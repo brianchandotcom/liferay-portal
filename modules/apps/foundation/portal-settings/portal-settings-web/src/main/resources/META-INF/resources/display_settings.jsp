@@ -74,6 +74,8 @@
 			leftList.add(new KeyValuePair(LocaleUtil.toLanguageId(availableLocale), availableLocale.getDisplayName(locale)));
 		}
 
+		leftList = ListUtil.sort(leftList, new KeyValuePairComparator(false, true));
+
 		// Right list
 
 		List rightList = new ArrayList();
@@ -92,7 +94,6 @@
 		<liferay-ui:input-move-boxes
 			leftBoxName="currentLanguageIds"
 			leftList="<%= leftList %>"
-			leftReorder="<%= Boolean.TRUE.toString() %>"
 			leftTitle="current"
 			rightBoxName="availableLanguageIds"
 			rightList="<%= rightList %>"

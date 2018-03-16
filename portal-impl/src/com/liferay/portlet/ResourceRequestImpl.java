@@ -16,12 +16,16 @@ package com.liferay.portlet;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PublicRenderParameter;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.PortletContext;
 import javax.portlet.PortletMode;
@@ -56,7 +60,37 @@ public class ResourceRequestImpl
 
 	@Override
 	public Map<String, String[]> getPrivateRenderParameterMap() {
-		return null;
+		Map<String, String[]> renderParameters = RenderParametersPool.get(
+			getOriginalHttpServletRequest(), getPlid(), getPortletName());
+
+		if ((renderParameters == null) || renderParameters.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Portlet portlet = getPortlet();
+
+		Set<PublicRenderParameter> publicRenderParameters =
+			portlet.getPublicRenderParameters();
+
+		if (publicRenderParameters.isEmpty()) {
+			return Collections.unmodifiableMap(renderParameters);
+		}
+
+		Map<String, String[]> privateRenderParameters = new HashMap<>();
+
+		for (Map.Entry<String, String[]> entry : renderParameters.entrySet()) {
+			if (portlet.getPublicRenderParameter(entry.getKey()) != null) {
+				continue;
+			}
+
+			privateRenderParameters.put(entry.getKey(), entry.getValue());
+		}
+
+		if (privateRenderParameters.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		return Collections.unmodifiableMap(privateRenderParameters);
 	}
 
 	@Override

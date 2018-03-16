@@ -3029,6 +3029,11 @@ marker file.
 ### Changed
 - [LPS-78772]: Update the [Liferay Gradle Plugins] dependency to version 3.8.20.
 
+## 5.3.32 - 2018-03-16
+
+### Changed
+- [LPS-78845]: Update the [Liferay Gradle Plugins] dependency to version 3.8.21.
+
 ## 5.3.33 - 2018-03-16
 
 ### Changed
@@ -3385,6 +3390,7 @@ marker file.
 [LPS-78741]: https://issues.liferay.com/browse/LPS-78741
 [LPS-78767]: https://issues.liferay.com/browse/LPS-78767
 [LPS-78772]: https://issues.liferay.com/browse/LPS-78772
+[LPS-78845]: https://issues.liferay.com/browse/LPS-78845
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

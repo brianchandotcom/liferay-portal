@@ -3721,6 +3721,13 @@ to version 2.3.98.
 - [LPS-78772]: Update the [Liferay Source Formatter] dependency to version
 1.0.570.
 
+## 3.8.21 - 2018-03-16
+
+### Changed
+- [LPS-78845]: Update the [Liferay Gradle Plugins Lang Builder] dependency to
+version 2.2.1.
+- [LPS-78845]: Update the [Liferay Lang Builder] dependency to version 1.0.24.
+
 ## 3.9.0 - 2018-03-16
 
 ### Added
@@ -4054,4 +4061,5 @@ instead of the latest ones.
 [LPS-78741]: https://issues.liferay.com/browse/LPS-78741
 [LPS-78767]: https://issues.liferay.com/browse/LPS-78767
 [LPS-78772]: https://issues.liferay.com/browse/LPS-78772
+[LPS-78845]: https://issues.liferay.com/browse/LPS-78845
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

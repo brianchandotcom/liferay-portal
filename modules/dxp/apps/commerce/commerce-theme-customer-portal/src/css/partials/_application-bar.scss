@@ -9,16 +9,46 @@
 		}
 	}
 
-	.dropdown-menu.portlet-flush {
-		padding-bottom: 0;
-		padding-top: 0;
-
-		@include media-breakpoint-up(md) {
-			overflow: visible;
+	.nav-item.dropdown-wide {
+		@include media-breakpoint-down(md) {
+			position: relative;
 		}
 
-		.portlet-body {
-			padding: 1.5rem;
+		@include media-breakpoint-down(sm) {
+			position: static;
+		}
+	}
+
+	.dropdown-wide .dropdown-menu {
+		left: 0;
+		max-height: none;
+		max-width: 100%;
+		right: 0;
+		width: auto;
+
+		@include media-breakpoint-up(md) {
+			left: auto;
+			min-width: 500px;
+		}
+	}
+
+	.dropdown-menu {
+		@include border-radius(0);
+
+		border-width: 0;
+		margin-top: 0;
+
+		&.portlet-flush {
+			padding-bottom: 0;
+			padding-top: 0;
+
+			@include media-breakpoint-up(md) {
+				overflow: visible;
+			}
+
+			.portlet-body {
+				padding: 1.5rem;
+			}
 		}
 	}
 
@@ -28,8 +58,7 @@
 		width: 13.75rem;
 	}
 
-	.navbar-form,
-	.nav-item {
+	.nav-link {
 		white-space: nowrap;
 	}
 
@@ -112,6 +141,12 @@
 	}
 
 	.b2b-cart {
+		.dropdown-menu {
+			.portlet-body {
+				padding: 0;
+			}
+		}
+
 		.nav-link {
 			background-color: $brand-color-primary;
 			color: #FFF;

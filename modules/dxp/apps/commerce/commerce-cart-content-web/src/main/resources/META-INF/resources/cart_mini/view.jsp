@@ -39,12 +39,20 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	displayStyleGroupId="<%= commerceCartContentMiniDisplayContext.getDisplayStyleGroupId() %>"
 	entries="<%= commerceOrderItemSearchContainer.getResults() %>"
 >
-	<div class="commerce-order-info">
-		<h4><strong><liferay-ui:message key="total" /> <%= HtmlUtil.escape(commerceCartContentMiniDisplayContext.getCommerceOrderSubtotal()) %></strong></h4>
-	</div>
+	<ul class="commerce-order-items-header">
+		<li class="autofit-row">
+			<div class="autofit-col autofit-col-expand">
+				<h4 class="commerce-title">Items (#)</h4>
+			</div>
+			<div class="autofit-col">
+				<div><a class="btn btn-outline-light" href="#placeholder">Edit Cart</a></div>
+			</div>
+		</li>
+	</ul>
 
-	<div class="commerce-order-items-container" id="<portlet:namespace />entriesContainer">
+	<div class="commerce-order-items-body" id="<portlet:namespace />entriesContainer">
 		<liferay-ui:search-container
+			cssClass="list-group-flush"
 			id="commerceOrderItems"
 			iteratorURL="<%= portletURL %>"
 			searchContainer="<%= commerceOrderItemSearchContainer %>"
@@ -63,44 +71,79 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				%>
 
 				<liferay-ui:search-container-column-image
-					cssClass="table-cell-content"
+					cssClass="thumbnail-section"
 					src="<%= thumbnailSrc %>"
 				/>
 
 				<liferay-ui:search-container-column-text
-					colspan="<%= 2 %>"
+					cssClass="autofit-col-expand"
 				>
-					<h5>
-						<a href="<%= commerceCartContentMiniDisplayContext.getCPDefinitionURL(cpDefinition.getCPDefinitionId(), themeDisplay) %>">
-							<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>
-						</a>
-					</h5>
+					<div class="description-section">
+						<div class="list-group-text">Brand</div>
 
-					<%
-					List<KeyValuePair> keyValuePairs = commerceCartContentMiniDisplayContext.getKeyValuePairs(commerceOrderItem.getJson(), locale);
+						<div class="list-group-title">
+							<a href="<%= commerceCartContentMiniDisplayContext.getCPDefinitionURL(cpDefinition.getCPDefinitionId(), themeDisplay) %>">
+								<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>
+							</a>
+						</div>
 
-					StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
+						<%
+						List<KeyValuePair> keyValuePairs = commerceCartContentMiniDisplayContext.getKeyValuePairs(commerceOrderItem.getJson(), locale);
 
-					for (KeyValuePair keyValuePair : keyValuePairs) {
-						stringJoiner.add(keyValuePair.getValue());
-					}
-					%>
+						StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
 
-					<h6 class="text-default">
-						<%= HtmlUtil.escape(stringJoiner.toString()) %>
-					</h6>
+						for (KeyValuePair keyValuePair : keyValuePairs) {
+							stringJoiner.add(keyValuePair.getValue());
+						}
+						%>
 
-					<h6 class="text-default">
-						<liferay-ui:message arguments="<%= commerceOrderItem.getQuantity() %>" key="quantity-x" />
-					</h6>
+						<div class="list-group-subtitle">SKU: <%= HtmlUtil.escape(stringJoiner.toString()) %></div>
+					</div>
+				</liferay-ui:search-container-column-text>
 
-					<h6>
-						<%= commerceCartContentMiniDisplayContext.getFormattedPrice(commerceOrderItem) %>
-					</h6>
+				<liferay-ui:search-container-column-text>
+					<div class="quantity-section">
+						<span class="commerce-quantity"><%= commerceOrderItem.getQuantity() %></span><span class="inline-item-after">x</span>
+					</div>
+				</liferay-ui:search-container-column-text>
+
+				<liferay-ui:search-container-column-text>
+					<div class="value-section">
+						<span class="commerce-value"><%= commerceCartContentMiniDisplayContext.getFormattedPrice(commerceOrderItem) %></span>
+					</div>
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" paginate="<%= false %>" searchContainer="<%= commerceOrderItemSearchContainer %>" />
 		</liferay-ui:search-container>
 	</div>
+
+	<ul class="commerce-order-items-footer">
+		<li class="autofit-row commerce-delivery">
+			<div class="autofit-col autofit-col-expand">
+				<div class="commerce-description"><liferay-ui:message key="delivery" /></div>
+			</div>
+			<div class="autofit-col">
+				<div class="commerce-value">Free</div>
+			</div>
+		</li>
+
+		<li class="autofit-row commerce-tax">
+			<div class="autofit-col autofit-col-expand">
+				<div class="commerce-description"><liferay-ui:message key="tax" /></div>
+			</div>
+			<div class="autofit-col">
+				<div class="commerce-value">$0.00</div>
+			</div>
+		</li>
+
+		<li class="autofit-row commerce-total">
+			<div class="autofit-col autofit-col-expand">
+				<div class="commerce-description"><liferay-ui:message key="total" /></div>
+			</div>
+			<div class="autofit-col">
+				<div class="commerce-value"><%= HtmlUtil.escape(commerceCartContentMiniDisplayContext.getCommerceOrderSubtotal()) %></div>
+			</div>
+		</li>
+	</ul>
 </liferay-ddm:template-renderer>

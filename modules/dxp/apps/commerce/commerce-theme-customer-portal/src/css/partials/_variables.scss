@@ -65,3 +65,41 @@ $order-details-subtitle: map-merge((
 	font-weight: $font-weight-semi-bold,
 	margin-bottom: 0.5rem
 ), $order-details-subtitle);
+
+// Cart Content Mini
+
+$commerce-order-items-header-bg: #393B49 !default;
+$commerce-order-items-header-color: #FFF !default;
+
+$commerce-order-items-body-bg: #393B49 !default;
+$commerce-order-items-body-color: #FFF !default;
+
+$commerce-order-items-body-list-group-text: () !default;
+$commerce-order-items-body-list-group-text: map-merge((
+	color: inherit,
+	font-size: 0.8125rem,
+	font-weight: $font-weight-light,
+	margin-top: -0.25rem
+), $commerce-order-items-body-list-group-text);
+
+$commerce-order-items-body-list-group-title: () !default;
+$commerce-order-items-body-list-group-title: map-merge((
+	color: $commerce-order-items-body-color,
+	font-size: 1.125rem,
+	font-weight: $font-weight-normal,
+	margin-bottom: 0.125rem,
+	margin-top: -0.125rem,
+	clay-link: (
+		color: $commerce-order-items-body-color,
+		hover-color: $commerce-order-items-body-color
+	)
+), $commerce-order-items-body-list-group-title);
+
+$commerce-order-items-body-list-group-subtitle: () !default;
+$commerce-order-items-body-list-group-subtitle: map-merge((
+	color: inherit,
+	font-size: 0.75rem
+), $commerce-order-items-body-list-group-subtitle);
+
+$commerce-order-items-footer-bg: #30323E !default;
+$commerce-order-items-footer-color: #FFF !default;

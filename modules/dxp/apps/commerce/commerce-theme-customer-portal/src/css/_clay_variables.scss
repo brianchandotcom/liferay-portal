@@ -30,6 +30,24 @@ $body-bg: #30313F !default;
 
 $input-bg: #F1F2F5 !default;
 
+// Buttons
+
+$btn-light: (
+	color: #272833,
+	hover-bg: #FFF,
+	hover-border-color: transparent,
+	focus-box-shadow: 0 0 0 2px rgba(darken(#FFF, 4%), 0.5),
+	disabled-bg: #FFF,
+	active-bg: darken(#FFF, 8%),
+	active-border-color: transparent,
+	active-box-shadow: none
+) !default;
+
+// Sticker
+
+$sticker-light-bg: #FFF !default;
+$sticker-light-color: #272833 !default;
+
 // Table
 
 $table-list-border-width: 0 !default;

@@ -495,6 +495,119 @@
 	}
 }
 
+// Cart Content Mini
+
+.commerce-order-items-header {
+	background-color: $commerce-order-items-header-bg;
+	color: $commerce-order-items-header-color;
+	padding-left: 1.5rem;
+	padding-right: 1.5rem;
+	padding-top: 1.5rem;
+
+	.autofit-row {
+		align-items: center;
+	}
+
+	.autofit-col {
+		padding-left: 0.5rem;
+		padding-right: 0.5rem;
+	}
+
+	.commerce-title {
+		font-size: 1.25rem;
+		font-weight: $font-weight-normal;
+		margin-bottom: 0;
+	}
+}
+
+.commerce-order-items-body {
+	background-color: $commerce-order-items-body-bg;
+	color: $commerce-order-items-body-color;
+	padding-bottom: 9rem;
+	padding-left: 1.5rem;
+	padding-right: 1.5rem;
+	padding-top: 1.5rem;
+
+	.list-group-notification {
+		color: inherit;
+		margin-bottom: 0;
+
+		.list-group-item {
+			background-color: $commerce-order-items-body-bg;
+			border-bottom-width: $list-group-border-width;
+			border-color: rgba(255, 255, 255, 0.1);
+			border-top-width: $list-group-border-width;
+			box-shadow: none;
+			color: inherit;
+		}
+
+		.thumbnail-section {
+			.sticker {
+				background-color: $sticker-light-bg;
+				color: $sticker-light-color;
+			}
+		}
+
+		.quantity-section, .value-section {
+			margin-top: 1rem;
+		}
+	}
+
+	.list-group-text {
+		@include clay-text-typography($commerce-order-items-body-list-group-text);
+	}
+
+	.list-group-title {
+		@include clay-text-typography($commerce-order-items-body-list-group-title);
+	}
+
+	.list-group-subtitle {
+		@include clay-text-typography($commerce-order-items-body-list-group-subtitle);
+	}
+
+	.main-content-body {
+		margin-top: 0;
+	}
+}
+
+.commerce-order-items-footer {
+	background-color: $commerce-order-items-footer-bg;
+	color: $commerce-order-items-footer-color;
+	padding: 1.5rem;
+
+	.autofit-row {
+		align-items: center;
+		
+		+ .autofit-row {
+			margin-top: 1.5rem;
+		}
+	}
+
+	.autofit-col {
+		padding-left: 0.5rem;
+		padding-right: 0.5rem;
+	}
+
+	.commerce-description {
+		font-size: 1rem;
+		font-weight: $font-weight-light;
+	}
+
+	.commerce-value {
+		font-size: 1.25rem;
+	}
+
+	.commerce-total {
+		.commerce-description {
+			font-weight: $font-weight-bold;
+		}
+
+		.commerce-value {
+			font-weight: $font-weight-bold;
+		}
+	}
+}
+
 // Chat Portlet
 
 .portlet-chat .chat-bar {

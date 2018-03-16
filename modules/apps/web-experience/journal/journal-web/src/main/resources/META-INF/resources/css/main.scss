@@ -12,14 +12,27 @@
 		}
 	}
 
-	.article-content-description, .article-content-title, .article-friendly-url {
-		.input-localized-content {
-			display: none;
+	.article-content-content {
+		.alloy-editor-container .alloy-editor-wrapper {
+			padding-top: 0px;
 		}
 
-		.form-control {
-			border-bottom-width: 1px;
+		.alloy-editor-switch {
+			margin-top: -40px;
 		}
+
+		.input-localized.input-localized-editor .form-control {
+			border-width: 1px;
+			min-height: 2.5rem;
+			padding-bottom: 0.5rem;
+			padding-left: 1rem;
+			padding-right: 1rem;
+			padding-top: 0.5rem;
+		}
+	}
+
+	.article-content-description {
+		@extend .article-content-content;
 
 		.alloy-editor-switch {
 			display: none;

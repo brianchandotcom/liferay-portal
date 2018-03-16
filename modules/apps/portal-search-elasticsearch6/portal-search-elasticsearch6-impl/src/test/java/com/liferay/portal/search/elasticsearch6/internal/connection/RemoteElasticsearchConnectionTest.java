@@ -14,7 +14,11 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.connection;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.search.elasticsearch6.configuration.OperationMode;
 
 import java.net.InetSocketAddress;
 
@@ -49,6 +53,8 @@ public class RemoteElasticsearchConnectionTest {
 	public void testModifyConnected() {
 		HashMap<String, Object> properties = new HashMap<>();
 
+		properties.put("operationMode", OperationMode.REMOTE.name());
+
 		_remoteElasticsearchConnection.activate(properties);
 
 		Assert.assertFalse(_remoteElasticsearchConnection.isConnected());
@@ -69,14 +75,49 @@ public class RemoteElasticsearchConnectionTest {
 	}
 
 	@Test
+	public void testModifyConnectedWithInvalidPropertiesThenValidProperties() {
+		HashMap<String, Object> properties = new HashMap<>();
+
+		properties.put("operationMode", OperationMode.REMOTE.name());
+
+		_remoteElasticsearchConnection.activate(properties);
+
+		_remoteElasticsearchConnection.connect();
+
+		properties.put(
+			"additionalConfigurations",
+			StringBundler.concat(
+				StringPool.OPEN_CURLY_BRACE, RandomTestUtil.randomString(),
+				StringPool.CLOSE_CURLY_BRACE));
+
+		try {
+			_remoteElasticsearchConnection.modified(properties);
+
+			Assert.fail();
+		}
+		catch (NullPointerException npe) {
+		}
+
+		Assert.assertFalse(_remoteElasticsearchConnection.isConnected());
+
+		properties.replace("additionalConfigurations", StringPool.BLANK);
+
+		_remoteElasticsearchConnection.modified(properties);
+
+		Assert.assertTrue(_remoteElasticsearchConnection.isConnected());
+	}
+
+	@Test
 	public void testModifyUnconnected() {
 		Assert.assertFalse(_remoteElasticsearchConnection.isConnected());
 
 		HashMap<String, Object> properties = new HashMap<>();
 
+		properties.put("operationMode", OperationMode.REMOTE.name());
+
 		_remoteElasticsearchConnection.modified(properties);
 
-		Assert.assertFalse(_remoteElasticsearchConnection.isConnected());
+		Assert.assertTrue(_remoteElasticsearchConnection.isConnected());
 	}
 
 	protected void assertTransportAddress(String hostString, int port) {

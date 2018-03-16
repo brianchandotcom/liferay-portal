@@ -52,6 +52,8 @@ public abstract class BaseElasticsearchConnection
 
 	@Override
 	public void connect() {
+		settingsBuilder = new SettingsBuilder(Settings.builder());
+
 		loadOptionalDefaultConfigurations();
 
 		loadAdditionalConfigurations();
@@ -162,7 +164,7 @@ public abstract class BaseElasticsearchConnection
 	}
 
 	protected volatile ElasticsearchConfiguration elasticsearchConfiguration;
-	protected final SettingsBuilder settingsBuilder = new SettingsBuilder(
+	protected SettingsBuilder settingsBuilder = new SettingsBuilder(
 		Settings.builder());
 
 	private Client _client;

@@ -21,9 +21,11 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.model.OAuth2ApplicationModel;
+import com.liferay.oauth2.provider.model.OAuth2ApplicationSoap;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -37,8 +39,10 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -54,6 +58,7 @@ import java.util.Map;
  * @see OAuth2ApplicationModel
  * @generated
  */
+@JSON(strict = true)
 @ProviderType
 public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 	implements OAuth2ApplicationModel {
@@ -65,30 +70,48 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 	public static final String TABLE_NAME = "OAuth2Application";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "oAuth2ApplicationId", Types.BIGINT },
-			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
-			{ "userId", Types.BIGINT },
-			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "allowedGrantTypes", Types.VARCHAR },
+			{ "clientId", Types.VARCHAR },
+			{ "clientProfile", Types.INTEGER },
+			{ "clientSecret", Types.VARCHAR },
+			{ "description", Types.VARCHAR },
+			{ "features", Types.VARCHAR },
+			{ "homePageURL", Types.VARCHAR },
+			{ "iconFileEntryId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
-			{ "description", Types.VARCHAR }
+			{ "privacyPolicyURL", Types.VARCHAR },
+			{ "redirectURIs", Types.VARCHAR },
+			{ "scopeAliases", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("oAuth2ApplicationId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("allowedGrantTypes", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("clientId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("clientProfile", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("clientSecret", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("features", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("homePageURL", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("iconFileEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("privacyPolicyURL", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("redirectURIs", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("scopeAliases", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table OAuth2Application (oAuth2ApplicationId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table OAuth2Application (oAuth2ApplicationId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,userId LONG,userName VARCHAR(75) null,allowedGrantTypes VARCHAR(75) null,clientId VARCHAR(75) null,clientProfile INTEGER,clientSecret VARCHAR(75) null,description VARCHAR(75) null,features VARCHAR(75) null,homePageURL VARCHAR(75) null,iconFileEntryId LONG,name VARCHAR(75) null,privacyPolicyURL VARCHAR(75) null,redirectURIs VARCHAR(75) null,scopeAliases VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table OAuth2Application";
 	public static final String ORDER_BY_JPQL = " ORDER BY oAuth2Application.oAuth2ApplicationId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY OAuth2Application.oAuth2ApplicationId ASC";
@@ -101,7 +124,69 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.oauth2.provider.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.liferay.oauth2.provider.model.OAuth2Application"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.oauth2.provider.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.oauth2.provider.model.OAuth2Application"),
+			true);
+	public static final long CLIENTID_COLUMN_BITMASK = 1L;
+	public static final long COMPANYID_COLUMN_BITMASK = 2L;
+	public static final long OAUTH2APPLICATIONID_COLUMN_BITMASK = 4L;
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static OAuth2Application toModel(OAuth2ApplicationSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		OAuth2Application model = new OAuth2ApplicationImpl();
+
+		model.setOAuth2ApplicationId(soapModel.getOAuth2ApplicationId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setAllowedGrantTypes(soapModel.getAllowedGrantTypes());
+		model.setClientId(soapModel.getClientId());
+		model.setClientProfile(soapModel.getClientProfile());
+		model.setClientSecret(soapModel.getClientSecret());
+		model.setDescription(soapModel.getDescription());
+		model.setFeatures(soapModel.getFeatures());
+		model.setHomePageURL(soapModel.getHomePageURL());
+		model.setIconFileEntryId(soapModel.getIconFileEntryId());
+		model.setName(soapModel.getName());
+		model.setPrivacyPolicyURL(soapModel.getPrivacyPolicyURL());
+		model.setRedirectURIs(soapModel.getRedirectURIs());
+		model.setScopeAliases(soapModel.getScopeAliases());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<OAuth2Application> toModels(
+		OAuth2ApplicationSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<OAuth2Application> models = new ArrayList<OAuth2Application>(soapModels.length);
+
+		for (OAuth2ApplicationSoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
+	}
+
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.oauth2.provider.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.oauth2.provider.model.OAuth2Application"));
 
@@ -143,14 +228,23 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("oAuth2ApplicationId", getOAuth2ApplicationId());
-		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("name", getName());
+		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
+		attributes.put("allowedGrantTypes", getAllowedGrantTypes());
+		attributes.put("clientId", getClientId());
+		attributes.put("clientProfile", getClientProfile());
+		attributes.put("clientSecret", getClientSecret());
 		attributes.put("description", getDescription());
+		attributes.put("features", getFeatures());
+		attributes.put("homePageURL", getHomePageURL());
+		attributes.put("iconFileEntryId", getIconFileEntryId());
+		attributes.put("name", getName());
+		attributes.put("privacyPolicyURL", getPrivacyPolicyURL());
+		attributes.put("redirectURIs", getRedirectURIs());
+		attributes.put("scopeAliases", getScopeAliases());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -166,28 +260,10 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 			setOAuth2ApplicationId(oAuth2ApplicationId);
 		}
 
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
 		Long companyId = (Long)attributes.get("companyId");
 
 		if (companyId != null) {
 			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -202,10 +278,40 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 			setModifiedDate(modifiedDate);
 		}
 
-		String name = (String)attributes.get("name");
+		Long userId = (Long)attributes.get("userId");
 
-		if (name != null) {
-			setName(name);
+		if (userId != null) {
+			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
+		}
+
+		String allowedGrantTypes = (String)attributes.get("allowedGrantTypes");
+
+		if (allowedGrantTypes != null) {
+			setAllowedGrantTypes(allowedGrantTypes);
+		}
+
+		String clientId = (String)attributes.get("clientId");
+
+		if (clientId != null) {
+			setClientId(clientId);
+		}
+
+		Integer clientProfile = (Integer)attributes.get("clientProfile");
+
+		if (clientProfile != null) {
+			setClientProfile(clientProfile);
+		}
+
+		String clientSecret = (String)attributes.get("clientSecret");
+
+		if (clientSecret != null) {
+			setClientSecret(clientSecret);
 		}
 
 		String description = (String)attributes.get("description");
@@ -213,8 +319,51 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 		if (description != null) {
 			setDescription(description);
 		}
+
+		String features = (String)attributes.get("features");
+
+		if (features != null) {
+			setFeatures(features);
+		}
+
+		String homePageURL = (String)attributes.get("homePageURL");
+
+		if (homePageURL != null) {
+			setHomePageURL(homePageURL);
+		}
+
+		Long iconFileEntryId = (Long)attributes.get("iconFileEntryId");
+
+		if (iconFileEntryId != null) {
+			setIconFileEntryId(iconFileEntryId);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
+		}
+
+		String privacyPolicyURL = (String)attributes.get("privacyPolicyURL");
+
+		if (privacyPolicyURL != null) {
+			setPrivacyPolicyURL(privacyPolicyURL);
+		}
+
+		String redirectURIs = (String)attributes.get("redirectURIs");
+
+		if (redirectURIs != null) {
+			setRedirectURIs(redirectURIs);
+		}
+
+		String scopeAliases = (String)attributes.get("scopeAliases");
+
+		if (scopeAliases != null) {
+			setScopeAliases(scopeAliases);
+		}
 	}
 
+	@JSON
 	@Override
 	public long getOAuth2ApplicationId() {
 		return _oAuth2ApplicationId;
@@ -225,16 +374,7 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 		_oAuth2ApplicationId = oAuth2ApplicationId;
 	}
 
-	@Override
-	public long getGroupId() {
-		return _groupId;
-	}
-
-	@Override
-	public void setGroupId(long groupId) {
-		_groupId = groupId;
-	}
-
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -242,9 +382,50 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 
 	@Override
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
 	}
 
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
+	@JSON
+	@Override
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	@Override
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
+	}
+
+	@JSON
+	@Override
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
+		_modifiedDate = modifiedDate;
+	}
+
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -271,6 +452,7 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 	public void setUserUuid(String userUuid) {
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -286,32 +468,135 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
-	public Date getCreateDate() {
-		return _createDate;
-	}
-
-	@Override
-	public void setCreateDate(Date createDate) {
-		_createDate = createDate;
-	}
-
-	@Override
-	public Date getModifiedDate() {
-		return _modifiedDate;
-	}
-
-	public boolean hasSetModifiedDate() {
-		return _setModifiedDate;
+	public String getAllowedGrantTypes() {
+		if (_allowedGrantTypes == null) {
+			return "";
+		}
+		else {
+			return _allowedGrantTypes;
+		}
 	}
 
 	@Override
-	public void setModifiedDate(Date modifiedDate) {
-		_setModifiedDate = true;
-
-		_modifiedDate = modifiedDate;
+	public void setAllowedGrantTypes(String allowedGrantTypes) {
+		_allowedGrantTypes = allowedGrantTypes;
 	}
 
+	@JSON
+	@Override
+	public String getClientId() {
+		if (_clientId == null) {
+			return "";
+		}
+		else {
+			return _clientId;
+		}
+	}
+
+	@Override
+	public void setClientId(String clientId) {
+		_columnBitmask |= CLIENTID_COLUMN_BITMASK;
+
+		if (_originalClientId == null) {
+			_originalClientId = _clientId;
+		}
+
+		_clientId = clientId;
+	}
+
+	public String getOriginalClientId() {
+		return GetterUtil.getString(_originalClientId);
+	}
+
+	@JSON
+	@Override
+	public int getClientProfile() {
+		return _clientProfile;
+	}
+
+	@Override
+	public void setClientProfile(int clientProfile) {
+		_clientProfile = clientProfile;
+	}
+
+	@JSON
+	@Override
+	public String getClientSecret() {
+		if (_clientSecret == null) {
+			return "";
+		}
+		else {
+			return _clientSecret;
+		}
+	}
+
+	@Override
+	public void setClientSecret(String clientSecret) {
+		_clientSecret = clientSecret;
+	}
+
+	@JSON
+	@Override
+	public String getDescription() {
+		if (_description == null) {
+			return "";
+		}
+		else {
+			return _description;
+		}
+	}
+
+	@Override
+	public void setDescription(String description) {
+		_description = description;
+	}
+
+	@JSON
+	@Override
+	public String getFeatures() {
+		if (_features == null) {
+			return "";
+		}
+		else {
+			return _features;
+		}
+	}
+
+	@Override
+	public void setFeatures(String features) {
+		_features = features;
+	}
+
+	@JSON
+	@Override
+	public String getHomePageURL() {
+		if (_homePageURL == null) {
+			return "";
+		}
+		else {
+			return _homePageURL;
+		}
+	}
+
+	@Override
+	public void setHomePageURL(String homePageURL) {
+		_homePageURL = homePageURL;
+	}
+
+	@JSON
+	@Override
+	public long getIconFileEntryId() {
+		return _iconFileEntryId;
+	}
+
+	@Override
+	public void setIconFileEntryId(long iconFileEntryId) {
+		_iconFileEntryId = iconFileEntryId;
+	}
+
+	@JSON
 	@Override
 	public String getName() {
 		if (_name == null) {
@@ -327,19 +612,56 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 		_name = name;
 	}
 
+	@JSON
 	@Override
-	public String getDescription() {
-		if (_description == null) {
+	public String getPrivacyPolicyURL() {
+		if (_privacyPolicyURL == null) {
 			return "";
 		}
 		else {
-			return _description;
+			return _privacyPolicyURL;
 		}
 	}
 
 	@Override
-	public void setDescription(String description) {
-		_description = description;
+	public void setPrivacyPolicyURL(String privacyPolicyURL) {
+		_privacyPolicyURL = privacyPolicyURL;
+	}
+
+	@JSON
+	@Override
+	public String getRedirectURIs() {
+		if (_redirectURIs == null) {
+			return "";
+		}
+		else {
+			return _redirectURIs;
+		}
+	}
+
+	@Override
+	public void setRedirectURIs(String redirectURIs) {
+		_redirectURIs = redirectURIs;
+	}
+
+	@JSON
+	@Override
+	public String getScopeAliases() {
+		if (_scopeAliases == null) {
+			return "";
+		}
+		else {
+			return _scopeAliases;
+		}
+	}
+
+	@Override
+	public void setScopeAliases(String scopeAliases) {
+		_scopeAliases = scopeAliases;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -370,14 +692,23 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 		OAuth2ApplicationImpl oAuth2ApplicationImpl = new OAuth2ApplicationImpl();
 
 		oAuth2ApplicationImpl.setOAuth2ApplicationId(getOAuth2ApplicationId());
-		oAuth2ApplicationImpl.setGroupId(getGroupId());
 		oAuth2ApplicationImpl.setCompanyId(getCompanyId());
-		oAuth2ApplicationImpl.setUserId(getUserId());
-		oAuth2ApplicationImpl.setUserName(getUserName());
 		oAuth2ApplicationImpl.setCreateDate(getCreateDate());
 		oAuth2ApplicationImpl.setModifiedDate(getModifiedDate());
-		oAuth2ApplicationImpl.setName(getName());
+		oAuth2ApplicationImpl.setUserId(getUserId());
+		oAuth2ApplicationImpl.setUserName(getUserName());
+		oAuth2ApplicationImpl.setAllowedGrantTypes(getAllowedGrantTypes());
+		oAuth2ApplicationImpl.setClientId(getClientId());
+		oAuth2ApplicationImpl.setClientProfile(getClientProfile());
+		oAuth2ApplicationImpl.setClientSecret(getClientSecret());
 		oAuth2ApplicationImpl.setDescription(getDescription());
+		oAuth2ApplicationImpl.setFeatures(getFeatures());
+		oAuth2ApplicationImpl.setHomePageURL(getHomePageURL());
+		oAuth2ApplicationImpl.setIconFileEntryId(getIconFileEntryId());
+		oAuth2ApplicationImpl.setName(getName());
+		oAuth2ApplicationImpl.setPrivacyPolicyURL(getPrivacyPolicyURL());
+		oAuth2ApplicationImpl.setRedirectURIs(getRedirectURIs());
+		oAuth2ApplicationImpl.setScopeAliases(getScopeAliases());
 
 		oAuth2ApplicationImpl.resetOriginalValues();
 
@@ -440,7 +771,15 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 	public void resetOriginalValues() {
 		OAuth2ApplicationModelImpl oAuth2ApplicationModelImpl = this;
 
+		oAuth2ApplicationModelImpl._originalCompanyId = oAuth2ApplicationModelImpl._companyId;
+
+		oAuth2ApplicationModelImpl._setOriginalCompanyId = false;
+
 		oAuth2ApplicationModelImpl._setModifiedDate = false;
+
+		oAuth2ApplicationModelImpl._originalClientId = oAuth2ApplicationModelImpl._clientId;
+
+		oAuth2ApplicationModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -449,19 +788,7 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 
 		oAuth2ApplicationCacheModel.oAuth2ApplicationId = getOAuth2ApplicationId();
 
-		oAuth2ApplicationCacheModel.groupId = getGroupId();
-
 		oAuth2ApplicationCacheModel.companyId = getCompanyId();
-
-		oAuth2ApplicationCacheModel.userId = getUserId();
-
-		oAuth2ApplicationCacheModel.userName = getUserName();
-
-		String userName = oAuth2ApplicationCacheModel.userName;
-
-		if ((userName != null) && (userName.length() == 0)) {
-			oAuth2ApplicationCacheModel.userName = null;
-		}
 
 		Date createDate = getCreateDate();
 
@@ -481,12 +808,40 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 			oAuth2ApplicationCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		oAuth2ApplicationCacheModel.name = getName();
+		oAuth2ApplicationCacheModel.userId = getUserId();
 
-		String name = oAuth2ApplicationCacheModel.name;
+		oAuth2ApplicationCacheModel.userName = getUserName();
 
-		if ((name != null) && (name.length() == 0)) {
-			oAuth2ApplicationCacheModel.name = null;
+		String userName = oAuth2ApplicationCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			oAuth2ApplicationCacheModel.userName = null;
+		}
+
+		oAuth2ApplicationCacheModel.allowedGrantTypes = getAllowedGrantTypes();
+
+		String allowedGrantTypes = oAuth2ApplicationCacheModel.allowedGrantTypes;
+
+		if ((allowedGrantTypes != null) && (allowedGrantTypes.length() == 0)) {
+			oAuth2ApplicationCacheModel.allowedGrantTypes = null;
+		}
+
+		oAuth2ApplicationCacheModel.clientId = getClientId();
+
+		String clientId = oAuth2ApplicationCacheModel.clientId;
+
+		if ((clientId != null) && (clientId.length() == 0)) {
+			oAuth2ApplicationCacheModel.clientId = null;
+		}
+
+		oAuth2ApplicationCacheModel.clientProfile = getClientProfile();
+
+		oAuth2ApplicationCacheModel.clientSecret = getClientSecret();
+
+		String clientSecret = oAuth2ApplicationCacheModel.clientSecret;
+
+		if ((clientSecret != null) && (clientSecret.length() == 0)) {
+			oAuth2ApplicationCacheModel.clientSecret = null;
 		}
 
 		oAuth2ApplicationCacheModel.description = getDescription();
@@ -497,31 +852,99 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 			oAuth2ApplicationCacheModel.description = null;
 		}
 
+		oAuth2ApplicationCacheModel.features = getFeatures();
+
+		String features = oAuth2ApplicationCacheModel.features;
+
+		if ((features != null) && (features.length() == 0)) {
+			oAuth2ApplicationCacheModel.features = null;
+		}
+
+		oAuth2ApplicationCacheModel.homePageURL = getHomePageURL();
+
+		String homePageURL = oAuth2ApplicationCacheModel.homePageURL;
+
+		if ((homePageURL != null) && (homePageURL.length() == 0)) {
+			oAuth2ApplicationCacheModel.homePageURL = null;
+		}
+
+		oAuth2ApplicationCacheModel.iconFileEntryId = getIconFileEntryId();
+
+		oAuth2ApplicationCacheModel.name = getName();
+
+		String name = oAuth2ApplicationCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			oAuth2ApplicationCacheModel.name = null;
+		}
+
+		oAuth2ApplicationCacheModel.privacyPolicyURL = getPrivacyPolicyURL();
+
+		String privacyPolicyURL = oAuth2ApplicationCacheModel.privacyPolicyURL;
+
+		if ((privacyPolicyURL != null) && (privacyPolicyURL.length() == 0)) {
+			oAuth2ApplicationCacheModel.privacyPolicyURL = null;
+		}
+
+		oAuth2ApplicationCacheModel.redirectURIs = getRedirectURIs();
+
+		String redirectURIs = oAuth2ApplicationCacheModel.redirectURIs;
+
+		if ((redirectURIs != null) && (redirectURIs.length() == 0)) {
+			oAuth2ApplicationCacheModel.redirectURIs = null;
+		}
+
+		oAuth2ApplicationCacheModel.scopeAliases = getScopeAliases();
+
+		String scopeAliases = oAuth2ApplicationCacheModel.scopeAliases;
+
+		if ((scopeAliases != null) && (scopeAliases.length() == 0)) {
+			oAuth2ApplicationCacheModel.scopeAliases = null;
+		}
+
 		return oAuth2ApplicationCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{oAuth2ApplicationId=");
 		sb.append(getOAuth2ApplicationId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
 		sb.append(", createDate=");
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
-		sb.append(", name=");
-		sb.append(getName());
+		sb.append(", userId=");
+		sb.append(getUserId());
+		sb.append(", userName=");
+		sb.append(getUserName());
+		sb.append(", allowedGrantTypes=");
+		sb.append(getAllowedGrantTypes());
+		sb.append(", clientId=");
+		sb.append(getClientId());
+		sb.append(", clientProfile=");
+		sb.append(getClientProfile());
+		sb.append(", clientSecret=");
+		sb.append(getClientSecret());
 		sb.append(", description=");
 		sb.append(getDescription());
+		sb.append(", features=");
+		sb.append(getFeatures());
+		sb.append(", homePageURL=");
+		sb.append(getHomePageURL());
+		sb.append(", iconFileEntryId=");
+		sb.append(getIconFileEntryId());
+		sb.append(", name=");
+		sb.append(getName());
+		sb.append(", privacyPolicyURL=");
+		sb.append(getPrivacyPolicyURL());
+		sb.append(", redirectURIs=");
+		sb.append(getRedirectURIs());
+		sb.append(", scopeAliases=");
+		sb.append(getScopeAliases());
 		sb.append("}");
 
 		return sb.toString();
@@ -529,7 +952,7 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(58);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.oauth2.provider.model.OAuth2Application");
@@ -540,20 +963,8 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 		sb.append(getOAuth2ApplicationId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
 		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>createDate</column-name><column-value><![CDATA[");
@@ -564,12 +975,60 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
+			"<column><column-name>userId</column-name><column-value><![CDATA[");
+		sb.append(getUserId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>userName</column-name><column-value><![CDATA[");
+		sb.append(getUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>allowedGrantTypes</column-name><column-value><![CDATA[");
+		sb.append(getAllowedGrantTypes());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>clientId</column-name><column-value><![CDATA[");
+		sb.append(getClientId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>clientProfile</column-name><column-value><![CDATA[");
+		sb.append(getClientProfile());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>clientSecret</column-name><column-value><![CDATA[");
+		sb.append(getClientSecret());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>description</column-name><column-value><![CDATA[");
 		sb.append(getDescription());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>features</column-name><column-value><![CDATA[");
+		sb.append(getFeatures());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>homePageURL</column-name><column-value><![CDATA[");
+		sb.append(getHomePageURL());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>iconFileEntryId</column-name><column-value><![CDATA[");
+		sb.append(getIconFileEntryId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>name</column-name><column-value><![CDATA[");
+		sb.append(getName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>privacyPolicyURL</column-name><column-value><![CDATA[");
+		sb.append(getPrivacyPolicyURL());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>redirectURIs</column-name><column-value><![CDATA[");
+		sb.append(getRedirectURIs());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>scopeAliases</column-name><column-value><![CDATA[");
+		sb.append(getScopeAliases());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -582,14 +1041,27 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 			OAuth2Application.class
 		};
 	private long _oAuth2ApplicationId;
-	private long _groupId;
 	private long _companyId;
-	private long _userId;
-	private String _userName;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private String _name;
+	private long _userId;
+	private String _userName;
+	private String _allowedGrantTypes;
+	private String _clientId;
+	private String _originalClientId;
+	private int _clientProfile;
+	private String _clientSecret;
 	private String _description;
+	private String _features;
+	private String _homePageURL;
+	private long _iconFileEntryId;
+	private String _name;
+	private String _privacyPolicyURL;
+	private String _redirectURIs;
+	private String _scopeAliases;
+	private long _columnBitmask;
 	private OAuth2Application _escapedModel;
 }

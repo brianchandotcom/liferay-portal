@@ -25,7 +25,7 @@ import com.liferay.journal.util.comparator.ArticleModifiedDateComparator;
 import com.liferay.journal.util.comparator.ArticleReviewDateComparator;
 import com.liferay.journal.util.comparator.ArticleTitleComparator;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
-import com.liferay.journal.util.impl.JournalUtil;
+import com.liferay.journal.web.internal.util.JournalHelperUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -235,7 +235,7 @@ public class JournalPortletUtil {
 			folderId);
 
 		while (folder != null) {
-			int restrictionType = JournalUtil.getRestrictionType(
+			int restrictionType = JournalHelperUtil.getRestrictionType(
 				folder.getFolderId());
 
 			if (restrictionType ==

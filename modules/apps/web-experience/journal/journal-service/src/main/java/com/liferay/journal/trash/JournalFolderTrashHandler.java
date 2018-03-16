@@ -17,6 +17,7 @@ package com.liferay.journal.trash;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.journal.exception.InvalidDDMStructureException;
+import com.liferay.journal.internal.util.JournalHelperUtil;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalFolderLocalService;
@@ -127,7 +128,7 @@ public class JournalFolderTrashHandler extends JournalBaseTrashHandler {
 
 		JournalFolder folder = _journalFolderLocalService.getFolder(classPK);
 
-		return JournalUtil.getAbsolutePath(
+		return JournalHelperUtil.getAbsolutePath(
 			portletRequest, folder.getParentFolderId());
 	}
 

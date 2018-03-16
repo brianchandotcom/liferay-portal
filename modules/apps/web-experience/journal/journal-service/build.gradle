@@ -34,7 +34,6 @@ dependencies {
 	provided project(":apps:foundation:xstream:xstream-configurator-api")
 	provided project(":apps:static:osgi:osgi-util")
 	provided project(":apps:static:portal-configuration:portal-configuration-metatype-api")
-	provided project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 	provided project(":apps:web-experience:export-import:export-import-api")
 	provided project(":apps:web-experience:journal:journal-api")
 	provided project(":apps:web-experience:rss:rss-api")

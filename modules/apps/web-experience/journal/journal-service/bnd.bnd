@@ -1,31 +1,7 @@
 Bundle-Name: Liferay Journal Service
 Bundle-SymbolicName: com.liferay.journal.service
 Bundle-Version: 4.0.0
-Export-Package:\
-	com.liferay.journal.atom,\
-	com.liferay.journal.configuration,\
-	com.liferay.journal.exportimport.data.handler,\
-	com.liferay.journal.model.impl,\
-	com.liferay.journal.model.listener,\
-	com.liferay.journal.search,\
-	com.liferay.journal.service.impl,\
-	com.liferay.journal.service.permission,\
-	com.liferay.journal.service.util,\
-	com.liferay.journal.social,\
-	com.liferay.journal.transformer,\
-	com.liferay.journal.trash,\
-	com.liferay.journal.upgrade,\
-	com.liferay.journal.util.impl,\
-	com.liferay.journal.verify,\
-	com.liferay.journal.workflow
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Web Content
 Liferay-Require-SchemaVersion: 1.1.2
 Liferay-Service: true
-Provide-Capability:\
-	liferay.resource.bundle;\
-		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.journal.lang)";\
-		resource.bundle.base.name="content.Language"
-Require-Capability:\
-	liferay.resource.bundle;\
-		filter:="(bundle.symbolic.name=com.liferay.journal.lang)"

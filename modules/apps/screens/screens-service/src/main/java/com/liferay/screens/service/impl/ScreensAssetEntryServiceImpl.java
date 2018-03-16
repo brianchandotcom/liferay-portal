@@ -23,7 +23,6 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
-import com.liferay.journal.service.permission.JournalArticlePermission;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -41,6 +40,8 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -282,7 +283,7 @@ public class ScreensAssetEntryServiceImpl
 
 		JournalArticle journalArticle = null;
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), assetEntry.getClassPK(), ActionKeys.VIEW);
 
 		try {
@@ -365,6 +366,12 @@ public class ScreensAssetEntryServiceImpl
 
 		return jsonObject;
 	}
+
+	private static volatile ModelResourcePermission<JournalArticle>
+		_journalArticleModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				ScreensAssetEntryServiceImpl.class,
+				"_journalArticleModelResourcePermission", JournalArticle.class);
 
 	@ServiceReference(type = AssetPublisherHelper.class)
 	private AssetPublisherHelper _assetPublisherHelper;

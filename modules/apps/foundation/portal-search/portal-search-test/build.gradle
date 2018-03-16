@@ -14,7 +14,6 @@ dependencies {
 	testIntegrationCompile project(":apps:foundation:portal-search:portal-search-api")
 	testIntegrationCompile project(":apps:static:osgi:osgi-util")
 	testIntegrationCompile project(":apps:web-experience:journal:journal-api")
-	testIntegrationCompile project(":apps:web-experience:journal:journal-service")
 	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

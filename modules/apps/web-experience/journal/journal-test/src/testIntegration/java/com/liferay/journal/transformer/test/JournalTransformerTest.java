@@ -23,13 +23,13 @@ import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
-import com.liferay.journal.transformer.RegexTransformerUtil;
-import com.liferay.journal.util.impl.JournalUtil;
+import com.liferay.journal.util.JournalTransformerListenerRegistry;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -44,7 +44,10 @@ import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,6 +78,10 @@ public class JournalTransformerTest {
 	public void setUp() throws Exception {
 		_ddmStructure = DDMStructureTestUtil.addStructure(
 			JournalArticle.class.getName());
+
+		_transformMethod = JournalTestUtil.getJournalUtilTransformMethod();
+
+		_getTokensMethod = JournalTestUtil.getJournalUtilGetTokensMethod();
 	}
 
 	@Test
@@ -109,8 +116,8 @@ public class JournalTransformerTest {
 
 		Map<String, String> tokens = getTokens();
 
-		String content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US",
+		String content = (String)_transformMethod.invoke(
+			null, null, tokens, Constants.VIEW, "en_US",
 			UnsecureSAXReaderUtil.read(xml), null, xsl,
 			TemplateConstants.LANG_TYPE_VM);
 
@@ -123,8 +130,8 @@ public class JournalTransformerTest {
 
 		element.setText("[@" + _article.getArticleId() + ";name@]");
 
-		content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US", document, null, xsl,
+		content = (String)_transformMethod.invoke(
+			null, null, tokens, Constants.VIEW, "en_US", document, null, xsl,
 			TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals("Joe Bloggs", content);
@@ -139,8 +146,8 @@ public class JournalTransformerTest {
 
 		String script = "${name.getData()} - ${viewMode}";
 
-		String content = JournalUtil.transform(
-			null, tokens, Constants.PRINT, "en_US",
+		String content = (String)_transformMethod.invoke(
+			null, null, tokens, Constants.PRINT, "en_US",
 			UnsecureSAXReaderUtil.read(xml), null, script,
 			TemplateConstants.LANG_TYPE_FTL);
 
@@ -161,22 +168,22 @@ public class JournalTransformerTest {
 
 		String script = "$name.getData()";
 
-		String content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US",
+		String content = (String)_transformMethod.invoke(
+			null, null, tokens, Constants.VIEW, "en_US",
 			UnsecureSAXReaderUtil.read(xml), null, script,
 			TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals("Joe Bloggs", content);
 
-		content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "pt_BR",
+		content = (String)_transformMethod.invoke(
+			null, null, tokens, Constants.VIEW, "pt_BR",
 			UnsecureSAXReaderUtil.read(xml), null, script,
 			TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals("Joao da Silva", content);
 
-		content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "fr_CA",
+		content = (String)_transformMethod.invoke(
+			null, null, tokens, Constants.VIEW, "fr_CA",
 			UnsecureSAXReaderUtil.read(xml), null, script,
 			TemplateConstants.LANG_TYPE_VM);
 
@@ -212,14 +219,14 @@ public class JournalTransformerTest {
 
 		String script = "$name.getData()";
 
-		String content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US", document, null, script,
+		String content = (String)_transformMethod.invoke(
+			null, null, tokens, Constants.VIEW, "en_US", document, null, script,
 			TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals("Joe Bloggs", content);
 
-		content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "pt_BR", document, null, script,
+		content = (String)_transformMethod.invoke(
+			null, null, tokens, Constants.VIEW, "pt_BR", document, null, script,
 			TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals("Joe Bloggs", content);
@@ -227,7 +234,7 @@ public class JournalTransformerTest {
 
 	@Test
 	public void testRegexTransformerListener() throws Exception {
-		initRegexTransformerUtil();
+		initRegexTransformerListener();
 
 		Map<String, String> tokens = getTokens();
 
@@ -236,8 +243,8 @@ public class JournalTransformerTest {
 
 		String script = "Hello $name.getData(), Welcome to beta.sample.com.";
 
-		String content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US",
+		String content = (String)_transformMethod.invoke(
+			null, null, tokens, Constants.VIEW, "en_US",
 			UnsecureSAXReaderUtil.read(xml), null, script,
 			TemplateConstants.LANG_TYPE_VM);
 
@@ -253,8 +260,8 @@ public class JournalTransformerTest {
 
 		String script = "@company_id@";
 
-		String content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US",
+		String content = (String)_transformMethod.invoke(
+			null, null, tokens, Constants.VIEW, "en_US",
 			UnsecureSAXReaderUtil.read(xml), null, script,
 			TemplateConstants.LANG_TYPE_VM);
 
@@ -263,8 +270,8 @@ public class JournalTransformerTest {
 
 		script = "@@company_id@@";
 
-		content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US",
+		content = (String)_transformMethod.invoke(
+			null, null, tokens, Constants.VIEW, "en_US",
 			UnsecureSAXReaderUtil.read(xml), null, script,
 			TemplateConstants.LANG_TYPE_VM);
 
@@ -282,8 +289,8 @@ public class JournalTransformerTest {
 
 		String script = "@view_counter@";
 
-		String content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US",
+		String content = (String)_transformMethod.invoke(
+			null, null, tokens, Constants.VIEW, "en_US",
 			UnsecureSAXReaderUtil.read(xml), null, script,
 			TemplateConstants.LANG_TYPE_VM);
 
@@ -313,8 +320,8 @@ public class JournalTransformerTest {
 		String xml = DDMStructureTestUtil.getSampleStructuredContent(
 			"name", "Joe Bloggs");
 
-		String content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US",
+		String content = (String)_transformMethod.invoke(
+			null, null, tokens, Constants.VIEW, "en_US",
 			UnsecureSAXReaderUtil.read(xml), null,
 			"#parse(\"$templatesPath/" + _ddmTemplate.getTemplateKey() +
 				"\")",
@@ -322,8 +329,8 @@ public class JournalTransformerTest {
 
 		Assert.assertEquals("Joe Bloggs", content);
 
-		content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US",
+		content = (String)_transformMethod.invoke(
+			null, null, tokens, Constants.VIEW, "en_US",
 			UnsecureSAXReaderUtil.read(xml), null,
 			"#parse(\"$journalTemplatesPath/" + _ddmTemplate.getTemplateKey() +
 				"\")",
@@ -333,8 +340,9 @@ public class JournalTransformerTest {
 	}
 
 	protected Map<String, String> getTokens() throws Exception {
-		Map<String, String> tokens = JournalUtil.getTokens(
-			TestPropsValues.getGroupId(), (PortletRequestModel)null, null);
+		Map<String, String> tokens = (Map)_getTokensMethod.invoke(
+			null, TestPropsValues.getGroupId(), (PortletRequestModel)null,
+			null);
 
 		tokens.put(
 			TemplateConstants.CLASS_NAME_ID,
@@ -351,9 +359,11 @@ public class JournalTransformerTest {
 		return tokens;
 	}
 
-	protected void initRegexTransformerUtil() {
-		Object instance = ReflectionTestUtil.getFieldValue(
-			RegexTransformerUtil.class, "_instance");
+	protected void initRegexTransformerListener() {
+		TransformerListener transformerListener =
+			_journalTransformerListenerRegistry.getTransformerListener(
+				"com.liferay.journal.internal.transformer." +
+					"RegexTransformerListener");
 
 		CacheRegistryUtil.setActive(true);
 
@@ -374,9 +384,10 @@ public class JournalTransformerTest {
 			replacements.add(replacement);
 		}
 
-		ReflectionTestUtil.setFieldValue(instance, "_patterns", patterns);
 		ReflectionTestUtil.setFieldValue(
-			instance, "_replacements", replacements);
+			transformerListener, "_patterns", patterns);
+		ReflectionTestUtil.setFieldValue(
+			transformerListener, "_replacements", replacements);
 	}
 
 	@DeleteAfterTestRun
@@ -387,5 +398,13 @@ public class JournalTransformerTest {
 
 	@DeleteAfterTestRun
 	private DDMTemplate _ddmTemplate;
+
+	private Method _getTokensMethod;
+
+	@Inject
+	private JournalTransformerListenerRegistry
+		_journalTransformerListenerRegistry;
+
+	private Method _transformMethod;
 
 }

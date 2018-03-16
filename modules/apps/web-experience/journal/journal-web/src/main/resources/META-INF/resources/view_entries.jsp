@@ -114,7 +114,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 							<c:if test="<%= journalDisplayContext.isSearch() %>">
 								<h5>
-									<%= JournalUtil.getAbsolutePath(liferayPortletRequest, curArticle.getFolderId()) %>
+									<%= JournalHelperUtil.getAbsolutePath(liferayPortletRequest, curArticle.getFolderId()) %>
 								</h5>
 							</c:if>
 
@@ -196,7 +196,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
 								name="path"
-								value="<%= JournalUtil.getAbsolutePath(liferayPortletRequest, curArticle.getFolderId()) %>"
+								value="<%= JournalHelperUtil.getAbsolutePath(liferayPortletRequest, curArticle.getFolderId()) %>"
 							/>
 						</c:if>
 

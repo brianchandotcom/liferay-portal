@@ -6,15 +6,15 @@
 		<priority value="ERROR" />
 	</category>
 
+	<category name="com.liferay.journal.internal.transformer.RegexTransformerListener">
+		<priority value="INFO" />
+	</category>
+
 	<category name="com.liferay.journal.lar">
 		<priority value="WARN" />
 	</category>
 
 	<category name="com.liferay.journal.service.impl.JournalContentSearchLocalServiceImpl">
-		<priority value="INFO" />
-	</category>
-
-	<category name="com.liferay.journal.transformer.RegexTransformerUtil">
 		<priority value="INFO" />
 	</category>
 

@@ -63,11 +63,12 @@ import com.liferay.journal.service.JournalFeedService;
 import com.liferay.journal.service.JournalFolderService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
-import com.liferay.journal.util.impl.JournalUtil;
+import com.liferay.journal.util.JournalHelper;
 import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
 import com.liferay.journal.web.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.portlet.action.ActionUtil;
 import com.liferay.journal.web.util.JournalPortletUtil;
+import com.liferay.journal.web.util.JournalUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.diff.CompareVersionsException;
@@ -536,7 +537,7 @@ public class JournalPortlet extends MVCPortlet {
 			String diffHtmlResults = null;
 
 			try {
-				diffHtmlResults = JournalUtil.diffHtml(
+				diffHtmlResults = _journalHelper.diffHtml(
 					groupId, articleId, sourceVersion, targetVersion,
 					languageId,
 					new PortletRequestModel(resourceRequest, resourceResponse),
@@ -736,7 +737,8 @@ public class JournalPortlet extends MVCPortlet {
 		String layoutUuid = ParamUtil.getString(
 			uploadPortletRequest, "layoutUuid");
 
-		Layout targetLayout = JournalUtil.getArticleLayout(layoutUuid, groupId);
+		Layout targetLayout = _journalHelper.getArticleLayout(
+			layoutUuid, groupId);
 
 		if (targetLayout == null) {
 			layoutUuid = null;
@@ -1473,6 +1475,9 @@ public class JournalPortlet extends MVCPortlet {
 
 	@Reference
 	private JournalFolderService _journalFolderService;
+
+	@Reference
+	private JournalHelper _journalHelper;
 
 	private volatile JournalWebConfiguration _journalWebConfiguration;
 

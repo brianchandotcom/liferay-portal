@@ -19,7 +19,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
-import com.liferay.journal.util.impl.JournalUtil;
+import com.liferay.journal.util.JournalHelper;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.test.ServiceTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
@@ -242,7 +243,7 @@ public class JournalArticleIndexVersionsTest {
 
 		Hits results = indexer.search(searchContext);
 
-		List<JournalArticle> articles = JournalUtil.getArticles(results);
+		List<JournalArticle> articles = _journalHelper.getArticles(results);
 
 		Assert.assertEquals(
 			articles.toString(), expectedCount, articles.size());
@@ -278,6 +279,9 @@ public class JournalArticleIndexVersionsTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private JournalHelper _journalHelper;
 
 	private String _originalPortalPreferencesXML;
 

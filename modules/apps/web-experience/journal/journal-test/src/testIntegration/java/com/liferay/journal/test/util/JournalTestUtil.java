@@ -32,6 +32,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -39,9 +40,11 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -57,6 +60,8 @@ import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.rss.util.RSSUtil;
 
+import java.lang.reflect.Method;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -64,6 +69,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.wiring.BundleWiring;
 
 /**
  * @author Juan Fernández
@@ -706,6 +716,19 @@ public class JournalTestUtil {
 			version, null, ServiceContextTestUtil.getServiceContext(groupId));
 	}
 
+	public static Method getJournalUtilGetTokensMethod() {
+		return ReflectionTestUtil.getMethod(
+			_JOURNAL_UTIL_CLASS, "getTokens", long.class,
+			PortletRequestModel.class, ThemeDisplay.class);
+	}
+
+	public static Method getJournalUtilTransformMethod() {
+		return ReflectionTestUtil.getMethod(
+			_JOURNAL_UTIL_CLASS, "transform", ThemeDisplay.class, Map.class,
+			String.class, String.class, Document.class,
+			PortletRequestModel.class, String.class, String.class);
+	}
+
 	public static String getSampleTemplateXSL() {
 		return "$name.getData()";
 	}
@@ -963,7 +986,45 @@ public class JournalTestUtil {
 		return map;
 	}
 
+	private static final Class<?> _JOURNAL_UTIL_CLASS;
+
 	private static final Locale[] _locales =
 		{LocaleUtil.US, LocaleUtil.GERMANY, LocaleUtil.SPAIN};
+
+	static {
+		Bundle testBundle = FrameworkUtil.getBundle(JournalTestUtil.class);
+
+		BundleContext bundleContext = testBundle.getBundleContext();
+
+		Bundle journalServiceBundle = null;
+
+		for (Bundle bundle : bundleContext.getBundles()) {
+			String symbolicName = bundle.getSymbolicName();
+
+			if (symbolicName.equals("com.liferay.journal.service")) {
+				journalServiceBundle = bundle;
+
+				break;
+			}
+		}
+
+		if (journalServiceBundle == null) {
+			throw new ExceptionInInitializerError(
+				"Unable to find com.liferay.journal.service bundle.");
+		}
+
+		BundleWiring bundleWiring = journalServiceBundle.adapt(
+			BundleWiring.class);
+
+		ClassLoader classLoader = bundleWiring.getClassLoader();
+
+		try {
+			_JOURNAL_UTIL_CLASS = classLoader.loadClass(
+				"com.liferay.journal.util.impl.JournalUtil");
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new ExceptionInInitializerError(cnfe);
+		}
+	}
 
 }

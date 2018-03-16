@@ -39,7 +39,7 @@ import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.dynamic.data.mapping.util.DDMXML;
 import com.liferay.exportimport.resources.importer.portlet.preferences.PortletPreferencesTranslator;
-import com.liferay.journal.configuration.JournalServiceConfigurationValues;
+import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFolderConstants;
@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.model.Theme;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -523,14 +524,17 @@ public class FileSystemImporter extends BaseImporter {
 		setServiceContext(fileName);
 
 		try {
+			JournalServiceConfiguration journalServiceConfiguration =
+				ConfigurationProviderUtil.getCompanyConfiguration(
+					JournalServiceConfiguration.class, companyId);
+
 			if (!updateModeEnabled || (ddmStructure == null)) {
 				ddmStructure = ddmStructureLocalService.addStructure(
 					userId, groupId, parentDDMStructureKey,
 					portal.getClassNameId(JournalArticle.class),
 					getKey(fileName), getMap(name), null, ddmForm,
 					ddmFormLayout,
-					JournalServiceConfigurationValues.
-						JOURNAL_ARTICLE_STORAGE_TYPE,
+					journalServiceConfiguration.journalArticleStorageType(),
 					DDMStructureConstants.TYPE_DEFAULT, serviceContext);
 			}
 			else {

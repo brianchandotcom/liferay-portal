@@ -23,7 +23,6 @@ import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
-import com.liferay.journal.exportimport.data.handler.JournalFeedStagedModelDataHandler;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.service.JournalFeedLocalServiceUtil;
@@ -141,7 +140,8 @@ public class JournalFeedStagedModelDataHandlerTest
 	public void testCleanStagedModelDataHandler() throws Exception {
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					JournalFeedStagedModelDataHandler.class.getName(),
+					"com.liferay.journal.internal.exportimport.data.handler." +
+						"JournalFeedStagedModelDataHandler",
 					Level.WARN)) {
 
 			super.testCleanStagedModelDataHandler();
@@ -205,7 +205,8 @@ public class JournalFeedStagedModelDataHandlerTest
 	public void testStagedModelDataHandler() throws Exception {
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					JournalFeedStagedModelDataHandler.class.getName(),
+					"com.liferay.journal.internal.exportimport.data.handler." +
+						"JournalFeedStagedModelDataHandler",
 					Level.WARN)) {
 
 			super.testStagedModelDataHandler();

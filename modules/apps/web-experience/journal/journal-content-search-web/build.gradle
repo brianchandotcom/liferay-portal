@@ -12,7 +12,6 @@ dependencies {
 	provided project(":apps:foundation:portal:portal-upgrade-api")
 	provided project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	provided project(":apps:web-experience:journal:journal-api")
-	provided project(":apps:web-experience:journal:journal-service")
 	provided project(":core:petra:petra-lang")
 	provided project(":core:petra:petra-string")
 }

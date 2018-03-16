@@ -18,6 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.GradleFileCheck;
@@ -42,6 +43,8 @@ import java.lang.reflect.Constructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -53,18 +56,19 @@ public class SourceChecksUtil {
 
 	public static List<SourceCheck> getSourceChecks(
 			SourceFormatterConfiguration sourceFormatterConfiguration,
-			String sourceProcessorName, boolean portalSource,
-			boolean subrepository, boolean includeModuleChecks)
+			String sourceProcessorName, Map<String, Properties> propertiesMap,
+			boolean portalSource, boolean subrepository,
+			boolean includeModuleChecks)
 		throws Exception {
 
 		List<SourceCheck> sourceChecks = _getSourceChecks(
-			sourceFormatterConfiguration, sourceProcessorName, portalSource,
-			subrepository, includeModuleChecks);
+			sourceFormatterConfiguration, sourceProcessorName, propertiesMap,
+			portalSource, subrepository, includeModuleChecks);
 
 		sourceChecks.addAll(
 			_getSourceChecks(
-				sourceFormatterConfiguration, "all", includeModuleChecks,
-				subrepository, includeModuleChecks));
+				sourceFormatterConfiguration, "all", propertiesMap,
+				includeModuleChecks, subrepository, includeModuleChecks));
 
 		return sourceChecks;
 	}
@@ -190,10 +194,51 @@ public class SourceChecksUtil {
 		return sourceChecksResult;
 	}
 
+	private static List<String> _getOverrideValues(
+		String attributeName, Class<? extends SourceCheck> sourceCheckClass,
+		Map<String, Properties> propertiesMap) {
+
+		String simpleName = sourceCheckClass.getSimpleName();
+
+		String[] simpleNameArray = simpleName.split(
+			"(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
+
+		String simpleNameValue = StringUtil.merge(simpleNameArray, ".");
+
+		String[] attributeNameArray = attributeName.split(
+			"(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
+
+		String attributeNameValue = StringUtil.merge(attributeNameArray, ".");
+
+		String key = StringBundler.concat(
+			"override.", StringUtil.toLowerCase(simpleNameValue), ".",
+			StringUtil.toLowerCase(attributeNameValue));
+
+		StringBundler sb = new StringBundler(propertiesMap.size() * 2);
+
+		for (Map.Entry<String, Properties> entry : propertiesMap.entrySet()) {
+			Properties properties = entry.getValue();
+
+			String value = properties.getProperty(key);
+
+			if (value != null) {
+				sb.append(value);
+				sb.append(CharPool.COMMA);
+			}
+		}
+
+		if (sb.index() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		return ListUtil.toList(StringUtil.split(sb.toString()));
+	}
+
 	private static List<SourceCheck> _getSourceChecks(
 			SourceFormatterConfiguration sourceFormatterConfiguration,
-			String sourceProcessorName, boolean portalSource,
-			boolean subrepository, boolean includeModuleChecks)
+			String sourceProcessorName, Map<String, Properties> propertiesMap,
+			boolean portalSource, boolean subrepository,
+			boolean includeModuleChecks)
 		throws Exception {
 
 		List<SourceCheck> sourceChecks = new ArrayList<>();
@@ -251,12 +296,16 @@ public class SourceChecksUtil {
 			for (String attributeName :
 					sourceCheckConfiguration.attributeNames()) {
 
-				for (String attributeValue :
-						sourceCheckConfiguration.getAttributeValues(
-							attributeName)) {
+				List<String> values = _getOverrideValues(
+					attributeName, sourceCheck.getClass(), propertiesMap);
 
-					BeanUtils.setProperty(
-						sourceCheck, attributeName, attributeValue);
+				if (values.isEmpty()) {
+					values = sourceCheckConfiguration.getAttributeValues(
+						attributeName);
+				}
+
+				for (String value : values) {
+					BeanUtils.setProperty(sourceCheck, attributeName, value);
 				}
 			}
 

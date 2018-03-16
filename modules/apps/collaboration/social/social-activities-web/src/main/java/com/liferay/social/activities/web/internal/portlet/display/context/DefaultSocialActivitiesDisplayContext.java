@@ -64,6 +64,7 @@ public class DefaultSocialActivitiesDisplayContext
 				_socialActivitiesRequestHelper.getMax();
 
 		portletURL.setParameter("end", String.valueOf(end));
+		portletURL.setParameter("tabs1", getSelectedTabName());
 
 		return portletURL.toString();
 	}

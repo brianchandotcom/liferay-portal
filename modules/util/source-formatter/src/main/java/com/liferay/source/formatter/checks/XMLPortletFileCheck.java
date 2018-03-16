@@ -14,11 +14,8 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.petra.xml.Dom4jUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
-import com.liferay.source.formatter.checks.util.XMLSourceUtil;
 
 import java.util.List;
 
@@ -41,13 +38,13 @@ public class XMLPortletFileCheck extends BaseFileCheck {
 			(!isPortalSource() && !isSubrepository() &&
 			 fileName.endsWith("/portlet.xml"))) {
 
-			content = _formatPortletXML(fileName, absolutePath, content);
+			_checkPortletXML(fileName, absolutePath, content);
 		}
 
 		return content;
 	}
 
-	private String _formatPortletXML(
+	private void _checkPortletXML(
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
@@ -74,25 +71,7 @@ public class XMLPortletFileCheck extends BaseFileCheck {
 							"'");
 				}
 			}
-
-			if (fileName.endsWith("/liferay-portlet.xml")) {
-				continue;
-			}
-
-			XMLSourceUtil.sortElementsByChildElement(
-				portletElement, "init-param", "name");
-
-			Element portletPreferencesElement = portletElement.element(
-				"portlet-preferences");
-
-			if (portletPreferencesElement != null) {
-				XMLSourceUtil.sortElementsByChildElement(
-					portletPreferencesElement, "preference", "name");
-			}
 		}
-
-		return StringUtil.replace(
-			Dom4jUtil.toString(document), "\"/>\n", "\" />\n");
 	}
 
 	private static final String _NUMERICAL_PORTLET_NAME_ELEMENT_EXCLUDES =

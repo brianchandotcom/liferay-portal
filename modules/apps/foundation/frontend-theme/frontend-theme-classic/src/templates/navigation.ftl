@@ -3,7 +3,7 @@
 		<span class="navbar-toggler-icon"></span>
 	</button>
 
-	<div aria-expanded="false" class="collapse mt-4 mt-md-0 navbar-collapse" id="navigationCollapse">
+	<div aria-expanded="false" class="collapse navbar-collapse" id="navigationCollapse">
 		<@liferay.navigation_menu default_preferences="${preferences}" />
 	</div>
 </#if>

@@ -7,18 +7,18 @@
 	background-color: #FFF;
 	border-bottom: 1px solid $light-color;
 
+	.navbar-blank {
+		@include media-query(null, $screen-xs-max) {
+			margin-top: 2rem;
+		}
+	}
+
 	.portlet-navigation {
 		margin-left: auto;
 	}
 
 	.logo:hover {
 		text-decoration: none;
-	}
-
-	.nav-item {
-		@include media-query(null, $screen-xs-max) {
-			margin-left: 1rem;
-		}
 	}
 
 	.nav-link {

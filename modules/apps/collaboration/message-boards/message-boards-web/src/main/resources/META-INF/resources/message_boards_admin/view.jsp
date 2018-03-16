@@ -186,7 +186,6 @@ mbAdminListDisplayContext.populateResultsAndTotal(searchContainer);
 </liferay-frontend:management-bar>
 
 <%
-request.setAttribute("view.jsp-displayStyle", "descriptive");
 request.setAttribute("view.jsp-entriesSearchContainer", searchContainer);
 %>
 

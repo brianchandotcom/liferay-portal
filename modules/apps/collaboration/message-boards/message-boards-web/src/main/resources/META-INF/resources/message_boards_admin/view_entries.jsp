@@ -298,7 +298,7 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator
-				displayStyle='<%= GetterUtil.getString(request.getAttribute("view.jsp-displayStyle")) %>'
+				displayStyle="descriptive"
 				markupView="lexicon"
 				resultRowSplitter="<%= new MBResultRowSplitter() %>"
 			/>

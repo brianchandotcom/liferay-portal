@@ -314,7 +314,6 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 					</c:if>
 
 					<%
-					request.setAttribute("view.jsp-displayStyle", "descriptive");
 					request.setAttribute("view.jsp-entriesSearchContainer", entriesSearchContainer);
 					%>
 
@@ -356,7 +355,6 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 					</c:if>
 
 					<%
-					request.setAttribute("view.jsp-displayStyle", "descriptive");
 					request.setAttribute("view.jsp-entriesSearchContainer", entriesSearchContainer);
 					%>
 

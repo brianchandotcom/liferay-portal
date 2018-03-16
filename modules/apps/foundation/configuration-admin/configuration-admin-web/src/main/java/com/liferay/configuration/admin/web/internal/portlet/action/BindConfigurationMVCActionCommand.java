@@ -38,11 +38,13 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 
-import java.io.File;
 import java.io.IOException;
 
 import java.net.URI;
-import java.net.URISyntaxException;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import java.util.Dictionary;
 import java.util.Enumeration;
@@ -249,24 +251,22 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 
 				if ((oldFileName != null) && !oldFileName.equals(fileName)) {
 					try {
-						File oldFile = new File(new URI(oldFileName));
+						Path oldFilePath = Paths.get(new URI(oldFileName));
 
-						if (oldFile.exists()) {
-							oldFile.delete();
+						Files.deleteIfExists(oldFilePath);
 
-							if (_log.isInfoEnabled()) {
-								_log.info(
-									"Delete inconsistent factory " +
-										"configuration " + oldFileName);
-							}
+						if (_log.isInfoEnabled()) {
+							_log.info(
+								"Delete inconsistent factory configuration " +
+									oldFileName);
 						}
 					}
-					catch (URISyntaxException urise) {
+					catch (Exception e) {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
 								"Unable to delete inconsistent factory " +
 									"configuration " + oldFileName,
-								urise);
+								e);
 						}
 					}
 				}

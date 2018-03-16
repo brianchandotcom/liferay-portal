@@ -17,11 +17,13 @@ package com.liferay.dynamic.data.mapping.type.paragraph.internal;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.portal.template.soy.utils.SoyHTMLSanitizer;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -43,9 +45,15 @@ public class ParagraphDDMFormFieldTemplateContextContributor
 
 		Map<String, Object> parameters = new HashMap<>();
 
-		parameters.put("text", ddmFormField.getProperty("text"));
+		parameters.put(
+			"text",
+			_soyHTMLSanitizer.sanitize(
+				(String)ddmFormField.getProperty("text")));
 
 		return parameters;
 	}
+
+	@Reference
+	private SoyHTMLSanitizer _soyHTMLSanitizer;
 
 }

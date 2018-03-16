@@ -23,45 +23,12 @@ import java.nio.charset.StandardCharsets;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Andrea Di Giorgi
  * @author Gregory Amerson
  */
 public class StringTestUtil {
-
-	public static boolean contains(
-		String content, String string, boolean regex) {
-
-		boolean found = false;
-
-		if (regex) {
-			Pattern pattern = Pattern.compile(
-				string, Pattern.DOTALL | Pattern.MULTILINE);
-
-			Matcher matcher = pattern.matcher(content);
-
-			found = matcher.matches();
-		}
-		else {
-			found = content.contains(string);
-		}
-
-		return found;
-	}
-
-	public static String getBetweenStrings(
-		String text, String textFrom, String textTo) {
-
-		String result = text.substring(
-			text.indexOf(textFrom) + textFrom.length());
-
-		result = result.substring(0, result.indexOf(textTo));
-
-		return result;
-	}
 
 	public static String merge(Iterable<String> strings, char separator) {
 		StringBuilder sb = new StringBuilder();

@@ -199,6 +199,8 @@ AUI.add(
 						instance.connectDefinitionFields();
 
 						instance.canvasRegion = instance.canvas.get('region');
+
+						A.one('.property-builder').insertBefore(A.one('.property-builder-tabs'), A.one('.property-builder-canvas'));
 					},
 
 					_afterRenderSettings: function() {

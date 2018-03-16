@@ -115,7 +115,7 @@
 			}
 
 			.diagram-node-shape-boundary {
-				stroke: white;
+				stroke: #FFF;
 				stroke-width: 5px;
 			}
 
@@ -129,6 +129,42 @@
 			margin-top: 5px;
 			width: auto;
 		}
+	}
+
+	.property-builder-content-container {
+		padding-left: 0;
+
+		.nav-tabs {
+			margin-bottom: 20px;
+		}
+
+		.nav-tabs + .tab-content .tab-pane.active:first-child {
+			display: flex;
+		}
+
+		.tab-pane {
+			padding-left: 10px;
+			padding-top: 10px;
+		}
+
+		.property-builder-canvas {
+			margin-left: 270px;
+			width: 100%;
+		}
+
+		.tabbable-content.main-tab > .nav-tabs {
+			border-bottom: 1px solid #DDD;
+		}
+
+		.nav-item.active {
+			border: 1px solid #DDD;
+			border-bottom: transparent;
+			border-radius: 4px 4px 0 0;
+		}
+	}
+
+	.property-builder-tabs-content .property-builder-fields-container {
+		padding: 0;
 	}
 
 	.property-builder-content-container .btn-toolbar-button {
@@ -163,16 +199,16 @@
 		}
 	}
 
-	.property-builder-fields-container {
-		margin: 0;
-	}
-
 	.table-property-list {
 		margin-top: 0;
 	}
 
 	.tab-pane {
 		height: 100%;
+
+		& > .btn-toolbar-content .btn-toolbar-button {
+			display: none;
+		}
 	}
 }
 
@@ -246,6 +282,11 @@
 
 .lfr-portlet-workflowdesigner-draft-version {
 	display: inline;
+}
+
+.lfr-template-editor-wrapper {
+	margin-top: 20px;
+	width: 100% !important;
 }
 
 .property-builder-disabled {

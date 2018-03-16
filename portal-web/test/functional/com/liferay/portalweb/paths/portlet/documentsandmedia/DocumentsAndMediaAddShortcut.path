@@ -21,12 +21,12 @@
 <!--SELECT_FILE-->
 <tr>
 	<td>SELECT_FILE_FOLDER_NAME</td>
-	<td>//tr[contains(@class,'splitter') and contains(.,'Folders')]/following-sibling::tr/td/a[contains(.,'${key_dmFolderName}')]</td>
+	<td>//tr[contains(@class,'table-divider') and contains(.,'Folders')]/following-sibling::tr/td/a[contains(.,'${key_dmFolderName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_FILE_DOCUMENT_TITLE</td>
-	<td>//tr[contains(@class,'splitter') and contains(.,'Documents')]/following-sibling::tr/td/a[contains(.,'${key_dmDocumentTitle}')]</td>
+	<td>//tr[contains(@class,'table-divider') and contains(.,'Documents')]/following-sibling::tr/td/a[contains(.,'${key_dmDocumentTitle}')]</td>
 	<td></td>
 </tr>
 </tbody>

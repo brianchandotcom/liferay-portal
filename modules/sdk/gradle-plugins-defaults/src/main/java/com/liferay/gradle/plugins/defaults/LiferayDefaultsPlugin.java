@@ -39,14 +39,14 @@ public class LiferayDefaultsPlugin extends LiferayPlugin {
 			LicenseReportDefaultsPlugin.INSTANCE.apply(project);
 		}
 
-		if (_isRunningInCIEnvironment()) {
-			LiferayCIPlugin.INSTANCE.apply(project);
-		}
-
 		LiferayBaseDefaultsPlugin.INSTANCE.apply(project);
 		LiferayRelengPlugin.INSTANCE.apply(project);
 		MavenDefaultsPlugin.INSTANCE.apply(project);
 		NodeDefaultsPlugin.INSTANCE.apply(project);
+
+		if (_isRunningInCIEnvironment()) {
+			LiferayCIPlugin.INSTANCE.apply(project);
+		}
 	}
 
 	@Override

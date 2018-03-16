@@ -208,6 +208,15 @@ set, the digest is compared with the `node_modules` directory's digest. If they
 don't match, the `node_modules` directory is deleted before running
 `npm install`.
 
+## 4.3.0 - 2018-03-15
+
+### Added
+- [LPS-78741]: Add property `useNpmCI` to `NpmInstallTask`. If `true`, run
+`npm ci` instead of `npm install`.
+
+### Fixed
+- [LPS-73472]: Allow single `"bin"` values in the `package.json` files.
+
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
@@ -231,3 +240,4 @@ don't match, the `node_modules` directory is deleted before running
 [LPS-75175]: https://issues.liferay.com/browse/LPS-75175
 [LPS-75965]: https://issues.liferay.com/browse/LPS-75965
 [LPS-77996]: https://issues.liferay.com/browse/LPS-77996
+[LPS-78741]: https://issues.liferay.com/browse/LPS-78741

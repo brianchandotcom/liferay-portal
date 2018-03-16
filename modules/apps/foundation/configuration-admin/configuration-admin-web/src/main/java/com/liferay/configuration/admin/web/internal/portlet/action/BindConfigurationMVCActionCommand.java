@@ -38,7 +38,11 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 
+import java.io.File;
 import java.io.IOException;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import java.util.Dictionary;
 import java.util.Enumeration;
@@ -238,8 +242,34 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 				sb.append(factoryPid);
 				sb.append(".config");
 
-				configuredProperties.put(
-					"felix.fileinstall.filename", sb.toString());
+				String fileName = sb.toString();
+
+				String oldFileName = (String)configuredProperties.put(
+					"felix.fileinstall.filename", fileName);
+
+				if ((oldFileName != null) && !oldFileName.equals(fileName)) {
+					try {
+						File oldFile = new File(new URI(oldFileName));
+
+						if (oldFile.exists()) {
+							oldFile.delete();
+
+							if (_log.isInfoEnabled()) {
+								_log.info(
+									"Delete inconsistent factory " +
+										"configuration " + oldFileName);
+							}
+						}
+					}
+					catch (URISyntaxException urise) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to delete inconsistent factory " +
+									"configuration " + oldFileName,
+								urise);
+						}
+					}
+				}
 			}
 
 			configuration.update(configuredProperties);

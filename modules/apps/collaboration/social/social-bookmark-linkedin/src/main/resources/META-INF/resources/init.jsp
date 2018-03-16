@@ -14,12 +14,13 @@
  */
 --%>
 
-<%@ include file="/bookmark/init.jsp" %>
+<%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%
-Map<String, Object> data = new HashMap<>();
+<%@ page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.social.bookmarks.SocialBookmark" %>
 
-data.put("contentid", contentId);
-%>
+<%@ page import="java.util.HashMap" %><%@
+page import="java.util.Map" %>
 
-<liferay-ui:icon data="<%= data %>" label="<%= true %>" linkCssClass="social-bookmark" message="<%= socialBookmark.getName(locale) %>" method="get" url="<%= socialBookmark.getPostURL(title, url) %>" />
+<liferay-theme:defineObjects />

@@ -35,7 +35,11 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(immediate = true, property = "social.bookmarks.type=plusone")
+@Component(
+	immediate = true,
+	property =
+		{"social.bookmarks.priority:Integer=0", "social.bookmarks.type=plusone"}
+)
 public class PlusoneSocialBookmark implements SocialBookmark {
 
 	@Override

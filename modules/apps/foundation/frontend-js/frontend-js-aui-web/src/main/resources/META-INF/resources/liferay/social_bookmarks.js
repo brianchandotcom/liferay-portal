@@ -1,6 +1,7 @@
 /**
  * The Social Bookmarks Component.
  *
+ * @deprecated
  * @module liferay-social-bookmarks
  */
 

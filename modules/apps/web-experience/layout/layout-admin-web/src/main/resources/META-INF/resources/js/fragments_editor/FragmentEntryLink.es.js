@@ -1,6 +1,6 @@
 import Component from 'metal-component';
 import {Config} from 'metal-state';
-import {isFunction, isObject} from 'metal';
+import {isFunction, isObject, object} from 'metal';
 import Soy from 'metal-soy';
 
 import templates from './FragmentEntryLink.soy';
@@ -135,35 +135,37 @@ class FragmentEntryLink extends Component {
 
 					const editor = AlloyEditor.editable(
 						wrapper,
-						{
-							enterMode: CKEDITOR.ENTER_BR,
-							extraPlugins: [
-								'ae_autolink',
-								'ae_dragresize',
-								'ae_addimages',
-								'ae_imagealignment',
-								'ae_placeholder',
-								'ae_selectionregion',
-								'ae_tableresize',
-								'ae_tabletools',
-								'ae_uicore',
-								'itemselector',
-								'media',
-								'adaptivemedia'
-							].join(','),
-							removePlugins: [
-								'contextmenu',
-								'elementspath',
-								'image',
-								'link',
-								'liststyle',
-								'magicline',
-								'resize',
-								'tabletools',
-								'toolbar',
-								'ae_embed'
-							].join(',')
-						}
+						object.mixin(
+							this.defaultEditorConfiguration.editorConfig,
+							{
+								enterMode: CKEDITOR.ENTER_BR,
+								extraPlugins: [
+									'ae_autolink',
+									'ae_dragresize',
+									'ae_addimages',
+									'ae_imagealignment',
+									'ae_placeholder',
+									'ae_selectionregion',
+									'ae_tableresize',
+									'ae_tabletools',
+									'ae_uicore',
+									'itemselector',
+									'media',
+									'adaptivemedia'
+								].join(','),
+								removePlugins: [
+									'contextmenu',
+									'elementspath',
+									'image',
+									'link',
+									'liststyle',
+									'magicline',
+									'resize',
+									'tabletools',
+									'toolbar',
+									'ae_embed'
+								].join(',')
+							})
 					);
 
 					const naviteEditor = editor.get('nativeEditor');
@@ -318,6 +320,17 @@ FragmentEntryLink.STATE = {
 			}
 		)
 		.value(''),
+
+	/**
+	 * Default configuration for AlloyEditor instances.
+	 * @default {}
+	 * @instance
+	 * @memberOf FragmentEntryLink
+	 * @review
+	 * @type {!object}
+	 */
+
+	defaultEditorConfiguration: Config.object().value({}),
 
 	/**
 	 * Editable values that should be used instead of the default ones

@@ -68,6 +68,17 @@ class FragmentEntryDisplay extends Component {
 FragmentEntryDisplay.STATE = {
 
 	/**
+	 * Default configuration for AlloyEditor instances.
+	 * @default {}
+	 * @instance
+	 * @memberOf FragmentEntryDisplay
+	 * @review
+	 * @type {!object}
+	 */
+
+	defaultEditorConfiguration: Config.object().value({}),
+
+	/**
 	 * URL for updating a distinct fragment entries of the editor.
 	 * @default undefined
 	 * @instance

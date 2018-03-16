@@ -441,6 +441,17 @@ FragmentsEditor.STATE = {
 	classPK: Config.string().required(),
 
 	/**
+	 * Default configuration for AlloyEditor instances.
+	 * @default {}
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!object}
+	 */
+
+	defaultEditorConfiguration: Config.object().value({}),
+
+	/**
 	 * URL for removing fragment entries of the underlying model.
 	 * @default undefined
 	 * @instance

@@ -4,6 +4,7 @@
  * FragmentsEditor
  */
 {template .render}
+	{@param defaultEditorConfiguration: ?}
 	{@param fragmentCollections: list<[
 		fragmentEntries: list<[
 			fragmentEntryId: string,
@@ -68,6 +69,7 @@
 						<div data-position="{index($fragmentEntryLink)}" key="{$fragmentEntryLink.fragmentEntryLinkId}">
 							{call com.liferay.layout.admin.web.FragmentEntryLink.render}
 								{param content: $fragmentEntryLink.content /}
+								{param defaultEditorConfiguration: $defaultEditorConfiguration /}
 								{param editableValues: $fragmentEntryLink.editableValues /}
 								{param events: [
 									'editableChanged': $_handleEditableChanged,

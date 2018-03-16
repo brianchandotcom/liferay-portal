@@ -57,8 +57,6 @@ import java.util.Properties;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
 import java.util.jar.JarFile;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import net.diibadaaba.zipdiff.DifferenceCalculator;
 import net.diibadaaba.zipdiff.Differences;
@@ -1754,6 +1752,42 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateWorkspaceWithVersion() throws Exception {
+		File workspaceProjectDir = _buildTemplateWithMaven(
+			WorkspaceUtil.WORKSPACE, "withportlet", "com.test",
+			"-DliferayVersion=7.1");
+
+		File file = _testContains(
+			workspaceProjectDir, "pom.xml", "liferay.workspace.bundle.url");
+
+		String content = FileUtil.read(file.toPath());
+
+		String stringBetween = StringTestUtil.getBetweenStrings(
+			content, "<liferay.workspace.bundle.url>",
+			"</liferay.workspace.bundle.url>");
+
+		boolean contains = stringBetween.contains("portal/7.1");
+
+		Assert.assertTrue(contains);
+
+		workspaceProjectDir = _buildTemplateWithGradle(
+			WorkspaceUtil.WORKSPACE, "withportlet", "--liferayVersion", "7.1");
+
+		file = _testContains(
+			workspaceProjectDir, "gradle.properties",
+			"liferay.workspace.bundle.url");
+
+		content = FileUtil.read(file.toPath());
+
+		stringBetween = StringTestUtil.getBetweenStrings(
+			content, "liferay.workspace.bundle.url=", ".zip");
+
+		contains = stringBetween.contains("portal/7.1");
+
+		Assert.assertTrue(contains);
+	}
+
+	@Test
 	public void testListTemplates() throws Exception {
 		final Map<String, String> expectedTemplates = new TreeMap<>();
 
@@ -2356,20 +2390,10 @@ public class ProjectTemplatesTest {
 
 		String content = FileUtil.read(file.toPath());
 
+		boolean found = false;
+
 		for (String s : strings) {
-			boolean found;
-
-			if (regex) {
-				Pattern pattern = Pattern.compile(
-					s, Pattern.DOTALL | Pattern.MULTILINE);
-
-				Matcher matcher = pattern.matcher(content);
-
-				found = matcher.matches();
-			}
-			else {
-				found = content.contains(s);
-			}
+			found = StringTestUtil.contains(content, s, regex);
 
 			if (contains) {
 				Assert.assertTrue("Not found in " + fileName + ": " + s, found);

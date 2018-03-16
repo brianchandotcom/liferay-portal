@@ -48,14 +48,14 @@ header {
 	}
 
 	.search-input {
-		background-color: #29343D;
+		background-color: $complementary-color;
 		border-color: transparent;
 		color: #FFF;
 		font-size: 0.88rem;
 		padding: 0.28rem 2rem 0.28rem 1rem;
 
 		&:focus {
-			background-color: #29343D;
+			background-color: $secondary;
 			color: #FFF;
 		}
 	}
@@ -90,4 +90,8 @@ header {
 	@include md {
 		top: auto;
 	}
+}
+
+#footer {
+	background-color: $complementary-color;
 }

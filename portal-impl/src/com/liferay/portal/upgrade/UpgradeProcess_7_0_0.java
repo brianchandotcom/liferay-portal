@@ -71,7 +71,7 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(UpgradeKernelPackage.class);
 
 		upgrade(UpgradeSharding.class);
-		
+
 		upgrade(UpgradeAddress.class);
 		upgrade(UpgradeAsset.class);
 		upgrade(UpgradeAssetTagsResourcePermission.class);

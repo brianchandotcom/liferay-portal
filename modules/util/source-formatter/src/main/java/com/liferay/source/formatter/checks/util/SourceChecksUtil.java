@@ -42,6 +42,7 @@ import java.io.File;
 import java.lang.reflect.Constructor;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -296,8 +297,12 @@ public class SourceChecksUtil {
 			for (String attributeName :
 					sourceCheckConfiguration.attributeNames()) {
 
-				List<String> values = _getOverrideValues(
-					attributeName, sourceCheck.getClass(), propertiesMap);
+				List<String> values = Collections.emptyList();
+
+				if (portalSource) {
+					values = _getOverrideValues(
+						attributeName, sourceCheck.getClass(), propertiesMap);
+				}
 
 				if (values.isEmpty()) {
 					values = sourceCheckConfiguration.getAttributeValues(

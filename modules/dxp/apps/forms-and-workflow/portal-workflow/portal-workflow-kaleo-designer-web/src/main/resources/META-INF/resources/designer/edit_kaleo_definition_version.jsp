@@ -255,7 +255,7 @@
 												</li>
 												<li>
 													<a href="javascript:;">
-														<liferay-ui:message key="settings" />
+														<liferay-ui:message key="properties" />
 													</a>
 												</li>
 											</ul>
@@ -270,16 +270,16 @@
 
 									<div class="property-builder-content-container">
 										<div class="tabbable">
-											<div class="tabbable-content">
-												<ul class="nav nav-tabs nav-tabs-default">
-													<li class="active">
+											<div class="main-tab tabbable-content">
+												<ul class="nav nav-tabs">
+													<li class="active nav-item">
 														<a href="javascript:;">
-															<liferay-ui:message key="view" />
+															<liferay-ui:message key="diagram" />
 														</a>
 													</li>
-													<li>
+													<li class="nav-item">
 														<a href="javascript:;">
-															<liferay-ui:message key="source" /> (Kaleo <liferay-ui:message key="xml" />)
+															<liferay-ui:message key="source" />
 														</a>
 													</li>
 												</ul>

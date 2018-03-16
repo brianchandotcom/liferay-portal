@@ -159,6 +159,14 @@
 
 		<execute macro="Form#closeSidebar" />
 
+		<execute macro="Form#saveElementSet" />
+
+		<execute macro="FormsAdminNavigator#gotoBack" />
+
+		<execute macro="FormsAdminNavigator#gotoEdit">
+			<var name="formName" value="Element Set 1" />
+		</execute>
+
 		<execute macro="DDLRecord#addTranslation">
 			<var name="localizedLanguage" value="Chinese (China)" />
 		</execute>

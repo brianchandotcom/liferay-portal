@@ -102,7 +102,7 @@ dependencies {
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.theme.contributor", version: "1.0.5"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.war.hook", version: "1.0.2"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.war.mvc.portlet", version: "1.0.2"
-	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.workspace", version: "1.0.8"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.workspace", version: "1.0.7"
 
 	testCompile gradleTestKit()
 	testCompile group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "3.2.0"

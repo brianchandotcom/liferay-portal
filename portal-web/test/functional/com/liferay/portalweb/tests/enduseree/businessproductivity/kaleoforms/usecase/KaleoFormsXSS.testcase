@@ -91,12 +91,9 @@
 		<execute function="AssertHTMLSourceTextNotPresent" value1="${actualScript}" />
 		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
 
-		<var name="key_rowEntry" value="alert" />
-
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Choose">
-			<var name="key_menuItem" value="Choose" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Choose" />
+			<var name="rowEntry" value="alert" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />

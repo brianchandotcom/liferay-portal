@@ -53,45 +53,27 @@
 	</command>
 
 	<command name="moveToInProgressStatus">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-		<var name="key_kbSuggestionBody" value="${kbSuggestionBody}" />
-
-		<var name="key_rowEntry" value="${kbSuggestionBody}" />
-
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Move to In Progress">
-			<var name="key_menuItem" value="Move to In Progress" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Move to In Progress" />
+			<var name="rowEntry" value="${kbSuggestionBody}" />
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 
 	<command name="moveToNewStatus">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-		<var name="key_kbSuggestionBody" value="${kbSuggestionBody}" />
-
-		<var name="key_rowEntry" value="${kbSuggestionBody}" />
-
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Move to New">
-			<var name="key_menuItem" value="Move to New" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Move to New" />
+			<var name="rowEntry" value="${kbSuggestionBody}" />
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 
 	<command name="moveToResolvedStatus">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-		<var name="key_kbSuggestionBody" value="${kbSuggestionBody}" />
-
-		<var name="key_rowEntry" value="${kbSuggestionBody}" />
-
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Resolve">
-			<var name="key_menuItem" value="Resolve" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Resolve" />
+			<var name="rowEntry" value="${kbSuggestionBody}" />
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />

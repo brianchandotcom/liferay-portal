@@ -318,13 +318,9 @@
 	</command>
 
 	<command name="deleteUserSegmentCP">
-		<var name="key_rowEntry" value="${userSegmentName}" />
-		<var name="key_userSegment" value="${userSegmentName}" />
-
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="ClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
-			<var name="key_menuItem" value="Delete" />
+		<execute macro="LexiconEntry#gotoEntryMenuItemNoError">
+			<var name="menuItem" value="Delete" />
+			<var name="rowEntry" value="${userSegmentName}" />
 		</execute>
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />

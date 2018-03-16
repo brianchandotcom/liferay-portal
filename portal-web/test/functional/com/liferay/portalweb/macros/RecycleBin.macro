@@ -77,16 +77,13 @@
 
 		<execute function="AssertClick" locator1="RecycleBin#RECYCLE_BIN_TABLE_NAME" value1="${assetName}" />
 
-		<var name="key_assetName" value="${documentName}" />
+		<execute function="AssertTextEquals" locator1="RecycleBin#RECYCLE_BIN_FOLDER_DOCUMENT_NAME" value1="${documentName}">
+			<var name="key_assetName" value="${documentName}" />
+		</execute>
 
-		<execute function="AssertTextEquals" locator1="RecycleBin#RECYCLE_BIN_FOLDER_DOCUMENT_NAME" value1="${documentName}" />
-
-		<var name="key_rowEntry" value="${documentName}" />
-
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Restore">
-			<var name="key_menuItem" value="Restore" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Restore" />
+			<var name="rowEntry" value="${documentName}" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="RecycleBin#RECYCLE_BIN_FOLDER_WARNING_IFRAME" />

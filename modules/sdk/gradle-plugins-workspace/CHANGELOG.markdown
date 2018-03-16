@@ -175,7 +175,7 @@ version 3.2.1.
 `liferay.workspace.bundle.url` project property.
 - [LPS-78149]: Add the ability to deploy additional 3rd-party OSGi modules via
 the `providedModules` configuration of the root project.
-- [LPS-78149]: Apply the [`com.liferay.target.platform.ide`](https://github.com/Ithildir/liferay-portal/tree/master/modules/sdk/gradle-plugins-target-platform)
+- [LPS-78149]: Apply the [`com.liferay.target.platform.ide`](https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-target-platform)
 Gradle plugin to the root project, if the `target.platform.version` property in
 `gradle.properties` is set.
 

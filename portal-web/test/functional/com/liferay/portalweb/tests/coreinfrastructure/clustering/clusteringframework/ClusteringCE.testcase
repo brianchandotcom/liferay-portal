@@ -150,6 +150,10 @@
 			<var name="url" value="http://localhost:9080" />
 		</execute>
 
+		<var name="key_entryTitle" value="Blogs Entry1 Title" />
+
+		<execute function="AssertClick" locator1="BlogsEntry#TITLE_LINK" value1="Blogs Entry1 Title" />
+
 		<execute macro="BlogsEntry#moveToRecycleBinPG">
 			<var name="assetType" value="Blogs Entry" />
 			<var name="entryContent" value="Blogs Entry1 Content" />

@@ -2106,6 +2106,10 @@
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
+		<var name="key_entryTitle" value="Blogs Entry1 Title" />
+
+		<execute function="AssertClick" locator1="BlogsEntry#TITLE_LINK" value1="Blogs Entry1 Title" />
+
 		<execute macro="BlogsEntry#removeViewPermissionsPG">
 			<var name="entryTitle" value="Blogs Entry1 Title" />
 			<var name="roleTitle" value="Guest" />

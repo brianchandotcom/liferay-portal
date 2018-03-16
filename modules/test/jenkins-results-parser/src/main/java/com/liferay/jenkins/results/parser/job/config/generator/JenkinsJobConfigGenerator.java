@@ -336,7 +336,8 @@ public class JenkinsJobConfigGenerator {
 	private Element _getSlaveConfigElement(String slaveHostname) {
 		String slaveLabel = slaveHostname;
 
-		Map<String, String> environmentSlavesMap = _getEnvironmentSlavesProperties();
+		Map<String, String> environmentSlavesMap =
+			_getEnvironmentSlavesProperties();
 
 		if (environmentSlavesMap.containsKey(slaveHostname)) {
 			slaveLabel = environmentSlavesMap.get(slaveHostname);
@@ -478,8 +479,9 @@ public class JenkinsJobConfigGenerator {
 		_globalProperties.add(propertyName);
 
 		if (_generatedProperties.containsKey("global.property.names")) {
-			propertyName = _generatedProperties.get(
-				"global.property.names") + propertyName + ",";
+			propertyName =
+				_generatedProperties.get("global.property.names") +
+					propertyName + ",";
 		}
 
 		_generatedProperties.put("global.property.names", propertyName);
@@ -995,8 +997,8 @@ public class JenkinsJobConfigGenerator {
 				String environmentSlaveOSType = "";
 
 				if (_environmentSlavesProperties.containsKey(slaveHostname)) {
-					String environmentSlaveKey = _environmentSlavesProperties.get(
-						slaveHostname);
+					String environmentSlaveKey =
+						_environmentSlavesProperties.get(slaveHostname);
 
 					environmentSlaveOSType = environmentSlaveKey.substring(
 						0, environmentSlaveKey.indexOf("."));

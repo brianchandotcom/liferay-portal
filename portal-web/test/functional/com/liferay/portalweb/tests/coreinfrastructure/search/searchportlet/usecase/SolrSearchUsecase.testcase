@@ -1335,7 +1335,7 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody"><![CDATA[<script>alert("Liferay Alert")</script>]]></var>
+			<var name="threadBody"><![CDATA[<script>alert(123);</script>]]></var>
 			<var name="threadSubject" value="Thread Subject" />
 		</execute>
 
@@ -1346,8 +1346,14 @@
 		<execute macro="SearchPortlet#viewSearchResultPG">
 			<var name="searchAssetTitle" value="Thread Subject" />
 			<var name="searchAssetType" value="Message Boards Message" />
-			<var name="searchAssetSummary"><![CDATA[<script>alert("Liferay Alert")</script>]]></var>
+			<var name="searchAssetSummary"><![CDATA[<script>alert(123);</script>]]></var>
 		</execute>
+
+		<var name="actualScript"><![CDATA[<script>alert(123);</script>]]></var>
+		<var name="escapedScript"><![CDATA[&lt;script&gt;alert(123);&lt;/script&gt;]]></var>
+
+		<execute function="AssertHTMLSourceTextNotPresent" value1="${actualScript}" />
+		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
 	</command>
 
 	<command name="ViewSearchResultForLongURL" priority="4">

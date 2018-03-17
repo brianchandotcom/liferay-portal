@@ -22,6 +22,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -41,14 +42,16 @@ import org.dom4j.Element;
 public class JenkinsJobConfigGenerator {
 
 	public JenkinsJobConfigGenerator(Map<String, String> properties) {
-		_properties = properties;
+		_propertiesMap = properties;
 
-		_environmentSlavesProperties = _getEnvironmentSlavesProperties();
-		_generatedProperties = new HashMap<>(_properties);
+		_environmentSlavesPropertiesMap = _getEnvironmentSlavesProperties();
+		_generatedPropertiesMap = new HashMap<>(_propertiesMap);
 	}
 
 	public Map<String, String> generateJobConfig() throws Exception {
-		for (Map.Entry<String, String> entry : _properties.entrySet()) {
+		Set<String> masterHostnames = new HashSet<>();
+
+		for (Map.Entry<String, String> entry : _propertiesMap.entrySet()) {
 			String key = entry.getKey();
 
 			if (key.startsWith("global.property(")) {
@@ -60,25 +63,27 @@ public class JenkinsJobConfigGenerator {
 			String value = entry.getValue();
 
 			if (key.startsWith("job.property(")) {
-				_processJobProperty(key, value);
+				_processJobProperty(key);
 
 				continue;
 			}
 
 			if (key.startsWith("master.job.names(")) {
+				masterHostnames.add(_getMasterJobNameHostname(key));
+
 				_processMasterJobName(key, value);
 
 				continue;
 			}
 
 			if (key.startsWith("master.job.property(")) {
-				_processMasterJobProperty(key, value);
+				_processMasterJobProperty(key);
 
 				continue;
 			}
 
 			if (key.startsWith("master.property(")) {
-				_processMasterProperty(key, value);
+				_processMasterProperty(key);
 
 				continue;
 			}
@@ -88,27 +93,25 @@ public class JenkinsJobConfigGenerator {
 			}
 		}
 
-		_generatedProperties.put(
-			"master.hostnames", StringUtils.join(_masterHostnames, ','));
+		_putGeneratedPropertyValue("master.hostnames", masterHostnames);
 
-		_generatedProperties.put(
-			"slave.hostnames", StringUtils.join(_slaveHostnames, ','));
+		_putGeneratedPropertyValue("slave.hostnames", _slaveHostnames);
 
 		int i = 0;
 
-		for (String masterHostname : _masterHostnames) {
+		for (String masterHostname : masterHostnames) {
 			if (masterHostname.startsWith("test-")) {
-				_generatedProperties.put(
+				_generatedPropertiesMap.put(
 					"trigger.day." + masterHostname, Integer.toString(i % 7));
 
-				_generatedProperties.put(
+				_generatedPropertiesMap.put(
 					"trigger.hour." + masterHostname, Integer.toString(i % 24));
 
 				i++;
 			}
 		}
 
-		return _generatedProperties;
+		return _generatedPropertiesMap;
 	}
 
 	private Element _generateJobListViewByParent(
@@ -178,7 +181,8 @@ public class JenkinsJobConfigGenerator {
 	private Map<String, String> _getEnvironmentSlavesProperties() {
 		Map<String, String> environmentSlavesProperties = new HashMap<>();
 
-		Set<Map.Entry<String, String>> propertiesSet = _properties.entrySet();
+		Set<Map.Entry<String, String>> propertiesSet =
+			_propertiesMap.entrySet();
 
 		Iterator<Map.Entry<String, String>> propertiesIterator =
 			propertiesSet.iterator();
@@ -225,6 +229,25 @@ public class JenkinsJobConfigGenerator {
 		}
 
 		return sb.toString();
+	}
+
+	private Set<String> _getGeneratedPropertyValueAsSet(
+		String generatedPropertyName) {
+
+		Set<String> generatedPropertyValuesSet = new HashSet<>();
+
+		String generatedPropertyValue = _generatedPropertiesMap.get(
+			generatedPropertyName);
+
+		if (generatedPropertyValue == null) {
+			return generatedPropertyValuesSet;
+		}
+
+		Collections.addAll(
+			generatedPropertyValuesSet,
+			StringUtils.split(generatedPropertyValue, ','));
+
+		return generatedPropertyValuesSet;
 	}
 
 	private String _getGlobalProperty(String property) {
@@ -468,46 +491,38 @@ public class JenkinsJobConfigGenerator {
 	private void _processGlobalProperty(String key) {
 		String propertyName = _getGlobalProperty(key);
 
-		_globalProperties.add(propertyName);
+		String generatedPropertyName = "global.property.names";
 
-		if (_generatedProperties.containsKey("global.property.names")) {
-			propertyName =
-				_generatedProperties.get("global.property.names") +
-					propertyName + ",";
-		}
+		Set<String> globalPropertyNamesSet = _getGeneratedPropertyValueAsSet(
+			generatedPropertyName);
 
-		_generatedProperties.put("global.property.names", propertyName);
+		globalPropertyNamesSet.add(propertyName);
+
+		_putGeneratedPropertyValue(
+			generatedPropertyName, globalPropertyNamesSet);
 	}
 
-	private void _processJobProperty(String key, String value) {
-		List<String> separatedProperty = _getJobProperties(key);
+	private void _processJobProperty(String key) {
+		List<String> propertiesList = _getJobProperties(key);
 
-		String jobName = separatedProperty.get(0);
-		String propertyName = separatedProperty.get(1);
+		String jobName = propertiesList.get(0);
+		String propertyName = propertiesList.get(1);
 
-		Map<String, String> jobProperties = _jobNamesToJobProperties.get(
-			jobName);
+		String generatedPropertyName = JenkinsResultsParserUtil.combine(
+			"job.properties(", jobName, ")");
 
-		if (jobProperties == null) {
-			jobProperties = new HashMap<>();
+		Set<String> jobPropertyNamesSet = _getGeneratedPropertyValueAsSet(
+			generatedPropertyName);
 
-			_jobNamesToJobProperties.put(jobName, jobProperties);
-		}
+		jobPropertyNamesSet.add(propertyName);
 
-		jobProperties.put(propertyName, value);
-
-		_generatedProperties.put(
-			"job.properties(" + jobName + ")",
-			StringUtils.join(jobProperties.keySet(), ','));
+		_putGeneratedPropertyValue(generatedPropertyName, jobPropertyNamesSet);
 	}
 
 	private void _processMasterJobName(String key, String value)
 		throws Exception {
 
 		String masterHostname = _getMasterJobNameHostname(key);
-
-		_masterHostnames.add(masterHostname);
-		_masterHostnamesToJobNames.put(masterHostname, value);
 
 		Map<String, String> childJobNamesMap = new HashMap<>();
 		List<String> parentJobNames = new ArrayList<>();
@@ -524,22 +539,22 @@ public class JenkinsJobConfigGenerator {
 
 				String jobBranchName = jobNames.get(0);
 
-				_generatedProperties.put(
+				_generatedPropertiesMap.put(
 					"job.portal.branch.name(" + jobName + ")", jobBranchName);
 
 				String jobVariationName = jobNames.get(1);
 
-				_generatedProperties.put(
+				_generatedPropertiesMap.put(
 					"job.variation.name(" + jobName + ")", jobVariationName);
 			}
 			else {
-				_generatedProperties.put(
+				_generatedPropertiesMap.put(
 					"job.variation.name(" + jobName + ")", "");
 			}
 
 			String jobShortName = _getJobShortname(jobName);
 
-			_generatedProperties.put(
+			_generatedPropertiesMap.put(
 				"job.short.name(" + jobName + ")", jobShortName);
 
 			String jobContent = JenkinsResultsParserUtil.read(
@@ -552,7 +567,7 @@ public class JenkinsJobConfigGenerator {
 			if (jobContent.contains("Build Flow") ||
 				jobContent.contains("com.cloudbees.plugins.flow.BuildFlow")) {
 
-				_generatedProperties.put(
+				_generatedPropertiesMap.put(
 					"job.content.type(" + jobName + ")", "BuildFlow");
 
 				childJobNamesMap.put(jobName, jobName);
@@ -563,7 +578,7 @@ public class JenkinsJobConfigGenerator {
 					 (jobName.contains("fixpack") ||
 					  jobName.contains("maintenance-tags"))) {
 
-				_generatedProperties.put(
+				_generatedPropertiesMap.put(
 					"job.content.type(" + jobName + ")", "BuildTrigger");
 
 				parentJobNames.add(jobName);
@@ -596,7 +611,7 @@ public class JenkinsJobConfigGenerator {
 						triggerBuilderChildJobName =
 							triggerBuilderChildJobName.replace(
 								"@!job.variation.name!@",
-								_generatedProperties.get(
+								_generatedPropertiesMap.get(
 									"job.variation.name(" + jobName + ")"));
 
 						triggerBuilderChildJobNames.add(
@@ -625,10 +640,10 @@ public class JenkinsJobConfigGenerator {
 			String currentParentJobName = null;
 
 			if (currentParentJobName2 != null) {
-				String currentParentJobShortName2 = _generatedProperties.get(
+				String currentParentJobShortName2 = _generatedPropertiesMap.get(
 					"job.short.name(" + currentParentJobName2 + ")");
 				String currentParentJobVariationName2 =
-					_generatedProperties.get(
+					_generatedPropertiesMap.get(
 						"job.variation.name(" + currentParentJobName2 + ")");
 				boolean memberOfCurrentParentJob = false;
 
@@ -655,10 +670,10 @@ public class JenkinsJobConfigGenerator {
 			if ((currentParentJobName == null) &&
 				(currentParentJobName1 != null)) {
 
-				String currentParentJobShortName1 = _generatedProperties.get(
+				String currentParentJobShortName1 = _generatedPropertiesMap.get(
 					"job.short.name(" + currentParentJobName1 + ")");
 				String currentParentJobVariationName1 =
-					_generatedProperties.get(
+					_generatedPropertiesMap.get(
 						"job.variation.name(" + currentParentJobName1 + ")");
 				boolean memberOfCurrentParentJob = false;
 
@@ -693,7 +708,7 @@ public class JenkinsJobConfigGenerator {
 				}
 
 				if (jobName.contains("[component.name]")) {
-					String componentNames = _generatedProperties.get(
+					String componentNames = _generatedPropertiesMap.get(
 						"job.component.names(" + jobName + ")");
 
 					if (componentNames == null) {
@@ -726,7 +741,7 @@ public class JenkinsJobConfigGenerator {
 				throw new Exception();
 			}
 
-			_generatedProperties.put(
+			_generatedPropertiesMap.put(
 				"child.job.names(" + parentJobName + ")",
 				childJobNamesMap.get(parentJobName));
 		}
@@ -736,7 +751,7 @@ public class JenkinsJobConfigGenerator {
 		List<Element> topLevelJobNameList = new ArrayList<>();
 
 		for (String topLevelJobName : topLevelJobNames) {
-			String excludeTopLevelView = _generatedProperties.get(
+			String excludeTopLevelView = _generatedPropertiesMap.get(
 				"job.property(" + topLevelJobName + "/exclude.top.level.view)");
 
 			if ((excludeTopLevelView == null) ||
@@ -747,20 +762,20 @@ public class JenkinsJobConfigGenerator {
 			}
 		}
 
-		_generatedProperties.put(
+		_generatedPropertiesMap.put(
 			"master.top.level.jobs.xml(" + masterHostname + ")",
 			_getFormattedXML(topLevelJobNameList));
 
-		String masterPrimaryView = _generatedProperties.get(
+		String masterPrimaryView = _generatedPropertiesMap.get(
 			"master.primary.view(" + masterHostname + ")");
 
 		if (masterPrimaryView == null) {
 			if (topLevelJobNames.isEmpty()) {
-				_generatedProperties.put(
+				_generatedPropertiesMap.put(
 					"master.primary.view(" + masterHostname + ")", "All");
 			}
 			else {
-				_generatedProperties.put(
+				_generatedPropertiesMap.put(
 					"master.primary.view(" + masterHostname + ")", "Top Level");
 			}
 		}
@@ -768,7 +783,7 @@ public class JenkinsJobConfigGenerator {
 		List<Element> listViewList = new ArrayList<>();
 
 		for (String parentJobName : parentJobNames) {
-			String childJobNames = _generatedProperties.get(
+			String childJobNames = _generatedPropertiesMap.get(
 				"child.job.names(" + parentJobName + ")");
 
 			String[] childJobNamesArray = childJobNames.split(",");
@@ -780,14 +795,14 @@ public class JenkinsJobConfigGenerator {
 					parentJobName, childJobNamesArray));
 		}
 
-		_generatedProperties.put(
+		_generatedPropertiesMap.put(
 			"master.list.views.xml(" + masterHostname + ")",
 			_getFormattedXML(listViewList));
 
 		for (String parentJobName : parentJobNames) {
 			sb = new StringBuilder();
 
-			String childJobNames = _generatedProperties.get(
+			String childJobNames = _generatedPropertiesMap.get(
 				"child.job.names(" + parentJobName + ")");
 			List<String> childJobNamesList = new ArrayList<>();
 
@@ -807,11 +822,11 @@ public class JenkinsJobConfigGenerator {
 					continue;
 				}
 
-				String jobContentType = _generatedProperties.get(
+				String jobContentType = _generatedPropertiesMap.get(
 					"job.content.type(" + parentJobName + ")");
 
 				if (jobContentType.equals("BuildTrigger")) {
-					String shortParentJobName = _generatedProperties.get(
+					String shortParentJobName = _generatedPropertiesMap.get(
 						"job.short.name(" + parentJobName + ")");
 
 					String shortChildJobName = _getShortChildJobName(
@@ -831,7 +846,7 @@ public class JenkinsJobConfigGenerator {
 						"\\[[a-z\\-]+\\]", "[component.name]");
 				}
 
-				String componentNamesIgnore = _generatedProperties.get(
+				String componentNamesIgnore = _generatedPropertiesMap.get(
 					"job.component.names.ignore(" + jobName + ")");
 
 				if (componentNamesIgnore != null) {
@@ -860,13 +875,13 @@ public class JenkinsJobConfigGenerator {
 				sb.append(" = build(\"");
 				sb.append(childJobName);
 
-				String customJobParameters = _generatedProperties.get(
+				String customJobParameters = _generatedPropertiesMap.get(
 					"job.property(" + jobName + "/custom.job.parameters)");
 
 				if (customJobParameters != null) {
 					sb.append("\", @!custom.job.parameters!@)\n");
 
-					_generatedProperties.put(
+					_generatedPropertiesMap.put(
 						"custom.job.parameters(" + parentJobName + ")",
 						customJobParameters);
 				}
@@ -887,10 +902,10 @@ public class JenkinsJobConfigGenerator {
 				sb.deleteCharAt(sb.length() - 1);
 			}
 
-			_generatedProperties.put(
+			_generatedPropertiesMap.put(
 				"build.flow.downstream.jobs.xml(" + parentJobName + ")",
 				sb.toString());
-			_generatedProperties.put(
+			_generatedPropertiesMap.put(
 				"child.job.names(" + parentJobName + ")",
 				StringUtils.join(childJobNamesList, ','));
 
@@ -904,7 +919,7 @@ public class JenkinsJobConfigGenerator {
 
 			String jobInvocationList = "job.invocation.instantiate.list";
 
-			_generatedProperties.put(
+			_generatedPropertiesMap.put(
 				JenkinsResultsParserUtil.combine(
 					jobInvocationList, parentJobName, ")"),
 				sb.toString());
@@ -917,65 +932,52 @@ public class JenkinsJobConfigGenerator {
 				sb.append("\n");
 			}
 
-			_generatedProperties.put(
+			_generatedPropertiesMap.put(
 				"job.invocation.make.list(" + parentJobName + ")",
 				sb.toString());
 		}
 	}
 
-	private void _processMasterJobProperty(String key, String value) {
-		List<String> separatedProperty = _getMasterJobProperties(key);
+	private void _processMasterJobProperty(String key) {
+		List<String> masterJobPropertiesList = _getMasterJobProperties(key);
 
-		String jobName = separatedProperty.get(0);
-		String masterHostname = separatedProperty.get(1);
-		String propertyName = separatedProperty.get(2);
+		String jobName = masterJobPropertiesList.get(0);
+		String masterHostname = masterJobPropertiesList.get(1);
 
-		Map<String, String> masterJobProperties =
-			_jobNamesToMasterJobProperties.get(jobName);
+		String generatedPropertyName = JenkinsResultsParserUtil.combine(
+			"master.job.properties(", masterHostname, "/", jobName, ")");
 
-		if (masterJobProperties == null) {
-			masterJobProperties = new HashMap<>();
+		Set<String> masterJobPropertiesSet = _getGeneratedPropertyValueAsSet(
+			generatedPropertyName);
 
-			_jobNamesToMasterJobProperties.put(jobName, masterJobProperties);
-		}
+		masterJobPropertiesSet.add(masterJobPropertiesList.get(2));
 
-		masterJobProperties.put(propertyName, value);
-
-		_generatedProperties.put(
-			"master.job.properties(" + masterHostname + "/" + jobName +
-				")",
-			StringUtils.join(masterJobProperties.keySet(), ','));
+		_putGeneratedPropertyValue(
+			generatedPropertyName, masterJobPropertiesSet);
 	}
 
-	private void _processMasterProperty(String key, String value) {
+	private void _processMasterProperty(String key) {
 		List<String> separatedProperty = _getJobProperties(key);
 
 		String masterHostname = separatedProperty.get(0);
 		String propertyName = separatedProperty.get(1);
 
-		Map<String, String> masterProperties =
-			_masterHostnamesToMasterProperties.get(masterHostname);
+		String generatedPropertyName = JenkinsResultsParserUtil.combine(
+			"master.properties(", masterHostname, ")");
 
-		if (masterProperties == null) {
-			masterProperties = new HashMap<>();
+		Set<String> masterPropertyNamesSet = _getGeneratedPropertyValueAsSet(
+			generatedPropertyName);
 
-			_masterHostnamesToMasterProperties.put(
-				masterHostname, masterProperties);
-		}
+		masterPropertyNamesSet.add(propertyName);
 
-		masterProperties.put(propertyName, value);
-
-		_generatedProperties.put(
-			"master.properties(" + masterHostname + ")",
-			StringUtils.join(masterProperties.keySet(), ','));
+		_putGeneratedPropertyValue(
+			generatedPropertyName, masterPropertyNamesSet);
 	}
 
 	private void _processMasterSlaves(String key, String value)
 		throws IOException {
 
 		String masterHostname = _getMasterJobNameHostname(key);
-
-		_masterHostnames.add(masterHostname);
 
 		if (value.contains("..")) {
 			StringBuilder sb = new StringBuilder();
@@ -988,9 +990,11 @@ public class JenkinsJobConfigGenerator {
 
 				String environmentSlaveOSType = "";
 
-				if (_environmentSlavesProperties.containsKey(slaveHostname)) {
+				if (_environmentSlavesPropertiesMap.containsKey(
+						slaveHostname)) {
+
 					String environmentSlaveKey =
-						_environmentSlavesProperties.get(slaveHostname);
+						_environmentSlavesPropertiesMap.get(slaveHostname);
 
 					environmentSlaveOSType = environmentSlaveKey.substring(
 						0, environmentSlaveKey.indexOf("."));
@@ -1017,7 +1021,7 @@ public class JenkinsJobConfigGenerator {
 			value = sb.toString();
 		}
 
-		_generatedProperties.put(
+		_generatedPropertiesMap.put(
 			"master.slaves.txt(" + masterHostname + ")",
 			value.replaceAll(",", "\n").trim());
 
@@ -1031,7 +1035,7 @@ public class JenkinsJobConfigGenerator {
 
 			Element slaveConfigXML = _getSlaveConfigElement(slaveHostname);
 
-			_generatedProperties.put(
+			_generatedPropertiesMap.put(
 				slaveHostname + ".config.xml.content",
 				Dom4JUtil.format(slaveConfigXML));
 
@@ -1039,11 +1043,11 @@ public class JenkinsJobConfigGenerator {
 
 			_slaveHostnames.add(slaveHostname);
 
-			_generatedProperties.put(
+			_generatedPropertiesMap.put(
 				"slave.master(" + slaveHostname + ")", masterHostname);
 		}
 
-		_generatedProperties.put(
+		_generatedPropertiesMap.put(
 			"master.slaves.xml(" + masterHostname + ")",
 			Dom4JUtil.format(slaves));
 
@@ -1061,9 +1065,16 @@ public class JenkinsJobConfigGenerator {
 			slaveHostnameList.add(slaveHostnameElement);
 		}
 
-		_generatedProperties.put(
+		_generatedPropertiesMap.put(
 			"master.axes.label.slaves.xml(" + masterHostname + ")",
 			_getFormattedXML(slaveHostnameList));
+	}
+
+	private void _putGeneratedPropertyValue(
+		String generatedPropertyName, Set<String> valueSet) {
+
+		_generatedPropertiesMap.put(
+			generatedPropertyName, StringUtils.join(valueSet, ','));
 	}
 
 	private static final Pattern _greedyParenthesesPattern = Pattern.compile(
@@ -1083,19 +1094,9 @@ public class JenkinsJobConfigGenerator {
 	private static final Pattern _triggerBuilderChildJobNamePattern =
 		Pattern.compile("<projects>(.+)</projects>");
 
-	private final Map<String, String> _environmentSlavesProperties;
-	private final Map<String, String> _generatedProperties;
-	private final Set<String> _globalProperties = new HashSet<>();
-	private final Map<String, Map<String, String>> _jobNamesToJobProperties =
-		new HashMap<>();
-	private final Map<String, Map<String, String>>
-		_jobNamesToMasterJobProperties = new HashMap<>();
-	private final Set<String> _masterHostnames = new HashSet<>();
-	private final Map<String, String> _masterHostnamesToJobNames =
-		new HashMap<>();
-	private final Map<String, Map<String, String>>
-		_masterHostnamesToMasterProperties = new HashMap<>();
-	private final Map<String, String> _properties;
+	private final Map<String, String> _environmentSlavesPropertiesMap;
+	private final Map<String, String> _generatedPropertiesMap;
+	private final Map<String, String> _propertiesMap;
 	private final Set<String> _slaveHostnames = new HashSet<>();
 
 }

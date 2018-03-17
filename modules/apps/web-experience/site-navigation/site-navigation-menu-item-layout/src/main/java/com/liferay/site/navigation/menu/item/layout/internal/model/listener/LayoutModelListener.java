@@ -35,6 +35,7 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -47,35 +48,35 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
 	public void onAfterCreate(Layout layout) throws ModelListenerException {
-		SiteNavigationMenu siteNavigationMenu =
-			_siteNavigationMenuLocalService.fetchAutoSiteNavigationMenu(
-				layout.getGroupId());
-
-		if ((siteNavigationMenu == null) || layout.isHidden()) {
+		if (layout.isHidden()) {
 			return;
 		}
 
-		_addSiteNavigationMenuItem(siteNavigationMenu, layout);
+		final SiteNavigationMenu siteNavigationMenu =
+			_siteNavigationMenuLocalService.fetchAutoSiteNavigationMenu(
+				layout.getGroupId());
 
-		boolean addToPrimaryMenu = GetterUtil.getBoolean(
+		final boolean addToPrimaryMenu = GetterUtil.getBoolean(
 			layout.getTypeSettingsProperty("addToPrimaryMenu"));
 
-		if (!addToPrimaryMenu) {
-			return;
+		if (siteNavigationMenu != null) {
+			_addSiteNavigationMenuItem(
+				siteNavigationMenu, layout,
+				menu -> !menu.isPrimary() ||
+				(menu.isPrimary() && addToPrimaryMenu));
 		}
 
 		SiteNavigationMenu primarySiteNavigationMenu =
 			_siteNavigationMenuLocalService.fetchPrimarySiteNavigationMenu(
 				layout.getGroupId());
 
-		if ((primarySiteNavigationMenu == null) ||
-			(primarySiteNavigationMenu.getSiteNavigationMenuId() ==
-				siteNavigationMenu.getSiteNavigationMenuId())) {
-
-			return;
+		if (primarySiteNavigationMenu != null) {
+			_addSiteNavigationMenuItem(
+				primarySiteNavigationMenu, layout,
+				menu -> (menu.getSiteNavigationMenuId() !=
+					siteNavigationMenu.getSiteNavigationMenuId()) &&
+					addToPrimaryMenu);
 		}
-
-		_addSiteNavigationMenuItem(primarySiteNavigationMenu, layout);
 	}
 
 	@Override
@@ -90,7 +91,12 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 	}
 
 	private void _addSiteNavigationMenuItem(
-		SiteNavigationMenu siteNavigationMenu, Layout layout) {
+		SiteNavigationMenu siteNavigationMenu, Layout layout,
+		Predicate<SiteNavigationMenu> predicate) {
+
+		if (!predicate.test(siteNavigationMenu)) {
+			return;
+		}
 
 		SiteNavigationMenuItemType siteNavigationMenuItemType =
 			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(

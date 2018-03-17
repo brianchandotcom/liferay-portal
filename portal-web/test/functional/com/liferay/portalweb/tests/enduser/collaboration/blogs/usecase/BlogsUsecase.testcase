@@ -1376,8 +1376,20 @@
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
+		<execute macro="Portlet#deletePG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Asset Publisher" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
 		</execute>
 
 		<execute macro="Blogs#addEntry">

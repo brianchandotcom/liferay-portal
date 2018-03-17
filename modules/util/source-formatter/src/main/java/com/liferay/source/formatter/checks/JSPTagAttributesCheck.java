@@ -75,7 +75,7 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 
 		content = _formatSingleLineTagAttributes(content);
 
-		content = formatMultiLinesTagAttributes(content);
+		content = formatMultiLinesTagAttributes(content, false);
 
 		return content;
 	}

@@ -32,7 +32,8 @@ import java.util.regex.Pattern;
  */
 public abstract class TagAttributesCheck extends BaseFileCheck {
 
-	protected String formatMultiLinesTagAttributes(String content)
+	protected String formatMultiLinesTagAttributes(
+			String content, boolean escapeQuotes)
 		throws Exception {
 
 		Matcher matcher = _multilineTagPattern.matcher(content);
@@ -61,7 +62,7 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 					matcher.start(3));
 			}
 
-			String newTag = formatTagAttributes(tag, false);
+			String newTag = formatTagAttributes(tag, escapeQuotes);
 
 			if (!tag.equals(newTag)) {
 				return StringUtil.replace(content, tag, newTag);

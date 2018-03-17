@@ -36,7 +36,7 @@ public class XMLTagAttributesCheck extends TagAttributesCheck {
 
 		content = _formatTagAttributes(content);
 
-		content = formatMultiLinesTagAttributes(content);
+		content = formatMultiLinesTagAttributes(content, true);
 
 		return content;
 	}

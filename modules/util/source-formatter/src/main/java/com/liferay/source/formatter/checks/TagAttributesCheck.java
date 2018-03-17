@@ -16,11 +16,11 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.checks.TagAttributesCheck.Tag;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
 import java.util.Map;
@@ -32,6 +32,10 @@ import java.util.regex.Pattern;
  * @author Hugo Huijser
  */
 public abstract class TagAttributesCheck extends BaseFileCheck {
+
+	protected Tag formatLineBreaks(Tag tag, boolean forceSingleLine) {
+		return tag;
+	}
 
 	protected String formatMultiLinesTagAttributes(
 			String content, boolean escapeQuotes)
@@ -96,7 +100,7 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 		tag = sortHTMLTagAttributes(tag);
 
 		if (isPortalSource() || isSubrepository()) {
-			tag = _formatLineBreaks(tag, forceSingleLine);
+			tag = formatLineBreaks(tag, forceSingleLine);
 		}
 
 		return tag.toString();
@@ -215,28 +219,6 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 
 	}
 
-	private Tag _formatLineBreaks(Tag tag, boolean forceSingleLine) {
-		if (forceSingleLine) {
-			tag.setMultiLine(false);
-
-			return tag;
-		}
-
-		String tagName = tag.getName();
-
-		if (!tagName.contains(StringPool.COLON) || tagName.startsWith("aui:") ||
-			tagName.startsWith("c:") || tagName.startsWith("portlet:") ||
-			ArrayUtil.contains(_SINGLE_LINE_TAG_WHITELIST, tagName)) {
-
-			tag.setMultiLine(false);
-		}
-		else {
-			tag.setMultiLine(true);
-		}
-
-		return tag;
-	}
-
 	private boolean _isValidAttributName(String attributeName) {
 		if (Validator.isNull(attributeName)) {
 			return false;
@@ -331,16 +313,6 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 			}
 		}
 	}
-
-	private static final String[] _SINGLE_LINE_TAG_WHITELIST = {
-		"liferay-frontend:defineObjects", "liferay-portlet:actionURL",
-		"liferay-portlet:param", "liferay-portlet:renderURL",
-		"liferay-portlet:renderURLParams", "liferay-portlet:resourceURL",
-		"liferay-staging:defineObjects", "liferay-theme:defineObjects",
-		"liferay-ui:error", "liferay-ui:icon-help", "liferay-ui:message",
-		"liferay-ui:success", "liferay-util:dynamic-include",
-		"liferay-util:include", "liferay-util:param"
-	};
 
 	private static final Pattern _attributeNamePattern = Pattern.compile(
 		"[a-z]+[-_a-zA-Z0-9]*");

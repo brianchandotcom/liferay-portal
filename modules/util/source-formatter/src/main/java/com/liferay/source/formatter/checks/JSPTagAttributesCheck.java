@@ -18,6 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.checks.TagAttributesCheck.Tag;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
@@ -78,6 +80,29 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 		content = formatMultiLinesTagAttributes(content, false);
 
 		return content;
+	}
+
+	@Override
+	protected Tag formatLineBreaks(Tag tag, boolean forceSingleLine) {
+		if (forceSingleLine) {
+			tag.setMultiLine(false);
+
+			return tag;
+		}
+
+		String tagName = tag.getName();
+
+		if (!tagName.contains(StringPool.COLON) || tagName.startsWith("aui:") ||
+			tagName.startsWith("c:") || tagName.startsWith("portlet:") ||
+			ArrayUtil.contains(_SINGLE_LINE_TAG_WHITELIST, tagName)) {
+
+			tag.setMultiLine(false);
+		}
+		else {
+			tag.setMultiLine(true);
+		}
+
+		return tag;
 	}
 
 	@Override
@@ -544,6 +569,16 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 
 		return false;
 	}
+
+	private static final String[] _SINGLE_LINE_TAG_WHITELIST = {
+		"liferay-frontend:defineObjects", "liferay-portlet:actionURL",
+		"liferay-portlet:param", "liferay-portlet:renderURL",
+		"liferay-portlet:renderURLParams", "liferay-portlet:resourceURL",
+		"liferay-staging:defineObjects", "liferay-theme:defineObjects",
+		"liferay-ui:error", "liferay-ui:icon-help", "liferay-ui:message",
+		"liferay-ui:success", "liferay-util:dynamic-include",
+		"liferay-util:include", "liferay-util:param"
+	};
 
 	private List<String> _allFileNames;
 	private final Map<String, Map<String, String>> _classSetMethodsMap =

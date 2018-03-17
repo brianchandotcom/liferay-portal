@@ -2,6 +2,14 @@
 	box-shadow: 0 0 0 1px rgba(0, 0, 0, 0);
 	position: relative;
 	transition: box-shadow ease 0.3s;
+
+	.portlet > .portlet-topper {
+		margin-top: 25px;
+
+		.portlet-topper-toolbar {
+			margin-right: 2px;
+		}
+	}
 }
 
 .fragment-entry-link-control {

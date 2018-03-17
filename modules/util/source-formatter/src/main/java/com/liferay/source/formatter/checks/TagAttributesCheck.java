@@ -40,6 +40,14 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 		Matcher matcher = _multilineTagPattern.matcher(content);
 
 		while (matcher.find()) {
+			if (matcher.start() != 0) {
+				char c = content.charAt(matcher.start() - 1);
+
+				if (c != CharPool.NEW_LINE) {
+					continue;
+				}
+			}
+
 			String tag = matcher.group(1);
 
 			if (getLevel(tag, "<", ">") != 0) {
@@ -337,6 +345,6 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 	private static final Pattern _attributeNamePattern = Pattern.compile(
 		"[a-z]+[-_a-zA-Z0-9]*");
 	private static final Pattern _multilineTagPattern = Pattern.compile(
-		"(([ \t]+)<[-\\w:]+\n.*?([^%])(/?>))(\n|$)", Pattern.DOTALL);
+		"(([ \t]*)<[-\\w:]+\n.*?([^%])(/?>))(\n|$)", Pattern.DOTALL);
 
 }

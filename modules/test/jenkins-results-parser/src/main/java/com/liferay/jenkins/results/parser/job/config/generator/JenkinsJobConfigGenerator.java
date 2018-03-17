@@ -49,7 +49,7 @@ public class JenkinsJobConfigGenerator {
 	}
 
 	public Map<String, String> generateJobConfig() throws Exception {
-		Set<String> masterHostnames = new HashSet<>();
+		Set<String> masterHostnamesSet = new HashSet<>();
 
 		for (Map.Entry<String, String> entry : _propertiesMap.entrySet()) {
 			String key = entry.getKey();
@@ -69,7 +69,7 @@ public class JenkinsJobConfigGenerator {
 			}
 
 			if (key.startsWith("master.job.names(")) {
-				masterHostnames.add(_getMasterJobNameHostname(key));
+				masterHostnamesSet.add(_getMasterJobNameHostname(key));
 
 				_processMasterJobName(key, value);
 
@@ -93,13 +93,13 @@ public class JenkinsJobConfigGenerator {
 			}
 		}
 
-		_putGeneratedPropertyValue("master.hostnames", masterHostnames);
+		_putGeneratedPropertyValue("master.hostnames", masterHostnamesSet);
 
-		_putGeneratedPropertyValue("slave.hostnames", _slaveHostnames);
+		_putGeneratedPropertyValue("slave.hostnames", _slaveHostnamesSet);
 
 		int i = 0;
 
-		for (String masterHostname : masterHostnames) {
+		for (String masterHostname : masterHostnamesSet) {
 			if (masterHostname.startsWith("test-")) {
 				_generatedPropertiesMap.put(
 					"trigger.day." + masterHostname, Integer.toString(i % 7));
@@ -1041,7 +1041,7 @@ public class JenkinsJobConfigGenerator {
 
 			Dom4JUtil.addToElement(slaves, slaveConfigXML);
 
-			_slaveHostnames.add(slaveHostname);
+			_slaveHostnamesSet.add(slaveHostname);
 
 			_generatedPropertiesMap.put(
 				"slave.master(" + slaveHostname + ")", masterHostname);
@@ -1097,6 +1097,6 @@ public class JenkinsJobConfigGenerator {
 	private final Map<String, String> _environmentSlavesPropertiesMap;
 	private final Map<String, String> _generatedPropertiesMap;
 	private final Map<String, String> _propertiesMap;
-	private final Set<String> _slaveHostnames = new HashSet<>();
+	private final Set<String> _slaveHostnamesSet = new HashSet<>();
 
 }

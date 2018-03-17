@@ -14,6 +14,7 @@
 
 package com.liferay.layout.admin.web.internal.editor.configuration;
 
+import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -21,7 +22,7 @@ import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
-import com.liferay.message.boards.constants.MBPortletKeys;
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -39,14 +40,13 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Roberto Díaz
+ * @author Pavel Savinov
  */
 @Component(
 	property = {
-		"editor.name=alloyeditor", "editor.name=alloyeditor_bbcode",
-		"editor.name=ckeditor", "editor.name=ckeditor_bbcode",
-		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS,
-		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN
+		"editor.config.key=fragmenEntryLinkEditor",
+		"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT_DISPLAY,
+		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES
 	},
 	service = EditorConfigContributor.class
 )
@@ -80,7 +80,6 @@ public class FragmentEntryLinkEditorConfigContributor
 
 		desiredItemSelectorReturnTypes.add(
 			new FileEntryItemSelectorReturnType());
-		desiredItemSelectorReturnTypes.add(new URLItemSelectorReturnType());
 
 		ItemSelectorCriterion imageItemSelectorCriterion =
 			new ImageItemSelectorCriterion();
@@ -106,11 +105,7 @@ public class FragmentEntryLinkEditorConfigContributor
 		return urlItemSelectorCriterion;
 	}
 
-	@Reference(unbind = "-")
-	protected void setItemSelector(ItemSelector itemSelector) {
-		_itemSelector = itemSelector;
-	}
-
+	@Reference
 	private ItemSelector _itemSelector;
 
 }

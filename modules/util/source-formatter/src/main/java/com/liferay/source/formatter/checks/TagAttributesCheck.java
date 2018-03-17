@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.checks.TagAttributesCheck.Tag;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
 import java.util.Map;
@@ -32,12 +33,25 @@ import java.util.regex.Pattern;
  */
 public abstract class TagAttributesCheck extends BaseFileCheck {
 
-	protected String formatMultiLinesTagAttributes(String content)
+	protected Tag formatLineBreaks(Tag tag, boolean forceSingleLine) {
+		return tag;
+	}
+
+	protected String formatMultiLinesTagAttributes(
+			String content, boolean escapeQuotes)
 		throws Exception {
 
 		Matcher matcher = _multilineTagPattern.matcher(content);
 
 		while (matcher.find()) {
+			if (matcher.start() != 0) {
+				char c = content.charAt(matcher.start() - 1);
+
+				if (c != CharPool.NEW_LINE) {
+					continue;
+				}
+			}
+
 			String tag = matcher.group(1);
 
 			if (getLevel(tag, "<", ">") != 0) {
@@ -61,7 +75,7 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 					matcher.start(3));
 			}
 
-			String newTag = formatTagAttributes(tag, false);
+			String newTag = formatTagAttributes(tag, escapeQuotes, false);
 
 			if (!tag.equals(newTag)) {
 				return StringUtil.replace(content, tag, newTag);
@@ -71,7 +85,8 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 		return content;
 	}
 
-	protected String formatTagAttributes(String s, boolean escapeQuotes)
+	protected String formatTagAttributes(
+			String s, boolean escapeQuotes, boolean forceSingleLine)
 		throws Exception {
 
 		Tag tag = _parseTag(s, escapeQuotes);
@@ -83,6 +98,10 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 		tag = formatTagAttributeType(tag);
 
 		tag = sortHTMLTagAttributes(tag);
+
+		if (isPortalSource() || isSubrepository()) {
+			tag = formatLineBreaks(tag, forceSingleLine);
+		}
 
 		return tag.toString();
 	}
@@ -121,6 +140,10 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 
 		public void setClosingTag(String closingTag) {
 			_closingTag = closingTag;
+		}
+
+		public void setMultiLine(boolean multiLine) {
+			_multiLine = multiLine;
 		}
 
 		@Override
@@ -191,7 +214,7 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 		private String _closingTag;
 		private final boolean _escapeQuotes;
 		private final String _indent;
-		private final boolean _multiLine;
+		private boolean _multiLine;
 		private final String _name;
 
 	}
@@ -294,6 +317,6 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 	private static final Pattern _attributeNamePattern = Pattern.compile(
 		"[a-z]+[-_a-zA-Z0-9]*");
 	private static final Pattern _multilineTagPattern = Pattern.compile(
-		"(([ \t]+)<[-\\w:]+\n.*?([^%])(/?>))(\n|$)", Pattern.DOTALL);
+		"(([ \t]*)<[-\\w:]+\n.*?([^%])(/?>))(\n|$)", Pattern.DOTALL);
 
 }

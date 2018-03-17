@@ -36,7 +36,7 @@ public class XMLTagAttributesCheck extends TagAttributesCheck {
 
 		content = _formatTagAttributes(content);
 
-		content = formatMultiLinesTagAttributes(content);
+		content = formatMultiLinesTagAttributes(content, true);
 
 		return content;
 	}
@@ -62,7 +62,7 @@ public class XMLTagAttributesCheck extends TagAttributesCheck {
 						!trimmedLine.startsWith("<!") &&
 						!(line.contains("<![CDATA[") && line.contains("]]>"))) {
 
-						line = formatTagAttributes(line, true);
+						line = formatTagAttributes(line, true, false);
 					}
 					else if (trimmedLine.startsWith("<![CDATA[") &&
 							 !trimmedLine.endsWith("]]>")) {

@@ -491,15 +491,7 @@ public class JenkinsJobConfigGenerator {
 	private void _processGlobalProperty(String key) {
 		String propertyName = _getGlobalProperty(key);
 
-		String generatedPropertyName = "global.property.names";
-
-		Set<String> globalPropertyNamesSet = _getGeneratedPropertyValueAsSet(
-			generatedPropertyName);
-
-		globalPropertyNamesSet.add(propertyName);
-
-		_putGeneratedPropertyValue(
-			generatedPropertyName, globalPropertyNamesSet);
+		_updateGeneratedProperty("global.property.names", propertyName);
 	}
 
 	private void _processJobProperty(String key) {
@@ -511,12 +503,7 @@ public class JenkinsJobConfigGenerator {
 		String generatedPropertyName = JenkinsResultsParserUtil.combine(
 			"job.properties(", jobName, ")");
 
-		Set<String> jobPropertyNamesSet = _getGeneratedPropertyValueAsSet(
-			generatedPropertyName);
-
-		jobPropertyNamesSet.add(propertyName);
-
-		_putGeneratedPropertyValue(generatedPropertyName, jobPropertyNamesSet);
+		_updateGeneratedProperty(generatedPropertyName, propertyName);
 	}
 
 	private void _processMasterJobName(String key, String value)
@@ -965,13 +952,7 @@ public class JenkinsJobConfigGenerator {
 		String generatedPropertyName = JenkinsResultsParserUtil.combine(
 			"master.properties(", masterHostname, ")");
 
-		Set<String> masterPropertyNamesSet = _getGeneratedPropertyValueAsSet(
-			generatedPropertyName);
-
-		masterPropertyNamesSet.add(propertyName);
-
-		_putGeneratedPropertyValue(
-			generatedPropertyName, masterPropertyNamesSet);
+		_updateGeneratedProperty(generatedPropertyName, propertyName);
 	}
 
 	private void _processMasterSlaves(String key, String value)
@@ -1075,6 +1056,18 @@ public class JenkinsJobConfigGenerator {
 
 		_generatedPropertiesMap.put(
 			generatedPropertyName, StringUtils.join(valueSet, ','));
+	}
+
+	private void _updateGeneratedProperty(
+		String generatedPropertyName, String additionalGeneratedPropertyValue) {
+
+		Set<String> generatedPropertyValuesSet =
+			_getGeneratedPropertyValueAsSet(generatedPropertyName);
+
+		generatedPropertyValuesSet.add(additionalGeneratedPropertyValue);
+
+		_putGeneratedPropertyValue(
+			generatedPropertyName, generatedPropertyValuesSet);
 	}
 
 	private static final Pattern _greedyParenthesesPattern = Pattern.compile(

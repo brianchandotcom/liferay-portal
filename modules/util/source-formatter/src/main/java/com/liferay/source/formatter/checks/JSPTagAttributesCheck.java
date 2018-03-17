@@ -192,14 +192,22 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 					String htmlTag = _getTag(trimmedLine, 0);
 
 					if (htmlTag != null) {
-						String newHTMLTag = formatTagAttributes(htmlTag, false);
+						String newHTMLTag = formatTagAttributes(
+							htmlTag, false, true);
 
 						line = StringUtil.replace(line, htmlTag, newHTMLTag);
 					}
 				}
 
 				for (String jspTag : _getJSPTag(line)) {
-					String newJSPTag = formatTagAttributes(jspTag, false);
+					boolean forceSingleLine = false;
+
+					if (!line.equals(jspTag)) {
+						forceSingleLine = true;
+					}
+
+					String newJSPTag = formatTagAttributes(
+						jspTag, false, forceSingleLine);
 
 					line = StringUtil.replace(line, jspTag, newJSPTag);
 				}

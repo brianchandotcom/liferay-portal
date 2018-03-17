@@ -14,6 +14,7 @@
 		fragmentCollectionId: string,
 		name: string
 	]>}
+	{@param portletNamespace: string}
 	{@param spritemap: string}
 	{@param? _contextualSidebarVisible: bool}
 	{@param? _dirty: bool}
@@ -78,6 +79,7 @@
 								] /}
 								{param fragmentEntryLinkId: $fragmentEntryLink.fragmentEntryLinkId /}
 								{param name: $fragmentEntryLink.name /}
+								{param portletNamespace: $portletNamespace /}
 								{param spritemap: $spritemap /}
 							{/call}
 						</div>

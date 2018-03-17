@@ -170,7 +170,14 @@ class FragmentEntryLink extends Component {
 
 					const naviteEditor = editor.get('nativeEditor');
 
-					naviteEditor.on('change', this._handleEditorChange);
+					nativeEditor.name = this.portletNamespace +
+						'fragmentEntryLink_';
+
+					naviteEditor.on(
+						'change',
+						this._handleEditorChange
+					);
+
 					naviteEditor.on(
 						'selectionChange',
 						this._handleEditorChange
@@ -376,6 +383,17 @@ FragmentEntryLink.STATE = {
 	 */
 
 	showControlBar: Config.bool().value(true),
+
+	/**
+	 * Portlet namespace needed for prefixing Alloy Editor instances
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEntryLink
+	 * @review
+	 * @type {!string}
+	 */
+
+	portletNamespace: Config.string().required(),
 
 	/**
 	 * Fragment spritemap

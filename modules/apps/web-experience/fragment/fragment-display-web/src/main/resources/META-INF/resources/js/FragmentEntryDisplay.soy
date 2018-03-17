@@ -6,6 +6,7 @@
 {template .render}
 	{@param defaultEditorConfiguration: ?}
 	{@param fragmentEntryLink: ?}
+	{@param portletNamespace: string}
 	{@param spritemap: string}
 	{@param? _handleEditableChanged: any}
 
@@ -20,6 +21,7 @@
 			{param fragmentEntryLinkId: $fragmentEntryLink.fragmentEntryLinkId /}
 			{param name: $fragmentEntryLink.name /}
 			{param spritemap: $spritemap /}
+			{param portletNamespace: $portletNamespace /}
 			{param showControlBar: false /}
 		{/call}
 	</div>

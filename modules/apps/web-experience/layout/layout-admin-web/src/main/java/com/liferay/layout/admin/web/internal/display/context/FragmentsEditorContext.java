@@ -38,6 +38,7 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Jürgen Kappler
@@ -166,6 +167,9 @@ public class FragmentsEditorContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		HttpServletResponse response = PortalUtil.getHttpServletResponse(
+			_renderResponse);
+
 		List<FragmentEntryLink> fragmentEntryLinks =
 			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
 				themeDisplay.getScopeGroupId(), _classNameId, _classPK);
@@ -180,7 +184,7 @@ public class FragmentsEditorContext {
 			soyContext.putHTML(
 				"content",
 				FragmentEntryRenderUtil.renderFragmentEntryLink(
-					fragmentEntryLink));
+					fragmentEntryLink, _request, response));
 			soyContext.put(
 				"editableValues",
 				JSONFactoryUtil.createJSONObject(

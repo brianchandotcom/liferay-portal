@@ -20,8 +20,18 @@ import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.template.StringTemplateResource;
+import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateManager;
+import com.liferay.portal.kernel.template.TemplateManagerUtil;
+import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -101,6 +111,56 @@ public class FragmentEntryRenderUtil {
 			fragmentEntryLink.getFragmentEntryId(),
 			fragmentEntryLink.getPosition(), fragmentEntryLink.getCss(), html,
 			fragmentEntryLink.getJs());
+	}
+
+	public static String renderFragmentEntryLink(
+			FragmentEntryLink fragmentEntryLink, HttpServletRequest request,
+			HttpServletResponse response)
+		throws PortalException {
+
+		FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry =
+			getService();
+
+		String html =
+			fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink);
+
+		html = _processTemplate(html, request, response);
+
+		return renderFragmentEntry(
+			fragmentEntryLink.getFragmentEntryId(),
+			fragmentEntryLink.getPosition(), fragmentEntryLink.getCss(), html,
+			fragmentEntryLink.getJs());
+	}
+
+	private static String _processTemplate(
+			String html, HttpServletRequest request,
+			HttpServletResponse response)
+		throws PortalException {
+
+		TemplateResource templateResource = new StringTemplateResource(
+			"template_id", html);
+
+		Template template = TemplateManagerUtil.getTemplate(
+			TemplateConstants.LANG_TYPE_FTL, templateResource, false);
+
+		TemplateManager templateManager =
+			TemplateManagerUtil.getTemplateManager(
+				TemplateConstants.LANG_TYPE_FTL);
+
+		templateManager.addTaglibSupport(template, request, response);
+		templateManager.addTaglibTheme(
+			template, "taglibLiferay", request, response);
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		template.put(TemplateConstants.WRITER, unsyncStringWriter);
+
+		template.prepare(request);
+
+		template.processTemplate(unsyncStringWriter);
+
+		return unsyncStringWriter.toString();
 	}
 
 	private static final ServiceTracker

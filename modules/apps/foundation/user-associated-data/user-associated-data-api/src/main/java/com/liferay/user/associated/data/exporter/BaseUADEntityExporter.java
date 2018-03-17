@@ -16,8 +16,11 @@ package com.liferay.user.associated.data.exporter;
 
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.exportimport.kernel.lar.ManifestSummary;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -42,17 +45,42 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseUADEntityExporter implements UADEntityExporter {
 
 	@Override
-	public void exportAll(long userId) throws PortalException {
+	public void exportAll(long userId, PortletDataContext portletDataContext)
+		throws PortalException {
+
 		UADEntityChunkedCommandUtil.executeChunkedCommand(
 			userId, getUADEntityAggregator(), this::export);
 	}
 
+	@Override
+	public long getCount(long userId) throws PortalException {
+		return getUADEntityAggregator().count(userId);
+	}
+
+	@Override
 	public StagedModelDataHandler getStagedModelDataHandler() {
 		StagedModelDataHandler stagedModelDataHandler =
 			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
 				getUADEntityName());
 
 		return stagedModelDataHandler;
+	}
+
+	@Override
+	public void prepareManifestSummary(
+			long userId, PortletDataContext portletDataContext)
+		throws PortalException {
+
+		ManifestSummary manifestSummary =
+			portletDataContext.getManifestSummary();
+
+		StagedModelType stagedModelType = new StagedModelType(
+			getUADEntityName());
+
+		long modelAdditionCount = getCount(userId);
+
+		manifestSummary.addModelAdditionCount(
+			stagedModelType, modelAdditionCount);
 	}
 
 	protected Folder getFolder(

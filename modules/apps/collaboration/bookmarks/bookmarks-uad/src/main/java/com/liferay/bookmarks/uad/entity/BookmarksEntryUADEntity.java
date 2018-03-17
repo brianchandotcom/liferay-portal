@@ -36,6 +36,12 @@ public class BookmarksEntryUADEntity extends BaseUADEntity {
 		_bookmarksEntry = bookmarksEntry;
 	}
 
+	@Override
+	public Object clone() {
+		return new BookmarksEntryUADEntity(
+			getUserId(), getUADEntityId(), _bookmarksEntry);
+	}
+
 	public BookmarksEntry getBookmarksEntry() {
 		return _bookmarksEntry;
 	}

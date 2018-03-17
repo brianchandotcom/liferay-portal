@@ -1,4 +1,6 @@
 Bundle-Name: Liferay Bookmarks UAD Test
 Bundle-SymbolicName: com.liferay.bookmarks.uad.test
 Bundle-Version: 1.0.0
--includeresource: test-classes/integration
+-includeresource:\
+	test-classes/integration,\
+	@lib/com.liferay.bookmarks.uad.jar!/com/liferay/bookmarks/uad/entity/BookmarksEntryUADEntity.class

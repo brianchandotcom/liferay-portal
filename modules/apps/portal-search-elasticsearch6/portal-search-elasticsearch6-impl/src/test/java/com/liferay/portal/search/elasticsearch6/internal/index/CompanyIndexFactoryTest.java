@@ -84,18 +84,12 @@ public class CompanyIndexFactoryTest {
 
 	@Test
 	public void testAdditionalTypeMappings() throws Exception {
-		_companyIndexFactory.setAdditionalIndexConfigurations(
-			loadAdditionalAnalyzers());
-		_companyIndexFactory.setAdditionalTypeMappings(
-			loadAdditionalTypeMappings());
+		assertAdditionalTypeMappings(loadAdditionalTypeMappings());
+	}
 
-		createIndices();
-
-		String field = RandomTestUtil.randomString() + "_ja";
-
-		indexOneDocument(field);
-
-		assertAnalyzer(field, "kuromoji_liferay_custom");
+	@Test
+	public void testAdditionalTypeMappingsWithRootType() throws Exception {
+		assertAdditionalTypeMappings(loadAdditionalTypeMappingsWithRootType());
 	}
 
 	@Test
@@ -276,6 +270,28 @@ public class CompanyIndexFactoryTest {
 	@Rule
 	public TestName testName = new TestName();
 
+	protected void assertAdditionalTypeMappings(String additionalTypeMappings)
+		throws Exception {
+
+		_companyIndexFactory.setAdditionalIndexConfigurations(
+			loadAdditionalAnalyzers());
+		_companyIndexFactory.setAdditionalTypeMappings(additionalTypeMappings);
+
+		createIndices();
+
+		String intactFieldName = RandomTestUtil.randomString() + "_en";
+
+		indexOneDocument(intactFieldName);
+
+		assertAnalyzer(intactFieldName, "english");
+
+		String replacedFieldName = RandomTestUtil.randomString() + "_ja";
+
+		indexOneDocument(replacedFieldName);
+
+		assertAnalyzer(replacedFieldName, "kuromoji_liferay_custom");
+	}
+
 	protected void assertAnalyzer(String field, String analyzer)
 		throws Exception {
 
@@ -353,6 +369,13 @@ public class CompanyIndexFactoryTest {
 	protected String loadAdditionalTypeMappings() throws Exception {
 		return ResourceUtil.getResourceAsString(
 			getClass(), "CompanyIndexFactoryTest-additionalTypeMappings.json");
+	}
+
+	protected String loadAdditionalTypeMappingsWithRootType() throws Exception {
+		return ResourceUtil.getResourceAsString(
+			getClass(),
+			"CompanyIndexFactoryTest-additionalTypeMappings-with-root-type." +
+				"json");
 	}
 
 	protected String loadOverrideTypeMappings() throws Exception {

@@ -1,0 +1,49 @@
+{
+  "name_space": "jenkins_results_parser",
+  "suites": [
+    {
+      "name": "default",
+      "dists": [
+        {"type": "tomcat"}
+      ],
+      "batches": [
+        {
+          "name": "modules-integration-mysql56-jdk8",
+          "test_includes": [
+            "**/src/testIntegration/**/jenkins-results-parser/**/*Test.java",
+            "**/src/testIntegration/**/poshi-runner/**/*Test.java"
+          ]
+        },
+        {
+          "name": "modules-unit-jdk8",
+          "test_includes": [
+            "**/src/test/**/jenkins-results-parser/**/*Test.java",
+            "**/src/test/**/poshi-runner/**/*Test.java"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "current-branch",
+      "dists": [
+        {"type": "tomcat"}
+      ],
+      "batches": [
+        {
+          "name": "modules-integration-mysql56-jdk8",
+          "test_includes": [
+            "**/src/testIntegration/**/jenkins-results-parser/**/*Test.java",
+            "**/src/testIntegration/**/poshi-runner/**/*Test.java"
+          ]
+        },
+        {
+          "name": "modules-unit-jdk8",
+          "test_includes": [
+            "**/src/test/**/jenkins-results-parser/**/*Test.java",
+            "**/src/test/**/poshi-runner/**/*Test.java"
+          ]
+        }
+      ]
+    }
+  ]
+}

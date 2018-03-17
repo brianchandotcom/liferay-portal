@@ -1,0 +1,481 @@
+{
+  "name_space": "portal",
+  "suites": [
+    {
+      "suite_name": "default",
+      "dists": [
+        {"type": "jboss"},
+        {"type": "tcserver"},
+        {"type": "tomcat"},
+        {"type": "weblogic"},
+        {"type": "websphere"},
+        {"type": "wildfly"}
+      ],
+      "batches": [
+        {"name": "bundle-blacklist-restart-jdk8"},
+        {"name": "central-requirements-jdk8"},
+        {"name": "compile-jsp-jdk8"},
+        {"name": "empty-temp-dir-jdk8"},
+        {
+          "name": "functional-bundle-tomcat-mysql56-jdk8",
+          "disabled": true
+        },
+        {
+          "name": "functional-smoke-jboss70-mysql56-jdk8",
+          "test_filter": "functional_portal_smoke"
+        },
+        {
+          "name": "functional-smoke-resin40-mysql56-jdk8",
+          "test_filter": "functional_portal_smoke",
+          "disabled": true
+        },
+        {
+          "name": "functional-smoke-tcserver32-mysql56-jdk8",
+          "test_filter": "functional_portal_smoke"
+        },
+        {
+          "name": "functional-smoke-tomcat80-db2105-jdk8",
+          "test_filter": "functional_portal_smoke"
+        },
+        {
+          "name": "functional-smoke-tomcat80-mariadb100-jdk8",
+          "test_filter": "functional_portal_smoke"
+        },
+        {
+          "name": "functional-smoke-tomcat80-mysql56-jdk8",
+          "test_filter": "functional_portal_smoke"
+        },
+        {
+          "name": "functional-smoke-tomcat80-oracle121-jdk8",
+          "test_filter": "functional_portal_smoke"
+        },
+        {
+          "name": "functional-smoke-tomcat80-postgresql94-jdk8",
+          "test_filter": "functional_portal_smoke"
+        },
+        {
+          "name": "functional-smoke-tomcat80-sybase160-jdk8",
+          "test_filter": "functional_portal_smoke"
+        },
+        {
+          "name": "functional-smoke-weblogic121-mysql56-jdk8",
+          "test_filter": "functional_portal_smoke"
+        },
+        {
+          "name": "functional-smoke-websphere85-mysql56-jdk8",
+          "test_filter": "functional_portal_smoke"
+        },
+        {
+          "name": "functional-smoke-wildfly100-mariadb100-jdk8",
+          "test_filter": "functional_portal_smoke"
+        },
+        {
+          "name": "functional-tomcat80-db2105-jdk8",
+          "test_filter": {
+            "poshi_query": "(portal.acceptance == true) AND (app.server.types == null OR app.server.types ~ tomcat) AND (database.types ~ db2)",
+            "test_per_node_max": 7
+          }
+        },
+        {
+          "name": "functional-tomcat80-hypersonic20-jdk8",
+          "test_filter": {
+            "poshi_query": "(portal.acceptance == true) AND (app.server.types == null OR app.server.types ~ tomcat) AND (database.types ~ hypersonic)",
+            "test_per_node_max": 7
+          }
+        },
+        {
+          "name": "functional-tomcat80-mariadb100-jdk8",
+          "test_filter": {
+            "poshi_query": "(portal.acceptance == true) AND (app.server.types == null OR app.server.types ~ tomcat) AND (database.types ~ mariadb)",
+            "test_per_node_max": 7
+          }
+        },
+        {
+          "name": "functional-tomcat80-mysql56-jdk8",
+          "test_filter": {
+            "poshi_query": "(portal.acceptance == true) AND (app.server.types == null OR app.server.types ~ tomcat) AND (database.types == null OR database.types ~ mysql)",
+            "test_per_node_max": 7
+          }
+        },
+        {
+          "name": "functional-tomcat80-mysql56-jdk8-quarantine",
+          "test_filter": {
+            "poshi_query": "(portal.acceptance == pending) AND (app.server.types == null OR app.server.types ~ tomcat) AND (database.types == null OR database.types ~ mysql)",
+            "test_per_node_max": 7
+          }
+        },
+        {
+          "name": "functional-tomcat80-oracle121-jdk8",
+          "test_filter": {
+            "poshi_query": "(portal.acceptance == true) AND (app.server.types == null OR app.server.types ~ tomcat) AND (database.types ~ oracle)",
+            "test_per_node_max": 7
+          }
+        },
+        {
+          "name": "functional-tomcat80-postgresql94-jdk8",
+          "test_filter": {
+            "poshi_query": "(portal.acceptance == true) AND (app.server.types == null OR app.server.types ~ tomcat) AND (database.types ~ postgresql)",
+            "test_per_node_max": 7
+          }
+        },
+        {
+          "name": "functional-tomcat80-sybase160-jdk8",
+          "test_filter": {
+            "poshi_query": "(portal.acceptance == true) AND (app.server.types == null OR app.server.types ~ tomcat) AND (database.types ~ sybase)",
+            "test_per_node_max": 7
+          }
+        },
+        {
+          "name": "functional-upgrade-jboss70-mysql56-jdk8",
+          "test_filter": "functional_portal_upgrade"
+        },
+        {
+          "name": "functional-upgrade-tcserver32-mysql56-jdk8",
+          "test_filter": "functional_portal_upgrade",
+          "disabled": true
+        },
+        {
+          "name": "functional-upgrade-tomcat80-mariadb100-jdk8",
+          "test_filter": "functional_portal_upgrade"
+        },
+        {
+          "name": "functional-upgrade-tomcat80-mysql56-jdk8",
+          "test_filter": "functional_portal_upgrade"
+        },
+        {
+          "name": "functional-upgrade-tomcat80-oracle121-jdk8",
+          "test_filter": "functional_portal_upgrade"
+        },
+        {
+          "name": "functional-upgrade-tomcat80-postgresql94-jdk8",
+          "test_filter": "functional_portal_upgrade"
+        },
+        {
+          "name": "functional-upgrade-tomcat80-sybase160-jdk8",
+          "test_filter": "functional_portal_upgrade"
+        },
+        {
+          "name": "functional-upgrade-weblogic121-mysql56-jdk8",
+          "test_filter": "functional_portal_upgrade",
+          "disabled": true
+        },
+        {
+          "name": "functional-upgrade-wildfly100-mariadb100-jdk8",
+          "test_filter": "functional_portal_upgrade"
+        },
+        {
+          "name": "integration-db2105-jdk8",
+          "filter": "integration"
+        },
+        {
+          "name": "integration-hypersonic20-jdk8",
+          "filter": "integration"
+        },
+        {
+          "name": "integration-mariadb100-jdk8",
+          "filter": "integration"
+        },
+        {
+          "name": "integration-mysql56-jdk8",
+          "filter": "integration"
+        },
+        {
+          "name": "integration-oracle121-jdk8",
+          "filter": "integration"
+        },
+        {
+          "name": "integration-postgresql94-jdk8",
+          "filter": "integration"
+        },
+        {
+          "name": "integration-sybase160-jdk8",
+          "filter": "integration"
+        },
+        {
+          "name": "javadoc-jdk8"
+        },
+        {
+          "name": "lpkg-controller-jdk8"
+        },
+        {
+          "name": "lpkg-override-jdk8"
+        },
+        {
+          "name": "lpkg-persistence-jdk8"
+        },
+        {
+          "name": "lpkg-release-jdk8"
+        },
+        {
+          "name": "lpkg-startup-jdk8"
+        },
+        {
+          "name": "modules-compile-jdk8"
+        },
+        {
+          "name": "modules-functional-jdk8"
+        },
+        {
+          "name": "modules-functional-tomcat80-mysql56-jdk8"
+        },
+        {
+          "name": "modules-integration-db2105-jdk8",
+          "test_filter": "modules_integration"
+        },
+        {
+          "name": "modules-integration-hypersonic20-jdk8",
+          "test_filter": "modules_integration"
+        },
+        {
+          "name": "modules-integration-mariadb100-jdk8",
+          "test_filter": "modules_integration"
+        },
+        {
+          "name": "modules-integration-mysql56-jdk8",
+          "test_filter": "modules_integration"
+        },
+        {
+          "name": "modules-integration-oracle121-jdk8",
+          "test_filter": "modules_integration"
+        },
+        {
+          "name": "modules-integration-postgresql94-jdk8",
+          "test_filter": "modules_integration"
+        },
+        {
+          "name": "modules-integration-sybase160-jdk8",
+          "test_filter": "modules_integration"
+        },
+        {
+          "name": "modules-unit-jdk8",
+          "test_filter": "modules_unit"
+        },
+        {
+          "name": "plugins-compile-jdk8"
+        },
+        {
+          "name": "plugins-functional-bundle-tomcat-mysql56-jdk8"
+        },
+        {
+          "name": "plugins-functional-tomcat80-mysql56-jdk8"
+        },
+        {
+          "name": "portal-frontend-js-jdk8"
+        },
+        {
+          "name": "portal-frontend-js-lint-jdk8",
+          "disabled": true
+        },
+        {
+          "name": "portal-license-jdk8"
+        },
+        {
+          "name": "portal-startup-space-in-path-jdk8"
+        },
+        {
+          "name": "portal-web-jdk8"
+        },
+        {
+          "name": "ruby-sass-compiler-jdk8"
+        },
+        {
+          "name": "semantic-versioning-jdk8"
+        },
+        {
+          "name": "service-builder-jdk8"
+        },
+        {
+          "name": "slim-profile-jdk8"
+        },
+        {
+          "name": "source-format-jdk8"
+        },
+        {
+          "name": "tck-jdk8"
+        },
+        {
+          "name": "unit-jdk8",
+          "test_filter": "unit"
+        },
+        {
+          "name": "wsdd-builder-jdk8"
+        }
+      ]
+    },
+    {
+      "suite_name": "current-branch",
+      "dists": [
+        {"type": "tomcat"}
+      ],
+      "batches": [
+        {
+          "name": "functional-smoke-tomcat80-mysql56-jdk8",
+          "enable_on_change": [
+            "portal-web/**"
+          ],
+          "enable_on_lportal_modules_changes": true
+        },
+        {
+          "name": "integration-jdk8",
+          "enable_on_change": [
+            "portal-client/**",
+            "portal-impl/**",
+            "portal-kernel/**",
+            "portal-test/**",
+            "portal-test-integration/**",
+            "portal-util/**"
+          ],
+          "test_filter": "integration"
+        },
+        {
+          "name": "modules-compile-current-branch-jdk8"
+        },
+        {
+          "name": "modules-integration-mysql56-jdk8",
+          "enable_on_change": [
+            "modules/**"
+          ],
+          "test_filter": {
+            "test_includes": "modules_integration:test_includes",
+            "test_includes_module_changes_only": true,
+            "test_per_node_max": 35
+          }
+        },
+        {
+          "name": "modules-unit-jdk8",
+          "enable_on_change": [
+            "modules/**"
+          ],
+          "test_filter": {
+            "test_includes": "modules_unit:test_includes",
+            "test_includes_module_changes_only": true,
+            "test_per_node_max": 250
+          }
+        },
+        {
+          "name": "semantic-versioning-current-branch-jdk8"
+        },
+        {
+          "name": "source-format-current-branch-jdk8"
+        },
+        {
+          "name": "unit-jdk8",
+          "enable_on_change": [
+            "portal-client/**",
+            "portal-impl/**",
+            "portal-kernel/**",
+            "portal-test/**",
+            "portal-test-integration/**",
+            "portal-util/**"
+          ],
+          "test_filter": "unit"
+        }
+      ],
+      "include_module_group_changes": true
+    },
+    {
+      "suite_name": "lpkg",
+      "dists": [
+        {"type": "tomcat"}
+      ],
+      "batches": [
+        {
+          "name": "lpkg-startup-jdk8"
+        }
+      ]
+    },
+    {
+      "suite_name": "sf",
+      "dists": [],
+      "batches": [
+        {
+          "name": "source-format-current-branch-jdk8"
+        }
+      ]
+    }
+  ],
+  "test_filters": [
+    {
+      "name": "base",
+      "test_class_names_auto_balance": [
+        ".*/com/liferay/portal/security/pacl/PACLAggregateTest.java",
+        ".*/com/liferay/pmd/PMDTest.java"
+      ],
+      "test_excludes": [
+        "modules/apps/adaptive-media/**",
+        "modules/apps/chat/**",
+        "modules/apps/collaboration/announcements/announcements-uad-test/**",
+        "modules/apps/collaboration/bookmarks/bookmarks-uad-test/**",
+        "modules/apps/mail-reader/**",
+        "modules/apps/static/portal-bundle-blacklist/portal-bundle-blacklist-test/src/test/java/com/liferay/portal/bundle/blacklist/BundleBlacklistSetUpBatchTest.java",
+        "modules/apps/static/portal-bundle-blacklist/portal-bundle-blacklist-test/src/testIntegration/java/com/liferay/portal/bundle/blacklist/test/BundleBlacklistVerifyReinstalledTest.java",
+        "modules/apps/static/portal-bundle-blacklist/portal-bundle-blacklist-test/src/testIntegration/java/com/liferay/portal/bundle/blacklist/test/BundleBlacklistVerifyUninstalledTest.java",
+        "modules/apps/static/portal-lpkg-deployer/**",
+        "modules/apps/web-experience/export-import/export-import-resources-importer-test/src/testIntegration/java/com/liferay/exportimport/resources/importer/test/ResourcesImporterTest.java",
+        "modules/private/apps/osb-cerebro/**",
+        "modules/private/apps/osb-common/osb-common-remote-company/**",
+        "modules/private/apps/osb-faro/**",
+        "modules/private/apps/osb-lcs/**",
+        "modules/private/apps/osb-pulpo/**",
+        "modules/private/apps/osb-training/**",
+        "modules/private/apps/pulpo/**",
+        "modules/private/apps/saml/**",
+        "modules/test/external-data-source-test/**",
+        "modules/test/portlet-title-localization-test/**",
+        "portal-impl/test/integration/com/liferay/portlet/asset/service/AssetTagStatsServiceTest.java",
+        "portal-impl/test/integration/com/liferay/portlet/documentlibrary/service/persistence/DLFileEntryFinderTest.java",
+        "portal-kernel/test/unit/com/liferay/portal/log/assertor/PortalLogAssertorTest.java",
+        "portal-kernel/test/unit/com/liferay/portal/modules/ModulesStructureTest.java",
+        "**/*ServiceHttpTest.java",
+        "**/*ServiceJsonTest.java",
+        "**/*ServiceSoapTest.java"
+      ],
+      "test_includes": [
+        "**/src/test/**/*Test.java",
+        "**/src/testIntegration/**/*Test.java",
+        "**/test/integration/**/*Test.java",
+        "**/test/unit/**/*Test.java"
+      ]
+    },
+    {
+      "name": "modules_integration",
+      "test_excludes": "base:test_excludes",
+      "test_includes": [
+        "**/src/testIntegration/**/*Test.java"
+      ],
+      "test_per_node_max": 35
+    },
+    {
+      "name": "modules_unit",
+      "test_excludes": "base:test_excludes",
+      "test_includes": [
+        "**/src/test/**/*Test.java"
+      ],
+      "test_per_node_max": 250
+    },
+    {
+      "name": "integration",
+      "test_excludes": "base:test_excludes",
+      "test_includes": [
+        "**/test/integration/**/*Test.java"
+      ]
+    },
+    {
+      "name": "unit",
+      "test_excludes": "base:test_excludes",
+      "test_includes": [
+        "**/test/unit/**/*Test.java"
+      ]
+    },
+    {
+      "name": "functional_portal_smoke",
+      "poshi_query": "portal.smoke == true",
+      "test_per_node_max": 7
+    },
+    {
+      "name": "functional_portal_upgrade",
+      "poshi_query": "portal.upgrade == true",
+      "test_per_node_max": 7
+    }
+  ]
+}

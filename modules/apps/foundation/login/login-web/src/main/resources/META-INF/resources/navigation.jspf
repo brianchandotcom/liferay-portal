@@ -14,7 +14,9 @@
  */
 --%>
 
-<liferay-util:buffer var="navigation">
+<liferay-util:buffer
+	var="navigation"
+>
 	<liferay-ui:icon-list>
 		<liferay-util:dynamic-include key="com.liferay.login.web#/navigation.jsp#pre" />
 

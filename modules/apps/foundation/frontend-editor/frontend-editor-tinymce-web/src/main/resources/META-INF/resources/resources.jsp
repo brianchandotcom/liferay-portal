@@ -20,7 +20,9 @@
 String editorName = (String)request.getAttribute(TinyMCEEditorConstants.ATTRIBUTE_NAMESPACE + ":editorName");
 %>
 
-<liferay-util:html-top outputKey="js_editor_tinymce">
+<liferay-util:html-top
+	outputKey="js_editor_tinymce"
+>
 
 	<%
 	long javaScriptLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_TINYMCEEDITOR);

@@ -68,7 +68,10 @@ if (showPrototypes && (group != null)) {
 }
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="pages" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="pages"
+/>
 
 <aui:model-context bean="<%= liveGroup %>" model="<%= Group.class %>" />
 

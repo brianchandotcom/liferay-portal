@@ -22,4 +22,6 @@ FileVersion fileVersion = (FileVersion)request.getAttribute(ImageEditorIntegrati
 ImageEditorDLDisplayContextHelper imageEditorDLDisplayContextHelper = new ImageEditorDLDisplayContextHelper(fileVersion, request);
 %>
 
-<liferay-ui:menu-item menuItem="<%= imageEditorDLDisplayContextHelper.getJavacriptEditWithImageEditorMenuItem(resourceBundle) %>" />
+<liferay-ui:menu-item
+	menuItem="<%= imageEditorDLDisplayContextHelper.getJavacriptEditWithImageEditorMenuItem(resourceBundle) %>"
+/>

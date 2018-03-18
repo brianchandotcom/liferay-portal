@@ -49,21 +49,13 @@ List<AnnouncementsEntry> announcementsEntries = announcementsEntriesSearchContai
 	<aui:nav cssClass="navbar-nav">
 		<portlet:renderURL var="viewEntriesURL" />
 
-		<aui:nav-item
-			href="<%= viewEntriesURL %>"
-			label="announcements"
-			selected='<%= navigation.equals("announcements") %>'
-		/>
+		<aui:nav-item href="<%= viewEntriesURL %>" label="announcements" selected='<%= navigation.equals("announcements") %>' />
 
 		<portlet:renderURL var="viewAlertsURL">
 			<portlet:param name="navigation" value="alerts" />
 		</portlet:renderURL>
 
-		<aui:nav-item
-			href="<%= viewAlertsURL %>"
-			label="alerts"
-			selected='<%= navigation.equals("alerts") %>'
-		/>
+		<aui:nav-item href="<%= viewAlertsURL %>" label="alerts" selected='<%= navigation.equals("alerts") %>' />
 	</aui:nav>
 </aui:nav-bar>
 

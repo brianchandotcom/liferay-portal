@@ -30,7 +30,14 @@ PortletURL redirectURL = renderResponse.createRenderURL();
 redirectURL.setParameter("mvcPath", "/view.jsp");
 %>
 
-<liferay-ui:icon-menu cssClass="lfr-asset-actions" direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showExpanded="<%= (row == null) %>">
+<liferay-ui:icon-menu
+	cssClass="lfr-asset-actions"
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showExpanded="<%= (row == null) %>"
+>
 	<c:if test="<%= !workflowTask.isCompleted() && workflowTaskDisplayContext.isAssignedToUser(workflowTask) %>">
 
 		<%

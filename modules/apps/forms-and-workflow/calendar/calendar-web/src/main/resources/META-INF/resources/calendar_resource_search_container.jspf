@@ -14,7 +14,9 @@
  */
 --%>
 
-<liferay-ui:search-container searchContainer="<%= new CalendarResourceSearch(renderRequest, CalendarResourceSearch.DEFAULT_CUR_PARAM, iteratorURL) %>">
+<liferay-ui:search-container
+	searchContainer="<%= new CalendarResourceSearch(renderRequest, CalendarResourceSearch.DEFAULT_CUR_PARAM, iteratorURL) %>"
+>
 
 	<%
 	long[] groupIds = {themeDisplay.getScopeGroupId()};

@@ -31,7 +31,13 @@ String duplicateTitle = workflowDefinitionDisplayContext.getDuplicateTitle(workf
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </liferay-portlet:actionURL>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
 	<portlet:renderURL var="viewURL">
 		<portlet:param name="mvcPath" value="/definition/view_workflow_definition.jsp" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />

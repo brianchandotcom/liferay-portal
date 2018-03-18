@@ -46,7 +46,9 @@ if (assetCategoryId != 0) {
 }
 %>
 
-<liferay-util:buffer var="removeCategory">
+<liferay-util:buffer
+	var="removeCategory"
+>
 	<c:if test="<%= assetCategoryId != 0 %>">
 		<span class="asset-entry badge badge-default badge-sm">
 			<%= assetCategoryTitle %>
@@ -62,7 +64,9 @@ if (assetCategoryId != 0) {
 	</c:if>
 </liferay-util:buffer>
 
-<liferay-util:buffer var="removeTag">
+<liferay-util:buffer
+	var="removeTag"
+>
 	<c:if test="<%= Validator.isNotNull(assetTagName) %>">
 		<span class="asset-entry badge badge-default badge-sm">
 			<%= HtmlUtil.escape(assetTagName) %>

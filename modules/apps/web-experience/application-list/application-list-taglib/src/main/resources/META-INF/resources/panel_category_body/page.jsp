@@ -32,4 +32,6 @@
 	</ul>
 </c:if>
 
-<liferay-application-list:panel panelCategory="<%= panelCategory %>" />
+<liferay-application-list:panel
+	panelCategory="<%= panelCategory %>"
+/>

@@ -61,7 +61,12 @@ if (ListUtil.isNotEmpty(selectedAMImageConfigurationEntries)) {
 	</c:choose>
 </div>
 
-<liferay-ui:tabs cssClass="navbar-no-collapse" names="details" refresh="<%= false %>" type="dropdown">
+<liferay-ui:tabs
+	cssClass="navbar-no-collapse"
+	names="details"
+	refresh="<%= false %>"
+	type="dropdown"
+>
 	<liferay-ui:section>
 		<div class="sidebar-body">
 			<dl class="sidebar-block">

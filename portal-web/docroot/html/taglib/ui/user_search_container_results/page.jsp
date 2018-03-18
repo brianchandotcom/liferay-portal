@@ -22,7 +22,10 @@ LinkedHashMap<String, Object> userParams = (LinkedHashMap<String, Object>)reques
 SearchContainer userSearchContainer = (SearchContainer)request.getAttribute("liferay-ui:user-search-container-results:searchContainer");
 %>
 
-<liferay-ui:search-container id="<%= userSearchContainer.getId(request, namespace) %>" searchContainer="<%= userSearchContainer %>">
+<liferay-ui:search-container
+	id="<%= userSearchContainer.getId(request, namespace) %>"
+	searchContainer="<%= userSearchContainer %>"
+>
 	<liferay-ui:search-container-results>
 
 		<%

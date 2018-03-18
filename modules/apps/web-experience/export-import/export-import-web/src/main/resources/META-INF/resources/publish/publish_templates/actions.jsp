@@ -39,7 +39,13 @@ ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration
 	<portlet:param name="publishConfigurationButtons" value="template" />
 </portlet:renderURL>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
 	<liferay-ui:icon
 		message='<%= localPublishing ? "publish-to-live" : "publish-to-remote-live" %>'
 		url="<%= publishByExportImportConfigurationURL %>"

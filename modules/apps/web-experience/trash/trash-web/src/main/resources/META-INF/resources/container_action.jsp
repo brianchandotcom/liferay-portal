@@ -22,7 +22,13 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 TrashRenderer trashRenderer = trashDisplayContext.getTrashRenderer();
 %>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
 	<c:choose>
 		<c:when test="<%= trashEntry != null %>">
 			<c:choose>

@@ -40,6 +40,12 @@ String displayStyle = GetterUtil.getString(portletPreferences.getValue("displayS
 long displayStyleGroupId = GetterUtil.getLong(portletPreferences.getValue("displayStyleGroupId", null), scopeGroupId);
 %>
 
-<liferay-ddm:template-renderer className="<%= TestPortlet.class.getName() %>" contextObjects="<%= contextObjects %>" displayStyle="<%= displayStyle %>" displayStyleGroupId="<%= displayStyleGroupId %>" entries="<%= Collections.emptyList() %>">
+<liferay-ddm:template-renderer
+	className="<%= TestPortlet.class.getName() %>"
+	contextObjects="<%= contextObjects %>"
+	displayStyle="<%= displayStyle %>"
+	displayStyleGroupId="<%= displayStyleGroupId %>"
+	entries="<%= Collections.emptyList() %>"
+>
 	This is the default content in case of failure.
 </liferay-ddm:template-renderer>

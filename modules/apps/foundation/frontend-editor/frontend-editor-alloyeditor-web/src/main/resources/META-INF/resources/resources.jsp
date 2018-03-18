@@ -20,7 +20,9 @@
 String editorName = (String)request.getAttribute(AlloyEditorConstants.ATTRIBUTE_NAMESPACE + ":editorName");
 %>
 
-<liferay-util:html-top outputKey="js_editor_alloyeditor_skip_editor_loading">
+<liferay-util:html-top
+	outputKey="js_editor_alloyeditor_skip_editor_loading"
+>
 	<link data-senna-track="temporary" href="<%= PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_ALLOYEDITOR) + "/alloyeditor/assets/alloy-editor-atlas.css") %>" rel="stylesheet" type="text/css" />
 
 	<%

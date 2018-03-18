@@ -27,7 +27,9 @@ long classPK = selLayout.getPlid();
 
 <%@ include file="/layout/mobile_device_rules_header.jspf" %>
 
-<liferay-util:buffer var="rootNodeNameLink">
+<liferay-util:buffer
+	var="rootNodeNameLink"
+>
 
 	<%
 	PortletURL editLayoutSetURL = liferayPortletResponse.createRenderURL();

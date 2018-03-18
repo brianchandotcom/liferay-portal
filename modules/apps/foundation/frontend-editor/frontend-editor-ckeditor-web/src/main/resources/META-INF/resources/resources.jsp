@@ -22,7 +22,9 @@ boolean inlineEdit = GetterUtil.getBoolean((String)request.getAttribute(CKEditor
 String inlineEditSaveURL = GetterUtil.getString((String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":inlineEditSaveURL"));
 %>
 
-<liferay-util:html-top outputKey="js_editor_ckeditor_skip_editor_loading">
+<liferay-util:html-top
+	outputKey="js_editor_ckeditor_skip_editor_loading"
+>
 	<style type="text/css">
 		table.cke_dialog {
 			position: absolute !important;

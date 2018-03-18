@@ -23,10 +23,7 @@ String navigationName = ParamUtil.getString(request, "navigationName");
 <c:if test="<%= Validator.isNotNull(navigationName) %>">
 	<aui:nav-bar markupView="lexicon">
 		<aui:nav cssClass="navbar-nav">
-			<aui:nav-item
-				label="<%= navigationName %>"
-				selected="<%= true %>"
-			/>
+			<aui:nav-item label="<%= navigationName %>" selected="<%= true %>" />
 		</aui:nav>
 	</aui:nav-bar>
 </c:if>

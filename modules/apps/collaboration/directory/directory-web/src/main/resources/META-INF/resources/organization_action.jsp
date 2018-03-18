@@ -26,7 +26,13 @@ Organization organization = (Organization)row.getObject();
 long organizationId = organization.getOrganizationId();
 %>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
 	<portlet:renderURL var="viewUsersURL">
 		<portlet:param name="mvcRenderCommandName" value="/directory/view" />
 		<portlet:param name="tabs1" value="users" />

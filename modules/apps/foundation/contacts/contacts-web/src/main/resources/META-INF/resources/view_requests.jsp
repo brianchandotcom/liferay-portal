@@ -16,7 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-ui:header title="requests" />
+<liferay-ui:header
+	title="requests"
+/>
 
 <liferay-ui:search-container
 	emptyResultsMessage="you-have-no-pending-requests"

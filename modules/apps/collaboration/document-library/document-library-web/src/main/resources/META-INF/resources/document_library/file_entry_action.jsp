@@ -71,4 +71,6 @@ else {
 }
 %>
 
-<liferay-ui:menu menu="<%= dlViewFileVersionDisplayContext.getMenu() %>" />
+<liferay-ui:menu
+	menu="<%= dlViewFileVersionDisplayContext.getMenu() %>"
+/>

@@ -52,7 +52,9 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute(T
 String toolbarSet = (String)request.getAttribute(TinyMCEEditorConstants.ATTRIBUTE_NAMESPACE + ":toolbarSet");
 %>
 
-<liferay-util:buffer var="editor">
+<liferay-util:buffer
+	var="editor"
+>
 	<textarea id="<%= HtmlUtil.escapeAttribute(name) %>" name="<%= HtmlUtil.escapeAttribute(name) %>" style="height: 100%; visibility: hidden; width: 100%;"><%= (contents != null) ? HtmlUtil.escape(contents) : StringPool.BLANK %></textarea>
 </liferay-util:buffer>
 

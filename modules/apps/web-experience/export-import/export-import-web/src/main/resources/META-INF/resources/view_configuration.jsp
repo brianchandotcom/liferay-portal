@@ -22,7 +22,11 @@ long exportImportConfigurationId = (Long)request.getAttribute(ExportImportWebKey
 ExportImportConfiguration exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
 %>
 
-<liferay-ui:panel-container extended="<%= true %>" id="exportImportConfigurationPanelContainer" persistState="<%= false %>">
+<liferay-ui:panel-container
+	extended="<%= true %>"
+	id="exportImportConfigurationPanelContainer"
+	persistState="<%= false %>"
+>
 	<liferay-ui:panel collapsible="<%= false %>" extended="<%= true %>" title="template-type">
 		<liferay-ui:message key="<%= ExportImportConfigurationConstants.getTypeLabel(exportImportConfiguration.getType()) %>" />
 	</liferay-ui:panel>

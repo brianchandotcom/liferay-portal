@@ -60,7 +60,10 @@ else {
 }
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="websites" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="websites"
+/>
 
 <div class="alert alert-info">
 	<liferay-ui:message key="url-and-type-are-required-fields.-websites-must-start-with-http-or-https" />

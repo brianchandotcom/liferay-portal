@@ -37,21 +37,13 @@ String[] tempFileNames = LayoutServiceUtil.getTempFileNames(scopeGroupId, Export
 		portletURL.setParameter("tabs3", "new-import-process");
 		%>
 
-		<aui:nav-item
-			href="<%= portletURL.toString() %>"
-			label="new-import-process"
-			selected='<%= tabs3.equals("new-import-process") %>'
-		/>
+		<aui:nav-item href="<%= portletURL.toString() %>" label="new-import-process" selected='<%= tabs3.equals("new-import-process") %>' />
 
 		<%
 		portletURL.setParameter("tabs3", "current-and-previous");
 		%>
 
-		<aui:nav-item
-			href="<%= portletURL.toString() %>"
-			label="current-and-previous"
-			selected='<%= tabs3.equals("current-and-previous") %>'
-		/>
+		<aui:nav-item href="<%= portletURL.toString() %>" label="current-and-previous" selected='<%= tabs3.equals("current-and-previous") %>' />
 	</aui:nav>
 </aui:nav-bar>
 

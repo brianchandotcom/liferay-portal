@@ -20,7 +20,9 @@
 	<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="bookmark-and-share" />" height="16" src="http://s7.addthis.com/static/btn/v2/lg-share-en.gif" style="border:0" width="125" />
 </a>
 
-<liferay-util:html-bottom outputKey="addthis">
+<liferay-util:html-bottom
+	outputKey="addthis"
+>
 	<script src="<%= HttpUtil.getProtocol(request) %>://s7.addthis.com/js/300/addthis_widget.js" type="text/javascript"></script>
 </liferay-util:html-bottom>
 

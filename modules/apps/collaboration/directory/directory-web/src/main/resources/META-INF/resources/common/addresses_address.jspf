@@ -22,6 +22,8 @@ String mailingName = LanguageUtil.get(request, addressListType.getName());
 
 <em class="mailing-name"><%= mailingName %></em><br />
 
-<liferay-text-localizer:address-display address="<%= address %>" />
+<liferay-text-localizer:address-display
+	address="<%= address %>"
+/>
 
 <c:if test="<%= address.isMailing() %>">(<liferay-ui:message key="mailing" />)</c:if>

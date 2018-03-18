@@ -31,7 +31,9 @@ String points =(String)request.getAttribute("liferay-map:map:points");
 name = namespace + name;
 %>
 
-<liferay-util:html-top outputKey="js_maps_google_skip_map_loading">
+<liferay-util:html-top
+	outputKey="js_maps_google_skip_map_loading"
+>
 	<script>
 		Liferay.namespace('Maps').onGMapsReady = function(event) {
 			Liferay.Maps.gmapsReady = true;

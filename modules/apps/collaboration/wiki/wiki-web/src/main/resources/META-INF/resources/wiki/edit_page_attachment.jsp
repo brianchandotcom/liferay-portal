@@ -59,7 +59,9 @@ Date expirationDate = new Date(System.currentTimeMillis() + GetterUtil.getIntege
 Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class.getName(), user.getUserId(), TicketConstants.TYPE_IMPERSONATE, null, expirationDate, new ServiceContext());
 %>
 
-<liferay-util:buffer var="removeAttachmentIcon">
+<liferay-util:buffer
+	var="removeAttachmentIcon"
+>
 	<liferay-ui:icon
 		iconCssClass="icon-remove"
 	/>

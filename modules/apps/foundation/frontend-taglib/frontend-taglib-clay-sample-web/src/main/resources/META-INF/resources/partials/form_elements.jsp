@@ -101,10 +101,30 @@ for (int i = 0; i < 8; i++) {
 }
 %>
 
-<clay:select label="Regular Select Element" name="name" options="<%= options %>" />
+<clay:select
+	label="Regular Select Element"
+	name="name"
+	options="<%= options %>"
+/>
 
-<clay:select disabled="<%= true %>" label="Disabled Regular Select Element" name="name" options="<%= options %>" />
+<clay:select
+	disabled="<%= true %>"
+	label="Disabled Regular Select Element"
+	name="name"
+	options="<%= options %>"
+/>
 
-<clay:select label="Multiple Select Element" multiple="<%= true %>" name="name" options="<%= options %>" />
+<clay:select
+	label="Multiple Select Element"
+	multiple="<%= true %>"
+	name="name"
+	options="<%= options %>"
+/>
 
-<clay:select disabled="<%= true %>" label="Disabled Multiple Select Element" multiple="<%= true %>" name="name" options="<%= options %>" />
+<clay:select
+	disabled="<%= true %>"
+	label="Disabled Multiple Select Element"
+	multiple="<%= true %>"
+	name="name"
+	options="<%= options %>"
+/>

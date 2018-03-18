@@ -81,7 +81,12 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 }
 %>
 
-<liferay-ui:tabs cssClass="navbar-no-collapse" names="<%= sections %>" refresh="<%= false %>" type="dropdown">
+<liferay-ui:tabs
+	cssClass="navbar-no-collapse"
+	names="<%= sections %>"
+	refresh="<%= false %>"
+	type="dropdown"
+>
 	<liferay-ui:section>
 		<div class="sidebar-body">
 			<c:choose>

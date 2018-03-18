@@ -14,10 +14,7 @@
  */
 --%>
 
-<%@ page import="com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil" %><%@
-page import="com.liferay.asset.kernel.model.AssetEntry" %><%@
-page import="com.liferay.asset.kernel.model.AssetRenderer" %><%@
-page import="com.liferay.asset.kernel.model.AssetRendererFactory" %><%@
+<%@ page import="com.liferay.asset.kernel.model.AssetRendererFactory" %><%@
 page import="com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil" %><%@
 page import="com.liferay.petra.string.CharPool" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
@@ -26,9 +23,6 @@ page import="com.liferay.portal.kernel.json.JSONArray" %><%@
 page import="com.liferay.portal.kernel.json.JSONObject" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
-page import="com.liferay.portal.kernel.portlet.LiferayPortletRequest" %><%@
-page import="com.liferay.portal.kernel.portlet.LiferayPortletResponse" %><%@
-page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.portlet.PortalPreferences" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.search.Field" %><%@

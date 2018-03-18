@@ -70,6 +70,7 @@ pageContext.setAttribute("searchURL", searchURL);
 					<a aria-expanded="false" aria-haspopup="true" class="component-link dropdown-toggle" data-toggle="dropdown" href="/" role="button">
 						<liferay-ui:message key="advance-status" /><span class="inline-item inline-item-after"><clay:icon symbol="caret-bottom" /></span>
 					</a>
+
 					<ul class="dropdown-menu">
 						<li class="dropdown-section">
 							<aui:select name="<%= CommerceOrderDisplayTerms.ADVANCE_STATUS %>" showEmptyOption="<%= true %>">
@@ -127,6 +128,7 @@ pageContext.setAttribute("searchURL", searchURL);
 				<a aria-expanded="false" aria-haspopup="true" class="component-link dropdown-toggle" data-toggle="dropdown" href="/" role="button">
 					<liferay-ui:message key="order-date" /><span class="inline-item inline-item-after"><clay:icon symbol="calendar" /></span>
 				</a>
+
 				<ul class="dropdown-menu">
 					<li class="dropdown-section">
 						<label for="<portlet:namespace /><%= CommerceOrderDisplayTerms.START_CREATE_DATE %>">

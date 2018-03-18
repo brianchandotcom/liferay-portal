@@ -44,6 +44,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			<div class="autofit-col autofit-col-expand">
 				<h4 class="commerce-title">Items (#)</h4>
 			</div>
+
 			<div class="autofit-col">
 				<div><a class="btn btn-outline-light" href="#placeholder">Edit Cart</a></div>
 			</div>
@@ -123,24 +124,25 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			<div class="autofit-col autofit-col-expand">
 				<div class="commerce-description"><liferay-ui:message key="delivery" /></div>
 			</div>
+
 			<div class="autofit-col">
 				<div class="commerce-value">Free</div>
 			</div>
 		</li>
-
 		<li class="autofit-row commerce-tax">
 			<div class="autofit-col autofit-col-expand">
 				<div class="commerce-description"><liferay-ui:message key="tax" /></div>
 			</div>
+
 			<div class="autofit-col">
 				<div class="commerce-value">$0.00</div>
 			</div>
 		</li>
-
 		<li class="autofit-row commerce-total">
 			<div class="autofit-col autofit-col-expand">
 				<div class="commerce-description"><liferay-ui:message key="total" /></div>
 			</div>
+
 			<div class="autofit-col">
 				<div class="commerce-value"><%= HtmlUtil.escape(commerceCartContentMiniDisplayContext.getCommerceOrderSubtotal()) %></div>
 			</div>

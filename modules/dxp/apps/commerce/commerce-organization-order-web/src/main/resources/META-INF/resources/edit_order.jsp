@@ -49,6 +49,7 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 				title='<%= LanguageUtil.format(request, "order-x", commerceOrder.getCommerceOrderId()) %>'
 			/>
 		</div>
+
 		<div class="autofit-col">
 			<liferay-ui:icon
 				icon="print"
@@ -61,6 +62,7 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 				url="javascript:window.print();"
 			/>
 		</div>
+
 		<div class="autofit-col">
 
 			<%
@@ -70,6 +72,7 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 
 			<liferay-util:include page="/order_notes.jsp" servletContext="<%= application %>" />
 		</div>
+
 		<div class="autofit-col">
 			<liferay-ui:icon
 				icon="plus"
@@ -82,6 +85,7 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 				url="#placeholder"
 			/>
 		</div>
+
 		<div class="autofit-col">
 			<liferay-ui:icon-menu direction="right" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>" triggerCssClass="component-action">
 				<liferay-ui:icon

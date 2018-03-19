@@ -5,14 +5,14 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 			schemas: [
 				/(https?:\/\/(?:www\.)?facebook.com\/\S*\/videos\/\S*)/
 			],
-			tpl: new CKEDITOR.template('<iframe allowFullScreen="true" allowTransparency="true" class="embed-responsive-item" frameborder="0" height="315" src="https://www.facebook.com/plugins/video.php?href={embedId}&show_text=0&width=321" scrolling="no" style="border:none;overflow:hidden" width="560"></iframe>')
+			tpl: new CKEDITOR.template('<div class="embed-responsive embed-responsive-16by9" data-embed-id="{embedId}"><iframe allowFullScreen="true" allowTransparency="true" class="embed-responsive-item" frameborder="0" height="315" src="https://www.facebook.com/plugins/video.php?href={embedId}&show_text=0&width=560&height=315" scrolling="no" style="border:none;overflow:hidden" width="560"></iframe></div>')
 		},
 		{
 			id: 'twitch',
 			schemas: [
 				/https?:\/\/(?:www\.)?twitch.tv\/videos\/(\S*)$/
 			],
-			tpl: new CKEDITOR.template('<iframe allowfullscreen="true" class="embed-responsive-item" frameborder="0" height="315" src="https://player.twitch.tv/?autoplay=false&video={embedId}" scrolling="no" width="560" ></iframe>')
+			tpl: new CKEDITOR.template('<div class="embed-responsive embed-responsive-16by9" data-embed-id="{embedId}"><iframe allowfullscreen="true" class="embed-responsive-item" frameborder="0" height="315" src="https://player.twitch.tv/?autoplay=false&video={embedId}" scrolling="no" width="560" ></iframe></div>')
 		},
 		{
 			id: 'vimeo',
@@ -22,20 +22,20 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 				/https?:\/\/(?:www\.)?vimeo\.com\/groups\/.*\/videos\/(\S*)/,
 				/https?:\/\/(?:www\.)?vimeo\.com\/(\S*)$/
 			],
-			tpl: new CKEDITOR.template('<iframe allowfullscreen class="embed-responsive-item" frameborder="0" height="315" mozallowfullscreen src="https://player.vimeo.com/video/{embedId}" webkitallowfullscreen width="560"></iframe>')
+			tpl: new CKEDITOR.template('<div class="embed-responsive embed-responsive-16by9" data-embed-id="{embedId}"><iframe allowfullscreen class="embed-responsive-item" frameborder="0" height="315" mozallowfullscreen src="https://player.vimeo.com/video/{embedId}" webkitallowfullscreen width="560"></iframe></div>')
 		},
 		{
 			id: 'youtube',
 			schemas: [
 				/https?:\/\/(?:www\.)?youtube.com\/watch\?v=(\S*)$/
 			],
-			tpl: new CKEDITOR.template('<iframe allow="autoplay; encrypted-media" allowfullscreen class="embed-responsive-item" height="315" frameborder="0" src="https://www.youtube.com/embed/{embedId}?rel=0" width="560"></iframe>')
+			tpl: new CKEDITOR.template('<div class="embed-responsive embed-responsive-16by9" data-embed-id="{embedId}"><iframe allow="autoplay; encrypted-media" allowfullscreen height="315" class="embed-responsive-item" frameborder="0" src="https://www.youtube.com/embed/{embedId}?rel=0" width="560"></iframe></div>')
 		}
 	];
 
 	var REGEX_HTTP = /^https?/;
 
-	CKEDITOR.DEFAULT_LFR_VIDEO_EMBED_WIDGET_TPL = '<div data-embed-video-url="{url}"><div class="embed-responsive embed-responsive-16by9">{videoContent}</div><div class="embed-video-help-message">{helpMessageIcon}<span> {helpMessage}</span></div></div><br>';
+	CKEDITOR.DEFAULT_LFR_VIDEO_EMBED_WIDGET_TPL = '<div data-embed-video-url="{url}">{videoContent}<div class="embed-video-help-message">{helpMessageIcon}<span> {helpMessage}</span></div></div><br>';
 
 	/**
 	 * CKEditor plugin which adds the infrastructure to embed video urls as media objects
@@ -72,8 +72,10 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 
 						upcastWidget = true;
 					}
-					else if (element.name === 'iframe') {
-						data.url = element.attributes.src;
+					else if (element.name === 'div' && element.attributes['data-embed-id']) {
+						var iframe = element.children[0];
+
+						data.url = iframe.attributes.src;
 
 						var embedContent = generateEmbedContent(data.url, element.getOuterHtml());
 
@@ -170,7 +172,7 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 						},
 
 						downcast: function(widget) {
-							return widget.children[0].children[0];
+							return widget.children[0];
 						},
 
 						upcast: function(element, data) {

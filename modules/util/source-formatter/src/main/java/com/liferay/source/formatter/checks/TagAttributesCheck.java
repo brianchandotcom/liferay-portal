@@ -43,6 +43,18 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 			return tag;
 		}
 
+		Map<String, String> attributesMap = tag.getAttributesMap();
+
+		for (Map.Entry<String, String> entry : attributesMap.entrySet()) {
+			String attributeValue = entry.getValue();
+
+			if (attributeValue.contains(StringPool.NEW_LINE)) {
+				tag.setMultiLine(true);
+
+				return tag;
+			}
+		}
+
 		return doFormatLineBreaks(tag, absolutePath);
 	}
 

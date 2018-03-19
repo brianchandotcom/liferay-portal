@@ -76,6 +76,12 @@
 		</execute>
 
 		<execute macro="WebContent#viewRTLLayout" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="Navigator#ensureLocaleURL">
+			<var name="locale" value="en" />
+		</execute>
 	</command>
 
 	<command name="Smoke" priority="5">

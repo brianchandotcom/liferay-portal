@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Social Bookmarks Analytics
+Bundle-SymbolicName: com.liferay.social.bookmarks.analytics
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Social Bookmarks
+Web-ContextPath: /social-bookmarks-analytics

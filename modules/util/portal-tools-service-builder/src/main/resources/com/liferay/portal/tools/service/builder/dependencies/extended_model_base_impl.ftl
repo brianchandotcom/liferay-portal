@@ -6,6 +6,7 @@ import ${apiPackagePath}.model.${entity.name};
 	import ${apiPackagePath}.service.${entity.name}LocalServiceUtil;
 
 	import com.liferay.portal.kernel.exception.PortalException;
+	import com.liferay.portal.kernel.exception.SystemException;
 	import com.liferay.portal.kernel.model.TreeModel;
 	import com.liferay.portal.kernel.util.StringBundler;
 
@@ -51,7 +52,16 @@ public abstract class ${entity.name}BaseImpl extends ${entity.name}ModelImpl imp
 				${entity.name}LocalServiceUtil.add${entity.name}(this);
 			}
 			else {
-				${entity.name}LocalServiceUtil.update${entity.name}(this);
+				<#if entity.versionEntity??>
+					try {
+						${entity.name}LocalServiceUtil.update${entity.name}(this);
+					}
+					catch (PortalException pe) {
+						throw new SystemException(pe);
+					}
+				<#else>
+					${entity.name}LocalServiceUtil.update${entity.name}(this);
+				</#if>
 			}
 		}
 
@@ -93,7 +103,16 @@ public abstract class ${entity.name}BaseImpl extends ${entity.name}ModelImpl imp
 
 				${entity.varName}.setTreePath(treePath);
 
-				${entity.name}LocalServiceUtil.update${entity.name}(${entity.varName});
+				<#if entity.versionEntity??>
+					try {
+						${entity.name}LocalServiceUtil.update${entity.name}(${entity.varName});
+					}
+					catch (PortalException pe) {
+						throw new SystemException(pe);
+					}
+				<#else>
+					${entity.name}LocalServiceUtil.update${entity.name}(${entity.varName});
+				</#if>
 			}
 		</#if>
 	</#if>

@@ -17,15 +17,15 @@
 
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
-		<column name="userName" type="String" />
+		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
 		<!-- Other fields -->
 
-		<column name="fullName" type="String" />
-		<column name="emailAddress" type="String" />
-		<column name="comments" type="String" />
+		<column name="fullName" type="String" uad-nonanonymizable="true" />
+		<column name="emailAddress" type="String" uad-nonanonymizable="true" />
+		<column name="comments" type="String" uad-nonanonymizable="true" />
 
 		<!-- Order -->
 

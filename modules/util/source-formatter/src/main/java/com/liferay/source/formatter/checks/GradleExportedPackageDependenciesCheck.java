@@ -47,20 +47,13 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 
 	@Override
 	public void init() throws Exception {
-		_exportPackageBundleSymbolicNames.addAll(
-			_getExportPackageBundleSymbolicNames());
+		_emptyExportPackageBundleSymbolicNames.addAll(
+			_getEmptyExportPackageBundleSymbolicNames());
 	}
 
 	@Override
 	public boolean isPortalCheck() {
 		return true;
-	}
-
-	public void setExportPackageBundleSymbolicNamePrefix(
-		String exportPackageBundleSymbolicNamePrefix) {
-
-		_exportPackageBundleSymbolicNamePrefixes.add(
-			exportPackageBundleSymbolicNamePrefix);
 	}
 
 	@Override
@@ -155,7 +148,7 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 		return matcher.group(1);
 	}
 
-	private Set<String> _getExportPackageBundleSymbolicNames()
+	private Set<String> _getEmptyExportPackageBundleSymbolicNames()
 		throws Exception {
 
 		File portalDir = getPortalDir();
@@ -198,7 +191,7 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 		for (File file : files) {
 			String content = FileUtil.read(file);
 
-			if (!content.contains("Export-Package:")) {
+			if (content.contains("Export-Package:")) {
 				continue;
 			}
 
@@ -209,9 +202,11 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 				continue;
 			}
 
-			if (bundleSymbolicName.startsWith("com.liferay")) {
-				bundleSymbolicNames.add(bundleSymbolicName);
+			if (!bundleSymbolicName.startsWith("com.liferay.")) {
+				continue;
 			}
+
+			bundleSymbolicNames.add(bundleSymbolicName);
 		}
 
 		return bundleSymbolicNames;
@@ -222,13 +217,7 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 			return true;
 		}
 
-		for (String s : _exportPackageBundleSymbolicNamePrefixes) {
-			if (dependencyName.startsWith(s)) {
-				return true;
-			}
-		}
-
-		if (_exportPackageBundleSymbolicNames.contains(dependencyName)) {
+		if (!_emptyExportPackageBundleSymbolicNames.contains(dependencyName)) {
 			return true;
 		}
 
@@ -237,17 +226,15 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 
 	private static final String[] _SKIP_DIR_NAMES = {
 		".git", ".gradle", ".idea", ".m2", ".settings", "bin", "build",
-		"classes", "sql", "src", "test-classes", "test-coverage",
-		"test-results", "tmp"
+		"classes", "dependencies", "node_modules", "sql", "src", "test",
+		"test-classes", "test-coverage", "test-results", "tmp"
 	};
 
 	private final Pattern _dependenciesPattern = Pattern.compile(
 		"(\n|\\A)(\t*)dependencies \\{\n");
 	private final Pattern _dependencyNamePattern = Pattern.compile(
 		".*, name: \"([^\"]*)\".*");
-	private final List<String> _exportPackageBundleSymbolicNamePrefixes =
-		new ArrayList<>();
-	private final List<String> _exportPackageBundleSymbolicNames =
+	private final List<String> _emptyExportPackageBundleSymbolicNames =
 		new ArrayList<>();
 
 }

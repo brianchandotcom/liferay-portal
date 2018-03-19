@@ -1,0 +1,58 @@
+{
+	"@context": "https://www.w3.org/ns/hydra/core#",
+	"@id": "https://apiosample.wedeploy.io/f/c/people",
+	"@type": "Class",
+	"description": "This form can be used to create or update a person",
+	"supportedProperty": [
+		{
+			"@type": "SupportedProperty",
+			"property": "#birthDate",
+			"readable": false,
+			"required": true,
+			"writeable": true
+		},
+		{
+			"@type": "SupportedProperty",
+			"property": "#image",
+			"readable": false,
+			"required": true,
+			"writeable": true
+		},
+		{
+			"@type": "SupportedProperty",
+			"property": "#address",
+			"readable": false,
+			"required": true,
+			"writeable": true
+		},
+		{
+			"@type": "SupportedProperty",
+			"property": "#givenName",
+			"readable": false,
+			"required": true,
+			"writeable": true
+		},
+		{
+			"@type": "SupportedProperty",
+			"property": "#jobTitle",
+			"readable": false,
+			"required": true,
+			"writeable": true
+		},
+		{
+			"@type": "SupportedProperty",
+			"property": "#familyName",
+			"readable": false,
+			"required": true,
+			"writeable": true
+		},
+		{
+			"@type": "SupportedProperty",
+			"property": "#email",
+			"readable": false,
+			"required": true,
+			"writeable": true
+		}
+	],
+	"title": "The person form"
+}

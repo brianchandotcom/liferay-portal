@@ -63,6 +63,7 @@ liferayOSGi {
 }
 
 updateFileVersions {
+	match(/<artifactId>com\.liferay\.source\.formatter<\/artifactId>\s+<version>(.+)<\/version>/, "../../etl/talend/pom.xml")
 	match(/\t\t\t\t<version>(\d.+)<\/version>/, "samples/pom.xml")
 	match(/com\.liferay\.source\.formatter=(\d.+)/, "../../sdk/gradle-plugins/src/main/resources/com/liferay/gradle/plugins/dependencies/portal-tools.properties")
 

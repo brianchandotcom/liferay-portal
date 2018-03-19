@@ -752,23 +752,30 @@ public class JenkinsJobConfigGenerator {
 
 		StringBuilder sb = new StringBuilder();
 
-		List<Element> topLevelJobNameList = new ArrayList<>();
+		List<String> topLevelJobNamesList = new ArrayList<>();
 
-		for (String topLevelJobName : topLevelJobNames) {
+		topLevelJobNamesList.addAll(topLevelJobNames);
+
+		Collections.sort(topLevelJobNamesList);
+
+		List<Element> topLevelJobNameElements = new ArrayList<>(
+			topLevelJobNamesList.size());
+
+		for (String topLevelJobName : topLevelJobNamesList) {
 			String excludeTopLevelView = _generatedPropertiesMap.get(
 				"job.property(" + topLevelJobName + "/exclude.top.level.view)");
 
 			if ((excludeTopLevelView == null) ||
 				!excludeTopLevelView.equals("true")) {
 
-				topLevelJobNameList.add(
+				topLevelJobNameElements.add(
 					Dom4JUtil.getNewElement("string", null, topLevelJobName));
 			}
 		}
 
 		_generatedPropertiesMap.put(
 			"master.top.level.jobs.xml(" + masterHostname + ")",
-			_getFormattedXML(topLevelJobNameList));
+			_getFormattedXML(topLevelJobNameElements));
 
 		String masterPrimaryView = _generatedPropertiesMap.get(
 			"master.primary.view(" + masterHostname + ")");

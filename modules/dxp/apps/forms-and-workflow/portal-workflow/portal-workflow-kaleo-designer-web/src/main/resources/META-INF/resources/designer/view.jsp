@@ -21,9 +21,6 @@
 </liferay-portlet:renderURL>
 
 <%
-int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
-int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM);
-
 String definitionsNavigation = ParamUtil.getString(request, "definitionsNavigation");
 
 int displayedStatus = KaleoDefinitionVersionConstants.STATUS_ALL;
@@ -40,6 +37,8 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 PortletURL navigationPortletURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
 
+int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM);
+
 if (delta > 0) {
 	navigationPortletURL.setParameter("delta", String.valueOf(delta));
 }
@@ -49,6 +48,8 @@ navigationPortletURL.setParameter("orderByType", orderByType);
 
 PortletURL displayStyleURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
 
+int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
+
 if (cur > 0) {
 	displayStyleURL.setParameter("cur", String.valueOf(cur));
 }
@@ -57,14 +58,10 @@ if (cur > 0) {
 <liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>">
 
 	<%
-	RequiredWorkflowDefinitionException requiredWorkflowDefinitionException = (RequiredWorkflowDefinitionException)errorException;
-
-	Object[] messageArguments = kaleoDesignerDisplayContext.getMessageArguments(requiredWorkflowDefinitionException.getWorkflowDefinitionLinks(), request);
-
-	String messageKey = kaleoDesignerDisplayContext.getMessageKey(requiredWorkflowDefinitionException.getWorkflowDefinitionLinks());
+	RequiredWorkflowDefinitionException rwde = (RequiredWorkflowDefinitionException)errorException;
 	%>
 
-	<liferay-ui:message arguments="<%= messageArguments %>" key="<%= messageKey %>" translateArguments="<%= false %>" />
+	<liferay-ui:message arguments="<%= kaleoDesignerDisplayContext.getMessageArguments(rwde.getWorkflowDefinitionLinks(), request) %>" key="<%= kaleoDesignerDisplayContext.getMessageKey(rwde.getWorkflowDefinitionLinks()) %>" translateArguments="<%= false %>" />
 </liferay-ui:error>
 
 <c:choose>

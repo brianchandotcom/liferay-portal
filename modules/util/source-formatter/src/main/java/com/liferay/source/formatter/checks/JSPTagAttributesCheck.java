@@ -66,7 +66,7 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 	}
 
 	@Override
-	protected Tag doFormatLineBreaks(Tag tag) {
+	protected Tag doFormatLineBreaks(Tag tag, String absolutePath) {
 		String tagName = tag.getName();
 
 		if (!tagName.contains(StringPool.COLON) || tagName.startsWith("aui:") ||
@@ -91,9 +91,9 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 			return content;
 		}
 
-		content = _formatSingleLineTagAttributes(content);
+		content = _formatSingleLineTagAttributes(absolutePath, content);
 
-		content = formatMultiLinesTagAttributes(content, false);
+		content = formatMultiLinesTagAttributes(absolutePath, content, false);
 
 		return content;
 	}
@@ -193,7 +193,8 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 		return tag;
 	}
 
-	private String _formatSingleLineTagAttributes(String content)
+	private String _formatSingleLineTagAttributes(
+			String absolutePath, String content)
 		throws Exception {
 
 		StringBundler sb = new StringBundler();
@@ -211,7 +212,7 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 
 					if (htmlTag != null) {
 						String newHTMLTag = formatTagAttributes(
-							htmlTag, false, true);
+							absolutePath, htmlTag, false, true);
 
 						line = StringUtil.replace(line, htmlTag, newHTMLTag);
 					}
@@ -225,7 +226,7 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 					}
 
 					String newJSPTag = formatTagAttributes(
-						jspTag, false, forceSingleLine);
+						absolutePath, jspTag, false, forceSingleLine);
 
 					line = StringUtil.replace(line, jspTag, newJSPTag);
 				}

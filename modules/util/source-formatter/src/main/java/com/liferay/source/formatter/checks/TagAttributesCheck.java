@@ -32,20 +32,22 @@ import java.util.regex.Pattern;
  */
 public abstract class TagAttributesCheck extends BaseFileCheck {
 
-	protected abstract Tag doFormatLineBreaks(Tag tag);
+	protected abstract Tag doFormatLineBreaks(Tag tag, String absolutePath);
 
-	protected Tag formatLineBreaks(Tag tag, boolean forceSingleLine) {
+	protected Tag formatLineBreaks(
+		Tag tag, String absolutePath, boolean forceSingleLine) {
+
 		if (forceSingleLine) {
 			tag.setMultiLine(false);
 
 			return tag;
 		}
 
-		return doFormatLineBreaks(tag);
+		return doFormatLineBreaks(tag, absolutePath);
 	}
 
 	protected String formatMultiLinesTagAttributes(
-			String content, boolean escapeQuotes)
+			String absolutePath, String content, boolean escapeQuotes)
 		throws Exception {
 
 		Matcher matcher = _multilineTagPattern.matcher(content);
@@ -82,7 +84,8 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 					matcher.start(3));
 			}
 
-			String newTag = formatTagAttributes(tag, escapeQuotes, false);
+			String newTag = formatTagAttributes(
+				absolutePath, tag, escapeQuotes, false);
 
 			if (!tag.equals(newTag)) {
 				return StringUtil.replace(content, tag, newTag);
@@ -93,7 +96,8 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 	}
 
 	protected String formatTagAttributes(
-			String s, boolean escapeQuotes, boolean forceSingleLine)
+			String absolutePath, String s, boolean escapeQuotes,
+			boolean forceSingleLine)
 		throws Exception {
 
 		Tag tag = _parseTag(s, escapeQuotes);
@@ -107,7 +111,7 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 		tag = sortHTMLTagAttributes(tag);
 
 		if (isPortalSource() || isSubrepository()) {
-			tag = formatLineBreaks(tag, forceSingleLine);
+			tag = formatLineBreaks(tag, absolutePath, forceSingleLine);
 		}
 
 		return tag.toString();

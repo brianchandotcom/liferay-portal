@@ -27,7 +27,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class XMLTagAttributesCheck extends TagAttributesCheck {
 
 	@Override
-	protected Tag doFormatLineBreaks(Tag tag) {
+	protected Tag doFormatLineBreaks(Tag tag, String absolutePath) {
+		if (absolutePath.endsWith("/pom.xml")) {
+			return tag;
+		}
+
 		if (ArrayUtil.contains(_SINGLE_LINE_TAG_NAMES, tag.getName())) {
 			tag.setMultiLine(false);
 		}
@@ -47,14 +51,16 @@ public class XMLTagAttributesCheck extends TagAttributesCheck {
 			return content;
 		}
 
-		content = _formatTagAttributes(content);
+		content = _formatTagAttributes(absolutePath, content);
 
-		content = formatMultiLinesTagAttributes(content, true);
+		content = formatMultiLinesTagAttributes(absolutePath, content, true);
 
 		return content;
 	}
 
-	private String _formatTagAttributes(String content) throws Exception {
+	private String _formatTagAttributes(String absolutePath, String content)
+		throws Exception {
+
 		StringBundler sb = new StringBundler();
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
@@ -75,7 +81,8 @@ public class XMLTagAttributesCheck extends TagAttributesCheck {
 						!trimmedLine.startsWith("<!") &&
 						!(line.contains("<![CDATA[") && line.contains("]]>"))) {
 
-						line = formatTagAttributes(line, true, false);
+						line = formatTagAttributes(
+							absolutePath, line, true, false);
 					}
 					else if (trimmedLine.startsWith("<![CDATA[") &&
 							 !trimmedLine.endsWith("]]>")) {

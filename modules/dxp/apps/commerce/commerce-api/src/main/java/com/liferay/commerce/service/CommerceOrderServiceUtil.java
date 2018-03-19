@@ -68,12 +68,28 @@ public class CommerceOrderServiceUtil {
 		return getService().approveCommerceOrder(commerceOrderId);
 	}
 
+	public static com.liferay.commerce.model.CommerceOrder cancelCommerceOrderPayment(
+		long commerceOrderId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .cancelCommerceOrderPayment(commerceOrderId, serviceContext);
+	}
+
 	public static com.liferay.commerce.model.CommerceOrder checkoutCommerceOrder(
 		long commerceOrderId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .checkoutCommerceOrder(commerceOrderId, serviceContext);
+	}
+
+	public static com.liferay.commerce.model.CommerceOrder completeCommerceOrderPayment(
+		long commerceOrderId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .completeCommerceOrderPayment(commerceOrderId, serviceContext);
 	}
 
 	public static void deleteCommerceOrder(long commerceOrderId)
@@ -156,6 +172,14 @@ public class CommerceOrderServiceUtil {
 		long commerceOrderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().reorderCommerceOrder(commerceOrderId);
+	}
+
+	public static java.lang.String startCommerceOrderPayment(
+		long commerceOrderId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .startCommerceOrderPayment(commerceOrderId, serviceContext);
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder submitCommerceOrder(

@@ -65,11 +65,29 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceOrder cancelCommerceOrderPayment(
+		long commerceOrderId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderService.cancelCommerceOrderPayment(commerceOrderId,
+			serviceContext);
+	}
+
+	@Override
 	public com.liferay.commerce.model.CommerceOrder checkoutCommerceOrder(
 		long commerceOrderId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderService.checkoutCommerceOrder(commerceOrderId,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrder completeCommerceOrderPayment(
+		long commerceOrderId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderService.completeCommerceOrderPayment(commerceOrderId,
 			serviceContext);
 	}
 
@@ -163,6 +181,14 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 		long commerceOrderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderService.reorderCommerceOrder(commerceOrderId);
+	}
+
+	@Override
+	public java.lang.String startCommerceOrderPayment(long commerceOrderId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderService.startCommerceOrderPayment(commerceOrderId,
+			serviceContext);
 	}
 
 	@Override

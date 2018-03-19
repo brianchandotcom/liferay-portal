@@ -94,8 +94,14 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	public CommerceOrder approveCommerceOrder(long userId, long commerceOrderId)
 		throws PortalException;
 
+	public CommerceOrder cancelCommerceOrderPayment(long commerceOrderId,
+		ServiceContext serviceContext) throws PortalException;
+
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder checkoutCommerceOrder(long commerceOrderId,
+		ServiceContext serviceContext) throws PortalException;
+
+	public CommerceOrder completeCommerceOrderPayment(long commerceOrderId,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -346,6 +352,9 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	public long searchCommerceOrdersCount(SearchContext searchContext)
 		throws PortalException;
 
+	public java.lang.String startCommerceOrderPayment(long commerceOrderId,
+		ServiceContext serviceContext) throws PortalException;
+
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder submitCommerceOrder(long userId, long commerceOrderId)
 		throws PortalException;
@@ -375,10 +384,6 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 		java.lang.String shippingOptionName,
 		java.lang.String purchaseOrderNumber, double subtotal,
 		double shippingPrice, double total, java.lang.String advanceStatus,
-		int paymentStatus, int orderStatus) throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public CommerceOrder updatePaymentStatus(long commerceOrderId,
 		int paymentStatus, int orderStatus) throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)

@@ -69,7 +69,13 @@ public interface CommerceOrderService extends BaseService {
 	public CommerceOrder approveCommerceOrder(long commerceOrderId)
 		throws PortalException;
 
+	public CommerceOrder cancelCommerceOrderPayment(long commerceOrderId,
+		ServiceContext serviceContext) throws PortalException;
+
 	public CommerceOrder checkoutCommerceOrder(long commerceOrderId,
+		ServiceContext serviceContext) throws PortalException;
+
+	public CommerceOrder completeCommerceOrderPayment(long commerceOrderId,
 		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteCommerceOrder(long commerceOrderId)
@@ -122,6 +128,9 @@ public interface CommerceOrderService extends BaseService {
 
 	public CommerceOrder reorderCommerceOrder(long commerceOrderId)
 		throws PortalException;
+
+	public java.lang.String startCommerceOrderPayment(long commerceOrderId,
+		ServiceContext serviceContext) throws PortalException;
 
 	public CommerceOrder submitCommerceOrder(long commerceOrderId)
 		throws PortalException;

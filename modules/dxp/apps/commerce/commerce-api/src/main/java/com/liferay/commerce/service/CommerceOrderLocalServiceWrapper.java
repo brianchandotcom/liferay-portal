@@ -80,11 +80,29 @@ public class CommerceOrderLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceOrder cancelCommerceOrderPayment(
+		long commerceOrderId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderLocalService.cancelCommerceOrderPayment(commerceOrderId,
+			serviceContext);
+	}
+
+	@Override
 	public com.liferay.commerce.model.CommerceOrder checkoutCommerceOrder(
 		long commerceOrderId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderLocalService.checkoutCommerceOrder(commerceOrderId,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrder completeCommerceOrderPayment(
+		long commerceOrderId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderLocalService.completeCommerceOrderPayment(commerceOrderId,
 			serviceContext);
 	}
 
@@ -452,6 +470,14 @@ public class CommerceOrderLocalServiceWrapper
 	}
 
 	@Override
+	public java.lang.String startCommerceOrderPayment(long commerceOrderId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderLocalService.startCommerceOrderPayment(commerceOrderId,
+			serviceContext);
+	}
+
+	@Override
 	public com.liferay.commerce.model.CommerceOrder submitCommerceOrder(
 		long userId, long commerceOrderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -499,14 +525,6 @@ public class CommerceOrderLocalServiceWrapper
 			commerceShippingMethodId, shippingOptionName, purchaseOrderNumber,
 			subtotal, shippingPrice, total, advanceStatus, paymentStatus,
 			orderStatus);
-	}
-
-	@Override
-	public com.liferay.commerce.model.CommerceOrder updatePaymentStatus(
-		long commerceOrderId, int paymentStatus, int orderStatus)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceOrderLocalService.updatePaymentStatus(commerceOrderId,
-			paymentStatus, orderStatus);
 	}
 
 	@Override

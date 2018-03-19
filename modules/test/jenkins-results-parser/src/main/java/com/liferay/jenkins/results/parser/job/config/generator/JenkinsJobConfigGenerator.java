@@ -146,6 +146,8 @@ public class JenkinsJobConfigGenerator {
 		comparatorElement.addAttribute(
 			"class", "hudson.util.CaseInsensitiveComparator");
 
+		Arrays.sort(childJobNames);
+
 		for (String childJob : childJobNames) {
 			Dom4JUtil.getNewElement("string", jobNamesElement, childJob);
 		}

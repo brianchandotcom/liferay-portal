@@ -19,9 +19,9 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -43,8 +43,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface OAuth2ApplicationModel extends BaseModel<OAuth2Application>,
-	GroupedModel, ShardedModel {
+public interface OAuth2ApplicationModel extends AuditedModel,
+	BaseModel<OAuth2Application>, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -80,22 +80,6 @@ public interface OAuth2ApplicationModel extends BaseModel<OAuth2Application>,
 	public void setOAuth2ApplicationId(long oAuth2ApplicationId);
 
 	/**
-	 * Returns the group ID of this o auth2 application.
-	 *
-	 * @return the group ID of this o auth2 application
-	 */
-	@Override
-	public long getGroupId();
-
-	/**
-	 * Sets the group ID of this o auth2 application.
-	 *
-	 * @param groupId the group ID of this o auth2 application
-	 */
-	@Override
-	public void setGroupId(long groupId);
-
-	/**
 	 * Returns the company ID of this o auth2 application.
 	 *
 	 * @return the company ID of this o auth2 application
@@ -110,6 +94,38 @@ public interface OAuth2ApplicationModel extends BaseModel<OAuth2Application>,
 	 */
 	@Override
 	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the create date of this o auth2 application.
+	 *
+	 * @return the create date of this o auth2 application
+	 */
+	@Override
+	public Date getCreateDate();
+
+	/**
+	 * Sets the create date of this o auth2 application.
+	 *
+	 * @param createDate the create date of this o auth2 application
+	 */
+	@Override
+	public void setCreateDate(Date createDate);
+
+	/**
+	 * Returns the modified date of this o auth2 application.
+	 *
+	 * @return the modified date of this o auth2 application
+	 */
+	@Override
+	public Date getModifiedDate();
+
+	/**
+	 * Sets the modified date of this o auth2 application.
+	 *
+	 * @param modifiedDate the modified date of this o auth2 application
+	 */
+	@Override
+	public void setModifiedDate(Date modifiedDate);
 
 	/**
 	 * Returns the user ID of this o auth2 application.
@@ -161,36 +177,122 @@ public interface OAuth2ApplicationModel extends BaseModel<OAuth2Application>,
 	public void setUserName(String userName);
 
 	/**
-	 * Returns the create date of this o auth2 application.
+	 * Returns the allowed grant types of this o auth2 application.
 	 *
-	 * @return the create date of this o auth2 application
+	 * @return the allowed grant types of this o auth2 application
 	 */
-	@Override
-	public Date getCreateDate();
+	@AutoEscape
+	public String getAllowedGrantTypes();
 
 	/**
-	 * Sets the create date of this o auth2 application.
+	 * Sets the allowed grant types of this o auth2 application.
 	 *
-	 * @param createDate the create date of this o auth2 application
+	 * @param allowedGrantTypes the allowed grant types of this o auth2 application
 	 */
-	@Override
-	public void setCreateDate(Date createDate);
+	public void setAllowedGrantTypes(String allowedGrantTypes);
 
 	/**
-	 * Returns the modified date of this o auth2 application.
+	 * Returns the client ID of this o auth2 application.
 	 *
-	 * @return the modified date of this o auth2 application
+	 * @return the client ID of this o auth2 application
 	 */
-	@Override
-	public Date getModifiedDate();
+	@AutoEscape
+	public String getClientId();
 
 	/**
-	 * Sets the modified date of this o auth2 application.
+	 * Sets the client ID of this o auth2 application.
 	 *
-	 * @param modifiedDate the modified date of this o auth2 application
+	 * @param clientId the client ID of this o auth2 application
 	 */
-	@Override
-	public void setModifiedDate(Date modifiedDate);
+	public void setClientId(String clientId);
+
+	/**
+	 * Returns the client profile of this o auth2 application.
+	 *
+	 * @return the client profile of this o auth2 application
+	 */
+	public int getClientProfile();
+
+	/**
+	 * Sets the client profile of this o auth2 application.
+	 *
+	 * @param clientProfile the client profile of this o auth2 application
+	 */
+	public void setClientProfile(int clientProfile);
+
+	/**
+	 * Returns the client secret of this o auth2 application.
+	 *
+	 * @return the client secret of this o auth2 application
+	 */
+	@AutoEscape
+	public String getClientSecret();
+
+	/**
+	 * Sets the client secret of this o auth2 application.
+	 *
+	 * @param clientSecret the client secret of this o auth2 application
+	 */
+	public void setClientSecret(String clientSecret);
+
+	/**
+	 * Returns the description of this o auth2 application.
+	 *
+	 * @return the description of this o auth2 application
+	 */
+	@AutoEscape
+	public String getDescription();
+
+	/**
+	 * Sets the description of this o auth2 application.
+	 *
+	 * @param description the description of this o auth2 application
+	 */
+	public void setDescription(String description);
+
+	/**
+	 * Returns the features of this o auth2 application.
+	 *
+	 * @return the features of this o auth2 application
+	 */
+	@AutoEscape
+	public String getFeatures();
+
+	/**
+	 * Sets the features of this o auth2 application.
+	 *
+	 * @param features the features of this o auth2 application
+	 */
+	public void setFeatures(String features);
+
+	/**
+	 * Returns the home page url of this o auth2 application.
+	 *
+	 * @return the home page url of this o auth2 application
+	 */
+	@AutoEscape
+	public String getHomePageURL();
+
+	/**
+	 * Sets the home page url of this o auth2 application.
+	 *
+	 * @param homePageURL the home page url of this o auth2 application
+	 */
+	public void setHomePageURL(String homePageURL);
+
+	/**
+	 * Returns the icon file entry ID of this o auth2 application.
+	 *
+	 * @return the icon file entry ID of this o auth2 application
+	 */
+	public long getIconFileEntryId();
+
+	/**
+	 * Sets the icon file entry ID of this o auth2 application.
+	 *
+	 * @param iconFileEntryId the icon file entry ID of this o auth2 application
+	 */
+	public void setIconFileEntryId(long iconFileEntryId);
 
 	/**
 	 * Returns the name of this o auth2 application.
@@ -208,19 +310,49 @@ public interface OAuth2ApplicationModel extends BaseModel<OAuth2Application>,
 	public void setName(String name);
 
 	/**
-	 * Returns the description of this o auth2 application.
+	 * Returns the privacy policy url of this o auth2 application.
 	 *
-	 * @return the description of this o auth2 application
+	 * @return the privacy policy url of this o auth2 application
 	 */
 	@AutoEscape
-	public String getDescription();
+	public String getPrivacyPolicyURL();
 
 	/**
-	 * Sets the description of this o auth2 application.
+	 * Sets the privacy policy url of this o auth2 application.
 	 *
-	 * @param description the description of this o auth2 application
+	 * @param privacyPolicyURL the privacy policy url of this o auth2 application
 	 */
-	public void setDescription(String description);
+	public void setPrivacyPolicyURL(String privacyPolicyURL);
+
+	/**
+	 * Returns the redirect ur is of this o auth2 application.
+	 *
+	 * @return the redirect ur is of this o auth2 application
+	 */
+	@AutoEscape
+	public String getRedirectURIs();
+
+	/**
+	 * Sets the redirect ur is of this o auth2 application.
+	 *
+	 * @param redirectURIs the redirect ur is of this o auth2 application
+	 */
+	public void setRedirectURIs(String redirectURIs);
+
+	/**
+	 * Returns the scope aliases of this o auth2 application.
+	 *
+	 * @return the scope aliases of this o auth2 application
+	 */
+	@AutoEscape
+	public String getScopeAliases();
+
+	/**
+	 * Sets the scope aliases of this o auth2 application.
+	 *
+	 * @param scopeAliases the scope aliases of this o auth2 application
+	 */
+	public void setScopeAliases(String scopeAliases);
 
 	@Override
 	public boolean isNew();

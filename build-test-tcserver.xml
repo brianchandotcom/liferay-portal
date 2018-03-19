@@ -55,8 +55,12 @@
 			./tcruntime-ctl.sh run
 		</echo>
 
-		<chmod perm="a+x">
-			<fileset dir="${app.server.tcserver.dir}">
+		<chmod
+			perm="a+x"
+		>
+			<fileset
+				dir="${app.server.tcserver.dir}"
+			>
 				<include name="**/*.sh" />
 			</fileset>
 		</chmod>

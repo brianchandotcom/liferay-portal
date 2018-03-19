@@ -23,7 +23,11 @@
 		<contains string="${basedir}" substring="private${file.separator}" />
 	</condition>
 
-	<loadfile failonerror="false" property="artifact.deploy.dependencies" srcFile="build.gradle">
+	<loadfile
+		failonerror="false"
+		property="artifact.deploy.dependencies"
+		srcFile="build.gradle"
+	>
 		<filterchain>
 			<linecontains>
 				<contains value="deployDependencies {" />
@@ -58,8 +62,13 @@
 	</condition>
 
 	<target if="artifact.hotfix" name="copy-hotfix-artifact">
-		<copy todir="${dist.dir}">
-			<fileset dir="hotfix" includes="*.jar" />
+		<copy
+			todir="${dist.dir}"
+		>
+			<fileset
+				dir="hotfix"
+				includes="*.jar"
+			/>
 		</copy>
 	</target>
 
@@ -95,10 +104,18 @@
 		<if>
 			<contains string="${basedir}" substring="private${file.separator}" />
 			<then>
-				<get dest="${dist.dir}" password="${build.repository.private.password}" src="${artifact.url}" username="${build.repository.private.username}" />
+				<get
+					dest="${dist.dir}"
+					password="${build.repository.private.password}"
+					src="${artifact.url}"
+					username="${build.repository.private.username}"
+				/>
 			</then>
 			<else>
-				<get dest="${dist.dir}" src="${artifact.url}" />
+				<get
+					dest="${dist.dir}"
+					src="${artifact.url}"
+				/>
 			</else>
 		</if>
 	</target>
@@ -132,26 +149,30 @@
 		<if>
 			<contains string="${basedir}" substring="private${file.separator}" />
 			<then>
-				<get dest="${dist.dir}" password="${build.repository.private.password}" src="${artifact.wsdd.url}" username="${build.repository.private.username}" />
+				<get
+					dest="${dist.dir}"
+					password="${build.repository.private.password}"
+					src="${artifact.wsdd.url}"
+					username="${build.repository.private.username}"
+				/>
 			</then>
 			<else>
-				<get dest="${dist.dir}" src="${artifact.wsdd.url}" />
+				<get
+					dest="${dist.dir}"
+					src="${artifact.wsdd.url}"
+				/>
 			</else>
 		</if>
 	</target>
 
-	<target
-		depends="get-artifact-version-previous-release,get-artifact-change-log-ticket-list-since-previous-release,get-artifact-change-log-ticket-list-full"
-		description="Get an aggregated list of tickets from the change logs of all versions of the current module since the version present in the previous release of this app."
-		if="${app.has.artifact.previous.release}"
-		name="get-artifact-change-log-ticket-list"
-	/>
+	<target depends="get-artifact-version-previous-release,get-artifact-change-log-ticket-list-since-previous-release,get-artifact-change-log-ticket-list-full" description="Get an aggregated list of tickets from the change logs of all versions of the current module since the version present in the previous release of this app." if="${app.has.artifact.previous.release}" name="get-artifact-change-log-ticket-list" />
 
-	<target
-		name="get-artifact-change-log-ticket-list-full"
-		unless="${app.has.artifact.previous.release}"
-	>
-		<loadfile failonerror="false" property="artifact.change.log.ticket.list" srcfile="${releng.module.dir}/liferay-releng.changelog">
+	<target name="get-artifact-change-log-ticket-list-full" unless="${app.has.artifact.previous.release}">
+		<loadfile
+			failonerror="false"
+			property="artifact.change.log.ticket.list"
+			srcfile="${releng.module.dir}/liferay-releng.changelog"
+		>
 			<filterchain>
 				<linecontainsregexp>
 					<regexp pattern="[0-9a-f]{40}\^\.\.[0-9a-f]{40}" />
@@ -174,13 +195,12 @@
 		</condition>
 	</target>
 
-	<target
-		depends="get-artifact-version-previous-release"
-		description="Get an aggregated list of tickets from the change logs of all versions of the current module since the version present in the previous release of this app."
-		if="${app.has.artifact.previous.release}"
-		name="get-artifact-change-log-ticket-list-since-previous-release"
-	>
-		<loadfile failonerror="false" property="artifact.change.log.ticket.list" srcfile="${releng.module.dir}/liferay-releng.changelog">
+	<target depends="get-artifact-version-previous-release" description="Get an aggregated list of tickets from the change logs of all versions of the current module since the version present in the previous release of this app." if="${app.has.artifact.previous.release}" name="get-artifact-change-log-ticket-list-since-previous-release">
+		<loadfile
+			failonerror="false"
+			property="artifact.change.log.ticket.list"
+			srcfile="${releng.module.dir}/liferay-releng.changelog"
+		>
 			<filterchain>
 				<tokenfilter>
 					<filetokenizer />
@@ -258,7 +278,10 @@
 	<target if="artifact.json" name="get-artifact-properties-json">
 		<basename file="${basedir}" property="app.dir.name" />
 
-		<loadfile property="artifact.name" srcfile="package.json">
+		<loadfile
+			property="artifact.name"
+			srcfile="package.json"
+		>
 			<filterchain>
 				<linecontains>
 					<contains value="&quot;distName&quot;:" />
@@ -272,7 +295,10 @@
 			</filterchain>
 		</loadfile>
 
-		<loadfile property="artifact.name" srcfile="package.json">
+		<loadfile
+			property="artifact.name"
+			srcfile="package.json"
+		>
 			<filterchain>
 				<linecontains>
 					<contains value="&quot;name&quot;:" />
@@ -286,7 +312,10 @@
 			</filterchain>
 		</loadfile>
 
-		<loadfile property="artifact.version" srcfile="package.json">
+		<loadfile
+			property="artifact.version"
+			srcfile="package.json"
+		>
 			<filterchain>
 				<linecontains>
 					<contains value="&quot;version&quot;:" />
@@ -328,12 +357,10 @@
 		<property name="artifact.location.src" value="${osgi.dir}/../deploy/${artifact.name}-${lp.version}.${module-incremental-version}.war" />
 	</target>
 
-	<target
-		description="Get the version of the current module that was present in the previous release of this app."
-		name="get-artifact-version-previous-release"
-		unless="${app.first.version}"
-	>
-		<loadfile property="artifact.version.previous.release">
+	<target description="Get the version of the current module that was present in the previous release of this app." name="get-artifact-version-previous-release" unless="${app.first.version}">
+		<loadfile
+			property="artifact.version.previous.release"
+		>
 			<propertyresource name="artifact.versions.previous.release" />
 
 			<filterchain>
@@ -359,7 +386,10 @@
 	</target>
 
 	<target depends="get-artifact-properties" name="move-artifact" unless="artifact.exclude">
-		<move file="${artifact.location.src}" tofile="${artifact.location.dest}" />
+		<move
+			file="${artifact.location.src}"
+			tofile="${artifact.location.dest}"
+		/>
 	</target>
 
 	<target depends="get-artifact-properties" if="artifact.deploy.dependencies" name="move-artifact-dependencies">
@@ -372,7 +402,10 @@
 			<arg value="-Pforced.deploy.dir=${artifact.dependencies.tmp.dir}" />
 		</exec>
 
-		<fileset dir="${artifact.dependencies.tmp.dir}" id="artifact.dependencies.files" />
+		<fileset
+			dir="${artifact.dependencies.tmp.dir}"
+			id="artifact.dependencies.files"
+		/>
 
 		<pathconvert pathsep="," property="artifact.dependencies.file.names" refid="artifact.dependencies.files">
 			<chainedmapper>
@@ -383,29 +416,35 @@
 		</pathconvert>
 
 		<delete>
-			<fileset dir="${artifact.dir.name}" includes="${artifact.dependencies.file.names}" />
+			<fileset
+				dir="${artifact.dir.name}"
+				includes="${artifact.dependencies.file.names}"
+			/>
 		</delete>
 
 		<dirname file="${artifact.location.dest}" property="artifact.location.parent.dir" />
 
-		<move todir="${artifact.location.parent.dir}">
-			<fileset refid="artifact.dependencies.files" />
+		<move
+			todir="${artifact.location.parent.dir}"
+		>
+			<fileset
+				refid="artifact.dependencies.files"
+			/>
 		</move>
 
 		<delete dir="artifact.dependencies.tmp.dir" quiet="true" />
 	</target>
 
-	<target
-		depends="get-artifact-change-log-ticket-list"
-		description="Record the change log tickets for the current module to app.changelog."
-		if="${artifact.has.change.log.ticket.list}"
-		name="record-artifact-change-log"
-	>
+	<target depends="get-artifact-change-log-ticket-list" description="Record the change log tickets for the current module to app.changelog." if="${artifact.has.change.log.ticket.list}" name="record-artifact-change-log">
 		<echo append="true" file="${dist.dir}/ticket.list.tmp">${artifact.change.log.ticket.list} </echo>
 	</target>
 
 	<target depends="reset-artifact-dependencies" name="reset-artifact">
-		<move failonerror="false" file="${artifact.location.dest}" tofile="${artifact.location.src}" />
+		<move
+			failonerror="false"
+			file="${artifact.location.dest}"
+			tofile="${artifact.location.src}"
+		/>
 	</target>
 
 	<target if="artifact.deploy.dependencies" name="reset-artifact-dependencies">

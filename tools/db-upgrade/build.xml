@@ -3,7 +3,10 @@
 <project basedir="." default="upgrade" name="db-upgrade">
 	<target name="upgrade">
 		<path id="lib.classpath">
-			<fileset dir="lib" includes="*.jar" />
+			<fileset
+				dir="lib"
+				includes="*.jar"
+			/>
 		</path>
 
 		<java

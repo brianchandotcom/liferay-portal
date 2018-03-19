@@ -41,14 +41,22 @@ plugins.includes=marketplace-portlet</echo>
 			value="CATALINA_HOME=${app.server.tcat.agent.dir}"
 		/>
 
-		<chmod perm="a+x">
-			<fileset dir="${app.server.tcat.admin.bin.dir}">
+		<chmod
+			perm="a+x"
+		>
+			<fileset
+				dir="${app.server.tcat.admin.bin.dir}"
+			>
 				<include name="*.sh" />
 			</fileset>
 		</chmod>
 
-		<chmod perm="a+x">
-			<fileset dir="${app.server.tcat.agent.bin.dir}">
+		<chmod
+			perm="a+x"
+		>
+			<fileset
+				dir="${app.server.tcat.agent.bin.dir}"
+			>
 				<include name="*.sh" />
 			</fileset>
 		</chmod>

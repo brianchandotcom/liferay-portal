@@ -3,7 +3,11 @@
 <project default="zip-maven" name="portal-maven" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-common.xml" />
 
-	<taskdef classname="com.oopsconsultancy.xmltask.ant.XmlTask" classpathref="lib.classpath" name="xmltask" />
+	<taskdef
+		classname="com.oopsconsultancy.xmltask.ant.XmlTask"
+		classpathref="lib.classpath"
+		name="xmltask"
+	/>
 
 	<condition else="" property="gpg.extension" value=".exe">
 		<contains casesensitive="false" string="${os.name}" substring="Windows" />
@@ -136,14 +140,19 @@ Run "ant -f build-dist.xml all zip-portal-war" to generate that file.
 
 		<mkdir dir="${tstamp.value}" />
 
-		<copy todir="${tstamp.value}">
+		<copy
+			todir="${tstamp.value}"
+		>
 			<fileset
 				dir="tools/maven"
 				includes="build.xml,readme.txt"
 			/>
 		</copy>
 
-		<copy file="tools/maven/build.properties" tofile="${tstamp.value}/build.properties">
+		<copy
+			file="tools/maven/build.properties"
+			tofile="${tstamp.value}/build.properties"
+		>
 			<filterset>
 				<filter token="gpg.keyname" value="" />
 				<filter token="gpg.passphrase" value="" />
@@ -155,7 +164,9 @@ Run "ant -f build-dist.xml all zip-portal-war" to generate that file.
 
 		<mkdir dir="${tstamp.value}/dist" />
 
-		<copy todir="${tstamp.value}/dist">
+		<copy
+			todir="${tstamp.value}/dist"
+		>
 			<fileset
 				dir="lib/portal"
 				includes="portal-client.jar"
@@ -199,25 +210,40 @@ Run "ant -f build-dist.xml all zip-portal-war" to generate that file.
 			tofile="${tstamp.value}/dist/portal-web.war"
 		/>
 
-		<zip destfile="${tstamp.value}/dist/util-taglib-tlddoc.jar">
-			<zipfileset dir="${doc.dir}/taglibs" />
+		<zip
+			destfile="${tstamp.value}/dist/util-taglib-tlddoc.jar"
+		>
+			<zipfileset
+				dir="${doc.dir}/taglibs"
+			/>
 		</zip>
 
-		<copy todir="${tstamp.value}/dist">
-			<fileset dir="tools/maven" excludes="build.*,readme.txt" />
+		<copy
+			todir="${tstamp.value}/dist"
+		>
+			<fileset
+				dir="tools/maven"
+				excludes="build.*,readme.txt"
+			/>
 			<filterset>
 				<filter token="version" value="${lp.maven.version}" />
 			</filterset>
 			<mapper>
 				<chainedmapper>
-					<mapper from="*.xml" to="*.pom" type="glob" />
+					<mapper
+						from="*.xml"
+						to="*.pom"
+						type="glob"
+					/>
 				</chainedmapper>
 			</mapper>
 		</copy>
 
 		<mkdir dir="${tstamp.value}/lib" />
 
-		<copy todir="${tstamp.value}/lib">
+		<copy
+			todir="${tstamp.value}/lib"
+		>
 			<fileset
 				dir="lib/development"
 				includes="ant-contrib.jar,antelope.jar"
@@ -226,7 +252,9 @@ Run "ant -f build-dist.xml all zip-portal-war" to generate that file.
 
 		<mkdir dir="${tstamp.value}/license" />
 
-		<copy todir="${tstamp.value}/license">
+		<copy
+			todir="${tstamp.value}/license"
+		>
 			<fileset
 				dir="lib"
 				includes="versions.html"
@@ -254,7 +282,9 @@ Run "ant -f build-dist.xml all zip-portal-war" to generate that file.
 
 		<mkdir dir="dist" />
 
-		<zip destfile="dist/liferay-portal-maven-${lp.version}.zip">
+		<zip
+			destfile="dist/liferay-portal-maven-${lp.version}.zip"
+		>
 			<zipfileset
 				dir="${tstamp.value}"
 				prefix="liferay-portal-maven-${lp.version}"

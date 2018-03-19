@@ -26,8 +26,12 @@
 			tofile="${app.server.glassfish.bin.dir}/asadmin.sh"
 		/>
 
-		<chmod perm="a+x">
-			<fileset dir="${app.server.glassfish.bin.dir}">
+		<chmod
+			perm="a+x"
+		>
+			<fileset
+				dir="${app.server.glassfish.bin.dir}"
+			>
 				<include name="*.sh" />
 			</fileset>
 		</chmod>

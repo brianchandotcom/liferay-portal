@@ -54,7 +54,9 @@
 
 	<macrodef name="update-apacheds-log4j-level">
 		<sequential>
-			<replace file="${apacheds.dir}/instances/liferay/conf/log4j.properties">
+			<replace
+				file="${apacheds.dir}/instances/liferay/conf/log4j.properties"
+			>
 				<replacetoken><![CDATA[log4j.rootCategory=WARN, F, stdout]]></replacetoken>
 				<replacevalue><![CDATA[log4j.rootCategory=INFO, F, stdout]]></replacevalue>
 			</replace>
@@ -87,7 +89,10 @@
 		<if>
 			<os family="unix" />
 			<then>
-				<chmod file="${apacheds.dir}/bin/**" perm="a+x" />
+				<chmod
+					file="${apacheds.dir}/bin/**"
+					perm="a+x"
+				/>
 
 				<exec dir="${apacheds.dir}/bin" executable="/bin/bash">
 					<arg value="-c" />
@@ -113,7 +118,10 @@
 			<socket port="10389" server="localhost" />
 		</waitfor>
 
-		<loadfile property="apacheds.log.content" srcfile="${apacheds.dir}/instances/liferay/log/apacheds.log" />
+		<loadfile
+			property="apacheds.log.content"
+			srcfile="${apacheds.dir}/instances/liferay/log/apacheds.log"
+		/>
 
 		<if>
 			<not>

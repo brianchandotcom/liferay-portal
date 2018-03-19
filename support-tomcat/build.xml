@@ -10,7 +10,13 @@
 	<property name="manifest.bundle.symbolic.name" value="com.liferay.support.tomcat" />
 
 	<path id="web-lib.classpath">
-		<fileset dir="${project.dir}/lib/development" includes="catalina.jar,jasper.jar,tomcat-api.jar,tomcat-coyote.jar" />
-		<fileset dir="${project.dir}/lib/portal" includes="tomcat-juli.jar" />
+		<fileset
+			dir="${project.dir}/lib/development"
+			includes="catalina.jar,jasper.jar,tomcat-api.jar,tomcat-coyote.jar"
+		/>
+		<fileset
+			dir="${project.dir}/lib/portal"
+			includes="tomcat-juli.jar"
+		/>
 	</path>
 </project>

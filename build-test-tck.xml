@@ -21,18 +21,28 @@
 
 			<fixcrlf eol="lf" file="${tstamp.value}/WEB-INF/web.xml" />
 
-			<replace file="${tstamp.value}/WEB-INF/web.xml">
+			<replace
+				file="${tstamp.value}/WEB-INF/web.xml"
+			>
 				<replacefilter>
 					<replacetoken><![CDATA[
 <!DOCTYPE web-app PUBLIC '-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN' 'http://java.sun.com/dtd/web-app_2_3.dtd'>
 ]]></replacetoken>
 					<replacevalue></replacevalue>
 				</replacefilter>
-				<replacefilter token="&lt;web-app&gt;" value="&lt;web-app version=&quot;2.4&quot;&gt;" />
+				<replacefilter
+					token="&lt;web-app&gt;"
+					value="&lt;web-app version=&quot;2.4&quot;&gt;"
+				/>
 			</replace>
 
-			<zip destfile="@{tck.war.file}" update="true">
-				<fileset dir="${tstamp.value}" />
+			<zip
+				destfile="@{tck.war.file}"
+				update="true"
+			>
+				<fileset
+					dir="${tstamp.value}"
+				/>
 			</zip>
 
 			<delete dir="${tstamp.value}" />
@@ -60,14 +70,23 @@
 					<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
 				</tstamp>
 
-				<mirrors-get dest="${tstamp.value}.zip" src="${portlet.tck.url}" />
+				<mirrors-get
+					dest="${tstamp.value}.zip"
+					src="${portlet.tck.url}"
+				/>
 
-				<unzip dest="tools/tck" src="${tstamp.value}.zip" />
+				<unzip
+					dest="tools/tck"
+					src="${tstamp.value}.zip"
+				/>
 
 				<delete file="${tstamp.value}.zip" />
 			</then>
 			<else>
-				<unzip dest="tools/tck" src="${portlet.tck.zip}" />
+				<unzip
+					dest="tools/tck"
+					src="${portlet.tck.zip}"
+				/>
 			</else>
 		</if>
 
@@ -77,8 +96,13 @@
 			perm="744"
 		/>
 
-		<replace file="tools/tck/bin/ts.jte">
-			<replacefilter token="http://localhost:8080/pluto/tck" value="http://localhost:8080/c/portal/tck" />
+		<replace
+			file="tools/tck/bin/ts.jte"
+		>
+			<replacefilter
+				token="http://localhost:8080/pluto/tck"
+				value="http://localhost:8080/c/portal/tck"
+			/>
 		</replace>
 
 		<echo append="true" file="tools/tck/bin/ts.jtx">
@@ -287,12 +311,18 @@ servletContextNames=${tck.servlet.context.names}</echo>
 			<then>
 				<for param="logfile">
 					<path>
-						<fileset dir="${liferay.home}/logs" includes="*.log" />
+						<fileset
+							dir="${liferay.home}/logs"
+							includes="*.log"
+						/>
 					</path>
 					<sequential>
 						<local name="logfile.content" />
 
-						<loadfile property="logfile.content" srcFile="@{logfile}" />
+						<loadfile
+							property="logfile.content"
+							srcFile="@{logfile}"
+						/>
 
 						<echo>File content for ${liferay.home}/logs/@{logfile}:
 

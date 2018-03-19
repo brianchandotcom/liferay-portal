@@ -5,7 +5,10 @@
 
 	<macrodef name="prepare-elasticsearch">
 		<sequential>
-			<chmod file="${elasticsearch.dir}/bin/**" perm="a+x" />
+			<chmod
+				file="${elasticsearch.dir}/bin/**"
+				perm="a+x"
+			/>
 
 			<if>
 				<not>
@@ -237,18 +240,27 @@
 			<if>
 				<os family="mac" />
 				<then>
-					<move file="${app.server.parent.dir}/kibana-${elastic.kibana.version}-darwin-x86_64" tofile="${elastic.kibana.dir}" />
+					<move
+						file="${app.server.parent.dir}/kibana-${elastic.kibana.version}-darwin-x86_64"
+						tofile="${elastic.kibana.dir}"
+					/>
 				</then>
 				<elseif>
 					<os family="unix" />
 					<then>
-						<move file="${app.server.parent.dir}/kibana-${elastic.kibana.version}-linux-x86_64" tofile="${elastic.kibana.dir}" />
+						<move
+							file="${app.server.parent.dir}/kibana-${elastic.kibana.version}-linux-x86_64"
+							tofile="${elastic.kibana.dir}"
+						/>
 					</then>
 				</elseif>
 				<elseif>
 					<os family="windows" />
 					<then>
-						<move file="${app.server.parent.dir}/kibana-${elastic.kibana.version}-windows-x86" tofile="${elastic.kibana.dir}" />
+						<move
+							file="${app.server.parent.dir}/kibana-${elastic.kibana.version}-windows-x86"
+							tofile="${elastic.kibana.dir}"
+						/>
 					</then>
 				</elseif>
 			</if>
@@ -282,7 +294,9 @@ operationMode=&quot;REMOTE&quot;</echo>
 	</target>
 
 	<target name="configure-elasticsearch-properties">
-		<replace file="${elasticsearch.dir}/config/elasticsearch.yml">
+		<replace
+			file="${elasticsearch.dir}/config/elasticsearch.yml"
+		>
 			<replacetoken><![CDATA[#cluster.name: my-application]]></replacetoken>
 			<replacevalue><![CDATA[cluster.name: LiferayElasticsearchCluster]]></replacevalue>
 		</replace>
@@ -291,12 +305,16 @@ operationMode=&quot;REMOTE&quot;</echo>
 	</target>
 
 	<target name="configure-kibana-properties">
-		<replace file="${elastic.kibana.dir}/config/kibana.yml">
+		<replace
+			file="${elastic.kibana.dir}/config/kibana.yml"
+		>
 			<replacetoken><![CDATA[#pid.file: /var/run/kibana.pid]]></replacetoken>
 			<replacevalue><![CDATA[pid.file: ${elastic.kibana.dir}/bin/pid-kibana]]></replacevalue>
 		</replace>
 
-		<replace file="${elastic.kibana.dir}/config/kibana.yml">
+		<replace
+			file="${elastic.kibana.dir}/config/kibana.yml"
+		>
 			<replacetoken><![CDATA[#elasticsearc.username: "user"
 #elasticsearch.password: "pass"]]></replacetoken>
 			<replacevalue><![CDATA[elasticsearch.username: "kibana"
@@ -318,8 +336,12 @@ elasticsearch.password: "kibanapassword"]]></replacevalue>
 
 			<delete dir="${elasticsearch.dir}-${elasticsearch.node.number}" />
 
-			<copy todir="${elasticsearch.dir}-${elasticsearch.node.number}">
-				<fileset dir="${elasticsearch.dir}" />
+			<copy
+				todir="${elasticsearch.dir}-${elasticsearch.node.number}"
+			>
+				<fileset
+					dir="${elasticsearch.dir}"
+				/>
 			</copy>
 		</antelope:repeat>
 
@@ -383,8 +405,13 @@ elasticsearch.password: "kibanapassword"]]></replacevalue>
 					result="elasticsearch.node.number"
 				/>
 
-				<chmod perm="a+rwx" type="both">
-					<fileset dir="${elasticsearch.dir}-${elasticsearch.node.number}" />
+				<chmod
+					perm="a+rwx"
+					type="both"
+				>
+					<fileset
+						dir="${elasticsearch.dir}-${elasticsearch.node.number}"
+					/>
 				</chmod>
 
 				<if>
@@ -478,7 +505,10 @@ elasticsearch.password: "kibanapassword"]]></replacevalue>
 			<if>
 				<os family="unix" />
 				<then>
-					<loadfile property="pid-elasticsearch" srcFile="${elasticsearch.dir}-${elasticsearch.node.number}/bin/pid-elasticsearch">
+					<loadfile
+						property="pid-elasticsearch"
+						srcFile="${elasticsearch.dir}-${elasticsearch.node.number}/bin/pid-elasticsearch"
+					>
 						<filterchain>
 							<linecontainsregexp>
 								<regexp pattern="[0-9]*" />
@@ -512,7 +542,10 @@ elasticsearch.password: "kibanapassword"]]></replacevalue>
 		<if>
 			<os family="unix" />
 			<then>
-				<loadfile property="pid-kibana" srcFile="${elastic.kibana.dir}/bin/pid-kibana">
+				<loadfile
+					property="pid-kibana"
+					srcFile="${elastic.kibana.dir}/bin/pid-kibana"
+				>
 					<filterchain>
 						<linecontainsregexp>
 							<regexp pattern="[0-9]*" />

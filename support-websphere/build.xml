@@ -9,6 +9,9 @@
 	<property name="javac.classpathref" value="web.classpath" />
 
 	<path id="web-lib.classpath">
-		<fileset dir="${app.server.websphere.dir}/plugins" includes="com.ibm.ws.runtime.jar" />
+		<fileset
+			dir="${app.server.websphere.dir}/plugins"
+			includes="com.ibm.ws.runtime.jar"
+		/>
 	</path>
 </project>

@@ -18,6 +18,9 @@
 	</path>
 
 	<target depends="build-common-java.deploy" name="deploy">
-		<move file="${deploy.dir}/${jar.file}.jar" tofile="${deploy.dir}/${manifest.bundle.symbolic.name}.jar" />
+		<move
+			file="${deploy.dir}/${jar.file}.jar"
+			tofile="${deploy.dir}/${manifest.bundle.symbolic.name}.jar"
+		/>
 	</target>
 </project>

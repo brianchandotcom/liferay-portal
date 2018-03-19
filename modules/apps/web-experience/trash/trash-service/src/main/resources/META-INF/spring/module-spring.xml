@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 
-<beans default-destroy-method="destroy" default-init-method="afterPropertiesSet" xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
 	<bean class="com.liferay.trash.service.impl.TrashEntryLocalServiceImpl" id="com.liferay.trash.service.TrashEntryLocalService" />
 	<bean class="com.liferay.trash.service.impl.TrashEntryServiceImpl" id="com.liferay.trash.service.TrashEntryService" />
 	<bean class="com.liferay.trash.service.persistence.impl.TrashEntryPersistenceImpl" id="com.liferay.trash.service.persistence.TrashEntryPersistence" parent="basePersistence" />

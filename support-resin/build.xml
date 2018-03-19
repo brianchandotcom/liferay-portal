@@ -9,6 +9,9 @@
 	<property name="javac.classpathref" value="web.classpath" />
 
 	<path id="web-lib.classpath">
-		<fileset dir="${project.dir}/lib/development" includes="resin.jar" />
+		<fileset
+			dir="${project.dir}/lib/development"
+			includes="resin.jar"
+		/>
 	</path>
 </project>

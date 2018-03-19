@@ -21,12 +21,16 @@
 			</then>
 		</if>
 
-		<replace file="${app.server.jetty.bin.dir}/run.bat">
+		<replace
+			file="${app.server.jetty.bin.dir}/run.bat"
+		>
 			<replacetoken>set "JAVA_OPTS=-D</replacetoken>
 			<replacevalue>set "JAVA_OPTS=-DSTOP.PORT=8079 -DSTOP.KEY=secret -D</replacevalue>
 		</replace>
 
-		<replace file="${app.server.jetty.bin.dir}/run.sh">
+		<replace
+			file="${app.server.jetty.bin.dir}/run.sh"
+		>
 			<replacetoken>export JAVA_OPTS="-D</replacetoken>
 			<replacevalue>export JAVA_OPTS="-DSTOP.PORT=8079 -DSTOP.KEY=secret -D</replacevalue>
 		</replace>
@@ -41,18 +45,26 @@
 			tofile="${app.server.jetty.bin.dir}/shutdown.sh"
 		/>
 
-		<replace file="${app.server.jetty.bin.dir}/shutdown.bat">
+		<replace
+			file="${app.server.jetty.bin.dir}/shutdown.bat"
+		>
 			<replacetoken>"%JAVA_HOME%/bin/java" %JAVA_OPTS% -jar ../start.jar</replacetoken>
 			<replacevalue>"%JAVA_HOME%/bin/java" %JAVA_OPTS% -jar ../start.jar --stop</replacevalue>
 		</replace>
 
-		<replace file="${app.server.jetty.bin.dir}/shutdown.sh">
+		<replace
+			file="${app.server.jetty.bin.dir}/shutdown.sh"
+		>
 			<replacetoken>$JAVA_HOME/bin/java $JAVA_OPTS -jar ../start.jar</replacetoken>
 			<replacevalue>$JAVA_HOME/bin/java $JAVA_OPTS -jar ../start.jar --stop</replacevalue>
 		</replace>
 
-		<chmod perm="a+x">
-			<fileset dir="${app.server.jetty.bin.dir}">
+		<chmod
+			perm="a+x"
+		>
+			<fileset
+				dir="${app.server.jetty.bin.dir}"
+			>
 				<include name="*.sh" />
 			</fileset>
 		</chmod>

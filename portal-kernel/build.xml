@@ -10,6 +10,9 @@
 	<property name="manifest.bundle.symbolic.name" value="com.liferay.portal.kernel" />
 
 	<path id="web-lib.classpath">
-		<fileset dir="${project.dir}/lib/development" includes="junit.jar" />
+		<fileset
+			dir="${project.dir}/lib/development"
+			includes="junit.jar"
+		/>
 	</path>
 </project>

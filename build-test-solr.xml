@@ -43,7 +43,9 @@ clientType=CLOUD</echo>
 
 	<macrodef name="configure-liferay-solr-ssl-adapter-properties">
 		<sequential>
-			<replace file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr.configuration.SolrConfiguration.cfg">
+			<replace
+				file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr.configuration.SolrConfiguration.cfg"
+			>
 				<replacetoken><![CDATA[http://]]></replacetoken>
 				<replacevalue><![CDATA[https://]]></replacevalue>
 			</replace>
@@ -58,7 +60,9 @@ trustStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks</echo>
 
 	<macrodef name="configure-solr-logging">
 		<sequential>
-			<replace file="${solr.dir}/server/solr/solr.xml">
+			<replace
+				file="${solr.dir}/server/solr/solr.xml"
+			>
 				<replacetoken><![CDATA[</solr>]]></replacetoken>
 				<replacevalue expandproperties="true"><![CDATA[
 	<logging>
@@ -71,7 +75,9 @@ trustStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks</echo>
 </solr>]]></replacevalue>
 			</replace>
 
-			<replace file="${solr.dir}/server/resources/log4j.properties">
+			<replace
+				file="${solr.dir}/server/resources/log4j.properties"
+			>
 				<replacetoken><![CDATA[WARN]]></replacetoken>
 				<replacevalue><![CDATA[INFO]]></replacevalue>
 			</replace>
@@ -158,18 +164,27 @@ SOLR_SSL_WANT_CLIENT_AUTH=true</echo>
 
 	<macrodef name="prepare-solr-configurations">
 		<sequential>
-			<copy overwrite="true" todir="${solr.dir}/server/solr/liferay/conf">
-				<fileset dir="${solr.dir}/server/solr/configsets/data_driven_schema_configs/conf">
+			<copy
+				overwrite="true"
+				todir="${solr.dir}/server/solr/liferay/conf"
+			>
+				<fileset
+					dir="${solr.dir}/server/solr/configsets/data_driven_schema_configs/conf"
+				>
 					<exclude name="solrconfig.xml" />
 				</fileset>
 
-				<fileset dir="modules/apps/portal-search-solr/portal-search-solr/src/main/resources/META-INF/resources">
+				<fileset
+					dir="modules/apps/portal-search-solr/portal-search-solr/src/main/resources/META-INF/resources"
+				>
 					<include name="schema.xml" />
 					<include name="solrconfig.xml" />
 				</fileset>
 			</copy>
 
-			<replace file="${solr.dir}/server/solr/liferay/conf/solrconfig.xml">
+			<replace
+				file="${solr.dir}/server/solr/liferay/conf/solrconfig.xml"
+			>
 				<replacetoken><![CDATA[<maxWarmingSearchers>2</maxWarmingSearchers>]]></replacetoken>
 				<replacevalue><![CDATA[<maxWarmingSearchers>5</maxWarmingSearchers>]]></replacevalue>
 			</replace>
@@ -183,23 +198,35 @@ schema=schema.xml</echo>
 
 	<macrodef name="prepare-solr-solrcloud-configurations">
 		<sequential>
-			<copy todir="${solr.dir}/server/solr/configsets/liferay_configs/conf">
-				<fileset dir="${solr.dir}/server/solr/liferay/conf" />
+			<copy
+				todir="${solr.dir}/server/solr/configsets/liferay_configs/conf"
+			>
+				<fileset
+					dir="${solr.dir}/server/solr/liferay/conf"
+				/>
 			</copy>
 		</sequential>
 	</macrodef>
 
 	<macrodef name="prepare-solr-solrcloud-example">
 		<sequential>
-			<copy todir="${solr.dir}/example/cloud/node1/solr">
-				<fileset dir="${solr.dir}/server/solr">
+			<copy
+				todir="${solr.dir}/example/cloud/node1/solr"
+			>
+				<fileset
+					dir="${solr.dir}/server/solr"
+				>
 					<include name="solr.xml" />
 					<include name="zoo.cfg" />
 				</fileset>
 			</copy>
 
-			<copy todir="${solr.dir}/example/cloud/node2/solr">
-				<fileset dir="${solr.dir}/server/solr">
+			<copy
+				todir="${solr.dir}/example/cloud/node2/solr"
+			>
+				<fileset
+					dir="${solr.dir}/server/solr"
+				>
 					<include name="solr.xml" />
 					<include name="zoo.cfg" />
 				</fileset>
@@ -212,7 +239,10 @@ schema=schema.xml</echo>
 			<if>
 				<os family="unix" />
 				<then>
-					<chmod file="${solr.dir}/bin/solr" perm="a+x" />
+					<chmod
+						file="${solr.dir}/bin/solr"
+						perm="a+x"
+					/>
 
 					<exec dir="${solr.dir}/bin" executable="/bin/bash">
 						<arg value="-c" />
@@ -332,7 +362,10 @@ schema=schema.xml</echo>
 		<if>
 			<os family="unix" />
 			<then>
-				<chmod file="${solr.dir}/bin/solr" perm="a+x" />
+				<chmod
+					file="${solr.dir}/bin/solr"
+					perm="a+x"
+				/>
 
 				<exec dir="${solr.dir}/bin" executable="/bin/bash">
 					<arg value="-c" />

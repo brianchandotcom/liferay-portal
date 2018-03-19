@@ -45,11 +45,19 @@
 		<jar
 			jarfile="${jar.file}.jar"
 		>
-			<fileset dir="classes" />
-			<fileset dir="src" />
+			<fileset
+				dir="classes"
+			/>
+			<fileset
+				dir="src"
+			/>
 		</jar>
 
-		<copy file="portal-client.jar" preservelastmodified="true" todir="${project.dir}/lib/portal" />
+		<copy
+			file="portal-client.jar"
+			preservelastmodified="true"
+			todir="${project.dir}/lib/portal"
+		/>
 	</target>
 
 	<target name="jar-sources">
@@ -74,7 +82,10 @@
 	<target name="java2html">
 		<remake-dir dir="src" />
 
-		<unjar dest="src" src="${jar.file}.jar" />
+		<unjar
+			dest="src"
+			src="${jar.file}.jar"
+		/>
 
 		<antcall target="build-common-java.java2html" />
 	</target>
@@ -82,7 +93,10 @@
 	<target name="javadoc">
 		<remake-dir dir="src" />
 
-		<unjar dest="src" src="${project.dir}/lib/portal/${jar.file}.jar" />
+		<unjar
+			dest="src"
+			src="${project.dir}/lib/portal/${jar.file}.jar"
+		/>
 
 		<antcall target="build-common-java.javadoc" />
 	</target>

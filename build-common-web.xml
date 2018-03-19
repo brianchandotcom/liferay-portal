@@ -19,9 +19,18 @@
 		<delete failonerror="false" file="${war.file}.war" />
 
 		<delete>
-			<fileset dir="docroot" includes="**/.sprite.png" />
-			<fileset dir="docroot" includes="**/.sprite.properties" />
-			<fileset dir="docroot" includes="**/Thumbs.db" />
+			<fileset
+				dir="docroot"
+				includes="**/.sprite.png"
+			/>
+			<fileset
+				dir="docroot"
+				includes="**/.sprite.properties"
+			/>
+			<fileset
+				dir="docroot"
+				includes="**/Thumbs.db"
+			/>
 		</delete>
 	</target>
 
@@ -70,8 +79,13 @@
 				<if>
 					<available file="tmp" type="dir" />
 					<then>
-						<copy preservelastmodified="true" todir="${war.file.dest}">
-							<fileset dir="tmp" />
+						<copy
+							preservelastmodified="true"
+							todir="${war.file.dest}"
+						>
+							<fileset
+								dir="tmp"
+							/>
 						</copy>
 					</then>
 					<elseif>
@@ -80,14 +94,23 @@
 							<equals arg1="${build.profile}" arg2="slim" />
 						</and>
 						<then>
-							<copy file="docroot/WEB-INF/slim-runtime-web.xml" preservelastmodified="true" tofile="${war.file.dest}/WEB-INF/web.xml" />
+							<copy
+								file="docroot/WEB-INF/slim-runtime-web.xml"
+								preservelastmodified="true"
+								tofile="${war.file.dest}/WEB-INF/web.xml"
+							/>
 						</then>
 					</elseif>
 					<elseif>
 						<available file="docroot" type="dir" />
 						<then>
-							<copy preservelastmodified="true" todir="${war.file.dest}">
-								<fileset dir="docroot">
+							<copy
+								preservelastmodified="true"
+								todir="${war.file.dest}"
+							>
+								<fileset
+									dir="docroot"
+								>
 									<exclude name="**/css/*.scss" />
 								</fileset>
 								<filtermapper>
@@ -133,7 +156,10 @@
 
 				<delete dir="${war.file.dest}" />
 
-				<move file="${tstamp.value}" tofile="${war.file.dest}" />
+				<move
+					file="${tstamp.value}"
+					tofile="${war.file.dest}"
+				/>
 			</then>
 		</if>
 
@@ -147,7 +173,9 @@
 		<if>
 			<equals arg1="${app.server.type}" arg2="resin" />
 			<then>
-				<replace file="${war.file.dest}/WEB-INF/web.xml">
+				<replace
+					file="${war.file.dest}/WEB-INF/web.xml"
+				>
 					<replacetoken><![CDATA[<web-app metadata-complete="true" version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">]]></replacetoken>
 					<replacevalue><![CDATA[<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" version="2.4">]]></replacevalue>
 				</replace>

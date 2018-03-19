@@ -119,21 +119,58 @@ message.
 			</sequential>
 
 			<delete failonerror="false" includeemptydirs="true">
-				<fileset dir="." includes="*.ear,*.jar,*.war,*.zip" />
-				<fileset dir="test-coverage" />
-				<fileset dir="test-results" />
-				<fileset dir="tmp" />
-				<fileset dir="${doc.dir}" />
-				<fileset dir="${app.server.bin.dir}" includes="*.log*" />
-				<fileset dir="${app.server.classes.portal.dir}" includes="portal-*.properties,system-*.properties" />
-				<fileset dir="${app.server.deploy.dir}" includes="*-ext/**,*-ext.war/**,*-hook/**,*-hook.war/**,*-layouttpl/**,*-layouttpl.war/**,*-portlet/**,*-portlet.war/**,*-theme/**,*-theme.war/**,*-web/**,*-web.war/**" />
-				<fileset dir="${app.server.lib.global.dir}" excludes="${jdbc.drivers}" />
-				<fileset dir="${liferay.home}" includes=".liferay-home" />
-				<fileset dir="${liferay.home}/data/elasticsearch" />
-				<fileset dir="${liferay.home}/data/hypersonic" includes="${database.name}.*" />
-				<fileset dir="${liferay.home}/deploy" />
-				<fileset dir="${liferay.home}/osgi" />
-				<fileset dir="${liferay.home}/work" />
+				<fileset
+					dir="."
+					includes="*.ear,*.jar,*.war,*.zip"
+				/>
+				<fileset
+					dir="test-coverage"
+				/>
+				<fileset
+					dir="test-results"
+				/>
+				<fileset
+					dir="tmp"
+				/>
+				<fileset
+					dir="${doc.dir}"
+				/>
+				<fileset
+					dir="${app.server.bin.dir}"
+					includes="*.log*"
+				/>
+				<fileset
+					dir="${app.server.classes.portal.dir}"
+					includes="portal-*.properties,system-*.properties"
+				/>
+				<fileset
+					dir="${app.server.deploy.dir}"
+					includes="*-ext/**,*-ext.war/**,*-hook/**,*-hook.war/**,*-layouttpl/**,*-layouttpl.war/**,*-portlet/**,*-portlet.war/**,*-theme/**,*-theme.war/**,*-web/**,*-web.war/**"
+				/>
+				<fileset
+					dir="${app.server.lib.global.dir}"
+					excludes="${jdbc.drivers}"
+				/>
+				<fileset
+					dir="${liferay.home}"
+					includes=".liferay-home"
+				/>
+				<fileset
+					dir="${liferay.home}/data/elasticsearch"
+				/>
+				<fileset
+					dir="${liferay.home}/data/hypersonic"
+					includes="${database.name}.*"
+				/>
+				<fileset
+					dir="${liferay.home}/deploy"
+				/>
+				<fileset
+					dir="${liferay.home}/osgi"
+				/>
+				<fileset
+					dir="${liferay.home}/work"
+				/>
 			</delete>
 
 			<if>
@@ -293,8 +330,12 @@ message.
 
 		<touch file="${liferay.home}/.liferay-home" />
 
-		<copy todir="${liferay.home}/data/hypersonic">
-			<fileset dir="sql">
+		<copy
+			todir="${liferay.home}/data/hypersonic"
+		>
+			<fileset
+				dir="sql"
+			>
 				<include name="${database.name}.properties" />
 				<include name="${database.name}.script" />
 			</fileset>
@@ -318,18 +359,26 @@ message.
 				</not>
 			</and>
 			<then>
-				<move file="${app.server.portal.war.name}" tofile="${app.server.portal.war.name}-tmp" />
+				<move
+					file="${app.server.portal.war.name}"
+					tofile="${app.server.portal.war.name}-tmp"
+				/>
 
 				<mkdir dir="${app.server.portal.dir}" />
 
-				<unzip dest="${app.server.portal.dir}" src="${app.server.portal.war.name}-tmp" />
+				<unzip
+					dest="${app.server.portal.dir}"
+					src="${app.server.portal.war.name}-tmp"
+				/>
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${app.server.type}" arg2="websphere" />
 			<then>
-				<replace file="${app.server.websphere.instance.dir}/config/cells/liferay-cell/applications/liferay-portal.ear/deployments/liferay-portal/liferay-portal.war/WEB-INF/ibm-web-ext.xml">
+				<replace
+					file="${app.server.websphere.instance.dir}/config/cells/liferay-cell/applications/liferay-portal.ear/deployments/liferay-portal/liferay-portal.war/WEB-INF/ibm-web-ext.xml"
+				>
 					<replacetoken><![CDATA[</web-ext>]]></replacetoken>
 					<replacevalue><![CDATA[  <jsp-attribute name="jdkSourceLevel" value="18" />
 </web-ext>]]></replacevalue>
@@ -368,7 +417,10 @@ message.
 				</gradle-execute>
 
 				<pathconvert property="build.app.server.lib.marker.files" setonempty="false">
-					<fileset dir="${project.dir}/modules" includes="**/.lfrbuild-app-server-lib" />
+					<fileset
+						dir="${project.dir}/modules"
+						includes="**/.lfrbuild-app-server-lib"
+					/>
 				</pathconvert>
 
 				<if>
@@ -427,7 +479,10 @@ message.
 			<then>
 				<if>
 					<resourcecount count="0" when="gt">
-						<fileset dir="${project.dir}/modules" includes="**/.lfrbuild-ci" />
+						<fileset
+							dir="${project.dir}/modules"
+							includes="**/.lfrbuild-ci"
+						/>
 					</resourcecount>
 					<then>
 						<gradle-execute dir="${project.dir}/modules" task="deploy">
@@ -450,25 +505,41 @@ message.
 			<then>
 				<delete dir="${app.server.portal.dir}" />
 
-				<move file="${app.server.portal.war.name}-tmp" tofile="${app.server.portal.war.name}" />
+				<move
+					file="${app.server.portal.war.name}-tmp"
+					tofile="${app.server.portal.war.name}"
+				/>
 			</then>
 		</if>
 
-		<copy file="tools/osgi-marketplace-override-README.markdown" tofile="${liferay.home}/osgi/marketplace/override/README.markdown" />
+		<copy
+			file="tools/osgi-marketplace-override-README.markdown"
+			tofile="${liferay.home}/osgi/marketplace/override/README.markdown"
+		/>
 
 		<print-current-time />
 	</target>
 
 	<target name="deploy-additional-jars">
-		<copy todir="${app.server.lib.global.dir}">
-			<fileset dir="lib/development" includes="hsql.jar,mariadb.jar,mysql.jar,postgresql.jar" />
-			<fileset dir="lib/global" excludes="dependencies.properties" />
+		<copy
+			todir="${app.server.lib.global.dir}"
+		>
+			<fileset
+				dir="lib/development"
+				includes="hsql.jar,mariadb.jar,mysql.jar,postgresql.jar"
+			/>
+			<fileset
+				dir="lib/global"
+				excludes="dependencies.properties"
+			/>
 		</copy>
 
 		<if>
 			<isset property="jdbc.drivers.optional.dir" />
 			<then>
-				<copy todir="${app.server.lib.global.dir}">
+				<copy
+					todir="${app.server.lib.global.dir}"
+				>
 					<fileset
 						dir="${jdbc.drivers.optional.dir}"
 						includes="${jdbc.drivers}"
@@ -480,13 +551,23 @@ message.
 		<if>
 			<equals arg1="${build.profile}" arg2="slim" />
 			<then>
-				<copy todir="${app.server.lib.portal.dir}">
-					<fileset dir="lib/portal" includes="aopalliance.jar,asm-debug-all.jar,aspectj-rt.jar,aspectj-weaver.jar,bnd.jar,c3p0.jar,cglib-nodep.jar,com.liferay.portal.slim.runtime.jar,commons-beanutils.jar,commons-chain.jar,commons-codec.jar,commons-collections.jar,commons-compress.jar,commons-configuration.jar,commons-dbcp.jar,commons-digester.jar,commons-discovery.jar,commons-fileupload.jar,commons-httpclient.jar,commons-io.jar,commons-lang.jar,commons-logging.jar,commons-math.jar,commons-pool.jar,commons-validator.jar,concurrent.jar,dom4j.jar,easyconf.jar,hibernate-commons-annotations.jar,hibernate-core.jar,hikaricp.jar,httpclient.jar,httpcore.jar,httpmime.jar,jabsorb.jar,jakarta-regexp.jar,javassist.jar,jaxb-impl.jar,jaxen.jar,jcl-over-slf4j.jar,jdom.jar,jna.jar,jodconverter.jar,jodd.jar,json-java.jar,jsr107cache.jar,kxml2.jar,liferay-icu4j.jar,log4j.jar,log4j-extras.jar,mchange-commons-java.jar,netty-all.jar,portal-impl.jar,rome.jar,saaj-api.jar,saaj-impl.jar,serializer.jar,slf4j-api.jar,spring-aop.jar,spring-aspects.jar,spring-beans.jar,spring-context.jar,spring-context-support.jar,spring-core.jar,spring-expression.jar,spring-jdbc.jar,spring-jms.jar,spring-orm.jar,spring-oxm.jar,spring-tx.jar,spring-web.jar,spring-webmvc.jar,stax.jar,stax-ex.jar,streambuffer.jar,stringtemplate.jar,tomcat-jdbc.jar,tomcat-juli.jar,util-java.jar,util-slf4j.jar,util-taglib.jar,wstx.jar,xalan.jar,xbean.jar,xbean-spring.jar,xercesImpl.jar,xml-apis.jar,xmlsec.jar,xmpcore.jar,xpp3.jar,xstream.jar,xz.jar" />
+				<copy
+					todir="${app.server.lib.portal.dir}"
+				>
+					<fileset
+						dir="lib/portal"
+						includes="aopalliance.jar,asm-debug-all.jar,aspectj-rt.jar,aspectj-weaver.jar,bnd.jar,c3p0.jar,cglib-nodep.jar,com.liferay.portal.slim.runtime.jar,commons-beanutils.jar,commons-chain.jar,commons-codec.jar,commons-collections.jar,commons-compress.jar,commons-configuration.jar,commons-dbcp.jar,commons-digester.jar,commons-discovery.jar,commons-fileupload.jar,commons-httpclient.jar,commons-io.jar,commons-lang.jar,commons-logging.jar,commons-math.jar,commons-pool.jar,commons-validator.jar,concurrent.jar,dom4j.jar,easyconf.jar,hibernate-commons-annotations.jar,hibernate-core.jar,hikaricp.jar,httpclient.jar,httpcore.jar,httpmime.jar,jabsorb.jar,jakarta-regexp.jar,javassist.jar,jaxb-impl.jar,jaxen.jar,jcl-over-slf4j.jar,jdom.jar,jna.jar,jodconverter.jar,jodd.jar,json-java.jar,jsr107cache.jar,kxml2.jar,liferay-icu4j.jar,log4j.jar,log4j-extras.jar,mchange-commons-java.jar,netty-all.jar,portal-impl.jar,rome.jar,saaj-api.jar,saaj-impl.jar,serializer.jar,slf4j-api.jar,spring-aop.jar,spring-aspects.jar,spring-beans.jar,spring-context.jar,spring-context-support.jar,spring-core.jar,spring-expression.jar,spring-jdbc.jar,spring-jms.jar,spring-orm.jar,spring-oxm.jar,spring-tx.jar,spring-web.jar,spring-webmvc.jar,stax.jar,stax-ex.jar,streambuffer.jar,stringtemplate.jar,tomcat-jdbc.jar,tomcat-juli.jar,util-java.jar,util-slf4j.jar,util-taglib.jar,wstx.jar,xalan.jar,xbean.jar,xbean-spring.jar,xercesImpl.jar,xml-apis.jar,xmlsec.jar,xmpcore.jar,xpp3.jar,xstream.jar,xz.jar"
+					/>
 				</copy>
 			</then>
 			<else>
-				<copy todir="${app.server.lib.portal.dir}">
-					<fileset dir="lib/portal" excludes="dependencies.properties" />
+				<copy
+					todir="${app.server.lib.portal.dir}"
+				>
+					<fileset
+						dir="lib/portal"
+						excludes="dependencies.properties"
+					/>
 				</copy>
 			</else>
 		</if>
@@ -494,7 +575,9 @@ message.
 		<if>
 			<equals arg1="${app.server.type}" arg2="jetty" />
 			<then>
-				<copy todir="${app.server.lib.global.dir}">
+				<copy
+					todir="${app.server.lib.global.dir}"
+				>
 					<fileset
 						dir="lib/development"
 						includes="activation.jar,jta.jar,mail.jar,persistence.jar"
@@ -520,7 +603,9 @@ message.
 			<then>
 				<ant dir="support-resin" inheritAll="false" target="deploy" />
 
-				<copy todir="${app.server.lib.global.dir}">
+				<copy
+					todir="${app.server.lib.global.dir}"
+				>
 					<fileset
 						dir="lib/development"
 						includes="saxpath.jar"
@@ -542,7 +627,10 @@ message.
 					</then>
 				</if>
 
-				<copy flatten="true" todir="${app.server.lib.endorsed.dir}">
+				<copy
+					flatten="true"
+					todir="${app.server.lib.endorsed.dir}"
+				>
 					<fileset
 						dir="lib"
 						includes="${endorsed.libraries}"
@@ -563,7 +651,9 @@ message.
 					</then>
 				</if>
 
-				<copy todir="${app.server.lib.global.dir}">
+				<copy
+					todir="${app.server.lib.global.dir}"
+				>
 					<fileset
 						dir="lib/development"
 						includes="activation.jar,jms.jar,jta.jar,mail.jar,persistence.jar"
@@ -601,7 +691,10 @@ message.
 
 				<delete dir="${app.server.portal.dir}" />
 
-				<move file="${tstamp.value}" tofile="${app.server.portal.war.name}" />
+				<move
+					file="${tstamp.value}"
+					tofile="${app.server.portal.war.name}"
+				/>
 			</then>
 		</if>
 
@@ -625,10 +718,17 @@ message.
 	</target>
 
 	<target name="dtddoc">
-		<taskdef classname="DTDDoc.DTDDocTask" classpathref="lib.classpath" name="DTDDoc" />
+		<taskdef
+			classname="DTDDoc.DTDDocTask"
+			classpathref="lib.classpath"
+			name="DTDDoc"
+		/>
 
 		<!--<antelope:stringutil string="${lp.version}" property="lp.version.dtd">
-			<replace regex="\." replacement="_" />
+			<replace
+				regex="\."
+				replacement="_"
+			/>
 		</antelope:stringutil>-->
 
 		<property name="doc.definitions.dir" value="${doc.dir}/definitions" />
@@ -887,13 +987,19 @@ message.
 	</target>
 
 	<target depends="setup-jrebel-properties" name="setup-jrebel">
-		<copy file="tools/jrebel/rebel.xml_GLOBAL" tofile="${app.server.lib.global.dir}/rebel.xml">
+		<copy
+			file="tools/jrebel/rebel.xml_GLOBAL"
+			tofile="${app.server.lib.global.dir}/rebel.xml"
+		>
 			<filterchain>
 				<expandproperties />
 			</filterchain>
 		</copy>
 
-		<copy file="tools/jrebel/rebel.xml_PORTAL" tofile="${app.server.classes.portal.dir}/rebel.xml">
+		<copy
+			file="tools/jrebel/rebel.xml_PORTAL"
+			tofile="${app.server.classes.portal.dir}/rebel.xml"
+		>
 			<filterchain>
 				<expandproperties />
 			</filterchain>
@@ -902,14 +1008,21 @@ message.
 
 	<target name="setup-jrebel-init">
 		<condition property="liferay.lib.portal.dir.isset">
-			<resourcecontains resource="portal-impl/src/system-ext.properties" substring="liferay.lib.portal.dir" />
+			<resourcecontains
+				resource="portal-impl/src/system-ext.properties"
+				substring="liferay.lib.portal.dir"
+			/>
 		</condition>
 	</target>
 
 	<target depends="setup-jrebel-init" name="setup-jrebel-properties" unless="liferay.lib.portal.dir.isset">
 		<echo append="true" file="portal-impl/src/system-ext.properties" message="liferay.lib.portal.dir=${app.server.lib.portal.dir}" />
 
-		<copy file="portal-impl/src/system-ext.properties" overwrite="true" tofile="portal-impl/classes/system-ext.properties" />
+		<copy
+			file="portal-impl/src/system-ext.properties"
+			overwrite="true"
+			tofile="portal-impl/classes/system-ext.properties"
+		/>
 	</target>
 
 	<target name="setup-libs">
@@ -1000,7 +1113,10 @@ message.
 				<if>
 					<os family="unix" />
 					<then>
-						<chmod file="${app.server.websphere.bin.dir}/startServer.sh" perm="a+x" />
+						<chmod
+							file="${app.server.websphere.bin.dir}/startServer.sh"
+							perm="a+x"
+						/>
 
 						<exec dir="${app.server.websphere.bin.dir}" executable="/bin/sh">
 							<arg value="-c" />

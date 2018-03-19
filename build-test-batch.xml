@@ -33,11 +33,18 @@
 						replace="http://\1-\2/\2"
 					/>
 
-					<get dest="${tstamp.value}.txt" ignoreerrors="true" src="${jenkins.build.url}/consoleText" />
+					<get
+						dest="${tstamp.value}.txt"
+						ignoreerrors="true"
+						src="${jenkins.build.url}/consoleText"
+					/>
 
 					<var name="jenkins.console.txt" unset="true" />
 
-					<loadfile property="jenkins.console.txt" srcfile="${tstamp.value}.txt" />
+					<loadfile
+						property="jenkins.console.txt"
+						srcfile="${tstamp.value}.txt"
+					/>
 
 					<delete file="${tstamp.value}.txt" />
 
@@ -352,7 +359,10 @@ mariadb.executable=${mariadb.executable}]]></echo>
 				<then>
 					<mkdir dir="${env.WORKSPACE}/test-results" />
 
-					<copy file="test-results/TESTS-TestSuites.xml" tofile="${env.WORKSPACE}/test-results/TESTS-TestSuites.xml" />
+					<copy
+						file="test-results/TESTS-TestSuites.xml"
+						tofile="${env.WORKSPACE}/test-results/TESTS-TestSuites.xml"
+					/>
 				</then>
 			</if>
 		</sequential>
@@ -368,18 +378,27 @@ mariadb.executable=${mariadb.executable}]]></echo>
 			<delete dir="${merged-classes}" />
 			<mkdir dir="${merged-classes}" />
 
-			<unzip dest="${merged-classes}">
+			<unzip
+				dest="${merged-classes}"
+			>
 				<patternset>
 					<include name="**/com/liferay/**" />
 				</patternset>
-				<fileset dir="@{portal.bundle.dir}">
+				<fileset
+					dir="@{portal.bundle.dir}"
+				>
 					<include name="**/*.jar" />
 					<include name="**/*.war" />
 				</fileset>
 			</unzip>
 
-			<jar destfile="@{merged.jar}" update="true">
-				<fileset dir="${merged-classes}">
+			<jar
+				destfile="@{merged.jar}"
+				update="true"
+			>
+				<fileset
+					dir="${merged-classes}"
+				>
 					<include name="**/*.class" />
 				</fileset>
 			</jar>
@@ -466,7 +485,10 @@ app.server.type=@{app.server.type}]]></echo>
 			<antcall inheritAll="false" target="compile-test" />
 
 			<delete>
-				<fileset dir="bundles" includes="*.zip" />
+				<fileset
+					dir="bundles"
+					includes="*.zip"
+				/>
 			</delete>
 
 			<if>
@@ -483,7 +505,11 @@ app.server.type=@{app.server.type}]]></echo>
 				</then>
 			</if>
 
-			<zip basedir="." destfile="liferay-portal-bundle-@{app.server.type}.zip" includes="bundles/**" />
+			<zip
+				basedir="."
+				destfile="liferay-portal-bundle-@{app.server.type}.zip"
+				includes="bundles/**"
+			/>
 
 			<execute>
 				<![CDATA[
@@ -516,7 +542,10 @@ app.server.type=@{app.server.type}]]></echo>
 		<sequential>
 			<antcall inheritAll="false" target="setup-sdk" />
 
-			<unzip dest="." src="liferay-portal-source.zip" />
+			<unzip
+				dest="."
+				src="liferay-portal-source.zip"
+			/>
 
 			<execute>
 				<![CDATA[
@@ -866,9 +895,15 @@ app.server.type=@{app.server.type}]]></echo>
 										src="@{test.plugins.war.zip.url}"
 									/>
 
-									<unzip dest="." src="plugins.war.zip">
+									<unzip
+										dest="."
+										src="plugins.war.zip"
+									>
 										<mapper>
-											<globmapper from="plugins/*" to="plugins/marketplace/*" />
+											<globmapper
+												from="plugins/*"
+												to="plugins/marketplace/*"
+											/>
 										</mapper>
 									</unzip>
 
@@ -1170,8 +1205,12 @@ app.server.type=@{app.server.type}]]></echo>
 							<antcall inheritall="false" target="stop-app-server" />
 
 							<delete includeemptydirs="false">
-								<fileset dir="${liferay.home}/osgi/marketplace/override" />
-								<fileset dir="${liferay.home}/osgi/static" />
+								<fileset
+									dir="${liferay.home}/osgi/marketplace/override"
+								/>
+								<fileset
+									dir="${liferay.home}/osgi/static"
+								/>
 							</delete>
 
 							<trycatch>
@@ -1300,7 +1339,9 @@ app.server.type=@{app.server.type}]]></echo>
 
 							<for param="app.dir">
 								<path>
-									<dirset dir="modules">
+									<dirset
+										dir="modules"
+									>
 										<include name="apps/*" />
 										<include name="private/apps/*" />
 									</dirset>
@@ -1631,7 +1672,10 @@ app.server.type=@{app.server.type}]]></echo>
 
 			<if>
 				<not>
-					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.bat" substring="${dummy.socket.proxy}" />
+					<resourcecontains
+						resource="${app.server.tomcat.dir}/bin/setenv.bat"
+						substring="${dummy.socket.proxy}"
+					/>
 				</not>
 				<then>
 					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.bat">
@@ -1643,7 +1687,10 @@ app.server.type=@{app.server.type}]]></echo>
 			</if>
 			<if>
 				<not>
-					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${dummy.socket.proxy}" />
+					<resourcecontains
+						resource="${app.server.tomcat.dir}/bin/setenv.sh"
+						substring="${dummy.socket.proxy}"
+					/>
 				</not>
 				<then>
 					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
@@ -1659,14 +1706,24 @@ app.server.type=@{app.server.type}]]></echo>
 	<macrodef name="setup-testable-tomcat-gc">
 		<sequential>
 			<if>
-				<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.bat" substring="${test.batch.app.server.tomcat.setenv.gc.old}" />
+				<resourcecontains
+					resource="${app.server.tomcat.dir}/bin/setenv.bat"
+					substring="${test.batch.app.server.tomcat.setenv.gc.old}"
+				/>
 				<then>
-					<replace file="${app.server.tomcat.dir}/bin/setenv.bat" token="${test.batch.app.server.tomcat.setenv.gc.old}" value="${test.batch.app.server.tomcat.setenv.gc.new}" />
+					<replace
+						file="${app.server.tomcat.dir}/bin/setenv.bat"
+						token="${test.batch.app.server.tomcat.setenv.gc.old}"
+						value="${test.batch.app.server.tomcat.setenv.gc.new}"
+					/>
 				</then>
 				<else>
 					<if>
 						<not>
-							<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.bat" substring="${test.batch.app.server.tomcat.setenv.gc.new}" />
+							<resourcecontains
+								resource="${app.server.tomcat.dir}/bin/setenv.bat"
+								substring="${test.batch.app.server.tomcat.setenv.gc.new}"
+							/>
 						</not>
 						<then>
 							<fail message="Unable to setup Tomcat GC properties for ${app.server.tomcat.dir}/bin/setenv.bat." />
@@ -1676,14 +1733,24 @@ app.server.type=@{app.server.type}]]></echo>
 			</if>
 
 			<if>
-				<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${test.batch.app.server.tomcat.setenv.gc.old}" />
+				<resourcecontains
+					resource="${app.server.tomcat.dir}/bin/setenv.sh"
+					substring="${test.batch.app.server.tomcat.setenv.gc.old}"
+				/>
 				<then>
-					<replace file="${app.server.tomcat.dir}/bin/setenv.sh" token="${test.batch.app.server.tomcat.setenv.gc.old}" value="${test.batch.app.server.tomcat.setenv.gc.new}" />
+					<replace
+						file="${app.server.tomcat.dir}/bin/setenv.sh"
+						token="${test.batch.app.server.tomcat.setenv.gc.old}"
+						value="${test.batch.app.server.tomcat.setenv.gc.new}"
+					/>
 				</then>
 				<else>
 					<if>
 						<not>
-							<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${test.batch.app.server.tomcat.setenv.gc.new}" />
+							<resourcecontains
+								resource="${app.server.tomcat.dir}/bin/setenv.sh"
+								substring="${test.batch.app.server.tomcat.setenv.gc.new}"
+							/>
 						</not>
 						<then>
 							<fail message="Unable to setup Tomcat GC properties for ${app.server.tomcat.dir}/bin/setenv.sh." />
@@ -1702,7 +1769,10 @@ app.server.type=@{app.server.type}]]></echo>
 
 			<if>
 				<not>
-					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.bat" substring="${heap.dump.on.oom}" />
+					<resourcecontains
+						resource="${app.server.tomcat.dir}/bin/setenv.bat"
+						substring="${heap.dump.on.oom}"
+					/>
 				</not>
 				<then>
 					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.bat">
@@ -1714,7 +1784,10 @@ app.server.type=@{app.server.type}]]></echo>
 			</if>
 			<if>
 				<not>
-					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${heap.dump.on.oom}" />
+					<resourcecontains
+						resource="${app.server.tomcat.dir}/bin/setenv.sh"
+						substring="${heap.dump.on.oom}"
+					/>
 				</not>
 				<then>
 					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
@@ -1735,7 +1808,10 @@ app.server.type=@{app.server.type}]]></echo>
 
 			<if>
 				<not>
-					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.bat" substring="${print.final.flags}" />
+					<resourcecontains
+						resource="${app.server.tomcat.dir}/bin/setenv.bat"
+						substring="${print.final.flags}"
+					/>
 				</not>
 				<then>
 					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.bat">
@@ -1747,7 +1823,10 @@ app.server.type=@{app.server.type}]]></echo>
 			</if>
 			<if>
 				<not>
-					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${print.final.flags}" />
+					<resourcecontains
+						resource="${app.server.tomcat.dir}/bin/setenv.sh"
+						substring="${print.final.flags}"
+					/>
 				</not>
 				<then>
 					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
@@ -2322,7 +2401,10 @@ app.server.type=@{app.server.type}]]></echo>
 					</path>
 					<sequential>
 						<if>
-							<resourcecontains resource="@{gradle.plugin.dir}/build.gradle" substring="gradleTest" />
+							<resourcecontains
+								resource="@{gradle.plugin.dir}/build.gradle"
+								substring="gradleTest"
+							/>
 							<then>
 								<gradle-execute dir="@{gradle.plugin.dir}" task="gradleTest" />
 							</then>
@@ -2743,7 +2825,10 @@ ${output.content}</echo>
 
 					<print-file file.name="${project.dir}/git.diff" />
 
-					<copy file="${project.dir}/git.diff" todir="${release.tool.dir}" />
+					<copy
+						file="${project.dir}/git.diff"
+						todir="${release.tool.dir}"
+					/>
 
 					<print-file file.name="${release.tool.dir}/git.diff" />
 
@@ -2817,7 +2902,10 @@ ${output.content}</echo>
 
 								<prepare-test-environment />
 
-								<move file="bundles" tofile="bun dles" />
+								<move
+									file="bundles"
+									tofile="bun dles"
+								/>
 							</sequential>
 						</then>
 						<else>
@@ -2965,11 +3053,20 @@ ${output.content}</echo>
 			<condition>
 				<and>
 					<not>
-						<resourcecontains resource="${project.dir}/sass-compiler-log" substring="Using Ruby Sass compiler" />
+						<resourcecontains
+							resource="${project.dir}/sass-compiler-log"
+							substring="Using Ruby Sass compiler"
+						/>
 					</not>
 					<or>
-						<resourcecontains resource="${project.dir}/sass-compiler-log" substring="Unable to load Ruby compiler, falling back to native" />
-						<resourcecontains resource="${project.dir}/sass-compiler-log" substring="Using native Sass compiler" />
+						<resourcecontains
+							resource="${project.dir}/sass-compiler-log"
+							substring="Unable to load Ruby compiler, falling back to native"
+						/>
+						<resourcecontains
+							resource="${project.dir}/sass-compiler-log"
+							substring="Using native Sass compiler"
+						/>
 					</or>
 				</and>
 			</condition>
@@ -2983,7 +3080,10 @@ ${output.content}</echo>
 
 				<var name="log.files" unset="true" />
 
-				<fileset dir="${project.dir}" id="log.files">
+				<fileset
+					dir="${project.dir}"
+					id="log.files"
+				>
 					<include name="baseline-reports/*.log" />
 					<include name="modules/**/baseline.log" />
 				</fileset>
@@ -3022,7 +3122,9 @@ ${output.content}</echo>
 				<echo>Deleting stale baseline log files.</echo>
 
 				<for param="log.file">
-					<fileset dir="${project.dir}">
+					<fileset
+						dir="${project.dir}"
+					>
 						<include name="baseline-reports/*.log" />
 						<include name="modules/**/baseline.log" />
 					</fileset>
@@ -3092,11 +3194,27 @@ ${output.content}</echo>
 
 				<record action="stop" name="${project.dir}/build.services.output.txt" />
 
-				<replaceregexp byline="true" file="${project.dir}/build.services.output.txt" match="Writing \/.+\/docroot\/WEB-INF\/src\/service\.properties" replace="" />
-				<replace file="${project.dir}/build.services.output.txt" token="Writing src/service.properties" value="" />
-				<replace file="${project.dir}/build.services.output.txt" token="Writing src/main/resources/service.properties" value="" />
+				<replaceregexp
+					byline="true"
+					file="${project.dir}/build.services.output.txt"
+					match="Writing \/.+\/docroot\/WEB-INF\/src\/service\.properties"
+					replace=""
+				/>
+				<replace
+					file="${project.dir}/build.services.output.txt"
+					token="Writing src/service.properties"
+					value=""
+				/>
+				<replace
+					file="${project.dir}/build.services.output.txt"
+					token="Writing src/main/resources/service.properties"
+					value=""
+				/>
 
-				<loadfile property="build.services.output.txt.content" srcfile="${project.dir}/build.services.output.txt" />
+				<loadfile
+					property="build.services.output.txt.content"
+					srcfile="${project.dir}/build.services.output.txt"
+				/>
 
 				<delete file="${project.dir}/build.services.output.txt" />
 
@@ -3298,7 +3416,9 @@ information. Make sure to commit in all build services results.
 		<echo>Deleting stale baseline log files.</echo>
 
 		<delete failonerror="false">
-			<fileset dir="${project.dir}">
+			<fileset
+				dir="${project.dir}"
+			>
 				<include name="baseline-reports/*.log" />
 				<include name="modules/**/baseline.log" />
 			</fileset>
@@ -3323,7 +3443,10 @@ information. Make sure to commit in all build services results.
 
 		<var name="log.files" unset="true" />
 
-		<fileset dir="${project.dir}" id="log.files">
+		<fileset
+			dir="${project.dir}"
+			id="log.files"
+		>
 			<include name="baseline-reports/*.log" />
 			<include name="modules/**/baseline.log" />
 		</fileset>

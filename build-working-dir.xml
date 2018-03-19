@@ -217,15 +217,15 @@
 				targetfile="@{replace.regex.file}"
 			/>
 
-			<fail
-				message="Unable to replace pattern &quot;@{replace.regex.pattern}&quot; with &quot;@{replace.regex.replacement}&quot; in @{replace.regex.file}."
-				unless="replace.regex.changed"
-			/>
+			<fail message="Unable to replace pattern &quot;@{replace.regex.pattern}&quot; with &quot;@{replace.regex.replacement}&quot; in @{replace.regex.file}." unless="replace.regex.changed" />
 		</sequential>
 	</macrodef>
 
 	<target name="checkout-portal" unless="prepare.working.dir.private">
-		<loadfile property="portal.git.commit" srcFile="git-commit-portal">
+		<loadfile
+			property="portal.git.commit"
+			srcFile="git-commit-portal"
+		>
 			<filterchain>
 				<striplinebreaks />
 			</filterchain>
@@ -295,7 +295,10 @@
 	</target>
 
 	<target if="prepare.working.dir.private" name="checkout-portal-private">
-		<loadfile property="portal.private.git.commit" srcFile="git-commit-portal-private">
+		<loadfile
+			property="portal.private.git.commit"
+			srcFile="git-commit-portal-private"
+		>
 			<filterchain>
 				<striplinebreaks />
 			</filterchain>

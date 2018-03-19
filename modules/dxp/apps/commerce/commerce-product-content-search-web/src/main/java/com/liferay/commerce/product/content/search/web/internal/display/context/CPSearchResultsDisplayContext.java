@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -76,7 +75,6 @@ public class CPSearchResultsDisplayContext {
 			httpServletRequest);
 
 		_liferayPortletRequest = cpRequestHelper.getLiferayPortletRequest();
-		_liferayPortletResponse = cpRequestHelper.getLiferayPortletResponse();
 
 		_locale = httpServletRequest.getLocale();
 
@@ -278,13 +276,10 @@ public class CPSearchResultsDisplayContext {
 	private final CPInstanceHelper _cpInstanceHelper;
 	private final CPSearchResultsPortletInstanceConfiguration
 		_cpSearchResultsPortletInstanceConfiguration;
-	private String _defaultOrderByCol;
-	private String _defaultOrderByType;
 	private long _displayStyleGroupId;
 	private final DLAppService _dlAppService;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
-	private final LiferayPortletResponse _liferayPortletResponse;
 	private final Locale _locale;
 	private final PortletSharedSearchResponse _portletSharedSearchResponse;
 	private SearchContainer<Document> _searchContainer;

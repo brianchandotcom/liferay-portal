@@ -119,61 +119,71 @@ public class JenkinsJobConfigGenerator {
 
 		Element listViewElement = Dom4JUtil.getNewElement("listView", null);
 
+		Element ownerElement = Dom4JUtil.getNewElement(
+			"owner", listViewElement);
+
+		ownerElement.addAttribute("class", "hudson");
+		ownerElement.addAttribute("reference", "../../..");
+
 		Dom4JUtil.addToElement(
-			listViewElement, Dom4JUtil.getNewElement("owner", null),
+			listViewElement,
 			Dom4JUtil.getNewElement("name", null, parentJobName),
 			Dom4JUtil.getNewElement("filterExecutors", null, "true"),
-			Dom4JUtil.getNewElement("filterQueue", null, "true"),
-			Dom4JUtil.getNewElement("properties", null),
-			Dom4JUtil.getNewElement("jobNames", null),
-			Dom4JUtil.getNewElement("jobFilters", null),
-			Dom4JUtil.getNewElement("columns", null),
-			Dom4JUtil.getNewElement("recurse", null, "false"));
+			Dom4JUtil.getNewElement("filterQueue", null, "true"));
 
-		Dom4JUtil.addToElement(
-			listViewElement.element("jobNames"),
-			Dom4JUtil.getNewElement("comparator", null));
+		Element propertiesElement = Dom4JUtil.getNewElement(
+			"properties", listViewElement);
+
+		propertiesElement.addAttribute(
+			"class", "hudson.model.View$PropertyList");
+
+		Element jobNamesElement = Dom4JUtil.getNewElement(
+			"jobNames", listViewElement);
+
+		Element comparatorElement = Dom4JUtil.getNewElement(
+			"comparator", jobNamesElement);
+
+		comparatorElement.addAttribute(
+			"class", "hudson.util.CaseInsensitiveComparator");
 
 		for (String childJob : childJobNames) {
-			Dom4JUtil.addToElement(
-				listViewElement.element("jobNames"),
-				Dom4JUtil.getNewElement("string", null, childJob));
+			Dom4JUtil.getNewElement("string", jobNamesElement, childJob);
 		}
+
+		Dom4JUtil.getNewElement("jobFilters", listViewElement);
+
+		Element columnsElement = Dom4JUtil.getNewElement(
+			"columns", listViewElement);
+
+		Dom4JUtil.getNewElement("recurse", listViewElement, "false");
+
+		Dom4JUtil.addToElement(
+			columnsElement,
+			Dom4JUtil.getNewElement("hudson.views.StatusColumn", null),
+			Dom4JUtil.getNewElement("hudson.views.WeatherColumn", null),
+			Dom4JUtil.getNewElement("hudson.views.JobColumn", null));
 
 		String descriptionColumnName =
 			"jenkins.plugins.extracolumns.DescriptionColumn";
 
-		Dom4JUtil.addToElement(
-			listViewElement.element("columns"),
-			Dom4JUtil.getNewElement("hudson.views.StatusColumn", null),
-			Dom4JUtil.getNewElement("hudson.views.WeatherColumn", null),
-			Dom4JUtil.getNewElement("hudson.views.JobColumn", null),
-			Dom4JUtil.getNewElement(descriptionColumnName, null),
-			Dom4JUtil.getNewElement("hudson.views.LastSuccessColumn", null),
-			Dom4JUtil.getNewElement("hudson.views.LastFailureColumn", null),
-			Dom4JUtil.getNewElement("hudson.views.LastDurationColumn", null),
-			Dom4JUtil.getNewElement("hudson.views.BuildButtonColumn", null));
+		Element descriptiveColumnNameElement = Dom4JUtil.getNewElement(
+			descriptionColumnName, columnsElement);
 
-		Element columnsElement = listViewElement.element("columns");
+		descriptiveColumnNameElement.addAttribute(
+			"plugin", "extra-columns@1.11");
 
 		Dom4JUtil.addToElement(
-			columnsElement.element(descriptionColumnName),
+			descriptiveColumnNameElement,
 			Dom4JUtil.getNewElement("displayName", null, "false"),
 			Dom4JUtil.getNewElement("trim", null, "false"),
 			Dom4JUtil.getNewElement("displayLength", null, "1"));
 
-		listViewElement.element("owner").addAttribute("class", "hudson");
-		listViewElement.element("owner").addAttribute("reference", "../../..");
-		listViewElement.element("properties").addAttribute(
-			"class", "hudson.model.View$PropertyList");
-
-		Element jobNamesElement = listViewElement.element("jobNames");
-
-		jobNamesElement.element("comparator").addAttribute(
-			"class", "hudson.util.CaseInsensitiveComparator");
-
-		columnsElement.element(descriptionColumnName).addAttribute(
-			"plugin", "extra-columns@1.11");
+		Dom4JUtil.addToElement(
+			columnsElement,
+			Dom4JUtil.getNewElement("hudson.views.LastSuccessColumn", null),
+			Dom4JUtil.getNewElement("hudson.views.LastFailureColumn", null),
+			Dom4JUtil.getNewElement("hudson.views.LastDurationColumn", null),
+			Dom4JUtil.getNewElement("hudson.views.BuildButtonColumn", null));
 
 		return listViewElement;
 	}
@@ -401,11 +411,13 @@ public class JenkinsJobConfigGenerator {
 
 		Element envVarsElement = Dom4JUtil.getNewElement(
 			"envVars", environmentVariablesNodePropertyElement,
-			Dom4JUtil.getNewElement("unserializable-parents", null),
-			Dom4JUtil.getNewElement(
-				"tree-map", null, Dom4JUtil.getNewElement("default", null)));
+			Dom4JUtil.getNewElement("unserializable-parents", null));
 
 		envVarsElement.addAttribute("serialization", "custom");
+
+		Element treeMapElement = Dom4JUtil.getNewElement(
+			"tree-map", envVarsElement,
+			Dom4JUtil.getNewElement("default", null));
 
 		if (slaveLabel.contains("osx")) {
 			List<Element> osxEnvironmentVariablesElements =
@@ -413,8 +425,7 @@ public class JenkinsJobConfigGenerator {
 					_getOSXEnvironmentVariablesMap(), slaveHostname);
 
 			Dom4JUtil.addToElement(
-				envVarsElement.element("tree-map"),
-				osxEnvironmentVariablesElements.toArray());
+				treeMapElement, osxEnvironmentVariablesElements.toArray());
 
 			return slaveElement;
 		}
@@ -425,8 +436,7 @@ public class JenkinsJobConfigGenerator {
 					_getWindowsEnvironmentVariablesMap(), slaveHostname);
 
 			Dom4JUtil.addToElement(
-				envVarsElement.element("tree-map"),
-				windowsEnvironmentVariablesElements.toArray());
+				treeMapElement, windowsEnvironmentVariablesElements.toArray());
 
 			return slaveElement;
 		}
@@ -436,8 +446,7 @@ public class JenkinsJobConfigGenerator {
 				_getLinuxEnvironmentVariablesMap(), slaveHostname);
 
 		Dom4JUtil.addToElement(
-			envVarsElement.element("tree-map"),
-			linuxEnvironmentVariablesElements.toArray());
+			treeMapElement, linuxEnvironmentVariablesElements.toArray());
 
 		return slaveElement;
 	}

@@ -259,6 +259,9 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 	@Reference
 	protected Portal portal;
 
+	@Reference
+	protected PortletLocalService portletLocalService;
+
 	private DDMDisplayTabItem _getFeedsTabItem() {
 		return new DDMDisplayTabItem() {
 
@@ -325,7 +328,7 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 				PortletDisplay portletDisplay =
 					themeDisplay.getPortletDisplay();
 
-				Portlet portlet = _portletLocalService.getPortletById(
+				Portlet portlet = portletLocalService.getPortletById(
 					portletDisplay.getId());
 
 				PortletURL portletURL = PortletURLFactoryUtil.create(
@@ -387,7 +390,7 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 				PortletDisplay portletDisplay =
 					themeDisplay.getPortletDisplay();
 
-				Portlet portlet = _portletLocalService.getPortletById(
+				Portlet portlet = portletLocalService.getPortletById(
 					portletDisplay.getId());
 
 				PortletURL portletURL = PortletURLFactoryUtil.create(
@@ -475,8 +478,5 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 		});
 	private static final Set<String> _viewTemplateExcludedColumnNames =
 		SetUtil.fromArray(new String[] {"mode"});
-
-	@Reference
-	private PortletLocalService _portletLocalService;
 
 }

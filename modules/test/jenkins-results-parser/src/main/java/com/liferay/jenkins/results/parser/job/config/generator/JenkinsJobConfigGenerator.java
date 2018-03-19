@@ -256,7 +256,7 @@ public class JenkinsJobConfigGenerator {
 		return sb.toString();
 	}
 
-	private Set<String> _getGeneratedPropertyValueSet(
+	private Set<String> _getGeneratedPropertyValuesSet(
 		String generatedPropertyName) {
 
 		Set<String> generatedPropertyValuesSet = new HashSet<>();
@@ -969,7 +969,7 @@ public class JenkinsJobConfigGenerator {
 		String generatedPropertyName = JenkinsResultsParserUtil.combine(
 			"master.job.properties(", masterHostname, "/", jobName, ")");
 
-		Set<String> masterJobPropertiesSet = _getGeneratedPropertyValueSet(
+		Set<String> masterJobPropertiesSet = _getGeneratedPropertyValuesSet(
 			generatedPropertyName);
 
 		masterJobPropertiesSet.add(masterJobPropertiesList.get(2));
@@ -1096,7 +1096,7 @@ public class JenkinsJobConfigGenerator {
 	private void _updateGeneratedProperty(
 		String generatedPropertyName, String additionalGeneratedPropertyValue) {
 
-		Set<String> generatedPropertyValuesSet = _getGeneratedPropertyValueSet(
+		Set<String> generatedPropertyValuesSet = _getGeneratedPropertyValuesSet(
 			generatedPropertyName);
 
 		generatedPropertyValuesSet.add(additionalGeneratedPropertyValue);

@@ -53,9 +53,12 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.sql.DataSource;
 import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
@@ -80,6 +83,22 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 	<#assign localizedEntity = entity.localizedEntity />
 
 	import ${apiPackagePath}.model.${localizedEntity.name};
+</#if>
+
+<#if entity.versionEntity??>
+	<#assign versionEntity = entity.versionEntity />
+
+	import ${apiPackagePath}.model.${versionEntity.name};
+	import com.liferay.portal.kernel.service.version.VersionService;
+	import com.liferay.portal.kernel.service.version.VersionServiceListener;
+	<#if entity.localizedEntity??>
+		<#assign
+			localizedEntity = entity.localizedEntity
+			localizedVersionEntity = localizedEntity.versionEntity
+		/>
+
+		import ${apiPackagePath}.model.${localizedVersionEntity.name};
+	</#if>
 </#if>
 
 <#list referenceEntities as referenceEntity>
@@ -116,7 +135,14 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 </#if>
 
 	@ProviderType
-	public abstract class ${entity.name}LocalServiceBaseImpl extends BaseLocalServiceImpl implements ${entity.name}LocalService, IdentifiableOSGiService {
+	public abstract class ${entity.name}LocalServiceBaseImpl extends BaseLocalServiceImpl implements ${entity.name}LocalService, IdentifiableOSGiService
+
+	<#if entity.versionEntity??>
+		<#assign versionEntity = entity.versionEntity />
+		, VersionService<${entity.name}, ${versionEntity.name}>
+	</#if>
+
+	{
 
 		/*
 		 * NOTE FOR DEVELOPERS:
@@ -173,17 +199,36 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 			return ${entity.varName}Persistence.update(${entity.varName});
 		}
 
-		/**
-		 * Creates a new ${entity.humanName} with the primary key. Does not add the ${entity.humanName} to the database.
-		 *
-		 * @param ${entity.PKVarName} the primary key for the new ${entity.humanName}
-		 * @return the new ${entity.humanName}
-		 */
-		@Override
-		@Transactional(enabled = false)
-		public ${entity.name} create${entity.name}(${entity.PKClassName} ${entity.PKVarName}) {
-			return ${entity.varName}Persistence.create(${entity.PKVarName});
-		}
+		<#if entity.versionEntity??>
+			/**
+			 * Creates a new ${entity.humanName}. Does not add the ${entity.humanName} to the database.
+			 *
+			 * @return the new ${entity.humanName}
+			 */
+			@Override
+			@Transactional(enabled = false)
+			public ${entity.name} create() {
+				long primaryKey = counterLocalService.increment(${entity.name}.class.getName());
+
+				${entity.name} draft${entity.name} = ${entity.varName}Persistence.create(primaryKey);
+
+				draft${entity.name}.setHeadId(primaryKey);
+
+				return draft${entity.name};
+			}
+		<#else>
+			/**
+			 * Creates a new ${entity.humanName} with the primary key. Does not add the ${entity.humanName} to the database.
+			 *
+			 * @param ${entity.PKVarName} the primary key for the new ${entity.humanName}
+			 * @return the new ${entity.humanName}
+			 */
+			@Override
+			@Transactional(enabled = false)
+			public ${entity.name} create${entity.name}(${entity.PKClassName} ${entity.PKVarName}) {
+				return ${entity.varName}Persistence.create(${entity.PKVarName});
+			}
+		</#if>
 
 		<#assign serviceBaseExceptions = serviceBuilder.getServiceBaseExceptions(methods, "delete" + entity.name, [entity.PKClassName], ["PortalException"]) />
 
@@ -202,9 +247,26 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 		 */
 		@Indexable(type = IndexableType.DELETE)
 		@Override
-		public ${entity.name} delete${entity.name}(${entity.PKClassName} ${entity.PKVarName}) <#if (serviceBaseExceptions?size gt 0)>throws ${stringUtil.merge(serviceBaseExceptions)} </#if>{
-			return ${entity.varName}Persistence.remove(${entity.PKVarName});
-		}
+		<#if entity.versionEntity??>
+			public ${entity.name} delete${entity.name}(${entity.PKClassName} ${entity.PKVarName}) {
+				${entity.name} ${entity.varName} = ${entity.varName}Persistence.fetchByPrimaryKey(${entity.PKVarName});
+
+				try {
+					if (${entity.varName} != null) {
+						delete(${entity.varName});
+					}
+
+					return ${entity.varName};
+				}
+				catch (PortalException pe) {
+					throw new SystemException(pe);
+				}
+			}
+		<#else>
+			public ${entity.name} delete${entity.name}(${entity.PKClassName} ${entity.PKVarName}) <#if (serviceBaseExceptions?size gt 0)>throws ${stringUtil.merge(serviceBaseExceptions)} </#if>{
+				return ${entity.varName}Persistence.remove(${entity.PKVarName});
+			}
+		</#if>
 
 		<#assign serviceBaseExceptions = serviceBuilder.getServiceBaseExceptions(methods, "delete" + entity.name, [apiPackagePath + ".model." + entity.name], []) />
 
@@ -219,9 +281,22 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 		 */
 		@Indexable(type = IndexableType.DELETE)
 		@Override
-		public ${entity.name} delete${entity.name}(${entity.name} ${entity.varName}) <#if (serviceBaseExceptions?size gt 0)>throws ${stringUtil.merge(serviceBaseExceptions)} </#if>{
-			return ${entity.varName}Persistence.remove(${entity.varName});
-		}
+		<#if entity.versionEntity??>
+			public ${entity.name} delete${entity.name}(${entity.name} ${entity.varName}) {
+				try {
+					delete(${entity.varName});
+
+					return ${entity.varName};
+				}
+				catch (PortalException pe) {
+					throw new SystemException(pe);
+				}
+			}
+		<#else>
+			public ${entity.name} delete${entity.name}(${entity.name} ${entity.varName}) <#if (serviceBaseExceptions?size gt 0)>throws ${stringUtil.merge(serviceBaseExceptions)} </#if>{
+				return ${entity.varName}Persistence.remove(${entity.varName});
+			}
+		</#if>
 
 		@Override
 		public DynamicQuery dynamicQuery() {
@@ -738,9 +813,15 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 		 */
 		@Indexable(type = IndexableType.REINDEX)
 		@Override
-		public ${entity.name} update${entity.name}(${entity.name} ${entity.varName}) <#if (serviceBaseExceptions?size gt 0)>throws ${stringUtil.merge(serviceBaseExceptions)} </#if>{
-			return ${entity.varName}Persistence.update(${entity.varName});
-		}
+		<#if entity.versionEntity??>
+			public ${entity.name} update${entity.name}(${entity.name} draft${entity.name}) throws PortalException {
+				return updateDraft(draft${entity.name});
+			}
+		<#else>
+			public ${entity.name} update${entity.name}(${entity.name} ${entity.varName}) <#if (serviceBaseExceptions?size gt 0)>throws ${stringUtil.merge(serviceBaseExceptions)} </#if>{
+				return ${entity.varName}Persistence.update(${entity.varName});
+			}
+		</#if>
 
 		<#list entity.blobEntityColumns as entityColumn>
 			<#if entityColumn.lazy>
@@ -997,8 +1078,14 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 			return ${localizedEntity.varName}Persistence.findBy${pkEntityColumn.methodName}(${entity.PKVarName});
 		}
 
+		<#assign entityVarName = entity.varName />
+
+		<#if entity.versionEntity??>
+			<#assign entityVarName = "draft" + entity.name />
+		</#if>
+
 		protected ${localizedEntity.name} update${localizedEntity.name}(
-			${entity.name} ${entity.varName}, String languageId,
+			${entity.name} ${entityVarName}, String languageId,
 			<#list localizedEntityColumns as entityColumn>
 				String ${entityColumn.name}
 
@@ -1008,32 +1095,27 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 			</#list>
 			) throws PortalException {
 
-			${localizedEntity.name} ${localizedEntity.varName} = ${localizedEntity.varName}Persistence.fetchBy${pkEntityColumn.methodName}_LanguageId(${entity.varName}.get${pkEntityColumn.methodName}(), languageId);
+			<#if entity.versionEntity??>
+				if (!${entityVarName}.isDraft()) {
+					throw new IllegalArgumentException("Can only update draft entries " + ${entityVarName}.getPrimaryKey());
+				}
+			</#if>
 
-			if (${localizedEntity.varName} == null) {
-				long ${localizedEntity.varName}Id = counterLocalService.increment(${localizedEntity.name}.class.getName());
+			${localizedEntity.name} ${localizedEntity.varName} = ${localizedEntity.varName}Persistence.fetchBy${pkEntityColumn.methodName}_LanguageId(${entityVarName}.get${pkEntityColumn.methodName}(), languageId);
 
-				${localizedEntity.varName} = ${localizedEntity.varName}Persistence.create(${localizedEntity.varName}Id);
+			return _update${localizedEntity.name}(${entityVarName}, ${localizedEntity.varName}, languageId,
+				<#list localizedEntityColumns as entityColumn>
+					${entityColumn.name}
 
-				${localizedEntity.varName}.set${pkEntityColumn.methodName}(${entity.varName}.get${pkEntityColumn.methodName}());
-				${localizedEntity.varName}.setLanguageId(languageId);
-			}
-
-			<#list entity.entityColumns as entityColumn>
-				<#if localizedEntity.hasEntityColumn(entityColumn.name) && !stringUtil.equals(entityColumn.name, "mvccVersion") && !stringUtil.equals(entityColumn.name, pkEntityColumn.name)>
-					${localizedEntity.varName}.set${entityColumn.methodName}(${entity.varName}.get${entityColumn.methodName}());
-				</#if>
-			</#list>
-
-			<#list localizedEntityColumns as entityColumn>
-				${localizedEntity.varName}.set${entityColumn.methodName}(${entityColumn.name});
-			</#list>
-
-			return ${localizedEntity.varName}Persistence.update(${localizedEntity.varName});
+					<#if entityColumn?has_next>
+						,
+					</#if>
+				</#list>
+			);
 		}
 
 		protected List<${localizedEntity.name}> update${localizedEntity.names}(
-			${entity.name} ${entity.varName},
+			${entity.name} ${entityVarName},
 			<#list localizedEntityColumns as entityColumn>
 				Map<String, String> ${entityColumn.name}Map
 
@@ -1042,6 +1124,12 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 				</#if>
 			</#list>
 			) throws PortalException {
+
+			<#if entity.versionEntity??>
+				if (!${entityVarName}.isDraft()) {
+					throw new IllegalArgumentException("Can only update draft entries " + ${entityVarName}.getPrimaryKey());
+				}
+			</#if>
 
 			Map<String, String[]> localizedValuesMap = new HashMap<String, String[]>();
 
@@ -1063,18 +1151,26 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 
 			List<${localizedEntity.name}> ${localizedEntity.varNames} = new ArrayList<${localizedEntity.name}>(localizedValuesMap.size());
 
-			for (${localizedEntity.name} ${localizedEntity.varName} : ${localizedEntity.varName}Persistence.findBy${pkEntityColumn.methodName}(${entity.varName}.get${pkEntityColumn.methodName}())) {
+			for (${localizedEntity.name} ${localizedEntity.varName} : ${localizedEntity.varName}Persistence.findBy${pkEntityColumn.methodName}(${entityVarName}.get${pkEntityColumn.methodName}())) {
 				String[] localizedValues = localizedValuesMap.remove(${localizedEntity.varName}.getLanguageId());
 
 				if (localizedValues == null) {
 					${localizedEntity.varName}Persistence.remove(${localizedEntity.varName});
 				}
 				else {
-					<#list entity.entityColumns as entityColumn>
-						<#if localizedEntity.hasEntityColumn(entityColumn.name) && !stringUtil.equals(entityColumn.name, "mvccVersion") && !stringUtil.equals(entityColumn.name, pkEntityColumn.name)>
-							${localizedEntity.varName}.set${entityColumn.methodName}(${entity.varName}.get${entityColumn.methodName}());
-						</#if>
-					</#list>
+					<#if entity.versionEntity??>
+						<#list entity.entityColumns as entityColumn>
+							<#if !stringUtil.equals(entityColumn.name, "headId") && localizedEntity.hasEntityColumn(entityColumn.name) && !stringUtil.equals(entityColumn.name, "mvccVersion") && !stringUtil.equals(entityColumn.name, pkEntityColumn.name)>
+								${localizedEntity.varName}.set${entityColumn.methodName}(${entityVarName}.get${entityColumn.methodName}());
+							</#if>
+						</#list>
+					<#else>
+						<#list entity.entityColumns as entityColumn>
+							<#if localizedEntity.hasEntityColumn(entityColumn.name) && !stringUtil.equals(entityColumn.name, "mvccVersion") && !stringUtil.equals(entityColumn.name, pkEntityColumn.name)>
+								${localizedEntity.varName}.set${entityColumn.methodName}(${entityVarName}.get${entityColumn.methodName}());
+							</#if>
+						</#list>
+					</#if>
 
 					<#list localizedEntityColumns as entityColumn>
 						${localizedEntity.varName}.set${entityColumn.methodName}(localizedValues[${entityColumn?index}]);
@@ -1092,11 +1188,21 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 
 				${localizedEntity.name} ${localizedEntity.varName} = ${localizedEntity.varName}Persistence.create(++batchCounter);
 
-				<#list entity.entityColumns as entityColumn>
-					<#if localizedEntity.hasEntityColumn(entityColumn.name) && !stringUtil.equals(entityColumn.name, "mvccVersion")>
-						${localizedEntity.varName}.set${entityColumn.methodName}(${entity.varName}.get${entityColumn.methodName}());
-					</#if>
-				</#list>
+				<#if entity.versionEntity??>
+					${localizedEntity.varName}.setHeadId(${localizedEntity.varName}.getPrimaryKey());
+
+					<#list entity.entityColumns as entityColumn>
+						<#if !stringUtil.equals(entityColumn.name, "headId") && localizedEntity.hasEntityColumn(entityColumn.name) && !stringUtil.equals(entityColumn.name, "mvccVersion")>
+							${localizedEntity.varName}.set${entityColumn.methodName}(${entityVarName}.get${entityColumn.methodName}());
+						</#if>
+					</#list>
+				<#else>
+					<#list entity.entityColumns as entityColumn>
+						<#if localizedEntity.hasEntityColumn(entityColumn.name) && !stringUtil.equals(entityColumn.name, "mvccVersion")>
+							${localizedEntity.varName}.set${entityColumn.methodName}(${entityVarName}.get${entityColumn.methodName}());
+						</#if>
+					</#list>
+				</#if>
 
 				${localizedEntity.varName}.setLanguageId(languageId);
 
@@ -1108,6 +1214,50 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 			}
 
 			return ${localizedEntity.varNames};
+		}
+
+		private ${localizedEntity.name} _update${localizedEntity.name}(
+			${entity.name} ${entityVarName}, ${localizedEntity.name} ${localizedEntity.varName}, String languageId,
+			<#list localizedEntityColumns as entityColumn>
+				String ${entityColumn.name}
+
+				<#if entityColumn?has_next>
+					,
+				</#if>
+			</#list>
+			) throws PortalException {
+
+			if (${localizedEntity.varName} == null) {
+				long ${localizedEntity.varName}Id = counterLocalService.increment(${localizedEntity.name}.class.getName());
+
+				${localizedEntity.varName} = ${localizedEntity.varName}Persistence.create(${localizedEntity.varName}Id);
+
+				${localizedEntity.varName}.set${pkEntityColumn.methodName}(${entityVarName}.get${pkEntityColumn.methodName}());
+				${localizedEntity.varName}.setLanguageId(languageId);
+			}
+
+			<#if entity.versionEntity??>
+				${localizedEntity.varName}.setHeadId(${localizedEntity.varName}.getPrimaryKey());
+
+				<#list entity.entityColumns as entityColumn>
+					<#if localizedEntity.hasEntityColumn(entityColumn.name) && !stringUtil.equals(entityColumn.name, "mvccVersion") && !stringUtil.equals(entityColumn.name, "headId") && !stringUtil.equals(entityColumn.name, pkEntityColumn.name)>
+						${localizedEntity.varName}.set${entityColumn.methodName}(${entityVarName}.get${entityColumn.methodName}());
+					</#if>
+				</#list>
+			<#else>
+
+				<#list entity.entityColumns as entityColumn>
+					<#if localizedEntity.hasEntityColumn(entityColumn.name) && !stringUtil.equals(entityColumn.name, "mvccVersion") && !stringUtil.equals(entityColumn.name, pkEntityColumn.name)>
+						${localizedEntity.varName}.set${entityColumn.methodName}(${entityVarName}.get${entityColumn.methodName}());
+					</#if>
+				</#list>
+			</#if>
+
+			<#list localizedEntityColumns as entityColumn>
+				${localizedEntity.varName}.set${entityColumn.methodName}(${entityColumn.name});
+			</#list>
+
+			return ${localizedEntity.varName}Persistence.update(${localizedEntity.varName});
 		}
 	</#if>
 
@@ -1221,6 +1371,12 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 				persistedModelLocalServiceRegistry.register("${apiPackagePath}.model.${entity.name}", ${entity.varName}LocalService);
 			</#if>
 		</#if>
+
+		<#if entity.localizedEntity?? && entity.versionEntity??>
+			<#assign localizedEntity = entity.localizedEntity />
+
+			registerListener(new ${localizedEntity.name}VersionServiceListener());
+		</#if>
 	}
 
 	public void destroy() {
@@ -1232,6 +1388,307 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 			</#if>
 		</#if>
 	}
+
+	<#if stringUtil.equals(sessionTypeName, "Local") && entity.versionEntity??>
+		<#assign
+			versionEntity = entity.versionEntity
+			pkEntityMethod = entity.PKEntityColumns?first.methodName
+		/>
+
+		@Indexable(type = IndexableType.REINDEX)
+		@Override
+		public ${entity.name} checkout(${entity.name} published${entity.name}, int version) throws PortalException {
+			if (published${entity.name}.isDraft()) {
+				throw new IllegalArgumentException("Cannot checkout with unpublished changes " + published${entity.name}.getHeadId());
+			}
+
+			${entity.name} draft${entity.name} = ${entity.varName}Persistence.fetchByHeadId(published${entity.name}.getPrimaryKey());
+
+			if (draft${entity.name} != null) {
+				throw new IllegalArgumentException("Cannot checkout with unpublished changes " + published${entity.name}.getPrimaryKey());
+			}
+
+			${versionEntity.name} ${versionEntity.varName} = getVersion(published${entity.name}, version);
+
+			draft${entity.name} = _createDraft(published${entity.name});
+
+			${versionEntity.varName}.populateVersionedModel(draft${entity.name});
+
+			draft${entity.name} = ${entity.varName}Persistence.update(draft${entity.name});
+
+			for (VersionServiceListener<${entity.name}, ${versionEntity.name}> versionServiceListener : _versionServiceListeners) {
+				versionServiceListener.afterCheckout(draft${entity.name}, version);
+			}
+
+			return draft${entity.name};
+		}
+
+		@Indexable(type = IndexableType.DELETE)
+		@Override
+		public ${entity.name} delete(${entity.name} published${entity.name}) throws PortalException {
+			if (published${entity.name}.isDraft()) {
+				throw new IllegalArgumentException("${entity.name} is a draft " + published${entity.name}.getPrimaryKey());
+			}
+
+			${entity.name} draft${entity.name} = ${entity.varName}Persistence.fetchByHeadId(published${entity.name}.getPrimaryKey());
+
+			if (draft${entity.name} != null) {
+				deleteDraft(draft${entity.name});
+			}
+
+			for (${versionEntity.name} ${versionEntity.varName} : getVersions(published${entity.name})) {
+				${versionEntity.varName}Persistence.remove(${versionEntity.varName});
+			}
+
+			${entity.varName}Persistence.remove(published${entity.name});
+
+			for (VersionServiceListener<${entity.name}, ${versionEntity.name}> versionServiceListener : _versionServiceListeners) {
+				versionServiceListener.afterDelete(published${entity.name});
+			}
+
+			return published${entity.name};
+		}
+
+		@Indexable(type = IndexableType.DELETE)
+		@Override
+		public ${entity.name} deleteDraft(${entity.name} draft${entity.name})
+			throws PortalException {
+
+			if (!draft${entity.name}.isDraft()) {
+				throw new IllegalArgumentException("${entity.name} is not a draft " + draft${entity.name}.getPrimaryKey());
+			}
+
+			${entity.varName}Persistence.remove(draft${entity.name});
+
+			for (VersionServiceListener<${entity.name}, ${versionEntity.name}> versionServiceListener : _versionServiceListeners) {
+				versionServiceListener.afterDeleteDraft(draft${entity.name});
+			}
+
+			return draft${entity.name};
+		}
+
+		@Override
+		public ${versionEntity.name} deleteVersion(${versionEntity.name} ${versionEntity.varName}) throws PortalException {
+			${versionEntity.name} latest${versionEntity.name} = ${versionEntity.varName}Persistence.findBy${pkEntityMethod}_First(${versionEntity.varName}.getVersionedModelId(), null);
+
+			if (latest${versionEntity.name}.getVersion() == ${versionEntity.varName}.getVersion()) {
+				throw new IllegalArgumentException("Cannot delete latest version " + ${versionEntity.varName}.getVersion());
+			}
+
+			${versionEntity.varName} = ${versionEntity.varName}Persistence.remove(${versionEntity.varName});
+
+			for (VersionServiceListener<${entity.name}, ${versionEntity.name}> versionServiceListener : _versionServiceListeners) {
+				versionServiceListener.afterDeleteVersion(${versionEntity.varName});
+			}
+
+			return ${versionEntity.varName};
+		}
+
+		@Override
+		public ${entity.name} fetchDraft(${entity.name} ${entity.varName}) {
+			if (${entity.varName}.isDraft()) {
+				return ${entity.varName};
+			}
+
+			return ${entity.varName}Persistence.fetchByHeadId(${entity.varName}.getPrimaryKey());
+		}
+
+		@Override
+		public ${entity.name} fetchDraft(long primaryKey) {
+			return ${entity.varName}Persistence.fetchByHeadId(primaryKey);
+		}
+
+		@Override
+		public ${versionEntity.name} fetchLatestVersion(${entity.name} ${entity.varName}) {
+			long primaryKey = ${entity.varName}.getPrimaryKey();
+
+			if (${entity.varName}.isDraft()) {
+				primaryKey = ${entity.varName}.getHeadId();
+			}
+
+			return ${versionEntity.varName}Persistence.fetchBy${pkEntityMethod}_First(primaryKey, null);
+		}
+
+		@Override
+		public ${entity.name} fetchPublished(${entity.name} ${entity.varName}) {
+			if (!${entity.varName}.isDraft()) {
+				return ${entity.varName};
+			}
+
+			if (${entity.varName}.getHeadId() == ${entity.varName}.getPrimaryKey()) {
+				return null;
+			}
+
+			return ${entity.varName}Persistence.fetchByPrimaryKey(${entity.varName}.getHeadId());
+		}
+
+		@Override
+		public ${entity.name} fetchPublished(long primaryKey) {
+			${entity.name} ${entity.varName} = ${entity.varName}Persistence.fetchByPrimaryKey(primaryKey);
+
+			if ((${entity.varName} == null) || (${entity.varName}.getHeadId() == ${entity.varName}.getPrimaryKey())) {
+				return null;
+			}
+
+			return ${entity.varName};
+		}
+
+		@Override
+		public ${entity.name} getDraft(${entity.name} ${entity.varName}) throws PortalException {
+			if (${entity.varName}.isDraft()) {
+				return ${entity.varName};
+			}
+
+			${entity.name} draft${entity.name} = ${entity.varName}Persistence.fetchByHeadId(${entity.varName}.getPrimaryKey());
+
+			if (draft${entity.name} == null) {
+				draft${entity.name} = ${entity.varName}LocalService.updateDraft(_createDraft(${entity.varName}));
+			}
+
+			return draft${entity.name};
+		}
+
+		@Override
+		public ${entity.name} getDraft(long primaryKey) throws PortalException {
+			${entity.name} draft${entity.name} = ${entity.varName}Persistence.fetchByHeadId(primaryKey);
+
+			if (draft${entity.name} == null) {
+				${entity.name} ${entity.varName} = ${entity.varName}Persistence.findByPrimaryKey(primaryKey);
+
+				draft${entity.name} = ${entity.varName}LocalService.updateDraft(_createDraft(${entity.varName}));
+			}
+
+			return draft${entity.name};
+		}
+
+		@Override
+		public ${versionEntity.name} getVersion(${entity.name} ${entity.varName}, int version) throws PortalException {
+			long primaryKey = ${entity.varName}.getPrimaryKey();
+
+			if (${entity.varName}.isDraft()) {
+				primaryKey = ${entity.varName}.getHeadId();
+			}
+
+			return ${versionEntity.varName}Persistence.findBy${pkEntityMethod}_Version(primaryKey, version);
+		}
+
+		@Override
+		public List<${versionEntity.name}> getVersions(${entity.name} ${entity.varName}) {
+			long primaryKey = ${entity.varName}.getPrimaryKey();
+
+			if (${entity.varName}.isDraft()) {
+				if (${entity.varName}.getHeadId() == ${entity.varName}.getPrimaryKey()) {
+					return Collections.emptyList();
+				}
+
+				primaryKey = ${entity.varName}.getHeadId();
+			}
+
+			return ${versionEntity.varName}Persistence.findBy${pkEntityMethod}(primaryKey);
+		}
+
+		@Indexable(type = IndexableType.REINDEX)
+		@Override
+		public ${entity.name} publishDraft(${entity.name} draft${entity.name}) throws PortalException {
+			if (!draft${entity.name}.isDraft()) {
+				throw new IllegalArgumentException("Can only publish drafts " + draft${entity.name}.getPrimaryKey());
+			}
+
+			${entity.name} head${entity.name} = null;
+
+			int version = 1;
+
+			if (draft${entity.name}.getHeadId() == draft${entity.name}.getPrimaryKey()) {
+				head${entity.name} = create();
+
+				draft${entity.name}.setHeadId(head${entity.name}.getPrimaryKey());
+			}
+			else {
+				head${entity.name} = ${entity.varName}Persistence.findByPrimaryKey(draft${entity.name}.getHeadId());
+
+				${versionEntity.name} latest${versionEntity.name} = ${versionEntity.varName}Persistence.findBy${pkEntityMethod}_First(draft${entity.name}.getHeadId(), null);
+
+				version = latest${versionEntity.name}.getVersion() + 1;
+			}
+
+			${versionEntity.name} ${versionEntity.varName} = ${versionEntity.varName}Persistence.create(counterLocalService.increment(${versionEntity.name}.class.getName()));
+
+			${versionEntity.varName}.setVersion(version);
+			${versionEntity.varName}.setVersionedModelId(head${entity.name}.getPrimaryKey());
+
+			draft${entity.name}.populateVersionModel(${versionEntity.varName});
+
+			${versionEntity.varName}Persistence.update(${versionEntity.varName});
+
+			${versionEntity.varName}.populateVersionedModel(head${entity.name});
+
+			head${entity.name}.setHeadId(-head${entity.name}.getPrimaryKey());
+
+			head${entity.name} = ${entity.varName}Persistence.update(head${entity.name});
+
+			for (VersionServiceListener<${entity.name}, ${versionEntity.name}> versionServiceListener : _versionServiceListeners) {
+				versionServiceListener.afterPublishDraft(draft${entity.name}, version);
+			}
+
+			deleteDraft(draft${entity.name});
+
+			return head${entity.name};
+		}
+
+		@Override
+		public void registerListener(VersionServiceListener<${entity.name}, ${versionEntity.name}> versionServiceListener) {
+			_versionServiceListeners.add(versionServiceListener);
+		}
+
+		@Override
+		public void unregisterListener(VersionServiceListener<${entity.name}, ${versionEntity.name}> versionServiceListener) {
+			_versionServiceListeners.remove(versionServiceListener);
+		}
+
+		@Indexable(type = IndexableType.REINDEX)
+		@Override
+		public ${entity.name} updateDraft(${entity.name} draft${entity.name}) throws PortalException {
+			if (!draft${entity.name}.isDraft()) {
+				throw new IllegalArgumentException("Can only update draft entries " + draft${entity.name}.getPrimaryKey());
+			}
+
+			${entity.name} previous${entity.name} = ${entity.varName}Persistence.fetchByPrimaryKey(draft${entity.name}.getPrimaryKey());
+
+			draft${entity.name} = ${entity.varName}Persistence.update(draft${entity.name});
+
+			if (previous${entity.name} == null) {
+				for (VersionServiceListener<${entity.name}, ${versionEntity.name}> versionServiceListener : _versionServiceListeners) {
+					versionServiceListener.afterCreateDraft(draft${entity.name});
+				}
+			}
+			else {
+				for (VersionServiceListener<${entity.name}, ${versionEntity.name}> versionServiceListener : _versionServiceListeners) {
+					versionServiceListener.afterUpdateDraft(draft${entity.name});
+				}
+			}
+
+			return draft${entity.name};
+		}
+
+		private ${entity.name} _createDraft(${entity.name} published${entity.name}) throws PortalException {
+			${entity.name} draft${entity.name} = create();
+
+			<#list entity.entityColumns as entityColumn>
+				<#if stringUtil.equals(entityColumn.methodName, "HeadId")>
+					draft${entity.name}.setHeadId(published${entity.name}.getPrimaryKey());
+				<#elseif !entityColumn.isPrimary() && !stringUtil.equals(entityColumn.methodName, "MvccVersion")>
+					draft${entity.name}.set${entityColumn.methodName}(published${entity.name}.get${entityColumn.methodName}());
+				</#if>
+			</#list>
+
+			draft${entity.name}.resetOriginalValues();
+
+			return draft${entity.name};
+		}
+
+		private final Set<VersionServiceListener<${entity.name}, ${versionEntity.name}>> _versionServiceListeners = Collections.newSetFromMap(new ConcurrentHashMap<VersionServiceListener<${entity.name}, ${versionEntity.name}>, Boolean>());
+
+	</#if>
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -1346,4 +1803,151 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 		</#if>
 	</#if>
 
+	<#if entity.localizedEntity?? && entity.versionEntity??>
+		<#assign
+			localizedEntity = entity.localizedEntity
+			versionEntity = entity.versionEntity
+			localizedVersionEntity = localizedEntity.versionEntity
+			pkEntityMethod = entity.PKEntityColumns?first.methodName
+		/>
+
+		private class ${localizedEntity.name}VersionServiceListener implements VersionServiceListener<${entity.name}, ${versionEntity.name}> {
+
+			@Override
+			public void afterCheckout(${entity.name} draft${entity.name}, int version) throws PortalException {
+				Map<String, ${localizedEntity.name}> published${localizedEntity.name}Map = new HashMap<String, ${localizedEntity.name}>();
+
+				for (${localizedEntity.name} published${localizedEntity.name} : ${localizedEntity.varName}Persistence.findBy${pkEntityMethod}(draft${entity.name}.getHeadId())) {
+					published${localizedEntity.name}Map.put(published${localizedEntity.name}.getLanguageId(), published${localizedEntity.name});
+				}
+
+				List<${localizedVersionEntity.name}> ${localizedVersionEntity.varNames} = ${localizedVersionEntity.varName}Persistence.findBy${pkEntityMethod}_Version(draft${entity.name}.getHeadId(), version);
+
+				long ${localizedVersionEntity.varName}BatchCounter = counterLocalService.increment(${localizedVersionEntity.name}.class.getName(), ${localizedVersionEntity.varNames}.size()) - ${localizedVersionEntity.varNames}.size();
+
+				for (${localizedVersionEntity.name} ${localizedVersionEntity.varName} : ${localizedVersionEntity.varNames}) {
+					${localizedEntity.name} draft${localizedEntity.name} = ${localizedEntity.varName}Persistence.create(++${localizedVersionEntity.varName}BatchCounter);
+
+					long headId = draft${localizedEntity.name}.getPrimaryKey();
+
+					${localizedEntity.name} published${localizedEntity.name} = published${localizedEntity.name}Map.get(${localizedVersionEntity.varName}.getLanguageId());
+
+					if (published${localizedEntity.name} != null) {
+						headId = published${localizedEntity.name}.getPrimaryKey();
+					}
+
+					draft${localizedEntity.name}.setHeadId(headId);
+
+					draft${localizedEntity.name}.set${pkEntityMethod}(draft${entity.name}.getPrimaryKey());
+					draft${localizedEntity.name}.setLanguageId(${localizedVersionEntity.varName}.getLanguageId());
+
+					<#list localizedEntityColumns as entityColumn>
+						draft${localizedEntity.name}.set${entityColumn.methodName}(${localizedVersionEntity.varName}.get${entityColumn.methodName}());
+					</#list>
+
+					${localizedEntity.varName}Persistence.update(draft${localizedEntity.name});
+				}
+			}
+
+			@Override
+			public void afterCreateDraft(${entity.name} draft${entity.name}) throws PortalException {
+				if (draft${entity.name}.getHeadId() == draft${entity.name}.getPrimaryKey()) {
+					return;
+				}
+
+				for (${localizedEntity.name} published${localizedEntity.name} : ${localizedEntity.varName}Persistence.findBy${pkEntityMethod}(draft${entity.name}.getHeadId())) {
+					_update${localizedEntity.name}(
+						draft${entity.name}, null, published${localizedEntity.name}.getLanguageId(),
+							<#list localizedEntityColumns as entityColumn>
+								published${localizedEntity.name}.get${entityColumn.methodName}()
+
+								<#if entityColumn?has_next>
+									,
+								</#if>
+							</#list>
+						);
+				}
+			}
+
+			@Override
+			public void afterDelete(${entity.name} published${entity.name}) throws PortalException {
+				${localizedEntity.varName}Persistence.removeBy${pkEntityMethod}(published${entity.name}.getPrimaryKey());
+				${localizedVersionEntity.varName}Persistence.removeBy${pkEntityMethod}(published${entity.name}.getPrimaryKey());
+			}
+
+			@Override
+			public void afterDeleteDraft(${entity.name} draft${entity.name}) throws PortalException {
+				${localizedEntity.varName}Persistence.removeBy${pkEntityMethod}(draft${entity.name}.getPrimaryKey());
+			}
+
+			@Override
+			public void afterDeleteVersion(${versionEntity.name} ${versionEntity.varName}) throws PortalException {
+				${localizedVersionEntity.varName}Persistence.removeBy${pkEntityMethod}_Version(${versionEntity.varName}.getVersionedModelId(), ${versionEntity.varName}.getVersion());
+			}
+
+			@Override
+			public void afterPublishDraft(${entity.name} draft${entity.name}, int version) throws PortalException {
+				Map<String, ${localizedEntity.name}> draft${localizedEntity.name}Map = new HashMap<String, ${localizedEntity.name}>();
+
+				for (${localizedEntity.name} draft${localizedEntity.name} : ${localizedEntity.varName}Persistence.findBy${pkEntityMethod}(draft${entity.name}.getPrimaryKey())) {
+					draft${localizedEntity.name}Map.put(draft${localizedEntity.name}.getLanguageId(), draft${localizedEntity.name});
+				}
+
+				long ${localizedVersionEntity.varName}BatchCounter = counterLocalService.increment(${localizedVersionEntity.name}.class.getName(), draft${localizedEntity.name}Map.size()) - draft${localizedEntity.name}Map.size();
+
+				for (${localizedEntity.name} published${localizedEntity.name} : ${localizedEntity.varName}Persistence.findBy${pkEntityMethod}(draft${entity.name}.getHeadId())) {
+					${localizedEntity.name} draft${localizedEntity.name} = draft${localizedEntity.name}Map.remove(published${localizedEntity.name}.getLanguageId());
+
+					if (draft${localizedEntity.name} == null) {
+						${localizedEntity.varName}Persistence.remove(published${localizedEntity.name});
+					}
+					else {
+						published${localizedEntity.name}.setHeadId(-published${localizedEntity.name}.getPrimaryKey());
+
+						<#list localizedEntityColumns as entityColumn>
+							published${localizedEntity.name}.set${entityColumn.methodName}(draft${localizedEntity.name}.get${entityColumn.methodName}());
+						</#list>
+
+						${localizedEntity.varName}Persistence.update(published${localizedEntity.name});
+
+						_publish${localizedVersionEntity.name}(published${localizedEntity.name}, ++${localizedVersionEntity.varName}BatchCounter, version);
+					}
+				}
+
+				long ${localizedEntity.varName}BatchCounter = counterLocalService.increment(${localizedEntity.name}.class.getName(), draft${localizedEntity.name}Map.size()) - draft${localizedEntity.name}Map.size();
+
+				for (${localizedEntity.name} draft${localizedEntity.name} : draft${localizedEntity.name}Map.values()) {
+					${localizedEntity.name} ${localizedEntity.varName} = ${localizedEntity.varName}Persistence.create(++${localizedEntity.varName}BatchCounter);
+
+					${localizedEntity.varName}.setHeadId(${localizedEntity.varName}.getPrimaryKey());
+					${localizedEntity.varName}.set${pkEntityMethod}(draft${entity.name}.getHeadId());
+					${localizedEntity.varName}.setLanguageId(draft${localizedEntity.name}.getLanguageId());
+
+					<#list localizedEntityColumns as entityColumn>
+						${localizedEntity.varName}.set${entityColumn.methodName}(draft${localizedEntity.name}.get${entityColumn.methodName}());
+					</#list>
+
+					${localizedEntity.varName}Persistence.update(${localizedEntity.varName});
+
+					_publish${localizedVersionEntity.name}(${localizedEntity.varName}, ++${localizedVersionEntity.varName}BatchCounter, version);
+				}
+			}
+
+			@Override
+			public void afterUpdateDraft(${entity.name} draft${entity.name}) {
+			}
+
+			private void _publish${localizedVersionEntity.name}(${localizedEntity.name} ${localizedEntity.varName}, long primaryKey, int version) {
+				${localizedVersionEntity.name} ${localizedVersionEntity.varName} = ${localizedVersionEntity.varName}Persistence.create(primaryKey);
+
+				${localizedVersionEntity.varName}.setVersion(version);
+				${localizedVersionEntity.varName}.setVersionedModelId(${localizedEntity.varName}.getPrimaryKey());
+
+				${localizedEntity.varName}.populateVersionModel(${localizedVersionEntity.varName});
+
+				${localizedVersionEntity.varName}Persistence.update(${localizedVersionEntity.varName});
+			}
+
+		}
+	</#if>
 }

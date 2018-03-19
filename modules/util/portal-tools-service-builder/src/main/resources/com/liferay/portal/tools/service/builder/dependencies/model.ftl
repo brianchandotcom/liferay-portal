@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.model.TypedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
+import com.liferay.portal.kernel.model.version.VersionModel;
+import com.liferay.portal.kernel.model.version.VersionedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
@@ -75,6 +77,11 @@ public interface ${entity.name}Model extends ${entity.getModelBaseInterfaceNames
 	 *
 	 * @return the primary key of this ${entity.humanName}
 	 */
+
+	<#if overrideColumnNames?seq_contains("primaryKey")>
+		@Override
+	</#if>
+
 	public ${entity.PKClassName} getPrimaryKey();
 
 	/**
@@ -82,6 +89,11 @@ public interface ${entity.name}Model extends ${entity.getModelBaseInterfaceNames
 	 *
 	 * @param primaryKey the primary key of this ${entity.humanName}
 	 */
+
+	<#if overrideColumnNames?seq_contains("primaryKey")>
+		@Override
+	</#if>
+
 	public void setPrimaryKey(${entity.PKClassName} primaryKey);
 
 	<#list entity.regularEntityColumns as entityColumn>

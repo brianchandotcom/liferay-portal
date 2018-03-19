@@ -3,7 +3,7 @@
 
 <service-builder api-package-path="com.liferay.trash.kernel" package-path="com.liferay.portlet.trash">
 	<namespace>Trash</namespace>
-	<entity local-service="true" name="TrashEntry" remote-service="true">
+	<entity deprecated="true" local-service="true" name="TrashEntry" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -60,7 +60,7 @@
 		<reference entity="Group" package-path="com.liferay.portal" />
 		<reference entity="SystemEvent" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="TrashVersion" remote-service="false">
+	<entity deprecated="true" local-service="true" name="TrashVersion" remote-service="false">
 
 		<!-- PK fields -->
 

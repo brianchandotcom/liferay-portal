@@ -57,24 +57,6 @@ import org.osgi.service.component.annotations.Component;
 public class PublishKaleoDefinitionVersionMVCActionCommand
 	extends BaseKaleoDesignerMVCActionCommand {
 
-	protected void checkTitleValue(Map<Locale, String> titleMap)
-		throws WorkflowDefinitionTitleException {
-
-		String title = titleMap.get(LocaleUtil.getDefault());
-
-		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
-			LocaleUtil.getDefault());
-
-		String defaultTitle = LanguageUtil.get(
-			resourceBundle, "untitled-workflow");
-
-		if (titleMap.isEmpty() || Validator.isNull(title) ||
-			Objects.equals(title, defaultTitle)) {
-
-			throw new WorkflowDefinitionTitleException();
-		}
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -86,7 +68,7 @@ public class PublishKaleoDefinitionVersionMVCActionCommand
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "title");
 
-		checkTitleValue(titleMap);
+		validateTitle(titleMap);
 
 		String content = ParamUtil.getString(actionRequest, "content");
 
@@ -167,6 +149,24 @@ public class PublishKaleoDefinitionVersionMVCActionCommand
 		}
 
 		return title;
+	}
+
+	protected void validateTitle(Map<Locale, String> titleMap)
+		throws WorkflowDefinitionTitleException {
+
+		String title = titleMap.get(LocaleUtil.getDefault());
+
+		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+			LocaleUtil.getDefault());
+
+		String defaultTitle = LanguageUtil.get(
+			resourceBundle, "untitled-workflow");
+
+		if (titleMap.isEmpty() || Validator.isNull(title) ||
+			Objects.equals(title, defaultTitle)) {
+
+			throw new WorkflowDefinitionTitleException();
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

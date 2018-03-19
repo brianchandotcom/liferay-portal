@@ -111,11 +111,13 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 					portletPreferences);
 			}
 
+			String instanceId = String.valueOf(
+				fragmentEntryLink.getFragmentEntryLinkId());
+
 			runtimeTagElement.attr("defaultPreferences", defaultPreferences);
-			runtimeTagElement.attr(
-				"instanceId",
-				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()));
+			runtimeTagElement.attr("instanceId", instanceId);
 			runtimeTagElement.attr("portletName", portletName);
+			runtimeTagElement.attr("persistSettings=false", true);
 
 			element.replaceWith(runtimeTagElement);
 		}

@@ -1416,9 +1416,7 @@ public class JournalDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			_liferayPortletRequest, JournalPortletKeys.JOURNAL,
-			PortletRequest.RENDER_PHASE);
+		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("mvcPath", "/view_feeds.jsp");
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());

@@ -41,4 +41,12 @@ public class SiteNavigationMenuImpl extends SiteNavigationMenuBaseImpl {
 		return navigationTypeKey;
 	}
 
+	public boolean isPrimary() {
+		if (getType() == SiteNavigationConstants.TYPE_PRIMARY) {
+			return true;
+		}
+
+		return false;
+	}
+
 }

@@ -311,6 +311,11 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	}
 
 	@Override
+	public boolean isPrimary() {
+		return _siteNavigationMenu.isPrimary();
+	}
+
+	@Override
 	public void persist() {
 		_siteNavigationMenu.persist();
 	}

@@ -219,14 +219,14 @@ public class KaleoDesignerDisplayContext {
 			};
 		}
 		else {
-			int moreAssets = workflowDefinitionLinks.size() - 2;
+			int moreAssetsCount = workflowDefinitionLinks.size() - 2;
 
 			return new Object[] {
 				getLocalizedAssetName(
 					firstWorkflowDefinitionLink.getClassName()),
 				getLocalizedAssetName(
 					secondWorkflowDefinitionLink.getClassName()),
-				moreAssets, getConfigureAssignementLink(request)
+				moreAssetsCount, getConfigureAssignementLink(request)
 			};
 		}
 	}

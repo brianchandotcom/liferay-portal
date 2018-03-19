@@ -35,7 +35,6 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Predicate;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,31 +51,30 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			return;
 		}
 
-		final SiteNavigationMenu siteNavigationMenu =
+		SiteNavigationMenu siteNavigationMenu =
 			_siteNavigationMenuLocalService.fetchAutoSiteNavigationMenu(
 				layout.getGroupId());
 
-		final boolean addToPrimaryMenu = GetterUtil.getBoolean(
+		if ((siteNavigationMenu != null) && !siteNavigationMenu.isPrimary()) {
+			_addSiteNavigationMenuItem(siteNavigationMenu, layout);
+		}
+
+		boolean addToPrimaryMenu = GetterUtil.getBoolean(
 			layout.getTypeSettingsProperty("addToPrimaryMenu"));
 
-		if (siteNavigationMenu != null) {
-			_addSiteNavigationMenuItem(
-				siteNavigationMenu, layout,
-				menu -> !menu.isPrimary() ||
-				(menu.isPrimary() && addToPrimaryMenu));
+		if (!addToPrimaryMenu) {
+			return;
 		}
 
 		SiteNavigationMenu primarySiteNavigationMenu =
 			_siteNavigationMenuLocalService.fetchPrimarySiteNavigationMenu(
 				layout.getGroupId());
 
-		if (primarySiteNavigationMenu != null) {
-			_addSiteNavigationMenuItem(
-				primarySiteNavigationMenu, layout,
-				menu -> (menu.getSiteNavigationMenuId() !=
-					siteNavigationMenu.getSiteNavigationMenuId()) &&
-					addToPrimaryMenu);
+		if (primarySiteNavigationMenu == null) {
+			return;
 		}
+
+		_addSiteNavigationMenuItem(primarySiteNavigationMenu, layout);
 	}
 
 	@Override
@@ -91,12 +89,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 	}
 
 	private void _addSiteNavigationMenuItem(
-		SiteNavigationMenu siteNavigationMenu, Layout layout,
-		Predicate<SiteNavigationMenu> predicate) {
-
-		if (!predicate.test(siteNavigationMenu)) {
-			return;
-		}
+		SiteNavigationMenu siteNavigationMenu, Layout layout) {
 
 		SiteNavigationMenuItemType siteNavigationMenuItemType =
 			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(

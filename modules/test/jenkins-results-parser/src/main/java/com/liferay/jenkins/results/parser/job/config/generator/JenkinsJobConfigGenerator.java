@@ -210,22 +210,35 @@ public class JenkinsJobConfigGenerator {
 		return environmentSlavesProperties;
 	}
 
+	private String _getFormattedXML(Element element) {
+		String formattedXML = null;
+
+		try {
+			formattedXML = Dom4JUtil.format(element, true);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+
+		formattedXML = formattedXML.replaceAll(
+			"(\\<[\\w\\-\\.]+)(/\\>)", "$1 $2");
+
+		if (formattedXML.startsWith("\n")) {
+			formattedXML = formattedXML.substring(1);
+		}
+
+		return formattedXML;
+	}
+
 	private String _getFormattedXML(List<Element> elements) {
 		StringBuilder sb = new StringBuilder();
 
 		for (Element element : elements) {
-			try {
-				sb.append(Dom4JUtil.format(element));
-
+			if (sb.length() > 0) {
 				sb.append("\n");
 			}
-			catch (IOException ioe) {
-				ioe.printStackTrace();
-			}
-		}
 
-		if (sb.length() > 0) {
-			sb.setLength(sb.length() - 1);
+			sb.append(_getFormattedXML(element));
 		}
 
 		return sb.toString();
@@ -1022,7 +1035,7 @@ public class JenkinsJobConfigGenerator {
 
 			_generatedPropertiesMap.put(
 				slaveHostname + ".config.xml.content",
-				Dom4JUtil.format(slaveConfigXML));
+				_getFormattedXML(slaveConfigXML));
 
 			Dom4JUtil.addToElement(slaves, slaveConfigXML);
 
@@ -1034,7 +1047,7 @@ public class JenkinsJobConfigGenerator {
 
 		_generatedPropertiesMap.put(
 			"master.slaves.xml(" + masterHostname + ")",
-			Dom4JUtil.format(slaves));
+			_getFormattedXML(slaves));
 
 		List<Element> slaveHostnameList = new ArrayList<>();
 

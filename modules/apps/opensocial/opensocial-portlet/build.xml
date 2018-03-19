@@ -29,7 +29,9 @@
 			tofile="tmp/WEB-INF/web.xml"
 		/>
 
-		<replace file="tmp/WEB-INF/web.xml">
+		<replace
+			file="tmp/WEB-INF/web.xml"
+		>
 			<replacefilter
 				token="org.apache.shindig.common.servlet.GuiceServletContextListener"
 				value="com.liferay.opensocial.shindig.servlet.GuiceServletContextListener"
@@ -54,7 +56,9 @@
 
 		<!-- Replace Servlet -->
 
-		<replace file="tmp/WEB-INF/web.xml">
+		<replace
+			file="tmp/WEB-INF/web.xml"
+		>
 			<replacefilter
 				token="org.apache.shindig.gadgets.servlet.JsServlet"
 				value="com.liferay.opensocial.shindig.servlet.JsServlet"
@@ -88,7 +92,9 @@
 
 		<!-- Convert Mappings for Servlet 2.4 Compliance -->
 
-		<replace file="tmp/WEB-INF/web.xml">
+		<replace
+			file="tmp/WEB-INF/web.xml"
+		>
 			<replacefilter
 				token="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 				value="http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
@@ -128,7 +134,10 @@
 			replace="@REST_API_SERVLET_TOKEN@"
 		/>
 
-		<replace file="tmp/WEB-INF/web.xml" propertyFile="docroot/WEB-INF/web.xml.properties">
+		<replace
+			file="tmp/WEB-INF/web.xml"
+			propertyFile="docroot/WEB-INF/web.xml.properties"
+		>
 			<replacefilter
 				property="auth.filter.replace"
 				token="@AUTH_FILTER_TOKEN@"
@@ -163,13 +172,26 @@
 			<param name="backup.file.name" value="tmp/WEB-INF/classes/containers/default/container.js" />
 		</antcall>
 
-		<replace file="tmp/WEB-INF/classes/containers/default/container.js">
-			<replacefilter token="${SERVER_HOST}:${SERVER_PORT}" value="%host%" />
-			<replacefilter token="/gadgets/" value="/o/opensocial-portlet/gadgets/" />
-			<replacefilter token="/rpc" value="/o/opensocial-portlet/rpc" />
+		<replace
+			file="tmp/WEB-INF/classes/containers/default/container.js"
+		>
+			<replacefilter
+				token="${SERVER_HOST}:${SERVER_PORT}"
+				value="%host%"
+			/>
+			<replacefilter
+				token="/gadgets/"
+				value="/o/opensocial-portlet/gadgets/"
+			/>
+			<replacefilter
+				token="/rpc"
+				value="/o/opensocial-portlet/rpc"
+			/>
 		</replace>
 
-		<replace file="tmp/WEB-INF/classes/containers/default/container.js">
+		<replace
+			file="tmp/WEB-INF/classes/containers/default/container.js"
+		>
 			<replacetoken>"profile" : {</replacetoken>
 			<replacevalue><![CDATA[
 				"home" : {
@@ -185,27 +207,40 @@
 			<param name="strip.comments.encoding" value="utf-8" />
 		</antcall>
 
-		<replace file="tmp/WEB-INF/classes/containers/default/container.js">
+		<replace
+			file="tmp/WEB-INF/classes/containers/default/container.js"
+		>
 			<replacetoken>"gadgets.uri.iframe.lockedDomainSuffix" :  "-a.example.com:8080",</replacetoken>
 			<replacevalue></replacevalue>
 		</replace>
 
-		<replace file="tmp/WEB-INF/classes/containers/default/container.js">
+		<replace
+			file="tmp/WEB-INF/classes/containers/default/container.js"
+		>
 			<replacetoken>"gadgets.uri.iframe.unlockedDomain" : "www.example.com:8080",</replacetoken>
 			<replacevalue></replacevalue>
 		</replace>
 
-		<replace file="tmp/WEB-INF/classes/containers/default/container.js">
+		<replace
+			file="tmp/WEB-INF/classes/containers/default/container.js"
+		>
 			<replacetoken>"gadgets.uri.js.host" : "http://www.example.com/",</replacetoken>
 			<replacevalue></replacevalue>
 		</replace>
 
-		<replace file="tmp/WEB-INF/classes/containers/default/container.js">
+		<replace
+			file="tmp/WEB-INF/classes/containers/default/container.js"
+		>
 			<replacetoken>"gadgets.uri.js.path" : "/o/opensocial-portlet/gadgets/js",</replacetoken>
 			<replacevalue></replacevalue>
 		</replace>
 
-		<replaceregexp byline="false" flags="g" match="(&quot;gadgets\.uri\.iframe\.basePath&quot; : &quot;.*?&quot;[\s\S]*)&quot;gadgets\.uri\.iframe\.basePath&quot; : &quot;.*?&quot;," replace="\1">
+		<replaceregexp
+			byline="false"
+			flags="g"
+			match="(&quot;gadgets\.uri\.iframe\.basePath&quot; : &quot;.*?&quot;[\s\S]*)&quot;gadgets\.uri\.iframe\.basePath&quot; : &quot;.*?&quot;,"
+			replace="\1"
+		>
 			<fileset
 				dir="tmp/WEB-INF/classes/containers/default/"
 				includes="container.js"
@@ -218,8 +253,13 @@
 			<param name="backup.file.name" value="tmp/WEB-INF/classes/config/oauth.json" />
 		</antcall>
 
-		<replace file="tmp/WEB-INF/classes/config/oauth.json">
-			<replacefilter token="http://localhost:8080/" value="http://localhost:8080/o/opensocial-portlet/" />
+		<replace
+			file="tmp/WEB-INF/classes/config/oauth.json"
+		>
+			<replacefilter
+				token="http://localhost:8080/"
+				value="http://localhost:8080/o/opensocial-portlet/"
+			/>
 		</replace>
 
 		<!-- Configure shindig.properties -->
@@ -253,9 +293,17 @@
 			tofile="tmp/WEB-INF/classes/shindig.properties"
 		/>
 
-		<replace file="tmp/WEB-INF/classes/shindig.properties">
-			<replacefilter token="/gadgets/" value="/o/opensocial-portlet/gadgets/" />
-			<replacefilter token="shindig.signing.viewer-access-tokens-enabled=false" value="shindig.signing.viewer-access-tokens-enabled=true" />
+		<replace
+			file="tmp/WEB-INF/classes/shindig.properties"
+		>
+			<replacefilter
+				token="/gadgets/"
+				value="/o/opensocial-portlet/gadgets/"
+			/>
+			<replacefilter
+				token="shindig.signing.viewer-access-tokens-enabled=false"
+				value="shindig.signing.viewer-access-tokens-enabled=true"
+			/>
 		</replace>
 
 		<!-- Delete Xerces -->
@@ -303,8 +351,13 @@
 			src="tmp/WEB-INF/lib/shiro-web-1.0.0-incubating.jar"
 		/>
 
-		<replace file="${tstamp.value}/META-INF/shiro.tld">
-			<replacefilter token="&lt;short-name&gt;Apache Shiro&lt;/short-name&gt;" value="&lt;short-name&gt;shiro&lt;/short-name&gt;" />
+		<replace
+			file="${tstamp.value}/META-INF/shiro.tld"
+		>
+			<replacefilter
+				token="&lt;short-name&gt;Apache Shiro&lt;/short-name&gt;"
+				value="&lt;short-name&gt;shiro&lt;/short-name&gt;"
+			/>
 		</replace>
 
 		<delete file="tmp/WEB-INF/lib/shiro-web-1.0.0-incubating.jar" />

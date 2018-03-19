@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 
-<beans default-destroy-method="destroy" default-init-method="afterPropertiesSet" xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
 	<bean class="com.liferay.journal.service.impl.JournalArticleLocalServiceImpl" id="com.liferay.journal.service.JournalArticleLocalService" />
 	<bean class="com.liferay.journal.service.impl.JournalArticleServiceImpl" id="com.liferay.journal.service.JournalArticleService" />
 	<bean class="com.liferay.journal.service.persistence.impl.JournalArticlePersistenceImpl" id="com.liferay.journal.service.persistence.JournalArticlePersistence" parent="basePersistence" />

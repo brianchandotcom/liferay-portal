@@ -2,13 +2,18 @@
 <!DOCTYPE project>
 
 <project name="build-nexus-report">
-	<taskdef classpath="../lib/development/ant-contrib.jar" resource="net/sf/antcontrib/antlib.xml" />
+	<taskdef
+		classpath="../lib/development/ant-contrib.jar"
+		resource="net/sf/antcontrib/antlib.xml"
+	/>
 
 	<property file="nexus.report.properties" />
 
 	<target depends="get-repository-index,init-report-files" name="build-module-availability-report">
 		<subant target="build-module-availability-report">
-			<fileset dir=".">
+			<fileset
+				dir="."
+			>
 				<exclude name="**/samples/**/*" />
 				<exclude name="themes/**/*" />
 				<include name="**/build.xml" />
@@ -20,7 +25,10 @@
 	</target>
 
 	<target depends="get-repository-index,init-report-files" name="build-module-stale-report">
-		<loadfile property="modules.symbolic.names.list" srcFile="${nexus.reports.dir}/modules.symbolic.names.list" />
+		<loadfile
+			property="modules.symbolic.names.list"
+			srcFile="${nexus.reports.dir}/modules.symbolic.names.list"
+		/>
 
 		<delete file="${nexus.reports.dir}/modules.symbolic.names.list" />
 
@@ -31,11 +39,7 @@
 						<contains string="${modules.symbolic.names.list}" substring="@{nexus.module}" />
 					</not>
 					<then>
-						<echo
-							append="true"
-							file="${nexus.reports.dir}/stale.modules.txt"
-							message="${line.separator}@{nexus.module}"
-						/>
+						<echo append="true" file="${nexus.reports.dir}/stale.modules.txt" message="${line.separator}@{nexus.module}" />
 					</then>
 				</if>
 			</sequential>
@@ -68,26 +72,20 @@
 			replace=""
 		/>
 
-		<loadfile property="repository.index" srcFile="${nexus.reports.dir}/${repository.name}.index" />
+		<loadfile
+			property="repository.index"
+			srcFile="${nexus.reports.dir}/${repository.name}.index"
+		/>
 
 		<delete file="${nexus.reports.dir}/${repository.name}.index" />
 	</target>
 
 	<target depends="prepare-report-dir" name="init-report-files">
-		<echo
-			file="${nexus.reports.dir}/available.modules.txt"
-			message="The following modules were found in ${repository.name}:${line.separator}"
-		/>
+		<echo file="${nexus.reports.dir}/available.modules.txt" message="The following modules were found in ${repository.name}:${line.separator}" />
 
-		<echo
-			file="${nexus.reports.dir}/stale.modules.txt"
-			message="The following modules were found in ${repository.name}, but do not currently exist in the source code:${line.separator}"
-		/>
+		<echo file="${nexus.reports.dir}/stale.modules.txt" message="The following modules were found in ${repository.name}, but do not currently exist in the source code:${line.separator}" />
 
-		<echo
-			file="${nexus.reports.dir}/unavailable.modules.txt"
-			message="The following modules were not found in ${repository.name}:${line.separator}"
-		/>
+		<echo file="${nexus.reports.dir}/unavailable.modules.txt" message="The following modules were not found in ${repository.name}:${line.separator}" />
 	</target>
 
 	<target name="prepare-report-dir">

@@ -101,7 +101,11 @@ PLATFORM_LOCALE=en_US
 ROOT_SUFFIX=dc=openam,dc=forgerock,dc=org
 SERVER_URL=http://test.able.com:8080</echo>
 
-			<java failonerror="true" fork="true" jar="${openam.configurator.tools.dir}/openam-configurator-tool-12.0.0.jar">
+			<java
+				failonerror="true"
+				fork="true"
+				jar="${openam.configurator.tools.dir}/openam-configurator-tool-12.0.0.jar"
+			>
 				<arg line="--file ${openam.configurator.tools.dir}/config.properties" />
 			</java>
 
@@ -112,14 +116,20 @@ SERVER_URL=http://test.able.com:8080</echo>
 			<if>
 				<os family="unix" />
 				<then>
-					<chmod file="${openam.admin.tools.dir}/**" perm="a+x" />
+					<chmod
+						file="${openam.admin.tools.dir}/**"
+						perm="a+x"
+					/>
 
 					<exec dir="${openam.admin.tools.dir}" executable="/bin/bash" failonerror="true">
 						<arg value="-c" />
 						<arg value="./setup -p ${openam.config.dir} -d ${openam.admin.tools.dir}/debug -l ${openam.admin.tools.dir}/log --acceptLicense" />
 					</exec>
 
-					<chmod file="${openam.admin.tools.dir}/passwordfile" perm="400" />
+					<chmod
+						file="${openam.admin.tools.dir}/passwordfile"
+						perm="400"
+					/>
 
 					<exec dir="${openam.admin.tools.dir}/openam/bin" executable="/bin/bash" failonerror="true">
 						<arg value="-c" />

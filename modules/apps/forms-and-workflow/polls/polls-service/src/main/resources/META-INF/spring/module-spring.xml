@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 
-<beans default-destroy-method="destroy" default-init-method="afterPropertiesSet" xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
 	<bean class="com.liferay.polls.service.impl.PollsChoiceLocalServiceImpl" id="com.liferay.polls.service.PollsChoiceLocalService" />
 	<bean class="com.liferay.polls.service.impl.PollsChoiceServiceImpl" id="com.liferay.polls.service.PollsChoiceService" />
 	<bean class="com.liferay.polls.service.persistence.impl.PollsChoicePersistenceImpl" id="com.liferay.polls.service.persistence.PollsChoicePersistence" parent="basePersistence" />

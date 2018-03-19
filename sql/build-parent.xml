@@ -1,10 +1,6 @@
 <?xml version="1.0"?>
 
-<project
-	name="sql-parent"
-	xmlns:if="ant:if"
-	xmlns:unless="ant:unless"
->
+<project name="sql-parent" xmlns:if="ant:if" xmlns:unless="ant:unless">
 	<import file="../build-common.xml" />
 
 	<mkdir dir="log" />
@@ -19,7 +15,10 @@
 				<gradle-execute dir="${project.dir}/modules" task=":private:apps:foundation:portal:portal-dao-db:jar" />
 
 				<path id="db.builder.classpath">
-					<fileset dir="${sdk.dir}/dist" includes="com.liferay.portal.dao.db-*.jar" />
+					<fileset
+						dir="${sdk.dir}/dist"
+						includes="com.liferay.portal.dao.db-*.jar"
+					/>
 					<path refid="project.classpath" />
 				</path>
 			</then>
@@ -126,7 +125,10 @@
 				<equals arg1="${rebuild-mysql.result}" arg2="0" />
 			</not>
 			<then>
-				<loadfile property="mysql.log.content" srcFile="log/${mysql.log}" />
+				<loadfile
+					property="mysql.log.content"
+					srcFile="log/${mysql.log}"
+				/>
 
 				<fail>${mysql.log.content}</fail>
 			</then>
@@ -141,7 +143,10 @@
 		</antcall>
 
 		<delete>
-			<fileset dir="portal" includes="*.log" />
+			<fileset
+				dir="portal"
+				includes="*.log"
+			/>
 		</delete>
 	</target>
 

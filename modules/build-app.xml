@@ -59,7 +59,10 @@
 	<target depends="dist-module-artifacts-lpkg" name="build-app-lpkg" unless="module.dirs.null">
 		<if>
 			<resourcecount count="0" when="greater">
-				<fileset dir="${osgi.dir}/marketplace" includes="*.jar,*.war" />
+				<fileset
+					dir="${osgi.dir}/marketplace"
+					includes="*.jar,*.war"
+				/>
 			</resourcecount>
 			<then>
 				<antcall target="write-lpkg-marketplace-properties">
@@ -67,13 +70,19 @@
 					<param name="title" value="${Liferay-Releng-App-Title}" />
 				</antcall>
 
-				<zip basedir="${osgi.dir}/marketplace" destfile="${osgi.dir}/marketplace/${Liferay-Releng-App-Title}.lpkg" includes="*.jar,*.war,liferay-marketplace.properties" />
+				<zip
+					basedir="${osgi.dir}/marketplace"
+					destfile="${osgi.dir}/marketplace/${Liferay-Releng-App-Title}.lpkg"
+					includes="*.jar,*.war,liferay-marketplace.properties"
+				/>
 			</then>
 		</if>
 
 		<for param="lpkg.dir">
 			<path>
-				<dirset dir="${osgi.dir}/marketplace">
+				<dirset
+					dir="${osgi.dir}/marketplace"
+				>
 					<include name="*/**" />
 					<exclude name="override" />
 				</dirset>
@@ -88,22 +97,40 @@
 					<param name="title" value="${lpkg.dir.name}" />
 				</antcall>
 
-				<zip basedir="@{lpkg.dir}" destfile="${osgi.dir}/marketplace/${lpkg.dir.name}.lpkg" includes="*.jar,*.war,liferay-marketplace.properties" />
+				<zip
+					basedir="@{lpkg.dir}"
+					destfile="${osgi.dir}/marketplace/${lpkg.dir.name}.lpkg"
+					includes="*.jar,*.war,liferay-marketplace.properties"
+				/>
 			</sequential>
 		</for>
 
 		<delete includeemptydirs="true">
-			<fileset dir="${osgi.dir}/marketplace" excludes="override, *.lpkg" includes="**/*" />
+			<fileset
+				dir="${osgi.dir}/marketplace"
+				excludes="override, *.lpkg"
+				includes="**/*"
+			/>
 		</delete>
 	</target>
 
 	<target name="build-app-lpkg-all">
 		<pathconvert pathsep="," property="app.names">
-			<globmapper from="${modules.dir}${file.separator}apps${file.separator}*" to="*" />
+			<globmapper
+				from="${modules.dir}${file.separator}apps${file.separator}*"
+				to="*"
+			/>
 			<path>
-				<dirset dir="${modules.dir}" includes="apps/*">
+				<dirset
+					dir="${modules.dir}"
+					includes="apps/*"
+				>
 					<present targetdir="${modules.dir}">
-						<mapper from="*" to="*/app.bnd" type="glob" />
+						<mapper
+							from="*"
+							to="*/app.bnd"
+							type="glob"
+						/>
 					</present>
 				</dirset>
 			</path>
@@ -124,7 +151,10 @@
 		<condition property="current.branch.private">
 			<or>
 				<istrue value="${ee.override}" />
-				<resourcecontains resource="${modules.dir}/../portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java" substring=" DXP " />
+				<resourcecontains
+					resource="${modules.dir}/../portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java"
+					substring=" DXP "
+				/>
 			</or>
 		</condition>
 
@@ -141,7 +171,9 @@
 			<arg value="-q" />
 		</exec>
 
-		<loadfile property="module.stale.artifacts">
+		<loadfile
+			property="module.stale.artifacts"
+		>
 			<filterchain>
 				<linecontains>
 					<contains value="${app.name}" />
@@ -158,7 +190,10 @@
 	</target>
 
 	<target depends="check-current-branch" if="${current.branch.private}" name="checkout-public-modules-releng">
-		<loadfile property="git.commit.portal.public" srcfile="${project.dir}/git-commit-portal">
+		<loadfile
+			property="git.commit.portal.public"
+			srcfile="${project.dir}/git-commit-portal"
+		>
 			<filterchain>
 				<striplinebreaks />
 			</filterchain>
@@ -191,7 +226,11 @@
 		<mkdir dir="${dist.dir}" />
 
 		<subant genericantfile="${modules.dir}/build-app-module.xml" target="dist-module-artifact">
-			<dirset dir="${modules.dir}" excludes="${build.modules.excludes}" includes="${app.module.dirs}" />
+			<dirset
+				dir="${modules.dir}"
+				excludes="${build.modules.excludes}"
+				includes="${app.module.dirs}"
+			/>
 			<property name="app.first.version" value="${app.first.version}" />
 			<property name="artifact.versions.previous.release" value="${artifact.versions.previous.release}" />
 			<property name="build.repository.private.password" value="${build.repository.private.password}" />
@@ -202,7 +241,11 @@
 
 	<target depends="get-osgi-static-modules,init-build-app" name="dist-module-artifacts-lpkg" unless="module.dirs.null">
 		<subant genericantfile="${modules.dir}/build-app-module.xml" target="dist-module-artifact-lpkg">
-			<dirset dir="${modules.dir}" excludes="${build.modules.excludes}" includes="${app.module.dirs}" />
+			<dirset
+				dir="${modules.dir}"
+				excludes="${build.modules.excludes}"
+				includes="${app.module.dirs}"
+			/>
 			<property name="liferay.releng.app.title.prefix" value="${liferay.releng.app.title.prefix}" />
 			<property name="osgi.dir" value="${osgi.dir}" />
 			<property name="osgi.static.modules" value="${osgi.static.modules}" />
@@ -215,7 +258,10 @@
 			<flattenmapper />
 
 			<path>
-				<fileset dir="${dist.dir}" includes="*.jar,*.war" />
+				<fileset
+					dir="${dist.dir}"
+					includes="*.jar,*.war"
+				/>
 			</path>
 		</pathconvert>
 
@@ -223,7 +269,11 @@
 	</target>
 
 	<target depends="dist-module-artifacts,init-build-app,get-app-version" name="get-app-change-log">
-		<loadfile failonerror="false" property="app.ticket.list" srcfile="${dist.dir}/ticket.list.tmp">
+		<loadfile
+			failonerror="false"
+			property="app.ticket.list"
+			srcfile="${dist.dir}/ticket.list.tmp"
+		>
 			<filterchain>
 				<tokenfilter>
 					<filetokenizer />
@@ -273,7 +323,9 @@
 	</target>
 
 	<target depends="get-app-properties" name="get-app-version" unless="build.app.from.changelog">
-		<loadfile property="app.major.minor.version.previous.release">
+		<loadfile
+			property="app.major.minor.version.previous.release"
+		>
 			<filterchain>
 				<replaceregex pattern="(\d{1,2}\.\d{1,2})\.\d{1,2}" replace="\1" />
 
@@ -282,14 +334,22 @@
 			<propertyresource name="app.version.previous.release" />
 		</loadfile>
 
-		<loadfile property="app.bug.fix.version.previous.release">
+		<loadfile
+			property="app.bug.fix.version.previous.release"
+		>
 			<filterchain>
 				<replaceregex pattern="\d{1,2}\.\d{1,2}\.(\d{1,2})" replace="\1" />
 			</filterchain>
 			<propertyresource name="app.version.previous.release" />
 		</loadfile>
 
-		<math datatype="int" operand1="${app.bug.fix.version.previous.release}" operand2="1" operation="+" result="app.bug.fix.version" />
+		<math
+			datatype="int"
+			operand1="${app.bug.fix.version.previous.release}"
+			operand2="1"
+			operation="+"
+			result="app.bug.fix.version"
+		/>
 
 		<property name="app.version" value="${app.major.minor.version.previous.release}.${app.bug.fix.version}" />
 	</target>
@@ -307,13 +367,19 @@
 
 				<regexpmapper from="^(.+?)-(\d.*?)\.jar$" to="\1#\2##" />
 			</chainedmapper>
-			<fileset dir="${lpkg.dir}" includes="*.jar" />
+			<fileset
+				dir="${lpkg.dir}"
+				includes="*.jar"
+			/>
 		</pathconvert>
 	</target>
 
 	<target depends="init-build-app" if="osgi.static.dir.available" name="get-osgi-static-modules">
 		<pathconvert property="osgi.static.modules">
-			<fileset dir="${osgi.dir}/static" includes="*.jar" />
+			<fileset
+				dir="${osgi.dir}/static"
+				includes="*.jar"
+			/>
 
 			<flattenmapper />
 		</pathconvert>
@@ -354,8 +420,14 @@
 
 			<!-- Order is important -->
 
-			<fileset dir="${liferay.home}/tools/portal-tools-target-platform-indexer-client" includes="com.liferay.portal.target.platform.indexer.api.jar,com.liferay.portal.target.platform.indexer.impl.jar,com.liferay.portal.tools.target.platform.indexer.client.jar" />
-			<fileset dir="${osgi.dir}/core" includes="com.liferay.portal.bootstrap.jar,org.eclipse.osgi.jar" />
+			<fileset
+				dir="${liferay.home}/tools/portal-tools-target-platform-indexer-client"
+				includes="com.liferay.portal.target.platform.indexer.api.jar,com.liferay.portal.target.platform.indexer.impl.jar,com.liferay.portal.tools.target.platform.indexer.client.jar"
+			/>
+			<fileset
+				dir="${osgi.dir}/core"
+				includes="com.liferay.portal.bootstrap.jar,org.eclipse.osgi.jar"
+			/>
 		</path>
 
 		<java
@@ -405,7 +477,10 @@
 
 		<pathconvert pathsep="," property="app.module.dirs.excludes.private">
 			<chainedmapper>
-				<globmapper from="${modules.dir}${file.separator}*" to="*" />
+				<globmapper
+					from="${modules.dir}${file.separator}*"
+					to="*"
+				/>
 
 				<filtermapper>
 					<linecontains>
@@ -418,71 +493,120 @@
 				</filtermapper>
 			</chainedmapper>
 			<path>
-				<dirset dir="${modules.dir}" excludes="**/*-test*" includes="apps/${app.name}/**,private/apps/${app.name}/**">
+				<dirset
+					dir="${modules.dir}"
+					excludes="**/*-test*"
+					includes="apps/${app.name}/**,private/apps/${app.name}/**"
+				>
 					<present targetdir="${modules.dir}">
-						<mapper from="*" to="*/.lfrbuild-portal-private" type="glob" />
+						<mapper
+							from="*"
+							to="*/.lfrbuild-portal-private"
+							type="glob"
+						/>
 					</present>
 				</dirset>
 			</path>
 		</pathconvert>
 
 		<pathconvert pathsep="," property="app.module.dirs.excludes.public">
-			<globmapper from="${modules.dir}${file.separator}*" to="*" />
+			<globmapper
+				from="${modules.dir}${file.separator}*"
+				to="*"
+			/>
 
 			<path>
-				<dirset dir="${modules.dir}" excludes="**/*-test*" includes="apps/${app.name}/**,private/apps/${app.name}/**">
+				<dirset
+					dir="${modules.dir}"
+					excludes="**/*-test*"
+					includes="apps/${app.name}/**,private/apps/${app.name}/**"
+				>
 					<present targetdir="${modules.dir}">
-						<mapper from="*" to="*/.lfrbuild-portal-private" type="glob" />
+						<mapper
+							from="*"
+							to="*/.lfrbuild-portal-private"
+							type="glob"
+						/>
 					</present>
 				</dirset>
-				<dirset dir="${modules.dir}" excludes="**/*-test*" includes="private/apps/${app.name}/**">
+				<dirset
+					dir="${modules.dir}"
+					excludes="**/*-test*"
+					includes="private/apps/${app.name}/**"
+				>
 					<present targetdir="${modules.dir}">
-						<mapper from="*" to="*/.lfrbuild-portal-private" type="glob" />
+						<mapper
+							from="*"
+							to="*/.lfrbuild-portal-private"
+							type="glob"
+						/>
 					</present>
 				</dirset>
 			</path>
 		</pathconvert>
 
-		<condition
-			else="${app.module.dirs.excludes.public}"
-			property="app.module.dirs.excludes"
-			value="${app.module.dirs.excludes.private}"
-		>
+		<condition else="${app.module.dirs.excludes.public}" property="app.module.dirs.excludes" value="${app.module.dirs.excludes.private}">
 			<istrue value="${current.branch.private}" />
 		</condition>
 
 		<pathconvert pathsep="," property="app.module.dirs.private">
-			<globmapper from="${modules.dir}${file.separator}*" to="*" />
+			<globmapper
+				from="${modules.dir}${file.separator}*"
+				to="*"
+			/>
 			<path>
-				<dirset dir="${modules.dir}" excludes="**/*-test*,${app.module.dirs.excludes}" includes="apps/${app.name}/**,private/apps/${app.name}/**">
+				<dirset
+					dir="${modules.dir}"
+					excludes="**/*-test*,${app.module.dirs.excludes}"
+					includes="apps/${app.name}/**,private/apps/${app.name}/**"
+				>
 					<present targetdir="${modules.dir}">
-						<mapper from="*" to="*/.lfrbuild-portal" type="glob" />
+						<mapper
+							from="*"
+							to="*/.lfrbuild-portal"
+							type="glob"
+						/>
 					</present>
 				</dirset>
-				<dirset dir="${modules.dir}" excludes="${app.module.dirs.excludes}" includes="apps/${app.name}/**,private/apps/${app.name}/**">
+				<dirset
+					dir="${modules.dir}"
+					excludes="${app.module.dirs.excludes}"
+					includes="apps/${app.name}/**,private/apps/${app.name}/**"
+				>
 					<present targetdir="${modules.dir}">
-						<mapper from="*" to="*/.lfrbuild-portal-private" type="glob" />
+						<mapper
+							from="*"
+							to="*/.lfrbuild-portal-private"
+							type="glob"
+						/>
 					</present>
 				</dirset>
 			</path>
 		</pathconvert>
 
 		<pathconvert pathsep="," property="app.module.dirs.public">
-			<globmapper from="${modules.dir}${file.separator}*" to="*" />
+			<globmapper
+				from="${modules.dir}${file.separator}*"
+				to="*"
+			/>
 			<path>
-				<dirset dir="${modules.dir}" excludes="**/*-test*,${app.module.dirs.excludes}" includes="apps/${app.name}/**,private/apps/${app.name}/**">
+				<dirset
+					dir="${modules.dir}"
+					excludes="**/*-test*,${app.module.dirs.excludes}"
+					includes="apps/${app.name}/**,private/apps/${app.name}/**"
+				>
 					<present targetdir="${modules.dir}">
-						<mapper from="*" to="*/.lfrbuild-portal" type="glob" />
+						<mapper
+							from="*"
+							to="*/.lfrbuild-portal"
+							type="glob"
+						/>
 					</present>
 				</dirset>
 			</path>
 		</pathconvert>
 
-		<condition
-			else="${app.module.dirs.public}"
-			property="app.module.dirs"
-			value="${app.module.dirs.private}"
-		>
+		<condition else="${app.module.dirs.public}" property="app.module.dirs" value="${app.module.dirs.private}">
 			<istrue value="${current.branch.private}" />
 		</condition>
 
@@ -504,7 +628,10 @@
 		<property file="${modules.dir}/../build.properties" />
 
 		<pathconvert property="app.bnd.file">
-			<fileset dir="${modules.dir}" includes="apps/${app.name}/app.bnd,private/apps/${app.name}/app.bnd" />
+			<fileset
+				dir="${modules.dir}"
+				includes="apps/${app.name}/app.bnd,private/apps/${app.name}/app.bnd"
+			/>
 		</pathconvert>
 
 		<loadproperties srcFile="${app.bnd.file}">
@@ -546,20 +673,34 @@
 
 		<delete dir="${deploy.dir.absolute}" />
 
-		<copy todir="${deploy.dir.absolute}">
-			<fileset dir="${deploy.dir.absolute}_backup" includes="**/*" />
+		<copy
+			todir="${deploy.dir.absolute}"
+		>
+			<fileset
+				dir="${deploy.dir.absolute}_backup"
+				includes="**/*"
+			/>
 		</copy>
 
 		<delete dir="${osgi.dir.absolute}" />
 
-		<copy todir="${osgi.dir.absolute}">
-			<fileset dir="${osgi.dir.absolute}_backup" includes="**/*" />
+		<copy
+			todir="${osgi.dir.absolute}"
+		>
+			<fileset
+				dir="${osgi.dir.absolute}_backup"
+				includes="**/*"
+			/>
 		</copy>
 	</target>
 
 	<target name="reset-lpkg">
 		<subant genericantfile="${modules.dir}/build-app-module.xml" target="reset-artifact">
-			<dirset dir="${modules.dir}" excludes="${build.modules.excludes}" includes="${app.module.dirs}" />
+			<dirset
+				dir="${modules.dir}"
+				excludes="${build.modules.excludes}"
+				includes="${app.module.dirs}"
+			/>
 			<property name="osgi.dir" value="${osgi.dir}" />
 		</subant>
 	</target>

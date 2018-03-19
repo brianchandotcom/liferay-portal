@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 
-<beans default-destroy-method="destroy" default-init-method="afterPropertiesSet" xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
 	<bean class="com.liferay.calendar.service.impl.CalendarLocalServiceImpl" id="com.liferay.calendar.service.CalendarLocalService" />
 	<bean class="com.liferay.calendar.service.impl.CalendarServiceImpl" id="com.liferay.calendar.service.CalendarService" />
 	<bean class="com.liferay.calendar.service.persistence.impl.CalendarPersistenceImpl" id="com.liferay.calendar.service.persistence.CalendarPersistence" parent="basePersistence" />

@@ -28,8 +28,14 @@
 		<property name="javac.srcdir" value="src" />
 		<property name="javac.classpathref" value="project.classpath" />
 
-		<copy preservelastmodified="true" todir="${javac.destdir}">
-			<fileset dir="${javac.srcdir}" excludes="**/*.java" />
+		<copy
+			preservelastmodified="true"
+			todir="${javac.destdir}"
+		>
+			<fileset
+				dir="${javac.srcdir}"
+				excludes="**/*.java"
+			/>
 		</copy>
 
 		<javac
@@ -48,7 +54,11 @@
 	</target>
 
 	<target depends="init-deploy,jar" if="${copy.jar}" name="deploy" unless="deploy.uptodate">
-		<copy file="${jar.file}.jar" preservelastmodified="true" todir="${deploy.dir}" />
+		<copy
+			file="${jar.file}.jar"
+			preservelastmodified="true"
+			todir="${deploy.dir}"
+		/>
 	</target>
 
 	<target name="download-latest-artifact" unless="${build.portal.artifacts.enabled}">
@@ -59,7 +69,9 @@
 
 	<target if="${build.portal.artifacts.enabled}" name="init-compile">
 		<condition property="compile.uptodate">
-			<uptodate targetfile="classes/.touch">
+			<uptodate
+				targetfile="classes/.touch"
+			>
 				<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
 			</uptodate>
 		</condition>
@@ -70,13 +82,18 @@
 		<property name="src.dir" value="${basedir}" />
 
 		<condition property="deploy.uptodate">
-			<uptodate srcfile="${jar.file}.jar" targetfile="${deploy.dir}/${jar.file}.jar" />
+			<uptodate
+				srcfile="${jar.file}.jar"
+				targetfile="${deploy.dir}/${jar.file}.jar"
+			/>
 		</condition>
 	</target>
 
 	<target depends="compile" name="init-jar">
 		<condition property="jar.uptodate">
-			<uptodate targetfile="${jar.file}.jar">
+			<uptodate
+				targetfile="${jar.file}.jar"
+			>
 				<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
 			</uptodate>
 		</condition>
@@ -104,7 +121,9 @@
 
 				<bnd eclipse="false" exceptions="true" failok="false" inherit="true" output="${jar.file}.jar">
 					<bndfiles>
-						<fileset dir=".">
+						<fileset
+							dir="."
+						>
 							<include name="bnd.bnd" />
 						</fileset>
 					</bndfiles>
@@ -251,7 +270,11 @@
 			<then>
 				<bndexpand propertyfile="${project.dir}/common.bnd" />
 
-				<taskdef classname="com.liferay.ant.bnd.ReleaseToRepoTask" classpathref="lib.classpath" name="release-to-repo" />
+				<taskdef
+					classname="com.liferay.ant.bnd.ReleaseToRepoTask"
+					classpathref="lib.classpath"
+					name="release-to-repo"
+				/>
 
 				<release-to-repo
 					bndRootFile="${project.dir}/common.bnd"

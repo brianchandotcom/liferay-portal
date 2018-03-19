@@ -1,7 +1,11 @@
 <?xml version="1.0"?>
 
 <project>
-	<taskdef classname="com.liferay.ant.mirrors.get.MirrorsGetTask" classpath="classes" name="mirrors-get" />
+	<taskdef
+		classname="com.liferay.ant.mirrors.get.MirrorsGetTask"
+		classpath="classes"
+		name="mirrors-get"
+	/>
 
 	<target name="test-1">
 		<mirrors-get

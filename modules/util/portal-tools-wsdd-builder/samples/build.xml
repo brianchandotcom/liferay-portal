@@ -3,11 +3,20 @@
 
 <project>
 	<path id="wsdd.builder.classpath">
-		<fileset dir="../lib" includes="*.jar" />
-		<fileset dir="../../../../tools/sdk/dist" includes="com.liferay.portal.tools.wsdd.builder-*.jar" />
+		<fileset
+			dir="../lib"
+			includes="*.jar"
+		/>
+		<fileset
+			dir="../../../../tools/sdk/dist"
+			includes="com.liferay.portal.tools.wsdd.builder-*.jar"
+		/>
 	</path>
 
-	<taskdef classpathref="wsdd.builder.classpath" resource="com/liferay/portal/tools/wsdd/builder/ant/taskdefs.properties" />
+	<taskdef
+		classpathref="wsdd.builder.classpath"
+		resource="com/liferay/portal/tools/wsdd/builder/ant/taskdefs.properties"
+	/>
 
 	<target name="build-wsdd">
 		<build-wsdd

@@ -4,20 +4,41 @@
 	<import file="../build-common.xml" />
 
 	<target name="build-sample-sql">
-		<gradle-execute
-			dir="../modules/util/portal-tools-sample-sql-builder"
-			task="jar"
-		/>
+		<gradle-execute dir="../modules/util/portal-tools-sample-sql-builder" task="jar" />
 
 		<path id="sample.sql.builder.classpath">
-			<fileset dir="${sdk.dir}/dist" includes="com.liferay.blogs.*.jar" />
-			<fileset dir="${sdk.dir}/dist" includes="com.liferay.dynamic.data.*.jar" />
-			<fileset dir="${sdk.dir}/dist" includes="com.liferay.friendly.url.*.jar" />
-			<fileset dir="${sdk.dir}/dist" includes="com.liferay.journal.*.jar" />
-			<fileset dir="${sdk.dir}/dist" includes="com.liferay.message.boards.*.jar" />
-			<fileset dir="${sdk.dir}/dist" includes="com.liferay.portal.tools.sample.sql.builder*.jar" />
-			<fileset dir="${sdk.dir}/dist" includes="com.liferay.subscription.*.jar" />
-			<fileset dir="${sdk.dir}/dist" includes="com.liferay.wiki.*.jar" />
+			<fileset
+				dir="${sdk.dir}/dist"
+				includes="com.liferay.blogs.*.jar"
+			/>
+			<fileset
+				dir="${sdk.dir}/dist"
+				includes="com.liferay.dynamic.data.*.jar"
+			/>
+			<fileset
+				dir="${sdk.dir}/dist"
+				includes="com.liferay.friendly.url.*.jar"
+			/>
+			<fileset
+				dir="${sdk.dir}/dist"
+				includes="com.liferay.journal.*.jar"
+			/>
+			<fileset
+				dir="${sdk.dir}/dist"
+				includes="com.liferay.message.boards.*.jar"
+			/>
+			<fileset
+				dir="${sdk.dir}/dist"
+				includes="com.liferay.portal.tools.sample.sql.builder*.jar"
+			/>
+			<fileset
+				dir="${sdk.dir}/dist"
+				includes="com.liferay.subscription.*.jar"
+			/>
+			<fileset
+				dir="${sdk.dir}/dist"
+				includes="com.liferay.wiki.*.jar"
+			/>
 			<path refid="project.classpath" />
 		</path>
 
@@ -34,7 +55,10 @@
 
 	<target name="clean">
 		<delete includeemptydirs="true">
-			<fileset dir="." includes="*.csv,*.sql,benchmarks-actual.properties,output/**,temp/**" />
+			<fileset
+				dir="."
+				includes="*.csv,*.sql,benchmarks-actual.properties,output/**,temp/**"
+			/>
 		</delete>
 	</target>
 </project>

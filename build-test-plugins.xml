@@ -16,7 +16,10 @@
 				<then>
 					<pathconvert pathsep="," property="plugin.war" setonempty="false">
 						<path>
-							<fileset dir="plugins/marketplace" includes="@{plugin}*.war" />
+							<fileset
+								dir="plugins/marketplace"
+								includes="@{plugin}*.war"
+							/>
 						</path>
 					</pathconvert>
 
@@ -48,7 +51,10 @@
 				<else>
 					<pathconvert pathsep="," property="plugin.build.path" setonempty="false">
 						<path>
-							<fileset dir="${project.dir}/modules" includes="**/@{plugin}/build.gradle,**/@{plugin}/build.xml" />
+							<fileset
+								dir="${project.dir}/modules"
+								includes="**/@{plugin}/build.gradle,**/@{plugin}/build.xml"
+							/>
 						</path>
 					</pathconvert>
 
@@ -111,7 +117,10 @@
 
 							<get-auto-deploy-dir />
 
-							<copy file="plugins/marketplace/${marketplace.app}" todir="${auto.deploy.dir}" />
+							<copy
+								file="plugins/marketplace/${marketplace.app}"
+								todir="${auto.deploy.dir}"
+							/>
 						</then>
 					</elseif>
 				</if>
@@ -213,11 +222,7 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.62</echo>
 						<if>
 							<isset property="portlet.properties.@{plugin}" />
 							<then>
-								<propertycopy
-									from="portlet.properties.@{plugin}"
-									name="portlet.properties"
-									override="true"
-								/>
+								<propertycopy from="portlet.properties.@{plugin}" name="portlet.properties" override="true" />
 
 								<if>
 									<available file="${plugin.path}/docroot/WEB-INF/src" />
@@ -282,7 +287,10 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.62</echo>
 
 								<get-auto-deploy-dir />
 
-								<copy file="${plugin.war}" todir="${auto.deploy.dir}" />
+								<copy
+									file="${plugin.war}"
+									todir="${auto.deploy.dir}"
+								/>
 
 								<var name="plugin.war" unset="true" />
 							</then>
@@ -308,11 +316,19 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.62</echo>
 						<if>
 							<equals arg1="@{plugin}" arg2="cas-web" />
 							<then>
-								<move todir="${app.server.dir}/webapps">
-									<fileset dir="${app.server.dir}/webapps">
+								<move
+									todir="${app.server.dir}/webapps"
+								>
+									<fileset
+										dir="${app.server.dir}/webapps"
+									>
 										<include name="cas-web-*.war" />
 									</fileset>
-									<mapper from="*" to="cas-web.war" type="glob" />
+									<mapper
+										from="*"
+										to="cas-web.war"
+										type="glob"
+									/>
 								</move>
 							</then>
 						</if>
@@ -415,7 +431,10 @@ plugins.includes=${test.plugin}</echo>
 		<if>
 			<available file="plugins-compile-failure" />
 			<then>
-				<loadfile property="failed.plugins" srcFile="plugins-compile-failure" />
+				<loadfile
+					property="failed.plugins"
+					srcFile="plugins-compile-failure"
+				/>
 
 				<beanshell>
 					<![CDATA[

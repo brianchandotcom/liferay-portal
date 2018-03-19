@@ -47,8 +47,12 @@
 	</path>
 
 	<target name="build-dtd">
-		<copy todir="docroot/dtd">
-			<fileset dir="${project.dir}/definitions" />
+		<copy
+			todir="docroot/dtd"
+		>
+			<fileset
+				dir="${project.dir}/definitions"
+			/>
 		</copy>
 	</target>
 
@@ -64,7 +68,10 @@
 
 	<target name="clean-tlds">
 		<delete includeemptydirs="true">
-			<fileset dir="docroot/WEB-INF/tld" includes="liferay*.tld" />
+			<fileset
+				dir="docroot/WEB-INF/tld"
+				includes="liferay*.tld"
+			/>
 		</delete>
 	</target>
 
@@ -129,17 +136,15 @@
 		<if>
 			<equals arg1="${app.server.type}" arg2="tomcat" />
 			<then>
-				<fileset dir="${jspc.classes.dir}" id="oversize.files">
+				<fileset
+					dir="${jspc.classes.dir}"
+					id="oversize.files"
+				>
 					<include name="**/*.java" />
 					<size units="K" value="700" when="more" />
 				</fileset>
 
-				<pathconvert
-					dirsep="/"
-					pathsep="${line.separator}"
-					property="oversize.files.java"
-					refid="oversize.files"
-				/>
+				<pathconvert dirsep="/" pathsep="${line.separator}" property="oversize.files.java" refid="oversize.files" />
 
 				<if>
 					<not>
@@ -147,11 +152,26 @@
 					</not>
 					<then>
 						<antelope:stringutil property="oversize.files.jsp" string="${oversize.files.java}">
-							<replace regex="\.java" replacement="" />
-							<replace regex="${jspc.classes.dir}/org/apache/jsp" replacement="docroot" />
-							<replace regex="_jsp" replacement=".jsp" />
-							<replace regex="_002d" replacement="-" />
-							<replace regex="_005f" replacement="_" />
+							<replace
+								regex="\.java"
+								replacement=""
+							/>
+							<replace
+								regex="${jspc.classes.dir}/org/apache/jsp"
+								replacement="docroot"
+							/>
+							<replace
+								regex="_jsp"
+								replacement=".jsp"
+							/>
+							<replace
+								regex="_002d"
+								replacement="-"
+							/>
+							<replace
+								regex="_005f"
+								replacement="_"
+							/>
 						</antelope:stringutil>
 
 						<fail>
@@ -243,7 +263,10 @@ ${oversize.files.jsp}</fail>
 		<if>
 			<available file="jspc_error" />
 			<then>
-				<loadfile property="jspc_error.content" srcfile="jspc_error" />
+				<loadfile
+					property="jspc_error.content"
+					srcfile="jspc_error"
+				/>
 
 				<fail>${jspc_error.content}</fail>
 			</then>
@@ -301,8 +324,13 @@ ${oversize.files.jsp}</fail>
 					<then>
 						<antcall target="compile-jonas" />
 
-						<copy preservelastmodified="true" todir="${app.server.dir}/work/jonas/localhost/_">
-							<fileset dir="classes/${app.server.type}">
+						<copy
+							preservelastmodified="true"
+							todir="${app.server.dir}/work/jonas/localhost/_"
+						>
+							<fileset
+								dir="classes/${app.server.type}"
+							>
 								<exclude name="**/*.jspc_error" />
 								<exclude name="**/*.java" />
 							</fileset>
@@ -313,8 +341,13 @@ ${oversize.files.jsp}</fail>
 						<then>
 							<antcall target="compile-resin" />
 
-							<copy preservelastmodified="true" todir="${app.server.portal.dir}/WEB-INF/work">
-								<fileset dir="classes/${app.server.type}">
+							<copy
+								preservelastmodified="true"
+								todir="${app.server.portal.dir}/WEB-INF/work"
+							>
+								<fileset
+									dir="classes/${app.server.type}"
+								>
 									<exclude name="**/*.jspc_error" />
 									<exclude name="**/*.java" />
 								</fileset>
@@ -326,8 +359,13 @@ ${oversize.files.jsp}</fail>
 						<then>
 							<antcall target="compile-tomcat" />
 
-							<copy preservelastmodified="true" todir="${app.server.dir}/work/Catalina/localhost/_">
-								<fileset dir="classes/${app.server.type}">
+							<copy
+								preservelastmodified="true"
+								todir="${app.server.dir}/work/Catalina/localhost/_"
+							>
+								<fileset
+									dir="classes/${app.server.type}"
+								>
 									<exclude name="**/*.jspc_error" />
 									<exclude name="**/*.java" />
 								</fileset>
@@ -356,7 +394,9 @@ ${oversize.files.jsp}</fail>
 					destfile="${war.file}.war"
 					webxml="docroot/WEB-INF/web.xml"
 				>
-					<fileset dir="docroot" />
+					<fileset
+						dir="docroot"
+					/>
 					<metainf dir="${project.dir}/oss-licenses">
 						<exclude name="**/development/**" />
 					</metainf>

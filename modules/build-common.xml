@@ -4,7 +4,10 @@
 <project name="build-common">
 	<dirname file="${ant.file.build-common}" property="modules.dir" />
 
-	<taskdef classpath="${modules.dir}/../lib/development/ant-contrib.jar" resource="net/sf/antcontrib/antlib.xml" />
+	<taskdef
+		classpath="${modules.dir}/../lib/development/ant-contrib.jar"
+		resource="net/sf/antcontrib/antlib.xml"
+	/>
 
 	<pathconvert dirsep=":" property="gradle.project.path">
 		<map from="${modules.dir}" to="" />

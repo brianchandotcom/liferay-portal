@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
-import com.liferay.source.formatter.checks.TagAttributesCheck.Tag;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
@@ -67,29 +66,7 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 	}
 
 	@Override
-	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws Exception {
-
-		if (isSubrepository() || isReadOnly(absolutePath)) {
-			return content;
-		}
-
-		content = _formatSingleLineTagAttributes(content);
-
-		content = formatMultiLinesTagAttributes(content, false);
-
-		return content;
-	}
-
-	@Override
-	protected Tag formatLineBreaks(Tag tag, boolean forceSingleLine) {
-		if (forceSingleLine) {
-			tag.setMultiLine(false);
-
-			return tag;
-		}
-
+	protected Tag doFormatLineBreaks(Tag tag, String absolutePath) {
 		String tagName = tag.getName();
 
 		if (!tagName.contains(StringPool.COLON) || tagName.startsWith("aui:") ||
@@ -103,6 +80,22 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 		}
 
 		return tag;
+	}
+
+	@Override
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
+		throws Exception {
+
+		if (isSubrepository() || isReadOnly(absolutePath)) {
+			return content;
+		}
+
+		content = _formatSingleLineTagAttributes(absolutePath, content);
+
+		content = formatMultiLinesTagAttributes(absolutePath, content, false);
+
+		return content;
 	}
 
 	@Override
@@ -200,7 +193,8 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 		return tag;
 	}
 
-	private String _formatSingleLineTagAttributes(String content)
+	private String _formatSingleLineTagAttributes(
+			String absolutePath, String content)
 		throws Exception {
 
 		StringBundler sb = new StringBundler();
@@ -218,7 +212,7 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 
 					if (htmlTag != null) {
 						String newHTMLTag = formatTagAttributes(
-							htmlTag, false, true);
+							absolutePath, htmlTag, false, true);
 
 						line = StringUtil.replace(line, htmlTag, newHTMLTag);
 					}
@@ -232,7 +226,7 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 					}
 
 					String newJSPTag = formatTagAttributes(
-						jspTag, false, forceSingleLine);
+						absolutePath, jspTag, false, forceSingleLine);
 
 					line = StringUtil.replace(line, jspTag, newJSPTag);
 				}

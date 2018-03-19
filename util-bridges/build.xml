@@ -12,12 +12,26 @@
 	<path id="web-lib.classpath">
 		<pathelement path="${project.dir}/portal-kernel/classes" />
 		<pathelement path="${project.dir}/util-java/classes" />
-		<fileset dir="${project.dir}/lib/development" includes="groovy.jar,jruby.jar,resin.jar" />
-		<fileset dir="${project.dir}/lib/portal" includes="bsf.jar,commons-logging.jar,liferay-rhino.jar,portals-bridges.jar,struts-core.jar,struts-extras.jar,struts-taglib.jar,struts-tiles.jar" />
+		<fileset
+			dir="${project.dir}/lib/development"
+			includes="groovy.jar,jruby.jar,resin.jar"
+		/>
+		<fileset
+			dir="${project.dir}/lib/portal"
+			includes="bsf.jar,commons-logging.jar,liferay-rhino.jar,portals-bridges.jar,struts-core.jar,struts-extras.jar,struts-taglib.jar,struts-tiles.jar"
+		/>
 	</path>
 
 	<target depends="build-common-java.jar" name="jar">
-		<copy file="${jar.file}.jar" preservelastmodified="true" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" />
-		<copy file="${project.dir}/lib/portal/portals-bridges.jar" preservelastmodified="true" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" />
+		<copy
+			file="${jar.file}.jar"
+			preservelastmodified="true"
+			todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies"
+		/>
+		<copy
+			file="${project.dir}/lib/portal/portals-bridges.jar"
+			preservelastmodified="true"
+			todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies"
+		/>
 	</target>
 </project>

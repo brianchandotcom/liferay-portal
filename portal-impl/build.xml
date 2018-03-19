@@ -1,14 +1,6 @@
 <?xml version="1.0"?>
 
-<project
-	basedir="."
-	default="compile"
-	name="portal-impl"
-	xmlns:antelope="antlib:ise.antelope.tasks"
-	xmlns:artifact="antlib:org.apache.maven.artifact.ant"
-	xmlns:if="ant:if"
-	xmlns:unless="ant:unless"
->
+<project basedir="." default="compile" name="portal-impl" xmlns:antelope="antlib:ise.antelope.tasks" xmlns:artifact="antlib:org.apache.maven.artifact.ant" xmlns:if="ant:if" xmlns:unless="ant:unless">
 	<property name="test.properties" value="portal-test.properties" />
 
 	<import file="../build-common-java.xml" />
@@ -38,8 +30,13 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		<ant dir="${alloy.taglibs.dir}" inheritAll="false" target="clean" />
 		<ant dir="${alloy.taglibs.dir}" inheritAll="false" target="start" />
 
-		<copy preservelastmodified="true" todir="${project.dir}/lib/development">
-			<fileset file="${alloy.taglibs.dir}/alloy-taglib/alloy-taglib.jar" />
+		<copy
+			preservelastmodified="true"
+			todir="${project.dir}/lib/development"
+		>
+			<fileset
+				file="${alloy.taglibs.dir}/alloy-taglib/alloy-taglib.jar"
+			/>
 		</copy>
 	</target>
 
@@ -48,13 +45,21 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 	</target>
 
 	<target name="build-ehcache-xsd">
-		<mirrors-get dest="ehcache.xsd" src="http://ehcache.org/ehcache.xsd" />
+		<mirrors-get
+			dest="ehcache.xsd"
+			src="http://ehcache.org/ehcache.xsd"
+		/>
 
 		<xmltask dest="src/ehcache/ehcache.xsd" source="ehcache.xsd">
-			<replace path="/xs:schema/xs:element[@name='ehcache']/xs:complexType/xs:attribute[@name='name']/@use" withText="required" />
+			<replace
+				path="/xs:schema/xs:element[@name='ehcache']/xs:complexType/xs:attribute[@name='name']/@use"
+				withText="required"
+			/>
 		</xmltask>
 
-		<replace file="src/ehcache/ehcache.xsd">
+		<replace
+			file="src/ehcache/ehcache.xsd"
+		>
 			<replacefilter>
 				<replacetoken><![CDATA[<?xml encoding="UTF-8" standalone="no" version="1.0"?>]]></replacetoken>
 				<replacevalue><![CDATA[<?xml encoding="UTF-8" standalone="no" version="1.0"?>
@@ -123,7 +128,10 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 
 	<target name="build-lang-cmd">
 		<path id="lang.builder.classpath">
-			<fileset dir="${sdk.dir}/dependencies/com.liferay.lang.builder/lib" includes="*.jar" />
+			<fileset
+				dir="${sdk.dir}/dependencies/com.liferay.lang.builder/lib"
+				includes="*.jar"
+			/>
 		</path>
 
 		<java
@@ -164,7 +172,10 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</gradle-execute>
 
 		<pathconvert pathsep="," property="modules.lib.versions.files">
-			<fileset dir="${project.dir}/tmp/license-reports" includes="*.xml" />
+			<fileset
+				dir="${project.dir}/tmp/license-reports"
+				includes="*.xml"
+			/>
 		</pathconvert>
 
 		<java
@@ -193,7 +204,10 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 
 	<target name="build-service">
 		<path id="service.builder.classpath">
-			<fileset dir="${sdk.dir}/dependencies/com.liferay.portal.tools.service.builder/lib" includes="*.jar" />
+			<fileset
+				dir="${sdk.dir}/dependencies/com.liferay.portal.tools.service.builder/lib"
+				includes="*.jar"
+			/>
 		</path>
 
 		<java
@@ -334,7 +348,10 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 				<antcall target="prepare-upgrade-table" />
 
 				<path id="upgrade.table.builder.classpath">
-					<fileset dir="${sdk.dir}/dependencies/com.liferay.portal.tools.upgrade.table.builder/lib" includes="*.jar" />
+					<fileset
+						dir="${sdk.dir}/dependencies/com.liferay.portal.tools.upgrade.table.builder/lib"
+						includes="*.jar"
+					/>
 				</path>
 
 				<java
@@ -354,7 +371,10 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 
 	<target depends="compile" name="build-wsdd">
 		<path id="wsdd.builder.classpath">
-			<fileset dir="${sdk.dir}/dependencies/com.liferay.portal.tools.wsdd.builder/lib" includes="*.jar" />
+			<fileset
+				dir="${sdk.dir}/dependencies/com.liferay.portal.tools.wsdd.builder/lib"
+				includes="*.jar"
+			/>
 			<path refid="project.classpath" />
 		</path>
 
@@ -457,11 +477,17 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 	<target name="build-yui-compressor-jar">
 		<setup-libs />
 
-		<taskdef classname="com.tonicsystems.jarjar.JarJarTask" classpath="${project.dir}/lib/development/jarjar.jar" name="jarjar" />
+		<taskdef
+			classname="com.tonicsystems.jarjar.JarJarTask"
+			classpath="${project.dir}/lib/development/jarjar.jar"
+			name="jarjar"
+		/>
 
 		<jarjar jarfile="${project.dir}/lib/portal/liferay-yui-compressor.jar.new">
 			<rule pattern="org.mozilla.**" result="com.yahoo.platform.yui.mozilla.@1" />
-			<zipfileset src="${project.dir}/tools/yuicompressor-2.4.7.jar" />
+			<zipfileset
+				src="${project.dir}/tools/yuicompressor-2.4.7.jar"
+			/>
 		</jarjar>
 	</target>
 
@@ -516,13 +542,28 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<then>
 				<delete failonerror="false" file="${deploy.dir}/${jar.file}" />
 
-				<unjar dest="${app.server.classes.portal.dir}" src="portal-impl.jar" />
+				<unjar
+					dest="${app.server.classes.portal.dir}"
+					src="portal-impl.jar"
+				/>
 			</then>
 			<else>
-				<copy file="${jar.file}.jar" preservelastmodified="true" todir="${deploy.dir}" />
+				<copy
+					file="${jar.file}.jar"
+					preservelastmodified="true"
+					todir="${deploy.dir}"
+				/>
 
-				<copy file="classes/log4j.properties" preservelastmodified="true" todir="${app.server.classes.portal.dir}" />
-				<copy file="classes/logging.properties" preservelastmodified="true" todir="${app.server.classes.portal.dir}" />
+				<copy
+					file="classes/log4j.properties"
+					preservelastmodified="true"
+					todir="${app.server.classes.portal.dir}"
+				/>
+				<copy
+					file="classes/logging.properties"
+					preservelastmodified="true"
+					todir="${app.server.classes.portal.dir}"
+				/>
 			</else>
 		</if>
 	</target>
@@ -632,7 +673,10 @@ Please run the following command from ${source.formatter.modules.dir.absolute.pa
 		</if>
 
 		<path id="source.formatter.classpath">
-			<fileset dir="${sdk.dir}/dependencies/com.liferay.source.formatter/lib" includes="*.jar" />
+			<fileset
+				dir="${sdk.dir}/dependencies/com.liferay.source.formatter/lib"
+				includes="*.jar"
+			/>
 			<path refid="project.classpath" />
 		</path>
 
@@ -714,7 +758,11 @@ This target does not format .es.js files. Please run the following command from 
 						</or>
 					</not>
 					<resourcecount count="0" when="greater">
-						<fileset dir="${project.dir}/modules" excludes="**/.gradle/,**/bin/,**/build/,**/classes/,**/node_modules/,**/tmp/" includes="**/package.json">
+						<fileset
+							dir="${project.dir}/modules"
+							excludes="**/.gradle/,**/bin/,**/build/,**/classes/,**/node_modules/,**/tmp/"
+							includes="**/package.json"
+						>
 							<contains text="&quot;${source.formatter.npm.script}&quot;:" />
 						</fileset>
 					</resourcecount>
@@ -776,7 +824,10 @@ This target does not format .es.js files. Please run the following command from 
 
 	<target name="format-tld">
 		<path id="tld.formatter.classpath">
-			<fileset dir="${sdk.dir}/dependencies/com.liferay.tld.formatter/lib" includes="*.jar" />
+			<fileset
+				dir="${sdk.dir}/dependencies/com.liferay.tld.formatter/lib"
+				includes="*.jar"
+			/>
 		</path>
 
 		<java
@@ -794,11 +845,19 @@ This target does not format .es.js files. Please run the following command from 
 	</target>
 
 	<target depends="build-common-java.init-compile" name="init-compile">
-		<copy preservelastmodified="true" todir="${portal-impl.classes.dir}/com/liferay/portal/definitions">
-			<fileset dir="${project.dir}/definitions" />
+		<copy
+			preservelastmodified="true"
+			todir="${portal-impl.classes.dir}/com/liferay/portal/definitions"
+		>
+			<fileset
+				dir="${project.dir}/definitions"
+			/>
 		</copy>
 
-		<copy preservelastmodified="true" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies">
+		<copy
+			preservelastmodified="true"
+			todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies"
+		>
 			<fileset
 				dir="${project.dir}/classes"
 				includes="*.properties"
@@ -809,18 +868,35 @@ This target does not format .es.js files. Please run the following command from 
 			/>
 		</copy>
 
-		<copy preservelastmodified="true" todir="${portal-impl.classes.dir}/com/liferay/portal/tools/sql/dependencies">
+		<copy
+			preservelastmodified="true"
+			todir="${portal-impl.classes.dir}/com/liferay/portal/tools/sql/dependencies"
+		>
 			<fileset
 				dir="${project.dir}/sql"
 				includes="portal-data-common.sql,portal-data-counter.sql,portal-data-release.sql,portal-tables.sql,indexes.properties,indexes.sql,sequences.sql,update-*.sql"
 			/>
 		</copy>
 
-		<copy file="${project.dir}/classes/log4j.properties" preservelastmodified="true" todir="${portal-impl.classes.dir}" />
-		<copy file="${project.dir}/classes/logging.properties" preservelastmodified="true" todir="${portal-impl.classes.dir}" />
+		<copy
+			file="${project.dir}/classes/log4j.properties"
+			preservelastmodified="true"
+			todir="${portal-impl.classes.dir}"
+		/>
+		<copy
+			file="${project.dir}/classes/logging.properties"
+			preservelastmodified="true"
+			todir="${portal-impl.classes.dir}"
+		/>
 
-		<copy preservelastmodified="true" todir="${portal-impl.classes.dir}">
-			<fileset dir="src" excludes="**/*.java,**/META-INF/javadocs-all*.xml" />
+		<copy
+			preservelastmodified="true"
+			todir="${portal-impl.classes.dir}"
+		>
+			<fileset
+				dir="src"
+				excludes="**/*.java,**/META-INF/javadocs-all*.xml"
+			/>
 		</copy>
 	</target>
 
@@ -836,7 +912,10 @@ This target does not format .es.js files. Please run the following command from 
 				<if>
 					<available file="${portal.deploy.dependencies.dir}/plugins@{index}" />
 					<then>
-						<fileset dir="${portal.deploy.dependencies.dir}/plugins@{index}" id="plugins@{index}.wars">
+						<fileset
+							dir="${portal.deploy.dependencies.dir}/plugins@{index}"
+							id="plugins@{index}.wars"
+						>
 							<include name="*.war" />
 						</fileset>
 
@@ -846,7 +925,9 @@ This target does not format .es.js files. Please run the following command from 
 
 						<if>
 							<not>
-								<uptodate targetfile="${jar.file}.jar">
+								<uptodate
+									targetfile="${jar.file}.jar"
+								>
 									<srcfiles dir="${portal.deploy.dependencies.dir}/plugins@{index}" includes="**/*.*" />
 								</uptodate>
 							</not>
@@ -912,7 +993,9 @@ This target does not format .es.js files. Please run the following command from 
 								<include name="**/*ModelImpl.java" />
 								<include name="**/sql/indexes.sql" />
 							</patternset>
-							<mapper type="flatten" />
+							<mapper
+								type="flatten"
+							/>
 						</unzip>
 					</then>
 				</if>
@@ -965,7 +1048,10 @@ This target does not format .es.js files. Please run the following command from 
 
 		<!-- Copy Java files -->
 
-		<copy overwrite="true" todir="test/integration/com/liferay/portal/security/pacl/test">
+		<copy
+			overwrite="true"
+			todir="test/integration/com/liferay/portal/security/pacl/test"
+		>
 			<fileset
 				dir="${lp.plugins.dir}/portlets/test-pacl-portlet/docroot/WEB-INF/src/com/liferay/testpacl"
 				includes="hook/**,messaging/**"
@@ -979,7 +1065,9 @@ This target does not format .es.js files. Please run the following command from 
 
 		<!-- Update TestPACLMessageListener.java -->
 
-		<replace file="test/integration/com/liferay/portal/security/pacl/test/messaging/TestPACLMessageListener.java">
+		<replace
+			file="test/integration/com/liferay/portal/security/pacl/test/messaging/TestPACLMessageListener.java"
+		>
 			<replacetoken><![CDATA[import com.liferay.portal.security.pacl.test.util.TestPACLUtil;]]></replacetoken>
 			<replacevalue><![CDATA[import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.PortalServiceUtil;
@@ -989,7 +1077,9 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import java.util.HashMap;]]></replacevalue>
 		</replace>
 
-		<replace file="test/integration/com/liferay/portal/security/pacl/test/messaging/TestPACLMessageListener.java">
+		<replace
+			file="test/integration/com/liferay/portal/security/pacl/test/messaging/TestPACLMessageListener.java"
+		>
 			<replacetoken><![CDATA[protected Map<String, Boolean> getResults(Message message) {]]></replacetoken>
 			<replacevalue><![CDATA[protected Map<String, Object> getResults(Message message) throws Exception {
 		Map<String, Object> results = new HashMap<String, Object>();
@@ -1024,7 +1114,10 @@ import java.util.HashMap;]]></replacevalue>
 
 		<!-- Copy WEB-INF files -->
 
-		<copy overwrite="true" todir="test/integration/com/liferay/portal/security/pacl/test/dependencies">
+		<copy
+			overwrite="true"
+			todir="test/integration/com/liferay/portal/security/pacl/test/dependencies"
+		>
 			<fileset
 				dir="${lp.plugins.dir}/portlets/test-pacl-portlet/docroot"
 				includes="WEB-INF/liferay-hook.xml,WEB-INF/liferay-plugin-package.properties"
@@ -1038,7 +1131,9 @@ import java.util.HashMap;]]></replacevalue>
 
 		<!-- Update liferay-plugin-package.properties -->
 
-		<replace file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties">
+		<replace
+			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties"
+		>
 			<replacetoken>Test Portal Access Control List</replacetoken>
 			<replacevalue>A Test</replacevalue>
 		</replace>
@@ -1050,7 +1145,9 @@ import java.util.HashMap;]]></replacevalue>
 			replace=""
 		/>
 
-		<replace file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties">
+		<replace
+			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties"
+		>
 			<replacetoken>security-manager-enabled=true</replacetoken>
 			<replacevalue>security-manager-enabled=true
 
@@ -1065,7 +1162,9 @@ security-manager-awt-operations=\
 			replace="security-manager-files-\1="
 		/>
 
-		<replace file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties">
+		<replace
+			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties"
+		>
 			<replacetoken>security-manager-files-delete=</replacetoken>
 			<replacevalue>security-manager-files-delete=\
     ${liferay.home}${/}pacl-test${/}-</replacevalue>
@@ -1078,7 +1177,9 @@ security-manager-awt-operations=\
 			replace="security-manager-files-read=\2"
 		/>
 
-		<replace file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties">
+		<replace
+			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties"
+		>
 			<replacetoken>security-manager-files-read=</replacetoken>
 			<replacevalue>security-manager-files-read=\
     ${env:JAVA_HOME}${/},\
@@ -1088,14 +1189,18 @@ security-manager-awt-operations=\
     ${liferay.home}${/}pacl-test${/}-,</replacevalue>
 		</replace>
 
-		<replace file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties">
+		<replace
+			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties"
+		>
 			<replacetoken>security-manager-files-write=</replacetoken>
 			<replacevalue>security-manager-files-write=\
     ${liferay.home}${/}pacl-test${/},\
     ${liferay.home}${/}pacl-test${/}-</replacevalue>
 		</replace>
 
-		<replace file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties">
+		<replace
+			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties"
+		>
 			<replacetoken>security-manager-get-bean-property[portal]=</replacetoken>
 			<replacevalue>security-manager-get-bean-property=</replacevalue>
 		</replace>
@@ -1107,7 +1212,9 @@ security-manager-awt-operations=\
 			replace="\1\2\3com.liferay.portal.kernel.util.InfrastructureUtil\3"
 		/>
 
-		<replace file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties">
+		<replace
+			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties"
+		>
 			<replacetoken>security-manager-hook-custom-jsp-dir-enabled=false</replacetoken>
 			<replacevalue>security-manager-get-bean-property[portal]=\
     com.liferay.portal.kernel.xml.SAXReader
@@ -1125,7 +1232,9 @@ security-manager-hook-custom-jsp-dir-enabled=false</replacevalue>
 			replace="\1\2\3com.liferay.portal.kernel.service.PortletPreferencesLocalService#getStrictPreferences\3com.liferay.portal.kernel.service.UserLocalService#getDefaultUser\3"
 		/>
 
-		<replace file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties">
+		<replace
+			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties"
+		>
 			<replacetoken>security-manager-sockets-accept=\</replacetoken>
 			<replacevalue>security-manager-set-bean-property[flash-portlet]=\
     com.liferay.portal.kernel.bean.PortletBeanLocatorUtil
@@ -1135,7 +1244,10 @@ security-manager-sockets-accept=\</replacevalue>
 
 		<!-- Copy WEB-INF/classes files -->
 
-		<copy overwrite="true" todir="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/classes">
+		<copy
+			overwrite="true"
+			todir="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/classes"
+		>
 			<fileset
 				dir="${lp.plugins.dir}/portlets/test-pacl-portlet/docroot/WEB-INF/src"
 				includes="portal.properties,content/**,META-INF/base-spring.xml,META-INF/hibernate-spring.xml,META-INF/infrastructure-spring.xml,META-INF/messaging-spring.xml"
@@ -1149,7 +1261,9 @@ security-manager-sockets-accept=\</replacevalue>
 
 		<!-- Update hibernate-spring.xml -->
 
-		<replace file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/classes/META-INF/hibernate-spring.xml">
+		<replace
+			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/classes/META-INF/hibernate-spring.xml"
+		>
 			<replacetoken><![CDATA[<bean class="com.liferay.portal.kernel.spring.util.SpringFactoryUtil" factory-method="newBean" id="liferayHibernateSessionFactory">]]></replacetoken>
 			<replacevalue><![CDATA[<bean class="com.liferay.portal.spring.hibernate.PortletHibernateConfiguration" id="liferayHibernateSessionFactory">
 		<property name="dataSource" ref="liferayDataSource" />

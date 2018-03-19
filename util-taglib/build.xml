@@ -33,16 +33,28 @@
 	</target>
 
 	<target depends="build-common-java.compile,download-latest-artifact,init-compile" name="compile" unless="${compile.uptodate}">
-		<copy file="classes/META-INF/liferay-portlet_1_0.tld" preservelastmodified="true" tofile="classes/META-INF/liferay-portlet_1_0.tld" />
+		<copy
+			file="classes/META-INF/liferay-portlet_1_0.tld"
+			preservelastmodified="true"
+			tofile="classes/META-INF/liferay-portlet_1_0.tld"
+		/>
 
-		<replace file="classes/META-INF/liferay-portlet_1_0.tld">
+		<replace
+			file="classes/META-INF/liferay-portlet_1_0.tld"
+		>
 			<replacetoken><![CDATA[<short-name>portlet_1_0</short-name>]]></replacetoken>
 			<replacevalue><![CDATA[<short-name>portlet</short-name>]]></replacevalue>
 		</replace>
 
-		<copy file="classes/META-INF/liferay-portlet.tld" preservelastmodified="true" tofile="classes/META-INF/liferay-portlet_2_0.tld" />
+		<copy
+			file="classes/META-INF/liferay-portlet.tld"
+			preservelastmodified="true"
+			tofile="classes/META-INF/liferay-portlet_2_0.tld"
+		/>
 
-		<replace file="classes/META-INF/liferay-portlet_2_0.tld">
+		<replace
+			file="classes/META-INF/liferay-portlet_2_0.tld"
+		>
 			<replacetoken><![CDATA[<uri>http://java.sun.com/portlet</uri>]]></replacetoken>
 			<replacevalue><![CDATA[<uri>http://java.sun.com/portlet_2_0</uri>]]></replacevalue>
 		</replace>
@@ -56,10 +68,20 @@
 			<elseif>
 				<equals arg1="${app.server.type}" arg2="tomcat" />
 				<then>
-					<copy file="${jar.file}.jar" preservelastmodified="true" todir="${deploy.dir}" />
+					<copy
+						file="${jar.file}.jar"
+						preservelastmodified="true"
+						todir="${deploy.dir}"
+					/>
 
-					<copy preservelastmodified="true" todir="${app.server.portal.dir}/WEB-INF/tld">
-						<fileset dir="classes/META-INF" includes="*.tld" />
+					<copy
+						preservelastmodified="true"
+						todir="${app.server.portal.dir}/WEB-INF/tld"
+					>
+						<fileset
+							dir="classes/META-INF"
+							includes="*.tld"
+						/>
 					</copy>
 				</then>
 			</elseif>
@@ -69,7 +91,10 @@
 	<target depends="build-common-java.init-jar" name="init-jar">
 		<for param="file">
 			<path>
-				<fileset dir="classes/META-INF" includes="*.tld" />
+				<fileset
+					dir="classes/META-INF"
+					includes="*.tld"
+				/>
 			</path>
 
 			<sequential>
@@ -82,9 +107,15 @@
 					<then>
 						<local name="content" />
 
-						<loadfile property="content" srcFile="../modules/core/util-taglib-compat/tld/${filename}-compat" />
+						<loadfile
+							property="content"
+							srcFile="../modules/core/util-taglib-compat/tld/${filename}-compat"
+						/>
 
-						<replace file="@{file}" value="${content}">
+						<replace
+							file="@{file}"
+							value="${content}"
+						>
 							<replacetoken><![CDATA[</taglib>]]></replacetoken>
 						</replace>
 
@@ -96,22 +127,46 @@
 	</target>
 
 	<target depends="build-common-java.jar" name="jar">
-		<copy file="${jar.file}.jar" preservelastmodified="true" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" />
+		<copy
+			file="${jar.file}.jar"
+			preservelastmodified="true"
+			todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies"
+		/>
 
-		<copy preservelastmodified="true" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies">
-			<fileset dir="classes/META-INF" />
+		<copy
+			preservelastmodified="true"
+			todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies"
+		>
+			<fileset
+				dir="classes/META-INF"
+			/>
 		</copy>
 
-		<copy file="${jar.file}.jar" preservelastmodified="true" todir="${project.dir}/portal-web/docroot/WEB-INF/lib" />
+		<copy
+			file="${jar.file}.jar"
+			preservelastmodified="true"
+			todir="${project.dir}/portal-web/docroot/WEB-INF/lib"
+		/>
 
-		<copy overwrite="true" preservelastmodified="true" todir="${project.dir}/portal-web/docroot/WEB-INF/tld">
-			<fileset dir="classes/META-INF" includes="*.tld" />
+		<copy
+			overwrite="true"
+			preservelastmodified="true"
+			todir="${project.dir}/portal-web/docroot/WEB-INF/tld"
+		>
+			<fileset
+				dir="classes/META-INF"
+				includes="*.tld"
+			/>
 		</copy>
 	</target>
 
 	<target depends="taglibdoc" name="jar-tlddoc">
-		<zip destfile="util-taglib-tlddoc.jar">
-			<zipfileset dir="${doc.dir}/taglibs/util-taglib" />
+		<zip
+			destfile="util-taglib-tlddoc.jar"
+		>
+			<zipfileset
+				dir="${doc.dir}/taglibs/util-taglib"
+			/>
 		</zip>
 	</target>
 
@@ -138,7 +193,9 @@
 
 		<pathconvert pathsep=" " property="tld.files">
 			<path>
-				<fileset dir="${project.dir}/util-taglib/src/META-INF">
+				<fileset
+					dir="${project.dir}/util-taglib/src/META-INF"
+				>
 					<include name="*.tld" />
 				</fileset>
 			</path>
@@ -156,14 +213,22 @@
 			<arg line="-xslt ${project.dir}/tools/styles/taglibs" />
 		</java>
 
-		<copy overwrite="true" preservelastmodified="true" todir="${doc.taglibs.dir}/images">
-			<fileset dir="${project.dir}/util-taglib/src/META-INF/images" />
+		<copy
+			overwrite="true"
+			preservelastmodified="true"
+			todir="${doc.taglibs.dir}/images"
+		>
+			<fileset
+				dir="${project.dir}/util-taglib/src/META-INF/images"
+			/>
 		</copy>
 	</target>
 
 	<target name="validate-tld">
 		<schemavalidate classname="org.xmlresolver.tools.ResolvingXMLReader" classpathref="lib.classpath">
-			<fileset dir="${project.dir}/util-taglib/src/META-INF">
+			<fileset
+				dir="${project.dir}/util-taglib/src/META-INF"
+			>
 				<include name="*.tld" />
 			</fileset>
 		</schemavalidate>

@@ -28,7 +28,9 @@
 			tofile="${app.server.resin.bin.dir}/start.sh"
 		/>
 
-		<replace file="${app.server.resin.bin.dir}/start.sh">
+		<replace
+			file="${app.server.resin.bin.dir}/start.sh"
+		>
 			<replacetoken>$@</replacetoken>
 			<replacevalue>start</replacevalue>
 		</replace>
@@ -38,13 +40,19 @@
 			tofile="${app.server.resin.bin.dir}/stop.sh"
 		/>
 
-		<replace file="${app.server.resin.bin.dir}/stop.sh">
+		<replace
+			file="${app.server.resin.bin.dir}/stop.sh"
+		>
 			<replacetoken>$@</replacetoken>
 			<replacevalue>stop</replacevalue>
 		</replace>
 
-		<chmod perm="a+x">
-			<fileset dir="${app.server.resin.bin.dir}">
+		<chmod
+			perm="a+x"
+		>
+			<fileset
+				dir="${app.server.resin.bin.dir}"
+			>
 				<include name="*.sh" />
 			</fileset>
 		</chmod>

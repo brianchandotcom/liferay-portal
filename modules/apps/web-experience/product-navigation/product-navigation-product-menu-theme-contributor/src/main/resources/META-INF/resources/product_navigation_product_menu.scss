@@ -100,7 +100,7 @@ body {
 	.nav-equal-height {
 		.nav > .active, > .active {
 			border-left: 4px solid $product-menu-nav-link-active-color;
-			font-weight: 800;
+			font-weight: 700;
 			margin-left: -24px;
 			padding-left: 20px;
 		}
@@ -210,7 +210,7 @@ body {
 	.list-group-heading {
 		background-color: $product-menu-list-group-heading-bg;
 		border-color: transparent;
-		font-weight: 500;
+		font-weight: 600;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
@@ -231,7 +231,7 @@ body {
 		}
 
 		&.collapsed {
-			font-weight: 300;
+			font-weight: 400;
 		}
 	}
 
@@ -307,7 +307,7 @@ body {
 			&:not(.collapsed) {
 				background-color: $product-menu-panel-title-active-bg;
 				border-left: $product-menu-panel-title-active-border-left-width $product-menu-panel-title-active-border-style $product-menu-panel-title-active-border;
-				font-weight: 800;
+				font-weight: 700;
 				padding-left: 24px - $product-menu-panel-title-active-border-left-width;
 			}
 

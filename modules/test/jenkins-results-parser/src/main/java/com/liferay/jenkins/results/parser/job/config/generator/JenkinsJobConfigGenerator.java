@@ -1096,8 +1096,8 @@ public class JenkinsJobConfigGenerator {
 	private void _updateGeneratedProperty(
 		String generatedPropertyName, String additionalGeneratedPropertyValue) {
 
-		Set<String> generatedPropertyValuesSet =
-			_getGeneratedPropertyValueSet(generatedPropertyName);
+		Set<String> generatedPropertyValuesSet = _getGeneratedPropertyValueSet(
+			generatedPropertyName);
 
 		generatedPropertyValuesSet.add(additionalGeneratedPropertyValue);
 

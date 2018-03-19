@@ -23,7 +23,7 @@ import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
@@ -125,9 +126,20 @@ public class FragmentEntryDisplayConfigurationAction
 			return 0;
 		}
 
+		String portletResource = ParamUtil.getString(
+			actionRequest, "portletResource");
+
+		PortletPreferences preferences =
+			_portletPreferencesLocalService.getPortletPreferences(
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
+				portletResource);
+
+		long classNameId = _portal.getClassNameId(PortletPreferences.class);
+
 		fragmentEntryLink = _fragmentEntryLinkLocalService.addFragmentEntryLink(
-			themeDisplay.getScopeGroupId(), fragmentEntryId,
-			_portal.getClassNameId(Portlet.class), 0, fragmentEntry.getCss(),
+			themeDisplay.getScopeGroupId(), fragmentEntryId, classNameId,
+			preferences.getPortletPreferencesId(), fragmentEntry.getCss(),
 			fragmentEntry.getHtml(), fragmentEntry.getJs(), StringPool.BLANK,
 			0);
 

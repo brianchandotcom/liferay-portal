@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.price.list.web.internal.display.context;
 
-import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.item.selector.criterion.CommercePriceListItemSelectorCriterion;
 import com.liferay.commerce.model.CommercePriceEntry;
 import com.liferay.commerce.model.CommercePriceList;

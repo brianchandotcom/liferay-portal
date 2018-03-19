@@ -65,8 +65,14 @@ public class ProxyPathRequestWrapper extends HttpServletRequestWrapper {
 
 		sb.append(PortalUtil.getPortalURL(request));
 
-		sb.append(PortalUtil.getPathContext());
-		sb.append(request.getRequestURI());
+		String pathContext = PortalUtil.getPathContext();
+		String uri = request.getRequestURI();
+
+		if (!uri.startsWith(pathContext)) {
+			sb.append(pathContext);
+		}
+
+		sb.append(uri);
 
 		return sb;
 	}

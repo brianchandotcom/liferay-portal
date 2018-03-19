@@ -27,6 +27,8 @@ String backURL = ParamUtil.getString(request, "backURL", StringPool.BLANK);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
+
+renderResponse.setTitle(StringBundler.concat(selUser.getFullName(), " - ", LanguageUtil.get(request, "personal-data-erasure")));
 %>
 
 <div class="container-fluid container-fluid-max-xl container-form-lg">

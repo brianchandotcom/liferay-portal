@@ -20,6 +20,8 @@
 ViewUADApplicationsSummaryDisplay viewUADApplicationsSummaryDisplay = (ViewUADApplicationsSummaryDisplay)request.getAttribute(UADWebKeys.VIEW_UAD_APPLICATIONS_SUMMARY_DISPLAY);
 
 int totalCount = viewUADApplicationsSummaryDisplay.getTotalCount();
+
+renderResponse.setTitle(StringBundler.concat(selUser.getFullName(), " - ", LanguageUtil.get(request, "personal-data-erasure")));
 %>
 
 <div class="container-fluid container-fluid-max-xl container-form-lg">

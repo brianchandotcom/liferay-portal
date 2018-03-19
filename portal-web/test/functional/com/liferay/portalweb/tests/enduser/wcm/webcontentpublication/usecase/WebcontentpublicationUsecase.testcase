@@ -382,10 +382,10 @@
 		</execute>
 
 		<execute macro="Vocabulary#addCP">
+			<var name="locale" value="de_DE" />
 			<var name="localization2Name" value="Nom Vocabulaire" />
 			<var name="localization2NameKey" value="fr_FR" />
 			<var name="localizationName" value="Vokabular Namen" />
-			<var name="locale" value="de_DE" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
@@ -399,10 +399,10 @@
 
 		<execute macro="Category#addCategoryLocalizationCP">
 			<var name="categoryName" value="Vocabulary1 Category" />
+			<var name="locale" value="de_DE" />
 			<var name="localization2Name" value="Nom de la Catégorie" />
 			<var name="localization2NameKey" value="fr_FR" />
 			<var name="localizationName" value="Kategorienamen" />
-			<var name="locale" value="de_DE" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 

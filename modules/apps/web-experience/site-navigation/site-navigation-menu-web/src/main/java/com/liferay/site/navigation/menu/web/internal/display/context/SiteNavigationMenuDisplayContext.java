@@ -267,10 +267,8 @@ public class SiteNavigationMenuDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		SiteNavigationMenu siteNavigationMenu = null;
-
 		if (getSiteNavigationMenuType() > 0) {
-			siteNavigationMenu =
+			SiteNavigationMenu siteNavigationMenu =
 				SiteNavigationMenuLocalServiceUtil.fetchSiteNavigationMenu(
 					themeDisplay.getScopeGroupId(),
 					getSiteNavigationMenuType());
@@ -281,9 +279,8 @@ public class SiteNavigationMenuDisplayContext {
 
 				return _siteNavigationMenuId;
 			}
-			else {
-				return 0;
-			}
+
+			return 0;
 		}
 
 		_siteNavigationMenuId = ParamUtil.getLong(
@@ -367,7 +364,7 @@ public class SiteNavigationMenuDisplayContext {
 	private String _displayStyle;
 	private long _displayStyleGroupId;
 	private String _expandedLevels;
-	private Integer _navigationMenuType = -1;
+	private Integer _navigationMenuType;
 	private Boolean _preview;
 	private final HttpServletRequest _request;
 	private String _rootMenuItemId;

@@ -313,7 +313,9 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 					/>
 
 					<%
-					SearchContainer categoryEntriesSearchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-threads-or-categories");
+					SearchContainer categoryEntriesSearchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, mbListDisplayContext.getCategoryEntriesDelta(), portletURL, null, "there-are-no-threads-or-categories");
+
+					mbListDisplayContext.setCategoryEntriesDelta(categoryEntriesSearchContainer);
 
 					categoryEntriesSearchContainer.setOrderByCol(orderByCol);
 					categoryEntriesSearchContainer.setOrderByComparator(orderByComparator);
@@ -329,7 +331,9 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 					</c:if>
 
 					<%
-					SearchContainer threadEntriesSearchContainer = new SearchContainer(renderRequest, null, null, "cur2", 0, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-threads-or-categories");
+					SearchContainer threadEntriesSearchContainer = new SearchContainer(renderRequest, null, null, "cur2", 0, mbListDisplayContext.getThreadEntriesDelta(), portletURL, null, "there-are-no-threads-or-categories");
+
+					mbListDisplayContext.setThreadEntriesDelta(categoryEntriesSearchContainer);
 
 					threadEntriesSearchContainer.setOrderByCol(orderByCol);
 					threadEntriesSearchContainer.setOrderByComparator(orderByComparator);
@@ -393,7 +397,9 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 					</c:if>
 
 					<%
-					SearchContainer threadEntriesSearchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-threads");
+					SearchContainer threadEntriesSearchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, mbListDisplayContext.getThreadEntriesDelta(), portletURL, null, "there-are-no-threads");
+
+					mbListDisplayContext.setThreadEntriesDelta(threadEntriesSearchContainer);
 
 					threadEntriesSearchContainer.setId("mbEntries");
 					threadEntriesSearchContainer.setOrderByCol(orderByCol);

@@ -37,6 +37,16 @@ public class BaseMBListDisplayContext
 	}
 
 	@Override
+	public int getCategoryEntriesDelta() {
+		return parentDisplayContext.getCategoryEntriesDelta();
+	}
+
+	@Override
+	public int getThreadEntriesDelta() {
+		return parentDisplayContext.getThreadEntriesDelta();
+	}
+
+	@Override
 	public boolean isShowMyPosts() {
 		return parentDisplayContext.isShowMyPosts();
 	}
@@ -71,6 +81,16 @@ public class BaseMBListDisplayContext
 		throws PortalException {
 
 		parentDisplayContext.populateThreadsResultsAndTotal(searchContainer);
+	}
+
+	@Override
+	public void setCategoryEntriesDelta(SearchContainer searchContainer) {
+		parentDisplayContext.setCategoryEntriesDelta(searchContainer);
+	}
+
+	@Override
+	public void setThreadEntriesDelta(SearchContainer searchContainer) {
+		parentDisplayContext.setThreadEntriesDelta(searchContainer);
 	}
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.web.internal.display.context;
 
+import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.display.context.MBListDisplayContext;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
@@ -23,6 +24,8 @@ import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -59,6 +62,28 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 		_request = request;
 
 		_categoryId = categoryId;
+	}
+
+	@Override
+	public int getCategoryEntriesDelta() {
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(_request);
+
+		return GetterUtil.getInteger(
+			portalPreferences.getValue(
+				MBPortletKeys.MESSAGE_BOARDS, "categoryEntriesDelta"),
+			SearchContainer.DEFAULT_DELTA);
+	}
+
+	@Override
+	public int getThreadEntriesDelta() {
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(_request);
+
+		return GetterUtil.getInteger(
+			portalPreferences.getValue(
+				MBPortletKeys.MESSAGE_BOARDS, "threadEntriesDelta"),
+			SearchContainer.DEFAULT_DELTA);
 	}
 
 	@Override
@@ -283,6 +308,36 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 				MBThreadServiceUtil.getThreads(
 					themeDisplay.getScopeGroupId(), _categoryId,
 					queryDefinition));
+		}
+	}
+
+	@Override
+	public void setCategoryEntriesDelta(SearchContainer searchContainer) {
+		int categoryEntriesDelta = ParamUtil.getInteger(
+			_request, searchContainer.getDeltaParam());
+
+		if (categoryEntriesDelta > 0) {
+			PortalPreferences portalPreferences =
+				PortletPreferencesFactoryUtil.getPortalPreferences(_request);
+
+			portalPreferences.setValue(
+				MBPortletKeys.MESSAGE_BOARDS, "categoryEntriesDelta",
+				String.valueOf(categoryEntriesDelta));
+		}
+	}
+
+	@Override
+	public void setThreadEntriesDelta(SearchContainer searchContainer) {
+		int threadEntriesDelta = ParamUtil.getInteger(
+			_request, searchContainer.getDeltaParam());
+
+		if (threadEntriesDelta > 0) {
+			PortalPreferences portalPreferences =
+				PortletPreferencesFactoryUtil.getPortalPreferences(_request);
+
+			portalPreferences.setValue(
+				MBPortletKeys.MESSAGE_BOARDS, "threadEntriesDelta",
+				String.valueOf(threadEntriesDelta));
 		}
 	}
 

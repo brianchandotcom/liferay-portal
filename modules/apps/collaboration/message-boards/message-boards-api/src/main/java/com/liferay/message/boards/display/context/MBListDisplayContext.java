@@ -22,6 +22,10 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public interface MBListDisplayContext extends MBDisplayContext {
 
+	public int getCategoryEntriesDelta();
+
+	public int getThreadEntriesDelta();
+
 	public boolean isShowMyPosts();
 
 	public boolean isShowRecentPosts();
@@ -37,5 +41,9 @@ public interface MBListDisplayContext extends MBDisplayContext {
 
 	public void populateThreadsResultsAndTotal(SearchContainer searchContainer)
 		throws PortalException;
+
+	public void setCategoryEntriesDelta(SearchContainer searchContainer);
+
+	public void setThreadEntriesDelta(SearchContainer searchContainer);
 
 }

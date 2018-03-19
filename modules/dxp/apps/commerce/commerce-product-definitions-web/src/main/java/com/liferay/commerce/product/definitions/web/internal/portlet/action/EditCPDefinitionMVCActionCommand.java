@@ -16,6 +16,10 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetLink;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.exception.CPFriendlyURLEntryException;
@@ -34,6 +38,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -172,6 +177,59 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	protected long[] getAssetCategoryIds(CPDefinition cpDefinition) {
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			cpDefinition.getModelClassName(), cpDefinition.getCPDefinitionId());
+
+		if (assetEntry == null) {
+			return new long[0];
+		}
+
+		return assetEntry.getCategoryIds();
+	}
+
+	protected double getAssetEntryPriority(CPDefinition cpDefinition) {
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			cpDefinition.getModelClassName(), cpDefinition.getCPDefinitionId());
+
+		if (assetEntry == null) {
+			return 0;
+		}
+
+		return assetEntry.getPriority();
+	}
+
+	protected long[] getAssetLinkIds(CPDefinition cpDefinition) {
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			cpDefinition.getModelClassName(), cpDefinition.getCPDefinitionId());
+
+		if (assetEntry == null) {
+			return new long[0];
+		}
+
+		List<Long> assetLinkIds = new ArrayList<>();
+
+		List<AssetLink> assetLinks = _assetLinkLocalService.getLinks(
+			assetEntry.getEntryId());
+
+		for (AssetLink assetLink : assetLinks) {
+			assetLinkIds.add(assetLink.getLinkId());
+		}
+
+		return ArrayUtil.toLongArray(assetLinkIds);
+	}
+
+	protected String[] getAssetTagNames(CPDefinition cpDefinition) {
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			cpDefinition.getModelClassName(), cpDefinition.getCPDefinitionId());
+
+		if (assetEntry == null) {
+			return new String[0];
+		}
+
+		return assetEntry.getTagNames();
+	}
+
 	protected String getSaveAndContinueRedirect(
 			ActionRequest actionRequest, CPDefinition cpDefinition)
 		throws Exception {
@@ -308,6 +366,14 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			CPDefinition oldCPDefinition = _cpDefinitionService.getCPDefinition(
 				cpDefinitionId);
 
+			serviceContext.setAssetCategoryIds(
+				getAssetCategoryIds(oldCPDefinition));
+			serviceContext.setAssetLinkEntryIds(
+				getAssetLinkIds(oldCPDefinition));
+			serviceContext.setAssetPriority(
+				getAssetEntryPriority(oldCPDefinition));
+			serviceContext.setAssetTagNames(getAssetTagNames(oldCPDefinition));
+
 			cpDefinition = _cpDefinitionService.updateCPDefinition(
 				cpDefinitionId, titleMap, shortDescriptionMap, descriptionMap,
 				urlTitleMap, metaTitleMap, metaKeywordsMap, metaDescriptionMap,
@@ -361,6 +427,12 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			cpDefinitionId, shippable, freeShipping, shipSeparately,
 			shippingExtraPrice, width, height, depth, weight, serviceContext);
 	}
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private AssetLinkLocalService _assetLinkLocalService;
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;

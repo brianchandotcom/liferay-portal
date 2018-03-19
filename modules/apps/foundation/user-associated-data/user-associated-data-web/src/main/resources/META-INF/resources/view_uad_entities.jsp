@@ -23,7 +23,7 @@ UADEntityDisplay uadEntityDisplay = viewUADEntitiesDisplay.getUADEntityDisplay()
 
 SearchContainer uadEntitySearchContainer = viewUADEntitiesDisplay.getSearchContainer();
 
-renderResponse.setTitle(StringBundler.concat(selUser.getFullName(), " - ", LanguageUtil.get(request, "personal-data-erasure"), " - ", uadEntityDisplay.getUADEntityTypeName()));
+renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", LanguageUtil.get(request, "personal-data-erasure"), " - ", uadEntityDisplay.getUADEntityTypeName()));
 %>
 
 <clay:navigation-bar

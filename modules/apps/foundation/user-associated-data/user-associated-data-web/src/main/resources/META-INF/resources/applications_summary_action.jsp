@@ -33,7 +33,7 @@ UADApplicationSummaryDisplay uadApplicationSummaryDisplay = (UADApplicationSumma
 >
 	<portlet:renderURL var="viewUADEntitiesURL">
 		<portlet:param name="mvcRenderCommandName" value="/view_uad_entities" />
-		<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
+		<portlet:param name="p_u_i_d" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
 		<portlet:param name="uadEntitySetName" value="<%= uadApplicationSummaryDisplay.getName() %>" />
 		<portlet:param name="uadRegistryKey" value="<%= uadApplicationSummaryDisplay.getDefaultUADRegistryKey() %>" />
 	</portlet:renderURL>
@@ -45,7 +45,7 @@ UADApplicationSummaryDisplay uadApplicationSummaryDisplay = (UADApplicationSumma
 
 	<portlet:actionURL name="/anonymize_application_uad_entities" var="anonymizeUADEntitiesURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
+		<portlet:param name="p_u_i_d" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
 		<portlet:param name="uadEntitySetName" value="<%= uadApplicationSummaryDisplay.getName() %>" />
 	</portlet:actionURL>
 
@@ -56,7 +56,7 @@ UADApplicationSummaryDisplay uadApplicationSummaryDisplay = (UADApplicationSumma
 
 	<portlet:actionURL name="/delete_application_uad_entities" var="deleteUADEntitiesURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
+		<portlet:param name="p_u_i_d" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
 		<portlet:param name="uadEntitySetName" value="<%= uadApplicationSummaryDisplay.getName() %>" />
 	</portlet:actionURL>
 

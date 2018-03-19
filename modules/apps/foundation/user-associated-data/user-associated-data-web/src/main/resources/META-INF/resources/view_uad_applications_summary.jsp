@@ -21,7 +21,7 @@ ViewUADApplicationsSummaryDisplay viewUADApplicationsSummaryDisplay = (ViewUADAp
 
 int totalCount = viewUADApplicationsSummaryDisplay.getTotalCount();
 
-renderResponse.setTitle(StringBundler.concat(selUser.getFullName(), " - ", LanguageUtil.get(request, "personal-data-erasure")));
+renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", LanguageUtil.get(request, "personal-data-erasure")));
 %>
 
 <div class="container-fluid container-fluid-max-xl container-form-lg">
@@ -45,7 +45,7 @@ renderResponse.setTitle(StringBundler.concat(selUser.getFullName(), " - ", Langu
 				<div class="autofit-col">
 					<portlet:renderURL var="viewUADEntitiesURL">
 						<portlet:param name="mvcRenderCommandName" value="/view_uad_summary" />
-						<portlet:param name="p_u_i_d" value="<%= String.valueOf(selUserId) %>" />
+						<portlet:param name="p_u_i_d" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
 					</portlet:renderURL>
 
 					<aui:button cssClass="btn-sm" disabled="<%= totalCount > 0 %>" href="<%= viewUADEntitiesURL %>" primary="true" value="complete-step" />

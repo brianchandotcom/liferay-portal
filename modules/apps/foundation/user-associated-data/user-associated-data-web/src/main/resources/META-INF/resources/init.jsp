@@ -50,5 +50,5 @@ page import="com.liferay.user.associated.data.web.internal.display.ViewUADEntiti
 <portlet:defineObjects />
 
 <%
-long selUserId = ParamUtil.getLong(request, "selUserId");
+User selectedUser = PortalUtil.getSelectedUser(request);
 %>

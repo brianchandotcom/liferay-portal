@@ -17,10 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-User selUser = PortalUtil.getSelectedUser(request);
-
-selUserId = selUser.getUserId();
-
 int step = (int)request.getAttribute(UADWebKeys.VIEW_UAD_SUMMARY_STEP);
 
 String backURL = ParamUtil.getString(request, "backURL", StringPool.BLANK);
@@ -28,7 +24,7 @@ String backURL = ParamUtil.getString(request, "backURL", StringPool.BLANK);
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
-renderResponse.setTitle(StringBundler.concat(selUser.getFullName(), " - ", LanguageUtil.get(request, "personal-data-erasure")));
+renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", LanguageUtil.get(request, "personal-data-erasure")));
 %>
 
 <div class="container-fluid container-fluid-max-xl container-form-lg">
@@ -48,7 +44,7 @@ renderResponse.setTitle(StringBundler.concat(selUser.getFullName(), " - ", Langu
 				<div>
 					<portlet:actionURL name="/deactivate_user" var="deactivateUserURL">
 						<portlet:param name="redirect" value="<%= currentURLObj.toString() %>" />
-						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
+						<portlet:param name="p_u_i_d" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
 					</portlet:actionURL>
 
 					<aui:button disabled="<%= step != 1 %>" onClick='<%= renderResponse.getNamespace() + "confirmAction('" + deactivateUserURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-deactivate-the-user") + "')" %>' value="deactivate-user" />
@@ -74,29 +70,29 @@ renderResponse.setTitle(StringBundler.concat(selUser.getFullName(), " - ", Langu
 					<c:if test="<%= step == 2 %>">
 
 						<%
-						Group selUserGroup = selUser.getGroup();
+						Group selectedUserGroup = selectedUser.getGroup();
 
-						int selUserPublicLayoutsPageCount = selUser.getPublicLayoutsPageCount();
-						int selUserPrivateLayoutsPageCount = selUser.getPrivateLayoutsPageCount();
+						int selectedUserPublicLayoutsPageCount = selectedUser.getPublicLayoutsPageCount();
+						int selectedUserPrivateLayoutsPageCount = selectedUser.getPrivateLayoutsPageCount();
 						%>
 
-						<c:if test="<%= selUserPublicLayoutsPageCount > 0 %>">
+						<c:if test="<%= selectedUserPublicLayoutsPageCount > 0 %>">
 							<liferay-ui:icon
 								label="<%= true %>"
 								message="open-profile-pages"
 								method="get"
 								target="_blank"
-								url="<%= selUserGroup.getDisplayURL(themeDisplay, false) %>"
+								url="<%= selectedUserGroup.getDisplayURL(themeDisplay, false) %>"
 							/>
 						</c:if>
 
-						<c:if test="<%= selUserPrivateLayoutsPageCount > 0 %>">
+						<c:if test="<%= selectedUserPrivateLayoutsPageCount > 0 %>">
 							<liferay-ui:icon
 								label="<%= true %>"
 								message="open-dashboard-pages"
 								method="get"
 								target="_blank"
-								url="<%= selUserGroup.getDisplayURL(themeDisplay, true) %>"
+								url="<%= selectedUserGroup.getDisplayURL(themeDisplay, true) %>"
 							/>
 						</c:if>
 					</c:if>
@@ -105,7 +101,7 @@ renderResponse.setTitle(StringBundler.concat(selUser.getFullName(), " - ", Langu
 				<div>
 					<portlet:actionURL name="/forget_personal_site" var="forgetPersonalSiteURL">
 						<portlet:param name="redirect" value="<%= currentURLObj.toString() %>" />
-						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
+						<portlet:param name="p_u_i_d" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
 					</portlet:actionURL>
 
 					<aui:button disabled="<%= step != 2 %>" onClick='<%= renderResponse.getNamespace() + "confirmAction('" + forgetPersonalSiteURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-forget-the-users-personal-site") + "')" %>' value="delete-personal-site" />
@@ -132,7 +128,7 @@ renderResponse.setTitle(StringBundler.concat(selUser.getFullName(), " - ", Langu
 				<div>
 					<portlet:renderURL var="viewUADEntitiesURL">
 						<portlet:param name="mvcRenderCommandName" value="/view_uad_applications_summary" />
-						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
+						<portlet:param name="p_u_i_d" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
 					</portlet:renderURL>
 
 					<aui:button disabled="<%= step != 3 %>" onClick="<%= viewUADEntitiesURL %>" value="review" />
@@ -159,7 +155,7 @@ renderResponse.setTitle(StringBundler.concat(selUser.getFullName(), " - ", Langu
 				<div>
 					<portlet:actionURL name="/delete_remaining_uad" var="deleteURL">
 						<portlet:param name="redirect" value="<%= currentURLObj.toString() %>" />
-						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
+						<portlet:param name="p_u_i_d" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
 					</portlet:actionURL>
 
 					<aui:button disabled="<%= step != 4 %>" onClick='<%= renderResponse.getNamespace() + "confirmAction('" + deleteURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-anonymize-the-users-personal-data") + "')" %>' value="anonymize-data" />
@@ -185,7 +181,7 @@ renderResponse.setTitle(StringBundler.concat(selUser.getFullName(), " - ", Langu
 
 				<div>
 					<portlet:actionURL name="/delete_user" var="deleteUserURL">
-						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
+						<portlet:param name="p_u_i_d" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
 					</portlet:actionURL>
 
 					<aui:button disabled="<%= step != 5 %>" onClick='<%= renderResponse.getNamespace() + "confirmAction('" + deleteUserURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-user") + "')" %>' value="delete-user" />

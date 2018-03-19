@@ -14,9 +14,11 @@
 
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
@@ -51,14 +53,17 @@ public class AutoAnonymizeUADMVCActionCommand extends BaseMVCActionCommand {
 		UADEntityAnonymizer uadEntityAnonymizer =
 			_uadRegistry.getUADEntityAnonymizer(uadRegistryKey);
 
-		long selUserId = ParamUtil.getLong(actionRequest, "selUserId");
+		User selectedUser = _portal.getSelectedUser(actionRequest);
 
-		uadEntityAnonymizer.autoAnonymizeAll(selUserId);
+		uadEntityAnonymizer.autoAnonymizeAll(selectedUser.getUserId());
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 		sendRedirect(actionRequest, actionResponse, redirect);
 	}
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private UADRegistry _uadRegistry;

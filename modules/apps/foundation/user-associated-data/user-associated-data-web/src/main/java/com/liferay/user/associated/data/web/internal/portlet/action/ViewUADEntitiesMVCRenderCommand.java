@@ -17,8 +17,10 @@ package com.liferay.user.associated.data.web.internal.portlet.action;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -63,46 +65,53 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		long selUserId = ParamUtil.getLong(renderRequest, "selUserId");
-		String uadEntitySetName = ParamUtil.getString(
-			renderRequest, "uadEntitySetName");
-		String uadRegistryKey = ParamUtil.getString(
-			renderRequest, "uadRegistryKey");
+		try {
+			User selectedUser = _portal.getSelectedUser(renderRequest);
 
-		UADEntityAggregator uadEntityAggregator =
-			_uadRegistry.getUADEntityAggregator(uadRegistryKey);
+			String uadEntitySetName = ParamUtil.getString(
+				renderRequest, "uadEntitySetName");
+			String uadRegistryKey = ParamUtil.getString(
+				renderRequest, "uadRegistryKey");
 
-		PortletRequest portletRequest =
-			(PortletRequest)renderRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_REQUEST);
-		LiferayPortletResponse liferayPortletResponse =
-			_portal.getLiferayPortletResponse(
-				(PortletResponse)renderRequest.getAttribute(
-					JavaConstants.JAVAX_PORTLET_RESPONSE));
+			UADEntityAggregator uadEntityAggregator =
+				_uadRegistry.getUADEntityAggregator(uadRegistryKey);
 
-		PortletURL currentURL = PortletURLUtil.getCurrent(
-			_portal.getLiferayPortletRequest(portletRequest),
-			liferayPortletResponse);
+			PortletRequest portletRequest =
+				(PortletRequest)renderRequest.getAttribute(
+					JavaConstants.JAVAX_PORTLET_REQUEST);
+			LiferayPortletResponse liferayPortletResponse =
+				_portal.getLiferayPortletResponse(
+					(PortletResponse)renderRequest.getAttribute(
+						JavaConstants.JAVAX_PORTLET_RESPONSE));
 
-		ViewUADEntitiesDisplay viewUADEntitiesDisplay =
-			new ViewUADEntitiesDisplay();
+			PortletURL currentURL = PortletURLUtil.getCurrent(
+				_portal.getLiferayPortletRequest(portletRequest),
+				liferayPortletResponse);
 
-		viewUADEntitiesDisplay.setNavigationItems(
-			_getNaviagationItems(
-				uadEntitySetName, uadRegistryKey, currentURL,
-				liferayPortletResponse));
+			ViewUADEntitiesDisplay viewUADEntitiesDisplay =
+				new ViewUADEntitiesDisplay();
 
-		viewUADEntitiesDisplay.setSearchContainer(
-			_getSearchContainer(
-				portletRequest, currentURL, uadEntityAggregator, selUserId));
+			viewUADEntitiesDisplay.setNavigationItems(
+				_getNaviagationItems(
+					uadEntitySetName, uadRegistryKey, currentURL,
+					liferayPortletResponse));
 
-		viewUADEntitiesDisplay.setUADEntityDisplay(
-			_uadRegistry.getUADEntityDisplay(uadRegistryKey));
-		viewUADEntitiesDisplay.setUADEntitySetName(uadEntitySetName);
-		viewUADEntitiesDisplay.setUADRegistryKey(uadRegistryKey);
+			viewUADEntitiesDisplay.setSearchContainer(
+				_getSearchContainer(
+					portletRequest, currentURL, uadEntityAggregator,
+					selectedUser.getUserId()));
 
-		renderRequest.setAttribute(
-			UADWebKeys.VIEW_UAD_ENTITIES_DISPLAY, viewUADEntitiesDisplay);
+			viewUADEntitiesDisplay.setUADEntityDisplay(
+				_uadRegistry.getUADEntityDisplay(uadRegistryKey));
+			viewUADEntitiesDisplay.setUADEntitySetName(uadEntitySetName);
+			viewUADEntitiesDisplay.setUADRegistryKey(uadRegistryKey);
+
+			renderRequest.setAttribute(
+				UADWebKeys.VIEW_UAD_ENTITIES_DISPLAY, viewUADEntitiesDisplay);
+		}
+		catch (PortalException pe) {
+			throw new PortletException(pe);
+		}
 
 		return "/view_uad_entities.jsp";
 	}
@@ -150,17 +159,17 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 
 	private SearchContainer<UADEntity> _getSearchContainer(
 		PortletRequest portletRequest, PortletURL currentURL,
-		UADEntityAggregator uadEntityAggregator, long selUserId) {
+		UADEntityAggregator uadEntityAggregator, long selectedUserId) {
 
 		SearchContainer<UADEntity> searchContainer = new SearchContainer<>(
 			portletRequest, currentURL, null, null);
 
 		searchContainer.setResults(
 			uadEntityAggregator.getUADEntities(
-				selUserId, searchContainer.getStart(),
+				selectedUserId, searchContainer.getStart(),
 				searchContainer.getEnd()));
 
-		searchContainer.setTotal(uadEntityAggregator.count(selUserId));
+		searchContainer.setTotal(uadEntityAggregator.count(selectedUserId));
 
 		return searchContainer;
 	}

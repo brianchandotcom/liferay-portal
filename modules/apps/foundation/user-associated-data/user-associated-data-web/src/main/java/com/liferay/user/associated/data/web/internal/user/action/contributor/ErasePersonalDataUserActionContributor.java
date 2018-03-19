@@ -49,7 +49,7 @@ public class ErasePersonalDataUserActionContributor
 	@Override
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse,
-		User user, User selUser) {
+		User user, User selectedUser) {
 
 		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
 			portletRequest, UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
@@ -61,7 +61,7 @@ public class ErasePersonalDataUserActionContributor
 		liferayPortletURL.setParameter("backURL", themeDisplay.getURLCurrent());
 
 		liferayPortletURL.setParameter(
-			"p_u_i_d", String.valueOf(selUser.getUserId()));
+			"p_u_i_d", String.valueOf(selectedUser.getUserId()));
 		liferayPortletURL.setParameter(
 			"mvcRenderCommandName", "/view_uad_summary");
 
@@ -70,9 +70,9 @@ public class ErasePersonalDataUserActionContributor
 
 	@Override
 	public boolean isShow(
-		PortletRequest portletRequest, User user, User selUser) {
+		PortletRequest portletRequest, User user, User selectedUser) {
 
-		if (_omniadmin.isOmniadmin(selUser)) {
+		if (_omniadmin.isOmniadmin(selectedUser)) {
 			return false;
 		}
 

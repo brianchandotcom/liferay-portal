@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd">
+<beans default-destroy-method="destroy" default-init-method="afterPropertiesSet" xmlns="http://www.springframework.org/schema/beans" xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 	<bean class="com.liferay.dynamic.data.mapping.internal.render.DDMFormFieldRendererRegistryImpl" id="com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistry">
 		<property name="defaultDDMFormFieldRenderer">
 			<bean class="com.liferay.dynamic.data.mapping.internal.render.DDMFormFieldFreeMarkerRenderer" />

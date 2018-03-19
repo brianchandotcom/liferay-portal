@@ -532,8 +532,8 @@ app.server.type=@{app.server.type}]]></echo>
 
 			<echo if:set="env.JENKINS_HOME">ANT_OPTS=${env.ANT_OPTS}</echo>
 
-			<antcall if:set="env.JENKINS_HOME" target="clean-up-db2-processes" inheritAll="false" />
-			<antcall if:set="env.JENKINS_HOME" target="clean-up-java-processes" inheritAll="false" />
+			<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-db2-processes" />
+			<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-java-processes" />
 		</sequential>
 	</macrodef>
 

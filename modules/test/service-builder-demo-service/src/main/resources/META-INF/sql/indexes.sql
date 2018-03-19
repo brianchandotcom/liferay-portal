@@ -1,0 +1,1 @@
+create index IX_867C5A9 on BigDecimalEntry (bigDecimalValue);

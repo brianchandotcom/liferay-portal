@@ -60,7 +60,7 @@ if (siteNavigationMenu != null) {
 
 										<div>
 											<span id="<portlet:namespace />navigationMenuName">
-												<c:if test="<%= (siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1) && Validator.isNotNull(siteNavigationMenuName) %>">
+												<c:if test="<%= (siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1) && (siteNavigationMenuDisplayContext.getSiteNavigationMenuId() > 0) %>">
 													<%= siteNavigationMenuName %>
 												</c:if>
 											</span>

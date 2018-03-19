@@ -18,13 +18,9 @@ import com.liferay.commerce.product.model.CPOption;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -41,22 +37,6 @@ public class CPOptionDisplayContext {
 
 		_cpOption = cpOption;
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
-	}
-
-	public List<Locale> getAvailableLocales() throws PortalException {
-		CPOption cpOption = getCPOption();
-
-		if (cpOption == null) {
-			return Collections.emptyList();
-		}
-
-		List<Locale> availableLocales = new ArrayList<>();
-
-		for (String languageId : cpOption.getAvailableLanguageIds()) {
-			availableLocales.add(LocaleUtil.fromLanguageId(languageId));
-		}
-
-		return availableLocales;
 	}
 
 	public CPOption getCPOption() {

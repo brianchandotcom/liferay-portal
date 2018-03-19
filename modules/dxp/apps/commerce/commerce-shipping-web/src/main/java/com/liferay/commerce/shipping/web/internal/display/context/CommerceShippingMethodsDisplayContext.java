@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -56,25 +54,6 @@ public class CommerceShippingMethodsDisplayContext {
 		_commerceShippingMethodService = commerceShippingMethodService;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-	}
-
-	public List<Locale> getAvailableLocales() throws PortalException {
-		CommerceShippingMethod commerceShippingMethod =
-			getCommerceShippingMethod();
-
-		if (commerceShippingMethod == null) {
-			return Collections.emptyList();
-		}
-
-		List<Locale> availableLocales = new ArrayList<>();
-
-		for (String languageId :
-				commerceShippingMethod.getAvailableLanguageIds()) {
-
-			availableLocales.add(LocaleUtil.fromLanguageId(languageId));
-		}
-
-		return availableLocales;
 	}
 
 	public CommerceShippingEngine getCommerceShippingEngine()

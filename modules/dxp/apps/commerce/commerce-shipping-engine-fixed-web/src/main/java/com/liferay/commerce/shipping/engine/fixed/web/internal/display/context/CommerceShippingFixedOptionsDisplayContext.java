@@ -25,16 +25,12 @@ import com.liferay.commerce.shipping.engine.fixed.web.internal.FixedCommerceShip
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -58,25 +54,6 @@ public class CommerceShippingFixedOptionsDisplayContext
 
 		_commerceShippingFixedOptionService =
 			commerceShippingFixedOptionService;
-	}
-
-	public List<Locale> getAvailableLocales() {
-		CommerceShippingFixedOption commerceShippingFixedOption =
-			getCommerceShippingFixedOption();
-
-		if (commerceShippingFixedOption == null) {
-			return Collections.emptyList();
-		}
-
-		List<Locale> availableLocales = new ArrayList<>();
-
-		for (String languageId :
-				commerceShippingFixedOption.getAvailableLanguageIds()) {
-
-			availableLocales.add(LocaleUtil.fromLanguageId(languageId));
-		}
-
-		return availableLocales;
 	}
 
 	public CommerceShippingFixedOption getCommerceShippingFixedOption() {

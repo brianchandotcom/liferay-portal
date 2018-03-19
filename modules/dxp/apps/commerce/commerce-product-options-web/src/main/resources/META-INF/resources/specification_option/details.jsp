@@ -33,9 +33,9 @@ List<CPOptionCategory> cpOptionCategories = cpSpecificationOptionDisplayContext.
 <liferay-ui:error exception="<%= CPSpecificationOptionKeyException.MustNotBeNull.class %>" message="please-enter-a-valid-key" />
 
 <aui:fieldset>
-	<aui:input autoFocus="<%= true %>" name="title" wrapperCssClass="commerce-product-specification-option-title" />
+	<aui:input autoFocus="<%= true %>" name="title" />
 
-	<aui:input name="description" wrapperCssClass="commerce-product-specification-option-description" />
+	<aui:input name="description" />
 
 	<aui:input name="facetable" />
 
@@ -73,37 +73,3 @@ List<CPOptionCategory> cpOptionCategories = cpSpecificationOptionDisplayContext.
 		titleInput.on('input', onTitleInput);
 	</aui:script>
 </c:if>
-
-<aui:script use="aui-base">
-	function afterDeletingAvailableLocale(event) {
-		var descriptionInputLocalized = Liferay.component('<portlet:namespace />description');
-		var titleInputLocalized = Liferay.component('<portlet:namespace />title');
-
-		var locale = event.locale;
-
-		descriptionInputLocalized.removeInputLanguage(locale);
-		titleInputLocalized.removeInputLanguage(locale);
-	}
-
-	function afterEditingLocaleChange(event) {
-		var descriptionInputLocalized = Liferay.component('<portlet:namespace />description');
-		var titleInputLocalized = Liferay.component('<portlet:namespace />title');
-
-		var editingLocale = event.newVal;
-		var items = descriptionInputLocalized.get('items');
-		var selectedIndex = items.indexOf(editingLocale);
-
-		descriptionInputLocalized.set('selected', selectedIndex);
-		descriptionInputLocalized.selectFlag(editingLocale);
-
-		titleInputLocalized.set('selected', selectedIndex);
-		titleInputLocalized.selectFlag(editingLocale);
-	}
-
-	var translationManager = Liferay.component('<portlet:namespace />translationManager');
-
-	if (translationManager) {
-		translationManager.on('deleteAvailableLocale', afterDeletingAvailableLocale);
-		translationManager.on('editingLocaleChange', afterEditingLocaleChange);
-	}
-</aui:script>

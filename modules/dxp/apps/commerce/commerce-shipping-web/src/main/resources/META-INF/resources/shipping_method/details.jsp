@@ -24,15 +24,6 @@ CommerceShippingMethodsDisplayContext commerceShippingMethodsDisplayContext = (C
 CommerceShippingMethod commerceShippingMethod = commerceShippingMethodsDisplayContext.getCommerceShippingMethod();
 
 long commerceShippingMethodId = commerceShippingMethod.getCommerceShippingMethodId();
-
-String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
-
-Set<Locale> availableLocalesSet = new HashSet<>();
-
-availableLocalesSet.add(LocaleUtil.fromLanguageId(defaultLanguageId));
-availableLocalesSet.addAll(commerceShippingMethodsDisplayContext.getAvailableLocales());
-
-Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
 %>
 
 <portlet:actionURL name="editCommerceShippingMethod" var="editCommerceShippingMethodActionURL" />
@@ -49,17 +40,9 @@ Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLoca
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<liferay-frontend:translation-manager
-				availableLocales="<%= availableLocales %>"
-				changeableDefaultLanguage="<%= true %>"
-				componentId='<%= renderResponse.getNamespace() + "translationManager" %>'
-				defaultLanguageId="<%= defaultLanguageId %>"
-				id="translationManager"
-			/>
+			<aui:input autoFocus="<%= true %>" name="name" />
 
-			<aui:input autoFocus="<%= true %>" name="name" wrapperCssClass="commerce-shipping-method-name" />
-
-			<aui:input name="description" wrapperCssClass="commerce-shipping-method-description" />
+			<aui:input name="description" />
 
 			<%
 			String thumbnailSrc = StringPool.BLANK;
@@ -91,40 +74,6 @@ Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLoca
 		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
-
-<aui:script use="aui-base">
-	function afterDeletingAvailableLocale(event) {
-		var descriptionInputLocalized = Liferay.component('<portlet:namespace />description');
-		var nameInputLocalized = Liferay.component('<portlet:namespace />name');
-
-		var locale = event.locale;
-
-		descriptionInputLocalized.removeInputLanguage(locale);
-		nameInputLocalized.removeInputLanguage(locale);
-	}
-
-	function afterEditingLocaleChange(event) {
-		var descriptionInputLocalized = Liferay.component('<portlet:namespace />description');
-		var nameInputLocalized = Liferay.component('<portlet:namespace />name');
-
-		var editingLocale = event.newVal;
-		var items = descriptionInputLocalized.get('items');
-		var selectedIndex = items.indexOf(editingLocale);
-
-		descriptionInputLocalized.set('selected', selectedIndex);
-		descriptionInputLocalized.selectFlag(editingLocale);
-
-		nameInputLocalized.set('selected', selectedIndex);
-		nameInputLocalized.selectFlag(editingLocale);
-	}
-
-	var translationManager = Liferay.component('<portlet:namespace />translationManager');
-
-	if (translationManager) {
-		translationManager.on('deleteAvailableLocale', afterDeletingAvailableLocale);
-		translationManager.on('editingLocaleChange', afterEditingLocaleChange);
-	}
-</aui:script>
 
 <aui:script>
 	function <portlet:namespace />saveCommerceShippingMethod() {

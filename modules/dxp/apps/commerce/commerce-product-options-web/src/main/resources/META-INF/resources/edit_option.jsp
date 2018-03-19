@@ -23,15 +23,6 @@ CPOption cpOption = cpOptionDisplayContext.getCPOption();
 
 long cpOptionId = cpOptionDisplayContext.getCPOptionId();
 
-String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
-
-Set<Locale> availableLocalesSet = new HashSet<>();
-
-availableLocalesSet.add(LocaleUtil.fromLanguageId(defaultLanguageId));
-availableLocalesSet.addAll(cpOptionDisplayContext.getAvailableLocales());
-
-Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
-
 boolean hasCustomAttributesAvailable = CustomAttributesUtil.hasCustomAttributes(company.getCompanyId(), CPOption.class.getName(), cpOptionId, null);
 %>
 

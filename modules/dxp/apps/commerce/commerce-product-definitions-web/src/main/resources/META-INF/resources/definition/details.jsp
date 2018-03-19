@@ -32,15 +32,6 @@ boolean neverExpire = ParamUtil.getBoolean(request, "neverExpire", true);
 if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 	neverExpire = false;
 }
-
-String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
-
-Set<Locale> availableLocalesSet = new HashSet<>();
-
-availableLocalesSet.add(LocaleUtil.fromLanguageId(defaultLanguageId));
-availableLocalesSet.addAll(cpDefinitionsDisplayContext.getAvailableLocales());
-
-Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
 %>
 
 <portlet:actionURL name="editProductDefinition" var="editProductDefinitionActionURL" />
@@ -80,17 +71,11 @@ Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLoca
 				</liferay-frontend:info-bar>
 			</c:if>
 
-			<aui:translation-manager
-				availableLocales="<%= availableLocales %>"
-				defaultLanguageId="<%= defaultLanguageId %>"
-				id="translationManager"
-			/>
-
-			<aui:input autoFocus="<%= true %>" label="title" localized="<%= true %>" name="titleMapAsXML" type="text" wrapperCssClass="commerce-product-definition-title">
+			<aui:input autoFocus="<%= true %>" label="title" localized="<%= true %>" name="titleMapAsXML" type="text">
 				<aui:validator name="required" />
 			</aui:input>
 
-			<aui:input label="short-description" localized="<%= true %>" name="shortDescriptionMapAsXML" type="textarea" wrapperCssClass="commerce-product-definition-description" />
+			<aui:input label="short-description" localized="<%= true %>" name="shortDescriptionMapAsXML" type="textarea" />
 
 			<%
 			String descriptionMapAsXML = StringPool.BLANK;
@@ -100,7 +85,7 @@ Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLoca
 			}
 			%>
 
-			<aui:field-wrapper cssClass="commerce-product-definition-description" label="full-description">
+			<aui:field-wrapper label="full-description">
 				<div class="entry-content form-group">
 					<liferay-ui:input-localized editorName="alloyeditor" name="descriptionMapAsXML" type="editor" xml="<%= descriptionMapAsXML %>" />
 				</div>
@@ -120,11 +105,11 @@ Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLoca
 				</div>
 			</div>
 
-			<aui:input label="meta-title" localized="<%= true %>" name="metaTitleMapAsXML" type="text" wrapperCssClass="commerce-product-definition-meta-title" />
+			<aui:input label="meta-title" localized="<%= true %>" name="metaTitleMapAsXML" type="text" />
 
-			<aui:input label="meta-keywords" localized="<%= true %>" name="metaKeywordsMapAsXML" type="textarea" wrapperCssClass="commerce-product-definition-meta-keywords" />
+			<aui:input label="meta-keywords" localized="<%= true %>" name="metaKeywordsMapAsXML" type="textarea" />
 
-			<aui:input label="meta-description" localized="<%= true %>" name="metaDescriptionMapAsXML" type="textarea" wrapperCssClass="commerce-product-definition-meta-description" />
+			<aui:input label="meta-description" localized="<%= true %>" name="metaDescriptionMapAsXML" type="textarea" />
 		</aui:fieldset>
 
 		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="schedule">
@@ -187,70 +172,6 @@ Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLoca
 		</aui:fieldset>
 	</aui:fieldset-group>
 </aui:form>
-
-<aui:script use="aui-base">
-	function afterDeletingAvailableLocale(event) {
-		var descriptionInputLocalized = Liferay.component('<portlet:namespace />descriptionMapAsXML');
-		var metaDescriptionInputLocalized = Liferay.component('<portlet:namespace />metaDescriptionMapAsXML');
-		var metaKeywordsInputLocalized = Liferay.component('<portlet:namespace />metaKeywordsMapAsXML');
-		var metaTitleInputLocalized = Liferay.component('<portlet:namespace />metaTitleMapAsXML');
-		var shortDescriptionInputLocalized = Liferay.component('<portlet:namespace />shortDescriptionMapAsXML');
-		var titleInputLocalized = Liferay.component('<portlet:namespace />titleMapAsXML');var metaDescriptionInputLocalized = Liferay.component('<portlet:namespace />metaDescriptionMapAsXML');
-		var urlTitleInputLocalized = Liferay.component('<portlet:namespace />urlTitleMapAsXML');
-
-		var locale = event.locale;
-
-		descriptionInputLocalized.removeInputLanguage(locale);
-		metaDescriptionInputLocalized.removeInputLanguage(locale);
-		metaKeywordsInputLocalized.removeInputLanguage(locale);
-		metaTitleInputLocalized.removeInputLanguage(locale);
-		shortDescriptionInputLocalized.removeInputLanguage(locale);
-		titleInputLocalized.removeInputLanguage(locale);
-		urlTitleInputLocalized.removeInputLanguage(locale);
-	}
-
-	function afterEditingLocaleChange(event) {
-		var descriptionInputLocalized = Liferay.component('<portlet:namespace />descriptionMapAsXML');
-		var metaDescriptionInputLocalized = Liferay.component('<portlet:namespace />metaDescriptionMapAsXML');
-		var metaKeywordsInputLocalized = Liferay.component('<portlet:namespace />metaKeywordsMapAsXML');
-		var metaTitleInputLocalized = Liferay.component('<portlet:namespace />metaTitleMapAsXML');
-		var shortDescriptionInputLocalized = Liferay.component('<portlet:namespace />shortDescriptionMapAsXML');
-		var titleInputLocalized = Liferay.component('<portlet:namespace />titleMapAsXML');
-		var urlTitleInputLocalized = Liferay.component('<portlet:namespace />urlTitleMapAsXML');
-
-		var editingLocale = event.newVal;
-		var items = descriptionInputLocalized.get('items');
-		var selectedIndex = items.indexOf(editingLocale);
-
-		descriptionInputLocalized.set('selected', selectedIndex);
-		descriptionInputLocalized.selectFlag(editingLocale);
-
-		metaDescriptionInputLocalized.set('selected', selectedIndex);
-		metaDescriptionInputLocalized.selectFlag(editingLocale);
-
-		metaKeywordsInputLocalized.set('selected', selectedIndex);
-		metaKeywordsInputLocalized.selectFlag(editingLocale);
-
-		metaTitleInputLocalized.set('selected', selectedIndex);
-		metaTitleInputLocalized.selectFlag(editingLocale);
-
-		shortDescriptionInputLocalized.set('selected', selectedIndex);
-		shortDescriptionInputLocalized.selectFlag(editingLocale);
-
-		titleInputLocalized.set('selected', selectedIndex);
-		titleInputLocalized.selectFlag(editingLocale);
-
-		urlTitleInputLocalized.set('selected', selectedIndex);
-		urlTitleInputLocalized.selectFlag(editingLocale);
-	}
-
-	var translationManager = Liferay.component('<portlet:namespace />translationManager');
-
-	if (translationManager) {
-		translationManager.on('deleteAvailableLocale', afterDeletingAvailableLocale);
-		translationManager.on('editingLocaleChange', afterEditingLocaleChange);
-	}
-</aui:script>
 
 <aui:script use="aui-base,event-input">
 	var publishButton = A.one('#<portlet:namespace />publishButton');

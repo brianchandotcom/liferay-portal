@@ -25,15 +25,11 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 import javax.portlet.PortletURL;
 
@@ -58,22 +54,6 @@ public abstract class BaseCPDefinitionsDisplayContext {
 
 		liferayPortletRequest = cpRequestHelper.getLiferayPortletRequest();
 		liferayPortletResponse = cpRequestHelper.getLiferayPortletResponse();
-	}
-
-	public List<Locale> getAvailableLocales() throws PortalException {
-		CPDefinition cpDefinition = getCPDefinition();
-
-		if (cpDefinition == null) {
-			return Collections.emptyList();
-		}
-
-		List<Locale> availableLocales = new ArrayList<>();
-
-		for (String languageId : cpDefinition.getAvailableLanguageIds()) {
-			availableLocales.add(LocaleUtil.fromLanguageId(languageId));
-		}
-
-		return availableLocales;
 	}
 
 	public CPDefinition getCPDefinition() throws PortalException {

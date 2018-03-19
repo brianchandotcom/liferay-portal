@@ -36,14 +36,6 @@ data.put("direction-right", StringPool.TRUE);
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "option-categories"), optionCategoriesURL, data);
 PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 
-String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
-
-Set<Locale> availableLocalesSet = new HashSet<>();
-
-availableLocalesSet.add(LocaleUtil.fromLanguageId(defaultLanguageId));
-
-Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
-
 renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 %>
 
@@ -56,14 +48,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpOptionCategory == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= optionCategoriesURL %>" />
 	<aui:input name="cpOptionCategoryId" type="hidden" value="<%= String.valueOf(cpOptionCategoryId) %>" />
-
-	<liferay-frontend:translation-manager
-		availableLocales="<%= availableLocales %>"
-		changeableDefaultLanguage="<%= true %>"
-		componentId='<%= renderResponse.getNamespace() + "translationManager" %>'
-		defaultLanguageId="<%= defaultLanguageId %>"
-		id="translationManager"
-	/>
 
 	<div class="lfr-form-content">
 		<liferay-ui:form-navigator

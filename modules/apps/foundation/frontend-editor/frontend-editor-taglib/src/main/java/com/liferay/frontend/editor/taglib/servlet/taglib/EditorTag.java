@@ -16,6 +16,7 @@ package com.liferay.frontend.editor.taglib.servlet.taglib;
 
 import com.liferay.frontend.editor.api.EditorRenderer;
 import com.liferay.frontend.editor.taglib.internal.EditorRendererUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.BaseValidatorTagSupport;

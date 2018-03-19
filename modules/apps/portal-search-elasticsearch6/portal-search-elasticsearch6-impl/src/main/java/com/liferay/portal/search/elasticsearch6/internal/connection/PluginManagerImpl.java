@@ -14,8 +14,8 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.connection;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
 

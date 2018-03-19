@@ -17,10 +17,10 @@ package com.liferay.blogs.web.internal.asset.display.contributor;
 import com.liferay.asset.display.contributor.AssetDisplayContributor;
 import com.liferay.asset.display.contributor.BaseAssetDisplayContributor;
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Locale;
 import java.util.Objects;

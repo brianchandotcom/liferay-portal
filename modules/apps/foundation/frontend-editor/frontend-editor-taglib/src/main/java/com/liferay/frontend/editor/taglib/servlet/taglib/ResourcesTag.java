@@ -16,8 +16,8 @@ package com.liferay.frontend.editor.taglib.servlet.taglib;
 
 import com.liferay.frontend.editor.api.EditorRenderer;
 import com.liferay.frontend.editor.taglib.internal.EditorRendererUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.io.IOException;

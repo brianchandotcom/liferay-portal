@@ -14,9 +14,9 @@
 
 package com.liferay.portal.search.internal.summary;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.summary.SummaryHelper;
 
 import java.util.Locale;

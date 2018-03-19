@@ -105,7 +105,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 					PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 						group.getCompanyId(), 0,
 						PortletKeys.PREFS_OWNER_TYPE_LAYOUT, defaultPlid,
-						portletId, "");
+						portletId, StringPool.BLANK);
 
 				defaultPreferences = PortletPreferencesFactoryUtil.toXML(
 					portletPreferences);
@@ -116,8 +116,8 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 			runtimeTagElement.attr("defaultPreferences", defaultPreferences);
 			runtimeTagElement.attr("instanceId", instanceId);
-			runtimeTagElement.attr("portletName", portletName);
 			runtimeTagElement.attr("persistSettings=false", true);
+			runtimeTagElement.attr("portletName", portletName);
 
 			element.replaceWith(runtimeTagElement);
 		}

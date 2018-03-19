@@ -69,6 +69,14 @@
 				z-index: 1;
 			}
 
+			.embed-responsive {
+				.embed-responsive-16by9 {
+					iframe {
+						@extend .embed-responsive-item !optional;
+					}
+				}
+			}
+
 			.cke_widget_mask {
 				background-color: #000;
 				cursor: pointer;

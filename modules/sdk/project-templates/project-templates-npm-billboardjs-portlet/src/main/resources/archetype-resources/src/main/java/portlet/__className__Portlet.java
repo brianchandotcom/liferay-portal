@@ -1,8 +1,8 @@
 package ${package}.portlet;
 
 import ${package}.constants.${className}PortletKeys;
-import ${package}.constants.${className}WebKeys;
 #if (${liferayVersion} == "7.1")
+import ${package}.constants.${className}WebKeys;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
@@ -22,7 +22,9 @@ import javax.portlet.RenderResponse;
 #end
 
 import org.osgi.service.component.annotations.Component;
+#if (${liferayVersion} == "7.1")
 import org.osgi.service.component.annotations.Reference;
+#end
 
 /**
  * @author ${author}

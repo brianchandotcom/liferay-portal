@@ -150,6 +150,13 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 	public void populateResultsAndTotal(SearchContainer searchContainer)
 		throws PortalException {
 
+		populateThreadsResultsAndTotal(searchContainer);
+	}
+
+	@Override
+	public void populateThreadsResultsAndTotal(SearchContainer searchContainer)
+		throws PortalException {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -263,50 +270,20 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 				status = WorkflowConstants.STATUS_ANY;
 			}
 
-			QueryDefinition<?> queryDefinition = new QueryDefinition<>(
+			QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
 				status, themeDisplay.getUserId(), true,
 				searchContainer.getStart(), searchContainer.getEnd(),
 				searchContainer.getOrderByComparator());
 
 			searchContainer.setTotal(
-				MBCategoryServiceUtil.getCategoriesAndThreadsCount(
+				MBThreadServiceUtil.getThreadsCount(
 					themeDisplay.getScopeGroupId(), _categoryId,
 					queryDefinition));
 			searchContainer.setResults(
-				MBCategoryServiceUtil.getCategoriesAndThreads(
+				MBThreadServiceUtil.getThreads(
 					themeDisplay.getScopeGroupId(), _categoryId,
 					queryDefinition));
 		}
-	}
-
-	@Override
-	public void populateThreadsResultsAndTotal(SearchContainer searchContainer)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		int status = WorkflowConstants.STATUS_APPROVED;
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		if (permissionChecker.isContentReviewer(
-				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId())) {
-
-			status = WorkflowConstants.STATUS_ANY;
-		}
-
-		QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
-			status, themeDisplay.getUserId(), true, searchContainer.getStart(),
-			searchContainer.getEnd(), null);
-
-		searchContainer.setTotal(
-			MBThreadServiceUtil.getThreadsCount(
-				themeDisplay.getScopeGroupId(), _categoryId, queryDefinition));
-		searchContainer.setResults(
-			MBThreadServiceUtil.getThreads(
-				themeDisplay.getScopeGroupId(), _categoryId, queryDefinition));
 	}
 
 	private static final UUID _UUID = UUID.fromString(

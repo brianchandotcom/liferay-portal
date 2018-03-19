@@ -151,18 +151,6 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 		<%@ include file="/message_boards/view_threads.jspf" %>
 	</c:when>
 	<c:when test='<%= mbListDisplayContext.isShowSearch() || mvcRenderCommandName.equals("/message_boards/view") || mvcRenderCommandName.equals("/message_boards/view_category") || mbListDisplayContext.isShowMyPosts() || mbListDisplayContext.isShowRecentPosts() %>'>
-
-		<%
-		SearchContainer entriesSearchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-threads-or-categories");
-
-		entriesSearchContainer.setId("mbEntries");
-		entriesSearchContainer.setOrderByCol(orderByCol);
-		entriesSearchContainer.setOrderByComparator(orderByComparator);
-		entriesSearchContainer.setOrderByType(orderByType);
-
-		mbListDisplayContext.populateResultsAndTotal(entriesSearchContainer);
-		%>
-
 		<c:choose>
 			<c:when test='<%= mvcRenderCommandName.equals("/message_boards/search") || mvcRenderCommandName.equals("/message_boards/view") || mvcRenderCommandName.equals("/message_boards/view_category") %>'>
 				<div class="main-content-body">
@@ -314,10 +302,51 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 					</c:if>
 
 					<%
-					request.setAttribute("view.jsp-entriesSearchContainer", entriesSearchContainer);
+					MBBreadcrumbUtil.addPortletBreadcrumbEntries(categoryId, request, renderResponse);
 					%>
 
-					<liferay-util:include page='<%= "/message_boards_admin/view_entries.jsp" %>' servletContext="<%= application %>" />
+					<liferay-ui:breadcrumb
+						showCurrentGroup="<%= false %>"
+						showGuestGroup="<%= false %>"
+						showLayout="<%= false %>"
+						showParentGroups="<%= false %>"
+					/>
+
+					<%
+					SearchContainer categoryEntriesSearchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-threads-or-categories");
+
+					categoryEntriesSearchContainer.setOrderByCol(orderByCol);
+					categoryEntriesSearchContainer.setOrderByComparator(orderByComparator);
+					categoryEntriesSearchContainer.setOrderByType(orderByType);
+
+					mbListDisplayContext.populateCategoriesResultsAndTotal(categoryEntriesSearchContainer);
+
+					request.setAttribute("view.jsp-categoryEntriesSearchContainer", categoryEntriesSearchContainer);
+					%>
+
+					<c:if test="<%= categoryEntriesSearchContainer.getTotal() > 0 %>">
+						<liferay-util:include page='<%= "/message_boards_admin/view_category_entries.jsp" %>' servletContext="<%= application %>" />
+					</c:if>
+
+					<%
+					SearchContainer threadEntriesSearchContainer = new SearchContainer(renderRequest, null, null, "cur2", 0, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-threads-or-categories");
+
+					threadEntriesSearchContainer.setOrderByCol(orderByCol);
+					threadEntriesSearchContainer.setOrderByComparator(orderByComparator);
+					threadEntriesSearchContainer.setOrderByType(orderByType);
+
+					mbListDisplayContext.populateThreadsResultsAndTotal(threadEntriesSearchContainer);
+
+					request.setAttribute("view.jsp-threadEntriesSearchContainer", threadEntriesSearchContainer);
+					%>
+
+					<c:if test="<%= threadEntriesSearchContainer.getTotal() > 0 %>">
+						<liferay-util:include page='<%= "/message_boards_admin/view_thread_entries.jsp" %>' servletContext="<%= application %>" />
+					</c:if>
+
+					<c:if test="<%= (categoryEntriesSearchContainer.getTotal() <= 0) && (threadEntriesSearchContainer.getTotal() <= 0) %>">
+						<liferay-ui:empty-result-message message="there-are-no-threads-or-categories" />
+					</c:if>
 
 					<%
 					if (category != null) {
@@ -327,7 +356,6 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 					%>
 
 				</div>
-
 			</c:when>
 			<c:when test="<%= mbListDisplayContext.isShowMyPosts() || mbListDisplayContext.isShowRecentPosts() %>">
 				<div class="main-content-body">
@@ -354,10 +382,6 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 						</div>
 					</c:if>
 
-					<%
-					request.setAttribute("view.jsp-entriesSearchContainer", entriesSearchContainer);
-					%>
-
 					<c:if test="<%= enableRSS && mbListDisplayContext.isShowRecentPosts() %>">
 						<liferay-rss:rss
 							delta="<%= rssDelta %>"
@@ -368,9 +392,20 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 						/>
 					</c:if>
 
-					<liferay-util:include page='<%= "/message_boards_admin/view_entries.jsp" %>' servletContext="<%= application %>">
-						<liferay-util:param name="showBreadcrumb" value="<%= Boolean.FALSE.toString() %>" />
-					</liferay-util:include>
+					<%
+					SearchContainer threadEntriesSearchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-threads");
+
+					threadEntriesSearchContainer.setId("mbEntries");
+					threadEntriesSearchContainer.setOrderByCol(orderByCol);
+					threadEntriesSearchContainer.setOrderByComparator(orderByComparator);
+					threadEntriesSearchContainer.setOrderByType(orderByType);
+
+					mbListDisplayContext.populateThreadsResultsAndTotal(threadEntriesSearchContainer);
+
+					request.setAttribute("view.jsp-threadEntriesSearchContainer", threadEntriesSearchContainer);
+					%>
+
+					<liferay-util:include page='<%= "/message_boards_admin/view_thread_entries.jsp" %>' servletContext="<%= application %>" />
 
 					<%
 					String pageSubtitle = null;

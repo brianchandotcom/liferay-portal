@@ -267,10 +267,8 @@ public class SiteNavigationMenuDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		SiteNavigationMenu siteNavigationMenu = null;
-
 		if (getSiteNavigationMenuType() > 0) {
-			siteNavigationMenu =
+			SiteNavigationMenu siteNavigationMenu =
 				SiteNavigationMenuLocalServiceUtil.fetchSiteNavigationMenu(
 					themeDisplay.getScopeGroupId(),
 					getSiteNavigationMenuType());
@@ -281,9 +279,8 @@ public class SiteNavigationMenuDisplayContext {
 
 				return _siteNavigationMenuId;
 			}
-			else {
-				return 0;
-			}
+
+			return 0;
 		}
 
 		_siteNavigationMenuId = ParamUtil.getLong(

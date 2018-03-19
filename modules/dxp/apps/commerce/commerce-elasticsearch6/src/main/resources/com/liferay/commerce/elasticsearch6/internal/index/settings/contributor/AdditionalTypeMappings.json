@@ -1,0 +1,32 @@
+{
+	"dynamic_templates": [
+		{
+			"template_commerce_attribute": {
+				"mapping": {
+					"store": true,
+					"type": "keyword"
+				},
+				"match": "ATTRIBUTE_*_VALUES_NAMES",
+				"match_mapping_type": "string"
+			}
+		}
+	],
+	"properties": {
+		"advanceStatus": {
+			"store": true,
+			"type": "keyword"
+		},
+		"optionsNames": {
+			"store": true,
+			"type": "keyword"
+		},
+		"orderStatus": {
+			"store": true,
+			"type": "keyword"
+		},
+		"productTypeName": {
+			"store": true,
+			"type": "keyword"
+		}
+	}
+}

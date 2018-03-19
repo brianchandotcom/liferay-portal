@@ -19,9 +19,6 @@ import com.liferay.blogs.uad.constants.BlogsUADConstants;
 
 import com.liferay.user.associated.data.entity.BaseUADEntity;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author Brian Wing Shun Chan
  * @generated
@@ -36,27 +33,6 @@ public class BlogsEntryUADEntity extends BaseUADEntity {
 
 	public BlogsEntry getBlogsEntry() {
 		return _blogsEntry;
-	}
-
-	@Override
-	public Map<String, Object> getUADEntityNonanonymizableFieldValues() {
-		Map<String, Object> uadEntityNonanonymizableFieldValues = new HashMap<String, Object>();
-
-		uadEntityNonanonymizableFieldValues.put("title", _blogsEntry.getTitle());
-		uadEntityNonanonymizableFieldValues.put("subtitle",
-			_blogsEntry.getSubtitle());
-		uadEntityNonanonymizableFieldValues.put("urlTitle",
-			_blogsEntry.getUrlTitle());
-		uadEntityNonanonymizableFieldValues.put("description",
-			_blogsEntry.getDescription());
-		uadEntityNonanonymizableFieldValues.put("content",
-			_blogsEntry.getContent());
-		uadEntityNonanonymizableFieldValues.put("smallImage",
-			_blogsEntry.getSmallImage());
-		uadEntityNonanonymizableFieldValues.put("smallImageId",
-			_blogsEntry.getSmallImageId());
-
-		return uadEntityNonanonymizableFieldValues;
 	}
 
 	private final BlogsEntry _blogsEntry;

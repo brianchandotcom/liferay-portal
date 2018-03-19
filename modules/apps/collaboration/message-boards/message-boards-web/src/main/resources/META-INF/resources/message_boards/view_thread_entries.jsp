@@ -179,5 +179,5 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 </liferay-ui:search-container>
 
 <%!
-private static Log _log = LogFactoryUtil.getLog("com_liferay_message_boards_web.message_boards_admin.view_entries_jsp");
+private static Log _log = LogFactoryUtil.getLog("com_liferay_message_boards_web.message_boards.view_thread_entries_jsp");
 %>

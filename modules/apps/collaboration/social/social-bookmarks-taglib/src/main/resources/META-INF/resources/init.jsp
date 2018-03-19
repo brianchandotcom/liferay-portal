@@ -43,10 +43,8 @@ page import="com.liferay.social.bookmarks.taglib.internal.util.SocialBookmarksRe
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Arrays" %><%@
-page import="java.util.HashMap" %><%@
 page import="java.util.HashSet" %><%@
 page import="java.util.List" %><%@
-page import="java.util.Map" %><%@
 page import="java.util.Set" %>
 
 <liferay-theme:defineObjects />

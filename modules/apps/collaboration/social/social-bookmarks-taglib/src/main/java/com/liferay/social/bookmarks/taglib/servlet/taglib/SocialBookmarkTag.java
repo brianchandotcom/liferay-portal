@@ -40,8 +40,6 @@ public class SocialBookmarkTag extends AttributesTagSupport {
 
 			if (socialBookmark != null) {
 				request.setAttribute(
-					"liferay-social-bookmarks:bookmark:contentId", _contentId);
-				request.setAttribute(
 					"liferay-social-bookmarks:bookmark:displayStyle",
 					_displayStyle);
 				request.setAttribute(
@@ -66,10 +64,6 @@ public class SocialBookmarkTag extends AttributesTagSupport {
 		catch (IOException | ServletException e) {
 			throw new JspException(e);
 		}
-	}
-
-	public void setContentId(String contentId) {
-		_contentId = contentId;
 	}
 
 	public void setDisplayStyle(String displayStyle) {
@@ -103,7 +97,6 @@ public class SocialBookmarkTag extends AttributesTagSupport {
 		return SocialBookmarksRegistryUtil.getSocialBookmark(_type);
 	}
 
-	private String _contentId;
 	private String _displayStyle;
 	private String _target;
 	private String _title;

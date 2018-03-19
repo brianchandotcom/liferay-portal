@@ -15,11 +15,6 @@
 		<tag-class>com.liferay.social.bookmarks.taglib.servlet.taglib.SocialBookmarkTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<name>contentId</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>displayStyle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -51,8 +46,14 @@
 		<tag-class>com.liferay.social.bookmarks.taglib.servlet.taglib.SocialBookmarksTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>An ID for the content being shared.</description>
-			<name>contentId</name>
+			<description>The class name of the entity being shared.</description>
+			<name>className</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The Java class primary key of the entity being shared. This is a Java <![CDATA[<code>long</code>]]>.</description>
+			<name>classPK</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

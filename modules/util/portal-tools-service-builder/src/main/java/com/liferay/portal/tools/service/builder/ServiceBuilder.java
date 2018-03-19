@@ -3412,7 +3412,7 @@ public class ServiceBuilder {
 		sb.append("\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
 		sb.append("\n");
 		sb.append("\txsi:schemaLocation=\"");
-		sb.append(_getSpringSchemaLocations());
+		sb.append(StringUtil.trim(_getSpringSchemaLocations()));
 		sb.append("\">\n");
 		sb.append("</beans>");
 
@@ -3472,8 +3472,40 @@ public class ServiceBuilder {
 					newContent.substring(lastSession);
 		}
 
-		ToolsUtil.writeFileRaw(
-			xmlFile, _formatXml(newContent), _modifiedFileNames);
+		newContent = _formatXml(newContent);
+
+		Matcher matcher = _beansPattern.matcher(newContent);
+
+		if (matcher.find()) {
+			String beans = matcher.group();
+			Map<String, String> beansAttributes = new TreeMap<>(
+				String.CASE_INSENSITIVE_ORDER);
+
+			matcher = _beansAttributePattern.matcher(beans);
+
+			while (matcher.find()) {
+				String beanAttribute = StringBundler.concat(
+					StringUtil.trim(matcher.group(1)), "=\"",
+					StringUtil.trim(matcher.group(2)), "\"");
+
+				beansAttributes.put(
+					StringUtil.trim(matcher.group(1)), beanAttribute);
+			}
+
+			sb.setIndex(0);
+
+			for (Map.Entry<String, String> beanAttribute :
+					beansAttributes.entrySet()) {
+
+				sb.append("\n\t");
+				sb.append(beanAttribute.getValue());
+			}
+
+			newContent = StringUtil.replaceFirst(
+				newContent, beans, "<beans" + sb.toString() + "\n>");
+		}
+
+		ToolsUtil.writeFileRaw(xmlFile, newContent, _modifiedFileNames);
 	}
 
 	private void _createSQLIndexes() throws Exception {
@@ -5017,7 +5049,7 @@ public class ServiceBuilder {
 		StringBundler sb = new StringBundler(_springNamespaces.length * 7);
 
 		for (String namespace : _springNamespaces) {
-			sb.append("\thttp://www.springframework.org/schema/");
+			sb.append(" http://www.springframework.org/schema/");
 			sb.append(namespace);
 			sb.append(" http://www.springframework.org/schema/");
 			sb.append(namespace);
@@ -6562,6 +6594,9 @@ public class ServiceBuilder {
 	private static final String _TPL_ROOT =
 		"com/liferay/portal/tools/service/builder/dependencies/";
 
+	private static Pattern _beansAttributePattern = Pattern.compile(
+		"\\s+([^=]*)=\\s*\"([^\"]*)\"");
+	private static Pattern _beansPattern = Pattern.compile("<beans[^>]*>");
 	private static Pattern _getterPattern = Pattern.compile(
 		StringBundler.concat(
 			"public .* get.*", Pattern.quote("("), "|public boolean is.*",

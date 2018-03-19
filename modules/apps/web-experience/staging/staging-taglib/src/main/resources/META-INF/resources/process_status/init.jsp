@@ -18,7 +18,7 @@
 
 <%
 int backgroundTaskStatus = GetterUtil.getInteger(request.getAttribute("liferay-staging:process-status:backgroundTaskStatus"));
-String backgroundTaskStatusLabel = StringUtil.toUpperCase(GetterUtil.getString(request.getAttribute("liferay-staging:process-status:backgroundTaskStatusLabel")));
+String backgroundTaskStatusLabel = GetterUtil.getString(request.getAttribute("liferay-staging:process-status:backgroundTaskStatusLabel"));
 
 String clayClassPostfix = "info";
 

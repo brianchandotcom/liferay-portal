@@ -4545,8 +4545,8 @@ go]]></replacevalue>
 					<then>
 						<delete failonerror="false" includeemptydirs="true">
 							<fileset dir="${test.app.server.liferay.home}/data">
-								<exclude name="hypersonic/lportal.properties" if:true="${keep.hypersonicdb}" />
-								<exclude name="hypersonic/lportal.script" if:true="${keep.hypersonicdb}" />
+								<exclude if:true="${keep.hypersonicdb}" name="hypersonic/lportal.properties" />
+								<exclude if:true="${keep.hypersonicdb}" name="hypersonic/lportal.script" />
 							</fileset>
 						</delete>
 					</then>
@@ -7423,8 +7423,8 @@ log.sanitizer.enabled=false</echo>
 		<echo if:set="env.JENKINS_HOME">
 ANT_OPTS=${env.ANT_OPTS}</echo>
 
-		<antcall if:set="env.JENKINS_HOME" target="clean-up-db2-processes" inheritAll="false" />
-		<antcall if:set="env.JENKINS_HOME" target="clean-up-java-processes" inheritAll="false" />
+		<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-db2-processes" />
+		<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-java-processes" />
 	</target>
 
 	<target name="prepare-test-build-custom">
@@ -7544,8 +7544,8 @@ plugins.includes=marketplace-portlet</echo>
 		<echo if:set="env.JENKINS_HOME">
 ANT_OPTS=${env.ANT_OPTS}</echo>
 
-		<antcall if:set="env.JENKINS_HOME" target="clean-up-db2-processes" inheritAll="false" />
-		<antcall if:set="env.JENKINS_HOME" target="clean-up-java-processes" inheritAll="false" />
+		<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-db2-processes" />
+		<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-java-processes" />
 	</target>
 
 	<target name="prepare-test-bundle">

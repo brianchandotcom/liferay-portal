@@ -22,7 +22,13 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 AssetDisplayTemplate assetDisplayTemplate = (AssetDisplayTemplate)row.getObject();
 %>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
 	<c:if test="<%= AssetDisplayTemplatePermission.contains(permissionChecker, assetDisplayTemplate, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editAssetDisplayTemplateURL">
 			<portlet:param name="mvcPath" value="/edit_asset_display_template.jsp" />

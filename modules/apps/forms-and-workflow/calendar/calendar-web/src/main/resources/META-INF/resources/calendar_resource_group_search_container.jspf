@@ -14,7 +14,10 @@
  */
 --%>
 
-<liferay-ui:search-container id="sites" searchContainer='<%= new CalendarResourceSearch(renderRequest, CalendarResourceSearch.DEFAULT_CUR_PARAM + "Groups", iteratorURL) %>'>
+<liferay-ui:search-container
+	id="sites"
+	searchContainer='<%= new CalendarResourceSearch(renderRequest, CalendarResourceSearch.DEFAULT_CUR_PARAM + "Groups", iteratorURL) %>'
+>
 
 	<%
 	String[] params = {"site:true:boolean"};

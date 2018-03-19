@@ -21,7 +21,10 @@ PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationLis
 PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
 %>
 
-<liferay-application-list:panel-category panelCategory="<%= panelCategory %>" showBody="<%= false %>">
+<liferay-application-list:panel-category
+	panelCategory="<%= panelCategory %>"
+	showBody="<%= false %>"
+>
 
 	<%
 	Group curSite = themeDisplay.getSiteGroup();

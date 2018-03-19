@@ -63,7 +63,10 @@ if (selLayout != null) {
 }
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="customization-settings" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="customization-settings"
+/>
 
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 

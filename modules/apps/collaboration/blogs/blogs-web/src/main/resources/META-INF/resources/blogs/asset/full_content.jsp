@@ -22,7 +22,9 @@ BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
 %>
 
-<liferay-util:html-top outputKey="blogs_common_main_css">
+<liferay-util:html-top
+	outputKey="blogs_common_main_css"
+>
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/blogs/css/common_main.css", portlet.getTimestamp()) %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 

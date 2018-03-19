@@ -77,12 +77,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 	</div>
 
 	<div class="container-fluid-1280">
-		<aui:translation-manager
-			availableLocales="<%= availableLocales %>"
-			changeableDefaultLanguage="<%= false %>"
-			defaultLanguageId="<%= defaultLanguageId %>"
-			id="translationManager"
-		/>
+		<aui:translation-manager availableLocales="<%= availableLocales %>" changeableDefaultLanguage="<%= false %>" defaultLanguageId="<%= defaultLanguageId %>" id="translationManager" />
 	</div>
 
 	<aui:form action="<%= saveFormInstanceURL %>" cssClass="ddm-form-builder-form" enctype="multipart/form-data" method="post" name="editForm">

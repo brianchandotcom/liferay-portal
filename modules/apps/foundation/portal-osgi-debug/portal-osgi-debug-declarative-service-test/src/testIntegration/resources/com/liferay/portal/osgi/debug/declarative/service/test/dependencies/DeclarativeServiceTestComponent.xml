@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<scr:component immediate="true" xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" name="com.liferay.portal.osgi.debug.declarative.service.test.component.DeclarativeServiceTestComponent">
+<scr:component immediate="true" name="com.liferay.portal.osgi.debug.declarative.service.test.component.DeclarativeServiceTestComponent" xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0">
 	<implementation class="com.liferay.portal.osgi.debug.declarative.service.test.component.DeclarativeServiceTestComponent" />
 	<reference field="declarativeServiceTestReference" interface="com.liferay.portal.osgi.debug.declarative.service.test.reference.DeclarativeServiceTestReference" name="declarativeServiceTestReference" />
 </scr:component>

@@ -22,7 +22,9 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 PowwowServer powwowServer = (PowwowServer)row.getObject();
 %>
 
-<liferay-ui:icon-menu showExpanded="<%= row == null %>">
+<liferay-ui:icon-menu
+	showExpanded="<%= row == null %>"
+>
 	<portlet:renderURL var="editURL">
 		<portlet:param name="mvcPath" value="/admin/edit_server.jsp" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />

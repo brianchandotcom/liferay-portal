@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+<beans default-destroy-method="destroy" default-init-method="afterPropertiesSet" xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 	<bean class="com.liferay.opensocial.service.impl.GadgetLocalServiceImpl" id="com.liferay.opensocial.service.GadgetLocalService" />
 	<bean class="com.liferay.opensocial.service.impl.GadgetServiceImpl" id="com.liferay.opensocial.service.GadgetService" />
 	<bean class="com.liferay.opensocial.service.persistence.impl.GadgetPersistenceImpl" id="com.liferay.opensocial.service.persistence.GadgetPersistence" parent="basePersistence" />

@@ -22,4 +22,6 @@
 String testRuntimePortletId = ParamUtil.getString(request, "testRuntimePortletId");
 %>
 
-<liferay-portlet:runtime portletName="<%= testRuntimePortletId %>" />
+<liferay-portlet:runtime
+	portletName="<%= testRuntimePortletId %>"
+/>

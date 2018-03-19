@@ -24,7 +24,13 @@ ResultRow row = (ResultRow)request.getAttribute(KBWebKeys.SEARCH_CONTAINER_RESUL
 KBTemplate kbTemplate = (KBTemplate)row.getObject();
 %>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
 	<c:if test="<%= KBTemplatePermission.contains(permissionChecker, kbTemplate, KBActionKeys.VIEW) %>">
 		<liferay-portlet:renderURL var="viewURL">
 			<portlet:param name="mvcPath" value='<%= templatePath + "view_template.jsp" %>' />

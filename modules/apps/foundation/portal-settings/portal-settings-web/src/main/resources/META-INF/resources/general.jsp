@@ -33,7 +33,10 @@ String defaultLandingPagePath = PrefsPropsUtil.getString(company.getCompanyId(),
 String defaultLogoutPagePath = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.DEFAULT_LOGOUT_PAGE_PATH, PropsValues.DEFAULT_LOGOUT_PAGE_PATH);
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="general" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="general"
+/>
 
 <h3><liferay-ui:message key="general" /></h3>
 

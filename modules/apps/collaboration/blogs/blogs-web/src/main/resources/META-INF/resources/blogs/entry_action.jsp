@@ -26,7 +26,14 @@ if (row != null) {
 }
 %>
 
-<liferay-ui:icon-menu cssClass='<%= row == null ? "entry-options inline" : StringPool.BLANK %>' direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	cssClass='<%= row == null ? "entry-options inline" : StringPool.BLANK %>'
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
 	<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editEntryURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 			<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />

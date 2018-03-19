@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+<feed xml:lang="en" xmlns="http://www.w3.org/2005/Atom">
 <title>The Verge -  All Posts</title>
 <icon>https://cdn.vox-cdn.com/community_logos/34086/verge-fv.png</icon>
 <updated>2017-06-21T12:07:44-04:00</updated>

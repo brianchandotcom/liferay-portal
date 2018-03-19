@@ -32,7 +32,13 @@ contextObjects.put("blogsPortletInstanceSettingsHelper", blogsPortletInstanceSet
 List<BlogsEntry> blogsEntries = _convertToBlogEntries(results);
 %>
 
-<liferay-ddm:template-renderer className="<%= BlogsEntry.class.getName() %>" contextObjects="<%= contextObjects %>" displayStyle="<%= blogsPortletInstanceConfiguration.displayStyle() %>" displayStyleGroupId="<%= blogsPortletInstanceSettingsHelper.getDisplayStyleGroupId() %>" entries="<%= blogsEntries %>">
+<liferay-ddm:template-renderer
+	className="<%= BlogsEntry.class.getName() %>"
+	contextObjects="<%= contextObjects %>"
+	displayStyle="<%= blogsPortletInstanceConfiguration.displayStyle() %>"
+	displayStyleGroupId="<%= blogsPortletInstanceSettingsHelper.getDisplayStyleGroupId() %>"
+	entries="<%= blogsEntries %>"
+>
 	<div class="widget-mode-simple">
 
 		<%
@@ -82,7 +88,9 @@ List<BlogsEntry> blogsEntries = _convertToBlogEntries(results);
 	</div>
 </liferay-ddm:template-renderer>
 
-<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />
+<liferay-ui:search-paginator
+	searchContainer="<%= searchContainer %>"
+/>
 
 <%!
 private List<BlogsEntry> _convertToBlogEntries(List results) throws PortalException, SystemException {

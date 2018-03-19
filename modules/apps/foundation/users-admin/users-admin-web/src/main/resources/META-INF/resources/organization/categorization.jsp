@@ -24,7 +24,10 @@ Organization organization = OrganizationServiceUtil.fetchOrganization(organizati
 
 <aui:model-context bean="<%= organization %>" model="<%= Organization.class %>" />
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="categorization" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="categorization"
+/>
 
 <liferay-asset:asset-categories-error />
 

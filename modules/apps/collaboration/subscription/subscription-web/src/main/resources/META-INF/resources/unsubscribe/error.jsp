@@ -16,7 +16,9 @@
 
 <%@ include file="/unsubscribe/init.jsp" %>
 
-<liferay-ui:header title="error" />
+<liferay-ui:header
+	title="error"
+/>
 
 <liferay-ui:error exception="<%= NoSuchTicketException.class %>" message="the-link-is-no-longer-valid" />
 

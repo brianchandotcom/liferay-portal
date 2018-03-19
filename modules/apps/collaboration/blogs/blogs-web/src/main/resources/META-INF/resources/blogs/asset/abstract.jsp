@@ -26,7 +26,9 @@ Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(),
 String coverImageURL = entry.getCoverImageURL(themeDisplay);
 %>
 
-<liferay-util:html-top outputKey="blogs_common_main_css">
+<liferay-util:html-top
+	outputKey="blogs_common_main_css"
+>
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/blogs/css/common_main.css", portlet.getTimestamp()) %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 

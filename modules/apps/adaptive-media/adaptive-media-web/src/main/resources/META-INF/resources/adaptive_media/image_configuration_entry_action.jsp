@@ -49,7 +49,13 @@ if (optimizeImageSingleBackgroundTasks != null) {
 String entryUuid = String.valueOf(amImageConfigurationEntry.getUUID());
 %>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
 	<liferay-portlet:renderURL var="editImageConfigurationEntryURL">
 		<portlet:param name="mvcRenderCommandName" value="/adaptive_media/edit_image_configuration_entry" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />

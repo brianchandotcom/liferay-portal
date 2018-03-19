@@ -10,7 +10,7 @@
 	<mkdir dir="log" />
 
 	<var name="fork.mode" value="false" />
-	<var name="fork.mode" value="true" if:true="${jvm.debug}" />
+	<var if:true="${jvm.debug}" name="fork.mode" value="true" />
 
 	<target name="build-db">
 		<if>

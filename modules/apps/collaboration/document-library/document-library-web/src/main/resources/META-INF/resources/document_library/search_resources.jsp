@@ -125,7 +125,9 @@ SearchContainer dlSearchContainer = new SearchContainer(liferayPortletRequest, p
 	</div>
 </c:if>
 
-<liferay-util:buffer var="searchResults">
+<liferay-util:buffer
+	var="searchResults"
+>
 	<liferay-portlet:renderURL varImpl="searchURL">
 		<portlet:param name="mvcRenderCommandName" value="/document_library/search" />
 	</liferay-portlet:renderURL>

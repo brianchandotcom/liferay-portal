@@ -27,7 +27,13 @@ AppDisplay appDisplay = (AppDisplay)row.getObject();
 String bundleIds = _getBundleIds(appDisplay);
 %>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
 
 	<%
 	String storeURL = appDisplay.getStoreURL(request);

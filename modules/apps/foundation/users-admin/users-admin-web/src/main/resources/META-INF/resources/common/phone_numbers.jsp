@@ -60,7 +60,10 @@ else {
 }
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="phoneNumbers" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="phoneNumbers"
+/>
 
 <div class="alert alert-info">
 	<liferay-ui:message key="phone-number-and-type-are-required-fields.-extension-must-be-numeric" />

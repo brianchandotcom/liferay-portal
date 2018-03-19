@@ -20,7 +20,9 @@
 	</liferay-util:include>
 </liferay-ui:search-container-column-text>
 
-<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+<liferay-ui:search-container-column-text
+	colspan="<%= 2 %>"
+>
 
 	<%
 	Dictionary<String, String> headers = bundle.getHeaders();

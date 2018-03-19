@@ -33,7 +33,9 @@ if (Validator.isNotNull(backURL)) {
 }
 %>
 
-<liferay-ui:search-container emptyResultsMessage="no-processes-were-found">
+<liferay-ui:search-container
+	emptyResultsMessage="no-processes-were-found"
+>
 	<liferay-ui:search-container-results>
 
 		<%

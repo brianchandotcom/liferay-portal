@@ -25,7 +25,9 @@ List<String> titles = (List<String>)request.getAttribute("liferay-trash:undo:tit
 int trashedEntriesCount = GetterUtil.getInteger(request.getAttribute("liferay-trash:undo:trashedEntriesCount"));
 %>
 
-<liferay-util:buffer var="alertMessage">
+<liferay-util:buffer
+	var="alertMessage"
+>
 	<aui:form action="<%= portletURL %>" cssClass="alert-trash-form" name="undoForm">
 		<liferay-util:buffer var="trashLink">
 

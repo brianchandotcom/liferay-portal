@@ -22,7 +22,13 @@ Map<String, Object> contextObjects = new HashMap<String, Object>();
 contextObjects.put("assetCategoriesNavigationDisplayContext", assetCategoriesNavigationDisplayContext);
 %>
 
-<liferay-ddm:template-renderer className="<%= AssetCategory.class.getName() %>" contextObjects="<%= contextObjects %>" displayStyle="<%= assetCategoriesNavigationPortletInstanceConfiguration.displayStyle() %>" displayStyleGroupId="<%= assetCategoriesNavigationDisplayContext.getDisplayStyleGroupId() %>" entries="<%= assetCategoriesNavigationDisplayContext.getDDMTemplateAssetVocabularies() %>">
+<liferay-ddm:template-renderer
+	className="<%= AssetCategory.class.getName() %>"
+	contextObjects="<%= contextObjects %>"
+	displayStyle="<%= assetCategoriesNavigationPortletInstanceConfiguration.displayStyle() %>"
+	displayStyleGroupId="<%= assetCategoriesNavigationDisplayContext.getDisplayStyleGroupId() %>"
+	entries="<%= assetCategoriesNavigationDisplayContext.getDDMTemplateAssetVocabularies() %>"
+>
 	<c:choose>
 		<c:when test="<%= assetCategoriesNavigationPortletInstanceConfiguration.allAssetVocabularies() %>">
 			<liferay-asset:asset-categories-navigation

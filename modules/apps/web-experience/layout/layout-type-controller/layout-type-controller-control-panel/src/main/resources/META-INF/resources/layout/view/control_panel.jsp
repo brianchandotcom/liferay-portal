@@ -16,6 +16,8 @@
 
 <%@ include file="/layout/view/init.jsp" %>
 
-<liferay-application-list:application-content portletId="<%= themeDisplay.getPpid() %>" />
+<liferay-application-list:application-content
+	portletId="<%= themeDisplay.getPpid() %>"
+/>
 
 <liferay-ui:layout-common />

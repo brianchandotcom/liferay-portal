@@ -31,7 +31,12 @@ if (Validator.isNotNull(scriptContent)) {
 
 <aui:input name="scriptContent" type="hidden" value="<%= script %>" />
 
-<liferay-ui:panel-container extended="<%= true %>" id="templateScriptContainer" markupView="lexicon" persistState="<%= true %>">
+<liferay-ui:panel-container
+	extended="<%= true %>"
+	id="templateScriptContainer"
+	markupView="lexicon"
+	persistState="<%= true %>"
+>
 	<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="templateScriptSectionPanel" markupView="lexicon" persistState="<%= true %>" title="script">
 		<aui:select changesContext="<%= true %>" helpMessage='<%= (ddmTemplate == null) ? StringPool.BLANK : "changing-the-language-does-not-automatically-translate-the-existing-template-script" %>' label="language" name="language">
 

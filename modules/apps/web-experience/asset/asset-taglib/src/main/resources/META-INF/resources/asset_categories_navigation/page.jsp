@@ -42,7 +42,12 @@ else {
 PortletURL portletURL = renderResponse.createRenderURL();
 %>
 
-<liferay-ui:panel-container cssClass="taglib-asset-categories-navigation" extended="<%= true %>" id='<%= namespace + "taglibAssetCategoriesNavigationPanel" %>' persistState="<%= true %>">
+<liferay-ui:panel-container
+	cssClass="taglib-asset-categories-navigation"
+	extended="<%= true %>"
+	id='<%= namespace + "taglibAssetCategoriesNavigationPanel" %>'
+	persistState="<%= true %>"
+>
 
 	<%
 	for (int i = 0; i < vocabularies.size(); i++) {

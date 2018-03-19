@@ -20,7 +20,10 @@
 Contact selContact = (Contact)request.getAttribute("user.selContact");
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="sms" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="sms"
+/>
 
 <aui:model-context bean="<%= selContact %>" model="<%= Contact.class %>" />
 

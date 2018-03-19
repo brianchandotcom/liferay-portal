@@ -27,7 +27,9 @@ portletDisplay.setURLBack(layoutPageTemplateDisplayContext.getEditLayoutPageTemp
 renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateEntryTitle());
 %>
 
-<liferay-editor:resources editorName="alloyeditor" />
+<liferay-editor:resources
+	editorName="alloyeditor"
+/>
 
 <soy:template-renderer
 	context="<%= fragmentsEditorContext.getEditorContext() %>"

@@ -32,7 +32,13 @@ if (layoutRevision.getLayoutRevisionId() == layoutRevisionId) {
 }
 %>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
 	<c:if test="<%= !layoutRevision.isPending() && LayoutPermissionUtil.contains(permissionChecker, layoutRevision.getPlid(), ActionKeys.UPDATE) %>">
 		<c:if test="<%= pendingLayoutRevisions.isEmpty() && !layoutRevision.isHead() && (layoutRevision.getStatus() != WorkflowConstants.STATUS_INCOMPLETE) %>">
 			<portlet:actionURL name="updateLayoutRevision" var="publishURL">

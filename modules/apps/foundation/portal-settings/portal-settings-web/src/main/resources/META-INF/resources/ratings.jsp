@@ -22,7 +22,10 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 CompanyPortletRatingsDefinitionDisplayContext companyPortletRatingsDefinitionDisplayContext = new CompanyPortletRatingsDefinitionDisplayContext(companyPortletPreferences, request);
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="ratings" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="ratings"
+/>
 
 <h3><liferay-ui:message key="ratings" /></h3>
 

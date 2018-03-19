@@ -53,4 +53,6 @@ else {
 }
 %>
 
-<liferay-ui:menu menu="<%= igViewFileVersionDisplayContext.getMenu() %>" />
+<liferay-ui:menu
+	menu="<%= igViewFileVersionDisplayContext.getMenu() %>"
+/>

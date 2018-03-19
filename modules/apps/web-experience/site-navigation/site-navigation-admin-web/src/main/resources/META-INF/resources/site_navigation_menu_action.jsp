@@ -24,7 +24,14 @@ SiteNavigationMenu siteNavigationMenu = (SiteNavigationMenu)row.getObject();
 PortletURL portletURL = renderResponse.createRenderURL();
 %>
 
-<liferay-ui:icon-menu cssClass="dropdown-menu-indicator-end" direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	cssClass="dropdown-menu-indicator-end"
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
 	<c:if test="<%= SiteNavigationMenuPermission.contains(permissionChecker, siteNavigationMenu, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editSiteNavigationMenuURL">
 			<portlet:param name="mvcPath" value="/edit_site_navigation_menu.jsp" />

@@ -24,7 +24,12 @@ FileEntry fileEntry = (FileEntry)row.getObject();
 MBMessage message = MBMessageLocalServiceUtil.getFileEntryMessage(fileEntry.getFileEntryId());
 %>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>">
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+>
 	<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, message.getCategoryId(), ActionKeys.ADD_FILE) %>">
 		<portlet:actionURL name="/message_boards/edit_message_attachments" var="restoreEntryURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />

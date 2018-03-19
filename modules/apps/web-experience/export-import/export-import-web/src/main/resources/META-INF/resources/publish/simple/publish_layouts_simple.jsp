@@ -56,12 +56,7 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)settingsMap.get("par
 			<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 		</portlet:renderURL>
 
-		<aui:nav-item
-			href="<%= advancedPublishURL %>"
-			iconCssClass="icon-cog"
-			label="switch-to-advanced-publication"
-			selected="<%= false %>"
-		/>
+		<aui:nav-item href="<%= advancedPublishURL %>" iconCssClass="icon-cog" label="switch-to-advanced-publication" selected="<%= false %>" />
 	</aui:nav>
 </aui:nav-bar>
 

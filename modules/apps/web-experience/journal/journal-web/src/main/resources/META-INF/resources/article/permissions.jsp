@@ -20,7 +20,10 @@
 JournalArticle article = journalDisplayContext.getArticle();
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="permissions" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="permissions"
+/>
 
 <aui:model-context bean="<%= article %>" model="<%= JournalArticle.class %>" />
 

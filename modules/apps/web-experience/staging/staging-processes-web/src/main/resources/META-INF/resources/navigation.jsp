@@ -46,21 +46,13 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		portletURL.setParameter("tabs1", "processes");
 		%>
 
-		<aui:nav-item
-			href="<%= portletURL.toString() %>"
-			label="processes"
-			selected='<%= tabs1.equals("processes") %>'
-		/>
+		<aui:nav-item href="<%= portletURL.toString() %>" label="processes" selected='<%= tabs1.equals("processes") %>' />
 
 		<%
 		portletURL.setParameter("tabs1", "scheduled");
 		%>
 
-		<aui:nav-item
-			href="<%= portletURL.toString() %>"
-			label="scheduled"
-			selected='<%= tabs1.equals("scheduled") %>'
-		/>
+		<aui:nav-item href="<%= portletURL.toString() %>" label="scheduled" selected='<%= tabs1.equals("scheduled") %>' />
 	</aui:nav>
 </aui:nav-bar>
 

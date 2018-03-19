@@ -54,7 +54,9 @@ if (portletTitleBasedNavigation) {
 }
 %>
 
-<liferay-util:buffer var="saveStatus">
+<liferay-util:buffer
+	var="saveStatus"
+>
 	<c:choose>
 		<c:when test="<%= entry != null %>">
 			<small class="text-capitalize text-muted" id="<portlet:namespace />saveStatus">
@@ -69,7 +71,9 @@ if (portletTitleBasedNavigation) {
 	</c:choose>
 </liferay-util:buffer>
 
-<liferay-util:buffer var="readingTime">
+<liferay-util:buffer
+	var="readingTime"
+>
 	<c:if test="<%= blogsPortletInstanceConfiguration.enableReadingTime() %>">
 		<small class="reading-time-wrapper text-muted">
 			<liferay-reading-time:reading-time displayStyle="descriptive" id="readingTime" model="<%= entry %>" />

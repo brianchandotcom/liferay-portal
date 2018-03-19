@@ -22,7 +22,9 @@ List<User> users = UserLocalServiceUtil.search(company.getCompanyId(), null, Wor
 request.setAttribute("users", users);
 %>
 
-<display:table name="users">
+<display:table
+	name="users"
+>
 	<display:column property="userId" title="User ID" />
 	<display:column property="emailAddress" title="Email Address" />
 </display:table>

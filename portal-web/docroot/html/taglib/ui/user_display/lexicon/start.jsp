@@ -16,7 +16,9 @@
 
 <%@ include file="/html/taglib/ui/user_display/init.jsp" %>
 
-<liferay-util:buffer var="html">
+<liferay-util:buffer
+	var="html"
+>
 	<liferay-ui:user-portrait
 		imageCssClass="<%= imageCssClass %>"
 		user="<%= userDisplay %>"

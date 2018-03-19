@@ -44,21 +44,13 @@ portletURL.setParameter("portletResource", portletResource);
 				portletURL.setParameter("tabs2", "export");
 				%>
 
-				<aui:nav-item
-					href="<%= portletURL.toString() %>"
-					label="export"
-					selected='<%= tabs2.equals("export") %>'
-				/>
+				<aui:nav-item href="<%= portletURL.toString() %>" label="export" selected='<%= tabs2.equals("export") %>' />
 
 				<%
 				portletURL.setParameter("tabs2", "import");
 				%>
 
-				<aui:nav-item
-					href="<%= portletURL.toString() %>"
-					label="import"
-					selected='<%= tabs2.equals("import") %>'
-				/>
+				<aui:nav-item href="<%= portletURL.toString() %>" label="import" selected='<%= tabs2.equals("import") %>' />
 			</aui:nav>
 		</aui:nav-bar>
 

@@ -66,22 +66,6 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 	}
 
 	@Override
-	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws Exception {
-
-		if (isSubrepository() || isReadOnly(absolutePath)) {
-			return content;
-		}
-
-		content = _formatSingleLineTagAttributes(content);
-
-		content = formatMultiLinesTagAttributes(content, false);
-
-		return content;
-	}
-
-	@Override
 	protected Tag doFormatLineBreaks(Tag tag) {
 		String tagName = tag.getName();
 
@@ -96,6 +80,22 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 		}
 
 		return tag;
+	}
+
+	@Override
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
+		throws Exception {
+
+		if (isSubrepository() || isReadOnly(absolutePath)) {
+			return content;
+		}
+
+		content = _formatSingleLineTagAttributes(content);
+
+		content = formatMultiLinesTagAttributes(content, false);
+
+		return content;
 	}
 
 	@Override

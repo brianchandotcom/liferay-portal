@@ -1808,16 +1808,16 @@ public class ProjectTemplatesTest {
 
 		Path customArchetypesDirPath = customArchetypesDir.toPath();
 
-		String fileName = templateFilePath.getFileName().toString();
-		
-		String[] fileNameSplit = fileName.split("-");
-		
-		Assert.assertEquals(fileNameSplit.length, 2);
-		
+		Path fileNamePath = templateFilePath.getFileName();
+
+		String fileName = fileNamePath.toString();
+
+		String suffix = fileName.substring(fileName.indexOf("-"));
+
 		Files.copy(
 			templateFilePath,
 			customArchetypesDirPath.resolve(
-				"custom.name.project.templates.foo.bar-" + fileNameSplit[1]));
+				"custom.name.project.templates.foo.bar-" + suffix));
 
 		List<File> customArchetypesDirs = new ArrayList<>();
 

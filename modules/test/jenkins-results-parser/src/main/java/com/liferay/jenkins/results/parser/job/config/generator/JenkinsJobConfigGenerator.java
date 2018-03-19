@@ -441,7 +441,11 @@ public class JenkinsJobConfigGenerator {
 
 		environmentVariableElements.add(sizeElement);
 
-		Set<String> environmentVariables = environmentVariablesMap.keySet();
+		List<String> environmentVariables = new ArrayList<>();
+
+		environmentVariables.addAll(environmentVariablesMap.keySet());
+
+		Collections.sort(environmentVariables);
 
 		for (String environmentVariable : environmentVariables) {
 			Element nameElement = Dom4JUtil.getNewElement(

@@ -21,6 +21,9 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -52,6 +55,36 @@ public class BlogsEntryUADEntityDisplayHelper {
 			"entryId", String.valueOf(blogsEntry.getEntryId()));
 
 		return portletURL.toString();
+	}
+
+	public String[] getDisplayFieldNames() {
+		return new String[] {
+			"title", "subtitle", "urlTitle", "description", "content",
+			"smallImage", "smallImageId"
+		};
+	}
+
+	public Map<String, Object> getUADEntityNonanonymizableFieldValues(
+		BlogsEntry blogsEntry) {
+
+		Map<String, Object> uadEntityNonanonymizableFieldValues =
+			new HashMap<>();
+
+		uadEntityNonanonymizableFieldValues.put(
+			"content", blogsEntry.getContent());
+		uadEntityNonanonymizableFieldValues.put(
+			"description", blogsEntry.getDescription());
+		uadEntityNonanonymizableFieldValues.put(
+			"smallImage", blogsEntry.getSmallImage());
+		uadEntityNonanonymizableFieldValues.put(
+			"smallImageId", blogsEntry.getSmallImageId());
+		uadEntityNonanonymizableFieldValues.put(
+			"subtitle", blogsEntry.getSubtitle());
+		uadEntityNonanonymizableFieldValues.put("title", blogsEntry.getTitle());
+		uadEntityNonanonymizableFieldValues.put(
+			"urlTitle", blogsEntry.getUrlTitle());
+
+		return uadEntityNonanonymizableFieldValues;
 	}
 
 	@Reference

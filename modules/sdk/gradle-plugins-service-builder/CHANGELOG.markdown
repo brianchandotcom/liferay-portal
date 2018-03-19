@@ -309,6 +309,7 @@ tasks that extend `BuildServiceTask`.
 ### Changed
 - [LPS-78023]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 2.0.0.
+- [LPS-78772]: Update formatting for auto-generated `module-spring.xml` files.
 
 [Liferay Portal Tools Service Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-service-builder
 [LPS-53392]: https://issues.liferay.com/browse/LPS-53392
@@ -346,3 +347,4 @@ version 2.0.0.
 [LPS-76018]: https://issues.liferay.com/browse/LPS-76018
 [LPS-76626]: https://issues.liferay.com/browse/LPS-76626
 [LPS-78023]: https://issues.liferay.com/browse/LPS-78023
+[LPS-78772]: https://issues.liferay.com/browse/LPS-78772

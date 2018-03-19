@@ -82,13 +82,7 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 	}
 
 	@Override
-	protected Tag formatLineBreaks(Tag tag, boolean forceSingleLine) {
-		if (forceSingleLine) {
-			tag.setMultiLine(false);
-
-			return tag;
-		}
-
+	protected Tag doFormatLineBreaks(Tag tag) {
 		String tagName = tag.getName();
 
 		if (!tagName.contains(StringPool.COLON) || tagName.startsWith("aui:") ||

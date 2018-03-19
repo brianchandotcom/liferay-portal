@@ -32,8 +32,18 @@ import java.util.regex.Pattern;
  */
 public abstract class TagAttributesCheck extends BaseFileCheck {
 
-	protected Tag formatLineBreaks(Tag tag, boolean forceSingleLine) {
+	protected Tag doFormatLineBreaks(Tag tag) {
 		return tag;
+	}
+
+	protected Tag formatLineBreaks(Tag tag, boolean forceSingleLine) {
+		if (forceSingleLine) {
+			tag.setMultiLine(false);
+
+			return tag;
+		}
+
+		return doFormatLineBreaks(tag);
 	}
 
 	protected String formatMultiLinesTagAttributes(

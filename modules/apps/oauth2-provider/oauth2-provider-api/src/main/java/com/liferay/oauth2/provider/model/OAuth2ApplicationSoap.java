@@ -23,9 +23,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.oauth2.provider.service.http.OAuth2ApplicationServiceSoap}.
  *
  * @author Brian Wing Shun Chan
+ * @see com.liferay.oauth2.provider.service.http.OAuth2ApplicationServiceSoap
  * @generated
  */
 @ProviderType
@@ -34,14 +35,23 @@ public class OAuth2ApplicationSoap implements Serializable {
 		OAuth2ApplicationSoap soapModel = new OAuth2ApplicationSoap();
 
 		soapModel.setOAuth2ApplicationId(model.getOAuth2ApplicationId());
-		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
-		soapModel.setUserId(model.getUserId());
-		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setName(model.getName());
+		soapModel.setUserId(model.getUserId());
+		soapModel.setUserName(model.getUserName());
+		soapModel.setAllowedGrantTypes(model.getAllowedGrantTypes());
+		soapModel.setClientId(model.getClientId());
+		soapModel.setClientProfile(model.getClientProfile());
+		soapModel.setClientSecret(model.getClientSecret());
 		soapModel.setDescription(model.getDescription());
+		soapModel.setFeatures(model.getFeatures());
+		soapModel.setHomePageURL(model.getHomePageURL());
+		soapModel.setIconFileEntryId(model.getIconFileEntryId());
+		soapModel.setName(model.getName());
+		soapModel.setPrivacyPolicyURL(model.getPrivacyPolicyURL());
+		soapModel.setRedirectURIs(model.getRedirectURIs());
+		soapModel.setScopeAliases(model.getScopeAliases());
 
 		return soapModel;
 	}
@@ -105,36 +115,12 @@ public class OAuth2ApplicationSoap implements Serializable {
 		_oAuth2ApplicationId = oAuth2ApplicationId;
 	}
 
-	public long getGroupId() {
-		return _groupId;
-	}
-
-	public void setGroupId(long groupId) {
-		_groupId = groupId;
-	}
-
 	public long getCompanyId() {
 		return _companyId;
 	}
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
-	}
-
-	public long getUserId() {
-		return _userId;
-	}
-
-	public void setUserId(long userId) {
-		_userId = userId;
-	}
-
-	public String getUserName() {
-		return _userName;
-	}
-
-	public void setUserName(String userName) {
-		_userName = userName;
 	}
 
 	public Date getCreateDate() {
@@ -153,12 +139,52 @@ public class OAuth2ApplicationSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public String getName() {
-		return _name;
+	public long getUserId() {
+		return _userId;
 	}
 
-	public void setName(String name) {
-		_name = name;
+	public void setUserId(long userId) {
+		_userId = userId;
+	}
+
+	public String getUserName() {
+		return _userName;
+	}
+
+	public void setUserName(String userName) {
+		_userName = userName;
+	}
+
+	public String getAllowedGrantTypes() {
+		return _allowedGrantTypes;
+	}
+
+	public void setAllowedGrantTypes(String allowedGrantTypes) {
+		_allowedGrantTypes = allowedGrantTypes;
+	}
+
+	public String getClientId() {
+		return _clientId;
+	}
+
+	public void setClientId(String clientId) {
+		_clientId = clientId;
+	}
+
+	public int getClientProfile() {
+		return _clientProfile;
+	}
+
+	public void setClientProfile(int clientProfile) {
+		_clientProfile = clientProfile;
+	}
+
+	public String getClientSecret() {
+		return _clientSecret;
+	}
+
+	public void setClientSecret(String clientSecret) {
+		_clientSecret = clientSecret;
 	}
 
 	public String getDescription() {
@@ -169,13 +195,78 @@ public class OAuth2ApplicationSoap implements Serializable {
 		_description = description;
 	}
 
+	public String getFeatures() {
+		return _features;
+	}
+
+	public void setFeatures(String features) {
+		_features = features;
+	}
+
+	public String getHomePageURL() {
+		return _homePageURL;
+	}
+
+	public void setHomePageURL(String homePageURL) {
+		_homePageURL = homePageURL;
+	}
+
+	public long getIconFileEntryId() {
+		return _iconFileEntryId;
+	}
+
+	public void setIconFileEntryId(long iconFileEntryId) {
+		_iconFileEntryId = iconFileEntryId;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public void setName(String name) {
+		_name = name;
+	}
+
+	public String getPrivacyPolicyURL() {
+		return _privacyPolicyURL;
+	}
+
+	public void setPrivacyPolicyURL(String privacyPolicyURL) {
+		_privacyPolicyURL = privacyPolicyURL;
+	}
+
+	public String getRedirectURIs() {
+		return _redirectURIs;
+	}
+
+	public void setRedirectURIs(String redirectURIs) {
+		_redirectURIs = redirectURIs;
+	}
+
+	public String getScopeAliases() {
+		return _scopeAliases;
+	}
+
+	public void setScopeAliases(String scopeAliases) {
+		_scopeAliases = scopeAliases;
+	}
+
 	private long _oAuth2ApplicationId;
-	private long _groupId;
 	private long _companyId;
-	private long _userId;
-	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private String _name;
+	private long _userId;
+	private String _userName;
+	private String _allowedGrantTypes;
+	private String _clientId;
+	private int _clientProfile;
+	private String _clientSecret;
 	private String _description;
+	private String _features;
+	private String _homePageURL;
+	private long _iconFileEntryId;
+	private String _name;
+	private String _privacyPolicyURL;
+	private String _redirectURIs;
+	private String _scopeAliases;
 }

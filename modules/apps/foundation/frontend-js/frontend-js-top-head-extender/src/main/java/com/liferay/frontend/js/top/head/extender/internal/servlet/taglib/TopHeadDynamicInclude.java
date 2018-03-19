@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 import com.liferay.portal.util.JavaScriptBundleUtil;
 
 import java.io.IOException;
@@ -70,10 +72,10 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 		}
 		else {
 			if (themeDisplay.isThemeJsBarebone()) {
-				_renderBundleURLs(response, _jsResourceURLs);
+				_renderBundleURLs(request, response, _jsResourceURLs);
 			}
 			else {
-				_renderBundleURLs(response, _allJsResourceURLs);
+				_renderBundleURLs(request, response, _allJsResourceURLs);
 			}
 		}
 	}
@@ -268,17 +270,28 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 	}
 
 	private void _renderBundleURLs(
-			HttpServletResponse response, List<String> urls)
+			HttpServletRequest request, HttpServletResponse response,
+			List<String> urls)
 		throws IOException {
 
 		PrintWriter printWriter = response.getWriter();
 
 		for (String url : urls) {
 			printWriter.print("<script data-senna-track=\"permanent\" src=\"");
-			printWriter.print(url);
+
+			AbsolutePortalURLBuilder absolutePortalURLBuilder =
+				_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
+					request);
+
+			printWriter.print(
+				absolutePortalURLBuilder.forResource(url).build());
+
 			printWriter.println("\" type=\"text/javascript\"></script>");
 		}
 	}
+
+	@Reference
+	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
 	private volatile List<String> _allJsResourceURLs = new ArrayList<>();
 	private BundleContext _bundleContext;

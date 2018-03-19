@@ -1,0 +1,2 @@
+Liferay-Releng-Marketplace: true
+Liferay-Releng-Subsystem-Title: ${liferay.releng.app.title.prefix} Elasticsearch 6 Search Engine

@@ -1,0 +1,2 @@
+Liferay-Releng-Marketplace: true
+Liferay-Releng-Subsystem-Title: ${liferay.releng.app.title.prefix} Social Networking

@@ -106,16 +106,6 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	@Override
-	public FragmentEntryLink fetchFragmentEntryLink(
-			long groupId, long classNameId, long classPK, long fragmentEntryId,
-			int position)
-		throws Exception {
-
-		return fragmentEntryLinkPersistence.fetchByG_F_C_C_P(
-			groupId, fragmentEntryId, classNameId, classPK, position);
-	}
-
-	@Override
 	public List<FragmentEntryLink> getFragmentEntryLinks(
 		long groupId, long classNameId, long classPK) {
 

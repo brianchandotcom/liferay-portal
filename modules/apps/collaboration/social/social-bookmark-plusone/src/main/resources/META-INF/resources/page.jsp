@@ -17,20 +17,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String contentId = GetterUtil.getString((String)request.getAttribute("liferay-social-bookmarks:bookmark:contentId"));
 SocialBookmark socialBookmark = (SocialBookmark)request.getAttribute("liferay-social-bookmarks:bookmark:socialBookmark");
 String title = GetterUtil.getString((String)request.getAttribute("liferay-social-bookmarks:bookmark:title"));
 String url = GetterUtil.getString((String)request.getAttribute("liferay-social-bookmarks:bookmark:url"));
-
-Map<String, Object> data = new HashMap<>();
-
-data.put("contentid", contentId);
 
 String icon = "../aui/google-plus-sign";
 %>
 
 <liferay-ui:icon
-	data="<%= data %>"
 	image="<%= icon %>"
 	label="<%= false %>"
 	linkCssClass="btn btn-borderless btn-outline-borderless btn-outline-secondary btn-sm"

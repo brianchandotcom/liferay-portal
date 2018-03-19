@@ -14,10 +14,24 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+<%@ include file="/dynamic_include/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
-page import="com.liferay.social.bookmarks.SocialBookmark" %>
-
-<liferay-theme:defineObjects />
+<aui:script>
+	if (window.Analytics) {
+		Liferay.on(
+			'socialBookmarks:share',
+			function(data) {
+				Analytics.send(
+					'SHARE',
+					'SocialBookmarks',
+					{
+						className: data.className,
+						classPK: data.classPK,
+						type: data.type,
+						url: data.url
+					}
+				);
+			}
+		);
+	}
+</aui:script>

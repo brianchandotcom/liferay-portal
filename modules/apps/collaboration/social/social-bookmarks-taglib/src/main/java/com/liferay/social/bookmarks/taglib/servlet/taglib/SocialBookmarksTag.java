@@ -50,8 +50,12 @@ public class SocialBookmarksTag extends IncludeTag {
 		return super.doStartTag();
 	}
 
-	public void setContentId(String contentId) {
-		_contentId = contentId;
+	public void setClassName(String className) {
+		_className = className;
+	}
+
+	public void setClassPK(long classPK) {
+		_classPK = classPK;
 	}
 
 	public void setDisplayStyle(String displayStyle) {
@@ -98,7 +102,7 @@ public class SocialBookmarksTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_contentId = null;
+		_className = null;
 		_displayStyle = null;
 		_target = null;
 		_title = null;
@@ -114,7 +118,9 @@ public class SocialBookmarksTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-social-bookmarks:bookmarks:contentId", _contentId);
+			"liferay-social-bookmarks:bookmarks:className", _className);
+		request.setAttribute(
+			"liferay-social-bookmarks:bookmarks:classPK", _classPK);
 		request.setAttribute(
 			"liferay-social-bookmarks:bookmarks:displayStyle", _displayStyle);
 		request.setAttribute(
@@ -128,7 +134,8 @@ public class SocialBookmarksTag extends IncludeTag {
 
 	private static final String _PAGE = "/bookmarks/page.jsp";
 
-	private String _contentId;
+	private String _className;
+	private long _classPK;
 	private String _displayStyle;
 	private String _target;
 	private String _title;

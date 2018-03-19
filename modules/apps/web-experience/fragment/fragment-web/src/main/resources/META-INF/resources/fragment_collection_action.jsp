@@ -22,7 +22,13 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 FragmentCollection fragmentCollection = (FragmentCollection)row.getObject();
 %>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
 	<c:if test="<%= FragmentCollectionPermission.contains(permissionChecker, fragmentCollection, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editFragmentCollectionURL">
 			<portlet:param name="mvcRenderCommandName" value="/fragment/edit_fragment_collection" />

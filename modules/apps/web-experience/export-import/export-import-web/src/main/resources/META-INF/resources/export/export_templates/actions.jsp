@@ -26,7 +26,13 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration)row.getObject();
 %>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
 	<portlet:renderURL var="newExportProcessURL">
 		<portlet:param name="mvcPath" value="/export/new_export/export_layouts.jsp" />
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />

@@ -25,4 +25,7 @@ portletURL.setParameter("classPK", String.valueOf(classPK));
 request.setAttribute("mobile_device_rules_header.jspf-portletURL", portletURL);
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="device" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="device"
+/>

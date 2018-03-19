@@ -26,7 +26,13 @@ User user2 = (User)row.getObject();
 long userId = user2.getUserId();
 %>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
 
 	<%
 	boolean hasUpdatePermission = UserPermissionUtil.contains(permissionChecker, userId, ActionKeys.UPDATE);

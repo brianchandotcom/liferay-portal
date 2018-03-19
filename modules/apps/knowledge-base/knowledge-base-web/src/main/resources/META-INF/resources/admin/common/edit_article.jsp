@@ -51,7 +51,9 @@ if (portletTitleBasedNavigation) {
 }
 %>
 
-<liferay-util:buffer var="kbArticleStatus">
+<liferay-util:buffer
+	var="kbArticleStatus"
+>
 	<c:if test="<%= kbArticle != null %>">
 		<aui:workflow-status id="<%= String.valueOf(resourcePrimKey) %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" version="<%= String.valueOf(kbArticle.getVersion()) %>" />
 	</c:if>

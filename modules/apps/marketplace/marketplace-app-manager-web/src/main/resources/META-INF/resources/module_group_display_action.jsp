@@ -26,7 +26,13 @@ ModuleGroupDisplay moduleGroupDisplay = (ModuleGroupDisplay)row.getObject();
 String bundleIds = _getBundleIds(moduleGroupDisplay);
 %>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
 	<c:choose>
 		<c:when test="<%= moduleGroupDisplay.getState() == BundleStateConstants.ACTIVE %>">
 			<portlet:actionURL name="deactivateBundles" var="deactivateBundlesURL">

@@ -51,14 +51,7 @@ if (Validator.isNotNull(script)) {
 >
 	<liferay-ui:section>
 		<div id="<portlet:namespace />formBuilderTab">
-			<aui:translation-manager
-				availableLocales="<%= availableLocales %>"
-				changeableDefaultLanguage="<%= changeableDefaultLanguage %>"
-				defaultLanguageId="<%= defaultLanguageId %>"
-				id="translationManager"
-				initialize="<%= false %>"
-				readOnly="<%= false %>"
-			/>
+			<aui:translation-manager availableLocales="<%= availableLocales %>" changeableDefaultLanguage="<%= changeableDefaultLanguage %>" defaultLanguageId="<%= defaultLanguageId %>" id="translationManager" initialize="<%= false %>" readOnly="<%= false %>" />
 
 			<div class="diagram-builder form-builder" id="<portlet:namespace />formBuilder">
 				<div class="diagram-builder-content" id="<portlet:namespace />formBuilderContent">

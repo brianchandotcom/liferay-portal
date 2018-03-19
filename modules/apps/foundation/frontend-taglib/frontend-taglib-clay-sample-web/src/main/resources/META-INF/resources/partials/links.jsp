@@ -28,4 +28,8 @@ Map<String, String> data = new HashMap<>();
 data.put("customProperty", "customValue");
 %>
 
-<clay:link data="<%= data %>" href="#" label="link text" />
+<clay:link
+	data="<%= data %>"
+	href="#"
+	label="link text"
+/>

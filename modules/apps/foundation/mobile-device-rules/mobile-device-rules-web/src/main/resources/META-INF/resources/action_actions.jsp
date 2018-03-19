@@ -22,7 +22,13 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 MDRAction action = (MDRAction)row.getObject();
 %>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
 	<c:if test="<%= MDRRuleGroupInstancePermission.contains(permissionChecker, action.getRuleGroupInstanceId(), ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editActionURL">
 			<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_action" />

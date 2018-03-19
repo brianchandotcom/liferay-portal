@@ -20,7 +20,9 @@
 boolean urlIsNotNull = Validator.isNotNull(url);
 %>
 
-<liferay-util:buffer var="linkContent">
+<liferay-util:buffer
+	var="linkContent"
+>
 	<c:choose>
 		<c:when test="<%= Validator.isNotNull(icon) %>">
 			<aui:icon cssClass="<%= iconCssClass %>" image="<%= icon %>" markupView="<%= markupView %>" />

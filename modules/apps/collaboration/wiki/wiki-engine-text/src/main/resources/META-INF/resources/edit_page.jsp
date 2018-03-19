@@ -20,4 +20,8 @@
 WikiPage wikiPage = BaseWikiEngine.getWikiPage(request);
 %>
 
-<liferay-ui:input-field bean="<%= wikiPage %>" field="content" model="<%= WikiPage.class %>" />
+<liferay-ui:input-field
+	bean="<%= wikiPage %>"
+	field="content"
+	model="<%= WikiPage.class %>"
+/>

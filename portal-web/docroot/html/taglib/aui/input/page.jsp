@@ -28,7 +28,9 @@ if (type.equals("textarea") && BrowserSnifferUtil.isIe(request) && ((BrowserSnif
 	</liferay-util:buffer>
 </c:if>
 
-<liferay-util:buffer var="labelContent">
+<liferay-util:buffer
+	var="labelContent"
+>
 	<c:if test="<%= Validator.isNotNull(label) %>">
 		<c:if test='<%= type.equals("toggle-switch") %>'>
 			<span class="toggle-switch-label">

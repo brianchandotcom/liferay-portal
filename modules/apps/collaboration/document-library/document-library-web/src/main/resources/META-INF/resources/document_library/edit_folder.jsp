@@ -320,7 +320,9 @@ if (portletTitleBasedNavigation) {
 	</aui:form>
 </div>
 
-<liferay-util:buffer var="workflowDefinitionsBuffer">
+<liferay-util:buffer
+	var="workflowDefinitionsBuffer"
+>
 	<c:if test="<%= workflowEnabled %>">
 		<aui:select label="" name="LIFERAY_WORKFLOW_DEFINITION_FILE_ENTRY_TYPE" title="workflow-definition">
 			<aui:option label="no-workflow" value="" />

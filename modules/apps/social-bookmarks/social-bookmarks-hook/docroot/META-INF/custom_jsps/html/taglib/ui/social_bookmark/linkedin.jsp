@@ -27,7 +27,9 @@ else if (displayStyle.equals("vertical")) {
 }
 %>
 
-<liferay-util:html-bottom outputKey="taglib_ui_social_bookmark_linkedin">
+<liferay-util:html-bottom
+	outputKey="taglib_ui_social_bookmark_linkedin"
+>
 	<script data-senna-track="temporary" type="text/javascript">
 		if (window.IN) {
 			delete window.IN;

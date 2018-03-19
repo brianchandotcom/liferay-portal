@@ -22,7 +22,9 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_fragment_
 FragmentEntry fragmentEntry = (FragmentEntry)request.getAttribute("liferay-fragment:fragment-entry-renderer:fragmentEntry");
 %>
 
-<liferay-util:html-top outputKey="<%= randomNamespace %>">
+<liferay-util:html-top
+	outputKey="<%= randomNamespace %>"
+>
 	<style type="text/css">
 		<%= fragmentEntry.getCss() %>
 	</style>

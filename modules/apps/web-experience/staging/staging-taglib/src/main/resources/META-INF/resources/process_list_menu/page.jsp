@@ -16,7 +16,13 @@
 
 <%@ include file="/process_list_menu/init.jsp" %>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
 	<c:if test="<%= !localPublishing || (backgroundTask.getGroupId() != liveGroupId) %>">
 		<portlet:actionURL name="editPublishConfiguration" var="relaunchURL">
 			<portlet:param name="mvcRenderCommandName" value="editPublishConfiguration" />

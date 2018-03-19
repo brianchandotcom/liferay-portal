@@ -24,7 +24,10 @@ String defaultRobots = RobotsUtil.getRobots(layoutsAdminDisplayContext.getSelLay
 String robots = ParamUtil.getString(request, "robots", defaultRobots);
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="robots" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="robots"
+/>
 
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(virtualHostName) %>">

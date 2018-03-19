@@ -24,7 +24,9 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 renderResponse.setTitle(selLayout.getName(locale));
 %>
 
-<liferay-editor:resources editorName="alloyeditor" />
+<liferay-editor:resources
+	editorName="alloyeditor"
+/>
 
 <soy:template-renderer
 	context="<%= fragmentsEditorContext.getEditorContext() %>"

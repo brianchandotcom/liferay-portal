@@ -16,7 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-util:body-bottom outputKey="addContentMenu">
+<liferay-util:body-bottom
+	outputKey="addContentMenu"
+>
 
 	<%
 	String portletNamespace = PortalUtil.getPortletNamespace(ProductNavigationControlMenuPortletKeys.PRODUCT_NAVIGATION_CONTROL_MENU);

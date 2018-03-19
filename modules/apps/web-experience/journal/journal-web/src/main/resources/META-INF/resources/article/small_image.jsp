@@ -24,7 +24,10 @@ boolean smallImage = BeanParamUtil.getBoolean(article, request, "smallImage");
 boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_article.jsp-changeStructure"));
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="small_image" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="small_image"
+/>
 
 <aui:model-context bean="<%= article %>" model="<%= JournalArticle.class %>" />
 

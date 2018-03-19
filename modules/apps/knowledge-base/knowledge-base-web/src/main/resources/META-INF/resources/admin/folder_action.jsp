@@ -50,7 +50,13 @@ else {
 }
 %>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
 	<c:if test="<%= kbFolder != null %>">
 		<c:if test="<%= KBFolderPermission.contains(permissionChecker, kbFolder, KBActionKeys.UPDATE) %>">
 			<liferay-portlet:renderURL var="editURL">

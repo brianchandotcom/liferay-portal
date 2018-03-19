@@ -22,6 +22,9 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 UnicodeProperties layoutSetTypeSettings = selLayoutSet.getSettingsProperties();
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="javascript" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="javascript"
+/>
 
 <aui:input label="paste-javascript-code-that-is-executed-at-the-bottom-of-every-page" name="TypeSettingsProperties--javascript--" placeholder="javascript" type="textarea" value='<%= layoutSetTypeSettings.getProperty("javascript") %>' wrap="soft" />

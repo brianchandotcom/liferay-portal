@@ -14,7 +14,13 @@
  */
 --%>
 
-<liferay-ui:icon-menu cssClass="control-entry" direction="right" markupView="lexicon" scroll="<%= false %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	cssClass="control-entry"
+	direction="right"
+	markupView="lexicon"
+	scroll="<%= false %>"
+	showWhenSingleIcon="<%= true %>"
+>
 	<c:if test="<%= AnnouncementsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcRenderCommandName" value="/announcements/edit_entry" />

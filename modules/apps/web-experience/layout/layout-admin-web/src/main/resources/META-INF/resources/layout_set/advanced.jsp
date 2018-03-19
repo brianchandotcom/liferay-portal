@@ -22,7 +22,10 @@ Group guestGroup = GroupLocalServiceUtil.getGroup(company.getCompanyId(), GroupC
 boolean mergeGuestPublicPages = PropertiesParamUtil.getBoolean(layoutsAdminDisplayContext.getGroupTypeSettings(), request, "mergeGuestPublicPages");
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="advanced" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="advanced"
+/>
 
 <c:choose>
 	<c:when test="<%= !layoutsAdminDisplayContext.isPrivateLayout() && (layoutsAdminDisplayContext.getLiveGroupId() != guestGroup.getGroupId()) %>">

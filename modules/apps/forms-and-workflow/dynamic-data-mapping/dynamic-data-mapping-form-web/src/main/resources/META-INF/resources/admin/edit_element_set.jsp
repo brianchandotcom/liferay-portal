@@ -54,12 +54,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 	</aui:nav-bar>
 
 	<div class="container-fluid-1280">
-		<aui:translation-manager
-			availableLocales="<%= availableLocales %>"
-			changeableDefaultLanguage="<%= false %>"
-			defaultLanguageId="<%= defaultLanguageId %>"
-			id="translationManager"
-		/>
+		<aui:translation-manager availableLocales="<%= availableLocales %>" changeableDefaultLanguage="<%= false %>" defaultLanguageId="<%= defaultLanguageId %>" id="translationManager" />
 	</div>
 
 	<button class="btn btn-primary lfr-ddm-add-field lfr-ddm-plus-button">

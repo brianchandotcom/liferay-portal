@@ -18,10 +18,7 @@
 
 <aui:nav-bar markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item
-			label="licenses"
-			selected="<%= true %>"
-		/>
+		<aui:nav-item label="licenses" selected="<%= true %>" />
 	</aui:nav>
 </aui:nav-bar>
 

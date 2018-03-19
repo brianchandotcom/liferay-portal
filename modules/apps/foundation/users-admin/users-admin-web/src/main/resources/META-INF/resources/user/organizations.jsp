@@ -26,11 +26,16 @@ String organizationIdsString = ParamUtil.getString(request, "organizationsSearch
 currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organizations");
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="organizations" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="organizations"
+/>
 
 <liferay-ui:membership-policy-error />
 
-<liferay-util:buffer var="removeOrganizationIcon">
+<liferay-util:buffer
+	var="removeOrganizationIcon"
+>
 	<liferay-ui:icon
 		icon="times"
 		markupView="lexicon"

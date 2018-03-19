@@ -26,7 +26,10 @@ OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)request.getAttrib
 Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(Organization.class);
 %>
 
-<liferay-ui:search-container id="<%= organizationSearchContainer.getId(request, namespace) %>" searchContainer="<%= organizationSearchContainer %>">
+<liferay-ui:search-container
+	id="<%= organizationSearchContainer.getId(request, namespace) %>"
+	searchContainer="<%= organizationSearchContainer %>"
+>
 	<liferay-ui:search-container-results>
 		<c:choose>
 			<c:when test="<%= !forceDatabase && indexer.isIndexerEnabled() && PropsValues.ORGANIZATIONS_SEARCH_WITH_INDEX %>">

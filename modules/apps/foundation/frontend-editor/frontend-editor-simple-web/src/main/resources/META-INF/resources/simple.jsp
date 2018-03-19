@@ -46,7 +46,9 @@ if (resizable) {
 }
 %>
 
-<liferay-util:buffer var="editor">
+<liferay-util:buffer
+	var="editor"
+>
 	<table bgcolor="#FFFFFF" cellpadding="0" cellspacing="0" height="100%" width="100%">
 		<tr>
 			<td bgcolor="#FFFFFF" height="100%">

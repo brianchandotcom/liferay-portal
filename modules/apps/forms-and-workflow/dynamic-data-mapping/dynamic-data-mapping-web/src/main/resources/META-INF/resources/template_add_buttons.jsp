@@ -27,7 +27,9 @@ long resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId");
 String message = "add";
 %>
 
-<liferay-frontend:add-menu inline="<%= true %>">
+<liferay-frontend:add-menu
+	inline="<%= true %>"
+>
 	<c:choose>
 		<c:when test="<%= classNameId == PortalUtil.getClassNameId(DDMStructure.class) %>">
 			<c:if test="<%= DDMTemplatePermission.containsAddTemplatePermission(permissionChecker, groupId, classNameId, scopeClassNameId) && (Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) %>">

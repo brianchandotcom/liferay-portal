@@ -32,21 +32,13 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			portletURL.setParameter("tabs1", "calendar");
 			%>
 
-			<aui:nav-item
-				href="<%= portletURL.toString() %>"
-				label="calendar"
-				selected='<%= tabs1.equals("calendar") %>'
-			/>
+			<aui:nav-item href="<%= portletURL.toString() %>" label="calendar" selected='<%= tabs1.equals("calendar") %>' />
 
 			<%
 			portletURL.setParameter("tabs1", "resources");
 			%>
 
-			<aui:nav-item
-				href="<%= portletURL.toString() %>"
-				label="resources"
-				selected='<%= tabs1.equals("resources") %>'
-			/>
+			<aui:nav-item href="<%= portletURL.toString() %>" label="resources" selected='<%= tabs1.equals("resources") %>' />
 		</aui:nav>
 
 		<c:if test='<%= tabs1.equals("resources") %>'>

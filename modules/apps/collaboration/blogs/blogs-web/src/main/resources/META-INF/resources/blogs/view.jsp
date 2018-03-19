@@ -82,21 +82,13 @@ searchContainer.setResults(results);
 <c:if test="<%= notPublishedEntriesCount > 0 %>">
 	<aui:nav-bar markupView="lexicon">
 		<aui:nav cssClass="navbar-nav">
-			<aui:nav-item
-				href="<%= portletURL.toString() %>"
-				label="published"
-				selected='<%= !mvcRenderCommandName.equals("/blogs/view_not_published_entries") %>'
-			/>
+			<aui:nav-item href="<%= portletURL.toString() %>" label="published" selected='<%= !mvcRenderCommandName.equals("/blogs/view_not_published_entries") %>' />
 
 			<portlet:renderURL var="viewNotPublishedEntriesURL">
 				<portlet:param name="mvcRenderCommandName" value="/blogs/view_not_published_entries" />
 			</portlet:renderURL>
 
-			<aui:nav-item
-				href="<%= viewNotPublishedEntriesURL %>"
-				label='<%= LanguageUtil.format(resourceBundle, "not-published-x", notPublishedEntriesCount, false) %>'
-				selected='<%= mvcRenderCommandName.equals("/blogs/view_not_published_entries") %>'
-			/>
+			<aui:nav-item href="<%= viewNotPublishedEntriesURL %>" label='<%= LanguageUtil.format(resourceBundle, "not-published-x", notPublishedEntriesCount, false) %>' selected='<%= mvcRenderCommandName.equals("/blogs/view_not_published_entries") %>' />
 		</aui:nav>
 	</aui:nav-bar>
 </c:if>

@@ -14,7 +14,9 @@
  */
 --%>
 
-<liferay-ui:search-container searchContainer="<%= workflowInstanceViewDisplayContext.getSearchContainer() %>">
+<liferay-ui:search-container
+	searchContainer="<%= workflowInstanceViewDisplayContext.getSearchContainer() %>"
+>
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.workflow.WorkflowInstance"
 		cssClass="entry-display-style"

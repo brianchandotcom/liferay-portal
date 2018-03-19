@@ -30,13 +30,18 @@ String rootNodeName = layoutsAdminDisplayContext.getRootNodeName();
 PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="look-and-feel" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="look-and-feel"
+/>
 
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
 <aui:input name="devices" type="hidden" value="regular" />
 
-<liferay-util:buffer var="rootNodeNameLink">
+<liferay-util:buffer
+	var="rootNodeNameLink"
+>
 	<c:choose>
 		<c:when test="<%= themeDisplay.isStateExclusive() %>">
 			<%= HtmlUtil.escape(rootNodeName) %>

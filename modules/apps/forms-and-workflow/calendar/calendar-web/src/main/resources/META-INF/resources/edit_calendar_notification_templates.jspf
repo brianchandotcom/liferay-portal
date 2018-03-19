@@ -45,21 +45,13 @@ String notificationTemplateSubject = BeanPropertiesUtil.getString(calendarNotifi
 		navigationURL.setParameter("tabs3", "invite-email");
 		%>
 
-		<aui:nav-item
-			href="<%= navigationURL.toString() %>"
-			label="invite-email"
-			selected='<%= tabs3.equals("invite-email") %>'
-		/>
+		<aui:nav-item href="<%= navigationURL.toString() %>" label="invite-email" selected='<%= tabs3.equals("invite-email") %>' />
 
 		<%
 		navigationURL.setParameter("tabs3", "reminder-email");
 		%>
 
-		<aui:nav-item
-			href="<%= navigationURL.toString() %>"
-			label="reminder-email"
-			selected='<%= tabs3.equals("reminder-email") %>'
-		/>
+		<aui:nav-item href="<%= navigationURL.toString() %>" label="reminder-email" selected='<%= tabs3.equals("reminder-email") %>' />
 	</aui:nav>
 </aui:nav-bar>
 

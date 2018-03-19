@@ -52,4 +52,6 @@ UserPanelCategory userPanelCategory = (UserPanelCategory)request.getAttribute(Ap
 	</c:if>
 </c:if>
 
-<liferay-application-list:panel-category-body panelCategory="<%= userPanelCategory %>" />
+<liferay-application-list:panel-category-body
+	panelCategory="<%= userPanelCategory %>"
+/>

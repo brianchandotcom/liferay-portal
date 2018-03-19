@@ -180,12 +180,7 @@ else {
 				<liferay-ui:error exception="<%= StorageFieldRequiredException.class %>" message="please-fill-out-all-required-fields" />
 
 				<c:if test="<%= !translating && !ddlDisplayContext.isFormView() %>">
-					<aui:translation-manager
-						availableLocales="<%= availableLocales %>"
-						changeableDefaultLanguage="<%= changeableDefaultLanguage %>"
-						defaultLanguageId="<%= defaultLanguageId %>"
-						id="translationManager"
-					/>
+					<aui:translation-manager availableLocales="<%= availableLocales %>" changeableDefaultLanguage="<%= changeableDefaultLanguage %>" defaultLanguageId="<%= defaultLanguageId %>" id="translationManager" />
 				</c:if>
 
 				<%

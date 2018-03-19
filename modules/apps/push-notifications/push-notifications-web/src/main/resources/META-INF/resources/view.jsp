@@ -33,11 +33,7 @@ portletURL.setParameter("tabs1", tabs1);
 		devicesURL.setParameter("tabs1", "devices");
 		%>
 
-		<aui:nav-item
-			href="<%= devicesURL.toString() %>"
-			label="devices"
-			selected='<%= tabs1.equals("devices") %>'
-		/>
+		<aui:nav-item href="<%= devicesURL.toString() %>" label="devices" selected='<%= tabs1.equals("devices") %>' />
 
 		<%
 		PortletURL testURL = renderResponse.createRenderURL();
@@ -45,11 +41,7 @@ portletURL.setParameter("tabs1", tabs1);
 		testURL.setParameter("tabs1", "test");
 		%>
 
-		<aui:nav-item
-			href="<%= testURL.toString() %>"
-			label="test"
-			selected='<%= tabs1.equals("test") %>'
-		/>
+		<aui:nav-item href="<%= testURL.toString() %>" label="test" selected='<%= tabs1.equals("test") %>' />
 	</aui:nav>
 </aui:nav-bar>
 

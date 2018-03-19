@@ -26,7 +26,13 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcRenderCommandName", "/blogs/view");
 %>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
 	<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editEntryURL">
 			<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />

@@ -26,7 +26,10 @@ if (selLayout != null) {
 }
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="seo" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="seo"
+/>
 
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 

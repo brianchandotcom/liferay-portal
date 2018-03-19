@@ -25,15 +25,7 @@ MailManager mailManager = MailManager.getInstance(request);
 <c:if test="<%= mailManager != null %>">
 	<div class="controls-list well">
 		<aui:nav cssClass="nav-list">
-			<aui:nav-item
-				cssClass="compose-message"
-				data-messageId="0"
-				data-messageType="new"
-				data-replyMessageId="0"
-				href="javascript:;"
-				iconClass="icon-envelope"
-				label="compose"
-			/>
+			<aui:nav-item cssClass="compose-message" data-messageId="0" data-messageType="new" data-replyMessageId="0" href="javascript:;" iconClass="icon-envelope" label="compose" />
 
 			<aui:nav-item cssClass="divider" />
 
@@ -59,18 +51,7 @@ MailManager mailManager = MailManager.getInstance(request);
 				}
 			%>
 
-				<aui:nav-item
-					cssClass="messages-link"
-					data-accountId="<%= accountId %>"
-					data-folderId="<%= folder.getFolderId() %>"
-					data-keywords=""
-					data-orderByField="<%= MailConstants.ORDER_BY_SENT_DATE %>"
-					data-orderByType="desc"
-					data-pageNumber="1"
-					href="javascript:;"
-					iconClass="<%= folderIcon %>"
-					label='<%= folder.getDisplayName() + " (" + MessageLocalServiceUtil.getFolderUnreadMessagesCount(folder.getFolderId()) + ")" %>'
-				/>
+				<aui:nav-item cssClass="messages-link" data-accountId="<%= accountId %>" data-folderId="<%= folder.getFolderId() %>" data-keywords="" data-orderByField="<%= MailConstants.ORDER_BY_SENT_DATE %>" data-orderByType="desc" data-pageNumber="1" href="javascript:;" iconClass="<%= folderIcon %>" label='<%= folder.getDisplayName() + " (" + MessageLocalServiceUtil.getFolderUnreadMessagesCount(folder.getFolderId()) + ")" %>' />
 
 			<%
 			}
@@ -78,25 +59,9 @@ MailManager mailManager = MailManager.getInstance(request);
 
 			<aui:nav-item cssClass="divider" />
 
-			<aui:nav-item
-				cssClass="manage-folders"
-				data-messageId="0"
-				data-messageType="new"
-				data-replyMessageId="0"
-				href="javascript:;"
-				iconClass="icon-cogs"
-				label="manage-folders"
-			/>
+			<aui:nav-item cssClass="manage-folders" data-messageId="0" data-messageType="new" data-replyMessageId="0" href="javascript:;" iconClass="icon-cogs" label="manage-folders" />
 
-			<aui:nav-item
-				cssClass="edit-account"
-				data-messageId="0"
-				data-messageType="new"
-				data-replyMessageId="0"
-				href="javascript:;"
-				iconClass="icon-cog"
-				label="edit-account"
-			/>
+			<aui:nav-item cssClass="edit-account" data-messageId="0" data-messageType="new" data-replyMessageId="0" href="javascript:;" iconClass="icon-cog" label="edit-account" />
 		</aui:nav>
 	</div>
 </c:if>

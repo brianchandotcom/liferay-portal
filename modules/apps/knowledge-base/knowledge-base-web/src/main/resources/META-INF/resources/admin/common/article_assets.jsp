@@ -20,7 +20,9 @@
 KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 %>
 
-<liferay-util:buffer var="html">
+<liferay-util:buffer
+	var="html"
+>
 	<liferay-asset:asset-categories-summary
 		className="<%= KBArticle.class.getName() %>"
 		classPK="<%= kbArticle.getClassPK() %>"

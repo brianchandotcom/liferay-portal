@@ -28,9 +28,14 @@ if (!host.equals(layoutSet.getVirtualHostname())) {
 }
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="siteMap" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="siteMap"
+/>
 
-<liferay-util:buffer var="linkContent">
+<liferay-util:buffer
+	var="linkContent"
+>
 	<aui:a href="http://www.sitemaps.org" target="_blank">http://www.sitemaps.org</aui:a>
 </liferay-util:buffer>
 

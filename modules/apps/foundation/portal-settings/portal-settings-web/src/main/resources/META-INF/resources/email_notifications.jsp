@@ -25,7 +25,10 @@ String adminEmailFromAddress = PrefsPropsUtil.getString(company.getCompanyId(), 
 PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId(), true);
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="email_notifications" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="email_notifications"
+/>
 
 <liferay-ui:tabs
 	names="sender,account-created-notification,email-verification-notification,password-changed-notification,password-reset-notification"

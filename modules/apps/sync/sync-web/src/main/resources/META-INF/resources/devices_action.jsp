@@ -24,7 +24,13 @@ SyncDevice syncDevice = (SyncDevice)row.getObject();
 String syncDeviceId = String.valueOf(syncDevice.getSyncDeviceId());
 %>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
 	<c:choose>
 		<c:when test="<%= syncDevice.getStatus() == SyncDeviceConstants.STATUS_ACTIVE %>">
 			<portlet:actionURL name="updateDevice" var="disableDeviceURL">

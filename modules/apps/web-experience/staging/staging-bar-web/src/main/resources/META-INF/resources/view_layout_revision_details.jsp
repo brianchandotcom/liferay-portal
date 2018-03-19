@@ -279,11 +279,15 @@ else {
 	);
 </aui:script>
 
-<liferay-util:buffer var="pageVariationsHelpIcon">
+<liferay-util:buffer
+	var="pageVariationsHelpIcon"
+>
 	<liferay-ui:icon-help message="page-variations-help" />
 </liferay-util:buffer>
 
-<liferay-util:buffer var="sitePagesVariationsHelpIcon">
+<liferay-util:buffer
+	var="sitePagesVariationsHelpIcon"
+>
 	<liferay-ui:icon-help message="pages-variations-help" />
 </liferay-util:buffer>
 

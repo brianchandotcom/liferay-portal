@@ -76,7 +76,13 @@ List<Group> selectedGroups = GroupLocalServiceUtil.getGroups(assetPublisherDispl
 	<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 </liferay-ui:search-container>
 
-<liferay-ui:icon-menu cssClass="select-existing-selector" direction="right" message="select" showArrow="<%= false %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	cssClass="select-existing-selector"
+	direction="right"
+	message="select"
+	showArrow="<%= false %>"
+	showWhenSingleIcon="<%= true %>"
+>
 
 	<%
 	for (Group group : availableGroups) {

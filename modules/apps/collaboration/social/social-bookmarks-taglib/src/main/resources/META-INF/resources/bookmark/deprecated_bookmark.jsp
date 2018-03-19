@@ -24,4 +24,13 @@ data.put("contentid", contentId);
 String icon = PropsUtil.get(PropsKeys.SOCIAL_BOOKMARK_ICON, new Filter(type));
 %>
 
-<liferay-ui:icon data="<%= data %>" image="<%= icon %>" label="<%= false %>" linkCssClass="btn btn-borderless btn-outline-borderless btn-outline-secondary btn-sm" message="<%= socialBookmark.getName(locale) %>" method="get" src="<%= icon %>" url="<%= socialBookmark.getPostURL(title, url) %>" />
+<liferay-ui:icon
+	data="<%= data %>"
+	image="<%= icon %>"
+	label="<%= false %>"
+	linkCssClass="btn btn-borderless btn-outline-borderless btn-outline-secondary btn-sm"
+	message="<%= socialBookmark.getName(locale) %>"
+	method="get"
+	src="<%= icon %>"
+	url="<%= socialBookmark.getPostURL(title, url) %>"
+/>

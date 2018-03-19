@@ -116,9 +116,11 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 
 		CommercePriceEntry commercePriceEntry = getCommercePriceEntry();
 
+		CommercePriceList commercePriceList =
+			commercePriceEntry.getCommercePriceList();
+
 		return _commercePriceFormatter.format(
-			getCommercePriceListCurrency(
-				commercePriceEntry.getCommercePriceList()),
+			commercePriceList.getCommerceCurrency(),
 			commerceTierPriceEntry.getPrice());
 	}
 
@@ -314,18 +316,6 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 			getCommerceTierPriceEntryId(), null);
 	}
 
-	protected CommerceCurrency getCommercePriceListCurrency(
-			CommercePriceList commercePriceList)
-		throws PortalException {
-
-		if (_commerceCurrency != null) {
-			return _commerceCurrency;
-		}
-
-		return commercePriceList.getCommerceCurrency();
-	}
-
-	private CommerceCurrency _commerceCurrency;
 	private final CommercePriceFormatter _commercePriceFormatter;
 	private final CommercePriceListActionHelper _commercePriceListActionHelper;
 	private CommerceTierPriceEntry _commerceTierPriceEntry;

@@ -15,6 +15,7 @@
 package com.liferay.commerce.price.list.web.internal.display.context;
 
 import com.liferay.commerce.model.CommercePriceEntry;
+import com.liferay.commerce.model.CommercePriceList;
 import com.liferay.commerce.price.CommercePriceFormatter;
 import com.liferay.commerce.price.list.web.display.context.BaseCommercePriceListDisplayContext;
 import com.liferay.commerce.price.list.web.internal.servlet.taglib.ui.CommercePriceListScreenNavigationConstants;
@@ -95,8 +96,12 @@ public class CommercePriceEntryDisplayContext
 			CommercePriceEntry commercePriceEntry)
 		throws PortalException {
 
+		CommercePriceList commercePriceList =
+			commercePriceEntry.getCommercePriceList();
+
 		return _commercePriceFormatter.format(
-			getCommercePriceListCurrency(), commercePriceEntry.getPrice());
+			commercePriceList.getCommerceCurrency(),
+			commercePriceEntry.getPrice());
 	}
 
 	public String getItemSelectorUrl() throws PortalException {

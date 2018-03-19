@@ -65,18 +65,6 @@ public abstract class BaseCommercePriceListDisplayContext<T> {
 		return _commercePriceList;
 	}
 
-	public CommerceCurrency getCommercePriceListCurrency()
-		throws PortalException {
-
-		if (_commerceCurrency != null) {
-			return _commerceCurrency;
-		}
-
-		CommercePriceList commercePriceList = getCommercePriceList();
-
-		return commercePriceList.getCommerceCurrency();
-	}
-
 	public long getCommercePriceListId() throws PortalException {
 		CommercePriceList commercePriceList = getCommercePriceList();
 

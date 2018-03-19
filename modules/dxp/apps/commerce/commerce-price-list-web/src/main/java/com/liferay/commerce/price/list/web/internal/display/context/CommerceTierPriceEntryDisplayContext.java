@@ -106,8 +106,11 @@ public class CommerceTierPriceEntryDisplayContext
 			CommerceTierPriceEntry commerceTierPriceEntry)
 		throws PortalException {
 
+		CommercePriceList commercePriceList = getCommercePriceList();
+
 		return _commercePriceFormatter.format(
-			getCommercePriceListCurrency(), commerceTierPriceEntry.getPrice());
+			commercePriceList.getCommerceCurrency(),
+			commerceTierPriceEntry.getPrice());
 	}
 
 	public String getContextTitle() throws PortalException {

@@ -44,7 +44,7 @@ public class JenkinsJobConfigGenerator {
 	public JenkinsJobConfigGenerator(Map<String, String> properties) {
 		_propertiesMap = properties;
 
-		_environmentSlavesPropertiesMap = _getEnvironmentSlavesProperties();
+		_environmentSlavesPropertiesMap = _getEnvironmentSlavesPropertiesMap();
 		_generatedPropertiesMap = new HashMap<>(_propertiesMap);
 	}
 
@@ -190,7 +190,7 @@ public class JenkinsJobConfigGenerator {
 		return listViewElement;
 	}
 
-	private Map<String, String> _getEnvironmentSlavesProperties() {
+	private Map<String, String> _getEnvironmentSlavesPropertiesMap() {
 		Map<String, String> environmentSlavesProperties = new HashMap<>();
 
 		Set<Map.Entry<String, String>> propertiesSet =
@@ -256,7 +256,7 @@ public class JenkinsJobConfigGenerator {
 		return sb.toString();
 	}
 
-	private Set<String> _getGeneratedPropertyValueAsSet(
+	private Set<String> _getGeneratedPropertyValueSet(
 		String generatedPropertyName) {
 
 		Set<String> generatedPropertyValuesSet = new HashSet<>();
@@ -275,7 +275,7 @@ public class JenkinsJobConfigGenerator {
 		return generatedPropertyValuesSet;
 	}
 
-	private String _getGlobalProperty(String property) {
+	private String _getGlobalPropertyValue(String property) {
 		return _getPropertyFromRegex(property, _greedyParenthesesPattern);
 	}
 
@@ -294,7 +294,7 @@ public class JenkinsJobConfigGenerator {
 		return jobNames;
 	}
 
-	private List<String> _getJobProperties(String property) {
+	private List<String> _getJobPropertiesList(String property) {
 		return _getPropertiesFromRegex(property, _masterPropertyPattern);
 	}
 
@@ -377,7 +377,7 @@ public class JenkinsJobConfigGenerator {
 		String slaveLabel = slaveHostname;
 
 		Map<String, String> environmentSlavesMap =
-			_getEnvironmentSlavesProperties();
+			_getEnvironmentSlavesPropertiesMap();
 
 		if (environmentSlavesMap.containsKey(slaveHostname)) {
 			slaveLabel = environmentSlavesMap.get(slaveHostname);
@@ -517,13 +517,13 @@ public class JenkinsJobConfigGenerator {
 	}
 
 	private void _processGlobalProperty(String key) {
-		String propertyName = _getGlobalProperty(key);
+		String propertyName = _getGlobalPropertyValue(key);
 
 		_updateGeneratedProperty("global.property.names", propertyName);
 	}
 
 	private void _processJobProperty(String key) {
-		List<String> propertiesList = _getJobProperties(key);
+		List<String> propertiesList = _getJobPropertiesList(key);
 
 		String jobName = propertiesList.get(0);
 		String propertyName = propertiesList.get(1);
@@ -969,7 +969,7 @@ public class JenkinsJobConfigGenerator {
 		String generatedPropertyName = JenkinsResultsParserUtil.combine(
 			"master.job.properties(", masterHostname, "/", jobName, ")");
 
-		Set<String> masterJobPropertiesSet = _getGeneratedPropertyValueAsSet(
+		Set<String> masterJobPropertiesSet = _getGeneratedPropertyValueSet(
 			generatedPropertyName);
 
 		masterJobPropertiesSet.add(masterJobPropertiesList.get(2));
@@ -979,7 +979,7 @@ public class JenkinsJobConfigGenerator {
 	}
 
 	private void _processMasterProperty(String key) {
-		List<String> separatedProperty = _getJobProperties(key);
+		List<String> separatedProperty = _getJobPropertiesList(key);
 
 		String masterHostname = separatedProperty.get(0);
 		String propertyName = separatedProperty.get(1);
@@ -1097,7 +1097,7 @@ public class JenkinsJobConfigGenerator {
 		String generatedPropertyName, String additionalGeneratedPropertyValue) {
 
 		Set<String> generatedPropertyValuesSet =
-			_getGeneratedPropertyValueAsSet(generatedPropertyName);
+			_getGeneratedPropertyValueSet(generatedPropertyName);
 
 		generatedPropertyValuesSet.add(additionalGeneratedPropertyValue);
 

@@ -81,7 +81,13 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 />
 
 <%
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-threads-or-categories");
+MBAdminListDisplayContext mbAdminListDisplayContext = mbDisplayContextProvider.getMbAdminListDisplayContext(request, response, categoryId);
+
+int entriesDelta = mbAdminListDisplayContext.getEntriesDelta();
+
+SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, entriesDelta, portletURL, null, "there-are-no-threads-or-categories");
+
+mbAdminListDisplayContext.setEntriesDelta(searchContainer);
 
 searchContainer.setId("mbEntries");
 searchContainer.setOrderByCol(orderByCol);
@@ -98,8 +104,6 @@ if (categoryId == 0) {
 else {
 	entriesChecker.setRememberCheckBoxStateURLRegex("mbCategoryId=" + categoryId);
 }
-
-MBAdminListDisplayContext mbAdminListDisplayContext = mbDisplayContextProvider.getMbAdminListDisplayContext(request, response, categoryId);
 
 mbAdminListDisplayContext.populateResultsAndTotal(searchContainer);
 %>

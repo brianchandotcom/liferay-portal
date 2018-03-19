@@ -22,9 +22,13 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public interface MBAdminListDisplayContext extends MBDisplayContext {
 
+	public int getEntriesDelta();
+
 	public boolean isShowSearch();
 
 	public void populateResultsAndTotal(SearchContainer searchContainer)
 		throws PortalException;
+
+	public void setEntriesDelta(SearchContainer searchContainer);
 
 }

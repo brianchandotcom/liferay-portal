@@ -14,12 +14,15 @@
 
 package com.liferay.message.boards.web.internal.display.context;
 
+import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.display.context.MBAdminListDisplayContext;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBCategoryServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -28,6 +31,7 @@ import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -54,6 +58,17 @@ public class DefaultMBAdminListDisplayContext
 		_request = request;
 
 		_categoryId = categoryId;
+	}
+
+	@Override
+	public int getEntriesDelta() {
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(_request);
+
+		return GetterUtil.getInteger(
+			portalPreferences.getValue(
+				MBPortletKeys.MESSAGE_BOARDS_ADMIN, "entriesDelta"),
+			SearchContainer.DEFAULT_DELTA);
 	}
 
 	@Override
@@ -152,6 +167,21 @@ public class DefaultMBAdminListDisplayContext
 				MBCategoryServiceUtil.getCategoriesAndThreads(
 					themeDisplay.getScopeGroupId(), _categoryId,
 					queryDefinition));
+		}
+	}
+
+	@Override
+	public void setEntriesDelta(SearchContainer searchContainer) {
+		int entriesDelta = ParamUtil.getInteger(
+			_request, searchContainer.getDeltaParam());
+
+		if (entriesDelta > 0) {
+			PortalPreferences portalPreferences =
+				PortletPreferencesFactoryUtil.getPortalPreferences(_request);
+
+			portalPreferences.setValue(
+				MBPortletKeys.MESSAGE_BOARDS_ADMIN, "entriesDelta",
+				String.valueOf(entriesDelta));
 		}
 	}
 

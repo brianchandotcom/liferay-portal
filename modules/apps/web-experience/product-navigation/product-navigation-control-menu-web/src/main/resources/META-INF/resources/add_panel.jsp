@@ -69,7 +69,7 @@
 							<div class="add-content-panel panel">
 								<div class="panel-heading" id="<portlet:namespace />addContentHeading" role="tab">
 									<div class="panel-title">
-										<a aria-controls="#<portlet:namespace />addContentCollapse" aria-expanded="<%= selectedTab.equals("content") %>" class="collapse-icon collapse-icon-middle panel-toggler <%= selectedTab.equals("content") ? StringPool.BLANK : "collapsed" %>" class="collapsed" data-qa-id="addMenuAddContentCategory" data-toggle="collapse" href="#<portlet:namespace />addContentCollapse" role="button">
+										<a aria-controls="#<portlet:namespace />addContentCollapse" aria-expanded="<%= selectedTab.equals("content") %>" class="collapse-icon collapse-icon-middle panel-toggler <%= selectedTab.equals("content") ? StringPool.BLANK : "collapsed" %>" data-qa-id="addMenuAddContentCategory" data-toggle="collapse" href="#<portlet:namespace />addContentCollapse" role="button">
 											<span class="category-name"><liferay-ui:message key="content" /></span>
 
 											<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />

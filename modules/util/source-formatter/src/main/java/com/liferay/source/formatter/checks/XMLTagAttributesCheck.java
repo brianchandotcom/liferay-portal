@@ -28,7 +28,9 @@ public class XMLTagAttributesCheck extends TagAttributesCheck {
 
 	@Override
 	protected Tag doFormatLineBreaks(Tag tag, String absolutePath) {
-		if (absolutePath.endsWith("/pom.xml")) {
+		if (absolutePath.endsWith("/pom.xml") ||
+			absolutePath.endsWith(".pom")) {
+
 			return tag;
 		}
 

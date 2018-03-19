@@ -29,9 +29,6 @@ import com.liferay.portal.kernel.util.Portal;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -63,16 +60,12 @@ public class RenderFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		if (fragmentEntryLink != null) {
-			HttpServletRequest request = _portal.getHttpServletRequest(
-				actionRequest);
-
-			HttpServletResponse response = _portal.getHttpServletResponse(
-				actionResponse);
-
 			jsonObject.put(
 				"content",
 				FragmentEntryRenderUtil.renderFragmentEntryLink(
-					fragmentEntryLink, request, response));
+					fragmentEntryLink,
+					_portal.getHttpServletRequest(actionRequest),
+					_portal.getHttpServletResponse(actionResponse)));
 		}
 
 		JSONPortletResponseUtil.writeJSON(

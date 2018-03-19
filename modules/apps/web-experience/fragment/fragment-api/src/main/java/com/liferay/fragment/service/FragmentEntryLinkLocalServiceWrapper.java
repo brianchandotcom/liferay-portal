@@ -48,6 +48,17 @@ public class FragmentEntryLinkLocalServiceWrapper
 
 	@Override
 	public com.liferay.fragment.model.FragmentEntryLink addFragmentEntryLink(
+		long groupId, long originalFragmentEntryLinkId, long fragmentEntryId,
+		long classNameId, long classPK, java.lang.String css,
+		java.lang.String html, java.lang.String js,
+		java.lang.String editableValues, int position) {
+		return _fragmentEntryLinkLocalService.addFragmentEntryLink(groupId,
+			originalFragmentEntryLinkId, fragmentEntryId, classNameId, classPK,
+			css, html, js, editableValues, position);
+	}
+
+	@Override
+	public com.liferay.fragment.model.FragmentEntryLink addFragmentEntryLink(
 		long groupId, long fragmentEntryId, long classNameId, long classPK,
 		java.lang.String css, java.lang.String html, java.lang.String js,
 		java.lang.String editableValues, int position) {

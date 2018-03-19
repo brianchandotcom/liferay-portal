@@ -91,6 +91,20 @@ public interface FragmentEntryLinkModel extends AttachedModel,
 	public void setGroupId(long groupId);
 
 	/**
+	 * Returns the original fragment entry link ID of this fragment entry link.
+	 *
+	 * @return the original fragment entry link ID of this fragment entry link
+	 */
+	public long getOriginalFragmentEntryLinkId();
+
+	/**
+	 * Sets the original fragment entry link ID of this fragment entry link.
+	 *
+	 * @param originalFragmentEntryLinkId the original fragment entry link ID of this fragment entry link
+	 */
+	public void setOriginalFragmentEntryLinkId(long originalFragmentEntryLinkId);
+
+	/**
 	 * Returns the fragment entry ID of this fragment entry link.
 	 *
 	 * @return the fragment entry ID of this fragment entry link

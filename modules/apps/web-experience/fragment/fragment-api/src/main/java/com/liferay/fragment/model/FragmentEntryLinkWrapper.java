@@ -59,6 +59,8 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 
 		attributes.put("fragmentEntryLinkId", getFragmentEntryLinkId());
 		attributes.put("groupId", getGroupId());
+		attributes.put("originalFragmentEntryLinkId",
+			getOriginalFragmentEntryLinkId());
 		attributes.put("fragmentEntryId", getFragmentEntryId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
@@ -83,6 +85,13 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 
 		if (groupId != null) {
 			setGroupId(groupId);
+		}
+
+		Long originalFragmentEntryLinkId = (Long)attributes.get(
+				"originalFragmentEntryLinkId");
+
+		if (originalFragmentEntryLinkId != null) {
+			setOriginalFragmentEntryLinkId(originalFragmentEntryLinkId);
 		}
 
 		Long fragmentEntryId = (Long)attributes.get("fragmentEntryId");
@@ -247,6 +256,16 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	@Override
 	public java.lang.String getJs() {
 		return _fragmentEntryLink.getJs();
+	}
+
+	/**
+	* Returns the original fragment entry link ID of this fragment entry link.
+	*
+	* @return the original fragment entry link ID of this fragment entry link
+	*/
+	@Override
+	public long getOriginalFragmentEntryLinkId() {
+		return _fragmentEntryLink.getOriginalFragmentEntryLinkId();
 	}
 
 	/**
@@ -418,6 +437,16 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	@Override
 	public void setNew(boolean n) {
 		_fragmentEntryLink.setNew(n);
+	}
+
+	/**
+	* Sets the original fragment entry link ID of this fragment entry link.
+	*
+	* @param originalFragmentEntryLinkId the original fragment entry link ID of this fragment entry link
+	*/
+	@Override
+	public void setOriginalFragmentEntryLinkId(long originalFragmentEntryLinkId) {
+		_fragmentEntryLink.setOriginalFragmentEntryLinkId(originalFragmentEntryLinkId);
 	}
 
 	/**

@@ -35,6 +35,7 @@ create table FragmentEntry (
 create table FragmentEntryLink (
 	fragmentEntryLinkId LONG not null primary key,
 	groupId LONG,
+	originalFragmentEntryLinkId LONG,
 	fragmentEntryId LONG,
 	classNameId LONG,
 	classPK LONG,

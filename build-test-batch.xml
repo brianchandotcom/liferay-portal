@@ -3270,7 +3270,12 @@ information. Make sure to commit in all build services results.
 
 				<antcall target="install-portal-snapshots" />
 
-				<gradle-execute dir="modules/util/source-formatter" task="deploy" />
+				<if>
+					<available file="modules/util/source-formatter" />
+					<then>
+						<gradle-execute dir="modules/util/source-formatter" task="deploy" />
+					</then>
+				</if>
 
 				<ant dir="portal-impl" target="format-source-all">
 					<property name="format.current.branch" value="true" />

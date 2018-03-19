@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.BNDSourceUtil;
@@ -22,13 +23,10 @@ import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
 import java.nio.file.FileVisitOption;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.PathMatcher;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
@@ -176,10 +174,10 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 				public FileVisitResult preVisitDirectory(
 					Path dirPath, BasicFileAttributes basicFileAttributes) {
 
-					for (PathMatcher pathMatcher : _PATH_MATCHERS) {
-						if (pathMatcher.matches(dirPath)) {
-							return FileVisitResult.SKIP_SUBTREE;
-						}
+					String dirName = String.valueOf(dirPath.getFileName());
+
+					if (ArrayUtil.contains(_SKIP_DIR_NAMES, dirName)) {
+						return FileVisitResult.SKIP_SUBTREE;
 					}
 
 					Path path = dirPath.resolve("bnd.bnd");
@@ -237,23 +235,10 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 		return false;
 	}
 
-	private static final FileSystem _FILE_SYSTEM = FileSystems.getDefault();
-
-	private static final PathMatcher[] _PATH_MATCHERS = {
-		_FILE_SYSTEM.getPathMatcher("glob:**/.git/**"),
-		_FILE_SYSTEM.getPathMatcher("glob:**/.gradle/**"),
-		_FILE_SYSTEM.getPathMatcher("glob:**/.idea/**"),
-		_FILE_SYSTEM.getPathMatcher("glob:**/.m2/**"),
-		_FILE_SYSTEM.getPathMatcher("glob:**/.settings/**"),
-		_FILE_SYSTEM.getPathMatcher("glob:**/bin/**"),
-		_FILE_SYSTEM.getPathMatcher("glob:**/build/**"),
-		_FILE_SYSTEM.getPathMatcher("glob:**/classes/**"),
-		_FILE_SYSTEM.getPathMatcher("glob:**/sql/**"),
-		_FILE_SYSTEM.getPathMatcher("glob:**/src/**"),
-		_FILE_SYSTEM.getPathMatcher("glob:**/test-classes/**"),
-		_FILE_SYSTEM.getPathMatcher("glob:**/test-coverage/**"),
-		_FILE_SYSTEM.getPathMatcher("glob:**/test-results/**"),
-		_FILE_SYSTEM.getPathMatcher("glob:**/tmp/**")
+	private static final String[] _SKIP_DIR_NAMES = {
+		".git", ".gradle", ".idea", ".m2", ".settings", "bin", "build",
+		"classes", "sql", "src", "test-classes", "test-coverage",
+		"test-results", "tmp"
 	};
 
 	private final Pattern _dependenciesPattern = Pattern.compile(

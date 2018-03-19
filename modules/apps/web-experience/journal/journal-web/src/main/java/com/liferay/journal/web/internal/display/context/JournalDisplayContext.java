@@ -669,7 +669,7 @@ public class JournalDisplayContext {
 	}
 
 	public NavigationItemList getNavigationBarItems(String currentItem) {
-		NavigationItemList navigationItems = new NavigationItemList() {
+		return new NavigationItemList() {
 			{
 				add(
 					navigationItem -> {
@@ -704,8 +704,6 @@ public class JournalDisplayContext {
 					});
 			}
 		};
-
-		return navigationItems;
 	}
 
 	public String getOrderByCol() {
@@ -1438,16 +1436,14 @@ public class JournalDisplayContext {
 	}
 
 	private String _getFeedsURL() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			_liferayPortletRequest, JournalPortletKeys.JOURNAL,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/view_feeds.jsp");
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 
 		return portletURL.toString();

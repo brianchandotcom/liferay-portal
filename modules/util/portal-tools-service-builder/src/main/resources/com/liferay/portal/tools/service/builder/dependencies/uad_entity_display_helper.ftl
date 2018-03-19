@@ -17,6 +17,17 @@ import org.osgi.service.component.annotations.Component;
 public class ${entity.name}UADEntityDisplayHelper {
 
 	/**
+	 * Returns an ordered string array of the names of the fields to be
+	 * displayed. Each field name will correspond to a table column in the order
+	 * they are specified.
+	 *
+	 * @return the array of field names to display
+	 */
+	public String[] getDisplayFieldNames() {
+		return new String[]{<#list entity.UADNonanonymizableEntityColumns as uadNonanonymizableEntityColumn>"${uadNonanonymizableEntityColumn.name}"<#sep>, </#sep></#list>};
+	}
+
+	/**
 	 * Implement get${entity.name}EditURL() to enable editing ${entity.names} from the GDPR UI.
 	 *
 	 * <p>
@@ -26,6 +37,17 @@ public class ${entity.name}UADEntityDisplayHelper {
 	 */
 	public String get${entity.name}EditURL(${entity.name} ${entity.varName}, LiferayPortletRequest liferayPortletRequest, LiferayPortletResponse liferayPortletResponse) {
 		return "";
+	}
+ad
+	@Override
+	public Map<String, Object> getUADEntityNonanonymizableFieldValues(${entity.name} ${entity.varName}) {
+		Map<String, Object> uadEntityNonanonymizableFieldValues = new HashMap<String, Object>();
+
+<#list entity.UADNonanonymizableEntityColumns as uadNonanonymizableEntityColumn>
+		uadEntityNonanonymizableFieldValues.put("${uadNonanonymizableEntityColumn.name}", ${entity.varName}.get${textFormatter.format(uadNonanonymizableEntityColumn.name, 6)}());
+</#list>
+
+		return uadEntityNonanonymizableFieldValues;
 	}
 
 }

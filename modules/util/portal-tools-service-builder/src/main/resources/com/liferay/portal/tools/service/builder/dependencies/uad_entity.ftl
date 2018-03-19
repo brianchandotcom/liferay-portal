@@ -32,19 +32,6 @@ public class ${entity.name}UADEntity extends BaseUADEntity {
 		return _${entity.varName};
 	}
 
-	<#if entity.UADNonanonymizableEntityColumns?has_content>
-		@Override
-		public Map<String, Object> getUADEntityNonanonymizableFieldValues() {
-			Map<String, Object> uadEntityNonanonymizableFieldValues = new HashMap<String, Object>();
-
-			<#list entity.UADNonanonymizableEntityColumns as uadNonanonymizableEntityColumn>
-				uadEntityNonanonymizableFieldValues.put("${uadNonanonymizableEntityColumn.name}", _${entity.varName}.get${textFormatter.format(uadNonanonymizableEntityColumn.name, 6)}());
-			</#list>
-
-			return uadEntityNonanonymizableFieldValues;
-		}
-	</#if>
-
 	private final ${entity.name} _${entity.varName};
 
 }

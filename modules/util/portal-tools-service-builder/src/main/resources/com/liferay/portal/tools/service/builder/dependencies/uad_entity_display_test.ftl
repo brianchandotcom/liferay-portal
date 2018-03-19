@@ -2,6 +2,7 @@ package ${packagePath}.uad.display.test;
 
 import ${apiPackagePath}.model.${entity.name};
 import ${packagePath}.uad.constants.${portletShortName}UADConstants;
+import ${packagePath}.uad.display.${entity.name}UADEntityDisplayHelper;
 import ${packagePath}.uad.test.${entity.name}UADEntityTestHelper;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -42,8 +43,18 @@ public class ${entity.name}UADEntityDisplayTest extends BaseUADEntityDisplayTest
 	}
 
 	@Override
+	protected String getApplicationName() {
+		return ${portletShortName}UADConstants.UAD_ENTITY_SET_NAME;
+	}
+
+	@Override
 	protected UADEntityAggregator getUADEntityAggregator() {
 		return _uadEntityAggregator;
+	}
+
+	@Override
+	protected String[] getDisplayFieldNames() {
+		return _${entity.varName}UADEntityDisplayHelper.getDisplayFieldNames();
 	}
 
 	@Override
@@ -58,6 +69,9 @@ public class ${entity.name}UADEntityDisplayTest extends BaseUADEntityDisplayTest
 
 	@DeleteAfterTestRun
 	private final List<${entity.name}> _${entity.varNames} = new ArrayList<${entity.name}>();
+
+	@Inject
+	private ${entity.name}UADEntityDisplayHelper _${entity.varName}UADEntityDisplayHelper;
 
 	@Inject
 	private ${entity.name}UADEntityTestHelper _${entity.varName}UADEntityTestHelper;

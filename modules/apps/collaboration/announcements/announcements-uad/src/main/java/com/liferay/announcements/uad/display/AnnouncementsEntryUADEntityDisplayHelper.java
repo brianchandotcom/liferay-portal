@@ -21,6 +21,9 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -54,6 +57,24 @@ public class AnnouncementsEntryUADEntityDisplayHelper {
 			"entryId", String.valueOf(announcementsEntry.getEntryId()));
 
 		return portletURL.toString();
+	}
+
+	public String[] getDisplayFieldNames() {
+		return new String[] {"title", "content"};
+	}
+
+	public Map<String, Object> getUADEntityNonanonymizableFieldValues(
+		AnnouncementsEntry announcementsEntry) {
+
+		Map<String, Object> uadEntityNonanonymizableFieldValues =
+			new HashMap<>();
+
+		uadEntityNonanonymizableFieldValues.put(
+			"content", announcementsEntry.getContent());
+		uadEntityNonanonymizableFieldValues.put(
+			"title", announcementsEntry.getTitle());
+
+		return uadEntityNonanonymizableFieldValues;
 	}
 
 	@Reference

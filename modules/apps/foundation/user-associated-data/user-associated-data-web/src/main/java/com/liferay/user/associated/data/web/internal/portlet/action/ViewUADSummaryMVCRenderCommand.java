@@ -21,6 +21,7 @@ import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
+import com.liferay.user.associated.data.web.internal.util.UADApplicationSummaryHelper;
 
 import java.util.Collection;
 
@@ -75,6 +76,14 @@ public class ViewUADSummaryMVCRenderCommand implements MVCRenderCommand {
 			return 2;
 		}
 
+		int reviewableUADEntitiesCount =
+			_uadApplicationSummaryHelper.getReviewableUADEntitiesCount(
+				_uadRegistry.getUADEntityDisplayStream(), selUser.getUserId());
+
+		if (reviewableUADEntitiesCount > 0) {
+			return 3;
+		}
+
 		Collection<UADEntityAggregator> uadEntityAggregators =
 			_uadRegistry.getUADEntityAggregators();
 
@@ -86,11 +95,14 @@ public class ViewUADSummaryMVCRenderCommand implements MVCRenderCommand {
 		}
 
 		if (selUserEntityCount > 0) {
-			return 3;
+			return 4;
 		}
 
 		return 5;
 	}
+
+	@Reference
+	private UADApplicationSummaryHelper _uadApplicationSummaryHelper;
 
 	@Reference
 	private UADRegistry _uadRegistry;

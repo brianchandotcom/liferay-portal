@@ -62,8 +62,12 @@
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
 
-		<execute macro="WebContent#addLocale">
-			<var name="language" value="Hebrew (Israel)" />
+		<execute macro="Navigator#ensureLocaleURL">
+			<var name="locale" value="iw" />
+		</execute>
+
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="כותרת" />
 			<var name="locale" value="iw-IL" />
 		</execute>
 

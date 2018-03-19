@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -62,7 +63,9 @@ public class RenderFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			jsonObject.put(
 				"content",
 				FragmentEntryRenderUtil.renderFragmentEntryLink(
-					fragmentEntryLink));
+					fragmentEntryLink,
+					_portal.getHttpServletRequest(actionRequest),
+					_portal.getHttpServletResponse(actionResponse)));
 		}
 
 		JSONPortletResponseUtil.writeJSON(
@@ -71,5 +74,8 @@ public class RenderFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -2064,6 +2064,7 @@ public class FragmentEntryLinkPersistenceImpl extends BasePersistenceImpl<Fragme
 
 		fragmentEntryLinkImpl.setFragmentEntryLinkId(fragmentEntryLink.getFragmentEntryLinkId());
 		fragmentEntryLinkImpl.setGroupId(fragmentEntryLink.getGroupId());
+		fragmentEntryLinkImpl.setOriginalFragmentEntryLinkId(fragmentEntryLink.getOriginalFragmentEntryLinkId());
 		fragmentEntryLinkImpl.setFragmentEntryId(fragmentEntryLink.getFragmentEntryId());
 		fragmentEntryLinkImpl.setClassNameId(fragmentEntryLink.getClassNameId());
 		fragmentEntryLinkImpl.setClassPK(fragmentEntryLink.getClassPK());

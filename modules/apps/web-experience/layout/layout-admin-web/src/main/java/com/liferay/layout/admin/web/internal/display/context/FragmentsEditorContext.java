@@ -180,7 +180,8 @@ public class FragmentsEditorContext {
 			soyContext.putHTML(
 				"content",
 				FragmentEntryRenderUtil.renderFragmentEntryLink(
-					fragmentEntryLink));
+					fragmentEntryLink, _request,
+					PortalUtil.getHttpServletResponse(_renderResponse)));
 			soyContext.put(
 				"editableValues",
 				JSONFactoryUtil.createJSONObject(

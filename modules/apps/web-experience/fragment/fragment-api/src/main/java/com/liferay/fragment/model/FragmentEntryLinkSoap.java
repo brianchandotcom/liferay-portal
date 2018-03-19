@@ -34,6 +34,7 @@ public class FragmentEntryLinkSoap implements Serializable {
 
 		soapModel.setFragmentEntryLinkId(model.getFragmentEntryLinkId());
 		soapModel.setGroupId(model.getGroupId());
+		soapModel.setOriginalFragmentEntryLinkId(model.getOriginalFragmentEntryLinkId());
 		soapModel.setFragmentEntryId(model.getFragmentEntryId());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
@@ -113,6 +114,14 @@ public class FragmentEntryLinkSoap implements Serializable {
 		_groupId = groupId;
 	}
 
+	public long getOriginalFragmentEntryLinkId() {
+		return _originalFragmentEntryLinkId;
+	}
+
+	public void setOriginalFragmentEntryLinkId(long originalFragmentEntryLinkId) {
+		_originalFragmentEntryLinkId = originalFragmentEntryLinkId;
+	}
+
 	public long getFragmentEntryId() {
 		return _fragmentEntryId;
 	}
@@ -179,6 +188,7 @@ public class FragmentEntryLinkSoap implements Serializable {
 
 	private long _fragmentEntryLinkId;
 	private long _groupId;
+	private long _originalFragmentEntryLinkId;
 	private long _fragmentEntryId;
 	private long _classNameId;
 	private long _classPK;

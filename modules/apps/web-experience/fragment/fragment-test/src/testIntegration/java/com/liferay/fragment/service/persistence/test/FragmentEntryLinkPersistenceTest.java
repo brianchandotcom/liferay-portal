@@ -123,6 +123,8 @@ public class FragmentEntryLinkPersistenceTest {
 
 		newFragmentEntryLink.setGroupId(RandomTestUtil.nextLong());
 
+		newFragmentEntryLink.setOriginalFragmentEntryLinkId(RandomTestUtil.nextLong());
+
 		newFragmentEntryLink.setFragmentEntryId(RandomTestUtil.nextLong());
 
 		newFragmentEntryLink.setClassNameId(RandomTestUtil.nextLong());
@@ -147,6 +149,8 @@ public class FragmentEntryLinkPersistenceTest {
 			newFragmentEntryLink.getFragmentEntryLinkId());
 		Assert.assertEquals(existingFragmentEntryLink.getGroupId(),
 			newFragmentEntryLink.getGroupId());
+		Assert.assertEquals(existingFragmentEntryLink.getOriginalFragmentEntryLinkId(),
+			newFragmentEntryLink.getOriginalFragmentEntryLinkId());
 		Assert.assertEquals(existingFragmentEntryLink.getFragmentEntryId(),
 			newFragmentEntryLink.getFragmentEntryId());
 		Assert.assertEquals(existingFragmentEntryLink.getClassNameId(),
@@ -212,9 +216,10 @@ public class FragmentEntryLinkPersistenceTest {
 
 	protected OrderByComparator<FragmentEntryLink> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("FragmentEntryLink",
-			"fragmentEntryLinkId", true, "groupId", true, "fragmentEntryId",
-			true, "classNameId", true, "classPK", true, "css", true, "html",
-			true, "js", true, "editableValues", true, "position", true);
+			"fragmentEntryLinkId", true, "groupId", true,
+			"originalFragmentEntryLinkId", true, "fragmentEntryId", true,
+			"classNameId", true, "classPK", true, "css", true, "html", true,
+			"js", true, "editableValues", true, "position", true);
 	}
 
 	@Test
@@ -418,6 +423,8 @@ public class FragmentEntryLinkPersistenceTest {
 		FragmentEntryLink fragmentEntryLink = _persistence.create(pk);
 
 		fragmentEntryLink.setGroupId(RandomTestUtil.nextLong());
+
+		fragmentEntryLink.setOriginalFragmentEntryLinkId(RandomTestUtil.nextLong());
 
 		fragmentEntryLink.setFragmentEntryId(RandomTestUtil.nextLong());
 

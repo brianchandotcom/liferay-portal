@@ -54,6 +54,17 @@ public class FragmentEntryLinkLocalServiceUtil {
 	}
 
 	public static com.liferay.fragment.model.FragmentEntryLink addFragmentEntryLink(
+		long groupId, long originalFragmentEntryLinkId, long fragmentEntryId,
+		long classNameId, long classPK, java.lang.String css,
+		java.lang.String html, java.lang.String js,
+		java.lang.String editableValues, int position) {
+		return getService()
+				   .addFragmentEntryLink(groupId, originalFragmentEntryLinkId,
+			fragmentEntryId, classNameId, classPK, css, html, js,
+			editableValues, position);
+	}
+
+	public static com.liferay.fragment.model.FragmentEntryLink addFragmentEntryLink(
 		long groupId, long fragmentEntryId, long classNameId, long classPK,
 		java.lang.String css, java.lang.String html, java.lang.String js,
 		java.lang.String editableValues, int position) {

@@ -9,7 +9,6 @@
 	{@param? _handleFragmentMoveDownButtonClick: any}
 	{@param? _handleFragmentMoveUpButtonClick: any}
 	{@param? _handleFragmentRemoveButtonClick: any}
-	{@param? content: html}
 	{@param? name: string}
 	{@param? showControlBar: bool}
 
@@ -45,12 +44,8 @@
 			</nav>
 		{/if}
 
-		{if not $content or $content == ''}
+		<div ref="content">
 			<div class="loading-animation"></div>
-		{else}
-			<div ref="content">
-				{$content}
-			</div>
-		{/if}
+		</div>
 	</div>
 {/template}

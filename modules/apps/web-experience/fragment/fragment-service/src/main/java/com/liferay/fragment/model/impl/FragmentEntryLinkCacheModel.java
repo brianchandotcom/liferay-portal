@@ -63,12 +63,14 @@ public class FragmentEntryLinkCacheModel implements CacheModel<FragmentEntryLink
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{fragmentEntryLinkId=");
 		sb.append(fragmentEntryLinkId);
 		sb.append(", groupId=");
 		sb.append(groupId);
+		sb.append(", originalFragmentEntryLinkId=");
+		sb.append(originalFragmentEntryLinkId);
 		sb.append(", fragmentEntryId=");
 		sb.append(fragmentEntryId);
 		sb.append(", classNameId=");
@@ -96,6 +98,7 @@ public class FragmentEntryLinkCacheModel implements CacheModel<FragmentEntryLink
 
 		fragmentEntryLinkImpl.setFragmentEntryLinkId(fragmentEntryLinkId);
 		fragmentEntryLinkImpl.setGroupId(groupId);
+		fragmentEntryLinkImpl.setOriginalFragmentEntryLinkId(originalFragmentEntryLinkId);
 		fragmentEntryLinkImpl.setFragmentEntryId(fragmentEntryId);
 		fragmentEntryLinkImpl.setClassNameId(classNameId);
 		fragmentEntryLinkImpl.setClassPK(classPK);
@@ -141,6 +144,8 @@ public class FragmentEntryLinkCacheModel implements CacheModel<FragmentEntryLink
 
 		groupId = objectInput.readLong();
 
+		originalFragmentEntryLinkId = objectInput.readLong();
+
 		fragmentEntryId = objectInput.readLong();
 
 		classNameId = objectInput.readLong();
@@ -160,6 +165,8 @@ public class FragmentEntryLinkCacheModel implements CacheModel<FragmentEntryLink
 		objectOutput.writeLong(fragmentEntryLinkId);
 
 		objectOutput.writeLong(groupId);
+
+		objectOutput.writeLong(originalFragmentEntryLinkId);
 
 		objectOutput.writeLong(fragmentEntryId);
 
@@ -200,6 +207,7 @@ public class FragmentEntryLinkCacheModel implements CacheModel<FragmentEntryLink
 
 	public long fragmentEntryLinkId;
 	public long groupId;
+	public long originalFragmentEntryLinkId;
 	public long fragmentEntryId;
 	public long classNameId;
 	public long classPK;

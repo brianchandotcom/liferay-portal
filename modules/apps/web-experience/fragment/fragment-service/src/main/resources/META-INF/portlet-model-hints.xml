@@ -48,6 +48,7 @@
 	<model name="com.liferay.fragment.model.FragmentEntryLink">
 		<field name="fragmentEntryLinkId" type="long" />
 		<field name="groupId" type="long" />
+		<field name="originalFragmentEntryLinkId" type="long" />
 		<field name="fragmentEntryId" type="long" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />

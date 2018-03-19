@@ -17,19 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String contentId = GetterUtil.getString((String)request.getAttribute("liferay-social-bookmarks:bookmark:contentId"));
 SocialBookmark socialBookmark = (SocialBookmark)request.getAttribute("liferay-social-bookmarks:bookmark:socialBookmark");
 String title = GetterUtil.getString((String)request.getAttribute("liferay-social-bookmarks:bookmark:title"));
 String url = GetterUtil.getString((String)request.getAttribute("liferay-social-bookmarks:bookmark:url"));
-
-Map<String, String> data = new HashMap<>();
-
-data.put("contentid", contentId);
 %>
 
 <clay:link
 	buttonStyle="secondary"
-	data="<%= data %>"
 	elementClasses="btn-outline-borderless btn-sm lfr-portal-tooltip"
 	href="<%= socialBookmark.getPostURL(title, url) %>"
 	icon="social-facebook"

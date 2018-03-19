@@ -20,7 +20,4 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.social.bookmarks.SocialBookmark" %>
 
-<%@ page import="java.util.HashMap" %><%@
-page import="java.util.Map" %>
-
 <liferay-theme:defineObjects />

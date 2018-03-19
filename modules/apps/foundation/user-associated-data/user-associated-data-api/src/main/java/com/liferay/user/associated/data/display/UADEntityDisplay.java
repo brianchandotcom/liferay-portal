@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.user.associated.data.entity.UADEntity;
 
+import java.util.Map;
+
 /**
  * @author William Newbury
  */
@@ -33,6 +35,9 @@ public interface UADEntityDisplay {
 		throws Exception;
 
 	public String getKey();
+
+	public Map<String, Object> getUADEntityNonanonymizableFieldValues(
+		UADEntity uadEntity);
 
 	public String getUADEntityTypeDescription();
 

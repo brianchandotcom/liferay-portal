@@ -25,7 +25,7 @@
 	};
 
 	window.YUI_config = {
-		base: PATH_JAVASCRIPT + '/aui/',
+		base: Liferay.ThemeDisplay.getCDNBaseURL() + PATH_JAVASCRIPT + '/aui/',
 		combine: COMBINE,
 		comboBase: LiferayAUI.getComboPath(),
 		filter: Liferay.AUI.getFilter(),
@@ -42,7 +42,7 @@
 			},
 
 			liferay: {
-				base: PATH_JAVASCRIPT + '/liferay/',
+				base: Liferay.ThemeDisplay.getCDNBaseURL() + PATH_JAVASCRIPT + '/liferay/',
 				combine: COMBINE,
 				filter: Liferay.AUI.getFilterConfig(),
 				modules: {
@@ -756,7 +756,7 @@
 			},
 
 			misc: {
-				base: PATH_JAVASCRIPT + '/misc/',
+				base: Liferay.ThemeDisplay.getCDNBaseURL() + PATH_JAVASCRIPT + '/misc/',
 				combine: COMBINE,
 				modules: {
 					'swfobject': {
@@ -770,7 +770,7 @@
 			},
 
 			portal: {
-				base: PATH_JAVASCRIPT + '/liferay/',
+				base: Liferay.ThemeDisplay.getCDNBaseURL() + PATH_JAVASCRIPT + '/liferay/',
 				combine: false,
 				modules: {
 					'portal-available-languages': {

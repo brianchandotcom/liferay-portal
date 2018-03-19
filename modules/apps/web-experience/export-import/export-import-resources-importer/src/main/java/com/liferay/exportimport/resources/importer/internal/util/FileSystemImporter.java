@@ -784,8 +784,6 @@ public class FileSystemImporter extends BaseImporter {
 			long length)
 		throws Exception {
 
-		String title = FileUtil.stripExtension(fileName);
-
 		setServiceContext(fileName);
 
 		FileEntry fileEntry = null;
@@ -794,8 +792,9 @@ public class FileSystemImporter extends BaseImporter {
 			try {
 				fileEntry = dlAppLocalService.addFileEntry(
 					userId, groupId, parentFolderId, fileName,
-					mimeTypes.getContentType(fileName), title, StringPool.BLANK,
-					StringPool.BLANK, inputStream, length, serviceContext);
+					mimeTypes.getContentType(fileName), fileName,
+					StringPool.BLANK, StringPool.BLANK, inputStream, length,
+					serviceContext);
 			}
 			catch (DuplicateFileEntryException dfee) {
 
@@ -806,15 +805,15 @@ public class FileSystemImporter extends BaseImporter {
 				}
 
 				fileEntry = dlAppLocalService.getFileEntry(
-					groupId, parentFolderId, title);
+					groupId, parentFolderId, fileName);
 
 				String previousVersion = fileEntry.getVersion();
 
 				fileEntry = dlAppLocalService.updateFileEntry(
 					userId, fileEntry.getFileEntryId(), fileName,
-					mimeTypes.getContentType(fileName), title, StringPool.BLANK,
-					StringPool.BLANK, true, inputStream, length,
-					serviceContext);
+					mimeTypes.getContentType(fileName), fileName,
+					StringPool.BLANK, StringPool.BLANK, true, inputStream,
+					length, serviceContext);
 
 				dlFileEntryLocalService.deleteFileVersion(
 					fileEntry.getUserId(), fileEntry.getFileEntryId(),

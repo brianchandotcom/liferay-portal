@@ -15,6 +15,8 @@
 package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
@@ -23,11 +25,13 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -84,6 +88,8 @@ public class DeleteKaleoDefinitionVersionMVCActionCommand
 			kaleoDefinitionVersionLocalService.deleteKaleoDefinitionVersions(
 				themeDisplay.getCompanyId(), name);
 		}
+
+		setRedirectAttribute(actionRequest, null);
 	}
 
 	@Override
@@ -92,6 +98,30 @@ public class DeleteKaleoDefinitionVersionMVCActionCommand
 
 		return LanguageUtil.get(
 			resourceBundle, "workflow-deleted-successfully");
+	}
+
+	@Override
+	protected void setRedirectAttribute(
+			ActionRequest actionRequest,
+			KaleoDefinitionVersion kaleoDefinitionVersion)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
+			actionRequest, KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW,
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("mvcPath", "/view.jsp");
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		portletURL.setParameter("redirect", redirect, false);
+
+		portletURL.setWindowState(actionRequest.getWindowState());
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, portletURL.toString());
 	}
 
 }

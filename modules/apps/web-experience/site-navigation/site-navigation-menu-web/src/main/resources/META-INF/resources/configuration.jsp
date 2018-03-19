@@ -58,7 +58,7 @@ if (siteNavigationMenu != null) {
 
 										<aui:input checked="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1 %>" cssClass="select-navigation" label="choose-menu" name="selectNavigation" type="radio" value="-1" />
 
-										<div>
+										<div class="mb-2 text-muted">
 											<span id="<portlet:namespace />navigationMenuName">
 												<c:if test="<%= (siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1) && (siteNavigationMenuDisplayContext.getSiteNavigationMenuId() > 0) %>">
 													<%= siteNavigationMenuName %>

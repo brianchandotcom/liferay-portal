@@ -54,6 +54,14 @@ import org.osgi.service.component.annotations.Reference;
 public class BookmarksEntryUADEntityExporter extends BaseUADEntityExporter {
 
 	@Override
+	public long count(long userId) throws PortalException {
+		ActionableDynamicQuery actionableDynamicQuery =
+			_getActionableDynamicQuery(userId);
+
+		return actionableDynamicQuery.performCount();
+	}
+
+	@Override
 	public void export(UADEntity uadEntity) throws PortalException {
 		BookmarksEntry bookmarksEntry = _getBookmarksEntry(uadEntity);
 
@@ -105,14 +113,6 @@ public class BookmarksEntryUADEntityExporter extends BaseUADEntityExporter {
 			});
 
 		actionableDynamicQuery.performActions();
-	}
-
-	@Override
-	public long getCount(long userId) throws PortalException {
-		ActionableDynamicQuery actionableDynamicQuery =
-			_getActionableDynamicQuery(userId);
-
-		return actionableDynamicQuery.performCount();
 	}
 
 	@Override

@@ -43,11 +43,12 @@ if (siteNavigationMenu != null) {
 					<aui:fieldset-group markupView="lexicon">
 						<aui:fieldset cssClass="p-3" label="navigation-menu">
 							<aui:input id="siteNavigationMenuId" name="preferences--siteNavigationMenuId--" type="hidden" value="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuId() %>" />
+							<aui:input id="siteNavigationMenuType" name="preferences--siteNavigationMenuType--" type="hidden" value="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() %>" />
 
 							<div>
 								<aui:input checked="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() != -1 %>" cssClass="select-navigation" label="select-navigation" name="selectNavigation" type="radio" value="0" />
 
-								<aui:select disabled="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1 %>" id="siteNavigationMenuType" label="" name="preferences--siteNavigationMenuType--" value="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() %>">
+								<aui:select disabled="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1 %>" label="" name="selectSiteNavigationMenuType" value="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() %>">
 									<aui:option label="primary-navigation" selected="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PRIMARY %>" value="<%= SiteNavigationConstants.TYPE_PRIMARY %>" />
 									<aui:option label="secondary-navigation" selected="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == SiteNavigationConstants.TYPE_SECONDARY %>" value="<%= SiteNavigationConstants.TYPE_SECONDARY %>" />
 									<aui:option label="social-navigation" selected="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == SiteNavigationConstants.TYPE_SOCIAL %>" value="<%= SiteNavigationConstants.TYPE_SOCIAL %>" />
@@ -337,25 +338,42 @@ if (siteNavigationMenu != null) {
 		'<portlet:namespace />rootMenuItemLevel'
 	);
 
+	var selectSiteNavigationMenuType = $('#<portlet:namespace />selectSiteNavigationMenuType')
+
+	selectSiteNavigationMenuType.on(
+		'change',
+		function() {
+			var siteNavigationMenuType = $('#<portlet:namespace />siteNavigationMenuType');
+
+			siteNavigationMenuType.val(selectSiteNavigationMenuType.val());
+		}
+	);
+
 	$('.select-navigation').on(
 		'change',
 		function() {
 			var chooseSiteNavigationMenu = $('#<portlet:namespace />chooseSiteNavigationMenu');
-			var siteNavigationMenuType = $('#<portlet:namespace />siteNavigationMenuType');
 
-			var state = siteNavigationMenuType.prop('disabled');
+			var state = selectSiteNavigationMenuType.prop('disabled');
 
 			chooseSiteNavigationMenu.prop('disabled', state);
 			chooseSiteNavigationMenu.toggleClass('disabled', state);
 
-			siteNavigationMenuType.prop('disabled', !state);
+			selectSiteNavigationMenuType.prop('disabled', !state);
 
-			if (!state) {
-				siteNavigationMenuType.val(-1);
+			$('#<portlet:namespace />siteNavigationMenuId').val(0);
+
+			var siteNavigationMenuType = -1;
+
+			if (state) {
+				siteNavigationMenuType = <%= SiteNavigationConstants.TYPE_PRIMARY %>;
 			}
-			else {
-				siteNavigationMenuType.val(<%= SiteNavigationConstants.TYPE_PRIMARY %>);
-			}
+
+			$('#<portlet:namespace />siteNavigationMenuType').val(siteNavigationMenuType);
+
+			$('#<portlet:namespace />navigationMenuName').text('');
+
+			$('#<portlet:namespace />removeSiteNavigationMenu').addClass('hide');
 
 			<portlet:namespace/>resetPreview();
 		}

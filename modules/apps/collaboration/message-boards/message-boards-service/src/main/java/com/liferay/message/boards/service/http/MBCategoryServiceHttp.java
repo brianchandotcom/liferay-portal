@@ -330,11 +330,39 @@ public class MBCategoryServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
+		HttpPrincipal httpPrincipal, long groupId, long parentCategoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+		try {
+			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
+					"getCategories", _getCategoriesParameterTypes9);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					parentCategoryId, queryDefinition);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.message.boards.model.MBCategory>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
 		HttpPrincipal httpPrincipal, long groupId, long[] parentCategoryIds,
 		int start, int end) {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
-					"getCategories", _getCategoriesParameterTypes9);
+					"getCategories", _getCategoriesParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					parentCategoryIds, start, end);
@@ -362,7 +390,7 @@ public class MBCategoryServiceHttp {
 		int status, int start, int end) {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
-					"getCategories", _getCategoriesParameterTypes10);
+					"getCategories", _getCategoriesParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					parentCategoryIds, status, start, end);
@@ -390,7 +418,7 @@ public class MBCategoryServiceHttp {
 		long[] parentCategoryIds, int status, int start, int end) {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
-					"getCategories", _getCategoriesParameterTypes11);
+					"getCategories", _getCategoriesParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					excludedCategoryIds, parentCategoryIds, status, start, end);
@@ -418,7 +446,7 @@ public class MBCategoryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
 					"getCategoriesAndThreads",
-					_getCategoriesAndThreadsParameterTypes12);
+					_getCategoriesAndThreadsParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					categoryId);
@@ -446,7 +474,7 @@ public class MBCategoryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
 					"getCategoriesAndThreads",
-					_getCategoriesAndThreadsParameterTypes13);
+					_getCategoriesAndThreadsParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					categoryId, status);
@@ -475,7 +503,7 @@ public class MBCategoryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
 					"getCategoriesAndThreads",
-					_getCategoriesAndThreadsParameterTypes14);
+					_getCategoriesAndThreadsParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					categoryId, status, start, end);
@@ -505,7 +533,7 @@ public class MBCategoryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
 					"getCategoriesAndThreads",
-					_getCategoriesAndThreadsParameterTypes15);
+					_getCategoriesAndThreadsParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					categoryId, status, start, end, obc);
@@ -534,7 +562,7 @@ public class MBCategoryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
 					"getCategoriesAndThreads",
-					_getCategoriesAndThreadsParameterTypes16);
+					_getCategoriesAndThreadsParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					categoryId, queryDefinition);
@@ -562,7 +590,7 @@ public class MBCategoryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
 					"getCategoriesAndThreadsCount",
-					_getCategoriesAndThreadsCountParameterTypes17);
+					_getCategoriesAndThreadsCountParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					categoryId);
@@ -590,7 +618,7 @@ public class MBCategoryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
 					"getCategoriesAndThreadsCount",
-					_getCategoriesAndThreadsCountParameterTypes18);
+					_getCategoriesAndThreadsCountParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					categoryId, status);
@@ -619,7 +647,7 @@ public class MBCategoryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
 					"getCategoriesAndThreadsCount",
-					_getCategoriesAndThreadsCountParameterTypes19);
+					_getCategoriesAndThreadsCountParameterTypes20);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					categoryId, queryDefinition);
@@ -646,7 +674,7 @@ public class MBCategoryServiceHttp {
 		long groupId, long parentCategoryId) {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
-					"getCategoriesCount", _getCategoriesCountParameterTypes20);
+					"getCategoriesCount", _getCategoriesCountParameterTypes21);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					parentCategoryId);
@@ -673,7 +701,7 @@ public class MBCategoryServiceHttp {
 		long groupId, long parentCategoryId, int status) {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
-					"getCategoriesCount", _getCategoriesCountParameterTypes21);
+					"getCategoriesCount", _getCategoriesCountParameterTypes22);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					parentCategoryId, status);
@@ -700,7 +728,7 @@ public class MBCategoryServiceHttp {
 		long groupId, long excludedCategoryId, long parentCategoryId, int status) {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
-					"getCategoriesCount", _getCategoriesCountParameterTypes22);
+					"getCategoriesCount", _getCategoriesCountParameterTypes23);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					excludedCategoryId, parentCategoryId, status);
@@ -724,10 +752,38 @@ public class MBCategoryServiceHttp {
 	}
 
 	public static int getCategoriesCount(HttpPrincipal httpPrincipal,
+		long groupId, long parentCategoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+		try {
+			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
+					"getCategoriesCount", _getCategoriesCountParameterTypes24);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					parentCategoryId, queryDefinition);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int getCategoriesCount(HttpPrincipal httpPrincipal,
 		long groupId, long[] parentCategoryIds) {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
-					"getCategoriesCount", _getCategoriesCountParameterTypes23);
+					"getCategoriesCount", _getCategoriesCountParameterTypes25);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					parentCategoryIds);
@@ -754,7 +810,7 @@ public class MBCategoryServiceHttp {
 		long groupId, long[] parentCategoryIds, int status) {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
-					"getCategoriesCount", _getCategoriesCountParameterTypes24);
+					"getCategoriesCount", _getCategoriesCountParameterTypes26);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					parentCategoryIds, status);
@@ -782,7 +838,7 @@ public class MBCategoryServiceHttp {
 		int status) {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
-					"getCategoriesCount", _getCategoriesCountParameterTypes25);
+					"getCategoriesCount", _getCategoriesCountParameterTypes27);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					excludedCategoryIds, parentCategoryIds, status);
@@ -810,7 +866,7 @@ public class MBCategoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
-					"getCategory", _getCategoryParameterTypes26);
+					"getCategory", _getCategoryParameterTypes28);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					categoryId);
@@ -841,7 +897,7 @@ public class MBCategoryServiceHttp {
 		long groupId, long categoryId) {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
-					"getCategoryIds", _getCategoryIdsParameterTypes27);
+					"getCategoryIds", _getCategoryIdsParameterTypes29);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					categoryId);
@@ -870,7 +926,7 @@ public class MBCategoryServiceHttp {
 		long categoryId) {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
-					"getSubcategoryIds", _getSubcategoryIdsParameterTypes28);
+					"getSubcategoryIds", _getSubcategoryIdsParameterTypes30);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					categoryIds, groupId, categoryId);
@@ -899,7 +955,7 @@ public class MBCategoryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
 					"getSubscribedCategories",
-					_getSubscribedCategoriesParameterTypes29);
+					_getSubscribedCategoriesParameterTypes31);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					userId, start, end);
@@ -927,7 +983,7 @@ public class MBCategoryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
 					"getSubscribedCategoriesCount",
-					_getSubscribedCategoriesCountParameterTypes30);
+					_getSubscribedCategoriesCountParameterTypes32);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					userId);
@@ -956,7 +1012,7 @@ public class MBCategoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
-					"moveCategory", _moveCategoryParameterTypes31);
+					"moveCategory", _moveCategoryParameterTypes33);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					categoryId, parentCategoryId, mergeWithParentCategory);
@@ -989,7 +1045,7 @@ public class MBCategoryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
 					"moveCategoryFromTrash",
-					_moveCategoryFromTrashParameterTypes32);
+					_moveCategoryFromTrashParameterTypes34);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					categoryId, newCategoryId);
@@ -1021,7 +1077,7 @@ public class MBCategoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
-					"moveCategoryToTrash", _moveCategoryToTrashParameterTypes33);
+					"moveCategoryToTrash", _moveCategoryToTrashParameterTypes35);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					categoryId);
@@ -1054,7 +1110,7 @@ public class MBCategoryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
 					"restoreCategoryFromTrash",
-					_restoreCategoryFromTrashParameterTypes34);
+					_restoreCategoryFromTrashParameterTypes36);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					categoryId);
@@ -1082,7 +1138,7 @@ public class MBCategoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
-					"subscribeCategory", _subscribeCategoryParameterTypes35);
+					"subscribeCategory", _subscribeCategoryParameterTypes37);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					categoryId);
@@ -1110,7 +1166,7 @@ public class MBCategoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
-					"unsubscribeCategory", _unsubscribeCategoryParameterTypes36);
+					"unsubscribeCategory", _unsubscribeCategoryParameterTypes38);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					categoryId);
@@ -1149,7 +1205,7 @@ public class MBCategoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
-					"updateCategory", _updateCategoryParameterTypes37);
+					"updateCategory", _updateCategoryParameterTypes39);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					categoryId, parentCategoryId, name, description,
@@ -1221,92 +1277,100 @@ public class MBCategoryServiceHttp {
 			long.class, long.class, long.class, int.class, int.class, int.class
 		};
 	private static final Class<?>[] _getCategoriesParameterTypes9 = new Class[] {
-			long.class, long[].class, int.class, int.class
-		};
-	private static final Class<?>[] _getCategoriesParameterTypes10 = new Class[] {
-			long.class, long[].class, int.class, int.class, int.class
-		};
-	private static final Class<?>[] _getCategoriesParameterTypes11 = new Class[] {
-			long.class, long[].class, long[].class, int.class, int.class,
-			int.class
-		};
-	private static final Class<?>[] _getCategoriesAndThreadsParameterTypes12 = new Class[] {
-			long.class, long.class
-		};
-	private static final Class<?>[] _getCategoriesAndThreadsParameterTypes13 = new Class[] {
-			long.class, long.class, int.class
-		};
-	private static final Class<?>[] _getCategoriesAndThreadsParameterTypes14 = new Class[] {
-			long.class, long.class, int.class, int.class, int.class
-		};
-	private static final Class<?>[] _getCategoriesAndThreadsParameterTypes15 = new Class[] {
-			long.class, long.class, int.class, int.class, int.class,
-			com.liferay.portal.kernel.util.OrderByComparator.class
-		};
-	private static final Class<?>[] _getCategoriesAndThreadsParameterTypes16 = new Class[] {
 			long.class, long.class,
 			com.liferay.portal.kernel.dao.orm.QueryDefinition.class
 		};
-	private static final Class<?>[] _getCategoriesAndThreadsCountParameterTypes17 =
-		new Class[] { long.class, long.class };
+	private static final Class<?>[] _getCategoriesParameterTypes10 = new Class[] {
+			long.class, long[].class, int.class, int.class
+		};
+	private static final Class<?>[] _getCategoriesParameterTypes11 = new Class[] {
+			long.class, long[].class, int.class, int.class, int.class
+		};
+	private static final Class<?>[] _getCategoriesParameterTypes12 = new Class[] {
+			long.class, long[].class, long[].class, int.class, int.class,
+			int.class
+		};
+	private static final Class<?>[] _getCategoriesAndThreadsParameterTypes13 = new Class[] {
+			long.class, long.class
+		};
+	private static final Class<?>[] _getCategoriesAndThreadsParameterTypes14 = new Class[] {
+			long.class, long.class, int.class
+		};
+	private static final Class<?>[] _getCategoriesAndThreadsParameterTypes15 = new Class[] {
+			long.class, long.class, int.class, int.class, int.class
+		};
+	private static final Class<?>[] _getCategoriesAndThreadsParameterTypes16 = new Class[] {
+			long.class, long.class, int.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
+	private static final Class<?>[] _getCategoriesAndThreadsParameterTypes17 = new Class[] {
+			long.class, long.class,
+			com.liferay.portal.kernel.dao.orm.QueryDefinition.class
+		};
 	private static final Class<?>[] _getCategoriesAndThreadsCountParameterTypes18 =
-		new Class[] { long.class, long.class, int.class };
+		new Class[] { long.class, long.class };
 	private static final Class<?>[] _getCategoriesAndThreadsCountParameterTypes19 =
+		new Class[] { long.class, long.class, int.class };
+	private static final Class<?>[] _getCategoriesAndThreadsCountParameterTypes20 =
 		new Class[] {
 			long.class, long.class,
 			com.liferay.portal.kernel.dao.orm.QueryDefinition.class
 		};
-	private static final Class<?>[] _getCategoriesCountParameterTypes20 = new Class[] {
-			long.class, long.class
-		};
 	private static final Class<?>[] _getCategoriesCountParameterTypes21 = new Class[] {
-			long.class, long.class, int.class
+			long.class, long.class
 		};
 	private static final Class<?>[] _getCategoriesCountParameterTypes22 = new Class[] {
-			long.class, long.class, long.class, int.class
+			long.class, long.class, int.class
 		};
 	private static final Class<?>[] _getCategoriesCountParameterTypes23 = new Class[] {
-			long.class, long[].class
+			long.class, long.class, long.class, int.class
 		};
 	private static final Class<?>[] _getCategoriesCountParameterTypes24 = new Class[] {
-			long.class, long[].class, int.class
+			long.class, long.class,
+			com.liferay.portal.kernel.dao.orm.QueryDefinition.class
 		};
 	private static final Class<?>[] _getCategoriesCountParameterTypes25 = new Class[] {
+			long.class, long[].class
+		};
+	private static final Class<?>[] _getCategoriesCountParameterTypes26 = new Class[] {
+			long.class, long[].class, int.class
+		};
+	private static final Class<?>[] _getCategoriesCountParameterTypes27 = new Class[] {
 			long.class, long[].class, long[].class, int.class
 		};
-	private static final Class<?>[] _getCategoryParameterTypes26 = new Class[] {
+	private static final Class<?>[] _getCategoryParameterTypes28 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCategoryIdsParameterTypes27 = new Class[] {
+	private static final Class<?>[] _getCategoryIdsParameterTypes29 = new Class[] {
 			long.class, long.class
 		};
-	private static final Class<?>[] _getSubcategoryIdsParameterTypes28 = new Class[] {
+	private static final Class<?>[] _getSubcategoryIdsParameterTypes30 = new Class[] {
 			java.util.List.class, long.class, long.class
 		};
-	private static final Class<?>[] _getSubscribedCategoriesParameterTypes29 = new Class[] {
+	private static final Class<?>[] _getSubscribedCategoriesParameterTypes31 = new Class[] {
 			long.class, long.class, int.class, int.class
 		};
-	private static final Class<?>[] _getSubscribedCategoriesCountParameterTypes30 =
+	private static final Class<?>[] _getSubscribedCategoriesCountParameterTypes32 =
 		new Class[] { long.class, long.class };
-	private static final Class<?>[] _moveCategoryParameterTypes31 = new Class[] {
+	private static final Class<?>[] _moveCategoryParameterTypes33 = new Class[] {
 			long.class, long.class, boolean.class
 		};
-	private static final Class<?>[] _moveCategoryFromTrashParameterTypes32 = new Class[] {
+	private static final Class<?>[] _moveCategoryFromTrashParameterTypes34 = new Class[] {
 			long.class, long.class
 		};
-	private static final Class<?>[] _moveCategoryToTrashParameterTypes33 = new Class[] {
+	private static final Class<?>[] _moveCategoryToTrashParameterTypes35 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _restoreCategoryFromTrashParameterTypes34 = new Class[] {
+	private static final Class<?>[] _restoreCategoryFromTrashParameterTypes36 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _subscribeCategoryParameterTypes35 = new Class[] {
+	private static final Class<?>[] _subscribeCategoryParameterTypes37 = new Class[] {
 			long.class, long.class
 		};
-	private static final Class<?>[] _unsubscribeCategoryParameterTypes36 = new Class[] {
+	private static final Class<?>[] _unsubscribeCategoryParameterTypes38 = new Class[] {
 			long.class, long.class
 		};
-	private static final Class<?>[] _updateCategoryParameterTypes37 = new Class[] {
+	private static final Class<?>[] _updateCategoryParameterTypes39 = new Class[] {
 			long.class, long.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,

@@ -99,6 +99,10 @@ public interface MBCategoryService extends BaseService {
 		int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBCategory> getCategories(long groupId, long parentCategoryId,
+		QueryDefinition<?> queryDefinition);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBCategory> getCategories(long groupId,
 		long[] parentCategoryIds, int start, int end);
 
@@ -153,6 +157,10 @@ public interface MBCategoryService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCategoriesCount(long groupId, long excludedCategoryId,
 		long parentCategoryId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCategoriesCount(long groupId, long parentCategoryId,
+		QueryDefinition<?> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCategoriesCount(long groupId, long[] parentCategoryIds);

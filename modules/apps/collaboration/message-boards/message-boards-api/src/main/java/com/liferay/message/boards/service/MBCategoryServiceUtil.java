@@ -113,6 +113,13 @@ public class MBCategoryServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
+		long groupId, long parentCategoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+		return getService()
+				   .getCategories(groupId, parentCategoryId, queryDefinition);
+	}
+
+	public static java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
 		long groupId, long[] parentCategoryIds, int start, int end) {
 		return getService().getCategories(groupId, parentCategoryIds, start, end);
 	}
@@ -195,6 +202,13 @@ public class MBCategoryServiceUtil {
 		return getService()
 				   .getCategoriesCount(groupId, excludedCategoryId,
 			parentCategoryId, status);
+	}
+
+	public static int getCategoriesCount(long groupId, long parentCategoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+		return getService()
+				   .getCategoriesCount(groupId, parentCategoryId,
+			queryDefinition);
 	}
 
 	public static int getCategoriesCount(long groupId, long[] parentCategoryIds) {

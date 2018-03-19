@@ -222,6 +222,24 @@ public class MBCategoryServiceSoap {
 	}
 
 	public static com.liferay.message.boards.model.MBCategorySoap[] getCategories(
+		long groupId, long parentCategoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.message.boards.model.MBCategory> returnValue =
+				MBCategoryServiceUtil.getCategories(groupId, parentCategoryId,
+					queryDefinition);
+
+			return com.liferay.message.boards.model.MBCategorySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.message.boards.model.MBCategorySoap[] getCategories(
 		long groupId, long[] parentCategoryIds, int start, int end)
 		throws RemoteException {
 		try {
@@ -354,6 +372,22 @@ public class MBCategoryServiceSoap {
 		try {
 			int returnValue = MBCategoryServiceUtil.getCategoriesCount(groupId,
 					excludedCategoryId, parentCategoryId, status);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCategoriesCount(long groupId, long parentCategoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition)
+		throws RemoteException {
+		try {
+			int returnValue = MBCategoryServiceUtil.getCategoriesCount(groupId,
+					parentCategoryId, queryDefinition);
 
 			return returnValue;
 		}

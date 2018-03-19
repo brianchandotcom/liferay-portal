@@ -3402,21 +3402,7 @@ public class ServiceBuilder {
 
 		File xmlFile = new File(_springFileName);
 
-		StringBundler sb = new StringBundler(11);
-
-		sb.append("<?xml version=\"1.0\"?>\n\n");
-		sb.append("<beans\n");
-		sb.append("\tdefault-destroy-method=\"destroy\"\n");
-		sb.append("\tdefault-init-method=\"afterPropertiesSet\"\n");
-		sb.append(_getSpringNamespacesDeclarations());
-		sb.append("\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
-		sb.append("\n");
-		sb.append("\txsi:schemaLocation=\"");
-		sb.append(_getSpringSchemaLocations());
-		sb.append("\">\n");
-		sb.append("</beans>");
-
-		String xml = sb.toString();
+		String xml = "<?xml version=\"1.0\"?>\n\n<beans>\n</beans>";
 
 		if (!xmlFile.exists()) {
 			_write(xmlFile, xml);
@@ -3472,8 +3458,23 @@ public class ServiceBuilder {
 					newContent.substring(lastSession);
 		}
 
-		ToolsUtil.writeFileRaw(
-			xmlFile, _formatXml(newContent), _modifiedFileNames);
+		newContent = _formatXml(newContent);
+
+		StringBundler sb = new StringBundler(9);
+
+		sb.append("<beans\n");
+		sb.append("\tdefault-destroy-method=\"destroy\"\n");
+		sb.append("\tdefault-init-method=\"afterPropertiesSet\"\n");
+		sb.append(_getSpringNamespacesDeclarations());
+		sb.append("\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
+		sb.append("\n");
+		sb.append("\txsi:schemaLocation=\"");
+		sb.append(StringUtil.trim(_getSpringSchemaLocations()));
+		sb.append("\"\n>");
+
+		newContent = newContent.replaceFirst("<beans[^>]*>", sb.toString());
+
+		ToolsUtil.writeFileRaw(xmlFile, newContent, _modifiedFileNames);
 	}
 
 	private void _createSQLIndexes() throws Exception {

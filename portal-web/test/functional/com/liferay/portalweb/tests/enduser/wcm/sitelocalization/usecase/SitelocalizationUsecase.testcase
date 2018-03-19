@@ -83,7 +83,7 @@
 
 		<execute macro="Page#viewPageLocalization">
 			<var name="category" value="Navigation" />
-			<var name="defaultSiteLanguageKey" value="es-es" />
+			<var name="defaultSiteLanguageKey" value="es-ES" />
 			<var name="fieldName" value="HTML Title" />
 			<var name="menuItem" value="Configure" />
 			<var name="page" value="Language Test Page" />
@@ -582,7 +582,7 @@
 
 		<execute macro="Page#viewPageLocalization">
 			<var name="category" value="Navegación" />
-			<var name="defaultSiteLanguageKey" value="es-es" />
+			<var name="defaultSiteLanguageKey" value="es-ES" />
 			<var name="fieldName" value="Título HTML" />
 			<var name="menuItem" value="Configurar" />
 			<var name="page" value="Site Page 1" />
@@ -596,7 +596,7 @@
 
 		<execute macro="Page#viewPageLocalization">
 			<var name="category" value="Navegación" />
-			<var name="defaultSiteLanguageKey" value="es-es" />
+			<var name="defaultSiteLanguageKey" value="es-ES" />
 			<var name="fieldName" value="Título HTML" />
 			<var name="menuItem" value="Configurar" />
 			<var name="page" value="Site Page 2" />

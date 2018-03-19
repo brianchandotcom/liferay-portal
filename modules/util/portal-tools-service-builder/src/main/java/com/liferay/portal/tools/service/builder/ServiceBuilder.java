@@ -959,6 +959,7 @@ public class ServiceBuilder {
 				if (_isUADEnabled(_entities)) {
 					_createUADBnd();
 					_createUADConstants(_entities);
+					_createUADMarkerFile();
 					_createUADTestBnd();
 				}
 
@@ -4136,6 +4137,17 @@ public class ServiceBuilder {
 		if (!file.exists()) {
 			ToolsUtil.writeFile(
 				file, content, _author, _jalopySettings, _modifiedFileNames);
+		}
+	}
+
+	private void _createUADMarkerFile() throws Exception {
+		Map<String, Object> context = _getContext();
+
+		File file = new File(
+			StringBundler.concat(_uadDirName, "/../../../.lfrbuild-portal"));
+
+		if (!file.exists()) {
+			ToolsUtil.writeFileRaw(file, StringPool.BLANK, _modifiedFileNames);
 		}
 	}
 

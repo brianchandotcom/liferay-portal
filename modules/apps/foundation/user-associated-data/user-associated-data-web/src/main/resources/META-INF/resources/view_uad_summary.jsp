@@ -22,6 +22,11 @@ User selUser = PortalUtil.getSelectedUser(request);
 selUserId = selUser.getUserId();
 
 int step = (int)request.getAttribute(UADWebKeys.VIEW_UAD_SUMMARY_STEP);
+
+String backURL = ParamUtil.getString(request, "backURL", StringPool.BLANK);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backURL);
 %>
 
 <div class="container-fluid container-fluid-max-xl container-form-lg">

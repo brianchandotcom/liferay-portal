@@ -5,7 +5,7 @@
 		</execute>
 
 		<execute function="Click" locator1="Translation#LOCALIZATION_NAME">
-			<var name="key_localizationName" value="${localizationNameKey}" />
+			<var method="StringUtil#replace('${locale}', '-', '_')" name="key_locale" />
 		</execute>
 	</command>
 
@@ -62,7 +62,7 @@
 	<command name="inputLocalizedName">
 		<execute macro="PortletEntry#changeLocale">
 			<var name="fieldName" value="Name" />
-			<var name="localizationNameKey" value="${language}" />
+			<var name="locale" value="${language}" />
 		</execute>
 
 		<execute macro="PortletEntry#inputName">

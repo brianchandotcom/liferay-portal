@@ -455,7 +455,7 @@
 </tr>
 <tr>
 	<td>LOCALIZATION</td>
-	<td>//div[label[contains(.,'${key_fieldName}')]]//div[contains(@class,'localized')]//button</td>
+	<td>//div[label[contains(.,'${key_fieldName}')]]//div[contains(@class,'localized')]//button[contains(@class,'localized')]</td>
 	<td></td>
 </tr>
 <tr>

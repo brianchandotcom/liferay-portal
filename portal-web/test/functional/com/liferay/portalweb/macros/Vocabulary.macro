@@ -49,11 +49,11 @@
 		</if>
 
 		<if>
-			<isset var="localizationNameKey" />
+			<isset var="locale" />
 			<then>
 				<execute macro="PortletEntry#changeLocale">
 					<var name="fieldName" value="Name" />
-					<var name="localizationNameKey" value="${localizationNameKey}" />
+					<var name="locale" value="${locale}" />
 				</execute>
 
 				<execute macro="PortletEntry#inputName">
@@ -67,7 +67,7 @@
 			<then>
 				<execute macro="PortletEntry#changeLocale">
 					<var name="fieldName" value="Name" />
-					<var name="localizationNameKey" value="${localization2NameKey}" />
+					<var name="locale" value="${localization2NameKey}" />
 				</execute>
 
 				<execute macro="PortletEntry#inputName">

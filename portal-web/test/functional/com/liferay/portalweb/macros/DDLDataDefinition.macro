@@ -254,7 +254,7 @@
 
 		<execute macro="PortletEntry#changeLocale">
 			<var name="fieldName" value="Name" />
-			<var name="localizationNameKey" value="${languageValue}" />
+			<var name="locale" value="${languageValue}" />
 		</execute>
 	</command>
 

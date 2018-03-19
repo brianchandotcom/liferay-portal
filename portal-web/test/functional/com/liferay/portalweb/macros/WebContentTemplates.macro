@@ -225,7 +225,7 @@
 
 		<execute macro="PortletEntry#changeLocale">
 			<var name="fieldName" value="Name" />
-			<var name="localizationNameKey" value="${localization1NameKey}" />
+			<var name="locale" value="${localization1NameKey}" />
 		</execute>
 
 		<execute function="Type#clickAtType" locator1="TextInput#NAME" value1="${localization1Name}" />
@@ -235,7 +235,7 @@
 			<then>
 				<execute macro="PortletEntry#changeLocale">
 					<var name="fieldName" value="Name" />
-					<var name="localizationNameKey" value="${localization2NameKey}" />
+					<var name="locale" value="${localization2NameKey}" />
 				</execute>
 
 				<execute function="Type#clickAtType" locator1="TextInput#NAME" value1="${localization2Name}" />

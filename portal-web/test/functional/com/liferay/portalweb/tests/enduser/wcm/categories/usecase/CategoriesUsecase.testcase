@@ -62,7 +62,7 @@
 		<execute macro="Category#addCategoryLocalizationCP">
 			<var name="categoryName" value="Category Name" />
 			<var name="localizationName" value="Kategorienamen" />
-			<var name="localizationNameKey" value="de_DE" />
+			<var name="locale" value="de_DE" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 

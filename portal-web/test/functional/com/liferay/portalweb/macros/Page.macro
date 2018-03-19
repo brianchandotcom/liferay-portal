@@ -28,7 +28,7 @@
 
 		<execute macro="PortletEntry#changeLocale">
 			<var name="fieldName" value="Friendly URL" />
-			<var name="localizationNameKey" value="${friendlyUrlLocalized}" />
+			<var name="locale" value="${friendlyUrlLocalized}" />
 		</execute>
 
 		<execute function="Type" locator1="SitePagesEditPage#FRIENDLY_URL_FIELD" value1="${localizedFriendlyURL}" />
@@ -93,7 +93,7 @@
 
 		<execute macro="PortletEntry#changeLocale">
 			<var name="fieldName" value="Name" />
-			<var name="localizationNameKey" value="${pageTranslation}" />
+			<var name="locale" value="${pageTranslation}" />
 		</execute>
 
 		<execute macro="PortletEntry#inputName">

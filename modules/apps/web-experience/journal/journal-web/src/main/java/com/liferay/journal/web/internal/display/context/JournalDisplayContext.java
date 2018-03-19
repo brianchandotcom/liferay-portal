@@ -695,13 +695,16 @@ public class JournalDisplayContext {
 							LanguageUtil.get(_request, "templates"));
 					});
 
-				add(
-					navigationItem -> {
-						navigationItem.setActive(currentItem.equals("feeds"));
-						navigationItem.setHref(_getFeedsURL());
-						navigationItem.setLabel(
-							LanguageUtil.get(_request, "feeds"));
-					});
+				if (PortalUtil.isRSSFeedsEnabled()) {
+					add(
+						navigationItem -> {
+							navigationItem.setActive(
+								currentItem.equals("feeds"));
+							navigationItem.setHref(_getFeedsURL());
+							navigationItem.setLabel(
+								LanguageUtil.get(_request, "feeds"));
+						});
+				}
 			}
 		};
 	}

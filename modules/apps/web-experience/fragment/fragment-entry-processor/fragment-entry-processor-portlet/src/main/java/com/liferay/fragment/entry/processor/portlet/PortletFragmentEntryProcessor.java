@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -97,11 +98,14 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				Group group = _groupLocalService.getGroup(
 					originalFragmentEntryLink.getGroupId());
 
+				long defaultPlid = _portal.getControlPanelPlid(
+					group.getCompanyId());
+
 				PortletPreferences portletPreferences =
 					PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-						group.getCompanyId(), group.getGroupId(),
-						PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-						PortletKeys.PREFS_PLID_SHARED, portletId, "");
+						group.getCompanyId(), 0,
+						PortletKeys.PREFS_OWNER_TYPE_LAYOUT, defaultPlid,
+						portletId, "");
 
 				defaultPreferences = PortletPreferencesFactoryUtil.toXML(
 					portletPreferences);
@@ -164,6 +168,9 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private PortletRegistry _portletRegistry;

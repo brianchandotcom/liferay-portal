@@ -56,8 +56,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
@@ -321,7 +319,7 @@ public class JournalDisplayContext {
 		return _ddmStructureKey;
 	}
 
-	public String getDDMStructureName() throws PortalException {
+	public String getDDMStructureName() {
 		if (_ddmStructureName != null) {
 			return _ddmStructureName;
 		}
@@ -347,7 +345,7 @@ public class JournalDisplayContext {
 		return _ddmStructureName;
 	}
 
-	public long getDDMStructurePrimaryKey() throws PortalException {
+	public long getDDMStructurePrimaryKey() {
 		String ddmStructureKey = getDDMStructureKey();
 
 		if (Validator.isNull(ddmStructureKey)) {
@@ -1267,30 +1265,6 @@ public class JournalDisplayContext {
 		return false;
 	}
 
-	public boolean isShowBreadcrumb() throws PortalException {
-		if (isNavigationStructure()) {
-			return false;
-		}
-
-		if (isNavigationRecent()) {
-			return false;
-		}
-
-		if (isNavigationMine()) {
-			return false;
-		}
-
-		if (isSearch()) {
-			return false;
-		}
-
-		if (!hasResults()) {
-			return false;
-		}
-
-		return true;
-	}
-
 	public boolean isShowEditActions() {
 		if (_showEditActions != null) {
 			return _showEditActions;
@@ -1555,9 +1529,6 @@ public class JournalDisplayContext {
 
 		return portletURL.toString();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		JournalDisplayContext.class);
 
 	private String[] _addMenuFavItems;
 	private JournalArticle _article;

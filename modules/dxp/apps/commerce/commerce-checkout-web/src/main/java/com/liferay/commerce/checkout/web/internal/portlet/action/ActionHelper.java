@@ -14,8 +14,7 @@
 
 package com.liferay.commerce.checkout.web.internal.portlet.action;
 
-import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.util.CommercePaymentHelper;
+import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -39,12 +38,12 @@ import org.osgi.service.component.annotations.Reference;
 public class ActionHelper {
 
 	public void startPayment(
-			CommerceOrder commerceOrder, ActionRequest actionRequest,
+			long commerceOrderId, ActionRequest actionRequest,
 			ActionResponse actionResponse, ServiceContext serviceContext)
 		throws Exception {
 
-		String output = _commercePaymentHelper.startPayment(
-			commerceOrder, serviceContext);
+		String output = _commerceOrderService.startCommerceOrderPayment(
+			commerceOrderId, serviceContext);
 
 		if (Validator.isHTML(output)) {
 			HttpServletResponse httpServletResponse =
@@ -72,7 +71,7 @@ public class ActionHelper {
 	}
 
 	@Reference
-	private CommercePaymentHelper _commercePaymentHelper;
+	private CommerceOrderService _commerceOrderService;
 
 	@Reference
 	private Portal _portal;

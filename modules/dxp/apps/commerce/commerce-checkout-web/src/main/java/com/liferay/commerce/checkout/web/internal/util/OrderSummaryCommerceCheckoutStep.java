@@ -152,7 +152,8 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 				commerceOrderId, serviceContext);
 
 		_actionHelper.startPayment(
-			commerceOrder, actionRequest, actionResponse, serviceContext);
+			commerceOrder.getCommerceOrderId(), actionRequest, actionResponse,
+			serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

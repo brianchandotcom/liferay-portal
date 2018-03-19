@@ -21,7 +21,6 @@ import com.liferay.commerce.checkout.web.util.BaseCommerceCheckoutStep;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceOrderPaymentLocalService;
-import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -76,14 +75,11 @@ public class OrderConfirmationCommerceCheckoutStep
 		long commerceOrderId = ParamUtil.getLong(
 			actionRequest, "commerceOrderId");
 
-		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
-			commerceOrderId);
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommerceOrder.class.getName(), actionRequest);
 
 		_actionHelper.startPayment(
-			commerceOrder, actionRequest, actionResponse, serviceContext);
+			commerceOrderId, actionRequest, actionResponse, serviceContext);
 	}
 
 	@Override
@@ -119,9 +115,6 @@ public class OrderConfirmationCommerceCheckoutStep
 
 	@Reference
 	private CommerceOrderPaymentLocalService _commerceOrderPaymentLocalService;
-
-	@Reference
-	private CommerceOrderService _commerceOrderService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

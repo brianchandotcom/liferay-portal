@@ -17,7 +17,6 @@ package com.liferay.commerce.internal.servlet;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.commerce.util.CommercePaymentHelper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -89,12 +88,12 @@ public class CommercePaymentServlet extends HttpServlet {
 				httpServletRequest);
 
 			if (cancel) {
-				_commercePaymentHelper.cancelPayment(
-					commerceOrder, serviceContext);
+				_commerceOrderService.cancelCommerceOrderPayment(
+					commerceOrder.getCommerceOrderId(), serviceContext);
 			}
 			else {
-				_commercePaymentHelper.completePayment(
-					commerceOrder, serviceContext);
+				_commerceOrderService.completeCommerceOrderPayment(
+					commerceOrder.getCommerceOrderId(), serviceContext);
 			}
 
 			httpServletResponse.sendRedirect(redirect);
@@ -106,9 +105,6 @@ public class CommercePaymentServlet extends HttpServlet {
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
-
-	@Reference
-	private CommercePaymentHelper _commercePaymentHelper;
 
 	@Reference
 	private Portal _portal;

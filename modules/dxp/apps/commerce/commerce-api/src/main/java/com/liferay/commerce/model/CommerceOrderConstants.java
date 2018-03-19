@@ -29,6 +29,9 @@ public class CommerceOrderConstants {
 	public static final int ORDER_STATUS_COMPLETED =
 		WorkflowConstants.STATUS_APPROVED;
 
+	public static final int ORDER_STATUS_IN_PROGRESS =
+		WorkflowConstants.STATUS_INCOMPLETE;
+
 	public static final int ORDER_STATUS_OPEN = WorkflowConstants.STATUS_DRAFT;
 
 	public static final int ORDER_STATUS_TO_TRANSMIT =
@@ -38,8 +41,8 @@ public class CommerceOrderConstants {
 		WorkflowConstants.STATUS_INCOMPLETE;
 
 	public static final int[] ORDER_STATUSES = {
-		ORDER_STATUS_OPEN, ORDER_STATUS_TO_TRANSMIT, ORDER_STATUS_TRANSMITTED,
-		ORDER_STATUS_COMPLETED, ORDER_STATUS_CANCELLED
+		ORDER_STATUS_OPEN, ORDER_STATUS_IN_PROGRESS, ORDER_STATUS_TO_TRANSMIT,
+		ORDER_STATUS_TRANSMITTED, ORDER_STATUS_COMPLETED, ORDER_STATUS_CANCELLED
 	};
 
 	public static final int PAYMENT_STATUS_AUTHORIZED =
@@ -70,6 +73,9 @@ public class CommerceOrderConstants {
 		}
 		else if (orderStatus == ORDER_STATUS_COMPLETED) {
 			return "completed";
+		}
+		else if (orderStatus == ORDER_STATUS_IN_PROGRESS) {
+			return "in-progress";
 		}
 		else if (orderStatus == ORDER_STATUS_OPEN) {
 			return "open";

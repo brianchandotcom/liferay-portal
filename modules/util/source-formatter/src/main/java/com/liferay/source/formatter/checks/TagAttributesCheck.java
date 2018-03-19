@@ -32,9 +32,7 @@ import java.util.regex.Pattern;
  */
 public abstract class TagAttributesCheck extends BaseFileCheck {
 
-	protected Tag doFormatLineBreaks(Tag tag) {
-		return tag;
-	}
+	protected abstract Tag doFormatLineBreaks(Tag tag);
 
 	protected Tag formatLineBreaks(Tag tag, boolean forceSingleLine) {
 		if (forceSingleLine) {

@@ -36,7 +36,8 @@ String socialBookmarksDisplayStyle = blogsPortletInstanceConfiguration.socialBoo
 </portlet:renderURL>
 
 <liferay-social-bookmarks:bookmarks
-	contentId="<%= String.valueOf(entry.getEntryId()) %>"
+	className="<%= BlogsEntry.class.getName() %>"
+	classPK="<%= entry.getEntryId() %>"
 	displayStyle="<%= blogsPortletInstanceConfiguration.socialBookmarksDisplayStyle() %>"
 	target="_blank"
 	title="<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, entry) %>"

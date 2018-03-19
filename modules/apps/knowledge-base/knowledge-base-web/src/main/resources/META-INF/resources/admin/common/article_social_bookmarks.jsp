@@ -25,7 +25,8 @@ PortletURL viewKBArticleURL = kbArticleURLHelper.createViewURL(kbArticle);
 %>
 
 <liferay-social-bookmarks:bookmarks
-	contentId="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>"
+	className="<%= KBArticle.class.getName() %>"
+	classPK="<%= kbArticle.getKbArticleId() %>"
 	displayStyle="<%= socialBookmarksDisplayStyle %>"
 	target="_blank"
 	title="<%= kbArticle.getTitle() %>"

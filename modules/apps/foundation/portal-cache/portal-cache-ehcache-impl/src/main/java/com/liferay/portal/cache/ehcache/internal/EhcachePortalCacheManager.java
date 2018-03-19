@@ -204,10 +204,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	protected void initPortalCacheConfiguratorSettingsServiceTracker(
 		BundleContext bundleContext) {
 
-		if (_cacheManager != null) {
-			return;
-		}
-
 		String filterString = StringBundler.concat(
 			"(&(objectClass=", PortalCacheConfiguratorSettings.class.getName(),
 			")(", PortalCacheManager.PORTAL_CACHE_MANAGER_NAME, "=",

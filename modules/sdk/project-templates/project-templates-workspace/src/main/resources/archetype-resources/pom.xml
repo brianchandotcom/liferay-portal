@@ -13,6 +13,9 @@
 	<name>${artifactId}</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+#if (${liferayVersion} == "7.1")
+		<liferay.workspace.bundle.url>https://cdn.lfrs.sl/releases.liferay.com/portal/7.1.0-m1/liferay-ce-portal-tomcat-7.1-m1-20180223151209360.zip</liferay.workspace.bundle.url>
+#end
 	</properties>
 	<build>
 		<plugins>

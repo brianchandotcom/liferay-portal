@@ -1373,9 +1373,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "bnd.bnd",
-			"Liferay-Theme-Contributor-Type: foo-bar");
-		_testContains(
-			gradleProjectDir, "bnd.bnd",
+			"Liferay-Theme-Contributor-Type: foo-bar",
 			"Web-ContextPath: /foo-bar-theme-contributor");
 		_testNotContains(
 			gradleProjectDir, "bnd.bnd",
@@ -1406,9 +1404,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "bnd.bnd",
-			"Liferay-Theme-Contributor-Type: my-contributor-default");
-		_testContains(
-			gradleProjectDir, "bnd.bnd",
+			"Liferay-Theme-Contributor-Type: my-contributor-default",
 			"Web-ContextPath: /my-contributor-default-theme-contributor");
 	}
 
@@ -1751,6 +1747,24 @@ public class ProjectTemplatesTest {
 			gradleWorkspaceProjectDir, mavenWorkspaceProjectDir,
 			gradleOutputDir, mavenOutputDir,
 			":modules:foo-portlet" + _GRADLE_TASK_PATH_BUILD);
+	}
+
+	@Test
+	public void testBuildTemplateWorkspaceWithVersion() throws Exception {
+		File workspaceProjectDir = _buildTemplateWithMaven(
+			WorkspaceUtil.WORKSPACE, "withportlet", "com.test",
+			"-DliferayVersion=7.1");
+
+		_testContains(
+			workspaceProjectDir, "pom.xml", "<liferay.workspace.bundle.url>",
+			"liferay.com/portal/7.1.0-");
+
+		workspaceProjectDir = _buildTemplateWithGradle(
+			WorkspaceUtil.WORKSPACE, "withportlet", "--liferayVersion", "7.1");
+
+		_testContains(
+			workspaceProjectDir, "gradle.properties", true,
+			".*liferay.workspace.bundle.url=.*liferay.com/portal/7.1.0-.*");
 	}
 
 	@Test

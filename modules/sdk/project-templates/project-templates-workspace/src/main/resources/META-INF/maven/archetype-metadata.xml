@@ -17,4 +17,9 @@
 			</includes>
 		</fileSet>
 	</fileSets>
+	<requiredProperties>
+		<requiredProperty key="liferayVersion">
+			<defaultValue>7.0</defaultValue>
+		</requiredProperty>
+	</requiredProperties>
 </archetype-descriptor>

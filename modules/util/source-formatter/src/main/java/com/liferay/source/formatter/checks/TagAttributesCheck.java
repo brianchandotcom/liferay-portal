@@ -315,7 +315,7 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 	}
 
 	private static final Pattern _attributeNamePattern = Pattern.compile(
-		"[a-z]+[-_a-zA-Z0-9]*");
+		"[a-z]+[-_:a-zA-Z0-9]*");
 	private static final Pattern _multilineTagPattern = Pattern.compile(
 		"(([ \t]*)<[-\\w:]+\n.*?([^%])(/?>))(\n|$)", Pattern.DOTALL);
 

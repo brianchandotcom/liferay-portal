@@ -14,14 +14,10 @@
 
 package com.liferay.commerce.elasticsearch6.internal.index.settings.contributor;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch6.settings.IndexSettingsContributor;
 import com.liferay.portal.search.elasticsearch6.settings.IndexSettingsHelper;
 import com.liferay.portal.search.elasticsearch6.settings.TypeMappingsHelper;
-
-import java.io.IOException;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -48,21 +44,10 @@ public class CommerceIndexSettingsContributor
 	public void contribute(
 		String indexName, TypeMappingsHelper typeMappingsHelper) {
 
-		try {
-			Class<?> clazz = getClass();
+		String typeMappings = StringUtil.read(
+			getClass(), "dependencies/AdditionalTypeMappings.json");
 
-			String mappingsPath =
-				"com/liferay/commerce/elasticsearch6/internal/index/settings" +
-					"/contributor/AdditionalTypeMappings.json";
-
-			String mappings = StringUtil.read(
-				clazz.getClassLoader(), mappingsPath, false);
-
-			typeMappingsHelper.addTypeMappings(indexName, mappings);
-		}
-		catch (IOException ioe) {
-			_log.error("Could not load AdditionalTypeMappings.json", ioe);
-		}
+		typeMappingsHelper.addTypeMappings(indexName, typeMappings);
 	}
 
 	@Override
@@ -73,8 +58,5 @@ public class CommerceIndexSettingsContributor
 	@Override
 	public void populate(IndexSettingsHelper indexSettingsHelper) {
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceIndexSettingsContributor.class);
 
 }

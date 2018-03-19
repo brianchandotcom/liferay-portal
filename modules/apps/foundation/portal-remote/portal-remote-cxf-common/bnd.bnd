@@ -4,6 +4,8 @@ Bundle-Version: 4.0.0
 Import-Package:\
 	!com.sun.*,\
 	\
+	!javax.annotation.*;resolution:=optional,\
+	\
 	!javax.validation.*,\
 	\
 	!net.sf.cglib.proxy.*,\

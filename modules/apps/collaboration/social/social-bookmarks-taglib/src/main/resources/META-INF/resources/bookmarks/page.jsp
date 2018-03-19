@@ -64,7 +64,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 				%>
 
 					<li class="taglib-social-bookmark <%= styleClass %>" onClick="<%= "return socialBookmarks_handleItemClick('" + HtmlUtil.escapeJS(socialBookmark.getPostURL(title, url)) + "')" %>">
-						<liferay-social-bookmarks:bookmark contentId="<%= contentId %>" displayStyle="<%= displayStyle %>" target="<%= target %>" title="<%= title %>" type="<%= types[i] %>" url="<%= url %>" />
+						<liferay-social-bookmarks:bookmark displayStyle="<%= displayStyle %>" target="<%= target %>" title="<%= title %>" type="<%= types[i] %>" url="<%= url %>" />
 					</li>
 
 				<%

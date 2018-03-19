@@ -35,6 +35,7 @@ page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
+page import="com.liferay.site.navigation.constants.SiteNavigationConstants" %><%@
 page import="com.liferay.site.navigation.menu.web.internal.constants.SiteNavigationMenuWebKeys" %><%@
 page import="com.liferay.site.navigation.menu.web.internal.display.context.SiteNavigationMenuDisplayContext" %><%@
 page import="com.liferay.site.navigation.model.SiteNavigationMenu" %><%@

@@ -36,6 +36,10 @@ public interface MBListDisplayContext extends MBDisplayContext {
 			SearchContainer searchContainer)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of 4.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public void populateResultsAndTotal(SearchContainer searchContainer)
 		throws PortalException;
 

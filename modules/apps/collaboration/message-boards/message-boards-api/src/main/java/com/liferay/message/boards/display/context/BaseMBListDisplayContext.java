@@ -69,6 +69,10 @@ public class BaseMBListDisplayContext
 		parentDisplayContext.populateCategoriesResultsAndTotal(searchContainer);
 	}
 
+	/**
+	 * @deprecated As of 4.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void populateResultsAndTotal(SearchContainer searchContainer)
 		throws PortalException {

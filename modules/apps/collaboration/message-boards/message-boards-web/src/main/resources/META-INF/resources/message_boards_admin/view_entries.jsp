@@ -25,15 +25,11 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 
 long groupThreadsUserId = ParamUtil.getLong(request, "groupThreadsUserId");
 
-boolean showBreadcrumb = ParamUtil.getBoolean(request, "showBreadcrumb", true);
-
 PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 
 if (groupThreadsUserId > 0) {
 	portletURL.setParameter("groupThreadsUserId", String.valueOf(groupThreadsUserId));
 }
-
-boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 %>
 
 <div class="container-fluid-1280 view-entries-container">
@@ -62,29 +58,24 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 		</portlet:renderURL>
 
 		<%
-		if (portletTitleBasedNavigation) {
-			portletDisplay.setShowBackIcon(true);
-			portletDisplay.setURLBack(backURL.toString());
+		portletDisplay.setShowBackIcon(true);
+		portletDisplay.setURLBack(backURL.toString());
 
-			renderResponse.setTitle(category.getName());
-		}
+		renderResponse.setTitle(category.getName());
 		%>
 
 	</c:if>
 
-	<c:if test="<%= showBreadcrumb %>">
+	<%
+	MBBreadcrumbUtil.addPortletBreadcrumbEntries(categoryId, request, renderResponse);
+	%>
 
-		<%
-		MBBreadcrumbUtil.addPortletBreadcrumbEntries(categoryId, request, renderResponse);
-		%>
-
-		<liferay-ui:breadcrumb
-			showCurrentGroup="<%= false %>"
-			showGuestGroup="<%= false %>"
-			showLayout="<%= false %>"
-			showParentGroups="<%= false %>"
-		/>
-	</c:if>
+	<liferay-ui:breadcrumb
+		showCurrentGroup="<%= false %>"
+		showGuestGroup="<%= false %>"
+		showLayout="<%= false %>"
+		showParentGroups="<%= false %>"
+	/>
 
 	<aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
@@ -246,11 +237,9 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 								</c:if>
 							</h4>
 
-							<c:if test="<%= portletTitleBasedNavigation || ((message != null) && !message.isApproved()) %>">
-								<span class="h6">
-									<aui:workflow-status bean="<%= message %>" markupView="lexicon" model="<%= MBMessage.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= message.getStatus() %>" />
-								</span>
-							</c:if>
+							<span class="h6">
+								<aui:workflow-status bean="<%= message %>" markupView="lexicon" model="<%= MBMessage.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= message.getStatus() %>" />
+							</span>
 
 							<%
 							int repliesCount = Math.max(thread.getMessageCount() - 1, 0);

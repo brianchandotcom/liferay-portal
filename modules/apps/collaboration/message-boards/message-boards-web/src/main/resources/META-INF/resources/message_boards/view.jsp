@@ -401,7 +401,6 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 
 					mbListDisplayContext.setThreadEntriesDelta(threadEntriesSearchContainer);
 
-					threadEntriesSearchContainer.setId("mbEntries");
 					threadEntriesSearchContainer.setOrderByCol(orderByCol);
 					threadEntriesSearchContainer.setOrderByComparator(orderByComparator);
 					threadEntriesSearchContainer.setOrderByType(orderByType);

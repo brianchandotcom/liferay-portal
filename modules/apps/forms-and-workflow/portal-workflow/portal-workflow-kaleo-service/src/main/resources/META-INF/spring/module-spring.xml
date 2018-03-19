@@ -6,7 +6,7 @@
 	xmlns="http://www.springframework.org/schema/beans"
 	xmlns:osgi="http://www.springframework.org/schema/osgi"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd"
 >
 	<bean class="com.liferay.portal.workflow.kaleo.service.impl.KaleoActionLocalServiceImpl" id="com.liferay.portal.workflow.kaleo.service.KaleoActionLocalService" />
 	<bean class="com.liferay.portal.workflow.kaleo.service.persistence.impl.KaleoActionPersistenceImpl" id="com.liferay.portal.workflow.kaleo.service.persistence.KaleoActionPersistence" parent="basePersistence" />

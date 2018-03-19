@@ -74,14 +74,14 @@ public class UnpublishDefinitionPortletConfigurationIcon
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "unpublishKaleoDefinitionVersion");
 
+		portletURL.setParameter(
+			"mvcPath", portletRequest.getParameter("mvcPath"));
+
 		KaleoDefinition kaleoDefinition = getKaleoDefinition(portletRequest);
 
 		portletURL.setParameter("name", kaleoDefinition.getName());
 		portletURL.setParameter(
 			"version", String.valueOf(kaleoDefinition.getVersion()));
-
-		portletURL.setParameter(
-			"mvcPath", portletRequest.getParameter("mvcPath"));
 
 		KaleoDefinitionVersion kaleoDefinitionVersion =
 			(KaleoDefinitionVersion)portletRequest.getAttribute(

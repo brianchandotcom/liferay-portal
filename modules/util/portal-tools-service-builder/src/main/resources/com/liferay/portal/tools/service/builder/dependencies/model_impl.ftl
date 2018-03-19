@@ -32,6 +32,18 @@ import ${apiPackagePath}.model.${entity.name}Soap;
 	import ${apiPackagePath}.model.${localizedEntity.name};
 </#if>
 
+<#if entity.versionEntity??>
+	<#assign versionEntity = entity.versionEntity />
+
+	import ${apiPackagePath}.model.${versionEntity.name};
+
+<#elseif entity.versionedEntity??>
+	<#assign versionedEntity = entity.versionedEntity />
+
+	import ${apiPackagePath}.model.${versionedEntity.name};
+	import ${apiPackagePath}.model.impl.${versionedEntity.name}Impl;
+</#if>
+
 import ${apiPackagePath}.service.${entity.name}LocalServiceUtil;
 
 import aQute.bnd.annotation.ProviderType;
@@ -50,6 +62,7 @@ import com.liferay.portal.kernel.model.ContainerModel;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
+import com.liferay.portal.kernel.model.version.VersionedModelInvocationHandler;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DateUtil;
@@ -64,6 +77,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
+
+import java.lang.reflect.Method;
 
 import java.math.BigDecimal;
 
@@ -529,6 +544,61 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 				return ${localizedEntity.varName}.get${entityColumn.methodName}();
 			}
 		</#list>
+	</#if>
+
+	<#if entity.versionEntity??>
+		<#assign versionEntity = entity.versionEntity />
+
+		@Override
+		public boolean isDraft() {
+			if (getHeadId() > 0) {
+				return true;
+			}
+
+			return false;
+		}
+
+		@Override
+		public void populateVersionModel(${versionEntity.name} ${versionEntity.varName}) {
+			<#list entity.entityColumns as entityColumn>
+				<#if !entityColumn.isPrimary() && !stringUtil.equals(entityColumn.methodName, "HeadId") && !stringUtil.equals(entityColumn.methodName, "MvccVersion")>
+					${versionEntity.varName}.set${entityColumn.methodName}(get${entityColumn.methodName}());
+				</#if>
+			</#list>
+		}
+	<#elseif entity.versionedEntity??>
+		<#assign
+			versionedEntity = entity.versionedEntity
+			pkEntityColumn = versionedEntity.PKEntityColumns?first
+		/>
+
+		@Override
+		public long getVersionedModelId() {
+			return get${pkEntityColumn.methodName}();
+		}
+
+		@Override
+		public void populateVersionedModel(${versionedEntity.name} ${versionedEntity.varName}) {
+			<#list versionedEntity.entityColumns as entityColumn>
+				<#if !entityColumn.isPrimary() && !stringUtil.equals(entityColumn.methodName, "HeadId") && !stringUtil.equals(entityColumn.methodName, "MvccVersion")>
+					${versionedEntity.varName}.set${entityColumn.methodName}(get${entityColumn.methodName}());
+				</#if>
+			</#list>
+		}
+
+		@Override
+		public void setVersionedModelId(long ${versionedEntity.getPKVarName()}) {
+			set${pkEntityColumn.methodName}(${versionedEntity.getPKVarName()});
+		}
+
+		@Override
+		public ${versionedEntity.name} toVersionedModel() {
+			if (_${versionedEntity.varName} == null) {
+				_${versionedEntity.varName} = (${versionedEntity.name})ProxyUtil.newProxyInstance(_classLoader, _versionedModelInterfaces, new VersionedModelInvocationHandler(this, _versionedModelMethodsMap));
+			}
+
+			return _${versionedEntity.varName};
+		}
 	</#if>
 
 	<#list entity.regularEntityColumns as entityColumn>
@@ -1518,6 +1588,34 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 	private static final ClassLoader _classLoader = ${entity.name}.class.getClassLoader();
 
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {${entity.name}.class};
+
+	<#if entity.versionedEntity??>
+		<#assign versionedEntity = entity.versionedEntity />
+
+		private static final Map<Method, Method> _versionedModelMethodsMap = new HashMap<Method, Method>();
+		private static final Class<?>[] _versionedModelInterfaces = new Class<?>[] {${versionedEntity.name}.class};
+
+		static {
+			try {
+				_versionedModelMethodsMap.put(${versionedEntity.name}.class.getMethod("getPrimaryKey"), ${entity.name}.class.getMethod("getVersionedModelId"));
+
+				<#list versionedEntity.entityColumns as entityColumn>
+					<#if !stringUtil.equals(entityColumn.methodName, "HeadId") && !stringUtil.equals(entityColumn.methodName, "MvccVersion")>
+						<#if stringUtil.equals(entityColumn.type, "boolean")>
+							_versionedModelMethodsMap.put(${versionedEntity.name}.class.getMethod("is${entityColumn.methodName}"), ${entity.name}.class.getMethod("is${entityColumn.methodName}"));
+						</#if>
+
+						_versionedModelMethodsMap.put(${versionedEntity.name}.class.getMethod("get${entityColumn.methodName}"), ${entity.name}.class.getMethod("get${entityColumn.methodName}"));
+					</#if>
+				</#list>
+			}
+			catch (ReflectiveOperationException roe) {
+				throw new ExceptionInInitializerError(roe);
+			}
+		}
+
+		private volatile ${versionedEntity.name} _${versionedEntity.varName};
+	</#if>
 
 	<#list entity.regularEntityColumns as entityColumn>
 		<#if stringUtil.equals(entityColumn.type, "Blob") && entityColumn.lazy>

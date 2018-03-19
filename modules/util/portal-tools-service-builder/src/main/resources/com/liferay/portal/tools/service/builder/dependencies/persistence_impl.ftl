@@ -643,7 +643,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				${entity.varName}.setNew(false);
 			}
 			else {
-				<#if entity.hasLazyBlobEntityColumn()>
+				<#if entity.versionedEntity??>
+					throw new IllegalArgumentException("${entity.name} is read only, create a new version instead");
+				<#elseif entity.hasLazyBlobEntityColumn()>
 
 					<#-- Workaround for HHH-2680 -->
 

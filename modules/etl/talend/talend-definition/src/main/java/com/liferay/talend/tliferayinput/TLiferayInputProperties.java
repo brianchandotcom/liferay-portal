@@ -88,12 +88,12 @@ public class TLiferayInputProperties
 
 		mainForm.addRow(queryString);
 
-		Widget guessButton = Widget.widget(guessSchema);
+		Widget guessButtonWidget = Widget.widget(guessSchema);
 
-		guessButton.setLongRunning(true);
-		guessButton.setWidgetType(Widget.BUTTON_WIDGET_TYPE);
+		guessButtonWidget.setLongRunning(true);
+		guessButtonWidget.setWidgetType(Widget.BUTTON_WIDGET_TYPE);
 
-		mainForm.addRow(guessButton);
+		mainForm.addRow(guessButtonWidget);
 	}
 
 	@Override

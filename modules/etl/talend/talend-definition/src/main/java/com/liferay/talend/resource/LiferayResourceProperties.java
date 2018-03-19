@@ -206,31 +206,31 @@ public class LiferayResourceProperties
 
 		refreshLayout(resourceSelectionForm);
 
-		Form moduleRefForm = Form.create(this, Form.REFERENCE);
+		Form referenceForm = Form.create(this, Form.REFERENCE);
 
-		Widget resourcesWidgetLong = Widget.widget(resourceURL);
+		Widget resourcesReferenceWidget = Widget.widget(resourceURL);
 
-		resourcesWidgetLong.setCallAfter(true);
-		resourcesWidgetLong.setLongRunning(true);
-		resourcesWidgetLong.setWidgetType(
+		resourcesReferenceWidget.setCallAfter(true);
+		resourcesReferenceWidget.setLongRunning(true);
+		resourcesReferenceWidget.setWidgetType(
 			Widget.NAME_SELECTION_REFERENCE_WIDGET_TYPE);
 
-		moduleRefForm.addRow(resourcesWidgetLong);
+		referenceForm.addRow(resourcesReferenceWidget);
 
-		Widget relatedCollectionsWidgetLong = Widget.widget(
+		Widget relatedCollectionsReferenceWidget = Widget.widget(
 			relatedResourceCollections);
 
-		relatedCollectionsWidgetLong.setLongRunning(true);
-		relatedCollectionsWidgetLong.setWidgetType(
+		relatedCollectionsReferenceWidget.setLongRunning(true);
+		relatedCollectionsReferenceWidget.setWidgetType(
 			Widget.ENUMERATION_WIDGET_TYPE);
 
-		moduleRefForm.addRow(useRelatedResource);
+		referenceForm.addRow(useRelatedResource);
 
-		moduleRefForm.addColumn(relatedCollectionsWidgetLong);
+		referenceForm.addColumn(relatedCollectionsReferenceWidget);
 
-		moduleRefForm.addRow(main.getForm(Form.REFERENCE));
+		referenceForm.addRow(main.getForm(Form.REFERENCE));
 
-		refreshLayout(moduleRefForm);
+		refreshLayout(referenceForm);
 	}
 
 	@Override

@@ -1,4 +1,46 @@
 <definition>
+	<command name="addDataDefinitions">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No entries were found." />
+
+		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
+
+		<execute function="AssertElementPresent" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_2">
+			<var name="key_ddlDataDefinitionName" value="Contacts" />
+		</execute>
+
+		<execute function="AssertConsoleTextNotPresent" value1="DB2 SQL Error: SQLCODE=-134, SQLSTATE=42907, SQLERRMC=XSD407_0_, DRIVER=4.8.87" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#addCP">
+			<var name="ddlDataDefinitionName" value="Data Definition" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#save" />
+
+		<execute function="AssertElementPresent" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_2">
+			<var name="key_ddlDataDefinitionName" value="Data Definition" />
+		</execute>
+
+		<execute function="AssertConsoleTextNotPresent" value1="DB2 SQL Error: SQLCODE=-134, SQLSTATE=42907, SQLERRMC=XSD407_0_, DRIVER=4.8.87" />
+	</command>
+
 	<command name="addForm">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />

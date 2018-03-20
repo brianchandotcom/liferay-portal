@@ -1,6 +1,7 @@
 apply plugin: "com.liferay.lang.merger"
 
 dependencies {
+	complieOnly group: "com.liferay", name: "com.liferay.frontend.taglib.soy", version: "1.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
@@ -10,6 +11,7 @@ dependencies {
 	compileOnly project(":apps:foundation:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:web-experience:application-list:application-list-api")
 	compileOnly project(":apps:web-experience:export-import:export-import-api")
+	compileOnly project(":apps:foundation:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:web-experience:staging:staging-api")
 	compileOnly project(":apps:web-experience:staging:staging-taglib")
 	compileOnly project(":apps:web-experience:trash:trash-api")

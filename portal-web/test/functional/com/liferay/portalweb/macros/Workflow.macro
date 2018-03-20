@@ -288,19 +288,15 @@
 	<command name="configureWorkflow">
 		<var name="key_rowEntry" value="${workflowResourceValue}" />
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${workflowResourceValue}" />
+		<execute function="AssertClick" locator1="Button#EDIT_ROW" value1="Edit" />
 
 		<var name="key_workflowResourceValue" value="${workflowResourceValue}" />
 
 		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${workflowDefinition}" />
 
-		<execute macro="PortletEntry#save" />
+		<execute function="AssertClick" locator1="WorkflowConfiguration#SAVE" value1="Save" />
+
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute macro="Workflow#viewConfigurationSelected">
 			<var name="workflowDefinition" value="${workflowDefinition}" />

@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -32,6 +33,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
@@ -1464,6 +1466,30 @@ public class GitWorkingDirectory {
 		return executeBashCommands(1, 1000 * 30, commands);
 	}
 
+	protected Properties getGitWorkingDirectoryProperties(
+		String propertiesFilePath) {
+
+		try {
+			Properties properties = new Properties();
+
+			List<File> propertiesFiles = _getPropertiesFiles(
+				propertiesFilePath);
+
+			for (File propertiesFile : propertiesFiles) {
+				if (!propertiesFile.exists()) {
+					continue;
+				}
+
+				properties.load(new FileInputStream(propertiesFile));
+			}
+
+			return properties;
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
 	protected List<String> getLocalBranchNames() {
 		ExecutionResult executionResult = executeBashCommands(
 			"git for-each-ref refs/heads --format=\"%(refname)\"");
@@ -1769,6 +1795,33 @@ public class GitWorkingDirectory {
 		}
 
 		return executionResult.getStandardOut();
+	}
+
+	private List<File> _getPropertiesFiles(String propertiesFilePath) {
+		List<File> propertiesFiles = new ArrayList<>();
+
+		File workingDirectory = getWorkingDirectory();
+
+		propertiesFiles.add(new File(workingDirectory, propertiesFilePath));
+
+		String[] environments = {
+			System.getenv("HOSTNAME"), System.getenv("HOST"),
+			System.getenv("COMPUTERNAME"), System.getProperty("user.name")
+		};
+
+		for (String environment : environments) {
+			if (environment == null) {
+				continue;
+			}
+
+			propertiesFiles.add(
+				new File(
+					workingDirectory,
+					propertiesFilePath.replace(
+						".properties", "." + environment + ".properties")));
+		}
+
+		return propertiesFiles;
 	}
 
 	private String _log(int num, File file, String format) {

@@ -52,6 +52,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 
 					<c:if test="<%= step > 1 %>">
 						<liferay-ui:icon
+							cssClass="text-success"
 							iconCssClass="icon-ok-sign"
 							label="<%= true %>"
 							message="user-was-successfully-deactivated"
@@ -109,6 +110,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 
 					<c:if test="<%= step > 2 %>">
 						<liferay-ui:icon
+							cssClass="text-success"
 							iconCssClass="icon-ok-sign"
 							label="<%= true %>"
 							message="personal-site-was-successfully-forgotten"
@@ -136,6 +138,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 
 					<c:if test="<%= step > 3 %>">
 						<liferay-ui:icon
+							cssClass="text-success"
 							iconCssClass="icon-ok-sign"
 							label="<%= true %>"
 							message="all-ambiguous-data-was-forgotten"
@@ -163,6 +166,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 
 					<c:if test="<%= step > 4 %>">
 						<liferay-ui:icon
+							cssClass="text-success"
 							iconCssClass="icon-ok-sign"
 							label="<%= true %>"
 							message="all-data-was-anonymized"

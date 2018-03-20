@@ -1553,10 +1553,6 @@
 			<var name="virtualHostsURL" value="http://www.baker.com:8080" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="www.able.com" />
-		</execute>
-
 		<execute macro="BlogsNavigator#gotoEntryPG">
 			<var name="entryContent" value="Blogs Entry2 Content" />
 			<var name="entryTitle"><![CDATA[Blogs Entry Title `~!@#$%^&*(){}[],.<>/?|]]></var>

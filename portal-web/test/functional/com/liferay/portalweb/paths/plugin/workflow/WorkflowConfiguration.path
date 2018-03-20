@@ -24,6 +24,11 @@
 	<td>//*[@data-qa-id='row' and contains(.,'${key_workflowResourceValue}')]//select</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SAVE</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_workflowResourceValue}')]//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

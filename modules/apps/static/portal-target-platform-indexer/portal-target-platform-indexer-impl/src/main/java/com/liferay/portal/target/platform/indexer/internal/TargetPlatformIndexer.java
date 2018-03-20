@@ -160,6 +160,10 @@ public class TargetPlatformIndexer implements Indexer {
 	private void _addBundle(Path tempPath, Path jarPath, Set<File> jarFiles)
 		throws IOException {
 
+		if (!Files.exists(jarPath)) {
+			return;
+		}
+
 		Path tempJarPath = tempPath.resolve(jarPath.getFileName());
 
 		Files.copy(

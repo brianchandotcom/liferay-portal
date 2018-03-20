@@ -36,7 +36,9 @@
 	</command>
 
 	<command name="gotoAddFeed">
-		<execute macro="WebContentNavigator#gotoFeeds" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Feeds" />
+		</execute>
 
 		<execute macro="LexiconEntry#gotoAdd" />
 	</command>
@@ -122,7 +124,9 @@
 	</command>
 
 	<command name="gotoEditFeed">
-		<execute macro="WebContentNavigator#gotoFeeds" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Feeds" />
+		</execute>
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
 			<var name="menuItem" value="Edit" />
@@ -159,14 +163,6 @@
 		</execute>
 	</command>
 
-	<command name="gotoFeeds">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Feeds">
-			<var name="key_menuItem" value="Feeds" />
-		</execute>
-	</command>
-
 	<command name="gotoLocalizedEditPGViaWCD">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="${localizedPortletName}" />
@@ -176,30 +172,6 @@
 		<execute function="SelectFrame" locator1="IFrame#MODAL_IFRAME" />
 
 		<execute function="AssertVisible" locator1="TextInput#TITLE" />
-	</command>
-
-	<command name="gotoManageStructures">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Structures">
-			<var name="key_menuItem" value="Structures" />
-		</execute>
-
-		<execute macro="SiteAdmin#viewPortletTitle">
-			<var name="portletTitle" value="Structures" />
-		</execute>
-	</command>
-
-	<command name="gotoManageTemplates">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Templates">
-			<var name="key_menuItem" value="Templates" />
-		</execute>
-
-		<execute macro="SiteAdmin#viewPortletTitle">
-			<var name="portletTitle" value="Templates" />
-		</execute>
 	</command>
 
 	<command name="gotoManageTemplatesViaStructures">

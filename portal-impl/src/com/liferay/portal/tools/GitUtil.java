@@ -39,6 +39,14 @@ import java.util.Set;
  */
 public class GitUtil {
 
+	public static List<String> getCurrentBranchDeletedFileNames(
+			String baseDirName, String gitWorkingBranchName)
+		throws Exception {
+
+		return getDeletedFileNames(
+			baseDirName, getCurrentBranchCommitId(gitWorkingBranchName));
+	}
+
 	public static List<String> getCurrentBranchFileNames(
 			String baseDirName, String gitWorkingBranchName)
 		throws Exception {
@@ -47,10 +55,24 @@ public class GitUtil {
 			baseDirName, getCurrentBranchCommitId(gitWorkingBranchName));
 	}
 
+	public static List<String> getLatestAuthorDeletedFileNames(
+			String baseDirName)
+		throws Exception {
+
+		return getDeletedFileNames(baseDirName, getLatestAuthorCommitId());
+	}
+
 	public static List<String> getLatestAuthorFileNames(String baseDirName)
 		throws Exception {
 
 		return getFileNames(baseDirName, getLatestAuthorCommitId());
+	}
+
+	public static List<String> getLocalChangesDeletedFileNames(
+			String baseDirName)
+		throws Exception {
+
+		return getLocalChangesFileNames(baseDirName, "remove");
 	}
 
 	public static List<String> getLocalChangesFileNames(String baseDirName)
@@ -110,6 +132,41 @@ public class GitUtil {
 			"git merge-base HEAD " + gitWorkingBranchName);
 
 		return unsyncBufferedReader.readLine();
+	}
+
+	protected static List<String> getDeletedFileNames(
+			String baseDirName, String commitId)
+		throws Exception {
+
+		List<String> fileNames = new ArrayList<>();
+
+		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
+			"git rev-parse HEAD");
+
+		String latestCommitId = unsyncBufferedReader.readLine();
+
+		unsyncBufferedReader = getGitCommandReader(
+			StringBundler.concat(
+				"git diff --diff-filter=RD --name-status ", commitId, " ",
+				latestCommitId));
+
+		String line = null;
+
+		int gitLevel = getGitLevel(baseDirName);
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			String[] array = line.split("\\s+");
+
+			if (array.length < 2) {
+				continue;
+			}
+
+			if (StringUtil.count(array[1], CharPool.SLASH) >= gitLevel) {
+				fileNames.add(getFileName(array[1], gitLevel));
+			}
+		}
+
+		return fileNames;
 	}
 
 	protected static Set<String> getDirNames(

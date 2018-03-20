@@ -251,18 +251,18 @@ public class OAuth2AccessTokenUtil {
 	/**
 	* Returns the o auth2 access tokens before and after the current o auth2 access token in the ordered set where oAuth2ApplicationId = &#63;.
 	*
-	* @param OAuth2AccessTokenId the primary key of the current o auth2 access token
+	* @param oAuth2AccessTokenId the primary key of the current o auth2 access token
 	* @param oAuth2ApplicationId the o auth2 application ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next o auth2 access token
 	* @throws NoSuchOAuth2AccessTokenException if a o auth2 access token with the primary key could not be found
 	*/
 	public static OAuth2AccessToken[] findByOAuth2ApplicationId_PrevAndNext(
-		long OAuth2AccessTokenId, long oAuth2ApplicationId,
+		long oAuth2AccessTokenId, long oAuth2ApplicationId,
 		OrderByComparator<OAuth2AccessToken> orderByComparator)
 		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2AccessTokenException {
 		return getPersistence()
-				   .findByOAuth2ApplicationId_PrevAndNext(OAuth2AccessTokenId,
+				   .findByOAuth2ApplicationId_PrevAndNext(oAuth2AccessTokenId,
 			oAuth2ApplicationId, orderByComparator);
 	}
 
@@ -425,18 +425,18 @@ public class OAuth2AccessTokenUtil {
 	/**
 	* Returns the o auth2 access tokens before and after the current o auth2 access token in the ordered set where oAuth2RefreshTokenId = &#63;.
 	*
-	* @param OAuth2AccessTokenId the primary key of the current o auth2 access token
+	* @param oAuth2AccessTokenId the primary key of the current o auth2 access token
 	* @param oAuth2RefreshTokenId the o auth2 refresh token ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next o auth2 access token
 	* @throws NoSuchOAuth2AccessTokenException if a o auth2 access token with the primary key could not be found
 	*/
 	public static OAuth2AccessToken[] findByOAuth2RefreshTokenId_PrevAndNext(
-		long OAuth2AccessTokenId, long oAuth2RefreshTokenId,
+		long oAuth2AccessTokenId, long oAuth2RefreshTokenId,
 		OrderByComparator<OAuth2AccessToken> orderByComparator)
 		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2AccessTokenException {
 		return getPersistence()
-				   .findByOAuth2RefreshTokenId_PrevAndNext(OAuth2AccessTokenId,
+				   .findByOAuth2RefreshTokenId_PrevAndNext(oAuth2AccessTokenId,
 			oAuth2RefreshTokenId, orderByComparator);
 	}
 
@@ -539,23 +539,23 @@ public class OAuth2AccessTokenUtil {
 	/**
 	* Creates a new o auth2 access token with the primary key. Does not add the o auth2 access token to the database.
 	*
-	* @param OAuth2AccessTokenId the primary key for the new o auth2 access token
+	* @param oAuth2AccessTokenId the primary key for the new o auth2 access token
 	* @return the new o auth2 access token
 	*/
-	public static OAuth2AccessToken create(long OAuth2AccessTokenId) {
-		return getPersistence().create(OAuth2AccessTokenId);
+	public static OAuth2AccessToken create(long oAuth2AccessTokenId) {
+		return getPersistence().create(oAuth2AccessTokenId);
 	}
 
 	/**
 	* Removes the o auth2 access token with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param OAuth2AccessTokenId the primary key of the o auth2 access token
+	* @param oAuth2AccessTokenId the primary key of the o auth2 access token
 	* @return the o auth2 access token that was removed
 	* @throws NoSuchOAuth2AccessTokenException if a o auth2 access token with the primary key could not be found
 	*/
-	public static OAuth2AccessToken remove(long OAuth2AccessTokenId)
+	public static OAuth2AccessToken remove(long oAuth2AccessTokenId)
 		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2AccessTokenException {
-		return getPersistence().remove(OAuth2AccessTokenId);
+		return getPersistence().remove(oAuth2AccessTokenId);
 	}
 
 	public static OAuth2AccessToken updateImpl(
@@ -566,23 +566,23 @@ public class OAuth2AccessTokenUtil {
 	/**
 	* Returns the o auth2 access token with the primary key or throws a {@link NoSuchOAuth2AccessTokenException} if it could not be found.
 	*
-	* @param OAuth2AccessTokenId the primary key of the o auth2 access token
+	* @param oAuth2AccessTokenId the primary key of the o auth2 access token
 	* @return the o auth2 access token
 	* @throws NoSuchOAuth2AccessTokenException if a o auth2 access token with the primary key could not be found
 	*/
-	public static OAuth2AccessToken findByPrimaryKey(long OAuth2AccessTokenId)
+	public static OAuth2AccessToken findByPrimaryKey(long oAuth2AccessTokenId)
 		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2AccessTokenException {
-		return getPersistence().findByPrimaryKey(OAuth2AccessTokenId);
+		return getPersistence().findByPrimaryKey(oAuth2AccessTokenId);
 	}
 
 	/**
 	* Returns the o auth2 access token with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param OAuth2AccessTokenId the primary key of the o auth2 access token
+	* @param oAuth2AccessTokenId the primary key of the o auth2 access token
 	* @return the o auth2 access token, or <code>null</code> if a o auth2 access token with the primary key could not be found
 	*/
-	public static OAuth2AccessToken fetchByPrimaryKey(long OAuth2AccessTokenId) {
-		return getPersistence().fetchByPrimaryKey(OAuth2AccessTokenId);
+	public static OAuth2AccessToken fetchByPrimaryKey(long oAuth2AccessTokenId) {
+		return getPersistence().fetchByPrimaryKey(oAuth2AccessTokenId);
 	}
 
 	public static java.util.Map<java.io.Serializable, OAuth2AccessToken> fetchByPrimaryKeys(

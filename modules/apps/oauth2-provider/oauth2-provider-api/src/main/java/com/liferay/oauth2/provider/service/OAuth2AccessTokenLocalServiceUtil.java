@@ -56,25 +56,25 @@ public class OAuth2AccessTokenLocalServiceUtil {
 	/**
 	* Creates a new o auth2 access token with the primary key. Does not add the o auth2 access token to the database.
 	*
-	* @param OAuth2AccessTokenId the primary key for the new o auth2 access token
+	* @param oAuth2AccessTokenId the primary key for the new o auth2 access token
 	* @return the new o auth2 access token
 	*/
 	public static com.liferay.oauth2.provider.model.OAuth2AccessToken createOAuth2AccessToken(
-		long OAuth2AccessTokenId) {
-		return getService().createOAuth2AccessToken(OAuth2AccessTokenId);
+		long oAuth2AccessTokenId) {
+		return getService().createOAuth2AccessToken(oAuth2AccessTokenId);
 	}
 
 	/**
 	* Deletes the o auth2 access token with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param OAuth2AccessTokenId the primary key of the o auth2 access token
+	* @param oAuth2AccessTokenId the primary key of the o auth2 access token
 	* @return the o auth2 access token that was removed
 	* @throws PortalException if a o auth2 access token with the primary key could not be found
 	*/
 	public static com.liferay.oauth2.provider.model.OAuth2AccessToken deleteOAuth2AccessToken(
-		long OAuth2AccessTokenId)
+		long oAuth2AccessTokenId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteOAuth2AccessToken(OAuth2AccessTokenId);
+		return getService().deleteOAuth2AccessToken(oAuth2AccessTokenId);
 	}
 
 	/**
@@ -176,8 +176,8 @@ public class OAuth2AccessTokenLocalServiceUtil {
 	}
 
 	public static com.liferay.oauth2.provider.model.OAuth2AccessToken fetchOAuth2AccessToken(
-		long OAuth2AccessTokenId) {
-		return getService().fetchOAuth2AccessToken(OAuth2AccessTokenId);
+		long oAuth2AccessTokenId) {
+		return getService().fetchOAuth2AccessToken(oAuth2AccessTokenId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
@@ -191,14 +191,14 @@ public class OAuth2AccessTokenLocalServiceUtil {
 	/**
 	* Returns the o auth2 access token with the primary key.
 	*
-	* @param OAuth2AccessTokenId the primary key of the o auth2 access token
+	* @param oAuth2AccessTokenId the primary key of the o auth2 access token
 	* @return the o auth2 access token
 	* @throws PortalException if a o auth2 access token with the primary key could not be found
 	*/
 	public static com.liferay.oauth2.provider.model.OAuth2AccessToken getOAuth2AccessToken(
-		long OAuth2AccessTokenId)
+		long oAuth2AccessTokenId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getOAuth2AccessToken(OAuth2AccessTokenId);
+		return getService().getOAuth2AccessToken(oAuth2AccessTokenId);
 	}
 
 	/**

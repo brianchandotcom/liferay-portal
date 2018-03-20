@@ -92,26 +92,26 @@ public abstract class OAuth2AccessTokenLocalServiceBaseImpl
 	/**
 	 * Creates a new o auth2 access token with the primary key. Does not add the o auth2 access token to the database.
 	 *
-	 * @param OAuth2AccessTokenId the primary key for the new o auth2 access token
+	 * @param oAuth2AccessTokenId the primary key for the new o auth2 access token
 	 * @return the new o auth2 access token
 	 */
 	@Override
-	public OAuth2AccessToken createOAuth2AccessToken(long OAuth2AccessTokenId) {
-		return oAuth2AccessTokenPersistence.create(OAuth2AccessTokenId);
+	public OAuth2AccessToken createOAuth2AccessToken(long oAuth2AccessTokenId) {
+		return oAuth2AccessTokenPersistence.create(oAuth2AccessTokenId);
 	}
 
 	/**
 	 * Deletes the o auth2 access token with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param OAuth2AccessTokenId the primary key of the o auth2 access token
+	 * @param oAuth2AccessTokenId the primary key of the o auth2 access token
 	 * @return the o auth2 access token that was removed
 	 * @throws PortalException if a o auth2 access token with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public OAuth2AccessToken deleteOAuth2AccessToken(long OAuth2AccessTokenId)
+	public OAuth2AccessToken deleteOAuth2AccessToken(long oAuth2AccessTokenId)
 		throws PortalException {
-		return oAuth2AccessTokenPersistence.remove(OAuth2AccessTokenId);
+		return oAuth2AccessTokenPersistence.remove(oAuth2AccessTokenId);
 	}
 
 	/**
@@ -211,21 +211,21 @@ public abstract class OAuth2AccessTokenLocalServiceBaseImpl
 	}
 
 	@Override
-	public OAuth2AccessToken fetchOAuth2AccessToken(long OAuth2AccessTokenId) {
-		return oAuth2AccessTokenPersistence.fetchByPrimaryKey(OAuth2AccessTokenId);
+	public OAuth2AccessToken fetchOAuth2AccessToken(long oAuth2AccessTokenId) {
+		return oAuth2AccessTokenPersistence.fetchByPrimaryKey(oAuth2AccessTokenId);
 	}
 
 	/**
 	 * Returns the o auth2 access token with the primary key.
 	 *
-	 * @param OAuth2AccessTokenId the primary key of the o auth2 access token
+	 * @param oAuth2AccessTokenId the primary key of the o auth2 access token
 	 * @return the o auth2 access token
 	 * @throws PortalException if a o auth2 access token with the primary key could not be found
 	 */
 	@Override
-	public OAuth2AccessToken getOAuth2AccessToken(long OAuth2AccessTokenId)
+	public OAuth2AccessToken getOAuth2AccessToken(long oAuth2AccessTokenId)
 		throws PortalException {
-		return oAuth2AccessTokenPersistence.findByPrimaryKey(OAuth2AccessTokenId);
+		return oAuth2AccessTokenPersistence.findByPrimaryKey(oAuth2AccessTokenId);
 	}
 
 	@Override
@@ -236,7 +236,7 @@ public abstract class OAuth2AccessTokenLocalServiceBaseImpl
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(OAuth2AccessToken.class);
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName("OAuth2AccessTokenId");
+		actionableDynamicQuery.setPrimaryKeyPropertyName("oAuth2AccessTokenId");
 
 		return actionableDynamicQuery;
 	}
@@ -250,7 +250,7 @@ public abstract class OAuth2AccessTokenLocalServiceBaseImpl
 		indexableActionableDynamicQuery.setModelClass(OAuth2AccessToken.class);
 
 		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
-			"OAuth2AccessTokenId");
+			"oAuth2AccessTokenId");
 
 		return indexableActionableDynamicQuery;
 	}
@@ -261,7 +261,7 @@ public abstract class OAuth2AccessTokenLocalServiceBaseImpl
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(OAuth2AccessToken.class);
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName("OAuth2AccessTokenId");
+		actionableDynamicQuery.setPrimaryKeyPropertyName("oAuth2AccessTokenId");
 	}
 
 	/**

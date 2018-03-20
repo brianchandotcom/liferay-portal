@@ -74,20 +74,20 @@ public interface OAuth2AccessTokenLocalService extends BaseLocalService,
 	/**
 	* Creates a new o auth2 access token with the primary key. Does not add the o auth2 access token to the database.
 	*
-	* @param OAuth2AccessTokenId the primary key for the new o auth2 access token
+	* @param oAuth2AccessTokenId the primary key for the new o auth2 access token
 	* @return the new o auth2 access token
 	*/
-	public OAuth2AccessToken createOAuth2AccessToken(long OAuth2AccessTokenId);
+	public OAuth2AccessToken createOAuth2AccessToken(long oAuth2AccessTokenId);
 
 	/**
 	* Deletes the o auth2 access token with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param OAuth2AccessTokenId the primary key of the o auth2 access token
+	* @param oAuth2AccessTokenId the primary key of the o auth2 access token
 	* @return the o auth2 access token that was removed
 	* @throws PortalException if a o auth2 access token with the primary key could not be found
 	*/
 	@Indexable(type = IndexableType.DELETE)
-	public OAuth2AccessToken deleteOAuth2AccessToken(long OAuth2AccessTokenId)
+	public OAuth2AccessToken deleteOAuth2AccessToken(long oAuth2AccessTokenId)
 		throws PortalException;
 
 	/**
@@ -167,7 +167,7 @@ public interface OAuth2AccessTokenLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuth2AccessToken fetchOAuth2AccessToken(long OAuth2AccessTokenId);
+	public OAuth2AccessToken fetchOAuth2AccessToken(long oAuth2AccessTokenId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -178,12 +178,12 @@ public interface OAuth2AccessTokenLocalService extends BaseLocalService,
 	/**
 	* Returns the o auth2 access token with the primary key.
 	*
-	* @param OAuth2AccessTokenId the primary key of the o auth2 access token
+	* @param oAuth2AccessTokenId the primary key of the o auth2 access token
 	* @return the o auth2 access token
 	* @throws PortalException if a o auth2 access token with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuth2AccessToken getOAuth2AccessToken(long OAuth2AccessTokenId)
+	public OAuth2AccessToken getOAuth2AccessToken(long oAuth2AccessTokenId)
 		throws PortalException;
 
 	/**

@@ -74,9 +74,9 @@ public interface OAuth2AccessTokenModel extends BaseModel<OAuth2AccessToken>,
 	/**
 	 * Sets the o auth2 access token ID of this o auth2 access token.
 	 *
-	 * @param OAuth2AccessTokenId the o auth2 access token ID of this o auth2 access token
+	 * @param oAuth2AccessTokenId the o auth2 access token ID of this o auth2 access token
 	 */
-	public void setOAuth2AccessTokenId(long OAuth2AccessTokenId);
+	public void setOAuth2AccessTokenId(long oAuth2AccessTokenId);
 
 	/**
 	 * Returns the company ID of this o auth2 access token.

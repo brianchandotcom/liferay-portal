@@ -67,7 +67,7 @@ public class OAuth2AccessTokenModelImpl extends BaseModelImpl<OAuth2AccessToken>
 	 */
 	public static final String TABLE_NAME = "OAuth2AccessToken";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "OAuth2AccessTokenId", Types.BIGINT },
+			{ "oAuth2AccessTokenId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
@@ -83,7 +83,7 @@ public class OAuth2AccessTokenModelImpl extends BaseModelImpl<OAuth2AccessToken>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("OAuth2AccessTokenId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("oAuth2AccessTokenId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
@@ -97,10 +97,10 @@ public class OAuth2AccessTokenModelImpl extends BaseModelImpl<OAuth2AccessToken>
 		TABLE_COLUMNS_MAP.put("tokenType", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table OAuth2AccessToken (OAuth2AccessTokenId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,oAuth2ApplicationId LONG,oAuth2RefreshTokenId LONG,expirationDate DATE null,remoteIPInfo VARCHAR(75) null,scopeAliases VARCHAR(75) null,tokenContent VARCHAR(75) null,tokenType VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table OAuth2AccessToken (oAuth2AccessTokenId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,oAuth2ApplicationId LONG,oAuth2RefreshTokenId LONG,expirationDate DATE null,remoteIPInfo VARCHAR(75) null,scopeAliases VARCHAR(75) null,tokenContent VARCHAR(75) null,tokenType VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table OAuth2AccessToken";
-	public static final String ORDER_BY_JPQL = " ORDER BY oAuth2AccessToken.OAuth2AccessTokenId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY OAuth2AccessToken.OAuth2AccessTokenId ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY oAuth2AccessToken.oAuth2AccessTokenId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY OAuth2AccessToken.oAuth2AccessTokenId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -176,7 +176,7 @@ public class OAuth2AccessTokenModelImpl extends BaseModelImpl<OAuth2AccessToken>
 
 	@Override
 	public long getPrimaryKey() {
-		return _OAuth2AccessTokenId;
+		return _oAuth2AccessTokenId;
 	}
 
 	@Override
@@ -186,7 +186,7 @@ public class OAuth2AccessTokenModelImpl extends BaseModelImpl<OAuth2AccessToken>
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _OAuth2AccessTokenId;
+		return _oAuth2AccessTokenId;
 	}
 
 	@Override
@@ -208,7 +208,7 @@ public class OAuth2AccessTokenModelImpl extends BaseModelImpl<OAuth2AccessToken>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("OAuth2AccessTokenId", getOAuth2AccessTokenId());
+		attributes.put("oAuth2AccessTokenId", getOAuth2AccessTokenId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
@@ -229,10 +229,10 @@ public class OAuth2AccessTokenModelImpl extends BaseModelImpl<OAuth2AccessToken>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long OAuth2AccessTokenId = (Long)attributes.get("OAuth2AccessTokenId");
+		Long oAuth2AccessTokenId = (Long)attributes.get("oAuth2AccessTokenId");
 
-		if (OAuth2AccessTokenId != null) {
-			setOAuth2AccessTokenId(OAuth2AccessTokenId);
+		if (oAuth2AccessTokenId != null) {
+			setOAuth2AccessTokenId(oAuth2AccessTokenId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -304,12 +304,12 @@ public class OAuth2AccessTokenModelImpl extends BaseModelImpl<OAuth2AccessToken>
 
 	@Override
 	public long getOAuth2AccessTokenId() {
-		return _OAuth2AccessTokenId;
+		return _oAuth2AccessTokenId;
 	}
 
 	@Override
-	public void setOAuth2AccessTokenId(long OAuth2AccessTokenId) {
-		_OAuth2AccessTokenId = OAuth2AccessTokenId;
+	public void setOAuth2AccessTokenId(long oAuth2AccessTokenId) {
+		_oAuth2AccessTokenId = oAuth2AccessTokenId;
 	}
 
 	@Override
@@ -619,7 +619,7 @@ public class OAuth2AccessTokenModelImpl extends BaseModelImpl<OAuth2AccessToken>
 	public CacheModel<OAuth2AccessToken> toCacheModel() {
 		OAuth2AccessTokenCacheModel oAuth2AccessTokenCacheModel = new OAuth2AccessTokenCacheModel();
 
-		oAuth2AccessTokenCacheModel.OAuth2AccessTokenId = getOAuth2AccessTokenId();
+		oAuth2AccessTokenCacheModel.oAuth2AccessTokenId = getOAuth2AccessTokenId();
 
 		oAuth2AccessTokenCacheModel.companyId = getCompanyId();
 
@@ -694,7 +694,7 @@ public class OAuth2AccessTokenModelImpl extends BaseModelImpl<OAuth2AccessToken>
 	public String toString() {
 		StringBundler sb = new StringBundler(25);
 
-		sb.append("{OAuth2AccessTokenId=");
+		sb.append("{oAuth2AccessTokenId=");
 		sb.append(getOAuth2AccessTokenId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
@@ -732,7 +732,7 @@ public class OAuth2AccessTokenModelImpl extends BaseModelImpl<OAuth2AccessToken>
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>OAuth2AccessTokenId</column-name><column-value><![CDATA[");
+			"<column><column-name>oAuth2AccessTokenId</column-name><column-value><![CDATA[");
 		sb.append(getOAuth2AccessTokenId());
 		sb.append("]]></column-value></column>");
 		sb.append(
@@ -789,7 +789,7 @@ public class OAuth2AccessTokenModelImpl extends BaseModelImpl<OAuth2AccessToken>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			OAuth2AccessToken.class
 		};
-	private long _OAuth2AccessTokenId;
+	private long _oAuth2AccessTokenId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;

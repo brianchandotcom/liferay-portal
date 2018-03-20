@@ -7,7 +7,7 @@
 	<import class="com.liferay.oauth2.provider.model.OAuth2RefreshToken" />
 	<import class="com.liferay.oauth2.provider.model.OAuth2ScopeGrant" />
 	<class name="com.liferay.oauth2.provider.model.impl.OAuth2AccessTokenImpl" table="OAuth2AccessToken">
-		<id name="OAuth2AccessTokenId" type="long">
+		<id access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor" name="oAuth2AccessTokenId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

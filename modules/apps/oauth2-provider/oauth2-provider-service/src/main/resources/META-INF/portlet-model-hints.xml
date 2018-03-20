@@ -2,7 +2,7 @@
 
 <model-hints>
 	<model name="com.liferay.oauth2.provider.model.OAuth2AccessToken">
-		<field name="OAuth2AccessTokenId" type="long" />
+		<field name="oAuth2AccessTokenId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />

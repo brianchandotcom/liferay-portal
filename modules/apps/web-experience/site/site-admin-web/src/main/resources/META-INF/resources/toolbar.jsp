@@ -54,7 +54,9 @@ SearchContainer groupSearch = (SearchContainer)request.getAttribute("view.jsp-gr
 			Group group = siteAdminDisplayContext.getGroup();
 			%>
 
-			<liferay-frontend:add-menu inline="<%= true %>">
+			<liferay-frontend:add-menu
+				inline="<%= true %>"
+			>
 				<liferay-portlet:renderURL varImpl="addSiteURL">
 					<portlet:param name="jspPage" value="/select_site_initializer.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -64,7 +66,10 @@ SearchContainer groupSearch = (SearchContainer)request.getAttribute("view.jsp-gr
 					</c:if>
 				</liferay-portlet:renderURL>
 
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addSiteURL.toString() %>" />
+				<liferay-frontend:add-menu-item
+					title='<%= LanguageUtil.get(request, "add") %>'
+					url="<%= addSiteURL.toString() %>"
+				/>
 			</liferay-frontend:add-menu>
 		</c:if>
 	</liferay-frontend:management-bar-buttons>

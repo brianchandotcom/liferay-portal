@@ -83,7 +83,11 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator displayStyle="icon" markupView="lexicon" searchContainer="<%= SiteInitializerItemSearchContainer %>" />
+			<liferay-ui:search-iterator
+				displayStyle="icon"
+				markupView="lexicon"
+				searchContainer="<%= SiteInitializerItemSearchContainer %>"
+			/>
 		</liferay-ui:search-container>
 
 		<portlet:actionURL name="addGroup" var="addSiteURL">

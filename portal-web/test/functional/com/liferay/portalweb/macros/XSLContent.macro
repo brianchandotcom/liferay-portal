@@ -4,9 +4,7 @@
 
 		<execute function="Check" locator1="ConfigurationAdmin#XSL_CONTENT_CONFIGURATION_XML_DOCTYPE_DECLARATION_CHECKBOX" />
 
-		<execute function="Click" locator1="Button#SAVE" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="SystemSettings#saveConfiguration" />
 	</command>
 
 	<command name="configureXSLContentPortlet">

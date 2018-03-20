@@ -45,22 +45,28 @@ public class ApioException extends Exception {
 	public String toString() {
 		StringBuilder sb = new StringBuilder("ApioException{");
 
-		sb.append("code=");
-		sb.append(_code);
-		sb.append(", message='");
-		sb.append(getMessage());
-		sb.append('\'');
-
 		if (getCause() != null) {
-			sb.append(", cause='");
+			sb.append("cause=");
+			sb.append(_APOSTROPHE);
 			sb.append(getCause());
-			sb.append('\'');
+			sb.append(_APOSTROPHE);
+			sb.append(", ");
 		}
 
+		sb.append("code=");
+		sb.append(_APOSTROPHE);
+		sb.append(_code);
+		sb.append(_APOSTROPHE);
+		sb.append(", message=");
+		sb.append(_APOSTROPHE);
+		sb.append(getMessage());
+		sb.append(_APOSTROPHE);
 		sb.append('}');
 
 		return sb.toString();
 	}
+
+	private static final char _APOSTROPHE = '\'';
 
 	private static final int _DEFAULT_ERROR_CODE = 400;
 

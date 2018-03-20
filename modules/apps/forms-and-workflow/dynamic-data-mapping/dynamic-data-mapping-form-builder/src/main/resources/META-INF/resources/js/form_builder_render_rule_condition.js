@@ -482,7 +482,7 @@ AUI.add(
 
 				var value = [];
 
-				if (condition) {
+				if ((condition) && (condition.operands[0].value)) {
 					value = [condition.operands[0].value];
 				}
 
@@ -512,10 +512,8 @@ AUI.add(
 
 				var value = [];
 
-				if (condition) {
-					if (condition.operator != '') {
-						value = [condition.operator];
-					}
+				if ((condition) && (condition.operator != '')) {
+					value = [condition.operator];
 				}
 
 				var field = instance.createSelectField(
@@ -547,7 +545,7 @@ AUI.add(
 
 				var visible = instance._isConstant(secondOperandTypeValue) && !instance._isFieldList(firstOperand);
 
-				if (condition && instance._isBinaryCondition(index) && visible) {
+				if ((condition) && (instance._isBinaryCondition(index)) && (visible)) {
 					value = condition.operands[1].value;
 				}
 
@@ -575,8 +573,10 @@ AUI.add(
 
 				var visible = instance._getSecondOperandTypeValue(index) === 'field';
 
-				if (condition && instance._isBinaryCondition(index) && visible) {
-					value = [condition.operands[1].value];
+				if ((condition) && (condition.operands.length > 1) && (instance._isBinaryCondition(index)) && (visible)) {
+					if (condition.operands[1].value != '') {
+						value = [condition.operands[1].value];
+					}
 				}
 
 				var field = instance.createSelectField(
@@ -603,7 +603,7 @@ AUI.add(
 				var visible = instance._isConstant(instance._getSecondOperandTypeValue(index)) &&
 					instance._isFieldList(instance._getFirstOperand(index));
 
-				if (condition && instance._isBinaryCondition(index) && visible) {
+				if ((condition) && (instance._isBinaryCondition(index)) && (visible)) {
 					options = instance._getFieldOptions(instance._getFirstOperandValue(index));
 					if (condition.operands[1].value != '') {
 						value = [condition.operands[1].value];
@@ -630,7 +630,7 @@ AUI.add(
 
 				var value = [];
 
-				if (condition && instance._isBinaryCondition(index) && condition.operands[1]) {
+				if ((condition) && (instance._isBinaryCondition(index)) && (condition.operands[1])) {
 					value = [condition.operands[1].type];
 				}
 
@@ -658,7 +658,7 @@ AUI.add(
 
 				instance._conditions[index + '-condition-second-operand-type'] = field;
 
-				if (condition && instance._isBinaryCondition(index)) {
+				if ((condition) && (instance._isBinaryCondition(index))) {
 					instance._updateSecondOperandType(condition.operator, index);
 
 					if (condition.operands[0].type === 'user') {

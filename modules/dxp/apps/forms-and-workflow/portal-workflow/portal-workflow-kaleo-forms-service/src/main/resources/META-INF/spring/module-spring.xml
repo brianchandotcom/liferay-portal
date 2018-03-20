@@ -5,7 +5,7 @@
 	default-init-method="afterPropertiesSet"
 	xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
 	<bean class="com.liferay.portal.workflow.kaleo.forms.service.impl.KaleoProcessLocalServiceImpl" id="com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLocalService" />
 	<bean class="com.liferay.portal.workflow.kaleo.forms.service.impl.KaleoProcessServiceImpl" id="com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessService" />

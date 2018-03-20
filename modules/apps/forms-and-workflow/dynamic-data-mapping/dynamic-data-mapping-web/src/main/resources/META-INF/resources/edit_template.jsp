@@ -201,6 +201,14 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 
 			<aui:fieldset-group markupView="lexicon">
 				<aui:fieldset>
+					<c:if test="<%= (template != null) && (groupId != PortalUtil.getScopeGroupId(request, refererPortletName)) %>">
+						<aui:field-wrapper>
+							<div class="alert alert-warning">
+								<liferay-ui:message key="this-template-does-not-belong-to-this-site.-you-may-affect-other-sites-if-you-edit-this-template" />
+							</div>
+						</aui:field-wrapper>
+					</c:if>
+
 					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />
 
 					<liferay-ui:panel-container

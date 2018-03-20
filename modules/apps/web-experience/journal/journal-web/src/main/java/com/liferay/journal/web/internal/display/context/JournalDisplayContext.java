@@ -1481,7 +1481,10 @@ public class JournalDisplayContext {
 			"refererWebDAVToken", WebDAVUtil.getStorageToken(portlet));
 		portletURL.setParameter(
 			"scopeTitle", LanguageUtil.get(_request, "structures"));
-		portletURL.setParameter("showAncestorScopes", Boolean.TRUE.toString());
+		portletURL.setParameter(
+			"showAncestorScopes",
+			String.valueOf(
+				_journalWebConfiguration.showAncestorScopesByDefault()));
 		portletURL.setParameter("showCacheableInput", Boolean.TRUE.toString());
 		portletURL.setParameter("showManageTemplates", Boolean.TRUE.toString());
 
@@ -1521,7 +1524,10 @@ public class JournalDisplayContext {
 			"refererWebDAVToken", WebDAVUtil.getStorageToken(portlet));
 		portletURL.setParameter(
 			"scopeTitle", LanguageUtil.get(_request, "templates"));
-		portletURL.setParameter("showAncestorScopes", Boolean.TRUE.toString());
+		portletURL.setParameter(
+			"showAncestorScopes",
+			String.valueOf(
+				_journalWebConfiguration.showAncestorScopesByDefault()));
 		portletURL.setParameter("showCacheableInput", Boolean.TRUE.toString());
 		portletURL.setParameter("showHeader", Boolean.TRUE.toString());
 

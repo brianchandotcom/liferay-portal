@@ -58,8 +58,18 @@ public class EntryUADEntityDisplayTest extends BaseUADEntityDisplayTestCase {
 	}
 
 	@Override
+	protected String getApplicationName() {
+		return ContactsUADConstants.UAD_ENTITY_SET_NAME;
+	}
+
+	@Override
 	protected UADEntityAggregator getUADEntityAggregator() {
 		return _uadEntityAggregator;
+	}
+
+	@Override
+	protected String[] getDisplayFieldNames() {
+		return new String[] { "fullName", "emailAddress", "comments" };
 	}
 
 	@Override

@@ -20,6 +20,9 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -31,6 +34,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = EntryUADEntityDisplayHelper.class)
 public class EntryUADEntityDisplayHelper {
+
+	public String[] getDisplayFieldNames() {
+		return new String[] {"fullName", "emailAddress", "comments"};
+	}
 
 	public String getEntryEditURL(
 			Entry entry, LiferayPortletRequest liferayPortletRequest,
@@ -47,6 +54,22 @@ public class EntryUADEntityDisplayHelper {
 		portletURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
 
 		return portletURL.toString();
+	}
+
+	public Map<String, Object> getUADEntityNonanonymizableFieldValues(
+		Entry entry) {
+
+		Map<String, Object> uadEntityNonanonymizableFieldValues =
+			new HashMap<>();
+
+		uadEntityNonanonymizableFieldValues.put(
+			"comments", entry.getComments());
+		uadEntityNonanonymizableFieldValues.put(
+			"emailAddress", entry.getEmailAddress());
+		uadEntityNonanonymizableFieldValues.put(
+			"fullName", entry.getFullName());
+
+		return uadEntityNonanonymizableFieldValues;
 	}
 
 	@Reference

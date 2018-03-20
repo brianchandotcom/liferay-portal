@@ -21,14 +21,13 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
 import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
-import com.liferay.user.associated.data.display.BaseUADEntityDisplay;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
 import com.liferay.user.associated.data.entity.UADEntity;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
@@ -36,7 +35,15 @@ import java.util.List;
  */
 @Component(immediate = true, property =  {
 	"model.class.name=" + ContactsUADConstants.CLASS_NAME_ENTRY}, service = UADEntityDisplay.class)
-public class EntryUADEntityDisplay extends BaseUADEntityDisplay {
+public class EntryUADEntityDisplay implements UADEntityDisplay {
+	public String getApplicationName() {
+		return ContactsUADConstants.UAD_ENTITY_SET_NAME;
+	}
+
+	public String[] getDisplayFieldNames() {
+		return _entryUADEntityDisplayHelper.getDisplayFieldNames();
+	}
+
 	@Override
 	public String getEditURL(UADEntity uadEntity,
 		LiferayPortletRequest liferayPortletRequest,
@@ -48,6 +55,18 @@ public class EntryUADEntityDisplay extends BaseUADEntityDisplay {
 			liferayPortletRequest, liferayPortletResponse);
 	}
 
+	public String getKey() {
+		return ContactsUADConstants.CLASS_NAME_ENTRY;
+	}
+
+	@Override
+	public Map<String, Object> getUADEntityNonanonymizableFieldValues(
+		UADEntity uadEntity) {
+		EntryUADEntity entryUADEntity = (EntryUADEntity)uadEntity;
+
+		return _entryUADEntityDisplayHelper.getUADEntityNonanonymizableFieldValues(entryUADEntity.getEntry());
+	}
+
 	@Override
 	public String getUADEntityTypeDescription() {
 		return "";
@@ -56,11 +75,6 @@ public class EntryUADEntityDisplay extends BaseUADEntityDisplay {
 	@Override
 	public String getUADEntityTypeName() {
 		return "Entry";
-	}
-
-	@Override
-	public List<String> getUADEntityTypeNonanonymizableFieldNamesList() {
-		return _uadEntityAnonymizer.getUADEntityNonanonymizableFieldNames();
 	}
 
 	@Reference

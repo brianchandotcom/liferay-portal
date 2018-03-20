@@ -19,9 +19,6 @@ import com.liferay.contacts.uad.constants.ContactsUADConstants;
 
 import com.liferay.user.associated.data.entity.BaseUADEntity;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author Brian Wing Shun Chan
  * @generated
@@ -35,18 +32,6 @@ public class EntryUADEntity extends BaseUADEntity {
 
 	public Entry getEntry() {
 		return _entry;
-	}
-
-	@Override
-	public Map<String, Object> getUADEntityNonanonymizableFieldValues() {
-		Map<String, Object> uadEntityNonanonymizableFieldValues = new HashMap<String, Object>();
-
-		uadEntityNonanonymizableFieldValues.put("fullName", _entry.getFullName());
-		uadEntityNonanonymizableFieldValues.put("emailAddress",
-			_entry.getEmailAddress());
-		uadEntityNonanonymizableFieldValues.put("comments", _entry.getComments());
-
-		return uadEntityNonanonymizableFieldValues;
 	}
 
 	private final Entry _entry;

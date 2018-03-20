@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 
@@ -50,14 +50,13 @@ public class DeactivateUserMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long selUserId = ParamUtil.getLong(actionRequest, "selUserId");
+		User selectedUser = _portal.getSelectedUser(actionRequest);
 
 		_userLocalService.updateStatus(
-			selUserId, WorkflowConstants.STATUS_INACTIVE, new ServiceContext());
+			selectedUser.getUserId(), WorkflowConstants.STATUS_INACTIVE,
+			new ServiceContext());
 
-		User user = _userLocalService.getUser(selUserId);
-
-		Group group = user.getGroup();
+		Group group = selectedUser.getGroup();
 
 		group.setActive(true);
 
@@ -66,6 +65,9 @@ public class DeactivateUserMVCActionCommand
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private UserLocalService _userLocalService;

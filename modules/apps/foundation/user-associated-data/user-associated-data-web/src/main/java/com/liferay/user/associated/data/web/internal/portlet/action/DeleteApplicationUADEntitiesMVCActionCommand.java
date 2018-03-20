@@ -14,9 +14,11 @@
 
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.web.internal.util.UADApplicationSummaryHelper;
@@ -48,7 +50,8 @@ public class DeleteApplicationUADEntitiesMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long selUserId = ParamUtil.getLong(actionRequest, "selUserId");
+		User selectedUser = _portal.getSelectedUser(actionRequest);
+
 		String uadEntitySetName = ParamUtil.getString(
 			actionRequest, "uadEntitySetName");
 
@@ -57,9 +60,12 @@ public class DeleteApplicationUADEntitiesMVCActionCommand
 				uadEntitySetName);
 
 		for (UADEntityAnonymizer uadEntityAnonymizer : uadEntityAnonymizers) {
-			uadEntityAnonymizer.deleteAll(selUserId);
+			uadEntityAnonymizer.deleteAll(selectedUser.getUserId());
 		}
 	}
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private UADApplicationSummaryHelper _uadApplicationSummaryHelper;

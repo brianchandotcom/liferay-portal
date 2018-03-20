@@ -14,13 +14,16 @@
 
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
 import com.liferay.user.associated.data.web.internal.display.ViewUADApplicationsSummaryDisplay;
 import com.liferay.user.associated.data.web.internal.util.UADApplicationSummaryHelper;
 
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -43,23 +46,33 @@ public class ViewUADApplicationsSummaryMVCRenderCommand
 
 	@Override
 	public String render(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
 
-		long selUserId = ParamUtil.getLong(renderRequest, "selUserId");
+		try {
+			User selectedUser = _portal.getSelectedUser(renderRequest);
 
-		ViewUADApplicationsSummaryDisplay viewUADApplicationsSummaryDisplay =
-			new ViewUADApplicationsSummaryDisplay();
+			ViewUADApplicationsSummaryDisplay
+				viewUADApplicationsSummaryDisplay =
+					new ViewUADApplicationsSummaryDisplay();
 
-		viewUADApplicationsSummaryDisplay.setSearchContainer(
-			_uadApplicationSummaryHelper.createSearchContainer(
-				renderRequest, renderResponse, selUserId));
+			viewUADApplicationsSummaryDisplay.setSearchContainer(
+				_uadApplicationSummaryHelper.createSearchContainer(
+					renderRequest, renderResponse, selectedUser.getUserId()));
 
-		renderRequest.setAttribute(
-			UADWebKeys.VIEW_UAD_APPLICATIONS_SUMMARY_DISPLAY,
-			viewUADApplicationsSummaryDisplay);
+			renderRequest.setAttribute(
+				UADWebKeys.VIEW_UAD_APPLICATIONS_SUMMARY_DISPLAY,
+				viewUADApplicationsSummaryDisplay);
+		}
+		catch (PortalException pe) {
+			throw new PortletException(pe);
+		}
 
 		return "/view_uad_applications_summary.jsp";
 	}
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private UADApplicationSummaryHelper _uadApplicationSummaryHelper;

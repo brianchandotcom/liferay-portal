@@ -16,7 +16,7 @@ package liferay.user.associated.data.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
@@ -50,10 +50,10 @@ public class ViewUADSummaryMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			User selUser = PortalUtil.getSelectedUser(renderRequest);
+			User selectedUser = _portal.getSelectedUser(renderRequest);
 
 			renderRequest.setAttribute(
-				UADWebKeys.VIEW_UAD_SUMMARY_STEP, _determineStep(selUser));
+				UADWebKeys.VIEW_UAD_SUMMARY_STEP, _determineStep(selectedUser));
 		}
 		catch (Exception pe) {
 			throw new PortletException(pe);
@@ -62,35 +62,38 @@ public class ViewUADSummaryMVCRenderCommand implements MVCRenderCommand {
 		return "/view_uad_summary.jsp";
 	}
 
-	private int _determineStep(User selUser) throws Exception {
-		if (selUser.isActive()) {
+	private int _determineStep(User selectedUser) throws Exception {
+		if (selectedUser.isActive()) {
 			return 1;
 		}
 
-		int selUserPageCount =
-			selUser.getPrivateLayoutsPageCount() +
-				selUser.getPublicLayoutsPageCount();
+		int selectedUserPageCount =
+			selectedUser.getPrivateLayoutsPageCount() +
+				selectedUser.getPublicLayoutsPageCount();
 
-		if (selUserPageCount > 0) {
+		if (selectedUserPageCount > 0) {
 			return 2;
 		}
 
 		Collection<UADEntityAggregator> uadEntityAggregators =
 			_uadRegistry.getUADEntityAggregators();
 
-		int selUserEntityCount = 0;
+		int selectedUserEntityCount = 0;
 
 		for (UADEntityAggregator uadEntityAggregator : uadEntityAggregators) {
-			selUserEntityCount += uadEntityAggregator.count(
-				selUser.getUserId());
+			selectedUserEntityCount += uadEntityAggregator.count(
+				selectedUser.getUserId());
 		}
 
-		if (selUserEntityCount > 0) {
+		if (selectedUserEntityCount > 0) {
 			return 3;
 		}
 
 		return 5;
 	}
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private UADRegistry _uadRegistry;

@@ -24,7 +24,7 @@
 >
 	<portlet:actionURL name="/auto_anonymize_uad" var="autoAnonymizeURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
+		<portlet:param name="p_u_i_d" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
 		<portlet:param name="uadRegistryKey" value="<%= viewUADEntitiesDisplay.getUADRegistryKey() %>" />
 	</portlet:actionURL>
 
@@ -36,7 +36,7 @@
 
 	<portlet:actionURL name="/delete_uad" var="deleteURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
+		<portlet:param name="p_u_i_d" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
 		<portlet:param name="uadRegistryKey" value="<%= viewUADEntitiesDisplay.getUADRegistryKey() %>" />
 	</portlet:actionURL>
 

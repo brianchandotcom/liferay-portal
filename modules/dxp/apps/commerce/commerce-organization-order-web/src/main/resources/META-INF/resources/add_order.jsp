@@ -32,57 +32,60 @@ Organization organization = commerceOrganizationOrderDisplayContext.getOrganizat
 
 	<aui:model-context model="<%= CommerceOrder.class %>" />
 
-	<aui:fieldset>
-		<c:if test="<%= !commerceAddresses.isEmpty() %>">
-			<aui:field-wrapper label="shipping-address">
+	<c:if test="<%= !commerceAddresses.isEmpty() %>">
+		<h6><liferay-ui:message key="shipping-address" /></h6>
 
-				<%
-				for (int i = 0; i < commerceAddresses.size(); i++) {
-					CommerceAddress commerceAddress = commerceAddresses.get(i);
+		<ul class="list-group list-group-flush order-shipping-address-list">
 
-					commerceAddress = commerceAddress.toEscapedModel();
-				%>
+			<%
+			for (int i = 0; i < commerceAddresses.size(); i++) {
+				CommerceAddress commerceAddress = commerceAddresses.get(i);
 
-					<div class="col-md-4">
-						<div class="radio radio-card radio-middle-left">
+				commerceAddress = commerceAddress.toEscapedModel();
+			%>
+
+				<li class="list-group-item list-group-item-flex">
+					<div class="autofit-col">
+						<div class="custom-control custom-radio">
 							<label>
-								<aui:input checked="<%= i == 0 %>" label="" name="shippingAddressId" type="radio" value="<%= commerceAddress.getCommerceAddressId() %>" />
-
-								<div class="card">
-									<div class="card-body">
-										<h5><%= commerceAddress.getName() %></h5>
-										<p><%= commerceAddress.getStreet1() %></p>
-
-										<c:if test="<%= Validator.isNotNull(commerceAddress.getStreet2()) %>">
-											<p><%= commerceAddress.getStreet2() %></p>
-										</c:if>
-
-										<c:if test="<%= Validator.isNotNull(commerceAddress.getStreet3()) %>">
-											<p><%= commerceAddress.getStreet3() %></p>
-										</c:if>
-
-										<p><%= commerceAddress.getCity() %></p>
-
-										<%
-										CommerceCountry commerceCountry = commerceAddress.getCommerceCountry();
-										%>
-
-										<c:if test="<%= commerceCountry != null %>">
-											<p><%= HtmlUtil.escape(commerceCountry.getName(locale)) %></p>
-										</c:if>
-									</div>
-								</div>
+								<aui:input checked="<%= i == 0 %>" cssClass="custom-control-input" id='<%= "shippingAddressId" + i %>' label="" name="shippingAddressId" type="radio" value="<%= commerceAddress.getCommerceAddressId() %>" />
+								<span class="custom-control-label"></span>
 							</label>
 						</div>
 					</div>
+					<div class="autofit-col autofit-col-expand">
+						<div class="autofit-section">
+							<label class="order-shipping-address-label" for='<portlet:namespace /><%= "shippingAddressId" + i %>'>
+								<span class="commerce-name list-group-title"><%= commerceAddress.getName() %></span>
+								<span class="commerce-street1 list-group-text"><%= commerceAddress.getStreet1() %></span>
 
-				<%
-				}
-				%>
+								<c:if test="<%= Validator.isNotNull(commerceAddress.getStreet2()) %>">
+									<span class="commerce-street2 list-group-text"><%= commerceAddress.getStreet2() %></span>
+								</c:if>
 
-			</aui:field-wrapper>
-		</c:if>
+								<c:if test="<%= Validator.isNotNull(commerceAddress.getStreet3()) %>">
+									<span class="commerce-street3 list-group-text"><%= commerceAddress.getStreet3() %></span>
+								</c:if>
 
-		<aui:input name="purchaseOrderNumber" />
-	</aui:fieldset>
+								<span class="commerce-city list-group-text"><%= commerceAddress.getCity() %></span>
+
+								<%
+								CommerceCountry commerceCountry = commerceAddress.getCommerceCountry();
+								%>
+
+								<c:if test="<%= commerceCountry != null %>">
+									<span class="commerce-country list-group-text"><%= HtmlUtil.escape(commerceCountry.getName(locale)) %></span>
+								</c:if>
+							</label>
+						</div>
+					</div>
+				</li>
+
+			<%
+			}
+			%>
+		</ul>
+	</c:if>
+
+	<aui:input name="purchaseOrderNumber" />
 </aui:form>

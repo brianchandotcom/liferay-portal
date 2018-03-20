@@ -136,20 +136,20 @@ CommerceOrganizationOrderDisplayContext commerceOrganizationOrderDisplayContext 
 								toolbars: {
 									footer: [
 										{
-											cssClass: 'btn-primary mr-2',
-											label: '<liferay-ui:message key="add-order" />',
-											on: {
-												click: function() {
-													submitForm(document.<portlet:namespace />addFm);
-												}
-											}
-										},
-										{
-											cssClass: 'btn-cancel',
+											cssClass: 'btn-cancel mr-2',
 											label: '<liferay-ui:message key="cancel" />',
 											on: {
 												click: function() {
 													dialog.hide();
+												}
+											}
+										},
+										{
+											cssClass: 'btn-primary',
+											label: '<liferay-ui:message key="add-order" />',
+											on: {
+												click: function() {
+													submitForm(document.<portlet:namespace />addFm);
 												}
 											}
 										}
@@ -158,7 +158,7 @@ CommerceOrganizationOrderDisplayContext commerceOrganizationOrderDisplayContext 
 										{
 											cssClass: 'close',
 											discardDefaultButtonCssClasses: true,
-											labelHTML: '<span aria-hidden="true">&times;</span>',
+											labelHTML: '<clay:icon symbol="times" />',
 											on: {
 												click: function(event) {
 													dialog.hide();

@@ -574,6 +574,16 @@
 	}
 }
 
+.order-shipping-address-list {
+	.list-group-text, .list-group-title {
+		display: block;
+	}
+
+	.custom-control .custom-control-input:focus ~ .custom-control-label::before {
+		box-shadow: 0 0 0 1px $list-group-bg, 0 0 0 2px lighten(saturate($component-active-bg, 3.40), 21.18);
+	}
+}
+
 // Cart Content Mini
 
 .commerce-order-items-header {

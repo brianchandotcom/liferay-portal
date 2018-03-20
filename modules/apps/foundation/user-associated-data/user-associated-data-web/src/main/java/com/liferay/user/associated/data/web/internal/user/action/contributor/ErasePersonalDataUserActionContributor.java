@@ -19,9 +19,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.users.admin.user.action.contributor.BaseUserActionContributor;
 import com.liferay.users.admin.user.action.contributor.UserActionContributor;
@@ -54,11 +52,6 @@ public class ErasePersonalDataUserActionContributor
 		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
 			portletRequest, UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
 			PortletRequest.RENDER_PHASE);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		liferayPortletURL.setParameter("backURL", themeDisplay.getURLCurrent());
 
 		liferayPortletURL.setParameter(
 			"p_u_i_d", String.valueOf(selectedUser.getUserId()));

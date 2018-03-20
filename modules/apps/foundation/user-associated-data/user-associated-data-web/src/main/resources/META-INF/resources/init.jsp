@@ -32,7 +32,7 @@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.model.User" %><%@
-page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.portlet.LiferayPortletURL" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
@@ -41,9 +41,11 @@ page import="com.liferay.user.associated.data.entity.UADEntity" %><%@
 page import="com.liferay.user.associated.data.web.internal.constants.UADWebKeys" %><%@
 page import="com.liferay.user.associated.data.web.internal.display.UADApplicationSummaryDisplay" %><%@
 page import="com.liferay.user.associated.data.web.internal.display.ViewUADApplicationsSummaryDisplay" %><%@
-page import="com.liferay.user.associated.data.web.internal.display.ViewUADEntitiesDisplay" %>
+page import="com.liferay.user.associated.data.web.internal.display.ViewUADEntitiesDisplay" %><%@
+page import="com.liferay.users.admin.constants.UsersAdminPortletKeys" %>
 
-<%@ page import="javax.portlet.PortletURL" %>
+<%@ page import="javax.portlet.PortletRequest" %><%@
+page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
 

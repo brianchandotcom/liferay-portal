@@ -85,12 +85,6 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 					value="<%= uadEntityDisplay.getEditURL(uadEntity, liferayPortletRequest, liferayPortletResponse) %>"
 				/>
 
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand"
-					name="nonanonymizable-fields"
-					value="<%= uadEntityDisplay.getUADEntityNonanonymizableFieldValues(uadEntity) %>"
-				/>
-
 				<liferay-ui:search-container-column-jsp
 					cssClass="entry-action-column"
 					path="/uad_entity_action.jsp"

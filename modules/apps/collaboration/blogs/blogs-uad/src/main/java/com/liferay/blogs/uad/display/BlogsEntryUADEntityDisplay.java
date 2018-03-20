@@ -21,14 +21,13 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
 import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
-import com.liferay.user.associated.data.display.BaseUADEntityDisplay;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
 import com.liferay.user.associated.data.entity.UADEntity;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
@@ -36,7 +35,15 @@ import java.util.List;
  */
 @Component(immediate = true, property =  {
 	"model.class.name=" + BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY}, service = UADEntityDisplay.class)
-public class BlogsEntryUADEntityDisplay extends BaseUADEntityDisplay {
+public class BlogsEntryUADEntityDisplay implements UADEntityDisplay {
+	public String getApplicationName() {
+		return BlogsUADConstants.UAD_ENTITY_SET_NAME;
+	}
+
+	public String[] getDisplayFieldNames() {
+		return _blogsEntryUADEntityDisplayHelper.getDisplayFieldNames();
+	}
+
 	@Override
 	public String getEditURL(UADEntity uadEntity,
 		LiferayPortletRequest liferayPortletRequest,
@@ -48,6 +55,18 @@ public class BlogsEntryUADEntityDisplay extends BaseUADEntityDisplay {
 			liferayPortletRequest, liferayPortletResponse);
 	}
 
+	public String getKey() {
+		return BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY;
+	}
+
+	@Override
+	public Map<String, Object> getUADEntityNonanonymizableFieldValues(
+		UADEntity uadEntity) {
+		BlogsEntryUADEntity blogsEntryUADEntity = (BlogsEntryUADEntity)uadEntity;
+
+		return _blogsEntryUADEntityDisplayHelper.getUADEntityNonanonymizableFieldValues(blogsEntryUADEntity.getBlogsEntry());
+	}
+
 	@Override
 	public String getUADEntityTypeDescription() {
 		return "A blog post";
@@ -56,11 +75,6 @@ public class BlogsEntryUADEntityDisplay extends BaseUADEntityDisplay {
 	@Override
 	public String getUADEntityTypeName() {
 		return "BlogsEntry";
-	}
-
-	@Override
-	public List<String> getUADEntityTypeNonanonymizableFieldNamesList() {
-		return _uadEntityAnonymizer.getUADEntityNonanonymizableFieldNames();
 	}
 
 	@Reference

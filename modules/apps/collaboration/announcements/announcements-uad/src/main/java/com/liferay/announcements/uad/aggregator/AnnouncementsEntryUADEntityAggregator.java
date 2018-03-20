@@ -18,9 +18,11 @@ import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.announcements.uad.entity.AnnouncementsEntryUADEntity;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.entity.UADEntity;
+import com.liferay.user.associated.data.util.UADDynamicQueryHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +43,8 @@ public class AnnouncementsEntryUADEntityAggregator
 
 	@Override
 	public int count(long userId) {
-		return _announcementsEntryLocalService.getUserEntriesCount(userId);
+		return (int)_announcementsEntryLocalService.dynamicQueryCount(
+			_getDynamicQuery(userId));
 	}
 
 	@Override
@@ -78,7 +81,17 @@ public class AnnouncementsEntryUADEntityAggregator
 			announcementsEntry);
 	}
 
+	private DynamicQuery _getDynamicQuery(long userId) {
+		return _uadDynamicQueryHelper.addDynamicQueryCriteria(
+			_announcementsEntryLocalService.dynamicQuery(),
+			AnnouncementsUADConstants.USER_ID_FIELD_NAMES_ANNOUNCEMENTS_ENTRY,
+			userId);
+	}
+
 	@Reference
 	private AnnouncementsEntryLocalService _announcementsEntryLocalService;
+
+	@Reference
+	private UADDynamicQueryHelper _uadDynamicQueryHelper;
 
 }

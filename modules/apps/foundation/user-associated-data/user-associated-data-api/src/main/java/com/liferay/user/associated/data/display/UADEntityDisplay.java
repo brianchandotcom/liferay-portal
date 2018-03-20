@@ -18,26 +18,29 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.user.associated.data.entity.UADEntity;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * @author William Newbury
  */
 public interface UADEntityDisplay {
 
+	public String getApplicationName();
+
+	public String[] getDisplayFieldNames();
+
 	public String getEditURL(
 			UADEntity uadEntity, LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception;
 
-	public String getUADEntityNonanonymizableFieldValues(UADEntity uadEntity);
+	public String getKey();
+
+	public Map<String, Object> getUADEntityNonanonymizableFieldValues(
+		UADEntity uadEntity);
 
 	public String getUADEntityTypeDescription();
 
 	public String getUADEntityTypeName();
-
-	public String getUADEntityTypeNonanonymizableFieldNames();
-
-	public List<String> getUADEntityTypeNonanonymizableFieldNamesList();
 
 }

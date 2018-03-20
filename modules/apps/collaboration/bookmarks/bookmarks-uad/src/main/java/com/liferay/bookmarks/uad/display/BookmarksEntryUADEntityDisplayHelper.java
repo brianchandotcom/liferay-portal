@@ -19,6 +19,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -36,6 +39,25 @@ public class BookmarksEntryUADEntityDisplayHelper {
 		throws Exception {
 
 		return StringPool.BLANK;
+	}
+
+	public String[] getDisplayFieldNames() {
+		return new String[] {"name", "description", "url"};
+	}
+
+	public Map<String, Object> getUADEntityNonanonymizableFieldValues(
+		BookmarksEntry bookmarksEntry) {
+
+		Map<String, Object> uadEntityNonanonymizableFieldValues =
+			new HashMap<>();
+
+		uadEntityNonanonymizableFieldValues.put(
+			"description", bookmarksEntry.getDescription());
+		uadEntityNonanonymizableFieldValues.put(
+			"name", bookmarksEntry.getName());
+		uadEntityNonanonymizableFieldValues.put("url", bookmarksEntry.getUrl());
+
+		return uadEntityNonanonymizableFieldValues;
 	}
 
 }

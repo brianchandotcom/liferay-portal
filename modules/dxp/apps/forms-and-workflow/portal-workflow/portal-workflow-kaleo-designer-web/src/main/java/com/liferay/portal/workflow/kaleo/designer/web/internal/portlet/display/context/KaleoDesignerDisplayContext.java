@@ -151,11 +151,12 @@ public class KaleoDesignerDisplayContext {
 	}
 
 	public OrderByComparator<KaleoDefinitionVersion>
-		getKaleoDefinitionVersionOrderByComparator() {
+		getKaleoDefinitionVersionOrderByComparator(
+			SearchContainer searchContainer) {
 
 		boolean orderByAsc = false;
-		String orderByCol = getOrderByCol();
-		String orderByType = getOrderByType();
+		String orderByCol = getOrderByCol(searchContainer);
+		String orderByType = getOrderByType(searchContainer);
 
 		if (orderByType.equals("asc")) {
 			orderByAsc = true;
@@ -264,12 +265,24 @@ public class KaleoDesignerDisplayContext {
 		return kaleoDefinitionVersion.getModifiedDate();
 	}
 
-	public String getOrderByCol() {
+	public String getOrderByCol(SearchContainer searchContainer) {
+		String orderByCol = searchContainer.getOrderByCol();
+
+		if (orderByCol != null) {
+			return orderByCol;
+		}
+
 		return ParamUtil.getString(
 			_kaleoDesignerRequestHelper.getRequest(), "orderByCol", "title");
 	}
 
-	public String getOrderByType() {
+	public String getOrderByType(SearchContainer searchContainer) {
+		String orderByType = searchContainer.getOrderByType();
+
+		if (orderByType != null) {
+			return orderByType;
+		}
+
 		return ParamUtil.getString(
 			_kaleoDesignerRequestHelper.getRequest(), "orderByType", "asc");
 	}
@@ -299,8 +312,7 @@ public class KaleoDesignerDisplayContext {
 				getLatestKaleoDefinitionVersions(
 					_kaleoDesignerRequestHelper.getCompanyId(),
 					searchTerms.getKeywords(), WorkflowConstants.STATUS_ANY,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					getKaleoDefinitionVersionOrderByComparator());
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		kaleoDefinitionVersions = ListUtil.filter(
 			kaleoDefinitionVersions,
@@ -315,6 +327,10 @@ public class KaleoDesignerDisplayContext {
 				kaleoDefinitionVersions, searchContainer.getStart(),
 				searchContainer.getEnd());
 		}
+
+		kaleoDefinitionVersions = ListUtil.sort(
+			kaleoDefinitionVersions,
+			getKaleoDefinitionVersionOrderByComparator(searchContainer));
 
 		return kaleoDefinitionVersions;
 	}

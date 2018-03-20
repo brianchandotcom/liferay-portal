@@ -23,6 +23,14 @@ UADEntityDisplay uadEntityDisplay = viewUADEntitiesDisplay.getUADEntityDisplay()
 
 SearchContainer uadEntitySearchContainer = viewUADEntitiesDisplay.getSearchContainer();
 
+PortletURL backURL = renderResponse.createRenderURL();
+
+backURL.setParameter("mvcRenderCommandName", "/view_uad_applications_summary");
+backURL.setParameter("p_u_i_d", String.valueOf(selectedUser.getUserId()));
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backURL.toString());
+
 renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", LanguageUtil.get(request, "personal-data-erasure"), " - ", uadEntityDisplay.getUADEntityTypeName()));
 %>
 

@@ -294,7 +294,7 @@
 
 		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${workflowDefinition}" />
 
-		<execute function="AssertClick" locator1="WorkflowConfiguration#SAVE" value1="Save" />
+		<execute function="AssertClick" locator1="WorkflowConfiguration#RESOURCE_TABLE_SAVE" value1="Save" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 

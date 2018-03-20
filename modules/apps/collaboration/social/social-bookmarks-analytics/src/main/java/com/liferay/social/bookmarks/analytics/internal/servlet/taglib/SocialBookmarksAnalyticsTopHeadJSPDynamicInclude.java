@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class SocialBookmarksAnalyticsJSPDynamicInclude
+public class SocialBookmarksAnalyticsTopHeadJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
@@ -57,6 +57,6 @@ public class SocialBookmarksAnalyticsJSPDynamicInclude
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SocialBookmarksAnalyticsJSPDynamicInclude.class);
+		SocialBookmarksAnalyticsTopHeadJSPDynamicInclude.class);
 
 }

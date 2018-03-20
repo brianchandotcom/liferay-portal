@@ -563,7 +563,7 @@ public class JenkinsJobConfigMapGenerator {
 						"hudson\\.plugins\\.parameterizedtrigger\\",
 						".(TriggerBuilder|BuildTrigger)(.*?)/hudson",
 						"\\.plugins\\.parameterizedtrigger\\",
-						".(TriggerBuilder|BuildTrigger)"));
+						".(TriggerBuilder|BuildTrigger)"), Pattern.DOTALL);
 
 				Matcher triggerBuilderMatcher = triggerBuilderPattern.matcher(
 					jobConfigTemplateFileContent);

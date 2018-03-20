@@ -255,11 +255,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DESCRIPTIVE_HEADER_VERTICAL_ELLIPSIS</td>
-	<td>//h2[contains(.,'${key_assetHeader}')]//..//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FAVORITE</td>
 	<td>//div[contains(@class,'open')]//li[contains(@class,'dropdown-header') and contains(.,'Favorite')]</td>
 	<td></td>

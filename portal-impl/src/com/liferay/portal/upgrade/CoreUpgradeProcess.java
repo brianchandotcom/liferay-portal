@@ -25,6 +25,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.util.Iterator;
+import java.util.NavigableSet;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -46,23 +48,66 @@ public class CoreUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
+	public Version getLatestSchemaVersion() {
+		return upgradeProcesses.lastKey();
+	}
+
+	public Version getRequiredSchemaVersion() {
+		NavigableSet<Version> reverseSchemaVersions =
+			upgradeProcesses.descendingKeySet();
+
+		Iterator<Version> itr = reverseSchemaVersions.iterator();
+
+		Version requiredSchemaVersion = itr.next();
+
+		while (itr.hasNext()) {
+			Version nextSchemaVersion = itr.next();
+
+			if ((requiredSchemaVersion.getMajor() !=
+					nextSchemaVersion.getMajor()) ||
+				(requiredSchemaVersion.getMinor() !=
+					nextSchemaVersion.getMinor())) {
+
+				break;
+			}
+
+			requiredSchemaVersion = nextSchemaVersion;
+		}
+
+		return requiredSchemaVersion;
+	}
+
+	public boolean isInLatestSchemaVersion() throws SQLException {
+		return getLatestSchemaVersion().equals(getCurrentSchemaVersion());
+	}
+
+	public boolean isInRequiredSchemaVersion() throws SQLException {
+		if (getRequiredSchemaVersion().compareTo(getCurrentSchemaVersion()) <=
+				0) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
 		for (Version pendingSchemaVersion :
-				getPendingSchemaVersions(getCoreSchemaVersion())) {
+				getPendingSchemaVersions(getCurrentSchemaVersion())) {
 
 			Class<?> pendingUpgradeClass = upgradeProcesses.get(
 				pendingSchemaVersion);
 
 			upgrade(pendingUpgradeClass);
 
-			updateCoreSchemaVersion(pendingSchemaVersion);
+			updateSchemaVersion(pendingSchemaVersion);
 		}
 
 		clearIndexesCache();
 	}
 
-	protected Version getCoreSchemaVersion() throws SQLException {
+	protected Version getCurrentSchemaVersion() throws SQLException {
 		try (PreparedStatement ps = connection.prepareStatement(
 				"select schemaVersion from Release_ where servletContextName " +
 					"= ?");) {
@@ -97,7 +142,7 @@ public class CoreUpgradeProcess extends UpgradeProcess {
 		return pendingUpgradeProcesses.keySet();
 	}
 
-	protected void updateCoreSchemaVersion(Version newSchemaVersion)
+	protected void updateSchemaVersion(Version newSchemaVersion)
 		throws SQLException {
 
 		try (PreparedStatement ps = connection.prepareStatement(

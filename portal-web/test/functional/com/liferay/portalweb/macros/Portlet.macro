@@ -316,6 +316,12 @@
 		</if>
 	</command>
 
+	<command name="mouseOverPortletTitle">
+		<var name="key_portletTitleName" value="${portletTitleName}" />
+
+		<execute function="MouseOver" locator1="Portlet#SPECIFIC_TITLE" />
+	</command>
+
 	<command name="openAdminURL">
 		<execute macro="Navigator#openSpecificURL">
 			<var name="url" value="${adminURL}" />

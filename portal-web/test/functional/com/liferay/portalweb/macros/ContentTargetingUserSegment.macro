@@ -330,12 +330,9 @@
 	</command>
 
 	<command name="editGenderRule">
-		<var name="key_rowEntry" value="${userSegmentName}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="${userSegmentName}" />
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#openFormField">
@@ -346,13 +343,9 @@
 	</command>
 
 	<command name="editUserSegmentCP">
-		<var name="key_rowEntry" value="${userSegmentName}" />
-		<var name="key_userSegment" value="${userSegmentName}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="${userSegmentName}" />
 		</execute>
 
 		<execute macro="PortletEntry#inputName">

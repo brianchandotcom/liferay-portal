@@ -450,10 +450,6 @@
 	</command>
 
 	<command name="deletePageVariationPG">
-		<var name="key_PagesVariationName" value="${pageVariationName}" />
-
-		<var name="key_rowEntry" value="${pageVariationName}" />
-
 		<execute function="Click" locator1="Icon#STAGING_BAR_VERTICAL_ELLIPSIS" />
 
 		<execute function="Click" locator1="Staging#STAGING_MENU_MANAGE_PAGE_VARIATION" />
@@ -481,12 +477,9 @@
 			<var name="key_menuItem" value="Publish Templates" />
 		</execute>
 
-		<var name="key_rowEntry" value="${publishTemplateName}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
-			<var name="key_menuItem" value="Delete" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Delete" />
+			<var name="rowEntry" value="${publishTemplateName}" />
 		</execute>
 	</command>
 
@@ -691,12 +684,9 @@
 			<var name="key_menuItem" value="Publish Templates" />
 		</execute>
 
-		<var name="key_rowEntry" value="${publishTemplateName}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Move to the Recycle Bin">
-			<var name="key_menuItem" value="Move to the Recycle Bin" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Move to the Recycle Bin" />
+			<var name="rowEntry" value="${publishTemplateName}" />
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />

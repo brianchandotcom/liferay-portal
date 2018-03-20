@@ -19,33 +19,28 @@
 	</command>
 
 	<command name="_tearDownWorkflow">
-		<var name="key_rowEntry" value="Knowledge Base Article" />
 		<var name="noWorkflow" value="No Workflow" />
 
 		<if>
 			<condition function="IsElementPresent" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 			<then>
-				<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-					<var name="key_menuItem" value="Edit" />
+				<execute macro="LexiconEntry#gotoEntryMenuItem">
+					<var name="menuItem" value="Edit" />
+					<var name="rowEntry" value="Knowledge Base Article" />
 				</execute>
 
-				<var name="key_workflowResourceValue" value="Knowledge Base Article" />
-
-				<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${noWorkflow}" />
+				<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${noWorkflow}">
+					<var name="key_workflowResourceValue" value="Knowledge Base Article" />
+				</execute>
 
 				<execute macro="Button#clickSave" />
 			</then>
 		</if>
 
 		<for list="Blogs Entry,Calendar Event,Comment,Message Boards Message,Page Revision,Wiki Page" param="workflowResourceValue">
-			<var name="key_rowEntry" value="${workflowResourceValue}" />
-
-			<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-			<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-				<var name="key_menuItem" value="Edit" />
+			<execute macro="LexiconEntry#gotoEntryMenuItem">
+				<var name="menuItem" value="Edit" />
+				<var name="rowEntry" value="${workflowResourceValue}" />
 			</execute>
 
 			<var name="key_workflowResourceValue" value="${workflowResourceValue}" />
@@ -286,19 +281,16 @@
 	</command>
 
 	<command name="configureWorkflow">
-		<var name="key_rowEntry" value="${workflowResourceValue}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="${workflowResourceValue}" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${workflowResourceValue}" />
 
-		<var name="key_workflowResourceValue" value="${workflowResourceValue}" />
-
-		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${workflowDefinition}" />
+		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${workflowDefinition}">
+			<var name="key_workflowResourceValue" value="${workflowResourceValue}" />
+		</execute>
 
 		<execute macro="PortletEntry#save" />
 
@@ -631,18 +623,14 @@
 
 		<execute macro="Workflow#_tearDownWorkflow" />
 
-		<var name="key_rowEntry" value="User" />
-		<var name="noWorkflow" value="No Workflow" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="User" />
 		</execute>
 
-		<var name="key_workflowResourceValue" value="User" />
-
-		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${noWorkflow}" />
+		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="No Workflow">
+			<var name="key_workflowResourceValue" value="User" />
+		</execute>
 
 		<execute macro="Button#clickSave" />
 	</command>

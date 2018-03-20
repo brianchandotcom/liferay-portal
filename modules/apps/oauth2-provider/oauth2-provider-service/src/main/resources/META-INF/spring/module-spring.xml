@@ -5,7 +5,7 @@
 	default-init-method="afterPropertiesSet"
 	xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
 	<bean class="com.liferay.oauth2.provider.service.impl.OAuth2AccessTokenLocalServiceImpl" id="com.liferay.oauth2.provider.service.OAuth2AccessTokenLocalService" />
 	<bean class="com.liferay.oauth2.provider.service.impl.OAuth2AccessTokenServiceImpl" id="com.liferay.oauth2.provider.service.OAuth2AccessTokenService" />

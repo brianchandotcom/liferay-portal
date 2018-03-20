@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -43,17 +44,27 @@ public class GitUtil {
 			String baseDirName, String gitWorkingBranchName)
 		throws Exception {
 
+		return getFileNames(
+			baseDirName, getCurrentBranchCommitId(gitWorkingBranchName));
+	}
+
+	protected static String getCurrentBranchCommitId(
+			String gitWorkingBranchName)
+		throws Exception {
+
 		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
 			"git merge-base HEAD " + gitWorkingBranchName);
 
-		String mergeBaseCommitId = unsyncBufferedReader.readLine();
-
-		return getFileNames(baseDirName, mergeBaseCommitId);
+		return unsyncBufferedReader.readLine();
 	}
 
 	public static List<String> getLatestAuthorFileNames(String baseDirName)
 		throws Exception {
 
+		return getFileNames(baseDirName, getLatestAuthorCommitId());
+	}
+
+	protected static String getLatestAuthorCommitId() throws Exception {
 		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
 			"git log");
 
@@ -79,10 +90,17 @@ public class GitUtil {
 			}
 		}
 
-		return getFileNames(baseDirName, firstDifferentAuthorCommitId);
+		return firstDifferentAuthorCommitId;
 	}
 
 	public static List<String> getLocalChangesFileNames(String baseDirName)
+		throws Exception {
+
+		return getLocalChangesFileNames(baseDirName, "add");
+	}
+
+	protected static List<String> getLocalChangesFileNames(
+			String baseDirName, String command)
 		throws Exception {
 
 		List<String> localChangesFileNames = new ArrayList<>();
@@ -95,16 +113,16 @@ public class GitUtil {
 		int gitLevel = getGitLevel(baseDirName);
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (!line.startsWith("add '") ||
-				(StringUtil.count(line, CharPool.SLASH) < gitLevel)) {
-
+			if (StringUtil.count(line, CharPool.SLASH) < gitLevel) {
 				continue;
 			}
 
-			String fileName = getFileName(
-				line.substring(5, line.length() - 1), gitLevel);
+			if (!Objects.isNull(command) && !line.startsWith(command + " '")) {
+				continue;
+			}
 
-			localChangesFileNames.add(fileName);
+			localChangesFileNames.add(
+				getFileName(line.substring(5, line.length() - 1), gitLevel));
 		}
 
 		return localChangesFileNames;

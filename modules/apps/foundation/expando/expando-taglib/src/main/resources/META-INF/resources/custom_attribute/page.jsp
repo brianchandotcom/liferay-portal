@@ -681,7 +681,10 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 
 							<c:choose>
 								<c:when test="<%= propertyHeight > 0 %>">
-									<textarea class="field form-control lfr-input-text" id="<%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"
+									<textarea
+										class="field form-control lfr-input-text"
+										id="<%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %>"
+										name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"
 										style="
 										<c:if test="<%= propertyHeight > 0 %>">
 											height: <%= propertyHeight %>px;
@@ -693,7 +696,10 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 									><%= HtmlUtil.escape(String.valueOf(value)) %></textarea>
 								</c:when>
 								<c:otherwise>
-									<input class="field form-control lfr-input-text" id="<%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"
+									<input
+										class="field form-control lfr-input-text"
+										id="<%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %>"
+										name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"
 										style="
 										<c:if test="<%= propertyWidth > 0 %>">
 											width: <%= propertyWidth %>px;

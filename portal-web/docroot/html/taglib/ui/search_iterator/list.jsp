@@ -125,7 +125,9 @@ if (iteratorURL != null) {
 					}
 				%>
 
-					<th class="<%= cssClass %>" id="<%= namespace + id %>_col-<%= normalizedHeaderName %>"
+					<th
+						class="<%= cssClass %>"
+						id="<%= namespace + id %>_col-<%= normalizedHeaderName %>"
 
 						<%--
 

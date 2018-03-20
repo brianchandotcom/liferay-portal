@@ -29,8 +29,8 @@ class LayoutColumn extends Component {
 			spritemap: this.pathThemeImages + '/lexicon/icons.svg'
 		};
 
-		if (this.siteNavigationMenuName !== '') {
-			config.checkboxFieldLabel = _.sub(Liferay.Language.get('add-this-page-to-the-primary-navigation-x'), this.siteNavigationMenuName);
+		if (this.siteNavigationMenuNames !== '') {
+			config.checkboxFieldLabel = _.sub(Liferay.Language.get('add-this-page-to-the-following-menus-x'), this.siteNavigationMenuNames);
 			config.checkboxFieldName = 'TypeSettingsProperties--addToPrimaryMenu--';
 			config.checkboxFieldValue = true;
 		}
@@ -128,13 +128,13 @@ LayoutColumn.STATE = {
 	portletNamespace: Config.string().required(),
 
 	/**
-	 * Site navigation menu name, to add layouts by default
+	 * Site navigation menu names, to add layouts by default
 	 * @instance
 	 * @memberof Layout
 	 * @type {!string}
 	 */
 
-	siteNavigationMenuName: Config.string().required()
+	siteNavigationMenuNames: Config.string().required()
 
 };
 

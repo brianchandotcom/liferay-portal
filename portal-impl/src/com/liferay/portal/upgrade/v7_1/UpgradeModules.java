@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_1_0;
+package com.liferay.portal.upgrade.v7_1;
 
 /**
  * @author Alberto Chaparro

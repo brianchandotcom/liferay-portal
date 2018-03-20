@@ -12,17 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_1_0;
+package com.liferay.portal.upgrade.v7_1;
+
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.upgrade.v7_1_0.util.CounterTable;
 
 /**
- * @author Adolfo Pérez
+ * @author Preston Crary
  */
-public class UpgradeMVCCVersion
-	extends com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion {
+public class UpgradeCounter extends UpgradeProcess {
 
 	@Override
-	protected String[] getModuleTableNames() {
-		return new String[] {"Subscription"};
+	protected void doUpgrade() throws Exception {
+		alter(
+			CounterTable.class,
+			new AlterColumnType("name", "VARCHAR(150) not null"));
 	}
 
 }

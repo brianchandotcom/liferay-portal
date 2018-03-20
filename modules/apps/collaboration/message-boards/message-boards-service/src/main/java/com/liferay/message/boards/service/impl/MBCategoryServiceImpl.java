@@ -148,8 +148,15 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 
 	@Override
 	public List<MBCategory> getCategories(
-		long groupId, long parentCategoryId,
-		QueryDefinition<?> queryDefinition) {
+			long groupId, long parentCategoryId,
+			QueryDefinition<?> queryDefinition)
+		throws PortalException {
+
+		if (queryDefinition.isIncludeOwner() &&
+			(queryDefinition.getOwnerUserId() != 0)) {
+
+			queryDefinition.setOwnerUserId(getUserId());
+		}
 
 		return mbCategoryFinder.filterFindByG_P(
 			groupId, parentCategoryId, queryDefinition);
@@ -236,7 +243,14 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 
 	@Override
 	public List<Object> getCategoriesAndThreads(
-		long groupId, long categoryId, QueryDefinition<?> queryDefinition) {
+			long groupId, long categoryId, QueryDefinition<?> queryDefinition)
+		throws PortalException {
+
+		if (queryDefinition.isIncludeOwner() &&
+			(queryDefinition.getOwnerUserId() != 0)) {
+
+			queryDefinition.setOwnerUserId(getUserId());
+		}
 
 		return mbCategoryFinder.filterFindC_T_ByG_C(
 			groupId, categoryId, queryDefinition);
@@ -263,7 +277,14 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 
 	@Override
 	public int getCategoriesAndThreadsCount(
-		long groupId, long categoryId, QueryDefinition<?> queryDefinition) {
+			long groupId, long categoryId, QueryDefinition<?> queryDefinition)
+		throws PortalException {
+
+		if (queryDefinition.isIncludeOwner() &&
+			(queryDefinition.getOwnerUserId() != 0)) {
+
+			queryDefinition.setOwnerUserId(getUserId());
+		}
 
 		return mbCategoryFinder.filterCountC_T_ByG_C(
 			groupId, categoryId, queryDefinition);
@@ -304,8 +325,15 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 
 	@Override
 	public int getCategoriesCount(
-		long groupId, long parentCategoryId,
-		QueryDefinition<?> queryDefinition) {
+			long groupId, long parentCategoryId,
+			QueryDefinition<?> queryDefinition)
+		throws PortalException {
+
+		if (queryDefinition.isIncludeOwner() &&
+			(queryDefinition.getOwnerUserId() != 0)) {
+
+			queryDefinition.setOwnerUserId(getUserId());
+		}
 
 		return mbCategoryFinder.filterCountByG_P(
 			groupId, parentCategoryId, queryDefinition);

@@ -307,8 +307,15 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 
 	@Override
 	public List<MBThread> getThreads(
-		long groupId, long categoryId,
-		QueryDefinition<MBThread> queryDefinition) {
+			long groupId, long categoryId,
+			QueryDefinition<MBThread> queryDefinition)
+		throws PortalException {
+
+		if (queryDefinition.isIncludeOwner() &&
+			(queryDefinition.getOwnerUserId() != 0)) {
+
+			queryDefinition.setOwnerUserId(getUserId());
+		}
 
 		return mbThreadFinder.filterFindByG_C(
 			groupId, categoryId, queryDefinition);
@@ -330,8 +337,15 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 
 	@Override
 	public int getThreadsCount(
-		long groupId, long categoryId,
-		QueryDefinition<MBThread> queryDefinition) {
+			long groupId, long categoryId,
+			QueryDefinition<MBThread> queryDefinition)
+		throws PortalException {
+
+		if (queryDefinition.isIncludeOwner() &&
+			(queryDefinition.getOwnerUserId() != 0)) {
+
+			queryDefinition.setOwnerUserId(getUserId());
+		}
 
 		return mbThreadFinder.filterCountByG_C(
 			groupId, categoryId, queryDefinition);

@@ -41,7 +41,14 @@ KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)row.getO
 </liferay-portlet:actionURL>
 
 <c:if test="<%= !kaleoDefinitionVersion.getVersion().equals(currentKaleoDefinitionVersion.getVersion()) %>">
-	<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" id='<%= "iconMenu_" + kaleoDefinitionVersion.getVersion() %>' markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+	<liferay-ui:icon-menu
+		direction="left-side"
+		icon="<%= StringPool.BLANK %>"
+		id='<%= "iconMenu_" + kaleoDefinitionVersion.getVersion() %>'
+		markupView="lexicon"
+		message="<%= StringPool.BLANK %>"
+		showWhenSingleIcon="<%= true %>"
+	>
 		<liferay-ui:icon
 			id='<%= "previewBeforeRevert" + kaleoDefinitionVersion.getVersion() %>'
 			message="preview"
@@ -56,7 +63,7 @@ KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)row.getO
 </c:if>
 
 <aui:script use="liferay-kaleo-designer-utils">
-	var title = '<liferay-ui:message key="preview"/>';
+	var title = '<liferay-ui:message key="preview" />';
 
 	var previewBeforeRevert = A.rbind('previewBeforeRevert', Liferay.KaleoDesignerUtils, '<%= viewURL %>', '<%= revertURL %>', title);
 

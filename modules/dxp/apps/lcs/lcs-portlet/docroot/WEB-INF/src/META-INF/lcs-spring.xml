@@ -217,7 +217,7 @@
 
 	<!--  Task scheduler -->
 
-	<bean class="com.liferay.lcs.task.scheduler.impl.TaskSchedulerServiceImpl" id="com.liferay.lcs.scheduler.TaskSchedulerService" >
+	<bean class="com.liferay.lcs.task.scheduler.impl.TaskSchedulerServiceImpl" id="com.liferay.lcs.scheduler.TaskSchedulerService">
 		<property name="defaultInterval" value="#{T(com.liferay.lcs.util.PortletPropsValues).COMMAND_SCHEDULE_DEFAULT_INTERVAL}" />
 		<property name="scheduleDelayMax" value="#{T(com.liferay.lcs.util.PortletPropsValues).COMMAND_SCHEDULE_DELAY_MAX}" />
 	</bean>

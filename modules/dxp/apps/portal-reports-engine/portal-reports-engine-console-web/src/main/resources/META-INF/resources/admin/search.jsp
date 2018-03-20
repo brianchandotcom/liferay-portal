@@ -18,12 +18,21 @@
 
 <c:choose>
 	<c:when test="<%= hasAddSourcePermission && reportsEngineDisplayContext.isSourcesTabSelected() %>">
-		<liferay-ui:search-form page="/admin/data_source/source_search.jsp" servletContext="<%= application %>" />
+		<liferay-ui:search-form
+			page="/admin/data_source/source_search.jsp"
+			servletContext="<%= application %>"
+		/>
 	</c:when>
 	<c:when test="<%= hasAddDefinitionPermission && reportsEngineDisplayContext.isDefinitionsTabSelected() %>">
-		<liferay-ui:search-form page="/admin/definition/definition_search.jsp" servletContext="<%= application %>" />
+		<liferay-ui:search-form
+			page="/admin/definition/definition_search.jsp"
+			servletContext="<%= application %>"
+		/>
 	</c:when>
 	<c:otherwise>
-		<liferay-ui:search-form page="/admin/report/entry_search.jsp" servletContext="<%= application %>" />
+		<liferay-ui:search-form
+			page="/admin/report/entry_search.jsp"
+			servletContext="<%= application %>"
+		/>
 	</c:otherwise>
 </c:choose>

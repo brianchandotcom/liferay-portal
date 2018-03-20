@@ -109,7 +109,11 @@ recordSearchContainer.setOrderByType(kaleoFormsViewRecordsDisplayContext.getOrde
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteRecords();" %>' icon="trash" label="delete" />
+		<liferay-frontend:management-bar-button
+			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteRecords();" %>'
+			icon="trash"
+			label="delete"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -183,7 +187,10 @@ recordSearchContainer.setOrderByType(kaleoFormsViewRecordsDisplayContext.getOrde
 			}
 			%>
 
-			<liferay-ui:search-iterator displayStyle="<%= kaleoFormsViewRecordsDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
+			<liferay-ui:search-iterator
+				displayStyle="<%= kaleoFormsViewRecordsDisplayContext.getDisplayStyle() %>"
+				markupView="lexicon"
+			/>
 		</liferay-ui:search-container>
 	</aui:form>
 </div>
@@ -197,7 +204,10 @@ recordSearchContainer.setOrderByType(kaleoFormsViewRecordsDisplayContext.getOrde
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.format(request, "submit-new-x", HtmlUtil.escape(kaleoProcess.getName(locale)), false) %>' url="<%= submitURL.toString() %>" />
+		<liferay-frontend:add-menu-item
+			title='<%= LanguageUtil.format(request, "submit-new-x", HtmlUtil.escape(kaleoProcess.getName(locale)), false) %>'
+			url="<%= submitURL.toString() %>"
+		/>
 	</liferay-frontend:add-menu>
 </c:if>
 

@@ -24,8 +24,22 @@ String tilesPopUp = (String)request.getAttribute("tilesPopUp");
 String tilesTitle = (String)request.getAttribute("tilesTitle");
 %>
 
-<tiles:insert flush="false" template="/html/common/themes/portal.jsp">
-	<tiles:put name="content" value="<%= tilesContent %>" />
-	<tiles:put name="pop_up" value="<%= tilesPopUp %>" />
-	<tiles:put name="title" value="<%= tilesTitle %>" />
+<tiles:insert
+	flush="false"
+	template="/html/common/themes/portal.jsp"
+>
+	<tiles:put
+		name="content"
+		value="<%= tilesContent %>"
+	/>
+
+	<tiles:put
+		name="pop_up"
+		value="<%= tilesPopUp %>"
+	/>
+
+	<tiles:put
+		name="title"
+		value="<%= tilesTitle %>"
+	/>
 </tiles:insert>

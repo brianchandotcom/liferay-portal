@@ -33,7 +33,10 @@ else if (samlProviderConfigurationHelper.isRoleSp()) {
 }
 %>
 
-<liferay-ui:tabs names="<%= tabs1Names %>" url="<%= portletURL.toString() %>">
+<liferay-ui:tabs
+	names="<%= tabs1Names %>"
+	url="<%= portletURL.toString() %>"
+>
 	<div class="container-fluid-1280">
 		<c:choose>
 			<c:when test='<%= tabs1.equals("general") %>'>

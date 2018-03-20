@@ -37,7 +37,12 @@ String notificationRecipients = PrefsParamUtil.getString(portletPreferences, req
 
 	<liferay-ui:error key="maxRestartAttempts" message="please-enter-a-valid-integer-for-max-restart-attempts" />
 
-	<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" persistState="<%= true %>" title="notification-options">
+	<liferay-ui:panel
+		collapsible="<%= true %>"
+		extended="<%= true %>"
+		persistState="<%= true %>"
+		title="notification-options"
+	>
 		<aui:fieldset>
 			<aui:input cssClass="lfr-input-text-container" helpMessage="notification-email-from-address-help" label="notification-email-from-address" name="preferences--notificationEmailFromAddress--" style="min-width: 100px;" value="<%= notificationEmailFromAddress %>" />
 
@@ -51,7 +56,12 @@ String notificationRecipients = PrefsParamUtil.getString(portletPreferences, req
 		</aui:fieldset>
 	</liferay-ui:panel>
 
-	<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" persistState="<%= true %>" title="restart-options">
+	<liferay-ui:panel
+		collapsible="<%= true %>"
+		extended="<%= true %>"
+		persistState="<%= true %>"
+		title="restart-options"
+	>
 		<aui:fieldset>
 			<aui:input cssClass="lfr-input-text-container" helpMessage="maximum-restart-attempts-help" label="maximum-restart-attempts" name="preferences--maxRestartAttempts--" value="<%= maxRestartAttempts %>">
 				<aui:validator name="min">"0"</aui:validator>

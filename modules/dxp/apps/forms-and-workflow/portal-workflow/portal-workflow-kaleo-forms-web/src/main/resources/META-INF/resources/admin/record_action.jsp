@@ -30,7 +30,13 @@ long kaleoProcessId = GetterUtil.getLong((String)row.getParameter("kaleoProcessI
 DDLRecordVersion ddlRecordVersion = ddlRecord.getLatestRecordVersion();
 %>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
 	<portlet:renderURL var="viewDDLRecordURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 		<portlet:param name="mvcPath" value="/admin/view_record.jsp" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -49,5 +55,7 @@ DDLRecordVersion ddlRecordVersion = ddlRecord.getLatestRecordVersion();
 		<portlet:param name="ddlRecordId" value="<%= String.valueOf(ddlRecord.getRecordId()) %>" />
 	</portlet:actionURL>
 
-	<liferay-ui:icon-delete url="<%= deleteDDLRecordURL %>" />
+	<liferay-ui:icon-delete
+		url="<%= deleteDDLRecordURL %>"
+	/>
 </liferay-ui:icon-menu>

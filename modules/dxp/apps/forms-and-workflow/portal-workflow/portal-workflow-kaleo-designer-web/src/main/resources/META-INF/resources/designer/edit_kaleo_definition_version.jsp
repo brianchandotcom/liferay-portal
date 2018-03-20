@@ -143,7 +143,12 @@
 							</h4>
 						</div>
 
-						<liferay-ui:tabs cssClass="navbar-no-collapse panel panel-default" names="details,revision-history" refresh="<%= false %>" type="tabs nav-tabs-default">
+						<liferay-ui:tabs
+							cssClass="navbar-no-collapse panel panel-default"
+							names="details,revision-history"
+							refresh="<%= false %>"
+							type="tabs nav-tabs-default"
+						>
 							<c:if test="<%= kaleoDefinitionVersion != null %>">
 								<liferay-ui:section>
 									<div class="sidebar-list">
@@ -239,7 +244,11 @@
 
 					<aui:fieldset-group markupView="lexicon">
 						<aui:fieldset>
-							<liferay-ui:input-localized name="title" placeholder="untitled-workflow" xml='<%= BeanPropertiesUtil.getString(kaleoDefinitionVersion, "title") %>' />
+							<liferay-ui:input-localized
+								name="title"
+								placeholder="untitled-workflow"
+								xml='<%= BeanPropertiesUtil.getString(kaleoDefinitionVersion, "title") %>'
+							/>
 						</aui:fieldset>
 
 						<aui:fieldset>
@@ -292,7 +301,9 @@
 													</div>
 
 													<div class="tab-pane">
-														<liferay-util:buffer var="importFileMark">
+														<liferay-util:buffer
+															var="importFileMark"
+														>
 															<aui:a href="#" id="uploadLink">
 																<%= StringUtil.toLowerCase(LanguageUtil.get(request, "import-a-file")) %>
 															</aui:a>
@@ -788,18 +799,11 @@
 					<c:if test="<%= !isPreviewBeforeRestoreState %>">
 						<aui:button-row>
 							<c:if test="<%= kaleoDesignerDisplayContext.isPublishKaleoDefinitionVersionButtonVisible(permissionChecker) %>">
-								<aui:button
-									onClick='<%= renderResponse.getNamespace() + "publishKaleoDefinitionVersion();" %>'
-									primary="<%= true %>"
-									value="<%= kaleoDesignerDisplayContext.getPublishKaleoDefinitionVersionButtonLabel(kaleoDefinitionVersion) %>"
-								/>
+								<aui:button onClick='<%= renderResponse.getNamespace() + "publishKaleoDefinitionVersion();" %>' primary="<%= true %>" value="<%= kaleoDesignerDisplayContext.getPublishKaleoDefinitionVersionButtonLabel(kaleoDefinitionVersion) %>" />
 							</c:if>
 
 							<c:if test="<%= kaleoDesignerDisplayContext.isSaveKaleoDefinitionVersionButtonVisible(permissionChecker, kaleoDefinitionVersion) %>">
-								<aui:button
-									onClick='<%= renderResponse.getNamespace() + "saveKaleoDefinitionVersion();" %>'
-									value="save"
-								/>
+								<aui:button onClick='<%= renderResponse.getNamespace() + "saveKaleoDefinitionVersion();" %>' value="save" />
 							</c:if>
 
 							<span class="lfr-portlet-workflowdesigner-message" id="<portlet:namespace />toolbarMessage"></span>
@@ -826,7 +830,11 @@
 					<aui:fieldset>
 						<aui:col>
 							<aui:field-wrapper label="title">
-								<liferay-ui:input-localized name='<%= randomNamespace + "title" %>' placeholder="<%= duplicateTitle %>" xml="" />
+								<liferay-ui:input-localized
+									name='<%= randomNamespace + "title" %>'
+									placeholder="<%= duplicateTitle %>"
+									xml=""
+								/>
 							</aui:field-wrapper>
 						</aui:col>
 

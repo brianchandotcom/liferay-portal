@@ -35,7 +35,13 @@ String kaleoNamespace = PortalUtil.getPortletNamespace(KaleoDesignerPortletKeys.
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </liferay-portlet:actionURL>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
 	<liferay-portlet:renderURL portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="editURL">
 		<portlet:param name="mvcPath" value='<%= "/designer/edit_kaleo_definition_version.jsp" %>' />
 		<portlet:param name="redirect" value="<%= currentURL %>" />

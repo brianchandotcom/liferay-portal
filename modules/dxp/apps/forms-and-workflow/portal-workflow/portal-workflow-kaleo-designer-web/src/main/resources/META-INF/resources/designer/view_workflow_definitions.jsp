@@ -157,7 +157,12 @@ KaleoDefinitionVersionSearch kaleoDefinitionVersionSearch = new KaleoDefinitionV
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" resultRowSplitter="<%= new KaleoDefinitionVersionResultRowSplitter() %>" searchContainer="<%= kaleoDefinitionVersionSearch %>" />
+		<liferay-ui:search-iterator
+			displayStyle="list"
+			markupView="lexicon"
+			resultRowSplitter="<%= new KaleoDefinitionVersionResultRowSplitter() %>"
+			searchContainer="<%= kaleoDefinitionVersionSearch %>"
+		/>
 	</liferay-ui:search-container>
 </div>
 
@@ -168,6 +173,9 @@ KaleoDefinitionVersionSearch kaleoDefinitionVersionSearch = new KaleoDefinitionV
 	</liferay-portlet:renderURL>
 
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "new-workflow") %>' url="<%= editKaleoDefinitionVersionURL.toString() %>" />
+		<liferay-frontend:add-menu-item
+			title='<%= LanguageUtil.get(request, "new-workflow") %>'
+			url="<%= editKaleoDefinitionVersionURL.toString() %>"
+		/>
 	</liferay-frontend:add-menu>
 </c:if>

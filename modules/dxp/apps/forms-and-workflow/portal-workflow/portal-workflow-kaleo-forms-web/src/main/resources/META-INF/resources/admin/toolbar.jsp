@@ -47,7 +47,11 @@ PortletURL portletURL = kaleoFormsAdminDisplayContext.getPortletURL();
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteKaleoProcess();" %>' icon="trash" label="delete" />
+		<liferay-frontend:management-bar-button
+			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteKaleoProcess();" %>'
+			icon="trash"
+			label="delete"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 

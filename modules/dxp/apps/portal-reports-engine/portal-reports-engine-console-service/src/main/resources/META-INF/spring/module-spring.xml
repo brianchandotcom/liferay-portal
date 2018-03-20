@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+>
 	<bean class="com.liferay.portal.reports.engine.console.service.impl.DefinitionLocalServiceImpl" id="com.liferay.portal.reports.engine.console.service.DefinitionLocalService" />
 	<bean class="com.liferay.portal.reports.engine.console.service.impl.DefinitionServiceImpl" id="com.liferay.portal.reports.engine.console.service.DefinitionService" />
 	<bean class="com.liferay.portal.reports.engine.console.service.persistence.impl.DefinitionPersistenceImpl" id="com.liferay.portal.reports.engine.console.service.persistence.DefinitionPersistence" parent="basePersistence" />

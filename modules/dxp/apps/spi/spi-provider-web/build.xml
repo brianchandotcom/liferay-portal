@@ -10,8 +10,13 @@
 		<if>
 			<available file="docroot/WEB-INF/lib" />
 			<then>
-				<move todir="docroot/WEB-INF/embedded-tomcat-lib">
-					<fileset dir="docroot/WEB-INF/lib" includes="ecj.jar,tomcat-embed-*.jar" />
+				<move
+					todir="docroot/WEB-INF/embedded-tomcat-lib"
+				>
+					<fileset
+						dir="docroot/WEB-INF/lib"
+						includes="ecj.jar,tomcat-embed-*.jar"
+					/>
 				</move>
 			</then>
 		</if>
@@ -26,7 +31,9 @@
 	<target name="setup-eclipse">
 		<antcall target="build-common.setup-eclipse" />
 
-		<replace file=".classpath">
+		<replace
+			file=".classpath"
+		>
 			<replacetoken><![CDATA[util-taglib.jar" />]]></replacetoken>
 			<replacevalue><![CDATA[util-taglib.jar" />
 	<classpathentry kind="lib" path="docroot/WEB-INF/embedded-tomcat-lib/tomcat-embed-core.jar" />
@@ -49,8 +56,13 @@ spi-provider-web must be built from a Liferay Tomcat bundle.
 			</then>
 		</if>
 
-		<copy todir="docroot/WEB-INF/embedded-tomcat-lib/ext">
-			<fileset dir="${app.server.tomcat.lib.global.dir}" excludes="hsql.jar,jtds.jar,mysql.jar,portal-service.jar,postgresql.jar" />
+		<copy
+			todir="docroot/WEB-INF/embedded-tomcat-lib/ext"
+		>
+			<fileset
+				dir="${app.server.tomcat.lib.global.dir}"
+				excludes="hsql.jar,jtds.jar,mysql.jar,portal-service.jar,postgresql.jar"
+			/>
 		</copy>
 
 		<war-macro

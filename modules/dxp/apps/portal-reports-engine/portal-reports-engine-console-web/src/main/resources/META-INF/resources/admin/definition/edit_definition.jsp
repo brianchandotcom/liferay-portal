@@ -170,7 +170,9 @@ else {
 
 		<c:if test="<%= definition == null %>">
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
-				<liferay-ui:input-permissions modelName="<%= Definition.class.getName() %>" />
+				<liferay-ui:input-permissions
+					modelName="<%= Definition.class.getName() %>"
+				/>
 			</aui:fieldset>
 		</c:if>
 	</aui:fieldset-group>

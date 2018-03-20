@@ -73,7 +73,10 @@ DefinitionSearch definitionSearch = reportsEngineDisplayContext.getDefinitionSea
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= reportsEngineDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
+		<liferay-ui:search-iterator
+			displayStyle="<%= reportsEngineDisplayContext.getDisplayStyle() %>"
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </aui:form>
 
@@ -83,7 +86,10 @@ DefinitionSearch definitionSearch = reportsEngineDisplayContext.getDefinitionSea
 </portlet:renderURL>
 
 <liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addDefinitionURL.toString() %>" />
+	<liferay-frontend:add-menu-item
+		title='<%= LanguageUtil.get(request, "add") %>'
+		url="<%= addDefinitionURL.toString() %>"
+	/>
 </liferay-frontend:add-menu>
 
 <%

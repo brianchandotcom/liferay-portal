@@ -65,7 +65,9 @@ renderResponse.setTitle((source != null) ? LanguageUtil.format(request, "edit-x"
 
 		<c:if test="<%= source == null %>">
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
-				<liferay-ui:input-permissions modelName="<%= Source.class.getName() %>" />
+				<liferay-ui:input-permissions
+					modelName="<%= Source.class.getName() %>"
+				/>
 			</aui:fieldset>
 		</c:if>
 	</aui:fieldset-group>

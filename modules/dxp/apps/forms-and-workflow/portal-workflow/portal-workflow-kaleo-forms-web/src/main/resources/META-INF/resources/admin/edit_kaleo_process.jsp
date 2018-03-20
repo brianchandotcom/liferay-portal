@@ -81,7 +81,9 @@ renderResponse.setTitle(title);
 	<liferay-ui:error exception="<%= RequiredStructureException.class %>" message="unable-to-delete-field-set-with-forms-associated-with-it" />
 	<liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>" message="unable-to-delete-the-worflow-definition-that-is-in-use" />
 
-	<liferay-util:buffer var="htmlBottom">
+	<liferay-util:buffer
+		var="htmlBottom"
+	>
 		<aui:button-row cssClass="kaleo-process-buttons">
 			<aui:button cssClass="hide kaleo-process-previous pull-left" icon="icon-circle-arrow-left" value="previous" />
 

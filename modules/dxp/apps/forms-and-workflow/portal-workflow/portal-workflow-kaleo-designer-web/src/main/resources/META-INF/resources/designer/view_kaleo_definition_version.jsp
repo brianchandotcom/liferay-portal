@@ -78,7 +78,11 @@ renderResponse.setTitle(kaleoDefinitionVersion.getTitle(locale));
 		<aui:fieldset cssClass="workflow-definition-content">
 			<aui:col>
 				<aui:field-wrapper label="title">
-					<liferay-ui:input-localized disabled="<%= true %>" name="title" xml='<%= BeanPropertiesUtil.getString(kaleoDefinitionVersion, "title") %>' />
+					<liferay-ui:input-localized
+						disabled="<%= true %>"
+						name="title"
+						xml='<%= BeanPropertiesUtil.getString(kaleoDefinitionVersion, "title") %>'
+					/>
 				</aui:field-wrapper>
 			</aui:col>
 

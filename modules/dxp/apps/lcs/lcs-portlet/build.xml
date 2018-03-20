@@ -37,7 +37,9 @@
 			<patternset
 				includes="**/sigar-bin/lib/*.dll,**/sigar-bin/lib/*.dylib,**/sigar-bin/lib/*.lib,**/sigar-bin/lib/*.sl,**/sigar-bin/lib/*.so"
 			/>
-			<mapper type="flatten" />
+			<mapper
+				type="flatten"
+			/>
 		</unzip>
 	</target>
 </project>

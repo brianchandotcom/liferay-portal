@@ -214,7 +214,9 @@ renderResponse.setTitle(definition.getName(locale));
 					/>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator markupView="lexicon" />
+				<liferay-ui:search-iterator
+					markupView="lexicon"
+				/>
 			</liferay-ui:search-container>
 		</aui:fieldset>
 	</aui:fieldset-group>

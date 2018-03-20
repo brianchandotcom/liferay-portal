@@ -18,4 +18,6 @@
 
 <liferay-portlet:renderURLParams varImpl="portletURL" />
 
-<liferay-ui:input-search markupView="lexicon" />
+<liferay-ui:input-search
+	markupView="lexicon"
+/>

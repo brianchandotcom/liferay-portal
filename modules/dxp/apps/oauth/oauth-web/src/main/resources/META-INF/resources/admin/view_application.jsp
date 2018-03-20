@@ -53,10 +53,16 @@ OAuthApplication oAuthApplication = OAuthApplicationLocalServiceUtil.getOAuthApp
 		<aui:field-wrapper label="share-access-token">
 			<c:choose>
 				<c:when test="<%= oAuthApplication.isShareableAccessToken() %>">
-					<liferay-ui:icon iconCssClass="icon-check" message="checked" />
+					<liferay-ui:icon
+						iconCssClass="icon-check"
+						message="checked"
+					/>
 				</c:when>
 				<c:otherwise>
-					<liferay-ui:icon iconCssClass="icon-remove" message="close" />
+					<liferay-ui:icon
+						iconCssClass="icon-remove"
+						message="close"
+					/>
 				</c:otherwise>
 			</c:choose>
 		</aui:field-wrapper>

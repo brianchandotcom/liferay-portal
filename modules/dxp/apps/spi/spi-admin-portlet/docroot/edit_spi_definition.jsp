@@ -97,8 +97,18 @@ if (useDefaultRestartOptions) {
 
 	<aui:model-context bean="<%= spiDefinition %>" model="<%= SPIDefinition.class %>" />
 
-	<liferay-ui:panel-container extended="<%= true %>" id="spiDefinitionGeneralPanelContainer" persistState="<%= true %>">
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="spiDefinitionGeneralPanel" persistState="<%= true %>" title="general">
+	<liferay-ui:panel-container
+		extended="<%= true %>"
+		id="spiDefinitionGeneralPanelContainer"
+		persistState="<%= true %>"
+	>
+		<liferay-ui:panel
+			collapsible="<%= true %>"
+			extended="<%= true %>"
+			id="spiDefinitionGeneralPanel"
+			persistState="<%= true %>"
+			title="general"
+		>
 			<aui:fieldset>
 				<aui:input autoFocus="<%= (spiDefinition == null) && windowState.equals(WindowState.MAXIMIZED) %>" disabled="<%= (spiDefinition != null) %>" name="name" />
 
@@ -113,8 +123,20 @@ if (useDefaultRestartOptions) {
 		Set<String> allUsedServletContextNames = (Set<String>)portletIdsAndServletContextNames.getObject(1);
 		%>
 
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="spiDefinitionRuntimeConfigurationPanel" persistState="<%= true %>" title="spi-configurations">
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="spiDefinitionSPIRuntimePanel" persistState="<%= true %>" title="spi-runtime">
+		<liferay-ui:panel
+			collapsible="<%= true %>"
+			extended="<%= true %>"
+			id="spiDefinitionRuntimeConfigurationPanel"
+			persistState="<%= true %>"
+			title="spi-configurations"
+		>
+			<liferay-ui:panel
+				collapsible="<%= true %>"
+				extended="<%= false %>"
+				id="spiDefinitionSPIRuntimePanel"
+				persistState="<%= true %>"
+				title="spi-runtime"
+			>
 				<aui:fieldset>
 					<aui:input helpMessage="maximum-worker-threads-help" label="maximum-worker-threads" max="<%= SPIConfigurationTemplate.getMaxThreads() %>" min="<%= SPIConfigurationTemplate.getMinThreads() %>" name="TypeSettingsProperties--max-threads--" required="<%= true %>" type="number" value="<%= maxThreads %>" />
 
@@ -122,7 +144,13 @@ if (useDefaultRestartOptions) {
 				</aui:fieldset>
 			</liferay-ui:panel>
 
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="spiDefinitionSPIApplicationsPanel" persistState="<%= true %>" title="spi-applications">
+			<liferay-ui:panel
+				collapsible="<%= true %>"
+				extended="<%= false %>"
+				id="spiDefinitionSPIApplicationsPanel"
+				persistState="<%= true %>"
+				title="spi-applications"
+			>
 				<aui:fieldset>
 
 					<%
@@ -158,13 +186,25 @@ if (useDefaultRestartOptions) {
 				</aui:fieldset>
 			</liferay-ui:panel>
 
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="spiDefinitionJavaRuntimePanel" persistState="<%= true %>" title="java-runtime">
+			<liferay-ui:panel
+				collapsible="<%= true %>"
+				extended="<%= false %>"
+				id="spiDefinitionJavaRuntimePanel"
+				persistState="<%= true %>"
+				title="java-runtime"
+			>
 				<aui:fieldset>
 					<aui:input helpMessage="jvm-arguments-help" label="jvm-arguments" name="jvmArguments" />
 				</aui:fieldset>
 			</liferay-ui:panel>
 
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="spiDefinitionRecoveryOptionsPanel" persistState="<%= true %>" title="recovery-options">
+			<liferay-ui:panel
+				collapsible="<%= true %>"
+				extended="<%= false %>"
+				id="spiDefinitionRecoveryOptionsPanel"
+				persistState="<%= true %>"
+				title="recovery-options"
+			>
 				<aui:fieldset>
 					<aui:input checked="<%= useDefaultNotificationOptions %>" helpMessage="use-default-notification-options" id="useDefaultNotificationOptions" label="use-default-notification-options" name="useDefaultNotificationOptions" type="checkbox" />
 
@@ -191,8 +231,22 @@ if (useDefaultRestartOptions) {
 			</liferay-ui:panel>
 		</liferay-ui:panel>
 
-		<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= true %>" helpMessage="advanced-configurations-help" id="spiDefinitionAdvancedConfigurationPanel" persistState="<%= false %>" title="advanced-configurations">
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="spiDefinitionAdvancedSPIRuntimePanel" persistState="<%= true %>" title="advanced-spi-runtime">
+		<liferay-ui:panel
+			collapsible="<%= true %>"
+			defaultState="closed"
+			extended="<%= true %>"
+			helpMessage="advanced-configurations-help"
+			id="spiDefinitionAdvancedConfigurationPanel"
+			persistState="<%= false %>"
+			title="advanced-configurations"
+		>
+			<liferay-ui:panel
+				collapsible="<%= true %>"
+				extended="<%= false %>"
+				id="spiDefinitionAdvancedSPIRuntimePanel"
+				persistState="<%= true %>"
+				title="advanced-spi-runtime"
+			>
 				<aui:fieldset>
 					<aui:input helpMessage="java-executable-help" label="java-executable" name="TypeSettingsProperties--java-executable--" type="text" value="<%= javaExecutable %>" />
 
@@ -206,7 +260,14 @@ if (useDefaultRestartOptions) {
 				</aui:fieldset>
 			</liferay-ui:panel>
 
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" helpMessage="spi-core-applications-help" id="spiDefinitionSPICoreApplicationsPanel" persistState="<%= true %>" title="spi-core-applications">
+			<liferay-ui:panel
+				collapsible="<%= true %>"
+				extended="<%= false %>"
+				helpMessage="spi-core-applications-help"
+				id="spiDefinitionSPICoreApplicationsPanel"
+				persistState="<%= true %>"
+				title="spi-core-applications"
+			>
 				<aui:fieldset>
 
 					<%

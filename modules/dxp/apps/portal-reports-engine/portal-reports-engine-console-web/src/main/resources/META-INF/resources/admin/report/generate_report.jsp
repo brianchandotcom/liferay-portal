@@ -148,7 +148,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-report-entry"));
 		</c:if>
 
 		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
-			<liferay-ui:input-permissions modelName="<%= Entry.class.getName() %>" />
+			<liferay-ui:input-permissions
+				modelName="<%= Entry.class.getName() %>"
+			/>
 		</aui:fieldset>
 	</aui:fieldset-group>
 

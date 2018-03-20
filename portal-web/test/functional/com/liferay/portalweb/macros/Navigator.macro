@@ -135,7 +135,9 @@
 	</command>
 
 	<command name="gotoPage" summary="Navigate to the page named '${pageName}'">
-		<execute macro="Navigator#openURL" />
+		<execute macro="Navigator#openURL">
+			<var name="baseURL" value="${baseURL}" />
+		</execute>
 
 		<execute function="Pause" locator1="3000" />
 
@@ -146,6 +148,7 @@
 
 	<command name="gotoPrivateSitePage">
 		<execute macro="Navigator#openPrivateSiteURL">
+			<var name="baseURL" value="${baseURL}" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
@@ -156,6 +159,7 @@
 
 	<command name="gotoPrivateStagedSitePage" summary="Navigate to the page named '${pageName}'">
 		<execute macro="Navigator#openPrivateStagedSiteURL">
+			<var name="baseURL" value="${baseURL}" />
 			<var name="siteNameURL" value="${siteName}" />
 		</execute>
 
@@ -176,6 +180,7 @@
 
 	<command name="gotoSitePage">
 		<execute macro="Navigator#openSiteURL">
+			<var name="baseURL" value="${baseURL}" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
@@ -196,6 +201,7 @@
 
 	<command name="gotoStagedSitePage" summary="Navigate to the page named '${pageName}'">
 		<execute macro="Navigator#openStagingSiteURL">
+			<var name="baseURL" value="${baseURL}" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 

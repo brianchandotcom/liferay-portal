@@ -106,9 +106,6 @@ public class DeleteKaleoDefinitionVersionMVCActionCommand
 			KaleoDefinitionVersion kaleoDefinitionVersion)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
 			actionRequest, KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW,
 			PortletRequest.RENDER_PHASE);

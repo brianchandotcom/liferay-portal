@@ -35,11 +35,9 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		</div>
 
 		<div class="sheet-section">
-			<h3 class="sheet-subtitle"><liferay-ui:message key="summary-page-step-one-title" /></h3>
-
 			<div class="sheet-text">
 				<div>
-					<liferay-ui:message key="summary-page-step-one-description" />
+					<strong><liferay-ui:message key="summary-page-step-one-title" />: </strong><liferay-ui:message key="summary-page-step-one-description" />
 				</div>
 
 				<div>
@@ -63,11 +61,9 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		</div>
 
 		<div class="sheet-section">
-			<h3 class="sheet-subtitle"><liferay-ui:message key="summary-page-step-two-title" /></h3>
-
 			<div class="sheet-text">
 				<div>
-					<liferay-ui:message key="summary-page-step-two-description" />
+					<strong><liferay-ui:message key="summary-page-step-two-title" />: </strong><liferay-ui:message key="summary-page-step-two-description" />
 
 					<c:if test="<%= step == 2 %>">
 
@@ -121,11 +117,9 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		</div>
 
 		<div class="sheet-section">
-			<h3 class="sheet-subtitle"><liferay-ui:message key="summary-page-step-three-title" /></h3>
-
 			<div class="sheet-text">
 				<div>
-					<liferay-ui:message key="summary-page-step-three-description" />
+					<strong><liferay-ui:message key="summary-page-step-three-title" />: </strong><liferay-ui:message key="summary-page-step-three-description" />
 				</div>
 
 				<div>
@@ -149,11 +143,9 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		</div>
 
 		<div class="sheet-section">
-			<h3 class="sheet-subtitle"><liferay-ui:message key="summary-page-step-four-title" /></h3>
-
 			<div class="sheet-text">
 				<div>
-					<liferay-ui:message key="summary-page-step-four-description" />
+					<strong><liferay-ui:message key="summary-page-step-four-title" />: </strong><liferay-ui:message key="summary-page-step-four-description" />
 				</div>
 
 				<div>
@@ -177,11 +169,9 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		</div>
 
 		<div class="sheet-section">
-			<h3 class="sheet-subtitle"><liferay-ui:message key="summary-page-step-five-title" /></h3>
-
 			<div class="sheet-text">
 				<div>
-					<liferay-ui:message key="summary-page-step-five-description" />
+					<strong><liferay-ui:message key="summary-page-step-five-title" />: </strong><liferay-ui:message key="summary-page-step-five-description" />
 				</div>
 
 				<div>

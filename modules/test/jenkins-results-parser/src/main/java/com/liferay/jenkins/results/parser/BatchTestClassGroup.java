@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * @author Michael Hashimoto
@@ -28,6 +29,10 @@ public class TestBatchGroup {
 		_gitWorkingDirectory = gitWorkingDirectory;
 
 		_batchName = batchName;
+
+		_portalTestProperties =
+			_gitWorkingDirectory.getGitWorkingDirectoryProperties(
+				"test.properties");
 	}
 
 	public String getBatchName() {
@@ -36,6 +41,10 @@ public class TestBatchGroup {
 
 	public GitWorkingDirectory getGitWorkingDirectory() {
 		return _gitWorkingDirectory;
+	}
+
+	public Properties getPortalTestProperties() {
+		return _portalTestProperties;
 	}
 
 	public List<String> getTestClassList(int i) {
@@ -56,5 +65,6 @@ public class TestBatchGroup {
 
 	private final String _batchName;
 	private final GitWorkingDirectory _gitWorkingDirectory;
+	private final Properties _portalTestProperties;
 
 }

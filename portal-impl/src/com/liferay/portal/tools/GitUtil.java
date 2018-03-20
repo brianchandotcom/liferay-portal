@@ -47,6 +47,13 @@ public class GitUtil {
 			baseDirName, getCurrentBranchCommitId(gitWorkingBranchName));
 	}
 
+	public static String getCurrentBranchFileContent(
+			String gitWorkingBranchName, String fileName)
+		throws Exception {
+
+		return getFileContent(gitWorkingBranchName, fileName);
+	}
+
 	public static List<String> getCurrentBranchFileNames(
 			String baseDirName, String gitWorkingBranchName)
 		throws Exception {
@@ -62,6 +69,12 @@ public class GitUtil {
 		return getDeletedFileNames(baseDirName, getLatestAuthorCommitId());
 	}
 
+	public static String getLatestAuthorFileContent(String fileName)
+		throws Exception {
+
+		return getFileContent(getLatestAuthorCommitId(), fileName);
+	}
+
 	public static List<String> getLatestAuthorFileNames(String baseDirName)
 		throws Exception {
 
@@ -73,6 +86,12 @@ public class GitUtil {
 		throws Exception {
 
 		return getLocalChangesFileNames(baseDirName, "remove");
+	}
+
+	public static String getLocalChangesFileContent(String fileName)
+		throws Exception {
+
+		return getFileContent("HEAD", fileName);
 	}
 
 	public static List<String> getLocalChangesFileNames(String baseDirName)
@@ -196,6 +215,33 @@ public class GitUtil {
 		}
 
 		return dirNames;
+	}
+
+	protected static String getFileContent(String committish, String fileName)
+		throws Exception {
+
+		StringBundler sb = new StringBundler();
+
+		String gitCommand = StringBundler.concat(
+			"git show ", committish, ":", fileName);
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				getGitCommandReader(gitCommand)) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				sb.append(line);
+
+				sb.append("\n");
+			}
+		}
+
+		if (sb.length() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		return sb.toString();
 	}
 
 	protected static String getFileName(String fileName, int gitLevel) {

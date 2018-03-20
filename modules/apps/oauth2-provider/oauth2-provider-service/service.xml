@@ -7,7 +7,7 @@
 
 		<!-- PK fields -->
 
-		<column name="OAuth2AccessTokenId" primary="true" type="long" />
+		<column name="oAuth2AccessTokenId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 

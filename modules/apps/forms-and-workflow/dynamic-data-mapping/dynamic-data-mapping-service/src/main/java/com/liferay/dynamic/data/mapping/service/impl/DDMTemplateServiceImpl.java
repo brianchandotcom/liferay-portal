@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.service.impl;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
 import com.liferay.dynamic.data.mapping.service.base.DDMTemplateServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.File;
 
@@ -75,7 +77,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			String language, String script, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMTemplatePermission.checkAddTemplatePermission(
+		_ddmPermissionSupport.checkAddTemplatePermission(
 			getPermissionChecker(), groupId, classNameId, resourceClassNameId);
 
 		return ddmTemplateLocalService.addTemplate(
@@ -126,7 +128,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			File smallImageFile, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMTemplatePermission.checkAddTemplatePermission(
+		_ddmPermissionSupport.checkAddTemplatePermission(
 			getPermissionChecker(), groupId, classNameId, resourceClassNameId);
 
 		return ddmTemplateLocalService.addTemplate(
@@ -160,7 +162,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		DDMTemplate template = ddmTemplatePersistence.findByPrimaryKey(
 			templateId);
 
-		DDMTemplatePermission.checkAddTemplatePermission(
+		_ddmPermissionSupport.checkAddTemplatePermission(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			template.getClassNameId(), template.getResourceClassName());
 
@@ -176,7 +178,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		DDMTemplate template = ddmTemplatePersistence.findByPrimaryKey(
 			templateId);
 
-		DDMTemplatePermission.checkAddTemplatePermission(
+		_ddmPermissionSupport.checkAddTemplatePermission(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			template.getClassNameId(), template.getResourceClassName());
 
@@ -209,7 +211,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			long newClassPK, String type, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMTemplatePermission.checkAddTemplatePermission(
+		_ddmPermissionSupport.checkAddTemplatePermission(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			classNameId, resourceClassNameId);
 
@@ -932,5 +934,8 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			companyId, groupIds, classNameId, classPK, resourceClassNameId,
 			type, mode, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
+
+	@ServiceReference(type = DDMPermissionSupport.class)
+	private DDMPermissionSupport _ddmPermissionSupport;
 
 }

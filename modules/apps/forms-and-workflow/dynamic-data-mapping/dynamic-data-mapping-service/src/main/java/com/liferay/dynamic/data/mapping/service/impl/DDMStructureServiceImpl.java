@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.service.impl;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
 import com.liferay.dynamic.data.mapping.service.base.DDMStructureServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
 import java.util.Locale;
@@ -48,7 +50,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMStructurePermission.checkAddStruturePermission(
+		_ddmPermissionSupport.checkAddStruturePermission(
 			getPermissionChecker(), groupId, classNameId);
 
 		return ddmStructureLocalService.addStructure(
@@ -84,7 +86,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			String xsd, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMStructurePermission.checkAddStruturePermission(
+		_ddmPermissionSupport.checkAddStruturePermission(
 			getPermissionChecker(), groupId, classNameId);
 
 		return ddmStructureLocalService.addStructure(
@@ -101,7 +103,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMStructurePermission.checkAddStruturePermission(
+		_ddmPermissionSupport.checkAddStruturePermission(
 			getPermissionChecker(), groupId, classNameId);
 
 		return ddmStructureLocalService.addStructure(
@@ -147,7 +149,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			int type, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMStructurePermission.checkAddStruturePermission(
+		_ddmPermissionSupport.checkAddStruturePermission(
 			getPermissionChecker(), groupId, classNameId);
 
 		return ddmStructureLocalService.addStructure(
@@ -164,7 +166,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMStructurePermission.checkAddStruturePermission(
+		_ddmPermissionSupport.checkAddStruturePermission(
 			getPermissionChecker(), groupId, classNameId);
 
 		return ddmStructureLocalService.addStructure(
@@ -213,7 +215,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			int type, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMStructurePermission.checkAddStruturePermission(
+		_ddmPermissionSupport.checkAddStruturePermission(
 			getPermissionChecker(), groupId, classNameId);
 
 		return ddmStructureLocalService.addStructure(
@@ -247,7 +249,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 		DDMStructurePermission.check(
 			getPermissionChecker(), structure, ActionKeys.VIEW);
 
-		DDMStructurePermission.checkAddStruturePermission(
+		_ddmPermissionSupport.checkAddStruturePermission(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			structure.getClassNameId());
 
@@ -266,7 +268,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 		DDMStructurePermission.check(
 			getPermissionChecker(), structure, ActionKeys.VIEW);
 
-		DDMStructurePermission.checkAddStruturePermission(
+		_ddmPermissionSupport.checkAddStruturePermission(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			structure.getClassNameId());
 
@@ -750,5 +752,8 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			structureId, parentStructureId, nameMap, descriptionMap, definition,
 			serviceContext);
 	}
+
+	@ServiceReference(type = DDMPermissionSupport.class)
+	private DDMPermissionSupport _ddmPermissionSupport;
 
 }

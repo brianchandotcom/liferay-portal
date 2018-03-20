@@ -146,9 +146,31 @@
 	<div class="row">
 		<div class="col polling-interval">
 			<chart:line
+				componentId="line-chart-with-polling-interval"
 				config="<%= chartSampleDisplayContext.getLineChartWithPollingIntervalConfig() %>"
 				id="line-chart-with-polling-interval"
 			/>
 		</div>
 	</div>
 </div>
+
+<aui:script>
+	Liferay.componentReady('line-chart-with-polling-interval').then(
+		function(chart) {
+			chart.data = function() {
+				return Promise.resolve(
+					[
+						{
+							data: [Math.random()*100, Math.random()*100, Math.random()*100],
+							id: 'data1'
+						},
+						{
+							data: [Math.random()*100, Math.random()*100, Math.random()*100],
+							id: 'data2'
+						}
+					]
+				);
+			};
+		}
+	);
+</aui:script>

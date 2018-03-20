@@ -197,7 +197,7 @@ public class ChartSampleDisplayContext {
 			new MultiValueColumn("data1", 100, 20, 30),
 			new MultiValueColumn("data2", 20, 70, 100));
 
-		_lineChartWithPollingIntervalConfig.setPollingInterval(4000);
+		_lineChartWithPollingIntervalConfig.setPollingInterval(2000);
 	}
 
 	private void _initPieChartConfig() {

@@ -37,9 +37,9 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 /**
  * @author Cesar Polanco
  */
-public class JenkinsJobConfigGenerator {
+public class JenkinsJobConfigMapGenerator {
 
-	public JenkinsJobConfigGenerator(Map<String, String> basePropertiesMap) {
+	public JenkinsJobConfigMapGenerator(Map<String, String> basePropertiesMap) {
 		_basePropertiesMap = basePropertiesMap;
 
 		_environmentSlavesPropertiesMap = _getEnvironmentSlavesMap();

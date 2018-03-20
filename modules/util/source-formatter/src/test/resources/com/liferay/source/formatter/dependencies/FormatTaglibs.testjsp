@@ -27,5 +27,9 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
 <aui:form useNamespace="false">
-	<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" type="more" />
+	<liferay-ui:search-iterator
+		displayStyle="descriptive"
+		markupView="lexicon"
+		type="more"
+	/>
 </aui:form>

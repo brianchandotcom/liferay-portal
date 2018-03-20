@@ -22,8 +22,8 @@
 	<liferay-ui:success key="<%= successMessageKey %>" message="<%= (String)MultiSessionMessages.get(renderRequest, successMessageKey) %>" translateMessage="<%= false %>" />
 </c:if>
 
-<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" varImpl="portletURL">
-	<portlet:param name="mvcPath" value="/designer/view.jsp" />
+<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" portletName="<%= KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW %>" varImpl="portletURL">
+	<portlet:param name="mvcPath" value="/view.jsp" />
 </liferay-portlet:renderURL>
 
 <%

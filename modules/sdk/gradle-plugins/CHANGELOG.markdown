@@ -3736,6 +3736,14 @@ default tool dependency versions: by setting the project property
 `portal.version` to `7.0.x`, Gradle will use the portal tools for Liferay 7.0.x
 instead of the latest ones.
 
+## 3.9.1 - 2018-03-17
+
+### Changed
+- [LPS-78772]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.99.
+- [LPS-78772]: Update the [Liferay Source Formatter] dependency to version
+1.0.571.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

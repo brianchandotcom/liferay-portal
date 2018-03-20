@@ -19,7 +19,6 @@ import com.liferay.announcements.kernel.model.AnnouncementsFlag;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.announcements.uad.test.BaseAnnouncementsFlagUADEntityTestCase;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.petra.string.StringPool;
@@ -35,7 +34,6 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -89,34 +87,6 @@ public class AnnouncementsFlagUADEntityExporterTest
 
 		PortletFileRepositoryUtil.deletePortletFileEntry(
 			fileEntry.getFileEntryId());
-	}
-
-	@Test(expected = NoSuchFileEntryException.class)
-	public void testExportAll() throws Exception {
-		AnnouncementsFlag announcementsFlag = addAnnouncementsFlag(
-			TestPropsValues.getUserId());
-		AnnouncementsFlag announcementsFlagExported = addAnnouncementsFlag(
-			_user.getUserId());
-
-		_uadEntityExporter.exportAll(_user.getUserId());
-
-		FileEntry fileEntry = _getFileEntry(
-			announcementsFlagExported.getCompanyId(),
-			String.valueOf(announcementsFlagExported.getFlagId()));
-
-		_verifyFileEntry(fileEntry, announcementsFlagExported);
-
-		PortletFileRepositoryUtil.deletePortletFileEntry(
-			fileEntry.getFileEntryId());
-
-		_getFileEntry(
-			announcementsFlag.getCompanyId(),
-			String.valueOf(announcementsFlag.getFlagId()));
-	}
-
-	@Test
-	public void testExportAllNoAnnouncementsFlags() throws Exception {
-		_uadEntityExporter.exportAll(_user.getUserId());
 	}
 
 	private FileEntry _getFileEntry(long companyId, String uadEntityId)

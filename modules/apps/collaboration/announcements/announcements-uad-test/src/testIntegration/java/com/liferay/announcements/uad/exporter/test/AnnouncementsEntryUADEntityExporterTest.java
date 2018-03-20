@@ -19,7 +19,6 @@ import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.announcements.uad.test.BaseAnnouncementsEntryUADEntityTestCase;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.petra.string.StringPool;
@@ -35,7 +34,6 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -92,34 +90,6 @@ public class AnnouncementsEntryUADEntityExporterTest
 
 		PortletFileRepositoryUtil.deletePortletFileEntry(
 			fileEntry.getFileEntryId());
-	}
-
-	@Test(expected = NoSuchFileEntryException.class)
-	public void testExportAll() throws Exception {
-		AnnouncementsEntry announcementsEntry = addAnnouncementsEntry(
-			TestPropsValues.getUserId());
-		AnnouncementsEntry announcementsEntryExported = addAnnouncementsEntry(
-			_user.getUserId());
-
-		_uadEntityExporter.exportAll(_user.getUserId());
-
-		FileEntry fileEntry = _getFileEntry(
-			announcementsEntryExported.getCompanyId(),
-			String.valueOf(announcementsEntryExported.getEntryId()));
-
-		_verifyFileEntry(fileEntry, announcementsEntryExported);
-
-		PortletFileRepositoryUtil.deletePortletFileEntry(
-			fileEntry.getFileEntryId());
-
-		_getFileEntry(
-			announcementsEntry.getCompanyId(),
-			String.valueOf(announcementsEntry.getEntryId()));
-	}
-
-	@Test
-	public void testExportAllNoAnnouncementsEntries() throws Exception {
-		_uadEntityExporter.exportAll(_user.getUserId());
 	}
 
 	private FileEntry _getFileEntry(long companyId, String uadEntityId)

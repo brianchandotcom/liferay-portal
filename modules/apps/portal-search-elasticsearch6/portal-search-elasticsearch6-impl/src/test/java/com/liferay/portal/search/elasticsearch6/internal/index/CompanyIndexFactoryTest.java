@@ -84,12 +84,34 @@ public class CompanyIndexFactoryTest {
 
 	@Test
 	public void testAdditionalTypeMappings() throws Exception {
-		assertAdditionalTypeMappings(loadAdditionalTypeMappings());
+		_companyIndexFactory.setAdditionalTypeMappings(
+			loadAdditionalTypeMappings());
+
+		assertAdditionalTypeMappings();
+	}
+
+	@Test
+	public void testAdditionalTypeMappingsFromContributor() throws Exception {
+		addIndexSettingsContributor(loadAdditionalTypeMappings());
+
+		assertAdditionalTypeMappings();
 	}
 
 	@Test
 	public void testAdditionalTypeMappingsWithRootType() throws Exception {
-		assertAdditionalTypeMappings(loadAdditionalTypeMappingsWithRootType());
+		_companyIndexFactory.setAdditionalTypeMappings(
+			loadAdditionalTypeMappingsWithRootType());
+
+		assertAdditionalTypeMappings();
+	}
+
+	@Test
+	public void testAdditionalTypeMappingsWithRootTypeFromContributor()
+		throws Exception {
+
+		addIndexSettingsContributor(loadAdditionalTypeMappingsWithRootType());
+
+		assertAdditionalTypeMappings();
 	}
 
 	@Test
@@ -172,18 +194,7 @@ public class CompanyIndexFactoryTest {
 	public void testIndexSettingsContributorTypeMappings() throws Exception {
 		final String mappings = loadAdditionalTypeMappings();
 
-		_companyIndexFactory.addIndexSettingsContributor(
-			new BaseIndexSettingsContributor(1) {
-
-				@Override
-				public void contribute(
-					String indexName, TypeMappingsHelper typeMappingsHelper) {
-
-					typeMappingsHelper.addTypeMappings(
-						indexName, replaceAnalyzer(mappings, "brazilian"));
-				}
-
-			});
+		addIndexSettingsContributor(replaceAnalyzer(mappings, "brazilian"));
 
 		_companyIndexFactory.setAdditionalTypeMappings(
 			replaceAnalyzer(mappings, "portuguese"));
@@ -237,20 +248,10 @@ public class CompanyIndexFactoryTest {
 	public void testOverrideTypeMappingsIgnoreOtherContributions()
 		throws Exception {
 
-		final String mappings = replaceAnalyzer(
+		String mappings = replaceAnalyzer(
 			loadAdditionalTypeMappings(), RandomTestUtil.randomString());
 
-		_companyIndexFactory.addIndexSettingsContributor(
-			new BaseIndexSettingsContributor(1) {
-
-				@Override
-				public void contribute(
-					String indexName, TypeMappingsHelper typeMappingsHelper) {
-
-					typeMappingsHelper.addTypeMappings(indexName, mappings);
-				}
-
-			});
+		addIndexSettingsContributor(mappings);
 
 		_companyIndexFactory.setAdditionalIndexConfigurations(
 			loadAdditionalAnalyzers());
@@ -270,14 +271,41 @@ public class CompanyIndexFactoryTest {
 	@Rule
 	public TestName testName = new TestName();
 
-	protected void assertAdditionalTypeMappings(String additionalTypeMappings)
-		throws Exception {
+	protected void addIndexSettingsContributor(String mappings) {
+		_companyIndexFactory.addIndexSettingsContributor(
+			new BaseIndexSettingsContributor(1) {
 
+				@Override
+				public void contribute(
+					String indexName, TypeMappingsHelper typeMappingsHelper) {
+
+					typeMappingsHelper.addTypeMappings(indexName, mappings);
+				}
+
+			});
+	}
+
+	protected void assertAdditionalTypeMappings() throws Exception {
 		_companyIndexFactory.setAdditionalIndexConfigurations(
 			loadAdditionalAnalyzers());
-		_companyIndexFactory.setAdditionalTypeMappings(additionalTypeMappings);
 
 		createIndices();
+
+		String contributedKeywordFieldName = "orderStatus";
+
+		assertType(contributedKeywordFieldName, "keyword");
+
+		String contributedTextFieldName = "productDescription";
+
+		assertType(contributedTextFieldName, "text");
+
+		String liferayKeywordFieldName = "status";
+
+		assertType(liferayKeywordFieldName, "keyword");
+
+		String liferayTextFieldName = "subtitle";
+
+		assertType(liferayTextFieldName, "text");
 
 		String intactFieldName = RandomTestUtil.randomString() + "_en";
 
@@ -319,6 +347,12 @@ public class CompanyIndexFactoryTest {
 
 	protected void assertNoAnalyzer(String field) throws Exception {
 		assertAnalyzer(field, null);
+	}
+
+	protected void assertType(String field, String type) throws Exception {
+		FieldMappingAssert.assertType(
+			type, field, LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE,
+			getTestIndexName(), _elasticsearchFixture.getIndicesAdminClient());
 	}
 
 	protected CompanyIndexFactory createCompanyIndexFactory() {

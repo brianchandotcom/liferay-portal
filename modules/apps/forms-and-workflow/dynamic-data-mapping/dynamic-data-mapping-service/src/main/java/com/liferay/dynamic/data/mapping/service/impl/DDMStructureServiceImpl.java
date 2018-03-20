@@ -19,10 +19,11 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
 import com.liferay.dynamic.data.mapping.service.base.DDMStructureServiceBaseImpl;
-import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -246,7 +247,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
 			structureId);
 
-		DDMStructurePermission.check(
+		_ddmStructureModelResourcePermission.check(
 			getPermissionChecker(), structure, ActionKeys.VIEW);
 
 		_ddmPermissionSupport.checkAddStruturePermission(
@@ -265,7 +266,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
 			structureId);
 
-		DDMStructurePermission.check(
+		_ddmStructureModelResourcePermission.check(
 			getPermissionChecker(), structure, ActionKeys.VIEW);
 
 		_ddmPermissionSupport.checkAddStruturePermission(
@@ -288,7 +289,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 */
 	@Override
 	public void deleteStructure(long structureId) throws PortalException {
-		DDMStructurePermission.check(
+		_ddmStructureModelResourcePermission.check(
 			getPermissionChecker(), structureId, ActionKeys.DELETE);
 
 		ddmStructureLocalService.deleteStructure(structureId);
@@ -314,7 +315,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			groupId, classNameId, structureKey);
 
 		if (ddmStructure != null) {
-			DDMStructurePermission.check(
+			_ddmStructureModelResourcePermission.check(
 				getPermissionChecker(), ddmStructure, ActionKeys.VIEW);
 		}
 
@@ -331,7 +332,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			groupId, classNameId, structureKey, includeAncestorStructures);
 
 		if (ddmStructure != null) {
-			DDMStructurePermission.check(
+			_ddmStructureModelResourcePermission.check(
 				getPermissionChecker(), ddmStructure, ActionKeys.VIEW);
 		}
 
@@ -346,7 +347,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 */
 	@Override
 	public DDMStructure getStructure(long structureId) throws PortalException {
-		DDMStructurePermission.check(
+		_ddmStructureModelResourcePermission.check(
 			getPermissionChecker(), structureId, ActionKeys.VIEW);
 
 		return ddmStructurePersistence.findByPrimaryKey(structureId);
@@ -370,7 +371,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 		DDMStructure structure = ddmStructureLocalService.getStructure(
 			groupId, classNameId, structureKey);
 
-		DDMStructurePermission.check(
+		_ddmStructureModelResourcePermission.check(
 			getPermissionChecker(), structure, ActionKeys.VIEW);
 
 		return structure;
@@ -406,7 +407,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 		DDMStructure structure = ddmStructureLocalService.getStructure(
 			groupId, classNameId, structureKey, includeAncestorStructures);
 
-		DDMStructurePermission.check(
+		_ddmStructureModelResourcePermission.check(
 			getPermissionChecker(), structure, ActionKeys.VIEW);
 
 		return structure;
@@ -436,7 +437,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			long structureId, String version, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMStructurePermission.check(
+		_ddmStructureModelResourcePermission.check(
 			getPermissionChecker(), structureId, ActionKeys.UPDATE);
 
 		ddmStructureLocalService.revertStructure(
@@ -656,7 +657,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 		DDMStructure structure = ddmStructurePersistence.findByG_C_S(
 			groupId, classNameId, structureKey);
 
-		DDMStructurePermission.check(
+		_ddmStructureModelResourcePermission.check(
 			getPermissionChecker(), structure, ActionKeys.UPDATE);
 
 		return ddmStructureLocalService.updateStructure(
@@ -697,7 +698,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 		DDMStructure structure = ddmStructurePersistence.findByG_C_S(
 			groupId, classNameId, structureKey);
 
-		DDMStructurePermission.check(
+		_ddmStructureModelResourcePermission.check(
 			getPermissionChecker(), structure, ActionKeys.UPDATE);
 
 		return ddmStructureLocalService.updateStructure(
@@ -713,7 +714,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMStructurePermission.check(
+		_ddmStructureModelResourcePermission.check(
 			getPermissionChecker(), structureId, ActionKeys.UPDATE);
 
 		return ddmStructureLocalService.updateStructure(
@@ -745,13 +746,19 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			String definition, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMStructurePermission.check(
+		_ddmStructureModelResourcePermission.check(
 			getPermissionChecker(), structureId, ActionKeys.UPDATE);
 
 		return ddmStructureLocalService.updateStructure(
 			structureId, parentStructureId, nameMap, descriptionMap, definition,
 			serviceContext);
 	}
+
+	private static volatile ModelResourcePermission<DDMStructure>
+		_ddmStructureModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				DDMStructureServiceImpl.class,
+				"_ddmStructureModelResourcePermission", DDMStructure.class);
 
 	@ServiceReference(type = DDMPermissionSupport.class)
 	private DDMPermissionSupport _ddmPermissionSupport;

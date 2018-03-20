@@ -24,4 +24,6 @@ public interface AssetRendererFactoryLookup {
 	public AssetRendererFactory<?> getAssetRendererFactoryByClassName(
 		String className);
 
+	public AssetRendererFactory<?> getAssetRendererFactoryByType(String type);
+
 }

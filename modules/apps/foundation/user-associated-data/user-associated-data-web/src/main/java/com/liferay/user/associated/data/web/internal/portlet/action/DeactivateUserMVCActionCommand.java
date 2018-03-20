@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionC
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -52,6 +53,8 @@ public class DeactivateUserMVCActionCommand
 
 		User selectedUser = _portal.getSelectedUser(actionRequest);
 
+		_userGroupLocalService.clearUserUserGroups(selectedUser.getUserId());
+
 		_userLocalService.updateStatus(
 			selectedUser.getUserId(), WorkflowConstants.STATUS_INACTIVE,
 			new ServiceContext());
@@ -68,6 +71,9 @@ public class DeactivateUserMVCActionCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UserGroupLocalService _userGroupLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

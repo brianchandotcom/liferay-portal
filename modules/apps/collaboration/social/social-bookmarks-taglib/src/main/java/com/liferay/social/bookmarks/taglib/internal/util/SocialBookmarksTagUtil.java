@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,12 +11,24 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+package com.liferay.social.bookmarks.taglib.internal.util;
 
-<%@ page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
-page import="com.liferay.social.bookmarks.SocialBookmark" %>
+import com.liferay.portal.kernel.util.HtmlUtil;
 
-<liferay-theme:defineObjects />
+/**
+ * @author Alejandro Tardín
+ */
+public class SocialBookmarksTagUtil {
+
+	public static String getClickJSCall(
+		String className, long classPK, String type, String shareURL,
+		String url) {
+
+		return String.format(
+			"socialBookmarks_handleItemClick('%s', %d, '%s', '%s', '%s');",
+			HtmlUtil.escapeJS(className), classPK, HtmlUtil.escapeJS(type),
+			HtmlUtil.escapeJS(shareURL), HtmlUtil.escapeJS(url));
+	}
+
+}

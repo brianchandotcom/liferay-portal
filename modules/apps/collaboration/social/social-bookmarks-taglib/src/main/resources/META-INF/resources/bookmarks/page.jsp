@@ -39,10 +39,12 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 						{
 							for (int i = 0; i < types.length; i++) {
 								SocialBookmark socialBookmark = SocialBookmarksRegistryUtil.getSocialBookmark(types[i]);
+								final String type = types[i];
+
 								if (socialBookmark != null) {
 									add(
 										navigationItem -> {
-											navigationItem.setHref("javascript:socialBookmarks_handleItemClick('" + HtmlUtil.escapeJS(socialBookmark.getPostURL(title, url)) + "');");
+											navigationItem.setHref("javascript:" + SocialBookmarksTagUtil.getClickJSCall(className, classPK, type, socialBookmark.getPostURL(title, url), url));
 											navigationItem.setLabel(socialBookmark.getName(request.getLocale()));
 										});
 								}
@@ -59,13 +61,12 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 				int maxInlineElements = 3;
 
 				for (int i = 0; i < Math.min(types.length, maxInlineElements); i++) {
-					String styleClass = "taglib-social-bookmark-" + types[i];
 					SocialBookmark socialBookmark = SocialBookmarksRegistryUtil.getSocialBookmark(types[i]);
+					String styleClass = "taglib-social-bookmark-" + types[i];
 				%>
 
-					<li class="taglib-social-bookmark <%= styleClass %>" onClick="<%= "return socialBookmarks_handleItemClick('" + HtmlUtil.escapeJS(socialBookmark.getPostURL(title, url)) + "')" %>">
+					<li class="taglib-social-bookmark <%= styleClass %>" onClick="<%= "return " + SocialBookmarksTagUtil.getClickJSCall(className, classPK, types[i], socialBookmark.getPostURL(title, url), url) %>">
 						<liferay-social-bookmarks:bookmark
-							contentId="<%= contentId %>"
 							displayStyle="<%= displayStyle %>"
 							target="<%= target %>"
 							title="<%= title %>"
@@ -93,11 +94,12 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 							{
 								for (int i = maxInlineElements; i < types.length; i++) {
 									SocialBookmark socialBookmark = SocialBookmarksRegistryUtil.getSocialBookmark(types[i]);
+									final String type = types[i];
 
 									if (socialBookmark != null) {
 										add(
 											navigationItem -> {
-												navigationItem.setHref("javascript:socialBookmarks_handleItemClick('" + HtmlUtil.escapeJS(socialBookmark.getPostURL(title, url)) + "');");
+												navigationItem.setHref("javascript:" + SocialBookmarksTagUtil.getClickJSCall(className, classPK, type, socialBookmark.getPostURL(title, url), url));
 												navigationItem.setLabel(socialBookmark.getName(request.getLocale()));
 											});
 									}
@@ -118,7 +120,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 		outputKey="social_bookmarks"
 	>
 		<aui:script>
-			function socialBookmarks_handleItemClick(url) {
+			function socialBookmarks_handleItemClick(className, classPK, type, shareURL, url) {
 				var SHARE_WINDOW_HEIGHT = 436;
 				var SHARE_WINDOW_WIDTH = 626;
 
@@ -131,7 +133,17 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 					'width=' + SHARE_WINDOW_WIDTH
 				];
 
-				window.open(url, null, shareWindowFeatures.join()).focus();
+				window.open(shareURL, null, shareWindowFeatures.join()).focus();
+
+				Liferay.fire(
+					'socialBookmarks:share',
+					{
+						className: className,
+						classPK: classPK,
+						type: type,
+						url: url
+					}
+				);
 
 				return false;
 			}

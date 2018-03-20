@@ -632,7 +632,7 @@ AUI.add(
 
 						var ruleDraft = ruleBuilder.get('ruleDraft');
 
-						if (!ruleBuilder.ruleDraftEmpty(ruleDraft) || typeof ruleDraft == 'undefined') {
+						if (!ruleBuilder.isRuleDraftEmpty(ruleDraft) || (typeof ruleDraft == 'undefined')) {
 							ruleBuilder.renderRule();
 						}
 					},

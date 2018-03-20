@@ -762,12 +762,8 @@
 	</command>
 
 	<command name="addWithWorkflowPGViaAP">
-		<execute function="MouseOver#mouseOverNotVisible" locator1="AP#ADD_ASSET_PLUS_ICON" />
-
-		<execute function="Click" locator1="AP#ADD_ASSET_PLUS_ICON" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Basic Web Content">
-			<var name="key_menuItem" value="Basic Web Content" />
+		<execute macro="AssetPublisherPortlet#addAsset">
+			<var name="assetType" value="Basic Web Content" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />

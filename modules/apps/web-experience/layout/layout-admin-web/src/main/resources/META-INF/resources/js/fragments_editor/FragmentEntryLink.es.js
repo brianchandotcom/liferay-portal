@@ -170,7 +170,9 @@ class FragmentEntryLink extends Component {
 
 					naviteEditor.on('change', this._handleEditorChange);
 					naviteEditor.on(
-						'selectionChange', this._handleEditorChange);
+						'selectionChange',
+						this._handleEditorChange
+					);
 
 					return editor;
 				}

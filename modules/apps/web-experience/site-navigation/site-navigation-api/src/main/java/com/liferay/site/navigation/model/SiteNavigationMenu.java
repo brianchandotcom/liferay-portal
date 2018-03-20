@@ -56,6 +56,23 @@ public interface SiteNavigationMenu extends SiteNavigationMenuModel,
 			}
 		};
 
+	public static final Accessor<SiteNavigationMenu, String> NAME_ACCESSOR = new Accessor<SiteNavigationMenu, String>() {
+			@Override
+			public String get(SiteNavigationMenu siteNavigationMenu) {
+				return siteNavigationMenu.getName();
+			}
+
+			@Override
+			public Class<String> getAttributeClass() {
+				return String.class;
+			}
+
+			@Override
+			public Class<SiteNavigationMenu> getTypeClass() {
+				return SiteNavigationMenu.class;
+			}
+		};
+
 	public java.lang.String getTypeKey();
 
 	public boolean isPrimary();

@@ -211,11 +211,6 @@ public class SiteNavigationMenuLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.site.navigation.model.SiteNavigationMenu fetchAutoSiteNavigationMenu(
-		long groupId) {
-		return getService().fetchAutoSiteNavigationMenu(groupId);
-	}
-
 	public static com.liferay.site.navigation.model.SiteNavigationMenu fetchPrimarySiteNavigationMenu(
 		long groupId) {
 		return getService().fetchPrimarySiteNavigationMenu(groupId);
@@ -233,6 +228,11 @@ public class SiteNavigationMenuLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
+	}
+
+	public static java.util.List<com.liferay.site.navigation.model.SiteNavigationMenu> getAutoSiteNavigationMenus(
+		long groupId) {
+		return getService().getAutoSiteNavigationMenus(groupId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {

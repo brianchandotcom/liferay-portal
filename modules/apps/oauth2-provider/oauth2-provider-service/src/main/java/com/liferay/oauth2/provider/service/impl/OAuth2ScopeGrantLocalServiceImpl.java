@@ -21,5 +21,4 @@ import com.liferay.oauth2.provider.service.base.OAuth2ScopeGrantLocalServiceBase
  */
 public class OAuth2ScopeGrantLocalServiceImpl
 	extends OAuth2ScopeGrantLocalServiceBaseImpl {
-
 }

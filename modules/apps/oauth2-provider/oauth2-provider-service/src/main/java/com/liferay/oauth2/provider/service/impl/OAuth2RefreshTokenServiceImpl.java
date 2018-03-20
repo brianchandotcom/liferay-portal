@@ -21,5 +21,4 @@ import com.liferay.oauth2.provider.service.base.OAuth2RefreshTokenServiceBaseImp
  */
 public class OAuth2RefreshTokenServiceImpl
 	extends OAuth2RefreshTokenServiceBaseImpl {
-
 }

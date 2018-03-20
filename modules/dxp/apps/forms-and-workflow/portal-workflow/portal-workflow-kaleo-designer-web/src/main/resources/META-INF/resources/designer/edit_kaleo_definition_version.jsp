@@ -16,6 +16,12 @@
 
 <%@ include file="/designer/init.jsp" %>
 
+<% String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestProcessed"; %>
+
+<c:if test="<%= MultiSessionMessages.contains(renderRequest, successMessageKey) %>">
+	<liferay-ui:success key="<%= successMessageKey %>" message="<%= (String)MultiSessionMessages.get(renderRequest, successMessageKey) %>" translateMessage="<%= false %>" />
+</c:if>
+
 <c:choose>
 	<c:when test="<%= WorkflowEngineManagerUtil.isDeployed() %>">
 

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
@@ -80,10 +79,31 @@ public class UpdateWorkflowDefinitionLinkMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		String[] classNameAndWorkflowDefinition =
+			getClassNameAndWorkflowDefinition(actionRequest);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		String className = classNameAndWorkflowDefinition[0];
+		String workflowDefinition = classNameAndWorkflowDefinition[1];
+
+		if (Validator.isNotNull(className)) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			long groupId = ParamUtil.getLong(actionRequest, "groupId");
+
+			_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
+				themeDisplay.getUserId(), themeDisplay.getCompanyId(), groupId,
+				className, 0, 0, workflowDefinition);
+
+			actionRequest.setAttribute(
+				WorkflowWebKeys.WORKFLOW_DEFINITION_NAME, workflowDefinition);
+		}
+
+		sendRedirect(actionRequest, actionResponse);
+	}
+
+	protected String[] getClassNameAndWorkflowDefinition(
+		ActionRequest actionRequest) {
 
 		String className = StringPool.BLANK;
 		String workflowDefinition = StringPool.BLANK;
@@ -103,16 +123,7 @@ public class UpdateWorkflowDefinitionLinkMVCActionCommand
 			break;
 		}
 
-		if (Validator.isNotNull(className)) {
-			_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
-				themeDisplay.getUserId(), themeDisplay.getCompanyId(), groupId,
-				className, 0, 0, workflowDefinition);
-
-			actionRequest.setAttribute(
-				WorkflowWebKeys.WORKFLOW_DEFINITION_NAME, workflowDefinition);
-		}
-
-		sendRedirect(actionRequest, actionResponse);
+		return new String[] {className, workflowDefinition};
 	}
 
 	@Reference(unbind = "-")
@@ -122,9 +133,6 @@ public class UpdateWorkflowDefinitionLinkMVCActionCommand
 		_workflowDefinitionLinkLocalService =
 			workflowDefinitionLinkLocalService;
 	}
-
-	@Reference
-	protected Portal portal;
 
 	private static final String _PREFIX = "workflowDefinitionName@";
 

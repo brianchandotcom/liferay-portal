@@ -289,7 +289,7 @@
 			<var name="key_workflowResourceValue" value="${workflowResourceValue}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="WorkflowConfiguration#SAVE" value1="Save" />
+		<execute function="AssertClick" locator1="WorkflowConfiguration#RESOURCE_TABLE_SAVE" value1="Save" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 

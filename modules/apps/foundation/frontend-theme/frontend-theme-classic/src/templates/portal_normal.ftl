@@ -67,8 +67,8 @@
 		</#if>
 	</section>
 
-	<footer class="mt-3 navigation-bar-secondary" id="footer" role="contentinfo">
-		<div class="container py-5">
+	<footer id="footer" role="contentinfo">
+		<div class="container">
 			<div class="row">
 				<div class="col-md-6 text-center text-md-left">
 					<@liferay.language key="powered-by" />

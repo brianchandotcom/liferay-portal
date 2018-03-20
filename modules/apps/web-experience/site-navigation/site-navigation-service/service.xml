@@ -23,7 +23,7 @@
 
 		<!-- Other fields -->
 
-		<column name="name" type="String" />
+		<column accessor="true" name="name" type="String" />
 		<column name="type" type="int" />
 		<column name="auto" type="boolean" />
 

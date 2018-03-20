@@ -30,8 +30,10 @@ import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated
  * @generated
  */
+@Deprecated
 public class AssetCategoryPropertyFinderBaseImpl extends BasePersistenceImpl<AssetCategoryProperty> {
 	public AssetCategoryPropertyFinderBaseImpl() {
 		setModelClass(AssetCategoryProperty.class);

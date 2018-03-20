@@ -29,8 +29,10 @@ import com.liferay.portal.kernel.model.Subscription;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portal.service.persistence.impl.SubscriptionPersistenceImpl
  * @see SubscriptionUtil
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	/*

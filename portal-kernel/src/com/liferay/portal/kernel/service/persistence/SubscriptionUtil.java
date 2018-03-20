@@ -35,8 +35,10 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @see SubscriptionPersistence
  * @see com.liferay.portal.service.persistence.impl.SubscriptionPersistenceImpl
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public class SubscriptionUtil {
 	/*

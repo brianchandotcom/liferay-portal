@@ -37,7 +37,7 @@ import java.util.List;
  * @see AssetTagStatsPersistence
  * @see com.liferay.portlet.asset.service.persistence.impl.AssetTagStatsPersistenceImpl
  * @deprecated As of 7.0.0, replaced by {@link
-com.liferay.asset.tags.model.impl.AssetTagStatsImpl}
+com.liferay.asset.tag.stats.model.impl.AssetTagStatsImpl}
  * @generated
  */
 @Deprecated

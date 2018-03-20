@@ -267,32 +267,77 @@
 		<var method="StringUtil#replace('${pageName}', ' ', '-')" name="pageNameURL" />
 		<var method="StringUtil#lowerCase('${pageNameURL}')" name="pageNameURL" />
 
-		<execute function="Open" locator1="/group/${siteNameURL}/${pageNameURL}" />
+		<var name="baseURL" value="${baseURL}" />
+
+		<if>
+			<contains string="${baseURL}" substring="{baseURL}" />
+			<then>
+				<var method="TestPropsUtil#get('portal.url')" name="baseURL" />
+			</then>
+		</if>
+
+		<execute function="Open" locator1="${baseURL}/group/${siteNameURL}/${pageNameURL}" />
 	</command>
 
 	<command name="openPrivateSiteURL">
 		<var method="StringUtil#replace('${siteName}', ' ', '-')" name="siteNameURL" />
 		<var method="StringUtil#lowerCase('${siteNameURL}')" name="siteNameURL" />
 
-		<execute function="Open" locator1="/group/${siteNameURL}" />
+		<var name="baseURL" value="${baseURL}" />
+
+		<if>
+			<contains string="${baseURL}" substring="{baseURL}" />
+			<then>
+				<var method="TestPropsUtil#get('portal.url')" name="baseURL" />
+			</then>
+		</if>
+
+		<execute function="Open" locator1="${baseURL}/group/${siteNameURL}" />
 	</command>
 
 	<command name="openPrivateStagedSiteURL">
 		<var method="StringUtil#replace('${siteNameURL}', ' ', '-')" name="siteNameURL" />
 		<var method="StringUtil#lowerCase('${siteNameURL}')" name="siteNameURL" />
 
-		<execute function="Open" locator1="/group/${siteNameURL}-staging" />
+		<var name="baseURL" value="${baseURL}" />
+
+		<if>
+			<contains string="${baseURL}" substring="{baseURL}" />
+			<then>
+				<var method="TestPropsUtil#get('portal.url')" name="baseURL" />
+			</then>
+		</if>
+
+		<execute function="Open" locator1="${baseURL}/group/${siteNameURL}-staging" />
 	</command>
 
 	<command name="openPrivateURL">
-		<execute function="Open" locator1="/group/guest" />
+		<var name="baseURL" value="${baseURL}" />
+
+		<if>
+			<contains string="${baseURL}" substring="{baseURL}" />
+			<then>
+				<var method="TestPropsUtil#get('portal.url')" name="baseURL" />
+			</then>
+		</if>
+
+		<execute function="Open" locator1="${baseURL}/group/guest" />
 	</command>
 
 	<command name="openSiteURL">
 		<var method="StringUtil#replace('${siteName}', ' ', '-')" name="siteNameURL" />
 		<var method="StringUtil#lowerCase('${siteNameURL}')" name="siteNameURL" />
 
-		<execute function="Open" locator1="/web/${siteNameURL}" />
+		<var name="baseURL" value="${baseURL}" />
+
+		<if>
+			<contains string="${baseURL}" substring="{baseURL}" />
+			<then>
+				<var method="TestPropsUtil#get('portal.url')" name="baseURL" />
+			</then>
+		</if>
+
+		<execute function="Open" locator1="${baseURL}/web/${siteNameURL}" />
 	</command>
 
 	<command name="openSpecificURL">
@@ -303,17 +348,44 @@
 		<var method="StringUtil#replace('${siteName}', ' ', '-')" name="siteNameURL" />
 		<var method="StringUtil#lowerCase('${siteNameURL}')" name="siteNameURL" />
 
-		<execute function="Open" locator1="/web/${siteNameURL}-staging" />
+		<var name="baseURL" value="${baseURL}" />
+
+		<if>
+			<contains string="${baseURL}" substring="{baseURL}" />
+			<then>
+				<var method="TestPropsUtil#get('portal.url')" name="baseURL" />
+			</then>
+		</if>
+
+		<execute function="Open" locator1="${baseURL}/web/${siteNameURL}-staging" />
 	</command>
 
 	<command name="openStagingURL">
-		<execute function="Open" locator1="/web/guest-staging" />
+		<var name="baseURL" value="${baseURL}" />
+
+		<if>
+			<contains string="${baseURL}" substring="{baseURL}" />
+			<then>
+				<var method="TestPropsUtil#get('portal.url')" name="baseURL" />
+			</then>
+		</if>
+
+		<execute function="Open" locator1="${baseURL}/web/guest-staging" />
 	</command>
 
 	<command name="openURL">
 		<execute function="WaitForSPARefresh" />
 
-		<execute function="Open" locator1="/web/guest/home" />
+		<var name="baseURL" value="${baseURL}" />
+
+		<if>
+			<contains string="${baseURL}" substring="{baseURL}" />
+			<then>
+				<var method="TestPropsUtil#get('portal.url')" name="baseURL" />
+			</then>
+		</if>
+
+		<execute function="Open" locator1="${baseURL}/web/guest/home" />
 	</command>
 
 	<command name="selectSpecificWindow">

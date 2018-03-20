@@ -1,0 +1,24 @@
+<definition component-name="portal-upgrades">
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="ignore.errors" value="Plugin security management is not enabled. Enable a security manager, then restart." />
+	<property name="testray.main.component.name" value="Upgrades FW" />
+
+	<set-up>
+		<execute macro="SignIn#signIn" />
+
+		<execute macro="Smoke#viewWelcomePage" />
+
+		<execute macro="Upgrade#reindexSearches" />
+	</set-up>
+
+	<command name="AddDataDefinitionsAfterUpgrade6130" priority="5">
+		<description message="This is a use case for LPS-52392." />
+
+		<property name="data.archive.type" value="data-archive-portal" />
+		<property name="database.types" value="db2" />
+		<property name="portal.version" value="6.1.30" />
+
+		<execute macro="Upgrade#addDataDefinitions" />
+	</command>
+</definition>

@@ -50,7 +50,9 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration;
+import com.liferay.portal.search.elasticsearch6.constants.ElasticsearchSearchContextAttributes;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch6.internal.facet.CompositeFacetProcessor;
 import com.liferay.portal.search.elasticsearch6.internal.facet.FacetCollectorFactory;
@@ -324,6 +326,19 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		searchRequestBuilder.setSize(end - start);
 	}
 
+	protected void addPreference(
+		SearchRequestBuilder searchRequestBuilder,
+		SearchContext searchContext) {
+
+		String preference = (String)searchContext.getAttribute(
+			ElasticsearchSearchContextAttributes.
+				ATTRIBUTE_KEY_SEARCH_REQUEST_PREFERENCE);
+
+		if (!Validator.isBlank(preference)) {
+			searchRequestBuilder.setPreference(preference);
+		}
+	}
+
 	protected void addSelectedFields(
 		SearchRequestBuilder searchRequestBuilder, QueryConfig queryConfig) {
 
@@ -489,6 +504,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			addGroupBy(searchRequestBuilder, searchContext, start, end);
 			addHighlights(searchRequestBuilder, searchContext, queryConfig);
 			addPagination(searchRequestBuilder, start, end);
+			addPreference(searchRequestBuilder, searchContext);
 			addSelectedFields(searchRequestBuilder, queryConfig);
 			addSort(searchRequestBuilder, searchContext.getSorts());
 

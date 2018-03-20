@@ -72,7 +72,7 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 
 		<c:if test="<%= siteAdminDisplayContext.hasAddChildSitePermission(group) %>">
 			<liferay-portlet:renderURL varImpl="addChildSiteURL">
-				<portlet:param name="jspPage" value="/view_layout_set_prototypes.jsp" />
+				<portlet:param name="jspPage" value="/select_site_initializer.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="parentGroupSearchContainerPrimaryKeys" value="<%= String.valueOf(group.getGroupId()) %>" />
 			</liferay-portlet:renderURL>

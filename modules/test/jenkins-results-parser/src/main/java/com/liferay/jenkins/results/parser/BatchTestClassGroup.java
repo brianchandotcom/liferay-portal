@@ -14,23 +14,19 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.IOException;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.apache.commons.lang.StringUtils;
 
 /**
  * @author Michael Hashimoto
  */
 public class TestBatchGroup {
 
-	public TestBatchGroup(String batchName) {
+	public TestBatchGroup(
+		GitWorkingDirectory gitWorkingDirectory, String batchName) {
+
+		_gitWorkingDirectory = gitWorkingDirectory;
+
 		_batchName = batchName;
 	}
 
@@ -38,11 +34,17 @@ public class TestBatchGroup {
 		return _batchName;
 	}
 
+	public GitWorkingDirectory getGitWorkingDirectory() {
+		return _gitWorkingDirectory;
+	}
+
 	public List<String> getTestClassList(int i) {
 		List<String> list = new ArrayList<>();
 
-		list.add("com/liferay/portlet/SecurityPortletContainerWrapperTest.class");
-		list.add("com/liferay/portal/kernel/cal/RecurrenceSerializerTest.class");
+		list.add(
+			"com/liferay/portlet/SecurityPortletContainerWrapperTest.class");
+		list.add(
+			"com/liferay/portal/kernel/cal/RecurrenceSerializerTest.class");
 		list.add("com/liferay/portal/util/HtmlImplTest.class");
 
 		return list;
@@ -52,6 +54,7 @@ public class TestBatchGroup {
 		return 3;
 	}
 
-	private String _batchName;
+	private final String _batchName;
+	private final GitWorkingDirectory _gitWorkingDirectory;
 
 }

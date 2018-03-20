@@ -14,17 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.IOException;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.apache.commons.lang.StringUtils;
-
 /**
  * @author Michael Hashimoto
  */
@@ -33,7 +22,7 @@ public class TestBatchGroupFactory {
 	public static TestBatchGroup newTestBatchGroup(
 		GitWorkingDirectory gitWorkingDirectory, String batchName) {
 
-		return new TestBatchGroup(batchName);
+		return new TestBatchGroup(gitWorkingDirectory, batchName);
 	}
 
 }

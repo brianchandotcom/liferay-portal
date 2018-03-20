@@ -35,7 +35,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		</div>
 
 		<div class="sheet-text">
-			<strong><liferay-ui:message key="summary-page-step-one-title" />: </strong><liferay-ui:message key="summary-page-step-one-description" />
+			<liferay-ui:message key="summary-page-step-one-description" />
 		</div>
 
 		<div class="sheet-text">
@@ -57,7 +57,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		</div>
 
 		<div class="sheet-text">
-			<strong><liferay-ui:message key="summary-page-step-two-title" />: </strong><liferay-ui:message key="summary-page-step-two-description" />
+			<liferay-ui:message key="summary-page-step-two-description" />
 
 			<c:if test="<%= step == 2 %>">
 
@@ -109,7 +109,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		</div>
 
 		<div class="sheet-text">
-			<strong><liferay-ui:message key="summary-page-step-three-title" />: </strong><liferay-ui:message key="summary-page-step-three-description" />
+			<liferay-ui:message key="summary-page-step-three-description" />
 		</div>
 
 		<div class="sheet-text">
@@ -131,7 +131,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		</div>
 
 		<div class="sheet-text">
-			<strong><liferay-ui:message key="summary-page-step-four-title" />: </strong><liferay-ui:message key="summary-page-step-four-description" />
+			<liferay-ui:message key="summary-page-step-four-description" />
 		</div>
 
 		<div class="sheet-text">
@@ -153,7 +153,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		</div>
 
 		<div class="sheet-text">
-			<strong><liferay-ui:message key="summary-page-step-five-title" />: </strong><liferay-ui:message key="summary-page-step-five-description" />
+			<liferay-ui:message key="summary-page-step-five-description" />
 		</div>
 
 		<div class="sheet-text">

@@ -166,6 +166,8 @@ AUI.add(
 
 						instance._validateRule();
 
+						instance.set('ruleStored', false);
+
 						instance._updateLogicOperatorEnableState();
 
 						return FormBuilderRenderRule.superclass.render.apply(instance, []);
@@ -474,6 +476,8 @@ AUI.add(
 						instance.fire(
 							'cancelRule'
 						);
+
+						instance.set('ruleStored', true);
 					},
 
 					_handleDeleteActionClick: function(event) {
@@ -511,27 +515,24 @@ AUI.add(
 					_handleFormBuildClick: function() {
 						var instance = this;
 
-						if (instance.get('ruleStored')) {
-							instance.fire(
-								'saveRuleDraft',
-								{
-									actions: {},
-									conditions: {},
-									'logical-operator': ''
-								}
-							);
+						var actions = {};
+						var conditions = {};
+						var logicalOperator = '';
+
+						if (!instance.get('ruleStored')) {
+							actions = instance._getActions();
+							conditions = instance._getConditions();
+							logicalOperator = instance.get('logicOperator');
 						}
-						else {
-							instance.fire(
-								'saveRuleDraft',
-								{
-									actions: instance._getActions(),
-									conditions: instance._getConditions(),
-									'logical-operator': instance.get('logicOperator')
-								}
-							);
-						}
-						instance.set('ruleStored', false);
+
+						instance.fire(
+							'saveRuleDraft',
+							{
+								actions: actions,
+								conditions: conditions,
+								'logical-operator': logicalOperator
+							}
+						);
 					},
 
 					_handleSaveClick: function() {

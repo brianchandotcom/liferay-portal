@@ -281,18 +281,17 @@
 	</command>
 
 	<command name="configureWorkflow">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="${workflowResourceValue}" />
+		<execute function="AssertClick" locator1="Button#EDIT_ROW" value1="Edit">
+			<var name="key_rowEntry" value="${workflowResourceValue}" />
 		</execute>
-
-		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${workflowResourceValue}" />
 
 		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${workflowDefinition}">
 			<var name="key_workflowResourceValue" value="${workflowResourceValue}" />
 		</execute>
 
-		<execute macro="PortletEntry#save" />
+		<execute function="AssertClick" locator1="WorkflowConfiguration#SAVE" value1="Save" />
+
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute macro="Workflow#viewConfigurationSelected">
 			<var name="workflowDefinition" value="${workflowDefinition}" />

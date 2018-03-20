@@ -3054,6 +3054,11 @@ marker file.
 ### Changed
 - [LPS-78772]: Update the [Liferay Gradle Plugins] dependency to version 3.9.3.
 
+## 5.3.37 - 2018-03-19
+
+### Changed
+- [LPS-78772]: Update the [Liferay Gradle Plugins] dependency to version 3.9.4.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public

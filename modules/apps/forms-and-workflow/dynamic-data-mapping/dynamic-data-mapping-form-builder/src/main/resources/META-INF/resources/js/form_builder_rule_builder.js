@@ -218,6 +218,28 @@ AUI.add(
 						return pages;
 					},
 
+					isRuleDraftEmpty: function(ruleDraft) {
+						var instance = this;
+
+						var ruleDraftIsEmpty = true;
+						var ruleDraftKeys = A.Object.keys(ruleDraft);
+						var ruleDraftValues = A.Object.values(ruleDraft);
+
+						if (!(ruleDraftKeys.length === 0)) {
+							ruleDraftIsEmpty = ruleDraftValues.filter(
+								function(ruleDraftValue) {
+									var empty;
+
+									if (ruleDraftValue.length > 0) {
+										empty = false;
+									}
+									return empty;
+								}
+							);
+						}
+						return ruleDraftIsEmpty;
+					},
+
 					renderRule: function(rule) {
 						var instance = this;
 
@@ -243,32 +265,12 @@ AUI.add(
 						instance._ruleClasses.set('fields', instance.getFields());
 						instance._ruleClasses.set('pages', instance.getPages());
 
-						if (!instance.ruleDraftEmpty(ruleDraft)) {
+						if (!instance.isRuleDraftEmpty(ruleDraft)) {
 							instance._ruleClasses.render(ruleDraft);
 						}
 						else {
 							instance._ruleClasses.render(rule);
 						}
-					},
-
-					ruleDraftEmpty: function(ruleDraft) {
-						var ruleDraftIsEmpty = true;
-
-						for (var i in ruleDraft) {
-							if (ruleDraft.hasOwnProperty(i)) {
-								ruleDraftIsEmpty = false;
-								break;
-							}
-						}
-						if (ruleDraft && ruleDraft.conditions) {
-							for (var j = 0; j < ruleDraft.conditions.length; j++) {
-								if (!ruleDraft.conditions[j].operands[0].value && !ruleDraft.conditions[j].operands.operator) {
-									ruleDraftIsEmpty = true;
-									break;
-								}
-							}
-						}
-						return ruleDraftIsEmpty;
 					},
 
 					show: function() {
@@ -516,7 +518,13 @@ AUI.add(
 							rules.push(rule);
 						}
 
-						instance.set('ruleDraft', {});
+						var ruleDraft = {
+							actions: {},
+							condition: {},
+							'logical-operator': ''
+						};
+
+						instance.set('ruleDraft', ruleDraft);
 
 						instance.syncUI();
 
@@ -534,15 +542,11 @@ AUI.add(
 					_handleSaveRuleDraft: function(event) {
 						var instance = this;
 
-						var rule = {};
-
-						if (!event.actions && !event.conditions && event['logical-operator'] != '') {
-							rule = {
-								actions: event.actions,
-								conditions: event.conditions,
-								'logical-operator': event['logical-operator']
-							};
-						}
+						var rule = {
+							actions: event.actions,
+							conditions: event.conditions,
+							'logical-operator': event['logical-operator']
+						};
 
 						instance.set('ruleDraft', rule);
 					},

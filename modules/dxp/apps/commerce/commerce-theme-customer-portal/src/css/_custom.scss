@@ -720,3 +720,13 @@
 	max-width: map-get($container-max-widths, xl);
 	z-index: $zindex-fixed;
 }
+
+// Checkout
+.commerce-payment-types {
+	border-left-width: 0;
+	border-right-width: 0;
+
+	&:first-child {
+		border-top-width: 0;
+	}
+}

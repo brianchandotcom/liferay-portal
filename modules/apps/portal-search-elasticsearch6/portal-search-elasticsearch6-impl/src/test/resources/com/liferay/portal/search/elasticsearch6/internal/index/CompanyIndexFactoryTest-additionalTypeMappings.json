@@ -13,5 +13,15 @@
 				"match_pattern": "regex"
 			}
 		}
-	]
+	],
+	"properties": {
+		"orderStatus": {
+			"store": true,
+			"type": "keyword"
+		},
+		"productDescription": {
+			"store": true,
+			"type": "text"
+		}
+	}
 }

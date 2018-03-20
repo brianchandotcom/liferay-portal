@@ -148,8 +148,8 @@ public class JenkinsJobConfigGenerator {
 
 		Arrays.sort(childJobNames);
 
-		for (String childJob : childJobNames) {
-			Dom4JUtil.getNewElement("string", jobNamesElement, childJob);
+		for (String childJobName : childJobNames) {
+			Dom4JUtil.getNewElement("string", jobNamesElement, childJobName);
 		}
 
 		Dom4JUtil.getNewElement("jobFilters", listViewElement);

@@ -54,7 +54,9 @@
 			value="<%= HtmlUtil.escape(StringUtil.shorten(resource.getDescription(locale))) %>"
 		/>
 
-		<liferay-ui:search-container-column-text name="active">
+		<liferay-ui:search-container-column-text
+			name="active"
+		>
 			<c:choose>
 				<c:when test="<%= resource.isActive() %>">
 					<liferay-ui:message key="yes" />
@@ -72,5 +74,7 @@
 		/>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator markupView="lexicon" />
+	<liferay-ui:search-iterator
+		markupView="lexicon"
+	/>
 </liferay-ui:search-container>

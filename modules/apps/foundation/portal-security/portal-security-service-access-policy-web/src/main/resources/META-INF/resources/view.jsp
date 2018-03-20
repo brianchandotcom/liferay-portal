@@ -57,8 +57,13 @@ PortletURL portletURL = renderResponse.createRenderURL();
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 				</portlet:renderURL>
 
-				<liferay-frontend:add-menu inline="<%= true %>">
-					<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addSAPEntryURL %>" />
+				<liferay-frontend:add-menu
+					inline="<%= true %>"
+				>
+					<liferay-frontend:add-menu-item
+						title='<%= LanguageUtil.get(request, "add") %>'
+						url="<%= addSAPEntryURL %>"
+					/>
 				</liferay-frontend:add-menu>
 			</c:if>
 		</liferay-frontend:management-bar-buttons>
@@ -136,6 +141,8 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </div>

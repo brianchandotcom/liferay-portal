@@ -146,7 +146,14 @@ if (portletTitleBasedNavigation) {
 			<aui:fieldset-group markupView="lexicon">
 				<aui:fieldset>
 					<h1 class="kb-title">
-						<liferay-ui:input-editor contents="<%= HtmlUtil.escape(title) %>" editorName="alloyeditor" name="titleEditor" onChangeMethod='<%= (kbArticle == null) ? "OnChangeEditor" : StringPool.BLANK %>' placeholder="title" showSource="<%= false %>" />
+						<liferay-ui:input-editor
+							contents="<%= HtmlUtil.escape(title) %>"
+							editorName="alloyeditor"
+							name="titleEditor"
+							onChangeMethod='<%= (kbArticle == null) ? "OnChangeEditor" : StringPool.BLANK %>'
+							placeholder="title"
+							showSource="<%= false %>"
+						/>
 					</h1>
 
 					<aui:input name="title" type="hidden" />
@@ -161,7 +168,13 @@ if (portletTitleBasedNavigation) {
 						}
 						%>
 
-						<liferay-ui:input-editor contents="<%= content %>" editorName="<%= kbGroupServiceConfiguration.getEditorName() %>" fileBrowserParams="<%= fileBrowserParams %>" name="contentEditor" placeholder="content" />
+						<liferay-ui:input-editor
+							contents="<%= content %>"
+							editorName="<%= kbGroupServiceConfiguration.getEditorName() %>"
+							fileBrowserParams="<%= fileBrowserParams %>"
+							name="contentEditor"
+							placeholder="content"
+						/>
 
 						<aui:input name="content" type="hidden" />
 					</div>
@@ -173,7 +186,9 @@ if (portletTitleBasedNavigation) {
 					</div>
 				</aui:fieldset>
 
-				<liferay-expando:custom-attributes-available className="<%= KBArticle.class.getName() %>">
+				<liferay-expando:custom-attributes-available
+					className="<%= KBArticle.class.getName() %>"
+				>
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
 						<liferay-expando:custom-attribute-list
 							className="<%= KBArticle.class.getName() %>"
@@ -185,9 +200,15 @@ if (portletTitleBasedNavigation) {
 				</liferay-expando:custom-attributes-available>
 
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
-					<liferay-asset:asset-categories-selector className="<%= KBArticle.class.getName() %>" classPK="<%= (kbArticle != null) ? kbArticle.getClassPK() : 0 %>" />
+					<liferay-asset:asset-categories-selector
+						className="<%= KBArticle.class.getName() %>"
+						classPK="<%= (kbArticle != null) ? kbArticle.getClassPK() : 0 %>"
+					/>
 
-					<liferay-asset:asset-tags-selector className="<%= KBArticle.class.getName() %>" classPK="<%= (kbArticle != null) ? kbArticle.getClassPK() : 0 %>" />
+					<liferay-asset:asset-tags-selector
+						className="<%= KBArticle.class.getName() %>"
+						classPK="<%= (kbArticle != null) ? kbArticle.getClassPK() : 0 %>"
+					/>
 				</aui:fieldset>
 
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">

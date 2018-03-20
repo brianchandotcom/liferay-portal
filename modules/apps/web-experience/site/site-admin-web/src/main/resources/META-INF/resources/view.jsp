@@ -75,7 +75,12 @@ if (group != null) {
 				<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 
 				<div id="breadcrumb">
-					<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
+					<liferay-ui:breadcrumb
+						showCurrentGroup="<%= false %>"
+						showGuestGroup="<%= false %>"
+						showLayout="<%= false %>"
+						showPortletBreadcrumb="<%= true %>"
+					/>
 				</div>
 
 				<liferay-ui:error exception="<%= NoSuchLayoutSetException.class %>">

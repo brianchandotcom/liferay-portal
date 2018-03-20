@@ -45,5 +45,7 @@ WSRPProducer wsrpProducer = (WSRPProducer)row.getObject();
 		<portlet:param name="wsrpProducerId" value="<%= String.valueOf(wsrpProducer.getWsrpProducerId()) %>" />
 	</portlet:actionURL>
 
-	<liferay-ui:icon-delete url="<%= deleteURL %>" />
+	<liferay-ui:icon-delete
+		url="<%= deleteURL %>"
+	/>
 </liferay-ui:icon-menu>

@@ -105,8 +105,13 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 				<portlet:param name="redirect" value="<%= viewNodesURL %>" />
 			</portlet:renderURL>
 
-			<liferay-frontend:add-menu inline="<%= true %>">
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-wiki") %>' url="<%= addNodeURL %>" />
+			<liferay-frontend:add-menu
+				inline="<%= true %>"
+			>
+				<liferay-frontend:add-menu-item
+					title='<%= LanguageUtil.get(request, "add-wiki") %>'
+					url="<%= addNodeURL %>"
+				/>
 			</liferay-frontend:add-menu>
 		</c:if>
 	</liferay-frontend:management-bar-buttons>
@@ -121,7 +126,11 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 			label="info"
 		/>
 
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteNodes();" %>' icon='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "trash" : "times" %>' label='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>' />
+		<liferay-frontend:management-bar-button
+			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteNodes();" %>'
+			icon='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "trash" : "times" %>'
+			label='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>'
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -205,7 +214,9 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 								toggleRowChecker="<%= true %>"
 							/>
 
-							<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+							<liferay-ui:search-container-column-text
+								colspan="<%= 2 %>"
+							>
 
 								<%
 								Date lastPostDate = node.getLastPostDate();
@@ -257,7 +268,10 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 					</c:choose>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+				<liferay-ui:search-iterator
+					displayStyle="<%= displayStyle %>"
+					markupView="lexicon"
+				/>
 			</liferay-ui:search-container>
 		</aui:form>
 	</div>

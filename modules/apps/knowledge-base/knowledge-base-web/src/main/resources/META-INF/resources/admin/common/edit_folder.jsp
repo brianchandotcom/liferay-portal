@@ -62,7 +62,9 @@ renderResponse.setTitle((kbFolder == null) ? LanguageUtil.get(resourceBundle, "n
 				<aui:input name="description" />
 			</aui:fieldset>
 
-			<liferay-expando:custom-attributes-available className="<%= KBFolder.class.getName() %>">
+			<liferay-expando:custom-attributes-available
+				className="<%= KBFolder.class.getName() %>"
+			>
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
 					<liferay-expando:custom-attribute-list
 						className="<%= KBFolder.class.getName() %>"

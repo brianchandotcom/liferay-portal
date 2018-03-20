@@ -133,7 +133,9 @@ if (portletTitleBasedNavigation) {
 				for (ToolbarItem toolbarItem : dlViewFileVersionDisplayContext.getToolbarItems()) {
 				%>
 
-					<liferay-ui:toolbar-item toolbarItem="<%= toolbarItem %>" />
+					<liferay-ui:toolbar-item
+						toolbarItem="<%= toolbarItem %>"
+					/>
 
 				<%
 				}
@@ -161,7 +163,12 @@ if (portletTitleBasedNavigation) {
 			<h4 class="sidebar-title"><%= fileVersion.getTitle() %></h4>
 		</div>
 
-		<liferay-ui:tabs cssClass="navbar-no-collapse" names="<%= tabsNames %>" refresh="<%= false %>" type="dropdown">
+		<liferay-ui:tabs
+			cssClass="navbar-no-collapse"
+			names="<%= tabsNames %>"
+			refresh="<%= false %>"
+			type="dropdown"
+		>
 			<liferay-ui:section>
 				<div class="sidebar-body">
 					<dl class="sidebar-block">
@@ -277,7 +284,12 @@ if (portletTitleBasedNavigation) {
 					request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 					%>
 
-					<liferay-ui:panel-container cssClass="metadata-panel-container" extended="<%= true %>" markupView="lexicon" persistState="<%= true %>">
+					<liferay-ui:panel-container
+						cssClass="metadata-panel-container"
+						extended="<%= true %>"
+						markupView="lexicon"
+						persistState="<%= true %>"
+					>
 						<c:if test="<%= dlViewFileVersionDisplayContext.getDDMStructuresCount() > 0 %>">
 
 							<%
@@ -299,7 +311,15 @@ if (portletTitleBasedNavigation) {
 							%>
 
 									<c:if test="<%= !ddmFormFieldValues.isEmpty() %>">
-										<liferay-ui:panel collapsible="<%= true %>" cssClass="metadata" extended="<%= true %>" id='<%= "documentLibraryMetadataPanel" + StringPool.UNDERLINE + ddmStructure.getStructureId() %>' markupView="lexicon" persistState="<%= true %>" title="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>">
+										<liferay-ui:panel
+											collapsible="<%= true %>"
+											cssClass="metadata"
+											extended="<%= true %>"
+											id='<%= "documentLibraryMetadataPanel" + StringPool.UNDERLINE + ddmStructure.getStructureId() %>'
+											markupView="lexicon"
+											persistState="<%= true %>"
+											title="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>"
+										>
 											<liferay-ddm:html
 												classNameId="<%= PortalUtil.getClassNameId(com.liferay.dynamic.data.mapping.model.DDMStructure.class) %>"
 												classPK="<%= ddmStructure.getPrimaryKey() %>"
@@ -321,8 +341,19 @@ if (portletTitleBasedNavigation) {
 
 						</c:if>
 
-						<liferay-expando:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>" classPK="<%= fileVersionId %>" editable="<%= false %>">
-							<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-custom-fields" id="documentLibraryCustomFieldsPanel" markupView="lexicon" persistState="<%= true %>" title="custom-fields">
+						<liferay-expando:custom-attributes-available
+							className="<%= DLFileEntryConstants.getClassName() %>"
+							classPK="<%= fileVersionId %>"
+							editable="<%= false %>"
+						>
+							<liferay-ui:panel
+								collapsible="<%= true %>"
+								cssClass="lfr-custom-fields"
+								id="documentLibraryCustomFieldsPanel"
+								markupView="lexicon"
+								persistState="<%= true %>"
+								title="custom-fields"
+							>
 								<liferay-expando:custom-attribute-list
 									className="<%= DLFileEntryConstants.getClassName() %>"
 									classPK="<%= fileVersionId %>"
@@ -351,7 +382,14 @@ if (portletTitleBasedNavigation) {
 									String name = "metadata." + ddmStructure.getStructureKey();
 						%>
 
-									<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-asset-metadata" id='<%= "documentLibraryMetadataPanel" + StringPool.UNDERLINE + ddmStructure.getStructureId() %>' markupView="lexicon" persistState="<%= true %>" title="<%= name %>">
+									<liferay-ui:panel
+										collapsible="<%= true %>"
+										cssClass="lfr-asset-metadata"
+										id='<%= "documentLibraryMetadataPanel" + StringPool.UNDERLINE + ddmStructure.getStructureId() %>'
+										markupView="lexicon"
+										persistState="<%= true %>"
+										title="<%= name %>"
+									>
 										<liferay-ddm:html
 											classNameId="<%= PortalUtil.getClassNameId(com.liferay.dynamic.data.mapping.model.DDMStructure.class) %>"
 											classPK="<%= ddmStructure.getPrimaryKey() %>"
@@ -420,7 +458,9 @@ if (portletTitleBasedNavigation) {
 			</c:choose>
 		</c:if>
 
-		<liferay-util:buffer var="documentTitle">
+		<liferay-util:buffer
+			var="documentTitle"
+		>
 			<%= fileVersion.getTitle() %>
 
 			<c:if test="<%= versionSpecific %>">
@@ -460,7 +500,11 @@ if (portletTitleBasedNavigation) {
 						}
 						%>
 
-						<liferay-ui:icon iconCssClass="icon-plus" label="<%= true %>" message="<%= uploadedByMessage %>" />
+						<liferay-ui:icon
+							iconCssClass="icon-plus"
+							label="<%= true %>"
+							message="<%= uploadedByMessage %>"
+						/>
 					</span>
 
 					<c:if test="<%= dlPortletInstanceSettings.isEnableRatings() && fileEntry.isSupportsSocial() %>">
@@ -532,7 +576,14 @@ if (portletTitleBasedNavigation) {
 			</c:if>
 
 			<c:if test="<%= showComments && fileEntry.isRepositoryCapabilityProvided(CommentCapability.class) %>">
-				<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-document-library-comments panel-group" extended="<%= true %>" markupView="lexicon" persistState="<%= true %>" title="<%= dlViewFileVersionDisplayContext.getDiscussionLabel(locale) %>">
+				<liferay-ui:panel
+					collapsible="<%= true %>"
+					cssClass="lfr-document-library-comments panel-group"
+					extended="<%= true %>"
+					markupView="lexicon"
+					persistState="<%= true %>"
+					title="<%= dlViewFileVersionDisplayContext.getDiscussionLabel(locale) %>"
+				>
 					<liferay-comment:discussion
 						className="<%= dlViewFileVersionDisplayContext.getDiscussionClassName() %>"
 						classPK="<%= dlViewFileVersionDisplayContext.getDiscussionClassPK() %>"

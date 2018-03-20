@@ -105,17 +105,39 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 
 		<div class="export-dialog-tree">
 			<aui:fieldset-group markupView="lexicon">
-				<liferay-staging:configuration-header exportImportConfiguration="<%= exportImportConfiguration %>" />
+				<liferay-staging:configuration-header
+					exportImportConfiguration="<%= exportImportConfiguration %>"
+				/>
 
 				<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">
-					<liferay-staging:select-pages action="<%= Constants.EXPORT %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" groupId="<%= liveGroupId %>" privateLayout="<%= privateLayout %>" treeId="<%= treeId %>" />
+					<liferay-staging:select-pages
+						action="<%= Constants.EXPORT %>"
+						exportImportConfigurationId="<%= exportImportConfigurationId %>"
+						groupId="<%= liveGroupId %>"
+						privateLayout="<%= privateLayout %>"
+						treeId="<%= treeId %>"
+					/>
 				</c:if>
 
-				<liferay-staging:content cmd="<%= cmd %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" showAllPortlets="<%= true %>" type="<%= Constants.EXPORT %>" />
+				<liferay-staging:content
+					cmd="<%= cmd %>"
+					exportImportConfigurationId="<%= exportImportConfigurationId %>"
+					showAllPortlets="<%= true %>"
+					type="<%= Constants.EXPORT %>"
+				/>
 
-				<liferay-staging:deletions cmd="<%= Constants.EXPORT %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" />
+				<liferay-staging:deletions
+					cmd="<%= Constants.EXPORT %>"
+					exportImportConfigurationId="<%= exportImportConfigurationId %>"
+				/>
 
-				<liferay-staging:permissions action="<%= Constants.EXPORT %>" descriptionCSSClass="permissions-description" exportImportConfigurationId="<%= exportImportConfigurationId %>" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" />
+				<liferay-staging:permissions
+					action="<%= Constants.EXPORT %>"
+					descriptionCSSClass="permissions-description"
+					exportImportConfigurationId="<%= exportImportConfigurationId %>"
+					global="<%= group.isCompany() %>"
+					labelCSSClass="permissions-label"
+				/>
 			</aui:fieldset-group>
 		</div>
 

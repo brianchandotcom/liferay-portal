@@ -170,7 +170,9 @@ int yesTotal = MeetupsRegistrationLocalServiceUtil.getMeetupsRegistrationsCount(
 		%>
 
 		<div class="taglib-search-iterator-page-iterator-bottom">
-			<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />
+			<liferay-ui:search-paginator
+				searchContainer="<%= searchContainer %>"
+			/>
 		</div>
 
 		<aui:script use="aui-base">

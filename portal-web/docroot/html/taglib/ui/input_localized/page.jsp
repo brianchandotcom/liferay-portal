@@ -182,7 +182,9 @@
 							}
 						%>
 
-							<liferay-util:buffer var="linkContent">
+							<liferay-util:buffer
+								var="linkContent"
+							>
 								<%= StringUtil.replace(curLanguageId, '_', '-') %>
 
 								<span class="label label-<%= translationStatusCssClass %>"><%= translationStatus %></span>

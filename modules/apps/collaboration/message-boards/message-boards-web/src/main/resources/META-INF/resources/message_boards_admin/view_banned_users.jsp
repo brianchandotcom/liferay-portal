@@ -62,7 +62,11 @@ int totalBannedUsers = MBBanLocalServiceUtil.getBansCount(scopeGroupId);
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "unbanUser();" %>' icon="unlock" label="unban-user" />
+		<liferay-frontend:management-bar-button
+			href='<%= "javascript:" + renderResponse.getNamespace() + "unbanUser();" %>'
+			icon="unlock"
+			label="unban-user"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -93,7 +97,9 @@ int totalBannedUsers = MBBanLocalServiceUtil.getBansCount(scopeGroupId);
 					userId="<%= ban.getBanUserId() %>"
 				/>
 
-				<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+				<liferay-ui:search-container-column-text
+					colspan="<%= 2 %>"
+				>
 
 					<%
 					Date createDate = ban.getCreateDate();
@@ -135,7 +141,10 @@ int totalBannedUsers = MBBanLocalServiceUtil.getBansCount(scopeGroupId);
 				/>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+			<liferay-ui:search-iterator
+				displayStyle="<%= displayStyle %>"
+				markupView="lexicon"
+			/>
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

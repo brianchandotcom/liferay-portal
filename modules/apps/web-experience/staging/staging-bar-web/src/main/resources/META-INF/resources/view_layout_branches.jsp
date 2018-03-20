@@ -111,7 +111,11 @@ request.setAttribute("view_layout_branches.jsp-currenttLayoutBranchId", String.v
 				/>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
+			<liferay-ui:search-iterator
+				markupView="lexicon"
+				paginate="<%= false %>"
+				searchContainer="<%= searchContainer %>"
+			/>
 		</liferay-ui:search-container>
 	</div>
 </div>

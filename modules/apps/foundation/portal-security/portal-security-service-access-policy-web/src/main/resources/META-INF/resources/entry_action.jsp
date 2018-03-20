@@ -65,6 +65,8 @@ SAPEntry sapEntry = (SAPEntry)row.getObject();
 			<portlet:param name="sapEntryId" value="<%= String.valueOf(sapEntry.getSapEntryId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete url="<%= deleteURL %>" />
+		<liferay-ui:icon-delete
+			url="<%= deleteURL %>"
+		/>
 	</c:if>
 </liferay-ui:icon-menu>

@@ -37,7 +37,9 @@ FragmentEntryLink fragmentEntryLink = fragmentEntryDisplayContext.getFragmentEnt
 	<c:otherwise>
 		<c:choose>
 			<c:when test="<%= fragmentEntryDisplayContext.hasEditPermission() %>">
-				<liferay-editor:resources editorName="alloyeditor" />
+				<liferay-editor:resources
+					editorName="alloyeditor"
+				/>
 
 				<soy:template-renderer
 					context="<%= fragmentEntryDisplayContext.getSoyContext() %>"

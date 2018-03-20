@@ -30,7 +30,10 @@ long categoryId = GetterUtil.getLong(request.getAttribute("view.jsp-categoryId")
 			<portlet:param name="parentCategoryId" value="<%= String.valueOf(categoryId) %>" />
 		</portlet:renderURL>
 
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) ? "category[message-board]" : "subcategory[message-board]") %>' url="<%= addCategoryURL.toString() %>" />
+		<liferay-frontend:add-menu-item
+			title='<%= LanguageUtil.get(request, (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) ? "category[message-board]" : "subcategory[message-board]") %>'
+			url="<%= addCategoryURL.toString() %>"
+		/>
 	</c:if>
 
 	<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.ADD_MESSAGE) %>">
@@ -40,6 +43,9 @@ long categoryId = GetterUtil.getLong(request.getAttribute("view.jsp-categoryId")
 			<portlet:param name="mbCategoryId" value="<%= String.valueOf(categoryId) %>" />
 		</portlet:renderURL>
 
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "thread") %>' url="<%= addMessageURL.toString() %>" />
+		<liferay-frontend:add-menu-item
+			title='<%= LanguageUtil.get(request, "thread") %>'
+			url="<%= addMessageURL.toString() %>"
+		/>
 	</c:if>
 </liferay-frontend:add-menu>

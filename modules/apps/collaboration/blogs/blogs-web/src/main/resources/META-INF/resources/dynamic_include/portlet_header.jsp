@@ -28,7 +28,13 @@ BlogsGroupServiceOverriddenConfiguration blogsGroupServiceOverriddenConfiguratio
 		%>
 
 		<div class="btn-group-item">
-			<clay:link buttonStyle="borderless" elementClasses="btn-sm" href="<%= rssURL %>" icon="rss" label='<%= LanguageUtil.get(request, "rss") %>' />
+			<clay:link
+				buttonStyle="borderless"
+				elementClasses="btn-sm"
+				href="<%= rssURL %>"
+				icon="rss"
+				label='<%= LanguageUtil.get(request, "rss") %>'
+			/>
 		</div>
 
 		<liferay-util:html-top>
@@ -49,7 +55,12 @@ BlogsGroupServiceOverriddenConfiguration blogsGroupServiceOverriddenConfiguratio
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:actionURL>
 
-					<clay:link buttonStyle="secondary" elementClasses="btn-sm" href="<%= unsubscribeURL %>" label='<%= LanguageUtil.get(request, "unsubscribe") %>' />
+					<clay:link
+						buttonStyle="secondary"
+						elementClasses="btn-sm"
+						href="<%= unsubscribeURL %>"
+						label='<%= LanguageUtil.get(request, "unsubscribe") %>'
+					/>
 				</c:when>
 				<c:otherwise>
 					<portlet:actionURL name="/blogs/edit_entry" var="subscribeURL">
@@ -57,7 +68,12 @@ BlogsGroupServiceOverriddenConfiguration blogsGroupServiceOverriddenConfiguratio
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:actionURL>
 
-					<clay:link buttonStyle="secondary" elementClasses="btn-sm" href="<%= subscribeURL %>" label='<%= LanguageUtil.get(request, "subscribe") %>' />
+					<clay:link
+						buttonStyle="secondary"
+						elementClasses="btn-sm"
+						href="<%= subscribeURL %>"
+						label='<%= LanguageUtil.get(request, "subscribe") %>'
+					/>
 				</c:otherwise>
 			</c:choose>
 		</div>
@@ -70,7 +86,12 @@ BlogsGroupServiceOverriddenConfiguration blogsGroupServiceOverriddenConfiguratio
 		</portlet:renderURL>
 
 		<div class="btn-group-item">
-			<clay:link buttonStyle="primary" elementClasses="btn-sm" href="<%= editEntryURL %>" label='<%= LanguageUtil.get(request, "new-blog-entry") %>' />
+			<clay:link
+				buttonStyle="primary"
+				elementClasses="btn-sm"
+				href="<%= editEntryURL %>"
+				label='<%= LanguageUtil.get(request, "new-blog-entry") %>'
+			/>
 		</div>
 	</c:if>
 </div>

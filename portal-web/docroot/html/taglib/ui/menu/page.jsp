@@ -41,7 +41,9 @@ List<MenuItem> menuItems = menu.getMenuItems();
 	for (MenuItem menuItem : menuItems) {
 	%>
 
-		<liferay-ui:menu-item menuItem="<%= menuItem %>" />
+		<liferay-ui:menu-item
+			menuItem="<%= menuItem %>"
+		/>
 
 	<%
 	}

@@ -118,7 +118,10 @@ displayStyleURL.setParameter("mvcRenderCommandName", "/mysubscriptions/view");
 					/>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator markupView="lexicon" resultRowSplitter="<%= new MySubscriptionsResultRowSplitter(locale) %>" />
+				<liferay-ui:search-iterator
+					markupView="lexicon"
+					resultRowSplitter="<%= new MySubscriptionsResultRowSplitter(locale) %>"
+				/>
 
 				<c:if test="<%= !results.isEmpty() %>">
 					<aui:button-row cssName="unsubscribe-button-row">

@@ -29,31 +29,17 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col">
-			<chart:area-spline config="<%= chartSampleDisplayContext.getAreaSplineChartConfig() %>" id="area-spline" />
+			<chart:area-spline
+				config="<%= chartSampleDisplayContext.getAreaSplineChartConfig() %>"
+				id="area-spline"
+			/>
 		</div>
 
 		<div class="col">
-			<chart:area-step config="<%= chartSampleDisplayContext.getAreaStepChartConfig() %>" id="area-step" />
-		</div>
-	</div>
-</div>
-
-<div class="container-fluid">
-	<div class="row">
-		<div class="col">
-			<chart:line config="<%= chartSampleDisplayContext.getLineChartConfig() %>" id="line" />
-		</div>
-
-		<div class="col">
-			<chart:scatter config="<%= chartSampleDisplayContext.getScatterChartConfig() %>" id="scatter" />
-		</div>
-
-		<div class="col">
-			<chart:spline config="<%= chartSampleDisplayContext.getSplineChartConfig() %>" id="spline" />
-		</div>
-
-		<div class="col">
-			<chart:step config="<%= chartSampleDisplayContext.getStepChartConfig() %>" id="step" />
+			<chart:area-step
+				config="<%= chartSampleDisplayContext.getAreaStepChartConfig() %>"
+				id="area-step"
+			/>
 		</div>
 	</div>
 </div>
@@ -61,11 +47,31 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col">
-			<chart:bar config="<%= chartSampleDisplayContext.getBarChartConfig() %>" id="bar" />
+			<chart:line
+				config="<%= chartSampleDisplayContext.getLineChartConfig() %>"
+				id="line"
+			/>
 		</div>
 
 		<div class="col">
-			<chart:combination config="<%= chartSampleDisplayContext.getCombinationChartConfig() %>" id="combination" />
+			<chart:scatter
+				config="<%= chartSampleDisplayContext.getScatterChartConfig() %>"
+				id="scatter"
+			/>
+		</div>
+
+		<div class="col">
+			<chart:spline
+				config="<%= chartSampleDisplayContext.getSplineChartConfig() %>"
+				id="spline"
+			/>
+		</div>
+
+		<div class="col">
+			<chart:step
+				config="<%= chartSampleDisplayContext.getStepChartConfig() %>"
+				id="step"
+			/>
 		</div>
 	</div>
 </div>
@@ -73,11 +79,35 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col">
-			<chart:donut config="<%= chartSampleDisplayContext.getDonutChartConfig() %>" id="donut" />
+			<chart:bar
+				config="<%= chartSampleDisplayContext.getBarChartConfig() %>"
+				id="bar"
+			/>
 		</div>
 
 		<div class="col">
-			<chart:pie config="<%= chartSampleDisplayContext.getPieChartConfig() %>" id="pie" />
+			<chart:combination
+				config="<%= chartSampleDisplayContext.getCombinationChartConfig() %>"
+				id="combination"
+			/>
+		</div>
+	</div>
+</div>
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col">
+			<chart:donut
+				config="<%= chartSampleDisplayContext.getDonutChartConfig() %>"
+				id="donut"
+			/>
+		</div>
+
+		<div class="col">
+			<chart:pie
+				config="<%= chartSampleDisplayContext.getPieChartConfig() %>"
+				id="pie"
+			/>
 		</div>
 	</div>
 </div>
@@ -85,7 +115,10 @@
 <div class="container-fluid">
 		<div class="row">
 			<div class="col">
-				<chart:gauge config="<%= chartSampleDisplayContext.getGaugeChartConfig() %>" id="gauge" />
+				<chart:gauge
+					config="<%= chartSampleDisplayContext.getGaugeChartConfig() %>"
+					id="gauge"
+				/>
 			</div>
 		</div>
 	</div>

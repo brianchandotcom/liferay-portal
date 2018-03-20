@@ -118,10 +118,14 @@ long userId = user2.getUserId();
 		<c:if test="<%= userId != user.getUserId() %>">
 			<c:choose>
 				<c:when test="<%= user2.isActive() %>">
-					<liferay-ui:icon-deactivate url="<%= deleteUserURL %>" />
+					<liferay-ui:icon-deactivate
+						url="<%= deleteUserURL %>"
+					/>
 				</c:when>
 				<c:when test="<%= !user2.isActive() && PropsValues.USERS_DELETE %>">
-					<liferay-ui:icon-delete url="<%= deleteUserURL %>" />
+					<liferay-ui:icon-delete
+						url="<%= deleteUserURL %>"
+					/>
 				</c:when>
 			</c:choose>
 		</c:if>

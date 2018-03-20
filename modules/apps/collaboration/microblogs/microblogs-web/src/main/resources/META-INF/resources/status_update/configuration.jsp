@@ -24,7 +24,12 @@
 
 		<div class="portlet-configuration-body-content">
 			<div class="container-fluid-1280">
-				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" persistState="<%= true %>" title="display-settings">
+				<liferay-ui:panel
+					collapsible="<%= true %>"
+					extended="<%= true %>"
+					persistState="<%= true %>"
+					title="display-settings"
+				>
 					<aui:input label="display-most-recent-status" name="preferences--showStatus--" type="checkbox" value="<%= showStatus %>" />
 				</liferay-ui:panel>
 			</div>

@@ -46,8 +46,14 @@ PortalUtil.addPortletBreadcrumbEntry(request, fragmentDisplayContext.getFragment
 				<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentDisplayContext.getFragmentCollectionId()) %>" />
 			</portlet:actionURL>
 
-			<liferay-frontend:add-menu inline="<%= true %>">
-				<liferay-frontend:add-menu-item id="addFragmentEntryMenuItem" title='<%= LanguageUtil.get(request, "add-fragment") %>' url="<%= addFragmentEntryURL.toString() %>" />
+			<liferay-frontend:add-menu
+				inline="<%= true %>"
+			>
+				<liferay-frontend:add-menu-item
+					id="addFragmentEntryMenuItem"
+					title='<%= LanguageUtil.get(request, "add-fragment") %>'
+					url="<%= addFragmentEntryURL.toString() %>"
+				/>
 			</liferay-frontend:add-menu>
 
 			<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
@@ -130,22 +136,39 @@ PortalUtil.addPortletBreadcrumbEntry(request, fragmentDisplayContext.getFragment
 
 			<li>
 				<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
-					<liferay-ui:input-search markupView="lexicon" />
+					<liferay-ui:input-search
+						markupView="lexicon"
+					/>
 				</aui:form>
 			</li>
 		</c:if>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href="javascript:;" icon="import-export" id="exportSelectedFragmentEntries" label="export" />
+		<liferay-frontend:management-bar-button
+			href="javascript:;"
+			icon="import-export"
+			id="exportSelectedFragmentEntries"
+			label="export"
+		/>
 
-		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedFragmentEntries" label="delete" />
+		<liferay-frontend:management-bar-button
+			href="javascript:;"
+			icon="trash"
+			id="deleteSelectedFragmentEntries"
+			label="delete"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<div id="breadcrumb">
-		<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
+		<liferay-ui:breadcrumb
+			showCurrentGroup="<%= false %>"
+			showGuestGroup="<%= false %>"
+			showLayout="<%= false %>"
+			showPortletBreadcrumb="<%= true %>"
+		/>
 	</div>
 
 	<liferay-ui:search-container
@@ -227,7 +250,10 @@ PortalUtil.addPortletBreadcrumbEntry(request, fragmentDisplayContext.getFragment
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= fragmentDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
+		<liferay-ui:search-iterator
+			displayStyle="<%= fragmentDisplayContext.getDisplayStyle() %>"
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </aui:form>
 

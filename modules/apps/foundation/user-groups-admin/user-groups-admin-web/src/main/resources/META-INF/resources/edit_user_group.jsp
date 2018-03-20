@@ -65,7 +65,9 @@ renderResponse.setTitle((userGroup == null) ? LanguageUtil.get(request, "new-use
 
 			<aui:input disabled="<%= !hasUserGroupUpdatePermission %>" name="description" />
 
-			<liferay-expando:custom-attributes-available className="<%= UserGroup.class.getName() %>">
+			<liferay-expando:custom-attributes-available
+				className="<%= UserGroup.class.getName() %>"
+			>
 				<liferay-expando:custom-attribute-list
 					className="<%= UserGroup.class.getName() %>"
 					classPK="<%= userGroupId %>"

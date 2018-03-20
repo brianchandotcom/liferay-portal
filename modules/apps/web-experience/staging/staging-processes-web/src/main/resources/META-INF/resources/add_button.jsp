@@ -42,7 +42,10 @@ List<ExportImportConfiguration> exportImportConfigurations = ExportImportConfigu
 				<portlet:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
 			</portlet:renderURL>
 
-			<liferay-frontend:add-menu-item title="<%= exportImportConfiguration.getName() %>" url="<%= addNewProcessURL %>" />
+			<liferay-frontend:add-menu-item
+				title="<%= exportImportConfiguration.getName() %>"
+				url="<%= addNewProcessURL %>"
+			/>
 
 		<%
 		}
@@ -55,6 +58,9 @@ List<ExportImportConfiguration> exportImportConfigurations = ExportImportConfigu
 			<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
 		</portlet:renderURL>
 
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "custom-publication") %>' url="<%= addNewCustomProcessURL %>" />
+		<liferay-frontend:add-menu-item
+			title='<%= LanguageUtil.get(request, "custom-publication") %>'
+			url="<%= addNewCustomProcessURL %>"
+		/>
 	</liferay-frontend:add-menu>
 </c:if>

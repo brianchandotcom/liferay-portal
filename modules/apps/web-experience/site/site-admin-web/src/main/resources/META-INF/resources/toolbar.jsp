@@ -74,7 +74,9 @@ SearchContainer groupSearch = (SearchContainer)request.getAttribute("view.jsp-gr
 			<aui:form action="<%= searchURL.toString() %>" name="searchFm">
 				<liferay-portlet:renderURLParams varImpl="searchURL" />
 
-				<liferay-ui:input-search markupView="lexicon" />
+				<liferay-ui:input-search
+					markupView="lexicon"
+				/>
 			</aui:form>
 		</li>
 	</liferay-frontend:management-bar-filters>
@@ -85,7 +87,12 @@ SearchContainer groupSearch = (SearchContainer)request.getAttribute("view.jsp-gr
 			label="info"
 		/>
 
-		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSites" label="delete" />
+		<liferay-frontend:management-bar-button
+			href="javascript:;"
+			icon="trash"
+			id="deleteSites"
+			label="delete"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 

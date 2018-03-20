@@ -57,7 +57,10 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator displayStyle="icon" markupView="lexicon" />
+	<liferay-ui:search-iterator
+		displayStyle="icon"
+		markupView="lexicon"
+	/>
 </liferay-ui:search-container>
 
 <portlet:actionURL name="/layout/add_layout_prototype_layout" var="addLayoutPrototypeLayoutURL">

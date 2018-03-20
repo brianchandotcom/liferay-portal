@@ -40,19 +40,37 @@ String[] displayActivityCounterNameIndexes = new String[displayActivityCounterNa
 
 	<div class="portlet-configuration-body-content">
 		<div class="container-fluid-1280">
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="userStatisticsRankingsPanel" persistState="<%= true %>" title="ranking">
+			<liferay-ui:panel
+				collapsible="<%= true %>"
+				extended="<%= true %>"
+				id="userStatisticsRankingsPanel"
+				persistState="<%= true %>"
+				title="ranking"
+			>
 				<aui:input label="rank-by-contribution" name="preferences--rankByContribution--" type="checkbox" value="<%= socialUserStatisticsPortletInstanceConfiguration.rankByContribution() %>" />
 
 				<aui:input label="rank-by-participation" name="preferences--rankByParticipation--" type="checkbox" value="<%= socialUserStatisticsPortletInstanceConfiguration.rankByParticipation() %>" />
 			</liferay-ui:panel>
 
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="userStatisticsSettingsPanel" persistState="<%= true %>" title="settings">
+			<liferay-ui:panel
+				collapsible="<%= true %>"
+				extended="<%= true %>"
+				id="userStatisticsSettingsPanel"
+				persistState="<%= true %>"
+				title="settings"
+			>
 				<aui:input label="show-header-text" name="preferences--showHeaderText--" type="checkbox" value="<%= socialUserStatisticsPortletInstanceConfiguration.showHeaderText() %>" />
 
 				<aui:input label="show-totals" name="preferences--showTotals--" type="checkbox" value="<%= socialUserStatisticsPortletInstanceConfiguration.showTotals() %>" />
 			</liferay-ui:panel>
 
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="userStatisticsDisplayActivityCounterNamesPanel" persistState="<%= true %>" title="counters">
+			<liferay-ui:panel
+				collapsible="<%= true %>"
+				extended="<%= true %>"
+				id="userStatisticsDisplayActivityCounterNamesPanel"
+				persistState="<%= true %>"
+				title="counters"
+			>
 				<div id="<portlet:namespace />displayActivityCounterNames">
 					<aui:input label="display-additional-activity-counters" name="preferences--displayAdditionalActivityCounters--" type="checkbox" value="<%= socialUserStatisticsPortletInstanceConfiguration.displayAdditionalActivityCounters() %>" />
 

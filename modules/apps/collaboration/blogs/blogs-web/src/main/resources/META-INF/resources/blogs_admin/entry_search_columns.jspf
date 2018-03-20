@@ -21,7 +21,9 @@
 			userId="<%= entry.getUserId() %>"
 		/>
 
-		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+		<liferay-ui:search-container-column-text
+			colspan="<%= 2 %>"
+		>
 
 			<%
 			Date modifiedDate = entry.getModifiedDate();

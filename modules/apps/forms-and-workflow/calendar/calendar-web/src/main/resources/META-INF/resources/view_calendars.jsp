@@ -78,7 +78,9 @@ portletURL.setParameter("calendarResourceId", String.valueOf(calendarResource.ge
 				<span class="calendar-portlet-color-box" style="background-color:<%= ColorUtil.toHexString(calendar.getColor()) %>;">&nbsp;</span>
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text name="default">
+			<liferay-ui:search-container-column-text
+				name="default"
+			>
 				<c:choose>
 					<c:when test="<%= calendar.isDefaultCalendar() %>">
 						<liferay-ui:message key="yes" />
@@ -96,7 +98,9 @@ portletURL.setParameter("calendarResourceId", String.valueOf(calendarResource.ge
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </div>
 

@@ -83,7 +83,11 @@ PortletURL portletURL = organizationItemSelectorViewDisplayContext.getPortletURL
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" searchContainer="<%= organizationItemSelectorViewDisplayContext.getSearchContainer() %>" />
+		<liferay-ui:search-iterator
+			displayStyle="list"
+			markupView="lexicon"
+			searchContainer="<%= organizationItemSelectorViewDisplayContext.getSearchContainer() %>"
+		/>
 	</liferay-ui:search-container>
 </div>
 

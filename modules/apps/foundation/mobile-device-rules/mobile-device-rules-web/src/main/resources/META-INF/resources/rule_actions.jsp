@@ -49,6 +49,8 @@ MDRRule rule = (MDRRule)row.getObject();
 			<portlet:param name="ruleId" value="<%= String.valueOf(rule.getRuleId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete url="<%= deleteURL %>" />
+		<liferay-ui:icon-delete
+			url="<%= deleteURL %>"
+		/>
 	</c:if>
 </liferay-ui:icon-menu>

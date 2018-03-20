@@ -35,7 +35,9 @@ TasksEntry tasksEntry = TasksEntryLocalServiceUtil.fetchTasksEntry(tasksEntryId)
 		tasksEntry = tasksEntry.toEscapedModel();
 		%>
 
-		<liferay-ui:header title="<%= HtmlUtil.unescape(tasksEntry.getTitle()) %>" />
+		<liferay-ui:header
+			title="<%= HtmlUtil.unescape(tasksEntry.getTitle()) %>"
+		/>
 
 		<div class="task-data-container">
 			<div class="task-data">
@@ -232,7 +234,9 @@ TasksEntry tasksEntry = TasksEntryLocalServiceUtil.fetchTasksEntry(tasksEntryId)
 			</c:if>
 		</aui:button-row>
 
-		<liferay-ui:tabs names="comments" />
+		<liferay-ui:tabs
+			names="comments"
+		/>
 
 		<%@ include file="/tasks/view_comments.jspf" %>
 	</c:otherwise>

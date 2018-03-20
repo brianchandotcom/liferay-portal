@@ -185,7 +185,10 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 						%>
 
 						<div class="lfr-asset-icon">
-							<liferay-ui:icon icon="<%= dlFolderAssetRendererFactory.getIconCssClass() %>" markupView="lexicon" />
+							<liferay-ui:icon
+								icon="<%= dlFolderAssetRendererFactory.getIconCssClass() %>"
+								markupView="lexicon"
+							/>
 
 							<%= foldersCount %> <liferay-ui:message key='<%= (foldersCount == 1) ? "subfolder" : "subfolders" %>' />
 						</div>
@@ -195,13 +198,18 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 						%>
 
 						<div class="last lfr-asset-icon">
-							<liferay-ui:icon icon="<%= dlFileEntryAssetRendererFactory.getIconCssClass() %>" markupView="lexicon" />
+							<liferay-ui:icon
+								icon="<%= dlFileEntryAssetRendererFactory.getIconCssClass() %>"
+								markupView="lexicon"
+							/>
 
 							<%= imagesCount %> <liferay-ui:message key='<%= (imagesCount == 1) ? "image" : "images" %>' />
 						</div>
 					</div>
 
-					<liferay-expando:custom-attributes-available className="<%= DLFolderConstants.getClassName() %>">
+					<liferay-expando:custom-attributes-available
+						className="<%= DLFolderConstants.getClassName() %>"
+					>
 						<liferay-expando:custom-attribute-list
 							className="<%= DLFolderConstants.getClassName() %>"
 							classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"

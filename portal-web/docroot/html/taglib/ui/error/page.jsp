@@ -49,7 +49,9 @@ if (bodyContent != null) {
 		</c:if>
 	</c:when>
 	<c:when test='<%= SessionErrors.contains(portletRequest, "warning") %>'>
-		<liferay-util:buffer var="alertMessage">
+		<liferay-util:buffer
+			var="alertMessage"
+		>
 			<c:choose>
 				<c:when test="<%= message != null %>">
 					<liferay-ui:message key="<%= message %>" localizeKey="<%= translateMessage %>" />

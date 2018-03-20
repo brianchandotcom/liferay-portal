@@ -107,7 +107,12 @@ else {
 
 	<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
 
-	<liferay-ui:panel-container extended="<%= false %>" id="documentLibraryAssetPanelContainer" markupView="lexicon" persistState="<%= true %>">
+	<liferay-ui:panel-container
+		extended="<%= false %>"
+		id="documentLibraryAssetPanelContainer"
+		markupView="lexicon"
+		persistState="<%= true %>"
+	>
 		<div class="selected-files-count">
 			<liferay-ui:message key="no-files-selected" />
 		</div>
@@ -116,12 +121,24 @@ else {
 			<aui:input name="description" />
 
 			<c:if test="<%= !fileEntryTypes.isEmpty() %>">
-				<liferay-ui:panel collapsible="<%= true %>" cssClass="document-type" markupView="lexicon" persistState="<%= true %>" title="document-type">
+				<liferay-ui:panel
+					collapsible="<%= true %>"
+					cssClass="document-type"
+					markupView="lexicon"
+					persistState="<%= true %>"
+					title="document-type"
+				>
 					<aui:input name="fileEntryTypeId" type="hidden" value="<%= (fileEntryTypeId > 0) ? fileEntryTypeId : 0 %>" />
 					<aui:input name="defaultLanguageId" type="hidden" value="<%= themeDisplay.getLanguageId() %>" />
 
 					<div class="document-type-selector">
-						<liferay-ui:icon-menu direction="down" icon="../aui/file-alt" id="groupSelector" message='<%= (fileEntryTypeId > 0) ? HtmlUtil.escape(fileEntryType.getName(locale)) : "basic-document" %>' showWhenSingleIcon="<%= true %>">
+						<liferay-ui:icon-menu
+							direction="down"
+							icon="../aui/file-alt"
+							id="groupSelector"
+							message='<%= (fileEntryTypeId > 0) ? HtmlUtil.escape(fileEntryType.getName(locale)) : "basic-document" %>'
+							showWhenSingleIcon="<%= true %>"
+						>
 
 							<%
 							for (DLFileEntryType curFileEntryType : fileEntryTypes) {
@@ -219,7 +236,9 @@ else {
 				</liferay-ui:panel>
 			</c:if>
 
-			<liferay-expando:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>">
+			<liferay-expando:custom-attributes-available
+				className="<%= DLFileEntryConstants.getClassName() %>"
+			>
 				<liferay-expando:custom-attribute-list
 					className="<%= DLFileEntryConstants.getClassName() %>"
 					classPK="<%= fileVersionId %>"
@@ -230,11 +249,26 @@ else {
 		</c:if>
 
 		<c:if test="<%= (folder == null) || folder.isSupportsSocial() %>">
-			<liferay-ui:panel cssClass="categorization-panel" defaultState="closed" extended="<%= false %>" id="dlFileEntryCategorizationPanel" markupView="lexicon" persistState="<%= true %>" title="categorization">
+			<liferay-ui:panel
+				cssClass="categorization-panel"
+				defaultState="closed"
+				extended="<%= false %>"
+				id="dlFileEntryCategorizationPanel"
+				markupView="lexicon"
+				persistState="<%= true %>"
+				title="categorization"
+			>
 				<aui:fieldset>
-					<liferay-asset:asset-categories-selector className="<%= DLFileEntry.class.getName() %>" classPK="<%= assetClassPK %>" classTypePK="<%= fileEntryTypeId %>" />
+					<liferay-asset:asset-categories-selector
+						className="<%= DLFileEntry.class.getName() %>"
+						classPK="<%= assetClassPK %>"
+						classTypePK="<%= fileEntryTypeId %>"
+					/>
 
-					<liferay-asset:asset-tags-selector className="<%= DLFileEntry.class.getName() %>" classPK="<%= assetClassPK %>" />
+					<liferay-asset:asset-tags-selector
+						className="<%= DLFileEntry.class.getName() %>"
+						classPK="<%= assetClassPK %>"
+					/>
 				</aui:fieldset>
 			</liferay-ui:panel>
 		</c:if>

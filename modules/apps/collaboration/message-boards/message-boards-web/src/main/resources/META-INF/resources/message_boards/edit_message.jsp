@@ -223,7 +223,9 @@ if (portletTitleBasedNavigation) {
 				</aui:field-wrapper>
 			</aui:fieldset>
 
-			<liferay-expando:custom-attributes-available className="<%= MBMessage.class.getName() %>">
+			<liferay-expando:custom-attributes-available
+				className="<%= MBMessage.class.getName() %>"
+			>
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
 					<liferay-expando:custom-attribute-list
 						className="<%= MBMessage.class.getName() %>"
@@ -281,7 +283,12 @@ if (portletTitleBasedNavigation) {
 										<portlet:param name="fileName" value="<%= fileEntry.getTitle() %>" />
 									</liferay-portlet:actionURL>
 
-									<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>">
+									<liferay-ui:icon-menu
+										direction="left-side"
+										icon="<%= StringPool.BLANK %>"
+										markupView="lexicon"
+										message="<%= StringPool.BLANK %>"
+									>
 										<liferay-ui:icon-delete
 											trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
 											url="<%= deleteURL %>"
@@ -290,7 +297,9 @@ if (portletTitleBasedNavigation) {
 								</liferay-ui:search-container-column-text>
 							</liferay-ui:search-container-row>
 
-							<liferay-ui:search-iterator markupView="lexicon" />
+							<liferay-ui:search-iterator
+								markupView="lexicon"
+							/>
 						</liferay-ui:search-container>
 					</c:if>
 				</aui:fieldset>
@@ -395,7 +404,9 @@ if (portletTitleBasedNavigation) {
 			<c:if test="<%= (message == null) && captchaConfiguration.messageBoardsEditMessageCaptchaEnabled() %>">
 				<portlet:resourceURL id="/message_boards/captcha" var="captchaURL" />
 
-				<liferay-captcha:captcha url="<%= captchaURL %>" />
+				<liferay-captcha:captcha
+					url="<%= captchaURL %>"
+				/>
 			</c:if>
 		</aui:fieldset-group>
 

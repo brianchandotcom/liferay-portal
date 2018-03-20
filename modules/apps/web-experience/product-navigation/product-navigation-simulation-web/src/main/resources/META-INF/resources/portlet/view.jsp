@@ -46,7 +46,9 @@ PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegist
 
 				<div aria-expanded="<%= true %>" aria-labelledby="<portlet:namespace /><%= AUIUtil.normalizeId(panelApp.getKey()) %>Header" class="collapse in panel-collapse" id="<portlet:namespace /><%= AUIUtil.normalizeId(panelApp.getKey()) %>Collapse" role="tabpanel">
 					<div class="simulation-app-panel-body">
-						<liferay-application-list:panel-app panelApp="<%= panelApp %>" />
+						<liferay-application-list:panel-app
+							panelApp="<%= panelApp %>"
+						/>
 					</div>
 				</div>
 			</div>

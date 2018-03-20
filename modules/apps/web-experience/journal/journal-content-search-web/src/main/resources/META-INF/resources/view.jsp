@@ -31,7 +31,10 @@
 
 <aui:form action="<%= searchURL %>" method="post" name="fm" onSubmit='<%= renderResponse.getNamespace() + "search(); event.preventDefault();" %>'>
 	<div class="form-search">
-		<liferay-ui:input-search name="keywords" placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
+		<liferay-ui:input-search
+			name="keywords"
+			placeholder='<%= LanguageUtil.get(request, "keywords") %>'
+		/>
 	</div>
 </aui:form>
 

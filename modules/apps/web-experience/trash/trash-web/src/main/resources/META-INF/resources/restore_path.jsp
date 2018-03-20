@@ -27,7 +27,9 @@ if (Validator.isNull(redirect)) {
 %>
 
 <c:if test="<%= SessionMessages.contains(renderRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA) %>">
-	<liferay-util:buffer var="alertMessage">
+	<liferay-util:buffer
+		var="alertMessage"
+	>
 
 		<%
 		Map<String, List<String>> data = (HashMap<String, List<String>>)SessionMessages.get(renderRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA);
@@ -53,11 +55,15 @@ if (Validator.isNull(redirect)) {
 					}
 				%>
 
-					<liferay-util:buffer var="entityLink">
+					<liferay-util:buffer
+						var="entityLink"
+					>
 						<em class="restore-entry-title"><aui:a href="<%= restoreEntryLinks.get(i) %>" label="<%= HtmlUtil.escape(restoreEntryMessages.get(i)) %>" /></em>
 					</liferay-util:buffer>
 
-					<liferay-util:buffer var="link">
+					<liferay-util:buffer
+						var="link"
+					>
 						<em class="restore-entry-title"><aui:a href="<%= restoreLinks.get(i) %>" label="<%= HtmlUtil.escape(restoreMessages.get(i)) %>" /></em>
 					</liferay-util:buffer>
 

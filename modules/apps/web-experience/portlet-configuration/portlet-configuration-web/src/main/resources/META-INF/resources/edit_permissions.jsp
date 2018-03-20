@@ -37,7 +37,9 @@ Resource resource = portletConfigurationPermissionsDisplayContext.getResource();
 			<liferay-frontend:management-bar-filters>
 				<li>
 					<aui:form action="<%= portletConfigurationPermissionsDisplayContext.getIteratorURL() %>" name="searchFm">
-						<liferay-ui:input-search markupView="lexicon" />
+						<liferay-ui:input-search
+							markupView="lexicon"
+						/>
 					</aui:form>
 				</li>
 			</liferay-frontend:management-bar-filters>
@@ -151,7 +153,9 @@ Resource resource = portletConfigurationPermissionsDisplayContext.getResource();
 
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator markupView="lexicon" />
+				<liferay-ui:search-iterator
+					markupView="lexicon"
+				/>
 			</liferay-ui:search-container>
 		</aui:form>
 	</div>

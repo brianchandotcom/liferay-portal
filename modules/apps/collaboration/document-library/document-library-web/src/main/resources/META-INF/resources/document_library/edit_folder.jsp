@@ -68,7 +68,9 @@ if (portletTitleBasedNavigation) {
 %>
 
 <div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
-	<liferay-util:buffer var="removeFileEntryTypeIcon">
+	<liferay-util:buffer
+		var="removeFileEntryTypeIcon"
+	>
 		<liferay-ui:icon
 			iconCssClass="icon-remove"
 			label="<%= true %>"
@@ -183,7 +185,9 @@ if (portletTitleBasedNavigation) {
 									/>
 
 									<c:if test="<%= workflowEnabled %>">
-										<liferay-ui:search-container-column-text name="workflow">
+										<liferay-ui:search-container-column-text
+											name="workflow"
+										>
 											<aui:select label="" name='<%= "workflowDefinition" + dlFileEntryType.getFileEntryTypeId() %>' title="workflow-definition">
 												<aui:option label="no-workflow" value="" />
 
@@ -219,7 +223,9 @@ if (portletTitleBasedNavigation) {
 									</liferay-ui:search-container-column-text>
 								</liferay-ui:search-container-row>
 
-								<liferay-ui:search-iterator paginate="<%= false %>" />
+								<liferay-ui:search-iterator
+									paginate="<%= false %>"
+								/>
 							</liferay-ui:search-container>
 
 							<liferay-ui:icon
@@ -291,7 +297,9 @@ if (portletTitleBasedNavigation) {
 			</c:if>
 
 			<c:if test="<%= (parentFolder == null) || parentFolder.isSupportsMetadata() %>">
-				<liferay-expando:custom-attributes-available className="<%= DLFolderConstants.getClassName() %>">
+				<liferay-expando:custom-attributes-available
+					className="<%= DLFolderConstants.getClassName() %>"
+				>
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
 						<liferay-expando:custom-attribute-list
 							className="<%= DLFolderConstants.getClassName() %>"

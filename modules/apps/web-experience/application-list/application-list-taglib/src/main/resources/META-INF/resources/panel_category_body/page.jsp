@@ -23,7 +23,9 @@
 		for (PanelApp panelApp : panelApps) {
 		%>
 
-			<liferay-application-list:panel-app panelApp="<%= panelApp %>" />
+			<liferay-application-list:panel-app
+				panelApp="<%= panelApp %>"
+			/>
 
 		<%
 		}

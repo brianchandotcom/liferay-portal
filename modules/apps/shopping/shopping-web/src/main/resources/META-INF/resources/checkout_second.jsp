@@ -229,7 +229,9 @@ ShoppingOrder order = ShoppingOrderLocalServiceUtil.getLatestOrder(user.getUserI
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 
 	<aui:input name="itemIds" type="hidden" value="<%= itemIds %>" />

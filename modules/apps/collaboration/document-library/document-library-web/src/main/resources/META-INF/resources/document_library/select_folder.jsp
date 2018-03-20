@@ -38,7 +38,12 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 
 <div class="container-fluid-1280">
 	<aui:form method="post" name="selectFolderFm">
-		<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" />
+		<liferay-ui:breadcrumb
+			showCurrentGroup="<%= false %>"
+			showGuestGroup="<%= false %>"
+			showLayout="<%= false %>"
+			showParentGroups="<%= false %>"
+		/>
 
 		<aui:button-row>
 			<c:if test="<%= dlVisualizationHelper.isAddFolderButtonVisible() && DLFolderPermission.contains(permissionChecker, repositoryId, folderId, ActionKeys.ADD_FOLDER) %>">
@@ -157,7 +162,9 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator markupView="lexicon" />
+			<liferay-ui:search-iterator
+				markupView="lexicon"
+			/>
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

@@ -146,6 +146,10 @@ else {
 	</c:if>
 
 	<c:if test="<%= portletName.equals(BookmarksPortletKeys.BOOKMARKS_ADMIN) %>">
-		<liferay-export-import-changeset:publish-entity-menu-item className="<%= BookmarksEntry.class.getName() %>" groupId="<%= entry.getGroupId() %>" uuid="<%= entry.getUuid() %>" />
+		<liferay-export-import-changeset:publish-entity-menu-item
+			className="<%= BookmarksEntry.class.getName() %>"
+			groupId="<%= entry.getGroupId() %>"
+			uuid="<%= entry.getUuid() %>"
+		/>
 	</c:if>
 </liferay-ui:icon-menu>

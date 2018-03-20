@@ -138,7 +138,9 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 				<portlet:param name="<%= Constants.CMD %>" value="captcha" />
 			</portlet:resourceURL>
 
-			<liferay-captcha:captcha url="<%= captchaURL %>" />
+			<liferay-captcha:captcha
+				url="<%= captchaURL %>"
+			/>
 		</c:if>
 
 		<aui:button onClick="" type="submit" value="send" />

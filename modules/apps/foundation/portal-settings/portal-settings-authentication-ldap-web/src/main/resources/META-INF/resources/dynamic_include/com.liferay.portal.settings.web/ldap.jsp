@@ -156,7 +156,10 @@ boolean ldapExportEnabled = !(ldapImportConfiguration.importUserPasswordAutogene
 										<portlet:param name="ldapServerId" value="<%= String.valueOf(ldapServerId) %>" />
 									</portlet:actionURL>
 
-									<liferay-ui:icon-delete showIcon="<%= true %>" url="<%= deleteURL %>" />
+									<liferay-ui:icon-delete
+										showIcon="<%= true %>"
+										url="<%= deleteURL %>"
+									/>
 								</div>
 							</td>
 						</tr>

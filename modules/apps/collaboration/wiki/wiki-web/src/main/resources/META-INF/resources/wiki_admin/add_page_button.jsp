@@ -31,7 +31,10 @@ for (Menu menu : menus) {
 	}
 %>
 
-	<liferay-frontend:add-menu addMenuItems="<%= addMenuItems %>" inline="<%= true %>" />
+	<liferay-frontend:add-menu
+		addMenuItems="<%= addMenuItems %>"
+		inline="<%= true %>"
+	/>
 
 <%
 }

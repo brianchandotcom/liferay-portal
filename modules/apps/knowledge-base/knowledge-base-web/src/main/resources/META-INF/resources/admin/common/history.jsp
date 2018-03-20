@@ -176,7 +176,9 @@ if (portletTitleBasedNavigation) {
 			<aui:button name="compare" type="submit" value="compare-versions" />
 		</aui:button-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </aui:fieldset>
 

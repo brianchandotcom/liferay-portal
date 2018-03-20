@@ -162,7 +162,10 @@ portletURL.setParameter("tabs1", tabs1);
 
 	<liferay-util:include page="/microblogs/view_microblogs_entries.jsp" servletContext="<%= application %>" />
 
-	<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" type="article" />
+	<liferay-ui:search-paginator
+		searchContainer="<%= searchContainer %>"
+		type="article"
+	/>
 </div>
 
 <aui:script use="aui-base,aui-io-deprecated">

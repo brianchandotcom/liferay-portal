@@ -132,7 +132,9 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator markupView="lexicon" />
+			<liferay-ui:search-iterator
+				markupView="lexicon"
+			/>
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

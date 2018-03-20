@@ -355,7 +355,11 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 						deletePageURL.setParameter("redirect", frontPageURL.toString());
 						%>
 
-						<liferay-ui:icon-delete label="<%= true %>" trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>" url="<%= deletePageURL.toString() %>" />
+						<liferay-ui:icon-delete
+							label="<%= true %>"
+							trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
+							url="<%= deletePageURL.toString() %>"
+						/>
 					</c:if>
 				</liferay-ui:icon-list>
 			</td>

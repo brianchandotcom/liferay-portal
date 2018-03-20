@@ -17,7 +17,9 @@
 <div class="taglib-vertical-card <%= Validator.isNotNull(cssClass) ? cssClass : StringPool.BLANK %> <%= showCheckbox ? "selectable" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>>
 	<c:choose>
 		<c:when test="<%= (rowChecker != null) && (resultRow != null) %>">
-			<liferay-util:buffer var="checkboxInput">
+			<liferay-util:buffer
+				var="checkboxInput"
+			>
 				<%= rowChecker.getRowCheckBox(request, rowChecker.isChecked(resultRow.getObject()), rowChecker.isDisabled(resultRow.getObject()), resultRow.getPrimaryKey()) %>
 			</liferay-util:buffer>
 

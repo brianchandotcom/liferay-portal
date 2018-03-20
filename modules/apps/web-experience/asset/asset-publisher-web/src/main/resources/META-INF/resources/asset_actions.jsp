@@ -50,7 +50,14 @@ List<AssetEntryAction> assetEntryActions = assetPublisherDisplayContext.getAsset
 
 <c:if test="<%= (editPortletURL != null) || ListUtil.isNotEmpty(assetEntryActions) %>">
 	<div class="pull-right">
-		<liferay-ui:icon-menu cssClass="visible-interaction" direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+		<liferay-ui:icon-menu
+			cssClass="visible-interaction"
+			direction="left-side"
+			icon="<%= StringPool.BLANK %>"
+			markupView="lexicon"
+			message="<%= StringPool.BLANK %>"
+			showWhenSingleIcon="<%= true %>"
+		>
 			<c:if test="<%= editPortletURL != null %>">
 
 				<%

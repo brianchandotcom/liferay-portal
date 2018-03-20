@@ -44,7 +44,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "data-providers"));
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-buttons>
 		<c:if test="<%= ddmDataProviderDisplayContext.isShowAddDataProviderButton() %>">
-			<liferay-frontend:add-menu inline="<%= true %>">
+			<liferay-frontend:add-menu
+				inline="<%= true %>"
+			>
 
 				<%
 				for (String ddmDataProviderType : ddmDataProviderDisplayContext.getDDMDataProviderTypes()) {
@@ -57,7 +59,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "data-providers"));
 						<portlet:param name="type" value="<%= ddmDataProviderType %>" />
 					</portlet:renderURL>
 
-					<liferay-frontend:add-menu-item title="<%= LanguageUtil.get(request, ddmDataProviderType) %>" url="<%= addDataProviderURL.toString() %>" />
+					<liferay-frontend:add-menu-item
+						title="<%= LanguageUtil.get(request, ddmDataProviderType) %>"
+						url="<%= addDataProviderURL.toString() %>"
+					/>
 
 				<%
 				}
@@ -117,7 +122,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "data-providers"));
 				/>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
+			<liferay-ui:search-iterator
+				displayStyle="descriptive"
+				markupView="lexicon"
+			/>
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

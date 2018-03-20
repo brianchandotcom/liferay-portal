@@ -26,7 +26,9 @@ WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 </portlet:actionURL>
 
 <div class="container-fluid-1280">
-	<liferay-trash:undo portletURL="<%= undoTrashURL %>" />
+	<liferay-trash:undo
+		portletURL="<%= undoTrashURL %>"
+	/>
 
 	<c:if test="<%= WikiNodePermission.contains(permissionChecker, node, ActionKeys.ADD_ATTACHMENT) %>">
 		<portlet:actionURL name="/wiki/edit_page_attachment" var="emptyTrashURL">

@@ -153,5 +153,10 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 		</c:choose>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" resultRowSplitter="<%= new BookmarksResultRowSplitter() %>" searchContainer="<%= bookmarksSearchContainer %>" />
+	<liferay-ui:search-iterator
+		displayStyle="<%= displayStyle %>"
+		markupView="lexicon"
+		resultRowSplitter="<%= new BookmarksResultRowSplitter() %>"
+		searchContainer="<%= bookmarksSearchContainer %>"
+	/>
 </liferay-ui:search-container>

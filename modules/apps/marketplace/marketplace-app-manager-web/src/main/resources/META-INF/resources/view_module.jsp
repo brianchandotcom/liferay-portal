@@ -125,7 +125,9 @@ else {
 			<aui:form action="<%= searchURL.toString() %>" method="get" name="fm1">
 				<liferay-portlet:renderURLParams varImpl="searchURL" />
 
-				<liferay-ui:input-search markupView="lexicon" />
+				<liferay-ui:input-search
+					markupView="lexicon"
+				/>
 			</aui:form>
 		</li>
 	</liferay-frontend:management-bar-filters>
@@ -205,7 +207,9 @@ else {
 				</c:choose>
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+			<liferay-ui:search-container-column-text
+				colspan="<%= 2 %>"
+			>
 
 				<%
 				String description = StringPool.BLANK;
@@ -239,6 +243,9 @@ else {
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
+		<liferay-ui:search-iterator
+			displayStyle="descriptive"
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </div>

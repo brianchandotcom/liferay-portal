@@ -74,7 +74,9 @@ renderResponse.setTitle(headerTitle);
 									<c:when test="<%= workflowTask.isAssignedToSingleUser() %>">
 										<div class="card-col-field">
 											<div class="list-group-card-icon">
-												<liferay-ui:user-portrait userId="<%= workflowTask.getAssigneeUserId() %>" />
+												<liferay-ui:user-portrait
+													userId="<%= workflowTask.getAssigneeUserId() %>"
+												/>
 											</div>
 										</div>
 
@@ -128,11 +130,22 @@ renderResponse.setTitle(headerTitle);
 				</c:if>
 			</aui:fieldset>
 
-			<liferay-ui:panel-container cssClass="task-panel-container" extended="<%= false %>">
+			<liferay-ui:panel-container
+				cssClass="task-panel-container"
+				extended="<%= false %>"
+			>
 				<c:if test="<%= assetRenderer != null %>">
-					<liferay-ui:panel extended="<%= true %>" markupView="lexicon" title="<%= workflowTaskDisplayContext.getPreviewOfTitle(workflowTask) %>">
+					<liferay-ui:panel
+						extended="<%= true %>"
+						markupView="lexicon"
+						title="<%= workflowTaskDisplayContext.getPreviewOfTitle(workflowTask) %>"
+					>
 						<div class="locale-actions">
-							<liferay-ui:language formAction="<%= currentURL %>" languageId="<%= languageId %>" languageIds="<%= availableLanguageIds %>" />
+							<liferay-ui:language
+								formAction="<%= currentURL %>"
+								languageId="<%= languageId %>"
+								languageIds="<%= availableLanguageIds %>"
+							/>
 						</div>
 
 						<div class="task-content-actions">
@@ -153,20 +166,36 @@ renderResponse.setTitle(headerTitle);
 										<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
 									</portlet:renderURL>
 
-									<liferay-frontend:management-bar-button href="<%= assetRenderer.isPreviewInContext() ? assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, null) : viewFullContentURL.toString() %>" icon="view" label="view[action]" />
+									<liferay-frontend:management-bar-button
+										href="<%= assetRenderer.isPreviewInContext() ? assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, null) : viewFullContentURL.toString() %>"
+										icon="view"
+										label="view[action]"
+									/>
 
 									<c:if test="<%= workflowTaskDisplayContext.hasViewDiffsPortletURL(workflowTask) %>">
-										<liferay-ui:icon iconCssClass="icon-copy" message="diffs" url="<%= workflowTaskDisplayContext.getTaglibViewDiffsURL(workflowTask) %>" />
+										<liferay-ui:icon
+											iconCssClass="icon-copy"
+											message="diffs"
+											url="<%= workflowTaskDisplayContext.getTaglibViewDiffsURL(workflowTask) %>"
+										/>
 									</c:if>
 								</c:if>
 
 								<c:if test="<%= workflowTaskDisplayContext.hasEditPortletURL(workflowTask) %>">
 									<c:choose>
 										<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) && workflowTaskDisplayContext.isShowEditURL(workflowTask) %>">
-											<liferay-frontend:management-bar-button href="<%= workflowTaskDisplayContext.getTaglibEditURL(workflowTask) %>" icon="pencil" label="edit" />
+											<liferay-frontend:management-bar-button
+												href="<%= workflowTaskDisplayContext.getTaglibEditURL(workflowTask) %>"
+												icon="pencil"
+												label="edit"
+											/>
 										</c:when>
 										<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) && !workflowTaskDisplayContext.isShowEditURL(workflowTask) && !workflowTask.isCompleted() %>">
-											<liferay-frontend:management-bar-button href="" icon="question-circle-full" label="please-assign-the-task-to-yourself-to-be-able-to-edit-the-content" />
+											<liferay-frontend:management-bar-button
+												href=""
+												icon="question-circle-full"
+												label="please-assign-the-task-to-yourself-to-be-able-to-edit-the-content"
+											/>
 										</c:when>
 									</c:choose>
 								</c:if>
@@ -188,7 +217,11 @@ renderResponse.setTitle(headerTitle);
 						/>
 					</liferay-ui:panel>
 
-					<liferay-ui:panel extended="<%= true %>" markupView="lexicon" title="comments">
+					<liferay-ui:panel
+						extended="<%= true %>"
+						markupView="lexicon"
+						title="comments"
+					>
 						<liferay-comment:discussion
 							assetEntryVisible="<%= false %>"
 							className="<%= assetRenderer.getClassName() %>"
@@ -201,7 +234,10 @@ renderResponse.setTitle(headerTitle);
 					</liferay-ui:panel>
 				</c:if>
 
-				<liferay-ui:panel markupView="lexicon" title="activities">
+				<liferay-ui:panel
+					markupView="lexicon"
+					title="activities"
+				>
 
 					<%
 					List<WorkflowLog> workflowLogs = workflowTaskDisplayContext.getWorkflowLogs(workflowTask);

@@ -83,7 +83,10 @@ List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(renderRequest
 		/>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator markupView="lexicon" paginate="<%= total > SearchContainer.DEFAULT_DELTA %>" />
+	<liferay-ui:search-iterator
+		markupView="lexicon"
+		paginate="<%= total > SearchContainer.DEFAULT_DELTA %>"
+	/>
 </liferay-ui:search-container>
 
 <c:if test='<%= SessionMessages.contains(renderRequest, "deletedMissingAssetEntries") %>'>
@@ -101,7 +104,13 @@ for (long groupId : groupIds) {
 
 	<div class="select-asset-selector">
 		<div class="edit-controls lfr-meta-actions">
-			<liferay-ui:icon-menu cssClass="select-existing-selector" direction="right" message='<%= LanguageUtil.format(request, (groupIds.length == 1) ? "select" : "select-in-x", HtmlUtil.escape(group.getDescriptiveName(locale)), false) %>' showArrow="<%= false %>" showWhenSingleIcon="<%= true %>">
+			<liferay-ui:icon-menu
+				cssClass="select-existing-selector"
+				direction="right"
+				message='<%= LanguageUtil.format(request, (groupIds.length == 1) ? "select" : "select-in-x", HtmlUtil.escape(group.getDescriptiveName(locale)), false) %>'
+				showArrow="<%= false %>"
+				showWhenSingleIcon="<%= true %>"
+			>
 
 				<%
 				List<AssetRendererFactory<?>> assetRendererFactories = ListUtil.sort(AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId()), new AssetRendererFactoryTypeNameComparator(locale));

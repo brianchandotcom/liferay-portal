@@ -57,13 +57,21 @@ ddmStructuresSearchContainer.setResults(ddmStructures);
 %>
 
 <c:if test="<%= journalDisplayContext.getAddMenuFavItemsLength() == 0 %>">
-	<liferay-ui:alert message='<%= LanguageUtil.format(resourceBundle, "you-can-add-as-many-as-x-favorites-in-your-quick-menu", journalWebConfiguration.maxAddMenuItems()) %>' timeout="<%= 0 %>" type="info" />
+	<liferay-ui:alert
+		message='<%= LanguageUtil.format(resourceBundle, "you-can-add-as-many-as-x-favorites-in-your-quick-menu", journalWebConfiguration.maxAddMenuItems()) %>'
+		timeout="<%= 0 %>"
+		type="info"
+	/>
 </c:if>
 
 <liferay-ui:error exception="<%= MaxAddMenuFavItemsException.class %>" message='<%= LanguageUtil.format(resourceBundle, "you-cannot-add-more-than-x-favorites", journalWebConfiguration.maxAddMenuItems()) %>' />
 
 <c:if test="<%= journalDisplayContext.getAddMenuFavItemsLength() >= journalWebConfiguration.maxAddMenuItems() %>">
-	<liferay-ui:alert message='<%= LanguageUtil.get(resourceBundle, "right-now-your-quick-menu-is-full-of-favorites-if-you-want-to-add-another-one-please-remove-at-least-one-of-them") %>' timeout="<%= 0 %>" type="warning" />
+	<liferay-ui:alert
+		message='<%= LanguageUtil.get(resourceBundle, "right-now-your-quick-menu-is-full-of-favorites-if-you-want-to-add-another-one-please-remove-at-least-one-of-them") %>'
+		timeout="<%= 0 %>"
+		type="warning"
+	/>
 </c:if>
 
 <clay:navigation-bar
@@ -97,7 +105,9 @@ ddmStructuresSearchContainer.setResults(ddmStructures);
 
 		<li>
 			<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-				<liferay-ui:input-search markupView="lexicon" />
+				<liferay-ui:input-search
+					markupView="lexicon"
+				/>
 			</aui:form>
 		</li>
 	</liferay-frontend:management-bar-filters>
@@ -153,7 +163,10 @@ ddmStructuresSearchContainer.setResults(ddmStructures);
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
+		<liferay-ui:search-iterator
+			displayStyle="list"
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </aui:form>
 

@@ -38,7 +38,9 @@ if (message.isAnonymous()) {
 		<div class="card-row card-row-padded">
 			<div class="card-col-field">
 				<div class="list-group-card-icon">
-					<liferay-ui:user-portrait userId="<%= !message.isAnonymous() ? message.getUserId() : 0 %>" />
+					<liferay-ui:user-portrait
+						userId="<%= !message.isAnonymous() ? message.getUserId() : 0 %>"
+					/>
 				</div>
 			</div>
 
@@ -192,7 +194,13 @@ if (message.isAnonymous()) {
 					%>
 
 					<c:if test="<%= showAnswerFlag || hasBanUserPermission || hasReplyPermission || hasUpdatePermission || hasPermissionsPermission || hasMoveThreadPermission || hasDeletePermission %>">
-						<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+						<liferay-ui:icon-menu
+							direction="left-side"
+							icon="<%= StringPool.BLANK %>"
+							markupView="lexicon"
+							message="<%= StringPool.BLANK %>"
+							showWhenSingleIcon="<%= true %>"
+						>
 							<c:if test="<%= showAnswerFlag %>">
 								<c:choose>
 									<c:when test="<%= !message.isAnswer() %>">
@@ -397,7 +405,9 @@ if (message.isAnonymous()) {
 			/>
 		</div>
 
-		<liferay-expando:custom-attributes-available className="<%= MBMessage.class.getName() %>">
+		<liferay-expando:custom-attributes-available
+			className="<%= MBMessage.class.getName() %>"
+		>
 			<div class="card-row card-row-padded custom-attributes">
 				<liferay-expando:custom-attribute-list
 					className="<%= MBMessage.class.getName() %>"

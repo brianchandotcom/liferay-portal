@@ -109,21 +109,34 @@ recordSearchContainer.setOrderByType(ddlViewRecordsDisplayContext.getOrderByType
 			</portlet:renderURL>
 
 			<aui:form action="<%= searchURL.toString() %>" name="fm1">
-				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" name="<%= DisplayTerms.KEYWORDS %>" />
+				<liferay-ui:input-search
+					autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
+					markupView="lexicon"
+					name="<%= DisplayTerms.KEYWORDS %>"
+				/>
 			</aui:form>
 		</li>
 	</liferay-frontend:management-bar-filters>
 
 	<c:if test="<%= hasDeletePermission %>">
 		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteRecords();" %>' icon="trash" label="delete" />
+			<liferay-frontend:management-bar-button
+				href='<%= "javascript:" + renderResponse.getNamespace() + "deleteRecords();" %>'
+				icon="trash"
+				label="delete"
+			/>
 		</liferay-frontend:management-bar-action-buttons>
 	</c:if>
 
 	<c:if test="<%= showAddRecordButton && ddlDisplayContext.isAdminPortlet() %>">
 		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:add-menu inline="<%= true %>">
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.format(request, "add-x", HtmlUtil.escape(ddmStructure.getName(locale)), false) %>' url="<%= addRecordURL.toString() %>" />
+			<liferay-frontend:add-menu
+				inline="<%= true %>"
+			>
+				<liferay-frontend:add-menu-item
+					title='<%= LanguageUtil.format(request, "add-x", HtmlUtil.escape(ddmStructure.getName(locale)), false) %>'
+					url="<%= addRecordURL.toString() %>"
+				/>
 			</liferay-frontend:add-menu>
 		</liferay-frontend:management-bar-buttons>
 	</c:if>
@@ -199,7 +212,10 @@ recordSearchContainer.setOrderByType(ddlViewRecordsDisplayContext.getOrderByType
 			}
 			%>
 
-			<liferay-ui:search-iterator displayStyle="<%= ddlViewRecordsDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
+			<liferay-ui:search-iterator
+				displayStyle="<%= ddlViewRecordsDisplayContext.getDisplayStyle() %>"
+				markupView="lexicon"
+			/>
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

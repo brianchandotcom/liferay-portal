@@ -126,7 +126,12 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 					</h4>
 				</div>
 
-				<liferay-ui:tabs cssClass="navbar-no-collapse panel panel-default" names="details,revision-history" refresh="<%= false %>" type="tabs nav-tabs-default ">
+				<liferay-ui:tabs
+					cssClass="navbar-no-collapse panel panel-default"
+					names="details,revision-history"
+					refresh="<%= false %>"
+					type="tabs nav-tabs-default "
+				>
 					<liferay-ui:section>
 						<div class="sidebar-list">
 
@@ -217,12 +222,18 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 					<aui:fieldset cssClass="workflow-definition-content">
 						<aui:col>
 							<aui:field-wrapper label="title">
-								<liferay-ui:input-localized name="title" placeholder="untitled-workflow" xml='<%= BeanPropertiesUtil.getString(workflowDefinition, "title") %>' />
+								<liferay-ui:input-localized
+									name="title"
+									placeholder="untitled-workflow"
+									xml='<%= BeanPropertiesUtil.getString(workflowDefinition, "title") %>'
+								/>
 							</aui:field-wrapper>
 						</aui:col>
 
 						<aui:col cssClass="workflow-definition-upload">
-							<liferay-util:buffer var="importFileMark">
+							<liferay-util:buffer
+								var="importFileMark"
+							>
 								<aui:a href="#" id="uploadLink">
 									<%= StringUtil.toLowerCase(LanguageUtil.get(request, "import-a-file")) %>
 								</aui:a>
@@ -274,7 +285,10 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 			<aui:fieldset>
 				<aui:col>
 					<aui:field-wrapper label="title">
-						<liferay-ui:input-localized name='<%= randomNamespace + "title" %>' xml="<%= duplicateTitle %>" />
+						<liferay-ui:input-localized
+							name='<%= randomNamespace + "title" %>'
+							xml="<%= duplicateTitle %>"
+						/>
 					</aui:field-wrapper>
 				</aui:col>
 

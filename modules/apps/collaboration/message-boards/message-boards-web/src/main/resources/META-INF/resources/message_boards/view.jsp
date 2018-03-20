@@ -128,7 +128,9 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 					<%@ include file="/message_boards/subscribed_category_columns.jspf" %>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator type="more" />
+				<liferay-ui:search-iterator
+					type="more"
+				/>
 			</liferay-ui:search-container>
 
 			<%@ include file="/message_boards/view_threads.jspf" %>

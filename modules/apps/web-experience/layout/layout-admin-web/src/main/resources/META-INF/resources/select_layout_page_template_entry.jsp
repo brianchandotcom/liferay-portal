@@ -75,7 +75,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 					</liferay-ui:search-container-column-text>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator displayStyle="icon" markupView="lexicon" />
+				<liferay-ui:search-iterator
+					displayStyle="icon"
+					markupView="lexicon"
+				/>
 			</liferay-ui:search-container>
 
 			<portlet:actionURL name="/layout/add_content_layout" var="addLayoutURL">

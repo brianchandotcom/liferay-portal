@@ -273,9 +273,15 @@ if (portletTitleBasedNavigation) {
 					%>
 
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
-						<liferay-asset:asset-categories-selector className="<%= WikiPage.class.getName() %>" classPK="<%= classPK %>" />
+						<liferay-asset:asset-categories-selector
+							className="<%= WikiPage.class.getName() %>"
+							classPK="<%= classPK %>"
+						/>
 
-						<liferay-asset:asset-tags-selector className="<%= WikiPage.class.getName() %>" classPK="<%= classPK %>" />
+						<liferay-asset:asset-tags-selector
+							className="<%= WikiPage.class.getName() %>"
+							classPK="<%= classPK %>"
+						/>
 					</aui:fieldset>
 
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
@@ -328,7 +334,9 @@ if (portletTitleBasedNavigation) {
 					</aui:fieldset>
 
 					<c:if test="<%= wikiPage != null %>">
-						<liferay-expando:custom-attributes-available className="<%= WikiPage.class.getName() %>">
+						<liferay-expando:custom-attributes-available
+							className="<%= WikiPage.class.getName() %>"
+						>
 							<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
 								<liferay-expando:custom-attribute-list
 									className="<%= WikiPage.class.getName() %>"

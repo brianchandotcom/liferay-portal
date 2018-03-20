@@ -20,5 +20,12 @@
 	markupView="lexicon"
 	persistState="<%= true %>"
 >
-	<liferay-ui:panel collapsible="<%= true %>" cssClass="search-facet" id='<%= renderResponse.getNamespace() + "facetAssetEntriesPanel" %>' markupView="lexicon" persistState="<%= true %>" title="type" />
+	<liferay-ui:panel
+		collapsible="<%= true %>"
+		cssClass="search-facet"
+		id='<%= renderResponse.getNamespace() + "facetAssetEntriesPanel" %>'
+		markupView="lexicon"
+		persistState="<%= true %>"
+		title="type"
+	/>
 </liferay-ui:panel-container>

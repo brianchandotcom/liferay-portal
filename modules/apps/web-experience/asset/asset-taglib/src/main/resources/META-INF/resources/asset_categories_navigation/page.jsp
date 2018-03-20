@@ -59,7 +59,13 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			hidePortletWhenEmpty = false;
 	%>
 
-			<liferay-ui:panel collapsible="<%= false %>" extended="<%= true %>" markupView="lexicon" persistState="<%= true %>" title="<%= HtmlUtil.escape(vocabulary.getUnambiguousTitle(vocabularies, themeDisplay.getSiteGroupId(), themeDisplay.getLocale())) %>">
+			<liferay-ui:panel
+				collapsible="<%= false %>"
+				extended="<%= true %>"
+				markupView="lexicon"
+				persistState="<%= true %>"
+				title="<%= HtmlUtil.escape(vocabulary.getUnambiguousTitle(vocabularies, themeDisplay.getSiteGroupId(), themeDisplay.getLocale())) %>"
+			>
 				<%= vocabularyNavigation %>
 			</liferay-ui:panel>
 

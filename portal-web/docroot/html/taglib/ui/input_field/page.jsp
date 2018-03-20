@@ -69,7 +69,14 @@ if (hints != null) {
 			}
 			%>
 
-			<liferay-ui:input-checkbox cssClass="<%= cssClass %>" defaultValue="<%= value %>" disabled="<%= disabled %>" formName="<%= formName %>" id="<%= namespace + id %>" param="<%= fieldParam %>" />
+			<liferay-ui:input-checkbox
+				cssClass="<%= cssClass %>"
+				defaultValue="<%= value %>"
+				disabled="<%= disabled %>"
+				formName="<%= formName %>"
+				id="<%= namespace + id %>"
+				param="<%= fieldParam %>"
+			/>
 		</c:when>
 		<c:when test='<%= type.equals("Date") %>'>
 

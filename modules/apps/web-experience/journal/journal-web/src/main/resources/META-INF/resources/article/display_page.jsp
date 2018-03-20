@@ -58,7 +58,10 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 		}
 		%>
 
-		<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="display-page" />
+		<liferay-ui:error-marker
+			key="<%= WebKeys.ERROR_SECTION %>"
+			value="display-page"
+		/>
 
 		<aui:input id="pagesContainerInput" ignoreRequestValue="<%= true %>" name="layoutUuid" type="hidden" value="<%= layoutUuid %>" />
 

@@ -23,7 +23,9 @@ String alternativeLayoutFriendlyURL = (String)SessionMessages.get(request, "alte
 <c:if test="<%= Validator.isNotNull(alternativeLayoutFriendlyURL) %>">
 	<button class="close" type="button">&times;</button>
 
-	<liferay-util:buffer var="redirectedLink">
+	<liferay-util:buffer
+		var="redirectedLink"
+	>
 		<aui:a href="<%= PortalUtil.getCurrentCompleteURL(request) %>">
 			<%= HtmlUtil.escape(PortalUtil.getCurrentCompleteURL(request)) %>
 		</aui:a>
@@ -33,7 +35,9 @@ String alternativeLayoutFriendlyURL = (String)SessionMessages.get(request, "alte
 		<liferay-ui:message arguments="<%= redirectedLink %>" key="you-were-redirected-to-x" translateArguments="<%= false %>" />
 	</p>
 
-	<liferay-util:buffer var="originalLink">
+	<liferay-util:buffer
+		var="originalLink"
+	>
 		<aui:a href="<%= alternativeLayoutFriendlyURL %>">
 			<liferay-ui:message key="link" />
 		</aui:a>

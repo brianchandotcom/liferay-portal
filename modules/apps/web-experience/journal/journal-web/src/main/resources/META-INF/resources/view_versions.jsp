@@ -157,5 +157,10 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 		</c:choose>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" resultRowSplitter="<%= journalDisplayContext.isSearch() ? null : new JournalResultRowSplitter() %>" searchContainer="<%= articleSearchContainer %>" />
+	<liferay-ui:search-iterator
+		displayStyle="<%= displayStyle %>"
+		markupView="lexicon"
+		resultRowSplitter="<%= journalDisplayContext.isSearch() ? null : new JournalResultRowSplitter() %>"
+		searchContainer="<%= articleSearchContainer %>"
+	/>
 </liferay-ui:search-container>

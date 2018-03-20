@@ -40,7 +40,13 @@ String[] displayActivityCounterNameIndexes = new String[displayActivityCounterNa
 
 	<div class="portlet-configuration-body-content">
 		<div class="container-fluid-1280">
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="groupStatisticsDisplayActivityCounterNamesPanel" persistState="<%= true %>" title="counters">
+			<liferay-ui:panel
+				collapsible="<%= true %>"
+				extended="<%= true %>"
+				id="groupStatisticsDisplayActivityCounterNamesPanel"
+				persistState="<%= true %>"
+				title="counters"
+			>
 				<div id="<portlet:namespace />displayActivityCounterNames">
 					<aui:fieldset label="">
 

@@ -117,7 +117,11 @@ portletURL.setParameter("mvcRenderCommandName", "/polls/view");
 				/>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" searchContainer="<%= searchContainer %>" />
+			<liferay-ui:search-iterator
+				displayStyle="list"
+				markupView="lexicon"
+				searchContainer="<%= searchContainer %>"
+			/>
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

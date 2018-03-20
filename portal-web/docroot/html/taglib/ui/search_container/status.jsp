@@ -25,7 +25,9 @@ User statusByUser = UserLocalServiceUtil.fetchUser(statusByUserId);
 %>
 
 <c:if test="<%= statusByUser != null %>">
-	<liferay-util:buffer var="buffer">
+	<liferay-util:buffer
+		var="buffer"
+	>
 		<div class="user-status-tooltip">
 			<span class="user-status-avatar">
 				<liferay-ui:user-portrait

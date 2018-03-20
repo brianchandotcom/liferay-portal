@@ -62,11 +62,20 @@ if (article != null) {
 
 <div class="metadata">
 	<aui:field-wrapper>
-		<liferay-asset:asset-categories-selector className="<%= JournalArticle.class.getName() %>" classPK="<%= classPK %>" classTypePK="<%= ddmStructure.getStructureId() %>" ignoreRequestValue="<%= changeStructure %>" />
+		<liferay-asset:asset-categories-selector
+			className="<%= JournalArticle.class.getName() %>"
+			classPK="<%= classPK %>"
+			classTypePK="<%= ddmStructure.getStructureId() %>"
+			ignoreRequestValue="<%= changeStructure %>"
+		/>
 	</aui:field-wrapper>
 
 	<aui:field-wrapper label="tags">
-		<liferay-asset:asset-tags-selector className="<%= JournalArticle.class.getName() %>" classPK="<%= classPK %>" ignoreRequestValue="<%= changeStructure %>" />
+		<liferay-asset:asset-tags-selector
+			className="<%= JournalArticle.class.getName() %>"
+			classPK="<%= classPK %>"
+			ignoreRequestValue="<%= changeStructure %>"
+		/>
 	</aui:field-wrapper>
 
 	<aui:field-wrapper label="priority">

@@ -37,8 +37,18 @@ public class JSPSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testFormatTagLineBreaks() throws Exception {
+		test("FormatTagLineBreaks.testjsp");
+	}
+
+	@Test
 	public void testMisplacedImport() throws Exception {
 		test("MisplacedImport.testjsp", "Move imports to init.jsp");
+	}
+
+	@Test
+	public void testSortTagAttributes() throws Exception {
+		test("SortTagAttributes.testjsp");
 	}
 
 }

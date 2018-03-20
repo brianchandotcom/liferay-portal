@@ -18,14 +18,21 @@
 
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-button href="javascript:;" icon="cog" id="showSiteNavigationMenuSettings" label="settings" />
+		<liferay-frontend:management-bar-button
+			href="javascript:;"
+			icon="cog"
+			id="showSiteNavigationMenuSettings"
+			label="settings"
+		/>
 
 		<portlet:renderURL var="addSiteNavigationMenuItemRedirectURL">
 			<portlet:param name="mvcPath" value="/add_site_navigation_menu_item_redirect.jsp" />
 			<portlet:param name="portletResource" value="<%= portletDisplay.getId() %>" />
 		</portlet:renderURL>
 
-		<liferay-frontend:add-menu inline="<%= true %>">
+		<liferay-frontend:add-menu
+			inline="<%= true %>"
+		>
 
 			<%
 			for (SiteNavigationMenuItemType siteNavigationMenuItemType : siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemTypes()) {
@@ -39,7 +46,11 @@
 				addSiteNavigationMenuItemTypeURL.setWindowState(LiferayWindowState.POP_UP);
 			%>
 
-				<liferay-frontend:add-menu-item cssClass="add-menu-item-link" title="<%= siteNavigationMenuItemType.getLabel(locale) %>" url="<%= addSiteNavigationMenuItemTypeURL.toString() %>" />
+				<liferay-frontend:add-menu-item
+					cssClass="add-menu-item-link"
+					title="<%= siteNavigationMenuItemType.getLabel(locale) %>"
+					url="<%= addSiteNavigationMenuItemTypeURL.toString() %>"
+				/>
 
 			<%
 			}

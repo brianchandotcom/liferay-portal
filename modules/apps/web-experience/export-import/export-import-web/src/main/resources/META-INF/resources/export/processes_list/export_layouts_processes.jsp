@@ -283,7 +283,13 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 
 			<liferay-ui:search-container-column-text>
 				<c:if test="<%= !backgroundTask.isInProgress() %>">
-					<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+					<liferay-ui:icon-menu
+						direction="left-side"
+						icon="<%= StringPool.BLANK %>"
+						markupView="lexicon"
+						message="<%= StringPool.BLANK %>"
+						showWhenSingleIcon="<%= true %>"
+					>
 						<portlet:actionURL name="editExportConfiguration" var="relaunchURL">
 							<portlet:param name="mvcRenderCommandName" value="exportLayoutsView" />
 							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RELAUNCH %>" />
@@ -291,7 +297,12 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 							<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
 						</portlet:actionURL>
 
-						<liferay-ui:icon icon="reload" markupView="lexicon" message="relaunch" url="<%= relaunchURL %>" />
+						<liferay-ui:icon
+							icon="reload"
+							markupView="lexicon"
+							message="relaunch"
+							url="<%= relaunchURL %>"
+						/>
 
 						<portlet:actionURL name="deleteBackgroundTasks" var="deleteBackgroundTaskURL">
 							<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
@@ -312,7 +323,11 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" resultRowSplitter="<%= new ExportImportResultRowSplitter() %>" />
+		<liferay-ui:search-iterator
+			displayStyle="<%= displayStyle %>"
+			markupView="lexicon"
+			resultRowSplitter="<%= new ExportImportResultRowSplitter() %>"
+		/>
 	</liferay-ui:search-container>
 </aui:form>
 

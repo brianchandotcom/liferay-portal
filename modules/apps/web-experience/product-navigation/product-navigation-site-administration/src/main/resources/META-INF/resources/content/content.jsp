@@ -34,7 +34,9 @@ PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttrib
 
 	<c:choose>
 		<c:when test="<%= scopeLayouts.isEmpty() %>">
-			<liferay-application-list:panel-category-body panelCategory="<%= panelCategory %>" />
+			<liferay-application-list:panel-category-body
+				panelCategory="<%= panelCategory %>"
+			/>
 		</c:when>
 		<c:otherwise>
 
@@ -112,7 +114,9 @@ PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttrib
 									</ul>
 							</div>
 
-						<liferay-application-list:panel-category-body panelCategory="<%= panelCategory %>" />
+						<liferay-application-list:panel-category-body
+							panelCategory="<%= panelCategory %>"
+						/>
 					</li>
 				</ul>
 			</c:if>

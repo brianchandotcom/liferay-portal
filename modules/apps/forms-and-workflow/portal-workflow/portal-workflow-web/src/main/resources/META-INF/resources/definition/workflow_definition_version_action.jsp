@@ -43,7 +43,14 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 </liferay-portlet:actionURL>
 
 <c:if test="<%= currentWorkflowDefinition.getVersion() != workflowDefinition.getVersion() %>">
-	<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" id='<%= "iconMenu_" + String.valueOf(workflowDefinition.getVersion()) %>' markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+	<liferay-ui:icon-menu
+		direction="left-side"
+		icon="<%= StringPool.BLANK %>"
+		id='<%= "iconMenu_" + String.valueOf(workflowDefinition.getVersion()) %>'
+		markupView="lexicon"
+		message="<%= StringPool.BLANK %>"
+		showWhenSingleIcon="<%= true %>"
+	>
 		<liferay-ui:icon
 			id='<%= "previewBeforeRevert" + String.valueOf(workflowDefinition.getVersion()) %>'
 			message="preview"

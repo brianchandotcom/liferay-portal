@@ -67,7 +67,9 @@ SearchContainer dlSearchContainer = new SearchContainer(liferayPortletRequest, p
 <aui:input name="searchRepositoryId" type="hidden" value="<%= searchRepositoryId %>" />
 
 <c:if test="<%= showSearchInfo %>">
-	<liferay-util:buffer var="searchInfo">
+	<liferay-util:buffer
+		var="searchInfo"
+	>
 		<div class="search-info">
 			<span class="keywords">
 
@@ -110,7 +112,13 @@ SearchContainer dlSearchContainer = new SearchContainer(liferayPortletRequest, p
 				<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
 			</portlet:renderURL>
 
-			<liferay-ui:icon cssClass="close-search" iconCssClass="icon-remove" id="closeSearch" message="remove" url="<%= closeSearchURL %>" />
+			<liferay-ui:icon
+				cssClass="close-search"
+				iconCssClass="icon-remove"
+				id="closeSearch"
+				message="remove"
+				url="<%= closeSearchURL %>"
+			/>
 		</div>
 
 		<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
@@ -282,7 +290,11 @@ SearchContainer dlSearchContainer = new SearchContainer(liferayPortletRequest, p
 					</c:choose>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" searchContainer="<%= dlSearchContainer %>" />
+				<liferay-ui:search-iterator
+					displayStyle="descriptive"
+					markupView="lexicon"
+					searchContainer="<%= dlSearchContainer %>"
+				/>
 			</liferay-ui:search-container>
 
 		<%

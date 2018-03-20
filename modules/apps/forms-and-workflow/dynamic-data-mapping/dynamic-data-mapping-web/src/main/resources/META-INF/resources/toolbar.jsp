@@ -58,7 +58,11 @@ PortletURL portletURL = renderResponse.createRenderURL();
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteStructures();" %>' icon="trash" label="delete" />
+		<liferay-frontend:management-bar-button
+			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteStructures();" %>'
+			icon="trash"
+			label="delete"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 
 	<c:if test="<%= ddmDisplay.isShowAddButton(themeDisplay.getScopeGroup()) && DDMStructurePermission.containsAddStruturePermission(permissionChecker, groupId, scopeClassNameId) %>">
@@ -74,8 +78,13 @@ PortletURL portletURL = renderResponse.createRenderURL();
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 			</liferay-portlet:renderURL>
 
-			<liferay-frontend:add-menu inline="<%= true %>">
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addStructureURL %>" />
+			<liferay-frontend:add-menu
+				inline="<%= true %>"
+			>
+				<liferay-frontend:add-menu-item
+					title='<%= LanguageUtil.get(request, "add") %>'
+					url="<%= addStructureURL %>"
+				/>
 			</liferay-frontend:add-menu>
 		</liferay-frontend:management-bar-buttons>
 	</c:if>

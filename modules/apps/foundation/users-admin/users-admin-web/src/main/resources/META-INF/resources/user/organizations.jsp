@@ -99,7 +99,9 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 		</c:if>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator markupView="lexicon" />
+	<liferay-ui:search-iterator
+		markupView="lexicon"
+	/>
 </liferay-ui:search-container>
 
 <c:if test="<%= !portletName.equals(myAccountPortletId) %>">

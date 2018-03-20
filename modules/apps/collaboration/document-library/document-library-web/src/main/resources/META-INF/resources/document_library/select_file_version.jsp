@@ -86,7 +86,9 @@ if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentRe
 				/>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator markupView="lexicon" />
+			<liferay-ui:search-iterator
+				markupView="lexicon"
+			/>
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

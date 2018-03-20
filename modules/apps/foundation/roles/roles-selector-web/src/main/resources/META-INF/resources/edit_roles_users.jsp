@@ -101,5 +101,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portlet
 		/>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator markupView="lexicon" />
+	<liferay-ui:search-iterator
+		markupView="lexicon"
+	/>
 </liferay-ui:search-container>

@@ -67,7 +67,10 @@ roleSearch.setResults(roles);
 		<c:if test="<%= (rolesCount > 0) || searchTerms.isSearch() %>">
 			<li>
 				<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-					<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
+					<liferay-ui:input-search
+						autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
+						markupView="lexicon"
+					/>
 				</aui:form>
 			</li>
 		</c:if>
@@ -100,7 +103,10 @@ roleSearch.setResults(roles);
 			<%@ include file="/role_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+		<liferay-ui:search-iterator
+			displayStyle="<%= displayStyle %>"
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </aui:form>
 

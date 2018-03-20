@@ -45,7 +45,9 @@
 			%>
 
 			<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
-				<liferay-ui:input-search markupView="lexicon" />
+				<liferay-ui:input-search
+					markupView="lexicon"
+				/>
 			</aui:form>
 		</li>
 	</liferay-frontend:management-bar-filters>
@@ -70,7 +72,9 @@
 			%>
 
 			<liferay-ui:search-container-column-text>
-				<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+				<liferay-ui:search-container-column-text
+					colspan="<%= 2 %>"
+				>
 					<liferay-frontend:horizontal-card
 						resultRow="<%= row %>"
 						text="<%= HtmlUtil.escape(fragmentCollection.getName()) %>"
@@ -86,6 +90,9 @@
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= fragmentItemSelectorViewDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
+		<liferay-ui:search-iterator
+			displayStyle="<%= fragmentItemSelectorViewDisplayContext.getDisplayStyle() %>"
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </aui:form>

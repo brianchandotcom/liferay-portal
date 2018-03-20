@@ -20,7 +20,9 @@ boolean hasAddUserPermission = PortalPermissionUtil.contains(permissionChecker, 
 %>
 
 <c:if test="<%= hasAddOrganizationPermission || hasAddUserPermission %>">
-	<liferay-frontend:add-menu inline="<%= true %>">
+	<liferay-frontend:add-menu
+		inline="<%= true %>"
+	>
 		<c:if test="<%= hasAddUserPermission %>">
 			<portlet:renderURL var="addUserURL">
 				<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_user" />
@@ -28,7 +30,10 @@ boolean hasAddUserPermission = PortalPermissionUtil.contains(permissionChecker, 
 				<portlet:param name="organizationsSearchContainerPrimaryKeys" value="<%= String.valueOf(organizationId) %>" />
 			</portlet:renderURL>
 
-			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "new-user") %>' url="<%= addUserURL.toString() %>" />
+			<liferay-frontend:add-menu-item
+				title='<%= LanguageUtil.get(request, "new-user") %>'
+				url="<%= addUserURL.toString() %>"
+			/>
 		</c:if>
 
 		<c:if test="<%= hasAddOrganizationPermission %>">
@@ -44,7 +49,10 @@ boolean hasAddUserPermission = PortalPermissionUtil.contains(permissionChecker, 
 					<portlet:param name="type" value="<%= organizationType %>" />
 				</portlet:renderURL>
 
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.format(request, "new-x", organizationType) %>' url="<%= addOrganizationURL.toString() %>" />
+				<liferay-frontend:add-menu-item
+					title='<%= LanguageUtil.format(request, "new-x", organizationType) %>'
+					url="<%= addOrganizationURL.toString() %>"
+				/>
 
 			<%
 			}
@@ -53,7 +61,11 @@ boolean hasAddUserPermission = PortalPermissionUtil.contains(permissionChecker, 
 		</c:if>
 
 		<c:if test="<%= OrganizationPermissionUtil.contains(permissionChecker, organization, ActionKeys.ASSIGN_MEMBERS) %>">
-			<liferay-frontend:add-menu-item id="assignUsers" title='<%= LanguageUtil.get(request, "assign-users") %>' url="javascript:;" />
+			<liferay-frontend:add-menu-item
+				id="assignUsers"
+				title='<%= LanguageUtil.get(request, "assign-users") %>'
+				url="javascript:;"
+			/>
 		</c:if>
 	</liferay-frontend:add-menu>
 </c:if>

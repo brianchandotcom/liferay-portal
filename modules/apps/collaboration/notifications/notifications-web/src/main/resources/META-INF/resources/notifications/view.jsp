@@ -95,11 +95,24 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 
 	<liferay-frontend:management-bar-action-buttons>
 		<c:if test="<%= !actionRequired %>">
-			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "markNotificationsAsRead();" %>' icon="envelope-open" label="mark-as-read" />
-			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "markNotificationsAsUnread();" %>' icon="envelope-closed" label="mark-as-unread" />
+			<liferay-frontend:management-bar-button
+				href='<%= "javascript:" + renderResponse.getNamespace() + "markNotificationsAsRead();" %>'
+				icon="envelope-open"
+				label="mark-as-read"
+			/>
+
+			<liferay-frontend:management-bar-button
+				href='<%= "javascript:" + renderResponse.getNamespace() + "markNotificationsAsUnread();" %>'
+				icon="envelope-closed"
+				label="mark-as-unread"
+			/>
 		</c:if>
 
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteAllNotifications();" %>' icon="times" label="delete" />
+		<liferay-frontend:management-bar-button
+			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteAllNotifications();" %>'
+			icon="times"
+			label="delete"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -118,7 +131,10 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 					<%@ include file="/notifications/user_notification_entry.jspf" %>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
+				<liferay-ui:search-iterator
+					displayStyle="descriptive"
+					markupView="lexicon"
+				/>
 			</liferay-ui:search-container>
 		</div>
 	</aui:form>

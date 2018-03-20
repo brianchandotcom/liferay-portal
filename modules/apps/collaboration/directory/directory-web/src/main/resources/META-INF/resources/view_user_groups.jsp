@@ -83,7 +83,9 @@ boolean showSearch = ParamUtil.getBoolean(request, "showSearch", true);
 
 		<c:if test="<%= showSearch %>">
 			<li>
-				<liferay-ui:input-search markupView="lexicon" />
+				<liferay-ui:input-search
+					markupView="lexicon"
+				/>
 			</li>
 		</c:if>
 	</liferay-frontend:management-bar-filters>
@@ -118,6 +120,8 @@ boolean showSearch = ParamUtil.getBoolean(request, "showSearch", true);
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </div>

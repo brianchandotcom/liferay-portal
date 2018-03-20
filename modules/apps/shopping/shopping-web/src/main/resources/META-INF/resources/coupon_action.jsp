@@ -47,5 +47,7 @@ ShoppingCoupon coupon = (ShoppingCoupon)row.getObject();
 		<portlet:param name="deleteCouponIds" value="<%= String.valueOf(coupon.getCouponId()) %>" />
 	</portlet:actionURL>
 
-	<liferay-ui:icon-delete url="<%= deleteURL %>" />
+	<liferay-ui:icon-delete
+		url="<%= deleteURL %>"
+	/>
 </liferay-ui:icon-menu>

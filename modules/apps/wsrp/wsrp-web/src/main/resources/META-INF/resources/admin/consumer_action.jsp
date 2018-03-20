@@ -34,7 +34,13 @@ catch (Exception e) {
 
 <c:choose>
 	<c:when test="<%= serviceDescription == null %>">
-		<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+		<liferay-ui:icon-menu
+			direction="left-side"
+			icon="<%= StringPool.BLANK %>"
+			markupView="lexicon"
+			message="<%= StringPool.BLANK %>"
+			showWhenSingleIcon="<%= true %>"
+		>
 			<portlet:actionURL name="restartConsumer" var="restartConsumerURL">
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="wsrpConsumerId" value="<%= String.valueOf(wsrpConsumer.getWsrpConsumerId()) %>" />
@@ -50,11 +56,19 @@ catch (Exception e) {
 				<portlet:param name="wsrpConsumerId" value="<%= String.valueOf(wsrpConsumer.getWsrpConsumerId()) %>" />
 			</portlet:actionURL>
 
-			<liferay-ui:icon-delete url="<%= deleteURL %>" />
+			<liferay-ui:icon-delete
+				url="<%= deleteURL %>"
+			/>
 		</liferay-ui:icon-menu>
 	</c:when>
 	<c:otherwise>
-		<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+		<liferay-ui:icon-menu
+			direction="left-side"
+			icon="<%= StringPool.BLANK %>"
+			markupView="lexicon"
+			message="<%= StringPool.BLANK %>"
+			showWhenSingleIcon="<%= true %>"
+		>
 			<portlet:renderURL var="editURL">
 				<portlet:param name="mvcPath" value="/admin/edit_consumer.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -117,7 +131,9 @@ catch (Exception e) {
 				<portlet:param name="wsrpConsumerId" value="<%= String.valueOf(wsrpConsumer.getWsrpConsumerId()) %>" />
 			</portlet:actionURL>
 
-			<liferay-ui:icon-delete url="<%= deleteURL %>" />
+			<liferay-ui:icon-delete
+				url="<%= deleteURL %>"
+			/>
 		</liferay-ui:icon-menu>
 	</c:otherwise>
 </c:choose>

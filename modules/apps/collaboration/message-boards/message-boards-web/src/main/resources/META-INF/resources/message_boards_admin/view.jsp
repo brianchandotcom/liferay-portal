@@ -167,17 +167,31 @@ mbListDisplayContext.populateResultsAndTotal(searchContainer);
 				<aui:input name="breadcrumbsCategoryId" type="hidden" value="<%= categoryId %>" />
 				<aui:input name="searchCategoryId" type="hidden" value="<%= categoryId %>" />
 
-				<liferay-ui:input-search markupView="lexicon" />
+				<liferay-ui:input-search
+					markupView="lexicon"
+				/>
 			</aui:form>
 		</li>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteEntries();" %>' icon='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "trash" : "times" %>' label='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>' />
+		<liferay-frontend:management-bar-button
+			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteEntries();" %>'
+			icon='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "trash" : "times" %>'
+			label='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>'
+		/>
 
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "lockEntries();" %>' icon="lock" label="lock" />
+		<liferay-frontend:management-bar-button
+			href='<%= "javascript:" + renderResponse.getNamespace() + "lockEntries();" %>'
+			icon="lock"
+			label="lock"
+		/>
 
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "unlockEntries();" %>' icon="unlock" label="unlock" />
+		<liferay-frontend:management-bar-button
+			href='<%= "javascript:" + renderResponse.getNamespace() + "unlockEntries();" %>'
+			icon="unlock"
+			label="unlock"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 

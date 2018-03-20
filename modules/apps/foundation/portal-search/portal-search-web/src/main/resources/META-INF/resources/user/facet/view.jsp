@@ -44,8 +44,20 @@ UserSearchFacetDisplayContext userSearchFacetDisplayContext = (UserSearchFacetDi
 		<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(userSearchFacetDisplayContext.getParamName()) %>" type="hidden" value="<%= userSearchFacetDisplayContext.getParamValue() %>" />
 	</c:when>
 	<c:otherwise>
-		<liferay-ui:panel-container extended="<%= true %>" id='<%= renderResponse.getNamespace() + "facetUserPanelContainer" %>' markupView="lexicon" persistState="<%= true %>">
-			<liferay-ui:panel collapsible="<%= true %>" cssClass="search-facet" id='<%= renderResponse.getNamespace() + "facetUserPanel" %>' markupView="lexicon" persistState="<%= true %>" title="user">
+		<liferay-ui:panel-container
+			extended="<%= true %>"
+			id='<%= renderResponse.getNamespace() + "facetUserPanelContainer" %>'
+			markupView="lexicon"
+			persistState="<%= true %>"
+		>
+			<liferay-ui:panel
+				collapsible="<%= true %>"
+				cssClass="search-facet"
+				id='<%= renderResponse.getNamespace() + "facetUserPanel" %>'
+				markupView="lexicon"
+				persistState="<%= true %>"
+				title="user"
+			>
 				<aui:form method="post" name="userFacetForm">
 					<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(userSearchFacetDisplayContext.getParamName()) %>" type="hidden" value="<%= userSearchFacetDisplayContext.getParamValue() %>" />
 					<aui:input cssClass="facet-parameter-name" name="facet-parameter-name" type="hidden" value="<%= userSearchFacetDisplayContext.getParamName() %>" />

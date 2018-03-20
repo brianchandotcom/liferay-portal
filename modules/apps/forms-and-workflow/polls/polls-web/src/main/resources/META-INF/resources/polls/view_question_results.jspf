@@ -190,7 +190,9 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance(locale);
 		}
 		%>
 
-		<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+		<liferay-ui:search-iterator
+			searchContainer="<%= searchContainer %>"
+		/>
 	</c:if>
 </c:if>
 

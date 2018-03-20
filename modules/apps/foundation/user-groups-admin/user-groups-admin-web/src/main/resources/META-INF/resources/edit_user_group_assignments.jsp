@@ -99,8 +99,14 @@ navigationItems.add(entriesNavigationItem);
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 
-		<liferay-frontend:add-menu inline="<%= true %>">
-			<liferay-frontend:add-menu-item id="addUsers" title='<%= LanguageUtil.get(request, "add-users") %>' url="javascript:;" />
+		<liferay-frontend:add-menu
+			inline="<%= true %>"
+		>
+			<liferay-frontend:add-menu-item
+				id="addUsers"
+				title='<%= LanguageUtil.get(request, "add-users") %>'
+				url="javascript:;"
+			/>
 		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
@@ -119,13 +125,20 @@ navigationItems.add(entriesNavigationItem);
 
 		<li>
 			<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-				<liferay-ui:input-search markupView="lexicon" />
+				<liferay-ui:input-search
+					markupView="lexicon"
+				/>
 			</aui:form>
 		</li>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="removeUsers" label="remove" />
+		<liferay-frontend:management-bar-button
+			href="javascript:;"
+			icon="trash"
+			id="removeUsers"
+			label="remove"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -137,7 +150,12 @@ navigationItems.add(entriesNavigationItem);
 	<aui:input name="removeUserIds" type="hidden" />
 
 	<div id="breadcrumb">
-		<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
+		<liferay-ui:breadcrumb
+			showCurrentGroup="<%= false %>"
+			showGuestGroup="<%= false %>"
+			showLayout="<%= false %>"
+			showPortletBreadcrumb="<%= true %>"
+		/>
 	</div>
 
 	<liferay-ui:search-container
@@ -145,7 +163,9 @@ navigationItems.add(entriesNavigationItem);
 		rowChecker="<%= rowChecker %>"
 		searchContainer="<%= userSearchContainer %>"
 	>
-		<liferay-ui:user-search-container-results userParams="<%= userParams %>" />
+		<liferay-ui:user-search-container-results
+			userParams="<%= userParams %>"
+		/>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.User"
@@ -162,7 +182,10 @@ navigationItems.add(entriesNavigationItem);
 			<%@ include file="/user_search_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+		<liferay-ui:search-iterator
+			displayStyle="<%= displayStyle %>"
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </aui:form>
 

@@ -152,5 +152,10 @@
 		</c:choose>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" resultRowSplitter="<%= new WorkflowInstanceResultRowSplitter() %>" searchContainer="<%= workflowInstanceViewDisplayContext.getSearchContainer() %>" />
+	<liferay-ui:search-iterator
+		displayStyle="<%= displayStyle %>"
+		markupView="lexicon"
+		resultRowSplitter="<%= new WorkflowInstanceResultRowSplitter() %>"
+		searchContainer="<%= workflowInstanceViewDisplayContext.getSearchContainer() %>"
+	/>
 </liferay-ui:search-container>

@@ -108,7 +108,13 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 						<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
 					</liferay-portlet:actionURL>
 
-					<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+					<liferay-ui:icon-menu
+						direction="left-side"
+						icon="<%= StringPool.BLANK %>"
+						markupView="lexicon"
+						message="<%= StringPool.BLANK %>"
+						showWhenSingleIcon="<%= true %>"
+					>
 						<liferay-ui:icon-delete
 							label="<%= true %>"
 							message='<%= ((completionDate != null) && completionDate.before(new Date())) ? "clear" : "cancel" %>'
@@ -119,7 +125,9 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 
 	<%

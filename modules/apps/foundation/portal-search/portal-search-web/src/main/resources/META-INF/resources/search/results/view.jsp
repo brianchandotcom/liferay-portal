@@ -119,7 +119,10 @@ com.liferay.portal.kernel.dao.search.SearchContainer<com.liferay.portal.kernel.s
 						<strong><%= searchResultSummaryDisplayContext.getModelResource() %></strong> &#183;
 
 						<c:if test="<%= searchResultSummaryDisplayContext.isLocaleReminderVisible() %>">
-							<liferay-ui:icon image='<%= "../language/" + searchResultSummaryDisplayContext.getLocaleLanguageId() %>' message="<%= searchResultSummaryDisplayContext.getLocaleReminder() %>" />
+							<liferay-ui:icon
+								image='<%= "../language/" + searchResultSummaryDisplayContext.getLocaleLanguageId() %>'
+								message="<%= searchResultSummaryDisplayContext.getLocaleReminder() %>"
+							/>
 						</c:if>
 
 						<c:if test="<%= searchResultSummaryDisplayContext.isCreatorVisible() %>">
@@ -216,7 +219,11 @@ com.liferay.portal.kernel.dao.search.SearchContainer<com.liferay.portal.kernel.s
 	</liferay-ui:search-container-row>
 
 	<aui:form useNamespace="<%= false %>">
-		<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" type="more" />
+		<liferay-ui:search-iterator
+			displayStyle="descriptive"
+			markupView="lexicon"
+			type="more"
+		/>
 	</aui:form>
 </liferay-ui:search-container>
 

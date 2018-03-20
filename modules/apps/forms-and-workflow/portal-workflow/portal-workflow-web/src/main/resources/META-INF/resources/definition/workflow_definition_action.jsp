@@ -109,7 +109,10 @@ String duplicateTitle = workflowDefinitionDisplayContext.getDuplicateTitle(workf
 		<aui:fieldset>
 			<aui:col>
 				<aui:field-wrapper label="title">
-					<liferay-ui:input-localized name='<%= randomNamespace + "title" %>' xml="<%= duplicateTitle %>" />
+					<liferay-ui:input-localized
+						name='<%= randomNamespace + "title" %>'
+						xml="<%= duplicateTitle %>"
+					/>
 				</aui:field-wrapper>
 			</aui:col>
 

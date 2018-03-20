@@ -94,7 +94,10 @@ renderResponse.setTitle(role.getTitle(locale));
 
 		<li>
 			<aui:form action="<%= portletURL %>" name="searchFm">
-				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
+				<liferay-ui:input-search
+					autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
+					markupView="lexicon"
+				/>
 			</aui:form>
 		</li>
 	</liferay-frontend:management-bar-filters>
@@ -106,13 +109,24 @@ renderResponse.setTitle(role.getTitle(locale));
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 
-		<liferay-frontend:add-menu inline="<%= true %>">
-			<liferay-frontend:add-menu-item id="addAssignees" title='<%= LanguageUtil.format(request, "add-x", tabs2) %>' url="javascript:;" />
+		<liferay-frontend:add-menu
+			inline="<%= true %>"
+		>
+			<liferay-frontend:add-menu-item
+				id="addAssignees"
+				title='<%= LanguageUtil.format(request, "add-x", tabs2) %>'
+				url="javascript:;"
+			/>
 		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="unsetRoleAssignments" label="delete" />
+		<liferay-frontend:management-bar-button
+			href="javascript:;"
+			icon="trash"
+			id="unsetRoleAssignments"
+			label="delete"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 

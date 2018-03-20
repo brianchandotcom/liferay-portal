@@ -56,7 +56,9 @@
 			value='<%= LanguageUtil.get(request, "user") %>'
 		/>
 
-		<liferay-ui:search-container-column-text name="active">
+		<liferay-ui:search-container-column-text
+			name="active"
+		>
 			<liferay-ui:message key="yes" />
 		</liferay-ui:search-container-column-text>
 
@@ -66,5 +68,7 @@
 		/>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator markupView="lexicon" />
+	<liferay-ui:search-iterator
+		markupView="lexicon"
+	/>
 </liferay-ui:search-container>

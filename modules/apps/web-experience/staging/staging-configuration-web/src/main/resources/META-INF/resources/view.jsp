@@ -99,7 +99,9 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 		</div>
 	</c:when>
 	<c:otherwise>
-		<liferay-staging:alert type="INFO">
+		<liferay-staging:alert
+			type="INFO"
+		>
 			<liferay-ui:message key="you-do-not-have-permission-to-manage-settings-related-to-staging" />
 		</liferay-staging:alert>
 	</c:otherwise>

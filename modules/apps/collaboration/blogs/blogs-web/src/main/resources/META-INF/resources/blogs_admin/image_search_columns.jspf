@@ -33,7 +33,9 @@ String thumbnailSrc = DLUtil.getThumbnailSrc(fileEntry, themeDisplay);
 			</c:otherwise>
 		</c:choose>
 
-		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+		<liferay-ui:search-container-column-text
+			colspan="<%= 2 %>"
+		>
 
 			<%
 			Date createDate = fileEntry.getCreateDate();
@@ -98,13 +100,21 @@ String thumbnailSrc = DLUtil.getThumbnailSrc(fileEntry, themeDisplay);
 		</liferay-ui:search-container-column-text>
 	</c:when>
 	<c:otherwise>
-		<liferay-ui:search-container-column-text cssClass="table-cell-content" name="title">
+		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
+			name="title"
+		>
 			<%= HtmlUtil.escape(fileEntry.getTitle()) %>
 		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-text name="size" value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>" />
+		<liferay-ui:search-container-column-text
+			name="size"
+			value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>"
+		/>
 
-		<liferay-ui:search-container-column-text name="modified-date">
+		<liferay-ui:search-container-column-text
+			name="modified-date"
+		>
 			<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - fileEntry.getModifiedDate().getTime(), true), HtmlUtil.escape(fileEntry.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
 		</liferay-ui:search-container-column-text>
 

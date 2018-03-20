@@ -100,7 +100,9 @@ if (portletTitleBasedNavigation) {
 									<portlet:param name="urlTitle" value="<%= previousEntry.getUrlTitle() %>" />
 								</portlet:renderURL>
 
-								<liferay-util:html-top outputKey="blogs_previous_entry_link">
+								<liferay-util:html-top
+									outputKey="blogs_previous_entry_link"
+								>
 									<link href="<%= previousEntryURL.toString() %>" rel="prev" />
 								</liferay-util:html-top>
 
@@ -122,7 +124,9 @@ if (portletTitleBasedNavigation) {
 										<%= dateFormatDate.format(previousEntry.getDisplayDate()) %>
 
 										<c:if test="<%= blogsPortletInstanceConfiguration.enableReadingTime() %>">
-											<liferay-reading-time:reading-time model="<%= previousEntry %>" />
+											<liferay-reading-time:reading-time
+												model="<%= previousEntry %>"
+											/>
 										</c:if>
 									</small>
 								</div>
@@ -147,7 +151,9 @@ if (portletTitleBasedNavigation) {
 									<portlet:param name="urlTitle" value="<%= nextEntry.getUrlTitle() %>" />
 								</portlet:renderURL>
 
-								<liferay-util:html-top outputKey="blogs_next_entry_link">
+								<liferay-util:html-top
+									outputKey="blogs_next_entry_link"
+								>
 									<link href="<%= nextEntryURL.toString() %>" rel="next" />
 								</liferay-util:html-top>
 
@@ -169,7 +175,9 @@ if (portletTitleBasedNavigation) {
 										<%= dateFormatDate.format(nextEntry.getDisplayDate()) %>
 
 										<c:if test="<%= blogsPortletInstanceConfiguration.enableReadingTime() %>">
-											<liferay-reading-time:reading-time model="<%= nextEntry %>" />
+											<liferay-reading-time:reading-time
+												model="<%= nextEntry %>"
+											/>
 										</c:if>
 									</small>
 								</div>

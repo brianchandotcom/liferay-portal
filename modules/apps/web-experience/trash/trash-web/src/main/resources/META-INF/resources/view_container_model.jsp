@@ -32,7 +32,11 @@ renderResponse.setTitle(LanguageUtil.format(request, "select-x", trashContainerM
 </div>
 
 <aui:form cssClass="container-fluid-1280" method="post" name="selectContainerFm">
-	<liferay-ui:breadcrumb showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" />
+	<liferay-ui:breadcrumb
+		showGuestGroup="<%= false %>"
+		showLayout="<%= false %>"
+		showParentGroups="<%= false %>"
+	/>
 
 	<aui:button-row>
 
@@ -110,7 +114,9 @@ renderResponse.setTitle(LanguageUtil.format(request, "select-x", trashContainerM
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </aui:form>
 

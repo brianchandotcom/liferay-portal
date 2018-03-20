@@ -31,7 +31,9 @@
 	PasswordPolicyRel passwordPolicyRel = PasswordPolicyRelLocalServiceUtil.fetchPasswordPolicyRel(Organization.class.getName(), organization.getOrganizationId());
 	%>
 
-	<liferay-util:buffer var="name">
+	<liferay-util:buffer
+		var="name"
+	>
 		<%= organization.getName() %>
 
 		<c:if test="<%= (passwordPolicyRel != null) && (passwordPolicyRel.getPasswordPolicyId() != passwordPolicy.getPasswordPolicyId()) %>">

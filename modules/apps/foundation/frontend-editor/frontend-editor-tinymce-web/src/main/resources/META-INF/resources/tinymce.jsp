@@ -59,7 +59,9 @@ String toolbarSet = (String)request.getAttribute(TinyMCEEditorConstants.ATTRIBUT
 </liferay-util:buffer>
 
 <c:if test="<%= !skipEditorLoading %>">
-	<liferay-editor:resources editorName="<%= editorName %>" />
+	<liferay-editor:resources
+		editorName="<%= editorName %>"
+	/>
 </c:if>
 
 <div class="<%= HtmlUtil.escapeAttribute(cssClass) %>" id="<%= HtmlUtil.escapeAttribute(name) %>Container">

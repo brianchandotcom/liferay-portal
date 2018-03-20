@@ -157,6 +157,11 @@ WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" resultRowSplitter="<%= new WorkflowDefinitionResultRowSplitter() %>" searchContainer="<%= workflowDefinitionSearch %>" />
+		<liferay-ui:search-iterator
+			displayStyle="list"
+			markupView="lexicon"
+			resultRowSplitter="<%= new WorkflowDefinitionResultRowSplitter() %>"
+			searchContainer="<%= workflowDefinitionSearch %>"
+		/>
 	</liferay-ui:search-container>
 </div>

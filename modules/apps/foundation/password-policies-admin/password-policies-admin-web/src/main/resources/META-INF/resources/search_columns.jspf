@@ -20,7 +20,9 @@
 			icon="password-policies"
 		/>
 
-		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+		<liferay-ui:search-container-column-text
+			colspan="<%= 2 %>"
+		>
 			<h5>
 				<aui:a href="<%= rowURL %>"><%= passwordPolicy.getName() %></aui:a>
 			</h5>

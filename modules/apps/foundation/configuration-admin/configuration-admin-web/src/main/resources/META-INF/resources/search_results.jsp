@@ -46,7 +46,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
 			</portlet:renderURL>
 
 			<aui:form action="<%= searchURL %>" name="searchFm">
-				<liferay-ui:input-search autoFocus="<%= true %>" markupView="lexicon" />
+				<liferay-ui:input-search
+					autoFocus="<%= true %>"
+					markupView="lexicon"
+				/>
 			</aui:form>
 		</li>
 	</liferay-frontend:management-bar-filters>
@@ -153,7 +156,11 @@ renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
 			<liferay-ui:search-container-column-text
 				name=""
 			>
-				<liferay-ui:icon-menu direction="right" markupView="lexicon" showWhenSingleIcon="<%= true %>">
+				<liferay-ui:icon-menu
+					direction="right"
+					markupView="lexicon"
+					showWhenSingleIcon="<%= true %>"
+				>
 					<c:choose>
 						<c:when test="<%= configurationModel.isFactory() && !configurationModel.isCompanyFactory() %>">
 							<liferay-ui:icon
@@ -199,6 +206,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </div>

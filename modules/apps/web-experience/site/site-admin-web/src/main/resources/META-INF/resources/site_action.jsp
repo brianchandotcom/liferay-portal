@@ -132,7 +132,9 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 				<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 			</portlet:actionURL>
 
-			<liferay-ui:icon-deactivate url="<%= activateURL %>" />
+			<liferay-ui:icon-deactivate
+				url="<%= activateURL %>"
+			/>
 		</c:when>
 		<c:when test="<%= !group.isActive() && !group.isCompany() && hasUpdatePermission %>">
 			<portlet:actionURL name="activate" var="activateURL">
@@ -153,6 +155,8 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete url="<%= deleteURL %>" />
+		<liferay-ui:icon-delete
+			url="<%= deleteURL %>"
+		/>
 	</c:if>
 </liferay-ui:icon-menu>

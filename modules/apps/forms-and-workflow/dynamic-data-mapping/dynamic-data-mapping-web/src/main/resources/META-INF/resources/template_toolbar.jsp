@@ -90,7 +90,11 @@ portletURL.setParameter("keywords", keywords);
 
 	<c:if test="<%= includeCheckBox %>">
 		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteTemplates();" %>' icon="trash" label="delete" />
+			<liferay-frontend:management-bar-button
+				href='<%= "javascript:" + renderResponse.getNamespace() + "deleteTemplates();" %>'
+				icon="trash"
+				label="delete"
+			/>
 		</liferay-frontend:management-bar-action-buttons>
 	</c:if>
 

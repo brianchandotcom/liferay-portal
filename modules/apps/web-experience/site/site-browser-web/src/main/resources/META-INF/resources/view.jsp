@@ -49,7 +49,9 @@ GroupSearch groupSearch = siteBrowserDisplayContext.getGroupSearch();
 			<c:if test='<%= !Objects.equals(siteBrowserDisplayContext.getType(), "parent-sites") %>'>
 				<li>
 					<aui:form action="<%= siteBrowserDisplayContext.getPortletURL() %>" name="searchFm">
-						<liferay-ui:input-search markupView="lexicon" />
+						<liferay-ui:input-search
+							markupView="lexicon"
+						/>
 					</aui:form>
 				</li>
 			</c:if>
@@ -169,7 +171,10 @@ GroupSearch groupSearch = siteBrowserDisplayContext.getGroupSearch();
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+		<liferay-ui:search-iterator
+			displayStyle="<%= displayStyle %>"
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </aui:form>
 

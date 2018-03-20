@@ -23,5 +23,10 @@ JournalArticle article = journalDisplayContext.getArticle();
 <div class="form-group">
 	<label for="<portlet:namespace />friendlyURL"><liferay-ui:message key="friendly-url" /><liferay-ui:icon-help message='<%= LanguageUtil.format(request, "for-example-x", "<em>news</em>", false) %>' /></label>
 
-	<liferay-ui:input-localized defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" inputAddon="<%= journalDisplayContext.getFriendlyURLBase() %>" name="friendlyURL" xml="<%= (article != null) ? HttpUtil.decodeURL(article.getFriendlyURLsXML()) : StringPool.BLANK %>" />
+	<liferay-ui:input-localized
+		defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>"
+		inputAddon="<%= journalDisplayContext.getFriendlyURLBase() %>"
+		name="friendlyURL"
+		xml="<%= (article != null) ? HttpUtil.decodeURL(article.getFriendlyURLsXML()) : StringPool.BLANK %>"
+	/>
 </div>

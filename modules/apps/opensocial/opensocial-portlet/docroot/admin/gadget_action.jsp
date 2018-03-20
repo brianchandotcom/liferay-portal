@@ -42,7 +42,11 @@ catch (Exception e) {
 			<portlet:param name="gadgetId" value="<%= String.valueOf(gadget.getGadgetId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon iconCssClass="icon-edit" message="edit" url="<%= updateGadgetURL %>" />
+		<liferay-ui:icon
+			iconCssClass="icon-edit"
+			message="edit"
+			url="<%= updateGadgetURL %>"
+		/>
 
 		<c:if test="<%= (oAuthServices != null) && (oAuthServices.size() > 0) %>">
 			<portlet:renderURL var="configureOAuthURL">
@@ -51,7 +55,11 @@ catch (Exception e) {
 				<portlet:param name="gadgetId" value="<%= String.valueOf(gadget.getGadgetId()) %>" />
 			</portlet:renderURL>
 
-			<liferay-ui:icon iconCssClass="icon-list-alt" message="manage-oauth" url="<%= configureOAuthURL %>" />
+			<liferay-ui:icon
+				iconCssClass="icon-list-alt"
+				message="manage-oauth"
+				url="<%= configureOAuthURL %>"
+			/>
 		</c:if>
 
 		<portlet:actionURL name="refreshGadgets" var="refreshGadgetsURL">
@@ -59,7 +67,11 @@ catch (Exception e) {
 			<portlet:param name="gadgetId" value="<%= String.valueOf(gadget.getGadgetId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon iconCssClass="icon-refresh" message="refresh" url="<%= refreshGadgetsURL %>" />
+		<liferay-ui:icon
+			iconCssClass="icon-refresh"
+			message="refresh"
+			url="<%= refreshGadgetsURL %>"
+		/>
 	</c:if>
 
 	<c:if test="<%= GadgetPermission.contains(permissionChecker, themeDisplay.getScopeGroupId(), gadget.getGadgetId(), ActionKeys.PERMISSIONS) %>">
@@ -86,6 +98,8 @@ catch (Exception e) {
 			<portlet:param name="gadgetId" value="<%= String.valueOf(gadget.getGadgetId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete url="<%= deleteURL %>" />
+		<liferay-ui:icon-delete
+			url="<%= deleteURL %>"
+		/>
 	</c:if>
 </liferay-ui:icon-menu>

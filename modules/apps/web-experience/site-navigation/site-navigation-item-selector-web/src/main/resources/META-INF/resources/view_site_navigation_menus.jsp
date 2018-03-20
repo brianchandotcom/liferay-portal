@@ -34,13 +34,19 @@ String displayStyle = siteNavigationMenuItemSelectorViewDisplayContext.getDispla
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation label="all">
+		<liferay-frontend:management-bar-navigation
+			label="all"
+		>
 
 			<%
 			PortletURL portletURL = siteNavigationMenuItemSelectorViewDisplayContext.getPortletURL();
 			%>
 
-			<liferay-frontend:management-bar-filter-item active="<%= true %>" label="all" url="<%= portletURL.toString() %>" />
+			<liferay-frontend:management-bar-filter-item
+				active="<%= true %>"
+				label="all"
+				url="<%= portletURL.toString() %>"
+			/>
 		</liferay-frontend:management-bar-navigation>
 
 		<liferay-frontend:management-bar-sort
@@ -81,7 +87,9 @@ String displayStyle = siteNavigationMenuItemSelectorViewDisplayContext.getDispla
 						userId="<%= siteNavigationMenu.getUserId() %>"
 					/>
 
-					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
 						<h4>
 							<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
 								<%= HtmlUtil.escape(siteNavigationMenu.getName()) %>
@@ -153,7 +161,10 @@ String displayStyle = siteNavigationMenuItemSelectorViewDisplayContext.getDispla
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+		<liferay-ui:search-iterator
+			displayStyle="<%= displayStyle %>"
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </aui:form>
 

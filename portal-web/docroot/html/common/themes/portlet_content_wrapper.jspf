@@ -26,7 +26,10 @@
 			</c:when>
 			<c:otherwise>
 				<c:if test='<%= !tilesPortletContent.endsWith("/error.jsp") %>'>
-					<liferay-theme:portlet-messages group="<%= group %>" portlet="<%= portlet %>" />
+					<liferay-theme:portlet-messages
+						group="<%= group %>"
+						portlet="<%= portlet %>"
+					/>
 				</c:if>
 
 				<c:choose>

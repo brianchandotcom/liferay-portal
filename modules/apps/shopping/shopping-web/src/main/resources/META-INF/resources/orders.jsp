@@ -113,7 +113,9 @@ portletURL.setParameter("tabs1", "order");
 	}
 	%>
 
-	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+	<liferay-ui:search-iterator
+		searchContainer="<%= searchContainer %>"
+	/>
 </aui:form>
 
 <aui:script>

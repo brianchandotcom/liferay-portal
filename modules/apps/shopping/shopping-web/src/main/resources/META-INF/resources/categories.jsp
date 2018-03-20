@@ -110,7 +110,9 @@ boolean showSearch = (categoriesAndItemsCount > 0);
 
 			<li>
 				<aui:form action="<%= searchURL.toString() %>" name="searchFm">
-					<liferay-ui:input-search markupView="lexicon" />
+					<liferay-ui:input-search
+						markupView="lexicon"
+					/>
 				</aui:form>
 			</li>
 		</c:if>
@@ -129,7 +131,9 @@ boolean showSearch = (categoriesAndItemsCount > 0);
 		%>
 
 		<c:if test="<%= showAddCategoryButton || showAddItemButton %>">
-			<liferay-frontend:add-menu inline="<%= true %>">
+			<liferay-frontend:add-menu
+				inline="<%= true %>"
+			>
 				<c:if test="<%= showAddCategoryButton %>">
 					<portlet:renderURL var="addCategoriesURL">
 						<portlet:param name="mvcRenderCommandName" value="/shopping/edit_category" />
@@ -137,7 +141,10 @@ boolean showSearch = (categoriesAndItemsCount > 0);
 						<portlet:param name="parentCategoryId" value="<%= String.valueOf(categoryId) %>" />
 					</portlet:renderURL>
 
-					<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-category") %>' url="<%= addCategoriesURL.toString() %>" />
+					<liferay-frontend:add-menu-item
+						title='<%= LanguageUtil.get(request, "add-category") %>'
+						url="<%= addCategoriesURL.toString() %>"
+					/>
 				</c:if>
 
 				<c:if test="<%= showAddItemButton %>">
@@ -147,7 +154,10 @@ boolean showSearch = (categoriesAndItemsCount > 0);
 						<portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" />
 					</portlet:renderURL>
 
-					<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-item") %>' url="<%= addItemURL.toString() %>" />
+					<liferay-frontend:add-menu-item
+						title='<%= LanguageUtil.get(request, "add-item") %>'
+						url="<%= addItemURL.toString() %>"
+					/>
 				</c:if>
 			</liferay-frontend:add-menu>
 		</c:if>
@@ -334,6 +344,10 @@ boolean showSearch = (categoriesAndItemsCount > 0);
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" resultRowSplitter="<%= new ShoppingResultRowSplitter() %>" />
+		<liferay-ui:search-iterator
+			displayStyle="<%= displayStyle %>"
+			markupView="lexicon"
+			resultRowSplitter="<%= new ShoppingResultRowSplitter() %>"
+		/>
 	</liferay-ui:search-container>
 </div>

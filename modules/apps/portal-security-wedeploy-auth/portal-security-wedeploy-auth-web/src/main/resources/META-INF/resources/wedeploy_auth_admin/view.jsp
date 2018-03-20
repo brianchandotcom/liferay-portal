@@ -98,7 +98,10 @@ portletURL.setParameter("mvcRenderCommandName", "/wedeploy_auth_admin/view");
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
+		<liferay-ui:search-iterator
+			displayStyle="list"
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 
 	<c:if test="<%= WeDeployAuthPermission.contains(permissionChecker, WeDeployAuthActionKeys.ADD_APP) %>">
@@ -107,7 +110,10 @@ portletURL.setParameter("mvcRenderCommandName", "/wedeploy_auth_admin/view");
 		</portlet:renderURL>
 
 		<liferay-frontend:add-menu>
-			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-wedeploy-app") %>' url="<%= editWeDeployAuthAppURL %>" />
+			<liferay-frontend:add-menu-item
+				title='<%= LanguageUtil.get(request, "add-wedeploy-app") %>'
+				url="<%= editWeDeployAuthAppURL %>"
+			/>
 		</liferay-frontend:add-menu>
 	</c:if>
 </div>

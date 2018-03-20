@@ -211,7 +211,9 @@
 			<div class="separator"><!-- --></div>
 
 			<div class="taglib-search-iterator-page-iterator-bottom">
-				<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />
+				<liferay-ui:search-paginator
+					searchContainer="<%= searchContainer %>"
+				/>
 			</div>
 		</c:if>
 

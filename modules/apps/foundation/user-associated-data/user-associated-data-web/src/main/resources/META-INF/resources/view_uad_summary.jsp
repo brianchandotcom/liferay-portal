@@ -47,7 +47,11 @@ int step = (int)request.getAttribute(UADWebKeys.VIEW_UAD_SUMMARY_STEP);
 					<aui:button disabled="<%= step != 1 %>" onClick='<%= renderResponse.getNamespace() + "confirmAction('" + deactivateUserURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-deactivate-the-user") + "')" %>' value="deactivate-user" />
 
 					<c:if test="<%= step > 1 %>">
-						<liferay-ui:icon iconCssClass="icon-ok-sign" label="<%= true %>" message="user-was-successfully-deactivated" />
+						<liferay-ui:icon
+							iconCssClass="icon-ok-sign"
+							label="<%= true %>"
+							message="user-was-successfully-deactivated"
+						/>
 					</c:if>
 				</div>
 			</div>
@@ -100,7 +104,11 @@ int step = (int)request.getAttribute(UADWebKeys.VIEW_UAD_SUMMARY_STEP);
 					<aui:button disabled="<%= step != 2 %>" onClick='<%= renderResponse.getNamespace() + "confirmAction('" + forgetPersonalSiteURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-forget-the-users-personal-site") + "')" %>' value="delete-personal-site" />
 
 					<c:if test="<%= step > 2 %>">
-						<liferay-ui:icon iconCssClass="icon-ok-sign" label="<%= true %>" message="personal-site-was-successfully-forgotten" />
+						<liferay-ui:icon
+							iconCssClass="icon-ok-sign"
+							label="<%= true %>"
+							message="personal-site-was-successfully-forgotten"
+						/>
 					</c:if>
 				</div>
 			</div>
@@ -123,7 +131,11 @@ int step = (int)request.getAttribute(UADWebKeys.VIEW_UAD_SUMMARY_STEP);
 					<aui:button disabled="<%= step != 3 %>" onClick="<%= viewUADEntitiesURL %>" value="review" />
 
 					<c:if test="<%= step > 3 %>">
-						<liferay-ui:icon iconCssClass="icon-ok-sign" label="<%= true %>" message="all-ambiguous-data-was-forgotten" />
+						<liferay-ui:icon
+							iconCssClass="icon-ok-sign"
+							label="<%= true %>"
+							message="all-ambiguous-data-was-forgotten"
+						/>
 					</c:if>
 				</div>
 			</div>
@@ -146,7 +158,11 @@ int step = (int)request.getAttribute(UADWebKeys.VIEW_UAD_SUMMARY_STEP);
 					<aui:button disabled="<%= step != 4 %>" onClick='<%= renderResponse.getNamespace() + "confirmAction('" + deleteURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-anonymize-the-users-personal-data") + "')" %>' value="anonymize-data" />
 
 					<c:if test="<%= step > 4 %>">
-						<liferay-ui:icon iconCssClass="icon-ok-sign" label="<%= true %>" message="all-data-was-anonymized" />
+						<liferay-ui:icon
+							iconCssClass="icon-ok-sign"
+							label="<%= true %>"
+							message="all-data-was-anonymized"
+						/>
 					</c:if>
 				</div>
 			</div>

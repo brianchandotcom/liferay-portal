@@ -207,11 +207,15 @@ if (portletTitleBasedNavigation) {
 				<c:if test="<%= (category == null) && captchaConfiguration.messageBoardsEditCategoryCaptchaEnabled() %>">
 					<portlet:resourceURL id="/message_boards/captcha" var="captchaURL" />
 
-					<liferay-captcha:captcha url="<%= captchaURL %>" />
+					<liferay-captcha:captcha
+						url="<%= captchaURL %>"
+					/>
 				</c:if>
 			</aui:fieldset>
 
-			<liferay-expando:custom-attributes-available className="<%= MBCategory.class.getName() %>">
+			<liferay-expando:custom-attributes-available
+				className="<%= MBCategory.class.getName() %>"
+			>
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
 					<liferay-expando:custom-attribute-list
 						className="<%= MBCategory.class.getName() %>"

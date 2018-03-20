@@ -521,7 +521,9 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 							rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
 							%>
 
-							<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+							<liferay-ui:search-container-column-text
+								colspan="<%= 2 %>"
+							>
 								<liferay-frontend:horizontal-card
 									actionJsp="/document_library/folder_action.jsp"
 									actionJspServletContext="<%= application %>"
@@ -610,7 +612,12 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" resultRowSplitter="<%= new DLResultRowSplitter() %>" searchContainer="<%= dlSearchContainer %>" />
+		<liferay-ui:search-iterator
+			displayStyle="<%= displayStyle %>"
+			markupView="lexicon"
+			resultRowSplitter="<%= new DLResultRowSplitter() %>"
+			searchContainer="<%= dlSearchContainer %>"
+		/>
 	</liferay-ui:search-container>
 </div>
 

@@ -45,7 +45,13 @@ else {
 %>
 
 <c:if test="<%= socialActivityWikiPage != null %>">
-	<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+	<liferay-ui:icon-menu
+		direction="left-side"
+		icon="<%= StringPool.BLANK %>"
+		markupView="lexicon"
+		message="<%= StringPool.BLANK %>"
+		showWhenSingleIcon="<%= true %>"
+	>
 		<c:if test="<%= (version != wikiPage.getVersion()) && socialActivityWikiPage.isApproved() && WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) %>">
 			<portlet:actionURL name="/wiki/edit_page" var="revertURL">
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.REVERT %>" />

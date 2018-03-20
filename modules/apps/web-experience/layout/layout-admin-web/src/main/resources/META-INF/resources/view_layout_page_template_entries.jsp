@@ -46,8 +46,14 @@ PortalUtil.addPortletBreadcrumbEntry(request, layoutPageTemplateDisplayContext.g
 				<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionId()) %>" />
 			</portlet:renderURL>
 
-			<liferay-frontend:add-menu inline="<%= true %>">
-				<liferay-frontend:add-menu-item id="addLayoutPageTemplateEntryMenuItem" title='<%= LanguageUtil.get(request, "add-page-template") %>' url="<%= addLayoutPageTemplateEntryURL.toString() %>" />
+			<liferay-frontend:add-menu
+				inline="<%= true %>"
+			>
+				<liferay-frontend:add-menu-item
+					id="addLayoutPageTemplateEntryMenuItem"
+					title='<%= LanguageUtil.get(request, "add-page-template") %>'
+					url="<%= addLayoutPageTemplateEntryURL.toString() %>"
+				/>
 			</liferay-frontend:add-menu>
 		</c:if>
 	</liferay-frontend:management-bar-buttons>
@@ -76,14 +82,21 @@ PortalUtil.addPortletBreadcrumbEntry(request, layoutPageTemplateDisplayContext.g
 
 			<li>
 				<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
-					<liferay-ui:input-search markupView="lexicon" />
+					<liferay-ui:input-search
+						markupView="lexicon"
+					/>
 				</aui:form>
 			</li>
 		</c:if>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedLayoutPageTemplateEntries" label="delete" />
+		<liferay-frontend:management-bar-button
+			href="javascript:;"
+			icon="trash"
+			id="deleteSelectedLayoutPageTemplateEntries"
+			label="delete"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -93,7 +106,12 @@ PortalUtil.addPortletBreadcrumbEntry(request, layoutPageTemplateDisplayContext.g
 
 <aui:form action="<%= deleteLayoutPageTemplateEntryURL %>" cssClass="container-fluid-1280" name="fm">
 	<div id="breadcrumb">
-		<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
+		<liferay-ui:breadcrumb
+			showCurrentGroup="<%= false %>"
+			showGuestGroup="<%= false %>"
+			showLayout="<%= false %>"
+			showPortletBreadcrumb="<%= true %>"
+		/>
 	</div>
 
 	<liferay-ui:search-container
@@ -149,7 +167,10 @@ PortalUtil.addPortletBreadcrumbEntry(request, layoutPageTemplateDisplayContext.g
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= layoutPageTemplateDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
+		<liferay-ui:search-iterator
+			displayStyle="<%= layoutPageTemplateDisplayContext.getDisplayStyle() %>"
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </aui:form>
 

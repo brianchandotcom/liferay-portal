@@ -125,7 +125,11 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 				name="date"
 				orderable="<%= true %>"
 			>
-				<fmt:formatDate pattern="MM/dd/yyyy hh:mm a" timeZone="<%= timeZone.getDisplayName(false, 0) %>" value="<%= startCalendar.getTime() %>" />
+				<fmt:formatDate
+					pattern="MM/dd/yyyy hh:mm a"
+					timeZone="<%= timeZone.getDisplayName(false, 0) %>"
+					value="<%= startCalendar.getTime() %>"
+				/>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
@@ -175,7 +179,9 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 				value="<%= LanguageUtil.get(request, PowwowMeetingConstants.getStatusLabel(powwowMeeting.getStatus())) %>"
 			/>
 
-			<liferay-ui:search-container-column-jsp path="/meetings/meeting_row_action.jsp" />
+			<liferay-ui:search-container-column-jsp
+				path="/meetings/meeting_row_action.jsp"
+			/>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator />

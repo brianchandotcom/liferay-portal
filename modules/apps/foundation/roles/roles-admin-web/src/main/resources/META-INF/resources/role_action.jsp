@@ -79,6 +79,8 @@ String name = role.getName();
 			<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete url="<%= deleteRoleURL %>" />
+		<liferay-ui:icon-delete
+			url="<%= deleteRoleURL %>"
+		/>
 	</c:if>
 </liferay-ui:icon-menu>

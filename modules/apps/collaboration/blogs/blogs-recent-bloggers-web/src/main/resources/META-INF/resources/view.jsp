@@ -113,6 +113,9 @@ else {
 		}
 		%>
 
-		<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
+		<liferay-ui:search-iterator
+			paginate="<%= false %>"
+			searchContainer="<%= searchContainer %>"
+		/>
 	</c:otherwise>
 </c:choose>

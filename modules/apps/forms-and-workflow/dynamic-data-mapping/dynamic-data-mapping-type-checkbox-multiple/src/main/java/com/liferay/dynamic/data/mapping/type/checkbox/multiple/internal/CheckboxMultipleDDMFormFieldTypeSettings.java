@@ -94,10 +94,10 @@ public interface CheckboxMultipleDDMFormFieldTypeSettings
 	@DDMFormField(
 		label = "%predefined-value",
 		properties = {
-			"inline=true", "placeholder=%enter-a-default-value",
+			"multiple=true", "placeholder=%enter-a-default-value",
 			"tooltip=%enter-a-default-value-that-is-submitted-if-no-other-value-is-entered"
 		},
-		type = "checkbox_multiple"
+		type = "select"
 	)
 	@Override
 	public LocalizedValue predefinedValue();

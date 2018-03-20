@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -43,6 +44,8 @@ public class RadioDDMFormFieldTemplateContextContributorTest
 	public void setUp() throws Exception {
 		_radioDDMFormFieldTemplateContextContributor =
 			new RadioDDMFormFieldTemplateContextContributor();
+
+		setUpJSONFactory();
 	}
 
 	@Test
@@ -75,7 +78,8 @@ public class RadioDDMFormFieldTemplateContextContributorTest
 			_radioDDMFormFieldTemplateContextContributor.getParameters(
 				ddmFormField, ddmFormFieldRenderingContext);
 
-		Assert.assertFalse(parameters.containsKey("predefinedValue"));
+		Assert.assertEquals(
+			StringPool.BLANK, parameters.get("predefinedValue"));
 	}
 
 	@Test
@@ -146,6 +150,28 @@ public class RadioDDMFormFieldTemplateContextContributorTest
 	}
 
 	@Test
+	public void testGetPredefinedValueInJSONArrayFormat() {
+		DDMFormField ddmFormField = createDDMFormField();
+
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			new DDMFormFieldRenderingContext();
+
+		ddmFormFieldRenderingContext.setLocale(LocaleUtil.US);
+
+		LocalizedValue predefinedValue = new LocalizedValue(LocaleUtil.US);
+
+		predefinedValue.addString(LocaleUtil.US, "[\"value\"]");
+
+		ddmFormField.setProperty("predefinedValue", predefinedValue);
+
+		Map<String, Object> parameters =
+			_radioDDMFormFieldTemplateContextContributor.getParameters(
+				ddmFormField, ddmFormFieldRenderingContext);
+
+		Assert.assertEquals("value", parameters.get("predefinedValue"));
+	}
+
+	@Test
 	public void testGetValue() {
 		DDMFormField ddmFormField = createDDMFormField();
 
@@ -170,6 +196,14 @@ public class RadioDDMFormFieldTemplateContextContributorTest
 		ddmFormField.setProperty("dataSourceType", "data-provider");
 
 		return ddmFormField;
+	}
+
+	protected void setUpJSONFactory() throws Exception {
+		field(
+			RadioDDMFormFieldTemplateContextContributor.class, "jsonFactory"
+		).set(
+			_radioDDMFormFieldTemplateContextContributor, _jsonFactory
+		);
 	}
 
 	private final JSONFactory _jsonFactory = new JSONFactoryImpl();

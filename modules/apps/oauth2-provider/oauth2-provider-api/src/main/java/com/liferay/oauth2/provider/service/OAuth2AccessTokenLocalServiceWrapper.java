@@ -49,27 +49,33 @@ public class OAuth2AccessTokenLocalServiceWrapper
 	/**
 	* Creates a new o auth2 access token with the primary key. Does not add the o auth2 access token to the database.
 	*
-	* @param OAuth2AccessTokenId the primary key for the new o auth2 access token
+	* @param oAuth2AccessTokenId the primary key for the new o auth2 access token
 	* @return the new o auth2 access token
 	*/
 	@Override
 	public com.liferay.oauth2.provider.model.OAuth2AccessToken createOAuth2AccessToken(
-		long OAuth2AccessTokenId) {
-		return _oAuth2AccessTokenLocalService.createOAuth2AccessToken(OAuth2AccessTokenId);
+		long oAuth2AccessTokenId) {
+		return _oAuth2AccessTokenLocalService.createOAuth2AccessToken(oAuth2AccessTokenId);
+	}
+
+	@Override
+	public com.liferay.oauth2.provider.model.OAuth2AccessToken createOAuth2AccessToken(
+		java.lang.String tokenContent) {
+		return _oAuth2AccessTokenLocalService.createOAuth2AccessToken(tokenContent);
 	}
 
 	/**
 	* Deletes the o auth2 access token with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param OAuth2AccessTokenId the primary key of the o auth2 access token
+	* @param oAuth2AccessTokenId the primary key of the o auth2 access token
 	* @return the o auth2 access token that was removed
 	* @throws PortalException if a o auth2 access token with the primary key could not be found
 	*/
 	@Override
 	public com.liferay.oauth2.provider.model.OAuth2AccessToken deleteOAuth2AccessToken(
-		long OAuth2AccessTokenId)
+		long oAuth2AccessTokenId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _oAuth2AccessTokenLocalService.deleteOAuth2AccessToken(OAuth2AccessTokenId);
+		return _oAuth2AccessTokenLocalService.deleteOAuth2AccessToken(oAuth2AccessTokenId);
 	}
 
 	/**
@@ -182,8 +188,14 @@ public class OAuth2AccessTokenLocalServiceWrapper
 
 	@Override
 	public com.liferay.oauth2.provider.model.OAuth2AccessToken fetchOAuth2AccessToken(
-		long OAuth2AccessTokenId) {
-		return _oAuth2AccessTokenLocalService.fetchOAuth2AccessToken(OAuth2AccessTokenId);
+		long oAuth2AccessTokenId) {
+		return _oAuth2AccessTokenLocalService.fetchOAuth2AccessToken(oAuth2AccessTokenId);
+	}
+
+	@Override
+	public com.liferay.oauth2.provider.model.OAuth2AccessToken fetchOAuth2AccessToken(
+		java.lang.String tokenContent) {
+		return _oAuth2AccessTokenLocalService.fetchOAuth2AccessToken(tokenContent);
 	}
 
 	@Override
@@ -199,15 +211,22 @@ public class OAuth2AccessTokenLocalServiceWrapper
 	/**
 	* Returns the o auth2 access token with the primary key.
 	*
-	* @param OAuth2AccessTokenId the primary key of the o auth2 access token
+	* @param oAuth2AccessTokenId the primary key of the o auth2 access token
 	* @return the o auth2 access token
 	* @throws PortalException if a o auth2 access token with the primary key could not be found
 	*/
 	@Override
 	public com.liferay.oauth2.provider.model.OAuth2AccessToken getOAuth2AccessToken(
-		long OAuth2AccessTokenId)
+		long oAuth2AccessTokenId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _oAuth2AccessTokenLocalService.getOAuth2AccessToken(OAuth2AccessTokenId);
+		return _oAuth2AccessTokenLocalService.getOAuth2AccessToken(oAuth2AccessTokenId);
+	}
+
+	@Override
+	public com.liferay.oauth2.provider.model.OAuth2AccessToken getOAuth2AccessToken(
+		java.lang.String tokenContent)
+		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2AccessTokenException {
+		return _oAuth2AccessTokenLocalService.getOAuth2AccessToken(tokenContent);
 	}
 
 	/**
@@ -225,6 +244,20 @@ public class OAuth2AccessTokenLocalServiceWrapper
 	public java.util.List<com.liferay.oauth2.provider.model.OAuth2AccessToken> getOAuth2AccessTokens(
 		int start, int end) {
 		return _oAuth2AccessTokenLocalService.getOAuth2AccessTokens(start, end);
+	}
+
+	@Override
+	public java.util.Collection<com.liferay.oauth2.provider.model.OAuth2AccessToken> getOAuth2AccessTokens(
+		long oAuth2RefreshTokenId) {
+		return _oAuth2AccessTokenLocalService.getOAuth2AccessTokens(oAuth2RefreshTokenId);
+	}
+
+	@Override
+	public java.util.Collection<com.liferay.oauth2.provider.model.OAuth2AccessToken> getOAuth2AccessTokens(
+		long applicationId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.oauth2.provider.model.OAuth2AccessToken> orderByComparator) {
+		return _oAuth2AccessTokenLocalService.getOAuth2AccessTokens(applicationId,
+			start, end, orderByComparator);
 	}
 
 	/**

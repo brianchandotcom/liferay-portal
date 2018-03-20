@@ -41,6 +41,19 @@ public class OAuth2AuthorizationLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.oauth2.provider.service.impl.OAuth2AuthorizationLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static java.util.List<com.liferay.oauth2.provider.model.OAuth2Authorization> getOAuth2Authorizations(
+		long companyId, long applicationId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.oauth2.provider.model.OAuth2Authorization> orderByComparator) {
+		return getService()
+				   .getOAuth2Authorizations(companyId, applicationId, start,
+			end, orderByComparator);
+	}
+
+	public static int getOAuth2AuthorizationsCount(long companyId,
+		long applicationId) {
+		return getService()
+				   .getOAuth2AuthorizationsCount(companyId, applicationId);
+	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -49,6 +62,27 @@ public class OAuth2AuthorizationLocalServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.oauth2.provider.model.OAuth2Authorization> getUserOAuth2Authorizations(
+		long companyId, long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.oauth2.provider.model.OAuth2Authorization> orderByComparator) {
+		return getService()
+				   .getUserOAuth2Authorizations(companyId, userId, start, end,
+			orderByComparator);
+	}
+
+	public static int getUserOAuth2AuthorizationsCount(long companyId,
+		long userId) {
+		return getService().getUserOAuth2AuthorizationsCount(companyId, userId);
+	}
+
+	public static boolean revokeOAuth2Authorization(long oAuth2AccessTokenId,
+		long oAuth2RefreshTokenId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .revokeOAuth2Authorization(oAuth2AccessTokenId,
+			oAuth2RefreshTokenId);
 	}
 
 	public static OAuth2AuthorizationLocalService getService() {

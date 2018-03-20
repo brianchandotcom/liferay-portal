@@ -16,12 +16,21 @@ package com.liferay.oauth2.provider.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.oauth2.provider.service.OAuth2AuthorizationServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.http.TunnelUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
+
 /**
  * Provides the HTTP utility for the
- * {@link com.liferay.oauth2.provider.service.OAuth2AuthorizationServiceUtil} service utility. The
+ * {@link OAuth2AuthorizationServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * {@link com.liferay.portal.kernel.security.auth.HttpPrincipal} parameter.
+ * {@link HttpPrincipal} parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -40,10 +49,120 @@ import aQute.bnd.annotation.ProviderType;
  *
  * @author Brian Wing Shun Chan
  * @see OAuth2AuthorizationServiceSoap
- * @see com.liferay.portal.kernel.security.auth.HttpPrincipal
- * @see com.liferay.oauth2.provider.service.OAuth2AuthorizationServiceUtil
+ * @see HttpPrincipal
+ * @see OAuth2AuthorizationServiceUtil
  * @generated
  */
 @ProviderType
 public class OAuth2AuthorizationServiceHttp {
+	public static java.util.List<com.liferay.oauth2.provider.model.OAuth2Authorization> getUserOAuth2Authorizations(
+		HttpPrincipal httpPrincipal, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.oauth2.provider.model.OAuth2Authorization> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(OAuth2AuthorizationServiceUtil.class,
+					"getUserOAuth2Authorizations",
+					_getUserOAuth2AuthorizationsParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, start,
+					end, orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.oauth2.provider.model.OAuth2Authorization>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int getUserOAuth2AuthorizationsCount(
+		HttpPrincipal httpPrincipal)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(OAuth2AuthorizationServiceUtil.class,
+					"getUserOAuth2AuthorizationsCount",
+					_getUserOAuth2AuthorizationsCountParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static boolean revokeOAuth2Authorization(
+		HttpPrincipal httpPrincipal, long oAuth2AccessTokenId,
+		long oAuth2RefreshTokenId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(OAuth2AuthorizationServiceUtil.class,
+					"revokeOAuth2Authorization",
+					_revokeOAuth2AuthorizationParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					oAuth2AccessTokenId, oAuth2RefreshTokenId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Boolean)returnObj).booleanValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(OAuth2AuthorizationServiceHttp.class);
+	private static final Class<?>[] _getUserOAuth2AuthorizationsParameterTypes0 = new Class[] {
+			int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
+	private static final Class<?>[] _getUserOAuth2AuthorizationsCountParameterTypes1 =
+		new Class[] {  };
+	private static final Class<?>[] _revokeOAuth2AuthorizationParameterTypes2 = new Class[] {
+			long.class, long.class
+		};
 }

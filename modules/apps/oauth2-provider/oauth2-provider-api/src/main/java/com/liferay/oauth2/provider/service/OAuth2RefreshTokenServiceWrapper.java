@@ -34,6 +34,13 @@ public class OAuth2RefreshTokenServiceWrapper
 		_oAuth2RefreshTokenService = oAuth2RefreshTokenService;
 	}
 
+	@Override
+	public com.liferay.oauth2.provider.model.OAuth2RefreshToken deleteOAuth2RefreshToken(
+		long oAuth2RefreshTokenId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _oAuth2RefreshTokenService.deleteOAuth2RefreshToken(oAuth2RefreshTokenId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

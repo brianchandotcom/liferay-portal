@@ -16,6 +16,7 @@ package com.liferay.oauth2.provider.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.oauth2.provider.exception.NoSuchOAuth2AccessTokenException;
 import com.liferay.oauth2.provider.model.OAuth2AccessToken;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -74,20 +76,23 @@ public interface OAuth2AccessTokenLocalService extends BaseLocalService,
 	/**
 	* Creates a new o auth2 access token with the primary key. Does not add the o auth2 access token to the database.
 	*
-	* @param OAuth2AccessTokenId the primary key for the new o auth2 access token
+	* @param oAuth2AccessTokenId the primary key for the new o auth2 access token
 	* @return the new o auth2 access token
 	*/
-	public OAuth2AccessToken createOAuth2AccessToken(long OAuth2AccessTokenId);
+	public OAuth2AccessToken createOAuth2AccessToken(long oAuth2AccessTokenId);
+
+	public OAuth2AccessToken createOAuth2AccessToken(
+		java.lang.String tokenContent);
 
 	/**
 	* Deletes the o auth2 access token with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param OAuth2AccessTokenId the primary key of the o auth2 access token
+	* @param oAuth2AccessTokenId the primary key of the o auth2 access token
 	* @return the o auth2 access token that was removed
 	* @throws PortalException if a o auth2 access token with the primary key could not be found
 	*/
 	@Indexable(type = IndexableType.DELETE)
-	public OAuth2AccessToken deleteOAuth2AccessToken(long OAuth2AccessTokenId)
+	public OAuth2AccessToken deleteOAuth2AccessToken(long oAuth2AccessTokenId)
 		throws PortalException;
 
 	/**
@@ -167,7 +172,11 @@ public interface OAuth2AccessTokenLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuth2AccessToken fetchOAuth2AccessToken(long OAuth2AccessTokenId);
+	public OAuth2AccessToken fetchOAuth2AccessToken(long oAuth2AccessTokenId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuth2AccessToken fetchOAuth2AccessToken(
+		java.lang.String tokenContent);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -178,13 +187,17 @@ public interface OAuth2AccessTokenLocalService extends BaseLocalService,
 	/**
 	* Returns the o auth2 access token with the primary key.
 	*
-	* @param OAuth2AccessTokenId the primary key of the o auth2 access token
+	* @param oAuth2AccessTokenId the primary key of the o auth2 access token
 	* @return the o auth2 access token
 	* @throws PortalException if a o auth2 access token with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuth2AccessToken getOAuth2AccessToken(long OAuth2AccessTokenId)
+	public OAuth2AccessToken getOAuth2AccessToken(long oAuth2AccessTokenId)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuth2AccessToken getOAuth2AccessToken(java.lang.String tokenContent)
+		throws NoSuchOAuth2AccessTokenException;
 
 	/**
 	* Returns a range of all the o auth2 access tokens.
@@ -199,6 +212,15 @@ public interface OAuth2AccessTokenLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<OAuth2AccessToken> getOAuth2AccessTokens(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Collection<OAuth2AccessToken> getOAuth2AccessTokens(
+		long oAuth2RefreshTokenId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Collection<OAuth2AccessToken> getOAuth2AccessTokens(
+		long applicationId, int start, int end,
+		OrderByComparator<OAuth2AccessToken> orderByComparator);
 
 	/**
 	* Returns the number of o auth2 access tokens.

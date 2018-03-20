@@ -58,7 +58,7 @@ public class OAuth2AccessTokenWrapper implements OAuth2AccessToken,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("OAuth2AccessTokenId", getOAuth2AccessTokenId());
+		attributes.put("oAuth2AccessTokenId", getOAuth2AccessTokenId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
@@ -76,10 +76,10 @@ public class OAuth2AccessTokenWrapper implements OAuth2AccessToken,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long OAuth2AccessTokenId = (Long)attributes.get("OAuth2AccessTokenId");
+		Long oAuth2AccessTokenId = (Long)attributes.get("oAuth2AccessTokenId");
 
-		if (OAuth2AccessTokenId != null) {
-			setOAuth2AccessTokenId(OAuth2AccessTokenId);
+		if (oAuth2AccessTokenId != null) {
+			setOAuth2AccessTokenId(oAuth2AccessTokenId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -259,6 +259,11 @@ public class OAuth2AccessTokenWrapper implements OAuth2AccessToken,
 		return _oAuth2AccessToken.getScopeAliases();
 	}
 
+	@Override
+	public java.util.List<java.lang.String> getScopeAliasesList() {
+		return _oAuth2AccessToken.getScopeAliasesList();
+	}
+
 	/**
 	* Returns the token content of this o auth2 access token.
 	*
@@ -393,11 +398,11 @@ public class OAuth2AccessTokenWrapper implements OAuth2AccessToken,
 	/**
 	* Sets the o auth2 access token ID of this o auth2 access token.
 	*
-	* @param OAuth2AccessTokenId the o auth2 access token ID of this o auth2 access token
+	* @param oAuth2AccessTokenId the o auth2 access token ID of this o auth2 access token
 	*/
 	@Override
-	public void setOAuth2AccessTokenId(long OAuth2AccessTokenId) {
-		_oAuth2AccessToken.setOAuth2AccessTokenId(OAuth2AccessTokenId);
+	public void setOAuth2AccessTokenId(long oAuth2AccessTokenId) {
+		_oAuth2AccessToken.setOAuth2AccessTokenId(oAuth2AccessTokenId);
 	}
 
 	/**
@@ -453,6 +458,12 @@ public class OAuth2AccessTokenWrapper implements OAuth2AccessToken,
 	@Override
 	public void setScopeAliases(java.lang.String scopeAliases) {
 		_oAuth2AccessToken.setScopeAliases(scopeAliases);
+	}
+
+	@Override
+	public void setScopeAliasesList(
+		java.util.List<java.lang.String> scopeAliasesList) {
+		_oAuth2AccessToken.setScopeAliasesList(scopeAliasesList);
 	}
 
 	/**

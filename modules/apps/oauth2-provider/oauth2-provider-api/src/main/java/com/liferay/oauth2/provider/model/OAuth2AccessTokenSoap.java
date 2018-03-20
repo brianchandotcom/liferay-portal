@@ -94,7 +94,7 @@ public class OAuth2AccessTokenSoap implements Serializable {
 	}
 
 	public long getPrimaryKey() {
-		return _OAuth2AccessTokenId;
+		return _oAuth2AccessTokenId;
 	}
 
 	public void setPrimaryKey(long pk) {
@@ -102,11 +102,11 @@ public class OAuth2AccessTokenSoap implements Serializable {
 	}
 
 	public long getOAuth2AccessTokenId() {
-		return _OAuth2AccessTokenId;
+		return _oAuth2AccessTokenId;
 	}
 
-	public void setOAuth2AccessTokenId(long OAuth2AccessTokenId) {
-		_OAuth2AccessTokenId = OAuth2AccessTokenId;
+	public void setOAuth2AccessTokenId(long oAuth2AccessTokenId) {
+		_oAuth2AccessTokenId = oAuth2AccessTokenId;
 	}
 
 	public long getCompanyId() {
@@ -197,7 +197,7 @@ public class OAuth2AccessTokenSoap implements Serializable {
 		_tokenType = tokenType;
 	}
 
-	private long _OAuth2AccessTokenId;
+	private long _oAuth2AccessTokenId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;

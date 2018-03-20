@@ -51,7 +51,7 @@ public class OAuth2AccessTokenCacheModel implements CacheModel<OAuth2AccessToken
 
 		OAuth2AccessTokenCacheModel oAuth2AccessTokenCacheModel = (OAuth2AccessTokenCacheModel)obj;
 
-		if (OAuth2AccessTokenId == oAuth2AccessTokenCacheModel.OAuth2AccessTokenId) {
+		if (oAuth2AccessTokenId == oAuth2AccessTokenCacheModel.oAuth2AccessTokenId) {
 			return true;
 		}
 
@@ -60,15 +60,15 @@ public class OAuth2AccessTokenCacheModel implements CacheModel<OAuth2AccessToken
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, OAuth2AccessTokenId);
+		return HashUtil.hash(0, oAuth2AccessTokenId);
 	}
 
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(25);
 
-		sb.append("{OAuth2AccessTokenId=");
-		sb.append(OAuth2AccessTokenId);
+		sb.append("{oAuth2AccessTokenId=");
+		sb.append(oAuth2AccessTokenId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", userId=");
@@ -100,7 +100,7 @@ public class OAuth2AccessTokenCacheModel implements CacheModel<OAuth2AccessToken
 	public OAuth2AccessToken toEntityModel() {
 		OAuth2AccessTokenImpl oAuth2AccessTokenImpl = new OAuth2AccessTokenImpl();
 
-		oAuth2AccessTokenImpl.setOAuth2AccessTokenId(OAuth2AccessTokenId);
+		oAuth2AccessTokenImpl.setOAuth2AccessTokenId(oAuth2AccessTokenId);
 		oAuth2AccessTokenImpl.setCompanyId(companyId);
 		oAuth2AccessTokenImpl.setUserId(userId);
 
@@ -163,7 +163,7 @@ public class OAuth2AccessTokenCacheModel implements CacheModel<OAuth2AccessToken
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		OAuth2AccessTokenId = objectInput.readLong();
+		oAuth2AccessTokenId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
 
@@ -184,7 +184,7 @@ public class OAuth2AccessTokenCacheModel implements CacheModel<OAuth2AccessToken
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(OAuth2AccessTokenId);
+		objectOutput.writeLong(oAuth2AccessTokenId);
 
 		objectOutput.writeLong(companyId);
 
@@ -233,7 +233,7 @@ public class OAuth2AccessTokenCacheModel implements CacheModel<OAuth2AccessToken
 		}
 	}
 
-	public long OAuth2AccessTokenId;
+	public long oAuth2AccessTokenId;
 	public long companyId;
 	public long userId;
 	public String userName;

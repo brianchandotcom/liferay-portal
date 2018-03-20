@@ -41,6 +41,11 @@ public class OAuth2RefreshTokenServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.oauth2.provider.service.impl.OAuth2RefreshTokenServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.oauth2.provider.model.OAuth2RefreshToken deleteOAuth2RefreshToken(
+		long oAuth2RefreshTokenId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteOAuth2RefreshToken(oAuth2RefreshTokenId);
+	}
 
 	/**
 	* Returns the OSGi service identifier.

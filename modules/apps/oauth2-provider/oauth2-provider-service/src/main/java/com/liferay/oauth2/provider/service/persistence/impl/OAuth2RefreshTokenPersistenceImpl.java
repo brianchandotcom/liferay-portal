@@ -859,8 +859,8 @@ public class OAuth2RefreshTokenPersistenceImpl extends BasePersistenceImpl<OAuth
 	}
 
 	private static final String _FINDER_COLUMN_TOKENCONTENT_TOKENCONTENT_1 = "oAuth2RefreshToken.tokenContent IS NULL";
-	private static final String _FINDER_COLUMN_TOKENCONTENT_TOKENCONTENT_2 = "oAuth2RefreshToken.tokenContent = ?";
-	private static final String _FINDER_COLUMN_TOKENCONTENT_TOKENCONTENT_3 = "(oAuth2RefreshToken.tokenContent IS NULL OR oAuth2RefreshToken.tokenContent = '')";
+	private static final String _FINDER_COLUMN_TOKENCONTENT_TOKENCONTENT_2 = "CAST_CLOB_TEXT(oAuth2RefreshToken.tokenContent) = ?";
+	private static final String _FINDER_COLUMN_TOKENCONTENT_TOKENCONTENT_3 = "(oAuth2RefreshToken.tokenContent IS NULL OR CAST_CLOB_TEXT(oAuth2RefreshToken.tokenContent) = '')";
 
 	public OAuth2RefreshTokenPersistenceImpl() {
 		setModelClass(OAuth2RefreshToken.class);

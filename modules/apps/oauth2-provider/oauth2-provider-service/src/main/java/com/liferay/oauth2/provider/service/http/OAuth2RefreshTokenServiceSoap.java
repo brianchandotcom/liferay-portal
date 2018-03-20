@@ -16,9 +16,16 @@ package com.liferay.oauth2.provider.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.oauth2.provider.service.OAuth2RefreshTokenServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.oauth2.provider.service.OAuth2RefreshTokenServiceUtil} service utility. The
+ * {@link OAuth2RefreshTokenServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,24 @@ import aQute.bnd.annotation.ProviderType;
  * @author Brian Wing Shun Chan
  * @see OAuth2RefreshTokenServiceHttp
  * @see com.liferay.oauth2.provider.model.OAuth2RefreshTokenSoap
- * @see com.liferay.oauth2.provider.service.OAuth2RefreshTokenServiceUtil
+ * @see OAuth2RefreshTokenServiceUtil
  * @generated
  */
 @ProviderType
 public class OAuth2RefreshTokenServiceSoap {
+	public static com.liferay.oauth2.provider.model.OAuth2RefreshTokenSoap deleteOAuth2RefreshToken(
+		long oAuth2RefreshTokenId) throws RemoteException {
+		try {
+			com.liferay.oauth2.provider.model.OAuth2RefreshToken returnValue = OAuth2RefreshTokenServiceUtil.deleteOAuth2RefreshToken(oAuth2RefreshTokenId);
+
+			return com.liferay.oauth2.provider.model.OAuth2RefreshTokenSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(OAuth2RefreshTokenServiceSoap.class);
 }

@@ -211,6 +211,11 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 		return _oAuth2Application.getAllowedGrantTypes();
 	}
 
+	@Override
+	public java.util.List<com.liferay.oauth2.provider.constants.GrantType> getAllowedGrantTypesList() {
+		return _oAuth2Application.getAllowedGrantTypesList();
+	}
+
 	/**
 	* Returns the client ID of this o auth2 application.
 	*
@@ -284,6 +289,11 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	@Override
 	public java.lang.String getFeatures() {
 		return _oAuth2Application.getFeatures();
+	}
+
+	@Override
+	public java.util.List<java.lang.String> getFeaturesList() {
+		return _oAuth2Application.getFeaturesList();
 	}
 
 	/**
@@ -371,6 +381,11 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 		return _oAuth2Application.getRedirectURIs();
 	}
 
+	@Override
+	public java.util.List<java.lang.String> getRedirectURIsList() {
+		return _oAuth2Application.getRedirectURIsList();
+	}
+
 	/**
 	* Returns the scope aliases of this o auth2 application.
 	*
@@ -379,6 +394,11 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	@Override
 	public java.lang.String getScopeAliases() {
 		return _oAuth2Application.getScopeAliases();
+	}
+
+	@Override
+	public java.util.List<java.lang.String> getScopeAliasesList() {
+		return _oAuth2Application.getScopeAliasesList();
 	}
 
 	/**
@@ -444,6 +464,12 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	@Override
 	public void setAllowedGrantTypes(java.lang.String allowedGrantTypes) {
 		_oAuth2Application.setAllowedGrantTypes(allowedGrantTypes);
+	}
+
+	@Override
+	public void setAllowedGrantTypesList(
+		java.util.List<com.liferay.oauth2.provider.constants.GrantType> allowedGrantTypesList) {
+		_oAuth2Application.setAllowedGrantTypesList(allowedGrantTypesList);
 	}
 
 	@Override
@@ -537,6 +563,11 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 		_oAuth2Application.setFeatures(features);
 	}
 
+	@Override
+	public void setFeaturesList(java.util.List<java.lang.String> featuresList) {
+		_oAuth2Application.setFeaturesList(featuresList);
+	}
+
 	/**
 	* Sets the home page url of this o auth2 application.
 	*
@@ -627,6 +658,12 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 		_oAuth2Application.setRedirectURIs(redirectURIs);
 	}
 
+	@Override
+	public void setRedirectURIsList(
+		java.util.List<java.lang.String> redirectURIsList) {
+		_oAuth2Application.setRedirectURIsList(redirectURIsList);
+	}
+
 	/**
 	* Sets the scope aliases of this o auth2 application.
 	*
@@ -635,6 +672,12 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	@Override
 	public void setScopeAliases(java.lang.String scopeAliases) {
 		_oAuth2Application.setScopeAliases(scopeAliases);
+	}
+
+	@Override
+	public void setScopeAliasesList(
+		java.util.List<java.lang.String> scopeAliasesList) {
+		_oAuth2Application.setScopeAliasesList(scopeAliasesList);
 	}
 
 	/**

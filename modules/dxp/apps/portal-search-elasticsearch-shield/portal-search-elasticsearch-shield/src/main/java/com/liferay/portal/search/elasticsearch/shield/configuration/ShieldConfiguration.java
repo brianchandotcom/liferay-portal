@@ -30,7 +30,7 @@ public interface ShieldConfiguration {
 
 	@Meta.AD(
 		deflt = "liferay", description = "password-help", name = "password",
-		required = false
+		required = false, type = Meta.Type.Password
 	)
 	public String password();
 
@@ -48,13 +48,15 @@ public interface ShieldConfiguration {
 
 	@Meta.AD(
 		description = "ssl-keystore-key-password-help",
-		name = "ssl-keystore-key-password", required = false
+		name = "ssl-keystore-key-password", required = false,
+		type = Meta.Type.Password
 	)
 	public String sslKeystoreKeyPassword();
 
 	@Meta.AD(
 		deflt = "liferay", description = "ssl-keystore-password-help",
-		name = "ssl-keystore-password", required = false
+		name = "ssl-keystore-password", required = false,
+		type = Meta.Type.Password
 	)
 	public String sslKeystorePassword();
 

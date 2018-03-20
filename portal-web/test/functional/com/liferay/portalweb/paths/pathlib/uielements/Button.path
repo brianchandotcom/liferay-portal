@@ -359,6 +359,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDIT_ROW</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_rowEntry}')]//*[normalize-space(text())='Edit']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTER</td>
 	<td>//button[contains(.,'Enter')]</td>
 	<td></td>

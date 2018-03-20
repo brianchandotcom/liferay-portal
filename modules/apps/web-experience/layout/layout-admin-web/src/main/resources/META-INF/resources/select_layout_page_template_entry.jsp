@@ -90,7 +90,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 			</portlet:actionURL>
 
 			<%
-			SiteNavigationMenu primarySiteNavigationMenu = SiteNavigationMenuLocalServiceUtil.fetchPrimarySiteNavigationMenu(scopeGroupId);
+			String autoSiteNavigationMenuNames = layoutsAdminDisplayContext.getAutoSiteNavigationMenuNames();
 			%>
 
 			<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
@@ -103,8 +103,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 
 						modalCommands.openSimpleInputModal(
 							{
-								<c:if test="<%= primarySiteNavigationMenu != null %>">
-									checkboxFieldLabel: '<liferay-ui:message arguments="<%= primarySiteNavigationMenu.getName() %>" key="add-this-page-to-the-primary-navigation-x" />',
+								<c:if test="<%= Validator.isNotNull(autoSiteNavigationMenuNames) %>">
+									checkboxFieldLabel: '<liferay-ui:message arguments="<%= autoSiteNavigationMenuNames %>" key="add-this-page-to-the-following-menus-x" />',
 									checkboxFieldName: 'TypeSettingsProperties--addToPrimaryMenu--',
 									checkboxFieldValue: true,
 								</c:if>

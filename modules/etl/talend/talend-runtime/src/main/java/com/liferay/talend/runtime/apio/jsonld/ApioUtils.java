@@ -16,6 +16,8 @@ package com.liferay.talend.runtime.apio.jsonld;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import com.liferay.talend.runtime.apio.constants.JSONLDConstants;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +32,7 @@ public class ApioUtils {
 	 * @param  jsonNode Input JsonNode
 	 * @return JsonNode for the context node, otherwise MissingNode
 	 */
-	public static JsonNode getContextNode(JsonNode jsonNode) {
+	public static JsonNode getContextJsonNode(JsonNode jsonNode) {
 		return _findJsonNode(jsonNode, JSONLDConstants.CONTEXT);
 	}
 

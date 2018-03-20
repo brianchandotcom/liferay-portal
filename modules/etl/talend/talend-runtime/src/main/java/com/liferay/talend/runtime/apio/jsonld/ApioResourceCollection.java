@@ -17,8 +17,9 @@ package com.liferay.talend.runtime.apio.jsonld;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.MissingNode;
 
-import com.liferay.talend.runtime.apio.jsonld.HydraConstants.FieldNames;
-import com.liferay.talend.runtime.apio.jsonld.HydraConstants.FieldTypes;
+import com.liferay.talend.runtime.apio.constants.HydraConstants.FieldNames;
+import com.liferay.talend.runtime.apio.constants.HydraConstants.FieldTypes;
+import com.liferay.talend.runtime.apio.constants.JSONLDConstants;
 
 import java.io.IOException;
 
@@ -47,8 +48,8 @@ public class ApioResourceCollection extends ApioSingleModel {
 		_validateResourceCollection();
 	}
 
-	public JsonNode getFirstEntry() {
-		JsonNode memberJsonNode = getMemberNode();
+	public JsonNode getFirstEntryJsonNode() {
+		JsonNode memberJsonNode = getMemberJsonNode();
 
 		if (!memberJsonNode.isArray() || (memberJsonNode.size() == 0)) {
 			if (_log.isDebugEnabled()) {
@@ -69,7 +70,7 @@ public class ApioResourceCollection extends ApioSingleModel {
 	 *         entries of a given (partial)collection (Member) or MissingNode if
 	 *         it's not present
 	 */
-	public JsonNode getMemberNode() {
+	public JsonNode getMemberJsonNode() {
 		if (_memberJsonNode == null) {
 			_memberJsonNode = findJsonNode(FieldNames.MEMBER);
 		}
@@ -90,7 +91,7 @@ public class ApioResourceCollection extends ApioSingleModel {
 	 *         JsonNode
 	 */
 	public String getResourceActualPage() {
-		JsonNode viewJsonNode = getViewNode();
+		JsonNode viewJsonNode = getViewJsonNode();
 
 		JsonNode jsonNode = viewJsonNode.path(JSONLDConstants.ID);
 
@@ -106,7 +107,7 @@ public class ApioResourceCollection extends ApioSingleModel {
 	 *         determined
 	 */
 	public String getResourceCollectionType() {
-		JsonNode firstEntryJsonNode = getFirstEntry();
+		JsonNode firstEntryJsonNode = getFirstEntryJsonNode();
 
 		JsonNode typeJsonNode = firstEntryJsonNode.path(JSONLDConstants.TYPE);
 
@@ -128,7 +129,7 @@ public class ApioResourceCollection extends ApioSingleModel {
 	 *         collection otherwise
 	 */
 	public List<String> getResourceElementFieldNames() {
-		JsonNode firstEntryJsonNode = getFirstEntry();
+		JsonNode firstEntryJsonNode = getFirstEntryJsonNode();
 
 		if (firstEntryJsonNode.isMissingNode() || firstEntryJsonNode.isNull()) {
 			return Collections.emptyList();
@@ -152,7 +153,7 @@ public class ApioResourceCollection extends ApioSingleModel {
 	 *         JsonNode
 	 */
 	public String getResourceFirstPage() {
-		JsonNode viewJsonNode = getViewNode();
+		JsonNode viewJsonNode = getViewJsonNode();
 
 		JsonNode jsonNode = viewJsonNode.path(FieldNames.FIRST);
 
@@ -166,7 +167,7 @@ public class ApioResourceCollection extends ApioSingleModel {
 	 *         JsonNode
 	 */
 	public String getResourceLastPage() {
-		JsonNode viewJsonNode = getViewNode();
+		JsonNode viewJsonNode = getViewJsonNode();
 
 		JsonNode jsonNode = viewJsonNode.path(FieldNames.LAST);
 
@@ -180,7 +181,7 @@ public class ApioResourceCollection extends ApioSingleModel {
 	 *         in the JsonNode
 	 */
 	public String getResourceNextPage() {
-		JsonNode viewJsonNode = getViewNode();
+		JsonNode viewJsonNode = getViewJsonNode();
 
 		JsonNode jsonNode = viewJsonNode.path(FieldNames.NEXT);
 
@@ -194,7 +195,7 @@ public class ApioResourceCollection extends ApioSingleModel {
 	 *         in the JsonNode
 	 */
 	public String getResourcePreviousPage() {
-		JsonNode viewJsonNode = getViewNode();
+		JsonNode viewJsonNode = getViewJsonNode();
 
 		JsonNode jsonNode = viewJsonNode.path(FieldNames.PREVIOUS);
 
@@ -214,7 +215,7 @@ public class ApioResourceCollection extends ApioSingleModel {
 	 * @return <code>JsonNode</code> The JsonNode for the view section or
 	 *         MissingNode if it's not present
 	 */
-	public JsonNode getViewNode() {
+	public JsonNode getViewJsonNode() {
 		return findJsonNode(FieldNames.VIEW);
 	}
 
@@ -244,7 +245,7 @@ public class ApioResourceCollection extends ApioSingleModel {
 	}
 
 	private void _validateResourceCollection() throws IOException {
-		if (!hasValueOf(FieldTypes.COLLECTION, getTypeNode())) {
+		if (!hasValueOf(FieldTypes.COLLECTION, getTypeJsonNode())) {
 			throw new IOException(
 				"The type of the given resource is not a Collection");
 		}
@@ -257,7 +258,7 @@ public class ApioResourceCollection extends ApioSingleModel {
 	 * Store the 'member' JsonNode as its the most resource intensive task to
 	 * collect and determine, so do it only once.
 	 *
-	 * @see #getMemberNode()
+	 * @see #getMemberJsonNode()
 	 */
 	private JsonNode _memberJsonNode;
 

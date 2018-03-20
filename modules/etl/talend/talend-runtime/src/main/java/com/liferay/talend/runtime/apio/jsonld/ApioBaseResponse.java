@@ -16,6 +16,8 @@ package com.liferay.talend.runtime.apio.jsonld;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import com.liferay.talend.runtime.apio.constants.JSONLDConstants;
+
 import java.io.IOException;
 
 import java.util.Iterator;
@@ -33,17 +35,17 @@ public abstract class ApioBaseResponse implements ApioResponse {
 	}
 
 	@Override
-	public JsonNode getContextNode() {
+	public JsonNode getContextJsonNode() {
 		return findJsonNode(JSONLDConstants.CONTEXT);
 	}
 
 	@Override
-	public JsonNode getIdNode() {
+	public JsonNode getIdJsonNode() {
 		return findJsonNode(JSONLDConstants.ID);
 	}
 
 	@Override
-	public JsonNode getTypeNode() {
+	public JsonNode getTypeJsonNode() {
 		return findJsonNode(JSONLDConstants.TYPE);
 	}
 

@@ -14,6 +14,7 @@
 
 package com.liferay.talend.avro;
 
+import com.liferay.talend.avro.constants.AvroConstants;
 import com.liferay.talend.runtime.apio.form.Property;
 import com.liferay.talend.runtime.apio.jsonld.ApioForm;
 import com.liferay.talend.runtime.apio.operation.Operation;

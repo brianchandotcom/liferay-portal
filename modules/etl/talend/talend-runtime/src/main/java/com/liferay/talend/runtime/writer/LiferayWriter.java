@@ -17,7 +17,7 @@ package com.liferay.talend.runtime.writer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import com.liferay.talend.avro.AvroConstants;
+import com.liferay.talend.avro.constants.AvroConstants;
 import com.liferay.talend.runtime.LiferaySink;
 import com.liferay.talend.tliferayoutput.Action;
 import com.liferay.talend.tliferayoutput.TLiferayOutputProperties;

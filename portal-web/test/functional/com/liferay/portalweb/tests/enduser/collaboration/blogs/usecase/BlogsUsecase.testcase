@@ -1522,8 +1522,8 @@
 			<var name="pageName" value="Private Blogs Page" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="www.able.com" />
+		<execute macro="Navigator#openPrivateURL">
+			<var name="baseURL" value="http://www.able.com:8080" />
 		</execute>
 
 		<execute macro="Portlet#addPG">

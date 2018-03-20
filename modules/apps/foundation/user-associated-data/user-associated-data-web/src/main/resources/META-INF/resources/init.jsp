@@ -43,6 +43,8 @@ page import="com.liferay.user.associated.data.web.internal.display.UADApplicatio
 page import="com.liferay.user.associated.data.web.internal.display.ViewUADApplicationsSummaryDisplay" %><%@
 page import="com.liferay.user.associated.data.web.internal.display.ViewUADEntitiesDisplay" %>
 
+<%@ page import="javax.portlet.PortletURL" %>
+
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />

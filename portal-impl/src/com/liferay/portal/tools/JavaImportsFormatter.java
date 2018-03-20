@@ -63,20 +63,22 @@ public class JavaImportsFormatter extends BaseImportsFormatter {
 			return content;
 		}
 
+		String newContent = ToolsUtil.stripFullyQualifiedClassNames(
+			content, imports, packagePath);
+
+		if (!content.equals(newContent)) {
+			imports = getImports(newContent);
+		}
+
 		String newImports = stripUnusedImports(
-			imports, content, packagePath, className, "\\*");
+			imports, newContent, packagePath, className, "\\*");
 
 		newImports = sortAndGroupImports(newImports);
 
-		if (!imports.equals(newImports)) {
-			content = StringUtil.replaceFirst(content, imports, newImports);
-		}
+		newContent = StringUtil.replaceFirst(newContent, imports, newImports);
 
-		content = content.replaceFirst(
+		return newContent.replaceFirst(
 			"(?m)^[ \t]*(package .*;)\\s*^[ \t]*import", "$1\n\nimport");
-
-		return ToolsUtil.stripFullyQualifiedClassNames(
-			content, newImports, packagePath);
 	}
 
 	private static final Pattern _importsPattern = Pattern.compile(

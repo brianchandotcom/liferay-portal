@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.plugin.PluginPackageIndexer;
 import com.liferay.portal.tools.DBUpgrader;
+import com.liferay.portal.upgrade.CoreUpgradeProcess;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -186,6 +187,18 @@ public class StartupAction extends SimpleAction {
 		}
 
 		DBUpgrader.checkRequiredBuildNumber(ReleaseInfo.getParentBuildNumber());
+
+		CoreUpgradeProcess coreUpgradeProcess = new CoreUpgradeProcess();
+
+		if (!coreUpgradeProcess.isInRequiredSchemaVersion()) {
+			String msg =
+				"You must first upgrade the Core to the required Schema " +
+					" Version " + coreUpgradeProcess.getRequiredSchemaVersion();
+
+			System.out.println(msg);
+
+			throw new RuntimeException(msg);
+		}
 
 		Registry registry = RegistryUtil.getRegistry();
 

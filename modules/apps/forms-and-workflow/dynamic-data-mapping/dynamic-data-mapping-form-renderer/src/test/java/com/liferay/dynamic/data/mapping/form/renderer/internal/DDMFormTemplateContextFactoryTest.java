@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -92,6 +93,7 @@ public class DDMFormTemplateContextFactoryTest extends PowerMockito {
 		setUpJSONFactory();
 		setUpLanguageUtil();
 		setUpLocaleThreadLocal();
+		setUpPortal();
 		setUpPortalClassLoaderUtil();
 
 		setUpDDMFormTemplateContextFactoryUtil();
@@ -588,6 +590,10 @@ public class DDMFormTemplateContextFactoryTest extends PowerMockito {
 		LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.US);
 	}
 
+	protected void setUpPortal() throws Exception {
+		setDeclaredField(_ddmFormTemplateContextFactory, "_portal", _portal);
+	}
+
 	protected void setUpPortalClassLoaderUtil() {
 		PortalClassLoaderUtil.setClassLoader(PortalImpl.class.getClassLoader());
 	}
@@ -596,6 +602,7 @@ public class DDMFormTemplateContextFactoryTest extends PowerMockito {
 	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
 	private Language _language;
 	private Locale _originalSiteDefaultLocale;
+	private final Portal _portal = new PortalImpl();
 	private HttpServletRequest _request;
 
 }

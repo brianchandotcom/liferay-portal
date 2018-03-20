@@ -166,9 +166,13 @@ class FragmentEntryLink extends Component {
 						}
 					);
 
-					editor
-						.get('nativeEditor')
-						.on('change', this._handleEditorChange);
+					const naviteEditor = editor.get('nativeEditor');
+
+					naviteEditor.on('change', this._handleEditorChange);
+					naviteEditor.on(
+						'selectionChange',
+						this._handleEditorChange
+					);
 
 					return editor;
 				}

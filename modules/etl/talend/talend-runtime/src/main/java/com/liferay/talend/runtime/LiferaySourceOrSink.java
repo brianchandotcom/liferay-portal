@@ -30,7 +30,7 @@ import com.liferay.talend.runtime.apio.jsonld.ApioForm;
 import com.liferay.talend.runtime.apio.jsonld.ApioResourceCollection;
 import com.liferay.talend.runtime.apio.jsonld.ApioSingleModel;
 import com.liferay.talend.runtime.apio.operation.Operation;
-import com.liferay.talend.runtime.client.RestClient;
+import com.liferay.talend.runtime.client.RESTClient;
 
 import java.io.IOException;
 
@@ -78,7 +78,7 @@ public class LiferaySourceOrSink
 			RuntimeContainer runtimeContainer, String resourceURL)
 		throws IOException {
 
-		RestClient restClient = null;
+		RESTClient restClient = null;
 		ApioResult apioResult = null;
 
 		try {
@@ -122,7 +122,7 @@ public class LiferaySourceOrSink
 			RuntimeContainer runtimeContainer, String resourceURL)
 		throws IOException {
 
-		RestClient restClient = null;
+		RESTClient restClient = null;
 		ApioResult apioResult = null;
 
 		try {
@@ -157,7 +157,7 @@ public class LiferaySourceOrSink
 			JsonNode apioForm)
 		throws IOException {
 
-		RestClient restClient = null;
+		RESTClient restClient = null;
 		ApioResult apioResult = null;
 
 		try {
@@ -194,7 +194,7 @@ public class LiferaySourceOrSink
 			JsonNode apioForm)
 		throws IOException {
 
-		RestClient restClient = null;
+		RESTClient restClient = null;
 		ApioResult apioResult = null;
 
 		try {
@@ -357,14 +357,14 @@ public class LiferaySourceOrSink
 		return aggregatedResourceOperations;
 	}
 
-	public RestClient getRestClient(RuntimeContainer runtimeContainer)
+	public RESTClient getRestClient(RuntimeContainer runtimeContainer)
 		throws ApioException {
 
 		LiferayConnectionProperties liferayConnectionProperties =
 			getEffectiveConnection(runtimeContainer);
 
 		if (restClient == null) {
-			restClient = new RestClient(liferayConnectionProperties);
+			restClient = new RESTClient(liferayConnectionProperties);
 		}
 		else {
 			String endpoint = restClient.getEndpoint();
@@ -375,10 +375,10 @@ public class LiferaySourceOrSink
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Endpoint has been changed, initialize a new " +
-							"RestClient");
+							"RESTClient");
 				}
 
-				restClient = new RestClient(liferayConnectionProperties);
+				restClient = new RESTClient(liferayConnectionProperties);
 
 				return restClient;
 			}
@@ -387,7 +387,7 @@ public class LiferaySourceOrSink
 		return restClient;
 	}
 
-	public RestClient getRestClient(
+	public RESTClient getRestClient(
 			RuntimeContainer runtimeContainer, String resourceURL)
 		throws ApioException {
 
@@ -408,7 +408,7 @@ public class LiferaySourceOrSink
 			_log.debug("New REST Client with \"{}\" endpoint", resourceURL);
 		}
 
-		return new RestClient(resourceURL, liferayConnectionProperties);
+		return new RESTClient(resourceURL, liferayConnectionProperties);
 	}
 
 	@Override
@@ -521,7 +521,7 @@ public class LiferaySourceOrSink
 				(LiferayConnectionProperties)
 					liferayConnectionPropertiesProvider);
 
-			RestClient restClient = liferaySourceOrSink.getRestClient(null);
+			RESTClient restClient = liferaySourceOrSink.getRestClient(null);
 
 			restClient.executeGetRequest();
 
@@ -555,7 +555,7 @@ public class LiferaySourceOrSink
 	protected volatile LiferayConnectionPropertiesProvider
 		liferayConnectionPropertiesProvider;
 	protected final ObjectMapper objectMapper = new ObjectMapper();
-	protected RestClient restClient;
+	protected RESTClient restClient;
 
 	private Schema _getResourceCollectionSchema(String resourceURL)
 		throws IOException {

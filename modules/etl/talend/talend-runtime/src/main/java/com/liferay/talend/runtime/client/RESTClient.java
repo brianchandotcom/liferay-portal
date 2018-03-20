@@ -55,7 +55,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author Zoltán Takács
  */
-public class RestClient {
+public class RESTClient {
 
 	/**
 	 * A {@link MediaType} constant representing {@value #JSON-LD} media type.
@@ -68,13 +68,13 @@ public class RestClient {
 	 */
 	public static final String JSON_LD = "application/ld+json";
 
-	public RestClient(LiferayConnectionProperties liferayConnectionProperties) {
+	public RESTClient(LiferayConnectionProperties liferayConnectionProperties) {
 		this(
 			liferayConnectionProperties.endpoint.getValue(),
 			liferayConnectionProperties);
 	}
 
-	public RestClient(
+	public RESTClient(
 		String endpoint,
 		LiferayConnectionProperties liferayConnectionProperties) {
 
@@ -175,7 +175,7 @@ public class RestClient {
 
 	protected final ObjectMapper objectMapper = new ObjectMapper();
 
-	private RestClient(
+	private RESTClient(
 		String endpoint, String password, String userId,
 		LiferayConnectionProperties liferayConnectionProperties) {
 
@@ -371,7 +371,7 @@ public class RestClient {
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger(
-		RestClient.class);
+		RESTClient.class);
 
 	private final Client _client;
 	private final String _endpoint;

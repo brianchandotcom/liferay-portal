@@ -1912,6 +1912,7 @@ public class VerifyProperties extends VerifyProcess {
 		"sites.form.update.seo", "staging.lock.enabled",
 		"social.activity.sets.bundling.enabled", "social.activity.sets.enabled",
 		"social.bookmark.display.styles",
+		"social.bookmark.types",
 		"table.mapper.cache.mapping.table.names", "tck.url",
 		"user.groups.indexer.enabled", "users.form.add.identification",
 		"users.indexer.enabled", "users.form.add.main",

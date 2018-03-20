@@ -32,16 +32,16 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 
 	@Override
 	public List<String> getBatchNames() {
-		String testBatchNames = portalTestProperties.getProperty(
-			"test.batch.names");
+		String testBatchNames = getProperty(
+			portalTestProperties, "test.batch.names");
 
 		return getListFromString(testBatchNames);
 	}
 
 	@Override
 	public List<String> getDistTypes() {
-		String testBatchDistAppServers = portalTestProperties.getProperty(
-			"test.batch.dist.app.servers");
+		String testBatchDistAppServers = getProperty(
+			portalTestProperties, "test.batch.dist.app.servers");
 
 		return getListFromString(testBatchDistAppServers);
 	}
@@ -51,10 +51,10 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 			"test.batch.run.property.query[", testBatchName, "]");
 
 		if (portalTestProperties.containsKey(propertyName)) {
-			String propertyValue = portalTestProperties.getProperty(
-				propertyName);
+			String propertyValue = getProperty(
+				portalTestProperties, propertyName);
 
-			if (!propertyValue.isEmpty()) {
+			if ((propertyValue != null) && !propertyValue.isEmpty()) {
 				return propertyValue;
 			}
 		}
@@ -92,10 +92,29 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 		return list;
 	}
 
+	protected String getProperty(Properties properties, String name) {
+		if (!properties.containsKey(name)) {
+			return null;
+		}
+
+		String value = properties.getProperty(name);
+
+		Matcher matcher = _propertiesPattern.matcher(value);
+
+		String newValue = value;
+
+		while (matcher.find()) {
+			newValue = newValue.replace(
+				matcher.group(0), getProperty(properties, matcher.group(1)));
+		}
+
+		return newValue;
+	}
+
 	protected final Properties portalTestProperties;
 
 	private String _getBranchName() {
-		Matcher matcher = _pattern.matcher(jobName);
+		Matcher matcher = _jobNamePattern.matcher(jobName);
 
 		if (matcher.find()) {
 			return matcher.group("branchName");
@@ -122,7 +141,9 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 		}
 	}
 
-	private static final Pattern _pattern = Pattern.compile(
+	private static final Pattern _jobNamePattern = Pattern.compile(
 		"[^\\(]+\\((?<branchName>[^\\)]+)\\)");
+	private static final Pattern _propertiesPattern = Pattern.compile(
+		"\\$\\{([^\\}]+)\\}");
 
 }

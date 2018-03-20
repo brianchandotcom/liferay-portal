@@ -29,8 +29,8 @@ import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -153,12 +153,9 @@ public class MBThreadServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
 
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+		try (ContextUserReplace contextUserReplace =
+				new ContextUserReplace(user, permissionChecker)) {
 
-		PermissionThreadLocal.setPermissionChecker(permissionChecker);
-
-		try {
 			QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
 				WorkflowConstants.STATUS_APPROVED, user.getUserId(), true);
 
@@ -167,10 +164,6 @@ public class MBThreadServiceTest {
 				MBThreadServiceUtil.getThreadsCount(
 					_group.getGroupId(), _category.getCategoryId(),
 					queryDefinition));
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
 		}
 	}
 
@@ -192,12 +185,9 @@ public class MBThreadServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
 
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+		try (ContextUserReplace contextUserReplace =
+				new ContextUserReplace(user, permissionChecker)) {
 
-		PermissionThreadLocal.setPermissionChecker(permissionChecker);
-
-		try {
 			QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
 				WorkflowConstants.STATUS_APPROVED, user.getUserId(), false);
 
@@ -206,10 +196,6 @@ public class MBThreadServiceTest {
 				MBThreadServiceUtil.getThreadsCount(
 					_group.getGroupId(), _category.getCategoryId(),
 					queryDefinition));
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
 		}
 	}
 
@@ -258,12 +244,9 @@ public class MBThreadServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
 
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+		try (ContextUserReplace contextUserReplace =
+				new ContextUserReplace(user, permissionChecker)) {
 
-		PermissionThreadLocal.setPermissionChecker(permissionChecker);
-
-		try {
 			QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
 				WorkflowConstants.STATUS_ANY);
 
@@ -272,10 +255,6 @@ public class MBThreadServiceTest {
 				MBThreadServiceUtil.getThreadsCount(
 					_group.getGroupId(), _category.getCategoryId(),
 					queryDefinition));
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
 		}
 	}
 
@@ -352,12 +331,9 @@ public class MBThreadServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
 
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+		try (ContextUserReplace contextUserReplace =
+				new ContextUserReplace(user, permissionChecker)) {
 
-		PermissionThreadLocal.setPermissionChecker(permissionChecker);
-
-		try {
 			QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
 				WorkflowConstants.STATUS_APPROVED, user.getUserId(), true);
 
@@ -367,10 +343,6 @@ public class MBThreadServiceTest {
 
 			Assert.assertEquals(threads.toString(), 1, threads.size());
 			Assert.assertEquals(draftMessage.getThread(), threads.get(0));
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
 		}
 	}
 
@@ -392,12 +364,9 @@ public class MBThreadServiceTest {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
 
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+		try (ContextUserReplace contextUserReplace =
+				new ContextUserReplace(user, permissionChecker)) {
 
-		PermissionThreadLocal.setPermissionChecker(permissionChecker);
-
-		try {
 			QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
 				WorkflowConstants.STATUS_APPROVED, user.getUserId(), false);
 
@@ -406,10 +375,6 @@ public class MBThreadServiceTest {
 				queryDefinition);
 
 			Assert.assertEquals(threads.toString(), 0, threads.size());
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
 		}
 	}
 

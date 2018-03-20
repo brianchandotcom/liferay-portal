@@ -107,7 +107,7 @@ public class CalendarBookingServiceTest {
 
 		List<CalendarBooking> calendarBookings = Collections.emptyList();
 
-		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_omnidminUser)) {
 
 			calendarBookings = CalendarBookingServiceUtil.getCalendarBookings(
@@ -138,7 +138,7 @@ public class CalendarBookingServiceTest {
 
 		List<CalendarBooking> calendarBookings = Collections.emptyList();
 
-		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user1)) {
 
 			calendarBookings = CalendarBookingServiceUtil.getCalendarBookings(
@@ -147,7 +147,7 @@ public class CalendarBookingServiceTest {
 
 		Assert.assertTrue(!calendarBookings.isEmpty());
 
-		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user2)) {
 
 			calendarBookings = CalendarBookingServiceUtil.getCalendarBookings(

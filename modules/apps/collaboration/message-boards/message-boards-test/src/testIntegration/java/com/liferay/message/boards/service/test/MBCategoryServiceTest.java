@@ -88,7 +88,7 @@ public class MBCategoryServiceTest {
 
 		addMessage(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 
-		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user)) {
 
 			int categoriesAndThreadsCount =
@@ -111,7 +111,7 @@ public class MBCategoryServiceTest {
 
 		addCategory();
 
-		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user)) {
 
 			int categoriesAndThreadsCount =
@@ -132,7 +132,7 @@ public class MBCategoryServiceTest {
 
 		addMessage(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 
-		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user)) {
 
 			int categoriesAndThreadsCount =
@@ -155,7 +155,7 @@ public class MBCategoryServiceTest {
 
 		addCategory();
 
-		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user)) {
 
 			int categoriesAndThreadsCount =
@@ -183,7 +183,7 @@ public class MBCategoryServiceTest {
 		MBMessage message2 = addMessage(
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 
-		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user)) {
 
 			List<Object> categoriesAndThreads =
@@ -214,7 +214,7 @@ public class MBCategoryServiceTest {
 
 		MBCategory category2 = addCategory();
 
-		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user)) {
 
 			List<Object> categoriesAndThreads =
@@ -241,7 +241,7 @@ public class MBCategoryServiceTest {
 		MBMessage message2 = addMessage(
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 
-		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user)) {
 
 			List<Object> categoriesAndThreads =
@@ -270,7 +270,7 @@ public class MBCategoryServiceTest {
 
 		addCategory();
 
-		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user)) {
 
 			List<Object> categoriesAndThreads =
@@ -302,7 +302,7 @@ public class MBCategoryServiceTest {
 		MBMessage message2 = addMessage(
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 
-		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user)) {
 
 			List<Object> categoriesAndThreads =

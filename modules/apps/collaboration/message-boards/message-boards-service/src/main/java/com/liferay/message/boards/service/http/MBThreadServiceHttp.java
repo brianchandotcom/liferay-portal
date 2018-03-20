@@ -415,7 +415,8 @@ public class MBThreadServiceHttp {
 
 	public static java.util.List<com.liferay.message.boards.model.MBThread> getThreads(
 		HttpPrincipal httpPrincipal, long groupId, long categoryId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.model.MBThread> queryDefinition) {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.model.MBThread> queryDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class,
 					"getThreads", _getThreadsParameterTypes12);
@@ -429,6 +430,10 @@ public class MBThreadServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -470,7 +475,8 @@ public class MBThreadServiceHttp {
 
 	public static int getThreadsCount(HttpPrincipal httpPrincipal,
 		long groupId, long categoryId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.model.MBThread> queryDefinition) {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.model.MBThread> queryDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class,
 					"getThreadsCount", _getThreadsCountParameterTypes14);
@@ -484,6 +490,10 @@ public class MBThreadServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 

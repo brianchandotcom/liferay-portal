@@ -331,7 +331,8 @@ public class MBCategoryServiceHttp {
 
 	public static java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
 		HttpPrincipal httpPrincipal, long groupId, long parentCategoryId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
 					"getCategories", _getCategoriesParameterTypes9);
@@ -345,6 +346,10 @@ public class MBCategoryServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -558,7 +563,8 @@ public class MBCategoryServiceHttp {
 
 	public static java.util.List<java.lang.Object> getCategoriesAndThreads(
 		HttpPrincipal httpPrincipal, long groupId, long categoryId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
 					"getCategoriesAndThreads",
@@ -573,6 +579,10 @@ public class MBCategoryServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -643,7 +653,8 @@ public class MBCategoryServiceHttp {
 
 	public static int getCategoriesAndThreadsCount(
 		HttpPrincipal httpPrincipal, long groupId, long categoryId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
 					"getCategoriesAndThreadsCount",
@@ -658,6 +669,10 @@ public class MBCategoryServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -753,7 +768,8 @@ public class MBCategoryServiceHttp {
 
 	public static int getCategoriesCount(HttpPrincipal httpPrincipal,
 		long groupId, long parentCategoryId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
 					"getCategoriesCount", _getCategoriesCountParameterTypes24);
@@ -767,6 +783,10 @@ public class MBCategoryServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 

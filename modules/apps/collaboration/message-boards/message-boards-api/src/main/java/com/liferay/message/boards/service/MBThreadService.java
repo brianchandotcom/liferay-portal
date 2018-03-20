@@ -117,14 +117,14 @@ public interface MBThreadService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBThread> getThreads(long groupId, long categoryId,
-		QueryDefinition<MBThread> queryDefinition);
+		QueryDefinition<MBThread> queryDefinition) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getThreadsCount(long groupId, long categoryId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getThreadsCount(long groupId, long categoryId,
-		QueryDefinition<MBThread> queryDefinition);
+		QueryDefinition<MBThread> queryDefinition) throws PortalException;
 
 	public Lock lockThread(long threadId) throws PortalException;
 

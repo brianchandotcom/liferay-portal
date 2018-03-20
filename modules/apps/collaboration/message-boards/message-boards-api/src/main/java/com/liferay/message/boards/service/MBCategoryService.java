@@ -100,7 +100,7 @@ public interface MBCategoryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBCategory> getCategories(long groupId, long parentCategoryId,
-		QueryDefinition<?> queryDefinition);
+		QueryDefinition<?> queryDefinition) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBCategory> getCategories(long groupId,
@@ -134,7 +134,8 @@ public interface MBCategoryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<java.lang.Object> getCategoriesAndThreads(long groupId,
-		long categoryId, QueryDefinition<?> queryDefinition);
+		long categoryId, QueryDefinition<?> queryDefinition)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCategoriesAndThreadsCount(long groupId, long categoryId);
@@ -145,7 +146,7 @@ public interface MBCategoryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCategoriesAndThreadsCount(long groupId, long categoryId,
-		QueryDefinition<?> queryDefinition);
+		QueryDefinition<?> queryDefinition) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCategoriesCount(long groupId, long parentCategoryId);
@@ -160,7 +161,7 @@ public interface MBCategoryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCategoriesCount(long groupId, long parentCategoryId,
-		QueryDefinition<?> queryDefinition);
+		QueryDefinition<?> queryDefinition) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCategoriesCount(long groupId, long[] parentCategoryIds);

@@ -449,6 +449,22 @@ public class BackgroundTaskLocalServiceUtil {
 			end, orderByComparator);
 	}
 
+	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasksByDuration(
+		long[] groupIds, java.lang.String[] taskExecutorClassNames,
+		boolean completed, int start, int end, boolean orderByType) {
+		return getService()
+				   .getBackgroundTasksByDuration(groupIds,
+			taskExecutorClassNames, completed, start, end, orderByType);
+	}
+
+	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasksByDuration(
+		long[] groupIds, java.lang.String[] taskExecutorClassNames, int start,
+		int end, boolean orderByType) {
+		return getService()
+				   .getBackgroundTasksByDuration(groupIds,
+			taskExecutorClassNames, start, end, orderByType);
+	}
+
 	/**
 	* Returns the number of background tasks.
 	*

@@ -14,7 +14,9 @@
  */
 --%>
 
-<%@ page import="com.liferay.portal.kernel.security.auth.PrincipalException" %>
+<%@ page import="com.liferay.portal.kernel.security.auth.PrincipalException" %><%@
+page import="com.liferay.portal.search.elasticsearch6.xpack.monitoring.web.internal.constants.XPackMonitoringProxyServletWebKeys" %><%@
+page import="com.liferay.portal.search.elasticsearch6.xpack.monitoring.web.internal.servlet.display.context.ErrorDisplayContext" %>
 
 <%@ page import="java.net.ConnectException" %>
 
@@ -23,7 +25,7 @@
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%
-com.liferay.portal.search.elasticsearch6.xpack.monitoring.web.internal.servlet.display.context.ErrorDisplayContext errorDisplayContext = (com.liferay.portal.search.elasticsearch6.xpack.monitoring.web.internal.servlet.display.context.ErrorDisplayContext)request.getAttribute(com.liferay.portal.search.elasticsearch6.xpack.monitoring.web.internal.constants.XPackMonitoringProxyServletWebKeys.ERROR_DISPLAY_CONTEXT);
+ErrorDisplayContext errorDisplayContext = (ErrorDisplayContext)request.getAttribute(XPackMonitoringProxyServletWebKeys.ERROR_DISPLAY_CONTEXT);
 
 Exception e = errorDisplayContext.getException();
 %>

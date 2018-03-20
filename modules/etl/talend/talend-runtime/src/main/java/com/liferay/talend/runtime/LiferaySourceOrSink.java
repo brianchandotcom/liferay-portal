@@ -25,10 +25,10 @@ import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
 import com.liferay.talend.runtime.apio.ApioException;
 import com.liferay.talend.runtime.apio.ApioResult;
+import com.liferay.talend.runtime.apio.constants.JSONLDConstants;
 import com.liferay.talend.runtime.apio.jsonld.ApioForm;
 import com.liferay.talend.runtime.apio.jsonld.ApioResourceCollection;
 import com.liferay.talend.runtime.apio.jsonld.ApioSingleModel;
-import com.liferay.talend.runtime.apio.jsonld.JSONLDConstants;
 import com.liferay.talend.runtime.apio.operation.Operation;
 import com.liferay.talend.runtime.client.RestClient;
 
@@ -594,9 +594,7 @@ public class LiferaySourceOrSink
 		return resourcesMap;
 	}
 
-	private JsonNode _toJsonNode(ApioResult apioResult)
-		throws IOException {
-
+	private JsonNode _toJsonNode(ApioResult apioResult) throws IOException {
 		JsonNode jsonNode = null;
 
 		if (_log.isDebugEnabled()) {

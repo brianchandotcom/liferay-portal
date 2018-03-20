@@ -22,7 +22,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.runtime.apio.ApioException;
 import com.liferay.talend.runtime.apio.ApioResult;
-import com.liferay.talend.runtime.apio.jsonld.JSONLDConstants;
+import com.liferay.talend.runtime.apio.constants.JSONLDConstants;
 
 import java.net.URI;
 import java.net.URISyntaxException;

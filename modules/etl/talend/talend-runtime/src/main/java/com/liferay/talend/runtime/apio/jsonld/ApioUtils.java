@@ -16,6 +16,8 @@ package com.liferay.talend.runtime.apio.jsonld;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import com.liferay.talend.runtime.apio.constants.JSONLDConstants;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

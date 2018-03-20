@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.talend.runtime.apio.jsonld;
+package com.liferay.talend.runtime.apio.constants;
 
 /**
  * @author Zoltán Takács

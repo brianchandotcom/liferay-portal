@@ -16,7 +16,8 @@ package com.liferay.talend.runtime.apio.jsonld;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import com.liferay.talend.runtime.apio.jsonld.HydraConstants.FieldNames;
+import com.liferay.talend.runtime.apio.constants.HydraConstants.FieldNames;
+import com.liferay.talend.runtime.apio.constants.JSONLDConstants;
 import com.liferay.talend.runtime.apio.operation.Operation;
 
 import java.io.IOException;

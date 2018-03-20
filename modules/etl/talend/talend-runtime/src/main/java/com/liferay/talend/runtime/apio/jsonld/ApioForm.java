@@ -134,7 +134,7 @@ public class ApioForm extends ApioBaseResponse {
 	}
 
 	private void _validateForm() throws IOException {
-		if (!hasValueOf(FieldTypes.CLASS, getTypeNode())) {
+		if (!hasValueOf(FieldTypes.CLASS, getTypeJsonNode())) {
 			throw new IOException("The given resource is not a from");
 		}
 	}

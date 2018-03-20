@@ -340,7 +340,8 @@ public class LiferaySourceOrSink
 
 		aggregatedResourceOperations.addAll(collectionOperations);
 
-		JsonNode resourceEntryJsonNode = apioResourceCollection.getFirstEntry();
+		JsonNode resourceEntryJsonNode =
+			apioResourceCollection.getFirstEntryJsonNode();
 
 		JsonNode resourceEntryURLJsonNode = resourceEntryJsonNode.path(
 			JSONLDConstants.ID);

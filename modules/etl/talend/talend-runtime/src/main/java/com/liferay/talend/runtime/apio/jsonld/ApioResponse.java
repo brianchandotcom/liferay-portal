@@ -21,10 +21,10 @@ import com.fasterxml.jackson.databind.JsonNode;
  */
 public interface ApioResponse {
 
-	public JsonNode getContextNode();
+	public JsonNode getContextJsonNode();
 
-	public JsonNode getIdNode();
+	public JsonNode getIdJsonNode();
 
-	public JsonNode getTypeNode();
+	public JsonNode getTypeJsonNode();
 
 }

@@ -35,17 +35,17 @@ public abstract class ApioBaseResponse implements ApioResponse {
 	}
 
 	@Override
-	public JsonNode getContextNode() {
+	public JsonNode getContextJsonNode() {
 		return findJsonNode(JSONLDConstants.CONTEXT);
 	}
 
 	@Override
-	public JsonNode getIdNode() {
+	public JsonNode getIdJsonNode() {
 		return findJsonNode(JSONLDConstants.ID);
 	}
 
 	@Override
-	public JsonNode getTypeNode() {
+	public JsonNode getTypeJsonNode() {
 		return findJsonNode(JSONLDConstants.TYPE);
 	}
 

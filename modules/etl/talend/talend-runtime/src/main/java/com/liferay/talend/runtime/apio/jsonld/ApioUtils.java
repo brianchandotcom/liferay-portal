@@ -32,7 +32,7 @@ public class ApioUtils {
 	 * @param  jsonNode Input JsonNode
 	 * @return JsonNode for the context node, otherwise MissingNode
 	 */
-	public static JsonNode getContextNode(JsonNode jsonNode) {
+	public static JsonNode getContextJsonNode(JsonNode jsonNode) {
 		return _findJsonNode(jsonNode, JSONLDConstants.CONTEXT);
 	}
 

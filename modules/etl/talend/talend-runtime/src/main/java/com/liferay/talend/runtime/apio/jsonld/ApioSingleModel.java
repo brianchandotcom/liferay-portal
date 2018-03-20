@@ -55,7 +55,7 @@ public class ApioSingleModel extends ApioBaseResponse {
 	 * @return <code>JsonNode</code> The JsonNode for the operation section or
 	 *         MissingNode if it's not present
 	 */
-	public JsonNode getOperationNode() {
+	public JsonNode getOperationJsonNode() {
 		return findJsonNode(FieldNames.OPERATION);
 	}
 
@@ -66,7 +66,7 @@ public class ApioSingleModel extends ApioBaseResponse {
 	 * @return <code>List</code> of <code>Operation</code>, empty List otherwise
 	 */
 	public List<Operation> getResourceOperations() {
-		JsonNode operationJsonNode = getOperationNode();
+		JsonNode operationJsonNode = getOperationJsonNode();
 
 		if (!operationJsonNode.isArray() || (operationJsonNode.size() == 0)) {
 			if (_log.isDebugEnabled()) {
@@ -108,7 +108,7 @@ public class ApioSingleModel extends ApioBaseResponse {
 	}
 
 	private void _validateSingleModel() throws IOException {
-		JsonNode contextJsonNode = getContextNode();
+		JsonNode contextJsonNode = getContextJsonNode();
 
 		if (contextJsonNode.isMissingNode()) {
 			throw new IOException(

@@ -56,7 +56,7 @@ public class ApioResourceCollectionTest {
 
 	@Test
 	public void testGetContextVocabulary() {
-		JsonNode jsonNode = _apioJsonLDResource.getContextNode();
+		JsonNode jsonNode = _apioJsonLDResource.getContextJsonNode();
 
 		String vocabulary = _apioJsonLDResource.getVocabulary(jsonNode);
 

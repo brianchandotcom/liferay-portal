@@ -170,5 +170,18 @@
 		<reference entity="OAuth2AccessToken" package-path="com.liferay.oauth2.provider" />
 	</entity>
 	<exceptions>
+		<exception>DuplicateOAuth2ApplicationClientId</exception>
+		<exception>DuplicateOAuth2ScopeGrant</exception>
+		<exception>OAuth2ApplicationClientGrantType</exception>
+		<exception>OAuth2ApplicationHomePageURL</exception>
+		<exception>OAuth2ApplicationHomePageURLScheme</exception>
+		<exception>OAuth2ApplicationName</exception>
+		<exception>OAuth2ApplicationPrivacyPolicyURL</exception>
+		<exception>OAuth2ApplicationPrivacyPolicyURLScheme</exception>
+		<exception>OAuth2ApplicationRedirectURI</exception>
+		<exception>OAuth2ApplicationRedirectURIFragment</exception>
+		<exception>OAuth2ApplicationRedirectURIMissing</exception>
+		<exception>OAuth2ApplicationRedirectURIPath</exception>
+		<exception>OAuth2ApplicationRedirectURIScheme</exception>
 	</exceptions>
 </service-builder>

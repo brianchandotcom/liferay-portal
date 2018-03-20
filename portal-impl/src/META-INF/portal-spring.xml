@@ -21,6 +21,10 @@
 	<bean class="com.liferay.portlet.asset.service.impl.AssetCategoryServiceImpl" id="com.liferay.asset.kernel.service.AssetCategoryService" />
 	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetCategoryPersistenceImpl" id="com.liferay.asset.kernel.service.persistence.AssetCategoryPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetCategoryFinderImpl" id="com.liferay.asset.kernel.service.persistence.AssetCategoryFinder" parent="basePersistence" />
+	<bean class="com.liferay.portlet.asset.service.impl.AssetCategoryPropertyLocalServiceImpl" id="com.liferay.asset.kernel.service.AssetCategoryPropertyLocalService" />
+	<bean class="com.liferay.portlet.asset.service.impl.AssetCategoryPropertyServiceImpl" id="com.liferay.asset.kernel.service.AssetCategoryPropertyService" />
+	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetCategoryPropertyPersistenceImpl" id="com.liferay.asset.kernel.service.persistence.AssetCategoryPropertyPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetCategoryPropertyFinderImpl" id="com.liferay.asset.kernel.service.persistence.AssetCategoryPropertyFinder" parent="basePersistence" />
 	<bean class="com.liferay.portlet.asset.service.impl.AssetEntryLocalServiceImpl" id="com.liferay.asset.kernel.service.AssetEntryLocalService" />
 	<bean class="com.liferay.portlet.asset.service.impl.AssetEntryServiceImpl" id="com.liferay.asset.kernel.service.AssetEntryService" />
 	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetEntryPersistenceImpl" id="com.liferay.asset.kernel.service.persistence.AssetEntryPersistence" parent="basePersistence" />
@@ -32,6 +36,8 @@
 	<bean class="com.liferay.portlet.asset.service.impl.AssetTagServiceImpl" id="com.liferay.asset.kernel.service.AssetTagService" />
 	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetTagPersistenceImpl" id="com.liferay.asset.kernel.service.persistence.AssetTagPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetTagFinderImpl" id="com.liferay.asset.kernel.service.persistence.AssetTagFinder" parent="basePersistence" />
+	<bean class="com.liferay.portlet.asset.service.impl.AssetTagStatsLocalServiceImpl" id="com.liferay.asset.kernel.service.AssetTagStatsLocalService" />
+	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetTagStatsPersistenceImpl" id="com.liferay.asset.kernel.service.persistence.AssetTagStatsPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portlet.asset.service.impl.AssetVocabularyLocalServiceImpl" id="com.liferay.asset.kernel.service.AssetVocabularyLocalService" />
 	<bean class="com.liferay.portlet.asset.service.impl.AssetVocabularyServiceImpl" id="com.liferay.asset.kernel.service.AssetVocabularyService" />
 	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetVocabularyPersistenceImpl" id="com.liferay.asset.kernel.service.persistence.AssetVocabularyPersistence" parent="basePersistence" />
@@ -216,6 +222,8 @@
 	<bean class="com.liferay.portal.service.impl.ServiceComponentLocalServiceImpl" id="com.liferay.portal.kernel.service.ServiceComponentLocalService" />
 	<bean class="com.liferay.portal.service.persistence.impl.ServiceComponentPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ServiceComponentPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portal.service.persistence.impl.ServiceComponentFinderImpl" id="com.liferay.portal.kernel.service.persistence.ServiceComponentFinder" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.SubscriptionLocalServiceImpl" id="com.liferay.portal.kernel.service.SubscriptionLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.SubscriptionPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.SubscriptionPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portal.service.impl.SystemEventLocalServiceImpl" id="com.liferay.portal.kernel.service.SystemEventLocalService" />
 	<bean class="com.liferay.portal.service.persistence.impl.SystemEventPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.SystemEventPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portal.service.impl.TeamLocalServiceImpl" id="com.liferay.portal.kernel.service.TeamLocalService" />

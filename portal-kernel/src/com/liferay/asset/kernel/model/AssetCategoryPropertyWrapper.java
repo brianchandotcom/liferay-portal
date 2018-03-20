@@ -35,8 +35,10 @@ import java.util.Objects;
  *
  * @author Brian Wing Shun Chan
  * @see AssetCategoryProperty
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public class AssetCategoryPropertyWrapper implements AssetCategoryProperty,
 	ModelWrapper<AssetCategoryProperty> {

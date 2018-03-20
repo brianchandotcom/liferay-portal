@@ -38,7 +38,7 @@ import java.io.Serializable;
  * @see com.liferay.portlet.asset.model.impl.AssetTagStatsImpl
  * @see com.liferay.portlet.asset.model.impl.AssetTagStatsModelImpl
  * @deprecated As of 7.0.0, replaced by {@link
-            com.liferay.asset.tags.model.impl.AssetTagStatsImpl}
+            com.liferay.asset.tag.stats.model.impl.AssetTagStatsImpl}
  * @generated
  */
 @Deprecated

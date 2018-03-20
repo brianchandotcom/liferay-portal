@@ -376,28 +376,8 @@
 	</xs:group>
 	<xs:group name="task-timer-actions-group">
 		<xs:choice>
-			<xs:element name="timer-action">
-				<xs:complexType>
-					<xs:complexContent>
-						<xs:extension base="action-complex-type">
-							<xs:sequence>
-								<xs:element name="execution-type" type="task-execution-type" />
-							</xs:sequence>
-						</xs:extension>
-					</xs:complexContent>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="timer-notification">
-				<xs:complexType>
-					<xs:complexContent>
-						<xs:extension base="task-notification-complex-type">
-							<xs:sequence>
-								<xs:element name="execution-type" type="task-execution-type" />
-							</xs:sequence>
-						</xs:extension>
-					</xs:complexContent>
-				</xs:complexType>
-			</xs:element>
+			<xs:element name="timer-action" type="action-complex-type" />
+			<xs:element name="timer-notification" type="task-notification-complex-type" />
 			<xs:element minOccurs="0" name="reassignments">
 				<xs:complexType>
 					<xs:choice>

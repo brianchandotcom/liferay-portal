@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.oauth2.provider.exception;
 
 import aQute.bnd.annotation.ProviderType;
@@ -30,7 +31,9 @@ public class OAuth2ApplicationRedirectURIPathException extends PortalException {
 		super(msg);
 	}
 
-	public OAuth2ApplicationRedirectURIPathException(String msg, Throwable cause) {
+	public OAuth2ApplicationRedirectURIPathException(
+		String msg, Throwable cause) {
+
 		super(msg, cause);
 	}
 

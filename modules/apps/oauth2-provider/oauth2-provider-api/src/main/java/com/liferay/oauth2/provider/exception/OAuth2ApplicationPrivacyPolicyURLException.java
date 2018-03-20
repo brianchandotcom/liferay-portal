@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.oauth2.provider.exception;
 
 import aQute.bnd.annotation.ProviderType;
@@ -21,7 +22,8 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class OAuth2ApplicationPrivacyPolicyURLException extends PortalException {
+public class OAuth2ApplicationPrivacyPolicyURLException
+	extends PortalException {
 
 	public OAuth2ApplicationPrivacyPolicyURLException() {
 	}
@@ -30,7 +32,9 @@ public class OAuth2ApplicationPrivacyPolicyURLException extends PortalException 
 		super(msg);
 	}
 
-	public OAuth2ApplicationPrivacyPolicyURLException(String msg, Throwable cause) {
+	public OAuth2ApplicationPrivacyPolicyURLException(
+		String msg, Throwable cause) {
+
 		super(msg, cause);
 	}
 

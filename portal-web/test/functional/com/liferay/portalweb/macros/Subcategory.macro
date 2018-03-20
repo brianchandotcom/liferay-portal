@@ -38,7 +38,7 @@
 
 	<command name="addDuplicateCP">
 		<var name="key_categoryName" value="${categoryName}" />
-		
+
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}">
 			<var name="key_vocabularyName" value="${vocabularyName}" />
 		</execute>

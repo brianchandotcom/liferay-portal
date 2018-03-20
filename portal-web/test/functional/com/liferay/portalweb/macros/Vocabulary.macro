@@ -267,7 +267,7 @@
 					<var name="menuItem" value="Edit" />
 					<var name="rowEntry" value="${vocabularyName}" />
 				</execute>
-				
+
 				<execute function="AssertNotChecked#assertNotCheckedNotVisible" locator1="CategoriesEditVocabulary#ALLOW_MULTIPLE_CATEGORIES_TOGGLE_SWITCH" />
 			</then>
 		</if>

@@ -447,16 +447,18 @@
 	</target>
 
 	<target name="strip-comments">
-		<replaceregexp file="${strip.comments.file}"
+		<replaceregexp
 			encoding="${strip.comments.encoding}"
+			file="${strip.comments.file}"
 			flags="gs"
 			match="\s*/[*].*?[*]/\s*"
 			replace=""
 		/>
 
-		<replaceregexp file="${strip.comments.file}"
+		<replaceregexp
 			byline="true"
 			encoding="${strip.comments.encoding}"
+			file="${strip.comments.file}"
 			match="^\s*(//)(.*)$$"
 			replace=""
 		/>

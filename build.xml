@@ -1238,7 +1238,8 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 
 	<target name="validate-xml">
 		<xmlvalidate failonerror="no">
-			<fileset dir="${project.dir}"
+			<fileset
+				dir="${project.dir}"
 				excludes="**/dependencies/**,**/ehcache/**"
 				includes="**/liferay-*.xml,**/web.xml"
 			/>

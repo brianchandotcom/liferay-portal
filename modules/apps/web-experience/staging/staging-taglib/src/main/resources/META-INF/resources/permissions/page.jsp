@@ -42,8 +42,6 @@ String inputLabel = LanguageUtil.get(request, inputTitle) + ": <span style='font
 
 <aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass="options-group" label="permissions" markupView="lexicon">
 	<span class="<%= labelCSSClass %>">
-		<aui:input disabled="<%= disableInputs %>" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="checkbox" label="<%= inputLabel %>"
-			value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PERMISSIONS, false) %>"
-		/>
+		<aui:input disabled="<%= disableInputs %>" label="<%= inputLabel %>" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PERMISSIONS, false) %>" />
 	</span>
 </aui:fieldset>

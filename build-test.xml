@@ -1377,7 +1377,8 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 						replace="\\\\]"
 					/>
 
-					<replaceregexp file="portal-impl/src/portal-ext.properties"
+					<replaceregexp
+						file="portal-impl/src/portal-ext.properties"
 						flags="g"
 						match="${propertyName}=.*"
 						replace=""

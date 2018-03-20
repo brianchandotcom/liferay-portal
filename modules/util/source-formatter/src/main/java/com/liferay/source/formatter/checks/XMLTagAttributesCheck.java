@@ -53,6 +53,8 @@ public class XMLTagAttributesCheck extends TagAttributesCheck {
 			return content;
 		}
 
+		content = formatIncorrectLineBreak(fileName, content);
+
 		content = _formatTagAttributes(absolutePath, content);
 
 		content = formatMultiLinesTagAttributes(absolutePath, content, true);

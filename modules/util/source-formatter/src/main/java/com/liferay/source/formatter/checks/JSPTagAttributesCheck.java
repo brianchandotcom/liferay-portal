@@ -91,6 +91,8 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 			return content;
 		}
 
+		content = formatIncorrectLineBreak(fileName, content);
+
 		content = _formatSingleLineTagAttributes(absolutePath, content);
 
 		content = formatMultiLinesTagAttributes(absolutePath, content, false);

@@ -225,6 +225,19 @@ public class HtmlBBCodeTranslatorImplTest {
 		Assert.assertEquals(expected, actual);
 	}
 
+	@Test
+	public void testURLWithAccents() {
+		String urlWithAccents =
+			"https://hu.wikipedia.org/wiki/Árvíztűrő_tükörfúrógép";
+
+		String expected =
+			"<a href=\"" + HtmlUtil.escapeHREF(urlWithAccents) + "\">link</a>";
+		String actual = _htmlBBCodeTranslator.parse(
+			"[url=" + urlWithAccents + "]link[/url]");
+
+		Assert.assertEquals(expected, actual);
+	}
+
 	private final HtmlBBCodeTranslatorImpl _htmlBBCodeTranslator =
 		new HtmlBBCodeTranslatorImpl();
 

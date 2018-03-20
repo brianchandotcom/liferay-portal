@@ -319,8 +319,20 @@ while (manageableCalendarsIterator.hasNext()) {
 		</aui:fieldset>
 
 		<aui:fieldset markupView="lexicon">
-			<liferay-ui:panel-container extended="<%= true %>" id="calendarBookingDetailsPanelContainer" persistState="<%= true %>">
-				<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="calendarBookingDetailsPanel" markupView="lexicon" persistState="<%= true %>" title="details">
+			<liferay-ui:panel-container
+				extended="<%= true %>"
+				id="calendarBookingDetailsPanelContainer"
+				persistState="<%= true %>"
+			>
+				<liferay-ui:panel
+					collapsible="<%= true %>"
+					defaultState="closed"
+					extended="<%= false %>"
+					id="calendarBookingDetailsPanel"
+					markupView="lexicon"
+					persistState="<%= true %>"
+					title="details"
+				>
 					<aui:select label="calendar" name="calendarId">
 
 						<%
@@ -349,7 +361,9 @@ while (manageableCalendarsIterator.hasNext()) {
 
 					<aui:input name="location" />
 
-					<liferay-expando:custom-attributes-available className="<%= CalendarBooking.class.getName() %>">
+					<liferay-expando:custom-attributes-available
+						className="<%= CalendarBooking.class.getName() %>"
+					>
 						<liferay-expando:custom-attribute-list
 							className="<%= CalendarBooking.class.getName() %>"
 							classPK="<%= (calendarBooking != null) ? calendarBooking.getCalendarBookingId() : 0 %>"
@@ -367,7 +381,15 @@ while (manageableCalendarsIterator.hasNext()) {
 					</c:if>
 				</liferay-ui:panel>
 
-				<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="calendarBookingInvitationPanel" markupView="lexicon" persistState="<%= true %>" title="invitations">
+				<liferay-ui:panel
+					collapsible="<%= true %>"
+					defaultState="closed"
+					extended="<%= false %>"
+					id="calendarBookingInvitationPanel"
+					markupView="lexicon"
+					persistState="<%= true %>"
+					title="invitations"
+				>
 					<c:if test="<%= invitable %>">
 						<aui:input inputCssClass="calendar-portlet-invite-resources-input" label="" name="inviteResource" placeholder="add-people-sites-rooms" type="text" />
 
@@ -435,17 +457,47 @@ while (manageableCalendarsIterator.hasNext()) {
 					</aui:row>
 				</liferay-ui:panel>
 
-				<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="calendarBookingReminderPanel" markupView="lexicon" persistState="<%= true %>" title="reminders">
+				<liferay-ui:panel
+					collapsible="<%= true %>"
+					defaultState="closed"
+					extended="<%= false %>"
+					id="calendarBookingReminderPanel"
+					markupView="lexicon"
+					persistState="<%= true %>"
+					title="reminders"
+				>
 					<div class="calendar-booking-reminders" id="<portlet:namespace />reminders"></div>
 				</liferay-ui:panel>
 
-				<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="calendarBookingCategorizationPanel" markupView="lexicon" persistState="<%= true %>" title="categorization">
-					<liferay-asset:asset-categories-selector className="<%= CalendarBooking.class.getName() %>" classPK="<%= calendarBookingId %>" />
+				<liferay-ui:panel
+					collapsible="<%= true %>"
+					defaultState="closed"
+					extended="<%= false %>"
+					id="calendarBookingCategorizationPanel"
+					markupView="lexicon"
+					persistState="<%= true %>"
+					title="categorization"
+				>
+					<liferay-asset:asset-categories-selector
+						className="<%= CalendarBooking.class.getName() %>"
+						classPK="<%= calendarBookingId %>"
+					/>
 
-					<liferay-asset:asset-tags-selector className="<%= CalendarBooking.class.getName() %>" classPK="<%= calendarBookingId %>" />
+					<liferay-asset:asset-tags-selector
+						className="<%= CalendarBooking.class.getName() %>"
+						classPK="<%= calendarBookingId %>"
+					/>
 				</liferay-ui:panel>
 
-				<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="calendarBookingAssetLinksPanel" markupView="lexicon" persistState="<%= true %>" title="related-assets">
+				<liferay-ui:panel
+					collapsible="<%= true %>"
+					defaultState="closed"
+					extended="<%= false %>"
+					id="calendarBookingAssetLinksPanel"
+					markupView="lexicon"
+					persistState="<%= true %>"
+					title="related-assets"
+				>
 					<liferay-asset:input-asset-links
 						className="<%= CalendarBooking.class.getName() %>"
 						classPK="<%= calendarBookingId %>"

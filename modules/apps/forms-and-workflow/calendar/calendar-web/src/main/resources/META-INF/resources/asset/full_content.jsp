@@ -110,7 +110,9 @@
 			<liferay-ui:message key="location" />: <a href="https://maps.google.com.br/maps?q=<%= HtmlUtil.escapeHREF(calendarBooking.getLocation()) %>" target="_blank"><%= HtmlUtil.escape(calendarBooking.getLocation()) %></a>
 		</c:if>
 
-		<liferay-expando:custom-attributes-available className="<%= CalendarBooking.class.getName() %>">
+		<liferay-expando:custom-attributes-available
+			className="<%= CalendarBooking.class.getName() %>"
+		>
 			<liferay-expando:custom-attribute-list
 				className="<%= CalendarBooking.class.getName() %>"
 				classPK="<%= (calendarBooking != null) ? calendarBooking.getCalendarBookingId() : 0 %>"

@@ -49,7 +49,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "user-groups"));
 
 			<li>
 				<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-					<liferay-ui:input-search markupView="lexicon" />
+					<liferay-ui:input-search
+						markupView="lexicon"
+					/>
 				</aui:form>
 			</li>
 		</liferay-frontend:management-bar-filters>
@@ -141,7 +143,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "user-groups"));
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </aui:form>
 

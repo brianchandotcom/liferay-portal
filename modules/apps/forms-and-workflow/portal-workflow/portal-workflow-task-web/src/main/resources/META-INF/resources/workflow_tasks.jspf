@@ -18,7 +18,9 @@
 	searchContainer="<%= workflowTaskSearch %>"
 	total="<%= workflowTaskSearch.getTotal() %>"
 >
-	<liferay-ui:search-container-results results="<%= workflowTaskSearch.getResults() %>">
+	<liferay-ui:search-container-results
+		results="<%= workflowTaskSearch.getResults() %>"
+	>
 	</liferay-ui:search-container-results>
 
 	<liferay-ui:search-container-row
@@ -151,5 +153,10 @@
 		</c:choose>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" resultRowSplitter="<%= new WorkflowTaskResultRowSplitter() %>" searchContainer="<%= workflowTaskSearch %>" />
+	<liferay-ui:search-iterator
+		displayStyle="<%= displayStyle %>"
+		markupView="lexicon"
+		resultRowSplitter="<%= new WorkflowTaskResultRowSplitter() %>"
+		searchContainer="<%= workflowTaskSearch %>"
+	/>
 </liferay-ui:search-container>

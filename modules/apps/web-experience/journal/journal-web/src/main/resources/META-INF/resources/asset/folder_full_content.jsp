@@ -49,7 +49,9 @@ JournalFolder folder = journalDisplayContext.getFolder();
 				</div>
 			</div>
 
-			<liferay-expando:custom-attributes-available className="<%= JournalFolder.class.getName() %>">
+			<liferay-expando:custom-attributes-available
+				className="<%= JournalFolder.class.getName() %>"
+			>
 				<liferay-expando:custom-attribute-list
 					className="<%= JournalFolder.class.getName() %>"
 					classPK="<%= folder.getFolderId() %>"

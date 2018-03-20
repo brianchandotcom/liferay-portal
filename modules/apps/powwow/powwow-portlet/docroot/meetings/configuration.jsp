@@ -59,7 +59,9 @@ String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBo
 		<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= "preferences--" + emailSubjectParam + "--" %>' value="<%= emailSubject %>" />
 
 		<aui:field-wrapper label="body">
-			<liferay-ui:input-editor editorImpl="ckeditor" />
+			<liferay-ui:input-editor
+				editorImpl="ckeditor"
+			/>
 
 			<aui:input name='<%= "preferences--" + emailBodyParam + "--" %>' type="hidden" value="<%= emailBody %>" />
 		</aui:field-wrapper>

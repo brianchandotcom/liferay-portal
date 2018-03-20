@@ -105,7 +105,12 @@ else {
 
 		<div class="body-editor">
 			<aui:field-wrapper label="body">
-				<liferay-ui:input-editor contents="<%= body %>" editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" toolbarSet="email" width="100%" />
+				<liferay-ui:input-editor
+					contents="<%= body %>"
+					editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>"
+					toolbarSet="email"
+					width="100%"
+				/>
 
 				<aui:input name="body" type="hidden" />
 			</aui:field-wrapper>

@@ -34,7 +34,9 @@ renderResponse.setTitle(kbCommentTitle);
 		<div class="card-row card-row-padded">
 			<div class="card-col-field">
 				<div class="list-group-card-icon">
-					<liferay-ui:user-portrait userId="<%= kbComment.getUserId() %>" />
+					<liferay-ui:user-portrait
+						userId="<%= kbComment.getUserId() %>"
+					/>
 				</div>
 			</div>
 

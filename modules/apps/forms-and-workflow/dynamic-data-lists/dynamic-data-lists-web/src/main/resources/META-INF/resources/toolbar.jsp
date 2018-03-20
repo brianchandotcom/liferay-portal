@@ -33,8 +33,13 @@ PortletURL portletURL = renderResponse.createRenderURL();
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 			</portlet:renderURL>
 
-			<liferay-frontend:add-menu inline="<%= true %>">
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addRecordSetURL.toString() %>" />
+			<liferay-frontend:add-menu
+				inline="<%= true %>"
+			>
+				<liferay-frontend:add-menu-item
+					title='<%= LanguageUtil.get(request, "add") %>'
+					url="<%= addRecordSetURL.toString() %>"
+				/>
 			</liferay-frontend:add-menu>
 		</c:if>
 	</liferay-frontend:management-bar-buttons>
@@ -60,7 +65,11 @@ PortletURL portletURL = renderResponse.createRenderURL();
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteRecordSets();" %>' icon="trash" label="delete" />
+		<liferay-frontend:management-bar-button
+			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteRecordSets();" %>'
+			icon="trash"
+			label="delete"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 

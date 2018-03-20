@@ -53,17 +53,38 @@ if (WebFormUtil.getTableRowsCount(company.getCompanyId(), databaseTableName) > 0
 			<liferay-ui:error exception="<%= ColumnNameException.class %>" message="please-enter-valid-field-names" />
 			<liferay-ui:error exception="<%= DuplicateColumnNameException.class %>" message="please-enter-unique-field-names" />
 
-			<liferay-ui:panel-container extended="<%= true %>" id="webFormConfiguration" markupView="lexicon" persistState="<%= true %>">
-				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="webFormGeneral" markupView="lexicon" persistState="<%= true %>" title="form-information">
+			<liferay-ui:panel-container
+				extended="<%= true %>"
+				id="webFormConfiguration"
+				markupView="lexicon"
+				persistState="<%= true %>"
+			>
+				<liferay-ui:panel
+					collapsible="<%= true %>"
+					extended="<%= true %>"
+					id="webFormGeneral"
+					markupView="lexicon"
+					persistState="<%= true %>"
+					title="form-information"
+				>
 					<aui:fieldset>
 						<liferay-ui:error key="successURLInvalid" message="please-enter-a-valid-url" />
 
 						<aui:field-wrapper cssClass="lfr-input-text-container" label="title">
-							<liferay-ui:input-localized cssClass="lfr-input-text" name="title" xml="<%= titleXml %>" />
+							<liferay-ui:input-localized
+								cssClass="lfr-input-text"
+								name="title"
+								xml="<%= titleXml %>"
+							/>
 						</aui:field-wrapper>
 
 						<aui:field-wrapper cssClass="lfr-textarea-container" label="description">
-							<liferay-ui:input-localized cssClass="lfr-input-text" name="description" type="textarea" xml="<%= descriptionXml %>" />
+							<liferay-ui:input-localized
+								cssClass="lfr-input-text"
+								name="description"
+								type="textarea"
+								xml="<%= descriptionXml %>"
+							/>
 						</aui:field-wrapper>
 
 						<aui:input name="preferences--requireCaptcha--" type="checkbox" value="<%= requireCaptcha %>" />
@@ -72,7 +93,14 @@ if (WebFormUtil.getTableRowsCount(company.getCompanyId(), databaseTableName) > 0
 					</aui:fieldset>
 				</liferay-ui:panel>
 
-				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="webFormData" markupView="lexicon" persistState="<%= true %>" title="handling-of-form-data">
+				<liferay-ui:panel
+					collapsible="<%= true %>"
+					extended="<%= true %>"
+					id="webFormData"
+					markupView="lexicon"
+					persistState="<%= true %>"
+					title="handling-of-form-data"
+				>
 					<aui:fieldset cssClass="handle-data" label="email">
 						<liferay-ui:error key="emailAddressInvalid" message="please-enter-a-valid-email-address" />
 						<liferay-ui:error key="emailAddressRequired" message="please-enter-an-email-address" />
@@ -103,7 +131,14 @@ if (WebFormUtil.getTableRowsCount(company.getCompanyId(), databaseTableName) > 0
 					</aui:fieldset>
 				</liferay-ui:panel>
 
-				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="webFormFields" markupView="lexicon" persistState="<%= true %>" title="form-fields">
+				<liferay-ui:panel
+					collapsible="<%= true %>"
+					extended="<%= true %>"
+					id="webFormFields"
+					markupView="lexicon"
+					persistState="<%= true %>"
+					title="form-fields"
+				>
 					<aui:fieldset cssClass="rows-container webFields">
 						<c:if test="<%= fieldsEditingDisabled %>">
 							<div class="alert">

@@ -74,7 +74,9 @@
 		>
 			<c:choose>
 				<c:when test='<%= displayStyle.equals("descriptive") %>'>
-					<liferay-ui:search-container-column-text valign="top">
+					<liferay-ui:search-container-column-text
+						valign="top"
+					>
 						<liferay-ui:user-portrait
 							userId="<%= backgroundTask.getUserId() %>"
 						/>
@@ -151,7 +153,11 @@
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" resultRowSplitter="<%= resultRowSplitter %>" />
+		<liferay-ui:search-iterator
+			displayStyle="<%= displayStyle %>"
+			markupView="lexicon"
+			resultRowSplitter="<%= resultRowSplitter %>"
+		/>
 	</liferay-ui:search-container>
 </aui:form>
 

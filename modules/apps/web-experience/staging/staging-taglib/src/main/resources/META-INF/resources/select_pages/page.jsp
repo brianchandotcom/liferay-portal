@@ -85,7 +85,9 @@
 
 				<c:choose>
 					<c:when test="<%= disableInputs %>">
-						<liferay-util:buffer var="badgeHTML">
+						<liferay-util:buffer
+							var="badgeHTML"
+						>
 							<span class="badge badge-info">
 
 								<%

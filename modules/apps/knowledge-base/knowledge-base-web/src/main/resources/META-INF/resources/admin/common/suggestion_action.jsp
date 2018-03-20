@@ -30,7 +30,13 @@ int nextStatus = KBUtil.getNextStatus(kbComment.getStatus());
 %>
 
 <c:if test="<%= KBArticlePermission.contains(permissionChecker, kbArticle, KBActionKeys.UPDATE) %>">
-	<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+	<liferay-ui:icon-menu
+		direction="left-side"
+		icon="<%= StringPool.BLANK %>"
+		markupView="lexicon"
+		message="<%= StringPool.BLANK %>"
+		showWhenSingleIcon="<%= true %>"
+	>
 		<c:if test="<%= previousStatus != KBCommentConstants.STATUS_NONE %>">
 			<liferay-portlet:actionURL name="updateKBCommentStatus" varImpl="previousStatusURL">
 				<portlet:param name="kbCommentId" value="<%= String.valueOf(kbComment.getKbCommentId()) %>" />

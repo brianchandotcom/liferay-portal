@@ -176,7 +176,9 @@ if (addresses.isEmpty()) {
 				<li class="<%= address.isPrimary() ? "primary" : "" %>">
 					<span class="property-type"><%= mailingName %></span><br />
 
-					<liferay-text-localizer:address-display address="<%= address %>" />
+					<liferay-text-localizer:address-display
+						address="<%= address %>"
+					/>
 
 					<c:if test="<%= address.isMailing() %>">(<liferay-ui:message key="mailing" />)</c:if>
 				</li>

@@ -23,7 +23,9 @@ if (type.equals("textarea") && BrowserSnifferUtil.isIe(request) && ((BrowserSnif
 %>
 
 <c:if test="<%= Validator.isNotNull(helpMessage) %>">
-	<liferay-util:buffer var="helpMessageContent">
+	<liferay-util:buffer
+		var="helpMessageContent"
+	>
 		<liferay-ui:icon-help message="<%= helpMessage %>" />
 	</liferay-util:buffer>
 </c:if>
@@ -260,7 +262,11 @@ boolean choiceField = checkboxField || radioField;
 		<input <%= checked ? "checked" : StringPool.BLANK %> class="<%= fieldCssClass %>" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= namespace + id %>" name="<%= namespace + name %>" <%= Validator.isNotNull(onChange) ? "onChange=\"" + onChange + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(onClick) ? "onClick=\"" + onClick + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(title) ? "title=\"" + LanguageUtil.get(resourceBundle, title) + "\"" : StringPool.BLANK %> type="radio" value="<%= HtmlUtil.escapeAttribute(valueString) %>" <%= AUIUtil.buildData(data) %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> />
 	</c:when>
 	<c:when test='<%= type.equals("resource") %>'>
-		<liferay-ui:input-resource id="<%= id %>" title="<%= title %>" url="<%= String.valueOf(value) %>" />
+		<liferay-ui:input-resource
+			id="<%= id %>"
+			title="<%= title %>"
+			url="<%= String.valueOf(value) %>"
+		/>
 	</c:when>
 	<c:when test='<%= type.equals("timeZone") %>'>
 

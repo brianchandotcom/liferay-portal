@@ -61,8 +61,19 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 			<aui:input autoFocus="<%= (defaultPolicy && windowState.equals(WindowState.MAXIMIZED)) %>" name="description" />
 		</aui:fieldset>
 
-		<liferay-ui:panel-container extended="<%= true %>" id="passwordPoliciesAdminPasswordPolicyPanelContainer" persistState="<%= true %>">
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="passwordPoliciesAdminPasswordPolicyPasswordPanel" markupView="lexicon" persistState="<%= true %>" title="password-changes">
+		<liferay-ui:panel-container
+			extended="<%= true %>"
+			id="passwordPoliciesAdminPasswordPolicyPanelContainer"
+			persistState="<%= true %>"
+		>
+			<liferay-ui:panel
+				collapsible="<%= true %>"
+				extended="<%= false %>"
+				id="passwordPoliciesAdminPasswordPolicyPasswordPanel"
+				markupView="lexicon"
+				persistState="<%= true %>"
+				title="password-changes"
+			>
 				<aui:fieldset>
 					<aui:input helpMessage="changeable-help" name="changeable" type="toggle-switch" value="<%= passwordPolicy.isChangeable() %>" />
 
@@ -102,7 +113,14 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 				</aui:fieldset>
 			</liferay-ui:panel>
 
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="passwordPoliciesAdminPasswordPolicySyntaxPanel" markupView="lexicon" persistState="<%= true %>" title="password-syntax-checking">
+			<liferay-ui:panel
+				collapsible="<%= true %>"
+				extended="<%= false %>"
+				id="passwordPoliciesAdminPasswordPolicySyntaxPanel"
+				markupView="lexicon"
+				persistState="<%= true %>"
+				title="password-syntax-checking"
+			>
 				<aui:fieldset>
 					<aui:input helpMessage="enable-syntax-checking-help" label="enable-syntax-checking" name="checkSyntax" type="toggle-switch" value="<%= passwordPolicy.isCheckSyntax() %>" />
 
@@ -130,7 +148,14 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 				</aui:fieldset>
 			</liferay-ui:panel>
 
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="passwordPoliciesAdminPasswordPolicyHistoryPanel" markupView="lexicon" persistState="<%= true %>" title="password-history">
+			<liferay-ui:panel
+				collapsible="<%= true %>"
+				extended="<%= false %>"
+				id="passwordPoliciesAdminPasswordPolicyHistoryPanel"
+				markupView="lexicon"
+				persistState="<%= true %>"
+				title="password-history"
+			>
 				<aui:fieldset>
 					<aui:input helpMessage="enable-history-help" label="enable-history" name="history" type="toggle-switch" value="<%= passwordPolicy.isHistory() %>" />
 
@@ -152,7 +177,14 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 				</aui:fieldset>
 			</liferay-ui:panel>
 
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="passwordPoliciesAdminPasswordPolicyExpirationPanel" markupView="lexicon" persistState="<%= true %>" title="password-expiration">
+			<liferay-ui:panel
+				collapsible="<%= true %>"
+				extended="<%= false %>"
+				id="passwordPoliciesAdminPasswordPolicyExpirationPanel"
+				markupView="lexicon"
+				persistState="<%= true %>"
+				title="password-expiration"
+			>
 				<aui:fieldset>
 					<aui:input helpMessage="enable-expiration-help" label="enable-expiration" name="expireable" type="toggle-switch" value="<%= passwordPolicy.isExpireable() %>" />
 
@@ -191,7 +223,14 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 				</aui:fieldset>
 			</liferay-ui:panel>
 
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="passwordPoliciesAdminPasswordPolicyLockoutPanel" markupView="lexicon" persistState="<%= true %>" title="lockout">
+			<liferay-ui:panel
+				collapsible="<%= true %>"
+				extended="<%= false %>"
+				id="passwordPoliciesAdminPasswordPolicyLockoutPanel"
+				markupView="lexicon"
+				persistState="<%= true %>"
+				title="lockout"
+			>
 				<aui:fieldset>
 					<aui:input helpMessage="enable-lockout-help" label="enable-lockout" name="lockout" type="toggle-switch" value="<%= passwordPolicy.isLockout() %>" />
 

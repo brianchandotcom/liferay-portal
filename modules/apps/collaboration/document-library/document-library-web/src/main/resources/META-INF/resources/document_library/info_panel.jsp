@@ -74,7 +74,12 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 			</h5>
 		</div>
 
-		<liferay-ui:tabs cssClass="navbar-no-collapse" names="details" refresh="<%= false %>" type="dropdown">
+		<liferay-ui:tabs
+			cssClass="navbar-no-collapse"
+			names="details"
+			refresh="<%= false %>"
+			type="dropdown"
+		>
 			<liferay-ui:section>
 				<div class="sidebar-body">
 					<dl class="sidebar-block">
@@ -129,7 +134,12 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 			</h5>
 		</div>
 
-		<liferay-ui:tabs cssClass="navbar-no-collapse" names="details,versions" refresh="<%= false %>" type="dropdown">
+		<liferay-ui:tabs
+			cssClass="navbar-no-collapse"
+			names="details,versions"
+			refresh="<%= false %>"
+			type="dropdown"
+		>
 			<liferay-ui:section>
 				<div class="sidebar-body">
 
@@ -265,7 +275,9 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 						inTrash="<%= fileEntry.isInTrash() %>"
 					/>
 
-					<liferay-expando:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>">
+					<liferay-expando:custom-attributes-available
+						className="<%= DLFileEntryConstants.getClassName() %>"
+					>
 						<liferay-expando:custom-attribute-list
 							className="<%= DLFileEntryConstants.getClassName() %>"
 							classPK="<%= fileVersion.getFileVersionId() %>"
@@ -322,7 +334,12 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 			</h5>
 		</div>
 
-		<liferay-ui:tabs cssClass="navbar-no-collapse" names="details" refresh="<%= false %>" type="dropdown">
+		<liferay-ui:tabs
+			cssClass="navbar-no-collapse"
+			names="details"
+			refresh="<%= false %>"
+			type="dropdown"
+		>
 			<liferay-ui:section>
 				<div class="sidebar-body">
 
@@ -421,7 +438,12 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 			<h4 class="sidebar-title"><liferay-ui:message arguments="<%= folders.size() + fileEntries.size() %>" key="x-items-are-selected" /></h4>
 		</div>
 
-		<liferay-ui:tabs cssClass="navbar-no-collapse" names="details" refresh="<%= false %>" type="dropdown">
+		<liferay-ui:tabs
+			cssClass="navbar-no-collapse"
+			names="details"
+			refresh="<%= false %>"
+			type="dropdown"
+		>
 			<liferay-ui:section>
 				<div class="sidebar-body">
 					<h5>

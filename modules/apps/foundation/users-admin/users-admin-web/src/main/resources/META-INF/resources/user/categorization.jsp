@@ -36,7 +36,13 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 		<liferay-ui:message key="categorization" />
 	</label>
 
-	<liferay-asset:asset-categories-selector className="<%= User.class.getName() %>" classPK="<%= (selUser != null) ? selUser.getPrimaryKey() : 0 %>" />
+	<liferay-asset:asset-categories-selector
+		className="<%= User.class.getName() %>"
+		classPK="<%= (selUser != null) ? selUser.getPrimaryKey() : 0 %>"
+	/>
 
-	<liferay-asset:asset-tags-selector className="<%= User.class.getName() %>" classPK="<%= (selUser != null) ? selUser.getPrimaryKey() : 0 %>" />
+	<liferay-asset:asset-tags-selector
+		className="<%= User.class.getName() %>"
+		classPK="<%= (selUser != null) ? selUser.getPrimaryKey() : 0 %>"
+	/>
 </aui:fieldset>

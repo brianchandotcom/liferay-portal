@@ -77,7 +77,9 @@ couponSearch.setResults(coupons);
 
 		<li>
 			<aui:form action="<%= searchURL.toString() %>" name="searchFm">
-				<liferay-ui:input-search markupView="lexicon" />
+				<liferay-ui:input-search
+					markupView="lexicon"
+				/>
 			</aui:form>
 		</li>
 	</liferay-frontend:management-bar-filters>
@@ -94,13 +96,23 @@ couponSearch.setResults(coupons);
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</portlet:renderURL>
 
-		<liferay-frontend:add-menu inline="<%= true %>">
-			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-coupon") %>' url="<%= editCouponURL.toString() %>" />
+		<liferay-frontend:add-menu
+			inline="<%= true %>"
+		>
+			<liferay-frontend:add-menu-item
+				title='<%= LanguageUtil.get(request, "add-coupon") %>'
+				url="<%= editCouponURL.toString() %>"
+			/>
 		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteCoupons" label="delete" />
+		<liferay-frontend:management-bar-button
+			href="javascript:;"
+			icon="trash"
+			id="deleteCoupons"
+			label="delete"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -170,7 +182,9 @@ couponSearch.setResults(coupons);
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </aui:form>
 

@@ -38,7 +38,9 @@ request.setAttribute("websites.classPK", company.getAccountId());
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 
-	<liferay-util:buffer var="htmlTop">
+	<liferay-util:buffer
+		var="htmlTop"
+	>
 		<div class="company-info">
 			<p class="float-container">
 				<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="logo" />" class="company-logo" src="<%= themeDisplay.getPathImage() %>/company_logo?img_id=<%= company.getLogoId() %>&t=<%= WebServerServletTokenUtil.getToken(company.getLogoId()) %>" /><br />

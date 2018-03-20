@@ -80,7 +80,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-man
 			<aui:form action="<%= searchURL.toString() %>" method="get" name="fm1">
 				<liferay-portlet:renderURLParams varImpl="searchURL" />
 
-				<liferay-ui:input-search markupView="lexicon" />
+				<liferay-ui:input-search
+					markupView="lexicon"
+				/>
 			</aui:form>
 		</li>
 	</liferay-frontend:management-bar-filters>
@@ -130,6 +132,10 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-man
 			<%@ include file="/app_display_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" resultRowSplitter="<%= new MarketplaceAppManagerResultRowSplitter() %>" />
+		<liferay-ui:search-iterator
+			displayStyle="descriptive"
+			markupView="lexicon"
+			resultRowSplitter="<%= new MarketplaceAppManagerResultRowSplitter() %>"
+		/>
 	</liferay-ui:search-container>
 </div>

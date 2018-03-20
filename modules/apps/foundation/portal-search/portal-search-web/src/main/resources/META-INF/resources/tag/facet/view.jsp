@@ -44,8 +44,20 @@ AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext = (AssetTa
 		<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(assetTagsSearchFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= assetTagsSearchFacetDisplayContext.getParameterValue() %>" />
 	</c:when>
 	<c:otherwise>
-		<liferay-ui:panel-container extended="<%= true %>" id='<%= renderResponse.getNamespace() + "facetAssetTagsPanelContainer" %>' markupView="lexicon" persistState="<%= true %>">
-			<liferay-ui:panel collapsible="<%= true %>" cssClass="search-facet" id='<%= renderResponse.getNamespace() + "facetAssetTagsPanel" %>' markupView="lexicon" persistState="<%= true %>" title="tag">
+		<liferay-ui:panel-container
+			extended="<%= true %>"
+			id='<%= renderResponse.getNamespace() + "facetAssetTagsPanelContainer" %>'
+			markupView="lexicon"
+			persistState="<%= true %>"
+		>
+			<liferay-ui:panel
+				collapsible="<%= true %>"
+				cssClass="search-facet"
+				id='<%= renderResponse.getNamespace() + "facetAssetTagsPanel" %>'
+				markupView="lexicon"
+				persistState="<%= true %>"
+				title="tag"
+			>
 				<aui:form method="post" name="assetTagsFacetForm">
 					<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(assetTagsSearchFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= assetTagsSearchFacetDisplayContext.getParameterValue() %>" />
 					<aui:input cssClass="facet-parameter-name" name="facet-parameter-name" type="hidden" value="<%= assetTagsSearchFacetDisplayContext.getParameterName() %>" />

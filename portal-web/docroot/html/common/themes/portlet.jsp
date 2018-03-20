@@ -72,7 +72,10 @@ boolean wsrp = ParamUtil.getBoolean(PortalUtil.getOriginalServletRequest(request
 	<c:when test="<%= themeDisplay.isStatePopUp() %>">
 		<div class="portlet-body">
 			<c:if test='<%= !tilesPortletContent.endsWith("/error.jsp") %>'>
-				<liferay-theme:portlet-messages group="<%= group %>" portlet="<%= portlet %>" />
+				<liferay-theme:portlet-messages
+					group="<%= group %>"
+					portlet="<%= portlet %>"
+				/>
 			</c:if>
 
 			<c:choose>
@@ -107,7 +110,9 @@ boolean wsrp = ParamUtil.getBoolean(PortalUtil.getOriginalServletRequest(request
 		}
 		%>
 
-		<liferay-theme:wrap-portlet page="portlet.jsp">
+		<liferay-theme:wrap-portlet
+			page="portlet.jsp"
+		>
 			<div class="<%= portletDisplay.isStateMin() ? "hide" : "" %> portlet-content-container" <%= containerStyles %>>
 				<%@ include file="/html/common/themes/portlet_content_wrapper.jspf" %>
 			</div>

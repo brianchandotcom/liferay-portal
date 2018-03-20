@@ -48,7 +48,9 @@ String currentTab = ParamUtil.getString(request, "currentTab", "forms");
 		<li>
 			<c:if test="<%= ddmFormAdminDisplayContext.isShowSearch() %>">
 				<aui:form action="<%= ddmFormAdminDisplayContext.getPortletURL() %>" method="post" name="fm1">
-					<liferay-ui:input-search markupView="lexicon" />
+					<liferay-ui:input-search
+						markupView="lexicon"
+					/>
 				</aui:form>
 			</c:if>
 		</li>
@@ -57,10 +59,18 @@ String currentTab = ParamUtil.getString(request, "currentTab", "forms");
 	<liferay-frontend:management-bar-action-buttons>
 		<c:choose>
 			<c:when test='<%= currentTab.equals("forms") %>'>
-				<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteFormInstances();" %>' icon="trash" label="delete" />
+				<liferay-frontend:management-bar-button
+					href='<%= "javascript:" + renderResponse.getNamespace() + "deleteFormInstances();" %>'
+					icon="trash"
+					label="delete"
+				/>
 			</c:when>
 			<c:when test='<%= currentTab.equals("element-set") %>'>
-				<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteStructures();" %>' icon="trash" label="delete" />
+				<liferay-frontend:management-bar-button
+					href='<%= "javascript:" + renderResponse.getNamespace() + "deleteStructures();" %>'
+					icon="trash"
+					label="delete"
+				/>
 			</c:when>
 		</c:choose>
 	</liferay-frontend:management-bar-action-buttons>

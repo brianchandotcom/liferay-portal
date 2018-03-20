@@ -44,8 +44,20 @@ ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext = (ScopeSearchFace
 		<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(scopeSearchFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= scopeSearchFacetDisplayContext.getParameterValue() %>" />
 	</c:when>
 	<c:otherwise>
-		<liferay-ui:panel-container extended="<%= true %>" id='<%= renderResponse.getNamespace() + "facetScopePanelContainer" %>' markupView="lexicon" persistState="<%= true %>">
-			<liferay-ui:panel collapsible="<%= true %>" cssClass="search-facet" id='<%= renderResponse.getNamespace() + "facetScopePanel" %>' markupView="lexicon" persistState="<%= true %>" title="site">
+		<liferay-ui:panel-container
+			extended="<%= true %>"
+			id='<%= renderResponse.getNamespace() + "facetScopePanelContainer" %>'
+			markupView="lexicon"
+			persistState="<%= true %>"
+		>
+			<liferay-ui:panel
+				collapsible="<%= true %>"
+				cssClass="search-facet"
+				id='<%= renderResponse.getNamespace() + "facetScopePanel" %>'
+				markupView="lexicon"
+				persistState="<%= true %>"
+				title="site"
+			>
 				<aui:form method="post" name="siteFacetForm">
 					<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(scopeSearchFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= scopeSearchFacetDisplayContext.getParameterValue() %>" />
 					<aui:input cssClass="facet-parameter-name" name="facet-parameter-name" type="hidden" value="<%= scopeSearchFacetDisplayContext.getParameterName() %>" />

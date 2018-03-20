@@ -254,7 +254,10 @@ else {
 				</c:choose>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator markupView="lexicon" resultRowSplitter="<%= kbFolderView ? null : new KBResultRowSplitter() %>" />
+			<liferay-ui:search-iterator
+				markupView="lexicon"
+				resultRowSplitter="<%= kbFolderView ? null : new KBResultRowSplitter() %>"
+			/>
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

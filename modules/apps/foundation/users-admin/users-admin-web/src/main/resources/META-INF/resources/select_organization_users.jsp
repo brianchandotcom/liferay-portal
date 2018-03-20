@@ -77,7 +77,9 @@ SearchContainer userSearchContainer = new UserSearch(renderRequest, portletURL);
 
 		<li>
 			<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-				<liferay-ui:input-search markupView="lexicon" />
+				<liferay-ui:input-search
+					markupView="lexicon"
+				/>
 			</aui:form>
 		</li>
 	</liferay-frontend:management-bar-filters>
@@ -98,7 +100,9 @@ SearchContainer userSearchContainer = new UserSearch(renderRequest, portletURL);
 		}
 		%>
 
-		<liferay-ui:user-search-container-results userParams="<%= userParams %>" />
+		<liferay-ui:user-search-container-results
+			userParams="<%= userParams %>"
+		/>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.User"
@@ -161,7 +165,10 @@ SearchContainer userSearchContainer = new UserSearch(renderRequest, portletURL);
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+		<liferay-ui:search-iterator
+			displayStyle="<%= displayStyle %>"
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </aui:form>
 

@@ -19,5 +19,7 @@
 <%@ page import="com.liferay.staging.bar.web.internal.portlet.constants.StagingBarPortletKeys" %>
 
 <li class="control-menu-nav-item staging-links">
-	<liferay-portlet:runtime portletName="<%= StagingBarPortletKeys.STAGING_BAR %>" />
+	<liferay-portlet:runtime
+		portletName="<%= StagingBarPortletKeys.STAGING_BAR %>"
+	/>
 </li>

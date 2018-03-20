@@ -33,7 +33,9 @@ WikiVisualizationHelper wikiVisualizationHelper = new WikiVisualizationHelper(wi
 	PortletURL undoTrashURL = wikiURLHelper.getUndoTrashURL();
 	%>
 
-	<liferay-trash:undo portletURL="<%= undoTrashURL.toString() %>" />
+	<liferay-trash:undo
+		portletURL="<%= undoTrashURL.toString() %>"
+	/>
 </c:if>
 
 <%
@@ -133,7 +135,10 @@ if (portletTitleBasedNavigation) {
 					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 					<aui:input name="nodeId" type="hidden" value="<%= node.getNodeId() %>" />
 
-					<liferay-ui:input-search id="keywords1" markupView="lexicon" />
+					<liferay-ui:input-search
+						id="keywords1"
+						markupView="lexicon"
+					/>
 				</aui:form>
 			</div>
 		</aui:nav-bar-search>

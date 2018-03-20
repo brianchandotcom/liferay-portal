@@ -69,7 +69,9 @@ else if (group.isStagingGroup()) {
 	String successMessage = (String)MultiSessionMessages.get(renderRequest, "requestProcessed");
 	%>
 
-	<liferay-util:buffer var="successHtml">
+	<liferay-util:buffer
+		var="successHtml"
+	>
 		<c:choose>
 			<c:when test='<%= Validator.isNotNull(successMessage) && !successMessage.equals("request_processed") %>'>
 				<%= HtmlUtil.escape(successMessage) %>

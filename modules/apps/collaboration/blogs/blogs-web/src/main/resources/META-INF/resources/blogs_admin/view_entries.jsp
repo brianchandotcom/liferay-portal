@@ -165,8 +165,13 @@ entriesSearchContainer.setResults(entriesResults);
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 				</portlet:renderURL>
 
-				<liferay-frontend:add-menu inline="<%= true %>">
-					<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-blog-entry") %>' url="<%= addEntryURL %>" />
+				<liferay-frontend:add-menu
+					inline="<%= true %>"
+				>
+					<liferay-frontend:add-menu-item
+						title='<%= LanguageUtil.get(request, "add-blog-entry") %>'
+						url="<%= addEntryURL %>"
+					/>
 				</liferay-frontend:add-menu>
 			</c:if>
 		</liferay-frontend:management-bar-buttons>
@@ -199,13 +204,20 @@ entriesSearchContainer.setResults(entriesResults);
 
 		<li>
 			<aui:form action="<%= searchURL.toString() %>" name="searchFm">
-				<liferay-ui:input-search markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "search") %>' />
+				<liferay-ui:input-search
+					markupView="lexicon"
+					placeholder='<%= LanguageUtil.get(request, "search") %>'
+				/>
 			</aui:form>
 		</li>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteEntries();" %>' icon='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "trash" : "times" %>' label='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>' />
+		<liferay-frontend:management-bar-button
+			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteEntries();" %>'
+			icon='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "trash" : "times" %>'
+			label='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>'
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -248,7 +260,10 @@ entriesSearchContainer.setResults(entriesResults);
 				<%@ include file="/blogs_admin/entry_search_columns.jspf" %>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+			<liferay-ui:search-iterator
+				displayStyle="<%= displayStyle %>"
+				markupView="lexicon"
+			/>
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

@@ -62,7 +62,9 @@ SearchContainer searchContainer = new GroupSearch(liferayPortletRequest, iterato
 			row.setCssClass("entry-card lfr-asset-item");
 			%>
 
-			<liferay-ui:search-container-column-text colspan="<%= 3 %>">
+			<liferay-ui:search-container-column-text
+				colspan="<%= 3 %>"
+			>
 				<liferay-frontend:horizontal-card
 					resultRow="<%= row %>"
 					text="<%= curGroup.getDescriptiveName(locale) %>"
@@ -77,6 +79,10 @@ SearchContainer searchContainer = new GroupSearch(liferayPortletRequest, iterato
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="icon" markupView="lexicon" searchContainer="<%= searchContainer %>" />
+		<liferay-ui:search-iterator
+			displayStyle="icon"
+			markupView="lexicon"
+			searchContainer="<%= searchContainer %>"
+		/>
 	</liferay-ui:search-container>
 </div>

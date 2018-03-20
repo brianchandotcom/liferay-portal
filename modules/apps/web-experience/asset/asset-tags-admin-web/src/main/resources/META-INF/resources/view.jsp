@@ -46,7 +46,9 @@
 		<c:if test="<%= assetTagsDisplayContext.isShowTagsSearch() %>">
 			<li>
 				<aui:form action="<%= portletURL %>" name="searchFm">
-					<liferay-ui:input-search markupView="lexicon" />
+					<liferay-ui:input-search
+						markupView="lexicon"
+					/>
 				</aui:form>
 			</li>
 		</c:if>
@@ -68,16 +70,31 @@
 				<portlet:param name="mvcPath" value="/edit_tag.jsp" />
 			</portlet:renderURL>
 
-			<liferay-frontend:add-menu inline="<%= true %>">
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-tag") %>' url="<%= editTagURL.toString() %>" />
+			<liferay-frontend:add-menu
+				inline="<%= true %>"
+			>
+				<liferay-frontend:add-menu-item
+					title='<%= LanguageUtil.get(request, "add-tag") %>'
+					url="<%= editTagURL.toString() %>"
+				/>
 			</liferay-frontend:add-menu>
 		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href="javascript:;" icon="change" id="mergeSelectedTags" label="merge" />
+		<liferay-frontend:management-bar-button
+			href="javascript:;"
+			icon="change"
+			id="mergeSelectedTags"
+			label="merge"
+		/>
 
-		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedTags" label="delete" />
+		<liferay-frontend:management-bar-button
+			href="javascript:;"
+			icon="trash"
+			id="deleteSelectedTags"
+			label="delete"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -163,7 +180,10 @@
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= assetTagsDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
+		<liferay-ui:search-iterator
+			displayStyle="<%= assetTagsDisplayContext.getDisplayStyle() %>"
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </aui:form>
 

@@ -54,7 +54,11 @@ portletURL.setParameter("keywords", keywords);
 	/>
 
 	<div class="form-search">
-		<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" placeholder='<%= LanguageUtil.get(request, "keywords") %>' title='<%= LanguageUtil.get(request, "search-pages") %>' />
+		<liferay-ui:input-search
+			autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
+			placeholder='<%= LanguageUtil.get(request, "keywords") %>'
+			title='<%= LanguageUtil.get(request, "search-pages") %>'
+		/>
 	</div>
 
 	<liferay-ui:search-container
@@ -126,7 +130,10 @@ portletURL.setParameter("keywords", keywords);
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" type="more" />
+		<liferay-ui:search-paginator
+			searchContainer="<%= searchContainer %>"
+			type="more"
+		/>
 	</liferay-ui:search-container>
 
 	<c:if test="<%= createNewPage %>">

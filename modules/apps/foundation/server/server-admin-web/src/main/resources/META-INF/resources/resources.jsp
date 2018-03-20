@@ -100,7 +100,15 @@ long usedMemory = totalMemory - runtime.freeMemory();
 		</div>
 	</div>
 
-	<liferay-ui:panel collapsible="<%= true %>" cssClass="server-admin-actions-panel" extended="<%= true %>" id="adminServerAdministrationSystemActionsPanel" markupView="lexicon" persistState="<%= true %>" title="system-actions">
+	<liferay-ui:panel
+		collapsible="<%= true %>"
+		cssClass="server-admin-actions-panel"
+		extended="<%= true %>"
+		id="adminServerAdministrationSystemActionsPanel"
+		markupView="lexicon"
+		persistState="<%= true %>"
+		title="system-actions"
+	>
 		<ul class="list-group system-action-group">
 			<li class="clearfix list-group-item">
 				<div class="pull-left">
@@ -123,7 +131,15 @@ long usedMemory = totalMemory - runtime.freeMemory();
 		</ul>
 	</liferay-ui:panel>
 
-	<liferay-ui:panel collapsible="<%= true %>" cssClass="server-admin-actions-panel" extended="<%= true %>" id="adminServerAdministrationCacheActionsPanel" markupView="lexicon" persistState="<%= true %>" title="cache-actions">
+	<liferay-ui:panel
+		collapsible="<%= true %>"
+		cssClass="server-admin-actions-panel"
+		extended="<%= true %>"
+		id="adminServerAdministrationCacheActionsPanel"
+		markupView="lexicon"
+		persistState="<%= true %>"
+		title="cache-actions"
+	>
 		<ul class="list-group system-action-group">
 			<li class="clearfix list-group-item">
 				<div class="pull-left">
@@ -164,7 +180,15 @@ long usedMemory = totalMemory - runtime.freeMemory();
 		</ul>
 	</liferay-ui:panel>
 
-	<liferay-ui:panel collapsible="<%= true %>" cssClass="server-admin-actions-panel" extended="<%= true %>" id="adminServerAdministrationIndexActionsPanel" markupView="lexicon" persistState="<%= true %>" title="index-actions">
+	<liferay-ui:panel
+		collapsible="<%= true %>"
+		cssClass="server-admin-actions-panel"
+		extended="<%= true %>"
+		id="adminServerAdministrationIndexActionsPanel"
+		markupView="lexicon"
+		persistState="<%= true %>"
+		title="index-actions"
+	>
 
 		<%
 		Map<String, BackgroundTaskDisplay> classNameToBackgroundTaskDisplayMap = new HashMap<>();
@@ -259,7 +283,15 @@ long usedMemory = totalMemory - runtime.freeMemory();
 		</ul>
 	</liferay-ui:panel>
 
-	<liferay-ui:panel collapsible="<%= true %>" cssClass="server-admin-actions-panel" extended="<%= true %>" id="adminServerAdministrationVerificationActionsPanel" markupView="lexicon" persistState="<%= true %>" title="verification-actions">
+	<liferay-ui:panel
+		collapsible="<%= true %>"
+		cssClass="server-admin-actions-panel"
+		extended="<%= true %>"
+		id="adminServerAdministrationVerificationActionsPanel"
+		markupView="lexicon"
+		persistState="<%= true %>"
+		title="verification-actions"
+	>
 		<ul class="list-group system-action-group">
 			<li class="clearfix list-group-item">
 				<div class="pull-left">
@@ -282,7 +314,15 @@ long usedMemory = totalMemory - runtime.freeMemory();
 		</ul>
 	</liferay-ui:panel>
 
-	<liferay-ui:panel collapsible="<%= true %>" cssClass="server-admin-actions-panel" extended="<%= true %>" id="adminServerAdministrationCleanUpActionsPanel" markupView="lexicon" persistState="<%= true %>" title="clean-up-actions">
+	<liferay-ui:panel
+		collapsible="<%= true %>"
+		cssClass="server-admin-actions-panel"
+		extended="<%= true %>"
+		id="adminServerAdministrationCleanUpActionsPanel"
+		markupView="lexicon"
+		persistState="<%= true %>"
+		title="clean-up-actions"
+	>
 		<ul class="list-group system-action-group">
 			<li class="clearfix list-group-item">
 				<div class="pull-left">

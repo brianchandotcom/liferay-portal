@@ -27,7 +27,9 @@
 
 	<aui:nav-bar-search>
 		<aui:form action="<%= ddmFormBrowserDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="post" name="searchFm">
-			<liferay-ui:input-search markupView="lexicon" />
+			<liferay-ui:input-search
+				markupView="lexicon"
+			/>
 		</aui:form>
 	</aui:nav-bar-search>
 </aui:nav-bar>
@@ -102,7 +104,10 @@
 				/>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator displayStyle="<%= ddmFormBrowserDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
+			<liferay-ui:search-iterator
+				displayStyle="<%= ddmFormBrowserDisplayContext.getDisplayStyle() %>"
+				markupView="lexicon"
+			/>
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

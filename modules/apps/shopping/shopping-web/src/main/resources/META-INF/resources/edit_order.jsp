@@ -286,7 +286,9 @@ long orderId = BeanParamUtil.getLong(order, request, "orderId");
 	}
 	%>
 
-	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+	<liferay-ui:search-iterator
+		searchContainer="<%= searchContainer %>"
+	/>
 
 	<div class="well">
 		<table class="lfr-table">
@@ -389,8 +391,18 @@ long orderId = BeanParamUtil.getLong(order, request, "orderId");
 </aui:form>
 
 <c:if test="<%= PropsValues.SHOPPING_ORDER_COMMENTS_ENABLED && !windowState.equals(LiferayWindowState.POP_UP) %>">
-	<liferay-ui:panel-container extended="<%= true %>" id="shoppingEditOrderPanelContainer" persistState="<%= true %>">
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="shoppingEditOrderCommentsPanel" persistState="<%= true %>" title="comments">
+	<liferay-ui:panel-container
+		extended="<%= true %>"
+		id="shoppingEditOrderPanelContainer"
+		persistState="<%= true %>"
+	>
+		<liferay-ui:panel
+			collapsible="<%= true %>"
+			extended="<%= true %>"
+			id="shoppingEditOrderCommentsPanel"
+			persistState="<%= true %>"
+			title="comments"
+		>
 			<liferay-comment:discussion
 				className="<%= ShoppingOrder.class.getName() %>"
 				classPK="<%= order.getOrderId() %>"

@@ -328,7 +328,11 @@ dateFormatDateTime.setTimeZone(timeZone);
 
 					<tr>
 						<td style="border: 1px solid gray; vertical-align: middle;">
-							<liferay-ui:input-checkbox disabled="<%= true %>" id='<%= "node_" + clusterNode.getClusterNodeId() + "_register" %>' param='<%= clusterNode.getClusterNodeId() + "_register" %>' />
+							<liferay-ui:input-checkbox
+								disabled="<%= true %>"
+								id='<%= "node_" + clusterNode.getClusterNodeId() + "_register" %>'
+								param='<%= clusterNode.getClusterNodeId() + "_register" %>'
+							/>
 						</td>
 						<td style="border: 1px solid gray;">
 							<table class="license-table">

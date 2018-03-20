@@ -117,7 +117,9 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 							toggleRowChecker="<%= true %>"
 						/>
 
-						<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+						<liferay-ui:search-container-column-text
+							colspan="<%= 2 %>"
+						>
 							<h4>
 								<aui:a href="<%= rowURL.toString() %>">
 									<%= curCategory.getName() %>
@@ -175,7 +177,9 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 							/>
 						</liferay-ui:search-container-column-text>
 
-						<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+						<liferay-ui:search-container-column-text
+							colspan="<%= 2 %>"
+						>
 							<c:choose>
 								<c:when test="<%= ((message != null) && (thread.getMessageCount() == 1)) %>">
 
@@ -293,7 +297,11 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 				</c:choose>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator displayStyle='<%= GetterUtil.getString(request.getAttribute("view.jsp-displayStyle")) %>' markupView="lexicon" resultRowSplitter="<%= new MBResultRowSplitter() %>" />
+			<liferay-ui:search-iterator
+				displayStyle='<%= GetterUtil.getString(request.getAttribute("view.jsp-displayStyle")) %>'
+				markupView="lexicon"
+				resultRowSplitter="<%= new MBResultRowSplitter() %>"
+			/>
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

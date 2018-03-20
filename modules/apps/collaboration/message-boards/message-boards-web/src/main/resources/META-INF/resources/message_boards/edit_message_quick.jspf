@@ -67,7 +67,9 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 			<div class="card-row card-row-padded">
 				<div class="card-col-field">
 					<div class="list-group-card-icon">
-						<liferay-ui:user-portrait userId="<%= themeDisplay.getUserId() %>" />
+						<liferay-ui:user-portrait
+							userId="<%= themeDisplay.getUserId() %>"
+						/>
 					</div>
 				</div>
 
@@ -158,7 +160,9 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 					<c:if test="<%= captchaConfiguration.messageBoardsEditMessageCaptchaEnabled() %>">
 						<portlet:resourceURL id="/message_boards/captcha" var="captchaURL" />
 
-						<liferay-captcha:captcha url="<%= captchaURL %>" />
+						<liferay-captcha:captcha
+							url="<%= captchaURL %>"
+						/>
 					</c:if>
 
 					<aui:button cssClass="advanced-reply btn btn-link btn-sm" value="advanced-reply" />
@@ -167,7 +171,9 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 						<aui:input helpMessage="message-boards-message-subscribe-me-help" label="subscribe-me" name="subscribe" type='<%= (mbGroupServiceSettings.isEmailMessageAddedEnabled() || mbGroupServiceSettings.isEmailMessageUpdatedEnabled()) ? "checkbox" : "hidden" %>' value="<%= subscribeByDefault %>" />
 					</c:if>
 
-					<liferay-expando:custom-attributes-available className="<%= MBMessage.class.getName() %>">
+					<liferay-expando:custom-attributes-available
+						className="<%= MBMessage.class.getName() %>"
+					>
 						<liferay-expando:custom-attribute-list
 							className="<%= MBMessage.class.getName() %>"
 							classPK="<%= (message != null) ? message.getMessageId() : 0 %>"

@@ -62,7 +62,11 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 				</aui:col>
 			</aui:fieldset>
 
-			<liferay-ui:panel-container cssClass="task-panel-container" extended="<%= false %>" id="preview">
+			<liferay-ui:panel-container
+				cssClass="task-panel-container"
+				extended="<%= false %>"
+				id="preview"
+			>
 
 				<%
 				AssetRenderer<?> assetRenderer = workflowInstanceEditDisplayContext.getAssetRenderer();
@@ -71,7 +75,11 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 				%>
 
 				<c:if test="<%= assetRenderer != null %>">
-					<liferay-ui:panel extended="<%= true %>" markupView="lexicon" title="<%= workflowInstanceEditDisplayContext.getPanelTitle() %>">
+					<liferay-ui:panel
+						extended="<%= true %>"
+						markupView="lexicon"
+						title="<%= workflowInstanceEditDisplayContext.getPanelTitle() %>"
+					>
 						<div class="task-content-actions">
 							<liferay-ui:icon-list>
 								<c:if test="<%= assetRenderer.hasViewPermission(permissionChecker) %>">
@@ -88,7 +96,11 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 										<portlet:param name="showEditURL" value="<%= Boolean.FALSE.toString() %>" />
 									</portlet:renderURL>
 
-									<liferay-frontend:management-bar-button href="<%= assetRenderer.isPreviewInContext() ? assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, null) : viewFullContentURL.toString() %>" icon="view" label="view[action]" />
+									<liferay-frontend:management-bar-button
+										href="<%= assetRenderer.isPreviewInContext() ? assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, null) : viewFullContentURL.toString() %>"
+										icon="view"
+										label="view[action]"
+									/>
 								</c:if>
 							</liferay-ui:icon-list>
 						</div>
@@ -108,7 +120,10 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 						/>
 					</liferay-ui:panel>
 
-					<liferay-ui:panel markupView="lexicon" title="comments">
+					<liferay-ui:panel
+						markupView="lexicon"
+						title="comments"
+					>
 						<liferay-comment:discussion
 							className="<%= assetRenderer.getClassName() %>"
 							classPK="<%= assetRenderer.getClassPK() %>"
@@ -121,7 +136,11 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 				</c:if>
 
 				<c:if test="<%= !workflowInstanceEditDisplayContext.isWorkflowTasksEmpty() %>">
-					<liferay-ui:panel extended="<%= false %>" markupView="lexicon" title="tasks">
+					<liferay-ui:panel
+						extended="<%= false %>"
+						markupView="lexicon"
+						title="tasks"
+					>
 						<liferay-ui:search-container
 							emptyResultsMessage="there-are-no-tasks"
 							iteratorURL="<%= renderResponse.createRenderURL() %>"
@@ -159,12 +178,18 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 								/>
 							</liferay-ui:search-container-row>
 
-							<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
+							<liferay-ui:search-iterator
+								displayStyle="list"
+								markupView="lexicon"
+							/>
 						</liferay-ui:search-container>
 					</liferay-ui:panel>
 				</c:if>
 
-				<liferay-ui:panel markupView="lexicon" title="activities">
+				<liferay-ui:panel
+					markupView="lexicon"
+					title="activities"
+				>
 					<%@ include file="/instance/workflow_logs.jspf" %>
 				</liferay-ui:panel>
 			</liferay-ui:panel-container>

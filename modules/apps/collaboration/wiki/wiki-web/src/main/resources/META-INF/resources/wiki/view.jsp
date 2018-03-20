@@ -205,7 +205,13 @@ if (portletTitleBasedNavigation) {
 					<div class="lfr-alert-container"></div>
 				</c:if>
 
-				<liferay-ddm:template-renderer className="<%= WikiPage.class.getName() %>" contextObjects="<%= contextObjects %>" displayStyle="<%= wikiPortletInstanceSettingsHelper.getDisplayStyle() %>" displayStyleGroupId="<%= wikiPortletInstanceSettingsHelper.getDisplayStyleGroupId() %>" entries="<%= entries %>">
+				<liferay-ddm:template-renderer
+					className="<%= WikiPage.class.getName() %>"
+					contextObjects="<%= contextObjects %>"
+					displayStyle="<%= wikiPortletInstanceSettingsHelper.getDisplayStyle() %>"
+					displayStyleGroupId="<%= wikiPortletInstanceSettingsHelper.getDisplayStyleGroupId() %>"
+					entries="<%= entries %>"
+				>
 					<div class="main-content-body">
 						<c:choose>
 							<c:when test="<%= !portletTitleBasedNavigation %>">
@@ -292,7 +298,9 @@ if (portletTitleBasedNavigation) {
 
 						<%@ include file="/wiki/view_page_content.jspf" %>
 
-						<liferay-expando:custom-attributes-available className="<%= WikiPage.class.getName() %>">
+						<liferay-expando:custom-attributes-available
+							className="<%= WikiPage.class.getName() %>"
+						>
 							<liferay-expando:custom-attribute-list
 								className="<%= WikiPage.class.getName() %>"
 								classPK="<%= wikiPage.getPrimaryKey() %>"
@@ -398,8 +406,19 @@ if (portletTitleBasedNavigation) {
 							</div>
 
 							<c:if test="<%= wikiPortletInstanceSettingsHelper.isEnableComments() %>">
-								<liferay-ui:panel-container extended="<%= false %>" markupView="lexicon" persistState="<%= true %>">
-									<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id='<%= liferayPortletResponse.getNamespace() + "wikiCommentsPanel" %>' markupView="lexicon" persistState="<%= true %>" title="comments">
+								<liferay-ui:panel-container
+									extended="<%= false %>"
+									markupView="lexicon"
+									persistState="<%= true %>"
+								>
+									<liferay-ui:panel
+										collapsible="<%= true %>"
+										extended="<%= true %>"
+										id='<%= liferayPortletResponse.getNamespace() + "wikiCommentsPanel" %>'
+										markupView="lexicon"
+										persistState="<%= true %>"
+										title="comments"
+									>
 										<liferay-comment:discussion
 											className="<%= WikiPage.class.getName() %>"
 											classPK="<%= wikiPage.getResourcePrimKey() %>"

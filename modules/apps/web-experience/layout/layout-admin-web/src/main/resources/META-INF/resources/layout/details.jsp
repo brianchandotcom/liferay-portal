@@ -94,7 +94,12 @@ StringBuilder friendlyURLBase = new StringBuilder();
 				<div class="form-group">
 					<label for="<portlet:namespace />friendlyURL"><liferay-ui:message key="friendly-url" /> <liferay-ui:icon-help message='<%= LanguageUtil.format(request, "for-example-x", "<em>/news</em>", false) %>' /></label>
 
-					<liferay-ui:input-localized defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" inputAddon="<%= friendlyURLBase.toString() %>" name="friendlyURL" xml="<%= HttpUtil.decodeURL(selLayout.getFriendlyURLsXML()) %>" />
+					<liferay-ui:input-localized
+						defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>"
+						inputAddon="<%= friendlyURLBase.toString() %>"
+						name="friendlyURL"
+						xml="<%= HttpUtil.decodeURL(selLayout.getFriendlyURLsXML()) %>"
+					/>
 				</div>
 			</c:when>
 			<c:otherwise>

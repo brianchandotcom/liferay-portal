@@ -21,7 +21,12 @@
 
 	<c:choose>
 		<c:when test='<%= displayStyle.equals("panel") %>'>
-			<liferay-ui:panel-container accordion="<%= true %>" extended="<%= true %>" id="tabs" persistState="<%= true %>">
+			<liferay-ui:panel-container
+				accordion="<%= true %>"
+				extended="<%= true %>"
+				id="tabs"
+				persistState="<%= true %>"
+			>
 				<%@ include file="/html/taglib/ui/form_navigator/sections.jspf" %>
 			</liferay-ui:panel-container>
 
@@ -42,7 +47,9 @@
 			%>
 
 			<div class="<%= wrapperCssClass %>" id="<portlet:namespace />tabs">
-				<liferay-util:buffer var="formNavigatorBottom">
+				<liferay-util:buffer
+					var="formNavigatorBottom"
+				>
 					<c:if test="<%= showButtons %>">
 						<aui:button-row>
 							<aui:button primary="<%= true %>" type="submit" />
@@ -54,7 +61,9 @@
 					<%= Validator.isNotNull(htmlBottom) ? htmlBottom : StringPool.BLANK %>
 				</liferay-util:buffer>
 
-				<liferay-util:buffer var="formSectionsBuffer">
+				<liferay-util:buffer
+					var="formSectionsBuffer"
+				>
 
 					<%
 					String contentCssClass = "form-navigator-content";

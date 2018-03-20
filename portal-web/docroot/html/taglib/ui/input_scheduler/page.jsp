@@ -50,7 +50,10 @@ int startYear = ParamUtil.get(request, "schedulerStartDateYear", cal.get(Calenda
 				yearValue="<%= startYear %>"
 			/>
 
-			<liferay-ui:icon icon="calendar" markupView="lexicon" />
+			<liferay-ui:icon
+				icon="calendar"
+				markupView="lexicon"
+			/>
 
 			<liferay-ui:input-time
 				amPmParam="schedulerStartDateAmPm"
@@ -84,7 +87,10 @@ int startYear = ParamUtil.get(request, "schedulerStartDateYear", cal.get(Calenda
 				yearValue="<%= endYear %>"
 			/>
 
-			<liferay-ui:icon icon="calendar" markupView="lexicon" />
+			<liferay-ui:icon
+				icon="calendar"
+				markupView="lexicon"
+			/>
 
 			<liferay-ui:input-time
 				amPmParam="schedulerEndDateAmPm"

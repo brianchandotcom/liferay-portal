@@ -43,7 +43,10 @@
 				<%= searchResultSummaryDisplayContext.getModelResource() %>
 
 				<c:if test="<%= searchResultSummaryDisplayContext.isLocaleReminderVisible() %>">
-					<liferay-ui:icon image='<%= "../language/" + searchResultSummaryDisplayContext.getLocaleLanguageId() %>' message="<%= searchResultSummaryDisplayContext.getLocaleReminder() %>" />
+					<liferay-ui:icon
+						image='<%= "../language/" + searchResultSummaryDisplayContext.getLocaleLanguageId() %>'
+						message="<%= searchResultSummaryDisplayContext.getLocaleReminder() %>"
+					/>
 				</c:if>
 			</h6>
 

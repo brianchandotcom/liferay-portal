@@ -23,7 +23,9 @@
 
 	<aui:fieldset-group>
 		<aui:fieldset>
-			<liferay-ui:input-editor contents="<%= message %>" />
+			<liferay-ui:input-editor
+				contents="<%= message %>"
+			/>
 		</aui:fieldset>
 	</aui:fieldset-group>
 

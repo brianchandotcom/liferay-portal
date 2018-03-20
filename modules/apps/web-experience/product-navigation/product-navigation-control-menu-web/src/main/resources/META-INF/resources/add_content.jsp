@@ -35,7 +35,10 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleD
 		<input class="form-control" id="<portlet:namespace />searchContent" name="<portlet:namespace />searchContent" placeholder="<%= LanguageUtil.get(request, "search") + StringPool.TRIPLE_PERIOD %>" type="text" />
 
 		<span class="input-group-btn">
-			<liferay-ui:icon icon="search" markupView="lexicon" />
+			<liferay-ui:icon
+				icon="search"
+				markupView="lexicon"
+			/>
 		</span>
 	</div>
 

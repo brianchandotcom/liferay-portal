@@ -32,7 +32,11 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.getMDRRuleGroup(mdrRule
 	showWhenSingleIcon="<%= true %>"
 >
 	<c:if test="<%= MDRRuleGroupInstancePermission.contains(permissionChecker, mdrRuleGroupInstance.getRuleGroupInstanceId(), ActionKeys.UPDATE) %>">
-		<liferay-ui:icon id='<%= row.getRowId() + "manageActions" %>' message="manage-actions" url="javascript:;" />
+		<liferay-ui:icon
+			id='<%= row.getRowId() + "manageActions" %>'
+			message="manage-actions"
+			url="javascript:;"
+		/>
 	</c:if>
 
 	<c:if test="<%= MDRRuleGroupInstancePermission.contains(permissionChecker, mdrRuleGroupInstance.getRuleGroupInstanceId(), ActionKeys.PERMISSIONS) %>">
@@ -44,11 +48,17 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.getMDRRuleGroup(mdrRule
 			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 		/>
 
-		<liferay-ui:icon message="permissions" url="<%= permissionsURL %>" useDialog="<%= true %>" />
+		<liferay-ui:icon
+			message="permissions"
+			url="<%= permissionsURL %>"
+			useDialog="<%= true %>"
+		/>
 	</c:if>
 
 	<c:if test="<%= MDRRuleGroupInstancePermission.contains(permissionChecker, mdrRuleGroupInstance.getRuleGroupInstanceId(), ActionKeys.DELETE) %>">
-		<liferay-ui:icon-delete url='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deleteRuleGroupInstance(" + mdrRuleGroupInstance.getRuleGroupInstanceId() + ");" %>' />
+		<liferay-ui:icon-delete
+			url='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deleteRuleGroupInstance(" + mdrRuleGroupInstance.getRuleGroupInstanceId() + ");" %>'
+		/>
 	</c:if>
 </liferay-ui:icon-menu>
 

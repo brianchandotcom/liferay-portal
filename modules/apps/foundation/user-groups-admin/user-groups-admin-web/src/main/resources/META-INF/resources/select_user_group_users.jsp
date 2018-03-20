@@ -94,7 +94,9 @@ navigationItems.add(entriesNavigationItem);
 
 		<li>
 			<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-				<liferay-ui:input-search markupView="lexicon" />
+				<liferay-ui:input-search
+					markupView="lexicon"
+				/>
 			</aui:form>
 		</li>
 	</liferay-frontend:management-bar-filters>
@@ -108,7 +110,9 @@ navigationItems.add(entriesNavigationItem);
 		rowChecker="<%= rowChecker %>"
 		searchContainer="<%= userSearchContainer %>"
 	>
-		<liferay-ui:user-search-container-results userParams="<%= userParams %>" />
+		<liferay-ui:user-search-container-results
+			userParams="<%= userParams %>"
+		/>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.User"
@@ -125,7 +129,10 @@ navigationItems.add(entriesNavigationItem);
 			<%@ include file="/user_search_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+		<liferay-ui:search-iterator
+			displayStyle="<%= displayStyle %>"
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </aui:form>
 

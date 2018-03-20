@@ -20,7 +20,9 @@
 	<div><%= LanguageUtil.get(request, "select-one-of-the-options") %></div>
 
 	<div id="<portlet:namespace />stagingTypes">
-		<liferay-util:buffer var="noneText">
+		<liferay-util:buffer
+			var="noneText"
+		>
 			<span class="staging-configuration-radio-label">
 				<span class="staging-configuration-radio-text">
 					<%= LanguageUtil.get(request, "none") %>
@@ -31,7 +33,9 @@
 		<aui:input checked="<%= !liveGroup.isStaged() %>" cssClass="staging-configuration-radio" id="none" label="<%= noneText %>" name="stagingType" type="radio" value="<%= StagingConstants.TYPE_NOT_STAGED %>" />
 
 		<c:if test="<%= !liveGroupRemoteStaging && !stagedRemotely %>">
-			<liferay-util:buffer var="localLiveText">
+			<liferay-util:buffer
+				var="localLiveText"
+			>
 				<span class="staging-configuration-radio-label">
 					<span class="staging-configuration-radio-text">
 						<%= LanguageUtil.get(request, "local-live") %>:
@@ -47,7 +51,9 @@
 		</c:if>
 
 		<c:if test="<%= !stagedLocally %>">
-			<liferay-util:buffer var="remoteLiveText">
+			<liferay-util:buffer
+				var="remoteLiveText"
+			>
 				<span class="staging-configuration-radio-label">
 					<span class="staging-configuration-radio-text">
 						<%= LanguageUtil.get(request, "remote-live") %>:

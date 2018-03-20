@@ -166,7 +166,9 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 
 		<c:if test="<%= feed == null %>">
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
-				<liferay-ui:input-permissions modelName="<%= JournalFeed.class.getName() %>" />
+				<liferay-ui:input-permissions
+					modelName="<%= JournalFeed.class.getName() %>"
+				/>
 			</aui:fieldset>
 		</c:if>
 

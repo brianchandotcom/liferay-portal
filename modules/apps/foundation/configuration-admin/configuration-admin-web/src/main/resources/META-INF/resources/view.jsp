@@ -31,7 +31,10 @@ List<ConfigurationCategorySectionDisplay> configurationCategorySectionDisplays =
 			</portlet:renderURL>
 
 			<aui:form action="<%= searchURL %>" name="searchFm">
-				<liferay-ui:input-search autoFocus="<%= true %>" markupView="lexicon" />
+				<liferay-ui:input-search
+					autoFocus="<%= true %>"
+					markupView="lexicon"
+				/>
 			</aui:form>
 		</li>
 	</liferay-frontend:management-bar-filters>
@@ -63,7 +66,10 @@ List<ConfigurationCategorySectionDisplay> configurationCategorySectionDisplays =
 
 						<li class="list-group-card-item">
 							<a href="<%= categoryURL %>">
-								<clay:icon elementClasses="user-icon-sm" symbol="<%= configurationCategoryDisplay.getCategoryIcon() %>" />
+								<clay:icon
+									elementClasses="user-icon-sm"
+									symbol="<%= configurationCategoryDisplay.getCategoryIcon() %>"
+								/>
 
 								<span class="list-group-card-item-text">
 									<liferay-ui:message key='<%= "category." + configurationCategoryDisplay.getCategoryKey() %>' />

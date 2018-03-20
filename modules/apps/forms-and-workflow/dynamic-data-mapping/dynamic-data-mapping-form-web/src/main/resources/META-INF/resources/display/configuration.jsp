@@ -51,7 +51,10 @@ DDMFormInstance selFormInstance = DDMFormInstanceServiceUtil.fetchFormInstance(f
 					total="<%= DDMFormInstanceServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, keywords) %>"
 				>
 					<div class="form-search input-append">
-						<liferay-ui:input-search autoFocus="<%= true %>" placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
+						<liferay-ui:input-search
+							autoFocus="<%= true %>"
+							placeholder='<%= LanguageUtil.get(request, "keywords") %>'
+						/>
 					</div>
 
 					<liferay-ui:search-container-results

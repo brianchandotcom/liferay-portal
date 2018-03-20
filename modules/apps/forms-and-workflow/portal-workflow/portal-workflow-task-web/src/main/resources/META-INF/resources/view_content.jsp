@@ -41,7 +41,11 @@ renderResponse.setTitle(title);
 	<div class="panel-body">
 		<c:if test="<%= assetEntry != null %>">
 			<div class="locale-actions">
-				<liferay-ui:language formAction="<%= currentURL %>" languageId="<%= languageId %>" languageIds="<%= availableLanguageIds %>" />
+				<liferay-ui:language
+					formAction="<%= currentURL %>"
+					languageId="<%= languageId %>"
+					languageIds="<%= availableLanguageIds %>"
+				/>
 			</div>
 
 			<liferay-asset:asset-display

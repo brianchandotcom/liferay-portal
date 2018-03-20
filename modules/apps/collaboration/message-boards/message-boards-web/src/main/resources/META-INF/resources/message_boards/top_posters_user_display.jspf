@@ -29,7 +29,9 @@ User topUser = UserLocalServiceUtil.fetchUserById(statsUser.getUserId());
 	String[] ranks = MBUserRankUtil.getUserRank(mbGroupServiceSettings, themeDisplay.getLanguageId(), statsUser);
 	%>
 
-	<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+	<liferay-ui:search-container-column-text
+		colspan="<%= 2 %>"
+	>
 		<c:if test="<%= Validator.isNotNull(ranks[0]) %>">
 			<h5 class="text-default"><liferay-ui:message key="rank" />: <%= HtmlUtil.escape(ranks[0]) %></h5>
 		</c:if>

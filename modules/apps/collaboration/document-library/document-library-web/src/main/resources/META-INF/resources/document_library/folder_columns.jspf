@@ -78,7 +78,10 @@ for (int j = 0; j < folderColumns.length; j++) {
 					AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(curFolder.getFolderId());
 					%>
 
-					<liferay-ui:icon icon="<%= assetRenderer.getIconCssClass() %>" markupView="lexicon" />
+					<liferay-ui:icon
+						icon="<%= assetRenderer.getIconCssClass() %>"
+						markupView="lexicon"
+					/>
 				</span>
 
 				<div class="entry-metadata">

@@ -84,7 +84,9 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 
 			<li>
 				<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-					<liferay-ui:input-search markupView="lexicon" />
+					<liferay-ui:input-search
+						markupView="lexicon"
+					/>
 				</aui:form>
 			</li>
 		</liferay-frontend:management-bar-filters>
@@ -180,7 +182,11 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" type="more" />
+		<liferay-ui:search-iterator
+			displayStyle="<%= displayStyle %>"
+			markupView="lexicon"
+			type="more"
+		/>
 	</liferay-ui:search-container>
 </aui:form>
 

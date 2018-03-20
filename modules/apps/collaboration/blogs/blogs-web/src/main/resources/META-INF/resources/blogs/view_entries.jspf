@@ -20,7 +20,9 @@
 />
 
 <c:if test="<%= results.isEmpty() %>">
-	<liferay-ui:empty-result-message message="no-entries-were-found" />
+	<liferay-ui:empty-result-message
+		message="no-entries-were-found"
+	/>
 </c:if>
 
 <%

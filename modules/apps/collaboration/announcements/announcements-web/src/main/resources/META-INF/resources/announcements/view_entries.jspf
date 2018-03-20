@@ -45,7 +45,11 @@
 </div>
 
 <c:if test="<%= entriesCount > 0 %>">
-	<liferay-ui:search-paginator id="pageIteratorTop" searchContainer="<%= searchContainer %>" type="article" />
+	<liferay-ui:search-paginator
+		id="pageIteratorTop"
+		searchContainer="<%= searchContainer %>"
+		type="article"
+	/>
 </c:if>
 
 <%

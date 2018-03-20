@@ -155,7 +155,10 @@ renderResponse.setTitle(((wsrpConsumer == null) ? LanguageUtil.get(request, "new
 					}
 					%>
 
-					<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
+					<liferay-ui:search-iterator
+						paginate="<%= false %>"
+						searchContainer="<%= searchContainer %>"
+					/>
 				</aui:field-wrapper>
 			</div>
 		</aui:fieldset>

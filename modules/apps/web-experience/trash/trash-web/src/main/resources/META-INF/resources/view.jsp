@@ -287,7 +287,9 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 									}
 									%>
 
-									<liferay-util:buffer var="rootEntryIcon">
+									<liferay-util:buffer
+										var="rootEntryIcon"
+									>
 										<liferay-ui:icon
 											label="<%= true %>"
 											message="<%= HtmlUtil.escape(rootTrashRenderer.getTitle(locale)) %>"
@@ -322,7 +324,11 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 					</c:choose>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator displayStyle="<%= trashDisplayContext.getDisplayStyle() %>" markupView="lexicon" type='<%= approximate ? "more" : "regular" %>' />
+				<liferay-ui:search-iterator
+					displayStyle="<%= trashDisplayContext.getDisplayStyle() %>"
+					markupView="lexicon"
+					type='<%= approximate ? "more" : "regular" %>'
+				/>
 			</liferay-ui:search-container>
 		</aui:form>
 	</div>

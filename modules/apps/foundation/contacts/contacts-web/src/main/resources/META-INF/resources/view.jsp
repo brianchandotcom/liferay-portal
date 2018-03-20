@@ -321,10 +321,14 @@ portletURL.setWindowState(WindowState.NORMAL);
 								<aui:col cssClass="contacts-center-home" width="<%= 100 %>">
 									<c:choose>
 										<c:when test="<%= !showOnlySiteMembers %>">
-											<liferay-ui:header title="contacts-center" />
+											<liferay-ui:header
+												title="contacts-center"
+											/>
 										</c:when>
 										<c:otherwise>
-											<liferay-ui:header title="members" />
+											<liferay-ui:header
+												title="members"
+											/>
 										</c:otherwise>
 									</c:choose>
 

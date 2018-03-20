@@ -52,7 +52,11 @@ String redirect = ParamUtil.getString(request, "redirect");
 			allURL.setParameter("navigation", "all");
 			%>
 
-			<liferay-frontend:management-bar-filter-item active='<%= Objects.equals(trashDisplayContext.getNavigation(), "all") %>' label="all" url="<%= allURL.toString() %>" />
+			<liferay-frontend:management-bar-filter-item
+				active='<%= Objects.equals(trashDisplayContext.getNavigation(), "all") %>'
+				label="all"
+				url="<%= allURL.toString() %>"
+			/>
 
 			<%
 			List<TrashHandler> trashHandlers = TrashHandlerRegistryUtil.getTrashHandlers();
@@ -63,7 +67,11 @@ String redirect = ParamUtil.getString(request, "redirect");
 				trashHandlerURL.setParameter("navigation", trashHandler.getClassName());
 			%>
 
-				<liferay-frontend:management-bar-filter-item active="<%= Objects.equals(trashDisplayContext.getNavigation(), trashHandler.getClassName()) %>" label="<%= ResourceActionsUtil.getModelResource(locale, trashHandler.getClassName()) %>" url="<%= trashHandlerURL.toString() %>" />
+				<liferay-frontend:management-bar-filter-item
+					active="<%= Objects.equals(trashDisplayContext.getNavigation(), trashHandler.getClassName()) %>"
+					label="<%= ResourceActionsUtil.getModelResource(locale, trashHandler.getClassName()) %>"
+					url="<%= trashHandlerURL.toString() %>"
+				/>
 
 			<%
 			}
@@ -87,7 +95,11 @@ String redirect = ParamUtil.getString(request, "redirect");
 				<aui:input name="deleteTrashEntryIds" type="hidden" />
 				<aui:input name="restoreTrashEntryIds" type="hidden" />
 
-				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "search") %>' />
+				<liferay-ui:input-search
+					autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
+					markupView="lexicon"
+					placeholder='<%= LanguageUtil.get(request, "search") %>'
+				/>
 			</aui:form>
 		</li>
 	</liferay-frontend:management-bar-filters>
@@ -98,7 +110,12 @@ String redirect = ParamUtil.getString(request, "redirect");
 			label="info"
 		/>
 
-		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedEntries" label="delete" />
+		<liferay-frontend:management-bar-button
+			href="javascript:;"
+			icon="trash"
+			id="deleteSelectedEntries"
+			label="delete"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 

@@ -41,7 +41,9 @@
 		<c:if test="<%= assetTagsSelectorDisplayContext.isShowTagsSearch() %>">
 			<li>
 				<aui:form action="<%= assetTagsSelectorDisplayContext.getPortletURL() %>" name="searchFm">
-					<liferay-ui:input-search markupView="lexicon" />
+					<liferay-ui:input-search
+						markupView="lexicon"
+					/>
 				</aui:form>
 			</li>
 		</c:if>
@@ -78,7 +80,10 @@
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= assetTagsSelectorDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
+		<liferay-ui:search-iterator
+			displayStyle="<%= assetTagsSelectorDisplayContext.getDisplayStyle() %>"
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </div>
 

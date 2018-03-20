@@ -58,14 +58,24 @@
 				<portlet:param name="mvcPath" value="/edit_layout_prototype.jsp" />
 			</portlet:renderURL>
 
-			<liferay-frontend:add-menu inline="<%= true %>">
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addLayoutPrototypeURL.toString() %>" />
+			<liferay-frontend:add-menu
+				inline="<%= true %>"
+			>
+				<liferay-frontend:add-menu-item
+					title='<%= LanguageUtil.get(request, "add") %>'
+					url="<%= addLayoutPrototypeURL.toString() %>"
+				/>
 			</liferay-frontend:add-menu>
 		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedLayoutPrototypes" label="delete" />
+		<liferay-frontend:management-bar-button
+			href="javascript:;"
+			icon="trash"
+			id="deleteSelectedLayoutPrototypes"
+			label="delete"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -214,7 +224,10 @@
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= layoutPrototypeDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
+		<liferay-ui:search-iterator
+			displayStyle="<%= layoutPrototypeDisplayContext.getDisplayStyle() %>"
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </aui:form>
 

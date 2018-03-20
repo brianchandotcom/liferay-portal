@@ -18,7 +18,9 @@
 
 <c:choose>
 	<c:when test="<%= (rowChecker != null) && (resultRow != null) %>">
-		<liferay-util:buffer var="checkboxInput">
+		<liferay-util:buffer
+			var="checkboxInput"
+		>
 			<%= rowChecker.getRowCheckBox(request, rowChecker.isChecked(resultRow.getObject()), rowChecker.isDisabled(resultRow.getObject()), resultRow.getPrimaryKey()) %>
 		</liferay-util:buffer>
 
@@ -51,7 +53,9 @@
 			</span>
 		</div>
 
-		<liferay-util:buffer var="actionJspBuffer">
+		<liferay-util:buffer
+			var="actionJspBuffer"
+		>
 			<liferay-util:include page="<%= actionJsp %>" servletContext="<%= actionJspServletContext %>" />
 		</liferay-util:buffer>
 
@@ -65,7 +69,9 @@
 
 <c:choose>
 	<c:when test="<%= (rowChecker != null) && (resultRow != null) %>">
-		<liferay-util:buffer var="checkboxInput">
+		<liferay-util:buffer
+			var="checkboxInput"
+		>
 			<%= rowChecker.getRowCheckBox(request, rowChecker.isChecked(resultRow.getObject()), rowChecker.isDisabled(resultRow.getObject()), resultRow.getPrimaryKey()) %>
 		</liferay-util:buffer>
 

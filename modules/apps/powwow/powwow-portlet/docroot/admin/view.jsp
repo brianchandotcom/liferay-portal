@@ -69,7 +69,9 @@
 			property="active"
 		/>
 
-		<liferay-ui:search-container-column-jsp path="/admin/server_action.jsp" />
+		<liferay-ui:search-container-column-jsp
+			path="/admin/server_action.jsp"
+		/>
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator />

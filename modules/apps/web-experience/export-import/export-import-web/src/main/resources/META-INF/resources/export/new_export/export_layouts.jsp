@@ -143,14 +143,36 @@ for (String s : PropsValues.DL_CHAR_BLACKLIST) {
 				</aui:fieldset>
 
 				<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">
-					<liferay-staging:select-pages action="<%= Constants.EXPORT %>" disableInputs="<%= configuredExport %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" groupId="<%= liveGroupId %>" privateLayout="<%= privateLayout %>" treeId="<%= treeId %>" />
+					<liferay-staging:select-pages
+						action="<%= Constants.EXPORT %>"
+						disableInputs="<%= configuredExport %>"
+						exportImportConfigurationId="<%= exportImportConfigurationId %>"
+						groupId="<%= liveGroupId %>"
+						privateLayout="<%= privateLayout %>"
+						treeId="<%= treeId %>"
+					/>
 				</c:if>
 
-				<liferay-staging:content cmd="<%= Constants.EXPORT %>" disableInputs="<%= configuredExport %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" type="<%= Constants.EXPORT %>" />
+				<liferay-staging:content
+					cmd="<%= Constants.EXPORT %>"
+					disableInputs="<%= configuredExport %>"
+					exportImportConfigurationId="<%= exportImportConfigurationId %>"
+					type="<%= Constants.EXPORT %>"
+				/>
 
-				<liferay-staging:deletions cmd="<%= Constants.EXPORT %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" />
+				<liferay-staging:deletions
+					cmd="<%= Constants.EXPORT %>"
+					exportImportConfigurationId="<%= exportImportConfigurationId %>"
+				/>
 
-				<liferay-staging:permissions action="<%= Constants.EXPORT %>" descriptionCSSClass="permissions-description" disableInputs="<%= configuredExport %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" />
+				<liferay-staging:permissions
+					action="<%= Constants.EXPORT %>"
+					descriptionCSSClass="permissions-description"
+					disableInputs="<%= configuredExport %>"
+					exportImportConfigurationId="<%= exportImportConfigurationId %>"
+					global="<%= group.isCompany() %>"
+					labelCSSClass="permissions-label"
+				/>
 			</aui:fieldset-group>
 		</div>
 

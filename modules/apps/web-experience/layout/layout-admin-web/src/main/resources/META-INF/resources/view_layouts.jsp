@@ -50,8 +50,13 @@
 		/>
 
 		<c:if test="<%= layoutsAdminDisplayContext.isShowAddRootLayoutButton() %>">
-			<liferay-frontend:add-menu inline="<%= true %>">
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "select-template") %>' url="<%= layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL() %>" />
+			<liferay-frontend:add-menu
+				inline="<%= true %>"
+			>
+				<liferay-frontend:add-menu-item
+					title='<%= LanguageUtil.get(request, "select-template") %>'
+					url="<%= layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL() %>"
+				/>
 			</liferay-frontend:add-menu>
 		</c:if>
 	</liferay-frontend:management-bar-buttons>
@@ -71,7 +76,12 @@
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedPages" label="delete" />
+		<liferay-frontend:management-bar-button
+			href="javascript:;"
+			icon="trash"
+			id="deleteSelectedPages"
+			label="delete"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -135,7 +145,10 @@
 					/>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator displayStyle="<%= layoutsAdminDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
+				<liferay-ui:search-iterator
+					displayStyle="<%= layoutsAdminDisplayContext.getDisplayStyle() %>"
+					markupView="lexicon"
+				/>
 			</liferay-ui:search-container>
 		</c:otherwise>
 	</c:choose>

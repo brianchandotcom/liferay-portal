@@ -70,7 +70,9 @@ renderResponse.setTitle(headerTitle);
 	request.setAttribute("websites.classPK", organizationId);
 	%>
 
-	<liferay-util:buffer var="htmlTop">
+	<liferay-util:buffer
+		var="htmlTop"
+	>
 		<c:if test="<%= organization != null %>">
 
 			<%

@@ -50,7 +50,14 @@ String format = ParamUtil.getString(request, SearchPortletParameterNames.FORMAT)
 	<%@ include file="/main_search.jspf" %>
 
 	<c:if test="<%= searchDisplayContext.isDisplayOpenSearchResults() %>">
-		<liferay-ui:panel collapsible="<%= true %>" cssClass="open-search-panel" extended="<%= true %>" id="searchOpenSearchPanelContainer" persistState="<%= true %>" title="open-search">
+		<liferay-ui:panel
+			collapsible="<%= true %>"
+			cssClass="open-search-panel"
+			extended="<%= true %>"
+			id="searchOpenSearchPanelContainer"
+			persistState="<%= true %>"
+			title="open-search"
+		>
 			<%@ include file="/open_search.jspf" %>
 		</liferay-ui:panel>
 	</c:if>

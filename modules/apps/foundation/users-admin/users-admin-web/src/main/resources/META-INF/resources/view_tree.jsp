@@ -103,7 +103,9 @@ if (organization != null) {
 						<aui:input name="mvcRenderCommandName" type="hidden" value='<%= "/users_admin/view" %>' />
 						<aui:input name="organizationId" type="hidden" value="<%= organizationId %>" />
 
-						<liferay-ui:input-search markupView="lexicon" />
+						<liferay-ui:input-search
+							markupView="lexicon"
+						/>
 					</aui:form>
 				</li>
 			</liferay-frontend:management-bar-filters>
@@ -119,7 +121,12 @@ if (organization != null) {
 			</liferay-frontend:management-bar-buttons>
 
 			<liferay-frontend:management-bar-action-buttons>
-				<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "delete();" %>' icon="trash" id="deleteOrganizations" label="delete" />
+				<liferay-frontend:management-bar-button
+					href='<%= "javascript:" + renderResponse.getNamespace() + "delete();" %>'
+					icon="trash"
+					id="deleteOrganizations"
+					label="delete"
+				/>
 			</liferay-frontend:management-bar-action-buttons>
 		</liferay-frontend:management-bar>
 
@@ -163,7 +170,12 @@ if (organization != null) {
 
 			<c:if test="<%= (portletName.equals(UsersAdminPortletKeys.USERS_ADMIN) && usersListView.equals(UserConstants.LIST_VIEW_TREE)) || portletName.equals(UsersAdminPortletKeys.MY_ORGANIZATIONS) %>">
 				<div id="breadcrumb">
-					<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
+					<liferay-ui:breadcrumb
+						showCurrentGroup="<%= false %>"
+						showGuestGroup="<%= false %>"
+						showLayout="<%= false %>"
+						showPortletBreadcrumb="<%= true %>"
+					/>
 				</div>
 			</c:if>
 
@@ -243,7 +255,12 @@ if (organization != null) {
 					<%@ include file="/organization/organization_user_search_columns.jspf" %>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" resultRowSplitter="<%= new OrganizationResultRowSplitter() %>" searchContainer="<%= searchContainer %>" />
+				<liferay-ui:search-iterator
+					displayStyle="<%= displayStyle %>"
+					markupView="lexicon"
+					resultRowSplitter="<%= new OrganizationResultRowSplitter() %>"
+					searchContainer="<%= searchContainer %>"
+				/>
 			</liferay-ui:search-container>
 		</aui:form>
 	</c:when>

@@ -663,7 +663,12 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 							}
 							%>
 
-							<liferay-ui:input-localized cssClass="lfr-input-text" id="<%= randomNamespace + name %>" name='<%= "ExpandoAttribute--" + name + "--" %>' xml="<%= xml %>" />
+							<liferay-ui:input-localized
+								cssClass="lfr-input-text"
+								id="<%= randomNamespace + name %>"
+								name='<%= "ExpandoAttribute--" + name + "--" %>'
+								xml="<%= xml %>"
+							/>
 						</c:when>
 						<c:otherwise>
 

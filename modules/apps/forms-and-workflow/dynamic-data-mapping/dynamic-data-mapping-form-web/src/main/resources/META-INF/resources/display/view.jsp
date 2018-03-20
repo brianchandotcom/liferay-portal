@@ -105,7 +105,11 @@ Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
 						<c:if test="<%= ddmFormDisplayContext.isFormShared() %>">
 							<div class="container-fluid-1280">
 								<div class="locale-actions">
-									<liferay-ui:language formAction="<%= currentURL %>" languageId="<%= languageId %>" languageIds="<%= ddmFormDisplayContext.getAvailableLanguageIds() %>" />
+									<liferay-ui:language
+										formAction="<%= currentURL %>"
+										languageId="<%= languageId %>"
+										languageIds="<%= ddmFormDisplayContext.getAvailableLanguageIds() %>"
+									/>
 								</div>
 							</div>
 						</c:if>

@@ -115,7 +115,11 @@ else {
 			label="info"
 		/>
 
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deletePages();" %>' iconCssClass='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "icon-trash" : "icon-remove" %>' label='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>' />
+		<liferay-frontend:management-bar-button
+			href='<%= "javascript:" + renderResponse.getNamespace() + "deletePages();" %>'
+			iconCssClass='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "icon-trash" : "icon-remove" %>'
+			label='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>'
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -163,7 +167,9 @@ else {
 			PortletURL undoTrashURL = wikiURLHelper.getUndoTrashURL();
 			%>
 
-			<liferay-trash:undo portletURL="<%= undoTrashURL.toString() %>" />
+			<liferay-trash:undo
+				portletURL="<%= undoTrashURL.toString() %>"
+			/>
 		</c:if>
 
 		<aui:form action="<%= wikiURLHelper.getSearchURL() %>" method="get" name="fm">
@@ -210,7 +216,9 @@ else {
 								toggleRowChecker="<%= true %>"
 							/>
 
-							<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+							<liferay-ui:search-container-column-text
+								colspan="<%= 2 %>"
+							>
 
 								<%
 								Date modifiedDate = curPage.getModifiedDate();
@@ -287,7 +295,10 @@ else {
 					</c:choose>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+				<liferay-ui:search-iterator
+					displayStyle="<%= displayStyle %>"
+					markupView="lexicon"
+				/>
 			</liferay-ui:search-container>
 		</aui:form>
 	</div>

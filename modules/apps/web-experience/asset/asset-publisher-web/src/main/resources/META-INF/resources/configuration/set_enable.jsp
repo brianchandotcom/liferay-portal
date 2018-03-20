@@ -18,7 +18,11 @@
 
 <aui:row cssClass="panel-group">
 	<aui:col width="<%= 50 %>">
-		<liferay-ui:panel collapsible="<%= false %>" markupView="lexicon" title="show-and-set">
+		<liferay-ui:panel
+			collapsible="<%= false %>"
+			markupView="lexicon"
+			title="show-and-set"
+		>
 			<c:if test="<%= assetPublisherDisplayContext.isShowEnableAddContentButton() %>">
 				<aui:input helpMessage="show-add-content-button-help" name="preferences--showAddContentButton--" type="checkbox" value="<%= assetPublisherDisplayContext.isShowAddContentButton() %>" />
 			</c:if>
@@ -39,7 +43,11 @@
 	</aui:col>
 
 	<aui:col width="<%= 50 %>">
-		<liferay-ui:panel collapsible="<%= false %>" markupView="lexicon" title="enable">
+		<liferay-ui:panel
+			collapsible="<%= false %>"
+			markupView="lexicon"
+			title="enable"
+		>
 			<aui:row>
 				<aui:col width="<%= 50 %>">
 					<aui:input label="print" name="preferences--enablePrint--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnablePrint() %>" />
@@ -91,7 +99,12 @@
 
 	<aui:row cssClass="panel-group">
 		<aui:col>
-			<liferay-ui:panel collapsible="<%= false %>" helpMessage='<%= !assetPublisherDisplayContext.isOpenOfficeServerEnabled() ? "enabling-openoffice-integration-provides-document-conversion-functionality" : StringPool.BLANK %>' markupView="lexicon" title="enable-conversion-to">
+			<liferay-ui:panel
+				collapsible="<%= false %>"
+				helpMessage='<%= !assetPublisherDisplayContext.isOpenOfficeServerEnabled() ? "enabling-openoffice-integration-provides-document-conversion-functionality" : StringPool.BLANK %>'
+				markupView="lexicon"
+				title="enable-conversion-to"
+			>
 				<aui:row>
 					<aui:col width="<%= 50 %>">
 
@@ -132,7 +145,11 @@
 
 <aui:row cssClass="panel-group">
 	<aui:col>
-		<liferay-ui:panel collapsible="<%= false %>" markupView="lexicon" title="social-bookmarks">
+		<liferay-ui:panel
+			collapsible="<%= false %>"
+			markupView="lexicon"
+			title="social-bookmarks"
+		>
 			<liferay-social-bookmarks:bookmarks-settings
 				displayStyle="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayStyle() %>"
 				types="<%= assetPublisherDisplayContext.getSocialBookmarksTypes() %>"

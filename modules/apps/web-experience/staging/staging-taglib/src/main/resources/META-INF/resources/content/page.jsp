@@ -54,7 +54,10 @@
 											</div>
 
 											<div class="flex-item-center range-options <%= disableInputs ? "hide" : StringPool.BLANK %>">
-												<liferay-ui:icon icon="reload" markupView="lexicon" />
+												<liferay-ui:icon
+													icon="reload"
+													markupView="lexicon"
+												/>
 
 												<aui:a cssClass="modify-link" href="javascript:;" id="rangeLink" method="get">
 													<liferay-ui:message key="refresh-counts" />
@@ -95,7 +98,10 @@
 													yearValue="<%= startCalendar.get(Calendar.YEAR) %>"
 												/>
 
-												<liferay-ui:icon icon="calendar" markupView="lexicon" />
+												<liferay-ui:icon
+													icon="calendar"
+													markupView="lexicon"
+												/>
 
 												<liferay-ui:input-time
 													amPmParam='<%= "startDateAmPm" %>'
@@ -125,7 +131,10 @@
 													yearValue="<%= endCalendar.get(Calendar.YEAR) %>"
 												/>
 
-												<liferay-ui:icon icon="calendar" markupView="lexicon" />
+												<liferay-ui:icon
+													icon="calendar"
+													markupView="lexicon"
+												/>
 
 												<liferay-ui:input-time
 													amPmParam='<%= "endDateAmPm" %>'
@@ -164,7 +173,13 @@
 						</div>
 					</li>
 					<li class="options">
-						<liferay-staging:portlet-list disableInputs="<%= disableInputs %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" portlets="<%= dataSiteLevelPortlets %>" showAllPortlets="<%= showAllPortlets %>" type="<%= type %>" />
+						<liferay-staging:portlet-list
+							disableInputs="<%= disableInputs %>"
+							exportImportConfigurationId="<%= exportImportConfigurationId %>"
+							portlets="<%= dataSiteLevelPortlets %>"
+							showAllPortlets="<%= showAllPortlets %>"
+							type="<%= type %>"
+						/>
 					</li>
 				</ul>
 			</li>

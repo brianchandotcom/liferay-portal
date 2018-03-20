@@ -40,7 +40,9 @@ boolean showStagingConfiguration = ParamUtil.getBoolean(request, "showStagingCon
 		}
 		%>
 
-		<liferay-portlet:runtime portletName="<%= StagingConfigurationPortletKeys.STAGING_CONFIGURATION %>" />
+		<liferay-portlet:runtime
+			portletName="<%= StagingConfigurationPortletKeys.STAGING_CONFIGURATION %>"
+		/>
 	</c:when>
 	<c:otherwise>
 		<liferay-util:include page="/navigation.jsp" servletContext="<%= application %>" />

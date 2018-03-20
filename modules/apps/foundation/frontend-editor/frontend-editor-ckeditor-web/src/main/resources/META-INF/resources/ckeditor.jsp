@@ -80,7 +80,11 @@ if (editorOptions != null) {
 %>
 
 <c:if test="<%= !skipEditorLoading %>">
-	<liferay-editor:resources editorName="<%= editorName %>" inlineEdit="<%= inlineEdit %>" inlineEditSaveURL="<%= inlineEditSaveURL %>" />
+	<liferay-editor:resources
+		editorName="<%= editorName %>"
+		inlineEdit="<%= inlineEdit %>"
+		inlineEditSaveURL="<%= inlineEditSaveURL %>"
+	/>
 </c:if>
 
 <%

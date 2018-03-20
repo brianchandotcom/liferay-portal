@@ -142,7 +142,9 @@ if (liveGroup == null) {
 				/>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator markupView="lexicon" />
+			<liferay-ui:search-iterator
+				markupView="lexicon"
+			/>
 		</liferay-ui:search-container>
 	</aui:form>
 
@@ -155,6 +157,9 @@ if (liveGroup == null) {
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "new") %>' url="<%= addExportConfigurationURL %>" />
+		<liferay-frontend:add-menu-item
+			title='<%= LanguageUtil.get(request, "new") %>'
+			url="<%= addExportConfigurationURL %>"
+		/>
 	</liferay-frontend:add-menu>
 </div>

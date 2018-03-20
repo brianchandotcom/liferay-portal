@@ -113,11 +113,21 @@ JournalArticle article = journalDisplayContext.getArticle();
 
 			<liferay-frontend:management-bar-action-buttons>
 				<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) %>">
-					<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteArticles" label="delete" />
+					<liferay-frontend:management-bar-button
+						href="javascript:;"
+						icon="trash"
+						id="deleteArticles"
+						label="delete"
+					/>
 				</c:if>
 
 				<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.EXPIRE) %>">
-					<liferay-frontend:management-bar-button href="javascript:;" icon="time" id="expireArticles" label="expire" />
+					<liferay-frontend:management-bar-button
+						href="javascript:;"
+						icon="time"
+						id="expireArticles"
+						label="expire"
+					/>
 				</c:if>
 			</liferay-frontend:management-bar-action-buttons>
 		</liferay-frontend:management-bar>
@@ -261,7 +271,10 @@ JournalArticle article = journalDisplayContext.getArticle();
 					</c:choose>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+				<liferay-ui:search-iterator
+					displayStyle="<%= displayStyle %>"
+					markupView="lexicon"
+				/>
 			</liferay-ui:search-container>
 		</aui:form>
 

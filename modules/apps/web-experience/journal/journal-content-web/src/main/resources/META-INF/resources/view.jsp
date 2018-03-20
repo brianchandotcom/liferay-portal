@@ -64,7 +64,9 @@ if (journalContentDisplayContext.isShowArticle()) {
 					</c:choose>
 
 					<c:if test="<%= journalContentDisplayContext.isShowSelectArticleLink() %>">
-						<liferay-util:buffer var="selectJournalArticleLink">
+						<liferay-util:buffer
+							var="selectJournalArticleLink"
+						>
 							<aui:a href="javascript:;" label="select-another" onClick="<%= portletDisplay.getURLConfigurationJS() %>" />
 						</liferay-util:buffer>
 
@@ -81,7 +83,9 @@ if (journalContentDisplayContext.isShowArticle()) {
 										<portlet:param name="redirect" value="<%= currentURL %>" />
 									</portlet:actionURL>
 
-									<liferay-util:buffer var="restoreJournalArticleLink">
+									<liferay-util:buffer
+										var="restoreJournalArticleLink"
+									>
 										<aui:a href="<%= restoreJournalArticleURL %>" label="undo" />
 									</liferay-util:buffer>
 
@@ -139,7 +143,9 @@ if (journalContentDisplayContext.isShowArticle()) {
 					</c:when>
 					<c:when test="<%= articleDisplay != null %>">
 						<div class="text-right user-tool-asset-addon-entries">
-							<liferay-asset:asset-addon-entry-display assetAddonEntries="<%= journalContentDisplayContext.getSelectedUserToolAssetAddonEntries() %>" />
+							<liferay-asset:asset-addon-entry-display
+								assetAddonEntries="<%= journalContentDisplayContext.getSelectedUserToolAssetAddonEntries() %>"
+							/>
 						</div>
 
 						<div class="journal-content-article">
@@ -174,7 +180,9 @@ if (journalContentDisplayContext.isShowArticle()) {
 
 <c:if test="<%= (articleDisplay != null) && journalContentDisplayContext.hasViewPermission() %>">
 	<div class="content-metadata-asset-addon-entries">
-		<liferay-asset:asset-addon-entry-display assetAddonEntries="<%= journalContentDisplayContext.getSelectedContentMetadataAssetAddonEntries() %>" />
+		<liferay-asset:asset-addon-entry-display
+			assetAddonEntries="<%= journalContentDisplayContext.getSelectedContentMetadataAssetAddonEntries() %>"
+		/>
 	</div>
 </c:if>
 

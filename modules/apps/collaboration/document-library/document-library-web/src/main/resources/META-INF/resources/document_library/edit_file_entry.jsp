@@ -451,7 +451,9 @@ if (portletTitleBasedNavigation) {
 				</c:if>
 
 				<c:if test="<%= (folder == null) || folder.isSupportsMetadata() %>">
-					<liferay-expando:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>">
+					<liferay-expando:custom-attributes-available
+						className="<%= DLFileEntryConstants.getClassName() %>"
+					>
 						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
 							<liferay-expando:custom-attribute-list
 								className="<%= DLFileEntryConstants.getClassName() %>"
@@ -465,9 +467,16 @@ if (portletTitleBasedNavigation) {
 
 				<c:if test="<%= (folder == null) || folder.isSupportsSocial() %>">
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
-						<liferay-asset:asset-categories-selector className="<%= DLFileEntry.class.getName() %>" classPK="<%= assetClassPK %>" classTypePK="<%= fileEntryTypeId %>" />
+						<liferay-asset:asset-categories-selector
+							className="<%= DLFileEntry.class.getName() %>"
+							classPK="<%= assetClassPK %>"
+							classTypePK="<%= fileEntryTypeId %>"
+						/>
 
-						<liferay-asset:asset-tags-selector className="<%= DLFileEntry.class.getName() %>" classPK="<%= assetClassPK %>" />
+						<liferay-asset:asset-tags-selector
+							className="<%= DLFileEntry.class.getName() %>"
+							classPK="<%= assetClassPK %>"
+						/>
 					</aui:fieldset>
 
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">

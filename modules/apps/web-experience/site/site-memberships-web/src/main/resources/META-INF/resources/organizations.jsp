@@ -79,8 +79,14 @@ organizationSearch.setResults(organizations);
 		/>
 
 		<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, siteMembershipsDisplayContext.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
-			<liferay-frontend:add-menu inline="<%= true %>">
-				<liferay-frontend:add-menu-item id="selectOrganizations" title='<%= LanguageUtil.get(request, "assign-organizations") %>' url="javascript:;" />
+			<liferay-frontend:add-menu
+				inline="<%= true %>"
+			>
+				<liferay-frontend:add-menu-item
+					id="selectOrganizations"
+					title='<%= LanguageUtil.get(request, "assign-organizations") %>'
+					url="javascript:;"
+				/>
 			</liferay-frontend:add-menu>
 		</c:if>
 	</liferay-frontend:management-bar-buttons>
@@ -101,7 +107,10 @@ organizationSearch.setResults(organizations);
 		<c:if test="<%= (organizationsCount > 0) || searchTerms.isSearch() %>">
 			<li>
 				<aui:form action="<%= siteMembershipsDisplayContext.getPortletURL() %>" name="searchFm">
-					<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
+					<liferay-ui:input-search
+						autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
+						markupView="lexicon"
+					/>
 				</aui:form>
 			</li>
 		</c:if>
@@ -113,7 +122,12 @@ organizationSearch.setResults(organizations);
 			label="info"
 		/>
 
-		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedOrganizations" label="remove-membership" />
+		<liferay-frontend:management-bar-button
+			href="javascript:;"
+			icon="trash"
+			id="deleteSelectedOrganizations"
+			label="remove-membership"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -157,7 +171,10 @@ organizationSearch.setResults(organizations);
 					<%@ include file="/organization_columns.jspf" %>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+				<liferay-ui:search-iterator
+					displayStyle="<%= displayStyle %>"
+					markupView="lexicon"
+				/>
 			</liferay-ui:search-container>
 		</aui:form>
 	</div>

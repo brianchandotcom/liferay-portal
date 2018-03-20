@@ -91,7 +91,13 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 
 			<liferay-ui:search-container-column-text>
 				<c:if test="<%= !backgroundTask.isInProgress() %>">
-					<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+					<liferay-ui:icon-menu
+						direction="left-side"
+						icon="<%= StringPool.BLANK %>"
+						markupView="lexicon"
+						message="<%= StringPool.BLANK %>"
+						showWhenSingleIcon="<%= true %>"
+					>
 
 						<%
 						Date completionDate = backgroundTask.getCompletionDate();
@@ -112,7 +118,9 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 
 	<%

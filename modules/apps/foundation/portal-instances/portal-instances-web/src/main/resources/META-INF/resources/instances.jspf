@@ -91,5 +91,8 @@
 		/>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= searchContainer %>" />
+	<liferay-ui:search-iterator
+		markupView="lexicon"
+		searchContainer="<%= searchContainer %>"
+	/>
 </liferay-ui:search-container>

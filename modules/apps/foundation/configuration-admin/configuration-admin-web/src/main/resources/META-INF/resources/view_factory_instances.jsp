@@ -57,7 +57,12 @@ renderResponse.setTitle(LanguageUtil.get(request, "category." + configurationMod
 
 					<c:if test="<%= configurationModelIterator.getTotal() > 0 %>">
 						<div class="autofit-col">
-							<liferay-ui:icon-menu cssClass="float-right" direction="right" markupView="lexicon" showWhenSingleIcon="<%= true %>">
+							<liferay-ui:icon-menu
+								cssClass="float-right"
+								direction="right"
+								markupView="lexicon"
+								showWhenSingleIcon="<%= true %>"
+							>
 								<portlet:resourceURL id="export" var="exportEntriesURL">
 									<portlet:param name="redirect" value="<%= currentURL %>" />
 									<portlet:param name="factoryPid" value="<%= configurationModel.getFactoryPid() %>" />
@@ -126,7 +131,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "category." + configurationMod
 						}
 						%>
 
-						<liferay-ui:search-container-column-text name="<%= columnLabel %>">
+						<liferay-ui:search-container-column-text
+							name="<%= columnLabel %>"
+						>
 							<aui:a href="<%= editFactoryInstanceURL %>"><strong><%= curConfigurationModel.getLabel() %></strong></aui:a>
 						</liferay-ui:search-container-column-text>
 
@@ -135,7 +142,11 @@ renderResponse.setTitle(LanguageUtil.get(request, "category." + configurationMod
 							cssClass="entry-action"
 							name=""
 						>
-							<liferay-ui:icon-menu direction="down" markupView="lexicon" showWhenSingleIcon="<%= true %>">
+							<liferay-ui:icon-menu
+								direction="down"
+								markupView="lexicon"
+								showWhenSingleIcon="<%= true %>"
+							>
 								<liferay-ui:icon
 									message="edit"
 									method="post"
@@ -170,7 +181,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "category." + configurationMod
 						</liferay-ui:search-container-column-text>
 					</liferay-ui:search-container-row>
 
-					<liferay-ui:search-iterator markupView="lexicon" />
+					<liferay-ui:search-iterator
+						markupView="lexicon"
+					/>
 				</liferay-ui:search-container>
 			</div>
 		</div>

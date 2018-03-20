@@ -94,7 +94,9 @@ boolean hasAddOrganizationPermission = PortalPermissionUtil.contains(permissionC
 
 				<li>
 					<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-						<liferay-ui:input-search markupView="lexicon" />
+						<liferay-ui:input-search
+							markupView="lexicon"
+						/>
 					</aui:form>
 				</li>
 			</liferay-frontend:management-bar-filters>
@@ -123,7 +125,10 @@ boolean hasAddOrganizationPermission = PortalPermissionUtil.contains(permissionC
 								<portlet:param name="type" value="<%= organizationType %>" />
 							</portlet:renderURL>
 
-							<liferay-frontend:add-menu-item title="<%= LanguageUtil.get(request, organizationType) %>" url="<%= addOrganizationURL.toString() %>" />
+							<liferay-frontend:add-menu-item
+								title="<%= LanguageUtil.get(request, organizationType) %>"
+								url="<%= addOrganizationURL.toString() %>"
+							/>
 
 						<%
 						}
@@ -134,7 +139,12 @@ boolean hasAddOrganizationPermission = PortalPermissionUtil.contains(permissionC
 			</liferay-frontend:management-bar-buttons>
 
 			<liferay-frontend:management-bar-action-buttons>
-				<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteOrganizations();" %>' icon="trash" id="deleteOrganizations" label="delete" />
+				<liferay-frontend:management-bar-button
+					href='<%= "javascript:" + renderResponse.getNamespace() + "deleteOrganizations();" %>'
+					icon="trash"
+					id="deleteOrganizations"
+					label="delete"
+				/>
 			</liferay-frontend:management-bar-action-buttons>
 		</liferay-frontend:management-bar>
 
@@ -154,7 +164,12 @@ boolean hasAddOrganizationPermission = PortalPermissionUtil.contains(permissionC
 
 				<c:if test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS) %>">
 					<div id="breadcrumb">
-						<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
+						<liferay-ui:breadcrumb
+							showCurrentGroup="<%= false %>"
+							showGuestGroup="<%= false %>"
+							showLayout="<%= false %>"
+							showPortletBreadcrumb="<%= true %>"
+						/>
 					</div>
 				</c:if>
 
@@ -169,7 +184,10 @@ boolean hasAddOrganizationPermission = PortalPermissionUtil.contains(permissionC
 				}
 				%>
 
-				<liferay-ui:organization-search-container-results organizationParams="<%= organizationParams %>" parentOrganizationId="<%= parentOrganizationId %>" />
+				<liferay-ui:organization-search-container-results
+					organizationParams="<%= organizationParams %>"
+					parentOrganizationId="<%= parentOrganizationId %>"
+				/>
 
 				<liferay-ui:search-container-row
 					className="com.liferay.portal.kernel.model.Organization"
@@ -194,7 +212,10 @@ boolean hasAddOrganizationPermission = PortalPermissionUtil.contains(permissionC
 					<%@ include file="/organization/search_columns.jspf" %>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+				<liferay-ui:search-iterator
+					displayStyle="<%= displayStyle %>"
+					markupView="lexicon"
+				/>
 			</liferay-ui:search-container>
 		</aui:form>
 	</c:when>

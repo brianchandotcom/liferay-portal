@@ -79,6 +79,8 @@ PasswordPolicy passwordPolicy = (PasswordPolicy)row.getObject();
 			<portlet:param name="passwordPolicyId" value="<%= String.valueOf(passwordPolicy.getPasswordPolicyId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete url="<%= deletePasswordPolicyURL %>" />
+		<liferay-ui:icon-delete
+			url="<%= deletePasswordPolicyURL %>"
+		/>
 	</c:if>
 </liferay-ui:icon-menu>

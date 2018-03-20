@@ -46,11 +46,17 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 
 <aui:form action="<%= searchURL %>" method="post" name="fm" onSubmit='<%= renderResponse.getNamespace() + "search(); event.preventDefault();" %>'>
 	<div class="form-search">
-		<liferay-ui:input-search name="keywords" placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
+		<liferay-ui:input-search
+			name="keywords"
+			placeholder='<%= LanguageUtil.get(request, "keywords") %>'
+		/>
 	</div>
 
 	<div class="search-results">
-		<liferay-ui:search-speed hits="<%= journalContentSearchDisplayContext.getHits() %>" searchContainer="<%= journalContentSearchDisplayContext.getSearchContainer() %>" />
+		<liferay-ui:search-speed
+			hits="<%= journalContentSearchDisplayContext.getHits() %>"
+			searchContainer="<%= journalContentSearchDisplayContext.getSearchContainer() %>"
+		/>
 	</div>
 
 	<liferay-ui:search-container
@@ -85,7 +91,10 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 
 				<c:if test="<%= languageId.length() > 0 %>">
 					<h6 class="text-default">
-						<liferay-ui:icon image='<%= "../language/" + languageId %>' message='<%= LanguageUtil.format(request, "this-result-comes-from-the-x-version-of-this-content", snippetLocale.getDisplayLanguage(locale), false) %>' />
+						<liferay-ui:icon
+							image='<%= "../language/" + languageId %>'
+							message='<%= LanguageUtil.format(request, "this-result-comes-from-the-x-version-of-this-content", snippetLocale.getDisplayLanguage(locale), false) %>'
+						/>
 					</h6>
 				</c:if>
 
@@ -97,7 +106,10 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
+		<liferay-ui:search-iterator
+			displayStyle="descriptive"
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </aui:form>
 

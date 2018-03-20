@@ -147,7 +147,9 @@ iteratorURL.setParameter("mbThreadId", String.valueOf(mbThreadId));
 			/>
 		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+		<liferay-ui:search-container-column-text
+			colspan="<%= 2 %>"
+		>
 
 			<%
 			User curUser = UserLocalServiceUtil.fetchUser(mbMessage.getUserId());
@@ -277,7 +279,10 @@ iteratorURL.setParameter("mbThreadId", String.valueOf(mbThreadId));
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
+	<liferay-ui:search-iterator
+		displayStyle="descriptive"
+		markupView="lexicon"
+	/>
 </liferay-ui:search-container>
 
 <div class="message-container" id="<portlet:namespace />messageContainer"></div>

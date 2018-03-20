@@ -131,7 +131,10 @@ navigationItems.add(availableSitesNavigationItem);
 			<aui:form action="<%= portletURL %>" name="searchFm">
 				<liferay-portlet:renderURLParams varImpl="portletURL" />
 
-				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
+				<liferay-ui:input-search
+					autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
+					markupView="lexicon"
+				/>
 			</aui:form>
 		</li>
 	</liferay-frontend:management-bar-filters>
@@ -313,6 +316,9 @@ navigationItems.add(availableSitesNavigationItem);
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+		<liferay-ui:search-iterator
+			displayStyle="<%= displayStyle %>"
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </aui:form>

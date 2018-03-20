@@ -128,11 +128,15 @@
 			}
 			%>
 
-			<liferay-util:buffer var="publishOnControlPanelLink">
+			<liferay-util:buffer
+				var="publishOnControlPanelLink"
+			>
 				<aui:a cssClass='<%= linkCssClass + " publish-link" %>' href="<%= publishRenderURL.toString() %>" id='<%= layoutSetBranchId + "publishLink" %>' label="<%= publishMessage %>" />
 			</liferay-util:buffer>
 
-			<liferay-util:buffer var="publishOnLayoutLink">
+			<liferay-util:buffer
+				var="publishOnLayoutLink"
+			>
 				<li class="control-menu-nav-item">
 					<div class="dropdown publish-btn-group">
 						<button class="btn btn-primary btn-sm" href="<%= simplePublishLayoutsURL.toString() %>" id="<%= layoutSetBranchId + "publishToLiveLink" %>" type="button">
@@ -260,7 +264,9 @@
 				<portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
 			</portlet:renderURL>
 
-			<liferay-util:buffer var="manageSitePagesVariationsLink">
+			<liferay-util:buffer
+				var="manageSitePagesVariationsLink"
+			>
 				<aui:a cssClass="manage-layout-set-branches" href="<%= layoutSetBranchesURL %>" id="manageLayoutSetBranches" label="manage-site-pages-variations" />
 			</liferay-util:buffer>
 

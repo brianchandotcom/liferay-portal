@@ -154,12 +154,17 @@ for (int i = 0; i < openSearchInstances.size(); i++) {
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator paginate="<%= false %>" />
+			<liferay-ui:search-iterator
+				paginate="<%= false %>"
+			/>
 
 			<c:choose>
 				<c:when test="<%= (searchContainer.getTotal() == resultRows.size()) || (Validator.isNotNull(primarySearch) && openSearch.getClassName().equals(primarySearch)) %>">
 					<div class="search-paginator-container">
-						<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" type="more" />
+						<liferay-ui:search-paginator
+							searchContainer="<%= searchContainer %>"
+							type="more"
+						/>
 					</div>
 				</c:when>
 				<c:otherwise>

@@ -52,7 +52,9 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 %>
 
 <div class="container-fluid-1280">
-	<liferay-util:buffer var="removeStructureIcon">
+	<liferay-util:buffer
+		var="removeStructureIcon"
+	>
 		<liferay-ui:icon
 			iconCssClass="icon-remove"
 			label="<%= true %>"
@@ -124,7 +126,10 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 						</liferay-ui:search-container-column-text>
 					</liferay-ui:search-container-row>
 
-					<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
+					<liferay-ui:search-iterator
+						markupView="lexicon"
+						paginate="<%= false %>"
+					/>
 				</liferay-ui:search-container>
 
 				<liferay-ui:icon

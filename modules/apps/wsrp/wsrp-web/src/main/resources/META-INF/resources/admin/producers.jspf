@@ -27,8 +27,13 @@
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</portlet:renderURL>
 
-		<liferay-frontend:add-menu inline="<%= true %>">
-			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-producer") %>' url="<%= addProducerURL.toString() %>" />
+		<liferay-frontend:add-menu
+			inline="<%= true %>"
+		>
+			<liferay-frontend:add-menu-item
+				title='<%= LanguageUtil.get(request, "add-producer") %>'
+				url="<%= addProducerURL.toString() %>"
+			/>
 		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
@@ -83,7 +88,9 @@
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </div>
 

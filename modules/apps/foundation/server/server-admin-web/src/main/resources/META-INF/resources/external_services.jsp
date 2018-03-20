@@ -18,8 +18,19 @@
 
 <div class="server-admin-tabs">
 	<aui:fieldset>
-		<liferay-ui:panel-container extended="<%= true %>" id="adminExternalServicesPanelContainer" persistState="<%= true %>">
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminImageMagickConversionPanel" markupView="lexicon" persistState="<%= true %>" title="enabling-imagemagick-provides-document-preview-functionality">
+		<liferay-ui:panel-container
+			extended="<%= true %>"
+			id="adminExternalServicesPanelContainer"
+			persistState="<%= true %>"
+		>
+			<liferay-ui:panel
+				collapsible="<%= true %>"
+				extended="<%= true %>"
+				id="adminImageMagickConversionPanel"
+				markupView="lexicon"
+				persistState="<%= true %>"
+				title="enabling-imagemagick-provides-document-preview-functionality"
+			>
 				<aui:input label="enabled" name="imageMagickEnabled" type="checkbox" value="<%= ImageMagickUtil.isEnabled() %>" />
 
 				<aui:input cssClass="lfr-input-text-container" label="path" name="imageMagickPath" type="text" value="<%= ImageMagickUtil.getGlobalSearchPath() %>" />
@@ -42,7 +53,14 @@
 				</aui:fieldset>
 			</liferay-ui:panel>
 
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminXugglerPanel" markupView="lexicon" persistState="<%= true %>" title="enabling-xuggler-provides-video-conversion-functionality">
+			<liferay-ui:panel
+				collapsible="<%= true %>"
+				extended="<%= true %>"
+				id="adminXugglerPanel"
+				markupView="lexicon"
+				persistState="<%= true %>"
+				title="enabling-xuggler-provides-video-conversion-functionality"
+			>
 				<liferay-ui:error exception="<%= XugglerInstallException.class %>" targetNode="#controlMenuAlertsContainer">
 
 					<%

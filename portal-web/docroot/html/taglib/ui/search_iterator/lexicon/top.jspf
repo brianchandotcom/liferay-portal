@@ -26,7 +26,12 @@ if (rowChecker != null) {
 
 <c:if test="<%= resultRows.isEmpty() && (emptyResultsMessage != null) %>">
 	<div class="main-content-body" id="<%= namespace + id %>EmptyResultsMessage">
-		<liferay-ui:empty-result-message compact="<%= compactEmptyResultsMessage %>" cssClass="<%= emptyResultsMessageCssClass %>" message="<%= emptyResultsMessage %>" search="<%= searchContainer.isSearch() %>" />
+		<liferay-ui:empty-result-message
+			compact="<%= compactEmptyResultsMessage %>"
+			cssClass="<%= emptyResultsMessageCssClass %>"
+			message="<%= emptyResultsMessage %>"
+			search="<%= searchContainer.isSearch() %>"
+		/>
 	</div>
 </c:if>
 

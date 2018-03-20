@@ -47,7 +47,11 @@ dlSearchContainer.setResults(foldersAndFileEntriesAndFileShortcuts);
 
 <div class="container-fluid-1280">
 	<aui:form method="post" name="selectFileEntryFm">
-		<liferay-ui:breadcrumb showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" />
+		<liferay-ui:breadcrumb
+			showGuestGroup="<%= false %>"
+			showLayout="<%= false %>"
+			showParentGroups="<%= false %>"
+		/>
 
 		<liferay-ui:search-container
 			emptyResultsMessage="there-are-no-documents-or-media-files-in-this-folder"
@@ -119,7 +123,11 @@ dlSearchContainer.setResults(foldersAndFileEntriesAndFileShortcuts);
 				</c:choose>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator markupView="lexicon" resultRowSplitter="<%= new DLResultRowSplitter() %>" searchContainer="<%= dlSearchContainer %>" />
+			<liferay-ui:search-iterator
+				markupView="lexicon"
+				resultRowSplitter="<%= new DLResultRowSplitter() %>"
+				searchContainer="<%= dlSearchContainer %>"
+			/>
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

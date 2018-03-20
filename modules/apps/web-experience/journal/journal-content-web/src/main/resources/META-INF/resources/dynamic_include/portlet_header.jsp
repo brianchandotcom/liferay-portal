@@ -21,7 +21,13 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 %>
 
 <div class="visible-interaction">
-	<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+	<liferay-ui:icon-menu
+		direction="left-side"
+		icon="<%= StringPool.BLANK %>"
+		markupView="lexicon"
+		message="<%= StringPool.BLANK %>"
+		showWhenSingleIcon="<%= true %>"
+	>
 		<c:if test="<%= journalContentDisplayContext.isShowEditArticleIcon() %>">
 
 			<%

@@ -24,7 +24,12 @@
 
 		<div class="portlet-configuration-body-content">
 			<div class="container-fluid-1280">
-				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" persistState="<%= true %>" title="user-profile">
+				<liferay-ui:panel
+					collapsible="<%= true %>"
+					extended="<%= true %>"
+					persistState="<%= true %>"
+					title="user-profile"
+				>
 					<aui:select label="display-style" name="preferences--displayStyle--" value="<%= displayStyle %>">
 						<aui:option label="<%= ContactsConstants.DISPLAY_STYLE_FULL_LABEL %>" value="<%= ContactsConstants.DISPLAY_STYLE_FULL %>" />
 						<aui:option label="<%= ContactsConstants.DISPLAY_STYLE_BASIC_LABEL %>" value="<%= ContactsConstants.DISPLAY_STYLE_BASIC %>" />

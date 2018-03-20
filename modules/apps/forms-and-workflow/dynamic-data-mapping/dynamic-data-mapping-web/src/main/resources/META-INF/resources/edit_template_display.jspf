@@ -30,7 +30,14 @@ if (Validator.isNotNull(scriptContent)) {
 	markupView="lexicon"
 	persistState="<%= true %>"
 >
-	<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="templateScriptSectionPanel" markupView="lexicon" persistState="<%= true %>" title="script">
+	<liferay-ui:panel
+		collapsible="<%= true %>"
+		extended="<%= true %>"
+		id="templateScriptSectionPanel"
+		markupView="lexicon"
+		persistState="<%= true %>"
+		title="script"
+	>
 		<div class="form-group lfr-template-editor-container">
 			<c:if test="<%= ddmDisplayContext.isAutocompleteEnabled(language) %>">
 				<div class="lfr-template-palette-container pull-left" id="<portlet:namespace />templatePaletteContainer">
@@ -66,7 +73,13 @@ if (Validator.isNotNull(scriptContent)) {
 								}
 							%>
 
-								<liferay-ui:panel collapsible="<%= true %>" cssClass="palette-section" extended="<%= false %>" id="<%= templateVariableGroup.getLabel() %>" title="<%= LanguageUtil.get(request, templateHandlerResourceBundle, templateVariableGroup.getLabel()) %>">
+								<liferay-ui:panel
+									collapsible="<%= true %>"
+									cssClass="palette-section"
+									extended="<%= false %>"
+									id="<%= templateVariableGroup.getLabel() %>"
+									title="<%= LanguageUtil.get(request, templateHandlerResourceBundle, templateVariableGroup.getLabel()) %>"
+								>
 									<ul class="palette-item-content">
 
 										<%

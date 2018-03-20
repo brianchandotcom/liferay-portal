@@ -29,8 +29,13 @@ String currentTab = ParamUtil.getString(request, "currentTab", "forms");
 				<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 			</portlet:renderURL>
 
-			<liferay-frontend:add-menu inline="<%= true %>">
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "new-form") %>' url="<%= addFormInstanceURL.toString() %>" />
+			<liferay-frontend:add-menu
+				inline="<%= true %>"
+			>
+				<liferay-frontend:add-menu-item
+					title='<%= LanguageUtil.get(request, "new-form") %>'
+					url="<%= addFormInstanceURL.toString() %>"
+				/>
 			</liferay-frontend:add-menu>
 		</c:if>
 	</c:when>
@@ -42,8 +47,13 @@ String currentTab = ParamUtil.getString(request, "currentTab", "forms");
 				<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 			</portlet:renderURL>
 
-			<liferay-frontend:add-menu inline="<%= true %>">
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "new-element-set") %>' url="<%= addFieldSetURL.toString() %>" />
+			<liferay-frontend:add-menu
+				inline="<%= true %>"
+			>
+				<liferay-frontend:add-menu-item
+					title='<%= LanguageUtil.get(request, "new-element-set") %>'
+					url="<%= addFieldSetURL.toString() %>"
+				/>
 			</liferay-frontend:add-menu>
 		</c:if>
 	</c:when>

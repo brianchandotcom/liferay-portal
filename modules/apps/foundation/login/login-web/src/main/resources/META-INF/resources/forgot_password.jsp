@@ -106,7 +106,9 @@ if (reminderAttempts == null) {
 				<c:if test="<%= captchaConfiguration.sendPasswordCaptchaEnabled() %>">
 					<portlet:resourceURL id="/login/captcha" var="captchaURL" />
 
-					<liferay-captcha:captcha url="<%= captchaURL %>" />
+					<liferay-captcha:captcha
+						url="<%= captchaURL %>"
+					/>
 				</c:if>
 
 				<aui:button-row>
@@ -156,7 +158,9 @@ if (reminderAttempts == null) {
 						<c:if test="<%= reminderAttempts >= 3 %>">
 							<portlet:resourceURL id="/login/captcha" var="captchaURL" />
 
-							<liferay-captcha:captcha url="<%= captchaURL %>" />
+							<liferay-captcha:captcha
+								url="<%= captchaURL %>"
+							/>
 						</c:if>
 
 						<aui:button-row>

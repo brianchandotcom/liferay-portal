@@ -157,7 +157,13 @@ data.put("qa-id", "customizations");
 				%>
 
 				<li class="control-menu-nav-item hidden-xs">
-					<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+					<liferay-ui:icon-menu
+						direction="left-side"
+						icon="<%= StringPool.BLANK %>"
+						markupView="lexicon"
+						message="<%= StringPool.BLANK %>"
+						showWhenSingleIcon="<%= true %>"
+					>
 						<liferay-ui:icon
 							message="<%= toggleCustomizedViewMessage %>"
 							url="<%= toggleCustomizationViewURL %>"

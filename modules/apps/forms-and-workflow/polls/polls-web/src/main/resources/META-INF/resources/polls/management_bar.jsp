@@ -40,8 +40,13 @@ portletURL.setParameter("mvcRenderCommandName", "/polls/view");
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 			</portlet:renderURL>
 
-			<liferay-frontend:add-menu inline="<%= true %>">
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-poll") %>' url="<%= editQuestionURL.toString() %>" />
+			<liferay-frontend:add-menu
+				inline="<%= true %>"
+			>
+				<liferay-frontend:add-menu-item
+					title='<%= LanguageUtil.get(request, "add-poll") %>'
+					url="<%= editQuestionURL.toString() %>"
+				/>
 			</liferay-frontend:add-menu>
 		</c:if>
 	</liferay-frontend:management-bar-buttons>
@@ -67,7 +72,9 @@ portletURL.setParameter("mvcRenderCommandName", "/polls/view");
 			<aui:form action="<%= searchURL.toString() %>" name="searchFm">
 				<liferay-portlet:renderURLParams varImpl="portletURL" />
 
-				<liferay-ui:input-search markupView="lexicon" />
+				<liferay-ui:input-search
+					markupView="lexicon"
+				/>
 			</aui:form>
 		</li>
 	</liferay-frontend:management-bar-filters>

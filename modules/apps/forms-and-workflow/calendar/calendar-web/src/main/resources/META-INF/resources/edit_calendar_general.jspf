@@ -64,7 +64,9 @@
 
 		<c:if test="<%= calendar == null %>">
 			<aui:field-wrapper label="permissions">
-				<liferay-ui:input-permissions modelName="<%= Calendar.class.getName() %>" />
+				<liferay-ui:input-permissions
+					modelName="<%= Calendar.class.getName() %>"
+				/>
 			</aui:field-wrapper>
 		</c:if>
 

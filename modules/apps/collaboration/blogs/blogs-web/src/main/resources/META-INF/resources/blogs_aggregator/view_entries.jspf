@@ -70,6 +70,8 @@
 
 <c:if test="<%= !results.isEmpty() %>">
 	<div class="search-container">
-		<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />
+		<liferay-ui:search-paginator
+			searchContainer="<%= searchContainer %>"
+		/>
 	</div>
 </c:if>

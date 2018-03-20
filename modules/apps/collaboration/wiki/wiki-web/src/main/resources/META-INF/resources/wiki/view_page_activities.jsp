@@ -135,7 +135,10 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 					/>
 				</c:when>
 				<c:otherwise>
-					<liferay-ui:search-container-column-text name="" value="" />
+					<liferay-ui:search-container-column-text
+						name=""
+						value=""
+					/>
 				</c:otherwise>
 			</c:choose>
 		</liferay-ui:search-container-row>

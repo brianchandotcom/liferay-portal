@@ -17,7 +17,13 @@
 <aui:input helpMessage="collated-spell-check-result-enabled-help" id="collatedSpellCheckResultEnabled" label="display-did-you-mean-if-the-number-of-search-results-does-not-meet-the-threshold" name="preferences--collatedSpellCheckResultEnabled--" type="checkbox" value="<%= searchDisplayContext.isCollatedSpellCheckResultEnabled() %>" />
 
 <div class="options-container <%= !searchDisplayContext.isCollatedSpellCheckResultEnabled() ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />collatedSpellCheckResultOptionsContainer">
-	<liferay-ui:toggle-area align="none" defaultShowContent="<%= searchDisplayContext.isCollatedSpellCheckResultEnabled() %>" hideMessage='<%= "&laquo; " + LanguageUtil.get(request, "hide-options") %>' id="toggle_id_search_configuration_collated_spell_check_result" showMessage='<%= LanguageUtil.get(request, "show-options") + " &raquo;" %>'>
+	<liferay-ui:toggle-area
+		align="none"
+		defaultShowContent="<%= searchDisplayContext.isCollatedSpellCheckResultEnabled() %>"
+		hideMessage='<%= "&laquo; " + LanguageUtil.get(request, "hide-options") %>'
+		id="toggle_id_search_configuration_collated_spell_check_result"
+		showMessage='<%= LanguageUtil.get(request, "show-options") + " &raquo;" %>'
+	>
 		<aui:input disabled="<%= !searchDisplayContext.isCollatedSpellCheckResultEnabled() %>" helpMessage="collated-spell-check-result-display-threshold-help" label="threshold-for-displaying-did-you-mean" name="preferences--collatedSpellCheckResultDisplayThreshold--" size="10" type="text" value="<%= searchDisplayContext.getCollatedSpellCheckResultDisplayThreshold() %>" />
 	</liferay-ui:toggle-area>
 </div>
@@ -25,7 +31,13 @@
 <aui:input helpMessage="query-suggestions-enabled-help" id="querySuggestionsEnabled" label="display-related-queries" name="preferences--querySuggestionsEnabled--" type="checkbox" value="<%= searchDisplayContext.isQuerySuggestionsEnabled() %>" />
 
 <div class="options-container <%= !searchDisplayContext.isQuerySuggestionsEnabled() ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />querySuggestionsOptionsContainer">
-	<liferay-ui:toggle-area align="none" defaultShowContent="<%= searchDisplayContext.isQuerySuggestionsEnabled() %>" hideMessage='<%= "&laquo; " + LanguageUtil.get(request, "hide-options") %>' id="toggle_id_search_configuration_query_suggestions" showMessage='<%= LanguageUtil.get(request, "show-options") + " &raquo;" %>'>
+	<liferay-ui:toggle-area
+		align="none"
+		defaultShowContent="<%= searchDisplayContext.isQuerySuggestionsEnabled() %>"
+		hideMessage='<%= "&laquo; " + LanguageUtil.get(request, "hide-options") %>'
+		id="toggle_id_search_configuration_query_suggestions"
+		showMessage='<%= LanguageUtil.get(request, "show-options") + " &raquo;" %>'
+	>
 		<aui:input disabled="<%= !searchDisplayContext.isQuerySuggestionsEnabled() %>" label="maximum-number-of-related-queries" name="preferences--querySuggestionsMax--" size="10" type="text" value="<%= searchDisplayContext.getQuerySuggestionsMax() %>" />
 
 		<aui:input disabled="<%= !searchDisplayContext.isQuerySuggestionsEnabled() %>" helpMessage="query-suggestions-display-threshold-help" label="threshold-for-displaying-related-queries" name="preferences--querySuggestionsDisplayThreshold--" size="10" type="text" value="<%= searchDisplayContext.getQuerySuggestionsDisplayThreshold() %>" />
@@ -35,7 +47,13 @@
 <aui:input helpMessage="query-indexing-enabled-help" id="queryIndexingEnabled" label="add-new-related-queries-based-on-successful-queries" name="preferences--queryIndexingEnabled--" type="checkbox" value="<%= searchDisplayContext.isQueryIndexingEnabled() %>" />
 
 <div class="options-container <%= !searchDisplayContext.isQueryIndexingEnabled() ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />queryIndexingOptionsContainer">
-	<liferay-ui:toggle-area align="none" defaultShowContent="<%= searchDisplayContext.isQueryIndexingEnabled() %>" hideMessage='<%= "&laquo; " + LanguageUtil.get(request, "hide-options") %>' id="toggle_id_search_configuration_query_indexing" showMessage='<%= LanguageUtil.get(request, "show-options") + " &raquo;" %>'>
+	<liferay-ui:toggle-area
+		align="none"
+		defaultShowContent="<%= searchDisplayContext.isQueryIndexingEnabled() %>"
+		hideMessage='<%= "&laquo; " + LanguageUtil.get(request, "hide-options") %>'
+		id="toggle_id_search_configuration_query_indexing"
+		showMessage='<%= LanguageUtil.get(request, "show-options") + " &raquo;" %>'
+	>
 		<aui:input disabled="<%= !searchDisplayContext.isQueryIndexingEnabled() %>" helpMessage="query-indexing-threshold-help" name="preferences--queryIndexingThreshold--" size="10" type="text" value="<%= searchDisplayContext.getQueryIndexingThreshold() %>" />
 	</liferay-ui:toggle-area>
 </div>

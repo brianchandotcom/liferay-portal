@@ -31,5 +31,8 @@ FileEntry fileEntry = (FileEntry)row.getObject();
 		<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
 	</portlet:actionURL>
 
-	<liferay-ui:icon-delete trash="<%= false %>" url="<%= deleteImageURL %>" />
+	<liferay-ui:icon-delete
+		trash="<%= false %>"
+		url="<%= deleteImageURL %>"
+	/>
 </c:if>

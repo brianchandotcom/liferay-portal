@@ -34,20 +34,31 @@
 	List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
 	%>
 
-	<liferay-frontend:add-menu inline="<%= true %>">
+	<liferay-frontend:add-menu
+		inline="<%= true %>"
+	>
 		<c:choose>
 			<c:when test="<%= layoutSetPrototypes.isEmpty() %>">
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addSiteURL.toString() %>" />
+				<liferay-frontend:add-menu-item
+					title='<%= LanguageUtil.get(request, "add") %>'
+					url="<%= addSiteURL.toString() %>"
+				/>
 			</c:when>
 			<c:otherwise>
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "blank-site") %>' url="<%= addSiteURL.toString() %>" />
+				<liferay-frontend:add-menu-item
+					title='<%= LanguageUtil.get(request, "blank-site") %>'
+					url="<%= addSiteURL.toString() %>"
+				/>
 
 				<%
 				for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
 					addSiteURL.setParameter("layoutSetPrototypeId", String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId()));
 				%>
 
-					<liferay-frontend:add-menu-item title="<%= layoutSetPrototype.getName(locale) %>" url="<%= addSiteURL.toString() %>" />
+					<liferay-frontend:add-menu-item
+						title="<%= layoutSetPrototype.getName(locale) %>"
+						url="<%= addSiteURL.toString() %>"
+					/>
 
 				<%
 				}

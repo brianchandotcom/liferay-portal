@@ -62,8 +62,13 @@ portletURL.setParameter("mvcRenderCommandName", "/portal_instances/view");
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</portlet:renderURL>
 
-		<liferay-frontend:add-menu inline="<%= true %>">
-			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addURL.toString() %>" />
+		<liferay-frontend:add-menu
+			inline="<%= true %>"
+		>
+			<liferay-frontend:add-menu-item
+				title='<%= LanguageUtil.get(request, "add") %>'
+				url="<%= addURL.toString() %>"
+			/>
 		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 </liferay-frontend:management-bar>

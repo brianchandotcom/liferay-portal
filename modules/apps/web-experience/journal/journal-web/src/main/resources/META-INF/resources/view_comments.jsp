@@ -102,5 +102,8 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 		</c:choose>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+	<liferay-ui:search-iterator
+		displayStyle="<%= displayStyle %>"
+		markupView="lexicon"
+	/>
 </liferay-ui:search-container>

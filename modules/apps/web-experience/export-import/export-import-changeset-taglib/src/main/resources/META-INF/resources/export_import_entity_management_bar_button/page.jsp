@@ -26,7 +26,11 @@ scopeGroup = themeDisplay.getScopeGroup();
 	String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + cmd + "'); void(0);";
 	%>
 
-	<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="import-export" label="<%= cmd %>" />
+	<liferay-frontend:management-bar-button
+		href="<%= taglibURL %>"
+		icon="import-export"
+		label="<%= cmd %>"
+	/>
 
 	<%
 	PortletURL portletURL = PortletURLFactoryUtil.create(request, ChangesetPortletKeys.CHANGESET, PortletRequest.ACTION_PHASE);

@@ -136,7 +136,10 @@ portletURL.setParameter("mvcRenderCommandName", "/monitoring/view");
 					/>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
+				<liferay-ui:search-iterator
+					displayStyle="list"
+					markupView="lexicon"
+				/>
 			</liferay-ui:search-container>
 		</c:when>
 		<c:when test="<%= !PropsValues.LIVE_USERS_ENABLED %>">

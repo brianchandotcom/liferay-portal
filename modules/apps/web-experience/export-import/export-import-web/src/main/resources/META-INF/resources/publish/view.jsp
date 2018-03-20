@@ -146,7 +146,9 @@ publishTemplatesURL.setParameter("publishConfigurationButtons", "saved");
 					<liferay-portlet:renderURLParams varImpl="searchURL" />
 					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-					<liferay-ui:input-search markupView="lexicon" />
+					<liferay-ui:input-search
+						markupView="lexicon"
+					/>
 				</aui:form>
 			</aui:nav-bar-search>
 		</c:if>

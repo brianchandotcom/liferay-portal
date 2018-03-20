@@ -169,7 +169,9 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 
 										<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA %>" type="hidden" value="<%= true %>" />
 
-										<liferay-util:buffer var="badgeHTML">
+										<liferay-util:buffer
+											var="badgeHTML"
+										>
 											<span class="badge badge-info"><%= importModelCount > 0 ? importModelCount : StringPool.BLANK %></span>
 											<span class="badge badge-warning deletions"><%= modelDeletionCount > 0 ? (modelDeletionCount + StringPool.SPACE + LanguageUtil.get(request, "deletions")) : StringPool.BLANK %></span>
 										</liferay-util:buffer>
@@ -284,10 +286,17 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 						</ul>
 					</aui:fieldset>
 
-					<liferay-staging:deletions cmd="<%= Constants.IMPORT %>" />
+					<liferay-staging:deletions
+						cmd="<%= Constants.IMPORT %>"
+					/>
 				</c:if>
 
-				<liferay-staging:permissions action="<%= Constants.IMPORT %>" descriptionCSSClass="permissions-description" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" />
+				<liferay-staging:permissions
+					action="<%= Constants.IMPORT %>"
+					descriptionCSSClass="permissions-description"
+					global="<%= group.isCompany() %>"
+					labelCSSClass="permissions-label"
+				/>
 
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass="options-group" label="update-data">
 

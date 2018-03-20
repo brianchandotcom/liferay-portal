@@ -213,7 +213,11 @@ renderResponse.setTitle(modelResourceName + ": " + ((column == null) ? LanguageU
 						%>
 
 						<aui:field-wrapper label="default-value">
-							<liferay-ui:input-localized cssClass="lfr-input-text-container" name="defaultValue" xml="<%= xml %>" />
+							<liferay-ui:input-localized
+								cssClass="lfr-input-text-container"
+								name="defaultValue"
+								xml="<%= xml %>"
+							/>
 						</aui:field-wrapper>
 					</c:when>
 					<c:otherwise>

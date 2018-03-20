@@ -57,7 +57,9 @@ if (tabs3.equals("available")) {
 	}
 	%>
 
-	<liferay-ui:user-search-container-results userParams="<%= userParams %>" />
+	<liferay-ui:user-search-container-results
+		userParams="<%= userParams %>"
+	/>
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.model.User"
@@ -69,5 +71,8 @@ if (tabs3.equals("available")) {
 		<%@ include file="/user_columns.jspf" %>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+	<liferay-ui:search-iterator
+		displayStyle="<%= displayStyle %>"
+		markupView="lexicon"
+	/>
 </liferay-ui:search-container>

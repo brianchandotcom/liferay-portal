@@ -30,7 +30,9 @@
 			boolean branchingPrivate = GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("branchingPrivate"));
 			%>
 
-			<liferay-util:buffer var="branchingPublicLabel">
+			<liferay-util:buffer
+				var="branchingPublicLabel"
+			>
 				<span class="staging-configuration-checkbox-label">
 					<span class="staging-configuration-checkbox-text">
 						<%= LanguageUtil.get(request, "enabled-on-public-pages") %>
@@ -40,7 +42,9 @@
 
 			<aui:input cssClass="staging-configuration-checkbox" label="<%= branchingPublicLabel %>" name="branchingPublic" type="checkbox" value="<%= branchingPublic %>" />
 
-			<liferay-util:buffer var="branchingPrivateLabel">
+			<liferay-util:buffer
+				var="branchingPrivateLabel"
+			>
 				<span class="staging-configuration-checkbox-label">
 					<span class="staging-configuration-checkbox-text">
 						<%= LanguageUtil.get(request, "enabled-on-private-pages") %>
@@ -95,7 +99,9 @@
 
 		<div id="<portlet:namespace />trashWarning">
 			<c:if test="<%= TrashEntryLocalServiceUtil.getEntriesCount(liveGroup.getGroupId()) > 0 %>">
-				<liferay-staging:alert type="WARNING">
+				<liferay-staging:alert
+					type="WARNING"
+				>
 					<liferay-ui:message key="local-staging-trash-warning" />
 				</liferay-staging:alert>
 			</c:if>
@@ -105,7 +111,9 @@
 			<liferay-ui:message key="staged-portlets-alert" />
 		</p>
 
-		<liferay-util:buffer var="selectAllCheckboxLabel">
+		<liferay-util:buffer
+			var="selectAllCheckboxLabel"
+		>
 			<span class="staging-configuration-checkbox-label">
 				<span class="staging-configuration-checkbox-text">
 					<%= LanguageUtil.get(request, "select-all") %>
@@ -145,7 +153,9 @@
 				}
 			%>
 
-				<liferay-util:buffer var="portletTitle">
+				<liferay-util:buffer
+					var="portletTitle"
+				>
 					<span class="staging-configuration-checkbox-label">
 						<span class="staging-configuration-checkbox-text">
 							<%= PortalUtil.getPortletTitle(curPortlet, application, locale) %>

@@ -93,7 +93,10 @@ navigationItems.add(navigationItem);
 		<c:if test="<%= (userGroupsCount > 0) || searchTerms.isSearch() %>">
 			<li>
 				<aui:form action="<%= viewUserGroupsURL.toString() %>" name="searchFm">
-					<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
+					<liferay-ui:input-search
+						autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
+						markupView="lexicon"
+					/>
 				</aui:form>
 			</li>
 		</c:if>
@@ -120,7 +123,10 @@ navigationItems.add(navigationItem);
 			<%@ include file="/user_group_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+		<liferay-ui:search-iterator
+			displayStyle="<%= displayStyle %>"
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </aui:form>
 

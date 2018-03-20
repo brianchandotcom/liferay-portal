@@ -86,7 +86,11 @@ String keywords = ParamUtil.getString(request, "keywords");
 	</c:if>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteImages();" %>' icon="times" label="delete" />
+		<liferay-frontend:management-bar-button
+			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteImages();" %>'
+			icon="times"
+			label="delete"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -166,7 +170,10 @@ String keywords = ParamUtil.getString(request, "keywords");
 				<%@ include file="/blogs_admin/image_search_columns.jspf" %>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+			<liferay-ui:search-iterator
+				displayStyle="<%= displayStyle %>"
+				markupView="lexicon"
+			/>
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

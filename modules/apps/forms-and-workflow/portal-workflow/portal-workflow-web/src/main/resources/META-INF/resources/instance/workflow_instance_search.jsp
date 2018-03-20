@@ -17,5 +17,7 @@
 <%@ include file="/instance/init.jsp" %>
 
 <div class="form">
-	<liferay-ui:input-search markupView="lexicon" />
+	<liferay-ui:input-search
+		markupView="lexicon"
+	/>
 </div>

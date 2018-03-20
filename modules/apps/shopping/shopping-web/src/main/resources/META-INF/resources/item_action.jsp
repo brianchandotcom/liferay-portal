@@ -67,6 +67,8 @@ ShoppingItem item = (ShoppingItem)row.getObject();
 			<portlet:param name="itemId" value="<%= String.valueOf(item.getItemId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete url="<%= deleteURL %>" />
+		<liferay-ui:icon-delete
+			url="<%= deleteURL %>"
+		/>
 	</c:if>
 </liferay-ui:icon-menu>

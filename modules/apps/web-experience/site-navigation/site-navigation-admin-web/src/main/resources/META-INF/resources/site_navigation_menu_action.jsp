@@ -162,6 +162,9 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			<portlet:param name="siteNavigationMenuId" value="<%= String.valueOf(siteNavigationMenu.getSiteNavigationMenuId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete trash="<%= false %>" url="<%= deleteSiteNavigationMenuURL %>" />
+		<liferay-ui:icon-delete
+			trash="<%= false %>"
+			url="<%= deleteSiteNavigationMenuURL %>"
+		/>
 	</c:if>
 </liferay-ui:icon-menu>

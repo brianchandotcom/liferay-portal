@@ -90,7 +90,11 @@ boolean previewBeforeRestore = WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_S
 				<aui:fieldset cssClass="workflow-definition-content">
 					<aui:col>
 						<aui:field-wrapper label="title">
-							<liferay-ui:input-localized disabled="<%= true %>" name=" <%= workflowDefinition.getName() %>_title" xml='<%= BeanPropertiesUtil.getString(workflowDefinition, "title") %>' />
+							<liferay-ui:input-localized
+								disabled="<%= true %>"
+								name=" <%= workflowDefinition.getName() %>_title"
+								xml='<%= BeanPropertiesUtil.getString(workflowDefinition, "title") %>'
+							/>
 						</aui:field-wrapper>
 					</aui:col>
 

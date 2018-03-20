@@ -101,7 +101,9 @@ String kbArticleDisplayStyle = kbSectionPortletInstanceConfiguration.kbArticleDi
 
 			<c:if test="<%= kbSectionPortletInstanceConfiguration.showKBArticlesPagination() && (total > searchContainer.getDelta()) %>">
 				<div class="taglib-search-iterator-page-iterator-bottom">
-					<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />
+					<liferay-ui:search-paginator
+						searchContainer="<%= searchContainer %>"
+					/>
 				</div>
 			</c:if>
 		</liferay-ui:search-container>

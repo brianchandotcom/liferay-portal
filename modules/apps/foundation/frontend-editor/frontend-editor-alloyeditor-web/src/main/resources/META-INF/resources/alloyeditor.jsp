@@ -56,7 +56,9 @@ if (editorOptions != null) {
 %>
 
 <c:if test="<%= !skipEditorLoading %>">
-	<liferay-editor:resources editorName="<%= editorName %>" />
+	<liferay-editor:resources
+		editorName="<%= editorName %>"
+	/>
 </c:if>
 
 <script data-senna-track="temporary" type="text/javascript">

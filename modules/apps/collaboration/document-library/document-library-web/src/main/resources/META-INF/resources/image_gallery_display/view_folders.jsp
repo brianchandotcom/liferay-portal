@@ -69,7 +69,10 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 				AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(curFolder.getFolderId());
 				%>
 
-				<liferay-ui:icon icon="<%= assetRenderer.getIconCssClass() %>" markupView="lexicon" />
+				<liferay-ui:icon
+					icon="<%= assetRenderer.getIconCssClass() %>"
+					markupView="lexicon"
+				/>
 
 				<strong><%= curFolder.getName() %></strong>
 

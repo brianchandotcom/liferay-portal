@@ -27,15 +27,27 @@ ExportImportConfiguration exportImportConfiguration = ExportImportConfigurationL
 	id="exportImportConfigurationPanelContainer"
 	persistState="<%= false %>"
 >
-	<liferay-ui:panel collapsible="<%= false %>" extended="<%= true %>" title="template-type">
+	<liferay-ui:panel
+		collapsible="<%= false %>"
+		extended="<%= true %>"
+		title="template-type"
+	>
 		<liferay-ui:message key="<%= ExportImportConfigurationConstants.getTypeLabel(exportImportConfiguration.getType()) %>" />
 	</liferay-ui:panel>
 
-	<liferay-ui:panel collapsible="<%= false %>" extended="<%= true %>" title="created-by">
+	<liferay-ui:panel
+		collapsible="<%= false %>"
+		extended="<%= true %>"
+		title="created-by"
+	>
 		<liferay-ui:message key="<%= exportImportConfiguration.getUserName() %>" />
 	</liferay-ui:panel>
 
-	<liferay-ui:panel collapsible="<%= false %>" extended="<%= true %>" title="description">
+	<liferay-ui:panel
+		collapsible="<%= false %>"
+		extended="<%= true %>"
+		title="description"
+	>
 		<liferay-ui:message key="<%= HtmlUtil.escape(exportImportConfiguration.getDescription()) %>" />
 	</liferay-ui:panel>
 </liferay-ui:panel-container>

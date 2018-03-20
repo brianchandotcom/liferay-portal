@@ -33,7 +33,12 @@ contextUseForAllTitle.put("inputSelector", ".custom-title input");
 />
 
 <aui:field-wrapper cssClass="custom-title lfr-input-text-container">
-	<liferay-ui:input-localized defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" disabled="<%= !portletConfigurationCSSPortletDisplayContext.isUseCustomTitle() %>" name="customTitle" xml="<%= portletConfigurationCSSPortletDisplayContext.getCustomTitleXML() %>" />
+	<liferay-ui:input-localized
+		defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>"
+		disabled="<%= !portletConfigurationCSSPortletDisplayContext.isUseCustomTitle() %>"
+		name="customTitle"
+		xml="<%= portletConfigurationCSSPortletDisplayContext.getCustomTitleXML() %>"
+	/>
 </aui:field-wrapper>
 
 <aui:select label="link-portlet-urls-to-page" name="linkToLayoutUuid">

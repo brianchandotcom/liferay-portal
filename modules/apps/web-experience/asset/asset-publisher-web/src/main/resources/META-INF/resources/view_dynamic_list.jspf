@@ -25,7 +25,12 @@ for (AssetEntryResult assetEntryResult : assetEntryResults) {
 		<h3 class="asset-entries-group-label"><%= HtmlUtil.escape(assetEntryResult.getTitle()) %></h3>
 	</c:if>
 
-	<liferay-ddm:template-renderer className="<%= AssetEntry.class.getName() %>" displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>" entries="<%= assetEntries %>">
+	<liferay-ddm:template-renderer
+		className="<%= AssetEntry.class.getName() %>"
+		displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>"
+		displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>"
+		entries="<%= assetEntries %>"
+	>
 
 		<%
 		request.setAttribute("view.jsp-results", assetEntries);
@@ -39,7 +44,12 @@ for (AssetEntryResult assetEntryResult : assetEntryResults) {
 %>
 
 <c:if test="<%= assetEntryResults.isEmpty() %>">
-	<liferay-ddm:template-renderer className="<%= AssetEntry.class.getName() %>" displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>" entries="<%= new ArrayList<AssetEntry>() %>">
+	<liferay-ddm:template-renderer
+		className="<%= AssetEntry.class.getName() %>"
+		displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>"
+		displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>"
+		entries="<%= new ArrayList<AssetEntry>() %>"
+	>
 
 		<%
 		Map<Long, List<AssetPublisherAddItemHolder>> scopeAssetPublisherAddItemHolders = assetPublisherDisplayContext.getScopeAssetPublisherAddItemHolders(1);

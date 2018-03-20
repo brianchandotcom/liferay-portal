@@ -136,7 +136,13 @@ else {
 			<liferay-ui:search-container-column-text
 				align="right"
 			>
-				<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+				<liferay-ui:icon-menu
+					direction="left-side"
+					icon="<%= StringPool.BLANK %>"
+					markupView="lexicon"
+					message="<%= StringPool.BLANK %>"
+					showWhenSingleIcon="<%= true %>"
+				>
 					<portlet:renderURL var="deleteScheduledPublicationRedirectURL">
 						<portlet:param name="mvcPath" value="/view.jsp" />
 						<portlet:param name="tabs1" value="scheduled" />
@@ -157,6 +163,8 @@ else {
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </div>

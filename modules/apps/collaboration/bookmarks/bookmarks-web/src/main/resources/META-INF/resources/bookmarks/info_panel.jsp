@@ -184,7 +184,9 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 				inTrash="<%= entry.isInTrash() %>"
 			/>
 
-			<liferay-expando:custom-attributes-available className="<%= BookmarksEntry.class.getName() %>">
+			<liferay-expando:custom-attributes-available
+				className="<%= BookmarksEntry.class.getName() %>"
+			>
 				<liferay-expando:custom-attribute-list
 					className="<%= BookmarksEntry.class.getName() %>"
 					classPK="<%= entry.getEntryId() %>"

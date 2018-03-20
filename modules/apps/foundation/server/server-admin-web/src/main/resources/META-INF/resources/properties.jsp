@@ -52,7 +52,11 @@ serverURL.setParameter("tabs2", tabs2);
 		</aui:nav>
 
 		<aui:nav-bar-search>
-			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
+			<liferay-ui:input-search
+				autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
+				markupView="lexicon"
+				placeholder='<%= LanguageUtil.get(request, "keywords") %>'
+			/>
 		</aui:nav-bar-search>
 	</aui:nav-bar>
 
@@ -166,6 +170,8 @@ serverURL.setParameter("tabs2", tabs2);
 			</c:if>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </div>

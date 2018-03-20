@@ -75,7 +75,10 @@ pageContext.setAttribute("portletURL", portletURL);
 
 		<li>
 			<aui:form action="<%= portletURLString %>" name="searchFm">
-				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
+				<liferay-ui:input-search
+					autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
+					markupView="lexicon"
+				/>
 			</aui:form>
 		</li>
 	</liferay-frontend:management-bar-filters>
@@ -95,7 +98,9 @@ pageContext.setAttribute("portletURL", portletURL);
 				<portlet:param name="type" value="<%= String.valueOf(type) %>" />
 			</liferay-portlet:renderURL>
 
-			<liferay-frontend:add-menu inline="<%= true %>">
+			<liferay-frontend:add-menu
+				inline="<%= true %>"
+			>
 
 				<%
 				String title = null;
@@ -111,13 +116,21 @@ pageContext.setAttribute("portletURL", portletURL);
 				}
 				%>
 
-				<liferay-frontend:add-menu-item title="<%= LanguageUtil.get(request, title) %>" url="<%= addRoleURL.toString() %>" />
+				<liferay-frontend:add-menu-item
+					title="<%= LanguageUtil.get(request, title) %>"
+					url="<%= addRoleURL.toString() %>"
+				/>
 			</liferay-frontend:add-menu>
 		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteRoles" label="delete" />
+		<liferay-frontend:management-bar-button
+			href="javascript:;"
+			icon="trash"
+			id="deleteRoles"
+			label="delete"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -178,7 +191,10 @@ pageContext.setAttribute("portletURL", portletURL);
 			<%@ include file="/search_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+		<liferay-ui:search-iterator
+			displayStyle="<%= displayStyle %>"
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </aui:form>
 

@@ -85,7 +85,9 @@ if (tabs2.equals("organizations")) {
 
 		<li>
 			<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-				<liferay-ui:input-search markupView="lexicon" />
+				<liferay-ui:input-search
+					markupView="lexicon"
+				/>
 			</aui:form>
 		</li>
 	</liferay-frontend:management-bar-filters>
@@ -129,7 +131,10 @@ if (tabs2.equals("organizations")) {
 			</c:when>
 		</c:choose>
 
-		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+		<liferay-ui:search-iterator
+			displayStyle="<%= displayStyle %>"
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </aui:form>
 

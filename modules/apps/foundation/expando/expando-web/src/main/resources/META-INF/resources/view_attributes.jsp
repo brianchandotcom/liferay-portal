@@ -71,8 +71,13 @@ ExpandoDisplayContext expandoDisplayContext = new ExpandoDisplayContext(request)
 				<portlet:param name="modelResource" value="<%= modelResource %>" />
 			</portlet:renderURL>
 
-			<liferay-frontend:add-menu inline="<%= true %>">
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-custom-field") %>' url="<%= addExpandoURL.toString() %>" />
+			<liferay-frontend:add-menu
+				inline="<%= true %>"
+			>
+				<liferay-frontend:add-menu-item
+					title='<%= LanguageUtil.get(request, "add-custom-field") %>'
+					url="<%= addExpandoURL.toString() %>"
+				/>
 			</liferay-frontend:add-menu>
 		</c:if>
 	</liferay-frontend:management-bar-buttons>
@@ -131,7 +136,10 @@ ExpandoDisplayContext expandoDisplayContext = new ExpandoDisplayContext(request)
 			<%@ include file="/attribute_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+			paginate="<%= false %>"
+		/>
 	</liferay-ui:search-container>
 </aui:form>
 

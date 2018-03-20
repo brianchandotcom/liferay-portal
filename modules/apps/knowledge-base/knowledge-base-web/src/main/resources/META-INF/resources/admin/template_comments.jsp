@@ -46,8 +46,19 @@ boolean helpful = BeanParamUtil.getBoolean(kbComment, request, "helpful", true);
 
 			<aui:fieldset>
 				<c:if test="<%= themeDisplay.isSignedIn() %>">
-					<liferay-ui:panel-container extended="<%= false %>" id='<%= renderResponse.getNamespace() + "Template" + kbTemplate.getKbTemplateId() + "CommentsPanelContainer" %>' persistState="<%= true %>">
-						<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= true %>" id='<%= renderResponse.getNamespace() + "Template" + kbTemplate.getKbTemplateId() + "CommentsPanel" %>' persistState="<%= true %>" title="comments">
+					<liferay-ui:panel-container
+						extended="<%= false %>"
+						id='<%= renderResponse.getNamespace() + "Template" + kbTemplate.getKbTemplateId() + "CommentsPanelContainer" %>'
+						persistState="<%= true %>"
+					>
+						<liferay-ui:panel
+							collapsible="<%= true %>"
+							defaultState="closed"
+							extended="<%= true %>"
+							id='<%= renderResponse.getNamespace() + "Template" + kbTemplate.getKbTemplateId() + "CommentsPanel" %>'
+							persistState="<%= true %>"
+							title="comments"
+						>
 							<c:if test="<%= kbComment != null %>">
 
 								<%
@@ -111,7 +122,9 @@ boolean helpful = BeanParamUtil.getBoolean(kbComment, request, "helpful", true);
 
 					<c:if test="<%= total > searchContainer.getDelta() %>">
 						<div class="taglib-search-iterator-page-iterator-bottom">
-							<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />
+							<liferay-ui:search-paginator
+								searchContainer="<%= searchContainer %>"
+							/>
 						</div>
 					</c:if>
 				</liferay-ui:search-container>

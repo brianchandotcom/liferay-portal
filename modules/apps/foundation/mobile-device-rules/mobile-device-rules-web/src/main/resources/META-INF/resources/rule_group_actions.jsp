@@ -86,6 +86,8 @@ MDRRuleGroup ruleGroup = (MDRRuleGroup)row.getObject();
 			<portlet:param name="ruleGroupId" value="<%= String.valueOf(ruleGroup.getRuleGroupId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete url="<%= deleteURL %>" />
+		<liferay-ui:icon-delete
+			url="<%= deleteURL %>"
+		/>
 	</c:if>
 </liferay-ui:icon-menu>

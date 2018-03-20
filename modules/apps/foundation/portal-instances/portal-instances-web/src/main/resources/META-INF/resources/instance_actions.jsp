@@ -35,7 +35,10 @@ Company companyObject = (Company)row.getObject();
 		<portlet:param name="companyId" value="<%= String.valueOf(companyObject.getCompanyId()) %>" />
 	</portlet:renderURL>
 
-	<liferay-ui:icon message="edit" url="<%= editURL %>" />
+	<liferay-ui:icon
+		message="edit"
+		url="<%= editURL %>"
+	/>
 
 	<c:if test="<%= companyObject.getCompanyId() != PortalInstancesLocalServiceUtil.getDefaultCompanyId() %>">
 		<portlet:actionURL name="/portal_instances/edit_instance" var="deleteURL">
@@ -44,6 +47,8 @@ Company companyObject = (Company)row.getObject();
 			<portlet:param name="companyId" value="<%= String.valueOf(companyObject.getCompanyId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete url="<%= deleteURL %>" />
+		<liferay-ui:icon-delete
+			url="<%= deleteURL %>"
+		/>
 	</c:if>
 </liferay-ui:icon-menu>

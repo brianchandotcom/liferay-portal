@@ -17,5 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <li class="control-menu-nav-item" data-qa-id="headerOptions">
-	<liferay-portlet:icon-options direction="right" markupView="lexicon" />
+	<liferay-portlet:icon-options
+		direction="right"
+		markupView="lexicon"
+	/>
 </li>

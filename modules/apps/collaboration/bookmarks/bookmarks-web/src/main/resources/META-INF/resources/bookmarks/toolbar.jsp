@@ -78,7 +78,9 @@ portletURL.setParameter("tag", StringPool.BLANK);
 				</liferay-portlet:renderURL>
 
 				<aui:form action="<%= searchURL.toString() %>" name="searchFm">
-					<liferay-ui:input-search markupView="lexicon" />
+					<liferay-ui:input-search
+						markupView="lexicon"
+					/>
 				</aui:form>
 			</li>
 		</c:if>
@@ -91,7 +93,11 @@ portletURL.setParameter("tag", StringPool.BLANK);
 		/>
 
 		<c:if test="<%= !user.isDefaultUser() %>">
-			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteEntries();" %>' icon='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "trash" : "times" %>' label='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>' />
+			<liferay-frontend:management-bar-button
+				href='<%= "javascript:" + renderResponse.getNamespace() + "deleteEntries();" %>'
+				icon='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "trash" : "times" %>'
+				label='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>'
+			/>
 		</c:if>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>

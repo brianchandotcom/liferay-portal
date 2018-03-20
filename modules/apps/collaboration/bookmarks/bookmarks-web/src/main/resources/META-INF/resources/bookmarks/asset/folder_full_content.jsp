@@ -51,7 +51,10 @@ BookmarksFolder folder = (BookmarksFolder)request.getAttribute(BookmarksWebKeys.
 				%>
 
 				<div class="lfr-asset-icon">
-					<liferay-ui:icon icon="<%= bookmarksFolderAssetRendererFactory.getIconCssClass() %>" markupView="lexicon" />
+					<liferay-ui:icon
+						icon="<%= bookmarksFolderAssetRendererFactory.getIconCssClass() %>"
+						markupView="lexicon"
+					/>
 
 					<%= foldersCount %> <liferay-ui:message key='<%= (foldersCount == 1) ? "subfolder" : "subfolders" %>' />
 				</div>
@@ -61,13 +64,18 @@ BookmarksFolder folder = (BookmarksFolder)request.getAttribute(BookmarksWebKeys.
 				%>
 
 				<div class="last lfr-asset-icon">
-					<liferay-ui:icon icon="<%= bookmarksEntryAssetRendererFactory.getIconCssClass() %>" markupView="lexicon" />
+					<liferay-ui:icon
+						icon="<%= bookmarksEntryAssetRendererFactory.getIconCssClass() %>"
+						markupView="lexicon"
+					/>
 
 					<%= entriesCount %> <liferay-ui:message key='<%= (entriesCount == 1) ? "bookmark" : "bookmarks" %>' />
 				</div>
 			</div>
 
-			<liferay-expando:custom-attributes-available className="<%= BookmarksFolder.class.getName() %>">
+			<liferay-expando:custom-attributes-available
+				className="<%= BookmarksFolder.class.getName() %>"
+			>
 				<liferay-expando:custom-attribute-list
 					className="<%= BookmarksFolder.class.getName() %>"
 					classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"

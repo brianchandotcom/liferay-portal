@@ -75,7 +75,9 @@ if (layoutRevision.getLayoutRevisionId() == layoutRevisionId) {
 					/>
 				</c:when>
 				<c:when test="<%= layoutRevision.getStatus() != WorkflowConstants.STATUS_INCOMPLETE %>">
-					<liferay-ui:icon-delete url="<%= deleteURL %>" />
+					<liferay-ui:icon-delete
+						url="<%= deleteURL %>"
+					/>
 				</c:when>
 			</c:choose>
 		</c:if>

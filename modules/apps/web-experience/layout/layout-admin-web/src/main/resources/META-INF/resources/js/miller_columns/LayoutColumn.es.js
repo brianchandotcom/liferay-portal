@@ -31,7 +31,7 @@ class LayoutColumn extends Component {
 
 		if (this.siteNavigationMenuNames !== '') {
 			config.checkboxFieldLabel = _.sub(Liferay.Language.get('add-this-page-to-the-following-menus-x'), this.siteNavigationMenuNames);
-			config.checkboxFieldName = 'TypeSettingsProperties--addToPrimaryMenu--';
+			config.checkboxFieldName = 'TypeSettingsProperties--addToAutoMenus--';
 			config.checkboxFieldValue = true;
 		}
 

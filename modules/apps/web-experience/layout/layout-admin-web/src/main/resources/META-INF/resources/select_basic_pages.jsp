@@ -93,7 +93,7 @@ String autoSiteNavigationMenuNames = layoutsAdminDisplayContext.getAutoSiteNavig
 				{
 					<c:if test="<%= Validator.isNotNull(autoSiteNavigationMenuNames) %>">
 						checkboxFieldLabel: '<liferay-ui:message arguments="<%= autoSiteNavigationMenuNames %>" key="add-this-page-to-the-following-menus-x" />',
-						checkboxFieldName: 'TypeSettingsProperties--addToPrimaryMenu--',
+						checkboxFieldName: 'TypeSettingsProperties--addToAutoMenus--',
 						checkboxFieldValue: true,
 					</c:if>
 

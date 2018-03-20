@@ -15,7 +15,7 @@
 	{@param pathThemeImages: string}
 	{@param portletNamespace: string}
 
-	<ul class="border col-11 col-md-6 col-lg-4 layout-column mb-0 p-0 show-quick-actions-on-hover" ref="layoutItemsWrapper">
+	<ul class="border col-11 col-lg-4 col-md-6 layout-column mb-0 p-0 show-quick-actions-on-hover" ref="layoutItemsWrapper">
 		{foreach $layoutColumnItem in $layoutColumn}
 			{call .layoutColumnItem}
 				{param layoutColumnItem: $layoutColumnItem /}
@@ -65,11 +65,11 @@
 
 	<li class="{$listGroupItemClasses}">
 		<div class="autofit-col flex-col">
-			<div class="custom-control custom-checkbox">
+			<div class="custom-checkbox custom-control">
 				<label>
 					<input class="custom-control-input" name="{$portletNamespace}rowIds" type="checkbox" value="{$layoutColumnItem.plid}"/>
 
-					<span class="custom-control-label custom-control-indicator"></span>
+					<span class="custom-control-indicator custom-control-label"></span>
 				</label>
 			</div>
 		</div>

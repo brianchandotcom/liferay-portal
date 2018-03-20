@@ -11,7 +11,7 @@
 	]>}
 	{@param? _handleFragmentRemoveButtonClick: any}
 
-	<div>
+	<div class="sidebar-added-fragments">
 		{if $fragmentEntryLinks}
 			{foreach $fragmentEntryLink in $fragmentEntryLinks}
 				<div class="card" key="{$fragmentEntryLink.fragmentEntryLinkId}">
@@ -29,7 +29,7 @@
 									data-fragment-entry-link-id="{$fragmentEntryLink.fragmentEntryLinkId}"
 									data-onclick="{$_handleFragmentRemoveButtonClick}"
 								>
-									<svg class="lexicon-icon collapse-icon-open">
+									<svg class="lexicon-icon">
 										<use xlink:href="{$spritemap}#times"></use>
 									</svg>
 								</button>

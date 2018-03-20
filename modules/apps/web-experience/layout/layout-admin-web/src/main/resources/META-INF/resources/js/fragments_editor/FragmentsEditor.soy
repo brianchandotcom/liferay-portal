@@ -52,7 +52,7 @@
 				<ul class="navbar-nav">
 					<li class="nav-item">
 						<button class="btn btn-secondary nav-btn" data-onclick="{$_handleToggleContextualSidebarButtonClick}">
-							<svg class="lexicon-icon icon-monospaced">
+							<svg class="icon-monospaced lexicon-icon">
 								<use xlink:href="{$spritemap}#cards"></use>
 							</svg>
 						</button>
@@ -62,7 +62,7 @@
 		</div>
 
 		<div class="container-fluid-1280 contextual-sidebar-content">
-			<div>
+			<div class="fragments-editor__fragment-entry-links">
 				{if $fragmentEntryLinks and (length($fragmentEntryLinks) > 0)}
 					{foreach $fragmentEntryLink in $fragmentEntryLinks}
 						<div data-position="{index($fragmentEntryLink)}" key="{$fragmentEntryLink.fragmentEntryLinkId}">

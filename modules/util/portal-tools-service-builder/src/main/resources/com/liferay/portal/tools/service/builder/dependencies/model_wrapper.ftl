@@ -10,6 +10,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.sql.Blob;
 
 import java.util.Date;

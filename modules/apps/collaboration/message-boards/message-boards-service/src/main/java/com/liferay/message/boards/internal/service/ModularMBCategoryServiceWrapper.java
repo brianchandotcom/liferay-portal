@@ -206,8 +206,13 @@ public class ModularMBCategoryServiceWrapper extends MBCategoryServiceWrapper {
 	public List<Object> getCategoriesAndThreads(
 		long groupId, long categoryId, QueryDefinition<?> queryDefinition) {
 
-		return _mbCategoryService.getCategoriesAndThreads(
-			groupId, categoryId, queryDefinition);
+		try {
+			return _mbCategoryService.getCategoriesAndThreads(
+				groupId, categoryId, queryDefinition);
+		}
+		catch (PortalException pe) {
+			throw new RuntimeException(pe);
+		}
 	}
 
 	@Override
@@ -228,8 +233,13 @@ public class ModularMBCategoryServiceWrapper extends MBCategoryServiceWrapper {
 	public int getCategoriesAndThreadsCount(
 		long groupId, long categoryId, QueryDefinition<?> queryDefinition) {
 
-		return _mbCategoryService.getCategoriesAndThreadsCount(
-			groupId, categoryId, queryDefinition);
+		try {
+			return _mbCategoryService.getCategoriesAndThreadsCount(
+				groupId, categoryId, queryDefinition);
+		}
+		catch (PortalException pe) {
+			throw new RuntimeException(pe);
+		}
 	}
 
 	@Override

@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.message.boards.model.MBThread;
 
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -115,7 +116,15 @@ public interface MBThreadService extends BaseService {
 		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBThread> getThreads(long groupId, long categoryId,
+		QueryDefinition<MBThread> queryDefinition) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getThreadsCount(long groupId, long categoryId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getThreadsCount(long groupId, long categoryId,
+		QueryDefinition<MBThread> queryDefinition) throws PortalException;
 
 	public Lock lockThread(long threadId) throws PortalException;
 

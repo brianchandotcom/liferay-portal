@@ -1,6 +1,18 @@
 <?xml version="1.0"?>
 
 <custom-sql>
+	<sql id="com.liferay.message.boards.service.persistence.MBCategoryFinder.countByG_P">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT MBCategory.categoryId) AS COUNT_VALUE
+			FROM
+				MBCategory
+			WHERE
+				(MBCategory.groupId = ?) AND
+				(MBCategory.parentCategoryId = ?) AND
+				([$STATUS$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$OWNER_USER_ID$])
+		]]>
+	</sql>
 	<sql id="com.liferay.message.boards.service.persistence.MBCategoryFinder.countC_ByG_P">
 		<![CDATA[
 			SELECT
@@ -39,6 +51,18 @@
 			WHERE
 				(MBThread.groupId = ?) AND
 				(MBThread.categoryId = ?) AND
+				([$STATUS$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$OWNER_USER_ID$])
+		]]>
+	</sql>
+	<sql id="com.liferay.message.boards.service.persistence.MBCategoryFinder.findByG_P">
+		<![CDATA[
+			SELECT
+				DISTINCT {MBCategory.*}
+			FROM
+				MBCategory
+			WHERE
+				(MBCategory.groupId = ?) AND
+				(MBCategory.parentCategoryId = ?) AND
 				([$STATUS$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$OWNER_USER_ID$])
 		]]>
 	</sql>
@@ -235,7 +259,8 @@
 				MBThread
 			WHERE
 				(MBThread.groupId = ?) AND
-				(MBThread.categoryId = ?)
+				(MBThread.categoryId = ?) AND
+				([$STATUS$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$OWNER_USER_ID$])
 		]]>
 	</sql>
 	<sql id="com.liferay.message.boards.service.persistence.MBThreadFinder.countByG_U_C">
@@ -375,7 +400,8 @@
 				MBThread
 			WHERE
 				(MBThread.groupId = ?) AND
-				(MBThread.categoryId = ?)
+				(MBThread.categoryId = ?) AND
+				([$STATUS$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$OWNER_USER_ID$])
 			ORDER BY
 				MBThread.priority DESC,
 				MBThread.lastPostDate DESC

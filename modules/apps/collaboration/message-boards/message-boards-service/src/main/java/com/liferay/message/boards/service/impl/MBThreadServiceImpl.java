@@ -306,6 +306,22 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 	}
 
 	@Override
+	public List<MBThread> getThreads(
+			long groupId, long categoryId,
+			QueryDefinition<MBThread> queryDefinition)
+		throws PortalException {
+
+		if (queryDefinition.isIncludeOwner() &&
+			(queryDefinition.getOwnerUserId() != 0)) {
+
+			queryDefinition.setOwnerUserId(getUserId());
+		}
+
+		return mbThreadFinder.filterFindByG_C(
+			groupId, categoryId, queryDefinition);
+	}
+
+	@Override
 	public int getThreadsCount(long groupId, long categoryId, int status) {
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return mbThreadFinder.filterCountByG_C(groupId, categoryId);
@@ -317,6 +333,22 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			return mbThreadFinder.filterCountByG_C(
 				groupId, categoryId, queryDefinition);
 		}
+	}
+
+	@Override
+	public int getThreadsCount(
+			long groupId, long categoryId,
+			QueryDefinition<MBThread> queryDefinition)
+		throws PortalException {
+
+		if (queryDefinition.isIncludeOwner() &&
+			(queryDefinition.getOwnerUserId() != 0)) {
+
+			queryDefinition.setOwnerUserId(getUserId());
+		}
+
+		return mbThreadFinder.filterCountByG_C(
+			groupId, categoryId, queryDefinition);
 	}
 
 	@Override

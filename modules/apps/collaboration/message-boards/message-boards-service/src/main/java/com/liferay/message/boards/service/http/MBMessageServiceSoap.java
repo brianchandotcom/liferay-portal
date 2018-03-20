@@ -277,6 +277,21 @@ public class MBMessageServiceSoap {
 		}
 	}
 
+	public static com.liferay.message.boards.model.MBMessageDisplay getMessageDisplay(
+		long messageId, int status) throws RemoteException {
+		try {
+			com.liferay.message.boards.model.MBMessageDisplay returnValue = MBMessageServiceUtil.getMessageDisplay(messageId,
+					status);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static java.lang.String[] getTempAttachmentNames(long groupId,
 		java.lang.String folderName) throws RemoteException {
 		try {

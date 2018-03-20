@@ -401,7 +401,12 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_C);
+			QueryDefinition queryDefinition = new QueryDefinition(
+				WorkflowConstants.STATUS_ANY);
+
+			String sql = CustomSQLUtil.get(
+				getClass(), COUNT_BY_G_C, queryDefinition,
+				MBThreadImpl.TABLE_NAME);
 
 			sql = InlineSQLHelperUtil.replacePermissionCheck(
 				sql, MBMessage.class.getName(), "MBThread.rootMessageId",
@@ -415,6 +420,7 @@ public class MBThreadFinderImpl
 
 			qPos.add(groupId);
 			qPos.add(categoryId);
+			qPos.add(WorkflowConstants.STATUS_ANY);
 
 			Iterator<Long> itr = q.iterate();
 
@@ -466,7 +472,12 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_C);
+			QueryDefinition queryDefinition = new QueryDefinition(
+				WorkflowConstants.STATUS_ANY);
+
+			String sql = CustomSQLUtil.get(
+				getClass(), FIND_BY_G_C, queryDefinition,
+				MBThreadImpl.TABLE_NAME);
 
 			sql = InlineSQLHelperUtil.replacePermissionCheck(
 				sql, MBMessage.class.getName(), "MBThread.rootMessageId",
@@ -480,6 +491,7 @@ public class MBThreadFinderImpl
 
 			qPos.add(groupId);
 			qPos.add(categoryId);
+			qPos.add(WorkflowConstants.STATUS_ANY);
 
 			return (List<MBThread>)QueryUtil.list(q, getDialect(), start, end);
 		}
@@ -848,9 +860,9 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_C);
-
-			sql = updateSQL(sql, queryDefinition);
+			String sql = CustomSQLUtil.get(
+				getClass(), COUNT_BY_G_C, queryDefinition,
+				MBThreadImpl.TABLE_NAME);
 
 			sql = InlineSQLHelperUtil.replacePermissionCheck(
 				sql, MBMessage.class.getName(), "MBThread.rootMessageId",
@@ -864,9 +876,14 @@ public class MBThreadFinderImpl
 
 			qPos.add(groupId);
 			qPos.add(categoryId);
+			qPos.add(queryDefinition.getStatus());
 
-			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
-				qPos.add(queryDefinition.getStatus());
+			if (queryDefinition.getOwnerUserId() > 0) {
+				qPos.add(queryDefinition.getOwnerUserId());
+
+				if (queryDefinition.isIncludeOwner()) {
+					qPos.add(WorkflowConstants.STATUS_IN_TRASH);
+				}
 			}
 
 			Iterator<Long> itr = q.iterate();
@@ -1031,9 +1048,9 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_C);
-
-			sql = updateSQL(sql, queryDefinition);
+			String sql = CustomSQLUtil.get(
+				getClass(), FIND_BY_G_C, queryDefinition,
+				MBThreadImpl.TABLE_NAME);
 
 			sql = InlineSQLHelperUtil.replacePermissionCheck(
 				sql, MBMessage.class.getName(), "MBThread.rootMessageId",
@@ -1047,9 +1064,14 @@ public class MBThreadFinderImpl
 
 			qPos.add(groupId);
 			qPos.add(categoryId);
+			qPos.add(queryDefinition.getStatus());
 
-			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
-				qPos.add(queryDefinition.getStatus());
+			if (queryDefinition.getOwnerUserId() > 0) {
+				qPos.add(queryDefinition.getOwnerUserId());
+
+				if (queryDefinition.isIncludeOwner()) {
+					qPos.add(WorkflowConstants.STATUS_IN_TRASH);
+				}
 			}
 
 			return (List<MBThread>)QueryUtil.list(

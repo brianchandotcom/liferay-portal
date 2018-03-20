@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.web.internal.display.context;
 
+import com.liferay.message.boards.display.context.MBAdminListDisplayContext;
 import com.liferay.message.boards.display.context.MBDisplayContextFactory;
 import com.liferay.message.boards.display.context.MBHomeDisplayContext;
 import com.liferay.message.boards.display.context.MBListDisplayContext;
@@ -37,6 +38,24 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(service = MBDisplayContextProvider.class)
 public class MBDisplayContextProvider {
+
+	public MBAdminListDisplayContext getMbAdminListDisplayContext(
+		HttpServletRequest request, HttpServletResponse response,
+		long categoryId) {
+
+		MBAdminListDisplayContext mbAdminListDisplayContext =
+			new DefaultMBAdminListDisplayContext(request, response, categoryId);
+
+		for (MBDisplayContextFactory mbDisplayContextFactory :
+				_mbDisplayContextFactories) {
+
+			mbAdminListDisplayContext =
+				mbDisplayContextFactory.getMBAdminListDisplayContext(
+					mbAdminListDisplayContext, request, response, categoryId);
+		}
+
+		return mbAdminListDisplayContext;
+	}
 
 	public MBHomeDisplayContext getMBHomeDisplayContext(
 		HttpServletRequest request, HttpServletResponse response) {

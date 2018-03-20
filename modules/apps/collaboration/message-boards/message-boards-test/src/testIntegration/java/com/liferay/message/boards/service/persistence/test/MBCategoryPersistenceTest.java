@@ -315,6 +315,21 @@ public class MBCategoryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_P_NotS() throws Exception {
+		_persistence.countByG_P_NotS(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+		_persistence.countByG_P_NotS(0L, 0L, 0);
+	}
+
+	@Test
+	public void testCountByG_P_NotSArrayable() throws Exception {
+		_persistence.countByG_P_NotS(RandomTestUtil.nextLong(),
+			new long[] { RandomTestUtil.nextLong(), 0L },
+			RandomTestUtil.nextInt());
+	}
+
+	@Test
 	public void testCountByNotC_G_P_S() throws Exception {
 		_persistence.countByNotC_G_P_S(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),

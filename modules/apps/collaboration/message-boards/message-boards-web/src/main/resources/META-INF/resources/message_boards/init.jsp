@@ -58,6 +58,7 @@ page import="com.liferay.message.boards.constants.MBCategoryConstants" %><%@
 page import="com.liferay.message.boards.constants.MBConstants" %><%@
 page import="com.liferay.message.boards.constants.MBMessageConstants" %><%@
 page import="com.liferay.message.boards.constants.MBPortletKeys" %><%@
+page import="com.liferay.message.boards.display.context.MBAdminListDisplayContext" %><%@
 page import="com.liferay.message.boards.display.context.MBHomeDisplayContext" %><%@
 page import="com.liferay.message.boards.display.context.MBListDisplayContext" %><%@
 page import="com.liferay.message.boards.exception.BannedUserException" %><%@

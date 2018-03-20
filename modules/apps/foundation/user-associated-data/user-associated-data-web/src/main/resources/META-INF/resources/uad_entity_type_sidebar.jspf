@@ -33,8 +33,6 @@
 			<dd class="sidebar-dd"><%= uadEntityDisplay.getUADEntityTypeDescription() %></dd>
 			<dt class="sidebar-dt">Count</dt>
 			<dd class="sidebar-dd"><%= uadEntitySearchContainer.getTotal() %></dd>
-			<dt class="sidebar-dt">Sensitive Fields</dt>
-			<dd class="sidebar-dd"><%= uadEntityDisplay.getUADEntityTypeNonanonymizableFieldNames() %></dd>
 		</dl>
 	</div>
 </div>

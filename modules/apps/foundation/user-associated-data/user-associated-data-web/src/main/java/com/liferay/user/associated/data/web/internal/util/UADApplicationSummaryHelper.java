@@ -21,14 +21,13 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
+import com.liferay.user.associated.data.display.UADEntityDisplay;
 import com.liferay.user.associated.data.web.internal.display.UADApplicationSummaryDisplay;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
@@ -65,8 +64,12 @@ public class UADApplicationSummaryHelper {
 		SearchContainer<UADApplicationSummaryDisplay> searchContainer =
 			new SearchContainer<>(portletRequest, currentURL, null, null);
 
+		Stream<UADApplicationSummaryDisplay>
+			uadApplicationSummaryDisplayStream =
+				getUADApplicationSummaryDisplayStream(userId);
+
 		List<UADApplicationSummaryDisplay> uadApplicationSummaryDisplays =
-			getUADApplicationSummaryDisplays(userId);
+			uadApplicationSummaryDisplayStream.collect(Collectors.toList());
 
 		searchContainer.setResults(uadApplicationSummaryDisplays);
 
@@ -75,120 +78,77 @@ public class UADApplicationSummaryHelper {
 		return searchContainer;
 	}
 
-	public List<String> getApplicationNames() {
-		List<String> applicationNames = new ArrayList<>();
-
-		for (UADEntityAggregator uadEntityAggregator :
-				_uadRegistry.getUADEntityAggregators()) {
-
-			String applicationName = uadEntityAggregator.getUADEntitySetName();
-
-			if (!applicationNames.contains(applicationName)) {
-				applicationNames.add(applicationName);
-			}
-		}
-
-		Collections.sort(applicationNames);
-
-		return applicationNames;
-	}
-
-	public List<UADEntityAggregator> getApplicationUADEntityAggregators(
-		String applicationName) {
-
-		List<UADEntityAggregator> uadEntityAggregators = new ArrayList<>();
-
-		for (UADEntityAggregator uadEntityAggregator :
-				_uadRegistry.getUADEntityAggregators()) {
-
-			if (applicationName.equals(
-					uadEntityAggregator.getUADEntitySetName())) {
-
-				uadEntityAggregators.add(uadEntityAggregator);
-			}
-		}
-
-		return uadEntityAggregators;
-	}
-
 	public List<UADEntityAnonymizer> getApplicationUADEntityAnonymizers(
 		String applicationName) {
 
-		List<UADEntityAnonymizer> uadEntityAnonymizers = new ArrayList<>();
+		Stream<UADEntityDisplay> uadEntityDisplayStream =
+			getApplicationUADEntityDisplayStream(applicationName);
 
-		for (String uadRegistryKey : getUADRegistryKeys(applicationName)) {
-			uadEntityAnonymizers.add(
-				_uadRegistry.getUADEntityAnonymizer(uadRegistryKey));
-		}
+		return uadEntityDisplayStream.map(
+			UADEntityDisplay::getKey
+		).map(
+			key -> _uadRegistry.getUADEntityAnonymizer(key)
+		).collect(
+			Collectors.toList()
+		);
+	}
 
-		return uadEntityAnonymizers;
+	public Stream<UADEntityDisplay> getApplicationUADEntityDisplayStream(
+		String applicationName) {
+
+		Stream<UADEntityDisplay> uadEntityDisplayStream =
+			_uadRegistry.getUADEntityDisplayStream();
+
+		return uadEntityDisplayStream.filter(
+			uadEntityDisplay -> applicationName.equals(
+				uadEntityDisplay.getApplicationName()));
 	}
 
 	public String getDefaultUADRegistryKey(String applicationName) {
-		for (String uadRegistryKey :
-				_uadRegistry.getUADEntityAggregatorKeySet()) {
+		Stream<UADEntityDisplay> uadEntityDisplayStream =
+			getApplicationUADEntityDisplayStream(applicationName);
 
-			UADEntityAggregator uadEntityAggregator =
-				_uadRegistry.getUADEntityAggregator(uadRegistryKey);
+		return uadEntityDisplayStream.map(
+			UADEntityDisplay::getKey
+		).findFirst(
+		).get();
+	}
 
-			if (applicationName.equals(
-					uadEntityAggregator.getUADEntitySetName())) {
+	public int getReviewableUADEntitiesCount(
+		Stream<UADEntityDisplay> uadEntityDisplayStream, long userId) {
 
-				return uadRegistryKey;
-			}
-		}
-
-		return null;
+		return uadEntityDisplayStream.map(
+			uadEntityDisplay -> uadEntityDisplay.getKey()
+		).map(
+			key -> _uadRegistry.getUADEntityAggregator(key)
+		).mapToInt(
+			uadEntityAggregator -> uadEntityAggregator.count(userId)
+		).sum();
 	}
 
 	public UADApplicationSummaryDisplay getUADApplicationSummaryDisplay(
 		String applicationName, long userId) {
 
-		List<UADEntityAggregator> uadEntityAggregators =
-			getApplicationUADEntityAggregators(applicationName);
-
-		Stream<UADEntityAggregator> uadEntityAggregatorsStream =
-			uadEntityAggregators.stream();
-
-		int count = uadEntityAggregatorsStream.mapToInt(
-			uadEntityAggregator -> uadEntityAggregator.count(userId)
-		).sum();
-
 		return new UADApplicationSummaryDisplay(
-			count, applicationName, getDefaultUADRegistryKey(applicationName));
+			getReviewableUADEntitiesCount(
+				getApplicationUADEntityDisplayStream(applicationName), userId),
+			applicationName, getDefaultUADRegistryKey(applicationName));
 	}
 
-	public List<UADApplicationSummaryDisplay> getUADApplicationSummaryDisplays(
-		long userId) {
+	public Stream<UADApplicationSummaryDisplay>
+		getUADApplicationSummaryDisplayStream(long userId) {
 
-		List<UADApplicationSummaryDisplay> uadApplicationSummaryDisplays =
-			new ArrayList<>();
+		Stream<UADEntityDisplay> uadEntityDisplayStream =
+			_uadRegistry.getUADEntityDisplayStream();
 
-		for (String applicationName : getApplicationNames()) {
-			uadApplicationSummaryDisplays.add(
-				getUADApplicationSummaryDisplay(applicationName, userId));
-		}
-
-		return uadApplicationSummaryDisplays;
-	}
-
-	public List<String> getUADRegistryKeys(String applicationName) {
-		List<String> uadRegistryKeys = new ArrayList<>();
-
-		for (String uadRegistryKey :
-				_uadRegistry.getUADEntityAggregatorKeySet()) {
-
-			UADEntityAggregator uadEntityAggregator =
-				_uadRegistry.getUADEntityAggregator(uadRegistryKey);
-
-			if (applicationName.equals(
-					uadEntityAggregator.getUADEntitySetName())) {
-
-				uadRegistryKeys.add(uadRegistryKey);
-			}
-		}
-
-		return uadRegistryKeys;
+		return uadEntityDisplayStream.map(
+			UADEntityDisplay::getApplicationName
+		).distinct(
+		).sorted(
+		).map(
+			applicationName ->
+				getUADApplicationSummaryDisplay(applicationName, userId)
+		);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

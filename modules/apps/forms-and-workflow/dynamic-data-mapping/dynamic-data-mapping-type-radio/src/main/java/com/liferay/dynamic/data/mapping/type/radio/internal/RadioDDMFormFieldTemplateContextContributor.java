@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.HashMap;
 import java.util.List;
@@ -68,11 +67,7 @@ public class RadioDDMFormFieldTemplateContextContributor
 			parameters.put("predefinedValue", predefinedValue);
 		}
 
-		parameters.put(
-			"value",
-			getValue(
-				GetterUtil.getString(
-					ddmFormFieldRenderingContext.getValue(), "[]")));
+		parameters.put("value", ddmFormFieldRenderingContext.getValue());
 
 		return parameters;
 	}
@@ -129,27 +124,23 @@ public class RadioDDMFormFieldTemplateContextContributor
 			return null;
 		}
 
-		String predefinedValueString = predefinedValue.getString(
-			ddmFormFieldRenderingContext.getLocale());
-
-		return getValue(GetterUtil.getString(predefinedValueString, "[]"));
-	}
-
-	protected String getValue(String valueString) {
-		JSONArray jsonArray;
+		String predefinedValueString = GetterUtil.getString(
+			predefinedValue.getString(ddmFormFieldRenderingContext.getLocale()),
+			"[]");
 
 		try {
-			jsonArray = jsonFactory.createJSONArray(valueString);
+			JSONArray jsonArray = jsonFactory.createJSONArray(
+				predefinedValueString);
+
+			return GetterUtil.getString(jsonArray.get(0));
 		}
 		catch (JSONException jsone) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(jsone, jsone);
 			}
 
-			return valueString;
+			return predefinedValueString;
 		}
-
-		return GetterUtil.get(jsonArray.get(0), StringPool.BLANK);
 	}
 
 	@Reference

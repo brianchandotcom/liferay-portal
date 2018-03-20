@@ -54,4 +54,9 @@ public interface OAuth2AccessToken extends OAuth2AccessTokenModel, PersistedMode
 				return OAuth2AccessToken.class;
 			}
 		};
+
+	public java.util.List<java.lang.String> getScopeAliasesList();
+
+	public void setScopeAliasesList(
+		java.util.List<java.lang.String> scopeAliasesList);
 }

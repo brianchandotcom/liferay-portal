@@ -64,6 +64,11 @@ public class OAuth2AccessTokenLocalServiceUtil {
 		return getService().createOAuth2AccessToken(oAuth2AccessTokenId);
 	}
 
+	public static com.liferay.oauth2.provider.model.OAuth2AccessToken createOAuth2AccessToken(
+		java.lang.String tokenContent) {
+		return getService().createOAuth2AccessToken(tokenContent);
+	}
+
 	/**
 	* Deletes the o auth2 access token with the primary key from the database. Also notifies the appropriate model listeners.
 	*
@@ -180,6 +185,11 @@ public class OAuth2AccessTokenLocalServiceUtil {
 		return getService().fetchOAuth2AccessToken(oAuth2AccessTokenId);
 	}
 
+	public static com.liferay.oauth2.provider.model.OAuth2AccessToken fetchOAuth2AccessToken(
+		java.lang.String tokenContent) {
+		return getService().fetchOAuth2AccessToken(tokenContent);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -201,6 +211,12 @@ public class OAuth2AccessTokenLocalServiceUtil {
 		return getService().getOAuth2AccessToken(oAuth2AccessTokenId);
 	}
 
+	public static com.liferay.oauth2.provider.model.OAuth2AccessToken getOAuth2AccessToken(
+		java.lang.String tokenContent)
+		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2AccessTokenException {
+		return getService().getOAuth2AccessToken(tokenContent);
+	}
+
 	/**
 	* Returns a range of all the o auth2 access tokens.
 	*
@@ -215,6 +231,19 @@ public class OAuth2AccessTokenLocalServiceUtil {
 	public static java.util.List<com.liferay.oauth2.provider.model.OAuth2AccessToken> getOAuth2AccessTokens(
 		int start, int end) {
 		return getService().getOAuth2AccessTokens(start, end);
+	}
+
+	public static java.util.Collection<com.liferay.oauth2.provider.model.OAuth2AccessToken> getOAuth2AccessTokens(
+		long oAuth2RefreshTokenId) {
+		return getService().getOAuth2AccessTokens(oAuth2RefreshTokenId);
+	}
+
+	public static java.util.Collection<com.liferay.oauth2.provider.model.OAuth2AccessToken> getOAuth2AccessTokens(
+		long applicationId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.oauth2.provider.model.OAuth2AccessToken> orderByComparator) {
+		return getService()
+				   .getOAuth2AccessTokens(applicationId, start, end,
+			orderByComparator);
 	}
 
 	/**

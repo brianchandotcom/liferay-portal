@@ -58,6 +58,12 @@ public class OAuth2AccessTokenLocalServiceWrapper
 		return _oAuth2AccessTokenLocalService.createOAuth2AccessToken(oAuth2AccessTokenId);
 	}
 
+	@Override
+	public com.liferay.oauth2.provider.model.OAuth2AccessToken createOAuth2AccessToken(
+		java.lang.String tokenContent) {
+		return _oAuth2AccessTokenLocalService.createOAuth2AccessToken(tokenContent);
+	}
+
 	/**
 	* Deletes the o auth2 access token with the primary key from the database. Also notifies the appropriate model listeners.
 	*
@@ -187,6 +193,12 @@ public class OAuth2AccessTokenLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.oauth2.provider.model.OAuth2AccessToken fetchOAuth2AccessToken(
+		java.lang.String tokenContent) {
+		return _oAuth2AccessTokenLocalService.fetchOAuth2AccessToken(tokenContent);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _oAuth2AccessTokenLocalService.getActionableDynamicQuery();
 	}
@@ -210,6 +222,13 @@ public class OAuth2AccessTokenLocalServiceWrapper
 		return _oAuth2AccessTokenLocalService.getOAuth2AccessToken(oAuth2AccessTokenId);
 	}
 
+	@Override
+	public com.liferay.oauth2.provider.model.OAuth2AccessToken getOAuth2AccessToken(
+		java.lang.String tokenContent)
+		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2AccessTokenException {
+		return _oAuth2AccessTokenLocalService.getOAuth2AccessToken(tokenContent);
+	}
+
 	/**
 	* Returns a range of all the o auth2 access tokens.
 	*
@@ -225,6 +244,20 @@ public class OAuth2AccessTokenLocalServiceWrapper
 	public java.util.List<com.liferay.oauth2.provider.model.OAuth2AccessToken> getOAuth2AccessTokens(
 		int start, int end) {
 		return _oAuth2AccessTokenLocalService.getOAuth2AccessTokens(start, end);
+	}
+
+	@Override
+	public java.util.Collection<com.liferay.oauth2.provider.model.OAuth2AccessToken> getOAuth2AccessTokens(
+		long oAuth2RefreshTokenId) {
+		return _oAuth2AccessTokenLocalService.getOAuth2AccessTokens(oAuth2RefreshTokenId);
+	}
+
+	@Override
+	public java.util.Collection<com.liferay.oauth2.provider.model.OAuth2AccessToken> getOAuth2AccessTokens(
+		long applicationId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.oauth2.provider.model.OAuth2AccessToken> orderByComparator) {
+		return _oAuth2AccessTokenLocalService.getOAuth2AccessTokens(applicationId,
+			start, end, orderByComparator);
 	}
 
 	/**

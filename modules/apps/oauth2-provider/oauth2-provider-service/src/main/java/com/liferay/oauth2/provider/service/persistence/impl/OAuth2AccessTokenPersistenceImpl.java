@@ -1385,8 +1385,8 @@ public class OAuth2AccessTokenPersistenceImpl extends BasePersistenceImpl<OAuth2
 	}
 
 	private static final String _FINDER_COLUMN_TOKENCONTENT_TOKENCONTENT_1 = "oAuth2AccessToken.tokenContent IS NULL";
-	private static final String _FINDER_COLUMN_TOKENCONTENT_TOKENCONTENT_2 = "oAuth2AccessToken.tokenContent = ?";
-	private static final String _FINDER_COLUMN_TOKENCONTENT_TOKENCONTENT_3 = "(oAuth2AccessToken.tokenContent IS NULL OR oAuth2AccessToken.tokenContent = '')";
+	private static final String _FINDER_COLUMN_TOKENCONTENT_TOKENCONTENT_2 = "CAST_CLOB_TEXT(oAuth2AccessToken.tokenContent) = ?";
+	private static final String _FINDER_COLUMN_TOKENCONTENT_TOKENCONTENT_3 = "(oAuth2AccessToken.tokenContent IS NULL OR CAST_CLOB_TEXT(oAuth2AccessToken.tokenContent) = '')";
 
 	public OAuth2AccessTokenPersistenceImpl() {
 		setModelClass(OAuth2AccessToken.class);

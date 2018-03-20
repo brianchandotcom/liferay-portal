@@ -217,6 +217,19 @@ public class OAuth2ScopeGrantLocalServiceUtil {
 		return getService().getOAuth2ScopeGrants(start, end);
 	}
 
+	public static java.util.Collection<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> getOAuth2ScopeGrants(
+		long oAuth2AccessTokenId) {
+		return getService().getOAuth2ScopeGrants(oAuth2AccessTokenId);
+	}
+
+	public static java.util.Collection<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> getOAuth2ScopeGrants(
+		long companyId, java.lang.String applicationName,
+		java.lang.String bundleSymbolicName, java.lang.String tokenContent) {
+		return getService()
+				   .getOAuth2ScopeGrants(companyId, applicationName,
+			bundleSymbolicName, tokenContent);
+	}
+
 	/**
 	* Returns the number of o auth2 scope grants.
 	*
@@ -239,6 +252,14 @@ public class OAuth2ScopeGrantLocalServiceUtil {
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static java.util.Collection<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> grantScopesToToken(
+		java.lang.String oAuth2AccessTokenContent,
+		java.util.Collection<com.liferay.oauth2.provider.scope.liferay.LiferayOAuth2Scope> scopes)
+		throws com.liferay.oauth2.provider.exception.DuplicateOAuth2ScopeGrantException,
+			com.liferay.oauth2.provider.exception.NoSuchOAuth2AccessTokenException {
+		return getService().grantScopesToToken(oAuth2AccessTokenContent, scopes);
 	}
 
 	/**

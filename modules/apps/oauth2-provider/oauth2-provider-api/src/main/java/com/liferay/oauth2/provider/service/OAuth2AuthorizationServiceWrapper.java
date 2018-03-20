@@ -45,6 +45,29 @@ public class OAuth2AuthorizationServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.oauth2.provider.model.OAuth2Authorization> getUserOAuth2Authorizations(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.oauth2.provider.model.OAuth2Authorization> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _oAuth2AuthorizationService.getUserOAuth2Authorizations(start,
+			end, orderByComparator);
+	}
+
+	@Override
+	public int getUserOAuth2AuthorizationsCount()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _oAuth2AuthorizationService.getUserOAuth2AuthorizationsCount();
+	}
+
+	@Override
+	public boolean revokeOAuth2Authorization(long oAuth2AccessTokenId,
+		long oAuth2RefreshTokenId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _oAuth2AuthorizationService.revokeOAuth2Authorization(oAuth2AccessTokenId,
+			oAuth2RefreshTokenId);
+	}
+
+	@Override
 	public OAuth2AuthorizationService getWrappedService() {
 		return _oAuth2AuthorizationService;
 	}

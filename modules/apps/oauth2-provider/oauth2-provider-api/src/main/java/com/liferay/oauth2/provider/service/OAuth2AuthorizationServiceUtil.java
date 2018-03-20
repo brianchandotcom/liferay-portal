@@ -51,6 +51,27 @@ public class OAuth2AuthorizationServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static java.util.List<com.liferay.oauth2.provider.model.OAuth2Authorization> getUserOAuth2Authorizations(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.oauth2.provider.model.OAuth2Authorization> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getUserOAuth2Authorizations(start, end, orderByComparator);
+	}
+
+	public static int getUserOAuth2AuthorizationsCount()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserOAuth2AuthorizationsCount();
+	}
+
+	public static boolean revokeOAuth2Authorization(long oAuth2AccessTokenId,
+		long oAuth2RefreshTokenId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .revokeOAuth2Authorization(oAuth2AccessTokenId,
+			oAuth2RefreshTokenId);
+	}
+
 	public static OAuth2AuthorizationService getService() {
 		return _serviceTracker.getService();
 	}

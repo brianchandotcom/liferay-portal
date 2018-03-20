@@ -16,7 +16,10 @@ package com.liferay.oauth2.provider.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.oauth2.provider.exception.DuplicateOAuth2ScopeGrantException;
+import com.liferay.oauth2.provider.exception.NoSuchOAuth2AccessTokenException;
 import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
+import com.liferay.oauth2.provider.scope.liferay.LiferayOAuth2Scope;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -36,6 +39,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -200,6 +204,15 @@ public interface OAuth2ScopeGrantLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<OAuth2ScopeGrant> getOAuth2ScopeGrants(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Collection<OAuth2ScopeGrant> getOAuth2ScopeGrants(
+		long oAuth2AccessTokenId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Collection<OAuth2ScopeGrant> getOAuth2ScopeGrants(long companyId,
+		java.lang.String applicationName, java.lang.String bundleSymbolicName,
+		java.lang.String tokenContent);
+
 	/**
 	* Returns the number of o auth2 scope grants.
 	*
@@ -219,6 +232,12 @@ public interface OAuth2ScopeGrantLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	public Collection<OAuth2ScopeGrant> grantScopesToToken(
+		java.lang.String oAuth2AccessTokenContent,
+		Collection<LiferayOAuth2Scope> scopes)
+		throws DuplicateOAuth2ScopeGrantException,
+			NoSuchOAuth2AccessTokenException;
 
 	/**
 	* Updates the o auth2 scope grant in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

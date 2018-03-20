@@ -18,8 +18,8 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor" name="oAuth2RefreshTokenId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="expirationDate" type="org.hibernate.type.TimestampType" />
 		<property name="remoteIPInfo" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="scopeAliases" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="tokenContent" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="scopeAliases" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property name="tokenContent" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="tokenType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.oauth2.provider.model.impl.OAuth2ApplicationImpl" table="OAuth2Application">
@@ -42,7 +42,7 @@
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="privacyPolicyURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="redirectURIs" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="scopeAliases" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="scopeAliases" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 	</class>
 	<class name="com.liferay.oauth2.provider.model.impl.OAuth2RefreshTokenImpl" table="OAuth2RefreshToken">
 		<id access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor" name="oAuth2RefreshTokenId" type="long">
@@ -55,8 +55,8 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor" name="oAuth2ApplicationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="expirationDate" type="org.hibernate.type.TimestampType" />
 		<property name="remoteIPInfo" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="scopeAliases" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="tokenContent" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="scopeAliases" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property name="tokenContent" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 	</class>
 	<class name="com.liferay.oauth2.provider.model.impl.OAuth2ScopeGrantImpl" table="OAuth2ScopeGrant">
 		<id access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor" name="oAuth2ScopeGrantId" type="long">

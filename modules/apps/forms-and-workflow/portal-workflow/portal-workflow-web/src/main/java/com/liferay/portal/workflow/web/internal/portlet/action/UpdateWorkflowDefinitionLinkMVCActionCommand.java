@@ -28,7 +28,6 @@ import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 
 import java.util.Enumeration;
-import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -55,9 +54,6 @@ public class UpdateWorkflowDefinitionLinkMVCActionCommand
 	protected void addSuccessMessage(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
-		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
-			portal.getLocale(actionRequest));
-
 		String workflowDefinition = (String)actionRequest.getAttribute(
 			WorkflowWebKeys.WORKFLOW_DEFINITION_NAME);
 
@@ -67,11 +63,13 @@ public class UpdateWorkflowDefinitionLinkMVCActionCommand
 
 		if (Validator.isNull(workflowDefinition)) {
 			successMessage = LanguageUtil.format(
-				resourceBundle, "workflow-unassigned-from-x", resource);
+				getResourceBundle(actionRequest), "workflow-unassigned-from-x",
+				resource);
 		}
 		else {
 			successMessage = LanguageUtil.format(
-				resourceBundle, "workflow-assigned-to-x", resource);
+				getResourceBundle(actionRequest), "workflow-assigned-to-x",
+				resource);
 		}
 
 		SessionMessages.add(actionRequest, "requestProcessed", successMessage);

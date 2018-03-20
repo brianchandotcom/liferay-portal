@@ -34,6 +34,34 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 
 	protected abstract Tag doFormatLineBreaks(Tag tag, String absolutePath);
 
+	protected String formatIncorrectLineBreak(String fileName, String content) {
+		Matcher matcher = _incorrectLineBreakPattern.matcher(content);
+
+		while (matcher.find()) {
+			String s = stripQuotes(matcher.group(3));
+
+			if (s.contains(">")) {
+				continue;
+			}
+
+			if (getLevel(matcher.group(), "<", ">") != 0) {
+				addMessage(
+					fileName,
+					"There should be a line break after '" + matcher.group(2) +
+						"'",
+					getLineCount(content, matcher.start()));
+
+				continue;
+			}
+
+			return StringUtil.replaceFirst(
+				content, StringPool.SPACE, "\n\t" + matcher.group(1),
+				matcher.start());
+		}
+
+		return content;
+	}
+
 	protected Tag formatLineBreaks(
 		Tag tag, String absolutePath, boolean forceSingleLine) {
 
@@ -339,6 +367,8 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 
 	private static final Pattern _attributeNamePattern = Pattern.compile(
 		"[a-z]+[-_:a-zA-Z0-9]*");
+	private static final Pattern _incorrectLineBreakPattern = Pattern.compile(
+		"\n(\t*)(<\\w[-_:\\w]*) (.*)[\"']\n[\\s\\S]*?>\n");
 	private static final Pattern _multilineTagPattern = Pattern.compile(
 		"(([ \t]*)<[-\\w:]+\n.*?([^%])(/?>))(\n|$)", Pattern.DOTALL);
 

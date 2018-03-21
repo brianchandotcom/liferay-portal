@@ -500,17 +500,9 @@
 
 // Catalog
 
-.catalog-card-page {
-	.card-page-item-asset {
-		min-width: 250px;
-
-		@include media-breakpoint-up(xl) {
-			max-width: 16.66667%;
-		}
-	}
-}
-
 .catalog-1-2-columns {
+	// Catalog Layout Template
+
 	#column-2 {
 		@include media-breakpoint-up(md) {
 			width: 200px;
@@ -537,9 +529,9 @@
 		padding-right: $grid-gutter-width / 2;
 		width: 100%;
 	}
-}
 
-.catalog-1-2-columns {
+	// Catalog Facets
+
 	.collapse-icon-closed {
 		color: $primary;
 		font-size: 0.5rem;
@@ -607,9 +599,9 @@
 			font-size: 0.875rem;
 		}
 	}
-}
 
-.catalog-1-2-columns {
+	// Catalog Search Portlet
+
 	.portlet-search-bar {
 		@extend %portlet-search-bar-inset;
 	}
@@ -623,6 +615,100 @@
 .term-count {
 	color: $secondary;
 	font-size: 100%;
+}
+
+// Catalog Cards
+
+.catalog-card-page {
+	.card {
+		display: flex;
+		padding: 1.25rem;
+		width: 100%;
+	}
+
+	.card-page-item-asset {
+		display: flex;
+		min-width: 17.25rem; // 276px
+
+		@include media-breakpoint-up(xl) {
+			max-width: 16.66667%;
+		}
+	}
+
+	.product-expand {
+		flex-grow: 1;
+	}
+
+	.product-sku {
+		margin-bottom: 0.5rem;
+	}
+
+	.product-description {
+		margin-bottom: 3rem;
+	}
+
+	.product-actions {
+		margin-bottom: 1.25rem;
+	}
+
+	// Product Price
+
+	.product-price {
+		margin-bottom: 2rem;
+	}
+
+	.commerce-prefix {
+		color: $secondary;
+		font-size: 0.9375rem;
+		font-weight: $font-weight-light;
+	}
+
+	.commerce-price {
+		font-size: 1.125rem;
+		font-weight: $font-weight-semi-bold;
+	}
+
+	.commerce-suffix {
+		font-size: 0.75rem;
+	}
+
+	// Quantity Input
+
+	.commerce-quantity-container {
+		margin-right: 0.5rem;
+		max-width: 54px;
+
+		.control-label {
+			display: none;
+		}
+
+		.form-control {
+			padding-left: 0.5rem;
+			padding-right: 0.5rem;
+		}
+
+		.form-group {
+			margin-bottom: 0;
+		}
+	}
+
+	.product-footer {
+		.custom-control-label-text {
+			font-weight: $font-weight-normal;
+		}
+
+		.add-to-list-link {
+			font-size: 0.8125rem;
+			line-height: 1.625rem;
+		}
+
+		.available-variants {
+			color: $secondary;
+			font-size: 0.8125rem;
+			font-weight: $font-weight-semi-bold;
+			line-height: 1.625rem;
+		}
+	}
 }
 
 // Orders

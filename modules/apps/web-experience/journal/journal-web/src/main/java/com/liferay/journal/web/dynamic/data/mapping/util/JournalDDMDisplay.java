@@ -25,7 +25,9 @@ import com.liferay.dynamic.data.mapping.util.DDMNavigationHelper;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.web.configuration.JournalWebConfiguration;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -50,19 +52,23 @@ import com.liferay.portal.kernel.webdav.WebDAVUtil;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
  */
 @Component(
+	configurationPid = "com.liferay.journal.web.configuration.JournalWebConfiguration",
 	property = {"javax.portlet.name=" + JournalPortletKeys.JOURNAL},
 	service = DDMDisplay.class
 )
@@ -256,6 +262,13 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 		return true;
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_journalWebConfiguration = ConfigurableUtil.createConfigurable(
+			JournalWebConfiguration.class, properties);
+	}
+
 	@Reference
 	protected Portal portal;
 
@@ -351,7 +364,9 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 					"scopeTitle",
 					getTitle(liferayPortletRequest, liferayPortletResponse));
 				portletURL.setParameter(
-					"showAncestorScopes", Boolean.TRUE.toString());
+					"showAncestorScopes",
+					String.valueOf(_journalWebConfiguration.
+						showAncestorScopesByDefault()));
 				portletURL.setParameter(
 					"showCacheableInput", Boolean.TRUE.toString());
 				portletURL.setParameter(
@@ -425,7 +440,9 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 					"scopeTitle",
 					LanguageUtil.get(resourceBundle, "templates"));
 				portletURL.setParameter(
-					"showAncestorScopes", Boolean.TRUE.toString());
+					"showAncestorScopes",
+					String.valueOf(_journalWebConfiguration.
+						showAncestorScopesByDefault()));
 				portletURL.setParameter(
 					"showCacheableInput", Boolean.TRUE.toString());
 				portletURL.setParameter("showHeader", Boolean.TRUE.toString());
@@ -478,5 +495,7 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 		});
 	private static final Set<String> _viewTemplateExcludedColumnNames =
 		SetUtil.fromArray(new String[] {"mode"});
+
+	private volatile JournalWebConfiguration _journalWebConfiguration;
 
 }

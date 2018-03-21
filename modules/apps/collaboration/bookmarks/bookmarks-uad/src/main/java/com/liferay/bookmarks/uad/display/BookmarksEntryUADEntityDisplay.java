@@ -14,13 +14,11 @@
 
 package com.liferay.bookmarks.uad.display;
 
+import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
-import com.liferay.bookmarks.uad.entity.BookmarksEntryUADEntity;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
-import com.liferay.user.associated.data.entity.UADEntity;
 
 import java.util.Map;
 
@@ -35,7 +33,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY,
 	service = UADEntityDisplay.class
 )
-public class BookmarksEntryUADEntityDisplay implements UADEntityDisplay {
+public class BookmarksEntryUADEntityDisplay
+	implements UADEntityDisplay<BookmarksEntry> {
 
 	public String getApplicationName() {
 		return BookmarksUADConstants.UAD_ENTITY_SET_NAME;
@@ -46,16 +45,13 @@ public class BookmarksEntryUADEntityDisplay implements UADEntityDisplay {
 	}
 
 	public String getEditURL(
-			UADEntity uadEntity, LiferayPortletRequest liferayPortletRequest,
+			BookmarksEntry bookmarksEntry,
+			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		BookmarksEntryUADEntity bookmarksEntryUADEntity =
-			(BookmarksEntryUADEntity)uadEntity;
-
 		return _bookmarksEntryUADEntityDisplayHelper.getBookmarksEntryEditURL(
-			bookmarksEntryUADEntity.getBookmarksEntry(), liferayPortletRequest,
-			liferayPortletResponse);
+			bookmarksEntry, liferayPortletRequest, liferayPortletResponse);
 	}
 
 	public String getKey() {
@@ -63,15 +59,11 @@ public class BookmarksEntryUADEntityDisplay implements UADEntityDisplay {
 	}
 
 	@Override
-	public Map<String, Object> getUADEntityNonanonymizableFieldValues(
-		UADEntity uadEntity) {
-
-		BookmarksEntryUADEntity bookmarksEntryUADEntity =
-			(BookmarksEntryUADEntity)uadEntity;
+	public Map<String, Object> getNonanonymizableFieldValues(
+		BookmarksEntry bookmarksEntry) {
 
 		return _bookmarksEntryUADEntityDisplayHelper.
-			getUADEntityNonanonymizableFieldValues(
-				bookmarksEntryUADEntity.getBookmarksEntry());
+			getNonanonymizableFieldValues(bookmarksEntry);
 	}
 
 	public String getUADEntityTypeDescription() {
@@ -85,10 +77,5 @@ public class BookmarksEntryUADEntityDisplay implements UADEntityDisplay {
 	@Reference
 	private BookmarksEntryUADEntityDisplayHelper
 		_bookmarksEntryUADEntityDisplayHelper;
-
-	@Reference(
-		target = "(model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY + ")"
-	)
-	private UADEntityAnonymizer _uadEntityAnonymizer;
 
 }

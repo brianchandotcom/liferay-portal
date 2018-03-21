@@ -413,25 +413,6 @@ class FragmentsEditor extends Component {
 }
 
 /**
- * Tabs that can appear inside the sidebar
- * @review
- * @see FragmentsEditor._sidebarTabs
- */
-
-const SIDEBAR_TABS = [
-	{
-		id: 'fragments',
-		name: Liferay.Language.get('fragments'),
-		visible: true
-	},
-	{
-		id: 'added',
-		name: Liferay.Language.get('added'),
-		visible: true
-	}
-];
-
-/**
  * State definition.
  * @review
  * @static
@@ -601,6 +582,27 @@ FragmentsEditor.STATE = {
 	renderFragmentEntryURL: Config.string().required(),
 
 	/**
+	 * Tabs being shown in sidebar
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!Array<{
+	 * 	 id: string,
+	 * 	 label: string
+	 * }>}
+	 */
+
+	sidebarTabs: Config.arrayOf(
+		Config.shapeOf(
+			{
+				id: Config.string().required(),
+				label: Config.string().required()
+			}
+		)
+	).required(),
+
+	/**
 	 * Path of the available icons.
 	 * @default undefined
 	 * @instance
@@ -664,34 +666,8 @@ FragmentsEditor.STATE = {
 		.value(''),
 
 	/**
-	 * Tabs being shown in sidebar
-	 * @default SIDEBAR_TABS
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @private
-	 * @review
-	 * @type {Array<{
-	 * 	 id:string,
-	 * 	 name:string,
-	 * 	 visible:boolean
-	 * }>}
-	 */
-
-	_sidebarTabs: Config.arrayOf(
-		Config.shapeOf(
-			{
-				id: Config.string(),
-				name: Config.string(),
-				visible: Config.bool()
-			}
-		)
-	)
-		.internal()
-		.value(SIDEBAR_TABS),
-
-	/**
 	 * Tab selected inside sidebar
-	 * @default SIDEBAR_TABS[0].id
+	 * @default 'fragments'
 	 * @instance
 	 * @memberOf FragmentsEditor
 	 * @private
@@ -699,11 +675,10 @@ FragmentsEditor.STATE = {
 	 * @type {string}
 	 */
 
-	_sidebarSelectedTab: Config.oneOf(
-		SIDEBAR_TABS.map(tab => tab.id)
-	)
+	_sidebarSelectedTab: Config
+		.string()
 		.internal()
-		.value(SIDEBAR_TABS[0].id)
+		.value('fragments')
 };
 
 Soy.register(FragmentsEditor, templates);

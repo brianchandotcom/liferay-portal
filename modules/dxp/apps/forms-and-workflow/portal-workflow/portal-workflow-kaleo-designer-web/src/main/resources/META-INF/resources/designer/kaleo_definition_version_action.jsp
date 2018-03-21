@@ -67,6 +67,12 @@ String kaleoNamespace = PortalUtil.getPortletNamespace(KaleoDesignerPortletKeys.
 		</c:otherwise>
 	</c:choose>
 
+	<liferay-ui:icon
+		id='<%= "duplicate" + kaleoDefinition.getName() %>'
+		message="duplicate"
+		url="javascript:;"
+	/>
+
 	<c:if test="<%= KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= KaleoDefinitionVersion.class.getName() %>"
@@ -96,12 +102,6 @@ String kaleoNamespace = PortalUtil.getPortletNamespace(KaleoDesignerPortletKeys.
 				<liferay-ui:icon
 					message="unpublish"
 					url="<%= unpublishURL %>"
-				/>
-
-				<liferay-ui:icon
-					id='<%= "duplicate" + kaleoDefinition.getName() %>'
-					message="duplicate"
-					url="javascript:;"
 				/>
 			</c:if>
 		</c:when>

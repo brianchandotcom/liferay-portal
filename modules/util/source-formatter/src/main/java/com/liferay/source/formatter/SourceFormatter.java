@@ -515,7 +515,7 @@ public class SourceFormatter {
 	}
 
 	private void _init() throws Exception {
-		if (_isPortalSource() && _modifiedSourceFormatterModule()) {
+		if (_isPortalSource() && _containsSourceFormatterFile()) {
 			_sourceFormatterArgs.setRecentChangesFileNames(null);
 		}
 
@@ -614,7 +614,7 @@ public class SourceFormatter {
 		return false;
 	}
 
-	private boolean _modifiedSourceFormatterModule() {
+	private boolean _containsSourceFormatterFile() {
 		List<String> recentChangesFileNames =
 			_sourceFormatterArgs.getRecentChangesFileNames();
 

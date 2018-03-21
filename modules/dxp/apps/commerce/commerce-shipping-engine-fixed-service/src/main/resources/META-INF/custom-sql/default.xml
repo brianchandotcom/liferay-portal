@@ -4,25 +4,25 @@
 	<sql id="com.liferay.commerce.shipping.engine.fixed.service.persistence.CommerceShippingFixedOptionRelFinder.findByC_C_C_Z_W">
 		<![CDATA[
 			SELECT
-				CommerceShippingFixedOptionRel.*
+				CShippingFixedOptionRel.*
 			FROM
-				CommerceShippingFixedOptionRel
+				CShippingFixedOptionRel
 			WHERE
-				(CommerceShippingFixedOptionRel.commerceShippingFixedOptionId = ?) AND
+				(CShippingFixedOptionRel.commerceShippingFixedOptionId = ?) AND
 				(
-					(CommerceShippingFixedOptionRel.commerceCountryId = ?) OR
-					(CommerceShippingFixedOptionRel.commerceCountryId = 0)
+					(CShippingFixedOptionRel.commerceCountryId = ?) OR
+					(CShippingFixedOptionRel.commerceCountryId = 0)
 				) AND
 				(
-					(CommerceShippingFixedOptionRel.commerceRegionId = ?) OR
-					(CommerceShippingFixedOptionRel.commerceRegionId = 0)
+					(CShippingFixedOptionRel.commerceRegionId = ?) OR
+					(CShippingFixedOptionRel.commerceRegionId = 0)
 				) AND
 				(
-					(CommerceShippingFixedOptionRel.zip = ?) OR
-					(CommerceShippingFixedOptionRel.zip IS NULL)
+					(CShippingFixedOptionRel.zip = ?) OR
+					(CShippingFixedOptionRel.zip IS NULL)
 				) AND
-				(CommerceShippingFixedOptionRel.weightFrom >= ?) AND
-				(CommerceShippingFixedOptionRel.weightTo <= ?)
+				(CShippingFixedOptionRel.weightFrom <= ?) AND
+				(CShippingFixedOptionRel.weightTo >= ?)
 		]]>
 	</sql>
 </custom-sql>

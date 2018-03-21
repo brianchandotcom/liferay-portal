@@ -288,6 +288,10 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 		List<String> types = _cpDefinitionLinkTypeRegistry.getTypes();
 
 		for (String type : types) {
+			if (Validator.isNull(type)) {
+				continue;
+			}
+
 			String[] linkedProductIds = getReverseCPDefinitionIds(
 				cpDefinition.getCPDefinitionId(), type);
 

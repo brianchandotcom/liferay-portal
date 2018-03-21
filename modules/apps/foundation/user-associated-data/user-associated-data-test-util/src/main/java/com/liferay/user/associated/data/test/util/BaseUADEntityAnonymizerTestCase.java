@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
-import com.liferay.user.associated.data.entity.UADEntity;
 
 import java.util.List;
 
@@ -33,7 +32,7 @@ import org.junit.Test;
 /**
  * @author Noah Sherrill
  */
-public abstract class BaseUADEntityAnonymizerTestCase {
+public abstract class BaseUADEntityAnonymizerTestCase<T extends BaseModel> {
 
 	@Before
 	public void setUp() throws Exception {
@@ -44,15 +43,15 @@ public abstract class BaseUADEntityAnonymizerTestCase {
 
 	@Test
 	public void testAutoAnonymize() throws Exception {
-		BaseModel baseModel = addBaseModel(_user.getUserId());
+		T baseModel = addBaseModel(_user.getUserId());
 
 		_testAutoAnonymize(baseModel);
 	}
 
 	@Test
 	public void testAutoAnonymizeAll() throws Exception {
-		BaseModel baseModel = addBaseModel(TestPropsValues.getUserId());
-		BaseModel autoAnonymizedBaseModel = addBaseModel(_user.getUserId());
+		T baseModel = addBaseModel(TestPropsValues.getUserId());
+		T autoAnonymizedBaseModel = addBaseModel(_user.getUserId());
 
 		_uadEntityAnonymizer.autoAnonymizeAll(_user.getUserId());
 
@@ -77,12 +76,11 @@ public abstract class BaseUADEntityAnonymizerTestCase {
 	public void testAutoAnonymizeStatusByUserOnly() throws Exception {
 		Assume.assumeTrue(this instanceof WhenHasStatusByUserIdField);
 
-		WhenHasStatusByUserIdField whenHasStatusByUserIdField =
+		WhenHasStatusByUserIdField<T> whenHasStatusByUserIdField =
 			(WhenHasStatusByUserIdField)this;
 
-		BaseModel baseModel =
-			whenHasStatusByUserIdField.addBaseModelWithStatusByUserId(
-				TestPropsValues.getUserId(), _user.getUserId());
+		T baseModel = whenHasStatusByUserIdField.addBaseModelWithStatusByUserId(
+			TestPropsValues.getUserId(), _user.getUserId());
 
 		_testAutoAnonymize(baseModel);
 	}
@@ -91,12 +89,11 @@ public abstract class BaseUADEntityAnonymizerTestCase {
 	public void testAutoAnonymizeUserOnly() throws Exception {
 		Assume.assumeTrue(this instanceof WhenHasStatusByUserIdField);
 
-		WhenHasStatusByUserIdField whenHasStatusByUserIdField =
+		WhenHasStatusByUserIdField<T> whenHasStatusByUserIdField =
 			(WhenHasStatusByUserIdField)this;
 
-		BaseModel baseModel =
-			whenHasStatusByUserIdField.addBaseModelWithStatusByUserId(
-				_user.getUserId(), TestPropsValues.getUserId());
+		T baseModel = whenHasStatusByUserIdField.addBaseModelWithStatusByUserId(
+			_user.getUserId(), TestPropsValues.getUserId());
 
 		_testAutoAnonymize(baseModel);
 	}
@@ -105,10 +102,9 @@ public abstract class BaseUADEntityAnonymizerTestCase {
 	public void testDelete() throws Exception {
 		BaseModel baseModel = addBaseModel(_user.getUserId(), false);
 
-		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
-			_user.getUserId());
+		List<T> entities = _uadEntityAggregator.getEntities(_user.getUserId());
 
-		_uadEntityAnonymizer.delete(uadEntities.get(0));
+		_uadEntityAnonymizer.delete(entities.get(0));
 
 		long baseModelPK = getBaseModelPrimaryKey(baseModel);
 
@@ -117,8 +113,8 @@ public abstract class BaseUADEntityAnonymizerTestCase {
 
 	@Test
 	public void testDeleteAll() throws Exception {
-		BaseModel baseModel = addBaseModel(TestPropsValues.getUserId());
-		BaseModel deletedBaseModel = addBaseModel(_user.getUserId(), false);
+		T baseModel = addBaseModel(TestPropsValues.getUserId());
+		T deletedBaseModel = addBaseModel(_user.getUserId(), false);
 
 		_uadEntityAnonymizer.deleteAll(_user.getUserId());
 
@@ -136,19 +132,18 @@ public abstract class BaseUADEntityAnonymizerTestCase {
 		_uadEntityAnonymizer.deleteAll(_user.getUserId());
 	}
 
-	protected abstract BaseModel<?> addBaseModel(long userId) throws Exception;
+	protected abstract T addBaseModel(long userId) throws Exception;
 
-	protected abstract BaseModel<?> addBaseModel(
-			long userId, boolean deleteAfterTestRun)
+	protected abstract T addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception;
 
 	protected long getBaseModelPrimaryKey(BaseModel baseModel) {
 		return (long)baseModel.getPrimaryKeyObj();
 	}
 
-	protected abstract UADEntityAggregator getUADEntityAggregator();
+	protected abstract UADEntityAggregator<T> getUADEntityAggregator();
 
-	protected abstract UADEntityAnonymizer getUADEntityAnonymizer();
+	protected abstract UADEntityAnonymizer<T> getUADEntityAnonymizer();
 
 	protected abstract boolean isBaseModelAutoAnonymized(
 			long baseModelPK, User user)
@@ -157,18 +152,17 @@ public abstract class BaseUADEntityAnonymizerTestCase {
 	protected abstract boolean isBaseModelDeleted(long baseModelPK);
 
 	private void _testAutoAnonymize(BaseModel baseModel) throws Exception {
-		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
-			_user.getUserId());
+		List<T> entities = _uadEntityAggregator.getEntities(_user.getUserId());
 
-		_uadEntityAnonymizer.autoAnonymize(uadEntities.get(0));
+		_uadEntityAnonymizer.autoAnonymize(entities.get(0), _user.getUserId());
 
 		long baseModelPK = getBaseModelPrimaryKey(baseModel);
 
 		Assert.assertTrue(isBaseModelAutoAnonymized(baseModelPK, _user));
 	}
 
-	private UADEntityAggregator _uadEntityAggregator;
-	private UADEntityAnonymizer _uadEntityAnonymizer;
+	private UADEntityAggregator<T> _uadEntityAggregator;
+	private UADEntityAnonymizer<T> _uadEntityAnonymizer;
 
 	@DeleteAfterTestRun
 	private User _user;

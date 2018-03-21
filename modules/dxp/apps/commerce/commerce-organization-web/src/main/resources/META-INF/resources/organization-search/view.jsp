@@ -37,7 +37,7 @@ CommerceOrganizationSearchDisplayContext commerceOrganizationSearchDisplayContex
 				<div class="input-group-inset-item input-group-inset-item-after">
 					<button class="btn btn-unstyled d-md-inline-block d-none" type="submit">
 						<svg aria-hidden="true" class="lexicon-icon lexicon-icon-search">
-							<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#search" />
+							<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#search">
 						</svg>
 					</button>
 				</div>

@@ -5,7 +5,7 @@
 	default-init-method="afterPropertiesSet"
 	xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
 	<bean class="com.liferay.friendly.url.service.impl.FriendlyURLEntryLocalServiceImpl" id="com.liferay.friendly.url.service.FriendlyURLEntryLocalService" />
 	<bean class="com.liferay.friendly.url.service.persistence.impl.FriendlyURLEntryPersistenceImpl" id="com.liferay.friendly.url.service.persistence.FriendlyURLEntryPersistence" parent="basePersistence" />

@@ -553,8 +553,14 @@ public class CPDefinitionLocalServiceImpl
 
 	@Override
 	public int getCPDefinitionsCountByCategoryId(long categoryId) {
-		return assetEntryLocalService.getAssetCategoryAssetEntriesCount(
-			categoryId);
+		long[] categoryIds = {categoryId};
+
+		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+
+		assetEntryQuery.setClassName(CPDefinition.class.getName());
+		assetEntryQuery.setAllCategoryIds(categoryIds);
+
+		return assetEntryLocalService.getEntriesCount(assetEntryQuery);
 	}
 
 	@Override

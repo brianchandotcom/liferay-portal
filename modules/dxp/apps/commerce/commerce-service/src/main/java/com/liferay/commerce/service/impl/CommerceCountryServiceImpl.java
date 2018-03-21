@@ -19,6 +19,8 @@ import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.service.base.CommerceCountryServiceBaseImpl;
 import com.liferay.commerce.service.permission.CommercePermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -137,6 +139,15 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 
 		return commerceCountryLocalService.getWarehouseCommerceCountries(
 			groupId, all);
+	}
+
+	@Override
+	public BaseModelSearchResult<CommerceCountry> searchCommerceCountries(
+			SearchContext searchContext)
+		throws PortalException {
+
+		return commerceCountryLocalService.searchCommerceCountries(
+			searchContext);
 	}
 
 	@Override

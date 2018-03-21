@@ -26,13 +26,25 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -46,6 +58,7 @@ import java.util.Map;
 public class CommerceCountryLocalServiceImpl
 	extends CommerceCountryLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceCountry addCommerceCountry(
 			Map<Locale, String> nameMap, boolean billingAllowed,
@@ -95,6 +108,7 @@ public class CommerceCountryLocalServiceImpl
 		}
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceCountry deleteCommerceCountry(
@@ -239,6 +253,31 @@ public class CommerceCountryLocalServiceImpl
 	}
 
 	@Override
+	public BaseModelSearchResult<CommerceCountry> searchCommerceCountries(
+			SearchContext searchContext)
+		throws PortalException {
+
+		Indexer<CommerceCountry> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(CommerceCountry.class);
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
+
+			List<CommerceCountry> commerceCountries = getCommerceCountries(
+				hits);
+
+			if (commerceCountries != null) {
+				return new BaseModelSearchResult<>(
+					commerceCountries, hits.getLength());
+			}
+		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public CommerceCountry updateCommerceCountry(
 			long commerceCountryId, Map<Locale, String> nameMap,
 			boolean billingAllowed, boolean shippingAllowed,
@@ -267,6 +306,40 @@ public class CommerceCountryLocalServiceImpl
 		return commerceCountry;
 	}
 
+	protected List<CommerceCountry> getCommerceCountries(Hits hits)
+		throws PortalException {
+
+		List<Document> documents = hits.toList();
+
+		List<CommerceCountry> commerceCountries = new ArrayList<>(
+			documents.size());
+
+		for (Document document : documents) {
+			long commerceCountryId = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			CommerceCountry commerceCountry = fetchCommerceCountry(
+				commerceCountryId);
+
+			if (commerceCountry == null) {
+				commerceCountries = null;
+
+				Indexer<CommerceCountry> indexer =
+					IndexerRegistryUtil.getIndexer(CommerceCountry.class);
+
+				long companyId = GetterUtil.getLong(
+					document.get(Field.COMPANY_ID));
+
+				indexer.delete(companyId, document.getUID());
+			}
+			else if (commerceCountries != null) {
+				commerceCountries.add(commerceCountry);
+			}
+		}
+
+		return commerceCountries;
+	}
+
 	protected void validate(
 			Map<Locale, String> nameMap, String twoLettersISOCode,
 			String threeLettersISOCode)
@@ -292,5 +365,8 @@ public class CommerceCountryLocalServiceImpl
 			throw new CommerceCountryThreeLettersISOCodeException();
 		}
 	}
+
+	private static final String[] _SELECTED_FIELD_NAMES =
+		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
 
 }

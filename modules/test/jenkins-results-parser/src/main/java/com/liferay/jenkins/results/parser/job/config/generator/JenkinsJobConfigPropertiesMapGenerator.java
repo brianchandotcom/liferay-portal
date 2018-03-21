@@ -38,9 +38,11 @@ import org.dom4j.Element;
 /**
  * @author Cesar Polanco
  */
-public class JenkinsJobConfigMapGenerator {
+public class JenkinsJobConfigPropertiesMapGenerator {
 
-	public JenkinsJobConfigMapGenerator(Map<String, String> basePropertiesMap) {
+	public JenkinsJobConfigPropertiesMapGenerator(
+		Map<String, String> basePropertiesMap) {
+
 		_basePropertiesMap = basePropertiesMap;
 
 		_environmentSlavesPropertiesMap = _getEnvironmentSlavesMap();

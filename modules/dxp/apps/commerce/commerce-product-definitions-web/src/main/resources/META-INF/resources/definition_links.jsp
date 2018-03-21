@@ -27,8 +27,6 @@ SearchContainer<CPDefinitionLink> cpDefinitionLinkSearchContainer = cpDefinition
 
 String type = cpDefinitionLinkDisplayContext.getType();
 
-String addMenuTitle = "add-related-product";
-
 PortletURL portletURL = cpDefinitionLinkDisplayContext.getPortletURL();
 %>
 
@@ -169,7 +167,7 @@ PortletURL portletURL = cpDefinitionLinkDisplayContext.getPortletURL();
 </aui:form>
 
 <liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item id="addCommerceProductDefinition" title="<%= LanguageUtil.get(request, addMenuTitle) %>" url="javascript:;" />
+	<liferay-frontend:add-menu-item id="addCommerceProductDefinition" title="<%= LanguageUtil.format(request, "add-x-product", type, true) %>" url="javascript:;" />
 </liferay-frontend:add-menu>
 
 <aui:script>

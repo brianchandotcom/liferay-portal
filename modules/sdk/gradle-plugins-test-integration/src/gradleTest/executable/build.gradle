@@ -1,7 +1,5 @@
 apply plugin: "com.liferay.test.integration"
 
-task runGradleTest
-
 buildscript{
 	dependencies {
 		classpath group: "de.undercouch", name: "gradle-download-task", version: "3.2.0"
@@ -14,18 +12,22 @@ buildscript{
 	}
 }
 
+task runGradleTest
+
+File testDir = file("test")
+
+File testTomcatDir = new File(testDir, "custom-0.0.0")
+
 copyTestModules {
 	enabled = false
 }
-
-def testDir = new File(projectDir, "test")
-def customDir = new File(testDir, "custom-0.0.0")
-def binDir = new File(customDir, "bin")
 
 runGradleTest {
 	dependsOn setUpTestableTomcat
 
 	doLast {
+		File binDir = new File(testTomcatDir, "bin")
+
 		for (String fileName in ["catalina.sh", "setenv.sh", "shutdown.sh"]) {
 			File file = new File(binDir, fileName)
 
@@ -39,6 +41,6 @@ setUpTestableTomcat {
 }
 
 testIntegrationTomcat {
-	dir = customDir
+	dir = testTomcatDir
 	liferayHome = testDir
 }

@@ -98,14 +98,16 @@ class AddToCart extends PortletBase {
 	}
 
 	_showNotification(messageKey, type) {
-		new Liferay.Notification(
-			{
-				message: Liferay.Language.get(messageKey),
-				render: true,
-				title: '',
-				type: type
-			}
-		);
+        AUI().use('liferay-notification',() => {
+            new Liferay.Notification(
+                {
+                    message: Liferay.Language.get(messageKey),
+                    render: true,
+                    title: '',
+                    type: type
+                }
+            );
+		});
 	}
 };
 

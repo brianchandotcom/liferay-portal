@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.permission.RolePermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -127,6 +128,13 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 			catch (Exception e) {
 				_log.error(e, e);
 			}
+		}
+
+		boolean clearSessionMessage = ParamUtil.getBoolean(
+			renderRequest, "clearSessionMessage");
+
+		if (clearSessionMessage) {
+			SessionMessages.clear(renderRequest);
 		}
 
 		super.render(renderRequest, renderResponse);

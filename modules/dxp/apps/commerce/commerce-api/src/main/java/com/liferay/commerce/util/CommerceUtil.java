@@ -127,6 +127,24 @@ public class CommerceUtil {
 		return orderByComparator;
 	}
 
+	public static Sort getCommerceCountrySort(
+		String orderByCol, String orderByType) {
+
+		boolean reverse = true;
+
+		if (orderByType.equals("asc")) {
+			reverse = false;
+		}
+
+		Sort sort = null;
+
+		if (orderByCol.equals("priority")) {
+			sort = SortFactoryUtil.create(Field.PRIORITY, reverse);
+		}
+
+		return sort;
+	}
+
 	public static Sort[] getCommerceOrderSorts(
 		String orderByCol, String orderByType) {
 

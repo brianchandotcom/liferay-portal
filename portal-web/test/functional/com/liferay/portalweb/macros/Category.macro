@@ -183,8 +183,8 @@
 	</command>
 
 	<command name="deleteCategoryByMenuCP">
-		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}">
-			<var name="key_vocabularyName" value="${vocabularyName}" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="${vocabularyName}" />
 		</execute>
 
 		<execute macro="LexiconEntry#gotoEntryMenuItemNoError">
@@ -200,8 +200,8 @@
 	</command>
 
 	<command name="deleteCategoryProperty2CP">
-		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}">
-			<var name="key_vocabularyName" value="${vocabularyName}" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="${vocabularyName}" />
 		</execute>
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
@@ -223,8 +223,8 @@
 	</command>
 
 	<command name="deletePartialCategoryCP">
-		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}">
-			<var name="key_vocabularyName" value="${vocabularyName}" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="${vocabularyName}" />
 		</execute>
 
 		<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
@@ -239,8 +239,8 @@
 	</command>
 
 	<command name="editCP">
-		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}">
-			<var name="key_vocabularyName" value="${vocabularyName}" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="${vocabularyName}" />
 		</execute>
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
@@ -256,8 +256,8 @@
 	</command>
 
 	<command name="editPropertyCP">
-		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}">
-			<var name="key_vocabularyName" value="${vocabularyName}" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="${vocabularyName}" />
 		</execute>
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
@@ -301,8 +301,8 @@
 	</command>
 
 	<command name="viewCategoryPropertyCP">
-		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}">
-			<var name="key_vocabularyName" value="${vocabularyName}" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="${vocabularyName}" />
 		</execute>
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
@@ -353,8 +353,8 @@
 	</command>
 
 	<command name="viewCategoryViewableByCP">
-		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}">
-			<var name="key_vocabularyName" value="${vocabularyName}" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="${vocabularyName}" />
 		</execute>
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">

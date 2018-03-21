@@ -37,10 +37,8 @@
 	</command>
 
 	<command name="addDuplicateCP">
-		<var name="key_categoryName" value="${categoryName}" />
-
-		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}">
-			<var name="key_vocabularyName" value="${vocabularyName}" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="${vocabularyName}" />
 		</execute>
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
@@ -76,13 +74,11 @@
 	</command>
 
 	<command name="deleteViaIconCP">
-		<var name="key_vocabularyName" value="${vocabularyName}" />
-
-		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
-
-		<var name="key_categoryName" value="${categoryName}" />
-
-		<execute function="AssertClick" locator1="Categories#CATEGORY_ENTRY_LINK" value1="${categoryName}" />
+		<for list="${vocabularyName},${categoryName}" param="rowEntry">
+			<execute macro="LexiconEntry#gotoEntry">
+				<var name="rowEntry" value="${rowEntry}" />
+			</execute>
+		</for>
 
 		<var name="key_subcategoryName" value="${subcategoryName}" />
 
@@ -97,13 +93,11 @@
 	</command>
 
 	<command name="deleteViaMenuCP">
-		<var name="key_vocabularyName" value="${vocabularyName}" />
-
-		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
-
-		<var name="key_categoryName" value="${categoryName}" />
-
-		<execute function="AssertClick" locator1="Categories#CATEGORY_ENTRY_LINK" value1="${categoryName}" />
+		<for list="${vocabularyName},${categoryName}" param="rowEntry">
+			<execute macro="LexiconEntry#gotoEntry">
+				<var name="rowEntry" value="${rowEntry}" />
+			</execute>
+		</for>
 
 		<execute macro="LexiconEntry#gotoEntryMenuItemNoError">
 			<var name="menuItem" value="Delete" />
@@ -117,13 +111,11 @@
 	</command>
 
 	<command name="editCP">
-		<var name="key_vocabularyName" value="${vocabularyName}" />
-
-		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
-
-		<var name="key_categoryName" value="${categoryName}" />
-
-		<execute function="AssertClick" locator1="Categories#CATEGORY_ENTRY_LINK" value1="${categoryName}" />
+		<for list="${vocabularyName},${categoryName}" param="rowEntry">
+			<execute macro="LexiconEntry#gotoEntry">
+				<var name="rowEntry" value="${rowEntry}" />
+			</execute>
+		</for>
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
 			<var name="menuItem" value="Edit" />
@@ -157,14 +149,11 @@
 	</command>
 
 	<command name="searchCP">
-		<var name="key_categoryName" value="${categoryName}" />
-		<var name="key_vocabularyName" value="${vocabularyName}" />
-
-		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
-
-		<execute function="Click" locator1="Categories#CATEGORY_ENTRY_LINK" />
-
-		<var name="key_subcategoryName" value="${subcategoryName}" />
+		<for list="${vocabularyName},${categoryName}" param="rowEntry">
+			<execute macro="LexiconEntry#gotoEntry">
+				<var name="rowEntry" value="${rowEntry}" />
+			</execute>
+		</for>
 
 		<execute macro="Search#searchCP">
 			<var name="searchTerm" value="${subcategorySearchEntry}" />
@@ -172,9 +161,9 @@
 	</command>
 
 	<command name="viewCategoryPropertyCP">
-		<var name="key_vocabularyName" value="${vocabularyName}" />
-
-		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="${vocabularyName}" />
+		</execute>
 
 		<var name="key_categoryName" value="${categoryName}" />
 
@@ -195,9 +184,9 @@
 
 	<command name="viewCP">
 		<var name="key_categoryName" value="${categoryName}" />
-		<var name="key_vocabularyName" value="${vocabularyName}" />
-
-		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="${vocabularyName}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="Categories#CATEGORY_ENTRY_LINK" value1="${categoryName}" />
 

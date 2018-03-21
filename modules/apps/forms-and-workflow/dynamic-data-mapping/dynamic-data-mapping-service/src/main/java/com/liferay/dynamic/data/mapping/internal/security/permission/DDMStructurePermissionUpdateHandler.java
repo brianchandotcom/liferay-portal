@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.service.permission;
+package com.liferay.dynamic.data.mapping.internal.security.permission;
 
-import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.security.permission.PermissionUpdateHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -28,33 +28,33 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	property = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMTemplate",
+	property = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure",
 	service = PermissionUpdateHandler.class
 )
-public class DDMTemplatePermissionUpdateHandler
+public class DDMStructurePermissionUpdateHandler
 	implements PermissionUpdateHandler {
 
 	@Override
 	public void updatedPermission(String primKey) {
-		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchDDMTemplate(
+		DDMStructure ddmStructure = _ddmStructureLocalService.fetchDDMStructure(
 			GetterUtil.getLong(primKey));
 
-		if (ddmTemplate == null) {
+		if (ddmStructure == null) {
 			return;
 		}
 
-		ddmTemplate.setModifiedDate(new Date());
+		ddmStructure.setModifiedDate(new Date());
 
-		_ddmTemplateLocalService.updateDDMTemplate(ddmTemplate);
+		_ddmStructureLocalService.updateDDMStructure(ddmStructure);
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDMTemplateLocalService(
-		DDMTemplateLocalService ddmTemplateLocalService) {
+	protected void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
 
-		_ddmTemplateLocalService = ddmTemplateLocalService;
+		_ddmStructureLocalService = ddmStructureLocalService;
 	}
 
-	private DDMTemplateLocalService _ddmTemplateLocalService;
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 }

@@ -342,7 +342,9 @@
 		<field name="city" type="String" />
 		<field name="zip" type="String" />
 		<field name="commerceRegionId" type="long" />
-		<field name="commerceCountryId" type="long" />
+		<field name="commerceCountryId" type="long">
+			<validator name="required" />
+		</field>
 		<field name="latitude" type="double" />
 		<field name="longitude" type="double" />
 	</model>

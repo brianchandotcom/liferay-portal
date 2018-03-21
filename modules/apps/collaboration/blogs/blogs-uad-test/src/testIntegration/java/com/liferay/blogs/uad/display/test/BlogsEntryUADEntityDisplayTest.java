@@ -68,14 +68,6 @@ public class BlogsEntryUADEntityDisplayTest extends BaseUADEntityDisplayTestCase
 	}
 
 	@Override
-	protected String[] getDisplayFieldNames() {
-		return new String[] {
-			"title", "subtitle", "urlTitle", "description", "content",
-			"smallImage", "smallImageId"
-		};
-	}
-
-	@Override
 	protected UADEntityDisplay getUADEntityDisplay() {
 		return _uadEntityDisplay;
 	}

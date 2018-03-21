@@ -68,11 +68,6 @@ public class EntryUADEntityDisplayTest extends BaseUADEntityDisplayTestCase {
 	}
 
 	@Override
-	protected String[] getDisplayFieldNames() {
-		return new String[] { "fullName", "emailAddress", "comments" };
-	}
-
-	@Override
 	protected UADEntityDisplay getUADEntityDisplay() {
 		return _uadEntityDisplay;
 	}

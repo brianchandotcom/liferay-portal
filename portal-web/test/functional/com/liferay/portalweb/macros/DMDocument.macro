@@ -559,7 +559,7 @@
 		<execute function="AssertElementPresent" locator1="Button#CANCEL_GIVEN_POSITION" />
 		<execute function="AssertElementPresent" locator1="Button#PUBLISH_GIVEN_POSITION" />
 
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+		<execute macro="Button#clickPublish" />
 
 		<execute function="SelectFrame" locator1="relative=top" />
 	</command>

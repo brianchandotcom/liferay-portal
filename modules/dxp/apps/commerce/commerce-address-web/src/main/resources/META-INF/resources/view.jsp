@@ -40,6 +40,12 @@ boolean hasManageCommerceCountriesPermission = CommercePermission.contains(permi
 			orderColumns='<%= new String[] {"priority"} %>'
 			portletURL="<%= commerceCountriesDisplayContext.getPortletURL() %>"
 		/>
+
+		<li>
+			<aui:form action="<%= String.valueOf(commerceCountriesDisplayContext.getPortletURL()) %>" name="searchFm">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-buttons>

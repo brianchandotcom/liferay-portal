@@ -1421,7 +1421,7 @@
 		</execute>
 
 		<execute macro="Workflow#viewConfigurationSelected">
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinition" value="Single Approver (1)" />
 			<var name="workflowResourceValue" value="Blogs Entry" />
 		</execute>
 
@@ -1432,7 +1432,7 @@
 		</execute>
 
 		<execute macro="Workflow#viewConfigurationSelected">
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinition" value="Single Approver (1)" />
 			<var name="workflowResourceValue" value="Blogs Entry" />
 		</execute>
 	</command>

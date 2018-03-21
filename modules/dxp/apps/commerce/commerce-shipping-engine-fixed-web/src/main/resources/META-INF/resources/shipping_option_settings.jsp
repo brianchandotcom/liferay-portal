@@ -72,7 +72,7 @@ boolean hasManageCommerceShippingMethodsPermission = CommercePermission.contains
 			>
 				<liferay-ui:search-container-row
 					className="com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel"
-					keyProperty="CommerceShippingFixedOptionRelId"
+					keyProperty="commerceShippingFixedOptionRelId"
 					modelVar="commerceShippingFixedOptionRel"
 				>
 

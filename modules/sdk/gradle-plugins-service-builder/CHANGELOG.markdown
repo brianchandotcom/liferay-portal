@@ -300,16 +300,15 @@ version 1.0.182.
 - [LPS-76626]: The `BuildServiceTask`'s `databaseNameMaxLengthCheckEnabled`
 property is no longer available.
 
-## 2.1.0 - *(Unreleased)*
+## 2.1.0 - 2018-03-21
 
 ### Added
 - [LPS-78023]: Add the property `uadDir` and `uadTestIntegrationDir` to all
 tasks that extend `BuildServiceTask`.
 
 ### Changed
-- [LPS-78023]: Update the [Liferay Portal Tools Service Builder] dependency to
+- [LPS-78772]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 2.0.0.
-- [LPS-78772]: Update formatting for auto-generated `module-spring.xml` files.
 
 [Liferay Portal Tools Service Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-service-builder
 [LPS-53392]: https://issues.liferay.com/browse/LPS-53392

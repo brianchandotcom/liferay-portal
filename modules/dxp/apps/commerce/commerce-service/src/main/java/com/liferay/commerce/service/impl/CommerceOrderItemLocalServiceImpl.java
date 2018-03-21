@@ -14,11 +14,14 @@
 
 package com.liferay.commerce.service.impl;
 
+import com.liferay.commerce.exception.CommerceOrderValidatorException;
 import com.liferay.commerce.internal.search.CommerceOrderItemIndexer;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.model.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceWarehouseItem;
+import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
+import com.liferay.commerce.order.CommerceOrderValidatorResult;
+import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
@@ -71,6 +74,8 @@ public class CommerceOrderItemLocalServiceImpl
 
 		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
 			cpInstance.getCPDefinitionId());
+
+		validate(cpDefinition, cpInstance, quantity);
 
 		if (price == null) {
 			price = commercePriceCalculationLocalService.getFinalPrice(
@@ -208,9 +213,9 @@ public class CommerceOrderItemLocalServiceImpl
 	}
 
 	@Override
-	public int getCPInstanceQuantity(long cpInstanceId) {
+	public int getCPInstanceQuantity(long cpInstanceId, int orderStatus) {
 		return commerceOrderItemFinder.getCPInstanceQuantity(
-			cpInstanceId, CommerceOrderConstants.ORDER_STATUS_COMPLETED);
+			cpInstanceId, orderStatus);
 	}
 
 	@Override
@@ -267,6 +272,12 @@ public class CommerceOrderItemLocalServiceImpl
 
 		CommerceOrderItem commerceOrderItem =
 			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
+
+		int newQuantity = quantity - commerceOrderItem.getQuantity();
+
+		validate(
+			commerceOrderItem.getCPDefinition(),
+			commerceOrderItem.getCPInstance(), newQuantity);
 
 		commerceOrderItem.setQuantity(quantity);
 		commerceOrderItem.setJson(json);
@@ -362,8 +373,33 @@ public class CommerceOrderItemLocalServiceImpl
 			"Unable to fix the search index after 10 attempts");
 	}
 
+	protected void validate(
+			CPDefinition cpDefinition, CPInstance cpInstance, int quantity)
+		throws PortalException {
+
+		if (cpInstance.getCPDefinitionId() !=
+				cpDefinition.getCPDefinitionId()) {
+
+			throw new NoSuchCPInstanceException(
+				"CPInstance " + cpInstance.getCPInstanceId() +
+					" belongs to a different CPDefinition than " +
+						cpDefinition.getCPDefinitionId());
+		}
+
+		List<CommerceOrderValidatorResult> commerceCartValidatorResults =
+			_commerceOrderValidatorRegistry.validate(cpInstance, quantity);
+
+		if (!commerceCartValidatorResults.isEmpty()) {
+			throw new CommerceOrderValidatorException(
+				commerceCartValidatorResults);
+		}
+	}
+
 	private static final String[] _SELECTED_FIELD_NAMES =
 		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID};
+
+	@ServiceReference(type = CommerceOrderValidatorRegistry.class)
+	private CommerceOrderValidatorRegistry _commerceOrderValidatorRegistry;
 
 	@ServiceReference(type = CPDefinitionLocalService.class)
 	private CPDefinitionLocalService _cpDefinitionLocalService;

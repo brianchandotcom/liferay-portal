@@ -8,6 +8,7 @@ import groovy.json.JsonSlurper
 
 import java.nio.file.Path
 
+import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 import org.ajoberstar.grgit.Commit
@@ -166,6 +167,12 @@ prepareMajorIncrement {
 	description = "Prepares the build scripts of modules and portal artifacts to a major version increment."
 
 	doLast {
+		File releaseModulesDir = null
+
+		if (project.properties["releaseDir"]) {
+			releaseModulesDir = new File(releaseDir, "modules")
+		}
+
 		Map<String, String> moduleNamePathsMap = [
 			"com.liferay.portal.configuration.metatype": ":apps:static:portal-configuration:portal-configuration-metatype-api",
 			"com.liferay.portal.mobile.device.detection.fiftyonedegrees": ":apps:portal-mobile-device-detection-fiftyonedegrees:portal-mobile-device-detection-fiftyonedegrees-api",
@@ -323,7 +330,34 @@ prepareMajorIncrement {
 				else {
 					VersionNumber versionNumber = VersionNumber.parse(versionString)
 
-					if ((versionNumber.minor == 0) && (versionNumber.micro == 0)) {
+					if (releaseModulesDir) {
+						String relativePath = FileUtil.relativize(dir, projectDir)
+
+						File releaseModuleDir = new File(releaseModulesDir, relativePath)
+
+						if (!releaseModuleDir.exists()) {
+							println "Skipping increment of version ${versionString} in ${dir} since ${releaseModuleDir} does not exist"
+
+							return all
+						}
+
+						File releaseModuleVersionFile = new File(releaseModuleDir, versionFile.name)
+
+						Matcher matcher = versionPattern.matcher(releaseModuleVersionFile.getText("UTF-8"))
+
+						String releaseModuleVersionString = matcher[0][1]
+
+						VersionNumber releaseModuleVersionNumber = VersionNumber.parse(releaseModuleVersionString)
+
+						if (versionNumber > releaseModuleVersionNumber) {
+							println "Skipping increment of version ${versionString} in ${dir} since it is already greater than the one in ${releaseModuleDir}"
+
+							return all
+						}
+
+						versionNumber = releaseModuleVersionNumber
+					}
+					else if ((versionNumber.minor == 0) && (versionNumber.micro == 0)) {
 						println "Skipping increment of version ${versionString} in ${dir}"
 
 						return all

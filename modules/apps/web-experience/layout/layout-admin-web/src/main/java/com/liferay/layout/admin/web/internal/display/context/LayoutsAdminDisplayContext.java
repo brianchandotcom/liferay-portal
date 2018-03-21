@@ -104,7 +104,8 @@ public class LayoutsAdminDisplayContext {
 				_themeDisplay.getScopeGroupId());
 
 		return ListUtil.toString(
-			siteNavigationMenus, SiteNavigationMenu.NAME_ACCESSOR, ", ");
+			siteNavigationMenus, SiteNavigationMenu.NAME_ACCESSOR,
+			StringPool.COMMA_AND_SPACE);
 	}
 
 	public JSONArray getBreadcrumbEntriesJSONArray() throws PortalException {

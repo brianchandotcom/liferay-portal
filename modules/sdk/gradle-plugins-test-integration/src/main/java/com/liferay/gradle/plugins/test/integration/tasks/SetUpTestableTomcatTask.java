@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins.test.integration.tasks;
 import com.liferay.gradle.plugins.test.integration.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.test.integration.internal.util.StringUtil;
 import com.liferay.gradle.util.FileUtil;
+import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.Validator;
 import com.liferay.gradle.util.copy.ExcludeExistingFileAction;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
@@ -244,6 +245,7 @@ public class SetUpTestableTomcatTask
 
 	@TaskAction
 	public void setUpTestableTomcat() throws Exception {
+		_setUpFilePermissions();
 		_setUpLogging();
 		_setUpManager();
 		_setUpOsgiModules();
@@ -314,6 +316,26 @@ public class SetUpTestableTomcatTask
 				}
 
 				printWriter.println("\"");
+			}
+		}
+	}
+
+	private void _setUpFilePermissions() {
+		if (OSDetector.isWindows()) {
+			return;
+		}
+
+		File binDir = getBinDir();
+
+		for (File file : binDir.listFiles()) {
+			if (!file.isFile()) {
+				continue;
+			}
+
+			String fileName = file.getName();
+
+			if (fileName.endsWith(".sh")) {
+				file.setExecutable(true);
 			}
 		}
 	}

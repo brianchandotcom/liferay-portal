@@ -1,0 +1,46 @@
+apply plugin: "com.liferay.test.integration"
+
+buildscript{
+	dependencies {
+		classpath group: "de.undercouch", name: "gradle-download-task", version: "3.2.0"
+	}
+
+	repositories {
+		maven {
+			url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+task runGradleTest
+
+File testDir = file("test")
+
+File testTomcatDir = new File(testDir, "custom-0.0.0")
+
+copyTestModules {
+	enabled = false
+}
+
+runGradleTest {
+	dependsOn setUpTestableTomcat
+
+	doLast {
+		File binDir = new File(testTomcatDir, "bin")
+
+		for (String fileName in ["catalina.sh", "setenv.sh", "shutdown.sh"]) {
+			File file = new File(binDir, fileName)
+
+			assert file.canExecute()
+		}
+	}
+}
+
+setUpTestableTomcat {
+	zipUrl = "http://archive.apache.org/dist/tomcat/tomcat-8/v8.0.32/bin/apache-tomcat-8.0.32.zip"
+}
+
+testIntegrationTomcat {
+	dir = testTomcatDir
+	liferayHome = testDir
+}

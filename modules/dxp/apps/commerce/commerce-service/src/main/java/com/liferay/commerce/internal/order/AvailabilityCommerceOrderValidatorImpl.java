@@ -17,6 +17,7 @@ package com.liferay.commerce.internal.order;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
 import com.liferay.commerce.model.CPDefinitionInventory;
+import com.liferay.commerce.model.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.CommerceOrderValidator;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
@@ -85,7 +86,8 @@ public class AvailabilityCommerceOrderValidatorImpl
 
 		int orderQuantity =
 			_commerceOrderItemLocalService.getCPInstanceQuantity(
-				commerceOrderItem.getCPInstanceId());
+				commerceOrderItem.getCPInstanceId(),
+				CommerceOrderConstants.ORDER_STATUS_OPEN);
 
 		if (orderQuantity > availableQuantity) {
 			return new CommerceOrderValidatorResult(
@@ -133,7 +135,8 @@ public class AvailabilityCommerceOrderValidatorImpl
 
 		int orderQuantity =
 			_commerceOrderItemLocalService.getCPInstanceQuantity(
-				cpInstance.getCPInstanceId());
+				cpInstance.getCPInstanceId(),
+				CommerceOrderConstants.ORDER_STATUS_OPEN);
 
 		orderQuantity += quantity;
 

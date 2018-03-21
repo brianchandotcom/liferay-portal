@@ -19,6 +19,7 @@ import com.liferay.commerce.model.CPDefinitionAvailabilityRange;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.model.CPDefinitionInventoryConstants;
 import com.liferay.commerce.model.CommerceAvailabilityRange;
+import com.liferay.commerce.model.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceWarehouseItem;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.service.CPDefinitionAvailabilityRangeLocalService;
@@ -170,7 +171,8 @@ public class CPDefinitionInventoryEngineImpl
 
 		int orderCPInstanceQuantity =
 			_commerceOrderItemLocalService.getCPInstanceQuantity(
-				cpInstance.getCPInstanceId());
+				cpInstance.getCPInstanceId(),
+				CommerceOrderConstants.ORDER_STATUS_COMPLETED);
 
 		return warehouseCPInstanceQuantity - orderCPInstanceQuantity;
 	}

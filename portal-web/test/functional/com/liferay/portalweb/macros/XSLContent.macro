@@ -1,25 +1,10 @@
 <definition>
 	<command name="configureConfigurationAdminXSL">
-		<var name="key_configurationAdminName" value="XSL Content Options" />
-
-		<while>
-			<condition function="IsElementNotPresent" locator1="ConfigurationAdmin#CONFIGURATION_ADMIN_NAME_LINK" />
-			<then>
-				<execute function="Click" locator1="Icon#CARET_RIGHT" />
-
-				<execute function="Pause" value1="1000" />
-			</then>
-		</while>
-
-		<execute function="Click" locator1="ConfigurationAdmin#CONFIGURATION_ADMIN_NAME_LINK" />
-
 		<execute function="Type" locator1="TextArea#URL" value1="@portlet_context_url@,@portal_url@" />
 
 		<execute function="Check" locator1="ConfigurationAdmin#XSL_CONTENT_CONFIGURATION_XML_DOCTYPE_DECLARATION_CHECKBOX" />
 
-		<execute function="Click" locator1="Button#SAVE" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="SystemSettings#saveConfiguration" />
 	</command>
 
 	<command name="configureXSLContentPortlet">

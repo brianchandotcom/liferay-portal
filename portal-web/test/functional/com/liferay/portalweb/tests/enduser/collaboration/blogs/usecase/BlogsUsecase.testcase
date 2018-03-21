@@ -1522,11 +1522,9 @@
 			<var name="pageName" value="Private Blogs Page" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="www.able.com" />
+		<execute macro="Navigator#openPrivateURL">
+			<var name="baseURL" value="http://www.able.com:8080" />
 		</execute>
-
-		<execute macro="ProductMenu#gotoPrivatePages" />
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Blogs" />
@@ -1554,12 +1552,6 @@
 			<var name="userEmailAddress" value="test@www.able.com" />
 			<var name="virtualHostsURL" value="http://www.baker.com:8080" />
 		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="www.able.com" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPrivatePages" />
 
 		<execute macro="BlogsNavigator#gotoEntryPG">
 			<var name="entryContent" value="Blogs Entry2 Content" />

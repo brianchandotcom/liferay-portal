@@ -320,17 +320,17 @@
 		</execute>
 
 		<execute macro="Page#viewSiteNameTranslationsPG">
-			<var name="language" value="English" />
+			<var name="locale" value="en-us" />
 			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#viewSiteNameTranslationsPG">
-			<var name="language" value="español" />
+			<var name="locale" value="es-es" />
 			<var name="siteName" value="Nombre del Sitio" />
 		</execute>
 
 		<execute macro="Page#viewSiteNameTranslationsPG">
-			<var name="language" value="中文" />
+			<var name="locale" value="zh-cn" />
 			<var name="siteName" value="站点名称" />
 		</execute>
 

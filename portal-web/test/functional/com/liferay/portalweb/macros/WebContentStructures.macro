@@ -35,7 +35,7 @@
 	<command name="addLocalization">
 		<execute macro="PortletEntry#changeLocale">
 			<var name="fieldName" value="Name" />
-			<var name="locale" value="${localization1NameKey}" />
+			<var name="locale" value="${locale}" />
 		</execute>
 
 		<execute macro="WebContentStructures#addName">
@@ -43,11 +43,11 @@
 		</execute>
 
 		<if>
-			<isset var="localization2NameKey" />
+			<isset var="locale2" />
 			<then>
 				<execute macro="PortletEntry#changeLocale">
 					<var name="fieldName" value="Name" />
-					<var name="locale" value="${localization2NameKey}" />
+					<var name="locale" value="${locale2}" />
 				</execute>
 
 				<execute macro="WebContentStructures#addName">

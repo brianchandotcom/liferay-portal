@@ -143,31 +143,6 @@
 		</execute>
 	</command>
 
-	<command name="gotoPrivatePages" summary="Navigate to Product Menu > Sites > Navigation > Private Pages">
-		<execute macro="ProductMenuHelper#expandPanel">
-			<var name="panel" value="Site Administration" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Navigation" />
-		</execute>
-
-		<if>
-			<condition function="IsElementNotPresent" locator1="ProductMenu#PRIVATE_PAGES_SELECTED" />
-			<then>
-				<execute function="AssertClick" locator1="ProductMenu#PRIVATE_PAGES" value1="Private Pages" />
-			</then>
-		</if>
-
-		<execute function="Pause" locator1="5000" />
-
-		<execute macro="ProductMenuHelper#openProductMenu" />
-
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Navigation" />
-		</execute>
-	</command>
-
 	<command name="gotoPublicSite" summary="Navigate to Product Menu > Sites > Site Popup > ${site}">
 		<execute macro="ProductMenuHelper#expandPanel">
 			<var name="panel" value="Site Administration" />

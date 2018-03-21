@@ -3469,10 +3469,10 @@
 		</execute>
 
 		<execute macro="WebContentStructures#addLocalization">
+			<var name="locale" value="fr_FR" />
+			<var name="locale2" value="zh_CN" />
 			<var name="localization1Name" value="nom de la structure de wc" />
-			<var name="localization1NameKey" value="fr_FR" />
 			<var name="localization2Name" value="wc 结构名称" />
-			<var name="localization2NameKey" value="zh_CN" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
@@ -3504,10 +3504,10 @@
 		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="WebContentTemplates#localizeTemplateName">
+			<var name="locale" value="fr_FR" />
+			<var name="locale2" value="zh_CN" />
 			<var name="localization1Name" value="nom de la template de wc" />
-			<var name="localization1NameKey" value="fr_FR" />
 			<var name="localization2Name" value="wc 模板名称" />
-			<var name="localization2NameKey" value="zh_CN" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
 

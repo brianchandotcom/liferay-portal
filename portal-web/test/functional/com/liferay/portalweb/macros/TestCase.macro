@@ -23,11 +23,15 @@
 				</not>
 			</or>
 			<then>
+				<execute macro="TestCase#getTestName">
+					<return from="testName" name="testName" />
+				</execute>
+
 				<if>
 					<and>
 						<equals arg1="${testPortalInstance}" arg2="true" />
 						<not>
-							<condition function="IsTestName" locator1="" value1="${testNameSkipPortalInstance}" />
+							<equals arg1="${testName}" arg2="${testNameSkipPortalInstance}" />
 						</not>
 					</and>
 					<then>
@@ -59,15 +63,31 @@
 		</if>
 	</command>
 
+	<command name="getTestName" returns="testName">
+		<var method="TestPropsUtil#get('test.name')" name="namespacedTestName" />
+
+		<execute class="com.liferay.poshi.runner.PoshiRunnerStackTraceUtil" method="getCurrentNamespace">
+			<return name="namespace" />
+		</execute>
+
+		<var method="StringUtil#replace('${namespacedTestName}', '${namespace}.', '')" name="testName" />
+
+		<return name="testName" value="${testName}" />
+	</command>
+
 	<command name="setUpPortalInstance">
 		<var method="TestPropsUtil#get('test.name.skip.portal.instance')" name="testNameSkipPortalInstance" />
 		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<execute macro="TestCase#getTestName">
+			<return from="testName" name="testName" />
+		</execute>
 
 		<if>
 			<and>
 				<equals arg1="${testPortalInstance}" arg2="true" />
 				<not>
-					<condition function="IsTestName" locator1="" value1="${testNameSkipPortalInstance}" />
+					<equals arg1="${testName}" arg2="${testNameSkipPortalInstance}" />
 				</not>
 			</and>
 			<then>

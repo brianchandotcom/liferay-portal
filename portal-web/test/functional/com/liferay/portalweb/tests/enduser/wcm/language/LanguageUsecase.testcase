@@ -276,12 +276,16 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
+		<execute macro="LanguagePortlet#viewLanguageCurrent">
+			<var name="locale" value="en-us" />
+		</execute>
+
 		<execute macro="LanguagePortlet#viewLanguagesAbsent">
-			<var name="missingLanguages" value="ARABIC,CHINESE,FRENCH,HUNGARIAN,JAPANESE,PORTUGUESE" />
+			<var name="missingLocales" value="fr-fr,hu-hu,iw-il,ja-jp,pt-br,zh-cn" />
 		</execute>
 
 		<execute macro="LanguagePortlet#viewLanguagesPresent">
-			<var name="currentLanguages" value="ENGLISH,GERMAN,SPANISH" />
+			<var name="currentLocales" value="de-de,es-es" />
 		</execute>
 	</command>
 
@@ -436,12 +440,16 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
+		<execute macro="LanguagePortlet#viewLanguageCurrent">
+			<var name="locale" value="en-us" />
+		</execute>
+
 		<execute macro="LanguagePortlet#viewLanguagesAbsent">
-			<var name="missingLanguages" value="ARABIC,GERMAN,HUNGARIAN,JAPANESE,PORTUGUESE,SPANISH" />
+			<var name="missingLocales" value="de-de,es-es,hu-hu,iw-il,ja-jp,pt-br" />
 		</execute>
 
 		<execute macro="LanguagePortlet#viewLanguagesPresent">
-			<var name="currentLanguages" value="CHINESE,FRENCH,ENGLISH" />
+			<var name="currentLocales" value="fr-fr,zh-cn" />
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
@@ -487,12 +495,16 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
+		<execute macro="LanguagePortlet#viewLanguageCurrent">
+			<var name="locale" value="en-us" />
+		</execute>
+
 		<execute macro="LanguagePortlet#viewLanguagesAbsent">
-			<var name="missingLanguages" value="CHINESE,FRENCH,HUNGARIAN,JAPANESE,PORTUGUESE" />
+			<var name="missingLocales" value="fr-fr,hu-hu,ja-jp,pt-br,zh-cn" />
 		</execute>
 
 		<execute macro="LanguagePortlet#viewLanguagesPresent">
-			<var name="currentLanguages" value="ENGLISH,GERMAN,SPANISH" />
+			<var name="currentLocales" value="de-de,es-es" />
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">

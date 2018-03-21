@@ -211,12 +211,10 @@
 			<var name="url" value="${portalURL}/group/site-name/site-child-page" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPrivatePages" />
-
 		<execute macro="Page#view">
 			<var name="depth" value="1" />
 			<var name="pageName" value="Site Child Page" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Private" />
 		</execute>
 	</command>
 

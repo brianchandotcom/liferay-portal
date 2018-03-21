@@ -48,6 +48,7 @@ public class TestBatchGroup {
 			_gitWorkingDirectory.getGitWorkingDirectoryProperties(
 				"test.properties");
 
+		_setTestClassNamesExcludes();
 		_setTestClassNamesIncludes();
 	}
 
@@ -115,6 +116,21 @@ public class TestBatchGroup {
 		}
 
 		return testClassFileNamesSet;
+	}
+
+	private void _setTestClassNamesExcludes() {
+		String testClassNamesExcludes = _portalTestProperties.getProperty(
+			_TEST_CLASS_NAMES_EXCLUDES_PROPERTY_NAME + "[" + _batchName + "]");
+
+		if (testClassNamesExcludes == null) {
+			testClassNamesExcludes = _portalTestProperties.getProperty(
+				_TEST_CLASS_NAMES_EXCLUDES_PROPERTY_NAME);
+		}
+
+		if (testClassNamesExcludes != null) {
+			Collections.addAll(
+				_testClassNamesExcludes, testClassNamesExcludes.split(","));
+		}
 	}
 
 	private void _setTestClassNamesIncludes() {

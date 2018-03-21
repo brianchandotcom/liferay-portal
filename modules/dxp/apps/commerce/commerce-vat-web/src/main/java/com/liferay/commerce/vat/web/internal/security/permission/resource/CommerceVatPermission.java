@@ -15,10 +15,8 @@
 package com.liferay.commerce.vat.web.internal.security.permission.resource;
 
 import com.liferay.commerce.vat.constants.CommerceVatConstants;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -29,8 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceVatPermission {
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, long groupId, String actionId)
-		throws PortalException {
+		PermissionChecker permissionChecker, long groupId, String actionId) {
 
 		return _portletResourcePermission.contains(
 			permissionChecker, groupId, actionId);

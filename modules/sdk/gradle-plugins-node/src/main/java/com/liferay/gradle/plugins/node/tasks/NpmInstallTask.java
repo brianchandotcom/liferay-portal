@@ -491,9 +491,11 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		if (!reset && Files.exists(nodeModulesDigestPath)) {
 			byte[] bytes = Files.readAllBytes(nodeModulesDigestPath);
 
-			if (!Arrays.equals(bytes, digestBytes)) {
-				reset = true;
+			if (Arrays.equals(bytes, digestBytes)) {
+				return;
 			}
+
+			reset = true;
 		}
 		else {
 			reset = true;

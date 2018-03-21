@@ -57,6 +57,11 @@ public class BookmarksEntryUADEntityDisplayTest
 	}
 
 	@Override
+	protected String getApplicationName() {
+		return BookmarksUADConstants.UAD_ENTITY_SET_NAME;
+	}
+
+	@Override
 	protected UADEntityAggregator getUADEntityAggregator() {
 		return _uadEntityAggregator;
 	}

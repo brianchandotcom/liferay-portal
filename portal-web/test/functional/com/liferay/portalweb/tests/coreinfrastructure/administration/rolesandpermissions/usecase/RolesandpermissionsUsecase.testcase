@@ -2213,7 +2213,7 @@
 			<var name="portlet" value="Site Teams" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no site teams. You can add a site team by clicking the plus button on the bottom right corner." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no site teams." />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Members" />

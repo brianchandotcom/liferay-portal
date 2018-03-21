@@ -118,13 +118,9 @@ element.style.border='2px dashed red';
 			<var name="rowEntry" value="Fragment Name" />
 		</execute>
 
-		<execute function="SelectFrameTop" />
+		<execute function="AssertElementPresent" locator1="//div[@class='fragment-preview__frame']//span[@class='test'][contains(@style,'2px dashed red')]" />
 
-		<execute function="SelectFrame" locator1="Fragment#FRAGMENT_PREVIEW_IFRAME" />
-
-		<execute function="AssertElementPresent" locator1="//span[@class='test'][contains(@style,'2px dashed red')]" />
-
-		<execute function="AssertCssValue" locator1="//span[@class='test'][contains(@style,'2px dashed red')]" locator2="color" value1="rgba(255, 0, 0, 1)" />
+		<execute function="AssertCssValue" locator1="//div[@class='fragment-preview__frame']//span[@class='test'][contains(@style,'2px dashed red')]" locator2="color" value1="rgba(255, 0, 0, 1)" />
 
 		<execute function="SelectFrameTop" />
 	</command>

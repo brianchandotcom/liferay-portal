@@ -10,43 +10,38 @@
 <tbody>
 <tr>
 	<td>HTML_EDITOR</td>
-	<td>//div[@class='fragment-editor']/div[@class='source-editor'][1]//textarea</td>
+	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'source-editor')][1]//textarea</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CSS_EDITOR</td>
-	<td>//div[@class='fragment-editor']/div[@class='source-editor'][2]//textarea</td>
+	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'source-editor')][2]//textarea</td>
 	<td></td>
 </tr>
 <tr>
 	<td>JAVASCRIPT_EDITOR</td>
-	<td>//div[@class='fragment-editor']/div[@class='source-editor'][3]//textarea</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_PREVIEW_IFRAME</td>
-	<td>//iframe[@class='fragment-preview__frame']</td>
+	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'source-editor')][3]//textarea</td>
 	<td></td>
 </tr>
 <!--FRAGMENT_SIDEBAR-->
 <tr>
 	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL</td>
-	<td>//div[contains(@class,'sidebar-body')]//a[contains(@href,'FragmentCollection')][normalize-space()='${key_collectionName}']</td>
+	<td>//div[contains(@class,'sidebar-body')]//a[contains(@href,'fragment-collection')][normalize-space()='${key_collectionName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED</td>
-	<td>//div[contains(@class,'sidebar-body')]//a[contains(@href,'FragmentCollection')][contains(@class,'collapsed')][normalize-space()='${key_collectionName}']</td>
+	<td>//div[contains(@class,'sidebar-body')]//a[contains(@href,'fragment-collection')][contains(@class,'collapsed')][normalize-space()='${key_collectionName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL_EXPANDED</td>
-	<td>//div[contains(@class,'sidebar-body')]//a[contains(@href,'FragmentCollection')][@aria-expanded='true'][normalize-space()='${key_collectionName}']</td>
+	<td>//div[contains(@class,'sidebar-body')]//a[contains(@href,'fragment-collection')][@aria-expanded='true'][normalize-space()='${key_collectionName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_FRAGMENT</td>
-	<td>//ul[@class='nav'][a[contains(@href,'FragmentCollection')][@aria-expanded='true']]//div[normalize-space()='${key_fragmentName}']//button</td>
+	<td>//ul[contains(@class,'nav')]//div[contains(@id,'fragment-collection')]//button[contains(@data-fragment-entry-name,'${key_fragmentName}')]</td>
 	<td></td>
 </tr>
 <!--PAGE_TEMPLATE-->

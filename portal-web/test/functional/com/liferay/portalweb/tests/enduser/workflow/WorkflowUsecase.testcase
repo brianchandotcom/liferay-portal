@@ -1371,6 +1371,16 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Site Page" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Workflow" />
@@ -1425,6 +1435,15 @@
 			<var name="workflowResourceValue" value="Blogs Entry" />
 		</execute>
 
+		<execute macro="Workflow#viewConfigurationSelected">
+			<var name="workflowDefinition" value="No Workflow" />
+			<var name="workflowResourceValue" value="Calendar Event" />
+		</execute>
+
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="New Site" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Site Administration" />
@@ -1434,6 +1453,11 @@
 		<execute macro="Workflow#viewConfigurationSelected">
 			<var name="workflowDefinition" value="Single Approver (1)" />
 			<var name="workflowResourceValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Workflow#viewConfigurationSelected">
+			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowResourceValue" value="Calendar Event" />
 		</execute>
 	</command>
 

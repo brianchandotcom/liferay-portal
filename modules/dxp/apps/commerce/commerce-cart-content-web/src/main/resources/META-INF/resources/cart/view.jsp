@@ -35,10 +35,10 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 <liferay-ui:error exception="<%= CommerceOrderValidatorException.class %>">
 
 	<%
-	CommerceOrderValidatorException ccve = (CommerceOrderValidatorException)errorException;
+	CommerceOrderValidatorException cove = (CommerceOrderValidatorException)errorException;
 
-	if (ccve != null) {
-		commerceOrderValidatorResults = ccve.getCommerceOrderValidatorResults();
+	if (cove != null) {
+		commerceOrderValidatorResults = cove.getCommerceOrderValidatorResults();
 	}
 
 	for (CommerceOrderValidatorResult commerceOrderValidatorResult : commerceOrderValidatorResults) {

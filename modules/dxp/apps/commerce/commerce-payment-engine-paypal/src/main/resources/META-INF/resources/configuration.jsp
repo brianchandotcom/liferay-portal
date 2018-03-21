@@ -22,7 +22,7 @@ PayPalCommercePaymentEngineGroupServiceConfiguration paypalCommercePaymentEngine
 
 <aui:fieldset>
 	<div class="alert alert-info">
-		<%= LanguageUtil.format(resourceBundle, "paypal-configuration-help", new Object[] {"<a href=\"https://developer.paypal.com/developer/applications/create\">", "</a>"}, false) %>
+		<%= LanguageUtil.format(resourceBundle, "paypal-configuration-help", new Object[] {"<a href=\"https://developer.paypal.com/developer/applications/create\" target=\"_blank\">", "</a>"}, false) %>
 	</div>
 
 	<aui:input label="client-id" name="settings--clientId--" value="<%= paypalCommercePaymentEngineGroupServiceConfiguration.clientId() %>" />

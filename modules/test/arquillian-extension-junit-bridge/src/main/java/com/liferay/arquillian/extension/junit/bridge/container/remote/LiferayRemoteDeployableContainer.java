@@ -14,9 +14,14 @@
 
 package com.liferay.arquillian.extension.junit.bridge.container.remote;
 
-import com.liferay.arquillian.containter.osgi.allin.remote.KarafWithoutBundleRemoteDeployableContainer;
+import java.io.IOException;
 
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
+import org.jboss.arquillian.container.osgi.karaf.remote.KarafRemoteDeployableContainer;
 import org.jboss.arquillian.container.spi.client.container.DeploymentException;
+import org.jboss.arquillian.container.spi.client.container.LifecycleException;
 import org.jboss.arquillian.container.spi.client.protocol.metadata.HTTPContext;
 import org.jboss.arquillian.container.spi.client.protocol.metadata.ProtocolMetaData;
 import org.jboss.arquillian.core.api.Instance;
@@ -30,7 +35,7 @@ import org.jboss.shrinkwrap.api.Archive;
  */
 public class LiferayRemoteDeployableContainer
 	<T extends LiferayRemoteContainerConfiguration>
-		extends KarafWithoutBundleRemoteDeployableContainer<T> {
+		extends KarafRemoteDeployableContainer<T> {
 
 	@Override
 	public ProtocolMetaData deploy(Archive<?> archive)
@@ -59,6 +64,20 @@ public class LiferayRemoteDeployableContainer
 		configurationInstanceProducer.set(config);
 
 		super.setup(config);
+	}
+
+	@Override
+	protected void awaitArquillianBundleActive(long timeout, TimeUnit unit)
+		throws InterruptedException, IOException, TimeoutException {
+
+		//On purpose: It is not needed to install an Arquillian Bundle
+	}
+
+	@Override
+	protected void installArquillianBundle()
+		throws IOException, LifecycleException {
+
+		//On purpose: It is not needed to install an Arquillian Bundle
 	}
 
 	@ApplicationScoped

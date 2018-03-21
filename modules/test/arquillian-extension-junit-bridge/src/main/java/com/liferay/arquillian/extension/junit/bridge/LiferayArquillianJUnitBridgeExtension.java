@@ -14,7 +14,6 @@
 
 package com.liferay.arquillian.extension.junit.bridge;
 
-import com.liferay.arquillian.containter.osgi.allin.remote.KarafWithoutBundleRemoteDeployableContainer;
 import com.liferay.arquillian.extension.junit.bridge.container.remote.LiferayRemoteDeployableContainer;
 import com.liferay.arquillian.extension.junit.bridge.deployment.BndDeploymentScenarioGenerator;
 import com.liferay.arquillian.extension.junit.bridge.deployment.JUnitBridgeAuxiliaryArchiveAppender;
@@ -53,10 +52,6 @@ public class LiferayArquillianJUnitBridgeExtension
 				NoOpArchiveApplicationProcessor.class);
 			extensionBuilder.override(
 				DeployableContainer.class, KarafRemoteDeployableContainer.class,
-				KarafWithoutBundleRemoteDeployableContainer.class);
-			extensionBuilder.override(
-				DeployableContainer.class,
-				KarafWithoutBundleRemoteDeployableContainer.class,
 				LiferayRemoteDeployableContainer.class);
 			extensionBuilder.service(
 				DeploymentScenarioGenerator.class,

@@ -217,6 +217,12 @@ don't match, the `node_modules` directory is deleted before running
 ### Fixed
 - [LPS-73472]: Allow single `"bin"` values in the `package.json` files.
 
+## 4.3.1 - 2018-03-21
+
+### Fixed
+- [LPS-78741]: If the `nodeModulesDigestFile` matches the `node_modules` directory's
+digest, do not run `npm ci` or `npm install`.
+
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573

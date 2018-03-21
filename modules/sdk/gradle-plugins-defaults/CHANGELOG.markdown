@@ -3059,6 +3059,20 @@ marker file.
 ### Changed
 - [LPS-78772]: Update the [Liferay Gradle Plugins] dependency to version 3.9.4.
 
+## 5.3.42 - 2018-03-21
+
+### Changed
+- [LPS-78772]: Update the [Liferay Gradle Plugins] dependency to version 3.9.9.
+
+## 5.3.43 - 2018-03-21
+
+### Changed
+- [LPS-78741]: Configure the `npmInstall` task to run `npm install` instead of
+`npm ci`.
+- [LPS-78741]: Update the [Liferay Gradle Plugins] dependency to version 3.9.8.
+- [LPS-78741]: Update the [Liferay Gradle Plugins JSDoc] dependency to version
+2.0.3.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public

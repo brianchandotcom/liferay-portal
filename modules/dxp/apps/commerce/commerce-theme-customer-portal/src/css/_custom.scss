@@ -192,6 +192,22 @@
 	padding: 1.25rem;
 }
 
+// Pagination
+
+a[type="button"] {
+	-webkit-appearance: none;
+}
+
+.pagination-items-per-page {
+	.dropdown-toggle {
+		font-weight: $font-weight-semi-bold;
+
+		.icon-sort {
+			margin-left: 0.5rem;
+		}
+	}
+}
+
 // Tables
 
 .table-list {

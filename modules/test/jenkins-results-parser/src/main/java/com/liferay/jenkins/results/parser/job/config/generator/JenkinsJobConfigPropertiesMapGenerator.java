@@ -196,10 +196,10 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 
 		Dom4JUtil.addToElement(
 			columnsElement,
-			Dom4JUtil.getNewElement("hudson.views.BuildButtonColumn", null),
-			Dom4JUtil.getNewElement("hudson.views.LastDurationColumn", null),
+			Dom4JUtil.getNewElement("hudson.views.LastSuccessColumn", null),
 			Dom4JUtil.getNewElement("hudson.views.LastFailureColumn", null),
-			Dom4JUtil.getNewElement("hudson.views.LastSuccessColumn", null));
+			Dom4JUtil.getNewElement("hudson.views.LastDurationColumn", null),
+			Dom4JUtil.getNewElement("hudson.views.BuildButtonColumn", null));
 
 		return listViewElement;
 	}

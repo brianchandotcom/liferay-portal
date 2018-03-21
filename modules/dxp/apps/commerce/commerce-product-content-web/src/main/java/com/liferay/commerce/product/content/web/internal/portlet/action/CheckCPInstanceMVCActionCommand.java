@@ -17,15 +17,15 @@ package com.liferay.commerce.product.content.web.internal.portlet.action;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
 import com.liferay.commerce.model.CPDefinitionInventory;
-import com.liferay.commerce.product.constants.CPContentContributorConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.util.CPContentContributor;
+import com.liferay.commerce.product.util.CPContentContributorRegistry;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.commerce.service.CommercePriceCalculationLocalService;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -35,16 +35,16 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
+import java.util.Iterator;
+import java.util.List;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
@@ -52,6 +52,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	immediate = true,
@@ -72,12 +73,6 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 			WebKeys.THEME_DISPLAY);
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
-
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			actionRequest);
-
-		HttpServletResponse httpServletResponse =
-			_portal.getHttpServletResponse(actionResponse);
 
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
@@ -107,60 +102,6 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 					_cpDefinitionInventoryEngineRegistry.
 						getCPDefinitionInventoryEngine(cpDefinitionInventory);
 
-				boolean displayAvailability =
-					cpDefinitionInventoryEngine.isDisplayAvailability(
-						cpInstance);
-
-				boolean available = false;
-
-				if (cpDefinitionInventoryEngine.getStockQuantity(cpInstance) >
-						cpDefinitionInventoryEngine.getMinStockQuantity(
-							cpInstance)) {
-
-					available = true;
-				}
-
-				if (displayAvailability && available) {
-					jsonObject.put(
-						"availability",
-						getAvailabilityLabel(
-							httpServletRequest,
-							CPContentContributorConstants.AVAILABLE));
-				}
-
-				if (displayAvailability && !available) {
-					jsonObject.put(
-						"availability",
-						getAvailabilityLabel(
-							httpServletRequest,
-							CPContentContributorConstants.UNAVAILABLE));
-				}
-
-				if (!available &&
-					cpDefinitionInventoryEngine.isBackOrderAllowed(
-						cpInstance)) {
-
-					jsonObject.put(
-						"availabilityRange",
-						getAvailabilityRangeLabel(
-							httpServletRequest,
-							cpDefinitionInventoryEngine.getAvailabilityRange(
-								cpInstance, _portal.getLocale(actionRequest))));
-				}
-
-				boolean displayStockQuantity =
-					cpDefinitionInventoryEngine.isDisplayStockQuantity(
-						cpInstance);
-
-				if (displayStockQuantity) {
-					jsonObject.put(
-						"stockQuantity",
-						getStockQuantityLabel(
-							httpServletRequest,
-							cpDefinitionInventoryEngine.getStockQuantity(
-								cpInstance)));
-				}
-
 				String formattedPrice =
 					_commercePriceCalculationLocalService.
 						getFormattedFinalPrice(
@@ -171,6 +112,24 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 								cpInstance));
 
 				jsonObject.put("price", formattedPrice);
+
+				List<CPContentContributor> cpContentContributors =
+					_cpContentContributorRegistry.getCPContentContributors();
+
+				for (CPContentContributor cpContentContributor :
+						cpContentContributors) {
+
+					JSONObject valueJSONObject = cpContentContributor.getValue(
+						cpInstance, themeDisplay.getLocale());
+
+					Iterator<String> iterator = valueJSONObject.keys();
+
+					while (iterator.hasNext()) {
+						String key = iterator.next();
+
+						jsonObject.put(key, valueJSONObject.get(key));
+					}
+				}
 			}
 			else {
 				jsonObject.put("cpInstanceExist", false);
@@ -188,43 +147,7 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		hideDefaultErrorMessage(actionRequest);
 		hideDefaultSuccessMessage(actionRequest);
 
-		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
-
 		writeJSON(actionResponse, jsonObject);
-	}
-
-	protected String getAvailabilityLabel(
-		HttpServletRequest httpServletRequest, String availability) {
-
-		if (Validator.isNull(availability)) {
-			return StringPool.BLANK;
-		}
-
-		return LanguageUtil.format(
-			httpServletRequest, "availability-x", availability, true);
-	}
-
-	protected String getAvailabilityRangeLabel(
-		HttpServletRequest httpServletRequest, String availabilityRange) {
-
-		if (Validator.isNull(availabilityRange)) {
-			return StringPool.BLANK;
-		}
-
-		return LanguageUtil.format(
-			httpServletRequest, "product-will-be-available-in-x",
-			availabilityRange);
-	}
-
-	protected String getStockQuantityLabel(
-		HttpServletRequest httpServletRequest, int stockQuantity) {
-
-		if (stockQuantity <= 0) {
-			return StringPool.BLANK;
-		}
-
-		return LanguageUtil.format(
-			httpServletRequest, "stock-quantity-x", stockQuantity);
 	}
 
 	protected void writeJSON(ActionResponse actionResponse, Object object)
@@ -246,6 +169,9 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private CommercePriceCalculationLocalService
 		_commercePriceCalculationLocalService;
+
+	@Reference
+	private CPContentContributorRegistry _cpContentContributorRegistry;
 
 	@Reference
 	private CPDefinitionInventoryEngineRegistry

@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.BNDSourceUtil;
@@ -22,13 +23,10 @@ import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
 import java.nio.file.FileVisitOption;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.PathMatcher;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
@@ -49,8 +47,8 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 
 	@Override
 	public void init() throws Exception {
-		_exportPackageBundleSymbolicNames.addAll(
-			_getExportPackageBundleSymbolicNames());
+		_emptyExportPackageBundleSymbolicNames.addAll(
+			_getEmptyExportPackageBundleSymbolicNames());
 	}
 
 	@Override
@@ -58,22 +56,11 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 		return true;
 	}
 
-	public void setExportPackageBundleSymbolicNamePrefix(
-		String exportPackageBundleSymbolicNamePrefix) {
-
-		_exportPackageBundleSymbolicNamePrefixes.add(
-			exportPackageBundleSymbolicNamePrefix);
-	}
-
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
 		if (isSubrepository() || isReadOnly(absolutePath)) {
-			return content;
-		}
-
-		if (absolutePath.contains("/modules/apps/static/")) {
 			return content;
 		}
 
@@ -161,7 +148,7 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 		return matcher.group(1);
 	}
 
-	private Set<String> _getExportPackageBundleSymbolicNames()
+	private Set<String> _getEmptyExportPackageBundleSymbolicNames()
 		throws Exception {
 
 		File portalDir = getPortalDir();
@@ -180,10 +167,10 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 				public FileVisitResult preVisitDirectory(
 					Path dirPath, BasicFileAttributes basicFileAttributes) {
 
-					for (PathMatcher pathMatcher : _PATH_MATCHERS) {
-						if (pathMatcher.matches(dirPath)) {
-							return FileVisitResult.SKIP_SUBTREE;
-						}
+					String dirName = String.valueOf(dirPath.getFileName());
+
+					if (ArrayUtil.contains(_SKIP_DIR_NAMES, dirName)) {
+						return FileVisitResult.SKIP_SUBTREE;
 					}
 
 					Path path = dirPath.resolve("bnd.bnd");
@@ -204,18 +191,16 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 		for (File file : files) {
 			String content = FileUtil.read(file);
 
-			if (!content.contains("Export-Package:")) {
+			if (content.contains("Export-Package:")) {
 				continue;
 			}
 
 			String bundleSymbolicName = BNDSourceUtil.getDefinitionValue(
 				content, "Bundle-SymbolicName");
 
-			if (bundleSymbolicName == null) {
-				continue;
-			}
+			if ((bundleSymbolicName != null) &&
+				bundleSymbolicName.startsWith("com.liferay.")) {
 
-			if (bundleSymbolicName.startsWith("com.liferay")) {
 				bundleSymbolicNames.add(bundleSymbolicName);
 			}
 		}
@@ -224,49 +209,26 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 	}
 
 	private boolean _isValidBundleSymbolicName(String dependencyName) {
-		if (!dependencyName.startsWith("com.liferay.")) {
-			return true;
-		}
+		if (!dependencyName.startsWith("com.liferay.") ||
+			!_emptyExportPackageBundleSymbolicNames.contains(dependencyName)) {
 
-		for (String s : _exportPackageBundleSymbolicNamePrefixes) {
-			if (dependencyName.startsWith(s)) {
-				return true;
-			}
-		}
-
-		if (_exportPackageBundleSymbolicNames.contains(dependencyName)) {
 			return true;
 		}
 
 		return false;
 	}
 
-	private static final FileSystem _FILE_SYSTEM = FileSystems.getDefault();
-
-	private static final PathMatcher[] _PATH_MATCHERS = {
-		_FILE_SYSTEM.getPathMatcher("glob:**/.git/**"),
-		_FILE_SYSTEM.getPathMatcher("glob:**/.gradle/**"),
-		_FILE_SYSTEM.getPathMatcher("glob:**/.idea/**"),
-		_FILE_SYSTEM.getPathMatcher("glob:**/.m2/**"),
-		_FILE_SYSTEM.getPathMatcher("glob:**/.settings/**"),
-		_FILE_SYSTEM.getPathMatcher("glob:**/bin/**"),
-		_FILE_SYSTEM.getPathMatcher("glob:**/build/**"),
-		_FILE_SYSTEM.getPathMatcher("glob:**/classes/**"),
-		_FILE_SYSTEM.getPathMatcher("glob:**/sql/**"),
-		_FILE_SYSTEM.getPathMatcher("glob:**/src/**"),
-		_FILE_SYSTEM.getPathMatcher("glob:**/test-classes/**"),
-		_FILE_SYSTEM.getPathMatcher("glob:**/test-coverage/**"),
-		_FILE_SYSTEM.getPathMatcher("glob:**/test-results/**"),
-		_FILE_SYSTEM.getPathMatcher("glob:**/tmp/**")
+	private static final String[] _SKIP_DIR_NAMES = {
+		".git", ".gradle", ".idea", ".m2", ".settings", "bin", "build",
+		"classes", "dependencies", "node_modules", "sql", "src", "test",
+		"test-classes", "test-coverage", "test-results", "tmp"
 	};
 
 	private final Pattern _dependenciesPattern = Pattern.compile(
 		"(\n|\\A)(\t*)dependencies \\{\n");
 	private final Pattern _dependencyNamePattern = Pattern.compile(
 		".*, name: \"([^\"]*)\".*");
-	private final List<String> _exportPackageBundleSymbolicNamePrefixes =
-		new ArrayList<>();
-	private final List<String> _exportPackageBundleSymbolicNames =
+	private final List<String> _emptyExportPackageBundleSymbolicNames =
 		new ArrayList<>();
 
 }

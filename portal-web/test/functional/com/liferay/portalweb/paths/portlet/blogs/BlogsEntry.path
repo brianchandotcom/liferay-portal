@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>TITLE_GENERIC</td>
-	<td>//div[@class='entry-title']/h2/a</td>
+	<td>//div[contains(@class,'autofit-row')]//a//h3</td>
 	<td></td>
 </tr>
 <tr>

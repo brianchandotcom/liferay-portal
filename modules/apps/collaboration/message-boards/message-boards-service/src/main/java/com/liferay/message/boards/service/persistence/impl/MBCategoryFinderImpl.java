@@ -78,6 +78,15 @@ public class MBCategoryFinderImpl
 		MBCategoryFinder.class.getName() + ".findT_ByG_C";
 
 	@Override
+	public int countC_ByG_P(
+		long groupId, long parentCategoryId,
+		QueryDefinition<?> queryDefinition) {
+
+		return doCountC_ByG_P(
+			groupId, parentCategoryId, queryDefinition, false);
+	}
+
+	@Override
 	public int countC_ByS_G_U_P(
 		long groupId, long userId, long[] parentCategoryIds,
 		QueryDefinition<MBCategory> queryDefinition) {
@@ -91,6 +100,14 @@ public class MBCategoryFinderImpl
 		long groupId, long categoryId, QueryDefinition<?> queryDefinition) {
 
 		return doCountC_T_ByG_C(groupId, categoryId, queryDefinition, false);
+	}
+
+	@Override
+	public int filterCountC_ByG_P(
+		long groupId, long parentCategoryId,
+		QueryDefinition<?> queryDefinition) {
+
+		return doCountC_ByG_P(groupId, parentCategoryId, queryDefinition, true);
 	}
 
 	@Override
@@ -110,6 +127,14 @@ public class MBCategoryFinderImpl
 	}
 
 	@Override
+	public List<MBCategory> filterFindC_ByG_P(
+		long groupId, long parentCategoryId,
+		QueryDefinition<?> queryDefinition) {
+
+		return doFindC_ByG_P(groupId, parentCategoryId, queryDefinition, true);
+	}
+
+	@Override
 	public List<MBCategory> filterFindC_ByS_G_U_P(
 		long groupId, long userId, long[] parentCategoryIds,
 		QueryDefinition<MBCategory> queryDefinition) {
@@ -126,6 +151,14 @@ public class MBCategoryFinderImpl
 	}
 
 	@Override
+	public List<MBCategory> findC_ByG_P(
+		long groupId, long parentCategoryId,
+		QueryDefinition<?> queryDefinition) {
+
+		return doFindC_ByG_P(groupId, parentCategoryId, queryDefinition, false);
+	}
+
+	@Override
 	public List<MBCategory> findC_ByS_G_U_P(
 		long groupId, long userId, long[] parentCategoryIds,
 		QueryDefinition<MBCategory> queryDefinition) {
@@ -139,6 +172,79 @@ public class MBCategoryFinderImpl
 		long groupId, long categoryId, QueryDefinition<?> queryDefinition) {
 
 		return doFindC_T_ByG_C(groupId, categoryId, queryDefinition, false);
+	}
+
+	protected int doCountC_ByG_P(
+		long groupId, long parentCategoryId, QueryDefinition<?> queryDefinition,
+		boolean inlineSQLHelper) {
+
+		if (!inlineSQLHelper || !InlineSQLHelperUtil.isEnabled(groupId)) {
+			if (queryDefinition.isExcludeStatus()) {
+				return MBCategoryUtil.countByG_P_NotS(
+					groupId, parentCategoryId, queryDefinition.getStatus());
+			}
+			else {
+				if (queryDefinition.getStatus() !=
+						WorkflowConstants.STATUS_ANY) {
+
+					return MBCategoryUtil.countByG_P_S(
+						groupId, parentCategoryId, queryDefinition.getStatus());
+				}
+				else {
+					return MBCategoryUtil.countByG_P(groupId, parentCategoryId);
+				}
+			}
+		}
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(
+				getClass(), COUNT_C_BY_G_P, queryDefinition,
+				MBCategoryImpl.TABLE_NAME);
+
+			sql = InlineSQLHelperUtil.replacePermissionCheck(
+				sql, MBCategory.class.getName(), "MBCategory.categoryId",
+				groupId);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(parentCategoryId);
+			qPos.add(queryDefinition.getStatus());
+
+			if (queryDefinition.getOwnerUserId() > 0) {
+				qPos.add(queryDefinition.getOwnerUserId());
+
+				if (queryDefinition.isIncludeOwner()) {
+					qPos.add(WorkflowConstants.STATUS_IN_TRASH);
+				}
+			}
+
+			Iterator<Long> itr = q.iterate();
+
+			while (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	protected int doCountC_ByS_G_U_P(
@@ -305,6 +411,90 @@ public class MBCategoryFinderImpl
 			}
 
 			return count;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected List<MBCategory> doFindC_ByG_P(
+		long groupId, long parentCategoryId, QueryDefinition<?> queryDefinition,
+		boolean inlineSQLHelper) {
+
+		if (!inlineSQLHelper || !InlineSQLHelperUtil.isEnabled(groupId)) {
+			if (queryDefinition.isExcludeStatus()) {
+				return MBCategoryUtil.findByG_P_NotS(
+					groupId, parentCategoryId, queryDefinition.getStatus(),
+					queryDefinition.getStart(), queryDefinition.getEnd());
+			}
+			else {
+				if (queryDefinition.getStatus() !=
+						WorkflowConstants.STATUS_ANY) {
+
+					return MBCategoryUtil.findByG_P_S(
+						groupId, parentCategoryId, queryDefinition.getStatus(),
+						queryDefinition.getStart(), queryDefinition.getEnd());
+				}
+				else {
+					return MBCategoryUtil.findByG_P(
+						groupId, parentCategoryId, queryDefinition.getStart(),
+						queryDefinition.getEnd());
+				}
+			}
+		}
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(
+				getClass(), FIND_C_BY_G_P, queryDefinition,
+				MBCategoryImpl.TABLE_NAME);
+
+			sql = InlineSQLHelperUtil.replacePermissionCheck(
+				sql, MBCategory.class.getName(), "MBCategory.categoryId",
+				groupId);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar("modelId", Type.LONG);
+			q.addScalar("modelCategory", Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(parentCategoryId);
+			qPos.add(queryDefinition.getStatus());
+
+			if (queryDefinition.getOwnerUserId() > 0) {
+				qPos.add(queryDefinition.getOwnerUserId());
+
+				if (queryDefinition.isIncludeOwner()) {
+					qPos.add(WorkflowConstants.STATUS_IN_TRASH);
+				}
+			}
+
+			List<MBCategory> categories = new ArrayList<>();
+
+			Iterator<Object[]> itr = (Iterator<Object[]>)QueryUtil.iterate(
+				q, getDialect(), queryDefinition.getStart(),
+				queryDefinition.getEnd());
+
+			while (itr.hasNext()) {
+				Object[] array = itr.next();
+
+				long modelId = (Long)array[0];
+
+				MBCategory category = MBCategoryUtil.findByPrimaryKey(modelId);
+
+				categories.add(category);
+			}
+
+			return categories;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

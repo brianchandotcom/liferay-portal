@@ -113,6 +113,14 @@ public class MBCategoryServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
+		long groupId, long parentCategoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCategories(groupId, parentCategoryId, queryDefinition);
+	}
+
+	public static java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
 		long groupId, long[] parentCategoryIds, int start, int end) {
 		return getService().getCategories(groupId, parentCategoryIds, start, end);
 	}
@@ -158,7 +166,8 @@ public class MBCategoryServiceUtil {
 
 	public static java.util.List<java.lang.Object> getCategoriesAndThreads(
 		long groupId, long categoryId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getCategoriesAndThreads(groupId, categoryId, queryDefinition);
 	}
@@ -175,7 +184,8 @@ public class MBCategoryServiceUtil {
 
 	public static int getCategoriesAndThreadsCount(long groupId,
 		long categoryId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getCategoriesAndThreadsCount(groupId, categoryId,
 			queryDefinition);
@@ -195,6 +205,14 @@ public class MBCategoryServiceUtil {
 		return getService()
 				   .getCategoriesCount(groupId, excludedCategoryId,
 			parentCategoryId, status);
+	}
+
+	public static int getCategoriesCount(long groupId, long parentCategoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCategoriesCount(groupId, parentCategoryId,
+			queryDefinition);
 	}
 
 	public static int getCategoriesCount(long groupId, long[] parentCategoryIds) {

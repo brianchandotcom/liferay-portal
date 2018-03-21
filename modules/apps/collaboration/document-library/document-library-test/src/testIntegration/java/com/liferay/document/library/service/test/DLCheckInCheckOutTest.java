@@ -115,7 +115,7 @@ public class DLCheckInCheckOutTest {
 	public void testAdminCancelCheckout() throws Exception {
 		FileEntry fileEntry = null;
 
-		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_authorUser)) {
 
 			fileEntry = createFileEntry(StringUtil.randomString());
@@ -124,7 +124,7 @@ public class DLCheckInCheckOutTest {
 				fileEntry.getFileEntryId(), _serviceContext);
 		}
 
-		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				TestPropsValues.getUser())) {
 
 			DLAppServiceUtil.cancelCheckOut(fileEntry.getFileEntryId());
@@ -140,7 +140,7 @@ public class DLCheckInCheckOutTest {
 	public void testAdminOverrideCheckout() throws Exception {
 		FileEntry fileEntry = null;
 
-		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_authorUser)) {
 
 			fileEntry = createFileEntry(StringUtil.randomString());
@@ -149,7 +149,7 @@ public class DLCheckInCheckOutTest {
 				fileEntry.getFileEntryId(), _serviceContext);
 		}
 
-		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				TestPropsValues.getUser())) {
 
 			DLAppServiceUtil.checkInFileEntry(
@@ -162,7 +162,7 @@ public class DLCheckInCheckOutTest {
 	public void testAdminUpdateCheckedOutFile() throws Exception {
 		FileEntry fileEntry = null;
 
-		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_authorUser)) {
 
 			fileEntry = createFileEntry(StringUtil.randomString());
@@ -171,7 +171,7 @@ public class DLCheckInCheckOutTest {
 				fileEntry.getFileEntryId(), _serviceContext);
 		}
 
-		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				TestPropsValues.getUser())) {
 
 			updateFileEntry(fileEntry.getFileEntryId());
@@ -243,7 +243,7 @@ public class DLCheckInCheckOutTest {
 
 		FileEntry fileEntry = null;
 
-		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_authorUser)) {
 
 			fileEntry = createFileEntry(StringUtil.randomString());
@@ -252,7 +252,7 @@ public class DLCheckInCheckOutTest {
 				fileEntry.getFileEntryId(), _serviceContext);
 		}
 
-		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_overriderUser)) {
 
 			DLAppServiceUtil.cancelCheckOut(fileEntry.getFileEntryId());
@@ -276,7 +276,7 @@ public class DLCheckInCheckOutTest {
 
 			FileEntry fileEntry = null;
 
-			try (ContextUserReplace contextUserReplacer =
+			try (ContextUserReplace contextUserReplace =
 					new ContextUserReplace(_authorUser)) {
 
 				fileEntry = createFileEntry(StringUtil.randomString());
@@ -285,7 +285,7 @@ public class DLCheckInCheckOutTest {
 					fileEntry.getFileEntryId(), _serviceContext);
 			}
 
-			try (ContextUserReplace contextUserReplacer =
+			try (ContextUserReplace contextUserReplace =
 					new ContextUserReplace(_overriderUser)) {
 
 				DLAppServiceUtil.cancelCheckOut(fileEntry.getFileEntryId());
@@ -353,7 +353,7 @@ public class DLCheckInCheckOutTest {
 
 		FileEntry fileEntry = null;
 
-		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_authorUser)) {
 
 			fileEntry = createFileEntry(StringUtil.randomString());
@@ -362,7 +362,7 @@ public class DLCheckInCheckOutTest {
 				fileEntry.getFileEntryId(), _serviceContext);
 		}
 
-		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_overriderUser)) {
 
 			DLAppServiceUtil.checkInFileEntry(
@@ -386,7 +386,7 @@ public class DLCheckInCheckOutTest {
 
 			FileEntry fileEntry = null;
 
-			try (ContextUserReplace contextUserReplacer =
+			try (ContextUserReplace contextUserReplace =
 					new ContextUserReplace(_authorUser)) {
 
 				fileEntry = createFileEntry(StringUtil.randomString());
@@ -395,7 +395,7 @@ public class DLCheckInCheckOutTest {
 					fileEntry.getFileEntryId(), _serviceContext);
 			}
 
-			try (ContextUserReplace contextUserReplacer =
+			try (ContextUserReplace contextUserReplace =
 					new ContextUserReplace(_overriderUser)) {
 
 				DLAppServiceUtil.checkInFileEntry(
@@ -499,7 +499,7 @@ public class DLCheckInCheckOutTest {
 
 			FileEntry fileEntry = null;
 
-			try (ContextUserReplace contextUserReplacer =
+			try (ContextUserReplace contextUserReplace =
 					new ContextUserReplace(_authorUser)) {
 
 				fileEntry = createFileEntry(StringUtil.randomString());
@@ -508,7 +508,7 @@ public class DLCheckInCheckOutTest {
 					fileEntry.getFileEntryId(), _serviceContext);
 			}
 
-			try (ContextUserReplace contextUserReplacer =
+			try (ContextUserReplace contextUserReplace =
 					new ContextUserReplace(_overriderUser)) {
 
 				updateFileEntry(fileEntry.getFileEntryId());

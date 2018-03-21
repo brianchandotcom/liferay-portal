@@ -256,11 +256,45 @@ public class MBThreadServiceSoap {
 		}
 	}
 
+	public static com.liferay.message.boards.model.MBThreadSoap[] getThreads(
+		long groupId, long categoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.model.MBThread> queryDefinition)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.message.boards.model.MBThread> returnValue =
+				MBThreadServiceUtil.getThreads(groupId, categoryId,
+					queryDefinition);
+
+			return com.liferay.message.boards.model.MBThreadSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getThreadsCount(long groupId, long categoryId, int status)
 		throws RemoteException {
 		try {
 			int returnValue = MBThreadServiceUtil.getThreadsCount(groupId,
 					categoryId, status);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getThreadsCount(long groupId, long categoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.model.MBThread> queryDefinition)
+		throws RemoteException {
+		try {
+			int returnValue = MBThreadServiceUtil.getThreadsCount(groupId,
+					categoryId, queryDefinition);
 
 			return returnValue;
 		}

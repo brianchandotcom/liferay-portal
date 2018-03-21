@@ -112,6 +112,15 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 
 	@Override
 	public java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
+		long groupId, long parentCategoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbCategoryService.getCategories(groupId, parentCategoryId,
+			queryDefinition);
+	}
+
+	@Override
+	public java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
 		long groupId, long[] parentCategoryIds, int start, int end) {
 		return _mbCategoryService.getCategories(groupId, parentCategoryIds,
 			start, end);
@@ -163,7 +172,8 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 	@Override
 	public java.util.List<java.lang.Object> getCategoriesAndThreads(
 		long groupId, long categoryId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbCategoryService.getCategoriesAndThreads(groupId, categoryId,
 			queryDefinition);
 	}
@@ -183,7 +193,8 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 
 	@Override
 	public int getCategoriesAndThreadsCount(long groupId, long categoryId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbCategoryService.getCategoriesAndThreadsCount(groupId,
 			categoryId, queryDefinition);
 	}
@@ -205,6 +216,14 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 		long parentCategoryId, int status) {
 		return _mbCategoryService.getCategoriesCount(groupId,
 			excludedCategoryId, parentCategoryId, status);
+	}
+
+	@Override
+	public int getCategoriesCount(long groupId, long parentCategoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbCategoryService.getCategoriesCount(groupId, parentCategoryId,
+			queryDefinition);
 	}
 
 	@Override

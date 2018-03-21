@@ -131,8 +131,21 @@ public class MBThreadServiceUtil {
 		return getService().getThreads(groupId, categoryId, status, start, end);
 	}
 
+	public static java.util.List<com.liferay.message.boards.model.MBThread> getThreads(
+		long groupId, long categoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.model.MBThread> queryDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getThreads(groupId, categoryId, queryDefinition);
+	}
+
 	public static int getThreadsCount(long groupId, long categoryId, int status) {
 		return getService().getThreadsCount(groupId, categoryId, status);
+	}
+
+	public static int getThreadsCount(long groupId, long categoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.model.MBThread> queryDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getThreadsCount(groupId, categoryId, queryDefinition);
 	}
 
 	public static com.liferay.portal.kernel.lock.Lock lockThread(long threadId)

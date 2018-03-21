@@ -132,8 +132,24 @@ public class MBThreadServiceWrapper implements MBThreadService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.message.boards.model.MBThread> getThreads(
+		long groupId, long categoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.model.MBThread> queryDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbThreadService.getThreads(groupId, categoryId, queryDefinition);
+	}
+
+	@Override
 	public int getThreadsCount(long groupId, long categoryId, int status) {
 		return _mbThreadService.getThreadsCount(groupId, categoryId, status);
+	}
+
+	@Override
+	public int getThreadsCount(long groupId, long categoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.model.MBThread> queryDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbThreadService.getThreadsCount(groupId, categoryId,
+			queryDefinition);
 	}
 
 	@Override

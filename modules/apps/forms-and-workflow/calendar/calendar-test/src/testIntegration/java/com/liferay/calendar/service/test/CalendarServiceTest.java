@@ -72,7 +72,7 @@ public class CalendarServiceTest {
 
 		_adminUser = UserTestUtil.addOmniAdminUser();
 
-		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_adminUser)) {
 
 			Calendar notStagedCalendar = getGroupCalendar(_notStagedGroup);

@@ -37,6 +37,16 @@ public class BaseMBListDisplayContext
 	}
 
 	@Override
+	public int getCategoryEntriesDelta() {
+		return parentDisplayContext.getCategoryEntriesDelta();
+	}
+
+	@Override
+	public int getThreadEntriesDelta() {
+		return parentDisplayContext.getThreadEntriesDelta();
+	}
+
+	@Override
 	public boolean isShowMyPosts() {
 		return parentDisplayContext.isShowMyPosts();
 	}
@@ -52,10 +62,39 @@ public class BaseMBListDisplayContext
 	}
 
 	@Override
+	public void populateCategoriesResultsAndTotal(
+			SearchContainer searchContainer)
+		throws PortalException {
+
+		parentDisplayContext.populateCategoriesResultsAndTotal(searchContainer);
+	}
+
+	/**
+	 * @deprecated As of 4.0.0, with no direct replacement
+	 */
+	@Deprecated
+	@Override
 	public void populateResultsAndTotal(SearchContainer searchContainer)
 		throws PortalException {
 
 		parentDisplayContext.populateResultsAndTotal(searchContainer);
+	}
+
+	@Override
+	public void populateThreadsResultsAndTotal(SearchContainer searchContainer)
+		throws PortalException {
+
+		parentDisplayContext.populateThreadsResultsAndTotal(searchContainer);
+	}
+
+	@Override
+	public void setCategoryEntriesDelta(SearchContainer searchContainer) {
+		parentDisplayContext.setCategoryEntriesDelta(searchContainer);
+	}
+
+	@Override
+	public void setThreadEntriesDelta(SearchContainer searchContainer) {
+		parentDisplayContext.setThreadEntriesDelta(searchContainer);
 	}
 
 }

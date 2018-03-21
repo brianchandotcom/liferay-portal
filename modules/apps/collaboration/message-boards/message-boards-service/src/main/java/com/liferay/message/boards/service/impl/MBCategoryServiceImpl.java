@@ -148,6 +148,22 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 
 	@Override
 	public List<MBCategory> getCategories(
+			long groupId, long parentCategoryId,
+			QueryDefinition<?> queryDefinition)
+		throws PortalException {
+
+		if (queryDefinition.isIncludeOwner() &&
+			(queryDefinition.getOwnerUserId() != 0)) {
+
+			queryDefinition.setOwnerUserId(getUserId());
+		}
+
+		return mbCategoryFinder.filterFindC_ByG_P(
+			groupId, parentCategoryId, queryDefinition);
+	}
+
+	@Override
+	public List<MBCategory> getCategories(
 		long groupId, long[] parentCategoryIds, int start, int end) {
 
 		return mbCategoryPersistence.filterFindByG_P(
@@ -227,7 +243,14 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 
 	@Override
 	public List<Object> getCategoriesAndThreads(
-		long groupId, long categoryId, QueryDefinition<?> queryDefinition) {
+			long groupId, long categoryId, QueryDefinition<?> queryDefinition)
+		throws PortalException {
+
+		if (queryDefinition.isIncludeOwner() &&
+			(queryDefinition.getOwnerUserId() != 0)) {
+
+			queryDefinition.setOwnerUserId(getUserId());
+		}
 
 		return mbCategoryFinder.filterFindC_T_ByG_C(
 			groupId, categoryId, queryDefinition);
@@ -254,7 +277,14 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 
 	@Override
 	public int getCategoriesAndThreadsCount(
-		long groupId, long categoryId, QueryDefinition<?> queryDefinition) {
+			long groupId, long categoryId, QueryDefinition<?> queryDefinition)
+		throws PortalException {
+
+		if (queryDefinition.isIncludeOwner() &&
+			(queryDefinition.getOwnerUserId() != 0)) {
+
+			queryDefinition.setOwnerUserId(getUserId());
+		}
 
 		return mbCategoryFinder.filterCountC_T_ByG_C(
 			groupId, categoryId, queryDefinition);
@@ -291,6 +321,22 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 
 		return mbCategoryPersistence.filterCountByNotC_G_P_S(
 			excludedCategoryId, groupId, parentCategoryId, status);
+	}
+
+	@Override
+	public int getCategoriesCount(
+			long groupId, long parentCategoryId,
+			QueryDefinition<?> queryDefinition)
+		throws PortalException {
+
+		if (queryDefinition.isIncludeOwner() &&
+			(queryDefinition.getOwnerUserId() != 0)) {
+
+			queryDefinition.setOwnerUserId(getUserId());
+		}
+
+		return mbCategoryFinder.filterCountC_ByG_P(
+			groupId, parentCategoryId, queryDefinition);
 	}
 
 	@Override

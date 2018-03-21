@@ -12,19 +12,31 @@
  * details.
  */
 
-package com.liferay.site.constants;
+package com.liferay.site.exception;
+
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Julio Camarero
- * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
-public class SiteWebKeys {
+@ProviderType
+public class InitializationException extends PortalException {
 
-	public static final String GROUP_INITIALIZER_REGISTRY =
-		"GROUP_INITIALIZER_REGISTRY";
+	public InitializationException() {
+	}
 
-	public static final String GROUP_SEARCH_PROVIDER = "GROUP_SEARCH_PROVIDER";
+	public InitializationException(String msg) {
+		super(msg);
+	}
 
-	public static final String GROUP_URL_PROVIDER = "GROUP_URL_PROVIDER";
+	public InitializationException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public InitializationException(Throwable cause) {
+		super(cause);
+	}
 
 }

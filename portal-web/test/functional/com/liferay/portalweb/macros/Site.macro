@@ -67,47 +67,28 @@
 				<equals arg1="${singleSiteTypePermission}" arg2="true" />
 			</not>
 			<then>
+				<var name="siteType" value="${siteType}" />
+
 				<if>
-					<equals arg1="${siteType}" arg2="Blank" />
+					<not>
+						<contains string="${siteTemplateName}" substring="{siteTemplateName}" />
+					</not>
 					<then>
-						<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Blank Site">
-							<var name="key_menuItem" value="Blank Site" />
-						</execute>
+						<var name="siteType" value="${siteTemplateName}" />
 					</then>
-					<elseif>
-						<equals arg1="${siteType}" arg2="Community" />
-						<then>
-							<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Community Site">
-								<var name="key_menuItem" value="Community Site" />
-							</execute>
-						</then>
-					</elseif>
-					<elseif>
-						<equals arg1="${siteType}" arg2="Intranet" />
-						<then>
-							<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Intranet Site">
-								<var name="key_menuItem" value="Intranet Site" />
-							</execute>
-						</then>
-					</elseif>
-					<elseif>
-						<equals arg1="${siteType}" arg2="Site Template" />
-						<then>
-							<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="${siteTemplateName}">
-								<var name="key_menuItem" value="${siteTemplateName}" />
-							</execute>
-						</then>
-					</elseif>
-					<else>
-						<fail message="Invalid var siteType. Must be (Blank|Community|Intranet|Site Template)." />
-					</else>
 				</if>
+
+				<execute macro="LexiconEntry#gotoEntry">
+					<var name="rowEntry" value="${siteType} Site" />
+				</execute>
+
+				<execute macro="PortletEntry#inputName">
+					<var name="name" value="${siteName}" />
+				</execute>
+
+				<execute macro="Modal#submit" />
 			</then>
 		</if>
-
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${siteName}" />
-		</execute>
 
 		<if>
 			<or>

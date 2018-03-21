@@ -12,19 +12,30 @@
  * details.
  */
 
-package com.liferay.site.constants;
+package com.liferay.site.initializer;
+
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.site.exception.InitializationException;
+
+import java.util.Locale;
 
 /**
- * @author Julio Camarero
  * @author Marco Leo
  */
-public class SiteWebKeys {
+@ProviderType
+public interface GroupInitializer {
 
-	public static final String GROUP_INITIALIZER_REGISTRY =
-		"GROUP_INITIALIZER_REGISTRY";
+	public String getDescription(Locale locale);
 
-	public static final String GROUP_SEARCH_PROVIDER = "GROUP_SEARCH_PROVIDER";
+	public String getKey();
 
-	public static final String GROUP_URL_PROVIDER = "GROUP_URL_PROVIDER";
+	public String getName(Locale locale);
+
+	public String getThumbnailSrc();
+
+	public void initialize(long groupId) throws InitializationException;
+
+	public boolean isActive(long companyId);
 
 }

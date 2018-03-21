@@ -29,15 +29,13 @@ if (Validator.isNull(redirect)) {
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 
-long groupId = ParamUtil.getLong(request, "groupId", portletName.equals(SiteAdminPortletKeys.SITE_SETTINGS) ? themeDisplay.getSiteGroupId() : 0);
+long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getSiteGroupId());
 
 Group group = null;
 
 if (groupId > 0) {
 	group = GroupLocalServiceUtil.getGroup(groupId);
 }
-
-long parentGroupId = ParamUtil.getLong(request, "parentGroupSearchContainerPrimaryKeys", GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 Group liveGroup = null;
 
@@ -81,38 +79,6 @@ long layoutSetPrototypeId = ParamUtil.getLong(request, "layoutSetPrototypeId");
 
 if (layoutSetPrototypeId > 0) {
 	layoutSetPrototype = LayoutSetPrototypeServiceUtil.getLayoutSetPrototype(layoutSetPrototypeId);
-}
-
-if (!portletName.equals(SiteAdminPortletKeys.SITE_SETTINGS)) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(backURL.toString());
-
-	String title = StringPool.BLANK;
-
-	if (group != null) {
-		title = group.getDescriptiveName(locale);
-	}
-	else if (layoutSetPrototype != null) {
-		title = layoutSetPrototype.getName(locale);
-	}
-	else if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
-		title = LanguageUtil.get(request, "new-child-site");
-	}
-	else {
-		title = LanguageUtil.get(request, "new-site");
-	}
-
-	renderResponse.setTitle(title);
-
-	if (group != null) {
-		PortalUtil.addPortletBreadcrumbEntry(request, group.getDescriptiveName(locale), null);
-		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
-	}
-	else if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
-		Group parentGroup = GroupLocalServiceUtil.getGroup(parentGroupId);
-
-		PortalUtil.addPortletBreadcrumbEntry(request, parentGroup.getDescriptiveName(locale), null);
-	}
 }
 %>
 

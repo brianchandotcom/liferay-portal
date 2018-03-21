@@ -12,19 +12,23 @@
  * details.
  */
 
-package com.liferay.site.constants;
+package com.liferay.site.initializer;
+
+import aQute.bnd.annotation.ProviderType;
+
+import java.util.List;
 
 /**
- * @author Julio Camarero
  * @author Marco Leo
  */
-public class SiteWebKeys {
+@ProviderType
+public interface GroupInitializerRegistry {
 
-	public static final String GROUP_INITIALIZER_REGISTRY =
-		"GROUP_INITIALIZER_REGISTRY";
+	public GroupInitializer getGroupInitializer(String key);
 
-	public static final String GROUP_SEARCH_PROVIDER = "GROUP_SEARCH_PROVIDER";
+	public List<GroupInitializer> getGroupInitializers(long companyId);
 
-	public static final String GROUP_URL_PROVIDER = "GROUP_URL_PROVIDER";
+	public List<GroupInitializer> getGroupInitializers(
+		long companyId, boolean active);
 
 }

@@ -52,11 +52,6 @@ public class ${entity.name}UADEntityDisplayTest extends BaseUADEntityDisplayTest
 	}
 
 	@Override
-	protected String[] getDisplayFieldNames() {
-		return new String[]{<#list entity.UADNonanonymizableEntityColumns as uadNonanonymizableEntityColumn>"${uadNonanonymizableEntityColumn.name}"<#sep>, </#sep></#list>};
-	}
-
-	@Override
 	protected UADEntityDisplay getUADEntityDisplay() {
 		return _uadEntityDisplay;
 	}

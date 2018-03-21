@@ -14,20 +14,14 @@
 
 package com.liferay.commerce.product.util;
 
-import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.portal.kernel.exception.PortalException;
-
 import java.util.List;
-
-import javax.portlet.PortletRequest;
 
 /**
  * @author Alessio Antonio Rendina
  */
 public interface CPContentContributorRegistry {
 
-	public void contribute(CPInstance cpInstance, PortletRequest portletRequest)
-		throws PortalException;
+	public CPContentContributor getCPContentContributor(String key);
 
 	public List<CPContentContributor> getCPContentContributors();
 

@@ -198,26 +198,20 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 			String bundleSymbolicName = BNDSourceUtil.getDefinitionValue(
 				content, "Bundle-SymbolicName");
 
-			if (bundleSymbolicName == null) {
-				continue;
-			}
+			if ((bundleSymbolicName != null) &&
+				bundleSymbolicName.startsWith("com.liferay.")) {
 
-			if (!bundleSymbolicName.startsWith("com.liferay.")) {
-				continue;
+				bundleSymbolicNames.add(bundleSymbolicName);
 			}
-
-			bundleSymbolicNames.add(bundleSymbolicName);
 		}
 
 		return bundleSymbolicNames;
 	}
 
 	private boolean _isValidBundleSymbolicName(String dependencyName) {
-		if (!dependencyName.startsWith("com.liferay.")) {
-			return true;
-		}
+		if (!dependencyName.startsWith("com.liferay.") ||
+			!_emptyExportPackageBundleSymbolicNames.contains(dependencyName)) {
 
-		if (!_emptyExportPackageBundleSymbolicNames.contains(dependencyName)) {
 			return true;
 		}
 

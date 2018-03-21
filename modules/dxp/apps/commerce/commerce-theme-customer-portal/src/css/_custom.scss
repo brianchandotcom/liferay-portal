@@ -152,6 +152,40 @@
 	}
 }
 
+// Portlet Search Bar
+
+%portlet-search-bar-inset {
+	margin-bottom: 1.5rem;
+
+	.lfr-ddm-field-group {
+		margin-bottom: 0;
+	}
+
+	.input-group.search-bar .search-field .search-bar-input {
+		@include border-radius($input-border-radius);
+
+		padding-right: 3.125rem;
+	}
+
+	.input-group-btn {
+		bottom: 0.25rem;
+		position: absolute;
+		right: 0.25rem;
+		top: 0.25rem;
+		z-index: $zindex-input-group-focus;
+
+		.btn-default {
+			background-color: rgba(0, 0, 0, 0.0001); // IE10 can't click if transparent
+
+			@include border-radius($btn-border-radius);
+
+			border-width: 0;
+			padding-bottom: 0;
+			padding-top: 0;
+		}
+	}
+}
+
 // Datepicker
 
 .datepicker-popover {
@@ -572,6 +606,12 @@
 			color: $body-color;
 			font-size: 0.875rem;
 		}
+	}
+}
+
+.catalog-1-2-columns {
+	.portlet-search-bar {
+		@extend %portlet-search-bar-inset;
 	}
 }
 

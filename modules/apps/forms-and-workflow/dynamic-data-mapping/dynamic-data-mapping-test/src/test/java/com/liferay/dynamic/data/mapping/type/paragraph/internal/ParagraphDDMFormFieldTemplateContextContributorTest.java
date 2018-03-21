@@ -51,7 +51,7 @@ public class ParagraphDDMFormFieldTemplateContextContributorTest
 
 		ddmFormField.setProperty("text", text);
 
-		Map parameters =
+		Map<String, Object> parameters =
 			_paragraphDDMFormFieldTemplateContextContributor.getParameters(
 				ddmFormField, new DDMFormFieldRenderingContext());
 

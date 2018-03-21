@@ -49,12 +49,6 @@ public abstract class BaseUADEntityDisplayTestCase {
 	}
 
 	@Test
-	public void testGetDisplayFieldNames() {
-		Assert.assertArrayEquals(
-			getDisplayFieldNames(), _uadEntityDisplay.getDisplayFieldNames());
-	}
-
-	@Test
 	public void testGetUADEntityTypeDescription() {
 		Assert.assertEquals(
 			getUADEntityTypeDescription(),
@@ -75,8 +69,6 @@ public abstract class BaseUADEntityDisplayTestCase {
 	protected abstract BaseModel<?> addBaseModel(long userId) throws Exception;
 
 	protected abstract String getApplicationName();
-
-	protected abstract String[] getDisplayFieldNames();
 
 	protected abstract UADEntityAggregator getUADEntityAggregator();
 

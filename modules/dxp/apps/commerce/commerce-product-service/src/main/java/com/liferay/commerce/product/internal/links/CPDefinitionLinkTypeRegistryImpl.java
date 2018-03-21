@@ -18,7 +18,6 @@ import com.liferay.commerce.product.links.CPDefinitionLinkType;
 import com.liferay.commerce.product.links.CPDefinitionLinkTypeRegistry;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
-import com.liferay.portal.kernel.service.RoleLocalService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +26,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -57,9 +55,6 @@ public class CPDefinitionLinkTypeRegistryImpl
 	protected void deactivate() {
 		_serviceTrackerList.close();
 	}
-
-	@Reference
-	private RoleLocalService _roleLocalService;
 
 	private ServiceTrackerList<CPDefinitionLinkType, CPDefinitionLinkType>
 		_serviceTrackerList;

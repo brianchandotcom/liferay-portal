@@ -26,85 +26,65 @@ String commerceShippingOptionKey = ParamUtil.getString(request, "commerceShippin
 if (Validator.isNull(commerceShippingOptionKey)) {
 	commerceShippingOptionKey = shippingMethodCheckoutStepDisplayContext.getCommerceShippingOptionKey(commerceOrder.getCommerceShippingMethodId(), commerceOrder.getShippingOptionName());
 }
-
-boolean hasShippingOption = false;
 %>
 
-<h3 class="p-4"><liferay-ui:message key="shipping-method" /></h3>
-
-<aui:fieldset>
+<aui:container fluid="<%= true %>" id="commerceShippingMethodsContainer">
 	<liferay-ui:error exception="<%= CommerceOrderShippingMethodException.class %>" message="please-select-a-valid-shipping-method" />
 
-	<div class="row text-center" id="commerceShippingMethodsContainer">
+	<c:choose>
+		<c:when test="commerceShippingOptions.isEmpty()">
+			<aui:row>
+				<aui:col widht="100">
+					<aui:alert type="info">
+						<liferay-ui:message key="there-are-no-available-shipping-methods" />
+					</aui:alert>
+				</aui:col>
+			</aui:row>
+		</c:when>
+		<c:otherwise>
+			<ul class="list-group">
 
-		<%
-		for (CommerceShippingMethod commerceShippingMethod : shippingMethodCheckoutStepDisplayContext.getCommerceShippingMethods()) {
-			List<CommerceShippingOption> commerceShippingOptions = shippingMethodCheckoutStepDisplayContext.getCommerceShippingOptions(commerceShippingMethod);
-		%>
+			<%
+			for (CommerceShippingMethod commerceShippingMethod : shippingMethodCheckoutStepDisplayContext.getCommerceShippingMethods()) {
+				List<CommerceShippingOption> commerceShippingOptions = shippingMethodCheckoutStepDisplayContext.getCommerceShippingOptions(commerceShippingMethod);
 
-			<c:if test="<%= !commerceShippingOptions.isEmpty() %>">
+				for (CommerceShippingOption commerceShippingOption : commerceShippingOptions) {
+					String curCommerceShippingOptionKey = shippingMethodCheckoutStepDisplayContext.getCommerceShippingOptionKey(commerceShippingMethod.getCommerceShippingMethodId(), commerceShippingOption.getName());
+					String label = shippingMethodCheckoutStepDisplayContext.getCommerceShippingOptionLabel(commerceShippingOption);
+			%>
 
-				<%
-				hasShippingOption = true;
-				%>
+					<li class="commerce-shipping-types list-group-item list-group-item-flex">
+						<div class="autofit-col autofit-col-expand">
+							<aui:input checked="<%= curCommerceShippingOptionKey.equals(commerceShippingOptionKey) %>" label="<%= label %>" name="commerceShippingOptionKey" type="radio" value="<%= curCommerceShippingOptionKey %>" />
+						</div>
 
-				<div class="col-md-3 mx-auto">
-					<div class="radio radio-card radio-middle-left">
-						<label>
+						<%
+						String thumbnailSrc = commerceShippingMethod.getImageURL(themeDisplay);
+						%>
 
-							<%
-							for (CommerceShippingOption commerceShippingOption : commerceShippingOptions) {
-								String curCommerceShippingOptionKey = shippingMethodCheckoutStepDisplayContext.getCommerceShippingOptionKey(commerceShippingMethod.getCommerceShippingMethodId(), commerceShippingOption.getName());
-								String label = shippingMethodCheckoutStepDisplayContext.getCommerceShippingOptionLabel(commerceShippingOption);
-							%>
-
-								<aui:input
-									checked="<%= curCommerceShippingOptionKey.equals(commerceShippingOptionKey) %>"
-									label="<%= label %>"
-									name="commerceShippingOptionKey"
-									type="radio"
-									value="<%= curCommerceShippingOptionKey %>"
-								/>
-
-							<%
-							}
-							%>
-
-							<div class="card card-commerce">
-								<div class="card-body">
-
-									<%
-									String thumbnailSrc = commerceShippingMethod.getImageURL(themeDisplay);
-									%>
-
-									<c:if test="<%= Validator.isNotNull(thumbnailSrc) %>">
-										<img class="w-25" src="<%= thumbnailSrc %>" />
-									</c:if>
-								</div>
+						<c:if test="<%= Validator.isNotNull(thumbnailSrc) %>">
+							<div class="autofit-col">
+								<img alt="<%= label %>" src="<%= thumbnailSrc %>" />
 							</div>
-						</label>
-					</div>
-				</div>
-			</c:if>
+						</c:if>
+					</li>
 
-		<%
+			<%
+				}
+			}
+			%>
+
+			</ul>
+		</c:otherwise>
+	</c:choose>
+</aui:container>
+
+<c:if test="<%= commerceShippingOptions.isEmpty() %>">
+	<aui:script use="aui-base">
+		var continue = A.one('#<portlet:namespace />continue');
+
+		if (continue) {
+			Liferay.Util.toggleDisabled(continue, true);
 		}
-		%>
-
-		<c:if test="<%= !hasShippingOption %>">
-			<div class="alert alert-info mx-auto">
-				<liferay-ui:message key="there-are-no-available-shipping-methods" />
-			</div>
-		</c:if>
-	</div>
-</aui:fieldset>
-
-<c:if test="<%= !hasShippingOption %>">
-	<aui:script>
-		var A = AUI();
-
-		var nextCheckoutStepButton = A.one('#<portlet:namespace />nextCheckoutStepButton');
-
-		nextCheckoutStepButton.attr('disabled', true);
 	</aui:script>
 </c:if>

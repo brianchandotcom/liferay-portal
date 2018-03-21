@@ -149,12 +149,9 @@
 	</command>
 
 	<command name="gotoViewEntriesViaIcon">
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
-			<var name="key_rowEntry" value="${formName}" />
-		</execute>
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="View Entries">
-			<var name="key_menuItem" value="View Entries" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="View Entries" />
+			<var name="rowEntry" value="${formName}" />
 		</execute>
 	</command>
 

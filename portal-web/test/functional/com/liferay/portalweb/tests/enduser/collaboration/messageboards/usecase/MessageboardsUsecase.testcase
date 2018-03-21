@@ -506,8 +506,8 @@
 		</execute>
 
 		<execute macro="JSONMBMessage#addMessage">
-			<var name="threadBody"><![CDATA[<script>alert(2)</script>]]></var>
-			<var name="threadSubject"><![CDATA[<script>alert(1)</script>]]></var>
+			<var name="threadBody"><![CDATA[<script>alert(123);</script>]]></var>
+			<var name="threadSubject"><![CDATA[<script>alert(123);</script>]]></var>
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -522,10 +522,16 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#viewBBCodeNoXSS">
-			<var name="threadBody"><![CDATA[<script>alert(2)</script>]]></var>
-			<var name="threadSubject"><![CDATA[<script>alert(1)</script>]]></var>
+			<var name="threadBody"><![CDATA[<script>alert(123);</script>]]></var>
+			<var name="threadSubject"><![CDATA[<script>alert(123);</script>]]></var>
 			<var name="userName" value="Anonymous" />
 		</execute>
+
+		<var name="actualScript"><![CDATA[<script>alert(123);</script>]]></var>
+		<var name="escapedScript"><![CDATA[&lt;script&gt;alert(123);&lt;/script&gt;]]></var>
+
+		<execute function="AssertHTMLSourceTextNotPresent" value1="${actualScript}" />
+		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
 	</command>
 
 	<command name="ViewCategoriesAndThreadsOnTwoScopes" priority="3">
@@ -1880,13 +1886,19 @@
 
 		<execute macro="MessageboardsThread#addPG">
 			<var name="threadBody" value="" />
-			<var name="threadSubject"><![CDATA[<script>alert(1)</script>]]></var>
+			<var name="threadSubject"><![CDATA[<script>alert(123);</script>]]></var>
 		</execute>
 
 		<execute macro="MessageboardsThread#viewNoXSSPG">
 			<var name="threadBody" value="" />
-			<var name="threadSubject"><![CDATA[<script>alert(1)</script>]]></var>
+			<var name="threadSubject"><![CDATA[<script>alert(123);</script>]]></var>
 		</execute>
+
+		<var name="actualScript"><![CDATA[<script>alert(123);</script>]]></var>
+		<var name="escapedScript"><![CDATA[&lt;script&gt;alert(123);&lt;/script&gt;]]></var>
+
+		<execute function="AssertHTMLSourceTextNotPresent" value1="${actualScript}" />
+		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
 	</command>
 
 	<command name="ViewNoMBThreadXSS" priority="4">

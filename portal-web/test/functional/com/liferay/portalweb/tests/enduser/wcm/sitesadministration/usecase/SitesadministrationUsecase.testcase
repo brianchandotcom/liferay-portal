@@ -1545,8 +1545,8 @@
 		</execute>
 
 		<execute macro="Team#addCP">
-			<var name="teamDescription"><![CDATA[<script>alert(123)</script>]]></var>
-			<var name="teamName"><![CDATA[<script>alert(123)</script>]]></var>
+			<var name="teamDescription"><![CDATA[<script>alert(123);</script>]]></var>
+			<var name="teamName"><![CDATA[<script>alert(123);</script>]]></var>
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -1556,7 +1556,15 @@
 		</execute>
 
 		<execute macro="Site#assignDefaultSiteTeam">
-			<var name="teamName"><![CDATA[<script>alert(123)</script>]]></var>
+			<var name="teamName"><![CDATA[<script>alert(123);</script>]]></var>
 		</execute>
+
+		<execute function="AssertAlertNotPresent" />
+
+		<var name="actualScript"><![CDATA[<script>alert(123);</script>]]></var>
+		<var name="escapedScript"><![CDATA[&lt;script&gt;alert(123);&lt;/script&gt;]]></var>
+
+		<execute function="AssertHTMLSourceTextNotPresent" value1="${actualScript}" />
+		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
 	</command>
 </definition>

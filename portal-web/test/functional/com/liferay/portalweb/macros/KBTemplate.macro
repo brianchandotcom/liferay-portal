@@ -15,12 +15,9 @@
 	<command name="gotoCP">
 		<execute function="AssertClick" locator1="NavBar#TEMPLATES" value1="Templates" />
 
-		<var name="key_rowEntry" value="${kbTemplateTitle}" />
-
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="View">
-			<var name="key_menuItem" value="View" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="View" />
+			<var name="rowEntry" value="${kbTemplateTitle}" />
 		</execute>
 	</command>
 

@@ -96,16 +96,13 @@
 	</command>
 
 	<command name="gotoSpreadsheetView">
-		<var name="key_ddlListName" value="${ddlListName}" />
+		<execute function="AssertTextEquals" locator1="DDL#LIST_TABLE_NAME" value1="${ddlListName}">
+			<var name="key_ddlListName" value="${ddlListName}" />
+		</execute>
 
-		<execute function="AssertTextEquals" locator1="DDL#LIST_TABLE_NAME" value1="${ddlListName}" />
-
-		<var name="key_rowEntry" value="${ddlListName}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Spreadsheet View">
-			<var name="key_menuItem" value="Spreadsheet View" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Spreadsheet View" />
+			<var name="rowEntry" value="${ddlListName}" />
 		</execute>
 	</command>
 

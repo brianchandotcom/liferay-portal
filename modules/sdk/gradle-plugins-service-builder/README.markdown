@@ -165,10 +165,12 @@ To do this, you must customize the classpath of the `buildService` task. If
 you're supplying the customized Service Builder plugin through a module named
 `custom-sb-api`, you could modify the `buildService` task like this:
 
-    buildService {
-        apiDir = "../custom-sb-api/src/main/java"
-        classpath = configurations.serviceBuilder.filter { file -> !file.name.contains("com.liferay.portal.tools.service.builder") }
-    }
+```gradle
+buildService {
+	apiDir = "../custom-sb-api/src/main/java"
+	classpath = configurations.serviceBuilder.filter { file -> !file.name.contains("com.liferay.portal.tools.service.builder") }
+}
+```
 
 If you do this in conjunction with the `serviceBuilder` dependency
 configuration, the custom Service Builder version is used.

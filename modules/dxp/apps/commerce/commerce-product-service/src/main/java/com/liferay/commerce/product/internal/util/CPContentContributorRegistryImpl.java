@@ -14,24 +14,21 @@
 
 package com.liferay.commerce.product.internal.util;
 
-import com.liferay.commerce.product.constants.CPContentContributorConstants;
-import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.util.CPContentContributor;
 import com.liferay.commerce.product.util.CPContentContributorRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import javax.portlet.PortletRequest;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -47,31 +44,26 @@ public class CPContentContributorRegistryImpl
 	implements CPContentContributorRegistry {
 
 	@Override
-	public void contribute(CPInstance cpInstance, PortletRequest portletRequest)
-		throws PortalException {
-
-		if (cpInstance == null) {
-			return;
+	public CPContentContributor getCPContentContributor(String key) {
+		if (Validator.isNull(key)) {
+			return null;
 		}
 
-		List<CPContentContributor> cpContentContributors =
-			getCPContentContributors();
+		ServiceWrapper<CPContentContributor>
+			cpContentContributorServiceWrapper = _serviceTrackerMap.getService(
+				key);
 
-		for (CPContentContributor cpContentContributor :
-				cpContentContributors) {
-
-			JSONObject jsonObject = cpContentContributor.getValue(
-				cpInstance, _portal.getLocale(portletRequest));
-
-			if (!jsonObject.isNull(cpContentContributor.getName())) {
-				String key =
-					CPContentContributorConstants.PREFIX +
-						cpContentContributor.getName();
-
-				portletRequest.setAttribute(
-					key, jsonObject.get(cpContentContributor.getName()));
+		if (cpContentContributorServiceWrapper == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"No commerce product content contributor registered with " +
+						"key " + key);
 			}
+
+			return null;
 		}
+
+		return cpContentContributorServiceWrapper.getService();
 	}
 
 	@Override
@@ -106,6 +98,9 @@ public class CPContentContributorRegistryImpl
 	protected void deactivate() {
 		_serviceTrackerMap.close();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CPContentContributorRegistryImpl.class);
 
 	@Reference
 	private Portal _portal;

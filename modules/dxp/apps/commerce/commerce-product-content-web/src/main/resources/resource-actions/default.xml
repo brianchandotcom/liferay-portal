@@ -3,6 +3,48 @@
 
 <resource-action-mapping>
 	<portlet-resource>
+		<portlet-name>com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentMiniPortlet</portlet-name>
+		<permissions>
+			<supports>
+				<action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>
+				<action-key>ADD_TO_PAGE</action-key>
+				<action-key>CONFIGURATION</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults>
+				<action-key>VIEW</action-key>
+			</site-member-defaults>
+			<guest-defaults>
+				<action-key>VIEW</action-key>
+			</guest-defaults>
+			<guest-unsupported>
+				<action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>
+				<action-key>CONFIGURATION</action-key>
+			</guest-unsupported>
+		</permissions>
+	</portlet-resource>
+	<portlet-resource>
+		<portlet-name>com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentPortlet</portlet-name>
+		<permissions>
+			<supports>
+				<action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>
+				<action-key>ADD_TO_PAGE</action-key>
+				<action-key>CONFIGURATION</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults>
+				<action-key>VIEW</action-key>
+			</site-member-defaults>
+			<guest-defaults>
+				<action-key>VIEW</action-key>
+			</guest-defaults>
+			<guest-unsupported>
+				<action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>
+				<action-key>CONFIGURATION</action-key>
+			</guest-unsupported>
+		</permissions>
+	</portlet-resource>
+	<portlet-resource>
 		<portlet-name>com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet</portlet-name>
 		<permissions>
 			<supports>

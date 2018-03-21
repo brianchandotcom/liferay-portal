@@ -20,11 +20,21 @@ import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.List;
+import java.io.Serializable;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -85,31 +95,73 @@ public class CommerceCountriesDisplayContext
 		searchContainer.setOrderByType(orderByType);
 		searchContainer.setRowChecker(getRowChecker());
 
-		int total;
-		List<CommerceCountry> results;
+		Sort sort = CommerceUtil.getCommerceCountrySort(
+			orderByCol, orderByType);
 
-		if (active != null) {
-			total = _commerceCountryService.getCommerceCountriesCount(
-				themeDisplay.getScopeGroupId(), active);
-			results = _commerceCountryService.getCommerceCountries(
-				themeDisplay.getScopeGroupId(), active,
-				searchContainer.getStart(), searchContainer.getEnd(),
-				orderByComparator);
-		}
-		else {
-			total = _commerceCountryService.getCommerceCountriesCount(
-				themeDisplay.getScopeGroupId());
-			results = _commerceCountryService.getCommerceCountries(
-				themeDisplay.getScopeGroupId(), searchContainer.getStart(),
-				searchContainer.getEnd(), orderByComparator);
-		}
+		SearchContext searchContext = buildSearchContext(
+			themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(), active,
+			getKeywords(), searchContainer.getStart(), searchContainer.getEnd(),
+			sort);
 
-		searchContainer.setTotal(total);
-		searchContainer.setResults(results);
+		BaseModelSearchResult<CommerceCountry> results =
+			_commerceCountryService.searchCommerceCountries(searchContext);
+
+		searchContainer.setTotal(results.getLength());
+		searchContainer.setResults(results.getBaseModels());
 
 		return searchContainer;
 	}
 
+	protected SearchContext buildSearchContext(
+		long companyId, long groupId, Boolean active, String keywords,
+		int start, int end, Sort sort) {
+
+		SearchContext searchContext = new SearchContext();
+
+		Map<String, Serializable> attributes = new HashMap<>();
+
+		attributes.put("active", active);
+
+		attributes.put(Field.ENTRY_CLASS_PK, keywords);
+		attributes.put(Field.NAME, keywords);
+		attributes.put("numericISOCode", keywords);
+		attributes.put("threeLettersISOCode", keywords);
+		attributes.put("twoLettersISOCode", keywords);
+
+		searchContext.setAttributes(attributes);
+
+		searchContext.setCompanyId(companyId);
+		searchContext.setStart(start);
+		searchContext.setEnd(end);
+		searchContext.setGroupIds(new long[] {groupId});
+
+		if (Validator.isNotNull(keywords)) {
+			searchContext.setKeywords(keywords);
+		}
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		if (sort != null) {
+			searchContext.setSorts(new Sort[] {sort});
+		}
+
+		return searchContext;
+	}
+
+	protected String getKeywords() {
+		if (Validator.isNotNull(_keywords)) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(renderRequest, "keywords");
+
+		return _keywords;
+	}
+
 	private final CommerceCountryService _commerceCountryService;
+	private String _keywords;
 
 }

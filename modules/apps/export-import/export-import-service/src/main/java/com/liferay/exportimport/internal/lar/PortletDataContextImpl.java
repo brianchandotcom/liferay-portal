@@ -2340,6 +2340,14 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return serviceContext;
 	}
 
+	@Override
+	public void removePrimaryKey(String path) {
+		String primaryKeyString = getPrimaryKeyString(String.class, path);
+
+		_scopedPrimaryKeys.remove(primaryKeyString);
+		_primaryKeys.remove(primaryKeyString);
+	}
+
 	protected Element doAddReferenceElement(
 		ClassedModel referrerClassedModel, Element element,
 		ClassedModel classedModel, String className, String binPath,

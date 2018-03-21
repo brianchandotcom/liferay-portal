@@ -44,8 +44,7 @@ public class JenkinsJobConfigMapGenerator {
 		_basePropertiesMap = basePropertiesMap;
 
 		_environmentSlavesPropertiesMap = _getEnvironmentSlavesMap();
-		_generatedJenkinsJobConfigPropertiesMap = new HashMap<>(
-			_basePropertiesMap);
+		_generatedJenkinsJobConfigPropertiesMap = new HashMap<>();
 	}
 
 	public Map<String, String> generateJenkinsJobConfigPropertiesMap()

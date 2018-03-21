@@ -1345,8 +1345,8 @@
 	</command>
 
 	<command name="viewSelectedPG">
-		<execute function="Click#clickNoWaitForVisible" locator1="Portlet#ICON_PLUS_SIGN">
-			<var name="key_portletName" value="Asset Publisher" />
+		<execute macro="Portlet#clickPortletPlusIconPG">
+			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="${selectedAsset}">

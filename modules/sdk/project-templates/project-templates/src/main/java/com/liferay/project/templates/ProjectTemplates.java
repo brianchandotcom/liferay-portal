@@ -74,8 +74,7 @@ public class ProjectTemplates {
 			if (templatesFile.isDirectory()) {
 				try (DirectoryStream<Path> directoryStream =
 						Files.newDirectoryStream(
-							templatesFile.toPath(),
-							TEMPLATE_BUNDLE_PREFIX + "*")) {
+							templatesFile.toPath(), "*.project.templates.*")) {
 
 					Iterator<Path> iterator = directoryStream.iterator();
 

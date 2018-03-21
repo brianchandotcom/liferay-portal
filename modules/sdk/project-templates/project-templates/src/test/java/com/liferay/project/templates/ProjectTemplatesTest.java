@@ -1808,10 +1808,14 @@ public class ProjectTemplatesTest {
 
 		Path customArchetypesDirPath = customArchetypesDir.toPath();
 
+		String fileName = String.valueOf(templateFilePath.getFileName());
+
+		String suffix = fileName.substring(fileName.indexOf('-'));
+
 		Files.copy(
 			templateFilePath,
 			customArchetypesDirPath.resolve(
-				ProjectTemplates.TEMPLATE_BUNDLE_PREFIX + "foo.bar-1.0.4.jar"));
+				"custom.name.project.templates.foo.bar-" + suffix));
 
 		List<File> customArchetypesDirs = new ArrayList<>();
 

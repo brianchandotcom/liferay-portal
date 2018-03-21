@@ -391,21 +391,6 @@ public class SourceFormatter {
 		return _sourceMismatchExceptions;
 	}
 
-	private boolean _modifiedSourceFormatterModule() {
-		List<String> recentChangesFileNames =
-			_sourceFormatterArgs.getRecentChangesFileNames();
-
-		if (recentChangesFileNames != null) {
-			for (String recentChangesFileName : recentChangesFileNames) {
-				if (recentChangesFileName.contains("/source-formatter/")) {
-					return true;
-				}
-			}
-		}
-
-		return false;
-	}
-
 	private List<String> _getCheckNames() {
 		List<String> checkNames = new ArrayList<>();
 
@@ -624,6 +609,21 @@ public class SourceFormatter {
 			}
 
 			baseDir = baseDir.getParentFile();
+		}
+
+		return false;
+	}
+
+	private boolean _modifiedSourceFormatterModule() {
+		List<String> recentChangesFileNames =
+			_sourceFormatterArgs.getRecentChangesFileNames();
+
+		if (recentChangesFileNames != null) {
+			for (String recentChangesFileName : recentChangesFileNames) {
+				if (recentChangesFileName.contains("/source-formatter/")) {
+					return true;
+				}
+			}
 		}
 
 		return false;

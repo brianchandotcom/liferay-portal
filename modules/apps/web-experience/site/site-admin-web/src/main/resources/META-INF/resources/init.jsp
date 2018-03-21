@@ -111,6 +111,7 @@ page import="com.liferay.ratings.kernel.RatingsType" %><%@
 page import="com.liferay.ratings.kernel.display.context.CompanyPortletRatingsDefinitionDisplayContext" %><%@
 page import="com.liferay.ratings.kernel.display.context.GroupPortletRatingsDefinitionDisplayContext" %><%@
 page import="com.liferay.ratings.kernel.transformer.RatingsDataTransformerUtil" %><%@
+page import="com.liferay.site.admin.web.internal.constants.SiteAdminConstants" %><%@
 page import="com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys" %><%@
 page import="com.liferay.site.admin.web.internal.constants.SiteAdminWebKeys" %><%@
 page import="com.liferay.site.admin.web.internal.display.context.SiteAdminDisplayContext" %><%@

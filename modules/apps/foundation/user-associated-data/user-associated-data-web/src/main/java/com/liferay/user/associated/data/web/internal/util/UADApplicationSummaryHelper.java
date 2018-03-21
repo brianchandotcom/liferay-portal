@@ -122,7 +122,7 @@ public class UADApplicationSummaryHelper {
 		).map(
 			key -> _uadRegistry.getUADEntityAggregator(key)
 		).mapToInt(
-			uadEntityAggregator -> uadEntityAggregator.count(userId)
+			uadEntityAggregator -> (int)uadEntityAggregator.count(userId)
 		).sum();
 	}
 

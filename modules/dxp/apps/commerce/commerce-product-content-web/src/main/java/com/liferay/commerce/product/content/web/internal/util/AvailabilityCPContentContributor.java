@@ -24,6 +24,7 @@ import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.util.Locale;
 
@@ -51,6 +52,10 @@ public class AvailabilityCPContentContributor implements CPContentContributor {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
+		if (cpInstance == null) {
+			return jsonObject;
+		}
+
 		CPDefinitionInventory cpDefinitionInventory =
 			_cpDefinitionInventoryLocalService.
 				fetchCPDefinitionInventoryByCPDefinitionId(
@@ -74,13 +79,15 @@ public class AvailabilityCPContentContributor implements CPContentContributor {
 		if (displayAvailability && available) {
 			jsonObject.put(
 				CPContentContributorConstants.AVAILABILITY_NAME,
-				CPContentContributorConstants.AVAILABLE);
+				LanguageUtil.get(
+					locale, CPContentContributorConstants.AVAILABLE));
 		}
 
 		if (displayAvailability && !available) {
 			jsonObject.put(
 				CPContentContributorConstants.AVAILABILITY_NAME,
-				CPContentContributorConstants.UNAVAILABLE);
+				LanguageUtil.get(
+					locale, CPContentContributorConstants.UNAVAILABLE));
 		}
 
 		return jsonObject;

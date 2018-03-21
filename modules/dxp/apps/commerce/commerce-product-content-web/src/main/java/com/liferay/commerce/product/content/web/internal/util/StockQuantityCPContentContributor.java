@@ -24,6 +24,7 @@ import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.util.Locale;
 
@@ -51,6 +52,10 @@ public class StockQuantityCPContentContributor implements CPContentContributor {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
+		if (cpInstance == null) {
+			return jsonObject;
+		}
+
 		CPDefinitionInventory cpDefinitionInventory =
 			_cpDefinitionInventoryLocalService.
 				fetchCPDefinitionInventoryByCPDefinitionId(
@@ -66,7 +71,9 @@ public class StockQuantityCPContentContributor implements CPContentContributor {
 		if (displayStockQuantity) {
 			jsonObject.put(
 				CPContentContributorConstants.STOCK_QUANTITY_NAME,
-				cpDefinitionInventoryEngine.getStockQuantity(cpInstance));
+				LanguageUtil.format(
+					locale, "stock-quantity-x",
+					cpDefinitionInventoryEngine.getStockQuantity(cpInstance)));
 		}
 
 		return jsonObject;

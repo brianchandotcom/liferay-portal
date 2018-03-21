@@ -1,0 +1,28 @@
+{
+	"git.portal.properties": [
+		{
+			"name": "github.pull.request.number",
+			"value": "5515"
+		},
+		{
+			"name": "github.receiver.username",
+			"value": "liferay"
+		},
+		{
+			"name": "github.sender.branch.name",
+			"value": "pull-request"
+		},
+		{
+			"name": "github.sender.username",
+			"value": "liferay"
+		},
+		{
+			"name": "github.upstream.branch.name",
+			"value": "7.0.x"
+		},
+		{
+			"name": "local.git.branch.cached",
+			"value": "true"
+		}
+	]
+}

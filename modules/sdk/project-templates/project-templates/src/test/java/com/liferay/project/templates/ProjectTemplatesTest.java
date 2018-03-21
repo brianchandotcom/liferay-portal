@@ -1810,7 +1810,7 @@ public class ProjectTemplatesTest {
 
 		String fileName = String.valueOf(templateFilePath.getFileName());
 
-		String suffix = fileName.substring(fileName.indexOf("-"));
+		String suffix = fileName.substring(fileName.indexOf('-'));
 
 		Files.copy(
 			templateFilePath,

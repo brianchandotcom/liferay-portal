@@ -58,6 +58,11 @@ public class AnnouncementsEntryUADEntityDisplayTest
 	}
 
 	@Override
+	protected String getApplicationName() {
+		return AnnouncementsUADConstants.UAD_ENTITY_SET_NAME;
+	}
+
+	@Override
 	protected UADEntityAggregator getUADEntityAggregator() {
 		return _uadEntityAggregator;
 	}

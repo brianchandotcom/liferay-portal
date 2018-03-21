@@ -1808,9 +1808,7 @@ public class ProjectTemplatesTest {
 
 		Path customArchetypesDirPath = customArchetypesDir.toPath();
 
-		Path fileNamePath = templateFilePath.getFileName();
-
-		String fileName = fileNamePath.toString();
+		String fileName = String.valueOf(templateFilePath.getFileName());
 
 		String suffix = fileName.substring(fileName.indexOf("-"));
 

@@ -238,6 +238,10 @@
 	}
 }
 
+.b2b-logo-image {
+	width: 105px;
+}
+
 .b2b-login-header-title {
 	@include media-breakpoint-up(md) {
 		padding-right: 160px;
@@ -295,20 +299,6 @@
 	position: absolute;
 	right: 0;
 	top: 0;
-}
-
-.b2b-login-bg-image {
-	@include clay-position(center-middle);
-
-	max-width: 300%;
-
-	@include media-breakpoint-up(sm) {
-		max-width: 200%;
-	}
-
-	@include media-breakpoint-up(xl) {
-		max-width: 120%;
-	}
 }
 
 .b2b-login-card {

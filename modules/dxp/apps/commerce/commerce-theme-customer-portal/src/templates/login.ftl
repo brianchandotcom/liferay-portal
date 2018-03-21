@@ -1,6 +1,10 @@
 <div class="b2b-login-container">
 	<header class="autofit-row b2b-login-header">
-		<div class="autofit-col b2b-login-header-logo">Logo?</div>
+		<div class="autofit-col b2b-login-header-logo">
+			<div class="b2b-logo">
+				<img alt="Customer Portal Logo" class="b2b-logo-image" src="${images_folder}/placeholder-customer-portal-logo.png">
+			</div>
+		</div>
 		<div class="autofit-col autofit-col-expand b2b-login-header-title">
 			<div class="autofit-section">
 				Welcome, <strong>${company_name}</strong>
@@ -10,7 +14,7 @@
 
 	<div class="b2b-login-body">
 		<div class="b2b-login-bg">
-			<img alt="Elegant Man tying shoes" class="b2b-login-bg-image" src="${images_folder}/placeholder-elegant-man.jpeg">
+			<img alt="Liferay Design Team being creative" class="b2b-login-bg-image h-100" src="${images_folder}/placeholder-customer-portal-login.jpg">
 			<div class="b2b-login-overlay b2b-overlay-scanline"></div>
 		</div>
 

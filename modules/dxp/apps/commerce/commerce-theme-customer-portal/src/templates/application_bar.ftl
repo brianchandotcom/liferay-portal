@@ -1,14 +1,14 @@
 <nav class="b2b-main-navbar navbar navbar-expand-md">
 	<h1 class="navbar-brand">
-		<span class="text-truncate-inline">
-			<span class="text-truncate">
-				<#if show_site_name>
-					${site_name}
-				<#else>
-					Logo?
-				</#if>
+		<#if show_site_name>
+			<span class="text-truncate-inline">
+				<span class="text-truncate">
+						${site_name}
+				</span>
 			</span>
-		</span>
+		<#else>
+			<img alt="Customer Portal Logo" class="b2b-logo-image" src="${images_folder}/placeholder-customer-portal-logo.png">
+		</#if>
 	</h1>
 
 	<div class="b2b-search portlet-flush portlet-controls-d-none">

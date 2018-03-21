@@ -22,7 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Eric Yan
  */
-@ExtendedObjectClassDefinition(category = "foundation")
+@ExtendedObjectClassDefinition(category = "search")
 @Meta.OCD(
 	id = "com.liferay.portal.search.configuration.DefaultSearchResultPermissionFilterConfiguration",
 	localization = "content/Language",

@@ -22,6 +22,10 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public interface ConfigurationCategory {
 
+	public default String getBundleSymbolicName() {
+		return "com.liferay.configuration.admin.web";
+	}
+
 	public default String getCategoryIcon() {
 		return "cog";
 	}

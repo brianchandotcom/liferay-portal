@@ -27,6 +27,11 @@ if (Validator.isNull(redirect)) {
 
 ConfigurationModel configurationModel = (ConfigurationModel)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_MODEL);
 String ddmFormHTML = (String)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_MODEL_FORM_HTML);
+ResourceBundleLoaderProvider resourceBundleLoaderProvider = (ResourceBundleLoaderProvider)request.getAttribute(ConfigurationAdminWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER);
+
+ResourceBundleLoader resourceBundleLoader = resourceBundleLoaderProvider.getResourceBundleLoader(configurationModel.getBundleSymbolicName());
+
+ResourceBundle componentResourceBundle = resourceBundleLoader.loadResourceBundle(PortalUtil.getLocale(request));
 
 String bindRedirectURL = currentURL;
 
@@ -39,10 +44,44 @@ if (configurationModel.isFactory()) {
 	bindRedirectURL = viewFactoryInstancesURL.toString();
 }
 
+String categoryDisplayName = LanguageUtil.get(request, "category." + configurationModel.getCategory());
+
+PortletURL homeURL = renderResponse.createRenderURL();
+
+PortalUtil.addPortletBreadcrumbEntry(request, portletDisplay.getPortletDisplayName(), homeURL.toString());
+
+PortletURL viewCategoryURL = renderResponse.createRenderURL();
+
+viewCategoryURL.setParameter("mvcRenderCommandName", "/view_category");
+viewCategoryURL.setParameter("configurationCategory", configurationModel.getCategory());
+
+PortalUtil.addPortletBreadcrumbEntry(request, categoryDisplayName, viewCategoryURL.toString());
+
+String configurationModelName = (componentResourceBundle != null) ? LanguageUtil.get(componentResourceBundle, configurationModel.getName()) : configurationModel.getName();
+
+if (configurationModel.isFactory() && !configurationModel.isCompanyFactory()) {
+	PortletURL viewFactoryInstances = renderResponse.createRenderURL();
+
+	viewFactoryInstances.setParameter("mvcRenderCommandName", "/view_factory_instances");
+	viewFactoryInstances.setParameter("factoryPid", configurationModel.getFactoryPid());
+
+	PortalUtil.addPortletBreadcrumbEntry(request, configurationModelName, viewFactoryInstances.toString());
+
+	if (configurationModel.hasConfiguration()) {
+		PortalUtil.addPortletBreadcrumbEntry(request, configurationModel.getLabel(), null);
+	}
+	else {
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add"), null);
+	}
+}
+else {
+	PortalUtil.addPortletBreadcrumbEntry(request, configurationModelName, null);
+}
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(portletURL.toString());
 
-renderResponse.setTitle(LanguageUtil.get(request, "category." + configurationModel.getCategory()));
+renderResponse.setTitle(categoryDisplayName);
 %>
 
 <liferay-ui:error exception="<%= ConfigurationModelListenerException.class %>">
@@ -57,7 +96,18 @@ renderResponse.setTitle(LanguageUtil.get(request, "category." + configurationMod
 <portlet:actionURL name="bindConfiguration" var="bindConfigurationActionURL" />
 <portlet:actionURL name="deleteConfiguration" var="deleteConfigurationActionURL" />
 
-<div class="container-fluid container-fluid-max-xl container-form-lg">
+<div class="container-fluid container-fluid-max-xl">
+	<div class="col-12">
+		<liferay-ui:breadcrumb
+			showCurrentGroup="<%= false %>"
+			showGuestGroup="<%= false %>"
+			showLayout="<%= false %>"
+			showParentGroups="<%= false %>"
+		/>
+	</div>
+</div>
+
+<div class="container-fluid container-fluid-max-xl">
 	<div class="row">
 		<div class="col-md-3">
 			<liferay-util:include page="/configuration_category_menu.jsp" servletContext="<%= application %>" />
@@ -71,15 +121,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "category." + configurationMod
 					<aui:input name="pid" type="hidden" value="<%= configurationModel.getID() %>" />
 
 					<h2>
-
-						<%
-						ResourceBundleLoaderProvider resourceBundleLoaderProvider = (ResourceBundleLoaderProvider)request.getAttribute(ConfigurationAdminWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER);
-
-						ResourceBundleLoader resourceBundleLoader = resourceBundleLoaderProvider.getResourceBundleLoader(configurationModel.getBundleSymbolicName());
-
-						ResourceBundle componentResourceBundle = resourceBundleLoader.loadResourceBundle(PortalUtil.getLocale(request));
-						%>
-
 						<%= (componentResourceBundle != null) ? LanguageUtil.get(componentResourceBundle, configurationModel.getName()) : configurationModel.getName() %>
 
 						<c:if test="<%= configurationModel.hasConfiguration() %>">

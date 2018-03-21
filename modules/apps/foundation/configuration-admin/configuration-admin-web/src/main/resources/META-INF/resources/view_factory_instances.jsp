@@ -28,9 +28,6 @@ if (Validator.isNull(redirect)) {
 ConfigurationModelIterator configurationModelIterator = (ConfigurationModelIterator)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR);
 ConfigurationModel configurationModel = (ConfigurationModel)request.getAttribute(ConfigurationAdminWebKeys.FACTORY_CONFIGURATION_MODEL);
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(portletURL.toString());
-
 ResourceBundleLoaderProvider resourceBundleLoaderProvider = (ResourceBundleLoaderProvider)request.getAttribute(ConfigurationAdminWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER);
 
 ResourceBundleLoader resourceBundleLoader = resourceBundleLoaderProvider.getResourceBundleLoader(configurationModel.getBundleSymbolicName());
@@ -39,10 +36,38 @@ ResourceBundle componentResourceBundle = resourceBundleLoader.loadResourceBundle
 
 String factoryConfigurationModelName = (componentResourceBundle != null) ? LanguageUtil.get(componentResourceBundle, configurationModel.getName()) : configurationModel.getName();
 
+String categoryDisplayName = LanguageUtil.get(request, "category." + configurationModel.getCategory());
+
+PortletURL homeURL = renderResponse.createRenderURL();
+
+PortalUtil.addPortletBreadcrumbEntry(request, portletDisplay.getPortletDisplayName(), homeURL.toString());
+
+PortletURL viewCategoryURL = renderResponse.createRenderURL();
+
+viewCategoryURL.setParameter("mvcRenderCommandName", "/view_category");
+viewCategoryURL.setParameter("configurationCategory", configurationModel.getCategory());
+
+PortalUtil.addPortletBreadcrumbEntry(request, categoryDisplayName, viewCategoryURL.toString());
+PortalUtil.addPortletBreadcrumbEntry(request, factoryConfigurationModelName, null);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(portletURL.toString());
+
 renderResponse.setTitle(LanguageUtil.get(request, "category." + configurationModel.getCategory()));
 %>
 
-<div class="container-fluid container-fluid-max-xl container-form-lg">
+<div class="container-fluid container-fluid-max-xl">
+	<div class="col-12">
+		<liferay-ui:breadcrumb
+			showCurrentGroup="<%= false %>"
+			showGuestGroup="<%= false %>"
+			showLayout="<%= false %>"
+			showParentGroups="<%= false %>"
+		/>
+	</div>
+</div>
+
+<div class="container-fluid container-fluid-max-xl">
 	<div class="row">
 		<div class="col-md-3">
 			<liferay-util:include page="/configuration_category_menu.jsp" servletContext="<%= application %>" />

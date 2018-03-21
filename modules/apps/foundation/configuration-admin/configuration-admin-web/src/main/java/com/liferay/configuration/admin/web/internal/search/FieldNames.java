@@ -19,6 +19,8 @@ package com.liferay.configuration.admin.web.internal.search;
  */
 public class FieldNames {
 
+	public static final String CONFIGURATION_CATEGORY = "configurationCategory";
+
 	public static final String CONFIGURATION_MODEL_ATTRIBUTE_DESCRIPTION =
 		"configurationModelAttributeDescription";
 

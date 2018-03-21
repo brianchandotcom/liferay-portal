@@ -21,7 +21,12 @@
 </tr>
 <tr>
 	<td>RESOURCE_TABLE_SELECT</td>
-	<td>//div[contains(.,'${key_workflowResourceValue}')]/select</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_workflowResourceValue}')]//select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_SAVE</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_workflowResourceValue}')]//button[contains(.,'Save')]</td>
 	<td></td>
 </tr>
 </tbody>

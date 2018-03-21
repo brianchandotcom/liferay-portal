@@ -12,6 +12,14 @@
 			<setting configurable="false" key="show-maximize-minimize-application-links" type="checkbox" value="false" />
 			<setting configurable="false" key="show-site-name-default" value="false" />
 		</settings>
+		<layout-templates>
+			<custom>
+				<layout-template id="catalog_1_2_columns" name="Catalog 1-2 Columns">
+					<template-path>/layouttpl/custom/catalog_1_2_columns.tpl</template-path>
+					<thumbnail-path>/layouttpl/custom/catalog_1_2_columns.png</thumbnail-path>
+				</layout-template>
+			</custom>
+		</layout-templates>
 		<portlet-decorator id="barebone" name="Barebone">
 			<default-portlet-decorator>true</default-portlet-decorator>
 			<portlet-decorator-css-class>portlet-barebone</portlet-decorator-css-class>

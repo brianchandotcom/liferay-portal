@@ -464,6 +464,127 @@
 	}
 }
 
+// Catalog
+
+.catalog-card-page {
+	.card-page-item-asset {
+		min-width: 250px;
+
+		@include media-breakpoint-up(xl) {
+			max-width: 16.66667%;
+		}
+	}
+}
+
+.catalog-1-2-columns {
+	#column-2 {
+		@include media-breakpoint-up(md) {
+			width: 200px;
+		}
+
+		@include media-breakpoint-up(lg) {
+			width: 300px;
+		}
+	}
+
+	#column-3 {
+		@include media-breakpoint-up(md) {
+			width: calc(100% - 200px);
+		}
+
+		@include media-breakpoint-up(lg) {
+			padding-left: 4rem;
+			width: calc(100% - 300px);
+		}
+	}
+
+	.portlet-column {
+		padding-left: $grid-gutter-width / 2;
+		padding-right: $grid-gutter-width / 2;
+		width: 100%;
+	}
+}
+
+.catalog-1-2-columns {
+	.collapse-icon-closed {
+		color: $primary;
+		font-size: 0.5rem;
+		transform: rotate(90deg) translateX(-50%);
+	}
+
+	.collapse-icon-open {
+		color: $primary;
+		font-size: 0.5rem;
+		transform: rotate(180deg) translateY(50%);
+	}
+
+	.collapse-icon {
+		text-decoration: none;
+	}
+
+	.portlet-category-facet {
+		.panel-group {
+			margin-bottom: 1rem;
+		}
+
+		.panel {
+			border-top-width: 0;
+		}
+
+		.panel-title {
+			border-color: $input-border-color;
+
+			@include border-radius($input-border-radius);
+
+			border-style: solid;
+			border-width: $input-border-width;
+			color: #9B9B9B;
+			font-size: 0.75rem;
+			font-weight: normal;
+		}
+
+		.panel-collapse {
+			left: $input-border-left-width;
+			margin-top: $dropdown-spacer;
+			right: $input-border-right-width;
+			position: absolute;
+			transition: none;
+			z-index: $zindex-dropdown;
+		}
+
+		.panel-body {
+			background-color: #FFF;
+			border-color: $input-border-color;
+
+			@include border-radius($input-border-radius);
+
+			border-style: solid;
+			border-width: $input-border-width;
+		}
+	}
+
+	.portlet-cp-option-facets {
+		.collapse-icon {
+			padding-left: 0.25rem;
+		}
+
+		.panel-title {
+			color: $body-color;
+			font-size: 0.875rem;
+		}
+	}
+}
+
+.term-name {
+	font-weight: 500;
+	margin-left: 0.25rem;
+}
+
+.term-count {
+	color: $secondary;
+	font-size: 100%;
+}
+
 // Orders
 
 .order-filter-settings {

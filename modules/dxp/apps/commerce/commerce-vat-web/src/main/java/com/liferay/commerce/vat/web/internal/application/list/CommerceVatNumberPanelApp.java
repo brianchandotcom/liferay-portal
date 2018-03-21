@@ -21,7 +21,7 @@ import com.liferay.commerce.product.model.CPGroup;
 import com.liferay.commerce.product.service.CPGroupService;
 import com.liferay.commerce.vat.constants.CommerceVatActionKeys;
 import com.liferay.commerce.vat.constants.CommerceVatPortletKeys;
-import com.liferay.commerce.vat.service.permission.CommerceVatPermission;
+import com.liferay.commerce.vat.web.internal.security.permission.resource.CommerceVatPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;

@@ -17,6 +17,7 @@ package com.liferay.layout.admin.web.internal.display.context;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
 import com.liferay.layout.admin.web.internal.util.LayoutPageTemplatePortletUtil;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -372,6 +374,21 @@ public class LayoutPageTemplateDisplayContext {
 
 	public String[] getOrderColumns() {
 		return new String[] {"create-date", "name"};
+	}
+
+	public boolean isAssetDisplayPageCollection() throws PortalException {
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			getLayoutPageTemplateCollection();
+
+		if (Objects.equals(
+				layoutPageTemplateCollection.getType(),
+				LayoutPageTemplateCollectionTypeConstants.
+					TYPE_ASSET_DISPLAY_PAGE)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isDisabledLayoutPageTemplateCollectionsManagementBar()

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -62,15 +63,18 @@ public class FragmentsEditorContext {
 
 	public FragmentsEditorContext(
 		HttpServletRequest request, RenderResponse renderResponse,
-		String className, long classPK) {
+		String className, long classPK, boolean showMapping) {
 
 		_request = request;
 		_renderResponse = renderResponse;
 		_classPK = classPK;
+		_showMapping = showMapping;
 
 		_classNameId = PortalUtil.getClassNameId(className);
 		_itemSelector = (ItemSelector)request.getAttribute(
 			LayoutAdminWebKeys.ITEM_SELECTOR);
+		_themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public SoyContext getEditorContext() throws PortalException {
@@ -119,6 +123,7 @@ public class FragmentsEditorContext {
 		soyContext.put(
 			"renderFragmentEntryURL",
 			_getFragmentEntryActionURL("/layout/render_fragment_entry"));
+		soyContext.put("sidebarTabs", _getSidebarTabs());
 		soyContext.put(
 			"spritemap",
 			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
@@ -175,6 +180,29 @@ public class FragmentsEditorContext {
 			desiredItemSelectorReturnTypes);
 
 		return imageItemSelectorCriterion;
+	}
+
+	private SoyContext _getSidebarTab(String label) {
+		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+
+		soyContext.put("id", label);
+		soyContext.put(
+			"label", LanguageUtil.get(_themeDisplay.getLocale(), label));
+
+		return soyContext;
+	}
+
+	private List<SoyContext> _getSidebarTabs() {
+		List<SoyContext> soyContexts = new ArrayList<>();
+
+		soyContexts.add(_getSidebarTab("fragments"));
+		soyContexts.add(_getSidebarTab("added"));
+
+		if (_showMapping) {
+			soyContexts.add(_getSidebarTab("mapping"));
+		}
+
+		return soyContexts;
 	}
 
 	private List<SoyContext> _getSoyContextFragmentCollections() {
@@ -275,5 +303,7 @@ public class FragmentsEditorContext {
 	private final ItemSelector _itemSelector;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
+	private final boolean _showMapping;
+	private final ThemeDisplay _themeDisplay;
 
 }

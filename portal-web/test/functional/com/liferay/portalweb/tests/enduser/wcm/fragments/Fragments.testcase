@@ -315,6 +315,16 @@ element.style.border='2px dashed red';
 			<var name="portletTitle" value="Fragment Name (Draft)" />
 		</execute>
 
+		<execute macro="Fragment#typeFragmentEditor">
+			<var name="editor" value="html" />
+			<var name="templateScript" value="" />
+		</execute>
+
+		<execute macro="Fragment#typeFragmentEditor">
+			<var name="editor" value="css" />
+			<var name="templateScript" value="" />
+		</execute>
+
 		<execute macro="Button#clickPublish" />
 
 		<execute macro="Alert#viewErrorMessage">

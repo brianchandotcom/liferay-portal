@@ -220,12 +220,6 @@ public class SiteNavigationMenuLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.site.navigation.model.SiteNavigationMenu fetchAutoSiteNavigationMenu(
-		long groupId) {
-		return _siteNavigationMenuLocalService.fetchAutoSiteNavigationMenu(groupId);
-	}
-
-	@Override
 	public com.liferay.site.navigation.model.SiteNavigationMenu fetchPrimarySiteNavigationMenu(
 		long groupId) {
 		return _siteNavigationMenuLocalService.fetchPrimarySiteNavigationMenu(groupId);
@@ -247,6 +241,12 @@ public class SiteNavigationMenuLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _siteNavigationMenuLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public java.util.List<com.liferay.site.navigation.model.SiteNavigationMenu> getAutoSiteNavigationMenus(
+		long groupId) {
+		return _siteNavigationMenuLocalService.getAutoSiteNavigationMenus(groupId);
 	}
 
 	@Override

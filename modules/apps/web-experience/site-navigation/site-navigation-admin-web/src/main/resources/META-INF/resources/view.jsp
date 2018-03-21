@@ -193,7 +193,13 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 					/>
 
 					<liferay-ui:search-container-column-text
-						name="navigation"
+						cssClass="table-cell-content text-center"
+						name="add-new-pages"
+						value='<%= siteNavigationMenu.isAuto() ? LanguageUtil.get(request, "yes") : StringPool.BLANK %>'
+					/>
+
+					<liferay-ui:search-container-column-text
+						name="marked-as"
 						value="<%= LanguageUtil.get(request, siteNavigationMenu.getTypeKey()) %>"
 					/>
 

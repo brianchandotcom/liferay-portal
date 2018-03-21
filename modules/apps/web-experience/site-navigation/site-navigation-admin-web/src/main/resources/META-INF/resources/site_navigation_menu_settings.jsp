@@ -45,17 +45,6 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationAdminDisplayContext.getSit
 
 	<aui:fieldset>
 		<aui:input checked="<%= siteNavigationMenu.isAuto() %>" label="add-new-pages-to-this-menu" name="auto" type="checkbox" />
-
-		<c:if test="<%= siteNavigationAdminDisplayContext.isShowAutoSiteNavigationMenuMessage() %>">
-
-			<%
-			SiteNavigationMenu autoSiteNavigationMenu = siteNavigationAdminDisplayContext.getAutoSiteNavigationMenu();
-			%>
-
-			<div class="text-muted">
-				<liferay-ui:message arguments="<%= autoSiteNavigationMenu.getName() %>" key="current-selected-menu-x" />
-			</div>
-		</c:if>
 	</aui:fieldset>
 
 	<aui:button-row>

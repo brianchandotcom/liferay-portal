@@ -96,14 +96,12 @@
 			<%
 			Map<String, Object> context = new HashMap<>();
 
-			SiteNavigationMenu primarySiteNavigationMenu = SiteNavigationMenuLocalServiceUtil.fetchPrimarySiteNavigationMenu(scopeGroupId);
-
 			context.put("breadcrumbEntries", layoutsAdminDisplayContext.getBreadcrumbEntriesJSONArray());
 			context.put("layoutColumns", layoutsAdminDisplayContext.getLayoutColumnsJSONArray());
 			context.put("pathThemeImages", themeDisplay.getPathThemeImages());
 			context.put("portletNamespace", renderResponse.getNamespace());
 			context.put("searchContainerId", "pages");
-			context.put("siteNavigationMenuName", (primarySiteNavigationMenu != null) ? primarySiteNavigationMenu.getName() : StringPool.BLANK);
+			context.put("siteNavigationMenuNames", layoutsAdminDisplayContext.getAutoSiteNavigationMenuNames());
 			%>
 
 			<soy:template-renderer

@@ -97,7 +97,6 @@ public class SiteNavigationMenuLocalServiceImpl
 			siteNavigationMenu.getSiteNavigationMenuId(), false, true, true);
 
 		_updateOldSiteNavigationMenuType(siteNavigationMenu, type);
-		_updateOldSiteNavigationMenuAuto(siteNavigationMenu, auto);
 
 		return siteNavigationMenu;
 	}
@@ -177,18 +176,6 @@ public class SiteNavigationMenuLocalServiceImpl
 	}
 
 	@Override
-	public SiteNavigationMenu fetchAutoSiteNavigationMenu(long groupId) {
-		List<SiteNavigationMenu> siteNavigationMenus =
-			siteNavigationMenuPersistence.findByG_A(groupId, true, 0, 1);
-
-		if (siteNavigationMenus.isEmpty()) {
-			return null;
-		}
-
-		return siteNavigationMenus.get(0);
-	}
-
-	@Override
 	public SiteNavigationMenu fetchPrimarySiteNavigationMenu(long groupId) {
 		return fetchSiteNavigationMenu(
 			groupId, SiteNavigationConstants.TYPE_PRIMARY);
@@ -204,6 +191,11 @@ public class SiteNavigationMenuLocalServiceImpl
 		}
 
 		return siteNavigationMenus.get(0);
+	}
+
+	@Override
+	public List<SiteNavigationMenu> getAutoSiteNavigationMenus(long groupId) {
+		return siteNavigationMenuPersistence.findByG_A(groupId, true);
 	}
 
 	@Override
@@ -248,7 +240,6 @@ public class SiteNavigationMenuLocalServiceImpl
 			siteNavigationMenuId);
 
 		_updateOldSiteNavigationMenuType(siteNavigationMenu, type);
-		_updateOldSiteNavigationMenuAuto(siteNavigationMenu, auto);
 
 		User user = userLocalService.getUser(userId);
 
@@ -329,28 +320,6 @@ public class SiteNavigationMenuLocalServiceImpl
 				siteNavigationMenuItem.getSiteNavigationMenuItemId(),
 				layout.getLayoutId(), serviceContext);
 		}
-	}
-
-	private void _updateOldSiteNavigationMenuAuto(
-		SiteNavigationMenu siteNavigationMenu, boolean auto) {
-
-		if (!auto) {
-			return;
-		}
-
-		SiteNavigationMenu autoSiteNavigationMenu = fetchAutoSiteNavigationMenu(
-			siteNavigationMenu.getGroupId());
-
-		if ((autoSiteNavigationMenu == null) ||
-			(autoSiteNavigationMenu.getSiteNavigationMenuId() ==
-				siteNavigationMenu.getSiteNavigationMenuId())) {
-
-			return;
-		}
-
-		autoSiteNavigationMenu.setAuto(false);
-
-		siteNavigationMenuPersistence.update(autoSiteNavigationMenu);
 	}
 
 	private void _updateOldSiteNavigationMenuType(

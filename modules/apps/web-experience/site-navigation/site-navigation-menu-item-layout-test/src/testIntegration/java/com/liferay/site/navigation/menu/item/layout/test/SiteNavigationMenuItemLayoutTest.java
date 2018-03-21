@@ -63,7 +63,7 @@ public class SiteNavigationMenuItemLayoutTest {
 	}
 
 	@Test
-	public void testAddToPrimaryMenuFalseToMenu() throws PortalException {
+	public void testAddToAutoMenuFalseToMenu() throws PortalException {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
@@ -72,51 +72,13 @@ public class SiteNavigationMenuItemLayoutTest {
 			TestPropsValues.getUserId(), _group.getGroupId(), "Auto Menu",
 			SiteNavigationConstants.TYPE_DEFAULT, true, serviceContext);
 
-		SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(
-			TestPropsValues.getUserId(), _group.getGroupId(), "Primary Menu",
-			SiteNavigationConstants.TYPE_PRIMARY, false, serviceContext);
-
 		Map<Locale, String> nameMap = new HashMap<>();
 
 		nameMap.put(LocaleUtil.getSiteDefault(), "welcome");
 
 		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
 
-		typeSettingsProperties.put(
-			"addToPrimaryMenu", Boolean.FALSE.toString());
-
-		LayoutServiceUtil.addLayout(
-			_group.getGroupId(), false, 0, nameMap, new HashMap<>(),
-			new HashMap<>(), new HashMap<>(), new HashMap<>(),
-			LayoutConstants.TYPE_PORTLET, typeSettingsProperties.toString(),
-			false, new HashMap<>(), serviceContext);
-
-		Assert.assertEquals(
-			1,
-			SiteNavigationMenuItemLocalServiceUtil.
-				getSiteNavigationMenuItemsCount());
-	}
-
-	@Test
-	public void testAddToPrimaryMenuFalseToPrimaryMenu()
-		throws PortalException {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(
-			TestPropsValues.getUserId(), _group.getGroupId(), "Primary Menu",
-			SiteNavigationConstants.TYPE_PRIMARY, true, serviceContext);
-
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		nameMap.put(LocaleUtil.getSiteDefault(), "welcome");
-
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-
-		typeSettingsProperties.put(
-			"addToPrimaryMenu", Boolean.FALSE.toString());
+		typeSettingsProperties.put("addToAutoMenus", Boolean.FALSE.toString());
 
 		LayoutServiceUtil.addLayout(
 			_group.getGroupId(), false, 0, nameMap, new HashMap<>(),
@@ -131,41 +93,7 @@ public class SiteNavigationMenuItemLayoutTest {
 	}
 
 	@Test
-	public void testAddToPrimaryMenuTrueToMenu() throws PortalException {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(
-			TestPropsValues.getUserId(), _group.getGroupId(), "Auto Menu",
-			SiteNavigationConstants.TYPE_DEFAULT, true, serviceContext);
-
-		SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(
-			TestPropsValues.getUserId(), _group.getGroupId(), "Primary Menu",
-			SiteNavigationConstants.TYPE_PRIMARY, false, serviceContext);
-
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		nameMap.put(LocaleUtil.getSiteDefault(), "welcome");
-
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-
-		typeSettingsProperties.put("addToPrimaryMenu", Boolean.TRUE.toString());
-
-		LayoutServiceUtil.addLayout(
-			_group.getGroupId(), false, 0, nameMap, new HashMap<>(),
-			new HashMap<>(), new HashMap<>(), new HashMap<>(),
-			LayoutConstants.TYPE_PORTLET, typeSettingsProperties.toString(),
-			false, new HashMap<>(), serviceContext);
-
-		Assert.assertEquals(
-			2,
-			SiteNavigationMenuItemLocalServiceUtil.
-				getSiteNavigationMenuItemsCount());
-	}
-
-	@Test
-	public void testAddToPrimaryMenuTrueToPrimaryMenu() throws PortalException {
+	public void testAddToAutoMenuFalseToPrimaryMenu() throws PortalException {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
@@ -180,7 +108,71 @@ public class SiteNavigationMenuItemLayoutTest {
 
 		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
 
-		typeSettingsProperties.put("addToPrimaryMenu", Boolean.TRUE.toString());
+		typeSettingsProperties.put("addToAutoMenus", Boolean.FALSE.toString());
+
+		LayoutServiceUtil.addLayout(
+			_group.getGroupId(), false, 0, nameMap, new HashMap<>(),
+			new HashMap<>(), new HashMap<>(), new HashMap<>(),
+			LayoutConstants.TYPE_PORTLET, typeSettingsProperties.toString(),
+			false, new HashMap<>(), serviceContext);
+
+		Assert.assertEquals(
+			0,
+			SiteNavigationMenuItemLocalServiceUtil.
+				getSiteNavigationMenuItemsCount());
+	}
+
+	@Test
+	public void testAddToAutoMenuTrueToMenu() throws PortalException {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(
+			TestPropsValues.getUserId(), _group.getGroupId(), "Auto Menu",
+			SiteNavigationConstants.TYPE_DEFAULT, true, serviceContext);
+
+		SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(
+			TestPropsValues.getUserId(), _group.getGroupId(), "Primary Menu",
+			SiteNavigationConstants.TYPE_PRIMARY, true, serviceContext);
+
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		nameMap.put(LocaleUtil.getSiteDefault(), "welcome");
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.put("addToAutoMenus", Boolean.TRUE.toString());
+
+		LayoutServiceUtil.addLayout(
+			_group.getGroupId(), false, 0, nameMap, new HashMap<>(),
+			new HashMap<>(), new HashMap<>(), new HashMap<>(),
+			LayoutConstants.TYPE_PORTLET, typeSettingsProperties.toString(),
+			false, new HashMap<>(), serviceContext);
+
+		Assert.assertEquals(
+			2,
+			SiteNavigationMenuItemLocalServiceUtil.
+				getSiteNavigationMenuItemsCount());
+	}
+
+	@Test
+	public void testAddToAutoMenuTrueToPrimaryMenu() throws PortalException {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(
+			TestPropsValues.getUserId(), _group.getGroupId(), "Primary Menu",
+			SiteNavigationConstants.TYPE_PRIMARY, true, serviceContext);
+
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		nameMap.put(LocaleUtil.getSiteDefault(), "welcome");
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.put("addToAutoMenus", Boolean.TRUE.toString());
 
 		LayoutServiceUtil.addLayout(
 			_group.getGroupId(), false, 0, nameMap, new HashMap<>(),

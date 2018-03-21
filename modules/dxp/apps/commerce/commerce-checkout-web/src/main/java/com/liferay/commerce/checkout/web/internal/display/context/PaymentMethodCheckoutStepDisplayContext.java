@@ -67,7 +67,7 @@ public class PaymentMethodCheckoutStepDisplayContext {
 
 		List<CommercePaymentMethod> commercePaymentMethods =
 			_commercePaymentMethodService.getCommercePaymentMethods(
-				themeDisplay.getScopeGroupId(),
+				_commerceOrder.getSiteGroupId(),
 				commerceAddress.getCommerceCountryId(), true);
 
 		return ListUtil.sort(

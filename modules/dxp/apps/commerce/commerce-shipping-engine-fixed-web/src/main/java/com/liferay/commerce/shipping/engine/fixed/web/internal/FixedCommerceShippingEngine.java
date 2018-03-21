@@ -122,7 +122,7 @@ public class FixedCommerceShippingEngine implements CommerceShippingEngine {
 		CommerceAddress commerceAddress = commerceOrder.getShippingAddress();
 
 		List<CommerceShippingFixedOption> commerceShippingFixedOptions =
-			_getCommerceShippingFixedOptions(commerceOrder.getGroupId());
+			_getCommerceShippingFixedOptions(commerceOrder.getSiteGroupId());
 
 		for (CommerceShippingFixedOption commerceShippingFixedOption :
 				commerceShippingFixedOptions) {

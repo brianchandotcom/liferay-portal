@@ -88,7 +88,7 @@ public class ShippingMethodCommerceCheckoutStep
 		}
 
 		if (_commerceShippingMethodService.getCommerceShippingMethodsCount(
-				commerceOrder.getGroupId(), true) > 0) {
+				commerceOrder.getSiteGroupId(), true) > 0) {
 
 			return true;
 		}

@@ -160,6 +160,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
+import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -6697,7 +6698,7 @@ public class JournalArticleLocalServiceImpl
 					folder.getFolderId(), fileEntry.getContentStream(),
 					fileEntryName, fileEntry.getMimeType(), false);
 
-				dlAppLocalService.deleteFileEntry(
+				TempFileEntryUtil.deleteTempFileEntry(
 					tempFileEntry.getFileEntryId());
 			}
 

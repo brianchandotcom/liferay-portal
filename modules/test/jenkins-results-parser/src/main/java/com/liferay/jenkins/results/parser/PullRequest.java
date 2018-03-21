@@ -95,8 +95,32 @@ public class PullRequest {
 		return _ownerUserName;
 	}
 
+	public String getRepositoryName() {
+		return _repositoryName;
+	}
+
+	public String getSenderBranchName() {
+		JSONObject headJSONObject = _jsonObject.getJSONObject("head");
+
+		return headJSONObject.getString("ref");
+	}
+
+	public String getSenderUsername() {
+		JSONObject headJSONObject = _jsonObject.getJSONObject("head");
+
+		JSONObject userJSONObject = headJSONObject.getJSONObject("user");
+
+		return userJSONObject.getString("login");
+	}
+
 	public TestSuiteStatus getTestSuiteStatus() {
 		return _testSuiteStatus;
+	}
+
+	public String getUpstreamBranchName() {
+		JSONObject baseJSONObject = _jsonObject.getJSONObject("base");
+
+		return baseJSONObject.getString("ref");
 	}
 
 	public void refresh() {

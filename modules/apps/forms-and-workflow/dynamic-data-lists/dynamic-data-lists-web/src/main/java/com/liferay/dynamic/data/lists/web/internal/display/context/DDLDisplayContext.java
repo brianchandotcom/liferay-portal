@@ -29,10 +29,11 @@ import com.liferay.dynamic.data.lists.web.internal.display.context.util.DDLReque
 import com.liferay.dynamic.data.lists.web.internal.search.RecordSetSearch;
 import com.liferay.dynamic.data.lists.web.internal.security.permission.resource.DDLPermission;
 import com.liferay.dynamic.data.lists.web.internal.security.permission.resource.DDLRecordSetPermission;
+import com.liferay.dynamic.data.lists.web.internal.security.permission.resource.DDMTemplatePermission;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
-import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
@@ -77,6 +78,7 @@ public class DDLDisplayContext {
 			DDLRecordSetLocalService ddlRecordSetLocalService,
 			DDLWebConfiguration ddlWebConfiguration,
 			DDMDisplayRegistry ddmDisplayRegistry,
+			DDMPermissionSupport ddmPermissionSupport,
 			DDMTemplateLocalService ddmTemplateLocalService,
 			StorageEngine storageEngine)
 		throws PortalException {
@@ -85,6 +87,7 @@ public class DDLDisplayContext {
 		_ddlRecordSetLocalService = ddlRecordSetLocalService;
 		_ddlWebConfiguration = ddlWebConfiguration;
 		_ddmDisplayRegistry = ddmDisplayRegistry;
+		_ddmPermissionSupport = ddmPermissionSupport;
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 		_storageEngine = storageEngine;
 
@@ -422,8 +425,7 @@ public class DDLDisplayContext {
 		}
 
 		_hasEditDisplayDDMTemplatePermission = DDMTemplatePermission.contains(
-			getPermissionChecker(), getScopeGroupId(),
-			getDisplayDDMTemplateId(), DDLPortletKeys.DYNAMIC_DATA_LISTS,
+			getPermissionChecker(), getDisplayDDMTemplateId(),
 			ActionKeys.UPDATE);
 
 		return _hasEditDisplayDDMTemplatePermission;
@@ -441,8 +443,7 @@ public class DDLDisplayContext {
 		}
 
 		_hasEditFormDDMTemplatePermission = DDMTemplatePermission.contains(
-			getPermissionChecker(), getScopeGroupId(), getFormDDMTemplateId(),
-			DDLPortletKeys.DYNAMIC_DATA_LISTS, ActionKeys.UPDATE);
+			getPermissionChecker(), getFormDDMTemplateId(), ActionKeys.UPDATE);
 
 		return _hasEditFormDDMTemplatePermission;
 	}
@@ -627,7 +628,7 @@ public class DDLDisplayContext {
 		}
 
 		_hasAddDDMTemplatePermission =
-			DDMTemplatePermission.containsAddTemplatePermission(
+			_ddmPermissionSupport.containsAddTemplatePermission(
 				getPermissionChecker(), getScopeGroupId(),
 				getStructureTypeClassNameId(), getStructureTypeClassNameId());
 
@@ -642,6 +643,7 @@ public class DDLDisplayContext {
 	private final DDLRequestHelper _ddlRequestHelper;
 	private final DDLWebConfiguration _ddlWebConfiguration;
 	private final DDMDisplayRegistry _ddmDisplayRegistry;
+	private final DDMPermissionSupport _ddmPermissionSupport;
 	private final DDMTemplateLocalService _ddmTemplateLocalService;
 	private DDMTemplate _displayDDMTemplate;
 	private DDMTemplate _formDDMTemplate;

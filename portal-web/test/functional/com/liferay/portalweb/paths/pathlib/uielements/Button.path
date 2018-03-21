@@ -194,6 +194,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CANCEL_GIVEN_POSITION</td>
+	<td>//div[contains(@class,'lfr-form-content')]/../div/a[contains(@class,'cancel') and contains(@class,'btn')] | //button[contains(.,'Cancel')] | //a[contains(@class,'btn') and contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHANGE</td>
 	<td>//button[contains(.,'Change')]</td>
 	<td></td>
@@ -546,6 +551,11 @@
 <tr>
 	<td>PUBLISH</td>
 	<td>//button[span[contains(.,'Publish')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_GIVEN_POSITION</td>
+	<td>//div[contains(@class,'lfr-form-content')]/../div/button[span[contains(.,'Publish')]]</td>
 	<td></td>
 </tr>
 <tr>

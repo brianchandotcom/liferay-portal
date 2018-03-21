@@ -43,7 +43,7 @@
 	<command name="AddSitePageXSS" priority="3">
 		<property name="testray.component.names" value="Site Pages Administration,XSS" />
 
-		<var name="sitePage3Name"><![CDATA[<script>alert("Site Page 3")</script> />]]></var>
+		<var name="sitePage3Name"><![CDATA[<script>alert(123);</script>]]></var>
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Navigation" />
@@ -87,6 +87,14 @@
 		<var name="key_pageName" value="${sitePage3Name}" />
 
 		<execute function="AssertTextEquals" locator1="Home#PAGE" value1="${sitePage3Name}" />
+
+		<execute function="AssertAlertNotPresent" />
+
+		<var name="actualScript"><![CDATA[<script>alert(123);</script>]]></var>
+		<var name="escapedScript"><![CDATA[&lt;script&gt;alert(123);&lt;/script&gt;]]></var>
+
+		<execute function="AssertHTMLSourceTextNotPresent" value1="${actualScript}" />
+		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
 	</command>
 
 	<command name="CannotDeleteLastPublicPageOnLiferay" priority="3">

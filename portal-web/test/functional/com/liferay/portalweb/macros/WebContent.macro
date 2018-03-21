@@ -42,6 +42,17 @@
 				</execute>
 			</then>
 		</if>
+
+		<if>
+			<isset var="viewableBy" />
+			<then>
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="Permissions" />
+				</execute>
+
+				<execute function="Select" locator1="WCEditWebContent#PERMISSIONS_VIEWABLE_BY_SELECT" value1="${viewableBy}" />
+			</then>
+		</if>
 	</command>
 
 	<command name="addDraft">
@@ -751,12 +762,8 @@
 	</command>
 
 	<command name="addWithWorkflowPGViaAP">
-		<execute function="MouseOver#mouseOverNotVisible" locator1="AP#ADD_ASSET_PLUS_ICON" />
-
-		<execute function="Click" locator1="AP#ADD_ASSET_PLUS_ICON" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Basic Web Content">
-			<var name="key_menuItem" value="Basic Web Content" />
+		<execute macro="AssetPublisherPortlet#addAsset">
+			<var name="assetType" value="Basic Web Content" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
@@ -864,12 +871,9 @@
 	</command>
 
 	<command name="deleteWithDisabledRB">
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
-			<var name="key_rowEntry" value="${entryTitle}" />
-		</execute>
-
-		<execute function="ClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
-			<var name="key_menuItem" value="Delete" />
+		<execute macro="LexiconEntry#gotoEntryMenuItemNoError">
+			<var name="menuItem" value="Delete" />
+			<var name="rowEntry" value="${entryTitle}" />
 		</execute>
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
@@ -1052,12 +1056,9 @@
 	</command>
 
 	<command name="expireSpecificVersionCP">
-		<var name="key_rowEntry" value="${webContentTitle}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="View History">
-			<var name="key_menuItem" value="View History" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="View History" />
+			<var name="rowEntry" value="${webContentTitle}" />
 		</execute>
 
 		<if>
@@ -1094,12 +1095,9 @@
 	</command>
 
 	<command name="gotoViewSpecificVersionHistoryCP">
-		<var name="key_rowEntry" value="${webContentTitle}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="View History">
-			<var name="key_menuItem" value="View History" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="View History" />
+			<var name="rowEntry" value="${webContentTitle}" />
 		</execute>
 	</command>
 

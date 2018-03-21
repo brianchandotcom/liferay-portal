@@ -17,7 +17,7 @@
 
 		<execute macro="Workflow#uploadDefinition">
 			<var name="workflowDefinitionFile" value="workflow_definition_xss.xml" />
-			<var name="workflowDefinitionTitle"><![CDATA['alert(0)'"alert(0)"><img src=x onerror=alert(0)><script>alert(0)</script>]]></var>
+			<var name="workflowDefinitionTitle"><![CDATA[<script>alert(123);</script>]]></var>
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -83,12 +83,17 @@
 
 		<execute macro="KaleoFormsAdmin#next" />
 
-		<var name="key_rowEntry" value="alert" />
+		<execute function="AssertAlertNotPresent" />
 
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<var name="actualScript"><![CDATA[<script>alert(123);</script>]]></var>
+		<var name="escapedScript"><![CDATA[&lt;script&gt;alert(123);&lt;/script&gt;]]></var>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Choose">
-			<var name="key_menuItem" value="Choose" />
+		<execute function="AssertHTMLSourceTextNotPresent" value1="${actualScript}" />
+		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Choose" />
+			<var name="rowEntry" value="alert" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />

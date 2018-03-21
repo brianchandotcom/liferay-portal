@@ -126,7 +126,8 @@
 	</command>
 
 	<command name="AddAssetTypesViaAPAndAddRespectivePortletsToSamePage" priority="5">
-		<description message="This is a use case for LPS-47619." />
+		<description message="This is a use case for LPS-47619 and LPS-67326." />
+
 		<property name="osgi.app.includes" value="knowledge-base" />
 		<property name="plugins.deployment.type" value="osgi" />
 
@@ -193,7 +194,7 @@
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
-		<execute macro="DMDocument#addPGViaAP">
+		<execute macro="DMDocument#addPGViaAPWithValidationPosition">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentFile" value="Document_1.doc" />
 			<var name="dmDocumentTitle" value="DM Document Title" />

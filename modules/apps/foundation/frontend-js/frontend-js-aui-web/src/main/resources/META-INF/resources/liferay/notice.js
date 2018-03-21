@@ -47,7 +47,7 @@ AUI.add(
 			instance._closeText = options.closeText;
 			instance._node = options.node;
 			instance._noticeType = options.type || 'notice';
-			instance._noticeClass = 'alert-warning';
+			instance._noticeClass = 'alert-notice';
 			instance._onClose = options.onClose;
 			instance._useCloseButton = true;
 

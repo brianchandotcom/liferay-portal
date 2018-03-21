@@ -30,6 +30,7 @@ import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
 import com.liferay.commerce.product.service.CPOptionCategoryService;
+import com.liferay.commerce.product.util.CPContentContributor;
 import com.liferay.commerce.product.util.CPContentContributorRegistry;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.document.library.kernel.util.DLUtil;
@@ -96,9 +97,6 @@ public class CPTypeDisplayContext {
 
 		liferayPortletResponse = cpRequestHelper.getLiferayPortletResponse();
 
-		cpContentContributorRegistry.contribute(
-			getDefaultCPInstance(), cpRequestHelper.getRenderRequest());
-
 		cpContentPortletInstanceConfiguration =
 			portletDisplay.getPortletInstanceConfiguration(
 				CPContentPortletInstanceConfiguration.class);
@@ -109,7 +107,7 @@ public class CPTypeDisplayContext {
 			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
 	}
 
-	public String getAvailabilityLabel() {
+	public String getAvailabilityLabel() throws Exception {
 		String availability = (String)getCPContentContributorValue(
 			CPContentContributorConstants.AVAILABILITY_NAME);
 
@@ -117,11 +115,10 @@ public class CPTypeDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		return LanguageUtil.format(
-			httpServletRequest, "availability-x", availability, true);
+		return availability;
 	}
 
-	public String getAvailabilityRangeLabel() {
+	public String getAvailabilityRangeLabel() throws Exception {
 		String availabilityRange = (String)getCPContentContributorValue(
 			CPContentContributorConstants.AVAILABILITY_RANGE_NAME);
 
@@ -129,9 +126,7 @@ public class CPTypeDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		return LanguageUtil.format(
-			httpServletRequest, "product-will-be-available-in-x",
-			availabilityRange);
+		return availabilityRange;
 	}
 
 	public List<CPDefinitionSpecificationOptionValue>
@@ -159,6 +154,25 @@ public class CPTypeDisplayContext {
 			classNameId, cpDefinition.getCPDefinitionId(),
 			CPAttachmentFileEntryConstants.TYPE_OTHER,
 			WorkflowConstants.STATUS_APPROVED, 0, total);
+	}
+
+	public Object getCPContentContributorValue(String contributorKey)
+		throws Exception {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		CPContentContributor cpContentContributor =
+			cpContentContributorRegistry.getCPContentContributor(
+				contributorKey);
+
+		if (cpContentContributor == null) {
+			return null;
+		}
+
+		return cpContentContributor.getValue(
+			getDefaultCPInstance(), themeDisplay.getLocale());
 	}
 
 	public CPDefinition getCPDefinition() {
@@ -268,16 +282,15 @@ public class CPTypeDisplayContext {
 		return LanguageUtil.get(locale, key);
 	}
 
-	public String getStockQuantityLabel() {
-		int stockQuantity = (int)getCPContentContributorValue(
+	public String getStockQuantityLabel() throws Exception {
+		String stockQuantity = (String)getCPContentContributorValue(
 			CPContentContributorConstants.STOCK_QUANTITY_NAME);
 
-		if (stockQuantity <= 0) {
+		if (Validator.isNull(stockQuantity)) {
 			return StringPool.BLANK;
 		}
 
-		return LanguageUtil.format(
-			httpServletRequest, "stock-quantity-x", stockQuantity);
+		return stockQuantity;
 	}
 
 	public ResourceURL getViewAttachmentURL() {
@@ -321,18 +334,6 @@ public class CPTypeDisplayContext {
 			cpDefinition.getCPDefinitionId(), null,
 			cpDefinition.getIgnoreSKUCombinations(), false, renderRequest,
 			renderResponse);
-	}
-
-	protected Object getCPContentContributorValue(String contributorKey) {
-		String key = CPContentContributorConstants.PREFIX + contributorKey;
-
-		Object value = httpServletRequest.getAttribute(key);
-
-		if (Validator.isNull(value)) {
-			return StringPool.BLANK;
-		}
-
-		return value;
 	}
 
 	protected final AssetCategoryService assetCategoryService;

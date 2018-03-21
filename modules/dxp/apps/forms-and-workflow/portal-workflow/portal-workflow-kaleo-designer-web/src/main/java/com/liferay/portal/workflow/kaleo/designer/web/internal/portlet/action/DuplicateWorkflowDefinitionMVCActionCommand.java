@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -23,8 +24,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 
 import java.util.Locale;
@@ -58,17 +59,34 @@ public class DuplicateWorkflowDefinitionMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		long companyId = themeDisplay.getCompanyId();
+
 		String name = ParamUtil.getString(actionRequest, "name");
 		String content = ParamUtil.getString(actionRequest, "content");
+		String duplicatedDefinitionName = ParamUtil.getString(
+			actionRequest, "duplicatedDefinitionName");
 
-		WorkflowDefinition workflowDefinition =
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(companyId);
+		KaleoDefinition kaleoDefinition =
+			kaleoDefinitionLocalService.fetchKaleoDefinition(
+				duplicatedDefinitionName, serviceContext);
+
+		if (kaleoDefinition.isActive()) {
 			workflowDefinitionManager.deployWorkflowDefinition(
 				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 				getTitle(actionRequest), name, content.getBytes());
+		}
+		else {
+			workflowDefinitionManager.saveWorkflowDefinition(
+				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+				getTitle(actionRequest), name, content.getBytes());
+		}
 
 		KaleoDefinitionVersion kaleoDefinitionVersion =
 			kaleoDefinitionVersionLocalService.getLatestKaleoDefinitionVersion(
-				themeDisplay.getCompanyId(), workflowDefinition.getName());
+				themeDisplay.getCompanyId(), name);
 
 		setRedirectAttribute(actionRequest, kaleoDefinitionVersion);
 

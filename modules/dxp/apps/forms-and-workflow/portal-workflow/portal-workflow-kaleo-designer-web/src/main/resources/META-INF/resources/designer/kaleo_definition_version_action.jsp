@@ -131,6 +131,7 @@ String kaleoNamespace = PortalUtil.getPortletNamespace(KaleoDesignerPortletKeys.
 		<aui:input name="content" type="hidden" value="<%= kaleoDefinition.getContent() %>" />
 		<aui:input name="duplicatedDefinitionTitle" type="hidden" value="<%= kaleoDefinition.getTitle(LanguageUtil.getLanguageId(request)) %>" />
 		<aui:input name="defaultDuplicationTitle" type="hidden" value="<%= duplicateTitle %>" />
+		<aui:input name="duplicatedDefinitionName" type="hidden" value="<%= kaleoDefinition.getName() %>" />
 
 		<aui:fieldset>
 			<aui:col>

@@ -163,7 +163,8 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 				selectedUserId, searchContainer.getStart(),
 				searchContainer.getEnd()));
 
-		searchContainer.setTotal(uadEntityAggregator.count(selectedUserId));
+		searchContainer.setTotal(
+			(int)uadEntityAggregator.count(selectedUserId));
 
 		return searchContainer;
 	}

@@ -276,8 +276,8 @@ public class CommerceOrderItemLocalServiceUtil {
 			commerceWarehouseId);
 	}
 
-	public static int getCPInstanceQuantity(long cpInstanceId) {
-		return getService().getCPInstanceQuantity(cpInstanceId);
+	public static int getCPInstanceQuantity(long cpInstanceId, int orderStatus) {
+		return getService().getCPInstanceQuantity(cpInstanceId, orderStatus);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {

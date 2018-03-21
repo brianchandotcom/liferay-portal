@@ -29,8 +29,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.SystemEventConstants;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -78,6 +80,7 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceCountry addCommerceCountry(CommerceCountry commerceCountry);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CommerceCountry addCommerceCountry(
 		Map<Locale, java.lang.String> nameMap, boolean billingAllowed,
 		boolean shippingAllowed, java.lang.String twoLettersISOCode,
@@ -329,6 +332,10 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 	public void importDefaultCountries(ServiceContext serviceContext)
 		throws java.lang.Exception;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CommerceCountry> searchCommerceCountries(
+		SearchContext searchContext) throws PortalException;
+
 	/**
 	* Updates the commerce country in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -339,6 +346,7 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 	public CommerceCountry updateCommerceCountry(
 		CommerceCountry commerceCountry);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CommerceCountry updateCommerceCountry(long commerceCountryId,
 		Map<Locale, java.lang.String> nameMap, boolean billingAllowed,
 		boolean shippingAllowed, java.lang.String twoLettersISOCode,

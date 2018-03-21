@@ -126,6 +126,13 @@ public class CommerceCountryServiceWrapper implements CommerceCountryService,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.model.CommerceCountry> searchCommerceCountries(
+		com.liferay.portal.kernel.search.SearchContext searchContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCountryService.searchCommerceCountries(searchContext);
+	}
+
+	@Override
 	public com.liferay.commerce.model.CommerceCountry updateCommerceCountry(
 		long commerceCountryId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,

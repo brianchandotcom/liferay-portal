@@ -21,6 +21,8 @@ import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -109,6 +111,10 @@ public interface CommerceCountryService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceCountry> getWarehouseCommerceCountries(long groupId,
 		boolean all) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CommerceCountry> searchCommerceCountries(
+		SearchContext searchContext) throws PortalException;
 
 	public CommerceCountry updateCommerceCountry(long commerceCountryId,
 		Map<Locale, java.lang.String> nameMap, boolean billingAllowed,

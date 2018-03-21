@@ -122,6 +122,12 @@ public class CommerceCountryServiceUtil {
 		return getService().getWarehouseCommerceCountries(groupId, all);
 	}
 
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.model.CommerceCountry> searchCommerceCountries(
+		com.liferay.portal.kernel.search.SearchContext searchContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().searchCommerceCountries(searchContext);
+	}
+
 	public static com.liferay.commerce.model.CommerceCountry updateCommerceCountry(
 		long commerceCountryId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,

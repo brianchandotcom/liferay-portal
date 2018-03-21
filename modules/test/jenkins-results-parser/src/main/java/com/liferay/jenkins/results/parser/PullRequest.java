@@ -166,8 +166,8 @@ public class PullRequest {
 
 	public static enum TestSuiteStatus {
 
-		ERROR("de4753"), FAILURE("de4753"), MISSING("cccccc"),
-		PENDING("fbca04"), SUCCESS("28a745");
+		ERROR("fccdcc"), FAILURE("fccdcc"), MISSING("eeeeee"),
+		PENDING("fff4c9"), SUCCESS("c7e8cb");
 
 		public String getColor() {
 			return _color;

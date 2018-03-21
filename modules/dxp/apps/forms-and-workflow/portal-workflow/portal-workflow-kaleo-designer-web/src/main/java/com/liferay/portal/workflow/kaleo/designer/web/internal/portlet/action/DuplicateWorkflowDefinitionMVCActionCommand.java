@@ -69,6 +69,7 @@ public class DuplicateWorkflowDefinitionMVCActionCommand
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setCompanyId(companyId);
+
 		KaleoDefinition kaleoDefinition =
 			kaleoDefinitionLocalService.fetchKaleoDefinition(
 				duplicatedDefinitionName, serviceContext);

@@ -46,8 +46,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "vat-numbers"));
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="commerceVatNumberId" type="hidden" value="<%= commerceVatNumberId %>" />
 
-	<liferay-ui:error exception="<%= CommerceVatNumberCountryCodeException.class %>" message="there-is-no-country-defined-for-the-given-vat-number" />
-
 	<aui:model-context bean="<%= commerceVatNumber %>" model="<%= CommerceVatNumber.class %>" />
 
 	<div class="lfr-form-content">

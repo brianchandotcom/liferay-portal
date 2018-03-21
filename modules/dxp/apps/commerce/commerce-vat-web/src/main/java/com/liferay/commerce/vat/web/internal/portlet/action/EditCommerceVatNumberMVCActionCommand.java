@@ -15,7 +15,6 @@
 package com.liferay.commerce.vat.web.internal.portlet.action;
 
 import com.liferay.commerce.vat.constants.CommerceVatPortletKeys;
-import com.liferay.commerce.vat.exception.CommerceVatNumberCountryCodeException;
 import com.liferay.commerce.vat.exception.NoSuchVatNumberException;
 import com.liferay.commerce.vat.model.CommerceVatNumber;
 import com.liferay.commerce.vat.service.CommerceVatNumberService;
@@ -96,12 +95,6 @@ public class EditCommerceVatNumberMVCActionCommand
 				SessionErrors.add(actionRequest, e.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
-			}
-			else if (e instanceof CommerceVatNumberCountryCodeException) {
-				SessionErrors.add(actionRequest, e.getClass());
-
-				hideDefaultErrorMessage(actionRequest);
-				hideDefaultSuccessMessage(actionRequest);
 			}
 			else {
 				throw e;

@@ -36,8 +36,6 @@ if (commerceVatNumber != null) {
 	<aui:input name="className" type="hidden" value="<%= organization.getModelClassName() %>" />
 	<aui:input name="classPK" type="hidden" value="<%= organization.getOrganizationId() %>" />
 
-	<liferay-ui:error exception="<%= CommerceVatNumberCountryCodeException.class %>" message="there-is-no-country-defined-for-the-given-vat-number" />
-
 	<aui:model-context bean="<%= commerceVatNumber %>" model="<%= CommerceVatNumber.class %>" />
 
 	<div class="lfr-form-content">

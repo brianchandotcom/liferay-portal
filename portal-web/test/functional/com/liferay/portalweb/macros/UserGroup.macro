@@ -165,7 +165,7 @@
 
 		<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
+		<execute macro="LexiconEntry#gotoEntryMenuItemNoError">
 			<var name="menuItem" value="Delete" />
 			<var name="rowEntry" value="${userGroupName}" />
 		</execute>
@@ -188,7 +188,7 @@
 
 		<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
+		<execute macro="LexiconEntry#gotoEntryMenuItemNoError">
 			<var name="menuItem" value="Delete" />
 			<var name="rowEntry" value="${userGroupName}" />
 		</execute>

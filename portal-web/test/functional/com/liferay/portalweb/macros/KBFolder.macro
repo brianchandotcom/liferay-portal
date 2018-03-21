@@ -45,7 +45,7 @@
 	</command>
 
 	<command name="deleteCP">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
+		<execute macro="LexiconEntry#gotoEntryMenuItemNoError">
 			<var name="menuItem" value="Delete" />
 			<var name="rowEntry" value="${kbFolderName}" />
 		</execute>

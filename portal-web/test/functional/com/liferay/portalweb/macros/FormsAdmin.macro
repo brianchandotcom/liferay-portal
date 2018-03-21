@@ -3,7 +3,7 @@
 	<var name="formName" value="Created Form Name" />
 
 	<command name="deleteForm">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
+		<execute macro="LexiconEntry#gotoEntryMenuItemNoError">
 			<var name="menuItem" value="Delete" />
 			<var name="rowEntry" value="${formName}" />
 		</execute>

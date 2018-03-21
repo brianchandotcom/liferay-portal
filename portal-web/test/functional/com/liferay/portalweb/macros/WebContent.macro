@@ -871,7 +871,7 @@
 	</command>
 
 	<command name="deleteWithDisabledRB">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
+		<execute macro="LexiconEntry#gotoEntryMenuItemNoError">
 			<var name="menuItem" value="Delete" />
 			<var name="rowEntry" value="${entryTitle}" />
 		</execute>

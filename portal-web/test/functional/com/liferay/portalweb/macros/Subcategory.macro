@@ -105,7 +105,7 @@
 
 		<execute function="AssertClick" locator1="Categories#CATEGORY_ENTRY_LINK" value1="${categoryName}" />
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
+		<execute macro="LexiconEntry#gotoEntryMenuItemNoError">
 			<var name="menuItem" value="Delete" />
 			<var name="rowEntry" value="${subcategoryName}" />
 		</execute>

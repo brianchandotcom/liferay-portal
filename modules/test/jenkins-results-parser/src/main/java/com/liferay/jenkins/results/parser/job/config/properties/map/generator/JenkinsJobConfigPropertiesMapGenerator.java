@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.jenkins.results.parser.job.config.generator;
+package com.liferay.jenkins.results.parser.job.config.properties.map.generator;
 
 import com.liferay.jenkins.results.parser.Dom4JUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;

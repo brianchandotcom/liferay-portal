@@ -17,9 +17,9 @@ import org.osgi.service.component.annotations.Component;
 public class ${entity.name}UADEntityDisplayHelper {
 
 	/**
-	 * Returns an ordered string array of the names of the fields to be
-	 * displayed. Each field name will correspond to a table column in the order
-	 * they are specified.
+	 * Returns an ordered string array of the fields' names to be displayed.
+	 * Each field name corresponds to a table column based on the order they are
+	 * specified.
 	 *
 	 * @return the array of field names to display
 	 */

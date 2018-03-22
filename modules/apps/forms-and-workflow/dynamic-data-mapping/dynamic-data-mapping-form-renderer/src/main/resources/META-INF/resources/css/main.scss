@@ -23,6 +23,16 @@
 	}
 }
 
+body .ddm-user-view-content {
+	.liferay-ddm-form-renderer-wizard {
+		padding: 40px 34px 31px;
+	}
+
+	.multi-step-indicator-label {
+		margin-top: -28px;
+	}
+}
+
 .portlet-forms .ddm-form-basic-info .ddm-form-name {
 	color: #000;
 	font-weight: 500;

@@ -17,11 +17,7 @@ package com.liferay.commerce.vat.web.internal.application.list;
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.commerce.application.list.constants.CommercePanelCategoryKeys;
-import com.liferay.commerce.product.model.CPGroup;
-import com.liferay.commerce.product.service.CPGroupService;
-import com.liferay.commerce.vat.constants.CommerceVatActionKeys;
 import com.liferay.commerce.vat.constants.CommerceVatPortletKeys;
-import com.liferay.commerce.vat.web.internal.security.permission.resource.CommerceVatPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
@@ -52,23 +48,7 @@ public class CommerceVatNumberPanelApp extends BasePanelApp {
 	public boolean isShow(PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
-		boolean show = super.isShow(permissionChecker, group);
-
-		if (show) {
-			CPGroup cpGroup = _cpGroupService.fetchCPGroupByGroupId(
-				group.getGroupId());
-
-			if (cpGroup == null) {
-				show = false;
-			}
-			else {
-				show = CommerceVatPermission.contains(
-					permissionChecker, group.getGroupId(),
-					CommerceVatActionKeys.MANAGE_COMMERCE_VAT_NUMBERS);
-			}
-		}
-
-		return show;
+		return super.isShow(permissionChecker, group);
 	}
 
 	@Override
@@ -79,8 +59,5 @@ public class CommerceVatNumberPanelApp extends BasePanelApp {
 	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
-
-	@Reference
-	private CPGroupService _cpGroupService;
 
 }

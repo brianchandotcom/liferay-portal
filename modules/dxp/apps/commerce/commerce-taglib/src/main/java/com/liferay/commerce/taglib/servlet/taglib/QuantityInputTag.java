@@ -81,6 +81,10 @@ public class QuantityInputTag extends IncludeTag {
 		_cpDefinitionId = cpDefinitionId;
 	}
 
+	public void setName(String name) {
+		_name = name;
+	}
+
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
@@ -103,6 +107,7 @@ public class QuantityInputTag extends IncludeTag {
 		_allowedOrderQuantity = null;
 		_cpDefinition = null;
 		_cpDefinitionId = 0;
+		_name = null;
 		_maxOrderQuantity = 0;
 		_minOrderQuantity = 0;
 		_multipleOrderQuantity = 0;
@@ -131,6 +136,7 @@ public class QuantityInputTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-commerce:quantity-input:multipleOrderQuantity",
 			_multipleOrderQuantity);
+		request.setAttribute("liferay-commerce:quantity-input:name", _name);
 		request.setAttribute(
 			"liferay-commerce:quantity-input:useSelect", _useSelect);
 		request.setAttribute("liferay-commerce:quantity-input:value", _value);
@@ -147,6 +153,7 @@ public class QuantityInputTag extends IncludeTag {
 	private int _maxOrderQuantity;
 	private int _minOrderQuantity;
 	private int _multipleOrderQuantity;
+	private String _name;
 	private boolean _useSelect = true;
 	private int _value;
 

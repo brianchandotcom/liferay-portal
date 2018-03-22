@@ -49,6 +49,11 @@
 			<type>long</type>
 		</attribute>
 		<attribute>
+			<name>name</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>useSelect</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

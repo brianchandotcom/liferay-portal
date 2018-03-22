@@ -22,10 +22,15 @@ CPDefinition cpDefinition = (CPDefinition)request.getAttribute("liferay-commerce
 int maxOrderQuantity = (int)request.getAttribute("liferay-commerce:quantity-input:maxOrderQuantity");
 int minOrderQuantity = (int)request.getAttribute("liferay-commerce:quantity-input:minOrderQuantity");
 int multipleOrderQuantity = (int)request.getAttribute("liferay-commerce:quantity-input:multipleOrderQuantity");
+String name = (String)request.getAttribute("liferay-commerce:quantity-input:name");
 boolean useSelect = (boolean)request.getAttribute("liferay-commerce:quantity-input:useSelect");
 int value = (int)request.getAttribute("liferay-commerce:quantity-input:value");
 
 long cpDefinitionId = cpDefinition.getCPDefinitionId();
+
+if (Validator.isNull(name)) {
+	name = cpDefinitionId + "Quantity";
+}
 
 int[] allowedOrderQuantities = null;
 
@@ -39,14 +44,14 @@ if (Validator.isNotNull(allowedOrderQuantity)) {
 <div class="commerce-quantity-container">
 	<c:choose>
 		<c:when test="<%= !useSelect %>">
-			<aui:input ignoreRequestValue="<%= true %>" label="quantity" name='<%= cpDefinitionId + "Quantity" %>' type="number" value="<%= value %>">
+			<aui:input ignoreRequestValue="<%= true %>" label="quantity" name='<%= name %>' type="number" value="<%= value %>">
 				<aui:validator name="number" />
 				<aui:validator name="min"><%= minOrderQuantity %></aui:validator>
 				<aui:validator name="max"><%= maxOrderQuantity %></aui:validator>
 			</aui:input>
 		</c:when>
 		<c:when test="<%= allowedOrderQuantities != null %>">
-			<aui:select ignoreRequestValue="<%= true %>" label="quantity" name='<%= cpDefinitionId + "Quantity" %>'>
+			<aui:select ignoreRequestValue="<%= true %>" label="quantity" name='<%= name %>'>
 
 				<%
 				for (int curQuantity : allowedOrderQuantities) {
@@ -61,7 +66,7 @@ if (Validator.isNotNull(allowedOrderQuantity)) {
 			</aui:select>
 		</c:when>
 		<c:otherwise>
-			<aui:select ignoreRequestValue="<%= true %>" label="quantity" name='<%= cpDefinitionId + "Quantity" %>'>
+			<aui:select ignoreRequestValue="<%= true %>" label="quantity" name='<%= name %>'>
 
 				<%
 				int quantity = 1;

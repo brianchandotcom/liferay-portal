@@ -23,12 +23,12 @@ Organization organization = (Organization)row.getObject();
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-		<portlet:renderURL var="editBranchURL">
-			<portlet:param name="organizationId" value="<%= String.valueOf(organization.getOrganizationId()) %>" />
-		</portlet:renderURL>
+	<portlet:renderURL var="editBranchURL">
+		<portlet:param name="organizationId" value="<%= String.valueOf(organization.getOrganizationId()) %>" />
+	</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editBranchURL %>"
-		/>
+	<liferay-ui:icon
+		message="edit"
+		url="<%= editBranchURL %>"
+	/>
 </liferay-ui:icon-menu>

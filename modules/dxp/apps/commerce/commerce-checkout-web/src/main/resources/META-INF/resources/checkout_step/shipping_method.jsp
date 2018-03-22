@@ -44,35 +44,35 @@ if (Validator.isNull(commerceShippingOptionKey)) {
 		<c:otherwise>
 			<ul class="list-group">
 
-			<%
-			for (CommerceShippingMethod commerceShippingMethod : shippingMethodCheckoutStepDisplayContext.getCommerceShippingMethods()) {
-				List<CommerceShippingOption> commerceShippingOptions = shippingMethodCheckoutStepDisplayContext.getCommerceShippingOptions(commerceShippingMethod);
+				<%
+				for (CommerceShippingMethod commerceShippingMethod : shippingMethodCheckoutStepDisplayContext.getCommerceShippingMethods()) {
+					List<CommerceShippingOption> commerceShippingOptions = shippingMethodCheckoutStepDisplayContext.getCommerceShippingOptions(commerceShippingMethod);
 
-				for (CommerceShippingOption commerceShippingOption : commerceShippingOptions) {
-					String curCommerceShippingOptionKey = shippingMethodCheckoutStepDisplayContext.getCommerceShippingOptionKey(commerceShippingMethod.getCommerceShippingMethodId(), commerceShippingOption.getName());
-					String label = shippingMethodCheckoutStepDisplayContext.getCommerceShippingOptionLabel(commerceShippingOption);
-			%>
+					for (CommerceShippingOption commerceShippingOption : commerceShippingOptions) {
+						String curCommerceShippingOptionKey = shippingMethodCheckoutStepDisplayContext.getCommerceShippingOptionKey(commerceShippingMethod.getCommerceShippingMethodId(), commerceShippingOption.getName());
+						String label = shippingMethodCheckoutStepDisplayContext.getCommerceShippingOptionLabel(commerceShippingOption);
+				%>
 
-					<li class="commerce-shipping-types list-group-item list-group-item-flex">
-						<div class="autofit-col autofit-col-expand">
-							<aui:input checked="<%= curCommerceShippingOptionKey.equals(commerceShippingOptionKey) %>" label="<%= label %>" name="commerceShippingOptionKey" type="radio" value="<%= curCommerceShippingOptionKey %>" />
-						</div>
-
-						<%
-						String thumbnailSrc = commerceShippingMethod.getImageURL(themeDisplay);
-						%>
-
-						<c:if test="<%= Validator.isNotNull(thumbnailSrc) %>">
-							<div class="autofit-col">
-								<img alt="<%= label %>" src="<%= thumbnailSrc %>" />
+						<li class="commerce-shipping-types list-group-item list-group-item-flex">
+							<div class="autofit-col autofit-col-expand">
+								<aui:input checked="<%= curCommerceShippingOptionKey.equals(commerceShippingOptionKey) %>" label="<%= label %>" name="commerceShippingOptionKey" type="radio" value="<%= curCommerceShippingOptionKey %>" />
 							</div>
-						</c:if>
-					</li>
 
-			<%
+							<%
+							String thumbnailSrc = commerceShippingMethod.getImageURL(themeDisplay);
+							%>
+
+							<c:if test="<%= Validator.isNotNull(thumbnailSrc) %>">
+								<div class="autofit-col">
+									<img alt="<%= label %>" src="<%= thumbnailSrc %>" />
+								</div>
+							</c:if>
+						</li>
+
+				<%
+					}
 				}
-			}
-			%>
+				%>
 
 			</ul>
 		</c:otherwise>

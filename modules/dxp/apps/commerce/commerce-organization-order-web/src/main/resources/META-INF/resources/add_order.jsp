@@ -49,10 +49,12 @@ Organization organization = commerceOrganizationOrderDisplayContext.getOrganizat
 						<div class="custom-control custom-radio">
 							<label>
 								<aui:input checked="<%= i == 0 %>" cssClass="custom-control-input" id='<%= "shippingAddressId" + i %>' label="" name="shippingAddressId" type="radio" value="<%= commerceAddress.getCommerceAddressId() %>" />
+
 								<span class="custom-control-label"></span>
 							</label>
 						</div>
 					</div>
+
 					<div class="autofit-col autofit-col-expand">
 						<div class="autofit-section">
 							<label class="order-shipping-address-label" for='<portlet:namespace /><%= "shippingAddressId" + i %>'>
@@ -84,6 +86,7 @@ Organization organization = commerceOrganizationOrderDisplayContext.getOrganizat
 			<%
 			}
 			%>
+
 		</ul>
 	</c:if>
 

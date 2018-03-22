@@ -45,7 +45,6 @@
 
 		<li ${nav_item_attr_selected} class="${nav_item_css_class}" id="layout_${nav_item.getLayoutId()}" role="presentation">
 			<a aria-labelledby="layout_${nav_item.getLayoutId()}" class="nav-link" ${nav_item_attr_has_popup} href="${nav_item.getURL()}" ${nav_item.getTarget()} role="menuitem">
-
 				<#if nav_item_layout.iconImageId != 0>
 					<span class="commerce-site-navigation-icon"><@liferay_theme["layout-icon"] layout=nav_item_layout /></span>
 				</#if>
@@ -71,14 +70,12 @@
 
 						<li ${nav_child_attr_selected} class="${nav_child_css_class}" id="layout_${nav_child.getLayoutId()}" role="presentation">
 							<a aria-labelledby="layout_${nav_child.getLayoutId()}" class="nav-link" href="${nav_child.getURL()}" ${nav_child.getTarget()} role="menuitem">
-
 								<#if nav_child_layout.iconImageId != 0>
 									<span class="commerce-site-navigation-icon"><@liferay_theme["layout-icon"] layout=nav_child_layout /></span>
 								</#if>
 
 								<span class="nav-link-text">${nav_child.getName()}</span>
 							</a>
-							
 						</li>
 					</#list>
 				</ul>

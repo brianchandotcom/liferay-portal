@@ -34,7 +34,6 @@ long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 
 <div class="form-group-autofit">
 	<aui:select label="choose-shipping-address" name="shippingAddress" onChange='<%= renderResponse.getNamespace() + "selectAddress();" %>' wrapperCssClass="form-group-item">
-
 		<aui:option label="add-new-address" value="0" />
 
 		<%
@@ -49,7 +48,7 @@ long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 
 	</aui:select>
 
-	<aui:input disabled="<%= commerceAddresses.isEmpty() ?  true : false %>" name="<%= baseAddressCheckoutStepDisplayContext.getParamName() %>" type="hidden" value="" />
+	<aui:input disabled="<%= commerceAddresses.isEmpty() ? true : false %>" name="<%= baseAddressCheckoutStepDisplayContext.getParamName() %>" type="hidden" value="" />
 
 	<aui:input name="newAddress" type="hidden" value='<%= commerceAddresses.isEmpty() ? "1" : "0" %>' />
 </div>

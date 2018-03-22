@@ -1,6 +1,5 @@
 <#if entries?has_content>
 	<ul class="card-page catalog-card-page">
-
 		<#list entries as curDocument>
 				<#assign
 				cpDefinitionId = cpSearchResultsDisplayContext.getCPDefinitionId(curDocument)
@@ -20,7 +19,7 @@
 				sku = "multiple"
 				/>
 
-				<#if isIgnoreSKUCombinations >
+				<#if isIgnoreSKUCombinations>
 					<#assign
 					cpInstance =  cpSearchResultsDisplayContext.getDefaultCPInstance(curDocument)
 					/>
@@ -38,18 +37,20 @@
 				<div class="card">
 					<div class="product-expand">
 						<p class="card-subtitle product-sku">
-								<#if sku == "multiple">
+								<#if stringUtil.equals(sku, "multiple")>
 									<@liferay_ui["message"] key="multiple" />
 								<#else>
 									SKU: ${sku}
 								</#if>
 						</p>
+
 						<div class="autofit-row product-description">
 							<div class="autofit-col autofit-col-expand">
 								<div class="card-title">
 									<a href="${friendlyURL}">${title}</a>
 								</div>
 							</div>
+
 							<div class="autofit-col">
 									<span class="sticker sticker-xl">
 										<span class="sticker-overlay">
@@ -59,9 +60,10 @@
 							</div>
 						</div>
 					</div>
+
 					<div class="product-expand">
 						<div class="product-price">
-								<#if isIgnoreSKUCombinations >
+								<#if isIgnoreSKUCombinations>
 									<span class="commerce-price"><@liferay_commerce["price"] CPInstanceId= cpInstanceId /></span>
 								<#else>
 									<span class="commerce-prefix"><@liferay_ui["message"] key="starting-at" /></span>
@@ -71,21 +73,23 @@
 							<span class="commerce-suffix">/<@liferay_ui["message"] key="ea" /></span>
 						</div>
 					</div>
+
 					<div class="product-footer">
 						<div class="product-actions">
-								<#if isIgnoreSKUCombinations >
+								<#if isIgnoreSKUCombinations>
 									<div class="autofit-row">
 										<div class="autofit-col">
 											<@liferay_commerce["quantity-input"]
-											CPDefinitionId= cpDefinitionId
-											useSelect=false
+												CPDefinitionId=cpDefinitionId
+												useSelect=false
 											/>
 										</div>
+
 										<div class="autofit-col autofit-col-expand">
 											<@liferay_commerce_cart["add-to-cart"]
-											CPDefinitionId= cpDefinitionId
-											CPInstanceId= cpInstanceId
-											elementClasses="btn-block btn-primary text-truncate"
+												CPDefinitionId=cpDefinitionId
+												CPInstanceId=cpInstanceId
+												elementClasses="btn-block btn-primary text-truncate"
 											/>
 										</div>
 									</div>
@@ -93,8 +97,9 @@
 									<a href="${friendlyURL}" class="btn btn-block btn-outline-primary text-truncate"><@liferay_ui["message"] key="view-all-variants" /></a>
 								</#if>
 						</div>
+
 						<div class="product-subactions">
-								<#if isIgnoreSKUCombinations >
+								<#if isIgnoreSKUCombinations>
 									<div class="autofit-row">
 										<div class="autofit-col autofit-col-expand">
 											<div class="custom-control custom-checkbox">
@@ -106,6 +111,7 @@
 												</label>
 											</div>
 										</div>
+
 										<div class="autofit-col">
 											<a class="add-to-list-link" href="#placeholder"><@liferay_ui["message"] key="add-to-list" /> +</a>
 										</div>
@@ -124,7 +130,6 @@
 				</div>
 			</li>
 		</#list>
-
 	</ul>
 <#else>
 	<div class="alert alert-info">

@@ -42,28 +42,29 @@ long commercePaymentMethodId = BeanParamUtil.getLong(commerceOrder, request, "co
 		<c:otherwise>
 			<ul class="list-group">
 
-			<%
-			for (CommercePaymentMethod commercePaymentMethod : commercePaymentMethods) {
-			%>
-				<li class="commerce-payment-types list-group-item list-group-item-flex">
-					<div class="autofit-col autofit-col-expand">
-						<aui:input checked="<%= commercePaymentMethod.getCommercePaymentMethodId() == commercePaymentMethodId %>" label="<%= commercePaymentMethod.getName(locale) %>" name="commercePaymentMethodId" type="radio" value="<%= commercePaymentMethod.getCommercePaymentMethodId() %>" />
-					</div>
+				<%
+				for (CommercePaymentMethod commercePaymentMethod : commercePaymentMethods) {
+				%>
 
-					<%
-					String thumbnailSrc = commercePaymentMethod.getImageURL(themeDisplay);
-					%>
-
-					<c:if test="<%= Validator.isNotNull(thumbnailSrc) %>">
-						<div class="autofit-col">
-							<img alt="<%= commercePaymentMethod.getName(locale) %>" src="<%= thumbnailSrc %>" />
+					<li class="commerce-payment-types list-group-item list-group-item-flex">
+						<div class="autofit-col autofit-col-expand">
+							<aui:input checked="<%= commercePaymentMethod.getCommercePaymentMethodId() == commercePaymentMethodId %>" label="<%= commercePaymentMethod.getName(locale) %>" name="commercePaymentMethodId" type="radio" value="<%= commercePaymentMethod.getCommercePaymentMethodId() %>" />
 						</div>
-					</c:if>
-				</li>
 
-			<%
-			}
-			%>
+						<%
+						String thumbnailSrc = commercePaymentMethod.getImageURL(themeDisplay);
+						%>
+
+						<c:if test="<%= Validator.isNotNull(thumbnailSrc) %>">
+							<div class="autofit-col">
+								<img alt="<%= commercePaymentMethod.getName(locale) %>" src="<%= thumbnailSrc %>" />
+							</div>
+						</c:if>
+					</li>
+
+				<%
+				}
+				%>
 
 			</ul>
 		</c:otherwise>

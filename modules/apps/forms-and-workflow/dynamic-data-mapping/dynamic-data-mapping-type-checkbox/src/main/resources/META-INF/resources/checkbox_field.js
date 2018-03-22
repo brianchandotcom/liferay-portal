@@ -26,7 +26,7 @@ AUI.add(
 					getBooleanValue: function(value) {
 						var instance = this;
 
-						return value == 'true' || value == true;
+						return value === 'true' || value === true;
 					},
 
 					getTemplateContext: function() {

@@ -334,7 +334,7 @@ public class LiferayWriter
 			if (rejectField != null) {
 				int pos = rejectField.pos();
 
-				errorIndexedRecord.put(pos, indexedRecord.get(pos));
+				errorIndexedRecord.put(pos, indexedRecord.get(field.pos()));
 			}
 		}
 

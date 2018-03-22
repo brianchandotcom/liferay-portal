@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ThemeLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -106,8 +105,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 	@Override
 	public void createJournalArticles(
 			JSONArray journalArticleJSONArray, ClassLoader classLoader,
-			String dependenciesFilePath, ServiceContext serviceContext,
-			ThemeDisplay themeDisplay)
+			String dependenciesFilePath, ServiceContext serviceContext)
 		throws Exception {
 
 		for (int i = 0; i < journalArticleJSONArray.length(); i++) {
@@ -116,7 +114,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 			createJournalArticle(
 				journalArticleJSONObject, classLoader, dependenciesFilePath,
-				serviceContext, themeDisplay);
+				serviceContext);
 		}
 	}
 
@@ -237,8 +235,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 	protected JournalArticle createJournalArticle(
 			JSONObject jsonObject, ClassLoader classLoader,
-			String dependenciesFilePath, ServiceContext serviceContext,
-			ThemeDisplay themeDisplay)
+			String dependenciesFilePath, ServiceContext serviceContext)
 		throws Exception {
 
 		String articleId = jsonObject.getString("articleId");
@@ -264,7 +261,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 		fetchOrAddDDMStructure(
 			ddmStructureKey, classLoader, ddmStructureFileName, serviceContext);
 
-		Locale locale = themeDisplay.getSiteDefaultLocale();
+		Locale locale = serviceContext.getLocale();
 
 		Map<Locale, String> titleMap = new HashMap<>();
 		Map<Locale, String> descriptionMap = new HashMap<>();
@@ -273,8 +270,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 		descriptionMap.put(locale, description);
 
 		content = getNormalizedContent(
-			content, classLoader, dependenciesFilePath, serviceContext,
-			themeDisplay);
+			content, classLoader, dependenciesFilePath, serviceContext);
 
 		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
 			serviceContext.getTimeZone());
@@ -483,8 +479,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 	protected String getNormalizedContent(
 			String content, ClassLoader classLoader,
-			String dependenciesFilePath, ServiceContext serviceContext,
-			ThemeDisplay themeDisplay)
+			String dependenciesFilePath, ServiceContext serviceContext)
 		throws Exception {
 
 		Set<String> placeHolders = new HashSet<>();
@@ -503,7 +498,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 				classLoader, dependenciesFilePath, fileName, serviceContext);
 
 			String previewURL = DLUtil.getDownloadURL(
-				fileEntry, fileEntry.getLatestFileVersion(), themeDisplay,
+				fileEntry, fileEntry.getLatestFileVersion(), null,
 				StringPool.BLANK, false, false);
 
 			String imgHtmlTag = String.format(
@@ -514,8 +509,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 		}
 
 		content = content.replace(
-			LOCALE_PLACEHOLDER,
-			String.valueOf(themeDisplay.getSiteDefaultLocale()));
+			LOCALE_PLACEHOLDER, String.valueOf(serviceContext.getLocale()));
 
 		return content;
 	}

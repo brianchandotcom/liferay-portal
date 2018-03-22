@@ -214,7 +214,7 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 				continue;
 			}
 
-			String environmentName = _getFirstRegexMatchGroup(
+			String environmentName = _getFirstPatternMatchGroup(
 				key, _reluctantParenthesesPattern);
 
 			String slaveHostNames = JenkinsResultsParserUtil.expandSlaveRange(
@@ -228,14 +228,14 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 		return environmentSlavesMap;
 	}
 
-	private String _getFirstRegexMatchGroup(String string, Pattern pattern) {
-		List<String> properties = _getRegexMatchGroupList(string, pattern);
+	private String _getFirstPatternMatchGroup(String string, Pattern pattern) {
+		List<String> patternMatchGroupList = _getPatternMatchGroupList(string, pattern);
 
-		if (properties.isEmpty()) {
+		if (patternMatchGroupList.isEmpty()) {
 			return null;
 		}
 
-		return properties.get(0);
+		return patternMatchGroupList.get(0);
 	}
 
 	private String _getFormattedXML(Element element) {
@@ -294,16 +294,16 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 	}
 
 	private String _getJobBranchName(String fullJobName) {
-		return _getFirstRegexMatchGroup(
+		return _getFirstPatternMatchGroup(
 			fullJobName, _masterJobBranchNamePattern);
 	}
 
 	private String _getJobShortName(String fullJobName) {
-		return _getFirstRegexMatchGroup(fullJobName, _jobShortNamePattern);
+		return _getFirstPatternMatchGroup(fullJobName, _jobShortNamePattern);
 	}
 
 	private String _getJobVariantName(String fullJobName) {
-		return _getFirstRegexMatchGroup(
+		return _getFirstPatternMatchGroup(
 			fullJobName, _reluctantParenthesesPattern);
 	}
 
@@ -322,17 +322,17 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 	}
 
 	private String _getMasterHostName(String propertyName) {
-		return _getFirstRegexMatchGroup(
+		return _getFirstPatternMatchGroup(
 			propertyName, _reluctantParenthesesPattern);
 	}
 
 	private List<String> _getMasterJobPropertiesList(String basePropertyName) {
-		List<String> regextMatchGroupList = _getRegexMatchGroupList(
+		List<String> patternMatchGroupList = _getPatternMatchGroupList(
 			basePropertyName, _masterJobPropertyPattern);
 
 		return Arrays.asList(
-			regextMatchGroupList.get(1), regextMatchGroupList.get(0),
-			regextMatchGroupList.get(2));
+			patternMatchGroupList.get(1), patternMatchGroupList.get(0),
+			patternMatchGroupList.get(2));
 	}
 
 	private Map<String, String> _getOSXEnvironmentVariablesMap() {
@@ -349,22 +349,22 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 		return osxEnvironmentVariablesMap;
 	}
 
-	private List<String> _getRegexMatchGroupList(String string, Pattern pattern) {
+	private List<String> _getPatternMatchGroupList(String string, Pattern pattern) {
 		Matcher propertyMatcher = pattern.matcher(string);
 
-		List<String> matchedGroups = new ArrayList<>();
+		List<String> patternMatchGroups = new ArrayList<>();
 
 		while (propertyMatcher.find()) {
 			for (int i = 1; i <= propertyMatcher.groupCount(); i++) {
-				matchedGroups.add(propertyMatcher.group(i));
+				patternMatchGroups.add(propertyMatcher.group(i));
 			}
 		}
 
-		return matchedGroups;
+		return patternMatchGroups;
 	}
 
 	private String _getShortChildJobName(String childJobName) {
-		return _getFirstRegexMatchGroup(
+		return _getFirstPatternMatchGroup(
 			childJobName, _shortChildJobNamePattern);
 	}
 
@@ -480,7 +480,7 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 	}
 
 	private String _getTriggerBuilderChildJobName(String triggerBuilder) {
-		return _getFirstRegexMatchGroup(
+		return _getFirstPatternMatchGroup(
 			triggerBuilder, _triggerBuilderChildJobNamePattern);
 	}
 
@@ -511,7 +511,7 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 	}
 
 	private void _processGlobalProperty(String basePropertyName) {
-		String globalPropertyName = _getFirstRegexMatchGroup(
+		String globalPropertyName = _getFirstPatternMatchGroup(
 			basePropertyName, _greedyParenthesesPattern);
 
 		_appendToGeneratedJenkinsJobConfigPropertyValue(
@@ -519,7 +519,7 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 	}
 
 	private void _processJobProperty(String basePropertyName) {
-		List<String> regexMatchGroupList = _getRegexMatchGroupList(
+		List<String> regexMatchGroupList = _getPatternMatchGroupList(
 			basePropertyName, _masterPropertyPattern);
 
 		String jobName = regexMatchGroupList.get(0);
@@ -967,7 +967,7 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 	}
 
 	private void _processMasterProperty(String basePropertyName) {
-		List<String> regexMatchGroupList = _getRegexMatchGroupList(
+		List<String> regexMatchGroupList = _getPatternMatchGroupList(
 			basePropertyName, _masterPropertyPattern);
 
 		String masterHostName = regexMatchGroupList.get(0);

@@ -346,14 +346,15 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 	@Override
 	public CPDefinition updateCPDefinitionIgnoreSKUCombinations(
-			long cpDefinitionId, boolean ignoreSKUCombinations)
+			long cpDefinitionId, boolean ignoreSKUCombinations,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinitionPermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
-			cpDefinitionId, ignoreSKUCombinations);
+			cpDefinitionId, ignoreSKUCombinations, serviceContext);
 	}
 
 	@Override

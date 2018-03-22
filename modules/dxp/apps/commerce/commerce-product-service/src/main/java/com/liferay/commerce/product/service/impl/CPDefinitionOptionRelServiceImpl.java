@@ -133,18 +133,6 @@ public class CPDefinitionOptionRelServiceImpl
 	}
 
 	@Override
-	public int getCPDefinitionOptionRelCount(
-			long cpDefinitionId, boolean skuContributor)
-		throws PortalException {
-
-		CPDefinitionPermission.check(
-			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
-
-		return cpDefinitionOptionRelLocalService.getCPDefinitionOptionRelCount(
-			cpDefinitionId, skuContributor);
-	}
-
-	@Override
 	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels(
 			long cpDefinitionId, boolean skuContributor)
 		throws PortalException {
@@ -193,6 +181,18 @@ public class CPDefinitionOptionRelServiceImpl
 	}
 
 	@Override
+	public int getCPDefinitionOptionRelsCount(
+			long cpDefinitionId, boolean skuContributor)
+		throws PortalException {
+
+		CPDefinitionPermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
+
+		return cpDefinitionOptionRelLocalService.getCPDefinitionOptionRelsCount(
+			cpDefinitionId, skuContributor);
+	}
+
+	@Override
 	public Hits search(SearchContext searchContext) {
 		return cpDefinitionOptionRelLocalService.search(searchContext);
 	}
@@ -206,42 +206,6 @@ public class CPDefinitionOptionRelServiceImpl
 
 		return cpDefinitionOptionRelLocalService.searchCPDefinitionOptionRels(
 			companyId, groupId, cpDefinitionId, keywords, start, end, sort);
-	}
-
-	@Override
-	public CPDefinitionOptionRel setFacetable(
-			long cpDefinitionOptionRelId, boolean facetable)
-		throws PortalException {
-
-		CPDefinitionPermission.checkCPDefinitionOptionRel(
-			getPermissionChecker(), cpDefinitionOptionRelId, ActionKeys.UPDATE);
-
-		return cpDefinitionOptionRelLocalService.setFacetable(
-			cpDefinitionOptionRelId, facetable);
-	}
-
-	@Override
-	public CPDefinitionOptionRel setRequired(
-			long cpDefinitionOptionRelId, boolean required)
-		throws PortalException {
-
-		CPDefinitionPermission.checkCPDefinitionOptionRel(
-			getPermissionChecker(), cpDefinitionOptionRelId, ActionKeys.UPDATE);
-
-		return cpDefinitionOptionRelLocalService.setRequired(
-			cpDefinitionOptionRelId, required);
-	}
-
-	@Override
-	public CPDefinitionOptionRel setSkuContributor(
-			long cpDefinitionOptionRelId, boolean skuContributor)
-		throws PortalException {
-
-		CPDefinitionPermission.checkCPDefinitionOptionRel(
-			getPermissionChecker(), cpDefinitionOptionRelId, ActionKeys.UPDATE);
-
-		return cpDefinitionOptionRelLocalService.setSkuContributor(
-			cpDefinitionOptionRelId, skuContributor);
 	}
 
 	@Override

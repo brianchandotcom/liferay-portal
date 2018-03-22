@@ -16,6 +16,7 @@ package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.base.CPDefinitionOptionRelLocalServiceBaseImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -40,6 +41,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
@@ -116,6 +118,10 @@ public class CPDefinitionOptionRelLocalServiceImpl
 				cpDefinitionOptionRelId, serviceContext);
 		}
 
+		// Commerce product instances
+
+		checkCPInstances(cpDefinitionId, skuContributor, serviceContext);
+
 		// Commerce product definition
 
 		reindexCPDefinition(cpDefinitionId);
@@ -191,14 +197,6 @@ public class CPDefinitionOptionRelLocalServiceImpl
 	}
 
 	@Override
-	public int getCPDefinitionOptionRelCount(
-		long cpDefinitionId, boolean skuContributor) {
-
-		return cpDefinitionOptionRelPersistence.countByC_SC(
-			cpDefinitionId, skuContributor);
-	}
-
-	@Override
 	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels(
 		long cpDefinitionId) {
 
@@ -238,6 +236,14 @@ public class CPDefinitionOptionRelLocalServiceImpl
 	}
 
 	@Override
+	public int getCPDefinitionOptionRelsCount(
+		long cpDefinitionId, boolean skuContributor) {
+
+		return cpDefinitionOptionRelPersistence.countByC_SC(
+			cpDefinitionId, skuContributor);
+	}
+
+	@Override
 	public Hits search(SearchContext searchContext) {
 		try {
 			Indexer<CPDefinitionOptionRel> indexer =
@@ -262,54 +268,6 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			companyId, groupId, cpDefinitionId, keywords, start, end, sort);
 
 		return searchCPOptions(searchContext);
-	}
-
-	@Override
-	public CPDefinitionOptionRel setFacetable(
-			long cpDefinitionOptionRelId, boolean facetable)
-		throws PortalException {
-
-		CPDefinitionOptionRel cpDefinitionOptionRel =
-			cpDefinitionOptionRelPersistence.findByPrimaryKey(
-				cpDefinitionOptionRelId);
-
-		cpDefinitionOptionRel.setFacetable(facetable);
-
-		cpDefinitionOptionRelPersistence.update(cpDefinitionOptionRel);
-
-		return cpDefinitionOptionRel;
-	}
-
-	@Override
-	public CPDefinitionOptionRel setRequired(
-			long cpDefinitionOptionRelId, boolean required)
-		throws PortalException {
-
-		CPDefinitionOptionRel cpDefinitionOptionRel =
-			cpDefinitionOptionRelPersistence.findByPrimaryKey(
-				cpDefinitionOptionRelId);
-
-		cpDefinitionOptionRel.setRequired(required);
-
-		cpDefinitionOptionRelPersistence.update(cpDefinitionOptionRel);
-
-		return cpDefinitionOptionRel;
-	}
-
-	@Override
-	public CPDefinitionOptionRel setSkuContributor(
-			long cpDefinitionOptionRelId, boolean skuContributor)
-		throws PortalException {
-
-		CPDefinitionOptionRel cpDefinitionOptionRel =
-			cpDefinitionOptionRelPersistence.findByPrimaryKey(
-				cpDefinitionOptionRelId);
-
-		cpDefinitionOptionRel.setSkuContributor(skuContributor);
-
-		cpDefinitionOptionRelPersistence.update(cpDefinitionOptionRel);
-
-		return cpDefinitionOptionRel;
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -337,6 +295,12 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		cpDefinitionOptionRel.setExpandoBridgeAttributes(serviceContext);
 
 		cpDefinitionOptionRelPersistence.update(cpDefinitionOptionRel);
+
+		// Commerce product instances
+
+		checkCPInstances(
+			cpDefinitionOptionRel.getCPDefinitionId(), skuContributor,
+			serviceContext);
 
 		// Commerce product definition
 
@@ -384,6 +348,46 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		}
 
 		return searchContext;
+	}
+
+	protected void checkCPInstances(
+			long cpDefinitionId, boolean skuContributor,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		if (!skuContributor) {
+			return;
+		}
+
+		CPDefinition cpDefinition = cpDefinitionLocalService.getCPDefinition(
+			cpDefinitionId);
+
+		if (!cpDefinition.isIgnoreSKUCombinations()) {
+			int cpDefinitionOptionRelsCount =
+				cpDefinitionOptionRelLocalService.
+					getCPDefinitionOptionRelsCount(
+						cpDefinition.getCPDefinitionId(), true);
+
+			if (cpDefinitionOptionRelsCount == 0) {
+				return;
+			}
+
+			List<CPInstance> cpInstances =
+				cpInstanceLocalService.getCPDefinitionInstances(
+					cpDefinition.getCPDefinitionId(),
+					WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null);
+
+			for (CPInstance cpInstance : cpInstances) {
+				if (Validator.isNull(cpInstance.getDDMContent())) {
+					cpInstanceLocalService.updateStatus(
+						serviceContext.getUserId(),
+						cpInstance.getCPInstanceId(),
+						WorkflowConstants.STATUS_INACTIVE, serviceContext,
+						new HashMap<String, Serializable>());
+				}
+			}
+		}
 	}
 
 	protected List<CPDefinitionOptionRel> getCPDefinitionOptionRels(Hits hits)

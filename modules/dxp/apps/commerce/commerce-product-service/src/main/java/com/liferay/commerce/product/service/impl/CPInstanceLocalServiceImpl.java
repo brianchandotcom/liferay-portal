@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.exception.CPDefinitionIgnoreSKUCombinationsException;
+import com.liferay.commerce.product.exception.CPInstanceDDMContentException;
 import com.liferay.commerce.product.exception.CPInstanceDisplayDateException;
 import com.liferay.commerce.product.exception.CPInstanceExpirationDateException;
 import com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException;
@@ -24,6 +25,7 @@ import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.base.CPInstanceLocalServiceBaseImpl;
+import com.liferay.commerce.product.util.DDMFormValuesUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -116,7 +118,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
-		validate(0, cpDefinitionId, serviceContext);
+		validate(0, cpDefinitionId, ddmContent, serviceContext);
 
 		// Commerce product instance
 
@@ -270,13 +272,21 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 				continue;
 			}
 
-			addCPInstance(
-				cpDefinitionId, skuSB.toString(), StringPool.BLANK,
-				StringPool.BLANK, true, jsonArray.toString(),
-				cpDefinition.getWidth(), cpDefinition.getHeight(),
-				cpDefinition.getDepth(), cpDefinition.getWeight(), 0, 0, true,
-				cpDefinition.getDisplayDate(), cpDefinition.getExpirationDate(),
-				neverExpire, serviceContext);
+			try {
+				addCPInstance(
+					cpDefinitionId, skuSB.toString(), StringPool.BLANK,
+					StringPool.BLANK, true, jsonArray.toString(),
+					cpDefinition.getWidth(), cpDefinition.getHeight(),
+					cpDefinition.getDepth(), cpDefinition.getWeight(), 0, 0,
+					true, cpDefinition.getDisplayDate(),
+					cpDefinition.getExpirationDate(), neverExpire,
+					serviceContext);
+			}
+			catch (CPInstanceDDMContentException cpiddmce) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(cpiddmce, cpiddmce);
+				}
+			}
 		}
 	}
 
@@ -462,6 +472,29 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	}
 
 	@Override
+	public BaseModelSearchResult<CPInstance> searchCPInstances(
+			SearchContext searchContext)
+		throws PortalException {
+
+		Indexer<CPInstance> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			CPInstance.class);
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
+
+			List<CPInstance> cpInstances = getCPInstances(hits);
+
+			if (cpInstances != null) {
+				return new BaseModelSearchResult<>(
+					cpInstances, hits.getLength());
+			}
+		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
+	}
+
+	@Override
 	public CPInstance updateCPInstance(
 			long cpInstanceId, String sku, String gtin,
 			String manufacturerPartNumber, boolean purchasable,
@@ -507,7 +540,9 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		CPInstance cpInstance = cpInstancePersistence.findByPrimaryKey(
 			cpInstanceId);
 
-		validate(cpInstanceId, cpInstance.getCPDefinitionId(), serviceContext);
+		validate(
+			cpInstanceId, cpInstance.getCPDefinitionId(),
+			cpInstance.getDDMContent(), serviceContext);
 
 		Date displayDate = null;
 		Date expirationDate = null;
@@ -863,28 +898,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		indexer.reindex(CPDefinition.class.getName(), cpDefinitionId);
 	}
 
-	protected BaseModelSearchResult<CPInstance> searchCPInstances(
-			SearchContext searchContext)
-		throws PortalException {
-
-		Indexer<CPInstance> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			CPInstance.class);
-
-		for (int i = 0; i < 10; i++) {
-			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
-
-			List<CPInstance> cpInstances = getCPInstances(hits);
-
-			if (cpInstances != null) {
-				return new BaseModelSearchResult<>(
-					cpInstances, hits.getLength());
-			}
-		}
-
-		throw new SearchException(
-			"Unable to fix the search index after 10 attempts");
-	}
-
 	protected CPInstance startWorkflowInstance(
 			long userId, CPInstance cpInstance, ServiceContext serviceContext)
 		throws PortalException {
@@ -898,7 +911,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	}
 
 	protected void validate(
-			long cpInstanceId, long cpDefinitionId,
+			long cpInstanceId, long cpDefinitionId, String ddmContent,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -908,7 +921,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			CPDefinition cpDefinition =
 				cpDefinitionLocalService.getCPDefinition(cpDefinitionId);
 
-			if (cpDefinition.getIgnoreSKUCombinations()) {
+			if (cpDefinition.isIgnoreSKUCombinations()) {
 				List<CPInstance> cpInstances = cpInstancePersistence.findByC_ST(
 					cpDefinitionId, WorkflowConstants.STATUS_APPROVED, 0, 2);
 
@@ -918,6 +931,33 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 					}
 
 					throw new CPDefinitionIgnoreSKUCombinationsException();
+				}
+			}
+			else {
+				List<CPInstance> cpInstances = cpInstancePersistence.findByC_ST(
+					cpDefinitionId, WorkflowConstants.STATUS_APPROVED);
+
+				for (CPInstance cpInstance : cpInstances) {
+					if (Validator.isNull(cpInstance.getDDMContent())) {
+						updateStatus(
+							serviceContext.getUserId(),
+							cpInstance.getCPInstanceId(),
+							WorkflowConstants.STATUS_INACTIVE, serviceContext,
+							new HashMap<String, Serializable>());
+					}
+
+					if (DDMFormValuesUtil.equals(
+							ddmContent, cpInstance.getDDMContent())) {
+
+						throw new CPInstanceDDMContentException();
+					}
+				}
+
+				if (Validator.isNull(ddmContent)) {
+					updateStatus(
+						serviceContext.getUserId(), cpInstanceId,
+						WorkflowConstants.STATUS_INACTIVE, serviceContext,
+						new HashMap<String, Serializable>());
 				}
 			}
 		}

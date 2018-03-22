@@ -226,6 +226,14 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 	}
 
 	@Override
+	public BaseModelSearchResult<CPInstance> searchCPInstances(
+			SearchContext searchContext)
+		throws PortalException {
+
+		return cpInstanceLocalService.searchCPInstances(searchContext);
+	}
+
+	@Override
 	public CPInstance updateCPInstance(
 			long cpInstanceId, String sku, String gtin,
 			String manufacturerPartNumber, boolean purchasable,

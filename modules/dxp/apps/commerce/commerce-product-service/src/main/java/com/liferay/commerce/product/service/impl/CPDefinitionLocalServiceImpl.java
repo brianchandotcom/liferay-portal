@@ -26,6 +26,7 @@ import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLocalization;
 import com.liferay.commerce.product.model.CPDisplayLayout;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceConstants;
 import com.liferay.commerce.product.service.base.CPDefinitionLocalServiceBaseImpl;
 import com.liferay.commerce.product.type.CPType;
@@ -34,6 +35,7 @@ import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -994,10 +996,11 @@ public class CPDefinitionLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPDefinition updateCPDefinitionIgnoreSKUCombinations(
-			long cpDefinitionId, boolean ignoreSKUCombinations)
+			long cpDefinitionId, boolean ignoreSKUCombinations,
+			ServiceContext serviceContext)
 		throws PortalException {
 
-		checkCPInstances(cpDefinitionId, ignoreSKUCombinations);
+		checkCPInstances(cpDefinitionId, ignoreSKUCombinations, serviceContext);
 
 		CPDefinition cpDefinition = cpDefinitionPersistence.findByPrimaryKey(
 			cpDefinitionId);
@@ -1217,7 +1220,8 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	protected void checkCPInstances(
-			long cpDefinitionId, boolean ignoreSKUCombinations)
+			long cpDefinitionId, boolean ignoreSKUCombinations,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		if (ignoreSKUCombinations) {
@@ -1227,6 +1231,30 @@ public class CPDefinitionLocalServiceImpl
 
 			if (cpInstancesCount > 1) {
 				throw new CPDefinitionIgnoreSKUCombinationsException();
+			}
+		}
+		else {
+			int cpDefinitionOptionRelsCount =
+				cpDefinitionOptionRelLocalService.
+					getCPDefinitionOptionRelsCount(cpDefinitionId, true);
+
+			if (cpDefinitionOptionRelsCount == 0) {
+				return;
+			}
+
+			List<CPInstance> cpInstances =
+				cpInstanceLocalService.getCPDefinitionInstances(
+					cpDefinitionId, WorkflowConstants.STATUS_APPROVED,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			for (CPInstance cpInstance : cpInstances) {
+				if (Validator.isNull(cpInstance.getDDMContent())) {
+					cpInstanceLocalService.updateStatus(
+						serviceContext.getUserId(),
+						cpInstance.getCPInstanceId(),
+						WorkflowConstants.STATUS_INACTIVE, serviceContext,
+						new HashMap<String, Serializable>());
+				}
 			}
 		}
 	}

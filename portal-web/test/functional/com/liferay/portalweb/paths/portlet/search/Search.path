@@ -14,8 +14,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SEARCH_FIELD</td>
-	<td>//input[contains(@data-qa-id,'searchInput')] | //input[contains(@id,'searchkeywords')] | //input[contains(@name,'SearchPortlet_keywords')]</td>
+	<td>INCREMENTAL_SEARCH_SUGGESTION</td>
+	<td>//div[@class='yui3-aclist-content']//li[contains(@data-text,"${key_kbArticleTitle}")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BAR</td>
+	<td>//h2/ancestor::section//input[@title='Search']</td>
 	<td></td>
 </tr>
 <tr>
@@ -26,11 +31,6 @@
 <tr>
 	<td>SEARCH_SCOPE_SELECT</td>
 	<td>//select[contains(@name,'SearchPortlet_groupId')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INCREMENTAL_SEARCH_SUGGESTION</td>
-	<td>//div[@class='yui3-aclist-content']//li[contains(@data-text,"${key_kbArticleTitle}")]</td>
 	<td></td>
 </tr>
 <tr>
@@ -52,6 +52,11 @@
 <tr>
 	<td>SEARCH_PORTLET_SEARCH_BUTTON</td>
 	<td>//*[name()='a' or 'button'][contains(@onclick,'SearchPortlet_search()')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_SEARCH_BAR</td>
+	<td>//input[contains(@id,'templateSearch') and @type='text'] | //input[contains(@data-qa-id,'searchInput')]</td>
 	<td></td>
 </tr>
 </tbody>

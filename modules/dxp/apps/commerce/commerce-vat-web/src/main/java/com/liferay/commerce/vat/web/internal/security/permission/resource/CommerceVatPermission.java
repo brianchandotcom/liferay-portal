@@ -17,6 +17,7 @@ package com.liferay.commerce.vat.web.internal.security.permission.resource;
 import com.liferay.commerce.vat.constants.CommerceVatConstants;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 

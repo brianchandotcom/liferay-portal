@@ -24,6 +24,7 @@ import java.nio.charset.Charset;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 
@@ -113,7 +114,7 @@ public class HttpClientInTransport implements HTTPInTransport {
 
 	@Override
 	public int getStatusCode() {
-		return 200;
+		return HttpStatus.SC_OK;
 	}
 
 	@Override

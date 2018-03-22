@@ -517,6 +517,7 @@ a[type="button"] {
 // Catalog
 
 .catalog-1-2-columns {
+
 	// Catalog Layout Template
 
 	#column-2 {
@@ -588,8 +589,8 @@ a[type="button"] {
 		.panel-collapse {
 			left: $input-border-left-width;
 			margin-top: $dropdown-spacer;
-			right: $input-border-right-width;
 			position: absolute;
+			right: $input-border-right-width;
 			transition: none;
 			z-index: $zindex-dropdown;
 		}

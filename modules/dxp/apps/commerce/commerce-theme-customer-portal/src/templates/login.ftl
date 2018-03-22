@@ -5,6 +5,7 @@
 				<img alt="Customer Portal Logo" class="b2b-logo-image" src="${images_folder}/placeholder-customer-portal-logo.png">
 			</div>
 		</div>
+
 		<div class="autofit-col autofit-col-expand b2b-login-header-title">
 			<div class="autofit-section">
 				Welcome, <strong>${company_name}</strong>

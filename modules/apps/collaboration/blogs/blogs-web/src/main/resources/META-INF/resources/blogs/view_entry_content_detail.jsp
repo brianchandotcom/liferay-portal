@@ -123,7 +123,7 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 
 		<!-- text resume -->
 
-		<div class="container widget-mode-detail-header">
+		<div class="container widget-mode-detail-header" id="<portlet:namespace /><%= entry.getEntryId() %>">
 			<div class="row">
 				<div class="col-md-8 mx-auto widget-mode-detail-text">
 					<%= entry.getContent() %>

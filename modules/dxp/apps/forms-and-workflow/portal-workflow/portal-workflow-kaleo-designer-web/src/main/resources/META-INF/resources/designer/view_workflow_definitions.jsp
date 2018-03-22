@@ -16,8 +16,6 @@
 
 <%@ include file="/designer/init.jsp" %>
 
-<liferay-ui:success key='<%= KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestProcessed" %>' message="<%= (String)MultiSessionMessages.get(renderRequest, successMessageKey) %>" translateMessage="<%= false %>" />
-
 <liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" portletName="<%= KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW %>" varImpl="portletURL">
 	<portlet:param name="mvcPath" value="/view.jsp" />
 </liferay-portlet:renderURL>
@@ -57,6 +55,8 @@ if (cur > 0) {
 
 KaleoDefinitionVersionSearch kaleoDefinitionVersionSearch = new KaleoDefinitionVersionSearch(renderRequest, portletURL);
 %>
+
+<liferay-ui:success key='<%= KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestProcessed" %>' message="<%= (String)MultiSessionMessages.get(renderRequest, successMessageKey) %>" translateMessage="<%= false %>" />
 
 <liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>">
 

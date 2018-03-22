@@ -73,7 +73,7 @@ FragmentEntryDisplay.STATE = {
 	 * @instance
 	 * @memberOf FragmentEntryDisplay
 	 * @review
-	 * @type {!object}
+	 * @type {object}
 	 */
 
 	defaultEditorConfiguration: Config.object().value({}),

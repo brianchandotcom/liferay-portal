@@ -446,7 +446,7 @@ FragmentsEditor.STATE = {
 	 * @instance
 	 * @memberOf FragmentsEditor
 	 * @review
-	 * @type {!object}
+	 * @type {object}
 	 */
 
 	defaultEditorConfiguration: Config.object().value({}),

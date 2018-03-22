@@ -334,7 +334,7 @@ FragmentEntryLink.STATE = {
 	 * @instance
 	 * @memberOf FragmentEntryLink
 	 * @review
-	 * @type {!object}
+	 * @type {object}
 	 */
 
 	defaultEditorConfiguration: Config.object().value({}),

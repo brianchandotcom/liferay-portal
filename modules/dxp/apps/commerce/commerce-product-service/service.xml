@@ -845,6 +845,7 @@
 		<exception>CPDefinitionOptionValueRelKey</exception>
 		<exception>CPDefinitionProductTypeName</exception>
 		<exception>CPFriendlyURLEntry</exception>
+		<exception>CPInstanceDDMContent</exception>
 		<exception>CPInstanceDisplayDate</exception>
 		<exception>CPInstanceExpirationDate</exception>
 		<exception>CPMeasurementUnitKey</exception>

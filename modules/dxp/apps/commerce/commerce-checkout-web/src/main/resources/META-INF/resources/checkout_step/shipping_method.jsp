@@ -19,6 +19,7 @@
 <%
 ShippingMethodCheckoutStepDisplayContext shippingMethodCheckoutStepDisplayContext = (ShippingMethodCheckoutStepDisplayContext)request.getAttribute(CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT);
 
+List<CommerceShippingMethod> commerceShippingMethods = shippingMethodCheckoutStepDisplayContext.getCommerceShippingMethods();
 CommerceOrder commerceOrder = shippingMethodCheckoutStepDisplayContext.getCommerceOrder();
 
 String commerceShippingOptionKey = ParamUtil.getString(request, "commerceShippingOptionKey");
@@ -32,7 +33,7 @@ if (Validator.isNull(commerceShippingOptionKey)) {
 	<liferay-ui:error exception="<%= CommerceOrderShippingMethodException.class %>" message="please-select-a-valid-shipping-method" />
 
 	<c:choose>
-		<c:when test="commerceShippingOptions.isEmpty()">
+		<c:when test="<%= commerceShippingMethods.isEmpty() %>">
 			<aui:row>
 				<aui:col widht="100">
 					<aui:alert type="info">
@@ -40,12 +41,20 @@ if (Validator.isNull(commerceShippingOptionKey)) {
 					</aui:alert>
 				</aui:col>
 			</aui:row>
+
+			<aui:script use="aui-base">
+				var continue = A.one('#<portlet:namespace />continue');
+
+				if (continue) {
+					Liferay.Util.toggleDisabled(continue, true);
+				}
+			</aui:script>
 		</c:when>
 		<c:otherwise>
 			<ul class="list-group">
 
 				<%
-				for (CommerceShippingMethod commerceShippingMethod : shippingMethodCheckoutStepDisplayContext.getCommerceShippingMethods()) {
+				for (CommerceShippingMethod commerceShippingMethod : commerceShippingMethods) {
 					List<CommerceShippingOption> commerceShippingOptions = shippingMethodCheckoutStepDisplayContext.getCommerceShippingOptions(commerceShippingMethod);
 
 					for (CommerceShippingOption commerceShippingOption : commerceShippingOptions) {
@@ -78,13 +87,3 @@ if (Validator.isNull(commerceShippingOptionKey)) {
 		</c:otherwise>
 	</c:choose>
 </aui:container>
-
-<c:if test="<%= commerceShippingOptions.isEmpty() %>">
-	<aui:script use="aui-base">
-		var continue = A.one('#<portlet:namespace />continue');
-
-		if (continue) {
-			Liferay.Util.toggleDisabled(continue, true);
-		}
-	</aui:script>
-</c:if>

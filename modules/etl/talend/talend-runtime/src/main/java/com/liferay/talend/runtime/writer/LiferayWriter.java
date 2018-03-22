@@ -66,8 +66,8 @@ public class LiferayWriter
 		_runtimeContainer = runtimeContainer;
 		_tLiferayOutputProperties = tLiferayOutputProperties;
 
+		_dieOnError = tLiferayOutputProperties.dieOnError.getValue();
 		_liferaySink = writeOperation.getSink();
-
 		_rejectWrites = new ArrayList<>();
 		_rejectSchema = TLiferayOutputProperties.createRejectSchema(
 			tLiferayOutputProperties.resource.main.schema.getValue());
@@ -297,7 +297,12 @@ public class LiferayWriter
 	}
 
 	private void _handleRejectRecord(
-		IndexedRecord indexedRecord, Exception exception) {
+			IndexedRecord indexedRecord, Exception exception)
+		throws IOException {
+
+		if (_dieOnError) {
+			throw new IOException(exception);
+		}
 
 		_result.rejectCount++;
 
@@ -354,6 +359,7 @@ public class LiferayWriter
 	private static final AvroConverter<String, String> _stringStringConverter =
 		new StringStringConverter();
 
+	private final boolean _dieOnError;
 	private final LiferaySink _liferaySink;
 	private final LiferayWriteOperation _liferayWriteOperation;
 	private final ObjectMapper _mapper = new ObjectMapper();

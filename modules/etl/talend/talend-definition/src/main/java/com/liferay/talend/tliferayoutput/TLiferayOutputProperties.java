@@ -203,12 +203,17 @@ public class TLiferayOutputProperties
 		calculateSchemaWidget.setWidgetType(Widget.BUTTON_WIDGET_TYPE);
 
 		mainForm.addRow(calculateSchemaWidget);
+
+		Form advancedForm = getForm(Form.ADVANCED);
+
+		advancedForm.addRow(dieOnError);
 	}
 
 	@Override
 	public void setupProperties() {
 		super.setupProperties();
 
+		dieOnError.setValue(true);
 		operations.setValue(Action.INSERT);
 
 		resource = new ResourcePropertiesHelper("resource");
@@ -305,6 +310,8 @@ public class TLiferayOutputProperties
 
 	public transient PresentationItem calculateSchema = new PresentationItem(
 		"calculateSchema", "Calculate Schema");
+	public Property<Boolean> dieOnError = PropertyFactory.newBoolean(
+		"dieOnError");
 	public Property<Action> operations = PropertyFactory.newEnum(
 		"operations", Action.class);
 	public SchemaProperties schemaReject = new SchemaProperties("schemaReject");

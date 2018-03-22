@@ -27,7 +27,7 @@
 	"name": "fragment-display-web",
 	"scripts": {
 		"checkFormat": "npm run csf",
-		"csf": "csf src/**/*.js",
+		"csf": "csf src/**/*.js src/**/*.soy",
 		"format": "npm run csf -- -i"
 	},
 	"version": "1.0.0"

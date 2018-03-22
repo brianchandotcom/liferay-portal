@@ -4,6 +4,7 @@
  * FragmentsEditor
  */
 {template .render}
+	{@param defaultEditorConfiguration: ?}
 	{@param fragmentCollections: list<[
 		fragmentEntries: list<[
 			fragmentEntryId: string,
@@ -13,6 +14,7 @@
 		fragmentCollectionId: string,
 		name: string
 	]>}
+	{@param portletNamespace: string}
 	{@param spritemap: string}
 	{@param? _contextualSidebarVisible: bool}
 	{@param? _dirty: bool}
@@ -68,6 +70,7 @@
 						<div data-position="{index($fragmentEntryLink)}" key="{$fragmentEntryLink.fragmentEntryLinkId}">
 							{call com.liferay.layout.admin.web.FragmentEntryLink.render}
 								{param content: $fragmentEntryLink.content /}
+								{param defaultEditorConfiguration: $defaultEditorConfiguration /}
 								{param editableValues: $fragmentEntryLink.editableValues /}
 								{param events: [
 									'editableChanged': $_handleEditableChanged,
@@ -76,6 +79,7 @@
 								] /}
 								{param fragmentEntryLinkId: $fragmentEntryLink.fragmentEntryLinkId /}
 								{param name: $fragmentEntryLink.name /}
+								{param portletNamespace: $portletNamespace /}
 								{param spritemap: $spritemap /}
 							{/call}
 						</div>

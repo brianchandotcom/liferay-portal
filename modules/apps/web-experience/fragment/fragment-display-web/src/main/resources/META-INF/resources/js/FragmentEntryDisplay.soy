@@ -4,13 +4,16 @@
  * FragmentDisplay
  */
 {template .render}
+	{@param defaultEditorConfiguration: ?}
 	{@param fragmentEntryLink: ?}
+	{@param portletNamespace: string}
 	{@param spritemap: string}
 	{@param? _handleEditableChanged: any}
 
 	<div data-position="0" key="{$fragmentEntryLink.fragmentEntryLinkId}">
 		{call com.liferay.layout.admin.web.FragmentEntryLink.render}
 			{param content: $fragmentEntryLink.content ?: '' /}
+			{param defaultEditorConfiguration: $defaultEditorConfiguration /}
 			{param editableValues: $fragmentEntryLink.editableValues /}
 			{param events: [
 					'editableChanged': $_handleEditableChanged
@@ -18,6 +21,7 @@
 			{param fragmentEntryLinkId: $fragmentEntryLink.fragmentEntryLinkId /}
 			{param name: $fragmentEntryLink.name /}
 			{param spritemap: $spritemap /}
+			{param portletNamespace: $portletNamespace /}
 			{param showControlBar: false /}
 		{/call}
 	</div>

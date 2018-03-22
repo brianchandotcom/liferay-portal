@@ -45,20 +45,10 @@ public class JavaAPISignatureCheck extends BaseJavaTermCheck {
 		return true;
 	}
 
-	public void setIllegalAPIParameterType(String illegalAPIParameterType) {
-		_illegalAPIParameterTypes.add(illegalAPIParameterType);
-	}
-
 	public void setIllegalAPIParameterTypes(String illegalAPIParameterTypes) {
 		Collections.addAll(
 			_illegalAPIParameterTypes,
 			StringUtil.split(illegalAPIParameterTypes));
-	}
-
-	public void setIllegalAPIServiceParameterType(
-		String illegalAPIServiceParameterType) {
-
-		_illegalAPIServiceParameterTypes.add(illegalAPIServiceParameterType);
 	}
 
 	public void setIllegalAPIServiceParameterTypes(

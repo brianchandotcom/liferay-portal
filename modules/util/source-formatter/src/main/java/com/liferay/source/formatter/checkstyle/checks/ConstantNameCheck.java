@@ -32,11 +32,6 @@ import java.util.regex.Pattern;
 public class ConstantNameCheck
 	extends com.puppycrawl.tools.checkstyle.checks.naming.ConstantNameCheck {
 
-	public void setCamelCaseTypeName(String camelCaseTypeName) {
-		_camelCaseTypeNames = ArrayUtil.append(
-			_camelCaseTypeNames, camelCaseTypeName);
-	}
-
 	public void setCamelCaseTypeNames(String camelCaseTypeNames) {
 		_camelCaseTypeNames = ArrayUtil.append(
 			_camelCaseTypeNames, StringUtil.split(camelCaseTypeNames));
@@ -44,11 +39,6 @@ public class ConstantNameCheck
 
 	public void setEnabled(boolean enabled) {
 		_enabled = enabled;
-	}
-
-	public void setImmutableFieldType(String immutableFieldType) {
-		_immutableFieldTypes = ArrayUtil.append(
-			_immutableFieldTypes, immutableFieldType);
 	}
 
 	public void setImmutableFieldTypes(String immutableFieldTypes) {

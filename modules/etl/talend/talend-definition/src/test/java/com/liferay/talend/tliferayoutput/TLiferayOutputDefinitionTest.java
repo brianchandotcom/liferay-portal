@@ -127,13 +127,14 @@ public class TLiferayOutputDefinitionTest {
 		Set<ConnectorTopology> connectorTopologies =
 			_tLiferayOutputDefinition.getSupportedConnectorTopologies();
 
-		assertThat(connectorTopologies, contains(ConnectorTopology.INCOMING));
 		assertThat(
 			connectorTopologies,
-			not(
-				contains(
-					ConnectorTopology.OUTGOING, ConnectorTopology.NONE,
-					ConnectorTopology.INCOMING_AND_OUTGOING)));
+			contains(
+				ConnectorTopology.INCOMING,
+				ConnectorTopology.INCOMING_AND_OUTGOING));
+		assertThat(
+			connectorTopologies,
+			not(contains(ConnectorTopology.OUTGOING, ConnectorTopology.NONE)));
 	}
 
 	@Rule

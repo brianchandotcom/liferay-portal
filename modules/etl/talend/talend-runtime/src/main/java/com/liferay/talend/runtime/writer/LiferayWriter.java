@@ -66,8 +66,8 @@ public class LiferayWriter
 		_runtimeContainer = runtimeContainer;
 		_tLiferayOutputProperties = tLiferayOutputProperties;
 
+		_dieOnError = tLiferayOutputProperties.dieOnError.getValue();
 		_liferaySink = writeOperation.getSink();
-
 		_rejectWrites = new ArrayList<>();
 		_rejectSchema = TLiferayOutputProperties.createRejectSchema(
 			tLiferayOutputProperties.resource.main.schema.getValue());
@@ -108,7 +108,9 @@ public class LiferayWriter
 				_runtimeContainer, singleResourceUri.toASCIIString());
 		}
 		catch (IOException ioe) {
-			_log.error("Unable to delete the resource: ", ioe);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to delete the resource: ", ioe);
+			}
 
 			throw ioe;
 		}
@@ -125,7 +127,9 @@ public class LiferayWriter
 				_runtimeContainer, resourceURL, apioForm);
 		}
 		catch (IOException ioe) {
-			_log.error("Unable to insert the resource: ", ioe);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to insert the resource: ", ioe);
+			}
 
 			throw ioe;
 		}
@@ -151,8 +155,8 @@ public class LiferayWriter
 				_runtimeContainer, singleResourceUri.toASCIIString(), apioForm);
 		}
 		catch (IOException ioe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to update the resource: " + ioe.getMessage());
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to update the resource: ", ioe);
 			}
 
 			throw ioe;
@@ -183,6 +187,17 @@ public class LiferayWriter
 	public void write(Object indexedRecordDatum) throws IOException {
 		if ((indexedRecordDatum == null) ||
 			!(indexedRecordDatum instanceof IndexedRecord)) {
+
+			if (_log.isDebugEnabled()) {
+				if (indexedRecordDatum != null) {
+					_log.debug(
+						"Unable to process incoming data row: " +
+							indexedRecordDatum.toString());
+				}
+				else {
+					_log.debug("Data row is null, skipping it.");
+				}
+			}
 
 			return;
 		}
@@ -297,7 +312,12 @@ public class LiferayWriter
 	}
 
 	private void _handleRejectRecord(
-		IndexedRecord indexedRecord, Exception exception) {
+			IndexedRecord indexedRecord, Exception exception)
+		throws IOException {
+
+		if (_dieOnError) {
+			throw new IOException(exception);
+		}
 
 		_result.rejectCount++;
 
@@ -329,7 +349,7 @@ public class LiferayWriter
 			if (rejectField != null) {
 				int pos = rejectField.pos();
 
-				errorIndexedRecord.put(pos, indexedRecord.get(pos));
+				errorIndexedRecord.put(pos, indexedRecord.get(field.pos()));
 			}
 		}
 
@@ -354,6 +374,7 @@ public class LiferayWriter
 	private static final AvroConverter<String, String> _stringStringConverter =
 		new StringStringConverter();
 
+	private final boolean _dieOnError;
 	private final LiferaySink _liferaySink;
 	private final LiferayWriteOperation _liferayWriteOperation;
 	private final ObjectMapper _mapper = new ObjectMapper();

@@ -28,7 +28,6 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -83,7 +82,7 @@ public class TLiferayOutputProperties
 
 		field.addProp(SchemaConstants.TALEND_COLUMN_DB_LENGTH, "255");
 		field.addProp(SchemaConstants.TALEND_FIELD_GENERATED, "true");
-		field.addProp(SchemaConstants.TALEND_IS_LOCKED, "false");
+		field.addProp(SchemaConstants.TALEND_IS_LOCKED, "true");
 
 		rejectFields.add(field);
 
@@ -146,6 +145,8 @@ public class TLiferayOutputProperties
 					resource.main.schema.setValue(schema);
 					temporaryMainSchema = schema;
 
+					_updateOutputSchemas();
+
 					validationResultMutable.setMessage(
 						i18nMessages.getMessage("success.validation.schema"));
 				}
@@ -203,12 +204,17 @@ public class TLiferayOutputProperties
 		calculateSchemaWidget.setWidgetType(Widget.BUTTON_WIDGET_TYPE);
 
 		mainForm.addRow(calculateSchemaWidget);
+
+		Form advancedForm = getForm(Form.ADVANCED);
+
+		advancedForm.addRow(dieOnError);
 	}
 
 	@Override
 	public void setupProperties() {
 		super.setupProperties();
 
+		dieOnError.setValue(true);
 		operations.setValue(Action.INSERT);
 
 		resource = new ResourcePropertiesHelper("resource");
@@ -305,8 +311,11 @@ public class TLiferayOutputProperties
 
 	public transient PresentationItem calculateSchema = new PresentationItem(
 		"calculateSchema", "Calculate Schema");
+	public Property<Boolean> dieOnError = PropertyFactory.newBoolean(
+		"dieOnError");
 	public Property<Action> operations = PropertyFactory.newEnum(
 		"operations", Action.class);
+	public SchemaProperties schemaFlow = new SchemaProperties("schemaFlow");
 	public SchemaProperties schemaReject = new SchemaProperties("schemaReject");
 
 	/**
@@ -340,20 +349,23 @@ public class TLiferayOutputProperties
 
 		Set<PropertyPathConnector> connectors = new HashSet<>();
 
-		if (!outputConnectors) {
-			connectors.add(mainConnector);
+		if (outputConnectors) {
+			connectors.add(flowConnector);
 			connectors.add(rejectConnector);
-
-			return connectors;
+		}
+		else {
+			connectors.add(mainConnector);
 		}
 
-		return Collections.<PropertyPathConnector>emptySet();
+		return connectors;
 	}
 
 	protected static final I18nMessages i18nMessages =
 		GlobalI18N.getI18nMessageProvider().getI18nMessages(
 			TLiferayOutputProperties.class);
 
+	protected transient PropertyPathConnector flowConnector =
+		new PropertyPathConnector(Connector.MAIN_NAME, "schemaFlow");
 	protected transient PropertyPathConnector rejectConnector =
 		new PropertyPathConnector(Connector.REJECT_NAME, "schemaReject");
 
@@ -480,6 +492,22 @@ public class TLiferayOutputProperties
 			"liferay", null, null, false, fields);
 
 		resource.main.schema.setValue(initialSchema);
+
+		_updateOutputSchemas();
+	}
+
+	private void _updateOutputSchemas() {
+		if (_log.isDebugEnabled()) {
+			_log.debug("Update output schemas");
+		}
+
+		Schema inputSchema = resource.main.schema.getValue();
+
+		schemaFlow.schema.setValue(inputSchema);
+
+		Schema rejectSchema = createRejectSchema(inputSchema);
+
+		schemaReject.schema.setValue(rejectSchema);
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger(

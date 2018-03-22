@@ -25,6 +25,7 @@ import com.liferay.fragment.util.FragmentEntryRenderUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -43,9 +44,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.soy.utils.SoyContext;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletPreferences;
@@ -143,15 +143,6 @@ public class FragmentEntryDisplayContext {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		EditorConfiguration editorConfiguration =
-			EditorConfigurationFactoryUtil.getEditorConfiguration(
-				PortletIdCodec.decodePortletName(portletDisplay.getId()),
-				"fragmenEntryLinkEditor", "", new HashMap<String, Object>(),
-				themeDisplay,
-				RequestBackedPortletURLFactoryUtil.create(_renderRequest));
-
-		Map<String, Object> data = editorConfiguration.getData();
-
 		SoyContext soyContext = new SoyContext();
 
 		PortletURL editFragmentEntryLinkURL = _renderResponse.createActionURL();
@@ -160,7 +151,16 @@ public class FragmentEntryDisplayContext {
 			ActionRequest.ACTION_NAME,
 			"/fragment_display/edit_fragment_entry_link");
 
-		soyContext.put("defaultEditorConfiguration", data);
+		EditorConfiguration editorConfiguration =
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
+				PortletIdCodec.decodePortletName(portletDisplay.getId()),
+				"fragmenEntryLinkEditor", StringPool.BLANK,
+				Collections.<String, Object>emptyMap(), themeDisplay,
+				RequestBackedPortletURLFactoryUtil.create(_renderRequest));
+
+		soyContext.put(
+			"defaultEditorConfiguration", editorConfiguration.getData());
+
 		soyContext.put(
 			"editFragmentEntryLinkURL", editFragmentEntryLinkURL.toString());
 

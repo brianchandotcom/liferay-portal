@@ -21,6 +21,7 @@ import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.fragment.util.FragmentEntryRenderUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,9 +37,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.template.soy.utils.SoyContext;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
@@ -70,21 +70,22 @@ public class FragmentsEditorContext {
 
 		SoyContext soyContext = new SoyContext();
 
-		EditorConfiguration editorConfiguration =
-			EditorConfigurationFactoryUtil.getEditorConfiguration(
-				PortletIdCodec.decodePortletName(portletDisplay.getId()),
-				"fragmenEntryLinkEditor", "", new HashMap<String, Object>(),
-				themeDisplay,
-				RequestBackedPortletURLFactoryUtil.create(_request));
-
-		Map<String, Object> data = editorConfiguration.getData();
-
 		soyContext.put(
 			"addFragmentEntryLinkURL",
 			_getFragmentEntryActionURL("/layout/add_fragment_entry_link"));
 		soyContext.put("classNameId", _classNameId);
 		soyContext.put("classPK", _classPK);
-		soyContext.put("defaultEditorConfiguration", data);
+
+		EditorConfiguration editorConfiguration =
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
+				PortletIdCodec.decodePortletName(portletDisplay.getId()),
+				"fragmenEntryLinkEditor", StringPool.BLANK,
+				Collections.emptyMap(), themeDisplay,
+				RequestBackedPortletURLFactoryUtil.create(_request));
+
+		soyContext.put(
+			"defaultEditorConfiguration", editorConfiguration.getData());
+
 		soyContext.put(
 			"deleteFragmentEntryLinkURL",
 			_getFragmentEntryActionURL("/layout/delete_fragment_entry_link"));

@@ -266,12 +266,6 @@ public class CPDefinitionOptionRelLocalServiceUtil {
 				   .getCPDefinitionOptionRelByUuidAndGroupId(uuid, groupId);
 	}
 
-	public static int getCPDefinitionOptionRelCount(long cpDefinitionId,
-		boolean skuContributor) {
-		return getService()
-				   .getCPDefinitionOptionRelCount(cpDefinitionId, skuContributor);
-	}
-
 	/**
 	* Returns a range of all the cp definition option rels.
 	*
@@ -356,6 +350,13 @@ public class CPDefinitionOptionRelLocalServiceUtil {
 		return getService().getCPDefinitionOptionRelsCount(cpDefinitionId);
 	}
 
+	public static int getCPDefinitionOptionRelsCount(long cpDefinitionId,
+		boolean skuContributor) {
+		return getService()
+				   .getCPDefinitionOptionRelsCount(cpDefinitionId,
+			skuContributor);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
@@ -393,25 +394,6 @@ public class CPDefinitionOptionRelLocalServiceUtil {
 		return getService()
 				   .searchCPDefinitionOptionRels(companyId, groupId,
 			cpDefinitionId, keywords, start, end, sort);
-	}
-
-	public static com.liferay.commerce.product.model.CPDefinitionOptionRel setFacetable(
-		long cpDefinitionOptionRelId, boolean facetable)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().setFacetable(cpDefinitionOptionRelId, facetable);
-	}
-
-	public static com.liferay.commerce.product.model.CPDefinitionOptionRel setRequired(
-		long cpDefinitionOptionRelId, boolean required)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().setRequired(cpDefinitionOptionRelId, required);
-	}
-
-	public static com.liferay.commerce.product.model.CPDefinitionOptionRel setSkuContributor(
-		long cpDefinitionOptionRelId, boolean skuContributor)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .setSkuContributor(cpDefinitionOptionRelId, skuContributor);
 	}
 
 	/**

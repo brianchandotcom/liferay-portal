@@ -93,10 +93,6 @@ public interface CPDefinitionOptionRelService extends BaseService {
 		long cpDefinitionOptionRelId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPDefinitionOptionRelCount(long cpDefinitionId,
-		boolean skuContributor) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels(
 		long cpDefinitionId, boolean skuContributor) throws PortalException;
 
@@ -114,6 +110,10 @@ public interface CPDefinitionOptionRelService extends BaseService {
 	public int getCPDefinitionOptionRelsCount(long cpDefinitionId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPDefinitionOptionRelsCount(long cpDefinitionId,
+		boolean skuContributor) throws PortalException;
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -128,16 +128,6 @@ public interface CPDefinitionOptionRelService extends BaseService {
 	public BaseModelSearchResult<CPDefinitionOptionRel> searchCPDefinitionOptionRels(
 		long companyId, long groupId, long cpDefinitionId,
 		java.lang.String keywords, int start, int end, Sort sort)
-		throws PortalException;
-
-	public CPDefinitionOptionRel setFacetable(long cpDefinitionOptionRelId,
-		boolean facetable) throws PortalException;
-
-	public CPDefinitionOptionRel setRequired(long cpDefinitionOptionRelId,
-		boolean required) throws PortalException;
-
-	public CPDefinitionOptionRel setSkuContributor(
-		long cpDefinitionOptionRelId, boolean skuContributor)
 		throws PortalException;
 
 	public CPDefinitionOptionRel updateCPDefinitionOptionRel(

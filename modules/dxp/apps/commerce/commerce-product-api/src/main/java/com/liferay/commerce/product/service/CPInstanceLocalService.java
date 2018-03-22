@@ -358,6 +358,10 @@ public interface CPInstanceLocalService extends BaseLocalService,
 		long groupId, java.lang.String keywords, int status, int start,
 		int end, Sort sort) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CPInstance> searchCPInstances(
+		SearchContext searchContext) throws PortalException;
+
 	/**
 	* Updates the cp instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

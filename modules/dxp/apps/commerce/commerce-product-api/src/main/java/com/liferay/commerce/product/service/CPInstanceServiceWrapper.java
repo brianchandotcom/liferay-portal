@@ -182,6 +182,13 @@ public class CPInstanceServiceWrapper implements CPInstanceService,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPInstance> searchCPInstances(
+		com.liferay.portal.kernel.search.SearchContext searchContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpInstanceService.searchCPInstances(searchContext);
+	}
+
+	@Override
 	public com.liferay.commerce.product.model.CPInstance updateCPInstance(
 		long cpInstanceId, java.lang.String sku, java.lang.String gtin,
 		java.lang.String manufacturerPartNumber, boolean purchasable,

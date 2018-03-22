@@ -99,13 +99,6 @@ public class CPDefinitionOptionRelServiceUtil {
 		return getService().getCPDefinitionOptionRel(cpDefinitionOptionRelId);
 	}
 
-	public static int getCPDefinitionOptionRelCount(long cpDefinitionId,
-		boolean skuContributor)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getCPDefinitionOptionRelCount(cpDefinitionId, skuContributor);
-	}
-
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionRel> getCPDefinitionOptionRels(
 		long cpDefinitionId, boolean skuContributor)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -133,6 +126,14 @@ public class CPDefinitionOptionRelServiceUtil {
 		return getService().getCPDefinitionOptionRelsCount(cpDefinitionId);
 	}
 
+	public static int getCPDefinitionOptionRelsCount(long cpDefinitionId,
+		boolean skuContributor)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCPDefinitionOptionRelsCount(cpDefinitionId,
+			skuContributor);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -155,25 +156,6 @@ public class CPDefinitionOptionRelServiceUtil {
 		return getService()
 				   .searchCPDefinitionOptionRels(companyId, groupId,
 			cpDefinitionId, keywords, start, end, sort);
-	}
-
-	public static com.liferay.commerce.product.model.CPDefinitionOptionRel setFacetable(
-		long cpDefinitionOptionRelId, boolean facetable)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().setFacetable(cpDefinitionOptionRelId, facetable);
-	}
-
-	public static com.liferay.commerce.product.model.CPDefinitionOptionRel setRequired(
-		long cpDefinitionOptionRelId, boolean required)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().setRequired(cpDefinitionOptionRelId, required);
-	}
-
-	public static com.liferay.commerce.product.model.CPDefinitionOptionRel setSkuContributor(
-		long cpDefinitionOptionRelId, boolean skuContributor)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .setSkuContributor(cpDefinitionOptionRelId, skuContributor);
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionRel updateCPDefinitionOptionRel(

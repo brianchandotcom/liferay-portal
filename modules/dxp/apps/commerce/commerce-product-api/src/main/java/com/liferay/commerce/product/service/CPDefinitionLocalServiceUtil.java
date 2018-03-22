@@ -639,11 +639,12 @@ public class CPDefinitionLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinition updateCPDefinitionIgnoreSKUCombinations(
-		long cpDefinitionId, boolean ignoreSKUCombinations)
+		long cpDefinitionId, boolean ignoreSKUCombinations,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCPDefinitionIgnoreSKUCombinations(cpDefinitionId,
-			ignoreSKUCombinations);
+			ignoreSKUCombinations, serviceContext);
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinition updateShippingInfo(

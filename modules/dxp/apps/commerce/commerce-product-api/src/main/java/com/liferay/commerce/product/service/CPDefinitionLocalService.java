@@ -508,8 +508,8 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinition updateCPDefinitionIgnoreSKUCombinations(
-		long cpDefinitionId, boolean ignoreSKUCombinations)
-		throws PortalException;
+		long cpDefinitionId, boolean ignoreSKUCombinations,
+		ServiceContext serviceContext) throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinition updateShippingInfo(long cpDefinitionId,

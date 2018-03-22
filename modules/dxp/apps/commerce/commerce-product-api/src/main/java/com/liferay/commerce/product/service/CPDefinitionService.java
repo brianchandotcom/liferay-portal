@@ -202,8 +202,8 @@ public interface CPDefinitionService extends BaseService {
 		ServiceContext serviceContext) throws PortalException;
 
 	public CPDefinition updateCPDefinitionIgnoreSKUCombinations(
-		long cpDefinitionId, boolean ignoreSKUCombinations)
-		throws PortalException;
+		long cpDefinitionId, boolean ignoreSKUCombinations,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void updateCPDisplayLayout(long cpDefinitionId,
 		java.lang.String layoutUuid, ServiceContext serviceContext)

@@ -199,10 +199,10 @@ public class CPDefinitionOptionRelServiceSoap {
 		}
 	}
 
-	public static int getCPDefinitionOptionRelCount(long cpDefinitionId,
+	public static int getCPDefinitionOptionRelsCount(long cpDefinitionId,
 		boolean skuContributor) throws RemoteException {
 		try {
-			int returnValue = CPDefinitionOptionRelServiceUtil.getCPDefinitionOptionRelCount(cpDefinitionId,
+			int returnValue = CPDefinitionOptionRelServiceUtil.getCPDefinitionOptionRelsCount(cpDefinitionId,
 					skuContributor);
 
 			return returnValue;
@@ -270,57 +270,6 @@ public class CPDefinitionOptionRelServiceSoap {
 			int returnValue = CPDefinitionOptionRelServiceUtil.getCPDefinitionOptionRelsCount(cpDefinitionId);
 
 			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.product.model.CPDefinitionOptionRelSoap setFacetable(
-		long cpDefinitionOptionRelId, boolean facetable)
-		throws RemoteException {
-		try {
-			com.liferay.commerce.product.model.CPDefinitionOptionRel returnValue =
-				CPDefinitionOptionRelServiceUtil.setFacetable(cpDefinitionOptionRelId,
-					facetable);
-
-			return com.liferay.commerce.product.model.CPDefinitionOptionRelSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.product.model.CPDefinitionOptionRelSoap setRequired(
-		long cpDefinitionOptionRelId, boolean required)
-		throws RemoteException {
-		try {
-			com.liferay.commerce.product.model.CPDefinitionOptionRel returnValue =
-				CPDefinitionOptionRelServiceUtil.setRequired(cpDefinitionOptionRelId,
-					required);
-
-			return com.liferay.commerce.product.model.CPDefinitionOptionRelSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.product.model.CPDefinitionOptionRelSoap setSkuContributor(
-		long cpDefinitionOptionRelId, boolean skuContributor)
-		throws RemoteException {
-		try {
-			com.liferay.commerce.product.model.CPDefinitionOptionRel returnValue =
-				CPDefinitionOptionRelServiceUtil.setSkuContributor(cpDefinitionOptionRelId,
-					skuContributor);
-
-			return com.liferay.commerce.product.model.CPDefinitionOptionRelSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

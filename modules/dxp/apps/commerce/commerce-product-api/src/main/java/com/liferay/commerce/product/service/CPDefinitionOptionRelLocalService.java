@@ -242,10 +242,6 @@ public interface CPDefinitionOptionRelLocalService extends BaseLocalService,
 	public CPDefinitionOptionRel getCPDefinitionOptionRelByUuidAndGroupId(
 		java.lang.String uuid, long groupId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPDefinitionOptionRelCount(long cpDefinitionId,
-		boolean skuContributor);
-
 	/**
 	* Returns a range of all the cp definition option rels.
 	*
@@ -316,6 +312,10 @@ public interface CPDefinitionOptionRelLocalService extends BaseLocalService,
 	public int getCPDefinitionOptionRelsCount(long cpDefinitionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPDefinitionOptionRelsCount(long cpDefinitionId,
+		boolean skuContributor);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
 
@@ -341,16 +341,6 @@ public interface CPDefinitionOptionRelLocalService extends BaseLocalService,
 	public BaseModelSearchResult<CPDefinitionOptionRel> searchCPDefinitionOptionRels(
 		long companyId, long groupId, long cpDefinitionId,
 		java.lang.String keywords, int start, int end, Sort sort)
-		throws PortalException;
-
-	public CPDefinitionOptionRel setFacetable(long cpDefinitionOptionRelId,
-		boolean facetable) throws PortalException;
-
-	public CPDefinitionOptionRel setRequired(long cpDefinitionOptionRelId,
-		boolean required) throws PortalException;
-
-	public CPDefinitionOptionRel setSkuContributor(
-		long cpDefinitionOptionRelId, boolean skuContributor)
 		throws PortalException;
 
 	/**

@@ -277,13 +277,6 @@ public class CPDefinitionOptionRelLocalServiceWrapper
 			groupId);
 	}
 
-	@Override
-	public int getCPDefinitionOptionRelCount(long cpDefinitionId,
-		boolean skuContributor) {
-		return _cpDefinitionOptionRelLocalService.getCPDefinitionOptionRelCount(cpDefinitionId,
-			skuContributor);
-	}
-
 	/**
 	* Returns a range of all the cp definition option rels.
 	*
@@ -378,6 +371,13 @@ public class CPDefinitionOptionRelLocalServiceWrapper
 	}
 
 	@Override
+	public int getCPDefinitionOptionRelsCount(long cpDefinitionId,
+		boolean skuContributor) {
+		return _cpDefinitionOptionRelLocalService.getCPDefinitionOptionRelsCount(cpDefinitionId,
+			skuContributor);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
 		return _cpDefinitionOptionRelLocalService.getExportActionableDynamicQuery(portletDataContext);
@@ -419,30 +419,6 @@ public class CPDefinitionOptionRelLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionOptionRelLocalService.searchCPDefinitionOptionRels(companyId,
 			groupId, cpDefinitionId, keywords, start, end, sort);
-	}
-
-	@Override
-	public com.liferay.commerce.product.model.CPDefinitionOptionRel setFacetable(
-		long cpDefinitionOptionRelId, boolean facetable)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDefinitionOptionRelLocalService.setFacetable(cpDefinitionOptionRelId,
-			facetable);
-	}
-
-	@Override
-	public com.liferay.commerce.product.model.CPDefinitionOptionRel setRequired(
-		long cpDefinitionOptionRelId, boolean required)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDefinitionOptionRelLocalService.setRequired(cpDefinitionOptionRelId,
-			required);
-	}
-
-	@Override
-	public com.liferay.commerce.product.model.CPDefinitionOptionRel setSkuContributor(
-		long cpDefinitionOptionRelId, boolean skuContributor)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDefinitionOptionRelLocalService.setSkuContributor(cpDefinitionOptionRelId,
-			skuContributor);
 	}
 
 	/**

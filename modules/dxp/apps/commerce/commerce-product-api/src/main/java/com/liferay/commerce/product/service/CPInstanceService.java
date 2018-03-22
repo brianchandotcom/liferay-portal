@@ -143,6 +143,10 @@ public interface CPInstanceService extends BaseService {
 		long groupId, java.lang.String keywords, int status, int start,
 		int end, Sort sort) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CPInstance> searchCPInstances(
+		SearchContext searchContext) throws PortalException;
+
 	public CPInstance updateCPInstance(long cpInstanceId, java.lang.String sku,
 		java.lang.String gtin, java.lang.String manufacturerPartNumber,
 		boolean purchasable, boolean published, int displayDateMonth,

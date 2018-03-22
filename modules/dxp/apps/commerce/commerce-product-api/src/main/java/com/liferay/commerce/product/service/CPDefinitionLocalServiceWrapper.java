@@ -688,10 +688,11 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 
 	@Override
 	public com.liferay.commerce.product.model.CPDefinition updateCPDefinitionIgnoreSKUCombinations(
-		long cpDefinitionId, boolean ignoreSKUCombinations)
+		long cpDefinitionId, boolean ignoreSKUCombinations,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(cpDefinitionId,
-			ignoreSKUCombinations);
+			ignoreSKUCombinations, serviceContext);
 	}
 
 	@Override

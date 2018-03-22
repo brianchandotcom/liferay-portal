@@ -774,7 +774,8 @@ public class CPDefinitionServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPDefinition updateCPDefinitionIgnoreSKUCombinations(
 		HttpPrincipal httpPrincipal, long cpDefinitionId,
-		boolean ignoreSKUCombinations)
+		boolean ignoreSKUCombinations,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionServiceUtil.class,
@@ -782,7 +783,7 @@ public class CPDefinitionServiceHttp {
 					_updateCPDefinitionIgnoreSKUCombinationsParameterTypes20);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpDefinitionId, ignoreSKUCombinations);
+					cpDefinitionId, ignoreSKUCombinations, serviceContext);
 
 			Object returnObj = null;
 
@@ -1000,7 +1001,10 @@ public class CPDefinitionServiceHttp {
 			long.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateCPDefinitionIgnoreSKUCombinationsParameterTypes20 =
-		new Class[] { long.class, boolean.class };
+		new Class[] {
+			long.class, boolean.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
 	private static final Class<?>[] _updateCPDisplayLayoutParameterTypes21 = new Class[] {
 			long.class, java.lang.String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class

@@ -164,7 +164,11 @@
 			}
 
 			function closeSidebar () {
-				if (!changed || confirm('<%= UnicodeLanguageUtil.get(request, "if-you-want-to-keep-your-configuration-you-need-to-save-changes.-do-you-want-to-save-changes-you-made") %>')) {
+				var saveChanges = !changed ? false : confirm(
+					'<%= UnicodeLanguageUtil.get(request, "if-you-want-to-keep-your-configuration-you-need-to-save-changes.-do-you-want-to-save-changes-you-made") %>'
+				);
+
+				if (!changed || !saveChanges) {
 					if (sidebarBodyChangeHandler) {
 						sidebarBodyChangeHandler.detach();
 
@@ -177,6 +181,14 @@
 					changed = false;
 
 					return true;
+				} else if (saveChanges) {
+					var form = A.one('#<portlet:namespace />sidebarBody form');
+
+					if (form) {
+						form.submit();
+					}
+
+					return false;
 				}
 
 				return false;

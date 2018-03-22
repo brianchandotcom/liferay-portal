@@ -948,25 +948,9 @@ public class SiteAdminPortlet extends MVCPortlet {
 		String creationType = ParamUtil.getString(
 			actionRequest, "creationType");
 
-		if (creationType.equals(SiteAdminConstants.CREATION_TYPE_INITIALIZER)) {
-			String groupInitializerKey = ParamUtil.getString(
-				actionRequest, "groupInitializerKey");
-
-			GroupInitializer groupInitializer =
-				groupInitializerRegistry.getGroupInitializer(
-					groupInitializerKey);
-
-			if (!liveGroup.isStaged() || liveGroup.isStagedRemotely()) {
-				groupInitializer.initialize(liveGroup.getGroupId());
-			}
-			else {
-				Group stagingGroup = liveGroup.getStagingGroup();
-
-				groupInitializer.initialize(stagingGroup.getGroupId());
-			}
-		}
-		else if (creationType.equals(
-					SiteAdminConstants.CREATION_TYPE_SITE_TEMPLATE)) {
+		if (Validator.isNull(creationType) ||
+			creationType.equals(
+				SiteAdminConstants.CREATION_TYPE_SITE_TEMPLATE)) {
 
 			long privateLayoutSetPrototypeId = ParamUtil.getLong(
 				actionRequest, "privateLayoutSetPrototypeId");
@@ -992,8 +976,12 @@ public class SiteAdminPortlet extends MVCPortlet {
 				boolean layoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
 					actionRequest, "layoutSetPrototypeLinkEnabled",
 					layoutSetPrototypeId > 0);
+				boolean layoutSetVisibilityPrivate = ParamUtil.getBoolean(
+					actionRequest, "layoutSetVisibilityPrivate");
 
-				if (layoutSetVisibility == _LAYOUT_SET_VISIBILITY_PRIVATE) {
+				if ((layoutSetVisibility == _LAYOUT_SET_VISIBILITY_PRIVATE) ||
+					layoutSetVisibilityPrivate) {
+
 					privateLayoutSetPrototypeId = layoutSetPrototypeId;
 
 					privateLayoutSetPrototypeLinkEnabled =
@@ -1020,6 +1008,25 @@ public class SiteAdminPortlet extends MVCPortlet {
 					privateLayoutSetPrototypeId,
 					publicLayoutSetPrototypeLinkEnabled,
 					privateLayoutSetPrototypeLinkEnabled);
+			}
+		}
+		else if (creationType.equals(
+					SiteAdminConstants.CREATION_TYPE_INITIALIZER)) {
+
+			String groupInitializerKey = ParamUtil.getString(
+				actionRequest, "groupInitializerKey");
+
+			GroupInitializer groupInitializer =
+				groupInitializerRegistry.getGroupInitializer(
+					groupInitializerKey);
+
+			if (!liveGroup.isStaged() || liveGroup.isStagedRemotely()) {
+				groupInitializer.initialize(liveGroup.getGroupId());
+			}
+			else {
+				Group stagingGroup = liveGroup.getStagingGroup();
+
+				groupInitializer.initialize(stagingGroup.getGroupId());
 			}
 		}
 

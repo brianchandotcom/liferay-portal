@@ -82,7 +82,7 @@ public class CommerceVatNumberIndexer extends BaseIndexer<CommerceVatNumber> {
 
 		Document document = getBaseModelDocument(CLASS_NAME, commerceVatNumber);
 
-		document.addText(FIELD_VAT_NUMBER, commerceVatNumber.getVatNumber());
+		document.addText(FIELD_VAT_NUMBER, commerceVatNumber.getValue());
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

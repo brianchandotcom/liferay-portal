@@ -19,6 +19,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LOCALIZATION_BUTTON</td>
+	<td>//button[contains(@id,'DDMFormPortlet')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOCALIZATION_OPTION</td>
+	<td>//div[contains(@class,'menu-open')]//a[//span[contains(.,'${key_locale}')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_FORM</td>
 	<td>//span[contains(@class,'taglib-text') and contains(.,'Select Form')]</td>
 	<td></td>
@@ -53,7 +63,6 @@
 	<td>//div[contains(@class,'basic-info')]//h5[contains(.,'${key_successPageDescription}')]</td>
 	<td></td>
 </tr>
-
 </tbody>
 </table>
 </body>

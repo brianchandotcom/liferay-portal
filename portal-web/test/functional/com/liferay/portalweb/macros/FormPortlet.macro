@@ -5,6 +5,14 @@
 		<execute function="AssertClick" locator1="Button#NEXT" value1="Next" />
 	</command>
 
+	<command name="changeLocale">
+		<execute function="Click" locator1="FormPortlet#LOCALIZATION_BUTTON" />
+
+		<execute function="Click" locator1="FormPortlet#LOCALIZATION_OPTION">
+			<var name="key_locale" value="${locale}" />>
+		</execute>
+	</command>
+
 	<command name="clickSubmit">
 		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Submit" />
 	</command>

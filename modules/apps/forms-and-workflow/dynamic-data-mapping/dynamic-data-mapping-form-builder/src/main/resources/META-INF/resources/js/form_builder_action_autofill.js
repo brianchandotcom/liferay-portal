@@ -11,11 +11,7 @@ AUI.add(
 
 		var TPL_LABEL_ACTION = '<h4>{message}</h4>';
 
-		var TPL_REQUIRED_ACTION = '<label>' +
-									  '<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">' +
-											'<use xlink:href="' + themeDisplay.getPathThemeImages() + '/lexicon/icons.svg#asterisk" />' +
-									  '</svg>' +
-								  '</label>';
+		var TPL_REQUIRED_ACTION = '<label>' + '<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">' + '<use xlink:href="' + themeDisplay.getPathThemeImages() + '/lexicon/icons.svg#asterisk" />' + '</svg>' + '</label>';
 
 		var FormBuilderActionAutofill = A.Component.create(
 			{

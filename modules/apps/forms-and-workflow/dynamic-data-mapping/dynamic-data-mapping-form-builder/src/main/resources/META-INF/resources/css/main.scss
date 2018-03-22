@@ -10,3 +10,23 @@
 @import "timeline-item";
 
 @import "form-builder-drag-and-drop";
+
+.multi-step-item.success-page {
+	&.complete {
+		.multi-step-divider {
+			background-color: $light-500;
+		}
+
+		.multi-step-icon {
+			background-color: $light-blue-400;
+		}
+	}
+
+	.multi-step-icon {
+		background-image: url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='512'%20height='512'%20viewBox='0%200%20512%20512'%3E%3Cpath%20class='lexicon-icon-outline'%20d='M502.091%2060.993c-9.909-9.91-25.962-9.91-35.843%200L129.26%20397.981%2045.752%20314.53c-9.881-9.909-25.962-9.909-35.843%200-9.909%209.909-9.909%2025.962%200%2035.843l98.257%2098.257c2.608%202.608%205.679%204.433%208.924%205.679%204.028%202.464%208.403%204.115%2012.952%204.115%206.49%200%2012.981-2.464%2017.936-7.418L502.09%2096.865c9.909-9.909%209.909-25.962%200-35.871v-.001z'%20fill='#{$dark}'/%3E%3C/svg%3E");
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: 0.875rem;
+		text-indent: -9999px;
+	}
+}

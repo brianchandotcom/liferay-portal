@@ -96,9 +96,6 @@ AUI.add(
 						var instance = this;
 
 						instance._setState(index, 'active');
-
-						//provide a way to create a dropdown node to active item
-						//`item` is the name of text element which i will use to type in checkboxes.
 					},
 
 					clear: function(index) {

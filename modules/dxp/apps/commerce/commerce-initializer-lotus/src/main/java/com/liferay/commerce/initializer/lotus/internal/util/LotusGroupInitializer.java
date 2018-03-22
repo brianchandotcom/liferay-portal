@@ -33,6 +33,7 @@ import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -43,11 +44,14 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.ThemeSetting;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ThemeLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -118,7 +122,11 @@ public class LotusGroupInitializer implements GroupInitializer {
 		return LanguageUtil.get(resourceBundle, "lotus-store");
 	}
 
-	public ServiceContext getServiceContext(long groupId) {
+	public ServiceContext getServiceContext(long groupId)
+		throws PortalException {
+
+		User user = _userLocalService.getUser(PrincipalThreadLocal.getUserId());
+
 		Locale locale = LocaleUtil.getSiteDefault();
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -127,6 +135,8 @@ public class LotusGroupInitializer implements GroupInitializer {
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setLanguageId(LanguageUtil.getLanguageId(locale));
 		serviceContext.setScopeGroupId(groupId);
+		serviceContext.setUserId(user.getUserId());
+		serviceContext.setTimeZone(user.getTimeZone());
 
 		return serviceContext;
 	}
@@ -138,9 +148,9 @@ public class LotusGroupInitializer implements GroupInitializer {
 
 	@Override
 	public void initialize(long groupId) throws InitializationException {
-		ServiceContext serviceContext = getServiceContext(groupId);
-
 		try {
+			ServiceContext serviceContext = getServiceContext(groupId);
+
 			_cpFileImporter.cleanLayouts(serviceContext);
 
 			createJournalArticles(serviceContext);
@@ -680,5 +690,8 @@ public class LotusGroupInitializer implements GroupInitializer {
 
 	@Reference
 	private ThemeLocalService _themeLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

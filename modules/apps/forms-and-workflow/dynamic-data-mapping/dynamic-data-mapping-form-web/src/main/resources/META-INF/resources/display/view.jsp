@@ -23,6 +23,8 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 
 String languageId = LanguageUtil.getLanguageId(request);
 Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
+
+DDMFormInstance formInstance = ddmFormDisplayContext.getFormInstance();
 %>
 
 <c:choose>
@@ -65,10 +67,6 @@ Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
 						<c:if test="<%= Validator.isNull(redirectURL) %>">
 							<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 						</c:if>
-
-						<%
-						DDMFormInstance formInstance = ddmFormDisplayContext.getFormInstance();
-						%>
 
 						<aui:input name="groupId" type="hidden" value="<%= formInstance.getGroupId() %>" />
 						<aui:input name="formInstanceId" type="hidden" value="<%= formInstance.getFormInstanceId() %>" />
@@ -148,6 +146,10 @@ Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
 					};
 
 					Liferay.on('destroyPortlet', <portlet:namespace />clearPortletHandlers);
+
+					<c:if test="<%= ddmFormDisplayContext.isFormShared() %>">
+						document.title = '<%= formInstance.getName(displayLocale) %>';
+					</c:if>
 
 					<c:choose>
 						<c:when test="<%= ddmFormDisplayContext.isAutosaveEnabled() %>">

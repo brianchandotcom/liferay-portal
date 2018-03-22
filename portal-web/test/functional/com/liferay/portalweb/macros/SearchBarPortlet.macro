@@ -54,9 +54,9 @@
 	</command>
 
 	<command name="searchPG">
-		<execute function="Type" locator1="SearchBar#SEARCH_FIELD" value1="${searchTerm}" />
+		<execute function="Type" locator1="Search#SEARCH_BAR" value1="${searchTerm}" />
 
-		<execute function="KeyPress" locator1="SearchBar#SEARCH_FIELD" value1="\RETURN" />
+		<execute function="KeyPress" locator1="Search#SEARCH_BAR" value1="\RETURN" />
 	</command>
 
 	<command name="selectScopeInputPG">

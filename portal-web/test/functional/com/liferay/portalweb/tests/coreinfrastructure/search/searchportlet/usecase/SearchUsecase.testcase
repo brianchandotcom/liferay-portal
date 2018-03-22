@@ -94,7 +94,7 @@
 			<var name="url" value="${searchURL}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="SearchBar#SEARCH_FIELD" value1="Potato" />
+		<execute function="AssertTextEquals" locator1="Search#SEARCH_BAR" value1="Potato" />
 
 		<execute macro="SearchPortlet#viewSearchResultsPG">
 			<var name="searchAssetTitle" value="Potato Blog" />

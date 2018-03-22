@@ -689,7 +689,7 @@
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${siteName}" />
+		<execute function="Type" locator1="Search#TEMPLATE_SEARCH_BAR" value1="${siteName}" />
 
 		<execute function="Click" locator1="Search#SEARCH_BUTTON" />
 

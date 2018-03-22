@@ -148,7 +148,7 @@ DDMFormInstance formInstance = ddmFormDisplayContext.getFormInstance();
 					Liferay.on('destroyPortlet', <portlet:namespace />clearPortletHandlers);
 
 					<c:if test="<%= ddmFormDisplayContext.isFormShared() %>">
-						document.title = '<%= formInstance.getName(displayLocale) %>';
+						document.title = '<%= HtmlUtil.escape(formInstance.getName(displayLocale)) %>';
 					</c:if>
 
 					<c:choose>

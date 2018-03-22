@@ -84,6 +84,13 @@ public interface DDMDataProviderInstanceService extends BaseService {
 	public DDMDataProviderInstance getDataProviderInstanceByUuid(
 		java.lang.String uuid) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDMDataProviderInstance> getDataProviderInstances(
+		long companyId, long[] groupIds, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getDataProviderInstancesCount(long companyId, long[] groupIds);
+
 	/**
 	* Returns the OSGi service identifier.
 	*

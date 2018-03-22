@@ -28,6 +28,9 @@ public interface DDMDataProviderInstanceFinder {
 	public int countByC_G_N_D(long companyId, long[] groupIds,
 		java.lang.String name, java.lang.String description, boolean andOperator);
 
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> filterByC_G(
+		long companyId, long[] groupIds, int start, int end);
+
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> filterByKeywords(
 		long companyId, long[] groupIds, java.lang.String keywords, int start,
 		int end,
@@ -35,6 +38,8 @@ public interface DDMDataProviderInstanceFinder {
 
 	public int filterCountByKeywords(long companyId, long[] groupIds,
 		java.lang.String keywords);
+
+	public int filterCountByC_G(long companyId, long[] groupIds);
 
 	public int filterCountByC_G_N_D(long companyId, long[] groupIds,
 		java.lang.String name, java.lang.String description, boolean andOperator);

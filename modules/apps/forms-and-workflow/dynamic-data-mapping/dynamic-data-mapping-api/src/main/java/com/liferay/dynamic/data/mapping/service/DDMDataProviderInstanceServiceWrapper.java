@@ -81,6 +81,19 @@ public class DDMDataProviderInstanceServiceWrapper
 		return _ddmDataProviderInstanceService.getDataProviderInstanceByUuid(uuid);
 	}
 
+	@Override
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> getDataProviderInstances(
+		long companyId, long[] groupIds, int start, int end) {
+		return _ddmDataProviderInstanceService.getDataProviderInstances(companyId,
+			groupIds, start, end);
+	}
+
+	@Override
+	public int getDataProviderInstancesCount(long companyId, long[] groupIds) {
+		return _ddmDataProviderInstanceService.getDataProviderInstancesCount(companyId,
+			groupIds);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

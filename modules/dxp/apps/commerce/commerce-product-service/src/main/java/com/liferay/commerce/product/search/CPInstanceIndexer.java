@@ -41,6 +41,8 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.io.Serializable;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -61,6 +63,8 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 	public static final String CLASS_NAME = CPInstance.class.getName();
 
 	public static final String FIELD_CP_DEFINITION_ID = "CPDefinitionId";
+
+	public static final String FIELD_PURCHASABLE = "purchasable";
 
 	public static final String FIELD_SKU = "sku";
 
@@ -95,6 +99,16 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 		if (cpDefinitionId > 0) {
 			contextBooleanFilter.addRequiredTerm(
 				FIELD_CP_DEFINITION_ID, cpDefinitionId);
+		}
+
+		Map<String, Serializable> attributes = searchContext.getAttributes();
+
+		if (attributes.containsKey(FIELD_PURCHASABLE)) {
+			boolean purchasable = GetterUtil.getBoolean(
+				attributes.get(FIELD_PURCHASABLE));
+
+			contextBooleanFilter.addRequiredTerm(
+				FIELD_PURCHASABLE, purchasable);
 		}
 
 		String[] fieldNames = (String[])searchContext.getAttribute("OPTIONS");
@@ -176,6 +190,7 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 		document.addText(FIELD_SKU, cpInstance.getSku());
 		document.addKeyword(
 			FIELD_CP_DEFINITION_ID, cpInstance.getCPDefinitionId());
+		document.addKeyword(FIELD_PURCHASABLE, cpInstance.getPurchasable());
 
 		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
 			cpDefinitionOptionRelListMap =

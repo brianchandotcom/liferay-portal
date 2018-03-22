@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.vat.service.impl;
 
+import com.liferay.commerce.vat.exception.CommerceVatNumberValueException;
 import com.liferay.commerce.vat.internal.search.CommerceVatNumberIndexer;
 import com.liferay.commerce.vat.model.CommerceVatNumber;
 import com.liferay.commerce.vat.service.base.CommerceVatNumberLocalServiceBaseImpl;
@@ -52,12 +53,14 @@ public class CommerceVatNumberLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceVatNumber addCommerceVatNumber(
-			String className, long classPK, String vatNumber,
+			String className, long classPK, String value,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
+
+		validate(value);
 
 		long commerceVatNumberId = counterLocalService.increment();
 
@@ -70,7 +73,7 @@ public class CommerceVatNumberLocalServiceImpl
 		commerceVatNumber.setUserName(user.getFullName());
 		commerceVatNumber.setClassName(className);
 		commerceVatNumber.setClassPK(classPK);
-		commerceVatNumber.setVatNumber(vatNumber);
+		commerceVatNumber.setValue(value);
 
 		commerceVatNumberPersistence.update(commerceVatNumber);
 
@@ -123,13 +126,15 @@ public class CommerceVatNumberLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceVatNumber updateCommerceVatNumber(
-			long commerceVatNumberId, String vatNumber)
+			long commerceVatNumberId, String value)
 		throws PortalException {
 
 		CommerceVatNumber commerceVatNumber =
 			commerceVatNumberPersistence.findByPrimaryKey(commerceVatNumberId);
 
-		commerceVatNumber.setVatNumber(vatNumber);
+		validate(value);
+
+		commerceVatNumber.setValue(value);
 
 		commerceVatNumberPersistence.update(commerceVatNumber);
 
@@ -224,6 +229,12 @@ public class CommerceVatNumberLocalServiceImpl
 
 		throw new SearchException(
 			"Unable to fix the search index after 10 attempts");
+	}
+
+	protected void validate(String value) throws PortalException {
+		if (Validator.isNull(value)) {
+			throw new CommerceVatNumberValueException();
+		}
 	}
 
 	private static final String[] _SELECTED_FIELD_NAMES =

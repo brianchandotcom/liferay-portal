@@ -36,7 +36,7 @@ public class CommerceVatNumberServiceImpl
 
 	@Override
 	public CommerceVatNumber addCommerceVatNumber(
-			String className, long classPK, String vatNumber,
+			String className, long classPK, String value,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -45,7 +45,7 @@ public class CommerceVatNumberServiceImpl
 			CommerceVatActionKeys.MANAGE_COMMERCE_VAT_NUMBERS);
 
 		return commerceVatNumberLocalService.addCommerceVatNumber(
-			className, classPK, vatNumber, serviceContext);
+			className, classPK, value, serviceContext);
 	}
 
 	@Override
@@ -134,12 +134,12 @@ public class CommerceVatNumberServiceImpl
 
 	@Override
 	public CommerceVatNumber updateCommerceVatNumber(
-			long commerceVatNumberId, String vatNumber)
+			long commerceVatNumberId, String value)
 		throws PortalException {
 
 		CommerceVatNumber commerceVatNumber =
 			commerceVatNumberLocalService.updateCommerceVatNumber(
-				commerceVatNumberId, vatNumber);
+				commerceVatNumberId, value);
 
 		_portletResourcePermission.check(
 			getPermissionChecker(), commerceVatNumber.getGroupId(),

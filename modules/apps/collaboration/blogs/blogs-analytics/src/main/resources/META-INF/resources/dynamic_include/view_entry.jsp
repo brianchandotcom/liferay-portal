@@ -18,70 +18,8 @@
 
 <%
 BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
-
-long entryId = ParamUtil.getLong(request, "entryId", entry.getEntryId());
 %>
 
-<aui:script require="metal-dom/src/all/dom as dom,metal-debounce/src/debounce">
-	if (window.Analytics) {
-		var applicationId = 'Blogs';
-
-		Analytics.registerMiddleware(
-			function(request, analytics) {
-				request.context['referrer'] = document.referrer;
-
-				return request;
-			}
-		);
-
-		Analytics.send(
-			'VISITS',
-			applicationId,
-			{
-				entryId: '<%= entryId %>'
-			}
-		);
-
-		var scrollSessionId = new Date().toISOString();
-
-		var entry = document.querySelector('#<portlet:namespace /><%= entry.getEntryId() %>');
-
-		var debounce = metalDebounceSrcDebounce.default;
-
-		var throttle = function(fn, wait) {
-			var time = Date.now();
-
-			return function() {
-				if ((time + wait - Date.now()) < 0) {
-					fn();
-					time = Date.now();
-				}
-			}
-		};
-
-		var sendEvent = function() {
-			var entryBoundingClientRect = entry.getBoundingClientRect();
-
-			var depth = Math.trunc(100 * (-entryBoundingClientRect.top) / entryBoundingClientRect.height);
-
-			if (depth >= 0 && depth <= 100) {
-				Analytics.send(
-					'DEPTH',
-					applicationId,
-					{
-						depth: depth,
-						entryId: '<%= entryId %>',
-						sessionId: scrollSessionId
-					}
-				);
-			}
-		};
-
-		Analytics.registerPlugin(
-			function(analytics) {
-				document.addEventListener('scroll', throttle(sendEvent, 500));
-				document.addEventListener('scroll', debounce(sendEvent, 1500));
-			}
-		);
-	}
+<aui:script require="blogs-analytics/js/track_blogs_entry.es as trackBlogsEntry">
+	trackBlogsEntry.default('<%= entry.getEntryId() %>', '<portlet:namespace /><%= entry.getEntryId() %>');
 </aui:script>

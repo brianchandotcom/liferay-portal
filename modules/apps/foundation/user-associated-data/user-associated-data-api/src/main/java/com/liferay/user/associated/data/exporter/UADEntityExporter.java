@@ -16,8 +16,6 @@ package com.liferay.user.associated.data.exporter;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.user.associated.data.entity.UADEntity;
 
@@ -34,12 +32,5 @@ public interface UADEntityExporter {
 	public byte[] export(UADEntity uadEntity) throws PortalException;
 
 	public File exportAll(long userId) throws PortalException;
-
-	public <T extends UADEntity> StagedModelDataHandler<T>
-		getStagedModelDataHandler();
-
-	public void prepareManifestSummary(
-			long userId, PortletDataContext portletDataContext)
-		throws PortalException;
 
 }

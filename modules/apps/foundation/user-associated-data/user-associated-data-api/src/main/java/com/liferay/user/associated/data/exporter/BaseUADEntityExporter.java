@@ -16,11 +16,6 @@ package com.liferay.user.associated.data.exporter;
 
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.exportimport.kernel.lar.ManifestSummary;
-import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
-import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
-import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -54,29 +49,6 @@ public abstract class BaseUADEntityExporter implements UADEntityExporter {
 	@Override
 	public long count(long userId) throws PortalException {
 		return getUADEntityAggregator().count(userId);
-	}
-
-	@Override
-	public StagedModelDataHandler getStagedModelDataHandler() {
-		StagedModelDataHandler stagedModelDataHandler =
-			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
-				getUADEntityName());
-
-		return stagedModelDataHandler;
-	}
-
-	@Override
-	public void prepareManifestSummary(
-			long userId, PortletDataContext portletDataContext)
-		throws PortalException {
-
-		ManifestSummary manifestSummary =
-			portletDataContext.getManifestSummary();
-
-		StagedModelType stagedModelType = new StagedModelType(
-			getUADEntityName());
-
-		manifestSummary.addModelAdditionCount(stagedModelType, count(userId));
 	}
 
 	protected File createFolder(long userId) {

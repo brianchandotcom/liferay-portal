@@ -116,11 +116,6 @@ public class BookmarksEntryUADEntityExporter extends BaseUADEntityExporter {
 		return _uadEntityAggregator;
 	}
 
-	@Override
-	protected String getUADEntityName() {
-		return BookmarksEntryUADEntity.class.getName();
-	}
-
 	private ActionableDynamicQuery _getActionableDynamicQuery(long userId) {
 		return _uadDynamicQueryHelper.addActionableDynamicQueryCriteria(
 			_bookmarksEntryLocalService.getActionableDynamicQuery(),

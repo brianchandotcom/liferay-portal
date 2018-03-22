@@ -15,12 +15,9 @@
 package com.liferay.site.navigation.internal.model.listener;
 
 import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 
@@ -34,32 +31,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = ModelListener.class)
 public class GroupModelListener extends BaseModelListener<Group> {
-
-	@Override
-	public void onAfterCreate(Group group) throws ModelListenerException {
-		if (!group.isSite()) {
-			return;
-		}
-
-		int siteNavigationMenusCount =
-			_siteNavigationMenuLocalService.getSiteNavigationMenusCount(
-				group.getGroupId());
-
-		if (siteNavigationMenusCount > 0) {
-			return;
-		}
-
-		try {
-			long defaultUserId = _userLocalService.getDefaultUserId(
-				group.getCompanyId());
-
-			_siteNavigationMenuLocalService.addDefaultSiteNavigationMenu(
-				defaultUserId, group.getGroupId(), new ServiceContext());
-		}
-		catch (PortalException pe) {
-			throw new ModelListenerException(pe);
-		}
-	}
 
 	@Override
 	public void onBeforeRemove(Group group) throws ModelListenerException {
@@ -80,8 +51,5 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Reference
 	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

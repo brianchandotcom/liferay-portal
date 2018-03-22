@@ -263,31 +263,26 @@ public class CommercePriceListLocalServiceImpl
 		Indexer<CommercePriceList> indexer =
 			IndexerRegistryUtil.nullSafeGetIndexer(CommercePriceList.class);
 
-		for (int i = 0; i < 10; i++) {
-			Hits hits = indexer.search(searchContext, Field.ENTRY_CLASS_PK);
+		Hits hits = indexer.search(searchContext, Field.ENTRY_CLASS_PK);
 
-			List<Document> documents = hits.toList();
+		List<Document> documents = hits.toList();
 
-			if (documents.isEmpty()) {
-				return Optional.empty();
-			}
-
-			Document document = documents.get(0);
-
-			long commercePriceListId = GetterUtil.getLong(
-				document.get(Field.ENTRY_CLASS_PK));
-
-			commercePriceList = fetchCommercePriceList(commercePriceListId);
-
-			portalCache.put(String.valueOf(userId), commercePriceList);
-
-			portalCache.put(String.valueOf(userId) + "_calculated", true);
-
-			return Optional.ofNullable(commercePriceList);
+		if (documents.isEmpty()) {
+			return Optional.empty();
 		}
 
-		throw new SearchException(
-			"Unable to fix the search index after 10 attempts");
+		Document document = documents.get(0);
+
+		long commercePriceListId = GetterUtil.getLong(
+			document.get(Field.ENTRY_CLASS_PK));
+
+		commercePriceList = fetchCommercePriceList(commercePriceListId);
+
+		portalCache.put(String.valueOf(userId), commercePriceList);
+
+		portalCache.put(String.valueOf(userId) + "_calculated", true);
+
+		return Optional.ofNullable(commercePriceList);
 	}
 
 	@Override

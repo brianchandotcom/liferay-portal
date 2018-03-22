@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>CURRENT_LOCALE</td>
-	<td>//span[contains(.,'${key_localizedLanguage}') and contains(@class,'translation')] | //div[contains(@class,'translation') and //li[contains(@class,'active')]]</td>
+	<td>//div[contains(@class,'localized')]//button[contains(@class,'localized')]//span[contains(@class,'btn-section')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -315,8 +315,8 @@
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
 
-		<execute macro="WebContent#viewDefaultLanguage">
-			<var name="language" value="Spanish (Spain)" />
+		<execute macro="PortletEntry#viewLocale">
+			<var name="locale" value="es-ES" />
 		</execute>
 	</command>
 

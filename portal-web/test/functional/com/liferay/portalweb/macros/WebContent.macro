@@ -1679,13 +1679,6 @@
 		<execute function="AssertElementNotPresent" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" />
 	</command>
 
-	<command name="viewDefaultLanguage">
-		<var name="key_localizedLanguage" value="${language}" />
-
-		<execute function="AssertElementNotPresent" locator1="Translation#AVAILABLE_TRANSLATIONS_LINK" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Translation#AVAILABLE_TRANSLATIONS_LINK" value1="${language}" />
-	</command>
-
 	<command name="viewDefaultPGViaWCD">
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#INFO" value1="This application is not visible to users yet" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#INFO" value1="Select Web Content to make it visible" />

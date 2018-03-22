@@ -111,6 +111,10 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
+	<command name="viewLocale">
+		<execute function="AssertTextEquals" locator1="Translation#CURRENT_LOCALE" value1="${locale}" />
+	</command>
+
 	<command name="viewNoNavItemLink">
 		<execute function="AssertElementNotPresent" locator1="NavBar#NAV_ITEM_LINK" />
 	</command>

@@ -16,11 +16,7 @@
 
 <%@ include file="/designer/init.jsp" %>
 
-<% String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestProcessed"; %>
-
-<c:if test="<%= MultiSessionMessages.contains(renderRequest, successMessageKey) %>">
-	<liferay-ui:success key="<%= successMessageKey %>" message="<%= (String)MultiSessionMessages.get(renderRequest, successMessageKey) %>" translateMessage="<%= false %>" />
-</c:if>
+<liferay-ui:success key='<%= KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestProcessed" %>' message="<%= (String)MultiSessionMessages.get(renderRequest, successMessageKey) %>" translateMessage="<%= false %>" />
 
 <liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" portletName="<%= KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW %>" varImpl="portletURL">
 	<portlet:param name="mvcPath" value="/view.jsp" />

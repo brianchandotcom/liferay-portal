@@ -314,6 +314,7 @@ public class TLiferayOutputProperties
 		"dieOnError");
 	public Property<Action> operations = PropertyFactory.newEnum(
 		"operations", Action.class);
+	public SchemaProperties schemaFlow = new SchemaProperties("schemaFlow");
 	public SchemaProperties schemaReject = new SchemaProperties("schemaReject");
 
 	/**
@@ -347,20 +348,23 @@ public class TLiferayOutputProperties
 
 		Set<PropertyPathConnector> connectors = new HashSet<>();
 
-		if (!outputConnectors) {
-			connectors.add(mainConnector);
+		if (outputConnectors) {
+			connectors.add(flowConnector);
 			connectors.add(rejectConnector);
-
-			return connectors;
+		}
+		else {
+			connectors.add(mainConnector);
 		}
 
-		return Collections.<PropertyPathConnector>emptySet();
+		return connectors;
 	}
 
 	protected static final I18nMessages i18nMessages =
 		GlobalI18N.getI18nMessageProvider().getI18nMessages(
 			TLiferayOutputProperties.class);
 
+	protected transient PropertyPathConnector flowConnector =
+		new PropertyPathConnector(Connector.MAIN_NAME, "schemaFlow");
 	protected transient PropertyPathConnector rejectConnector =
 		new PropertyPathConnector(Connector.REJECT_NAME, "schemaReject");
 

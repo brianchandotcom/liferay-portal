@@ -74,7 +74,9 @@ public class TLiferayOutputDefinition extends LiferayBaseComponentDefinition {
 
 	@Override
 	public Set<ConnectorTopology> getSupportedConnectorTopologies() {
-		return EnumSet.of(ConnectorTopology.INCOMING);
+		return EnumSet.of(
+			ConnectorTopology.INCOMING,
+			ConnectorTopology.INCOMING_AND_OUTGOING);
 	}
 
 	@Override

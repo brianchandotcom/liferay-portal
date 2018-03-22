@@ -15,15 +15,15 @@
 package com.liferay.portal.security.pacl;
 
 import com.liferay.petra.log4j.Log4JUtil;
+import com.liferay.petra.process.ProcessCallable;
+import com.liferay.petra.process.ProcessChannel;
+import com.liferay.petra.process.ProcessConfig;
+import com.liferay.petra.process.ProcessConfig.Builder;
+import com.liferay.petra.process.ProcessException;
+import com.liferay.petra.process.local.LocalProcessExecutor;
+import com.liferay.petra.process.local.LocalProcessLauncher.ProcessContext;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.process.ProcessCallable;
-import com.liferay.portal.kernel.process.ProcessChannel;
-import com.liferay.portal.kernel.process.ProcessConfig;
-import com.liferay.portal.kernel.process.ProcessConfig.Builder;
-import com.liferay.portal.kernel.process.ProcessException;
-import com.liferay.portal.kernel.process.local.LocalProcessExecutor;
-import com.liferay.portal.kernel.process.local.LocalProcessLauncher.ProcessContext;
 import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.ci.AutoBalanceTestCase;
@@ -94,23 +94,16 @@ public class PACLAggregateTest extends AutoBalanceTestCase {
 	public void testPACLTests() throws Exception {
 		LocalProcessExecutor localProcessExecutor = new LocalProcessExecutor();
 
-		try {
-			List<Class<?>> classes = scanTestClasses();
+		List<Class<?>> classes = scanTestClasses();
 
-			Assume.assumeFalse("No PACL tests available", classes.isEmpty());
+		Assume.assumeFalse("No PACL tests available", classes.isEmpty());
 
-			ProcessChannel<Result> processChannel =
-				localProcessExecutor.execute(
-					createProcessConfig(),
-					new PACLTestsProcessCallable(classes));
+		ProcessChannel<Result> processChannel = localProcessExecutor.execute(
+			createProcessConfig(), new PACLTestsProcessCallable(classes));
 
-			Future<Result> future = processChannel.getProcessNoticeableFuture();
+		Future<Result> future = processChannel.getProcessNoticeableFuture();
 
-			future.get();
-		}
-		finally {
-			localProcessExecutor.destroy();
-		}
+		future.get();
 	}
 
 	protected ProcessConfig createProcessConfig() {

@@ -21,6 +21,8 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.user.associated.data.entity.UADEntity;
 
+import java.io.File;
+
 /**
  * @author William Newbury
  */
@@ -29,10 +31,9 @@ public interface UADEntityExporter {
 
 	public long count(long userId) throws PortalException;
 
-	public void export(UADEntity uadEntity) throws PortalException;
+	public byte[] export(UADEntity uadEntity) throws PortalException;
 
-	public void exportAll(long userId, PortletDataContext portletDataContext)
-		throws PortalException;
+	public File exportAll(long userId) throws PortalException;
 
 	public <T extends UADEntity> StagedModelDataHandler<T>
 		getStagedModelDataHandler();

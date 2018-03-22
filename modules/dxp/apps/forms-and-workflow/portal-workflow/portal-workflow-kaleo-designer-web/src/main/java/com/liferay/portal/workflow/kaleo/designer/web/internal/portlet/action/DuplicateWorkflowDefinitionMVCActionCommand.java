@@ -59,8 +59,6 @@ public class DuplicateWorkflowDefinitionMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long companyId = themeDisplay.getCompanyId();
-
 		String name = ParamUtil.getString(actionRequest, "name");
 		String content = ParamUtil.getString(actionRequest, "content");
 		String duplicatedDefinitionName = ParamUtil.getString(
@@ -68,7 +66,7 @@ public class DuplicateWorkflowDefinitionMVCActionCommand
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		serviceContext.setCompanyId(companyId);
+		serviceContext.setCompanyId(themeDisplay.getCompanyId());
 
 		KaleoDefinition kaleoDefinition =
 			kaleoDefinitionLocalService.fetchKaleoDefinition(

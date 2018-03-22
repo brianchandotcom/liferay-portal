@@ -1,8 +1,6 @@
 AUI.add(
 	'liferay-ddm-form-field-checkbox',
 	function(A) {
-		var DataTypeBoolean = A.DataType.Boolean;
-
 		var CheckboxField = A.Component.create(
 			{
 				ATTRS: {
@@ -25,13 +23,21 @@ AUI.add(
 				NAME: 'liferay-ddm-form-field-checkbox',
 
 				prototype: {
+					getBooleanValue: function(value) {
+						var instance = this;
+
+						return value == 'true' || value == true;
+					},
+
 					getTemplateContext: function() {
 						var instance = this;
 
 						return A.merge(
 							CheckboxField.superclass.getTemplateContext.apply(instance, arguments),
 							{
-								showAsSwitcher: instance.get('showAsSwitcher')
+								predefinedValue: instance.getBooleanValue(instance.get('predefinedValue')),
+								showAsSwitcher: instance.get('showAsSwitcher'),
+								value: instance.getBooleanValue(instance.get('value'))
 							}
 						);
 					},
@@ -47,15 +53,26 @@ AUI.add(
 					setValue: function(value) {
 						var instance = this;
 
-						var inputNode = instance.getInputNode();
+						instance.set('predefinedValue', value);
+						instance.set('value', value);
 
-						inputNode.attr('checked', DataTypeBoolean.parse(value));
+						instance.render();
 					},
 
 					showErrorMessage: function() {
 						var instance = this;
 
 						CheckboxField.superclass.showErrorMessage.apply(instance, arguments);
+					},
+
+					_onValueChange: function(event) {
+						var instance = this;
+
+						var value = instance.getValue();
+
+						instance.setValue(value);
+
+						instance._fireStartedFillingEvent();
 					}
 				}
 			}

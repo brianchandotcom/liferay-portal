@@ -1,0 +1,11 @@
+{
+	"dependencies": {
+		"metal-debounce": "^2.0.0"
+	},
+	"devDependencies": {
+		"liferay-module-config-generator": "^1.1.10",
+		"metal-cli": "^4.2.0"
+	},
+	"name": "blogs-analytics",
+	"version": "1.0.0"
+}

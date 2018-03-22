@@ -49,8 +49,10 @@ public class TestBatchGroup {
 				"test.properties");
 
 		_setTestClassNamesExcludes();
-		_setTestClassNamesExcludesPathMatchers();
 		_setTestClassNamesIncludes();
+
+		_setTestClassNamesExcludesPathMatchers();
+		_setTestClassNamesIncludesPathMatchers();
 	}
 
 	public String getBatchName() {
@@ -163,6 +165,20 @@ public class TestBatchGroup {
 		}
 	}
 
+	private void _setTestClassNamesIncludesPathMatchers() {
+		File workingDirectory = _gitWorkingDirectory.getWorkingDirectory();
+
+		String workingDirectoryPath = workingDirectory.getAbsolutePath();
+
+		for (String testClassNamesInclude : _testClassNamesIncludes) {
+			String filePattern =
+				workingDirectoryPath + "/" + testClassNamesInclude;
+
+			_testClassNamesIncludesPathMatchers.add(
+				FileSystems.getDefault().getPathMatcher("glob:" + filePattern));
+		}
+	}
+
 	private static final String _TEST_CLASS_NAMES_EXCLUDES_PROPERTY_NAME =
 		"test.class.names.excludes";
 
@@ -176,5 +192,7 @@ public class TestBatchGroup {
 	private final List<PathMatcher> _testClassNamesExcludesPathMatchers =
 		new ArrayList<>();
 	private final List<String> _testClassNamesIncludes = new ArrayList<>();
+	private final List<PathMatcher> _testClassNamesIncludesPathMatchers =
+		new ArrayList<>();
 
 }

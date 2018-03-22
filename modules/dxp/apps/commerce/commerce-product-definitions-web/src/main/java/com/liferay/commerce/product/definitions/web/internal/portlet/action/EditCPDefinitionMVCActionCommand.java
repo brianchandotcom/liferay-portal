@@ -353,7 +353,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			cpDefinition = _cpDefinitionService.addCPDefinition(
 				titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
 				metaTitleMap, metaKeywordsMap, metaDescriptionMap,
-				productTypeName, false, null, published, displayDateMonth,
+				productTypeName, true, null, published, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, expirationDateMonth, expirationDateDay,
 				expirationDateYear, expirationDateHour, expirationDateMinute,

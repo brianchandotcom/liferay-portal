@@ -51,7 +51,7 @@ public class CheckboxDDMFormFieldTypeSettingsTest
 
 		Assert.assertNotNull(predefinedValueDDMFormField);
 		Assert.assertEquals(
-			"boolean", predefinedValueDDMFormField.getDataType());
+			"string", predefinedValueDDMFormField.getDataType());
 		Assert.assertEquals("checkbox", predefinedValueDDMFormField.getType());
 		Assert.assertEquals(true, predefinedValueDDMFormField.isLocalizable());
 		Assert.assertEquals(

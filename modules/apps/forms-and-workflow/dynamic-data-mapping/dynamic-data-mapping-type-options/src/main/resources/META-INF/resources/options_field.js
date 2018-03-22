@@ -1,9 +1,7 @@
 AUI.add(
 	'liferay-ddm-form-field-options',
 	function(A) {
-		var Renderer = Liferay.DDM.Renderer;
-
-		var Util = Renderer.Util;
+		var AObject = A.Object;
 
 		var TPL_DRAG_HANDLE = '<div class="drag-handle icon-reorder"><span aria-hidden="true"></span></div>';
 
@@ -211,13 +209,15 @@ AUI.add(
 					moveOption: function(oldIndex, newIndex) {
 						var instance = this;
 
-						var value = instance.getValue();
+						var value = instance.get('value');
 
-						value.splice(newIndex, 0, value.splice(oldIndex, 1)[0]);
+						AObject.keys(value).forEach(
+							function(languageId) {
+								value[languageId].splice(newIndex, 0, value[languageId].splice(oldIndex, 1)[0]);
+							}
+						);
 
-						instance._setValue(value);
-
-						instance._renderOptions();
+						instance.setValue(value);
 					},
 
 					processEvaluationContext: function(context) {
@@ -240,17 +240,20 @@ AUI.add(
 
 						var index = options.indexOf(option);
 
-						var value = instance.getValue();
+						var value = instance.get('value');
 
 						var optionTextValue = option.get('value');
 
 						optionTextValue = optionTextValue.trim();
 
 						if (optionTextValue.length > 0) {
+							AObject.keys(value).forEach(
+								function(languageId) {
+									value[languageId].splice(index, 1);
+								}
+							);
 
-							value.splice(index, 1);
-
-							instance._setValue(value);
+							instance.setValue(value);
 						}
 
 						instance.fire('removeOption');
@@ -278,11 +281,9 @@ AUI.add(
 					setValue: function(value) {
 						var instance = this;
 
-						if (!Util.compare(value, instance.get('value'))) {
-							instance.set('value', value);
+						instance.set('value', value);
 
-							instance._renderOptions();
-						}
+						instance._renderOptions();
 					},
 
 					showErrorMessage: function() {

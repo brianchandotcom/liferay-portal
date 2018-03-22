@@ -61,9 +61,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"group.initializer.key=" + CustomerPortalGroupInitializer.KEY
-	},
+	property = {"group.initializer.key=" + CustomerPortalGroupInitializer.KEY},
 	service = GroupInitializer.class
 )
 public class CustomerPortalGroupInitializer implements GroupInitializer {

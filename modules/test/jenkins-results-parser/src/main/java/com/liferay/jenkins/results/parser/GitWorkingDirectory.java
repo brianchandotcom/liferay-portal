@@ -681,6 +681,46 @@ public class GitWorkingDirectory {
 		return getBranch("HEAD", null);
 	}
 
+	public List<File> getCurrentBranchFiles() {
+		List<File> currentBranchFiles = new ArrayList<>();
+
+		ExecutionResult executionResult = executeBashCommands(
+			JenkinsResultsParserUtil.combine(
+				"git diff --diff-filter=AM --name-only ",
+				_getMergeBaseCommitSHA(), " ", getBranchSHA("HEAD")));
+
+		String gitDiffOutput = executionResult.getStandardOut();
+
+		for (String line : gitDiffOutput.split("\n")) {
+			currentBranchFiles.add(new File(_workingDirectory, line));
+		}
+
+		return currentBranchFiles;
+	}
+
+	public List<File> getCurrentBranchModuleGroupDirs() throws IOException {
+		List<File> currentBranchModuleGroupDirs = new ArrayList<>();
+
+		List<File> currentBranchFiles = getCurrentBranchFiles();
+
+		for (File moduleGroupDir : getModuleGroupDirs()) {
+			String moduleGroupPath = moduleGroupDir.getCanonicalPath();
+
+			for (File currentBranchFile : currentBranchFiles) {
+				String currentBranchFilePath =
+					currentBranchFile.getCanonicalPath();
+
+				if (currentBranchFilePath.startsWith(moduleGroupPath)) {
+					currentBranchModuleGroupDirs.add(moduleGroupDir);
+
+					break;
+				}
+			}
+		}
+
+		return currentBranchModuleGroupDirs;
+	}
+
 	public String getGitConfigProperty(String gitConfigPropertyName) {
 		ExecutionResult executionResult = executeBashCommands(
 			"git config " + gitConfigPropertyName);
@@ -1715,6 +1755,20 @@ public class GitWorkingDirectory {
 			throw new RuntimeException(
 				"Unable to get build property " + key, ioe);
 		}
+	}
+
+	private String _getMergeBaseCommitSHA() {
+		ExecutionResult executionResult = executeBashCommands(
+			"git merge-base HEAD " + _upstreamBranchName);
+
+		if (executionResult.getExitValue() != 0) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to get merge base commit SHA\n",
+					executionResult.getStandardError()));
+		}
+
+		return executionResult.getStandardOut();
 	}
 
 	private String _log(int num, File file, String format) {

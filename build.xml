@@ -878,6 +878,39 @@ message.
 		</javadoc>
 	</target>
 
+	<target name="nightly">
+		<antelope:stringutil property="nightly.bundle.file.beginindex" string="${nightly.bundle.url}">
+			<antelope:lastindexof string="/" />
+		</antelope:stringutil>
+
+		<antelope:math
+			datatype="int"
+			operand1="${nightly.bundle.file.beginindex}"
+			operand2="1"
+			operation="+"
+			result="nightly.bundle.file.beginindex"
+		/>
+
+		<antelope:stringutil property="nightly.bundle.file" string="${nightly.bundle.url}">
+			<antelope:substring beginindex="${nightly.bundle.file.beginindex}" />
+		</antelope:stringutil>
+
+		<mirrors-get
+			dest="${project.dir}/tmp/${nightly.bundle.file}"
+			force="true"
+			skipChecksum="true"
+			src="${nightly.bundle.url}"
+		/>
+
+		<delete dir="${liferay.home}" />
+
+		<unzip dest="${liferay.home}" src="${project.dir}/tmp/${nightly.bundle.file}">
+			<mapper>
+				<globmapper from="bundles/*" to="*" />
+			</mapper>
+		</unzip>
+	</target>
+
 	<target name="prepare-generated-files">
 		<ant antfile="build-dist.xml" inheritAll="false" target="prepare-generated-files" />
 	</target>

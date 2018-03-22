@@ -1,4 +1,4 @@
-Bundle-Name: Liferay Commerce Initalizer Lotus
+Bundle-Name: Liferay Commerce Initializer Lotus
 Bundle-SymbolicName: com.liferay.commerce.initializer.lotus
 Bundle-Version: 1.0.0
 Web-ContextPath: /commerce-initializer-lotus

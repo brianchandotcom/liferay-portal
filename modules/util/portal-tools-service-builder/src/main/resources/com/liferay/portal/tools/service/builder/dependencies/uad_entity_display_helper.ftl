@@ -38,14 +38,14 @@ public class ${entity.name}UADEntityDisplayHelper {
 	public String get${entity.name}EditURL(${entity.name} ${entity.varName}, LiferayPortletRequest liferayPortletRequest, LiferayPortletResponse liferayPortletResponse) {
 		return "";
 	}
-ad
+
 	@Override
 	public Map<String, Object> getUADEntityNonanonymizableFieldValues(${entity.name} ${entity.varName}) {
 		Map<String, Object> uadEntityNonanonymizableFieldValues = new HashMap<String, Object>();
 
-<#list entity.UADNonanonymizableEntityColumns as uadNonanonymizableEntityColumn>
-		uadEntityNonanonymizableFieldValues.put("${uadNonanonymizableEntityColumn.name}", ${entity.varName}.get${textFormatter.format(uadNonanonymizableEntityColumn.name, 6)}());
-</#list>
+		<#list entity.UADNonanonymizableEntityColumns as uadNonanonymizableEntityColumn>
+			uadEntityNonanonymizableFieldValues.put("${uadNonanonymizableEntityColumn.name}", ${entity.varName}.get${textFormatter.format(uadNonanonymizableEntityColumn.name, 6)}());
+		</#list>
 
 		return uadEntityNonanonymizableFieldValues;
 	}

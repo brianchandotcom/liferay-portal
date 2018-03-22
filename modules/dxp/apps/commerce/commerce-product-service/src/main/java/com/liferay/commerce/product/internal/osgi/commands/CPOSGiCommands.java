@@ -14,10 +14,7 @@
 
 package com.liferay.commerce.product.internal.osgi.commands;
 
-import com.liferay.commerce.product.model.CPGroup;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
-import com.liferay.commerce.product.service.CPGroupLocalService;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -26,10 +23,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -42,27 +37,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"osgi.command.function=commerceSites",
 		"osgi.command.function=createProducts", "osgi.command.scope=commerce"
 	},
 	service = CPOSGiCommands.class
 )
 public class CPOSGiCommands {
-
-	public List<Group> commerceSites() throws PortalException {
-		List<CPGroup> cpGroups = _cpGroupLocalService.getCPGroups(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		List<Group> groups = new ArrayList<>();
-
-		for (CPGroup cpGroup : cpGroups) {
-			Group group = _groupLocalService.getGroup(cpGroup.getGroupId());
-
-			groups.add(group);
-		}
-
-		return groups;
-	}
 
 	public void createProducts(long groupId, String prefix, int quantity)
 		throws PortalException {
@@ -114,9 +93,6 @@ public class CPOSGiCommands {
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
-
-	@Reference
-	private CPGroupLocalService _cpGroupLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

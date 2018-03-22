@@ -38,7 +38,8 @@ import java.util.Set;
 public class TestBatchGroup {
 
 	public TestBatchGroup(
-		GitWorkingDirectory gitWorkingDirectory, String batchName) {
+			GitWorkingDirectory gitWorkingDirectory, String batchName)
+		throws Exception {
 
 		_gitWorkingDirectory = gitWorkingDirectory;
 
@@ -53,6 +54,8 @@ public class TestBatchGroup {
 
 		_setTestClassNamesExcludesPathMatchers();
 		_setTestClassNamesIncludesPathMatchers();
+
+		_setTestClassGroups();
 	}
 
 	public String getBatchName() {
@@ -68,17 +71,11 @@ public class TestBatchGroup {
 	}
 
 	public List<String> getTestClassList(int i) throws Exception {
-		final List<String> list = new ArrayList<>();
-
-		list.addAll(_getTestClassFileNamesSet());
-
-		Collections.sort(list);
-
-		return list;
+		return _testClassGroups.get(i);
 	}
 
 	public int getTestClassListCount() {
-		return 3;
+		return _testClassGroups.size();
 	}
 
 	private boolean _filePathExcluded(Path filePath) {
@@ -103,6 +100,23 @@ public class TestBatchGroup {
 		}
 
 		return false;
+	}
+
+	private int _getTestBatchClassesPerGroup() {
+		String testBatchClassesPerGroup = _portalTestProperties.getProperty(
+			_TEST_BATCH_CLASSES_PER_GROUP_PROPERTY_NAME + "[" + _batchName +
+				"]");
+
+		if (testBatchClassesPerGroup == null) {
+			testBatchClassesPerGroup = _portalTestProperties.getProperty(
+				_TEST_BATCH_CLASSES_PER_GROUP_PROPERTY_NAME);
+		}
+
+		if (testBatchClassesPerGroup != null) {
+			return Integer.parseInt(testBatchClassesPerGroup);
+		}
+
+		return _DEFAULT_TEST_BATCH_CLASSES_PER_GROUP;
 	}
 
 	private Set<String> _getTestClassFileNamesSet() throws Exception {
@@ -146,6 +160,27 @@ public class TestBatchGroup {
 			});
 
 		return testClassFileNamesSet;
+	}
+
+	private void _setTestClassGroups() throws Exception {
+		final List<String> testClassFileNames = new ArrayList<>();
+
+		testClassFileNames.addAll(_getTestClassFileNamesSet());
+
+		Collections.sort(testClassFileNames);
+
+		int testBatchClassesPerGroup = _getTestBatchClassesPerGroup();
+
+		for (int i = 0; i < testClassFileNames.size();
+			i += testBatchClassesPerGroup) {
+
+			_testClassGroups.add(
+				testClassFileNames.subList(
+					i,
+					Math.min(
+						testClassFileNames.size(),
+						i + testBatchClassesPerGroup)));
+		}
 	}
 
 	private void _setTestClassNamesExcludes() {
@@ -206,6 +241,11 @@ public class TestBatchGroup {
 		}
 	}
 
+	private static final int _DEFAULT_TEST_BATCH_CLASSES_PER_GROUP = 5000;
+
+	private static final String _TEST_BATCH_CLASSES_PER_GROUP_PROPERTY_NAME =
+		"test.batch.classes.per.group";
+
 	private static final String _TEST_CLASS_NAMES_EXCLUDES_PROPERTY_NAME =
 		"test.class.names.excludes";
 
@@ -215,6 +255,7 @@ public class TestBatchGroup {
 	private final String _batchName;
 	private final GitWorkingDirectory _gitWorkingDirectory;
 	private final Properties _portalTestProperties;
+	private final List<List<String>> _testClassGroups = new ArrayList<>();
 	private final List<String> _testClassNamesExcludes = new ArrayList<>();
 	private final List<PathMatcher> _testClassNamesExcludesPathMatchers =
 		new ArrayList<>();

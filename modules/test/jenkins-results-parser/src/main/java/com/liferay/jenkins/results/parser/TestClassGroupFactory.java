@@ -20,7 +20,8 @@ package com.liferay.jenkins.results.parser;
 public class TestBatchGroupFactory {
 
 	public static TestBatchGroup newTestBatchGroup(
-		GitWorkingDirectory gitWorkingDirectory, String batchName) {
+			GitWorkingDirectory gitWorkingDirectory, String batchName)
+		throws Exception {
 
 		return new TestBatchGroup(gitWorkingDirectory, batchName);
 	}

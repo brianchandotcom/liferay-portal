@@ -5,8 +5,6 @@ AUI.add(
 
 		var TPL_SETTINGS_TOGGLER = '<button class="btn settings-toggler" type="button"><span class="settings-toggle-label"></span><span class="settings-toggle-icon"></span></button>';
 
-		var SoyTemplateUtil = Liferay.DDM.SoyTemplateUtil;
-
 		var FormBuilderSettingsForm = A.Component.create(
 			{
 				ATTRS: {

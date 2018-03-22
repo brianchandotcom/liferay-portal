@@ -181,7 +181,8 @@
 					changed = false;
 
 					return true;
-				} else if (saveChanges) {
+				}
+				else if (saveChanges) {
 					var form = A.one('#<portlet:namespace />sidebarBody form');
 
 					if (form) {

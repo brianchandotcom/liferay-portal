@@ -14,21 +14,11 @@
 
 package com.liferay.user.associated.data.exporter;
 
-import com.liferay.document.library.kernel.exception.NoSuchFolderException;
-import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.Repository;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
-import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -71,55 +61,7 @@ public abstract class BaseUADEntityExporter implements UADEntityExporter {
 
 	protected abstract String getEntityName();
 
-	protected Folder getFolder(
-			long companyId, String portletId, String folderName)
-		throws PortalException {
-
-		Group guestGroup = groupLocalService.getGroup(
-			companyId, GroupConstants.GUEST);
-
-		Repository repository =
-			PortletFileRepositoryUtil.fetchPortletRepository(
-				guestGroup.getGroupId(), portletId);
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		if (repository == null) {
-			repository = PortletFileRepositoryUtil.addPortletRepository(
-				guestGroup.getGroupId(), portletId, serviceContext);
-		}
-
-		Folder folder = null;
-
-		try {
-			folder = PortletFileRepositoryUtil.getPortletFolder(
-				repository.getRepositoryId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, folderName);
-		}
-		catch (NoSuchFolderException nsfe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(nsfe, nsfe);
-			}
-
-			folder = PortletFileRepositoryUtil.addPortletFolder(
-				userLocalService.getDefaultUserId(companyId),
-				repository.getRepositoryId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, folderName,
-				serviceContext);
-		}
-
-		return folder;
-	}
-
-	protected String getJSON(Object object) {
-		return JSONFactoryUtil.looseSerialize(object);
-	}
-
 	protected abstract UADEntityAggregator getUADEntityAggregator();
-
-	protected String getUADEntityName() {
-		return StringPool.BLANK;
-	}
 
 	protected ZipWriter getZipWriter(long userId) {
 		File file = createFolder(userId);
@@ -135,9 +77,6 @@ public abstract class BaseUADEntityExporter implements UADEntityExporter {
 
 		return ZipWriterFactoryUtil.getZipWriter(new File(sb.toString()));
 	}
-
-	@Reference
-	protected GroupLocalService groupLocalService;
 
 	@Reference
 	protected UserLocalService userLocalService;

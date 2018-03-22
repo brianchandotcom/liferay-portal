@@ -151,8 +151,6 @@ public class BookmarksEntryUADEntityExporter extends BaseUADEntityExporter {
 		}
 	}
 
-	private static final String _FOLDER_NAME = "UADExport";
-
 	@Reference
 	private BookmarksEntryLocalService _bookmarksEntryLocalService;
 

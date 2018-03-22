@@ -349,8 +349,8 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 		return osxEnvironmentVariablesMap;
 	}
 
-	private List<String> _getRegexMatchGroupList(String string, Pattern regex) {
-		Matcher propertyMatcher = regex.matcher(string);
+	private List<String> _getRegexMatchGroupList(String string, Pattern pattern) {
+		Matcher propertyMatcher = pattern.matcher(string);
 
 		List<String> matchedGroups = new ArrayList<>();
 

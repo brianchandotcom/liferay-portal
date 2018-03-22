@@ -22,9 +22,7 @@ import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.product.demo.data.creator.CPDemoDataCreator;
 import com.liferay.commerce.product.importer.CPFileImporter;
-import com.liferay.commerce.product.service.CPGroupLocalService;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
-import com.liferay.commerce.product.util.CommerceStarter;
 import com.liferay.commerce.service.CommerceCountryLocalService;
 import com.liferay.commerce.service.CommercePaymentMethodLocalService;
 import com.liferay.commerce.service.CommerceRegionLocalService;
@@ -35,7 +33,6 @@ import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -50,19 +47,19 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
+import com.liferay.site.exception.InitializationException;
+import com.liferay.site.initializer.GroupInitializer;
 
 import java.io.File;
 import java.io.IOException;
@@ -77,66 +74,21 @@ import java.util.ResourceBundle;
 import javax.portlet.PortletPreferences;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
- * @author Alessio Antonio Rendina
  */
 @Component(
 	immediate = true,
-	property = {
-		"commerce.starter.key=" + LotusCommerceStarterImpl.KEY,
-		"commerce.starter.order:Integer=10"
-	},
-	service = CommerceStarter.class
+	property = {"group.initializer.key=" + LotusGroupInitializer.KEY},
+	service = GroupInitializer.class
 )
-public class LotusCommerceStarterImpl implements CommerceStarter {
+public class LotusGroupInitializer implements GroupInitializer {
 
 	public static final String KEY = "lotus";
-
-	@Override
-	public void create(HttpServletRequest httpServletRequest) throws Exception {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Locale siteDefaultLocale = themeDisplay.getSiteDefaultLocale();
-
-		ServiceContext serviceContext = getServiceContext(httpServletRequest);
-
-		_cpFileImporter.cleanLayouts(serviceContext);
-
-		createJournalArticles(serviceContext, themeDisplay);
-
-		_cpFileImporter.updateLookAndFeel(_LOTUS_THEME_ID, serviceContext);
-
-		createLayouts(serviceContext);
-
-		_cpGroupLocalService.addCPGroup(serviceContext);
-
-		createSampleData(serviceContext);
-
-		_commerceCountryLocalService.importDefaultCountries(serviceContext);
-
-		_commerceRegionLocalService.importCommerceRegions(serviceContext);
-
-		_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
-
-		_commerceCurrencyLocalService.importDefaultValues(serviceContext);
-
-		setPaymentMethod(siteDefaultLocale, serviceContext);
-
-		setShippingMethod(siteDefaultLocale, serviceContext);
-
-		setThemeSettings(serviceContext);
-
-		setThemePortletSettings(serviceContext);
-	}
 
 	public void createSampleData(ServiceContext serviceContext)
 		throws Exception {
@@ -166,15 +118,15 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 		return LanguageUtil.get(resourceBundle, "lotus-store");
 	}
 
-	public ServiceContext getServiceContext(
-			HttpServletRequest httpServletRequest)
-		throws PortalException {
+	public ServiceContext getServiceContext(long groupId) {
+		Locale locale = LocaleUtil.getSiteDefault();
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			httpServletRequest);
+		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setLanguageId(LanguageUtil.getLanguageId(locale));
+		serviceContext.setScopeGroupId(groupId);
 
 		return serviceContext;
 	}
@@ -185,9 +137,45 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 	}
 
 	@Override
-	public boolean isActive(HttpServletRequest httpServletRequest) {
-		long companyId = _portal.getCompanyId(httpServletRequest);
+	public void initialize(long groupId) throws InitializationException {
+		ServiceContext serviceContext = getServiceContext(groupId);
 
+		try {
+			_cpFileImporter.cleanLayouts(serviceContext);
+
+			createJournalArticles(serviceContext);
+
+			_cpFileImporter.updateLookAndFeel(_LOTUS_THEME_ID, serviceContext);
+
+			createLayouts(serviceContext);
+
+			createSampleData(serviceContext);
+
+			_commerceCountryLocalService.importDefaultCountries(serviceContext);
+
+			_commerceRegionLocalService.importCommerceRegions(serviceContext);
+
+			_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
+
+			_commerceCurrencyLocalService.importDefaultValues(serviceContext);
+
+			setPaymentMethod(serviceContext);
+
+			setShippingMethod(serviceContext);
+
+			setThemeSettings(serviceContext);
+
+			setThemePortletSettings(serviceContext);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new InitializationException(e);
+		}
+	}
+
+	@Override
+	public boolean isActive(long companyId) {
 		Theme theme = _themeLocalService.fetchTheme(companyId, _LOTUS_THEME_ID);
 
 		if (theme == null) {
@@ -201,22 +189,7 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 		return true;
 	}
 
-	@Override
-	public void renderPreview(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws Exception {
-
-		httpServletRequest.setAttribute(
-			"render.jsp-servletContext", _servletContext);
-
-		_jspRenderer.renderJSP(
-			_servletContext, httpServletRequest, httpServletResponse,
-			"/render.jsp");
-	}
-
-	protected void createJournalArticles(
-			ServiceContext serviceContext, ThemeDisplay themeDisplay)
+	protected void createJournalArticles(ServiceContext serviceContext)
 		throws Exception {
 
 		Class<?> clazz = getClass();
@@ -230,8 +203,8 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 			journalArticleJSON);
 
 		_cpFileImporter.createJournalArticles(
-			jsonArray, clazz.getClassLoader(), _DEPENDENCY_PATH, serviceContext,
-			themeDisplay);
+			jsonArray, clazz.getClassLoader(), _DEPENDENCY_PATH,
+			serviceContext);
 	}
 
 	protected void createLayouts(ServiceContext serviceContext)
@@ -412,9 +385,10 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 		}
 	}
 
-	protected void setPaymentMethod(
-			Locale locale, ServiceContext serviceContext)
+	protected void setPaymentMethod(ServiceContext serviceContext)
 		throws Exception {
+
+		Locale locale = serviceContext.getLocale();
 
 		String engineKey = "money-order";
 
@@ -437,9 +411,10 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 			Collections.<String, String>emptyMap(), 1, true, serviceContext);
 	}
 
-	protected void setShippingMethod(
-			Locale locale, ServiceContext serviceContext)
+	protected void setShippingMethod(ServiceContext serviceContext)
 		throws Exception {
+
+		Locale locale = serviceContext.getLocale();
 
 		String engineKey = "fixed";
 
@@ -648,7 +623,7 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 			"SiteNavigationMenuPortlet";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LotusCommerceStarterImpl.class);
+		LotusGroupInitializer.class);
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
@@ -685,9 +660,6 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 
 	@Reference
 	private CPFileImporter _cpFileImporter;
-
-	@Reference
-	private CPGroupLocalService _cpGroupLocalService;
 
 	@Reference
 	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;

@@ -17,13 +17,10 @@ package com.liferay.commerce.starter.customer.portal.internal.util;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.product.demo.data.creator.CPDemoDataCreator;
 import com.liferay.commerce.product.importer.CPFileImporter;
-import com.liferay.commerce.product.service.CPGroupLocalService;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
-import com.liferay.commerce.product.util.CommerceStarter;
 import com.liferay.commerce.service.CommerceCountryLocalService;
 import com.liferay.commerce.service.CommerceRegionLocalService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -37,14 +34,16 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ThemeLocalService;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.site.exception.InitializationException;
+import com.liferay.site.initializer.GroupInitializer;
 
 import java.util.Iterator;
 import java.util.Locale;
@@ -53,8 +52,6 @@ import java.util.ResourceBundle;
 import javax.portlet.PortletPreferences;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -65,40 +62,13 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"commerce.starter.key=" + CustomerPortalCommerceStarterImpl.KEY,
-		"commerce.starter.order:Integer=20"
+		"group.initializer.key=" + CustomerPortalGroupInitializer.KEY
 	},
-	service = CommerceStarter.class
+	service = GroupInitializer.class
 )
-public class CustomerPortalCommerceStarterImpl implements CommerceStarter {
+public class CustomerPortalGroupInitializer implements GroupInitializer {
 
-	public static final String KEY = "customer-portal";
-
-	@Override
-	public void create(HttpServletRequest httpServletRequest) throws Exception {
-		ServiceContext serviceContext = getServiceContext(httpServletRequest);
-
-		_cpFileImporter.cleanLayouts(serviceContext);
-
-		_cpFileImporter.updateLookAndFeel(
-			_CUSTOMER_PORTAL_THEME_ID, serviceContext);
-
-		createLayouts(serviceContext);
-
-		_cpGroupLocalService.addCPGroup(serviceContext);
-
-		createSampleData(serviceContext);
-
-		_commerceCountryLocalService.importDefaultCountries(serviceContext);
-
-		_commerceRegionLocalService.importCommerceRegions(serviceContext);
-
-		_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
-
-		_commerceCurrencyLocalService.importDefaultValues(serviceContext);
-
-		setThemePortletSettings(serviceContext);
-	}
+	public static final String KEY = "customer-portal-initializer";
 
 	public void createSampleData(ServiceContext serviceContext)
 		throws Exception {
@@ -128,15 +98,15 @@ public class CustomerPortalCommerceStarterImpl implements CommerceStarter {
 		return LanguageUtil.get(resourceBundle, "customer-portal");
 	}
 
-	public ServiceContext getServiceContext(
-			HttpServletRequest httpServletRequest)
-		throws PortalException {
+	public ServiceContext getServiceContext(long groupId) {
+		Locale locale = LocaleUtil.getSiteDefault();
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			httpServletRequest);
+		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setLanguageId(LanguageUtil.getLanguageId(locale));
+		serviceContext.setScopeGroupId(groupId);
 
 		return serviceContext;
 	}
@@ -147,9 +117,38 @@ public class CustomerPortalCommerceStarterImpl implements CommerceStarter {
 	}
 
 	@Override
-	public boolean isActive(HttpServletRequest httpServletRequest) {
-		long companyId = _portal.getCompanyId(httpServletRequest);
+	public void initialize(long groupId) throws InitializationException {
+		ServiceContext serviceContext = getServiceContext(groupId);
 
+		try {
+			_cpFileImporter.cleanLayouts(serviceContext);
+
+			_cpFileImporter.updateLookAndFeel(
+				_CUSTOMER_PORTAL_THEME_ID, serviceContext);
+
+			createLayouts(serviceContext);
+
+			createSampleData(serviceContext);
+
+			_commerceCountryLocalService.importDefaultCountries(serviceContext);
+
+			_commerceRegionLocalService.importCommerceRegions(serviceContext);
+
+			_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
+
+			_commerceCurrencyLocalService.importDefaultValues(serviceContext);
+
+			setThemePortletSettings(serviceContext);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new InitializationException(e);
+		}
+	}
+
+	@Override
+	public boolean isActive(long companyId) {
 		Theme theme = _themeLocalService.fetchTheme(
 			companyId, _CUSTOMER_PORTAL_THEME_ID);
 
@@ -162,20 +161,6 @@ public class CustomerPortalCommerceStarterImpl implements CommerceStarter {
 		}
 
 		return true;
-	}
-
-	@Override
-	public void renderPreview(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws Exception {
-
-		httpServletRequest.setAttribute(
-			"render.jsp-servletContext", _servletContext);
-
-		_jspRenderer.renderJSP(
-			_servletContext, httpServletRequest, httpServletResponse,
-			"/render.jsp");
 	}
 
 	protected void createLayouts(ServiceContext serviceContext)
@@ -318,7 +303,7 @@ public class CustomerPortalCommerceStarterImpl implements CommerceStarter {
 			"SiteNavigationMenuPortlet";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CustomerPortalCommerceStarterImpl.class);
+		CustomerPortalGroupInitializer.class);
 
 	@Reference
 	private CommerceCountryLocalService _commerceCountryLocalService;
@@ -334,9 +319,6 @@ public class CustomerPortalCommerceStarterImpl implements CommerceStarter {
 
 	@Reference
 	private CPFileImporter _cpFileImporter;
-
-	@Reference
-	private CPGroupLocalService _cpGroupLocalService;
 
 	@Reference
 	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;

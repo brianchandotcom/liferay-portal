@@ -10,17 +10,17 @@
 <tbody>
 <tr>
 	<td>FS_PRODUCT_PRICE</td>
-	<td>//div/h2[contains (.,'Product Detail')]//..//div/div[contains (@class,'price') and contains (.,'${key_FSProductPrice}')]</td>
+	<td>//div[@class='product-detail-header']//div/div/div[contains(.,'${key_FSProductPrice}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FS_PRODUCT_SKU</td>
-	<td>//div/h2[contains (.,'Product Detail')]//..//div/h4[contains (@class,'sku') and contains (.,'${key_FSProductSKU}')]</td>
+	<td>//div[@class='product-detail-header']//..//div/h4[contains (.,'${key_FSProductSKU}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FS_PRODUCT_TITLE</td>
-	<td>//div/h2[contains (.,'Product Detail')]//..//div/h1[contains (.,'${key_FSProductTitle}')]</td>
+	<td>//div[@class='product-detail-header']//..//div/h1[contains (.,'${key_FSProductTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -30,17 +30,17 @@
 </tr>
 <tr>
 	<td>FS_PRODUCT_OPTION</td>
-	<td>//div[@class='drop-chosen']//ul/li/span[contains (@title,'${key_optionValue}') and contains (.,'${key_optionValue}')]</td>
+	<td>//div[@class='drop-chosen']/div/ul//li/a[contains (@title,'${key_optionValue}') and contains (.,'${key_optionValue}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FS_PRODUCT_IMAGE_THUMBNAIL</td>
-	<td>//div/h2[contains (.,'Product Detail')]//..//div[contains (@class,'thumb')]/img[contains (@src,'${key_FSProductImageThumb}')]</td>
+	<td>//div[@class='product-detail-header']//..//div[contains (@class,'thumb')]/img[contains (@src,'${key_FSProductImageThumb}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FS_PRODUCT_FULL_IMAGE</td>
-	<td>//div/h2[contains (.,'Product Detail')]//..//div[contains (@class,'full-image')]/img[contains (@src,'${key_FSProductImage}')]</td>
+	<td>//div[@class='product-detail-header']//..//div[contains (@class,'full-image')]/img[contains (@src,'${key_FSProductImage}')]</td>
 	<td></td>
 </tr>
 </tbody>

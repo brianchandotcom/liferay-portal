@@ -26,7 +26,7 @@
 
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
-		<column name="vatNumber" type="String" />
+		<column name="value" type="String" />
 		<column name="valid" type="boolean" />
 
 		<!-- Order -->
@@ -50,4 +50,7 @@
 			<finder-column name="classPK" />
 		</finder>
 	</entity>
+	<exceptions>
+		<exception>CommerceVatNumberValue</exception>
+	</exceptions>
 </service-builder>

@@ -93,14 +93,6 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="viewDisplayTemplateIconMenu">
-		<var name="key_language" value="${language}" />
-
-		<execute function="Click" locator1="Language#ICON_MENU_DROPDOWN" />
-
-		<execute function="AssertTextEquals" locator1="Language#ICON_MENU_LANGUAGE" value1="${language}" />
-	</command>
-
 	<command name="viewDisplayTemplateLongText">
 		<var name="key_language" value="${language}" />
 

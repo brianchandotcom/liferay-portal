@@ -351,8 +351,8 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="LanguagePortlet#viewDisplayTemplateIconMenu">
-			<var name="language" value="Deutsch" />
+		<execute macro="LanguagePortlet#viewLanguageCurrent">
+			<var name="locale" value="nl-nl" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">

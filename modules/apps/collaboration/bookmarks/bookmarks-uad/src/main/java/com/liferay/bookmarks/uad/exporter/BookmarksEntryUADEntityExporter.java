@@ -61,6 +61,8 @@ public class BookmarksEntryUADEntityExporter extends BaseUADEntityExporter {
 
 		String xml = bookmarksEntry.toXmlString();
 
+		xml = formatXML(xml);
+
 		try {
 			return xml.getBytes(StringPool.UTF8);
 		}

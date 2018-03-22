@@ -22,6 +22,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -90,6 +91,10 @@ public abstract class BaseUADEntityExporter implements UADEntityExporter {
 		file.mkdirs();
 
 		return file;
+	}
+
+	protected String formatXML(String xml) {
+		return XMLUtil.formatXML(xml);
 	}
 
 	protected abstract String getEntityName();

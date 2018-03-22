@@ -23,8 +23,6 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 
 String languageId = LanguageUtil.getLanguageId(request);
 Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
-
-DDMFormInstance formInstance = ddmFormDisplayContext.getFormInstance();
 %>
 
 <c:choose>
@@ -56,6 +54,10 @@ DDMFormInstance formInstance = ddmFormDisplayContext.getFormInstance();
 			</c:when>
 			<c:when test="<%= ddmFormDisplayContext.isFormAvailable() %>">
 				<portlet:actionURL name="addFormInstanceRecord" var="addFormInstanceRecordActionURL" />
+
+				<%
+				DDMFormInstance formInstance = ddmFormDisplayContext.getFormInstance();
+				%>
 
 				<div class="portlet-forms">
 					<aui:form action="<%= addFormInstanceRecordActionURL %>" data-DDMFormInstanceId="<%= formInstanceId %>" method="post" name="fm">

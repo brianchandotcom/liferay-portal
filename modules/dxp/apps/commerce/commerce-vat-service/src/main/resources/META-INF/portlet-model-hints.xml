@@ -11,7 +11,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
-		<field name="vatNumber" type="String">
+		<field name="value" type="String">
 			<validator name="required" />
 		</field>
 		<field name="valid" type="boolean" />

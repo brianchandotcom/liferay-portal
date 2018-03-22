@@ -110,18 +110,18 @@ public class EditCommerceVatNumberMVCActionCommand
 
 		String className = ParamUtil.getString(actionRequest, "className");
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
-		String vatNumber = ParamUtil.getString(actionRequest, "vatNumber");
+		String value = ParamUtil.getString(actionRequest, "value");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommerceVatNumber.class.getName(), actionRequest);
 
 		if (commerceVatNumberId <= 0) {
 			_commerceVatNumberService.addCommerceVatNumber(
-				className, classPK, vatNumber, serviceContext);
+				className, classPK, value, serviceContext);
 		}
 		else {
 			_commerceVatNumberService.updateCommerceVatNumber(
-				commerceVatNumberId, vatNumber);
+				commerceVatNumberId, value);
 		}
 	}
 

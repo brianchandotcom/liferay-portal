@@ -51,7 +51,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "vat-numbers"));
 	<div class="lfr-form-content">
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-				<aui:input name="vatNumber" />
+				<aui:input label="vat-number" name="value" />
 			</aui:fieldset>
 		</aui:fieldset-group>
 	</div>

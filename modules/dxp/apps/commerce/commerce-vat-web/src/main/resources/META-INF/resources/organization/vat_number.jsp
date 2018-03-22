@@ -40,7 +40,7 @@ if (commerceVatNumber != null) {
 
 	<div class="lfr-form-content">
 		<aui:fieldset>
-			<aui:input name="vatNumber" />
+			<aui:input label="vat-number" name="value" />
 		</aui:fieldset>
 	</div>
 

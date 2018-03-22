@@ -21,6 +21,8 @@ import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 
+import java.io.File;
+
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
@@ -53,7 +55,8 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 		NpmInstallTask npmInstallTask = (NpmInstallTask)GradleUtil.getTask(
 			project, NodePlugin.NPM_INSTALL_TASK_NAME);
 
-		npmInstallTask.setUseNpmCI(Boolean.TRUE);
+		npmInstallTask.setNodeModulesDigestFile(
+			new File(npmInstallTask.getNodeModulesDir(), ".digest"));
 	}
 
 	private void _configureTaskPublishNodeModule(

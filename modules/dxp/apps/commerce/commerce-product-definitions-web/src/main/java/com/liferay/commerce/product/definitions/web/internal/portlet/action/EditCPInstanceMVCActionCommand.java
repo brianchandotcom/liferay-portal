@@ -16,6 +16,7 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.exception.CPDefinitionIgnoreSKUCombinationsException;
+import com.liferay.commerce.product.exception.CPInstanceDDMContentException;
 import com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
@@ -125,6 +126,7 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		}
 		catch (Exception e) {
 			if (e instanceof CPDefinitionIgnoreSKUCombinationsException ||
+				e instanceof CPInstanceDDMContentException ||
 				e instanceof
 					NoSuchSkuContributorCPDefinitionOptionRelException) {
 
@@ -178,8 +180,11 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		boolean ignoreSKUCombinations = ParamUtil.getBoolean(
 			actionRequest, "ignoreSKUCombinations");
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CPInstance.class.getName(), actionRequest);
+
 		_cpDefinitionService.updateCPDefinitionIgnoreSKUCombinations(
-			cpDefinitionId, ignoreSKUCombinations);
+			cpDefinitionId, ignoreSKUCombinations, serviceContext);
 	}
 
 	protected CPInstance updateCPInstance(ActionRequest actionRequest)

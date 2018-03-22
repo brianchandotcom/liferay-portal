@@ -194,15 +194,18 @@ String displayStyle = cpInstanceDisplayContext.getDisplayStyle();
 	<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
 </liferay-portlet:renderURL>
 
-<liferay-portlet:actionURL name="editProductInstance" var="addProductInstancesURL">
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_MULTIPLE %>" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
-</liferay-portlet:actionURL>
-
 <liferay-frontend:add-menu>
 	<liferay-frontend:add-menu-item id="addSkuButton" title='<%= LanguageUtil.get(request, "add-sku") %>' url="<%= addProductInstanceURL.toString() %>" />
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "generate-all-sku-combinations") %>' url="<%= addProductInstancesURL.toString() %>" />
+
+	<c:if test="<%= !cpDefinition.isIgnoreSKUCombinations() %>">
+		<liferay-portlet:actionURL name="editProductInstance" var="addProductInstancesURL">
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_MULTIPLE %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
+		</liferay-portlet:actionURL>
+
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "generate-all-sku-combinations") %>' url="<%= addProductInstancesURL.toString() %>" />
+	</c:if>
 </liferay-frontend:add-menu>
 
 <aui:script>

@@ -55,6 +55,7 @@ productSkusURL.setParameter("screenNavigationCategoryKey", cpInstanceDisplayCont
 		<aui:model-context bean="<%= cpInstance %>" model="<%= CPInstance.class %>" />
 
 		<liferay-ui:error exception="<%= CPDefinitionIgnoreSKUCombinationsException.class %>" message="only-one-sku-can-be-approved" />
+		<liferay-ui:error exception="<%= CPInstanceDDMContentException.class %>" message="there-is-already-one-sku-with-the-selected-options" />
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>

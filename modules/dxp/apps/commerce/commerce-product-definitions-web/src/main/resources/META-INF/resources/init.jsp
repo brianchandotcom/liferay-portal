@@ -55,6 +55,7 @@ page import="com.liferay.commerce.product.exception.CPDefinitionIgnoreSKUCombina
 page import="com.liferay.commerce.product.exception.CPDefinitionOptionValueRelKeyException" %><%@
 page import="com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException" %><%@
 page import="com.liferay.commerce.product.exception.CPFriendlyURLEntryException" %><%@
+page import="com.liferay.commerce.product.exception.CPInstanceDDMContentException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPAttachmentFileEntryException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPDefinitionException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException" %><%@

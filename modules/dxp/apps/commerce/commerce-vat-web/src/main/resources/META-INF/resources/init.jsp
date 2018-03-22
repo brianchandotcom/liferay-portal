@@ -29,6 +29,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.commerce.vat.constants.CommerceVatActionKeys" %><%@
 page import="com.liferay.commerce.vat.constants.CommerceVatPortletKeys" %><%@
 page import="com.liferay.commerce.vat.constants.CommerceVatWebKeys" %><%@
+page import="com.liferay.commerce.vat.exception.NoSuchVatNumberException" %><%@
 page import="com.liferay.commerce.vat.model.CommerceVatNumber" %><%@
 page import="com.liferay.commerce.vat.web.internal.display.context.CommerceVatNumberDisplayContext" %><%@
 page import="com.liferay.commerce.vat.web.internal.security.permission.resource.CommerceVatPermission" %><%@

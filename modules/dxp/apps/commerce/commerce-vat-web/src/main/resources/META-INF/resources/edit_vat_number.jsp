@@ -23,7 +23,7 @@ CommerceVatNumber commerceVatNumber = commerceVatNumberDisplayContext.getCommerc
 
 long commerceVatNumberId = commerceVatNumberDisplayContext.getCommerceVatNumberId();
 
-String title = LanguageUtil.format(request, "edit-x", commerceVatNumber.getVatNumber(), false);
+String title = LanguageUtil.format(request, "edit-x", commerceVatNumber.getValue(), false);
 
 Map<String, Object> data = new HashMap<>();
 

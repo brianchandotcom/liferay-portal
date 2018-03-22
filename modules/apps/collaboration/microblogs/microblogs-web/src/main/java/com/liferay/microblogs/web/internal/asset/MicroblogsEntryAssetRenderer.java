@@ -116,7 +116,7 @@ public class MicroblogsEntryAssetRenderer
 			User user = UserLocalServiceUtil.getUser(_entry.getUserId());
 
 			long portletPlid = PortalUtil.getPlidFromPortletId(
-				user.getGroupId(), true, MicroblogsPortletKeys.MICROBLOGS);
+				user.getGroupId(), MicroblogsPortletKeys.MICROBLOGS);
 
 			PortletURL portletURL = PortletURLFactoryUtil.create(
 				liferayPortletRequest, MicroblogsPortletKeys.MICROBLOGS,

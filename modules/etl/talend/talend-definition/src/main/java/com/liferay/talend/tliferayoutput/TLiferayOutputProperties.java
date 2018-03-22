@@ -28,7 +28,6 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -145,6 +144,8 @@ public class TLiferayOutputProperties
 
 					resource.main.schema.setValue(schema);
 					temporaryMainSchema = schema;
+
+					_updateOutputSchemas();
 
 					validationResultMutable.setMessage(
 						i18nMessages.getMessage("success.validation.schema"));
@@ -491,6 +492,22 @@ public class TLiferayOutputProperties
 			"liferay", null, null, false, fields);
 
 		resource.main.schema.setValue(initialSchema);
+
+		_updateOutputSchemas();
+	}
+
+	private void _updateOutputSchemas() {
+		if (_log.isDebugEnabled()) {
+			_log.debug("Update output schemas");
+		}
+
+		Schema inputSchema = resource.main.schema.getValue();
+
+		schemaFlow.schema.setValue(inputSchema);
+
+		Schema rejectSchema = createRejectSchema(inputSchema);
+
+		schemaReject.schema.setValue(rejectSchema);
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger(

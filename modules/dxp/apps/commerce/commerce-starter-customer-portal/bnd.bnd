@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Commerce Starter Customer Portal
-Bundle-SymbolicName: com.liferay.commerce.starter.customer.portal
-Bundle-Version: 1.0.0
-Web-ContextPath: /commerce-starter-customer-portal

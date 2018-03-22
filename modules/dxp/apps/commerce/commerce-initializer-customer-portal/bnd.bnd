@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Commerce Initializer Customer Portal
+Bundle-SymbolicName: com.liferay.commerce.initializer.customer.portal
+Bundle-Version: 1.0.0
+Web-ContextPath: /commerce-initializer-customer-portal

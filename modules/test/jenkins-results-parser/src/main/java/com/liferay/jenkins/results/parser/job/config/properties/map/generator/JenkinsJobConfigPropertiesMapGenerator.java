@@ -228,8 +228,8 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 		return environmentSlavesMap;
 	}
 
-	private String _getFirstRegexMatchGroup(String string, Pattern regex) {
-		List<String> properties = _getRegexMatchGroupList(string, regex);
+	private String _getFirstRegexMatchGroup(String string, Pattern pattern) {
+		List<String> properties = _getRegexMatchGroupList(string, pattern);
 
 		if (properties.isEmpty()) {
 			return null;
@@ -1081,11 +1081,12 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 	}
 
 	private void _putGeneratedJenkinsJobConfigProperty(
-		String generatedJenkinsJobConfigPropertyName, Set<String> valuesSet) {
+		String generatedJenkinsJobConfigPropertyName,
+		Set<String> generatedJenkinsJobConfigPropertyValuesSet) {
 
 		_generatedJenkinsJobConfigPropertiesMap.put(
 			generatedJenkinsJobConfigPropertyName,
-			StringUtils.join(valuesSet, ','));
+			StringUtils.join(generatedJenkinsJobConfigPropertyValuesSet, ','));
 	}
 
 	private static final Pattern _greedyParenthesesPattern = Pattern.compile(

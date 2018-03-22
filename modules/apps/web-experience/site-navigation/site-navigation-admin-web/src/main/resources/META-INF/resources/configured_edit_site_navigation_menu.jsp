@@ -154,13 +154,8 @@
 	)
 	.then(
 		function(sidebar) {
-			sidebar.on(
-				'hide',
-				function() {
-					sidebar.body = '';
-					sidebar.visible = false;
-				}
-			);
+			var changed = false;
+			var sidebarBodyChangeHandler = null;
 
 			function openSidebar(title) {
 				sidebar.body = '<div id="<portlet:namespace />sidebarBody"><div class="loading-animation"></div></div>';
@@ -168,30 +163,69 @@
 				sidebar.visible = true;
 			}
 
+			function closeSidebar () {
+				var saveChanges = !changed ? false : confirm(
+					'<liferay-ui:message key="you-have-unsaved-changes.-do-you-want-to-save-them" />'
+				);
+
+				if (!changed || !saveChanges) {
+					if (sidebarBodyChangeHandler) {
+						sidebarBodyChangeHandler.detach();
+
+						sidebarBodyChangeHandler = null;
+					}
+
+					sidebar.body = '';
+					sidebar.visible = false;
+
+					changed = false;
+
+					return true;
+				}
+				else if (saveChanges) {
+					var form = A.one('#<portlet:namespace />sidebarBody form');
+
+					if (form) {
+						form.submit();
+					}
+
+					return false;
+				}
+
+				return false;
+			}
+
+			sidebar.on('hide', closeSidebar);
+
+			function handleSidebarBodyChange() {
+				changed = true;
+			}
+
 			function setSidebarBody(content) {
 				var sidebarBody = A.one('#<portlet:namespace />sidebarBody');
-				var sidebarHeaderButton = document.getElementById('<portlet:namespace />sidebarHeaderButton');
+				var sidebarHeaderButton = A.one('#<portlet:namespace />sidebarHeaderButton');
 
 				if (sidebarBody) {
 					sidebarBody.plug(A.Plugin.ParseContent);
 
 					sidebarBody.setContent(content);
+					sidebarBodyChangeHandler = sidebarBody.on('change', handleSidebarBodyChange);
 				}
 
 				if (sidebarHeaderButton) {
-					sidebarHeaderButton.addEventListener(
-						'click',
-						function() {
-							sidebar.body = '';
-							sidebar.visible = false;
-						}
-					);
+					sidebarHeaderButton.on('click', closeSidebar);
 				}
 			}
 
 			A.one('.site-navigation-menu-container').delegate(
 				'click',
 				function(event) {
+					if (!closeSidebar()) {
+						event.stopPropagation();
+
+						return;
+					}
+
 					var currentTarget = event.currentTarget;
 
 					var data = Liferay.Util.ns(
@@ -224,6 +258,12 @@
 			A.one('#<portlet:namespace />showSiteNavigationMenuSettings').on(
 				'click',
 				function() {
+					if (!closeSidebar()) {
+						event.stopPropagation();
+
+						return;
+					}
+
 					var data = Liferay.Util.ns(
 						'<portlet:namespace />',
 						{

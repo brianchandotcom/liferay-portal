@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
@@ -71,6 +72,10 @@ public class CommerceOrderItemLocalServiceImpl
 
 		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
 			cpInstanceId);
+
+		if (Validator.isNull(json) || json.equals("[]")) {
+			json = cpInstance.getDDMContent();
+		}
 
 		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
 			cpInstance.getCPDefinitionId());

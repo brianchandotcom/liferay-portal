@@ -326,15 +326,6 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 			propertyName, _reluctantParenthesesPattern);
 	}
 
-	private List<String> _getMasterJobPropertiesList(String basePropertyName) {
-		List<String> patternMatchGroupList = _getPatternMatchGroupList(
-			basePropertyName, _masterJobPropertyPattern);
-
-		return Arrays.asList(
-			patternMatchGroupList.get(1), patternMatchGroupList.get(0),
-			patternMatchGroupList.get(2));
-	}
-
 	private Map<String, String> _getOSXEnvironmentVariablesMap() {
 		Map<String, String> osxEnvironmentVariablesMap = new HashMap<>();
 
@@ -953,17 +944,17 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 	}
 
 	private void _processMasterJobProperty(String basePropertyName) {
-		List<String> masterJobPropertiesList = _getMasterJobPropertiesList(
-			basePropertyName);
+		List<String> patternMatchGroupList = _getPatternMatchGroupList(
+			basePropertyName, _masterJobPropertyPattern);
 
-		String jobName = masterJobPropertiesList.get(0);
-		String masterHostName = masterJobPropertiesList.get(1);
+		String jobName = patternMatchGroupList.get(1);
+		String masterHostName = patternMatchGroupList.get(0);
 
 		String generatedPropertyName = JenkinsResultsParserUtil.combine(
 			"master.job.properties(", masterHostName, "/", jobName, ")");
 
 		_appendToGeneratedJenkinsJobConfigPropertyValue(
-			generatedPropertyName, masterJobPropertiesList.get(2));
+			generatedPropertyName, patternMatchGroupList.get(2));
 	}
 
 	private void _processMasterProperty(String basePropertyName) {

@@ -82,7 +82,7 @@ public class TLiferayOutputProperties
 
 		field.addProp(SchemaConstants.TALEND_COLUMN_DB_LENGTH, "255");
 		field.addProp(SchemaConstants.TALEND_FIELD_GENERATED, "true");
-		field.addProp(SchemaConstants.TALEND_IS_LOCKED, "false");
+		field.addProp(SchemaConstants.TALEND_IS_LOCKED, "true");
 
 		rejectFields.add(field);
 

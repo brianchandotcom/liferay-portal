@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Commerce Wizard Web
-Bundle-SymbolicName: com.liferay.commerce.wizard.web
-Bundle-Version: 1.0.0
-Web-ContextPath: /commerce-wizard-web

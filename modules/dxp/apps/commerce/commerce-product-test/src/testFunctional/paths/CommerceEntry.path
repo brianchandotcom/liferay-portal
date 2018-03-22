@@ -90,7 +90,7 @@
 </tr>
 <tr>
 	<td>OPTIONS_SELECT_LIST</td>
-	<td>//div[@class='drop-chosen']//span[contains(., '${key_selectValue}')]</td>
+	<td>//div[@class='dropdown-section']//..//a[contains(., '${key_selectValue}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -170,12 +170,12 @@
 </tr>
 <tr>
 	<td>TITLE_FIELD</td>
-	<td>//div/span/input[contains(@id,'title')]</td>
+	<td>//div/input[contains(@id,'title')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MODAL_TITLE_FIELD</td>
-	<td>//div/span/input[contains(@id,'Title')]</td>
+	<td>//div/input[contains(@id,'Title')]</td>
 	<td></td>
 </tr>
 <tr>

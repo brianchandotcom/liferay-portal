@@ -19,6 +19,7 @@ import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
 import com.liferay.commerce.product.util.DDMFormValuesHelper;
+import com.liferay.commerce.product.util.DDMFormValuesUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
@@ -29,16 +30,13 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -136,17 +134,7 @@ public class DDMFormValuesHelperImpl implements DDMFormValuesHelper {
 
 	@Override
 	public boolean equals(String json1, String json2) throws PortalException {
-		JSONArray jsonArray1 = _jsonFactory.createJSONArray(json1);
-		JSONArray jsonArray2 = _jsonFactory.createJSONArray(json2);
-
-		if (jsonArray1.length() != jsonArray2.length()) {
-			return false;
-		}
-
-		Set<KeyValuePair> set1 = _toSet(jsonArray1);
-		Set<KeyValuePair> set2 = _toSet(jsonArray2);
-
-		return set1.equals(set2);
+		return DDMFormValuesUtil.equals(json1, json2);
 	}
 
 	@Override
@@ -214,21 +202,6 @@ public class DDMFormValuesHelperImpl implements DDMFormValuesHelper {
 		jsonObject.put("value", valueString);
 
 		return jsonObject;
-	}
-
-	private Set<KeyValuePair> _toSet(JSONArray jsonArray) {
-		Set<KeyValuePair> set = new HashSet<>();
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-
-			String key = jsonObject1.getString("key");
-			String value = jsonObject1.getString("value");
-
-			set.add(new KeyValuePair(key, value));
-		}
-
-		return set;
 	}
 
 	@Reference

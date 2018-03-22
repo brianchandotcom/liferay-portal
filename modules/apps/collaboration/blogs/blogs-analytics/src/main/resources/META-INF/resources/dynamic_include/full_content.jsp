@@ -14,10 +14,14 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+<%@ include file="/dynamic_include/init.jsp" %>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
+<%
+AssetEntry assetEntry = (AssetEntry)request.getAttribute("view.jsp-assetEntry");
 
-<%@ page import="com.liferay.asset.kernel.model.AssetEntry" %><%@
-page import="com.liferay.blogs.model.BlogsEntry" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %>
+BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
+%>
+
+<aui:script require="blogs-analytics/js/track_blogs_entry.es as trackBlogsEntry">
+	trackBlogsEntry.default('<%= entry.getEntryId() %>', '<portlet:namespace /><%= assetEntry.getEntryId() %>');
+</aui:script>

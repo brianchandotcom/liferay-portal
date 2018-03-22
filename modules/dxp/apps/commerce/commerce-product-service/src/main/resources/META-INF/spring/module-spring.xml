@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
 	<bean class="com.liferay.commerce.product.service.impl.CPAttachmentFileEntryLocalServiceImpl" id="com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPAttachmentFileEntryServiceImpl" id="com.liferay.commerce.product.service.CPAttachmentFileEntryService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPAttachmentFileEntryPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryPersistence" parent="basePersistence" />
@@ -28,9 +34,6 @@
 	<bean class="com.liferay.commerce.product.service.impl.CPFriendlyURLEntryLocalServiceImpl" id="com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPFriendlyURLEntryServiceImpl" id="com.liferay.commerce.product.service.CPFriendlyURLEntryService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPFriendlyURLEntryPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPFriendlyURLEntryPersistence" parent="basePersistence" />
-	<bean class="com.liferay.commerce.product.service.impl.CPGroupLocalServiceImpl" id="com.liferay.commerce.product.service.CPGroupLocalService" />
-	<bean class="com.liferay.commerce.product.service.impl.CPGroupServiceImpl" id="com.liferay.commerce.product.service.CPGroupService" />
-	<bean class="com.liferay.commerce.product.service.persistence.impl.CPGroupPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPGroupPersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.product.service.impl.CPInstanceLocalServiceImpl" id="com.liferay.commerce.product.service.CPInstanceLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPInstanceServiceImpl" id="com.liferay.commerce.product.service.CPInstanceService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPInstancePersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPInstancePersistence" parent="basePersistence" />

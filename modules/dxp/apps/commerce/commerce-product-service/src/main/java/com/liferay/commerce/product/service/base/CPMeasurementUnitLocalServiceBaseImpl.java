@@ -29,7 +29,6 @@ import com.liferay.commerce.product.service.persistence.CPDefinitionPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionSpecificationOptionValuePersistence;
 import com.liferay.commerce.product.service.persistence.CPDisplayLayoutPersistence;
 import com.liferay.commerce.product.service.persistence.CPFriendlyURLEntryPersistence;
-import com.liferay.commerce.product.service.persistence.CPGroupPersistence;
 import com.liferay.commerce.product.service.persistence.CPInstanceFinder;
 import com.liferay.commerce.product.service.persistence.CPInstancePersistence;
 import com.liferay.commerce.product.service.persistence.CPMeasurementUnitPersistence;
@@ -814,43 +813,6 @@ public abstract class CPMeasurementUnitLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the cp group local service.
-	 *
-	 * @return the cp group local service
-	 */
-	public com.liferay.commerce.product.service.CPGroupLocalService getCPGroupLocalService() {
-		return cpGroupLocalService;
-	}
-
-	/**
-	 * Sets the cp group local service.
-	 *
-	 * @param cpGroupLocalService the cp group local service
-	 */
-	public void setCPGroupLocalService(
-		com.liferay.commerce.product.service.CPGroupLocalService cpGroupLocalService) {
-		this.cpGroupLocalService = cpGroupLocalService;
-	}
-
-	/**
-	 * Returns the cp group persistence.
-	 *
-	 * @return the cp group persistence
-	 */
-	public CPGroupPersistence getCPGroupPersistence() {
-		return cpGroupPersistence;
-	}
-
-	/**
-	 * Sets the cp group persistence.
-	 *
-	 * @param cpGroupPersistence the cp group persistence
-	 */
-	public void setCPGroupPersistence(CPGroupPersistence cpGroupPersistence) {
-		this.cpGroupPersistence = cpGroupPersistence;
-	}
-
-	/**
 	 * Returns the cp instance local service.
 	 *
 	 * @return the cp instance local service
@@ -1298,10 +1260,6 @@ public abstract class CPMeasurementUnitLocalServiceBaseImpl
 	protected com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService cpFriendlyURLEntryLocalService;
 	@BeanReference(type = CPFriendlyURLEntryPersistence.class)
 	protected CPFriendlyURLEntryPersistence cpFriendlyURLEntryPersistence;
-	@BeanReference(type = com.liferay.commerce.product.service.CPGroupLocalService.class)
-	protected com.liferay.commerce.product.service.CPGroupLocalService cpGroupLocalService;
-	@BeanReference(type = CPGroupPersistence.class)
-	protected CPGroupPersistence cpGroupPersistence;
 	@BeanReference(type = com.liferay.commerce.product.service.CPInstanceLocalService.class)
 	protected com.liferay.commerce.product.service.CPInstanceLocalService cpInstanceLocalService;
 	@BeanReference(type = CPInstancePersistence.class)

@@ -50,8 +50,6 @@ create index IX_496A7862 on CPFriendlyURLEntry (groupId, classNameId, urlTitle[$
 create index IX_BD972D55 on CPFriendlyURLEntry (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_F4450517 on CPFriendlyURLEntry (uuid_[$COLUMN_LENGTH:75$], groupId);
 
-create unique index IX_F8D87652 on CPGroup (groupId);
-
 create unique index IX_7E830576 on CPInstance (CPDefinitionId, sku[$COLUMN_LENGTH:75$]);
 create index IX_F4C9CDD on CPInstance (CPDefinitionId, status);
 create index IX_48C70BC0 on CPInstance (companyId);

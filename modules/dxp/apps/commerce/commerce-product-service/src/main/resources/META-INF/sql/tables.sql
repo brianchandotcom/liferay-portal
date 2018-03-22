@@ -166,16 +166,6 @@ create table CPFriendlyURLEntry (
 	main BOOLEAN
 );
 
-create table CPGroup (
-	CPGroupId LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null
-);
-
 create table CPInstance (
 	uuid_ VARCHAR(75) null,
 	CPInstanceId LONG not null primary key,

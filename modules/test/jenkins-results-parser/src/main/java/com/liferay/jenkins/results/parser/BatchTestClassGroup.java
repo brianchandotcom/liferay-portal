@@ -81,6 +81,30 @@ public class TestBatchGroup {
 		return 3;
 	}
 
+	private boolean _filePathExcluded(Path filePath) {
+		for (PathMatcher excludePathMatcher :
+				_testClassNamesExcludesPathMatchers) {
+
+			if (excludePathMatcher.matches(filePath)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _filePathIncluded(Path filePath) {
+		for (PathMatcher includePathMatcher :
+				_testClassNamesIncludesPathMatchers) {
+
+			if (includePathMatcher.matches(filePath)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private Set<String> _getTestClassFileNamesSet() throws Exception {
 		File workingDirectory = _gitWorkingDirectory.getWorkingDirectory();
 

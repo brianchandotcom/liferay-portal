@@ -341,13 +341,13 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 	}
 
 	private List<String> _getPatternMatchGroupList(String string, Pattern pattern) {
-		Matcher propertyMatcher = pattern.matcher(string);
+		Matcher matcher = pattern.matcher(string);
 
 		List<String> patternMatchGroups = new ArrayList<>();
 
-		while (propertyMatcher.find()) {
-			for (int i = 1; i <= propertyMatcher.groupCount(); i++) {
-				patternMatchGroups.add(propertyMatcher.group(i));
+		while (matcher.find()) {
+			for (int i = 1; i <= matcher.groupCount(); i++) {
+				patternMatchGroups.add(matcher.group(i));
 			}
 		}
 

@@ -44,6 +44,7 @@ import java.io.IOException;
 import java.sql.Connection;
 
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -177,6 +178,24 @@ public class SetupWizardUtil {
 		name = _PROPERTIES_PREFIX.concat(name).concat(StringPool.DOUBLE_DASH);
 
 		return ParamUtil.getString(request, name, defaultValue);
+	}
+
+	private static String _getUnicodePropertiesStringWithEmptyValue(
+		UnicodeProperties unicodeProperties) {
+
+		for (Map.Entry<String, String> entry : unicodeProperties.entrySet()) {
+			String value = entry.getValue();
+
+			if (Validator.isNull(value)) {
+				unicodeProperties.setProperty(
+					entry.getKey(), StringPool.IS_NULL);
+			}
+		}
+
+		String encodedPropertiesString = unicodeProperties.toString();
+
+		return encodedPropertiesString.replace(
+			StringPool.IS_NULL, StringPool.BLANK);
 	}
 
 	private static boolean _isDatabaseConfigured(
@@ -358,7 +377,7 @@ public class SetupWizardUtil {
 		try {
 			FileUtil.write(
 				PropsValues.LIFERAY_HOME, PROPERTIES_FILE_NAME,
-				unicodeProperties.toString());
+				_getUnicodePropertiesStringWithEmptyValue(unicodeProperties));
 
 			if (FileUtil.exists(
 					PropsValues.LIFERAY_HOME + StringPool.SLASH +

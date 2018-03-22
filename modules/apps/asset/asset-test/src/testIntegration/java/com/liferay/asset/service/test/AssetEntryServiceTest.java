@@ -164,11 +164,15 @@ public class AssetEntryServiceTest {
 		RatingsTestUtil.addStats(
 			assetEntry3.getClassName(), assetEntry3.getClassPK(), 3000);
 
-		List<AssetEntry> assetEntries = new ArrayList<>(3);
+		AssetEntry assetEntry4 = AssetTestUtil.addAssetEntry(
+			_group.getGroupId(), dayBeforeYesterday);
+
+		List<AssetEntry> assetEntries = new ArrayList<>(4);
 
 		assetEntries.add(assetEntry3);
 		assetEntries.add(assetEntry1);
 		assetEntries.add(assetEntry2);
+		assetEntries.add(assetEntry4);
 
 		return assetEntries;
 	}

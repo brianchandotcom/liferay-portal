@@ -328,7 +328,7 @@ public class CPAttachmentFileEntriesDisplayContext extends
 
 	public boolean hasOptions() throws PortalException {
 		int skuContributorCPDefinitionOptionRelCount =
-			_cpDefinitionOptionRelService.getCPDefinitionOptionRelCount(
+			_cpDefinitionOptionRelService.getCPDefinitionOptionRelsCount(
 				getCPDefinitionId(), true);
 
 		if (skuContributorCPDefinitionOptionRelCount > 0) {

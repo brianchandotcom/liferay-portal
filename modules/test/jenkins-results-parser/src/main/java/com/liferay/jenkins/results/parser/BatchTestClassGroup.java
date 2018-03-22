@@ -110,37 +110,40 @@ public class TestBatchGroup {
 
 		final Set<String> testClassFileNamesSet = new HashSet<>();
 
-		for (String testClassNamesInclude : _testClassNamesIncludes) {
-			final String filePattern =
-				workingDirectory.getAbsolutePath() + "/" +
-					testClassNamesInclude;
+		Files.walkFileTree(
+			workingDirectory.toPath(),
+			new SimpleFileVisitor<Path>() {
 
-			final PathMatcher pathMatcher =
-				FileSystems.getDefault().getPathMatcher("glob:" + filePattern);
+				@Override
+				public FileVisitResult preVisitDirectory(
+						Path filePath, BasicFileAttributes attrs)
+					throws IOException {
 
-			Files.walkFileTree(
-				workingDirectory.toPath(),
-				new SimpleFileVisitor<Path>() {
-
-					@Override
-					public FileVisitResult visitFile(
-							Path filePath, BasicFileAttributes attrs)
-						throws IOException {
-
-						if (filePath.toFile().isDirectory()) {
-							visitFile(filePath, attrs);
-						}
-						else if (pathMatcher.matches(
-									filePath.toAbsolutePath())) {
-
-							testClassFileNamesSet.add(filePath.toString());
-						}
-
-						return FileVisitResult.CONTINUE;
+					if (_filePathExcluded(filePath)) {
+						return FileVisitResult.SKIP_SUBTREE;
 					}
 
-				});
-		}
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFile(
+						Path filePath, BasicFileAttributes attrs)
+					throws IOException {
+
+					if (filePath.toFile().isDirectory()) {
+						visitFile(filePath, attrs);
+					}
+					else if (_filePathIncluded(filePath) &&
+							 !_filePathExcluded(filePath)) {
+
+						testClassFileNamesSet.add(filePath.toString());
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
 
 		return testClassFileNamesSet;
 	}

@@ -62,7 +62,7 @@ public class BlogsAnalyticsFullContentJSPDynamicInclude
 			"com.liferay.blogs.web#/blogs/asset/full_content.jsp#post");
 	}
 
-	private static final String _JSP_PATH = "/dynamic_include/view_entry.jsp";
+	private static final String _JSP_PATH = "/dynamic_include/full_content.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlogsAnalyticsFullContentJSPDynamicInclude.class);

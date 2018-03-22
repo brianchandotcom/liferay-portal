@@ -34,8 +34,14 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.zip.ZipWriter;
+import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
-import com.liferay.user.associated.data.util.UADEntityChunkedCommandUtil;
+
+import java.io.File;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -47,14 +53,6 @@ public abstract class BaseUADEntityExporter implements UADEntityExporter {
 	@Override
 	public long count(long userId) throws PortalException {
 		return getUADEntityAggregator().count(userId);
-	}
-
-	@Override
-	public void exportAll(long userId, PortletDataContext portletDataContext)
-		throws PortalException {
-
-		UADEntityChunkedCommandUtil.executeChunkedCommand(
-			userId, getUADEntityAggregator(), this::export);
 	}
 
 	@Override
@@ -79,6 +77,22 @@ public abstract class BaseUADEntityExporter implements UADEntityExporter {
 
 		manifestSummary.addModelAdditionCount(stagedModelType, count(userId));
 	}
+
+	protected File createFolder(long userId) {
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(SystemProperties.get(SystemProperties.TMP_DIR));
+		sb.append("/liferay/uad/");
+		sb.append(userId);
+
+		File file = new File(sb.toString());
+
+		file.mkdirs();
+
+		return file;
+	}
+
+	protected abstract String getEntityName();
 
 	protected Folder getFolder(
 			long companyId, String portletId, String folderName)
@@ -128,6 +142,21 @@ public abstract class BaseUADEntityExporter implements UADEntityExporter {
 
 	protected String getUADEntityName() {
 		return StringPool.BLANK;
+	}
+
+	protected ZipWriter getZipWriter(long userId) {
+		File file = createFolder(userId);
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(file.getAbsolutePath());
+		sb.append(StringPool.SLASH);
+		sb.append(getEntityName());
+		sb.append(StringPool.UNDERLINE);
+		sb.append(Time.getShortTimestamp());
+		sb.append(".zip");
+
+		return ZipWriterFactoryUtil.getZipWriter(new File(sb.toString()));
 	}
 
 	@Reference

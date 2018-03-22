@@ -165,20 +165,20 @@ class FragmentEntryLink extends Component {
 									'toolbar',
 									'ae_embed'
 								].join(',')
-							})
+							}
+						)
 					);
 
-					const naviteEditor = editor.get('nativeEditor');
+					const nativeEditor = editor.get('nativeEditor');
 
-					nativeEditor.name = this.portletNamespace +
-						'fragmentEntryLink_';
+					nativeEditor.name = `${this.portletNamespace}fragmentEntryLink_`;
 
-					naviteEditor.on(
+					nativeEditor.on(
 						'change',
 						this._handleEditorChange
 					);
 
-					naviteEditor.on(
+					nativeEditor.on(
 						'selectionChange',
 						this._handleEditorChange
 					);

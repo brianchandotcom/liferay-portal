@@ -1122,6 +1122,10 @@ AUI.add(
 
 						var datePicker = instance.getDatePicker();
 
+						if (!datePicker) {
+							return '';
+						}
+
 						var selectedDate = datePicker.getDate();
 
 						var formattedDate = A.DataType.Date.format(selectedDate);
@@ -1156,6 +1160,10 @@ AUI.add(
 						var instance = this;
 
 						var datePicker = instance.getDatePicker();
+
+						if (!datePicker) {
+							return;
+						}
 
 						datePicker.set('activeInput', instance.getInputNode());
 

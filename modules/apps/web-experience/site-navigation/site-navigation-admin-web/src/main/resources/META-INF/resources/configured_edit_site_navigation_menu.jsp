@@ -165,7 +165,7 @@
 
 			function closeSidebar () {
 				var saveChanges = !changed ? false : confirm(
-					'<liferay-ui:message key="if-you-want-to-keep-your-configuration-you-need-to-save-changes.-do-you-want-to-save-changes-you-made" />'
+					'<liferay-ui:message key="you-have-unsaved-changes.-do-you-want-to-save-them" />'
 				);
 
 				if (!changed || !saveChanges) {

@@ -43,6 +43,7 @@ import com.liferay.portal.search.elasticsearch6.internal.filter.QueryFilterTrans
 import com.liferay.portal.search.elasticsearch6.internal.filter.RangeTermFilterTranslatorImpl;
 import com.liferay.portal.search.elasticsearch6.internal.filter.TermFilterTranslatorImpl;
 import com.liferay.portal.search.elasticsearch6.internal.filter.TermsFilterTranslatorImpl;
+import com.liferay.portal.search.elasticsearch6.internal.filter.TermsSetFilterTranslatorImpl;
 import com.liferay.portal.search.elasticsearch6.internal.groupby.DefaultGroupByTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.index.IndexNameBuilder;
 import com.liferay.portal.search.elasticsearch6.internal.query.BooleanQueryTranslatorImpl;
@@ -160,6 +161,7 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 				rangeTermFilterTranslator = new RangeTermFilterTranslatorImpl();
 				termFilterTranslator = new TermFilterTranslatorImpl();
 				termsFilterTranslator = new TermsFilterTranslatorImpl();
+				termsSetFilterTranslator = new TermsSetFilterTranslatorImpl();
 			}
 		};
 	}

@@ -81,7 +81,7 @@ public class CommerceVatNumberModelImpl extends BaseModelImpl<CommerceVatNumber>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
-			{ "vatNumber", Types.VARCHAR },
+			{ "value", Types.VARCHAR },
 			{ "valid", Types.BOOLEAN }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -96,11 +96,11 @@ public class CommerceVatNumberModelImpl extends BaseModelImpl<CommerceVatNumber>
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("vatNumber", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("value", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("valid", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceVatNumber (commerceVatNumberId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,vatNumber VARCHAR(75) null,valid BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceVatNumber (commerceVatNumberId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,value VARCHAR(75) null,valid BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceVatNumber";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceVatNumber.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceVatNumber.createDate DESC";
@@ -143,7 +143,7 @@ public class CommerceVatNumberModelImpl extends BaseModelImpl<CommerceVatNumber>
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setClassNameId(soapModel.getClassNameId());
 		model.setClassPK(soapModel.getClassPK());
-		model.setVatNumber(soapModel.getVatNumber());
+		model.setValue(soapModel.getValue());
 		model.setValid(soapModel.getValid());
 
 		return model;
@@ -219,7 +219,7 @@ public class CommerceVatNumberModelImpl extends BaseModelImpl<CommerceVatNumber>
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
-		attributes.put("vatNumber", getVatNumber());
+		attributes.put("value", getValue());
 		attributes.put("valid", getValid());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -284,10 +284,10 @@ public class CommerceVatNumberModelImpl extends BaseModelImpl<CommerceVatNumber>
 			setClassPK(classPK);
 		}
 
-		String vatNumber = (String)attributes.get("vatNumber");
+		String value = (String)attributes.get("value");
 
-		if (vatNumber != null) {
-			setVatNumber(vatNumber);
+		if (value != null) {
+			setValue(value);
 		}
 
 		Boolean valid = (Boolean)attributes.get("valid");
@@ -483,18 +483,18 @@ public class CommerceVatNumberModelImpl extends BaseModelImpl<CommerceVatNumber>
 
 	@JSON
 	@Override
-	public String getVatNumber() {
-		if (_vatNumber == null) {
+	public String getValue() {
+		if (_value == null) {
 			return "";
 		}
 		else {
-			return _vatNumber;
+			return _value;
 		}
 	}
 
 	@Override
-	public void setVatNumber(String vatNumber) {
-		_vatNumber = vatNumber;
+	public void setValue(String value) {
+		_value = value;
 	}
 
 	@JSON
@@ -554,7 +554,7 @@ public class CommerceVatNumberModelImpl extends BaseModelImpl<CommerceVatNumber>
 		commerceVatNumberImpl.setModifiedDate(getModifiedDate());
 		commerceVatNumberImpl.setClassNameId(getClassNameId());
 		commerceVatNumberImpl.setClassPK(getClassPK());
-		commerceVatNumberImpl.setVatNumber(getVatNumber());
+		commerceVatNumberImpl.setValue(getValue());
 		commerceVatNumberImpl.setValid(getValid());
 
 		commerceVatNumberImpl.resetOriginalValues();
@@ -678,12 +678,12 @@ public class CommerceVatNumberModelImpl extends BaseModelImpl<CommerceVatNumber>
 
 		commerceVatNumberCacheModel.classPK = getClassPK();
 
-		commerceVatNumberCacheModel.vatNumber = getVatNumber();
+		commerceVatNumberCacheModel.value = getValue();
 
-		String vatNumber = commerceVatNumberCacheModel.vatNumber;
+		String value = commerceVatNumberCacheModel.value;
 
-		if ((vatNumber != null) && (vatNumber.length() == 0)) {
-			commerceVatNumberCacheModel.vatNumber = null;
+		if ((value != null) && (value.length() == 0)) {
+			commerceVatNumberCacheModel.value = null;
 		}
 
 		commerceVatNumberCacheModel.valid = getValid();
@@ -713,8 +713,8 @@ public class CommerceVatNumberModelImpl extends BaseModelImpl<CommerceVatNumber>
 		sb.append(getClassNameId());
 		sb.append(", classPK=");
 		sb.append(getClassPK());
-		sb.append(", vatNumber=");
-		sb.append(getVatNumber());
+		sb.append(", value=");
+		sb.append(getValue());
 		sb.append(", valid=");
 		sb.append(getValid());
 		sb.append("}");
@@ -767,8 +767,8 @@ public class CommerceVatNumberModelImpl extends BaseModelImpl<CommerceVatNumber>
 		sb.append(getClassPK());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>vatNumber</column-name><column-value><![CDATA[");
-		sb.append(getVatNumber());
+			"<column><column-name>value</column-name><column-value><![CDATA[");
+		sb.append(getValue());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>valid</column-name><column-value><![CDATA[");
@@ -800,7 +800,7 @@ public class CommerceVatNumberModelImpl extends BaseModelImpl<CommerceVatNumber>
 	private long _classPK;
 	private long _originalClassPK;
 	private boolean _setOriginalClassPK;
-	private String _vatNumber;
+	private String _value;
 	private boolean _valid;
 	private long _columnBitmask;
 	private CommerceVatNumber _escapedModel;

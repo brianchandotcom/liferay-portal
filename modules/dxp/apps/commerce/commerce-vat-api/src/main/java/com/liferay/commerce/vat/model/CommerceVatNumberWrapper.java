@@ -67,7 +67,7 @@ public class CommerceVatNumberWrapper implements CommerceVatNumber,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
-		attributes.put("vatNumber", getVatNumber());
+		attributes.put("value", getValue());
 		attributes.put("valid", getValid());
 
 		return attributes;
@@ -129,10 +129,10 @@ public class CommerceVatNumberWrapper implements CommerceVatNumber,
 			setClassPK(classPK);
 		}
 
-		String vatNumber = (String)attributes.get("vatNumber");
+		String value = (String)attributes.get("value");
 
-		if (vatNumber != null) {
-			setVatNumber(vatNumber);
+		if (value != null) {
+			setValue(value);
 		}
 
 		Boolean valid = (Boolean)attributes.get("valid");
@@ -293,13 +293,13 @@ public class CommerceVatNumberWrapper implements CommerceVatNumber,
 	}
 
 	/**
-	* Returns the vat number of this commerce vat number.
+	* Returns the value of this commerce vat number.
 	*
-	* @return the vat number of this commerce vat number
+	* @return the value of this commerce vat number
 	*/
 	@Override
-	public java.lang.String getVatNumber() {
-		return _commerceVatNumber.getVatNumber();
+	public java.lang.String getValue() {
+		return _commerceVatNumber.getValue();
 	}
 
 	@Override
@@ -494,13 +494,13 @@ public class CommerceVatNumberWrapper implements CommerceVatNumber,
 	}
 
 	/**
-	* Sets the vat number of this commerce vat number.
+	* Sets the value of this commerce vat number.
 	*
-	* @param vatNumber the vat number of this commerce vat number
+	* @param value the value of this commerce vat number
 	*/
 	@Override
-	public void setVatNumber(java.lang.String vatNumber) {
-		_commerceVatNumber.setVatNumber(vatNumber);
+	public void setValue(java.lang.String value) {
+		_commerceVatNumber.setValue(value);
 	}
 
 	@Override

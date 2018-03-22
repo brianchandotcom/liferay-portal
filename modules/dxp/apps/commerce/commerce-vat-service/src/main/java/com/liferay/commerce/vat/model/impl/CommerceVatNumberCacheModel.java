@@ -85,8 +85,8 @@ public class CommerceVatNumberCacheModel implements CacheModel<CommerceVatNumber
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
-		sb.append(", vatNumber=");
-		sb.append(vatNumber);
+		sb.append(", value=");
+		sb.append(value);
 		sb.append(", valid=");
 		sb.append(valid);
 		sb.append("}");
@@ -127,11 +127,11 @@ public class CommerceVatNumberCacheModel implements CacheModel<CommerceVatNumber
 		commerceVatNumberImpl.setClassNameId(classNameId);
 		commerceVatNumberImpl.setClassPK(classPK);
 
-		if (vatNumber == null) {
-			commerceVatNumberImpl.setVatNumber("");
+		if (value == null) {
+			commerceVatNumberImpl.setValue("");
 		}
 		else {
-			commerceVatNumberImpl.setVatNumber(vatNumber);
+			commerceVatNumberImpl.setValue(value);
 		}
 
 		commerceVatNumberImpl.setValid(valid);
@@ -157,7 +157,7 @@ public class CommerceVatNumberCacheModel implements CacheModel<CommerceVatNumber
 		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
-		vatNumber = objectInput.readUTF();
+		value = objectInput.readUTF();
 
 		valid = objectInput.readBoolean();
 	}
@@ -187,11 +187,11 @@ public class CommerceVatNumberCacheModel implements CacheModel<CommerceVatNumber
 
 		objectOutput.writeLong(classPK);
 
-		if (vatNumber == null) {
+		if (value == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(vatNumber);
+			objectOutput.writeUTF(value);
 		}
 
 		objectOutput.writeBoolean(valid);
@@ -206,6 +206,6 @@ public class CommerceVatNumberCacheModel implements CacheModel<CommerceVatNumber
 	public long modifiedDate;
 	public long classNameId;
 	public long classPK;
-	public String vatNumber;
+	public String value;
 	public boolean valid;
 }

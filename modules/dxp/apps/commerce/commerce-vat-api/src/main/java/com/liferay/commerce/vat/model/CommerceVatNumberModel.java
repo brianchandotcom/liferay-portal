@@ -236,19 +236,19 @@ public interface CommerceVatNumberModel extends AttachedModel,
 	public void setClassPK(long classPK);
 
 	/**
-	 * Returns the vat number of this commerce vat number.
+	 * Returns the value of this commerce vat number.
 	 *
-	 * @return the vat number of this commerce vat number
+	 * @return the value of this commerce vat number
 	 */
 	@AutoEscape
-	public String getVatNumber();
+	public String getValue();
 
 	/**
-	 * Sets the vat number of this commerce vat number.
+	 * Sets the value of this commerce vat number.
 	 *
-	 * @param vatNumber the vat number of this commerce vat number
+	 * @param value the value of this commerce vat number
 	 */
-	public void setVatNumber(String vatNumber);
+	public void setValue(String value);
 
 	/**
 	 * Returns the valid of this commerce vat number.

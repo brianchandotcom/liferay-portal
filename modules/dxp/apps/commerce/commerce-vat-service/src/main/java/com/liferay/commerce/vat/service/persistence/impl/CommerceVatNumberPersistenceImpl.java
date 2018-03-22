@@ -1784,7 +1784,7 @@ public class CommerceVatNumberPersistenceImpl extends BasePersistenceImpl<Commer
 		commerceVatNumberImpl.setModifiedDate(commerceVatNumber.getModifiedDate());
 		commerceVatNumberImpl.setClassNameId(commerceVatNumber.getClassNameId());
 		commerceVatNumberImpl.setClassPK(commerceVatNumber.getClassPK());
-		commerceVatNumberImpl.setVatNumber(commerceVatNumber.getVatNumber());
+		commerceVatNumberImpl.setValue(commerceVatNumber.getValue());
 		commerceVatNumberImpl.setValid(commerceVatNumber.isValid());
 
 		return commerceVatNumberImpl;

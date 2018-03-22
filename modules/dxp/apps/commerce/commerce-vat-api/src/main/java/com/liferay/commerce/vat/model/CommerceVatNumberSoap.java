@@ -43,7 +43,7 @@ public class CommerceVatNumberSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
-		soapModel.setVatNumber(model.getVatNumber());
+		soapModel.setValue(model.getValue());
 		soapModel.setValid(model.getValid());
 
 		return soapModel;
@@ -172,12 +172,12 @@ public class CommerceVatNumberSoap implements Serializable {
 		_classPK = classPK;
 	}
 
-	public String getVatNumber() {
-		return _vatNumber;
+	public String getValue() {
+		return _value;
 	}
 
-	public void setVatNumber(String vatNumber) {
-		_vatNumber = vatNumber;
+	public void setValue(String value) {
+		_value = value;
 	}
 
 	public boolean getValid() {
@@ -201,6 +201,6 @@ public class CommerceVatNumberSoap implements Serializable {
 	private Date _modifiedDate;
 	private long _classNameId;
 	private long _classPK;
-	private String _vatNumber;
+	private String _value;
 	private boolean _valid;
 }

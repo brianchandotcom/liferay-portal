@@ -139,7 +139,7 @@ public class CommerceVatNumberPersistenceTest {
 
 		newCommerceVatNumber.setClassPK(RandomTestUtil.nextLong());
 
-		newCommerceVatNumber.setVatNumber(RandomTestUtil.randomString());
+		newCommerceVatNumber.setValue(RandomTestUtil.randomString());
 
 		newCommerceVatNumber.setValid(RandomTestUtil.randomBoolean());
 
@@ -167,8 +167,8 @@ public class CommerceVatNumberPersistenceTest {
 			newCommerceVatNumber.getClassNameId());
 		Assert.assertEquals(existingCommerceVatNumber.getClassPK(),
 			newCommerceVatNumber.getClassPK());
-		Assert.assertEquals(existingCommerceVatNumber.getVatNumber(),
-			newCommerceVatNumber.getVatNumber());
+		Assert.assertEquals(existingCommerceVatNumber.getValue(),
+			newCommerceVatNumber.getValue());
 		Assert.assertEquals(existingCommerceVatNumber.getValid(),
 			newCommerceVatNumber.getValid());
 	}
@@ -223,7 +223,7 @@ public class CommerceVatNumberPersistenceTest {
 			"commerceVatNumberId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "classNameId", true, "classPK", true,
-			"vatNumber", true, "valid", true);
+			"value", true, "valid", true);
 	}
 
 	@Test
@@ -462,7 +462,7 @@ public class CommerceVatNumberPersistenceTest {
 
 		commerceVatNumber.setClassPK(RandomTestUtil.nextLong());
 
-		commerceVatNumber.setVatNumber(RandomTestUtil.randomString());
+		commerceVatNumber.setValue(RandomTestUtil.randomString());
 
 		commerceVatNumber.setValid(RandomTestUtil.randomBoolean());
 

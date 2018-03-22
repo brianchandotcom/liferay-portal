@@ -8,6 +8,6 @@ create table CommerceVatNumber (
 	modifiedDate DATE null,
 	classNameId LONG,
 	classPK LONG,
-	vatNumber VARCHAR(75) null,
+	value VARCHAR(75) null,
 	valid BOOLEAN
 );

@@ -15,7 +15,7 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="vatNumber" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="value" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="valid" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 </hibernate-mapping>

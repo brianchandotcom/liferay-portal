@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.price.list.web.internal.display.context;
 
+import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.model.CommercePriceEntry;
 import com.liferay.commerce.model.CommercePriceList;
 import com.liferay.commerce.model.CommerceTierPriceEntry;
@@ -75,6 +76,14 @@ public class CommerceTierPriceEntryDisplayContext
 		}
 
 		return commercePriceEntry.getCommercePriceEntryId();
+	}
+
+	public CommerceCurrency getCommercePriceListCurrency()
+		throws PortalException {
+
+		CommercePriceList commercePriceList = getCommercePriceList();
+
+		return commercePriceList.getCommerceCurrency();
 	}
 
 	public CommerceTierPriceEntry getCommerceTierPriceEntry()

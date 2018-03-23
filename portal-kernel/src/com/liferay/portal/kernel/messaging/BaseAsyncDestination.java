@@ -228,27 +228,7 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 	 */
 	@Deprecated
 	protected RejectedExecutionHandler createRejectionExecutionHandler() {
-		return new RejectedExecutionHandler() {
-
-			@Override
-			public void rejectedExecution(
-				Runnable runnable, ThreadPoolExecutor threadPoolExecutor) {
-
-				if (!_log.isWarnEnabled()) {
-					return;
-				}
-
-				MessageRunnable messageRunnable = (MessageRunnable)runnable;
-
-				_log.warn(
-					StringBundler.concat(
-						"Discarding message ",
-						String.valueOf(messageRunnable.getMessage()),
-						" because it exceeds the maximum queue size of ",
-						String.valueOf(_maximumQueueSize)));
-			}
-
-		};
+		return _createRejectionExecutionHandler();
 	}
 
 	protected abstract void dispatch(

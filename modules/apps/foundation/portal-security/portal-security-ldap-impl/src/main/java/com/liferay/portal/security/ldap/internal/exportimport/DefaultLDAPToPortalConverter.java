@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ContactConstants;
 import com.liferay.portal.kernel.model.ListType;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.security.auth.FullNameDefinition;
 import com.liferay.portal.kernel.security.auth.FullNameDefinitionFactory;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ListTypeService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.persistence.ContactPersistence;
@@ -35,7 +37,6 @@ import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -101,6 +102,10 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 			Properties contactExpandoMappings, String password)
 		throws Exception {
 
+		Company company = _companyLocalService.getCompany(companyId);
+
+		Locale locale = company.getLocale();
+
 		boolean autoScreenName = PrefsPropsUtil.getBoolean(
 			companyId, PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE);
 
@@ -125,7 +130,7 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 			attributes, userMappings, UserConverterKeys.LAST_NAME);
 
 		FullNameDefinition fullNameDefinition =
-			FullNameDefinitionFactory.getInstance(LocaleUtil.getDefault());
+			FullNameDefinitionFactory.getInstance(locale);
 
 		if (Validator.isNull(firstName) ||
 			(fullNameDefinition.isFieldRequired("last-name") &&
@@ -202,7 +207,7 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 			Date birthday = DateUtil.parseDate(
 				LDAPUtil.getAttributeString(
 					attributes, contactMappings, ContactConverterKeys.BIRTHDAY),
-				LocaleUtil.getDefault());
+				locale);
 
 			contact.setBirthday(birthday);
 		}
@@ -288,8 +293,6 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 			attributes, userMappings, UserConverterKeys.JOB_TITLE);
 
 		user.setJobTitle(jobTitle);
-
-		Locale locale = LocaleUtil.getDefault();
 
 		user.setLanguageId(locale.toString());
 
@@ -378,6 +381,9 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultLDAPToPortalConverter.class);
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	private ContactPersistence _contactPersistence;
 	private ListTypeService _listTypeService;

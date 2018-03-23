@@ -69,7 +69,7 @@ soy.$$registerDelegateFn(soy.$$getDelTemplateId('ddm.field.idom'), 'fieldset', 0
 function $fieldset_column(opt_data, opt_ignored, opt_ijData) {
   var columnSize = goog.asserts.assertNumber(opt_data.columnSize, "expected parameter 'columnSize' of type int.");
   ie_open('div', null, null,
-      'class', 'col-md-' + columnSize);
+      'class', 'form-group-item col-md-' + columnSize);
     ie_open('div', null, null,
         'class', 'clearfix ' + ((! opt_data.field.visible) ? 'hide' : '') + ' lfr-ddm-form-field-container');
       var variant__soy12 = opt_data.field.type;
@@ -112,14 +112,14 @@ if (goog.DEBUG) {
 /**
  * @param {{
  *    columnSize: number,
- *    label: (null|string|undefined),
  *    name: string,
  *    nestedFields: !Array<(?)>,
+ *    visible: boolean,
+ *    label: (null|string|undefined),
  *    showBorderBottom: (boolean|null|undefined),
  *    showBorderTop: (boolean|null|undefined),
  *    showLabel: (boolean|null|undefined),
- *    tip: (null|string|undefined),
- *    visible: boolean
+ *    tip: (null|string|undefined)
  * }} opt_data
  * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
@@ -128,11 +128,13 @@ if (goog.DEBUG) {
  */
 function $render(opt_data, opt_ignored, opt_ijData) {
   var columnSize = goog.asserts.assertNumber(opt_data.columnSize, "expected parameter 'columnSize' of type int.");
-  soy.asserts.assertType(opt_data.label == null || (opt_data.label instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.label), 'label', opt_data.label, 'null|string|undefined');
-  var label = /** @type {null|string|undefined} */ (opt_data.label);
   soy.asserts.assertType(goog.isString(opt_data.name) || (opt_data.name instanceof goog.soy.data.SanitizedContent), 'name', opt_data.name, 'string|goog.soy.data.SanitizedContent');
   var name = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.name);
   var nestedFields = goog.asserts.assertArray(opt_data.nestedFields, "expected parameter 'nestedFields' of type list<?>.");
+  soy.asserts.assertType(goog.isBoolean(opt_data.visible) || opt_data.visible === 1 || opt_data.visible === 0, 'visible', opt_data.visible, 'boolean');
+  var visible = /** @type {boolean} */ (!!opt_data.visible);
+  soy.asserts.assertType(opt_data.label == null || (opt_data.label instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.label), 'label', opt_data.label, 'null|string|undefined');
+  var label = /** @type {null|string|undefined} */ (opt_data.label);
   soy.asserts.assertType(opt_data.showBorderBottom == null || goog.isBoolean(opt_data.showBorderBottom) || opt_data.showBorderBottom === 1 || opt_data.showBorderBottom === 0, 'showBorderBottom', opt_data.showBorderBottom, 'boolean|null|undefined');
   var showBorderBottom = /** @type {boolean|null|undefined} */ (opt_data.showBorderBottom);
   soy.asserts.assertType(opt_data.showBorderTop == null || goog.isBoolean(opt_data.showBorderTop) || opt_data.showBorderTop === 1 || opt_data.showBorderTop === 0, 'showBorderTop', opt_data.showBorderTop, 'boolean|null|undefined');
@@ -141,24 +143,28 @@ function $render(opt_data, opt_ignored, opt_ijData) {
   var showLabel = /** @type {boolean|null|undefined} */ (opt_data.showLabel);
   soy.asserts.assertType(opt_data.tip == null || (opt_data.tip instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.tip), 'tip', opt_data.tip, 'null|string|undefined');
   var tip = /** @type {null|string|undefined} */ (opt_data.tip);
-  soy.asserts.assertType(goog.isBoolean(opt_data.visible) || opt_data.visible === 1 || opt_data.visible === 0, 'visible', opt_data.visible, 'boolean');
-  var visible = /** @type {boolean} */ (!!opt_data.visible);
   ie_open('div', null, null,
-      'class', 'form-group' + (visible ? '' : ' hide') + ' liferay-ddm-form-field-fieldset' + (showBorderTop ? ' border-top' : '') + ' ' + (showBorderBottom ? ' border-bottom' : ''),
+      'class', 'form-group' + (visible ? '' : ' hide') + ' liferay-ddm-form-field-fieldset' + (showBorderBottom ? ' border-bottom' : ''),
       'data-fieldname', name);
-    ie_open('p', null, null,
-        'class', 'liferay-ddm-form-field-tip');
-      var dyn0 = tip ? tip : '';
-      if (typeof dyn0 == 'function') dyn0(); else if (dyn0 != null) itext(dyn0);
-    ie_close('p');
-    ie_open('fieldset');
+    if (tip) {
+      ie_open('p', null, null,
+          'class', 'liferay-ddm-form-field-tip');
+        var dyn0 = tip;
+        if (typeof dyn0 == 'function') dyn0(); else if (dyn0 != null) itext(dyn0);
+      ie_close('p');
+    }
+    ie_open('fieldset', null, null,
+        'class', showBorderTop ? ' border-top' : '');
       if (showLabel) {
         ie_open('legend');
           var dyn1 = label;
           if (typeof dyn1 == 'function') dyn1(); else if (dyn1 != null) itext(dyn1);
         ie_close('legend');
       }
-      $fieldset_columns(soy.$$assignDefaults({columnSize: columnSize, fields: nestedFields}, opt_data), null, opt_ijData);
+      ie_open('div', null, null,
+          'class', 'form-group-autofit');
+        $fieldset_columns(soy.$$assignDefaults({columnSize: columnSize, fields: nestedFields}, opt_data), null, opt_ijData);
+      ie_close('div');
     ie_close('fieldset');
   ie_close('div');
 }
@@ -171,8 +177,8 @@ exports.fieldset_column.params = ["columnSize","field"];
 exports.fieldset_column.types = {"columnSize":"int","field":"?"};
 exports.fieldset_columns.params = ["columnSize","fields"];
 exports.fieldset_columns.types = {"columnSize":"int","fields":"list<?>"};
-exports.render.params = ["columnSize","label","name","nestedFields","showBorderBottom","showBorderTop","showLabel","tip","visible"];
-exports.render.types = {"columnSize":"int","label":"string","name":"string","nestedFields":"list<?>","showBorderBottom":"bool","showBorderTop":"bool","showLabel":"bool","tip":"string","visible":"bool"};
+exports.render.params = ["columnSize","name","nestedFields","visible","label","showBorderBottom","showBorderTop","showLabel","tip"];
+exports.render.types = {"columnSize":"int","name":"string","nestedFields":"list<?>","visible":"bool","label":"string","showBorderBottom":"bool","showBorderTop":"bool","showLabel":"bool","tip":"string"};
 templates = exports;
 return exports;
 

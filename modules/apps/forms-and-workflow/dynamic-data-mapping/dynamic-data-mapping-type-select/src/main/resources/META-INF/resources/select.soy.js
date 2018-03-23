@@ -59,6 +59,7 @@ soy.$$registerDelegateFn(soy.$$getDelTemplateId('ddm.field.idom'), 'select', 0, 
  * @param {{
  *    name: string,
  *    options: !Array<{label: string, value: string}>,
+ *    pathThemeImages: string,
  *    predefinedValue: !Array<string>,
  *    strings: {chooseAnOption: string, chooseOptions: string, emptyList: string, search: string},
  *    value: !Array<string>,
@@ -85,6 +86,8 @@ function $render(opt_data, opt_ignored, opt_ijData) {
   soy.asserts.assertType(goog.isString(opt_data.name) || (opt_data.name instanceof goog.soy.data.SanitizedContent), 'name', opt_data.name, 'string|goog.soy.data.SanitizedContent');
   var name = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.name);
   var options = goog.asserts.assertArray(opt_data.options, "expected parameter 'options' of type list<[label: string, value: string]>.");
+  soy.asserts.assertType(goog.isString(opt_data.pathThemeImages) || (opt_data.pathThemeImages instanceof goog.soy.data.SanitizedContent), 'pathThemeImages', opt_data.pathThemeImages, 'string|goog.soy.data.SanitizedContent');
+  var pathThemeImages = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.pathThemeImages);
   var predefinedValue = goog.asserts.assertArray(opt_data.predefinedValue, "expected parameter 'predefinedValue' of type list<string>.");
   var strings = goog.asserts.assertObject(opt_data.strings, "expected parameter 'strings' of type [chooseAnOption: string, chooseOptions: string, emptyList: string, search: string].");
   var value = goog.asserts.assertArray(opt_data.value, "expected parameter 'value' of type list<string>.");
@@ -114,7 +117,7 @@ function $render(opt_data, opt_ignored, opt_ijData) {
   var showLabel = /** @type {boolean|null|undefined} */ (opt_data.showLabel);
   soy.asserts.assertType(opt_data.tip == null || (opt_data.tip instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.tip), 'tip', opt_data.tip, 'null|string|undefined');
   var tip = /** @type {null|string|undefined} */ (opt_data.tip);
-  var displayValue__soy5 = value.length > 0 ? value : predefinedValue.length > 0 ? predefinedValue : null;
+  var displayValues__soy5 = value.length > 0 ? value : predefinedValue.length > 0 ? predefinedValue : null;
   ie_open('div', null, null,
       'class', 'form-group' + (visible ? '' : ' hide'),
       'data-fieldname', name);
@@ -125,12 +128,12 @@ function $render(opt_data, opt_ignored, opt_ijData) {
       }
       ie_open('div', null, null,
           'class', 'form-builder-select-field input-group-container');
-        if (! readOnly && displayValue__soy5) {
-          $hidden_select({dir: dir, displayValue: displayValue__soy5, multiple: multiple, name: name, options: options, strings: strings}, null, opt_ijData);
+        if (! readOnly && displayValues__soy5) {
+          $hidden_select({dir: dir, displayValues: displayValues__soy5, multiple: multiple, name: name, options: options, strings: strings}, null, opt_ijData);
         }
-        if (fixedOptions) {
-          if (! readOnly && displayValue__soy5) {
-            $hidden_select({dir: dir, displayValue: displayValue__soy5, multiple: multiple, name: name, options: fixedOptions, strings: strings}, null, opt_ijData);
+        if (fixedOptions && fixedOptions.length > 0) {
+          if (! readOnly && displayValues__soy5) {
+            $hidden_select({dir: dir, displayValues: displayValues__soy5, multiple: multiple, name: name, options: fixedOptions, strings: strings}, null, opt_ijData);
           }
         }
         ie_open_start('div');
@@ -140,23 +143,26 @@ function $render(opt_data, opt_ignored, opt_ijData) {
             }
             iattr('id', name);
             iattr('name', name);
+            if (readOnly) {
+              iattr('disabled', '');
+            }
         ie_open_end();
           if (multiple) {
-            if (displayValue__soy5) {
+            if (displayValues__soy5) {
               ie_open('ul', null, null,
                   'class', 'multiple-badge-list');
-                var optionList56 = options;
-                var optionListLen56 = optionList56.length;
-                for (var optionIndex56 = 0; optionIndex56 < optionListLen56; optionIndex56++) {
-                  var optionData56 = optionList56[optionIndex56];
-                  $badge_item({badgeCloseIcon: badgeCloseIcon, option: optionData56, readOnly: readOnly, value: displayValue__soy5}, null, opt_ijData);
+                var optionList60 = options;
+                var optionListLen60 = optionList60.length;
+                for (var optionIndex60 = 0; optionIndex60 < optionListLen60; optionIndex60++) {
+                  var optionData60 = optionList60[optionIndex60];
+                  $badge_item({badgeCloseIcon: badgeCloseIcon, option: optionData60, readOnly: readOnly, value: displayValues__soy5}, null, opt_ijData);
                 }
                 if (fixedOptions) {
-                  var fixedOptionList65 = fixedOptions;
-                  var fixedOptionListLen65 = fixedOptionList65.length;
-                  for (var fixedOptionIndex65 = 0; fixedOptionIndex65 < fixedOptionListLen65; fixedOptionIndex65++) {
-                    var fixedOptionData65 = fixedOptionList65[fixedOptionIndex65];
-                    $badge_item({badgeCloseIcon: badgeCloseIcon, option: fixedOptionData65, readOnly: readOnly, value: displayValue__soy5}, null, opt_ijData);
+                  var fixedOptionList69 = fixedOptions;
+                  var fixedOptionListLen69 = fixedOptionList69.length;
+                  for (var fixedOptionIndex69 = 0; fixedOptionIndex69 < fixedOptionListLen69; fixedOptionIndex69++) {
+                    var fixedOptionData69 = fixedOptionList69[fixedOptionIndex69];
+                    $badge_item({badgeCloseIcon: badgeCloseIcon, option: fixedOptionData69, readOnly: readOnly, value: displayValues__soy5}, null, opt_ijData);
                   }
                 }
               ie_close('ul');
@@ -168,32 +174,37 @@ function $render(opt_data, opt_ignored, opt_ijData) {
               ie_close('div');
             }
           } else {
-            if (displayValue__soy5) {
-              var optionList82 = options;
-              var optionListLen82 = optionList82.length;
-              for (var optionIndex82 = 0; optionIndex82 < optionListLen82; optionIndex82++) {
-                var optionData82 = optionList82[optionIndex82];
-                if (optionData82.value == displayValue__soy5) {
-                  ie_open('div', null, null,
-                      'class', 'option-selected',
-                      'title', optionData82.label);
-                    var dyn1 = optionData82.label;
-                    if (typeof dyn1 == 'function') dyn1(); else if (dyn1 != null) itext(dyn1);
-                  ie_close('div');
-                }
-              }
-              if (fixedOptions) {
-                var fixedOptionList93 = fixedOptions;
-                var fixedOptionListLen93 = fixedOptionList93.length;
-                for (var fixedOptionIndex93 = 0; fixedOptionIndex93 < fixedOptionListLen93; fixedOptionIndex93++) {
-                  var fixedOptionData93 = fixedOptionList93[fixedOptionIndex93];
-                  if (fixedOptionData93.value == displayValue__soy5) {
+            if (displayValues__soy5) {
+              var displayValueList99 = displayValues__soy5;
+              var displayValueListLen99 = displayValueList99.length;
+              for (var displayValueIndex99 = 0; displayValueIndex99 < displayValueListLen99; displayValueIndex99++) {
+                var displayValueData99 = displayValueList99[displayValueIndex99];
+                var optionList86 = options;
+                var optionListLen86 = optionList86.length;
+                for (var optionIndex86 = 0; optionIndex86 < optionListLen86; optionIndex86++) {
+                  var optionData86 = optionList86[optionIndex86];
+                  if (optionData86.value == displayValueData99) {
                     ie_open('div', null, null,
                         'class', 'option-selected',
-                        'title', fixedOptionData93.label);
-                      var dyn2 = fixedOptionData93.label;
-                      if (typeof dyn2 == 'function') dyn2(); else if (dyn2 != null) itext(dyn2);
+                        'title', optionData86.label);
+                      var dyn1 = optionData86.label;
+                      if (typeof dyn1 == 'function') dyn1(); else if (dyn1 != null) itext(dyn1);
                     ie_close('div');
+                  }
+                }
+                if (fixedOptions) {
+                  var fixedOptionList97 = fixedOptions;
+                  var fixedOptionListLen97 = fixedOptionList97.length;
+                  for (var fixedOptionIndex97 = 0; fixedOptionIndex97 < fixedOptionListLen97; fixedOptionIndex97++) {
+                    var fixedOptionData97 = fixedOptionList97[fixedOptionIndex97];
+                    if (fixedOptionData97.value == displayValueData99) {
+                      ie_open('div', null, null,
+                          'class', 'option-selected',
+                          'title', fixedOptionData97.label);
+                        var dyn2 = fixedOptionData97.label;
+                        if (typeof dyn2 == 'function') dyn2(); else if (dyn2 != null) itext(dyn2);
+                      ie_close('div');
+                    }
                   }
                 }
               }
@@ -217,25 +228,35 @@ function $render(opt_data, opt_ignored, opt_ijData) {
           ie_open('div', null, null,
               'class', 'drop-chosen ' + (open ? '' : 'hide'));
             ie_open('div', null, null,
-                'class', 'search-chosen');
+                'aria-labelledby', 'theDropdownToggleId',
+                'class', 'dropdown-menu');
               ie_open('div', null, null,
-                  'class', 'select-search-container');
-                if (selectSearchIcon) {
-                  ie_open('a', null, null,
-                      'class', '',
-                      'href', 'javascript:;');
-                    selectSearchIcon();
-                  ie_close('a');
-                }
+                  'class', 'dropdown-section');
+                ie_open('div', null, null,
+                    'class', 'input-group input-group-sm');
+                  ie_open('div', null, null,
+                      'class', 'input-group-item');
+                    ie_open('input', null, null,
+                        'autocomplete', 'off',
+                        'class', 'drop-chosen-search form-control input-group-inset input-group-inset-after',
+                        'placeholder', strings.search,
+                        'type', 'text');
+                    ie_close('input');
+                    ie_open('span', null, null,
+                        'class', 'input-group-inset-item input-group-inset-item-after');
+                      ie_open('button', null, null,
+                          'class', 'btn btn-link',
+                          'type', 'button');
+                        if (selectSearchIcon) {
+                          selectSearchIcon();
+                        }
+                      ie_close('button');
+                    ie_close('span');
+                  ie_close('div');
+                ie_close('div');
               ie_close('div');
-              ie_open('input', null, null,
-                  'autocomplete', 'off',
-                  'class', 'drop-chosen-search',
-                  'placeholder', strings.search,
-                  'type', 'text');
-              ie_close('input');
+              $select_options(opt_data, null, opt_ijData);
             ie_close('div');
-            $select_options(opt_data, null, opt_ijData);
           ie_close('div');
         }
       ie_close('div');
@@ -268,14 +289,14 @@ function $badge_item(opt_data, opt_ignored, opt_ijData) {
   soy.asserts.assertType(opt_data.readOnly == null || goog.isBoolean(opt_data.readOnly) || opt_data.readOnly === 1 || opt_data.readOnly === 0, 'readOnly', opt_data.readOnly, 'boolean|null|undefined');
   var readOnly = /** @type {boolean|null|undefined} */ (opt_data.readOnly);
   if (value) {
-    var currentValueList139 = value;
-    var currentValueListLen139 = currentValueList139.length;
-    for (var currentValueIndex139 = 0; currentValueIndex139 < currentValueListLen139; currentValueIndex139++) {
-      var currentValueData139 = currentValueList139[currentValueIndex139];
-      if (option.value == currentValueData139) {
+    var currentValueList143 = value;
+    var currentValueListLen143 = currentValueList143.length;
+    for (var currentValueIndex143 = 0; currentValueIndex143 < currentValueListLen143; currentValueIndex143++) {
+      var currentValueData143 = currentValueList143[currentValueIndex143];
+      if (option.value == currentValueData143) {
         ie_open('li');
           ie_open('span', null, null,
-              'class', 'badge badge-default badge-sm multiple-badge',
+              'class', 'badge badge-primary badge-sm multiple-badge',
               'data-original-title', option.label,
               'title', option.label);
             var dyn4 = option.label;
@@ -304,8 +325,8 @@ if (goog.DEBUG) {
 /**
  * @param {{
  *    name: string,
+ *    pathThemeImages: string,
  *    label: (null|string|undefined),
- *    readOnly: (boolean|null|undefined),
  *    required: (boolean|null|undefined),
  *    tip: (null|string|undefined)
  * }} opt_data
@@ -317,29 +338,35 @@ if (goog.DEBUG) {
 function $select_label(opt_data, opt_ignored, opt_ijData) {
   soy.asserts.assertType(goog.isString(opt_data.name) || (opt_data.name instanceof goog.soy.data.SanitizedContent), 'name', opt_data.name, 'string|goog.soy.data.SanitizedContent');
   var name = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.name);
+  soy.asserts.assertType(goog.isString(opt_data.pathThemeImages) || (opt_data.pathThemeImages instanceof goog.soy.data.SanitizedContent), 'pathThemeImages', opt_data.pathThemeImages, 'string|goog.soy.data.SanitizedContent');
+  var pathThemeImages = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.pathThemeImages);
   soy.asserts.assertType(opt_data.label == null || (opt_data.label instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.label), 'label', opt_data.label, 'null|string|undefined');
   var label = /** @type {null|string|undefined} */ (opt_data.label);
-  soy.asserts.assertType(opt_data.readOnly == null || goog.isBoolean(opt_data.readOnly) || opt_data.readOnly === 1 || opt_data.readOnly === 0, 'readOnly', opt_data.readOnly, 'boolean|null|undefined');
-  var readOnly = /** @type {boolean|null|undefined} */ (opt_data.readOnly);
   soy.asserts.assertType(opt_data.required == null || goog.isBoolean(opt_data.required) || opt_data.required === 1 || opt_data.required === 0, 'required', opt_data.required, 'boolean|null|undefined');
   var required = /** @type {boolean|null|undefined} */ (opt_data.required);
   soy.asserts.assertType(opt_data.tip == null || (opt_data.tip instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.tip), 'tip', opt_data.tip, 'null|string|undefined');
   var tip = /** @type {null|string|undefined} */ (opt_data.tip);
   ie_open('label', null, null,
-      'class', 'control-label' + (readOnly ? ' disabled' : ''),
       'for', name);
     var dyn6 = label;
     if (typeof dyn6 == 'function') dyn6(); else if (dyn6 != null) itext(dyn6);
+    itext(' ');
     if (required) {
-      ie_void('span', null, null,
-          'class', 'icon-asterisk text-warning');
+      ie_open('svg', null, null,
+          'aria-hidden', 'true',
+          'class', 'lexicon-icon lexicon-icon-asterisk reference-mark');
+        ie_void('use', null, null,
+            'xlink:href', pathThemeImages + '/lexicon/icons.svg#asterisk');
+      ie_close('svg');
     }
   ie_close('label');
-  ie_open('p', null, null,
-      'class', 'liferay-ddm-form-field-tip');
-    var dyn7 = tip ? tip : '';
-    if (typeof dyn7 == 'function') dyn7(); else if (dyn7 != null) itext(dyn7);
-  ie_close('p');
+  if (tip) {
+    ie_open('span', null, null,
+        'class', 'form-text');
+      var dyn7 = tip;
+      if (typeof dyn7 == 'function') dyn7(); else if (dyn7 != null) itext(dyn7);
+    ie_close('span');
+  }
 }
 exports.select_label = $select_label;
 if (goog.DEBUG) {
@@ -349,7 +376,7 @@ if (goog.DEBUG) {
 
 /**
  * @param {{
- *    displayValue: !Array<string>,
+ *    displayValues: !Array<string>,
  *    name: string,
  *    options: !Array<{label: string, value: string}>,
  *    strings: {chooseAnOption: string, chooseOptions: string, emptyList: string, search: string},
@@ -362,7 +389,7 @@ if (goog.DEBUG) {
  * @suppress {checkTypes}
  */
 function $hidden_select(opt_data, opt_ignored, opt_ijData) {
-  var displayValue = goog.asserts.assertArray(opt_data.displayValue, "expected parameter 'displayValue' of type list<string>.");
+  var displayValues = goog.asserts.assertArray(opt_data.displayValues, "expected parameter 'displayValues' of type list<string>.");
   soy.asserts.assertType(goog.isString(opt_data.name) || (opt_data.name instanceof goog.soy.data.SanitizedContent), 'name', opt_data.name, 'string|goog.soy.data.SanitizedContent');
   var name = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.name);
   var options = goog.asserts.assertArray(opt_data.options, "expected parameter 'options' of type list<[label: string, value: string]>.");
@@ -388,7 +415,7 @@ function $hidden_select(opt_data, opt_ignored, opt_ijData) {
           iattr('dir', dir);
         }
         iattr('disabled', '');
-        if (displayValue.length == 0) {
+        if (displayValues.length == 0) {
           iattr('selected', '');
         }
         iattr('value', '');
@@ -396,11 +423,11 @@ function $hidden_select(opt_data, opt_ignored, opt_ijData) {
       var dyn8 = strings.chooseAnOption;
       if (typeof dyn8 == 'function') dyn8(); else if (dyn8 != null) itext(dyn8);
     ie_close('option');
-    var optionList188 = options;
-    var optionListLen188 = optionList188.length;
-    for (var optionIndex188 = 0; optionIndex188 < optionListLen188; optionIndex188++) {
-      var optionData188 = optionList188[optionIndex188];
-      $select_hidden_options({dir: dir, option: optionData188, values: displayValue}, null, opt_ijData);
+    var optionList196 = options;
+    var optionListLen196 = optionList196.length;
+    for (var optionIndex196 = 0; optionIndex196 < optionListLen196; optionIndex196++) {
+      var optionData196 = optionList196[optionIndex196];
+      $select_hidden_options({dir: dir, option: optionData196, values: displayValues}, null, opt_ijData);
     }
   ie_close('select');
 }
@@ -426,12 +453,12 @@ function $select_hidden_options(opt_data, opt_ignored, opt_ijData) {
   var values = goog.asserts.assertArray(opt_data.values, "expected parameter 'values' of type list<string>.");
   soy.asserts.assertType(opt_data.dir == null || (opt_data.dir instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.dir), 'dir', opt_data.dir, 'null|string|undefined');
   var dir = /** @type {null|string|undefined} */ (opt_data.dir);
-  var selected__soy192 = function() {
-    var currentValueList196 = values;
-    var currentValueListLen196 = currentValueList196.length;
-    for (var currentValueIndex196 = 0; currentValueIndex196 < currentValueListLen196; currentValueIndex196++) {
-      var currentValueData196 = currentValueList196[currentValueIndex196];
-      if (currentValueData196 == option.value) {
+  var selected__soy200 = function() {
+    var currentValueList204 = values;
+    var currentValueListLen204 = currentValueList204.length;
+    for (var currentValueIndex204 = 0; currentValueIndex204 < currentValueListLen204; currentValueIndex204++) {
+      var currentValueData204 = currentValueList204[currentValueIndex204];
+      if (currentValueData204 == option.value) {
         iattr('selected', '');
       }
     }
@@ -440,7 +467,7 @@ function $select_hidden_options(opt_data, opt_ignored, opt_ijData) {
       if (dir) {
         iattr('dir', dir);
       }
-      selected__soy192();
+      selected__soy200();
       iattr('value', option.value);
   ie_open_end();
     var dyn9 = option.label;
@@ -475,7 +502,7 @@ function $select_options(opt_data, opt_ignored, opt_ijData) {
   soy.asserts.assertType(opt_data.multiple == null || goog.isBoolean(opt_data.multiple) || opt_data.multiple === 1 || opt_data.multiple === 0, 'multiple', opt_data.multiple, 'boolean|null|undefined');
   var multiple = /** @type {boolean|null|undefined} */ (opt_data.multiple);
   ie_open('ul', null, null,
-      'class', 'dropdown-menu dropdown-visible results-chosen');
+      'class', 'dropdown-visible list-unstyled results-chosen');
     if (options.length > 0) {
       ie_open('div', null, null,
           'class', 'inline-scroller');
@@ -525,44 +552,24 @@ function $plot_dropdown_rows(opt_data, opt_ignored, opt_ijData) {
   var fixed = /** @type {boolean|null|undefined} */ (opt_data.fixed);
   soy.asserts.assertType(opt_data.multiple == null || goog.isBoolean(opt_data.multiple) || opt_data.multiple === 1 || opt_data.multiple === 0, 'multiple', opt_data.multiple, 'boolean|null|undefined');
   var multiple = /** @type {boolean|null|undefined} */ (opt_data.multiple);
-  var optionList281 = options;
-  var optionListLen281 = optionList281.length;
-  for (var optionIndex281 = 0; optionIndex281 < optionListLen281; optionIndex281++) {
-    var optionData281 = optionList281[optionIndex281];
-    var selected__soy239 = '';
+  var optionList268 = options;
+  var optionListLen268 = optionList268.length;
+  for (var optionIndex268 = 0; optionIndex268 < optionListLen268; optionIndex268++) {
+    var optionData268 = optionList268[optionIndex268];
+    var selected__soy247 = '';
     if (value) {
-      var currentValueList245 = value;
-      var currentValueListLen245 = currentValueList245.length;
-      for (var currentValueIndex245 = 0; currentValueIndex245 < currentValueListLen245; currentValueIndex245++) {
-        var currentValueData245 = currentValueList245[currentValueIndex245];
-        selected__soy239 += (currentValueData245 == optionData281.value) ? 'selected' : '';
+      var currentValueList253 = value;
+      var currentValueListLen253 = currentValueList253.length;
+      for (var currentValueIndex253 = 0; currentValueIndex253 < currentValueListLen253; currentValueIndex253++) {
+        var currentValueData253 = currentValueList253[currentValueIndex253];
+        selected__soy247 += (currentValueData253 == optionData268.value) ? 'selected' : '';
       }
     }
-    var attributes__soy247 = function() {
-      iattr('class', ' dropdown-item select-option-item' + ((fixed) ? ' fixed' : ' unfixed') + ((selected__soy239) ? ' option-selected' : ''));
-      iattr('data-option-index', optionIndex281);
-      iattr('data-option-selected', (selected__soy239) ? 'true' : '');
-      iattr('data-option-value', optionData281.value);
-    };
-    ie_open_start('li');
-        attributes__soy247();
-    ie_open_end();
-      if (multiple) {
-        ie_open_start('input');
-            iattr('type', 'checkbox');
-            iattr('value', '');
-            if (selected__soy239 == 'selected') {
-              iattr('checked', '');
-            }
-        ie_open_end();
-        ie_close('input');
-      }
-      ie_open('span', null, null,
-          'title', optionData281.label);
-        var dyn11 = optionData281.label;
-        if (typeof dyn11 == 'function') dyn11(); else if (dyn11 != null) itext(dyn11);
-      ie_close('span');
-    ie_close('li');
+    if (multiple) {
+      $multiple_selection({fixed: fixed, indexOption: optionIndex268, option: optionData268, selected: selected__soy247}, null, opt_ijData);
+    } else {
+      $simple_selection({fixed: fixed, indexOption: optionIndex268, option: optionData268, selected: selected__soy247}, null, opt_ijData);
+    }
   }
 }
 exports.plot_dropdown_rows = $plot_dropdown_rows;
@@ -570,20 +577,129 @@ if (goog.DEBUG) {
   $plot_dropdown_rows.soyTemplateName = 'DDMSelect.plot_dropdown_rows';
 }
 
-exports.render.params = ["name","predefinedValue","value","visible","badgeCloseIcon","dir","label","multiple","open","readOnly","required","selectCaretDoubleIcon","selectSearchIcon","showLabel","tip"];
-exports.render.types = {"name":"string","predefinedValue":"list<string>","value":"list<string>","visible":"bool","badgeCloseIcon":"html","dir":"string","label":"string","multiple":"bool","open":"bool","readOnly":"bool","required":"bool","selectCaretDoubleIcon":"html","selectSearchIcon":"html","showLabel":"bool","tip":"string"};
+
+/**
+ * @param {{
+ *    indexOption: number,
+ *    option: {label: string, value: string},
+ *    selected: string,
+ *    fixed: (boolean|null|undefined)
+ * }} opt_data
+ * @param {(null|undefined)=} opt_ignored
+ * @param {Object<string, *>=} opt_ijData
+ * @return {void}
+ * @suppress {checkTypes}
+ */
+function $multiple_selection(opt_data, opt_ignored, opt_ijData) {
+  var indexOption = goog.asserts.assertNumber(opt_data.indexOption, "expected parameter 'indexOption' of type int.");
+  var option = goog.asserts.assertObject(opt_data.option, "expected parameter 'option' of type [label: string, value: string].");
+  soy.asserts.assertType(goog.isString(opt_data.selected) || (opt_data.selected instanceof goog.soy.data.SanitizedContent), 'selected', opt_data.selected, 'string|goog.soy.data.SanitizedContent');
+  var selected = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.selected);
+  soy.asserts.assertType(opt_data.fixed == null || goog.isBoolean(opt_data.fixed) || opt_data.fixed === 1 || opt_data.fixed === 0, 'fixed', opt_data.fixed, 'boolean|null|undefined');
+  var fixed = /** @type {boolean|null|undefined} */ (opt_data.fixed);
+  var attributesMultipleSelection__soy271 = function() {
+    iattr('class', ((selected) ? ' active ' : '') + 'dropdown-item' + ((fixed) ? ' fixed' : ' unfixed'));
+    iattr('data-option-index', indexOption);
+    iattr('data-option-value', option.value);
+    iattr('data-option-selected', (selected) ? 'true' : '');
+  };
+  ie_open_start('li');
+      attributesMultipleSelection__soy271();
+  ie_open_end();
+    ie_open('div', null, null,
+        'class', 'custom-checkbox custom-control');
+      ie_open('label');
+        ie_open_start('input');
+            if (selected) {
+              iattr('checked', '');
+            }
+            iattr('class', 'custom-control-input');
+            iattr('type', 'checkbox');
+            iattr('value', '');
+        ie_open_end();
+        ie_close('input');
+        ie_open('span', null, null,
+            'class', 'custom-control-label ');
+          ie_open('span', null, null,
+              'class', 'custom-control-label-text');
+            var dyn11 = option.label;
+            if (typeof dyn11 == 'function') dyn11(); else if (dyn11 != null) itext(dyn11);
+          ie_close('span');
+        ie_close('span');
+      ie_close('label');
+    ie_close('div');
+  ie_close('li');
+}
+exports.multiple_selection = $multiple_selection;
+if (goog.DEBUG) {
+  $multiple_selection.soyTemplateName = 'DDMSelect.multiple_selection';
+}
+
+
+/**
+ * @param {{
+ *    indexOption: number,
+ *    option: {label: string, value: string},
+ *    selected: string,
+ *    fixed: (boolean|null|undefined)
+ * }} opt_data
+ * @param {(null|undefined)=} opt_ignored
+ * @param {Object<string, *>=} opt_ijData
+ * @return {void}
+ * @suppress {checkTypes}
+ */
+function $simple_selection(opt_data, opt_ignored, opt_ijData) {
+  var indexOption = goog.asserts.assertNumber(opt_data.indexOption, "expected parameter 'indexOption' of type int.");
+  var option = goog.asserts.assertObject(opt_data.option, "expected parameter 'option' of type [label: string, value: string].");
+  soy.asserts.assertType(goog.isString(opt_data.selected) || (opt_data.selected instanceof goog.soy.data.SanitizedContent), 'selected', opt_data.selected, 'string|goog.soy.data.SanitizedContent');
+  var selected = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.selected);
+  soy.asserts.assertType(opt_data.fixed == null || goog.isBoolean(opt_data.fixed) || opt_data.fixed === 1 || opt_data.fixed === 0, 'fixed', opt_data.fixed, 'boolean|null|undefined');
+  var fixed = /** @type {boolean|null|undefined} */ (opt_data.fixed);
+  var attributesNormalSelection__soy301 = function() {
+    iattr('class', ' select-option-item' + ((fixed) ? ' fixed' : ' unfixed'));
+    iattr('data-option-index', indexOption);
+    iattr('data-option-value', option.value);
+  };
+  ie_open_start('li');
+      attributesNormalSelection__soy301();
+  ie_open_end();
+    var itemAttributes__soy316 = function() {
+      iattr('class', ' dropdown-item' + ((selected) ? ' active' : ''));
+      iattr('data-option-selected', (selected) ? 'true' : '');
+      iattr('href', 'javascript:;');
+      iattr('title', option.label);
+    };
+    ie_open_start('a');
+        itemAttributes__soy316();
+    ie_open_end();
+      var dyn12 = option.label;
+      if (typeof dyn12 == 'function') dyn12(); else if (dyn12 != null) itext(dyn12);
+    ie_close('a');
+  ie_close('li');
+}
+exports.simple_selection = $simple_selection;
+if (goog.DEBUG) {
+  $simple_selection.soyTemplateName = 'DDMSelect.simple_selection';
+}
+
+exports.render.params = ["name","pathThemeImages","predefinedValue","value","visible","badgeCloseIcon","dir","label","multiple","open","readOnly","required","selectCaretDoubleIcon","selectSearchIcon","showLabel","tip"];
+exports.render.types = {"name":"string","pathThemeImages":"string","predefinedValue":"list<string>","value":"list<string>","visible":"bool","badgeCloseIcon":"html","dir":"string","label":"string","multiple":"bool","open":"bool","readOnly":"bool","required":"bool","selectCaretDoubleIcon":"html","selectSearchIcon":"html","showLabel":"bool","tip":"string"};
 exports.badge_item.params = ["value","badgeCloseIcon","readOnly"];
 exports.badge_item.types = {"value":"list<string>","badgeCloseIcon":"html","readOnly":"bool"};
-exports.select_label.params = ["name","label","readOnly","required","tip"];
-exports.select_label.types = {"name":"string","label":"string","readOnly":"bool","required":"bool","tip":"string"};
-exports.hidden_select.params = ["displayValue","name","dir","multiple"];
-exports.hidden_select.types = {"displayValue":"list<string>","name":"string","dir":"string","multiple":"bool"};
+exports.select_label.params = ["name","pathThemeImages","label","required","tip"];
+exports.select_label.types = {"name":"string","pathThemeImages":"string","label":"string","required":"bool","tip":"string"};
+exports.hidden_select.params = ["displayValues","name","dir","multiple"];
+exports.hidden_select.types = {"displayValues":"list<string>","name":"string","dir":"string","multiple":"bool"};
 exports.select_hidden_options.params = ["values","dir"];
 exports.select_hidden_options.types = {"values":"list<string>","dir":"string"};
 exports.select_options.params = ["value","multiple"];
 exports.select_options.types = {"value":"list<string>","multiple":"bool"};
 exports.plot_dropdown_rows.params = ["value","fixed","multiple"];
 exports.plot_dropdown_rows.types = {"value":"list<string>","fixed":"bool","multiple":"bool"};
+exports.multiple_selection.params = ["indexOption","selected","fixed"];
+exports.multiple_selection.types = {"indexOption":"int","selected":"string","fixed":"bool"};
+exports.simple_selection.params = ["indexOption","selected","fixed"];
+exports.simple_selection.types = {"indexOption":"int","selected":"string","fixed":"bool"};
 templates = exports;
 return exports;
 

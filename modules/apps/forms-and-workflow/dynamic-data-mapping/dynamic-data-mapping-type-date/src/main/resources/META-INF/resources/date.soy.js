@@ -59,6 +59,7 @@ soy.$$registerDelegateFn(soy.$$getDelTemplateId('ddm.field.idom'), 'date', 0, __
  * @param {{
  *    label: string,
  *    name: string,
+ *    pathThemeImages: string,
  *    readOnly: boolean,
  *    showLabel: boolean,
  *    value: string,
@@ -78,6 +79,8 @@ function $render(opt_data, opt_ignored, opt_ijData) {
   var label = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.label);
   soy.asserts.assertType(goog.isString(opt_data.name) || (opt_data.name instanceof goog.soy.data.SanitizedContent), 'name', opt_data.name, 'string|goog.soy.data.SanitizedContent');
   var name = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.name);
+  soy.asserts.assertType(goog.isString(opt_data.pathThemeImages) || (opt_data.pathThemeImages instanceof goog.soy.data.SanitizedContent), 'pathThemeImages', opt_data.pathThemeImages, 'string|goog.soy.data.SanitizedContent');
+  var pathThemeImages = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.pathThemeImages);
   soy.asserts.assertType(goog.isBoolean(opt_data.readOnly) || opt_data.readOnly === 1 || opt_data.readOnly === 0, 'readOnly', opt_data.readOnly, 'boolean');
   var readOnly = /** @type {boolean} */ (!!opt_data.readOnly);
   soy.asserts.assertType(goog.isBoolean(opt_data.showLabel) || opt_data.showLabel === 1 || opt_data.showLabel === 0, 'showLabel', opt_data.showLabel, 'boolean');
@@ -110,9 +113,14 @@ function $render(opt_data, opt_ignored, opt_ijData) {
       ie_open_end();
         var dyn0 = label;
         if (typeof dyn0 == 'function') dyn0(); else if (dyn0 != null) itext(dyn0);
+        itext(' ');
         if (required) {
-          ie_void('span', null, null,
-              'class', 'icon-asterisk text-warning');
+          ie_open('svg', null, null,
+              'aria-hidden', 'true',
+              'class', 'lexicon-icon lexicon-icon-asterisk reference-mark');
+            ie_void('use', null, null,
+                'xlink:href', pathThemeImages + '/lexicon/icons.svg#asterisk');
+          ie_close('svg');
         }
       ie_close('label');
       if (tip) {
@@ -123,16 +131,16 @@ function $render(opt_data, opt_ignored, opt_ijData) {
         ie_close('span');
       }
     }
-    var displayValue__soy35 = formattedValue ? formattedValue : predefinedValue;
+    var displayValue__soy38 = formattedValue ? formattedValue : predefinedValue;
     ie_open('div', null, null,
         'class', 'input-group input-group-container');
-      var inputAttributes__soy37 = function() {
+      var inputAttributes__soy40 = function() {
         iattr('class', 'form-control');
         if (label) {
           iattr('aria-label', label);
         }
-        if (displayValue__soy35) {
-          iattr('value', displayValue__soy35);
+        if (displayValue__soy38) {
+          iattr('value', displayValue__soy38);
         }
         if (readOnly) {
           iattr('disabled', '');
@@ -140,7 +148,7 @@ function $render(opt_data, opt_ignored, opt_ijData) {
         iattr('type', 'text');
       };
       ie_open_start('input');
-          inputAttributes__soy37();
+          inputAttributes__soy40();
       ie_open_end();
       ie_close('input');
       ie_open('input', null, null,
@@ -161,8 +169,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'DDMDate.render';
 }
 
-exports.render.params = ["label","name","readOnly","showLabel","value","visible","formattedValue","predefinedValue","required","tip"];
-exports.render.types = {"label":"string","name":"string","readOnly":"bool","showLabel":"bool","value":"string","visible":"bool","formattedValue":"string","predefinedValue":"string","required":"bool","tip":"string"};
+exports.render.params = ["label","name","pathThemeImages","readOnly","showLabel","value","visible","formattedValue","predefinedValue","required","tip"];
+exports.render.types = {"label":"string","name":"string","pathThemeImages":"string","readOnly":"bool","showLabel":"bool","value":"string","visible":"bool","formattedValue":"string","predefinedValue":"string","required":"bool","tip":"string"};
 templates = exports;
 return exports;
 

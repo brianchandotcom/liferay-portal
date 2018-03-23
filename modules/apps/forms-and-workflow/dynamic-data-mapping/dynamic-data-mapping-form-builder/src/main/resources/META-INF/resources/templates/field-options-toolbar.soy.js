@@ -86,11 +86,11 @@ function $field_settings_toolbar_list(opt_data, opt_ignored, opt_ijData) {
   ie_open('div', null, null,
       'aria-labelledby', 'dropdownFieldToolbar',
       'class', 'dropdown-menu dropdown-menu-right');
-    var optionList59 = options;
-    var optionListLen59 = optionList59.length;
-    for (var optionIndex59 = 0; optionIndex59 < optionListLen59; optionIndex59++) {
-      var optionData59 = optionList59[optionIndex59];
-      $field_settings_toolbar_item({option: optionData59}, null, opt_ijData);
+    var optionList61 = options;
+    var optionListLen61 = optionList61.length;
+    for (var optionIndex61 = 0; optionIndex61 < optionListLen61; optionIndex61++) {
+      var optionData61 = optionList61[optionIndex61];
+      $field_settings_toolbar_item({option: optionData61}, null, opt_ijData);
     }
   ie_close('div');
 }

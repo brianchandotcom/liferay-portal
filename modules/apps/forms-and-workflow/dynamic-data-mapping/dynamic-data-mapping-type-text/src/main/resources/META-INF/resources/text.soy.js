@@ -58,6 +58,7 @@ soy.$$registerDelegateFn(soy.$$getDelTemplateId('ddm.field.idom'), 'text', 0, __
 /**
  * @param {{
  *    name: string,
+ *    pathThemeImages: string,
  *    placeholder: string,
  *    value: (?),
  *    visible: boolean,
@@ -79,6 +80,8 @@ soy.$$registerDelegateFn(soy.$$getDelTemplateId('ddm.field.idom'), 'text', 0, __
 function $render(opt_data, opt_ignored, opt_ijData) {
   soy.asserts.assertType(goog.isString(opt_data.name) || (opt_data.name instanceof goog.soy.data.SanitizedContent), 'name', opt_data.name, 'string|goog.soy.data.SanitizedContent');
   var name = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.name);
+  soy.asserts.assertType(goog.isString(opt_data.pathThemeImages) || (opt_data.pathThemeImages instanceof goog.soy.data.SanitizedContent), 'pathThemeImages', opt_data.pathThemeImages, 'string|goog.soy.data.SanitizedContent');
+  var pathThemeImages = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.pathThemeImages);
   soy.asserts.assertType(goog.isString(opt_data.placeholder) || (opt_data.placeholder instanceof goog.soy.data.SanitizedContent), 'placeholder', opt_data.placeholder, 'string|goog.soy.data.SanitizedContent');
   var placeholder = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.placeholder);
   soy.asserts.assertType(goog.isBoolean(opt_data.visible) || opt_data.visible === 1 || opt_data.visible === 0, 'visible', opt_data.visible, 'boolean');
@@ -110,9 +113,14 @@ function $render(opt_data, opt_ignored, opt_ijData) {
           'for', name);
         var dyn0 = label;
         if (typeof dyn0 == 'function') dyn0(); else if (dyn0 != null) itext(dyn0);
+        itext(' ');
         if (required) {
-          ie_void('span', null, null,
-              'class', 'icon-asterisk text-warning');
+          ie_open('svg', null, null,
+              'aria-hidden', 'true',
+              'class', 'lexicon-icon lexicon-icon-asterisk reference-mark');
+            ie_void('use', null, null,
+                'xlink:href', pathThemeImages + '/lexicon/icons.svg#asterisk');
+          ie_close('svg');
         }
       ie_close('label');
       if (tip) {
@@ -142,32 +150,41 @@ function $render(opt_data, opt_ignored, opt_ijData) {
           if (typeof dyn2 == 'function') dyn2(); else if (dyn2 != null) itext(dyn2);
         ie_close('textarea');
       } else {
-        ie_open_start('input');
-            iattr('class', 'field form-control');
-            if (dir) {
-              iattr('dir', dir);
-            }
-            if (readOnly) {
-              iattr('disabled', '');
-            }
-            iattr('id', name);
-            iattr('name', name);
-            iattr('placeholder', placeholder);
-            iattr('type', 'text');
-            iattr('value', displayValue__soy5);
-        ie_open_end();
-        ie_close('input');
+        ie_open('div', null, null,
+            'class', 'input-group-item');
+          ie_open_start('input');
+              iattr('class', 'field form-control');
+              if (dir) {
+                iattr('dir', dir);
+              }
+              if (readOnly) {
+                iattr('disabled', '');
+              }
+              iattr('id', name);
+              iattr('name', name);
+              iattr('placeholder', placeholder);
+              iattr('type', 'text');
+              iattr('value', displayValue__soy5);
+          ie_open_end();
+          ie_close('input');
+        ie_close('div');
       }
       if (tooltip) {
-        ie_open('a', null, null,
-            'class', 'input-group-addon help-icon',
-            'data-original-title', tooltip,
-            'data-toggle', 'popover',
-            'href', 'javascript:;',
-            'title', tooltip);
-          ie_void('span', null, null,
-              'class', 'icon-question');
-        ie_close('a');
+        ie_open('div', null, null,
+            'class', 'input-group-item input-group-item-shrink');
+          ie_open('button', null, null,
+              'class', 'btn btn-monospaced btn-unstyled trigger-tooltip',
+              'data-original-title', tooltip,
+              'data-toggle', 'popover',
+              'title', tooltip,
+              'type', 'button');
+            ie_open('span', null, null,
+                'class', 'help-icon rounded-circle sticker sticker-secondary');
+              ie_void('span', null, null,
+                  'class', 'icon-question');
+            ie_close('span');
+          ie_close('button');
+        ie_close('div');
       }
     ie_close('div');
   ie_close('div');
@@ -177,8 +194,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'DDMText.render';
 }
 
-exports.render.params = ["name","placeholder","value","visible","dir","displayStyle","label","predefinedValue","readOnly","required","showLabel","tip","tooltip"];
-exports.render.types = {"name":"string","placeholder":"string","value":"?","visible":"bool","dir":"string","displayStyle":"string","label":"string","predefinedValue":"string","readOnly":"bool","required":"bool","showLabel":"bool","tip":"string","tooltip":"string"};
+exports.render.params = ["name","pathThemeImages","placeholder","value","visible","dir","displayStyle","label","predefinedValue","readOnly","required","showLabel","tip","tooltip"];
+exports.render.types = {"name":"string","pathThemeImages":"string","placeholder":"string","value":"?","visible":"bool","dir":"string","displayStyle":"string","label":"string","predefinedValue":"string","readOnly":"bool","required":"bool","showLabel":"bool","tip":"string","tooltip":"string"};
 templates = exports;
 return exports;
 

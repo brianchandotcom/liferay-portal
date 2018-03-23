@@ -57,11 +57,12 @@ soy.$$registerDelegateFn(soy.$$getDelTemplateId('ddm.field.idom'), 'options', 0,
 
 /**
  * @param {{
- *    label: (null|string|undefined),
  *    name: string,
+ *    pathThemeImages: string,
  *    required: boolean,
  *    showLabel: boolean,
- *    visible: boolean
+ *    visible: boolean,
+ *    label: (null|string|undefined)
  * }} opt_data
  * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
@@ -69,16 +70,18 @@ soy.$$registerDelegateFn(soy.$$getDelTemplateId('ddm.field.idom'), 'options', 0,
  * @suppress {checkTypes}
  */
 function $render(opt_data, opt_ignored, opt_ijData) {
-  soy.asserts.assertType(opt_data.label == null || (opt_data.label instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.label), 'label', opt_data.label, 'null|string|undefined');
-  var label = /** @type {null|string|undefined} */ (opt_data.label);
   soy.asserts.assertType(goog.isString(opt_data.name) || (opt_data.name instanceof goog.soy.data.SanitizedContent), 'name', opt_data.name, 'string|goog.soy.data.SanitizedContent');
   var name = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.name);
+  soy.asserts.assertType(goog.isString(opt_data.pathThemeImages) || (opt_data.pathThemeImages instanceof goog.soy.data.SanitizedContent), 'pathThemeImages', opt_data.pathThemeImages, 'string|goog.soy.data.SanitizedContent');
+  var pathThemeImages = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.pathThemeImages);
   soy.asserts.assertType(goog.isBoolean(opt_data.required) || opt_data.required === 1 || opt_data.required === 0, 'required', opt_data.required, 'boolean');
   var required = /** @type {boolean} */ (!!opt_data.required);
   soy.asserts.assertType(goog.isBoolean(opt_data.showLabel) || opt_data.showLabel === 1 || opt_data.showLabel === 0, 'showLabel', opt_data.showLabel, 'boolean');
   var showLabel = /** @type {boolean} */ (!!opt_data.showLabel);
   soy.asserts.assertType(goog.isBoolean(opt_data.visible) || opt_data.visible === 1 || opt_data.visible === 0, 'visible', opt_data.visible, 'boolean');
   var visible = /** @type {boolean} */ (!!opt_data.visible);
+  soy.asserts.assertType(opt_data.label == null || (opt_data.label instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.label), 'label', opt_data.label, 'null|string|undefined');
+  var label = /** @type {null|string|undefined} */ (opt_data.label);
   ie_open('div', null, null,
       'class', 'form-group' + (visible ? '' : ' hide') + ' liferay-ddm-form-field-options',
       'data-fieldname', name);
@@ -87,9 +90,14 @@ function $render(opt_data, opt_ignored, opt_ijData) {
           'class', 'control-label');
         var dyn0 = label;
         if (typeof dyn0 == 'function') dyn0(); else if (dyn0 != null) itext(dyn0);
+        itext(' ');
         if (required) {
-          ie_void('span', null, null,
-              'class', 'icon-asterisk text-warning');
+          ie_open('svg', null, null,
+              'aria-hidden', 'true',
+              'class', 'lexicon-icon lexicon-icon-asterisk reference-mark');
+            ie_void('use', null, null,
+                'xlink:href', pathThemeImages + '/lexicon/icons.svg#asterisk');
+          ie_close('svg');
         }
       ie_close('label');
     }
@@ -106,8 +114,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'DDMOptions.render';
 }
 
-exports.render.params = ["label","name","required","showLabel","visible"];
-exports.render.types = {"label":"string","name":"string","required":"bool","showLabel":"bool","visible":"bool"};
+exports.render.params = ["name","pathThemeImages","required","showLabel","visible","label"];
+exports.render.types = {"name":"string","pathThemeImages":"string","required":"bool","showLabel":"bool","visible":"bool","label":"string"};
 templates = exports;
 return exports;
 

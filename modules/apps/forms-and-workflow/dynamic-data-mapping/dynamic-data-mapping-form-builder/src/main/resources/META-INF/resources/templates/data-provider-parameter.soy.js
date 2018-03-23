@@ -40,6 +40,7 @@ var iattr = IncrementalDom.attr;
  * @param {{
  *    hasInputs: boolean,
  *    hasRequiredInputs: boolean,
+ *    pathThemeImages: string,
  *    strings: {dataProviderParameterInput: string, dataProviderParameterInputDescription: string, dataProviderParameterOutput: string, dataProviderParameterOutputDescription: string, requiredField: string}
  * }} opt_data
  * @param {(null|undefined)=} opt_ignored
@@ -52,6 +53,8 @@ function $render(opt_data, opt_ignored, opt_ijData) {
   var hasInputs = /** @type {boolean} */ (!!opt_data.hasInputs);
   soy.asserts.assertType(goog.isBoolean(opt_data.hasRequiredInputs) || opt_data.hasRequiredInputs === 1 || opt_data.hasRequiredInputs === 0, 'hasRequiredInputs', opt_data.hasRequiredInputs, 'boolean');
   var hasRequiredInputs = /** @type {boolean} */ (!!opt_data.hasRequiredInputs);
+  soy.asserts.assertType(goog.isString(opt_data.pathThemeImages) || (opt_data.pathThemeImages instanceof goog.soy.data.SanitizedContent), 'pathThemeImages', opt_data.pathThemeImages, 'string|goog.soy.data.SanitizedContent');
+  var pathThemeImages = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.pathThemeImages);
   var strings = goog.asserts.assertObject(opt_data.strings, "expected parameter 'strings' of type [dataProviderParameterInput: string, dataProviderParameterInputDescription: string, dataProviderParameterOutput: string, dataProviderParameterOutputDescription: string, requiredField: string].");
   ie_open('div');
     if (hasInputs) {
@@ -60,13 +63,20 @@ function $render(opt_data, opt_ignored, opt_ijData) {
         if (hasRequiredInputs) {
           ie_open('div', null, null,
               'class', 'data-provider-label-container');
-            ie_open('p', null, null,
-                'class', 'data-provider-parameter-input-required-field');
-              var dyn3 = strings.requiredField;
-              if (typeof dyn3 == 'function') dyn3(); else if (dyn3 != null) itext(dyn3);
-            ie_close('p');
-            ie_void('span', null, null,
-                'class', 'icon-asterisk text-warning');
+            ie_open('label');
+              ie_open('p', null, null,
+                  'class', 'data-provider-parameter-input-required-field');
+                var dyn3 = strings.requiredField;
+                if (typeof dyn3 == 'function') dyn3(); else if (dyn3 != null) itext(dyn3);
+              ie_close('p');
+              itext(' ');
+              ie_open('svg', null, null,
+                  'aria-hidden', 'true',
+                  'class', 'lexicon-icon lexicon-icon-asterisk reference-mark');
+                ie_void('use', null, null,
+                    'xlink:href', pathThemeImages + '/lexicon/icons.svg#asterisk');
+              ie_close('svg');
+            ie_close('label');
           ie_close('div');
         }
         ie_open('div', null, null,
@@ -115,8 +125,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'DDMDataProviderParameter.render';
 }
 
-exports.render.params = ["hasInputs","hasRequiredInputs"];
-exports.render.types = {"hasInputs":"bool","hasRequiredInputs":"bool"};
+exports.render.params = ["hasInputs","hasRequiredInputs","pathThemeImages"];
+exports.render.types = {"hasInputs":"bool","hasRequiredInputs":"bool","pathThemeImages":"string"};
 templates = exports;
 return exports;
 

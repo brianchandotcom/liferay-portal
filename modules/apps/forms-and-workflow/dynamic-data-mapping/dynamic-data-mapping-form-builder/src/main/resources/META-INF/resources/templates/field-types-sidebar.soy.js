@@ -45,15 +45,15 @@ var iattr = IncrementalDom.attr;
  * @return {void}
  * @suppress {checkTypes}
  */
-function __deltemplate_s73_a6c11d4d(opt_data, opt_ignored, opt_ijData) {
+function __deltemplate_s75_a6c11d4d(opt_data, opt_ignored, opt_ijData) {
   opt_data = opt_data || {};
   $toolbar(opt_data, null, opt_ijData);
 }
-exports.__deltemplate_s73_a6c11d4d = __deltemplate_s73_a6c11d4d;
+exports.__deltemplate_s75_a6c11d4d = __deltemplate_s75_a6c11d4d;
 if (goog.DEBUG) {
-  __deltemplate_s73_a6c11d4d.soyTemplateName = 'DDMFieldTypesSidebar.__deltemplate_s73_a6c11d4d';
+  __deltemplate_s75_a6c11d4d.soyTemplateName = 'DDMFieldTypesSidebar.__deltemplate_s75_a6c11d4d';
 }
-soy.$$registerDelegateFn(soy.$$getDelTemplateId('DDMSidebar.sidebar_toolbar.idom'), 'fieldTypes', 0, __deltemplate_s73_a6c11d4d);
+soy.$$registerDelegateFn(soy.$$getDelTemplateId('DDMSidebar.sidebar_toolbar.idom'), 'fieldTypes', 0, __deltemplate_s75_a6c11d4d);
 
 
 /**
@@ -63,15 +63,15 @@ soy.$$registerDelegateFn(soy.$$getDelTemplateId('DDMSidebar.sidebar_toolbar.idom
  * @return {void}
  * @suppress {checkTypes}
  */
-function __deltemplate_s75_40ef180d(opt_data, opt_ignored, opt_ijData) {
+function __deltemplate_s77_40ef180d(opt_data, opt_ignored, opt_ijData) {
   opt_data = opt_data || {};
   $render(opt_data, null, opt_ijData);
 }
-exports.__deltemplate_s75_40ef180d = __deltemplate_s75_40ef180d;
+exports.__deltemplate_s77_40ef180d = __deltemplate_s77_40ef180d;
 if (goog.DEBUG) {
-  __deltemplate_s75_40ef180d.soyTemplateName = 'DDMFieldTypesSidebar.__deltemplate_s75_40ef180d';
+  __deltemplate_s77_40ef180d.soyTemplateName = 'DDMFieldTypesSidebar.__deltemplate_s77_40ef180d';
 }
-soy.$$registerDelegateFn(soy.$$getDelTemplateId('DDMSidebar.sidebar_body.idom'), 'fieldTypes', 0, __deltemplate_s75_40ef180d);
+soy.$$registerDelegateFn(soy.$$getDelTemplateId('DDMSidebar.sidebar_body.idom'), 'fieldTypes', 0, __deltemplate_s77_40ef180d);
 
 
 /**
@@ -229,14 +229,14 @@ function $render_field_type_list_group(opt_data, opt_ignored, opt_ijData) {
   ie_close('a');
   ie_open('div', null, null,
       'class', 'list-group-body');
-    var fieldTypeList134 = fieldTypes;
-    var fieldTypeListLen134 = fieldTypeList134.length;
-    for (var fieldTypeIndex134 = 0; fieldTypeIndex134 < fieldTypeListLen134; fieldTypeIndex134++) {
-      var fieldTypeData134 = fieldTypeList134[fieldTypeIndex134];
+    var fieldTypeList136 = fieldTypes;
+    var fieldTypeListLen136 = fieldTypeList136.length;
+    for (var fieldTypeIndex136 = 0; fieldTypeIndex136 < fieldTypeListLen136; fieldTypeIndex136++) {
+      var fieldTypeData136 = fieldTypeList136[fieldTypeIndex136];
       ie_open('div', null, null,
           'class', 'list-group-item list-group-item-flex list-group-item-action lfr-ddm-form-builder-draggable-item lfr-ddm-form-builder-field-type-item',
-          'data-field-type-name', fieldTypeData134.name);
-        $render_field_template({description: fieldTypeData134.description, icon: fieldTypeData134.icon, name: fieldTypeData134.label}, null, opt_ijData);
+          'data-field-type-name', fieldTypeData136.name);
+        $render_field_template({description: fieldTypeData136.description, icon: fieldTypeData136.icon, name: fieldTypeData136.label}, null, opt_ijData);
       ie_close('div');
     }
   ie_close('div');
@@ -260,14 +260,14 @@ function $render_field_set_list_group(opt_data, opt_ignored, opt_ijData) {
   var fieldSets = goog.asserts.assertArray(opt_data.fieldSets, "expected parameter 'fieldSets' of type list<[description: string, icon: html, id: string, name: string]>.");
   ie_open('div', null, null,
       'class', 'list-group-body');
-    var fieldSetList147 = fieldSets;
-    var fieldSetListLen147 = fieldSetList147.length;
-    for (var fieldSetIndex147 = 0; fieldSetIndex147 < fieldSetListLen147; fieldSetIndex147++) {
-      var fieldSetData147 = fieldSetList147[fieldSetIndex147];
+    var fieldSetList149 = fieldSets;
+    var fieldSetListLen149 = fieldSetList149.length;
+    for (var fieldSetIndex149 = 0; fieldSetIndex149 < fieldSetListLen149; fieldSetIndex149++) {
+      var fieldSetData149 = fieldSetList149[fieldSetIndex149];
       ie_open('div', null, null,
           'class', 'list-group-item list-group-item-flex list-group-item-action lfr-ddm-form-builder-field-set-item lfr-ddm-form-builder-draggable-item',
-          'data-field-set-id', fieldSetData147.id);
-        $render_field_template({description: fieldSetData147.description, icon: fieldSetData147.icon, name: fieldSetData147.name}, null, opt_ijData);
+          'data-field-set-id', fieldSetData149.id);
+        $render_field_template({description: fieldSetData149.description, icon: fieldSetData149.icon, name: fieldSetData149.name}, null, opt_ijData);
       ie_close('div');
     }
   ie_close('div');

@@ -61,6 +61,7 @@ soy.$$registerDelegateFn(soy.$$getDelTemplateId('ddm.field.idom'), 'checkbox_mul
  *    label: string,
  *    name: string,
  *    options: !Array<{label: string, value: (?)}>,
+ *    pathThemeImages: string,
  *    readOnly: boolean,
  *    showAsSwitcher: boolean,
  *    showLabel: boolean,
@@ -83,6 +84,8 @@ function $render(opt_data, opt_ignored, opt_ijData) {
   soy.asserts.assertType(goog.isString(opt_data.name) || (opt_data.name instanceof goog.soy.data.SanitizedContent), 'name', opt_data.name, 'string|goog.soy.data.SanitizedContent');
   var name = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.name);
   var options = goog.asserts.assertArray(opt_data.options, "expected parameter 'options' of type list<[label: string, value: ?]>.");
+  soy.asserts.assertType(goog.isString(opt_data.pathThemeImages) || (opt_data.pathThemeImages instanceof goog.soy.data.SanitizedContent), 'pathThemeImages', opt_data.pathThemeImages, 'string|goog.soy.data.SanitizedContent');
+  var pathThemeImages = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.pathThemeImages);
   soy.asserts.assertType(goog.isBoolean(opt_data.readOnly) || opt_data.readOnly === 1 || opt_data.readOnly === 0, 'readOnly', opt_data.readOnly, 'boolean');
   var readOnly = /** @type {boolean} */ (!!opt_data.readOnly);
   soy.asserts.assertType(goog.isBoolean(opt_data.showAsSwitcher) || opt_data.showAsSwitcher === 1 || opt_data.showAsSwitcher === 0, 'showAsSwitcher', opt_data.showAsSwitcher, 'boolean');
@@ -105,9 +108,14 @@ function $render(opt_data, opt_ignored, opt_ijData) {
             'for', name);
           var dyn0 = label;
           if (typeof dyn0 == 'function') dyn0(); else if (dyn0 != null) itext(dyn0);
+          itext(' ');
           if (required && options.length > 1) {
-            ie_void('span', null, null,
-                'class', 'icon-asterisk text-warning');
+            ie_open('svg', null, null,
+                'aria-hidden', 'true',
+                'class', 'lexicon-icon lexicon-icon-asterisk reference-mark');
+              ie_void('use', null, null,
+                  'xlink:href', pathThemeImages + '/lexicon/icons.svg#asterisk');
+            ie_close('svg');
           }
         ie_close('label');
         if (tip) {
@@ -119,17 +127,17 @@ function $render(opt_data, opt_ignored, opt_ijData) {
         }
       ie_close('div');
     }
-    var optionList96 = options;
-    var optionListLen96 = optionList96.length;
-    for (var optionIndex96 = 0; optionIndex96 < optionListLen96; optionIndex96++) {
-      var optionData96 = optionList96[optionIndex96];
-      var checked__soy25 = function() {
+    var optionList104 = options;
+    var optionListLen104 = optionList104.length;
+    for (var optionIndex104 = 0; optionIndex104 < optionListLen104; optionIndex104++) {
+      var optionData104 = optionList104[optionIndex104];
+      var checked__soy28 = function() {
         if (displayValue__soy5) {
-          var currentValueList31 = displayValue__soy5;
-          var currentValueListLen31 = currentValueList31.length;
-          for (var currentValueIndex31 = 0; currentValueIndex31 < currentValueListLen31; currentValueIndex31++) {
-            var currentValueData31 = currentValueList31[currentValueIndex31];
-            if (currentValueData31 == optionData96.value) {
+          var currentValueList34 = displayValue__soy5;
+          var currentValueListLen34 = currentValueList34.length;
+          for (var currentValueIndex34 = 0; currentValueIndex34 < currentValueListLen34; currentValueIndex34++) {
+            var currentValueData34 = currentValueList34[currentValueIndex34];
+            if (currentValueData34 == optionData104.value) {
               iattr('checked', '');
             }
           }
@@ -139,18 +147,18 @@ function $render(opt_data, opt_ignored, opt_ijData) {
         ie_open('div', null, null,
             'class', 'lfr-ddm-form-field-checkbox-switch ' + (inline ? 'lfr-ddm-form-field-checkbox-switch-inline' : ''));
           ie_open('label', null, null,
-              'class', 'toggle-switch toggle-switch-option-' + optionData96.value,
-              'for', name + '_' + optionData96.value);
+              'class', 'toggle-switch toggle-switch-option-' + optionData104.value,
+              'for', name + '_' + optionData104.value);
             ie_open_start('input');
-                checked__soy25();
+                checked__soy28();
                 if (readOnly) {
                   iattr('disabled', '');
                 }
                 iattr('class', 'toggle-switch-check');
-                iattr('id', name + '_' + optionData96.value);
+                iattr('id', name + '_' + optionData104.value);
                 iattr('name', name);
                 iattr('type', 'checkbox');
-                iattr('value', optionData96.value);
+                iattr('value', optionData104.value);
             ie_open_end();
             ie_close('input');
             ie_open('span', null, null,
@@ -161,46 +169,59 @@ function $render(opt_data, opt_ignored, opt_ijData) {
             ie_close('span');
             ie_open('span', null, null,
                 'class', 'toggle-switch-text toggle-switch-text-right');
-              var dyn2 = optionData96.label;
+              var dyn2 = optionData104.label;
               if (typeof dyn2 == 'function') dyn2(); else if (dyn2 != null) itext(dyn2);
+              itext(' ');
               if (required && options.length == 1) {
-                ie_void('span', null, null,
-                    'class', 'icon-asterisk text-warning');
+                ie_open('svg', null, null,
+                    'aria-hidden', 'true',
+                    'class', 'lexicon-icon lexicon-icon-asterisk reference-mark');
+                  ie_void('use', null, null,
+                      'xlink:href', pathThemeImages + '/lexicon/icons.svg#asterisk');
+                ie_close('svg');
               }
             ie_close('span');
           ie_close('label');
         ie_close('div');
       } else {
         ie_open('div', null, null,
-            'class', 'form-check ' + (inline ? 'form-check-inline' : ''));
+            'class', 'form-check custom-checkbox ' + (inline ? 'form-check-inline' : 'custom-control'));
           ie_open('label', null, null,
-              'class', 'form-check-label form-check-label-option-' + optionData96.value,
-              'for', name + '_' + optionData96.value);
+              'class', 'form-check-label-option-' + optionData104.value,
+              'for', name + '_' + optionData104.value);
             ie_open_start('input');
-                checked__soy25();
+                checked__soy28();
                 if (dir) {
                   iattr('dir', dir);
                 }
                 if (readOnly) {
                   iattr('disabled', '');
                 }
-                iattr('class', 'form-check-input');
-                iattr('id', name + '_' + optionData96.value);
+                iattr('class', 'custom-control-input');
+                iattr('id', name + '_' + optionData104.value);
                 iattr('name', name);
                 iattr('type', 'checkbox');
-                iattr('value', optionData96.value);
+                iattr('value', optionData104.value);
             ie_open_end();
             ie_close('input');
             ie_open('span', null, null,
-                'class', 'form-check-description');
-              var dyn3 = optionData96.label;
-              if (typeof dyn3 == 'function') dyn3(); else if (dyn3 != null) itext(dyn3);
+                'class', 'form-check-description custom-control-label');
+              ie_open('span', null, null,
+                  'class', 'custom-control-label-text');
+                var dyn3 = optionData104.label;
+                if (typeof dyn3 == 'function') dyn3(); else if (dyn3 != null) itext(dyn3);
+                itext(' ');
+                if (required && options.length == 1) {
+                  ie_open('svg', null, null,
+                      'aria-hidden', 'true',
+                      'class', 'lexicon-icon lexicon-icon-asterisk reference-mark');
+                    ie_void('use', null, null,
+                        'xlink:href', pathThemeImages + '/lexicon/icons.svg#asterisk');
+                  ie_close('svg');
+                }
+              ie_close('span');
             ie_close('span');
           ie_close('label');
-          if (required && options.length == 1) {
-            ie_void('span', null, null,
-                'class', 'icon-asterisk text-warning');
-          }
         ie_close('div');
       }
     }
@@ -211,8 +232,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'DDMCheckboxMultiple.render';
 }
 
-exports.render.params = ["inline","label","name","readOnly","showAsSwitcher","showLabel","value","dir","predefinedValue","required","tip"];
-exports.render.types = {"inline":"bool","label":"string","name":"string","readOnly":"bool","showAsSwitcher":"bool","showLabel":"bool","value":"?","dir":"string","predefinedValue":"?","required":"bool","tip":"string"};
+exports.render.params = ["inline","label","name","pathThemeImages","readOnly","showAsSwitcher","showLabel","value","dir","predefinedValue","required","tip"];
+exports.render.types = {"inline":"bool","label":"string","name":"string","pathThemeImages":"string","readOnly":"bool","showAsSwitcher":"bool","showLabel":"bool","value":"?","dir":"string","predefinedValue":"?","required":"bool","tip":"string"};
 templates = exports;
 return exports;
 

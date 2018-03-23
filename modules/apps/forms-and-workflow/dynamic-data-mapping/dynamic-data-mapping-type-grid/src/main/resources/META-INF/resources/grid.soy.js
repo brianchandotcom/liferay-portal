@@ -58,17 +58,18 @@ soy.$$registerDelegateFn(soy.$$getDelTemplateId('ddm.field.idom'), 'grid', 0, __
 /**
  * @param {{
  *    columns: !Array<{label: string, value: (?)}>,
- *    dir: (null|string|undefined),
- *    focusTarget: (null|undefined|{index: number, row: number}),
  *    label: string,
  *    name: string,
- *    rows: !Array<{label: string, value: (?)}>,
+ *    pathThemeImages: string,
  *    readOnly: boolean,
- *    required: (boolean|null|undefined),
+ *    rows: !Array<{label: string, value: (?)}>,
  *    showLabel: boolean,
- *    tip: (null|string|undefined),
  *    value: (?),
- *    visible: boolean
+ *    visible: boolean,
+ *    dir: (null|string|undefined),
+ *    focusTarget: (null|undefined|{index: number, row: number}),
+ *    required: (boolean|null|undefined),
+ *    tip: (null|string|undefined)
  * }} opt_data
  * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
@@ -77,43 +78,51 @@ soy.$$registerDelegateFn(soy.$$getDelTemplateId('ddm.field.idom'), 'grid', 0, __
  */
 function $render(opt_data, opt_ignored, opt_ijData) {
   var columns = goog.asserts.assertArray(opt_data.columns, "expected parameter 'columns' of type list<[label: string, value: ?]>.");
-  soy.asserts.assertType(opt_data.dir == null || (opt_data.dir instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.dir), 'dir', opt_data.dir, 'null|string|undefined');
-  var dir = /** @type {null|string|undefined} */ (opt_data.dir);
-  soy.asserts.assertType(opt_data.focusTarget == null || goog.isObject(opt_data.focusTarget), 'focusTarget', opt_data.focusTarget, 'null|undefined|{index: number, row: number}');
-  var focusTarget = /** @type {null|undefined|{index: number, row: number}} */ (opt_data.focusTarget);
   soy.asserts.assertType(goog.isString(opt_data.label) || (opt_data.label instanceof goog.soy.data.SanitizedContent), 'label', opt_data.label, 'string|goog.soy.data.SanitizedContent');
   var label = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.label);
   soy.asserts.assertType(goog.isString(opt_data.name) || (opt_data.name instanceof goog.soy.data.SanitizedContent), 'name', opt_data.name, 'string|goog.soy.data.SanitizedContent');
   var name = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.name);
-  var rows = goog.asserts.assertArray(opt_data.rows, "expected parameter 'rows' of type list<[label: string, value: ?]>.");
+  soy.asserts.assertType(goog.isString(opt_data.pathThemeImages) || (opt_data.pathThemeImages instanceof goog.soy.data.SanitizedContent), 'pathThemeImages', opt_data.pathThemeImages, 'string|goog.soy.data.SanitizedContent');
+  var pathThemeImages = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.pathThemeImages);
   soy.asserts.assertType(goog.isBoolean(opt_data.readOnly) || opt_data.readOnly === 1 || opt_data.readOnly === 0, 'readOnly', opt_data.readOnly, 'boolean');
   var readOnly = /** @type {boolean} */ (!!opt_data.readOnly);
-  soy.asserts.assertType(opt_data.required == null || goog.isBoolean(opt_data.required) || opt_data.required === 1 || opt_data.required === 0, 'required', opt_data.required, 'boolean|null|undefined');
-  var required = /** @type {boolean|null|undefined} */ (opt_data.required);
+  var rows = goog.asserts.assertArray(opt_data.rows, "expected parameter 'rows' of type list<[label: string, value: ?]>.");
   soy.asserts.assertType(goog.isBoolean(opt_data.showLabel) || opt_data.showLabel === 1 || opt_data.showLabel === 0, 'showLabel', opt_data.showLabel, 'boolean');
   var showLabel = /** @type {boolean} */ (!!opt_data.showLabel);
-  soy.asserts.assertType(opt_data.tip == null || (opt_data.tip instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.tip), 'tip', opt_data.tip, 'null|string|undefined');
-  var tip = /** @type {null|string|undefined} */ (opt_data.tip);
   soy.asserts.assertType(goog.isBoolean(opt_data.visible) || opt_data.visible === 1 || opt_data.visible === 0, 'visible', opt_data.visible, 'boolean');
   var visible = /** @type {boolean} */ (!!opt_data.visible);
+  soy.asserts.assertType(opt_data.dir == null || (opt_data.dir instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.dir), 'dir', opt_data.dir, 'null|string|undefined');
+  var dir = /** @type {null|string|undefined} */ (opt_data.dir);
+  soy.asserts.assertType(opt_data.focusTarget == null || goog.isObject(opt_data.focusTarget), 'focusTarget', opt_data.focusTarget, 'null|undefined|{index: number, row: number}');
+  var focusTarget = /** @type {null|undefined|{index: number, row: number}} */ (opt_data.focusTarget);
+  soy.asserts.assertType(opt_data.required == null || goog.isBoolean(opt_data.required) || opt_data.required === 1 || opt_data.required === 0, 'required', opt_data.required, 'boolean|null|undefined');
+  var required = /** @type {boolean|null|undefined} */ (opt_data.required);
+  soy.asserts.assertType(opt_data.tip == null || (opt_data.tip instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.tip), 'tip', opt_data.tip, 'null|string|undefined');
+  var tip = /** @type {null|string|undefined} */ (opt_data.tip);
   ie_open('div', null, null,
       'class', 'form-group' + (visible ? '' : ' hide'),
       'data-fieldname', name);
     if (showLabel) {
-      ie_open('label', null, null,
-          'class', 'control-label');
+      ie_open('label');
         var dyn0 = label;
         if (typeof dyn0 == 'function') dyn0(); else if (dyn0 != null) itext(dyn0);
+        itext(' ');
         if (required) {
-          ie_void('span', null, null,
-              'class', 'icon-asterisk text-warning');
+          ie_open('svg', null, null,
+              'aria-hidden', 'true',
+              'class', 'lexicon-icon lexicon-icon-asterisk reference-mark');
+            ie_void('use', null, null,
+                'xlink:href', pathThemeImages + '/lexicon/icons.svg#asterisk');
+          ie_close('svg');
         }
       ie_close('label');
-      ie_open('p', null, null,
-          'class', 'liferay-ddm-form-field-tip');
-        var dyn1 = tip ? tip : '';
-        if (typeof dyn1 == 'function') dyn1(); else if (dyn1 != null) itext(dyn1);
-      ie_close('p');
+      if (tip) {
+        ie_open('p', null, null,
+            'class', 'liferay-ddm-form-field-tip');
+          var dyn1 = tip;
+          if (typeof dyn1 == 'function') dyn1(); else if (dyn1 != null) itext(dyn1);
+        ie_close('p');
+      }
     }
     ie_open('div', null, null,
         'class', 'liferay-ddm-form-field-grid table-responsive');
@@ -125,48 +134,48 @@ function $render(opt_data, opt_ignored, opt_ijData) {
         ie_open('thead');
           ie_open('tr');
             ie_void('th');
-            var columnList32 = columns;
-            var columnListLen32 = columnList32.length;
-            for (var columnIndex32 = 0; columnIndex32 < columnListLen32; columnIndex32++) {
-              var columnData32 = columnList32[columnIndex32];
+            var columnList38 = columns;
+            var columnListLen38 = columnList38.length;
+            for (var columnIndex38 = 0; columnIndex38 < columnListLen38; columnIndex38++) {
+              var columnData38 = columnList38[columnIndex38];
               ie_open('th');
-                var dyn2 = columnData32.label;
+                var dyn2 = columnData38.label;
                 if (typeof dyn2 == 'function') dyn2(); else if (dyn2 != null) itext(dyn2);
               ie_close('th');
             }
           ie_close('tr');
         ie_close('thead');
         ie_open('tbody');
-          var rowList61 = rows;
-          var rowListLen61 = rowList61.length;
-          for (var rowIndex61 = 0; rowIndex61 < rowListLen61; rowIndex61++) {
-            var rowData61 = rowList61[rowIndex61];
+          var rowList67 = rows;
+          var rowListLen67 = rowList67.length;
+          for (var rowIndex67 = 0; rowIndex67 < rowListLen67; rowIndex67++) {
+            var rowData67 = rowList67[rowIndex67];
             ie_open('tr', null, null,
-                'name', rowData61.value);
+                'name', rowData67.value);
               ie_open('td');
-                var dyn3 = rowData61.label;
+                var dyn3 = rowData67.label;
                 if (typeof dyn3 == 'function') dyn3(); else if (dyn3 != null) itext(dyn3);
               ie_close('td');
-              var columnList58 = columns;
-              var columnListLen58 = columnList58.length;
-              for (var columnIndex58 = 0; columnIndex58 < columnListLen58; columnIndex58++) {
-                var columnData58 = columnList58[columnIndex58];
+              var columnList64 = columns;
+              var columnListLen64 = columnList64.length;
+              for (var columnIndex64 = 0; columnIndex64 < columnListLen64; columnIndex64++) {
+                var columnData64 = columnList64[columnIndex64];
                 ie_open('td');
                   ie_open_start('input');
-                      if (focusTarget && (focusTarget.row == rowData61.value && focusTarget.index == columnIndex58)) {
+                      if (focusTarget && (focusTarget.row == rowData67.value && focusTarget.index == columnIndex64)) {
                         iattr('autoFocus', '');
                       }
-                      if (columnData58.value == opt_data.value[rowData61.value]) {
+                      if (columnData64.value == opt_data.value[rowData67.value]) {
                         iattr('checked', '');
                       }
                       iattr('class', 'form-builder-grid-field');
-                      iattr('data-row-index', columnIndex58);
+                      iattr('data-row-index', columnIndex64);
                       if (readOnly) {
                         iattr('disabled', '');
                       }
-                      iattr('name', rowData61.value);
+                      iattr('name', rowData67.value);
                       iattr('type', 'radio');
-                      iattr('value', columnData58.value);
+                      iattr('value', columnData64.value);
                   ie_open_end();
                   ie_close('input');
                 ie_close('td');
@@ -186,10 +195,10 @@ if (goog.DEBUG) {
 
 /**
  * @param {{
- *    dir: (null|string|undefined),
  *    name: string,
  *    rows: !Array<{label: string, value: (?)}>,
- *    value: (?)
+ *    value: (?),
+ *    dir: (null|string|undefined)
  * }} opt_data
  * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
@@ -197,16 +206,16 @@ if (goog.DEBUG) {
  * @suppress {checkTypes}
  */
 function $hidden_grid(opt_data, opt_ignored, opt_ijData) {
-  soy.asserts.assertType(opt_data.dir == null || (opt_data.dir instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.dir), 'dir', opt_data.dir, 'null|string|undefined');
-  var dir = /** @type {null|string|undefined} */ (opt_data.dir);
   soy.asserts.assertType(goog.isString(opt_data.name) || (opt_data.name instanceof goog.soy.data.SanitizedContent), 'name', opt_data.name, 'string|goog.soy.data.SanitizedContent');
   var name = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.name);
   var rows = goog.asserts.assertArray(opt_data.rows, "expected parameter 'rows' of type list<[label: string, value: ?]>.");
-  var rowList81 = rows;
-  var rowListLen81 = rowList81.length;
-  for (var rowIndex81 = 0; rowIndex81 < rowListLen81; rowIndex81++) {
-    var rowData81 = rowList81[rowIndex81];
-    var inputValue__soy65 = opt_data.value[rowData81.value] ? rowData81.value + ';' + opt_data.value[rowData81.value] : '';
+  soy.asserts.assertType(opt_data.dir == null || (opt_data.dir instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.dir), 'dir', opt_data.dir, 'null|string|undefined');
+  var dir = /** @type {null|string|undefined} */ (opt_data.dir);
+  var rowList87 = rows;
+  var rowListLen87 = rowList87.length;
+  for (var rowIndex87 = 0; rowIndex87 < rowListLen87; rowIndex87++) {
+    var rowData87 = rowList87[rowIndex87];
+    var inputValue__soy71 = opt_data.value[rowData87.value] ? rowData87.value + ';' + opt_data.value[rowData87.value] : '';
     ie_open_start('input');
         iattr('class', 'form-control');
         if (dir) {
@@ -214,8 +223,8 @@ function $hidden_grid(opt_data, opt_ignored, opt_ijData) {
         }
         iattr('name', name);
         iattr('type', 'hidden');
-        if (inputValue__soy65) {
-          iattr('value', inputValue__soy65);
+        if (inputValue__soy71) {
+          iattr('value', inputValue__soy71);
         }
     ie_open_end();
     ie_close('input');
@@ -226,10 +235,10 @@ if (goog.DEBUG) {
   $hidden_grid.soyTemplateName = 'DDMGrid.hidden_grid';
 }
 
-exports.render.params = ["dir","label","name","readOnly","required","showLabel","tip","value","visible"];
-exports.render.types = {"dir":"string","label":"string","name":"string","readOnly":"bool","required":"bool","showLabel":"bool","tip":"string","value":"?","visible":"bool"};
-exports.hidden_grid.params = ["dir","name","value"];
-exports.hidden_grid.types = {"dir":"string","name":"string","value":"?"};
+exports.render.params = ["label","name","pathThemeImages","readOnly","showLabel","value","visible","dir","required","tip"];
+exports.render.types = {"label":"string","name":"string","pathThemeImages":"string","readOnly":"bool","showLabel":"bool","value":"?","visible":"bool","dir":"string","required":"bool","tip":"string"};
+exports.hidden_grid.params = ["name","value","dir"];
+exports.hidden_grid.types = {"name":"string","value":"?","dir":"string"};
 templates = exports;
 return exports;
 

@@ -40,7 +40,6 @@ var iattr = IncrementalDom.attr;
 
 /**
  * @param {{
- *    plusIcon: (!soydata.SanitizedHtml|string),
  *    strings: {ruleBuilder: string}
  * }} opt_data
  * @param {(null|undefined)=} opt_ignored
@@ -49,8 +48,6 @@ var iattr = IncrementalDom.attr;
  * @suppress {checkTypes}
  */
 function $render(opt_data, opt_ignored, opt_ijData) {
-  soy.asserts.assertType((opt_data.plusIcon instanceof Function) || (opt_data.plusIcon instanceof soydata.UnsanitizedText) || goog.isString(opt_data.plusIcon), 'plusIcon', opt_data.plusIcon, 'Function');
-  var plusIcon = /** @type {Function} */ (opt_data.plusIcon);
   var strings = goog.asserts.assertObject(opt_data.strings, "expected parameter 'strings' of type [ruleBuilder: string].");
   ie_open('div', null, null,
       'class', 'form-builder-rule-builder-container');
@@ -61,17 +58,6 @@ function $render(opt_data, opt_ignored, opt_ijData) {
     ie_close('h1');
     ie_void('div', null, null,
         'class', 'liferay-ddm-form-rule-rules-list-container');
-    ie_open('div', null, null,
-        'class', 'form-builder-rule-builder-add-rule-container');
-      ie_open('div', null, null,
-          'class', 'btn-action-secondary btn-bottom-right dropdown form-builder-rule-builder-add-rule-button');
-        ie_open('button', null, null,
-            'class', 'btn btn-primary form-builder-rule-builder-add-rule-button-icon',
-            'type', 'button');
-          plusIcon();
-        ie_close('button');
-      ie_close('div');
-    ie_close('div');
   ie_close('div');
 }
 exports.render = $render;
@@ -603,8 +589,8 @@ if (goog.DEBUG) {
 }
 soy.$$registerDelegateFn(soy.$$getDelTemplateId('DDMRuleBuilder.action.idom'), 'require', 0, __deltemplate_s318_831406f5);
 
-exports.render.params = ["plusIcon"];
-exports.render.types = {"plusIcon":"html"};
+exports.render.params = [];
+exports.render.types = {};
 exports.rule_list.params = ["kebab","strings"];
 exports.rule_list.types = {"kebab":"html","strings":"?"};
 exports.empty_list.params = ["message"];

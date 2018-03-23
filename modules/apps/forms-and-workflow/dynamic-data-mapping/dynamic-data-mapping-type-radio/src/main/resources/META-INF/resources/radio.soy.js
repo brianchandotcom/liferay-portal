@@ -61,6 +61,7 @@ soy.$$registerDelegateFn(soy.$$getDelTemplateId('ddm.field.idom'), 'radio', 0, _
  *    label: string,
  *    name: string,
  *    options: !Array<{label: string, value: string}>,
+ *    pathThemeImages: string,
  *    readOnly: boolean,
  *    showLabel: boolean,
  *    value: string,
@@ -83,6 +84,8 @@ function $render(opt_data, opt_ignored, opt_ijData) {
   soy.asserts.assertType(goog.isString(opt_data.name) || (opt_data.name instanceof goog.soy.data.SanitizedContent), 'name', opt_data.name, 'string|goog.soy.data.SanitizedContent');
   var name = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.name);
   var options = goog.asserts.assertArray(opt_data.options, "expected parameter 'options' of type list<[label: string, value: string]>.");
+  soy.asserts.assertType(goog.isString(opt_data.pathThemeImages) || (opt_data.pathThemeImages instanceof goog.soy.data.SanitizedContent), 'pathThemeImages', opt_data.pathThemeImages, 'string|goog.soy.data.SanitizedContent');
+  var pathThemeImages = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.pathThemeImages);
   soy.asserts.assertType(goog.isBoolean(opt_data.readOnly) || opt_data.readOnly === 1 || opt_data.readOnly === 0, 'readOnly', opt_data.readOnly, 'boolean');
   var readOnly = /** @type {boolean} */ (!!opt_data.readOnly);
   soy.asserts.assertType(goog.isBoolean(opt_data.showLabel) || opt_data.showLabel === 1 || opt_data.showLabel === 0, 'showLabel', opt_data.showLabel, 'boolean');
@@ -109,9 +112,14 @@ function $render(opt_data, opt_ignored, opt_ijData) {
             'for', name);
           var dyn0 = label;
           if (typeof dyn0 == 'function') dyn0(); else if (dyn0 != null) itext(dyn0);
+          itext(' ');
           if (required) {
-            ie_void('span', null, null,
-                'class', 'icon-asterisk text-warning');
+            ie_open('svg', null, null,
+                'aria-hidden', 'true',
+                'class', 'lexicon-icon lexicon-icon-asterisk reference-mark');
+              ie_void('use', null, null,
+                  'xlink:href', pathThemeImages + '/lexicon/icons.svg#asterisk');
+            ie_close('svg');
           }
         ie_close('label');
         if (tip) {
@@ -123,17 +131,16 @@ function $render(opt_data, opt_ignored, opt_ijData) {
         }
       ie_close('div');
     }
-    var optionList58 = options;
-    var optionListLen58 = optionList58.length;
-    for (var optionIndex58 = 0; optionIndex58 < optionListLen58; optionIndex58++) {
-      var optionData58 = optionList58[optionIndex58];
+    var optionList59 = options;
+    var optionListLen59 = optionList59.length;
+    for (var optionIndex59 = 0; optionIndex59 < optionListLen59; optionIndex59++) {
+      var optionData59 = optionList59[optionIndex59];
       ie_open('div', null, null,
-          'class', 'form-check ' + (inline ? 'form-check-inline' : ''));
+          'class', 'custom-control ' + (inline ? 'custom-control-inline' : '') + ' custom-radio');
         ie_open('label', null, null,
-            'class', 'form-check-label form-check-label-option-' + optionData58.value,
-            'for', name + '_' + optionData58.value);
+            'for', name + '_' + optionData59.value);
           ie_open_start('input');
-              if (optionData58.value == displayValue__soy5) {
+              if (optionData59.value == displayValue__soy5) {
                 iattr('checked', '');
               }
               if (dir) {
@@ -142,17 +149,20 @@ function $render(opt_data, opt_ignored, opt_ijData) {
               if (readOnly) {
                 iattr('disabled', '');
               }
-              iattr('class', 'form-check-input');
-              iattr('id', name + '_' + optionData58.value);
+              iattr('class', 'custom-control-input');
+              iattr('id', name + '_' + optionData59.value);
               iattr('name', name);
               iattr('type', 'radio');
-              iattr('value', optionData58.value);
+              iattr('value', optionData59.value);
           ie_open_end();
           ie_close('input');
           ie_open('span', null, null,
-              'class', 'form-check-description');
-            var dyn2 = optionData58.label;
-            if (typeof dyn2 == 'function') dyn2(); else if (dyn2 != null) itext(dyn2);
+              'class', 'custom-control-label');
+            ie_open('span', null, null,
+                'class', 'custom-control-label-text');
+              var dyn2 = optionData59.label;
+              if (typeof dyn2 == 'function') dyn2(); else if (dyn2 != null) itext(dyn2);
+            ie_close('span');
           ie_close('span');
         ie_close('label');
       ie_close('div');
@@ -164,8 +174,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'DDMRadio.render';
 }
 
-exports.render.params = ["inline","label","name","readOnly","showLabel","value","visible","dir","predefinedValue","required","tip"];
-exports.render.types = {"inline":"bool","label":"string","name":"string","readOnly":"bool","showLabel":"bool","value":"string","visible":"bool","dir":"string","predefinedValue":"string","required":"bool","tip":"string"};
+exports.render.params = ["inline","label","name","pathThemeImages","readOnly","showLabel","value","visible","dir","predefinedValue","required","tip"];
+exports.render.types = {"inline":"bool","label":"string","name":"string","pathThemeImages":"string","readOnly":"bool","showLabel":"bool","value":"string","visible":"bool","dir":"string","predefinedValue":"string","required":"bool","tip":"string"};
 templates = exports;
 return exports;
 

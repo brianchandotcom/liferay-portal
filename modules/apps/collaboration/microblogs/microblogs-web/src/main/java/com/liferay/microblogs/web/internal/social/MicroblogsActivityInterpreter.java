@@ -18,6 +18,7 @@ import com.liferay.microblogs.constants.MicroblogsPortletKeys;
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.model.MicroblogsEntryConstants;
 import com.liferay.microblogs.service.MicroblogsEntryLocalService;
+import com.liferay.microblogs.web.internal.util.MicroblogsWebUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -102,7 +103,10 @@ public class MicroblogsActivityInterpreter
 			}
 		}
 
-		sb.append(HtmlUtil.escape(microblogsEntry.getContent()));
+		sb.append(
+			MicroblogsWebUtil.getProcessedContent(
+				HtmlUtil.replaceNewLine(microblogsEntry.getContent()),
+				serviceContext));
 
 		return sb.toString();
 	}

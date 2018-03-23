@@ -14,43 +14,52 @@
 
 package com.liferay.wiki.uad.test;
 
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.wiki.model.WikiPage;
-
-import org.junit.Assume;
+import com.liferay.wiki.service.WikiPageLocalService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author William Newbury
  */
 @Component(immediate = true, service = WikiPageUADEntityTestHelper.class)
 public class WikiPageUADEntityTestHelper {
-	/**
-	 * Implement addWikiPage() to enable some UAD tests.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid WikiPages with a specified user ID in order to execute correctly. Implement addWikiPage() such that it creates a valid WikiPage with the specified user ID value and returns it in order to enable the UAD tests that depend on it.
-	 * </p>
-	 *
-	 */
+
 	public WikiPage addWikiPage(long userId) throws Exception {
-		Assume.assumeTrue(false);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId());
 
-		return null;
+		return _wikiPageLocalService.addPage(
+			userId, RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
+			serviceContext);
 	}
 
-	/**
-	 * Implement addWikiPageWithStatusByUserId() to enable some UAD tests.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid WikiPages with specified user ID and status by user ID in order to execute correctly. Implement addWikiPageWithStatusByUserId() such that it creates a valid WikiPage with the specified user ID and status by user ID values and returns it in order to enable the UAD tests that depend on it.
-	 * </p>
-	 *
-	 */
-	public WikiPage addWikiPageWithStatusByUserId(long userId,
-		long statusByUserId) throws Exception {
-		Assume.assumeTrue(false);
+	public WikiPage addWikiPageWithStatusByUserId(
+			long userId, long statusByUserId)
+		throws Exception {
 
-		return null;
+		WikiPage wikiPage = addWikiPage(userId);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId());
+
+		_wikiPageLocalService.updateStatus(
+			statusByUserId, wikiPage, WorkflowConstants.STATUS_APPROVED,
+			serviceContext, null);
+
+		return wikiPage;
 	}
+
+	@Reference
+	private WikiPageLocalService _wikiPageLocalService;
+
 }

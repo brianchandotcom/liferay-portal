@@ -229,7 +229,8 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 	}
 
 	private String _getFirstPatternMatchGroup(String string, Pattern pattern) {
-		List<String> patternMatchGroupList = _getPatternMatchGroupList(string, pattern);
+		List<String> patternMatchGroupList = _getPatternMatchGroupList(
+			string, pattern);
 
 		if (patternMatchGroupList.isEmpty()) {
 			return null;
@@ -308,6 +309,12 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 	}
 
 	private Map<String, String> _getLinuxEnvironmentVariablesMap() {
+		String os = "linux";
+
+		if (_osEnvironmentVariablesMapMap.containsKey(os)) {
+			return _osEnvironmentVariablesMapMap.get(os);
+		}
+
 		Map<String, String> linuxEnvironmentVariablesMap = new HashMap<>();
 		String pathValue = JenkinsResultsParserUtil.combine(
 			"/bin:/opt/android/sdk:/opt/android/sdk/platform-tools:",
@@ -318,6 +325,8 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 
 		linuxEnvironmentVariablesMap.put("PATH", pathValue);
 
+		_osEnvironmentVariablesMapMap.put(os, linuxEnvironmentVariablesMap);
+
 		return linuxEnvironmentVariablesMap;
 	}
 
@@ -327,6 +336,12 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 	}
 
 	private Map<String, String> _getOSXEnvironmentVariablesMap() {
+		String os = "osx";
+
+		if (_osEnvironmentVariablesMapMap.containsKey(os)) {
+			return _osEnvironmentVariablesMapMap.get(os);
+		}
+
 		Map<String, String> osxEnvironmentVariablesMap = new HashMap<>();
 
 		osxEnvironmentVariablesMap.put("HOME", "/Users/administrator");
@@ -337,10 +352,14 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 
 		osxEnvironmentVariablesMap.put("PATH", pathValue);
 
+		_osEnvironmentVariablesMapMap.put(os, osxEnvironmentVariablesMap);
+
 		return osxEnvironmentVariablesMap;
 	}
 
-	private List<String> _getPatternMatchGroupList(String string, Pattern pattern) {
+	private List<String> _getPatternMatchGroupList(
+		String string, Pattern pattern) {
+
 		Matcher matcher = pattern.matcher(string);
 
 		List<String> patternMatchGroups = new ArrayList<>();
@@ -476,6 +495,12 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 	}
 
 	private Map<String, String> _getWindowsEnvironmentVariablesMap() {
+		String os = "windows";
+
+		if (_osEnvironmentVariablesMapMap.containsKey(os)) {
+			return _osEnvironmentVariablesMapMap.get(os);
+		}
+
 		Map<String, String> windowsEnvironmentVariablesMap = new HashMap<>();
 
 		String path = JenkinsResultsParserUtil.combine(
@@ -497,6 +522,8 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 		windowsEnvironmentVariablesMap.put(
 			"JAVA_HOME", "/c/Program Files/Java/jdk1.7.0_55");
 		windowsEnvironmentVariablesMap.put("PATH", path);
+
+		_osEnvironmentVariablesMapMap.put(os, windowsEnvironmentVariablesMap);
 
 		return windowsEnvironmentVariablesMap;
 	}
@@ -1090,6 +1117,8 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 		"\\((.+?)/(.+?)/(.+)\\)");
 	private static final Pattern _masterPropertyPattern = Pattern.compile(
 		"\\((.+?)/(.+)\\)");
+	private static Map<String, Map<String, String>>
+		_osEnvironmentVariablesMapMap = new HashMap<>();
 	private static final Pattern _reluctantParenthesesPattern = Pattern.compile(
 		"\\((.+?)\\)");
 	private static final Pattern _shortChildJobNamePattern = Pattern.compile(

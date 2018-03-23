@@ -55,7 +55,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 
-<div class="container-fluid-1280">
+<div class="container-fluid container-fluid-max-xl container-view">
 	<liferay-ui:search-container
 		emptyResultsMessage="no-configurations-were-found"
 		iteratorURL="<%= portletURL %>"

@@ -163,7 +163,9 @@
 
 		<execute macro="Alert#viewSuccessMessage" />
 
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no categories." />
+		<execute macro="PortletEntry#viewEmptyMessage">
+			<var name="entity" value="Categories" />
+		</execute>
 		<execute function="AssertTextNotPresent" value1="${categoryName}" />
 	</command>
 
@@ -179,7 +181,9 @@
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
 		<execute macro="Alert#viewSuccessMessage" />
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no categories." />
+		<execute macro="PortletEntry#viewEmptyMessage">
+			<var name="entity" value="Categories" />
+		</execute>
 	</command>
 
 	<command name="deleteCategoryByMenuCP">
@@ -195,7 +199,9 @@
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
 		<execute macro="Alert#viewSuccessMessage" />
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no categories." />
+		<execute macro="PortletEntry#viewEmptyMessage">
+			<var name="entity" value="Categories" />
+		</execute>
 		<execute function="AssertTextNotPresent" value1="${categoryName}" />
 	</command>
 
@@ -469,7 +475,9 @@
 		<if>
 			<equals arg1="${nullResult}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no categories." />
+				<execute macro="PortletEntry#viewEmptyMessage">
+					<var name="entity" value="Categories" />
+				</execute>
 			</then>
 		</if>
 	</command>

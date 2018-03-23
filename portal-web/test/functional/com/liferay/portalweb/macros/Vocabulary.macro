@@ -299,7 +299,9 @@
 		<if>
 			<equals arg1="${nullResult}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no vocabularies." />
+				<execute macro="PortletEntry#viewEmptyMessage">
+					<var name="entity" value="Vocabularies" />
+				</execute>
 			</then>
 		</if>
 	</command>

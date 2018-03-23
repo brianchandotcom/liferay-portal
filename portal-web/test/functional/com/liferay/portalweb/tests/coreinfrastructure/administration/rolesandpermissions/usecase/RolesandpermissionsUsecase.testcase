@@ -2213,7 +2213,9 @@
 			<var name="portlet" value="Site Teams" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no site teams." />
+		<execute macro="PortletEntry#viewEmptyMessage">
+			<var name="entity" value="Site Teams" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Members" />

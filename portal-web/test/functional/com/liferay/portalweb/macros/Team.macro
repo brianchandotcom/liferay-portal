@@ -283,7 +283,9 @@
 	<command name="viewDefaultCP">
 		<var name="key_teamName" value="${teamName}" />
 
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no site teams." />
+		<execute macro="PortletEntry#viewEmptyMessage">
+			<var name="entity" value="Site Teams" />
+		</execute>
 		<execute function="AssertTextNotPresent" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
 	</command>
 

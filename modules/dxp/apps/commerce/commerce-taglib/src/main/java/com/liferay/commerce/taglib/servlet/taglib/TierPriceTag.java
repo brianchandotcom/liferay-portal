@@ -116,8 +116,8 @@ public class TierPriceTag extends IncludeTag {
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
-	public void setQuantityInputId(String quantityInputId) {
-		_quantityInputId = quantityInputId;
+	public void setTaglibQuantityInputId(String taglibQuantityInputId) {
+		_taglibQuantityInputId = taglibQuantityInputId;
 	}
 
 	@Override
@@ -127,7 +127,7 @@ public class TierPriceTag extends IncludeTag {
 		_commerceCurrencyId = 0;
 		_cpInstanceId = 0;
 		_commerceTierPriceEntries = null;
-		_quantityInputId = null;
+		_taglibQuantityInputId = null;
 	}
 
 	@Override
@@ -146,7 +146,8 @@ public class TierPriceTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-commerce:tier-price:cpInstanceId", _cpInstanceId);
 		request.setAttribute(
-			"liferay-commerce:tier-price:quantityInputId", _quantityInputId);
+			"liferay-commerce:tier-price:taglibQuantityInputId",
+			_taglibQuantityInputId);
 	}
 
 	private static final String _PAGE = "/tier_price/page.jsp";
@@ -156,6 +157,6 @@ public class TierPriceTag extends IncludeTag {
 	private long _commerceCurrencyId;
 	private List<CommerceTierPriceEntry> _commerceTierPriceEntries;
 	private long _cpInstanceId;
-	private String _quantityInputId;
+	private String _taglibQuantityInputId;
 
 }

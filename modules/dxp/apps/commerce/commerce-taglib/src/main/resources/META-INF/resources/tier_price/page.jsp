@@ -17,19 +17,19 @@
 <%@ include file="/tier_price/init.jsp" %>
 
 <%
-	List<CommerceTierPriceEntry> commerceTierPriceEntries = (List<CommerceTierPriceEntry>)request.getAttribute("liferay-commerce:tier-price:commerceTierPriceEntries");
-	long commerceCurrencyId = (long)request.getAttribute("liferay-commerce:tier-price:commerceCurrencyId");
-	long cpInstanceId = (long)request.getAttribute("liferay-commerce:tier-price:cpInstanceId");
-	String quantityInputId = (String)request.getAttribute("liferay-commerce:tier-price:quantityInputId");
+List<CommerceTierPriceEntry> commerceTierPriceEntries = (List<CommerceTierPriceEntry>)request.getAttribute("liferay-commerce:tier-price:commerceTierPriceEntries");
+long commerceCurrencyId = (long)request.getAttribute("liferay-commerce:tier-price:commerceCurrencyId");
+long cpInstanceId = (long)request.getAttribute("liferay-commerce:tier-price:cpInstanceId");
+String taglibQuantityInputId = (String)request.getAttribute("liferay-commerce:tier-price:taglibQuantityInputId");
 
-	String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
+String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 %>
 
 <c:if test="<%= (commerceTierPriceEntries != null) && !commerceTierPriceEntries.isEmpty() %>">
 
 	<%
-		for (CommerceTierPriceEntry commerceTierPriceEntry : commerceTierPriceEntries) {
-		String formattedPrice = CommercePriceCalculationLocalServiceUtil.getFormattedFinalPrice(scopeGroupId, commerceCurrencyId, user.getUserId(), cpInstanceId, commerceTierPriceEntry.getMinQuantity());
+	for (CommerceTierPriceEntry commerceTierPriceEntry : commerceTierPriceEntries) {
+	String formattedPrice = CommercePriceCalculationLocalServiceUtil.getFormattedFinalPrice(scopeGroupId, commerceCurrencyId, user.getUserId(), cpInstanceId, commerceTierPriceEntry.getMinQuantity());
 	%>
 
 		<div class="form-group-item">
@@ -45,7 +45,7 @@
 		</div>
 
 	<%
-		}
+	}
 	%>
 
 	<script use="aui-base">
@@ -53,7 +53,7 @@
 			window,
 			'<%= randomNamespace %>setQuantity',
 			function(qt) {
-				var quantityNode = document.querySelector('#<%= quantityInputId %>');
+				var quantityNode = document.querySelector('#<%= taglibQuantityInputId %>');
 
 				if (quantityNode) {
 					quantityNode.value = qt;

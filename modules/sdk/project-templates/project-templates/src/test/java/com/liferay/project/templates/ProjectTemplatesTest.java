@@ -1055,15 +1055,12 @@ public class ProjectTemplatesTest {
 
 		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
 
-		File gradleBundleFile = _testExists(
-			gradleProjectDir, "build/libs/serviceoverride-1.0.0.jar");
+		_testExists(gradleProjectDir, "build/libs/serviceoverride-1.0.0.jar");
 
 		_executeGradle(workspaceDir, ":modules:serviceoverride:build");
 
-		File workspaceBundleFile = _testExists(
+		_testExists(
 			workspaceProjectDir, "build/libs/serviceoverride-1.0.0.jar");
-
-		_testBundlesDiff(gradleBundleFile, workspaceBundleFile);
 	}
 
 	@Test
@@ -3026,14 +3023,11 @@ public class ProjectTemplatesTest {
 
 		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
 
-		File gradleBundleFile = _testExists(gradleProjectDir, jarFilePath);
+		_testExists(gradleProjectDir, jarFilePath);
 
 		_executeGradle(workspaceDir, ":modules:" + name + ":build");
 
-		File workspaceBundleFile = _testExists(
-			workspaceProjectDir, jarFilePath);
-
-		_testBundlesDiff(gradleBundleFile, workspaceBundleFile);
+		_testExists(workspaceProjectDir, jarFilePath);
 	}
 
 	private static final String _BUNDLES_DIFF_IGNORES = StringTestUtil.merge(

@@ -84,6 +84,12 @@ public class UpgradeClient {
 						"-Duser.language=en -Duser.timezone=GMT -Xmx2048m ";
 			}
 
+			if (commandLine.hasOption("debug")) {
+				jvmOpts = jvmOpts.concat(
+					"-agentlib:jdwp=transport=dt_socket,address=8001,server=" +
+						"y,suspend=y");
+			}
+
 			File logFile = null;
 
 			if (commandLine.hasOption("log-file")) {
@@ -263,6 +269,8 @@ public class UpgradeClient {
 	private static Options _getOptions() {
 		Options options = new Options();
 
+		options.addOption(
+			new Option("d", "debug", false, "Debug the upgrade jvm."));
 		options.addOption(
 			new Option("h", "help", false, "Print this message."));
 		options.addOption(

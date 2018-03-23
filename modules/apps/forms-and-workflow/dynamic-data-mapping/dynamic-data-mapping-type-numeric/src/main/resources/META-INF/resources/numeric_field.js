@@ -1,6 +1,8 @@
 AUI.add(
 	'liferay-ddm-form-field-numeric',
 	function(A) {
+		var CSS_SETTINGS_SIDEBAR = A.getClassName('liferay', 'ddm', 'form', 'builder', 'field', 'settings', 'sidebar', 'content');
+
 		new A.TooltipDelegate(
 			{
 				position: 'left',
@@ -40,8 +42,9 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						instance.bindInputEvent('keypress', A.bind('_onNumericFieldKeyPress', instance));
-						instance.bindInputEvent('keyup', A.bind('_onNumericFieldKeyUp', instance));
+						instance._eventHandlers.push(
+							instance.after('render', instance._afterNumericFieldRender, instance)
+						);
 
 						instance.evaluate = A.debounce(
 							function() {
@@ -51,6 +54,35 @@ AUI.add(
 						);
 					},
 
+					applyMask: function(fieldNode) {
+						var instance = this;
+
+						var dataType = instance.get('dataType');
+						var maskController = fieldNode.getData('mask-controller');
+
+						if (maskController) {
+							maskController.destroy();
+						}
+
+						var numberMaskOptions = instance.getIntegerMaskConfig();
+
+						if (dataType == 'double') {
+							numberMaskOptions = instance.getDecimalMaskConfig();
+						}
+
+						var numberMask = DDMNumeric.createNumberMask(numberMaskOptions);
+
+						instance.lastDataType = dataType;
+						instance.maskedInputController = DDMNumeric.vanillaTextMask(
+							{
+								inputElement: fieldNode.getDOM(),
+								mask: numberMask
+							}
+						);
+
+						fieldNode.setData('mask-controller', instance.maskedInputController);
+					},
+
 					getChangeEventName: function() {
 						return 'input';
 					},
@@ -58,6 +90,29 @@ AUI.add(
 					getEvaluationContext: function(context) {
 						return {
 							dataType: context.dataType
+						}
+					},
+
+					getDecimalMaskConfig: function() {
+						var instance = this;
+
+						return {
+							allowDecimal: true,
+							decimalLimit: 6,
+							decimalSymbol: ',',
+							includeThousandsSeparator: true,
+							prefix: '',
+							thousandsSeparatorSymbol: '.'
+						};
+					},
+
+					getIntegerMaskConfig: function() {
+						var instance = this;
+
+						return {
+							allowLeadingZeroes: true,
+							includeThousandsSeparator: false,
+							prefix: ''
 						};
 					},
 
@@ -98,29 +153,23 @@ AUI.add(
 						NumericField.superclass.showErrorMessage.apply(instance, arguments);
 					},
 
-					_onNumericFieldKeyPress: function(event) {
-						event = event || window.event;
-
-						var charCode = (typeof event.which == 'number') ? event.which : event.keyCode;
-
-						if (charCode < 32 || (charCode >= 48 && charCode <= 57) || charCode === 46) {
-							return true;
-						}
-
-						event.preventDefault();
-
-						return false;
-					},
-
-					_onNumericFieldKeyUp: function() {
+					_afterNumericFieldRender: function() {
 						var instance = this;
 
-						var value = String(instance.get('value'));
+						var fieldNode = instance.getInputNode();
+						var fieldSidebar = A.one('.' + CSS_SETTINGS_SIDEBAR + ' .liferay-ddm-form-field-numeric');
 
-						var inputNode = instance.getInputNode();
+						if ((instance.maskedInputController) && (instance.get('dataType') == instance.lastDataType)) {
+							return;
+						}
 
-						inputNode.val(value.replace(/[^0-9.]/g, ''));
+						if ((instance.maskedInputController) && (fieldSidebar)) {
+							fieldNode = fieldSidebar.one('input');
+						}
+
+						instance.applyMask(fieldNode);
 					}
+
 				}
 			}
 		);

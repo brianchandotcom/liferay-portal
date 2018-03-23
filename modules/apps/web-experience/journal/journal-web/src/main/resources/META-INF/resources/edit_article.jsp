@@ -154,7 +154,13 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 	<portlet:param name="mvcPath" value="/edit_article.jsp" />
 </portlet:renderURL>
 
-<aui:form action="<%= editArticleActionURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm1" onSubmit="event.preventDefault();">
+<liferay-frontend:edit-form
+	action="<%= editArticleActionURL %>"
+	enctype="multipart/form-data"
+	method="post"
+	name="fm1"
+	onSubmit="event.preventDefault();"
+>
 	<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" />
 	<aui:input name="hideDefaultSuccessMessage" type="hidden" value="<%= hideDefaultSuccessMessage || (classNameId == PortalUtil.getClassNameId(DDMStructure.class)) %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
@@ -257,16 +263,16 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 			</c:if>
 		</c:if>
 
-		<liferay-ui:form-navigator
+		<liferay-frontend:form-navigator
 			formModelBean="<%= article %>"
-			formName="fm1"
 			id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_JOURNAL %>"
-			markupView="lexicon"
 			showButtons="<%= false %>"
 		/>
 	</div>
 
-	<aui:button-row cssClass="journal-article-button-row">
+	<liferay-frontend:button-row
+		cssClass="journal-article-button-row"
+	>
 
 		<%
 		boolean hasSavePermission = false;
@@ -304,8 +310,8 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 		</c:if>
 
 		<aui:button href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+	</liferay-frontend:button-row>
+</liferay-frontend:edit-form>
 
 <liferay-portlet:renderURL plid="<%= JournalUtil.getPreviewPlid(article, themeDisplay) %>" var="previewArticleContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcPath" value="/preview_article_content.jsp" />

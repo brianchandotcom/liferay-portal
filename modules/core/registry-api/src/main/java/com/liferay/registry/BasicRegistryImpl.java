@@ -588,10 +588,10 @@ public class BasicRegistryImpl implements Registry {
 
 			if (thisServiceRanking != otherServiceRanking) {
 				if (thisServiceRanking < otherServiceRanking) {
-					return -1;
+					return 1;
 				}
 
-				return 1;
+				return -1;
 			}
 
 			long thisServiceId = (Long)_properties.get("service.id");

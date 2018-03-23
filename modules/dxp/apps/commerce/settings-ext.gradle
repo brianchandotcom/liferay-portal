@@ -1,0 +1,8 @@
+String projectPathPrefix = properties["project.path.prefix"]
+
+include "${projectPathPrefix}:commerce-cloud:server"
+
+ProjectDescriptor projectDescriptor = project("${projectPathPrefix}:commerce-cloud:server")
+
+projectDescriptor.name = "commerce-cloud-server"
+projectDescriptor.projectDir = file("commerce-cloud/server")

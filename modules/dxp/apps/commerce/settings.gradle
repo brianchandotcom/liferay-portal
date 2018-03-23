@@ -13,3 +13,5 @@ buildscript {
 }
 
 apply plugin: "com.liferay.settings.plugin"
+
+apply from: "settings-ext.gradle"

@@ -1,0 +1,98 @@
+buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.defaults", version: "latest.release"
+		classpath group: "gradle.plugin.org.hidetake", name: "gradle-swagger-generator-plugin", version: "2.11.0"
+	}
+
+	repositories {
+		mavenLocal()
+
+		maven {
+			url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+apply plugin: "application"
+apply plugin: "com.liferay.source.formatter"
+apply plugin: "com.liferay.source.formatter.defaults"
+apply plugin: "org.hidetake.swagger.generator"
+
+task generateVertx(type: JavaCompile)
+
+sourceCompatibility = "1.8"
+
+group = "com.liferay"
+mainClassName = "io.vertx.core.Launcher"
+
+File vertxSrcDir = new File(buildDir, "vertx")
+
+compileJava {
+	dependsOn generateSwaggerCode
+	dependsOn generateVertx
+}
+
+dependencies {
+	compile group: "com.fasterxml.jackson.datatype", name: "jackson-datatype-jsr310", version: "2.9.5"
+	compile group: "io.swagger", name: "swagger-annotations", version: "1.5.18"
+	compile group: "io.vertx", name: "vertx-config", version: "3.5.1"
+	compile group: "io.vertx", name: "vertx-mongo-client", version: "3.5.1"
+	compile group: "io.vertx", name: "vertx-service-factory", version: "3.5.1"
+	compile group: "io.vertx", name: "vertx-service-proxy", version: "3.5.1"
+	compile group: "io.vertx", name: "vertx-web", version: "3.5.1"
+	compile group: "io.vertx", name: "vertx-web-client", version: "3.5.1"
+
+	compileOnly group: "io.vertx", name: "vertx-codegen", version: "3.5.1"
+
+	swaggerCodegen group: "io.swagger", name: "swagger-codegen-cli", version: "2.3.1"
+
+	testCompile group: "junit", name: "junit", version: "4.12"
+}
+
+generateVertx {
+	classpath = configurations.compileClasspath
+	description = "Runs the Vert.x code generator."
+	destinationDir = vertxSrcDir
+	group = "build"
+
+	options.compilerArgs = [
+		"-Acodegen.output=${destinationDir.absolutePath}",
+		"-proc:only",
+		"-processor", "io.vertx.codegen.CodeGenProcessor"
+	]
+
+	source = sourceSets.main.java
+}
+
+repositories {
+	maven {
+		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
+run {
+	args "run", "com.liferay.commerce.cloud.server.CommerceCloudServerVerticle"
+}
+
+sourceSets {
+	main {
+		java {
+			srcDirs vertxSrcDir
+			srcDirs new File(buildDir, "swagger-code-eleflow/src/main/java")
+		}
+	}
+}
+
+swaggerSources {
+	eleflow {
+		code {
+			components = ["models"]
+			configFile = file("swagger-config.json")
+			language = "java"
+			library = "vertx"
+			rawOptions = ["--model-name-prefix", "Eleflow", "--model-package", "com.liferay.commerce.cloud.server.eleflow.model"]
+		}
+
+		inputFile = file("swagger/EleflowPredictiveCommerce-Prod-swagger-apigateway.yaml")
+	}
+}

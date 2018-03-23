@@ -80,6 +80,25 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description><![CDATA[Creates a button row <code>&lt;div&gt;</code> tag to wrap <code>&lt;aui:button&gt;</code> components and offer additional styling.]]></description>
+		<name>button-row</name>
+		<tag-class>com.liferay.taglib.aui.ButtonRowTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description><![CDATA[A CSS class for styling the component.]]></description>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description><![CDATA[An ID for the component instance.]]></description>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
+	<tag>
 		<name>cards-treeview</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.soy.CardsTreeviewTag</tag-class>
 		<body-content>empty</body-content>

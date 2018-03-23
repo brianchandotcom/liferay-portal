@@ -46,9 +46,6 @@ body {
 
 	.company-details {
 	    float: left;
-	    overflow: hidden;
-	    text-overflow: ellipsis;
-	    white-space: nowrap;
 	    width: calc(100% - 32px);
 
 	    @include sm {

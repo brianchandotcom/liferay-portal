@@ -16,7 +16,6 @@ package com.liferay.site.admin.web.internal.display.context;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.site.admin.web.internal.constants.SiteAdminConstants;
 import com.liferay.site.initializer.GroupInitializer;
 
@@ -30,14 +29,8 @@ public class SiteInitializerItemDisplayContext {
 	public SiteInitializerItemDisplayContext(
 		GroupInitializer groupInitializer, Locale locale) {
 
-		String icon = groupInitializer.getThumbnailSrc();
-
-		if (Validator.isNull(icon)) {
-			icon = "site-template";
-		}
-
 		_groupInitializerKey = groupInitializer.getKey();
-		_icon = icon;
+		_icon = groupInitializer.getThumbnailSrc();
 		_layoutSetPrototypeId = 0;
 		_name = groupInitializer.getName(locale);
 		_type = SiteAdminConstants.CREATION_TYPE_INITIALIZER;
@@ -47,7 +40,7 @@ public class SiteInitializerItemDisplayContext {
 		LayoutSetPrototype layoutSetPrototype, Locale locale) {
 
 		_groupInitializerKey = StringPool.BLANK;
-		_icon = "site-template";
+		_icon = StringPool.BLANK;
 		_layoutSetPrototypeId = layoutSetPrototype.getLayoutSetPrototypeId();
 		_name = layoutSetPrototype.getName(locale);
 		_type = SiteAdminConstants.CREATION_TYPE_SITE_TEMPLATE;

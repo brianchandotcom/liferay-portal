@@ -63,23 +63,50 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 					<%
 					Map<String, Object> addLayoutData = new HashMap<>();
 
-					addLayoutData.put("creation-type", siteInitializerItem.getType());
+					String siteInitializerType = siteInitializerItem.getType();
+
+					addLayoutData.put("creation-type", siteInitializerType);
 					addLayoutData.put("group-initializer-key", siteInitializerItem.getGroupInitializerKey());
 					addLayoutData.put("layout-set-prototype-id", siteInitializerItem.getLayoutSetPrototypeId());
+
+					if (siteInitializerType.equals(SiteAdminConstants.CREATION_TYPE_SITE_TEMPLATE) || Validator.isBlank(siteInitializerItem.getIcon())) {
 					%>
 
-					<liferay-frontend:icon-vertical-card
-						actionJspServletContext="<%= application %>"
-						cssClass='<%= renderResponse.getNamespace() + "add-site-action-option" %>'
-						data="<%= addLayoutData %>"
-						icon="<%= siteInitializerItem.getIcon() %>"
-						resultRow="<%= row %>"
-						rowChecker="<%= searchContainer.getRowChecker() %>"
-						title="<%= siteInitializerItem.getName() %>"
-						url="javascript:;"
-					>
+						<liferay-frontend:icon-vertical-card
+							actionJspServletContext="<%= application %>"
+							cssClass='<%= renderResponse.getNamespace() + "add-site-action-option" %>'
+							data="<%= addLayoutData %>"
+							icon="site-template"
+							resultRow="<%= row %>"
+							rowChecker="<%= searchContainer.getRowChecker() %>"
+							title="<%= siteInitializerItem.getName() %>"
+							url="javascript:;"
+						>
 
-					</liferay-frontend:icon-vertical-card>
+						</liferay-frontend:icon-vertical-card>
+
+					<%
+					}
+					else {
+					%>
+
+						<liferay-frontend:vertical-card
+							actionJspServletContext="<%= application %>"
+							cssClass='<%= renderResponse.getNamespace() + "add-site-action-option" %>'
+							data="<%= addLayoutData %>"
+							imageUrl="<%= HtmlUtil.escape(siteInitializerItem.getIcon()) %>"
+							resultRow="<%= row %>"
+							rowChecker="<%= searchContainer.getRowChecker() %>"
+							title="<%= siteInitializerItem.getName() %>"
+							url="javascript:;"
+						>
+
+						</liferay-frontend:vertical-card>
+
+					<%
+					}
+					%>
+
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 

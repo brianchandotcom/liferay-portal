@@ -303,7 +303,7 @@
 	<tag>
 		<description><![CDATA[Creates a form that offers additional styling and custom namespacing.]]></description>
 		<name>form</name>
-		<tag-class>com.liferay.taglib.aui.FormTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.FormTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<description><![CDATA[Where to send the form data when the form is submitted.]]></description>

@@ -14,17 +14,15 @@
 
 package com.liferay.frontend.taglib.servlet.taglib.base;
 
+import com.liferay.taglib.util.IncludeTag;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 
 /**
- * @author Eduardo Lundgren
- * @author Bruno Basto
- * @author Nathan Cavanaugh
- * @author Julio Camarero
- * @generated
+ * @author Eudaldo Alonso
  */
-public abstract class BaseFormTag extends com.liferay.taglib.util.IncludeTag {
+public abstract class BaseFormTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
@@ -141,34 +139,40 @@ public abstract class BaseFormTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("aui:form:action", _action);
-		request.setAttribute("aui:form:cssClass", _cssClass);
-		request.setAttribute("aui:form:escapeXml", String.valueOf(_escapeXml));
-		request.setAttribute("aui:form:inlineLabels", String.valueOf(_inlineLabels));
-		request.setAttribute("aui:form:method", _method);
-		request.setAttribute("aui:form:name", _name);
-		request.setAttribute("aui:form:onSubmit", _onSubmit);
-		request.setAttribute("aui:form:portletNamespace", _portletNamespace);
-		request.setAttribute("aui:form:useNamespace", String.valueOf(_useNamespace));
-		request.setAttribute("aui:form:validateOnBlur", String.valueOf(_validateOnBlur));
+		request.setAttribute("liferay-frontend:form:action", _action);
+		request.setAttribute("liferay-frontend:form:cssClass", _cssClass);
+		request.setAttribute(
+			"liferay-frontend:form:escapeXml", String.valueOf(_escapeXml));
+		request.setAttribute(
+			"liferay-frontend:form:inlineLabels",
+			String.valueOf(_inlineLabels));
+		request.setAttribute("liferay-frontend:form:method", _method);
+		request.setAttribute("liferay-frontend:form:name", _name);
+		request.setAttribute("liferay-frontend:form:onSubmit", _onSubmit);
+		request.setAttribute(
+			"liferay-frontend:form:portletNamespace", _portletNamespace);
+		request.setAttribute(
+			"liferay-frontend:form:useNamespace",
+			String.valueOf(_useNamespace));
+		request.setAttribute(
+			"liferay-frontend:form:validateOnBlur",
+			String.valueOf(_validateOnBlur));
 	}
 
-	protected static final String _ATTRIBUTE_NAMESPACE = "aui:form:";
+	private static final String _ATTRIBUTE_NAMESPACE = "liferay-frontend:form:";
 
-	private static final String _END_PAGE =
-		"/html/taglib/aui/form/end.jsp";
+	private static final String _END_PAGE = "/form/end.jsp";
 
-	private static final String _START_PAGE =
-		"/html/taglib/aui/form/start.jsp";
+	private static final String _START_PAGE = "/form/start.jsp";
 
-	private String _action = null;
-	private String _cssClass = null;
+	private String _action;
+	private String _cssClass;
 	private boolean _escapeXml = true;
-	private boolean _inlineLabels = false;
+	private boolean _inlineLabels;
 	private String _method = "post";
 	private String _name = "fm";
-	private String _onSubmit = null;
-	private String _portletNamespace = null;
+	private String _onSubmit;
+	private String _portletNamespace;
 	private boolean _useNamespace = true;
 	private boolean _validateOnBlur = true;
 

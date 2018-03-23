@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/aui/form/init.jsp" %>
+<%@ include file="/form/init.jsp" %>
 
 <%
 String fullName = namespace.concat(HtmlUtil.escapeAttribute(name));

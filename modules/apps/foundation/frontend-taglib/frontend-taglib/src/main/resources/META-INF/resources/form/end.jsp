@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/aui/form/init.jsp" %>
+<%@ include file="/form/init.jsp" %>
 
 	<c:if test="<%= (checkboxNames != null) && !checkboxNames.isEmpty() %>">
 		<aui:input name="checkboxNames" type="hidden" value="<%= StringUtil.merge(checkboxNames) %>" />

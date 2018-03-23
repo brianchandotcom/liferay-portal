@@ -12,23 +12,30 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
-@generated
 --%>
 
-<%@ include file="/html/taglib/taglib-init.jsp" %>
+<%@ include file="/init.jsp" %>
+
+<%@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
+page import="com.liferay.portal.kernel.servlet.taglib.aui.ValidatorTag" %><%@
+page import="com.liferay.portal.kernel.util.StringUtil" %><%@
+page import="com.liferay.taglib.util.InlineUtil" %>
 
 <%
-java.lang.String action = GetterUtil.getString((java.lang.String)request.getAttribute("aui:form:action"));
-java.lang.String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:form:cssClass"));
-boolean inlineLabels = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:form:inlineLabels")));
-java.lang.String method = GetterUtil.getString((java.lang.String)request.getAttribute("aui:form:method"), "post");
-java.lang.String name = GetterUtil.getString((java.lang.String)request.getAttribute("aui:form:name"), "fm");
-java.lang.String onSubmit = GetterUtil.getString((java.lang.String)request.getAttribute("aui:form:onSubmit"));
-java.lang.String portletNamespace = GetterUtil.getString((java.lang.String)request.getAttribute("aui:form:portletNamespace"));
-boolean useNamespace = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:form:useNamespace")), true);
-boolean validateOnBlur = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:form:validateOnBlur")), true);
-Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:form:dynamicAttributes");
-%>
+String action = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-frontend:form:action"));
+List<String> checkboxNames = (List<String>)request.getAttribute("LIFERAY_SHARED_aui:form:checkboxNames");
+String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-frontend:form:cssClass"));
+boolean inlineLabels = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-frontend:form:inlineLabels")));
+String method = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-frontend:form:method"), "post");
+String name = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-frontend:form:name"), "fm");
+String onSubmit = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-frontend:form:onSubmit"));
+String portletNamespace = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-frontend:form:portletNamespace"));
+boolean useNamespace = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-frontend:form:useNamespace")), true);
+boolean validateOnBlur = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-frontend:form:validateOnBlur")), true);
+Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("liferay-frontend:form:dynamicAttributes");
+Map<String, List<ValidatorTag>> validatorTagsMap = (Map<String, List<ValidatorTag>>)request.getAttribute("liferay-frontend:form:validatorTagsMap");
 
-<%@ include file="/html/taglib/aui/form/init-ext.jspf" %>
+if (themeDisplay.isAddSessionIdToURL()) {
+	action = PortalUtil.getURLWithSessionId(action, themeDisplay.getSessionId());
+}
+%>

@@ -38,38 +38,6 @@ public class FieldsetTag extends IncludeTag {
 		return super.doStartTag();
 	}
 
-	public boolean getCollapsed() {
-		return _collapsed;
-	}
-
-	public boolean getCollapsible() {
-		return _collapsible;
-	}
-
-	public boolean getColumn() {
-		return _column;
-	}
-
-	public String getCssClass() {
-		return _cssClass;
-	}
-
-	public String getHelpMessage() {
-		return _helpMessage;
-	}
-
-	public String getId() {
-		return _id;
-	}
-
-	public String getLabel() {
-		return _label;
-	}
-
-	public boolean getLocalizeLabel() {
-		return _localizeLabel;
-	}
-
 	public void setCollapsed(boolean collapsed) {
 		_collapsed = collapsed;
 	}
@@ -133,11 +101,11 @@ public class FieldsetTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		if (Validator.isNull(getId()) && Validator.isNotNull(getLabel()) &&
-			getCollapsible()) {
+		if (Validator.isNull(_id) && Validator.isNotNull(_label) &&
+			_collapsible) {
 
 			String id = PortalUtil.getUniqueElementId(
-				request, _getNamespace(), AUIUtil.normalizeId(getLabel()));
+				request, _getNamespace(), AUIUtil.normalizeId(_label));
 
 			setId(_getNamespace() + id);
 		}

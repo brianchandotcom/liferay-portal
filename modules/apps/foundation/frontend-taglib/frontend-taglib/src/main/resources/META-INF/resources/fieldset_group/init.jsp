@@ -15,7 +15,3 @@
 --%>
 
 <%@ include file="/init.jsp" %>
-
-<%
-Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("liferay-frontend:fieldset-group:dynamicAttributes");
-%>

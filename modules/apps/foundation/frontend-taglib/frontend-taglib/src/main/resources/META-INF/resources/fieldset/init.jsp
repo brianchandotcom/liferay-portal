@@ -27,6 +27,6 @@ String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("l
 String helpMessage = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-frontend:fieldset:helpMessage"));
 String id = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-frontend:fieldset:id"));
 String label = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-frontend:fieldset:label"));
-boolean localizeLabel = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-frontend:fieldset:localizeLabel")), true);
+boolean localizeLabel = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-frontend:fieldset:localizeLabel")));
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("liferay-frontend:fieldset:dynamicAttributes");
 %>

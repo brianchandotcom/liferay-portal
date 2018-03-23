@@ -536,10 +536,6 @@
 			<var name="path" value="Topic > Category Name" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Category Name" />
-		</execute>
-
 		<execute macro="Category#viewPath">
 			<var name="categoryName" value="Subcategory Name" />
 			<var name="path" value="Topic > Category Name > Subcategory Name" />
@@ -2329,10 +2325,6 @@
 		<execute macro="Category#viewPath">
 			<var name="categoryName" value="Category Name" />
 			<var name="path" value="Topic > Category Name" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Category Name" />
 		</execute>
 
 		<execute macro="Category#viewPath">

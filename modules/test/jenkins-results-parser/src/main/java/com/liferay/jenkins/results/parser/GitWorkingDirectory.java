@@ -678,10 +678,20 @@ public class GitWorkingDirectory {
 	public List<File> getCurrentBranchFiles() {
 		List<File> currentBranchFiles = new ArrayList<>();
 
+		Branch headBranch = getBranch("HEAD", null);
+
 		ExecutionResult executionResult = executeBashCommands(
 			JenkinsResultsParserUtil.combine(
 				"git diff --diff-filter=AM --name-only ",
-				_getMergeBaseCommitSHA(), " ", getBranchSHA("HEAD")));
+				_getMergeBaseCommitSHA(
+					headBranch, getBranch(_upstreamBranchName, null)),
+				" ", headBranch.getSHA()));
+
+		if (executionResult.getExitValue() != 0) {
+			throw new RuntimeException(
+				"Unable to get current branch files\n" +
+					executionResult.getStandardError());
+		}
 
 		String gitDiffOutput = executionResult.getStandardOut();
 
@@ -1674,9 +1684,20 @@ public class GitWorkingDirectory {
 		}
 	}
 
-	private String _getMergeBaseCommitSHA() {
-		ExecutionResult executionResult = executeBashCommands(
-			"git merge-base HEAD " + _upstreamBranchName);
+	private String _getMergeBaseCommitSHA(Branch... branches) {
+		if (branches.length < 2) {
+			throw new IllegalArgumentException(
+				"Unable to perform merge-base with less than two branches");
+		}
+
+		StringBuilder sb = new StringBuilder("git merge-base");
+
+		for (Branch branch : branches) {
+			sb.append(" ");
+			sb.append(branch.getName());
+		}
+
+		ExecutionResult executionResult = executeBashCommands(sb.toString());
 
 		if (executionResult.getExitValue() != 0) {
 			throw new RuntimeException(

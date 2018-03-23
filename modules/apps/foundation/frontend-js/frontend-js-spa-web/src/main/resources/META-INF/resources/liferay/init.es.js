@@ -13,8 +13,7 @@ import {match} from 'metal-dom';
  * Initializes a Senna App with routes that match both ActionURLs and RenderURLs.
  * It also overrides Liferay's default Liferay.Util.submitForm to makes sure
  * forms are properly submitted using SPA.
- * @return {!App} The Senna App initialized.
- * @review
+ * @return {!App} The Senna App initialized
  */
 
 let initSPA = function() {

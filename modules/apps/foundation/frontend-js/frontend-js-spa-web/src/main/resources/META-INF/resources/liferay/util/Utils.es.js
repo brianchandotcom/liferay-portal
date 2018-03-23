@@ -5,16 +5,14 @@ const MAX_TIMEOUT = Math.pow(2, 31) - 1;
 /**
  * Utils
  *
- * Collection of utilities used by this module.
- * @review
+ * A collection of utilities used by this module
  */
 
 class Utils {
 
 	/**
-	 * Returns the biggest number allowed by the setTimeout function.
-	 * @return {!Number} The number.
-	 * @review
+	 * Returns the maximum number allowed by the `setTimeout` function
+	 * @return {!Number} The number
 	 */
 
 	static getMaxTimeout() {
@@ -22,10 +20,9 @@ class Utils {
 	}
 
 	/**
-	 * Given a portletId, returns the id of it's portlet boundary DOM element.
-	 * @param  {!String} portletId The portlet id.
-	 * @return {!String} The portlet boundary id.
-	 * @review
+	 * Given a portletId, returns the ID of the portlet's boundary DOM element
+	 * @param  {!String} portletId The portlet ID
+	 * @return {!String} The portlet boundary ID
 	 */
 
 	static getPortletBoundaryId(portletId) {
@@ -33,10 +30,9 @@ class Utils {
 	}
 
 	/**
-	 * Given an array of portlet ids, returns an array portlet boundary ids.
-	 * @param  {!Array} The collection of portletIds.
-	 * @return {!Array} The collection of portlet boundary ids.
-	 * @review
+	 * Given an array of portlet IDs, returns an array of portlet boundary IDs
+	 * @param  {!Array} The collection of portletIds
+	 * @return {!Array} The collection of portlet boundary IDs
 	 */
 
 	static getPortletBoundaryIds(portletIds) {
@@ -48,8 +44,7 @@ class Utils {
 	}
 
 	/**
-	 * Calls the destructor of every portlet rendered on the page.
-	 * @review
+	 * Destroys all rendered portlets on the page
 	 */
 
 	static resetAllPortlets() {

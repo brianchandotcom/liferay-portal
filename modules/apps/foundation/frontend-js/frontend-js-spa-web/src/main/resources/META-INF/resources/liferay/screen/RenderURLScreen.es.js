@@ -5,16 +5,14 @@ import EventScreen from './EventScreen.es';
 /**
  * RenderURLScreen
  *
- * This class inherits from EventScreen. It's the screen used for all
- * requests made to RenderURLs.
- * @review
+ * Inherits from {@link EventScreen|EventScreen}. This is the screen used for 
+ * all requests made to RenderURLs.
  */
 
 class RenderURLScreen extends EventScreen {
 
 	/**
 	 * @inheritDoc
-	 * @review
 	 */
 
 	constructor() {

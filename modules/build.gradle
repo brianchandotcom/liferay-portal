@@ -201,8 +201,12 @@ gradle.beforeProject {
 
 		pluginManager.withPlugin("eclipse") {
 			tasks.eclipse.dependsOn {
-				configurations.runtime.allDependencies.withType(ProjectDependency).collect { projectDependency ->  
-					projectDependency.dependencyProject.path + ':eclipse'
+				Set<ProjectDependency> projectDependencies = configurations.runtime.allDependencies.withType(ProjectDependency)
+
+				projectDependencies.collect {
+					ProjectDependency projectDependency ->
+
+					"${projectDependency.dependencyProject.path}:eclipse"
 				}
 			}
 		}

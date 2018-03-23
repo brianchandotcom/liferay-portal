@@ -31,6 +31,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Michael Hashimoto
@@ -151,7 +153,8 @@ public class TestBatchGroup {
 					else if (_filePathIncluded(filePath) &&
 							 !_filePathExcluded(filePath)) {
 
-						testClassFileNamesSet.add(filePath.toString());
+						testClassFileNamesSet.add(
+							_getTestClassPackagePath(filePath.toString()));
 					}
 
 					return FileVisitResult.CONTINUE;
@@ -160,6 +163,20 @@ public class TestBatchGroup {
 			});
 
 		return testClassFileNamesSet;
+	}
+
+	private String _getTestClassPackagePath(String filePath) {
+		Matcher matcher = _testClassPackagePathPattern.matcher(filePath);
+
+		if (matcher.find()) {
+			String packagePath = matcher.group("packagePath");
+
+			packagePath = packagePath.replace(".java", ".class");
+
+			return packagePath;
+		}
+
+		return filePath.replace(".java", ".class");
 	}
 
 	private void _setTestClassGroups() throws Exception {
@@ -262,5 +279,7 @@ public class TestBatchGroup {
 	private final List<String> _testClassNamesIncludes = new ArrayList<>();
 	private final List<PathMatcher> _testClassNamesIncludesPathMatchers =
 		new ArrayList<>();
+	private final Pattern _testClassPackagePathPattern = Pattern.compile(
+		"(.*)(?<packagePath>com/.*)");
 
 }

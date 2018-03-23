@@ -43,8 +43,9 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 	}
 
 	public PortalGitWorkingDirectory(
-		String upstreamBranchName, String workingDirectoryPath,
-		String repositoryName) throws IOException {
+			String upstreamBranchName, String workingDirectoryPath,
+			String repositoryName)
+		throws IOException {
 
 		super(upstreamBranchName, workingDirectoryPath, repositoryName);
 	}

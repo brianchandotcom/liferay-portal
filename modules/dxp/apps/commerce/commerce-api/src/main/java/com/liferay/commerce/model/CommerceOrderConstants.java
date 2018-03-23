@@ -58,11 +58,6 @@ public class CommerceOrderConstants {
 	public static final int ORDER_STATUS_TRANSMITTED =
 		WorkflowConstants.STATUS_INCOMPLETE;
 
-	public static final int[] ORDER_STATUSES = {
-		ORDER_STATUS_OPEN, ORDER_STATUS_IN_PROGRESS, ORDER_STATUS_TO_TRANSMIT,
-		ORDER_STATUS_TRANSMITTED, ORDER_STATUS_COMPLETED, ORDER_STATUS_CANCELLED
-	};
-
 	public static final int PAYMENT_STATUS_AUTHORIZED =
 		WorkflowConstants.STATUS_DRAFT;
 

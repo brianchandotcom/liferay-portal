@@ -19,6 +19,7 @@
 <%
 CommerceOrderEditDisplayContext commerceOrderEditDisplayContext = (CommerceOrderEditDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
+int[] availableOrderStatuses = commerceOrderEditDisplayContext.getAvailableOrderStatuses();
 CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder();
 long commerceOrderId = commerceOrderEditDisplayContext.getCommerceOrderId();
 
@@ -70,13 +71,13 @@ int orderStatus = BeanParamUtil.getInteger(commerceOrder, request, "orderStatus"
 						<aui:select label="order-status" name="orderStatus">
 
 							<%
-							for (int curOrderStatus : CommerceOrderConstants.ORDER_STATUSES) {
+							for (int availableOrderStatus : availableOrderStatuses) {
 							%>
 
 								<aui:option
-									label="<%= CommerceOrderConstants.getOrderStatusLabel(curOrderStatus) %>"
-									selected="<%= curOrderStatus == orderStatus %>"
-									value="<%= curOrderStatus %>"
+									label="<%= CommerceOrderConstants.getOrderStatusLabel(availableOrderStatus) %>"
+									selected="<%= availableOrderStatus == orderStatus %>"
+									value="<%= availableOrderStatus %>"
 								/>
 
 							<%

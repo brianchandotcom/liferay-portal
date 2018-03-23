@@ -1183,6 +1183,7 @@
 		<exception>CommerceOrderPurchaseOrderNumber</exception>
 		<exception>CommerceOrderShippingAddress</exception>
 		<exception>CommerceOrderShippingMethod</exception>
+		<exception>CommerceOrderStatus</exception>
 		<exception>CommerceOrderValidator</exception>
 		<exception>CommercePaymentEngine</exception>
 		<exception>CommercePaymentMethodEngineKey</exception>

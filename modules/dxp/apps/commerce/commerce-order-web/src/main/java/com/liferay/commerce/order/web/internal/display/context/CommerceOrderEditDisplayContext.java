@@ -102,6 +102,11 @@ public class CommerceOrderEditDisplayContext {
 				themeDisplay.getTimeZone());
 	}
 
+	public int[] getAvailableOrderStatuses() throws PortalException {
+		return _commerceOrderService.getAvailableOrderStatuses(
+			getCommerceOrderId());
+	}
+
 	public String getCommerceCurrencyCode() {
 		if (_commerceCurrency != null) {
 			return _commerceCurrency.getCode();

@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -416,6 +417,27 @@ public class CommerceOrderLocalServiceImpl
 	}
 
 	@Override
+	public int[] getAvailableOrderStatuses(long commerceOrderId)
+		throws PortalException {
+
+		if (commerceOrderId <= 0) {
+			return _AVAILABLE_ORDER_STATUSES;
+		}
+
+		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
+			commerceOrderId);
+
+		if (!commerceOrder.isPending() &&
+			ArrayUtil.contains(
+				_AVAILABLE_ORDER_STATUSES, commerceOrder.getOrderStatus())) {
+
+			return _AVAILABLE_ORDER_STATUSES;
+		}
+
+		return new int[] {commerceOrder.getOrderStatus()};
+	}
+
+	@Override
 	public List<CommerceOrder> getCommerceOrders(
 		long groupId, long orderUserId, int start, int end,
 		OrderByComparator<CommerceOrder> orderByComparator) {
@@ -739,6 +761,22 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrderPersistence.update(commerceOrder);
 
 		return commerceOrder;
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CommerceOrder updateOrderStatus(
+			long commerceOrderId, int orderStatus)
+		throws PortalException {
+
+		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
+			commerceOrderId);
+
+		validateOrderStatus(commerceOrder, orderStatus);
+
+		commerceOrder.setOrderStatus(orderStatus);
+
+		return commerceOrderPersistence.update(commerceOrder);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -1112,6 +1150,18 @@ public class CommerceOrderLocalServiceImpl
 		}
 	}
 
+	protected void validateOrderStatus(
+			CommerceOrder commerceOrder, int orderStatus)
+		throws PortalException {
+
+		int[] availableOrderStatuses = getAvailableOrderStatuses(
+			commerceOrder.getCommerceCurrencyId(), orderStatus);
+
+		if (!ArrayUtil.contains(availableOrderStatuses, orderStatus)) {
+			throw new CommerceOrderStatusException();
+		}
+	}
+
 	protected void validatePurchaseOrderNumber(String purchaseOrderNumber)
 		throws PortalException {
 
@@ -1119,6 +1169,22 @@ public class CommerceOrderLocalServiceImpl
 			throw new CommerceOrderPurchaseOrderNumberException();
 		}
 	}
+
+	private static final int[] _AVAILABLE_ORDER_STATUSES = {
+		CommerceOrderConstants.ORDER_STATUS_TO_TRANSMIT,
+		CommerceOrderConstants.ORDER_STATUS_TRANSMITTED,
+		CommerceOrderConstants.ORDER_STATUS_AWAITING_FULFILLMENT,
+		CommerceOrderConstants.ORDER_STATUS_AWAITING_PICKUP,
+		CommerceOrderConstants.ORDER_STATUS_AWAITING_SHIPMENT,
+		CommerceOrderConstants.ORDER_STATUS_PARTIALLY_REFUNDED,
+		CommerceOrderConstants.ORDER_STATUS_PARTIALLY_SHIPPED,
+		CommerceOrderConstants.ORDER_STATUS_REFUNDED,
+		CommerceOrderConstants.ORDER_STATUS_SHIPPED,
+		CommerceOrderConstants.ORDER_STATUS_COMPLETED,
+		CommerceOrderConstants.ORDER_STATUS_CANCELLED,
+		CommerceOrderConstants.ORDER_STATUS_DECLINED,
+		CommerceOrderConstants.ORDER_STATUS_DISPUTED
+	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceOrderLocalServiceImpl.class);

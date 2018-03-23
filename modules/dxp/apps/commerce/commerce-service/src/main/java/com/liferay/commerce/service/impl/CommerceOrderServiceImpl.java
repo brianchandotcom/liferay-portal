@@ -197,6 +197,19 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 	}
 
 	@Override
+	public int[] getAvailableOrderStatuses(long commerceOrderId)
+		throws PortalException {
+
+		if (commerceOrderId > 0) {
+			_commerceOrderModelResourcePermission.check(
+				getPermissionChecker(), commerceOrderId, ActionKeys.UPDATE);
+		}
+
+		return commerceOrderLocalService.getAvailableOrderStatuses(
+			commerceOrderId);
+	}
+
+	@Override
 	public CommerceOrder getCommerceOrder(long commerceOrderId)
 		throws PortalException {
 
@@ -346,6 +359,18 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			commercePaymentMethodId, commerceShippingMethodId,
 			shippingOptionName, purchaseOrderNumber, subtotal, shippingPrice,
 			total, advanceStatus, paymentStatus, orderStatus);
+	}
+
+	@Override
+	public CommerceOrder updateOrderStatus(
+			long commerceOrderId, int orderStatus)
+		throws PortalException {
+
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderId, ActionKeys.UPDATE);
+
+		return commerceOrderLocalService.updateOrderStatus(
+			commerceOrderId, orderStatus);
 	}
 
 	@Override

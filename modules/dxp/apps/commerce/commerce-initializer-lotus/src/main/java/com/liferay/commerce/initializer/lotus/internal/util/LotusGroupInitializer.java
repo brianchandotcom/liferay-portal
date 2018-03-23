@@ -28,7 +28,6 @@ import com.liferay.commerce.util.CommercePaymentEngineRegistry;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
-import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -649,9 +648,6 @@ public class LotusGroupInitializer implements GroupInitializer {
 
 	@Reference
 	private CPFileImporter _cpFileImporter;
-
-	@Reference
-	private JSPRenderer _jspRenderer;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

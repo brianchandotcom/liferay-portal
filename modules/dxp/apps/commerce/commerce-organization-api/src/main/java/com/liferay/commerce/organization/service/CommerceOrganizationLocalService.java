@@ -58,6 +58,9 @@ public interface CommerceOrganizationLocalService extends BaseLocalService {
 		java.lang.String[] emailAddresses, ServiceContext serviceContext)
 		throws PortalException;
 
+	public void configureB2BSite(long groupId, ServiceContext serviceContext)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Organization getAccountOrganization(long organizationId)
 		throws PortalException;

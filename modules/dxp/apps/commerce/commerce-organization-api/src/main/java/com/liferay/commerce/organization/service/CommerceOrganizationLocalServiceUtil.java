@@ -59,6 +59,12 @@ public class CommerceOrganizationLocalServiceUtil {
 			.addOrganizationUsers(organizationId, emailAddresses, serviceContext);
 	}
 
+	public static void configureB2BSite(long groupId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().configureB2BSite(groupId, serviceContext);
+	}
+
 	public static com.liferay.portal.kernel.model.Organization getAccountOrganization(
 		long organizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {

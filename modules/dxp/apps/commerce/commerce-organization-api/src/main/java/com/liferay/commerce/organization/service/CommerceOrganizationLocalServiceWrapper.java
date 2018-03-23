@@ -54,6 +54,14 @@ public class CommerceOrganizationLocalServiceWrapper
 	}
 
 	@Override
+	public void configureB2BSite(long groupId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceOrganizationLocalService.configureB2BSite(groupId,
+			serviceContext);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.model.Organization getAccountOrganization(
 		long organizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {

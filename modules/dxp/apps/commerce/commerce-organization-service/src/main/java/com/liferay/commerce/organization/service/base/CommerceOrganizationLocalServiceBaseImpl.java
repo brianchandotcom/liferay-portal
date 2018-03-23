@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.EmailAddressPersistence;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.OrganizationPersistence;
+import com.liferay.portal.kernel.service.persistence.RolePersistence;
+import com.liferay.portal.kernel.service.persistence.UserGroupRolePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -306,6 +308,43 @@ public abstract class CommerceOrganizationLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the role local service.
+	 *
+	 * @return the role local service
+	 */
+	public com.liferay.portal.kernel.service.RoleLocalService getRoleLocalService() {
+		return roleLocalService;
+	}
+
+	/**
+	 * Sets the role local service.
+	 *
+	 * @param roleLocalService the role local service
+	 */
+	public void setRoleLocalService(
+		com.liferay.portal.kernel.service.RoleLocalService roleLocalService) {
+		this.roleLocalService = roleLocalService;
+	}
+
+	/**
+	 * Returns the role persistence.
+	 *
+	 * @return the role persistence
+	 */
+	public RolePersistence getRolePersistence() {
+		return rolePersistence;
+	}
+
+	/**
+	 * Sets the role persistence.
+	 *
+	 * @param rolePersistence the role persistence
+	 */
+	public void setRolePersistence(RolePersistence rolePersistence) {
+		this.rolePersistence = rolePersistence;
+	}
+
+	/**
 	 * Returns the user local service.
 	 *
 	 * @return the user local service
@@ -340,6 +379,44 @@ public abstract class CommerceOrganizationLocalServiceBaseImpl
 	 */
 	public void setUserPersistence(UserPersistence userPersistence) {
 		this.userPersistence = userPersistence;
+	}
+
+	/**
+	 * Returns the user group role local service.
+	 *
+	 * @return the user group role local service
+	 */
+	public com.liferay.portal.kernel.service.UserGroupRoleLocalService getUserGroupRoleLocalService() {
+		return userGroupRoleLocalService;
+	}
+
+	/**
+	 * Sets the user group role local service.
+	 *
+	 * @param userGroupRoleLocalService the user group role local service
+	 */
+	public void setUserGroupRoleLocalService(
+		com.liferay.portal.kernel.service.UserGroupRoleLocalService userGroupRoleLocalService) {
+		this.userGroupRoleLocalService = userGroupRoleLocalService;
+	}
+
+	/**
+	 * Returns the user group role persistence.
+	 *
+	 * @return the user group role persistence
+	 */
+	public UserGroupRolePersistence getUserGroupRolePersistence() {
+		return userGroupRolePersistence;
+	}
+
+	/**
+	 * Sets the user group role persistence.
+	 *
+	 * @param userGroupRolePersistence the user group role persistence
+	 */
+	public void setUserGroupRolePersistence(
+		UserGroupRolePersistence userGroupRolePersistence) {
+		this.userGroupRolePersistence = userGroupRolePersistence;
 	}
 
 	public void afterPropertiesSet() {
@@ -408,8 +485,16 @@ public abstract class CommerceOrganizationLocalServiceBaseImpl
 	protected OrganizationPersistence organizationPersistence;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
 	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.RoleLocalService.class)
+	protected com.liferay.portal.kernel.service.RoleLocalService roleLocalService;
+	@ServiceReference(type = RolePersistence.class)
+	protected RolePersistence rolePersistence;
 	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
 	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserGroupRoleLocalService.class)
+	protected com.liferay.portal.kernel.service.UserGroupRoleLocalService userGroupRoleLocalService;
+	@ServiceReference(type = UserGroupRolePersistence.class)
+	protected UserGroupRolePersistence userGroupRolePersistence;
 }

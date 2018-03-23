@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.EmailAddressPersistence;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.OrganizationPersistence;
+import com.liferay.portal.kernel.service.persistence.RolePersistence;
+import com.liferay.portal.kernel.service.persistence.UserGroupRolePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -417,6 +419,62 @@ public abstract class CommerceOrganizationServiceBaseImpl
 	}
 
 	/**
+	 * Returns the role local service.
+	 *
+	 * @return the role local service
+	 */
+	public com.liferay.portal.kernel.service.RoleLocalService getRoleLocalService() {
+		return roleLocalService;
+	}
+
+	/**
+	 * Sets the role local service.
+	 *
+	 * @param roleLocalService the role local service
+	 */
+	public void setRoleLocalService(
+		com.liferay.portal.kernel.service.RoleLocalService roleLocalService) {
+		this.roleLocalService = roleLocalService;
+	}
+
+	/**
+	 * Returns the role remote service.
+	 *
+	 * @return the role remote service
+	 */
+	public com.liferay.portal.kernel.service.RoleService getRoleService() {
+		return roleService;
+	}
+
+	/**
+	 * Sets the role remote service.
+	 *
+	 * @param roleService the role remote service
+	 */
+	public void setRoleService(
+		com.liferay.portal.kernel.service.RoleService roleService) {
+		this.roleService = roleService;
+	}
+
+	/**
+	 * Returns the role persistence.
+	 *
+	 * @return the role persistence
+	 */
+	public RolePersistence getRolePersistence() {
+		return rolePersistence;
+	}
+
+	/**
+	 * Sets the role persistence.
+	 *
+	 * @param rolePersistence the role persistence
+	 */
+	public void setRolePersistence(RolePersistence rolePersistence) {
+		this.rolePersistence = rolePersistence;
+	}
+
+	/**
 	 * Returns the user local service.
 	 *
 	 * @return the user local service
@@ -470,6 +528,63 @@ public abstract class CommerceOrganizationServiceBaseImpl
 	 */
 	public void setUserPersistence(UserPersistence userPersistence) {
 		this.userPersistence = userPersistence;
+	}
+
+	/**
+	 * Returns the user group role local service.
+	 *
+	 * @return the user group role local service
+	 */
+	public com.liferay.portal.kernel.service.UserGroupRoleLocalService getUserGroupRoleLocalService() {
+		return userGroupRoleLocalService;
+	}
+
+	/**
+	 * Sets the user group role local service.
+	 *
+	 * @param userGroupRoleLocalService the user group role local service
+	 */
+	public void setUserGroupRoleLocalService(
+		com.liferay.portal.kernel.service.UserGroupRoleLocalService userGroupRoleLocalService) {
+		this.userGroupRoleLocalService = userGroupRoleLocalService;
+	}
+
+	/**
+	 * Returns the user group role remote service.
+	 *
+	 * @return the user group role remote service
+	 */
+	public com.liferay.portal.kernel.service.UserGroupRoleService getUserGroupRoleService() {
+		return userGroupRoleService;
+	}
+
+	/**
+	 * Sets the user group role remote service.
+	 *
+	 * @param userGroupRoleService the user group role remote service
+	 */
+	public void setUserGroupRoleService(
+		com.liferay.portal.kernel.service.UserGroupRoleService userGroupRoleService) {
+		this.userGroupRoleService = userGroupRoleService;
+	}
+
+	/**
+	 * Returns the user group role persistence.
+	 *
+	 * @return the user group role persistence
+	 */
+	public UserGroupRolePersistence getUserGroupRolePersistence() {
+		return userGroupRolePersistence;
+	}
+
+	/**
+	 * Sets the user group role persistence.
+	 *
+	 * @param userGroupRolePersistence the user group role persistence
+	 */
+	public void setUserGroupRolePersistence(
+		UserGroupRolePersistence userGroupRolePersistence) {
+		this.userGroupRolePersistence = userGroupRolePersistence;
 	}
 
 	public void afterPropertiesSet() {
@@ -550,10 +665,22 @@ public abstract class CommerceOrganizationServiceBaseImpl
 	protected OrganizationPersistence organizationPersistence;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
 	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.RoleLocalService.class)
+	protected com.liferay.portal.kernel.service.RoleLocalService roleLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.RoleService.class)
+	protected com.liferay.portal.kernel.service.RoleService roleService;
+	@ServiceReference(type = RolePersistence.class)
+	protected RolePersistence rolePersistence;
 	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
 	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.UserService.class)
 	protected com.liferay.portal.kernel.service.UserService userService;
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserGroupRoleLocalService.class)
+	protected com.liferay.portal.kernel.service.UserGroupRoleLocalService userGroupRoleLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserGroupRoleService.class)
+	protected com.liferay.portal.kernel.service.UserGroupRoleService userGroupRoleService;
+	@ServiceReference(type = UserGroupRolePersistence.class)
+	protected UserGroupRolePersistence userGroupRolePersistence;
 }

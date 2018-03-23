@@ -244,6 +244,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ACCORDION</td>
+	<td>//fieldset//div/a[contains(@aria-expanded,'true')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ACCORDION_TITLE</td>
 	<td>//div[contains (@id, '${key_accordionTitle}')]/a</td>
 	<td></td>

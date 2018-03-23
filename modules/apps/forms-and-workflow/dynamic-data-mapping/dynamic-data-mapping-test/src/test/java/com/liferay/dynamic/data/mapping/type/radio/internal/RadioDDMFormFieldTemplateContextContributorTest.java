@@ -23,6 +23,7 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -69,10 +70,15 @@ public class RadioDDMFormFieldTemplateContextContributorTest
 	public void testGetNotDefinedPredefinedValue() {
 		DDMFormField ddmFormField = createDDMFormField();
 
+		ddmFormField.setProperty("dataSourceType", "manual");
+
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
 
 		ddmFormFieldRenderingContext.setLocale(LocaleUtil.US);
+
+		ddmFormFieldRenderingContext.setProperty(
+			"options", createDDMFormOptions());
 
 		Map<String, Object> parameters =
 			_radioDDMFormFieldTemplateContextContributor.getParameters(
@@ -93,18 +99,8 @@ public class RadioDDMFormFieldTemplateContextContributorTest
 
 		ddmFormFieldRenderingContext.setLocale(LocaleUtil.US);
 
-		Map<String, String> keyValuePair0 = new HashMap<>();
-
-		keyValuePair0.put("label", "Label 0");
-		keyValuePair0.put("value", "Value 0");
-
-		Map<String, String> keyValuePair1 = new HashMap<>();
-
-		keyValuePair1.put("label", "Label 1");
-		keyValuePair1.put("value", "Value 1");
-
 		ddmFormFieldRenderingContext.setProperty(
-			"options", Arrays.asList(keyValuePair0, keyValuePair1));
+			"options", createDDMFormOptions());
 
 		Map<String, Object> parameters =
 			_radioDDMFormFieldTemplateContextContributor.getParameters(
@@ -131,10 +127,15 @@ public class RadioDDMFormFieldTemplateContextContributorTest
 	public void testGetPredefinedValue() {
 		DDMFormField ddmFormField = createDDMFormField();
 
+		ddmFormField.setProperty("dataSourceType", "manual");
+
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
 
 		ddmFormFieldRenderingContext.setLocale(LocaleUtil.US);
+
+		ddmFormFieldRenderingContext.setProperty(
+			"options", createDDMFormOptions());
 
 		LocalizedValue predefinedValue = new LocalizedValue(LocaleUtil.US);
 
@@ -153,10 +154,16 @@ public class RadioDDMFormFieldTemplateContextContributorTest
 	public void testGetPredefinedValueInJSONArrayFormat() {
 		DDMFormField ddmFormField = createDDMFormField();
 
+		ddmFormField.setProperty("dataSourceType", "manual");
+
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
 
 		ddmFormFieldRenderingContext.setLocale(LocaleUtil.US);
+
+		List<Map<String, String>> keyValuePairs = new ArrayList<>();
+
+		ddmFormFieldRenderingContext.setProperty("options", keyValuePairs);
 
 		LocalizedValue predefinedValue = new LocalizedValue(LocaleUtil.US);
 
@@ -175,10 +182,15 @@ public class RadioDDMFormFieldTemplateContextContributorTest
 	public void testGetValue() {
 		DDMFormField ddmFormField = createDDMFormField();
 
+		ddmFormField.setProperty("dataSourceType", "manual");
+
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
 
 		ddmFormFieldRenderingContext.setLocale(LocaleUtil.US);
+
+		ddmFormFieldRenderingContext.setProperty(
+			"options", createDDMFormOptions());
 
 		ddmFormFieldRenderingContext.setValue("value");
 
@@ -193,9 +205,21 @@ public class RadioDDMFormFieldTemplateContextContributorTest
 		DDMFormField ddmFormField = DDMFormTestUtil.createTextDDMFormField(
 			"name", false, false, false);
 
-		ddmFormField.setProperty("dataSourceType", "data-provider");
-
 		return ddmFormField;
+	}
+
+	protected List<Map<String, String>> createDDMFormOptions() {
+		Map<String, String> keyValuePair0 = new HashMap<>();
+
+		keyValuePair0.put("label", "Label 0");
+		keyValuePair0.put("value", "Value 0");
+
+		Map<String, String> keyValuePair1 = new HashMap<>();
+
+		keyValuePair1.put("label", "Label 1");
+		keyValuePair1.put("value", "Value 1");
+
+		return Arrays.asList(keyValuePair0, keyValuePair1);
 	}
 
 	protected void setUpJSONFactory() throws Exception {

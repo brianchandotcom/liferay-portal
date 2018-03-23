@@ -55,6 +55,10 @@ Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
 			<c:when test="<%= ddmFormDisplayContext.isFormAvailable() %>">
 				<portlet:actionURL name="addFormInstanceRecord" var="addFormInstanceRecordActionURL" />
 
+				<%
+				DDMFormInstance formInstance = ddmFormDisplayContext.getFormInstance();
+				%>
+
 				<div class="portlet-forms">
 					<aui:form action="<%= addFormInstanceRecordActionURL %>" data-DDMFormInstanceId="<%= formInstanceId %>" method="post" name="fm">
 
@@ -65,10 +69,6 @@ Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
 						<c:if test="<%= Validator.isNull(redirectURL) %>">
 							<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 						</c:if>
-
-						<%
-						DDMFormInstance formInstance = ddmFormDisplayContext.getFormInstance();
-						%>
 
 						<aui:input name="groupId" type="hidden" value="<%= formInstance.getGroupId() %>" />
 						<aui:input name="formInstanceId" type="hidden" value="<%= formInstance.getFormInstanceId() %>" />
@@ -148,6 +148,10 @@ Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
 					};
 
 					Liferay.on('destroyPortlet', <portlet:namespace />clearPortletHandlers);
+
+					<c:if test="<%= ddmFormDisplayContext.isFormShared() %>">
+						document.title = '<%= HtmlUtil.escape(formInstance.getName(displayLocale)) %>';
+					</c:if>
 
 					<c:choose>
 						<c:when test="<%= ddmFormDisplayContext.isAutosaveEnabled() %>">

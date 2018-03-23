@@ -34,9 +34,6 @@ for (String categoryKey : categoryKeys) {
 %>
 
 <c:choose>
-	<c:when test="<%= deprecatedCategorySections.length > 0 %>">
-		<%@ include file="/form_navigator/deprecated_sections.jspf" %>
-	</c:when>
 	<c:when test="<%= filterCategoryKeys.size() > 1 %>">
 		<liferay-ui:tabs
 			names="<%= StringUtil.merge(filterCategoryKeys) %>"

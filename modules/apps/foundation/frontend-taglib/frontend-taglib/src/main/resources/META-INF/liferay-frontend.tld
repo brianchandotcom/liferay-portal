@@ -472,18 +472,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>FormNavigatorCategory</code>]]> implementations. List the name of each category within the navigator.</description>
-			<name>categoryNames</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>FormNavigatorEntry</code>]]> implementations. List the name of each section within the category.</description>
-			<name>categorySections</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<description>The bean edited in the form.</description>
 			<name>formModelBean</name>
 			<required>false</required>
@@ -492,12 +480,6 @@
 		<attribute>
 			<description>An ID for the component instance. It's referenced by the navigator's categories and sections.</description>
 			<name>id</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>Deprecated as of 7.0.0, with no direct replacement. This is a path to the <![CDATA[<code>formSection.jsp</code>]]> file's folder <![CDATA[<code>/path/to/jsp/folder/</code>]]>.</description>
-			<name>jspPath</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

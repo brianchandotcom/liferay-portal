@@ -34,14 +34,9 @@ page import="java.util.Objects" %>
 
 <%
 String backURL = (String)request.getAttribute("liferay-frontend:form-navigator:backURL");
-String[][] categorySectionKeys = (String[][])request.getAttribute("liferay-frontend:form-navigator:categorySectionKeys");
-String[][] categorySectionLabels = (String[][])request.getAttribute("liferay-frontend:form-navigator:categorySectionLabels");
 String[] categoryKeys = (String[])request.getAttribute("liferay-frontend:form-navigator:categoryKeys");
-String[] categoryLabels = (String[])request.getAttribute("liferay-frontend:form-navigator:categoryLabels");
-String[] deprecatedCategorySections = (String[])request.getAttribute("liferay-frontend:form-navigator:deprecatedCategorySections");
 Object formModelBean = request.getAttribute("liferay-frontend:form-navigator:formModelBean");
 String id = (String)request.getAttribute("liferay-frontend:form-navigator:id");
-String jspPath = (String)request.getAttribute("liferay-frontend:form-navigator:jspPath");
 boolean showButtons = GetterUtil.getBoolean((String)request.getAttribute("liferay-frontend:form-navigator:showButtons"));
 
 if (Validator.isNull(backURL)) {
@@ -60,9 +55,5 @@ if (Validator.isNull(backURL)) {
 <%!
 private String _getSectionId(String name) {
 	return TextFormatter.format(name, TextFormatter.M);
-}
-
-private String _getSectionJsp(String name) {
-	return TextFormatter.format(name, TextFormatter.N);
 }
 %>

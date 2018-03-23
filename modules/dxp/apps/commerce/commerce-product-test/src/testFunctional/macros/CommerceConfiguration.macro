@@ -25,26 +25,6 @@
 		</for>
 	</command>
 
-	<command name="commerceSetUp">
-		<execute macro="ProductMenuHelper#expandPanel">
-			<var name="panel" value="Site Administration" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Commerce" />
-		</execute>
-
-		<if>
-			<condition function="IsElementPresent" locator1="ProductMenu#PORTLET">
-				<var name="key_portlet" value="Enable Features" />
-			</condition>
-
-			<then>
-				<execute macro="CPCommerceStarterKit#setEmptyStore" />
-			</then>
-		</if>
-	</command>
-
 	<command name="commerceTearDown">
 		<execute macro="Navigator#openURL" />
 

@@ -123,6 +123,15 @@
 
 	<command name="selectAssociatedOptionsValue">
 		<if>
+			<condition function="IsElementNotPresent" locator1="CommerceEntry#ACCORDION" />
+			<then>
+				<execute function="Click" locator1="CommerceEntry#ACCORDION_TITLE">
+					<var name="key_accordionTitle" value="Options" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
 			<condition function="IsElementPresent" locator1="CommerceEntry#OPTION_SELECT" />
 			<then>
 				<execute function="Click" locator1="CommerceEntry#OPTION_SELECT" />

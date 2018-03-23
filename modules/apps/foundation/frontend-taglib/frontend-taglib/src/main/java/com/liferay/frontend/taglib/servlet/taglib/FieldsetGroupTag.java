@@ -14,12 +14,9 @@
 
 package com.liferay.frontend.taglib.servlet.taglib;
 
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspWriter;
 
 /**
  * @author Eudaldo Alonso
@@ -33,52 +30,14 @@ public class FieldsetGroupTag extends IncludeTag {
 		return super.doStartTag();
 	}
 
-	public String getMarkupView() {
-		return _markupView;
-	}
-
-	public void setMarkupView(String markupView) {
-		_markupView = markupView;
-	}
-
-	@Override
-	protected void cleanUp() {
-		super.cleanUp();
-
-		_markupView = null;
-	}
-
 	@Override
 	protected String getEndPage() {
-		if (Validator.isNotNull(getMarkupView())) {
-			return "/fieldset_group/" + getMarkupView() + "/end.jsp";
-		}
-
 		return _END_PAGE;
 	}
 
 	@Override
 	protected String getStartPage() {
-		if (Validator.isNotNull(getMarkupView())) {
-			return "/fieldset_group/" + getMarkupView() + "/start.jsp";
-		}
-
 		return _START_PAGE;
-	}
-
-	@Override
-	protected int processEndTag() throws Exception {
-		JspWriter jspWriter = pageContext.getOut();
-
-		jspWriter.write("</div></div>");
-
-		return EVAL_PAGE;
-	}
-
-	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
-			"liferay-frontend:fieldset-group:markupView", _markupView);
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE =
@@ -87,7 +46,5 @@ public class FieldsetGroupTag extends IncludeTag {
 	private static final String _END_PAGE = "/fieldset_group/end.jsp";
 
 	private static final String _START_PAGE = "/fieldset_group/start.jsp";
-
-	private String _markupView;
 
 }

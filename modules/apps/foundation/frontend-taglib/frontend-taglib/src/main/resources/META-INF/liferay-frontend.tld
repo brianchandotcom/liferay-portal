@@ -432,11 +432,6 @@
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
-		<attribute>
-			<name>markupView</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>
@@ -444,11 +439,6 @@
 		<name>fieldset-group</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.FieldsetGroupTag</tag-class>
 		<body-content>JSP</body-content>
-		<attribute>
-			<name>markupView</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>

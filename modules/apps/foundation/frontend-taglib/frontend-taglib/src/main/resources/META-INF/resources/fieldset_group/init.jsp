@@ -17,6 +17,5 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String markupView = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-frontend:fieldset-group:markupView"));
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("liferay-frontend:fieldset-group:dynamicAttributes");
 %>

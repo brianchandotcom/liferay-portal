@@ -15,22 +15,16 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.aui.AUIUtil;
-import com.liferay.taglib.aui.FieldsetGroupTag;
-import com.liferay.taglib.ui.IconHelpTag;
-import com.liferay.taglib.ui.MessageTag;
 import com.liferay.taglib.util.IncludeTag;
-import com.liferay.taglib.util.InlineUtil;
 
 import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspWriter;
 
 /**
  * @author Eudaldo Alonso
@@ -40,14 +34,6 @@ public class FieldsetTag extends IncludeTag {
 	@Override
 	public int doStartTag() throws JspException {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
-
-		FieldsetGroupTag fieldsetGroupTag =
-			(FieldsetGroupTag)findAncestorWithClass(
-				this, FieldsetGroupTag.class);
-
-		if (Validator.isNull(getMarkupView()) && (fieldsetGroupTag != null)) {
-			setMarkupView(fieldsetGroupTag.getMarkupView());
-		}
 
 		return super.doStartTag();
 	}
@@ -84,10 +70,6 @@ public class FieldsetTag extends IncludeTag {
 		return _localizeLabel;
 	}
 
-	public String getMarkupView() {
-		return _markupView;
-	}
-
 	public void setCollapsed(boolean collapsed) {
 		_collapsed = collapsed;
 	}
@@ -120,10 +102,6 @@ public class FieldsetTag extends IncludeTag {
 		_localizeLabel = localizeLabel;
 	}
 
-	public void setMarkupView(String markupView) {
-		_markupView = markupView;
-	}
-
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -136,96 +114,21 @@ public class FieldsetTag extends IncludeTag {
 		_id = null;
 		_label = null;
 		_localizeLabel = true;
-		_markupView = null;
 	}
 
 	@Override
 	protected String getEndPage() {
-		if (Validator.isNotNull(getMarkupView())) {
-			return "/fieldset/" + getMarkupView() + "/end.jsp";
-		}
-
 		return _END_PAGE;
 	}
 
 	@Override
 	protected String getStartPage() {
-		if (Validator.isNotNull(getMarkupView())) {
-			return "/fieldset/" + getMarkupView() + "/start.jsp";
-		}
-
 		return _START_PAGE;
 	}
 
 	@Override
 	protected boolean isCleanUpSetAttributes() {
 		return _CLEAN_UP_SET_ATTRIBUTES;
-	}
-
-	@Override
-	protected int processEndTag() throws Exception {
-		JspWriter jspWriter = pageContext.getOut();
-
-		jspWriter.write("</div></fieldset>");
-
-		return EVAL_PAGE;
-	}
-
-	@Override
-	protected int processStartTag() throws Exception {
-		JspWriter jspWriter = pageContext.getOut();
-
-		jspWriter.write("<fieldset class=\"fieldset ");
-		jspWriter.write(GetterUtil.getString(getCssClass()));
-		jspWriter.write("\" ");
-
-		String id = getId();
-
-		if (id != null) {
-			jspWriter.write("id=\"");
-			jspWriter.write(id);
-			jspWriter.write("\" ");
-		}
-
-		jspWriter.write(
-			InlineUtil.buildDynamicAttributes(getDynamicAttributes()));
-
-		jspWriter.write(StringPool.GREATER_THAN);
-
-		String lable = getLabel();
-
-		if (lable != null) {
-			jspWriter.write(
-				"<legend class=\"fieldset-legend\"><span class=\"legend\">");
-
-			MessageTag messageTag = new MessageTag();
-
-			messageTag.setKey(lable);
-			messageTag.setLocalizeKey(getLocalizeLabel());
-
-			messageTag.doTag(pageContext);
-
-			String helpMessage = getHelpMessage();
-
-			if (helpMessage != null) {
-				IconHelpTag iconHelpTag = new IconHelpTag();
-
-				iconHelpTag.setMessage(helpMessage);
-
-				iconHelpTag.doTag(pageContext);
-			}
-
-			jspWriter.write("</span></legend>");
-		}
-
-		if (getColumn()) {
-			jspWriter.write("<div class=\"row\">");
-		}
-		else {
-			jspWriter.write("<div class=\"\">");
-		}
-
-		return EVAL_BODY_INCLUDE;
 	}
 
 	@Override
@@ -254,8 +157,6 @@ public class FieldsetTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-frontend:fieldset:localizeLabel",
 			String.valueOf(_localizeLabel));
-		request.setAttribute(
-			"liferay-frontend:fieldset:markupView", _markupView);
 	}
 
 	private String _getNamespace() {
@@ -289,6 +190,5 @@ public class FieldsetTag extends IncludeTag {
 	private String _id;
 	private String _label;
 	private boolean _localizeLabel = true;
-	private String _markupView;
 
 }

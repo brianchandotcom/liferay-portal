@@ -111,6 +111,12 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
+	<command name="viewEmptyMessage">
+		<var method="StringUtil#toLowerCase('${entity}')" name="entity" />
+
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no ${entity}." />
+	</command>
+
 	<command name="viewLocale">
 		<execute function="AssertElementPresent" locator1="Translation#CURRENT_LOCALE">
 			<var name="key_locale" value="${locale}" />

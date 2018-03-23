@@ -68,8 +68,9 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 		branchName = _getBranchName();
 		gitWorkingDirectory = _getGitWorkingDirectory();
 
-		portalTestProperties = getGitWorkingDirectoryProperties(
-			"test.properties");
+		portalTestProperties =
+			gitWorkingDirectory.getGitWorkingDirectoryProperties(
+				"test.properties");
 	}
 
 	protected List<String> getListFromString(String string) {

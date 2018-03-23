@@ -38,31 +38,12 @@
 	{@param? id: string}
 
 	<div id="{$id}">
-		<div class="management-bar management-bar-light navbar navbar-expand-md">
-			<div class="container">
-				<ul class="navbar-nav">
-					<li class="nav-item">
-						<span class="navbar-text">
-							{if $_dirty}
-								{msg desc=""}saving-changes{/msg}
-							{elseif $_lastSaveDate}
-								{msg desc=""}changes-saved-at-{$_lastSaveDate}{/msg}
-							{/if}
-						</span>
-					</li>
-				</ul>
-
-				<ul class="navbar-nav">
-					<li class="nav-item">
-						<button class="btn btn-secondary nav-btn" data-onclick="{$_handleToggleContextualSidebarButtonClick}">
-							<svg class="icon-monospaced lexicon-icon">
-								<use xlink:href="{$spritemap}#cards"></use>
-							</svg>
-						</button>
-					</li>
-				</ul>
-			</div>
-		</div>
+		{call .managementBar}
+			{param spritemap: $spritemap /}
+			{param dirty: $_dirty /}
+			{param handleToggleContextualSidebarButtonClick: $_handleToggleContextualSidebarButtonClick /}
+			{param lastSaveDate: $_lastSaveDate /}
+		{/call}
 
 		<div class="container-fluid-1280 contextual-sidebar-content">
 			<div class="fragments-editor__fragment-entry-links" ref="fragmentEntryLinks">
@@ -147,6 +128,42 @@
 
 		<div class="text-center text-muted">
 			{msg desc=""}the-fragment-editor-is-empty{/msg}
+		</div>
+	</div>
+{/template}
+
+/**
+ * Management bar
+ */
+{template .managementBar}
+	{@param spritemap: string}
+	{@param? dirty: bool}
+	{@param? handleToggleContextualSidebarButtonClick: any}
+	{@param? lastSaveDate: string}
+
+	<div class="management-bar management-bar-light navbar navbar-expand-md">
+		<div class="container">
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<span class="navbar-text">
+						{if $dirty}
+							{msg desc=""}saving-changes{/msg}
+						{elseif $lastSaveDate}
+							{msg desc=""}changes-saved-at-{$lastSaveDate}{/msg}
+						{/if}
+					</span>
+				</li>
+			</ul>
+
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<button class="btn btn-secondary nav-btn" data-onclick="{$handleToggleContextualSidebarButtonClick}">
+						<svg class="icon-monospaced lexicon-icon">
+							<use xlink:href="{$spritemap}#cards"></use>
+						</svg>
+					</button>
+				</li>
+			</ul>
 		</div>
 	</div>
 {/template}

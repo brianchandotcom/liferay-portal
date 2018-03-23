@@ -250,7 +250,7 @@
 </tr>
 <tr>
 	<td>ACCORDION_TITLE</td>
-	<td>//div[contains (@id, '${key_accordionTitle}')]/a</td>
+	<td>//fieldset//div/a[contains(.,'${key_accordionTitle}')]</td>
 	<td></td>
 </tr>
 </tbody>

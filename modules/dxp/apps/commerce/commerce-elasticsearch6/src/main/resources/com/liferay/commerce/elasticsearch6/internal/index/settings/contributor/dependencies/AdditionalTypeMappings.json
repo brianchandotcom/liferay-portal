@@ -20,6 +20,10 @@
 			"store": true,
 			"type": "keyword"
 		},
+		"orderOrganizationId": {
+			"store": true,
+			"type": "keyword"
+		},
 		"orderStatus": {
 			"store": true,
 			"type": "keyword"

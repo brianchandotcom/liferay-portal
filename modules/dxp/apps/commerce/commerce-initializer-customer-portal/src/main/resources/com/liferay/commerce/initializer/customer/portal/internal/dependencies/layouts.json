@@ -3,16 +3,10 @@
 		"hidden": false,
 		"layoutTemplateId": "1_column",
 		"name": "Home",
-		"portlets": [
-			{
-				"layoutColumnId": "column-1",
-				"layoutColumnPos": "0",
-				"portletName": "com_liferay_commerce_organization_web_internal_portlet_CommerceOrganizationSearchPortlet"
-			}
-		]
+		"portlets": []
 	},
 	{
-		"hidden": true,
+		"hidden": false,
 		"layoutTemplateId": "1_2_columns_i",
 		"name": "Catalog",
 		"portlets": [
@@ -29,7 +23,7 @@
 			{
 				"layoutColumnId": "column-3",
 				"layoutColumnPos": "0",
-				"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet"
+				"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet_INSTANCE_customer_portal"
 			}
 		]
 	},
@@ -41,19 +35,48 @@
 			{
 				"layoutColumnId": "column-1",
 				"layoutColumnPos": "0",
-				"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet"
+				"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet_INSTANCE_customer_portal"
 			}
 		]
 	},
 	{
-		"hidden": true,
+		"hidden": false,
 		"layoutTemplateId": "1_column",
 		"name": "Orders",
 		"portlets": [
 			{
 				"layoutColumnId": "column-1",
 				"layoutColumnPos": "0",
-				"portletName": "com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet"
+				"portletName": "com_liferay_commerce_organization_order_web_internal_portlet_CommerceOrganizationOrderPortlet"
+			}
+		]
+	},
+	{
+		"hidden": true,
+		"layoutTemplateId": "2_columns_iii",
+		"name": "Cart",
+		"portlets": [
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": "0",
+				"portletName": "com_liferay_commerce_cart_content_web_internal_portlet_CommerceCartContentPortlet"
+			},
+			{
+				"layoutColumnId": "column-2",
+				"layoutColumnPos": "0",
+				"portletName": "com_liferay_commerce_cart_content_web_internal_portlet_CommerceCartContentTotalPortlet"
+			}
+		]
+	},
+	{
+		"hidden": true,
+		"layoutTemplateId": "1_column",
+		"name": "Checkout",
+		"portlets": [
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": "0",
+				"portletName": "com_liferay_commerce_checkout_web_internal_portlet_CommerceCheckoutPortlet"
 			}
 		]
 	},
@@ -70,7 +93,7 @@
 		]
 	},
 	{
-		"hidden": true,
+		"hidden": false,
 		"layoutTemplateId": "1_column",
 		"name": "Account management",
 		"portlets": [
@@ -84,27 +107,12 @@
 	{
 		"hidden": false,
 		"layoutTemplateId": "1_column",
-		"name": "Company",
-		"subLayouts": [
+		"name": "User management",
+		"portlets": [
 			{
-				"hidden": false,
-				"layoutTemplateId": "1_column",
-				"name": "About us"
-			},
-			{
-				"hidden": false,
-				"layoutTemplateId": "1_column",
-				"name": "Careers"
-			},
-			{
-				"hidden": false,
-				"layoutTemplateId": "1_column",
-				"name": "Manufacturers"
-			},
-			{
-				"hidden": false,
-				"layoutTemplateId": "1_column",
-				"name": "Contact us"
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": "0",
+				"portletName": "com_liferay_commerce_user_web_internal_portlet_CommerceUserPortlet"
 			}
 		]
 	}

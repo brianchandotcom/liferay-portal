@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -73,9 +74,9 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 		branchName = _getBranchName();
 		gitWorkingDirectory = _getPortalGitWorkingDirectory();
 
-		portalTestProperties =
-			gitWorkingDirectory.getGitWorkingDirectoryProperties(
-				"test.properties");
+		portalTestProperties = JenkinsResultsParserUtil.getProperties(
+			new File(
+				gitWorkingDirectory.getWorkingDirectory(), "test.properties"));
 	}
 
 	protected List<String> getListFromString(String string) {

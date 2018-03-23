@@ -66,6 +66,10 @@ public class EditFormTag extends IncludeTag {
 		_inlineLabels = inlineLabels;
 	}
 
+	public void setLarge(boolean large) {
+		_large = large;
+	}
+
 	public void setMethod(String method) {
 		_method = method;
 	}
@@ -106,6 +110,7 @@ public class EditFormTag extends IncludeTag {
 		_cssClass = null;
 		_escapeXml = true;
 		_inlineLabels = false;
+		_large = false;
 		_method = "post";
 		_name = "fm";
 		_onSubmit = null;
@@ -151,6 +156,7 @@ public class EditFormTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-frontend:edit-form:inlineLabels",
 			String.valueOf(_inlineLabels));
+		request.setAttribute("liferay-frontend:edit-form:large", _large);
 		request.setAttribute("liferay-frontend:edit-form:method", _method);
 		request.setAttribute("liferay-frontend:edit-form:name", _name);
 		request.setAttribute("liferay-frontend:edit-form:onSubmit", _onSubmit);
@@ -194,6 +200,7 @@ public class EditFormTag extends IncludeTag {
 	private String _cssClass;
 	private boolean _escapeXml = true;
 	private boolean _inlineLabels;
+	private boolean _large;
 	private String _method = "post";
 	private String _name = "fm";
 	private String _onSubmit;

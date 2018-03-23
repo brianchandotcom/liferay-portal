@@ -26,6 +26,7 @@ String action = GetterUtil.getString((java.lang.String)request.getAttribute("lif
 List<String> checkboxNames = (List<String>)request.getAttribute("LIFERAY_SHARED_aui:form:checkboxNames");
 String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-frontend:edit-form:cssClass"));
 boolean inlineLabels = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-frontend:edit-form:inlineLabels")));
+boolean large = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-frontend:edit-form:large")));
 String method = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-frontend:edit-form:method"));
 String name = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-frontend:edit-form:name"));
 String onSubmit = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-frontend:edit-form:onSubmit"));

@@ -262,6 +262,12 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<name>large</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<description><![CDATA[The method to send the form data. The default value is <code>post</code>. Possible values are <code>get</code> and <code>post</code>.]]></description>
 			<name>method</name>
 			<required>false</required>

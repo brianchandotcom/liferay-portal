@@ -16,13 +16,14 @@
 
 <%@ include file="/edit_form/init.jsp" %>
 
-	<c:if test="<%= (checkboxNames != null) && !checkboxNames.isEmpty() %>">
-		<aui:input name="checkboxNames" type="hidden" value="<%= StringUtil.merge(checkboxNames) %>" />
-	</c:if>
+		<c:if test="<%= (checkboxNames != null) && !checkboxNames.isEmpty() %>">
+			<aui:input name="checkboxNames" type="hidden" value="<%= StringUtil.merge(checkboxNames) %>" />
+		</c:if>
 
-	<c:if test="<%= Validator.isNotNull(onSubmit) %>">
-		</fieldset>
-	</c:if>
+		<c:if test="<%= Validator.isNotNull(onSubmit) %>">
+			</fieldset>
+		</c:if>
+	</div>
 </form>
 
 <%

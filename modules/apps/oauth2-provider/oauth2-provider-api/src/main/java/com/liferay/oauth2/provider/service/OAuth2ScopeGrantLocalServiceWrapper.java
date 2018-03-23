@@ -95,6 +95,17 @@ public class OAuth2ScopeGrantLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.oauth2.provider.model.OAuth2ScopeGrant createOAuth2ScopeGrant(
+		long companyId, long oAuth2ApplicationScopeAliasesId,
+		java.lang.String applicationName, java.lang.String bundleSymbolicName,
+		java.lang.String scope)
+		throws com.liferay.oauth2.provider.exception.DuplicateOAuth2ScopeGrantException {
+		return _oAuth2ScopeGrantLocalService.createOAuth2ScopeGrant(companyId,
+			oAuth2ApplicationScopeAliasesId, applicationName,
+			bundleSymbolicName, scope);
+	}
+
+	@Override
 	public void deleteOAuth2AuthorizationOAuth2ScopeGrant(
 		long oAuth2AuthorizationId, long oAuth2ScopeGrantId) {
 		_oAuth2ScopeGrantLocalService.deleteOAuth2AuthorizationOAuth2ScopeGrant(oAuth2AuthorizationId,
@@ -331,6 +342,22 @@ public class OAuth2ScopeGrantLocalServiceWrapper
 		return _oAuth2ScopeGrantLocalService.getOAuth2ScopeGrants(start, end);
 	}
 
+	@Override
+	public java.util.Collection<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> getOAuth2ScopeGrants(
+		long oAuth2ApplicationScopeAliasesId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> orderByComparator) {
+		return _oAuth2ScopeGrantLocalService.getOAuth2ScopeGrants(oAuth2ApplicationScopeAliasesId,
+			start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.Collection<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> getOAuth2ScopeGrants(
+		long companyId, java.lang.String applicationName,
+		java.lang.String bundleSymbolicName, java.lang.String accessTokenContent) {
+		return _oAuth2ScopeGrantLocalService.getOAuth2ScopeGrants(companyId,
+			applicationName, bundleSymbolicName, accessTokenContent);
+	}
+
 	/**
 	* Returns the number of o auth2 scope grants.
 	*
@@ -356,6 +383,15 @@ public class OAuth2ScopeGrantLocalServiceWrapper
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _oAuth2ScopeGrantLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public java.util.Collection<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> grantScopesToAuthorization(
+		long oAuth2AuthorizationId,
+		java.util.Collection<com.liferay.oauth2.provider.scope.liferay.LiferayOAuth2Scope> liferayOAuth2Scopes)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _oAuth2ScopeGrantLocalService.grantScopesToAuthorization(oAuth2AuthorizationId,
+			liferayOAuth2Scopes);
 	}
 
 	@Override

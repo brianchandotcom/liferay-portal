@@ -53,24 +53,8 @@ public class FormNavigatorTag extends IncludeTag {
 		_categorySections = categorySections;
 	}
 
-	public void setDisplayStyle(String displayStyle) {
-		_displayStyle = displayStyle;
-	}
-
 	public void setFormModelBean(Object formModelBean) {
 		_formModelBean = formModelBean;
-	}
-
-	public void setFormName(String formName) {
-		_formName = formName;
-	}
-
-	public void setHtmlBottom(String htmlBottom) {
-		_htmlBottom = htmlBottom;
-	}
-
-	public void setHtmlTop(String htmlTop) {
-		_htmlTop = htmlTop;
 	}
 
 	public void setId(String id) {
@@ -96,11 +80,7 @@ public class FormNavigatorTag extends IncludeTag {
 		_backURL = null;
 		_categoryNames = null;
 		_categorySections = null;
-		_displayStyle = "form";
 		_formModelBean = null;
-		_formName = "fm";
-		_htmlBottom = null;
-		_htmlTop = null;
 		_id = null;
 		_jspPath = null;
 		_showButtons = true;
@@ -210,15 +190,7 @@ public class FormNavigatorTag extends IncludeTag {
 			"liferay-frontend:form-navigator:deprecatedCategorySections",
 			getDeprecatedCategorySections());
 		request.setAttribute(
-			"liferay-frontend:form-navigator:displayStyle", _displayStyle);
-		request.setAttribute(
 			"liferay-frontend:form-navigator:formModelBean", _formModelBean);
-		request.setAttribute(
-			"liferay-frontend:form-navigator:formName", _formName);
-		request.setAttribute(
-			"liferay-frontend:form-navigator:htmlBottom", _htmlBottom);
-		request.setAttribute(
-			"liferay-frontend:form-navigator:htmlTop", _htmlTop);
 		request.setAttribute("liferay-frontend:form-navigator:id", _id);
 		request.setAttribute(
 			"liferay-frontend:form-navigator:jspPath", _jspPath);
@@ -230,11 +202,7 @@ public class FormNavigatorTag extends IncludeTag {
 	private String _backURL;
 	private String[] _categoryNames;
 	private String[][] _categorySections;
-	private String _displayStyle = "form";
 	private Object _formModelBean;
-	private String _formName = "fm";
-	private String _htmlBottom;
-	private String _htmlTop;
 	private String _id;
 	private String _jspPath;
 	private boolean _showButtons = true;

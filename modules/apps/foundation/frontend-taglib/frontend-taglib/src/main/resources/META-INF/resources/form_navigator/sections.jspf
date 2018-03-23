@@ -14,138 +14,131 @@
  */
 --%>
 
-<c:choose>
-	<c:when test='<%= displayStyle.equals("steps") %>'>
-		<%@ include file="/form_navigator/steps.jspf" %>
-	</c:when>
-	<c:otherwise>
-		<aui:fieldset-group markupView="lexicon">
+<aui:fieldset-group markupView="lexicon">
 
-			<%
-			final FormNavigatorEntry formNavigatorEntry = formNavigatorEntries.get(0);
+	<%
+	final FormNavigatorEntry formNavigatorEntry = formNavigatorEntries.get(0);
 
-			String sectionId = namespace + _getSectionId(formNavigatorEntry.getKey());
+	String sectionId = namespace + _getSectionId(formNavigatorEntry.getKey());
 
-			String errorSection = null;
-			%>
+	String errorSection = null;
+	%>
 
-			<!-- Begin fragment <%= sectionId %> -->
+	<!-- Begin fragment <%= sectionId %> -->
 
-			<aui:fieldset id="<%= _getSectionId(formNavigatorEntry.getKey()) %>">
+	<aui:fieldset id="<%= _getSectionId(formNavigatorEntry.getKey()) %>">
 
-				<%
-				PortalIncludeUtil.include(
-					pageContext,
-					new PortalIncludeUtil.HTMLRenderer() {
+		<%
+		PortalIncludeUtil.include(
+			pageContext,
+			new PortalIncludeUtil.HTMLRenderer() {
 
-						public void renderHTML(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-							formNavigatorEntry.include(request, response);
-						}
-
-					});
-
-				errorSection = (String)request.getAttribute(WebKeys.ERROR_SECTION);
-
-				if (Objects.equals(formNavigatorEntry.getKey(), errorSection)) {
-					request.setAttribute(WebKeys.ERROR_SECTION, null);
+				public void renderHTML(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+					formNavigatorEntry.include(request, response);
 				}
-				%>
 
-			</aui:fieldset>
+			});
 
-			<!-- End fragment <%= sectionId %> -->
+		errorSection = (String)request.getAttribute(WebKeys.ERROR_SECTION);
 
-			<%
-			for (int i = 1; i < formNavigatorEntries.size(); i++) {
-				final FormNavigatorEntry curFormNavigatorEntry = formNavigatorEntries.get(i);
+		if (Objects.equals(formNavigatorEntry.getKey(), errorSection)) {
+			request.setAttribute(WebKeys.ERROR_SECTION, null);
+		}
+		%>
 
-				sectionId = namespace + _getSectionId(curFormNavigatorEntry.getKey());
-			%>
+	</aui:fieldset>
 
-				<!-- Begin fragment <%= sectionId %> -->
+	<!-- End fragment <%= sectionId %> -->
 
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id="<%= _getSectionId(curFormNavigatorEntry.getKey()) %>" label="<%= curFormNavigatorEntry.getLabel(locale) %>">
+	<%
+	for (int i = 1; i < formNavigatorEntries.size(); i++) {
+		final FormNavigatorEntry curFormNavigatorEntry = formNavigatorEntries.get(i);
 
-					<%
-					PortalIncludeUtil.include(
-						pageContext,
-						new PortalIncludeUtil.HTMLRenderer() {
+		sectionId = namespace + _getSectionId(curFormNavigatorEntry.getKey());
+	%>
 
-							public void renderHTML(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-								curFormNavigatorEntry.include(request, response);
-							}
+		<!-- Begin fragment <%= sectionId %> -->
 
-						});
-					%>
-
-				</aui:fieldset>
-
-				<!-- End fragment <%= sectionId %> -->
+		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id="<%= _getSectionId(curFormNavigatorEntry.getKey()) %>" label="<%= curFormNavigatorEntry.getLabel(locale) %>">
 
 			<%
-				String curErrorSection = (String)request.getAttribute(WebKeys.ERROR_SECTION);
+			PortalIncludeUtil.include(
+				pageContext,
+				new PortalIncludeUtil.HTMLRenderer() {
 
-				if (Objects.equals(_getSectionId(curFormNavigatorEntry.getKey()), _getSectionId(curErrorSection))) {
-					errorSection = curErrorSection;
+					public void renderHTML(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+						curFormNavigatorEntry.include(request, response);
+					}
 
-					request.setAttribute(WebKeys.ERROR_SECTION, null);
-				}
-			}
+				});
 			%>
+
+		</aui:fieldset>
+
+		<!-- End fragment <%= sectionId %> -->
+
+	<%
+		String curErrorSection = (String)request.getAttribute(WebKeys.ERROR_SECTION);
+
+		if (Objects.equals(_getSectionId(curFormNavigatorEntry.getKey()), _getSectionId(curErrorSection))) {
+			errorSection = curErrorSection;
+
+			request.setAttribute(WebKeys.ERROR_SECTION, null);
+		}
+	}
+	%>
+
+	<%
+	if (Validator.isNotNull(errorSection)) {
+		String currentTab = (String)request.getAttribute("currentTab");
+
+		request.setAttribute("errorTab", currentTab);
+	%>
+
+		<aui:script sandbox="<%= true %>">
+			var focusField;
+
+			var sectionContent = $('#<%= _getSectionId(errorSection) %>Content');
 
 			<%
-			if (Validator.isNotNull(errorSection)) {
-				String currentTab = (String)request.getAttribute("currentTab");
-
-				request.setAttribute("errorTab", currentTab);
+			String focusField = (String)request.getAttribute("liferay-ui:error:focusField");
 			%>
 
-				<aui:script sandbox="<%= true %>">
-					var focusField;
+			<c:choose>
+				<c:when test="<%= Validator.isNotNull(focusField) %>">
+					focusField = sectionContent.find('#<portlet:namespace /><%= focusField %>');
+				</c:when>
+				<c:otherwise>
+					focusField = sectionContent.find('input:not([type="hidden"]).field').first();
+				</c:otherwise>
+			</c:choose>
 
-					var sectionContent = $('#<%= _getSectionId(errorSection) %>Content');
+			Liferay.once(
+				'<portlet:namespace />formReady',
+				function(event) {
+					var hasFocusField = focusField.length;
 
-					<%
-					String focusField = (String)request.getAttribute("liferay-ui:error:focusField");
-					%>
-
-					<c:choose>
-						<c:when test="<%= Validator.isNotNull(focusField) %>">
-							focusField = sectionContent.find('#<portlet:namespace /><%= focusField %>');
-						</c:when>
-						<c:otherwise>
-							focusField = sectionContent.find('input:not([type="hidden"]).field').first();
-						</c:otherwise>
-					</c:choose>
-
-					Liferay.once(
-						'<portlet:namespace />formReady',
-						function(event) {
-							var hasFocusField = focusField.length;
-
-							if (!sectionContent.hasClass('in')) {
-								if (hasFocusField) {
-									sectionContent.one(
-										'shown.bs.collapse',
-										function() {
-											Liferay.Util.focusFormField(focusField);
-										}
-									);
+					if (!sectionContent.hasClass('in')) {
+						if (hasFocusField) {
+							sectionContent.one(
+								'shown.bs.collapse',
+								function() {
+									Liferay.Util.focusFormField(focusField);
 								}
-
-								sectionContent.collapse('show');
-							}
-							else if (hasFocusField) {
-								Liferay.Util.focusFormField(focusField);
-							}
+							);
 						}
-					);
-				</aui:script>
 
-			<%
-			}
-			%>
+						sectionContent.collapse('show');
+					}
+					else if (hasFocusField) {
+						Liferay.Util.focusFormField(focusField);
+					}
+				}
+			);
+		</aui:script>
 
-		</aui:fieldset-group>
-	</c:otherwise>
-</c:choose>
+	<%
+	}
+	%>
+
+</aui:fieldset-group>

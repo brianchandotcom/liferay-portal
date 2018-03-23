@@ -11,6 +11,8 @@
 		<execute function="Click" locator1="FormRules#RULE_BUILDER_ADD_RULE_BUTTON" />
 
 		<execute macro="FormRules#viewInactiveSaveButton" />
+
+		<execute function="AssertNotVisible" locator1="FormRules#RULE_BUILDER_ADD_RULE_BUTTON" />
 	</command>
 
 	<command name="chooseCalculateAdvancedOperator">

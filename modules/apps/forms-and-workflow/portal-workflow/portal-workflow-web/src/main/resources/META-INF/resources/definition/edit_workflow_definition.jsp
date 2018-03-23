@@ -424,4 +424,15 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 			Liferay.WorkflowWeb.confirmBeforeDuplicateDialog(this, '<%= duplicateWorkflowDefinition %>', duplicateWorkflowTitle, '<%= randomNamespace %>', '<portlet:namespace />');
 		}
 	);
+
+	document.querySelector('#<portlet:namespace />title').addEventListener(
+		'keypress',
+		function(event) {
+			var keycode = (event.keyCode ? event.keyCode : event.which);
+
+			if (keycode == '13') {
+				event.preventDefault();
+			}
+		}
+	);
 </aui:script>

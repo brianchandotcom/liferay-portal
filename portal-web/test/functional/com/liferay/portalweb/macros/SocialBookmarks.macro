@@ -1,0 +1,17 @@
+<definition>
+	<command name="viewDefaultSharableBookmarks">
+		<execute function="AssertElementPresent" locator1="SocialBookmarks#TWITTER" />
+		<execute function="AssertElementPresent" locator1="SocialBookmarks#FACEBOOK" />
+		<execute function="AssertElementPresent" locator1="SocialBookmarks#LINKEDIN" />
+
+		<execute function="Click" locator1="Icon#SHARE" />
+
+		<for list="Google+,AddThis,Delicious,Digg,Evernote,Newsvine,Reddit,Slashdot,StumbleUpon,Tuenti" param="socialBookmark">
+			<execute function="AssertElementPresent" locator1="SocialBookmarks#DROPDOWN_ELEMENT">
+				<var name="key_socialBookmark" value="${socialBookmark}" />
+			</execute>
+		</for>
+
+		<execute function="Click" locator1="Icon#SHARE" />
+	</command>
+</definition>

@@ -1360,7 +1360,8 @@
 		<execute function="AssertElementPresent" locator1="Icon#DETAILS" />
 		<execute function="AssertElementPresent" locator1="Icon#PRINT" />
 		<execute function="AssertElementPresent" locator1="SocialBookmarks#TWITTER" />
-		<execute function="AssertElementPresent" locator1="SocialBookmarks#GOOGLE_PLUS" />
+		<execute function="AssertElementPresent" locator1="SocialBookmarks#FACEBOOK" />
+		<execute function="AssertElementPresent" locator1="SocialBookmarks#LINKEDIN" />
 		<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_LABEL" />
 		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_LABEL" />
 	</command>

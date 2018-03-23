@@ -9,8 +9,13 @@
 </thead>
 <tbody>
 <tr>
-	<td>GOOGLE_PLUS</td>
-	<td>//li[contains(@class,'taglib-social-bookmark-plusone')]</td>
+	<td>FACEBOOK</td>
+	<td>//li[contains(@class,'taglib-social-bookmark-facebook')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LINKEDIN</td>
+	<td>//li[contains(@class,'taglib-social-bookmark-linkedin')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -19,8 +24,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td></td>
-	<td></td>
+	<td>DROPDOWN_ELEMENT</td>
+	<td>//div[contains(@class,'dropdown-menu')]//a[contains(.,'${key_socialBookmark')]</td>
 	<td></td>
 </tr>
 <!--ENABLE_SOCIAL_BOOKMARKS-->

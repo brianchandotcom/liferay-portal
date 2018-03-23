@@ -26,8 +26,10 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see SubscriptionModel
  * @see com.liferay.portal.model.impl.SubscriptionImpl
  * @see com.liferay.portal.model.impl.SubscriptionModelImpl
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ImplementationClassName("com.liferay.portal.model.impl.SubscriptionImpl")
 @ProviderType
 public interface Subscription extends SubscriptionModel, PersistedModel {

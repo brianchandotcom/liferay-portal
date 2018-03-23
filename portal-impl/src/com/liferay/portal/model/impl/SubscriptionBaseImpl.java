@@ -29,8 +29,10 @@ import com.liferay.portal.kernel.service.SubscriptionLocalServiceUtil;
  * @author Brian Wing Shun Chan
  * @see SubscriptionImpl
  * @see Subscription
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public abstract class SubscriptionBaseImpl extends SubscriptionModelImpl
 	implements Subscription {

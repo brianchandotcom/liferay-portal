@@ -68,8 +68,10 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @see AssetCategoryPropertyPersistence
  * @see com.liferay.asset.kernel.service.persistence.AssetCategoryPropertyUtil
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<AssetCategoryProperty>
 	implements AssetCategoryPropertyPersistence {

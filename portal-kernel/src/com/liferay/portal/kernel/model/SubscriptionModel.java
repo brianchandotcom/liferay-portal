@@ -36,8 +36,10 @@ import java.util.Date;
  * @see Subscription
  * @see com.liferay.portal.model.impl.SubscriptionImpl
  * @see com.liferay.portal.model.impl.SubscriptionModelImpl
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface SubscriptionModel extends AttachedModel, BaseModel<Subscription>,
 	GroupedModel, MVCCModel, ShardedModel {

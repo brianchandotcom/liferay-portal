@@ -26,8 +26,10 @@ import java.util.List;
  * This class is used by SOAP remote services.
  *
  * @author Brian Wing Shun Chan
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public class SubscriptionSoap implements Serializable {
 	public static SubscriptionSoap toSoapModel(Subscription model) {

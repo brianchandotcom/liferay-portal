@@ -21,7 +21,8 @@ import aQute.bnd.annotation.ProviderType;
  *
  * @author Brian Wing Shun Chan
  * @see SubscriptionLocalService
- * @deprecated As of 7.0.0, replaced by {@link com.liferay.subscription.service.impl.SubscriptionLocalServiceImpl}
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.subscription.service.impl.SubscriptionLocalServiceImpl}
  * @generated
  */
 @Deprecated
@@ -31,85 +32,6 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 	public SubscriptionLocalServiceWrapper(
 		SubscriptionLocalService subscriptionLocalService) {
 		_subscriptionLocalService = subscriptionLocalService;
-	}
-
-	/**
-	* Returns <code>true</code> if the user is subscribed to the entity.
-	*
-	* @param companyId the primary key of the company
-	* @param userId the primary key of the user
-	* @param className the entity's class name
-	* @param classPK the primary key of the entity's instance
-	* @return <code>true</code> if the user is subscribed to the entity;
-	<code>false</code> otherwise
-	*/
-	@Override
-	public boolean isSubscribed(long companyId, long userId,
-		java.lang.String className, long classPK) {
-		return _subscriptionLocalService.isSubscribed(companyId, userId,
-			className, classPK);
-	}
-
-	/**
-	* Returns <code>true</code> if the user is subscribed to any of the
-	* entities.
-	*
-	* @param companyId the primary key of the company
-	* @param userId the primary key of the user
-	* @param className the entity's class name
-	* @param classPKs the primary key of the entities
-	* @return <code>true</code> if the user is subscribed to any of the
-	entities; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isSubscribed(long companyId, long userId,
-		java.lang.String className, long[] classPKs) {
-		return _subscriptionLocalService.isSubscribed(companyId, userId,
-			className, classPKs);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _subscriptionLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _subscriptionLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _subscriptionLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _subscriptionLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _subscriptionLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Adds the subscription to the database. Also notifies the appropriate model listeners.
-	*
-	* @param subscription the subscription
-	* @return the subscription that was added
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Subscription addSubscription(
-		com.liferay.portal.kernel.model.Subscription subscription) {
-		return _subscriptionLocalService.addSubscription(subscription);
 	}
 
 	/**
@@ -172,6 +94,18 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 	}
 
 	/**
+	* Adds the subscription to the database. Also notifies the appropriate model listeners.
+	*
+	* @param subscription the subscription
+	* @return the subscription that was added
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.Subscription addSubscription(
+		com.liferay.portal.kernel.model.Subscription subscription) {
+		return _subscriptionLocalService.addSubscription(subscription);
+	}
+
+	/**
 	* Creates a new subscription with the primary key. Does not add the subscription to the database.
 	*
 	* @param subscriptionId the primary key for the new subscription
@@ -181,6 +115,45 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 	public com.liferay.portal.kernel.model.Subscription createSubscription(
 		long subscriptionId) {
 		return _subscriptionLocalService.createSubscription(subscriptionId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _subscriptionLocalService.deletePersistedModel(persistedModel);
+	}
+
+	/**
+	* Deletes the subscription with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param subscriptionId the primary key of the subscription
+	* @return the subscription that was removed
+	* @throws PortalException if a subscription with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.Subscription deleteSubscription(
+		long subscriptionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _subscriptionLocalService.deleteSubscription(subscriptionId);
+	}
+
+	/**
+	* Deletes the user's subscription to the entity. A social activity with the
+	* unsubscribe action is created.
+	*
+	* @param userId the primary key of the user
+	* @param className the entity's class name
+	* @param classPK the primary key of the entity's instance
+	*/
+	@Override
+	public void deleteSubscription(long userId, java.lang.String className,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_subscriptionLocalService.deleteSubscription(userId, className, classPK);
 	}
 
 	/**
@@ -198,104 +171,40 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 	}
 
 	/**
-	* Deletes the subscription with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes all the subscriptions of the user.
 	*
-	* @param subscriptionId the primary key of the subscription
-	* @return the subscription that was removed
-	* @throws PortalException if a subscription with the primary key could not be found
+	* @param userId the primary key of the user
 	*/
 	@Override
-	public com.liferay.portal.kernel.model.Subscription deleteSubscription(
-		long subscriptionId)
+	public void deleteSubscriptions(long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _subscriptionLocalService.deleteSubscription(subscriptionId);
+		_subscriptionLocalService.deleteSubscriptions(userId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Subscription fetchSubscription(
-		long companyId, long userId, java.lang.String className, long classPK) {
-		return _subscriptionLocalService.fetchSubscription(companyId, userId,
-			className, classPK);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Subscription fetchSubscription(
-		long subscriptionId) {
-		return _subscriptionLocalService.fetchSubscription(subscriptionId);
+	public void deleteSubscriptions(long userId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_subscriptionLocalService.deleteSubscriptions(userId, groupId);
 	}
 
 	/**
-	* Returns the subscription of the user to the entity.
+	* Deletes all the subscriptions to the entity.
 	*
 	* @param companyId the primary key of the company
-	* @param userId the primary key of the user
 	* @param className the entity's class name
 	* @param classPK the primary key of the entity's instance
-	* @return the subscription of the user to the entity
 	*/
 	@Override
-	public com.liferay.portal.kernel.model.Subscription getSubscription(
-		long companyId, long userId, java.lang.String className, long classPK)
+	public void deleteSubscriptions(long companyId, java.lang.String className,
+		long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _subscriptionLocalService.getSubscription(companyId, userId,
-			className, classPK);
+		_subscriptionLocalService.deleteSubscriptions(companyId, className,
+			classPK);
 	}
 
-	/**
-	* Returns the subscription with the primary key.
-	*
-	* @param subscriptionId the primary key of the subscription
-	* @return the subscription
-	* @throws PortalException if a subscription with the primary key could not be found
-	*/
 	@Override
-	public com.liferay.portal.kernel.model.Subscription getSubscription(
-		long subscriptionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _subscriptionLocalService.getSubscription(subscriptionId);
-	}
-
-	/**
-	* Updates the subscription in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param subscription the subscription
-	* @return the subscription that was updated
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Subscription updateSubscription(
-		com.liferay.portal.kernel.model.Subscription subscription) {
-		return _subscriptionLocalService.updateSubscription(subscription);
-	}
-
-	/**
-	* Returns the number of subscriptions.
-	*
-	* @return the number of subscriptions
-	*/
-	@Override
-	public int getSubscriptionsCount() {
-		return _subscriptionLocalService.getSubscriptionsCount();
-	}
-
-	/**
-	* Returns the number of subscriptions of the user.
-	*
-	* @param userId the primary key of the user
-	* @return the number of subscriptions of the user
-	*/
-	@Override
-	public int getUserSubscriptionsCount(long userId) {
-		return _subscriptionLocalService.getUserSubscriptionsCount(userId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _subscriptionLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _subscriptionLocalService.dynamicQuery();
 	}
 
 	/**
@@ -352,6 +261,104 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 	}
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _subscriptionLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _subscriptionLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Subscription fetchSubscription(
+		long subscriptionId) {
+		return _subscriptionLocalService.fetchSubscription(subscriptionId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Subscription fetchSubscription(
+		long companyId, long userId, java.lang.String className, long classPK) {
+		return _subscriptionLocalService.fetchSubscription(companyId, userId,
+			className, classPK);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _subscriptionLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _subscriptionLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _subscriptionLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _subscriptionLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the subscription with the primary key.
+	*
+	* @param subscriptionId the primary key of the subscription
+	* @return the subscription
+	* @throws PortalException if a subscription with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.Subscription getSubscription(
+		long subscriptionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _subscriptionLocalService.getSubscription(subscriptionId);
+	}
+
+	/**
+	* Returns the subscription of the user to the entity.
+	*
+	* @param companyId the primary key of the company
+	* @param userId the primary key of the user
+	* @param className the entity's class name
+	* @param classPK the primary key of the entity's instance
+	* @return the subscription of the user to the entity
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.Subscription getSubscription(
+		long companyId, long userId, java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _subscriptionLocalService.getSubscription(companyId, userId,
+			className, classPK);
+	}
+
+	/**
 	* Returns a range of all the subscriptions.
 	*
 	* <p>
@@ -366,6 +373,22 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 	public java.util.List<com.liferay.portal.kernel.model.Subscription> getSubscriptions(
 		int start, int end) {
 		return _subscriptionLocalService.getSubscriptions(start, end);
+	}
+
+	/**
+	* Returns all the subscriptions of the user to the entities.
+	*
+	* @param companyId the primary key of the company
+	* @param userId the primary key of the user
+	* @param className the entity's class name
+	* @param classPKs the primary key of the entities
+	* @return the subscriptions of the user to the entities
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Subscription> getSubscriptions(
+		long companyId, long userId, java.lang.String className, long[] classPKs) {
+		return _subscriptionLocalService.getSubscriptions(companyId, userId,
+			className, classPKs);
 	}
 
 	/**
@@ -384,19 +407,13 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 	}
 
 	/**
-	* Returns all the subscriptions of the user to the entities.
+	* Returns the number of subscriptions.
 	*
-	* @param companyId the primary key of the company
-	* @param userId the primary key of the user
-	* @param className the entity's class name
-	* @param classPKs the primary key of the entities
-	* @return the subscriptions of the user to the entities
+	* @return the number of subscriptions
 	*/
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Subscription> getSubscriptions(
-		long companyId, long userId, java.lang.String className, long[] classPKs) {
-		return _subscriptionLocalService.getSubscriptions(companyId, userId,
-			className, classPKs);
+	public int getSubscriptionsCount() {
+		return _subscriptionLocalService.getSubscriptionsCount();
 	}
 
 	/**
@@ -431,77 +448,61 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _subscriptionLocalService.dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _subscriptionLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
-	}
-
-	/**
-	* Deletes the user's subscription to the entity. A social activity with the
-	* unsubscribe action is created.
+	* Returns the number of subscriptions of the user.
 	*
 	* @param userId the primary key of the user
-	* @param className the entity's class name
-	* @param classPK the primary key of the entity's instance
+	* @return the number of subscriptions of the user
 	*/
 	@Override
-	public void deleteSubscription(long userId, java.lang.String className,
-		long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_subscriptionLocalService.deleteSubscription(userId, className, classPK);
+	public int getUserSubscriptionsCount(long userId) {
+		return _subscriptionLocalService.getUserSubscriptionsCount(userId);
 	}
 
 	/**
-	* Deletes all the subscriptions to the entity.
+	* Returns <code>true</code> if the user is subscribed to the entity.
 	*
 	* @param companyId the primary key of the company
+	* @param userId the primary key of the user
 	* @param className the entity's class name
 	* @param classPK the primary key of the entity's instance
+	* @return <code>true</code> if the user is subscribed to the entity;
+	<code>false</code> otherwise
 	*/
 	@Override
-	public void deleteSubscriptions(long companyId, java.lang.String className,
-		long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_subscriptionLocalService.deleteSubscriptions(companyId, className,
-			classPK);
+	public boolean isSubscribed(long companyId, long userId,
+		java.lang.String className, long classPK) {
+		return _subscriptionLocalService.isSubscribed(companyId, userId,
+			className, classPK);
 	}
 
 	/**
-	* Deletes all the subscriptions of the user.
+	* Returns <code>true</code> if the user is subscribed to any of the
+	* entities.
 	*
+	* @param companyId the primary key of the company
 	* @param userId the primary key of the user
+	* @param className the entity's class name
+	* @param classPKs the primary key of the entities
+	* @return <code>true</code> if the user is subscribed to any of the
+	entities; <code>false</code> otherwise
 	*/
 	@Override
-	public void deleteSubscriptions(long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_subscriptionLocalService.deleteSubscriptions(userId);
+	public boolean isSubscribed(long companyId, long userId,
+		java.lang.String className, long[] classPKs) {
+		return _subscriptionLocalService.isSubscribed(companyId, userId,
+			className, classPKs);
 	}
 
+	/**
+	* Updates the subscription in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param subscription the subscription
+	* @return the subscription that was updated
+	*/
 	@Override
-	public void deleteSubscriptions(long userId, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_subscriptionLocalService.deleteSubscriptions(userId, groupId);
+	public com.liferay.portal.kernel.model.Subscription updateSubscription(
+		com.liferay.portal.kernel.model.Subscription subscription) {
+		return _subscriptionLocalService.updateSubscription(subscription);
 	}
 
 	@Override

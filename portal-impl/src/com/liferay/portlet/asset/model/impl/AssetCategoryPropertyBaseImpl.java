@@ -29,8 +29,10 @@ import com.liferay.asset.kernel.service.AssetCategoryPropertyLocalServiceUtil;
  * @author Brian Wing Shun Chan
  * @see AssetCategoryPropertyImpl
  * @see AssetCategoryProperty
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public abstract class AssetCategoryPropertyBaseImpl
 	extends AssetCategoryPropertyModelImpl implements AssetCategoryProperty {

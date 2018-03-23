@@ -45,7 +45,7 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 
 		_basePropertiesMap = basePropertiesMap;
 
-		_environmentSlavesPropertiesMap = _getEnvironmentSlavesMap();
+		_environmentSlavesMap = _getEnvironmentSlavesMap();
 		_generatedJenkinsJobConfigPropertiesMap = new HashMap<>();
 	}
 
@@ -362,10 +362,8 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 	private Element _getSlaveConfigElement(String slaveHostName) {
 		String slaveLabel = slaveHostName;
 
-		Map<String, String> environmentSlavesMap = _getEnvironmentSlavesMap();
-
-		if (environmentSlavesMap.containsKey(slaveHostName)) {
-			slaveLabel = environmentSlavesMap.get(slaveHostName);
+		if (_environmentSlavesMap.containsKey(slaveHostName)) {
+			slaveLabel = _environmentSlavesMap.get(slaveHostName);
 		}
 
 		Element slaveElement = Dom4JUtil.getNewElement(
@@ -1005,11 +1003,9 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 
 				String environmentSlaveOSType = "";
 
-				if (_environmentSlavesPropertiesMap.containsKey(
-						slaveHostName)) {
-
+				if (_environmentSlavesMap.containsKey(slaveHostName)) {
 					String environmentSlavePropertyValue =
-						_environmentSlavesPropertiesMap.get(slaveHostName);
+						_environmentSlavesMap.get(slaveHostName);
 
 					environmentSlaveOSType =
 						environmentSlavePropertyValue.substring(
@@ -1115,7 +1111,7 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 		Pattern.compile("<projects>(.+)</projects>");
 
 	private final Map<String, String> _basePropertiesMap;
-	private final Map<String, String> _environmentSlavesPropertiesMap;
+	private final Map<String, String> _environmentSlavesMap;
 	private final Map<String, String> _generatedJenkinsJobConfigPropertiesMap;
 	private final Set<String> _slaveHostNamesSet = new HashSet<>();
 

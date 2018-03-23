@@ -14,6 +14,12 @@
  */
 --%>
 
+<%@ include file="/form_navigator/init.jsp" %>
+
+<%
+List<FormNavigatorEntry<Object>> formNavigatorEntries = (List<FormNavigatorEntry<Object>>)request.getAttribute("formNavigatorEntries");
+%>
+
 <liferay-frontend:fieldset-group>
 
 	<%

@@ -35,13 +35,12 @@ String tabs1Value = GetterUtil.getString(SessionClicks.get(request, namespace + 
 
 			<%
 			for (String categoryKey : categoryKeys) {
-				List<FormNavigatorEntry<Object>> formNavigatorEntries = FormNavigatorEntryUtil.getFormNavigatorEntries(id, categoryKey, user, formModelBean);
-
 				request.setAttribute("currentTab", categoryKey);
+				request.setAttribute("formNavigatorEntries", FormNavigatorEntryUtil.getFormNavigatorEntries(id, categoryKey, user, formModelBean));
 			%>
 
 				<liferay-ui:section>
-					<%@ include file="/form_navigator/sections.jspf" %>
+					<liferay-util:include page="/form_navigator/sections.jsp" servletContext="<%= application %>" />
 				</liferay-ui:section>
 
 			<%
@@ -59,10 +58,10 @@ String tabs1Value = GetterUtil.getString(SessionClicks.get(request, namespace + 
 	<c:otherwise>
 
 		<%
-		List<FormNavigatorEntry<Object>> formNavigatorEntries = FormNavigatorEntryUtil.getFormNavigatorEntries(id, user, formModelBean);
+		request.setAttribute("formNavigatorEntries", FormNavigatorEntryUtil.getFormNavigatorEntries(id, user, formModelBean));
 		%>
 
-		<%@ include file="/form_navigator/sections.jspf" %>
+		<liferay-util:include page="/form_navigator/sections.jsp" servletContext="<%= application %>" />
 	</c:otherwise>
 </c:choose>
 

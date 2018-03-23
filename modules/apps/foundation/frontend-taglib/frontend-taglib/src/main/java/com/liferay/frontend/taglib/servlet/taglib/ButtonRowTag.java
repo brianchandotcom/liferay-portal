@@ -36,14 +36,6 @@ public class ButtonRowTag extends IncludeTag {
 		return super.doStartTag();
 	}
 
-	public String getCssClass() {
-		return _cssClass;
-	}
-
-	public String getId() {
-		return _id;
-	}
-
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
 	}
@@ -58,11 +50,6 @@ public class ButtonRowTag extends IncludeTag {
 
 		_cssClass = null;
 		_id = null;
-	}
-
-	@Override
-	protected String getStartPage() {
-		return _START_PAGE;
 	}
 
 	@Override
@@ -85,7 +72,7 @@ public class ButtonRowTag extends IncludeTag {
 
 		jspWriter.write("<div class=\"button-holder ");
 
-		String cssClass = getCssClass();
+		String cssClass = _cssClass;
 
 		if (cssClass != null) {
 			jspWriter.write(cssClass);
@@ -93,7 +80,7 @@ public class ButtonRowTag extends IncludeTag {
 
 		jspWriter.write("\" ");
 
-		String id = getId();
+		String id = _id;
 
 		if (id != null) {
 			jspWriter.write("id=\"");
@@ -117,23 +104,18 @@ public class ButtonRowTag extends IncludeTag {
 		if (themeDisplay.isStatePopUp()) {
 			String cssClass = "dialog-footer";
 
-			if (getCssClass() != null) {
-				cssClass = cssClass + StringPool.SPACE + getCssClass();
+			if (_cssClass != null) {
+				cssClass = cssClass + StringPool.SPACE + _cssClass;
 			}
 
 			setCssClass(cssClass);
 		}
-
-		request.setAttribute("liferay-frontend:button-row:cssClass", _cssClass);
-		request.setAttribute("liferay-frontend:button-row:id", _id);
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE =
 		"liferay-frontend:button-row:";
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
-
-	private static final String _START_PAGE = "/button_row/start.jsp";
 
 	private String _cssClass;
 	private String _id;

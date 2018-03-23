@@ -15,6 +15,9 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.portal.kernel.servlet.taglib.aui.ValidatorTag;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
@@ -131,7 +134,8 @@ public class EditFormTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-frontend:edit-form:action", _action);
+		request.setAttribute(
+			"liferay-frontend:edit-form:action", _getAction(request));
 		request.setAttribute("liferay-frontend:edit-form:cssClass", _cssClass);
 		request.setAttribute(
 			"liferay-frontend:edit-form:escapeXml", String.valueOf(_escapeXml));
@@ -153,6 +157,18 @@ public class EditFormTag extends IncludeTag {
 			"liferay-frontend:edit-form:validatorTagsMap", _validatorTagsMap);
 		request.setAttribute(
 			"LIFERAY_SHARED_aui:form:checkboxNames", _checkboxNames);
+	}
+
+	private String _getAction(HttpServletRequest request) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay.isAddSessionIdToURL()) {
+			return PortalUtil.getURLWithSessionId(
+				_action, themeDisplay.getSessionId());
+		}
+
+		return _action;
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE =

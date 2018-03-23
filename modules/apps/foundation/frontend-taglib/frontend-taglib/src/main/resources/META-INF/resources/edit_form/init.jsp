@@ -34,8 +34,4 @@ boolean useNamespace = GetterUtil.getBoolean(String.valueOf(request.getAttribute
 boolean validateOnBlur = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-frontend:edit-form:validateOnBlur")));
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("liferay-frontend:edit-form:dynamicAttributes");
 Map<String, List<ValidatorTag>> validatorTagsMap = (Map<String, List<ValidatorTag>>)request.getAttribute("liferay-frontend:edit-form:validatorTagsMap");
-
-if (themeDisplay.isAddSessionIdToURL()) {
-	action = PortalUtil.getURLWithSessionId(action, themeDisplay.getSessionId());
-}
 %>

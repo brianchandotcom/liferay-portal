@@ -16,5 +16,4 @@
 
 <%@ include file="/fieldset_group/init.jsp" %>
 
-    </div>
 </div>

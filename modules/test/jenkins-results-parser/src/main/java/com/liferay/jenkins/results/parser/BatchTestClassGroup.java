@@ -232,15 +232,28 @@ public class TestBatchGroup {
 
 		int testBatchClassesPerGroup = _getTestBatchClassesPerGroup();
 
-		for (int i = 0; i < testClassFileNames.size();
-			 i += testBatchClassesPerGroup) {
+		int testBatchGroupSize =
+			testClassFileNames.size() / testBatchClassesPerGroup;
 
+		if ((testClassFileNames.size() % testBatchClassesPerGroup) != 0) {
+			testBatchGroupSize++;
+		}
+
+		int balancedTestBatchClassesPerGroup =
+			testClassFileNames.size() / testBatchGroupSize;
+
+		if ((testClassFileNames.size() % testBatchGroupSize) != 0) {
+			balancedTestBatchClassesPerGroup++;
+		}
+
+		for (int i = 0; i < testBatchGroupSize; i++) {
 			_testClassGroups.add(
-					testClassFileNames.subList(
-							i,
-							Math.min(
-									testClassFileNames.size(),
-									i + testBatchClassesPerGroup)));
+				testClassFileNames.subList(
+					i * balancedTestBatchClassesPerGroup,
+					Math.min(
+						testClassFileNames.size(),
+						i * balancedTestBatchClassesPerGroup +
+							balancedTestBatchClassesPerGroup)));
 		}
 	}
 

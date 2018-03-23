@@ -30,7 +30,7 @@ import javax.servlet.jsp.JspException;
 /**
  * @author Eudaldo Alonso
  */
-public class FormTag extends IncludeTag {
+public class EditFormTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
@@ -171,37 +171,38 @@ public class FormTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-frontend:form:action", _action);
-		request.setAttribute("liferay-frontend:form:cssClass", _cssClass);
+		request.setAttribute("liferay-frontend:edit-form:action", _action);
+		request.setAttribute("liferay-frontend:edit-form:cssClass", _cssClass);
 		request.setAttribute(
-			"liferay-frontend:form:escapeXml", String.valueOf(_escapeXml));
+			"liferay-frontend:edit-form:escapeXml", String.valueOf(_escapeXml));
 		request.setAttribute(
-			"liferay-frontend:form:inlineLabels",
+			"liferay-frontend:edit-form:inlineLabels",
 			String.valueOf(_inlineLabels));
-		request.setAttribute("liferay-frontend:form:method", _method);
-		request.setAttribute("liferay-frontend:form:name", _name);
-		request.setAttribute("liferay-frontend:form:onSubmit", _onSubmit);
+		request.setAttribute("liferay-frontend:edit-form:method", _method);
+		request.setAttribute("liferay-frontend:edit-form:name", _name);
+		request.setAttribute("liferay-frontend:edit-form:onSubmit", _onSubmit);
 		request.setAttribute(
-			"liferay-frontend:form:portletNamespace", _portletNamespace);
+			"liferay-frontend:edit-form:portletNamespace", _portletNamespace);
 		request.setAttribute(
-			"liferay-frontend:form:useNamespace",
+			"liferay-frontend:edit-form:useNamespace",
 			String.valueOf(_useNamespace));
 		request.setAttribute(
-			"liferay-frontend:form:validateOnBlur",
+			"liferay-frontend:edit-form:validateOnBlur",
 			String.valueOf(_validateOnBlur));
 		request.setAttribute(
-			"liferay-frontend:form:validatorTagsMap", _validatorTagsMap);
+			"liferay-frontend:edit-form:validatorTagsMap", _validatorTagsMap);
 		request.setAttribute(
 			"LIFERAY_SHARED_aui:form:checkboxNames", _checkboxNames);
 	}
 
-	private static final String _ATTRIBUTE_NAMESPACE = "liferay-frontend:form:";
+	private static final String _ATTRIBUTE_NAMESPACE =
+		"liferay-frontend:edit-form:";
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
-	private static final String _END_PAGE = "/form/end.jsp";
+	private static final String _END_PAGE = "/edit_form/end.jsp";
 
-	private static final String _START_PAGE = "/form/start.jsp";
+	private static final String _START_PAGE = "/edit_form/start.jsp";
 
 	private String _action;
 	private final List<String> _checkboxNames = new ArrayList<>();

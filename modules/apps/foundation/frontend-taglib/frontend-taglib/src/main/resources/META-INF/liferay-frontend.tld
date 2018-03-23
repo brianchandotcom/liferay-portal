@@ -231,6 +231,77 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description><![CDATA[Creates a form that offers additional styling and custom namespacing.]]></description>
+		<name>edit-form</name>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.EditFormTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description><![CDATA[Where to send the form data when the form is submitted.]]></description>
+			<name>action</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description><![CDATA[A CSS class for styling the component.]]></description>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Whether to escape the XML of the form's action URL. The default value is <code>true</code>.]]></description>
+			<name>escapeXml</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Whether to align the form's labels. The default value is <code>false</code>.]]></description>
+			<name>inlineLabels</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[The method to send the form data. The default value is <code>post</code>. Possible values are <code>get</code> and <code>post</code>.]]></description>
+			<name>method</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description><![CDATA[A name for the form that is also used for the ID of the component instance. The default value is <code>fm</code>.]]></description>
+			<name>name</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description><![CDATA[A function to be called on submitting the form.]]></description>
+			<name>onSubmit</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description><![CDATA[A namespace for the form and its elements. This attribute lets you set a namespace value that differs from the default portlet namespace.]]></description>
+			<name>portletNamespace</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Whether to use the default portlet namespace, to avoid name conflicts. The default value is <code>true</code>.]]></description>
+			<name>useNamespace</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Whether to validate fields when they lose focus. The default value is <code>true</code>.]]></description>
+			<name>validateOnBlur</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
+	<tag>
 		<name>email-notification-settings</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.EmailNotificationSettingsTag</tag-class>
 		<body-content>JSP</body-content>
@@ -299,77 +370,6 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-	</tag>
-	<tag>
-		<description><![CDATA[Creates a form that offers additional styling and custom namespacing.]]></description>
-		<name>form</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.FormTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<description><![CDATA[Where to send the form data when the form is submitted.]]></description>
-			<name>action</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description><![CDATA[A CSS class for styling the component.]]></description>
-			<name>cssClass</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Whether to escape the XML of the form's action URL. The default value is <code>true</code>.]]></description>
-			<name>escapeXml</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Whether to align the form's labels. The default value is <code>false</code>.]]></description>
-			<name>inlineLabels</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[The method to send the form data. The default value is <code>post</code>. Possible values are <code>get</code> and <code>post</code>.]]></description>
-			<name>method</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description><![CDATA[A name for the form that is also used for the ID of the component instance. The default value is <code>fm</code>.]]></description>
-			<name>name</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description><![CDATA[A function to be called on submitting the form.]]></description>
-			<name>onSubmit</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description><![CDATA[A namespace for the form and its elements. This attribute lets you set a namespace value that differs from the default portlet namespace.]]></description>
-			<name>portletNamespace</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Whether to use the default portlet namespace, to avoid name conflicts. The default value is <code>true</code>.]]></description>
-			<name>useNamespace</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Whether to validate fields when they lose focus. The default value is <code>true</code>.]]></description>
-			<name>validateOnBlur</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
-		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>
 		<description>Creates a lexicon-based card component.</description>

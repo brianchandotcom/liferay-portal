@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/form/init.jsp" %>
+<%@ include file="/edit_form/init.jsp" %>
 
 <%
 String fullName = namespace.concat(HtmlUtil.escapeAttribute(name));

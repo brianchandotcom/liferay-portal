@@ -33,7 +33,8 @@ public class ConstantNameCheck
 	extends com.puppycrawl.tools.checkstyle.checks.naming.ConstantNameCheck {
 
 	public void setCamelCaseTypeNames(String camelCaseTypeNames) {
-		_camelCaseTypeNames = StringUtil.split(camelCaseTypeNames);
+		_camelCaseTypeNames = ArrayUtil.append(
+			_camelCaseTypeNames, StringUtil.split(camelCaseTypeNames));
 	}
 
 	public void setEnabled(boolean enabled) {
@@ -41,7 +42,8 @@ public class ConstantNameCheck
 	}
 
 	public void setImmutableFieldTypes(String immutableFieldTypes) {
-		_immutableFieldTypes = StringUtil.split(immutableFieldTypes);
+		_immutableFieldTypes = ArrayUtil.append(
+			_immutableFieldTypes, StringUtil.split(immutableFieldTypes));
 	}
 
 	public void setShowDebugInformation(boolean showDebugInformation) {

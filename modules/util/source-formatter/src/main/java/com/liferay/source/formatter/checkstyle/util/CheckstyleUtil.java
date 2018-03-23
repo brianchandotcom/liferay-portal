@@ -15,9 +15,10 @@
 package com.liferay.source.formatter.checkstyle.util;
 
 import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.DebugUtil;
+import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import com.puppycrawl.tools.checkstyle.ConfigurationLoader;
 import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
@@ -38,57 +39,14 @@ public class CheckstyleUtil {
 
 	public static final int BATCH_SIZE = 1000;
 
-	public static Configuration addAttribute(
-		Configuration configuration, String key, String value,
-		String... regexChecks) {
+	public static String getCheckName(String name) {
+		int pos = name.lastIndexOf(CharPool.PERIOD);
 
-		if (!(configuration instanceof DefaultConfiguration)) {
-			return configuration;
+		if (pos != -1) {
+			return name.substring(pos + 1);
 		}
 
-		DefaultConfiguration defaultConfiguration =
-			(DefaultConfiguration)configuration;
-
-		DefaultConfiguration treeWalkerModule = null;
-
-		for (Configuration childConfiguration :
-				defaultConfiguration.getChildren()) {
-
-			String name = childConfiguration.getName();
-
-			if (name.equals("TreeWalker") &&
-				(childConfiguration instanceof DefaultConfiguration)) {
-
-				treeWalkerModule = (DefaultConfiguration)childConfiguration;
-
-				break;
-			}
-		}
-
-		if (treeWalkerModule == null) {
-			return configuration;
-		}
-
-		for (Configuration childConfiguration :
-				treeWalkerModule.getChildren()) {
-
-			if (!(childConfiguration instanceof DefaultConfiguration)) {
-				continue;
-			}
-
-			String name = childConfiguration.getName();
-
-			for (String regexCheck : regexChecks) {
-				if (name.matches(regexCheck)) {
-					DefaultConfiguration defaultChildConfiguration =
-						(DefaultConfiguration)childConfiguration;
-
-					defaultChildConfiguration.addAttribute(key, value);
-				}
-			}
-		}
-
-		return defaultConfiguration;
+		return name;
 	}
 
 	public static List<String> getCheckNames(Configuration configuration) {
@@ -121,27 +79,21 @@ public class CheckstyleUtil {
 				classLoader.getResourceAsStream(configurationFileName)),
 			new PropertiesExpander(System.getProperties()), false);
 
-		configuration = addAttribute(
-			configuration, "allowedClassNames",
-			_getPropertyValue(propertiesMap, "chaining.allowed.class.names"),
-			"com.liferay.source.formatter.checkstyle.checks.ChainingCheck");
-		configuration = addAttribute(
-			configuration, "allowedVariableTypeNames",
-			_getPropertyValue(propertiesMap, "chaining.allowed.variable.types"),
-			"com.liferay.source.formatter.checkstyle.checks.ChainingCheck");
-		configuration = addAttribute(
+		configuration = _addAttribute(
 			configuration, "maxLineLength", String.valueOf(maxLineLength),
 			"com.liferay.source.formatter.checkstyle.checks.AppendCheck");
-		configuration = addAttribute(
+		configuration = _addAttribute(
 			configuration, "maxLineLength", String.valueOf(maxLineLength),
 			"com.liferay.source.formatter.checkstyle.checks.ConcatCheck");
-		configuration = addAttribute(
+		configuration = _addAttribute(
 			configuration, "maxLineLength", String.valueOf(maxLineLength),
 			"com.liferay.source.formatter.checkstyle.checks." +
 				"PlusStatementCheck");
-		configuration = addAttribute(
+		configuration = _addAttribute(
 			configuration, "showDebugInformation",
 			String.valueOf(showDebugInformation), "com.liferay.*");
+
+		configuration = _addPropertiesAttributes(configuration, propertiesMap);
 
 		if (showDebugInformation) {
 			DebugUtil.addCheckNames(
@@ -151,27 +103,105 @@ public class CheckstyleUtil {
 		return configuration;
 	}
 
-	private static String _getPropertyValue(
-		Map<String, Properties> propertiesMap, String key) {
+	private static Configuration _addAttribute(
+		Configuration configuration, String key, String value,
+		String... regexChecks) {
 
-		StringBundler sb = new StringBundler(propertiesMap.size() * 2);
+		Configuration[] checkConfigurations = _getCheckConfigurations(
+			configuration);
 
-		for (Map.Entry<String, Properties> entry : propertiesMap.entrySet()) {
-			Properties properties = entry.getValue();
+		if (checkConfigurations == null) {
+			return configuration;
+		}
 
-			String value = properties.getProperty(key);
+		for (Configuration checkConfiguration : checkConfigurations) {
+			if (!(checkConfiguration instanceof DefaultConfiguration)) {
+				continue;
+			}
 
-			if (value != null) {
-				sb.append(value);
-				sb.append(CharPool.COMMA);
+			String name = checkConfiguration.getName();
+
+			for (String regexCheck : regexChecks) {
+				if (name.matches(regexCheck)) {
+					DefaultConfiguration defaultChildConfiguration =
+						(DefaultConfiguration)checkConfiguration;
+
+					defaultChildConfiguration.addAttribute(key, value);
+				}
 			}
 		}
 
-		if (sb.index() > 0) {
-			sb.setIndex(sb.index() - 1);
+		return configuration;
+	}
+
+	private static Configuration _addPropertiesAttributes(
+		Configuration configuration, Map<String, Properties> propertiesMap) {
+
+		Configuration[] checkConfigurations = _getCheckConfigurations(
+			configuration);
+
+		if (checkConfigurations == null) {
+			return configuration;
 		}
 
-		return sb.toString();
+		for (Configuration checkConfiguration : checkConfigurations) {
+			if (!(checkConfiguration instanceof DefaultConfiguration)) {
+				continue;
+			}
+
+			String checkName = getCheckName(checkConfiguration.getName());
+
+			List<String> attributeNames = SourceFormatterUtil.getAttributeNames(
+				checkName, propertiesMap);
+
+			for (String attributeName : attributeNames) {
+				String value = SourceFormatterUtil.getPropertyValue(
+					attributeName, checkName, propertiesMap);
+
+				if (Validator.isNotNull(value)) {
+					DefaultConfiguration defaultChildConfiguration =
+						(DefaultConfiguration)checkConfiguration;
+
+					defaultChildConfiguration.addAttribute(
+						attributeName, value);
+				}
+			}
+		}
+
+		return configuration;
+	}
+
+	private static Configuration[] _getCheckConfigurations(
+		Configuration configuration) {
+
+		if (!(configuration instanceof DefaultConfiguration)) {
+			return null;
+		}
+
+		DefaultConfiguration defaultConfiguration =
+			(DefaultConfiguration)configuration;
+
+		DefaultConfiguration treeWalkerModule = null;
+
+		for (Configuration childConfiguration :
+				defaultConfiguration.getChildren()) {
+
+			String name = childConfiguration.getName();
+
+			if (name.equals("TreeWalker") &&
+				(childConfiguration instanceof DefaultConfiguration)) {
+
+				treeWalkerModule = (DefaultConfiguration)childConfiguration;
+
+				break;
+			}
+		}
+
+		if (treeWalkerModule != null) {
+			return treeWalkerModule.getChildren();
+		}
+
+		return null;
 	}
 
 }

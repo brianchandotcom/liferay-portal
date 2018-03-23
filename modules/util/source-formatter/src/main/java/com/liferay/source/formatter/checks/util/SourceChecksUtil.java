@@ -18,7 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.GradleFileCheck;
@@ -42,7 +42,6 @@ import java.io.File;
 import java.lang.reflect.Constructor;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -195,46 +194,6 @@ public class SourceChecksUtil {
 		return sourceChecksResult;
 	}
 
-	private static List<String> _getOverrideValues(
-		String attributeName, Class<? extends SourceCheck> sourceCheckClass,
-		Map<String, Properties> propertiesMap) {
-
-		String simpleName = sourceCheckClass.getSimpleName();
-
-		String[] simpleNameArray = simpleName.split(
-			"(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
-
-		String simpleNameValue = StringUtil.merge(simpleNameArray, ".");
-
-		String[] attributeNameArray = attributeName.split(
-			"(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
-
-		String attributeNameValue = StringUtil.merge(attributeNameArray, ".");
-
-		String key = StringBundler.concat(
-			"override.", StringUtil.toLowerCase(simpleNameValue), ".",
-			StringUtil.toLowerCase(attributeNameValue));
-
-		StringBundler sb = new StringBundler(propertiesMap.size() * 2);
-
-		for (Map.Entry<String, Properties> entry : propertiesMap.entrySet()) {
-			Properties properties = entry.getValue();
-
-			String value = properties.getProperty(key);
-
-			if (value != null) {
-				sb.append(value);
-				sb.append(CharPool.COMMA);
-			}
-		}
-
-		if (sb.index() > 0) {
-			sb.setIndex(sb.index() - 1);
-		}
-
-		return ListUtil.toList(StringUtil.split(sb.toString()));
-	}
-
 	private static List<SourceCheck> _getSourceChecks(
 			SourceFormatterConfiguration sourceFormatterConfiguration,
 			String sourceProcessorName, Map<String, Properties> propertiesMap,
@@ -294,22 +253,28 @@ public class SourceChecksUtil {
 				continue;
 			}
 
+			Class<?> clazz = sourceCheck.getClass();
+
 			for (String attributeName :
 					sourceCheckConfiguration.attributeNames()) {
 
-				List<String> values = Collections.emptyList();
-
-				if (portalSource) {
-					values = _getOverrideValues(
-						attributeName, sourceCheck.getClass(), propertiesMap);
-				}
-
-				if (values.isEmpty()) {
-					values = sourceCheckConfiguration.getAttributeValues(
-						attributeName);
-				}
+				List<String> values =
+					sourceCheckConfiguration.getAttributeValues(attributeName);
 
 				for (String value : values) {
+					BeanUtils.setProperty(sourceCheck, attributeName, value);
+				}
+			}
+
+			List<String> attributeNames = SourceFormatterUtil.getAttributeNames(
+				CheckType.SOURCE_CHECK, clazz.getSimpleName(), propertiesMap);
+
+			for (String attributeName : attributeNames) {
+				String value = SourceFormatterUtil.getPropertyValue(
+					attributeName, CheckType.SOURCE_CHECK,
+					clazz.getSimpleName(), propertiesMap);
+
+				if (Validator.isNotNull(value)) {
 					BeanUtils.setProperty(sourceCheck, attributeName, value);
 				}
 			}

@@ -14,33 +14,51 @@
 
 package com.liferay.commerce.initializer.customer.portal.internal.util;
 
+import com.liferay.commerce.organization.constants.CommerceOrganizationConstants;
+import com.liferay.commerce.organization.service.CommerceOrganizationLocalService;
 import com.liferay.commerce.product.demo.data.creator.CPDemoDataCreator;
 import com.liferay.commerce.product.importer.CPFileImporter;
-import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.ListTypeConstants;
+import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.Theme;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ThemeLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.GroupInitializer;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.util.Dictionary;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -49,11 +67,14 @@ import javax.portlet.PortletPreferences;
 
 import javax.servlet.ServletContext;
 
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	immediate = true,
@@ -92,15 +113,23 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 		return LanguageUtil.get(resourceBundle, "customer-portal");
 	}
 
-	public ServiceContext getServiceContext(long groupId) {
+	public ServiceContext getServiceContext(long groupId)
+		throws PortalException {
+
+		User user = _userLocalService.getUser(PrincipalThreadLocal.getUserId());
+		Group group = _groupLocalService.getGroup(groupId);
+
 		Locale locale = LocaleUtil.getSiteDefault();
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setCompanyId(group.getCompanyId());
 		serviceContext.setLanguageId(LanguageUtil.getLanguageId(locale));
 		serviceContext.setScopeGroupId(groupId);
+		serviceContext.setUserId(user.getUserId());
+		serviceContext.setTimeZone(user.getTimeZone());
 
 		return serviceContext;
 	}
@@ -112,9 +141,11 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 
 	@Override
 	public void initialize(long groupId) throws InitializationException {
-		ServiceContext serviceContext = getServiceContext(groupId);
-
 		try {
+			ServiceContext serviceContext = getServiceContext(groupId);
+
+			configureB2BSite(groupId, serviceContext);
+
 			_cpFileImporter.cleanLayouts(serviceContext);
 
 			_cpFileImporter.updateLookAndFeel(
@@ -149,6 +180,19 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 		return true;
 	}
 
+	protected void configureB2BSite(long groupId, ServiceContext serviceContext)
+		throws Exception {
+
+		_commerceOrganizationLocalService.configureB2BSite(
+			groupId, serviceContext);
+
+		Group group = _groupLocalService.getGroup(groupId);
+
+		_addDemoAccountOrganizations(
+			group.getOrganizationId(), group.getNameCurrentValue(), 3,
+			serviceContext);
+	}
+
 	protected void createLayouts(ServiceContext serviceContext)
 		throws Exception {
 
@@ -164,6 +208,21 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 		_cpFileImporter.createLayouts(jsonArray, false, serviceContext);
 	}
 
+	protected DDMTemplate getDDMTemplate(
+			String portletClassName, String filePath, String name,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		long classNameId = _portal.getClassNameId(portletClassName);
+		long resourceClassNameId = _portal.getClassNameId(
+			PortletDisplayTemplate.class);
+
+		return _cpFileImporter.getDDMTemplate(
+			_getFile(filePath), classNameId, 0L, resourceClassNameId, name,
+			DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
+			TemplateConstants.LANG_TYPE_FTL, serviceContext);
+	}
+
 	protected JSONArray getThemePortletSettingJSONArray() throws Exception {
 		Class<?> clazz = getClass();
 
@@ -171,33 +230,23 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 			_DEPENDENCY_PATH + "theme-portlet-settings.json";
 
 		String themePortletSettingsJSON = StringUtil.read(
-			clazz.getClassLoader(), themePortletSettingsPath, false);
+			clazz.getClassLoader(), themePortletSettingsPath, true);
 
 		return JSONFactoryUtil.createJSONArray(themePortletSettingsJSON);
 	}
 
-	protected void setSiteNavigationMenuPortletSettings(
+	protected void setCPContentPortletSettings(
 			JSONObject jsonObject, String portletName,
 			ServiceContext serviceContext)
 		throws Exception {
 
-		if (portletName.equals(_SITE_NAVIGATION_MENU_PORTLET_NAME)) {
+		if (portletName.equals(_CP_CONTENT_PORTLET_NAME)) {
 			String instanceId = jsonObject.getString("instanceId");
 			String layoutFriendlyURL = jsonObject.getString(
 				"layoutFriendlyURL");
-			String rootLayoutFriendlyURL = jsonObject.getString(
-				"rootLayoutFriendlyURL");
 
 			JSONObject portletPreferencesJSONObject = jsonObject.getJSONObject(
 				"portletPreferences");
-
-			Layout rootLayout = null;
-
-			if (Validator.isNotNull(rootLayoutFriendlyURL)) {
-				rootLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
-					serviceContext.getScopeGroupId(), false,
-					rootLayoutFriendlyURL);
-			}
 
 			String portletId = PortletIdCodec.encode(portletName, instanceId);
 
@@ -218,17 +267,86 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 				if (key.equals("displayStyleGroupId")) {
 					value = String.valueOf(serviceContext.getScopeGroupId());
 				}
-				else if (key.equals("rootLayoutUuid")) {
-					if (rootLayout == null) {
-						value = StringPool.BLANK;
-					}
-					else {
-						value = rootLayout.getUuid();
-					}
+
+				portletSetup.setValue(key, value);
+			}
+
+			String filePath = _DEPENDENCY_PATH + "product_display_template.ftl";
+
+			DDMTemplate ddmTemplate = getDDMTemplate(
+				_SIMPLE_CP_TYPE_CLASS_NAME, filePath,
+				"Commerce Product Customer Portal", serviceContext);
+
+			String ddmTemplateKey =
+				"ddmTemplate_" + ddmTemplate.getTemplateKey();
+
+			portletSetup.setValue("displayStyle", ddmTemplateKey);
+
+			portletSetup.store();
+
+			long plid = LayoutConstants.DEFAULT_PLID;
+
+			if (Validator.isNotNull(layoutFriendlyURL)) {
+				Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
+					serviceContext.getScopeGroupId(), false, layoutFriendlyURL);
+
+				if (layout != null) {
+					plid = layout.getPlid();
+				}
+			}
+
+			if (plid > LayoutConstants.DEFAULT_PLID) {
+				_setPlidPortletPreferences(plid, portletId, serviceContext);
+			}
+		}
+	}
+
+	protected void setCPSearchResultPortletSettings(
+			JSONObject jsonObject, String portletName,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		if (portletName.equals(_CP_SEARCH_RESULT_PORTLET_NAME)) {
+			String instanceId = jsonObject.getString("instanceId");
+			String layoutFriendlyURL = jsonObject.getString(
+				"layoutFriendlyURL");
+
+			JSONObject portletPreferencesJSONObject = jsonObject.getJSONObject(
+				"portletPreferences");
+
+			String portletId = PortletIdCodec.encode(portletName, instanceId);
+
+			PortletPreferences portletSetup =
+				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+					serviceContext.getCompanyId(),
+					serviceContext.getScopeGroupId(),
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+					LayoutConstants.DEFAULT_PLID, portletId, StringPool.BLANK);
+
+			Iterator<String> iterator = portletPreferencesJSONObject.keys();
+
+			while (iterator.hasNext()) {
+				String key = iterator.next();
+
+				String value = portletPreferencesJSONObject.getString(key);
+
+				if (key.equals("displayStyleGroupId")) {
+					value = String.valueOf(serviceContext.getScopeGroupId());
 				}
 
 				portletSetup.setValue(key, value);
 			}
+
+			String filePath = _DEPENDENCY_PATH + "catalog_display_template.ftl";
+
+			DDMTemplate ddmTemplate = getDDMTemplate(
+				_CP_SEARCH_RESULT_PORTLET_CLASS_NAME, filePath,
+				"Commerce Catalog Customer Portal", serviceContext);
+
+			String ddmTemplateKey =
+				"ddmTemplate_" + ddmTemplate.getTemplateKey();
+
+			portletSetup.setValue("displayStyle", ddmTemplateKey);
 
 			portletSetup.store();
 
@@ -259,9 +377,56 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 
 			String portletName = jsonObject.getString("portletName");
 
-			setSiteNavigationMenuPortletSettings(
+			setCPContentPortletSettings(
+				jsonObject, portletName, serviceContext);
+
+			setCPSearchResultPortletSettings(
 				jsonObject, portletName, serviceContext);
 		}
+	}
+
+	private void _addDemoAccountOrganizations(
+			long organizationId, String groupName, int quantity,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		_updateOrganizationType();
+
+		int i = 1;
+
+		while (i <= quantity) {
+			String name = "Demo Account " + groupName + StringPool.SPACE + i;
+
+			_organizationLocalService.addOrganization(
+				serviceContext.getUserId(), organizationId, name,
+				CommerceOrganizationConstants.TYPE_ACCOUNT, 0L, 0L,
+				ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
+				false, serviceContext);
+
+			i++;
+		}
+	}
+
+	private String _getConfigurationFilter() {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(StringPool.OPEN_PARENTHESIS);
+		sb.append(ConfigurationAdmin.SERVICE_FACTORYPID);
+		sb.append(StringPool.EQUAL);
+		sb.append(_CONFIGURATION_PID);
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+
+		return sb.toString();
+	}
+
+	private File _getFile(String location) throws IOException {
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(location);
+
+		return FileUtil.createTempFile(inputStream);
 	}
 
 	private void _setPlidPortletPreferences(
@@ -278,18 +443,58 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 		portletSetup.store();
 	}
 
+	private void _updateOrganizationType() throws Exception {
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			_getConfigurationFilter());
+
+		for (Configuration configuration : configurations) {
+			Dictionary<String, Object> props = configuration.getProperties();
+
+			String name = (String)props.get("name");
+
+			if (name.equals(OrganizationConstants.TYPE_ORGANIZATION)) {
+				props.put(
+					"childrenTypes", new String[] {"account", "organization"});
+
+				configuration.update(props);
+			}
+		}
+	}
+
+	private static final String _CONFIGURATION_PID =
+		"com.liferay.organizations.service.internal.configuration." +
+			"OrganizationTypeConfiguration";
+
+	private static final String _CP_CONTENT_PORTLET_NAME =
+		"com_liferay_commerce_product_content_web_internal_portlet_" +
+			"CPContentPortlet";
+
+	private static final String _CP_SEARCH_RESULT_PORTLET_CLASS_NAME =
+		"com.liferay.commerce.product.content.search.web.internal.portlet." +
+			"CPSearchResultsPortlet";
+
+	private static final String _CP_SEARCH_RESULT_PORTLET_NAME =
+		"com_liferay_commerce_product_content_search_web_internal_portlet_" +
+			"CPSearchResultsPortlet";
+
 	private static final String _CUSTOMER_PORTAL_THEME_ID =
 		"customerportal_WAR_commercethemecustomerportal";
 
 	private static final String _DEPENDENCY_PATH =
-		"com/liferay/commerce/starter/customer/portal/internal/dependencies/";
+		"com/liferay/commerce/initializer/customer/portal/internal" +
+			"/dependencies/";
 
-	private static final String _SITE_NAVIGATION_MENU_PORTLET_NAME =
-		"com_liferay_site_navigation_menu_web_portlet_" +
-			"SiteNavigationMenuPortlet";
+	private static final String _SIMPLE_CP_TYPE_CLASS_NAME =
+		"com.liferay.commerce.product.type.simple.internal.SimpleCPType";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CustomerPortalGroupInitializer.class);
+
+	@Reference
+	private CommerceOrganizationLocalService _commerceOrganizationLocalService;
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference
 	private CPDemoDataCreator _cpDemoDataCreator;
@@ -298,10 +503,13 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 	private CPFileImporter _cpFileImporter;
 
 	@Reference
-	private JSPRenderer _jspRenderer;
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private OrganizationLocalService _organizationLocalService;
 
 	@Reference
 	private Portal _portal;
@@ -313,5 +521,8 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 
 	@Reference
 	private ThemeLocalService _themeLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

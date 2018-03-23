@@ -79,6 +79,8 @@ public class OAuth2ApplicationCacheModel implements CacheModel<OAuth2Application
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", oAuth2ApplicationScopeAliasesId=");
+		sb.append(oAuth2ApplicationScopeAliasesId);
 		sb.append(", allowedGrantTypes=");
 		sb.append(allowedGrantTypes);
 		sb.append(", clientId=");
@@ -101,8 +103,6 @@ public class OAuth2ApplicationCacheModel implements CacheModel<OAuth2Application
 		sb.append(privacyPolicyURL);
 		sb.append(", redirectURIs=");
 		sb.append(redirectURIs);
-		sb.append(", scopeAliases=");
-		sb.append(scopeAliases);
 		sb.append("}");
 
 		return sb.toString();
@@ -136,6 +136,8 @@ public class OAuth2ApplicationCacheModel implements CacheModel<OAuth2Application
 		else {
 			oAuth2ApplicationImpl.setModifiedDate(new Date(modifiedDate));
 		}
+
+		oAuth2ApplicationImpl.setOAuth2ApplicationScopeAliasesId(oAuth2ApplicationScopeAliasesId);
 
 		if (allowedGrantTypes == null) {
 			oAuth2ApplicationImpl.setAllowedGrantTypes("");
@@ -204,13 +206,6 @@ public class OAuth2ApplicationCacheModel implements CacheModel<OAuth2Application
 			oAuth2ApplicationImpl.setRedirectURIs(redirectURIs);
 		}
 
-		if (scopeAliases == null) {
-			oAuth2ApplicationImpl.setScopeAliases("");
-		}
-		else {
-			oAuth2ApplicationImpl.setScopeAliases(scopeAliases);
-		}
-
 		oAuth2ApplicationImpl.resetOriginalValues();
 
 		return oAuth2ApplicationImpl;
@@ -226,6 +221,8 @@ public class OAuth2ApplicationCacheModel implements CacheModel<OAuth2Application
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+
+		oAuth2ApplicationScopeAliasesId = objectInput.readLong();
 		allowedGrantTypes = objectInput.readUTF();
 		clientId = objectInput.readUTF();
 
@@ -239,7 +236,6 @@ public class OAuth2ApplicationCacheModel implements CacheModel<OAuth2Application
 		name = objectInput.readUTF();
 		privacyPolicyURL = objectInput.readUTF();
 		redirectURIs = objectInput.readUTF();
-		scopeAliases = objectInput.readUTF();
 	}
 
 	@Override
@@ -260,6 +256,8 @@ public class OAuth2ApplicationCacheModel implements CacheModel<OAuth2Application
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		objectOutput.writeLong(oAuth2ApplicationScopeAliasesId);
 
 		if (allowedGrantTypes == null) {
 			objectOutput.writeUTF("");
@@ -327,13 +325,6 @@ public class OAuth2ApplicationCacheModel implements CacheModel<OAuth2Application
 		else {
 			objectOutput.writeUTF(redirectURIs);
 		}
-
-		if (scopeAliases == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(scopeAliases);
-		}
 	}
 
 	public long oAuth2ApplicationId;
@@ -342,6 +333,7 @@ public class OAuth2ApplicationCacheModel implements CacheModel<OAuth2Application
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long oAuth2ApplicationScopeAliasesId;
 	public String allowedGrantTypes;
 	public String clientId;
 	public int clientProfile;
@@ -353,5 +345,4 @@ public class OAuth2ApplicationCacheModel implements CacheModel<OAuth2Application
 	public String name;
 	public String privacyPolicyURL;
 	public String redirectURIs;
-	public String scopeAliases;
 }

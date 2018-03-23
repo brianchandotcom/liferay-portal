@@ -75,6 +75,7 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
+			{ "oA2AScopeAliasesId", Types.BIGINT },
 			{ "allowedGrantTypes", Types.VARCHAR },
 			{ "clientId", Types.VARCHAR },
 			{ "clientProfile", Types.INTEGER },
@@ -85,8 +86,7 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 			{ "iconFileEntryId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "privacyPolicyURL", Types.VARCHAR },
-			{ "redirectURIs", Types.VARCHAR },
-			{ "scopeAliases", Types.CLOB }
+			{ "redirectURIs", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -97,6 +97,7 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("oA2AScopeAliasesId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("allowedGrantTypes", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("clientId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("clientProfile", Types.INTEGER);
@@ -108,10 +109,9 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("privacyPolicyURL", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("redirectURIs", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("scopeAliases", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table OAuth2Application (oAuth2ApplicationId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,allowedGrantTypes VARCHAR(75) null,clientId VARCHAR(75) null,clientProfile INTEGER,clientSecret VARCHAR(75) null,description VARCHAR(75) null,features STRING null,homePageURL STRING null,iconFileEntryId LONG,name VARCHAR(75) null,privacyPolicyURL STRING null,redirectURIs STRING null,scopeAliases TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table OAuth2Application (oAuth2ApplicationId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,oA2AScopeAliasesId LONG,allowedGrantTypes VARCHAR(75) null,clientId VARCHAR(75) null,clientProfile INTEGER,clientSecret VARCHAR(75) null,description VARCHAR(75) null,features STRING null,homePageURL STRING null,iconFileEntryId LONG,name VARCHAR(75) null,privacyPolicyURL STRING null,redirectURIs STRING null)";
 	public static final String TABLE_SQL_DROP = "drop table OAuth2Application";
 	public static final String ORDER_BY_JPQL = " ORDER BY oAuth2Application.oAuth2ApplicationId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY OAuth2Application.oAuth2ApplicationId ASC";
@@ -150,6 +150,7 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setOAuth2ApplicationScopeAliasesId(soapModel.getOAuth2ApplicationScopeAliasesId());
 		model.setAllowedGrantTypes(soapModel.getAllowedGrantTypes());
 		model.setClientId(soapModel.getClientId());
 		model.setClientProfile(soapModel.getClientProfile());
@@ -161,7 +162,6 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 		model.setName(soapModel.getName());
 		model.setPrivacyPolicyURL(soapModel.getPrivacyPolicyURL());
 		model.setRedirectURIs(soapModel.getRedirectURIs());
-		model.setScopeAliases(soapModel.getScopeAliases());
 
 		return model;
 	}
@@ -233,6 +233,8 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("oAuth2ApplicationScopeAliasesId",
+			getOAuth2ApplicationScopeAliasesId());
 		attributes.put("allowedGrantTypes", getAllowedGrantTypes());
 		attributes.put("clientId", getClientId());
 		attributes.put("clientProfile", getClientProfile());
@@ -244,7 +246,6 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 		attributes.put("name", getName());
 		attributes.put("privacyPolicyURL", getPrivacyPolicyURL());
 		attributes.put("redirectURIs", getRedirectURIs());
-		attributes.put("scopeAliases", getScopeAliases());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -288,6 +289,13 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Long oAuth2ApplicationScopeAliasesId = (Long)attributes.get(
+				"oAuth2ApplicationScopeAliasesId");
+
+		if (oAuth2ApplicationScopeAliasesId != null) {
+			setOAuth2ApplicationScopeAliasesId(oAuth2ApplicationScopeAliasesId);
 		}
 
 		String allowedGrantTypes = (String)attributes.get("allowedGrantTypes");
@@ -354,12 +362,6 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 
 		if (redirectURIs != null) {
 			setRedirectURIs(redirectURIs);
-		}
-
-		String scopeAliases = (String)attributes.get("scopeAliases");
-
-		if (scopeAliases != null) {
-			setScopeAliases(scopeAliases);
 		}
 	}
 
@@ -466,6 +468,18 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 		_setModifiedDate = true;
 
 		_modifiedDate = modifiedDate;
+	}
+
+	@JSON
+	@Override
+	public long getOAuth2ApplicationScopeAliasesId() {
+		return _oAuth2ApplicationScopeAliasesId;
+	}
+
+	@Override
+	public void setOAuth2ApplicationScopeAliasesId(
+		long oAuth2ApplicationScopeAliasesId) {
+		_oAuth2ApplicationScopeAliasesId = oAuth2ApplicationScopeAliasesId;
 	}
 
 	@JSON
@@ -644,22 +658,6 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 		_redirectURIs = redirectURIs;
 	}
 
-	@JSON
-	@Override
-	public String getScopeAliases() {
-		if (_scopeAliases == null) {
-			return "";
-		}
-		else {
-			return _scopeAliases;
-		}
-	}
-
-	@Override
-	public void setScopeAliases(String scopeAliases) {
-		_scopeAliases = scopeAliases;
-	}
-
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -697,6 +695,7 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 		oAuth2ApplicationImpl.setUserName(getUserName());
 		oAuth2ApplicationImpl.setCreateDate(getCreateDate());
 		oAuth2ApplicationImpl.setModifiedDate(getModifiedDate());
+		oAuth2ApplicationImpl.setOAuth2ApplicationScopeAliasesId(getOAuth2ApplicationScopeAliasesId());
 		oAuth2ApplicationImpl.setAllowedGrantTypes(getAllowedGrantTypes());
 		oAuth2ApplicationImpl.setClientId(getClientId());
 		oAuth2ApplicationImpl.setClientProfile(getClientProfile());
@@ -708,7 +707,6 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 		oAuth2ApplicationImpl.setName(getName());
 		oAuth2ApplicationImpl.setPrivacyPolicyURL(getPrivacyPolicyURL());
 		oAuth2ApplicationImpl.setRedirectURIs(getRedirectURIs());
-		oAuth2ApplicationImpl.setScopeAliases(getScopeAliases());
 
 		oAuth2ApplicationImpl.resetOriginalValues();
 
@@ -818,6 +816,8 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 			oAuth2ApplicationCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		oAuth2ApplicationCacheModel.oAuth2ApplicationScopeAliasesId = getOAuth2ApplicationScopeAliasesId();
+
 		oAuth2ApplicationCacheModel.allowedGrantTypes = getAllowedGrantTypes();
 
 		String allowedGrantTypes = oAuth2ApplicationCacheModel.allowedGrantTypes;
@@ -894,14 +894,6 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 			oAuth2ApplicationCacheModel.redirectURIs = null;
 		}
 
-		oAuth2ApplicationCacheModel.scopeAliases = getScopeAliases();
-
-		String scopeAliases = oAuth2ApplicationCacheModel.scopeAliases;
-
-		if ((scopeAliases != null) && (scopeAliases.length() == 0)) {
-			oAuth2ApplicationCacheModel.scopeAliases = null;
-		}
-
 		return oAuth2ApplicationCacheModel;
 	}
 
@@ -921,6 +913,8 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", oAuth2ApplicationScopeAliasesId=");
+		sb.append(getOAuth2ApplicationScopeAliasesId());
 		sb.append(", allowedGrantTypes=");
 		sb.append(getAllowedGrantTypes());
 		sb.append(", clientId=");
@@ -943,8 +937,6 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 		sb.append(getPrivacyPolicyURL());
 		sb.append(", redirectURIs=");
 		sb.append(getRedirectURIs());
-		sb.append(", scopeAliases=");
-		sb.append(getScopeAliases());
 		sb.append("}");
 
 		return sb.toString();
@@ -981,6 +973,10 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 		sb.append(
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>oAuth2ApplicationScopeAliasesId</column-name><column-value><![CDATA[");
+		sb.append(getOAuth2ApplicationScopeAliasesId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>allowedGrantTypes</column-name><column-value><![CDATA[");
@@ -1026,10 +1022,6 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 			"<column><column-name>redirectURIs</column-name><column-value><![CDATA[");
 		sb.append(getRedirectURIs());
 		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>scopeAliases</column-name><column-value><![CDATA[");
-		sb.append(getScopeAliases());
-		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1049,6 +1041,7 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private long _oAuth2ApplicationScopeAliasesId;
 	private String _allowedGrantTypes;
 	private String _clientId;
 	private String _originalClientId;
@@ -1061,7 +1054,6 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 	private String _name;
 	private String _privacyPolicyURL;
 	private String _redirectURIs;
-	private String _scopeAliases;
 	private long _columnBitmask;
 	private OAuth2Application _escapedModel;
 }

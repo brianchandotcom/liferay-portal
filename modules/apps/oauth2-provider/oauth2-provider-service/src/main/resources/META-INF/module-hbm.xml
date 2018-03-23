@@ -2,26 +2,10 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping auto-import="false" default-lazy="false">
-	<import class="com.liferay.oauth2.provider.model.OAuth2AccessToken" />
 	<import class="com.liferay.oauth2.provider.model.OAuth2Application" />
-	<import class="com.liferay.oauth2.provider.model.OAuth2RefreshToken" />
+	<import class="com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases" />
+	<import class="com.liferay.oauth2.provider.model.OAuth2Authorization" />
 	<import class="com.liferay.oauth2.provider.model.OAuth2ScopeGrant" />
-	<class name="com.liferay.oauth2.provider.model.impl.OAuth2AccessTokenImpl" table="OAuth2AccessToken">
-		<id access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor" name="oAuth2AccessTokenId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor" name="oAuth2ApplicationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor" name="oAuth2RefreshTokenId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="expirationDate" type="org.hibernate.type.TimestampType" />
-		<property name="remoteIPInfo" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="scopeAliases" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property name="tokenContent" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property name="tokenType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-	</class>
 	<class name="com.liferay.oauth2.provider.model.impl.OAuth2ApplicationImpl" table="OAuth2Application">
 		<id access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor" name="oAuth2ApplicationId" type="long">
 			<generator class="assigned" />
@@ -31,6 +15,7 @@
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor" column="oA2AScopeAliasesId" name="oAuth2ApplicationScopeAliasesId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="allowedGrantTypes" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="clientId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="clientProfile" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
@@ -42,10 +27,9 @@
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="privacyPolicyURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="redirectURIs" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="scopeAliases" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 	</class>
-	<class name="com.liferay.oauth2.provider.model.impl.OAuth2RefreshTokenImpl" table="OAuth2RefreshToken">
-		<id access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor" name="oAuth2RefreshTokenId" type="long">
+	<class name="com.liferay.oauth2.provider.model.impl.OAuth2ApplicationScopeAliasesImpl" table="OAuth2ApplicationScopeAliases">
+		<id access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor" column="oA2AScopeAliasesId" name="oAuth2ApplicationScopeAliasesId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -53,17 +37,32 @@
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor" name="oAuth2ApplicationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="expirationDate" type="org.hibernate.type.TimestampType" />
+		<property name="scopeAliases" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.liferay.oauth2.provider.model.impl.OAuth2AuthorizationImpl" table="OAuth2Authorization">
+		<id access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor" name="oAuth2AuthorizationId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor" name="oAuth2ApplicationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor" column="oA2AScopeAliasesId" name="oAuth2ApplicationScopeAliasesId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="accessTokenContent" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="accessTokenCreateDate" type="org.hibernate.type.TimestampType" />
+		<property name="accessTokenExpirationDate" type="org.hibernate.type.TimestampType" />
 		<property name="remoteIPInfo" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="scopeAliases" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property name="tokenContent" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property name="refreshTokenContent" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="refreshTokenCreateDate" type="org.hibernate.type.TimestampType" />
+		<property name="refreshTokenExpirationDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.oauth2.provider.model.impl.OAuth2ScopeGrantImpl" table="OAuth2ScopeGrant">
 		<id access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor" name="oAuth2ScopeGrantId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor" name="oAuth2AccessTokenId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor" column="oA2AScopeAliasesId" name="oAuth2ApplicationScopeAliasesId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="applicationName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="bundleSymbolicName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="scope" type="com.liferay.portal.dao.orm.hibernate.StringType" />

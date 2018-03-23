@@ -34,7 +34,7 @@ public class OAuth2ScopeGrantSoap implements Serializable {
 
 		soapModel.setOAuth2ScopeGrantId(model.getOAuth2ScopeGrantId());
 		soapModel.setCompanyId(model.getCompanyId());
-		soapModel.setOAuth2AccessTokenId(model.getOAuth2AccessTokenId());
+		soapModel.setOAuth2ApplicationScopeAliasesId(model.getOAuth2ApplicationScopeAliasesId());
 		soapModel.setApplicationName(model.getApplicationName());
 		soapModel.setBundleSymbolicName(model.getBundleSymbolicName());
 		soapModel.setScope(model.getScope());
@@ -108,12 +108,13 @@ public class OAuth2ScopeGrantSoap implements Serializable {
 		_companyId = companyId;
 	}
 
-	public long getOAuth2AccessTokenId() {
-		return _oAuth2AccessTokenId;
+	public long getOAuth2ApplicationScopeAliasesId() {
+		return _oAuth2ApplicationScopeAliasesId;
 	}
 
-	public void setOAuth2AccessTokenId(long oAuth2AccessTokenId) {
-		_oAuth2AccessTokenId = oAuth2AccessTokenId;
+	public void setOAuth2ApplicationScopeAliasesId(
+		long oAuth2ApplicationScopeAliasesId) {
+		_oAuth2ApplicationScopeAliasesId = oAuth2ApplicationScopeAliasesId;
 	}
 
 	public String getApplicationName() {
@@ -142,7 +143,7 @@ public class OAuth2ScopeGrantSoap implements Serializable {
 
 	private long _oAuth2ScopeGrantId;
 	private long _companyId;
-	private long _oAuth2AccessTokenId;
+	private long _oAuth2ApplicationScopeAliasesId;
 	private String _applicationName;
 	private String _bundleSymbolicName;
 	private String _scope;

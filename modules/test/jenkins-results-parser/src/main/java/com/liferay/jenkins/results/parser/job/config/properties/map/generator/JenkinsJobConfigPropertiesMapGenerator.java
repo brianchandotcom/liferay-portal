@@ -788,19 +788,15 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 
 		if (masterPrimaryView == null) {
 			if (topLevelJobNames.isEmpty()) {
-				_generatedJenkinsJobConfigPropertiesMap.put(
-					"master.primary.view(" + masterHostName + ")", "All");
+				masterPrimaryView = "All";
 			}
 			else {
-				_generatedJenkinsJobConfigPropertiesMap.put(
-					"master.primary.view(" + masterHostName + ")", "Top Level");
+				masterPrimaryView = "Top Level";
 			}
 		}
-		else {
-			_generatedJenkinsJobConfigPropertiesMap.put(
-				"master.primary.view(" + masterHostName + ")",
-				masterPrimaryView);
-		}
+
+		_generatedJenkinsJobConfigPropertiesMap.put(
+			"master.primary.view(" + masterHostName + ")", masterPrimaryView);
 
 		List<Element> listViewList = new ArrayList<>();
 

@@ -33,7 +33,7 @@ class AddToCart extends PortletBase {
 			}
 		}
 
-		var quantityNode = document.querySelector('#' + this.quantityInputId )
+		var quantityNode = document.querySelector('#' + this.taglibQuantityInputId )
 
 		if (quantityNode) {
 			_quantity = quantityNode.value;
@@ -152,7 +152,7 @@ AddToCart.STATE = {
 	 * @type {?string}
 	 * @default undefined
 	 */
-	quantityInputId: Config.string(),
+    taglibQuantityInputId: Config.string(),
 
 
 	/**

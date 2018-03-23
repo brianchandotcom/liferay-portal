@@ -120,8 +120,8 @@ public class AddToCartTag extends TemplateRendererTag {
 		putValue("quantity", quantity);
 	}
 
-	public void setQuantityInputId(String quantityInputId) {
-		putValue("quantityInputId", quantityInputId);
+	public void setTaglibQuantityInputId(String taglibQuantityInputId) {
+		putValue("taglibQuantityInputId", taglibQuantityInputId);
 	}
 
 	private String _getURI() throws WindowStateException {

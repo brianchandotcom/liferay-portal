@@ -37,5 +37,5 @@ String quantityInputId = renderResponse.getNamespace() + cpDefinition.getCPDefin
 	CPInstanceId="<%= cpInstanceId %>"
 	elementClasses="btn-lg btn-default"
 	productContentId='<%= productContentId %>'
-	quantityInputId='<%= quantityInputId %>'
+	taglibQuantityInputId='<%= quantityInputId %>'
 />

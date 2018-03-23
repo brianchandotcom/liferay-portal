@@ -16,6 +16,7 @@ package com.liferay.adaptive.media.image.internal.configuration;
 
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.URLCodec;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -42,7 +43,7 @@ public class AMImageConfigurationEntryParserTest extends PowerMockito {
 			_http);
 
 		when(
-			_http.encodeURL(Mockito.eq("desc"))
+			URLCodec.encodeURL(Mockito.eq("desc"))
 		).thenReturn(
 			"desc"
 		);
@@ -54,7 +55,7 @@ public class AMImageConfigurationEntryParserTest extends PowerMockito {
 		);
 
 		when(
-			_http.encodeURL(Mockito.eq("test"))
+			URLCodec.encodeURL(Mockito.eq("test"))
 		).thenReturn(
 			"test"
 		);
@@ -116,7 +117,7 @@ public class AMImageConfigurationEntryParserTest extends PowerMockito {
 	@Test
 	public void testEncodedDescription() {
 		when(
-			_http.encodeURL(Mockito.eq("desc:;"))
+			URLCodec.encodeURL(Mockito.eq("desc:;"))
 		).thenReturn(
 			"desc%3A%3B"
 		);
@@ -147,7 +148,7 @@ public class AMImageConfigurationEntryParserTest extends PowerMockito {
 	@Test
 	public void testEncodedName() {
 		when(
-			_http.encodeURL(Mockito.eq("test:;"))
+			URLCodec.encodeURL(Mockito.eq("test:;"))
 		).thenReturn(
 			"test%3A%3B"
 		);

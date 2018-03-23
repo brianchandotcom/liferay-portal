@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
@@ -84,9 +85,10 @@ public class AMImageConfigurationEntryParser {
 
 		StringBundler sb = new StringBundler(14);
 
-		sb.append(_http.encodeURL(amImageConfigurationEntry.getName()));
+		sb.append(URLCodec.encodeURL(amImageConfigurationEntry.getName()));
 		sb.append(StringPool.COLON);
-		sb.append(_http.encodeURL(amImageConfigurationEntry.getDescription()));
+		sb.append(
+			URLCodec.encodeURL(amImageConfigurationEntry.getDescription()));
 		sb.append(StringPool.COLON);
 		sb.append(amImageConfigurationEntry.getUUID());
 		sb.append(StringPool.COLON);

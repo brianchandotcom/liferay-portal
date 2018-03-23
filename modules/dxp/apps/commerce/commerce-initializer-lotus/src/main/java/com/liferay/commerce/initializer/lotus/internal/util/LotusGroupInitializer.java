@@ -623,7 +623,7 @@ public class LotusGroupInitializer implements GroupInitializer {
 			"CPSearchResultsPortlet";
 
 	private static final String _DEPENDENCY_PATH =
-		"com/liferay/commerce/starter/lotus/internal/dependencies/";
+		"com/liferay/commerce/initializer/lotus/internal/dependencies/";
 
 	private static final String _LOTUS_THEME_ID =
 		"lotus_WAR_commercethemelotus";

@@ -17,6 +17,7 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
+import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -26,6 +27,7 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -58,10 +60,10 @@ public class TestBatchGroup {
 		_testSuiteName = testSuiteName;
 
 		_portalTestProperties = JenkinsResultsParserUtil.getProperties(
-				new File(
-						_gitWorkingDirectory.getWorkingDirectory(), "test.properties"));
+			new File(
+				_gitWorkingDirectory.getWorkingDirectory(), "test.properties"));
 
-		_setTestBatchCurrentBranch();
+		_setCurrentBranch();
 
 		_setTestClassNamesExcludes();
 		_setTestClassNamesIncludes();
@@ -84,19 +86,124 @@ public class TestBatchGroup {
 		return _portalTestProperties;
 	}
 
-	public List<String> getTestClassList(int i) throws Exception {
-		return _testClassGroups.get(i);
-	}
-
-	public int getTestClassListCount() {
+	public int getTestBatchGroupSize() {
 		return _testClassGroups.size();
 	}
 
-	private boolean _filePathExcluded(Path filePath) {
-		for (PathMatcher excludePathMatcher :
-				_testClassNamesExcludesPathMatchers) {
+	public List<String> getTestClassGroup(int i) throws Exception {
+		return _testClassGroups.get(i);
+	}
 
-			if (excludePathMatcher.matches(filePath)) {
+	private int _getMaxClassGroupSize() {
+		List<String> orderedPropertyNames = new ArrayList<>();
+
+		orderedPropertyNames.add(
+			JenkinsResultsParserUtil.combine(
+				"test.batch.max.class.group.size[", _batchName, "][",
+				_testSuiteName, "]"));
+		orderedPropertyNames.add(
+			JenkinsResultsParserUtil.combine(
+				"test.batch.max.class.group.size[", _batchName, "]"));
+		orderedPropertyNames.add(
+			JenkinsResultsParserUtil.combine(
+				"test.batch.max.class.group.size[", _testSuiteName, "]"));
+		orderedPropertyNames.add("test.batch.max.class.group.size");
+
+		String propertyValue = _getPropertyValueFromOrderedPropertyNames(
+			_portalTestProperties, orderedPropertyNames);
+
+		if (propertyValue != null) {
+			return Integer.parseInt(propertyValue);
+		}
+
+		return _DEFAULT_MAX_CLASS_GROUP_SIZE;
+	}
+
+	private String _getPropertyValueFromOrderedPropertyNames(
+		Properties properties, List<String> orderedPropertyNames) {
+
+		for (String propertyName : orderedPropertyNames) {
+			if (properties.containsKey(propertyName)) {
+				String propertyValue = properties.getProperty(propertyName);
+
+				if ((propertyValue != null) && !propertyValue.isEmpty()) {
+					return propertyValue;
+				}
+			}
+		}
+
+		return null;
+	}
+
+	private Set<String> _getTestClassFileNames() throws Exception {
+		File workingDirectory = _gitWorkingDirectory.getWorkingDirectory();
+
+		final Set<String> testClassFileNames = new HashSet<>();
+
+		Files.walkFileTree(
+			workingDirectory.toPath(),
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+						Path filePath, BasicFileAttributes attrs)
+					throws IOException {
+
+					if (_pathExcluded(filePath)) {
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFile(
+						Path filePath, BasicFileAttributes attrs)
+					throws IOException {
+
+					if (filePath.toFile().isDirectory()) {
+						visitFile(filePath, attrs);
+					}
+					else if (_pathIncluded(filePath) &&
+							 !_pathExcluded(filePath)) {
+
+						testClassFileNames.add(
+							_getPackagePath(filePath.toString()));
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				private String _getPackagePath(String filePath) {
+					Matcher matcher = _packagePathPattern.matcher(filePath);
+
+					if (matcher.find()) {
+						String packagePath = matcher.group("packagePath");
+
+						packagePath = packagePath.replace(".java", ".class");
+
+						return packagePath;
+					}
+
+					return filePath.replace(".java", ".class");
+				}
+
+			});
+
+		return testClassFileNames;
+	}
+
+	private boolean _pathExcluded(Path path) {
+		return _pathMatches(path, _testClassNamesExcludesPathMatchers);
+	}
+
+	private boolean _pathIncluded(Path path) {
+		return _pathMatches(path, _testClassNamesIncludesPathMatchers);
+	}
+
+	private boolean _pathMatches(Path path, List<PathMatcher> pathMatchers) {
+		for (PathMatcher pathMatcher : pathMatchers) {
+			if (pathMatcher.matches(path)) {
 				return true;
 			}
 		}
@@ -104,145 +211,45 @@ public class TestBatchGroup {
 		return false;
 	}
 
-	private boolean _filePathIncluded(Path filePath) {
-		for (PathMatcher includePathMatcher :
-				_testClassNamesIncludesPathMatchers) {
+	private void _setCurrentBranch() {
+		List<String> orderedPropertyNames = new ArrayList<>();
 
-			if (includePathMatcher.matches(filePath)) {
-				return true;
-			}
-		}
+		orderedPropertyNames.add(
+			JenkinsResultsParserUtil.combine(
+				"test.batch.current.branch[", _testSuiteName, "]"));
+		orderedPropertyNames.add("test.batch.current.branch");
 
-		return false;
-	}
+		String propertyValue = _getPropertyValueFromOrderedPropertyNames(
+			_portalTestProperties, orderedPropertyNames);
 
-	private int _getTestBatchClassesPerGroup() {
-		String[] propertyNames = {
-			JenkinsResultsParserUtil.combine(_TEST_BATCH_CLASSES_PER_GROUP_PROPERTY_NAME, "[", _batchName, "][", _testSuiteName, "]"),
-			JenkinsResultsParserUtil.combine(_TEST_BATCH_CLASSES_PER_GROUP_PROPERTY_NAME, "[", _batchName, "]"),
-			JenkinsResultsParserUtil.combine(_TEST_BATCH_CLASSES_PER_GROUP_PROPERTY_NAME, "[", _testSuiteName, "]"),
-			_TEST_BATCH_CLASSES_PER_GROUP_PROPERTY_NAME
-		};
-
-		for (String propertyName : propertyNames) {
-			if (_portalTestProperties.containsKey(propertyName)) {
-				String propertyValue = _portalTestProperties.getProperty(
-						propertyName);
-
-				if ((propertyValue != null) && !propertyValue.isEmpty()) {
-					System.out.println(propertyName + "=" + propertyValue);
-
-					return Integer.parseInt(propertyValue);
-				}
-			}
-		}
-
-		return _DEFAULT_TEST_BATCH_CLASSES_PER_GROUP;
-	}
-
-	private void _setTestBatchCurrentBranch() {
-		String[] propertyNames = {
-			JenkinsResultsParserUtil.combine(_TEST_BATCH_CURRENT_BRANCH_PROPERTY_NAME, "[", _testSuiteName, "]"),
-			_TEST_BATCH_CURRENT_BRANCH_PROPERTY_NAME
-		};
-
-		for (String propertyName : propertyNames) {
-			if (_portalTestProperties.containsKey(propertyName)) {
-				String propertyValue = _portalTestProperties.getProperty(
-					propertyName);
-
-				if ((propertyValue != null) && !propertyValue.isEmpty()) {
-					_testBatchCurrentBranch = Boolean.parseBoolean(
-						propertyValue);
-
-					System.out.println(propertyName + "=" + propertyValue);
-
-					return;
-				}
-			}
+		if (propertyValue != null) {
+			_testBatchCurrentBranch = Boolean.parseBoolean(propertyValue);
 		}
 
 		_testBatchCurrentBranch = false;
 	}
 
-	private Set<String> _getTestClassFileNamesSet() throws Exception {
-		File workingDirectory = _gitWorkingDirectory.getWorkingDirectory();
-
-		final Set<String> testClassFileNamesSet = new HashSet<>();
-
-		Files.walkFileTree(
-				workingDirectory.toPath(),
-				new SimpleFileVisitor<Path>() {
-
-					@Override
-					public FileVisitResult preVisitDirectory(
-							Path filePath, BasicFileAttributes attrs)
-							throws IOException {
-
-						if (_filePathExcluded(filePath)) {
-							return FileVisitResult.SKIP_SUBTREE;
-						}
-
-						return FileVisitResult.CONTINUE;
-					}
-
-					@Override
-					public FileVisitResult visitFile(
-							Path filePath, BasicFileAttributes attrs)
-							throws IOException {
-
-						if (filePath.toFile().isDirectory()) {
-							visitFile(filePath, attrs);
-						}
-						else if (_filePathIncluded(filePath) &&
-								!_filePathExcluded(filePath)) {
-
-							testClassFileNamesSet.add(
-									_getTestClassPackagePath(filePath.toString()));
-						}
-
-						return FileVisitResult.CONTINUE;
-					}
-
-				});
-
-		return testClassFileNamesSet;
-	}
-
-	private String _getTestClassPackagePath(String filePath) {
-		Matcher matcher = _testClassPackagePathPattern.matcher(filePath);
-
-		if (matcher.find()) {
-			String packagePath = matcher.group("packagePath");
-
-			packagePath = packagePath.replace(".java", ".class");
-
-			return packagePath;
-		}
-
-		return filePath.replace(".java", ".class");
-	}
-
 	private void _setTestClassGroups() throws Exception {
-		final List<String> testClassFileNames = new ArrayList<>();
-
-		testClassFileNames.addAll(_getTestClassFileNamesSet());
+		final List<String> testClassFileNames = new ArrayList<>(
+			_getTestClassFileNames());
 
 		Collections.sort(testClassFileNames);
 
-		int testBatchClassesPerGroup = _getTestBatchClassesPerGroup();
+		int maxClassGroupSize = _getMaxClassGroupSize();
+		int testClassFileNamesCount = testClassFileNames.size();
 
-		int testBatchGroupSize =
-			testClassFileNames.size() / testBatchClassesPerGroup;
+		int testBatchGroupSize = testClassFileNamesCount / maxClassGroupSize;
 
-		if ((testClassFileNames.size() % testBatchClassesPerGroup) != 0) {
+		/* Add guava and clean this up */
+
+		if ((testClassFileNamesCount % maxClassGroupSize) != 0) {
 			testBatchGroupSize++;
 		}
 
 		int balancedTestBatchClassesPerGroup =
-			testClassFileNames.size() / testBatchGroupSize;
+			testClassFileNamesCount / testBatchGroupSize;
 
-		if ((testClassFileNames.size() % testBatchGroupSize) != 0) {
+		if ((testClassFileNamesCount % testBatchGroupSize) != 0) {
 			balancedTestBatchClassesPerGroup++;
 		}
 
@@ -251,197 +258,149 @@ public class TestBatchGroup {
 				testClassFileNames.subList(
 					i * balancedTestBatchClassesPerGroup,
 					Math.min(
-						testClassFileNames.size(),
+						testClassFileNamesCount,
 						i * balancedTestBatchClassesPerGroup +
 							balancedTestBatchClassesPerGroup)));
 		}
 	}
 
-	private void _setTestClassNamesExcludes() throws IOException {
-		String[] propertyNames = {
-			JenkinsResultsParserUtil.combine("test.batch.class.names.excludes[", _batchName, "][", _testSuiteName, "]"),
-			JenkinsResultsParserUtil.combine("test.batch.class.names.excludes[", _batchName, "]"),
-			JenkinsResultsParserUtil.combine("test.batch.class.names.excludes[", _testSuiteName, "]"),
-			_TEST_CLASS_NAMES_EXCLUDES_PROPERTY_NAME
-		};
+	private List<String> _getCurrentBranchTestClassGlobs(
+			List<String> testClassGlobs)
+		throws IOException {
 
-		String testClassNamesExcludes = null;
+		List<String> currentBranchTestClassGlobs = new ArrayList<>();
 
-		for (String propertyName : propertyNames) {
-			if (_portalTestProperties.containsKey(propertyName)) {
-				String propertyValue = _portalTestProperties.getProperty(
-						propertyName);
+		File workingDirectory = _gitWorkingDirectory.getWorkingDirectory();
 
-				if (propertyValue != null) {
-					testClassNamesExcludes = propertyValue;
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			(PortalGitWorkingDirectory)_gitWorkingDirectory;
 
-					break;
+		List<File> moduleGroupDirs =
+			portalGitWorkingDirectory.getCurrentBranchModuleGroupDirs();
+
+		for (File moduleGroupDir : moduleGroupDirs) {
+			String moduleGroupDirPath = moduleGroupDir.getCanonicalPath();
+
+			moduleGroupDirPath = moduleGroupDirPath.replace(
+				workingDirectory.getCanonicalPath() + "/", "");
+
+			for (String testClassGlob : testClassGlobs) {
+				currentBranchTestClassGlobs.add(
+					moduleGroupDirPath + "/" + testClassGlob);
+
+				if (testClassGlob.startsWith("**/")) {
+					currentBranchTestClassGlobs.add(
+						moduleGroupDirPath + "/" + testClassGlob.substring(3));
 				}
 			}
 		}
 
-		if (testClassNamesExcludes != null && !testClassNamesExcludes.isEmpty()) {
+		return currentBranchTestClassGlobs;
+	}
+
+	private void _setTestClassNamesExcludes() throws IOException {
+		List<String> orderedPropertyNames = new ArrayList<>();
+
+		orderedPropertyNames.add(
+			JenkinsResultsParserUtil.combine(
+				"test.batch.class.names.excludes[", _batchName, "][",
+				_testSuiteName, "]"));
+		orderedPropertyNames.add(
+			JenkinsResultsParserUtil.combine(
+				"test.batch.class.names.excludes[", _batchName, "]"));
+		orderedPropertyNames.add(
+			JenkinsResultsParserUtil.combine(
+				"test.batch.class.names.excludes[", _testSuiteName, "]"));
+		orderedPropertyNames.add("test.batch.class.names.excludes");
+		orderedPropertyNames.add("test.class.names.excludes");
+
+		String testClassNamesExcludes =
+			_getPropertyValueFromOrderedPropertyNames(
+				_portalTestProperties, orderedPropertyNames);
+
+		if ((testClassNamesExcludes != null) &&
+			!testClassNamesExcludes.isEmpty()) {
+
+			List<String> testClassExcludeGlobs = Arrays.asList(
+				testClassNamesExcludes.split(","));
+
 			if (_testBatchCurrentBranch) {
-				PortalGitWorkingDirectory portalGitWorkingDirectory =
-					(PortalGitWorkingDirectory)_gitWorkingDirectory;
-
-				File workingDirectory =
-					portalGitWorkingDirectory.getWorkingDirectory();
-
-				String workingDirectoryPath =
-					workingDirectory.getCanonicalPath();
-
-				List<File> moduleGroupDirs =
-					portalGitWorkingDirectory.getCurrentBranchModuleGroupDirs();
-
-				for (File moduleGroupDir : moduleGroupDirs) {
-					String moduleGroupDirPath =
-						moduleGroupDir.getCanonicalPath();
-
-					moduleGroupDirPath = moduleGroupDirPath.replace(
-							workingDirectoryPath + "/", "");
-
-					for (String testClassNames :
-							testClassNamesExcludes.split(",")) {
-
-						_testClassNamesExcludes.add(
-							moduleGroupDirPath + "/" + testClassNames);
-
-						if (testClassNames.startsWith("**/")) {
-							_testClassNamesExcludes.add(
-								moduleGroupDirPath + "/" + testClassNames.substring(3));
-						}
-					}
-				}
-
-				System.out.println(_testClassNamesExcludes);
+				_testClassNamesExcludes.addAll(
+					_getCurrentBranchTestClassGlobs(testClassExcludeGlobs));
 			}
 			else {
-				Collections.addAll(
-					_testClassNamesExcludes, testClassNamesExcludes.split(","));
+				_testClassNamesExcludes.addAll(testClassExcludeGlobs);
 			}
 		}
 	}
 
-	private void _setTestClassNamesExcludesPathMatchers() {
+	private List<PathMatcher> _getTestClassNamesPathMatchers(
+			List<String> testClassGlobs) {
+
+		List<PathMatcher> pathMatchers = new ArrayList<>();
+
 		File workingDirectory = _gitWorkingDirectory.getWorkingDirectory();
 
 		String workingDirectoryPath = workingDirectory.getAbsolutePath();
 
-		System.out.println("\nEXCLUDES\n");
+		for (String testClassGlob : testClassGlobs) {
+			FileSystem fileSystem = FileSystems.getDefault();
 
-		for (String testClassNamesExclude : _testClassNamesExcludes) {
-			String filePattern =
-				workingDirectoryPath + "/" + testClassNamesExclude;
-
-			System.out.println("\tglob: " + filePattern);
-
-			_testClassNamesExcludesPathMatchers.add(
-				FileSystems.getDefault().getPathMatcher("glob:" + filePattern));
+			pathMatchers.add(
+				fileSystem.getPathMatcher(
+					"glob:" + workingDirectoryPath + "/" + testClassGlob));
 		}
 
-		System.out.println();
+		return pathMatchers;
+	}
+
+	private void _setTestClassNamesExcludesPathMatchers() {
+		_testClassNamesExcludesPathMatchers.addAll(
+			_getTestClassNamesPathMatchers(_testClassNamesExcludes));
 	}
 
 	private void _setTestClassNamesIncludes() throws IOException {
-		String[] propertyNames = {
-			JenkinsResultsParserUtil.combine("test.batch.class.names.includes[", _batchName, "][", _testSuiteName, "]"),
-			JenkinsResultsParserUtil.combine("test.batch.class.names.includes[", _batchName, "]"),
-			JenkinsResultsParserUtil.combine("test.batch.class.names.includes[", _testSuiteName, "]"),
-			_TEST_CLASS_NAMES_INCLUDES_PROPERTY_NAME
-		};
+		List<String> orderedPropertyNames = new ArrayList<>();
 
-		String testClassNamesIncludes = null;
+		orderedPropertyNames.add(
+			JenkinsResultsParserUtil.combine(
+				"test.batch.class.names.includes[", _batchName, "][",
+				_testSuiteName, "]"));
+		orderedPropertyNames.add(
+			JenkinsResultsParserUtil.combine(
+				"test.batch.class.names.includes[", _batchName, "]"));
+		orderedPropertyNames.add(
+			JenkinsResultsParserUtil.combine(
+				"test.batch.class.names.includes[", _testSuiteName, "]"));
+		orderedPropertyNames.add("test.batch.class.names.includes");
+		orderedPropertyNames.add("test.class.names.includes");
 
-		for (String propertyName : propertyNames) {
-			if (_portalTestProperties.containsKey(propertyName)) {
-				String propertyValue = _portalTestProperties.getProperty(
-						propertyName);
+		String testClassNamesIncludes =
+			_getPropertyValueFromOrderedPropertyNames(
+				_portalTestProperties, orderedPropertyNames);
 
-				if ((propertyValue != null) && !propertyValue.isEmpty()) {
-					testClassNamesIncludes = propertyValue;
+		if ((testClassNamesIncludes != null) &&
+			!testClassNamesIncludes.isEmpty()) {
 
-					break;
-				}
-			}
-		}
+			List<String> testClassIncludeGlobs = Arrays.asList(
+				testClassNamesIncludes.split(","));
 
-		if (testClassNamesIncludes != null) {
 			if (_testBatchCurrentBranch) {
-				PortalGitWorkingDirectory portalGitWorkingDirectory =
-					(PortalGitWorkingDirectory)_gitWorkingDirectory;
-
-				File workingDirectory =
-					portalGitWorkingDirectory.getWorkingDirectory();
-
-				String workingDirectoryPath =
-					workingDirectory.getCanonicalPath();
-
-				List<File> moduleGroupDirs =
-					portalGitWorkingDirectory.getCurrentBranchModuleGroupDirs();
-
-				for (File moduleGroupDir : moduleGroupDirs) {
-					String moduleGroupDirPath =
-						moduleGroupDir.getCanonicalPath();
-
-					moduleGroupDirPath = moduleGroupDirPath.replace(
-						workingDirectoryPath + "/", "");
-
-					for (String testClassNames :
-							testClassNamesIncludes.split(",")) {
-
-						_testClassNamesIncludes.add(
-							moduleGroupDirPath + "/" + testClassNames);
-
-						if (testClassNames.startsWith("**/")) {
-							_testClassNamesIncludes.add(
-								moduleGroupDirPath + "/" + testClassNames.substring(3));
-						}
-					}
-				}
-
-				System.out.println(_testClassNamesIncludes);
+				_testClassNamesIncludes.addAll(
+					_getCurrentBranchTestClassGlobs(testClassIncludeGlobs));
 			}
 			else {
-				Collections.addAll(
-					_testClassNamesIncludes, testClassNamesIncludes.split(","));
+				_testClassNamesIncludes.addAll(testClassIncludeGlobs);
 			}
 		}
 	}
 
 	private void _setTestClassNamesIncludesPathMatchers() {
-		File workingDirectory = _gitWorkingDirectory.getWorkingDirectory();
-
-		String workingDirectoryPath = workingDirectory.getAbsolutePath();
-
-		System.out.println("\nINCLUDES\n");
-
-		for (String testClassNamesInclude : _testClassNamesIncludes) {
-			String filePattern =
-					workingDirectoryPath + "/" + testClassNamesInclude;
-
-			System.out.println("\tglob: " + filePattern);
-
-			_testClassNamesIncludesPathMatchers.add(
-					FileSystems.getDefault().getPathMatcher("glob:" + filePattern));
-		}
-
-		System.out.println();
+		_testClassNamesIncludesPathMatchers.addAll(
+			_getTestClassNamesPathMatchers(_testClassNamesIncludes));
 	}
 
-	private static final int _DEFAULT_TEST_BATCH_CLASSES_PER_GROUP = 5000;
-
-	private static final String _TEST_BATCH_CLASSES_PER_GROUP_PROPERTY_NAME =
-		"test.batch.classes.per.group";
-
-	private static final String _TEST_BATCH_CURRENT_BRANCH_PROPERTY_NAME =
-		"test.batch.current.branch";
-
-	private static final String _TEST_CLASS_NAMES_EXCLUDES_PROPERTY_NAME =
-		"test.class.names.excludes";
-
-	private static final String _TEST_CLASS_NAMES_INCLUDES_PROPERTY_NAME =
-		"test.class.names.includes";
+	private static final int _DEFAULT_MAX_CLASS_GROUP_SIZE = 5000;
 
 	private final String _batchName;
 	private final GitWorkingDirectory _gitWorkingDirectory;
@@ -454,8 +413,8 @@ public class TestBatchGroup {
 	private final List<PathMatcher> _testClassNamesIncludesPathMatchers =
 		new ArrayList<>();
 	private boolean _testBatchCurrentBranch;
-	private final Pattern _testClassPackagePathPattern = Pattern.compile(
-		"(.*)(?<packagePath>com/.*)");
+	private final Pattern _packagePathPattern = Pattern.compile(
+		".*/(?<packagePath>com/.*)");
 	private final String _testSuiteName;
 
 }

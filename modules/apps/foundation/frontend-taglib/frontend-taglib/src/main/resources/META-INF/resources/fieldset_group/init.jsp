@@ -12,15 +12,11 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
-@generated
 --%>
 
-<%@ include file="/html/taglib/taglib-init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
-java.lang.String markupView = GetterUtil.getString((java.lang.String)request.getAttribute("aui:fieldset-group:markupView"));
-Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:fieldset-group:dynamicAttributes");
+String markupView = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-frontend:fieldset-group:markupView"));
+Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("liferay-frontend:fieldset-group:dynamicAttributes");
 %>
-
-<%@ include file="/html/taglib/aui/fieldset_group/init-ext.jspf" %>

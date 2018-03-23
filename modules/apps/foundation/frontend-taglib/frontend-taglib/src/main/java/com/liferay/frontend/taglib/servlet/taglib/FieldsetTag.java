@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.taglib.servlet.taglib;
 
+import com.liferay.frontend.taglib.servlet.taglib.base.BaseFieldsetTag;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -21,7 +22,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.aui.AUIUtil;
 import com.liferay.taglib.aui.FieldsetGroupTag;
-import com.liferay.taglib.aui.base.BaseFieldsetTag;
 import com.liferay.taglib.ui.IconHelpTag;
 import com.liferay.taglib.ui.MessageTag;
 import com.liferay.taglib.util.InlineUtil;
@@ -33,9 +33,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 
 /**
- * @author Julio Camarero
- * @author Jorge Ferrer
- * @author Brian Wing Shun Chan
+ * @author Eudaldo Alonso
  */
 public class FieldsetTag extends BaseFieldsetTag {
 
@@ -55,20 +53,19 @@ public class FieldsetTag extends BaseFieldsetTag {
 	@Override
 	protected String getEndPage() {
 		if (Validator.isNotNull(getMarkupView())) {
-			return "/html/taglib/aui/fieldset/" + getMarkupView() + "/end.jsp";
+			return "/fieldset/" + getMarkupView() + "/end.jsp";
 		}
 
-		return "/html/taglib/aui/fieldset/end.jsp";
+		return "/fieldset/end.jsp";
 	}
 
 	@Override
 	protected String getStartPage() {
 		if (Validator.isNotNull(getMarkupView())) {
-			return "/html/taglib/aui/fieldset/" + getMarkupView() +
-				"/start.jsp";
+			return "/fieldset/" + getMarkupView() + "/start.jsp";
 		}
 
-		return "/html/taglib/aui/fieldset/start.jsp";
+		return "/fieldset/start.jsp";
 	}
 
 	@Override

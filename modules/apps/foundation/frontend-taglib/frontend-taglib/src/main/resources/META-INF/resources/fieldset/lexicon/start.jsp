@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/aui/fieldset/init.jsp" %>
+<%@ include file="/fieldset/init.jsp" %>
 
 <%
 if (Validator.isNull(label)) {

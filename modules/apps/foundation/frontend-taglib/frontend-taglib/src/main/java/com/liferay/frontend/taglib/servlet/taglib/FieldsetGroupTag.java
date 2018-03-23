@@ -14,37 +14,32 @@
 
 package com.liferay.frontend.taglib.servlet.taglib;
 
+import com.liferay.frontend.taglib.servlet.taglib.base.BaseFieldsetGroupTag;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.taglib.aui.base.BaseFieldsetGroupTag;
 
 import javax.servlet.jsp.JspWriter;
 
 /**
- * @author Eduardo Lundgren
- * @author Bruno Basto
- * @author Nathan Cavanaugh
- * @author Julio Camarero
+ * @author Eudaldo Alonso
  */
 public class FieldsetGroupTag extends BaseFieldsetGroupTag {
 
 	@Override
 	protected String getEndPage() {
 		if (Validator.isNotNull(getMarkupView())) {
-			return "/html/taglib/aui/fieldset_group/" + getMarkupView() +
-				"/end.jsp";
+			return "/fieldset_group/" + getMarkupView() + "/end.jsp";
 		}
 
-		return "/html/taglib/aui/fieldset_group/end.jsp";
+		return "/fieldset_group/end.jsp";
 	}
 
 	@Override
 	protected String getStartPage() {
 		if (Validator.isNotNull(getMarkupView())) {
-			return "/html/taglib/aui/fieldset_group/" + getMarkupView() +
-				"/start.jsp";
+			return "/fieldset_group/" + getMarkupView() + "/start.jsp";
 		}
 
-		return "/html/taglib/aui/fieldset_group/start.jsp";
+		return "/fieldset_group/start.jsp";
 	}
 
 	@Override

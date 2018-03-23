@@ -14,17 +14,15 @@
 
 package com.liferay.frontend.taglib.servlet.taglib.base;
 
+import com.liferay.taglib.util.IncludeTag;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 
 /**
- * @author Eduardo Lundgren
- * @author Bruno Basto
- * @author Nathan Cavanaugh
- * @author Julio Camarero
- * @generated
+ * @author Eudaldo Alonso
  */
-public abstract class BaseFieldsetTag extends com.liferay.taglib.util.IncludeTag {
+public abstract class BaseFieldsetTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
@@ -132,33 +130,40 @@ public abstract class BaseFieldsetTag extends com.liferay.taglib.util.IncludeTag
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("aui:fieldset:collapsed", String.valueOf(_collapsed));
-		request.setAttribute("aui:fieldset:collapsible", String.valueOf(_collapsible));
-		request.setAttribute("aui:fieldset:column", String.valueOf(_column));
-		request.setAttribute("aui:fieldset:cssClass", _cssClass);
-		request.setAttribute("aui:fieldset:helpMessage", _helpMessage);
-		request.setAttribute("aui:fieldset:id", _id);
-		request.setAttribute("aui:fieldset:label", _label);
-		request.setAttribute("aui:fieldset:localizeLabel", String.valueOf(_localizeLabel));
-		request.setAttribute("aui:fieldset:markupView", _markupView);
+		request.setAttribute(
+			"liferay-frontend:fieldset:collapsed", String.valueOf(_collapsed));
+		request.setAttribute(
+			"liferay-frontend:fieldset:collapsible",
+			String.valueOf(_collapsible));
+		request.setAttribute(
+			"liferay-frontend:fieldset:column", String.valueOf(_column));
+		request.setAttribute("liferay-frontend:fieldset:cssClass", _cssClass);
+		request.setAttribute(
+			"liferay-frontend:fieldset:helpMessage", _helpMessage);
+		request.setAttribute("liferay-frontend:fieldset:id", _id);
+		request.setAttribute("liferay-frontend:fieldset:label", _label);
+		request.setAttribute(
+			"liferay-frontend:fieldset:localizeLabel",
+			String.valueOf(_localizeLabel));
+		request.setAttribute(
+			"liferay-frontend:fieldset:markupView", _markupView);
 	}
 
-	protected static final String _ATTRIBUTE_NAMESPACE = "aui:fieldset:";
+	private static final String _ATTRIBUTE_NAMESPACE =
+		"liferay-frontend:fieldset:";
 
-	private static final String _END_PAGE =
-		"/html/taglib/aui/fieldset/end.jsp";
+	private static final String _END_PAGE = "/fieldset/end.jsp";
 
-	private static final String _START_PAGE =
-		"/html/taglib/aui/fieldset/start.jsp";
+	private static final String _START_PAGE = "/fieldset/start.jsp";
 
-	private boolean _collapsed = false;
-	private boolean _collapsible = false;
-	private boolean _column = false;
-	private String _cssClass = null;
-	private String _helpMessage = null;
-	private String _id = null;
-	private String _label = null;
+	private boolean _collapsed;
+	private boolean _collapsible;
+	private boolean _column;
+	private String _cssClass;
+	private String _helpMessage;
+	private String _id;
+	private String _label;
 	private boolean _localizeLabel = true;
-	private String _markupView = null;
+	private String _markupView;
 
 }

@@ -14,17 +14,15 @@
 
 package com.liferay.frontend.taglib.servlet.taglib.base;
 
+import com.liferay.taglib.util.IncludeTag;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 
 /**
- * @author Eduardo Lundgren
- * @author Bruno Basto
- * @author Nathan Cavanaugh
- * @author Julio Camarero
- * @generated
+ * @author Eudaldo Alonso
  */
-public abstract class BaseFieldsetGroupTag extends com.liferay.taglib.util.IncludeTag {
+public abstract class BaseFieldsetGroupTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
@@ -60,17 +58,17 @@ public abstract class BaseFieldsetGroupTag extends com.liferay.taglib.util.Inclu
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("aui:fieldset-group:markupView", _markupView);
+		request.setAttribute(
+			"liferay-frontend:fieldset-group:markupView", _markupView);
 	}
 
-	protected static final String _ATTRIBUTE_NAMESPACE = "aui:fieldset-group:";
+	private static final String _ATTRIBUTE_NAMESPACE =
+		"liferay-frontend:fieldset-group:";
 
-	private static final String _END_PAGE =
-		"/html/taglib/aui/fieldset_group/end.jsp";
+	private static final String _END_PAGE = "/fieldset_group/end.jsp";
 
-	private static final String _START_PAGE =
-		"/html/taglib/aui/fieldset_group/start.jsp";
+	private static final String _START_PAGE = "/fieldset_group/start.jsp";
 
-	private String _markupView = null;
+	private String _markupView;
 
 }

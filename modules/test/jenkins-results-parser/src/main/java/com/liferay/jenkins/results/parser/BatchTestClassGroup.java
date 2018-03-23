@@ -47,9 +47,9 @@ public class TestBatchGroup {
 
 		_batchName = batchName;
 
-		_portalTestProperties =
-			_gitWorkingDirectory.getGitWorkingDirectoryProperties(
-				"test.properties");
+		_portalTestProperties = JenkinsResultsParserUtil.getProperties(
+			new File(
+				_gitWorkingDirectory.getWorkingDirectory(), "test.properties"));
 
 		_setTestClassNamesExcludes();
 		_setTestClassNamesIncludes();

@@ -294,20 +294,6 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 		return generatedJenkinsJobConfigPropertyValuesSet;
 	}
 
-	private String _getJobBranchName(String fullJobName) {
-		return _getFirstPatternMatchGroup(
-			fullJobName, _masterJobBranchNamePattern);
-	}
-
-	private String _getJobShortName(String fullJobName) {
-		return _getFirstPatternMatchGroup(fullJobName, _jobShortNamePattern);
-	}
-
-	private String _getJobVariantName(String fullJobName) {
-		return _getFirstPatternMatchGroup(
-			fullJobName, _reluctantParenthesesPattern);
-	}
-
 	private Map<String, String> _getLinuxEnvironmentVariablesMap() {
 		String os = "linux";
 
@@ -371,11 +357,6 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 		}
 
 		return patternMatchGroups;
-	}
-
-	private String _getShortChildJobName(String childJobName) {
-		return _getFirstPatternMatchGroup(
-			childJobName, _shortChildJobNamePattern);
 	}
 
 	private Element _getSlaveConfigElement(String slaveHostName) {
@@ -564,19 +545,26 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 
 		for (String fullJobName : basePropertyValue.split(",")) {
 			if (fullJobName.contains("(")) {
+				String jobBranchName = _getFirstPatternMatchGroup(
+					fullJobName, _masterJobBranchNamePattern);
+
 				_generatedJenkinsJobConfigPropertiesMap.put(
 					"job.portal.branch.name(" + fullJobName + ")",
-					_getJobBranchName(fullJobName));
+					jobBranchName);
+
+				String jobVariantName = _getFirstPatternMatchGroup(
+					fullJobName, _reluctantParenthesesPattern);
+
 				_generatedJenkinsJobConfigPropertiesMap.put(
-					"job.variation.name(" + fullJobName + ")",
-					_getJobVariantName(fullJobName));
+					"job.variation.name(" + fullJobName + ")", jobVariantName);
 			}
 			else {
 				_generatedJenkinsJobConfigPropertiesMap.put(
 					"job.variation.name(" + fullJobName + ")", "");
 			}
 
-			String jobShortName = _getJobShortName(fullJobName);
+			String jobShortName = _getFirstPatternMatchGroup(
+				fullJobName, _jobShortNamePattern);
 
 			_generatedJenkinsJobConfigPropertiesMap.put(
 				"job.short.name(" + fullJobName + ")", jobShortName);
@@ -861,8 +849,8 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 						_generatedJenkinsJobConfigPropertiesMap.get(
 							"job.short.name(" + parentJobName + ")");
 
-					String shortChildJobName = _getShortChildJobName(
-						childJobName);
+					String shortChildJobName = _getFirstPatternMatchGroup(
+						childJobName, _shortChildJobNamePattern);
 
 					if (!shortChildJobName.contains(shortParentJobName)) {
 						continue;

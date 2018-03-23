@@ -14,17 +14,15 @@
 
 package com.liferay.frontend.taglib.servlet.taglib.base;
 
+import com.liferay.taglib.util.IncludeTag;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 
 /**
- * @author Eduardo Lundgren
- * @author Bruno Basto
- * @author Nathan Cavanaugh
- * @author Julio Camarero
- * @generated
+ * @author Eudaldo Alonso
  */
-public abstract class BaseButtonRowTag extends com.liferay.taglib.util.IncludeTag {
+public abstract class BaseButtonRowTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
@@ -64,16 +62,16 @@ public abstract class BaseButtonRowTag extends com.liferay.taglib.util.IncludeTa
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("aui:button-row:cssClass", _cssClass);
-		request.setAttribute("aui:button-row:id", _id);
+		request.setAttribute("liferay-frontend:button-row:cssClass", _cssClass);
+		request.setAttribute("liferay-frontend:button-row:id", _id);
 	}
 
-	protected static final String _ATTRIBUTE_NAMESPACE = "aui:button-row:";
+	private static final String _ATTRIBUTE_NAMESPACE =
+		"liferay-frontend:button-row:";
 
-	private static final String _START_PAGE =
-		"/html/taglib/aui/button_row/start.jsp";
+	private static final String _START_PAGE = "/button_row/start.jsp";
 
-	private String _cssClass = null;
-	private String _id = null;
+	private String _cssClass;
+	private String _id;
 
 }

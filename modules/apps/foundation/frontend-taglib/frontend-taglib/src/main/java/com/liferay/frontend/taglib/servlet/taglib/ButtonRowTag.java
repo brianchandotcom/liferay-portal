@@ -14,19 +14,17 @@
 
 package com.liferay.frontend.taglib.servlet.taglib;
 
+import com.liferay.frontend.taglib.servlet.taglib.base.BaseButtonRowTag;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.taglib.aui.base.BaseButtonRowTag;
 import com.liferay.taglib.util.InlineUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspWriter;
 
 /**
- * @author Julio Camarero
- * @author Jorge Ferrer
- * @author Brian Wing Shun Chan
+ * @author Eudaldo Alonso
  */
 public class ButtonRowTag extends BaseButtonRowTag {
 

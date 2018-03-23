@@ -16,16 +16,26 @@ package com.liferay.wiki.uad.display;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author William Newbury
  */
 @Component(immediate = true, service = WikiPageUADEntityDisplayHelper.class)
 public class WikiPageUADEntityDisplayHelper {
+
 	/**
 	 * Returns an ordered string array of the fields' names to be displayed.
 	 * Each field name corresponds to a table column based on the order they are
@@ -34,32 +44,46 @@ public class WikiPageUADEntityDisplayHelper {
 	 * @return the array of field names to display
 	 */
 	public String[] getDisplayFieldNames() {
-		return new String[] { "title", "content", "summary" };
+		return new String[] {"title", "content", "summary"};
 	}
 
-	/**
-	 * Implement getWikiPageEditURL() to enable editing WikiPages from the GDPR UI.
-	 *
-	 * <p>
-	 * Editing WikiPages in the GDPR UI depends on generating valid edit URLs. Implement getWikiPageEditURL() such that it returns a valid edit URL for the specified WikiPage.
-	 * </p>
-	 *
-	 */
-	public String getWikiPageEditURL(WikiPage wikiPage,
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
-		return "";
-	}
-
-	@Override
 	public Map<String, Object> getUADEntityNonanonymizableFieldValues(
 		WikiPage wikiPage) {
-		Map<String, Object> uadEntityNonanonymizableFieldValues = new HashMap<String, Object>();
 
+		Map<String, Object> uadEntityNonanonymizableFieldValues =
+			new HashMap<>();
+
+		uadEntityNonanonymizableFieldValues.put(
+			"content", wikiPage.getContent());
+		uadEntityNonanonymizableFieldValues.put(
+			"summary", wikiPage.getSummary());
 		uadEntityNonanonymizableFieldValues.put("title", wikiPage.getTitle());
-		uadEntityNonanonymizableFieldValues.put("content", wikiPage.getContent());
-		uadEntityNonanonymizableFieldValues.put("summary", wikiPage.getSummary());
 
 		return uadEntityNonanonymizableFieldValues;
 	}
+
+	public String getWikiPageEditURL(
+			WikiPage wikiPage, LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws Exception {
+
+		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
+			portal.getControlPanelPlid(liferayPortletRequest),
+			WikiPortletKeys.WIKI, PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
+		portletURL.setParameter(
+			"redirect", portal.getCurrentURL(liferayPortletRequest));
+		portletURL.setParameter("title", String.valueOf(wikiPage.getTitle()));
+
+		WikiNode wikiNode = wikiPage.getNode();
+
+		portletURL.setParameter("nodeId", String.valueOf(wikiNode.getNodeId()));
+
+		return portletURL.toString();
+	}
+
+	@Reference
+	protected Portal portal;
+
 }

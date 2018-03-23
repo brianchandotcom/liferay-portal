@@ -21,22 +21,12 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_form_n
 
 String tabs1Param = randomNamespace + "tabs1";
 String tabs1Value = GetterUtil.getString(SessionClicks.get(request, namespace + id, null));
-
-List<String> filterCategoryKeys = new ArrayList<String>();
-
-for (String categoryKey : categoryKeys) {
-	List<FormNavigatorEntry<Object>> formNavigatorEntries = FormNavigatorEntryUtil.getFormNavigatorEntries(id, categoryKey, user, formModelBean);
-
-	if (ListUtil.isNotEmpty(formNavigatorEntries)) {
-		filterCategoryKeys.add(categoryKey);
-	}
-}
 %>
 
 <c:choose>
-	<c:when test="<%= filterCategoryKeys.size() > 1 %>">
+	<c:when test="<%= categoryKeys.length > 1 %>">
 		<liferay-ui:tabs
-			names="<%= StringUtil.merge(filterCategoryKeys) %>"
+			names="<%= ArrayUtil.toString(categoryKeys, StringPool.COMMA) %>"
 			param="<%= tabs1Param %>"
 			refresh="<%= false %>"
 			type="tabs nav-tabs-default"
@@ -44,7 +34,7 @@ for (String categoryKey : categoryKeys) {
 		>
 
 			<%
-			for (String categoryKey : filterCategoryKeys) {
+			for (String categoryKey : categoryKeys) {
 				List<FormNavigatorEntry<Object>> formNavigatorEntries = FormNavigatorEntryUtil.getFormNavigatorEntries(id, categoryKey, user, formModelBean);
 
 				request.setAttribute("currentTab", categoryKey);

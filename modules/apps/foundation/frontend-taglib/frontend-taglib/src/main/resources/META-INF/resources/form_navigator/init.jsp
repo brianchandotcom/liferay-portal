@@ -18,8 +18,6 @@
 
 <%@ page import="com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry" %><%@
 page import="com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntryUtil" %><%@
-page import="com.liferay.portal.kernel.util.ListUtil" %><%@
-page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.SessionClicks" %><%@
 page import="com.liferay.portal.kernel.util.TextFormatter" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
@@ -27,10 +25,7 @@ page import="com.liferay.taglib.util.PortalIncludeUtil" %>
 
 <%@ page import="java.io.IOException" %>
 
-<%@ page import="java.util.ArrayList" %><%@
-page import="java.util.Objects" %>
-
-<portlet:defineObjects />
+<%@ page import="java.util.Objects" %>
 
 <%
 String backURL = (String)request.getAttribute("liferay-frontend:form-navigator:backURL");
@@ -38,18 +33,6 @@ String[] categoryKeys = (String[])request.getAttribute("liferay-frontend:form-na
 Object formModelBean = request.getAttribute("liferay-frontend:form-navigator:formModelBean");
 String id = (String)request.getAttribute("liferay-frontend:form-navigator:id");
 boolean showButtons = GetterUtil.getBoolean((String)request.getAttribute("liferay-frontend:form-navigator:showButtons"));
-
-if (Validator.isNull(backURL)) {
-	String redirect = ParamUtil.getString(request, "redirect");
-
-	backURL = redirect;
-}
-
-PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-if (Validator.isNull(backURL)) {
-	backURL = portletURL.toString();
-}
 %>
 
 <%!

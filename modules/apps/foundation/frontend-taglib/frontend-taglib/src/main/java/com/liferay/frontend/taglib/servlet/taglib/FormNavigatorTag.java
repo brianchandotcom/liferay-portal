@@ -14,8 +14,25 @@
 
 package com.liferay.frontend.taglib.servlet.taglib;
 
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategoryUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.portlet.PortletResponse;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -55,10 +72,6 @@ public class FormNavigatorTag extends IncludeTag {
 		_showButtons = true;
 	}
 
-	protected String[] getCategoryKeys() {
-		return FormNavigatorCategoryUtil.getKeys(_id);
-	}
-
 	@Override
 	protected String getPage() {
 		return "/form_navigator/page.jsp";
@@ -67,15 +80,56 @@ public class FormNavigatorTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-frontend:form-navigator:backURL", _backURL);
+			"liferay-frontend:form-navigator:backURL", _getBackURL());
 		request.setAttribute(
-			"liferay-frontend:form-navigator:categoryKeys", getCategoryKeys());
+			"liferay-frontend:form-navigator:categoryKeys", _getCategoryKeys());
 		request.setAttribute(
 			"liferay-frontend:form-navigator:formModelBean", _formModelBean);
 		request.setAttribute("liferay-frontend:form-navigator:id", _id);
 		request.setAttribute(
 			"liferay-frontend:form-navigator:showButtons",
 			String.valueOf(_showButtons));
+	}
+
+	private String _getBackURL() {
+		String backURL = _backURL;
+
+		if (Validator.isNull(backURL)) {
+			backURL = ParamUtil.getString(request, "redirect");
+		}
+
+		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		LiferayPortletResponse liferayPortletResponse =
+			PortalUtil.getLiferayPortletResponse(portletResponse);
+
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		if (Validator.isNull(backURL)) {
+			backURL = portletURL.toString();
+		}
+
+		return backURL;
+	}
+
+	private String[] _getCategoryKeys() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<String> categoryKeys = new ArrayList<>();
+
+		for (String categoryKey : FormNavigatorCategoryUtil.getKeys(_id)) {
+			List<FormNavigatorEntry<Object>> formNavigatorEntries =
+				FormNavigatorEntryUtil.getFormNavigatorEntries(
+					_id, categoryKey, themeDisplay.getUser(), _formModelBean);
+
+			if (ListUtil.isNotEmpty(formNavigatorEntries)) {
+				categoryKeys.add(categoryKey);
+			}
+		}
+
+		return ArrayUtil.toStringArray(categoryKeys);
 	}
 
 	private String _backURL;

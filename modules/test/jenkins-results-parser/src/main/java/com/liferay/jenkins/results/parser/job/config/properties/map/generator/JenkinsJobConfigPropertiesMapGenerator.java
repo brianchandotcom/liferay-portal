@@ -783,7 +783,7 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 			"master.top.level.jobs.xml(" + masterHostName + ")",
 			_getFormattedXML(topLevelJobNameElementsList));
 
-		String masterPrimaryView = _generatedJenkinsJobConfigPropertiesMap.get(
+		String masterPrimaryView = _basePropertiesMap.get(
 			"master.primary.view(" + masterHostName + ")");
 
 		if (masterPrimaryView == null) {
@@ -795,6 +795,11 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 				_generatedJenkinsJobConfigPropertiesMap.put(
 					"master.primary.view(" + masterHostName + ")", "Top Level");
 			}
+		}
+		else {
+			_generatedJenkinsJobConfigPropertiesMap.put(
+				"master.primary.view(" + masterHostName + ")",
+				masterPrimaryView);
 		}
 
 		List<Element> listViewList = new ArrayList<>();

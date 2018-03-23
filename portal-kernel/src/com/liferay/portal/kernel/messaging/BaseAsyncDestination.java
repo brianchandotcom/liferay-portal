@@ -130,7 +130,7 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
 
 		if (_rejectedExecutionHandler == null) {
-			_rejectedExecutionHandler = createRejectionExecutionHandler();
+			_rejectedExecutionHandler = _createRejectionExecutionHandler();
 		}
 
 		ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
@@ -228,27 +228,7 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 	 */
 	@Deprecated
 	protected RejectedExecutionHandler createRejectionExecutionHandler() {
-		return new RejectedExecutionHandler() {
-
-			@Override
-			public void rejectedExecution(
-				Runnable runnable, ThreadPoolExecutor threadPoolExecutor) {
-
-				if (!_log.isWarnEnabled()) {
-					return;
-				}
-
-				MessageRunnable messageRunnable = (MessageRunnable)runnable;
-
-				_log.warn(
-					StringBundler.concat(
-						"Discarding message ",
-						String.valueOf(messageRunnable.getMessage()),
-						" because it exceeds the maximum queue size of ",
-						String.valueOf(_maximumQueueSize)));
-			}
-
-		};
+		return _createRejectionExecutionHandler();
 	}
 
 	protected abstract void dispatch(
@@ -378,6 +358,30 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 	protected volatile PortalExecutorManager portalExecutorManager;
 	protected ServiceTracker<PortalExecutorManager, PortalExecutorManager>
 		serviceTracker;
+
+	private RejectedExecutionHandler _createRejectionExecutionHandler() {
+		return new RejectedExecutionHandler() {
+
+			@Override
+			public void rejectedExecution(
+				Runnable runnable, ThreadPoolExecutor threadPoolExecutor) {
+
+				if (!_log.isWarnEnabled()) {
+					return;
+				}
+
+				MessageRunnable messageRunnable = (MessageRunnable)runnable;
+
+				_log.warn(
+					StringBundler.concat(
+						"Discarding message ",
+						String.valueOf(messageRunnable.getMessage()),
+						" because it exceeds the maximum queue size of ",
+						String.valueOf(_maximumQueueSize)));
+			}
+
+		};
+	}
 
 	private static final int _WORKERS_CORE_SIZE = 2;
 

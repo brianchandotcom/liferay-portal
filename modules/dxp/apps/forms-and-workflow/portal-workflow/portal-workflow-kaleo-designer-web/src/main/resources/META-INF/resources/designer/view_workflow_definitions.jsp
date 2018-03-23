@@ -56,11 +56,7 @@ if (cur > 0) {
 KaleoDefinitionVersionSearch kaleoDefinitionVersionSearch = new KaleoDefinitionVersionSearch(renderRequest, portletURL);
 %>
 
-<%
-String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestProcessed";
-%>
-
-<liferay-ui:success key='<%= KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestProcessed" %>' message="<%= (String)MultiSessionMessages.get(renderRequest, successMessageKey) %>" translateMessage="<%= false %>" />
+<liferay-ui:success key='<%= KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestProcessed" %>' message='<%= (String)MultiSessionMessages.get(renderRequest, KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestProcessed") %>' translateMessage="<%= false %>" />
 
 <liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>">
 

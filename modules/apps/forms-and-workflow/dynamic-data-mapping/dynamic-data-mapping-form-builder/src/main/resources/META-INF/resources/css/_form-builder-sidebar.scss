@@ -4,7 +4,8 @@ $sidebar-header-padding: 0.5rem 1.5rem;
 $sidebar-list-group-icon-size: 0.75rem;
 $sidebar-list-subtitle-font-size: 0.7rem;
 $sidebar-load-icon-pos-top: 150px;
-$sidebar-margin-top: 65px;
+$sidebar-margin-top-lg: 65px;
+$sidebar-margin-top-sm: 49px;
 $sidebar-navbar-border-color: #F1F2F5;
 $sidebar-subtitle-font-size: 1rem;
 $sidebar-title-font-size: 1.2rem;
@@ -16,11 +17,18 @@ $sidebar-z-index: 1000;
 }
 
 @mixin sidebarContentHeight($height) {
-	height: calc(100vh - #{$height + $sidebar-margin-top});
+	height: calc(100vh - #{$height + $sidebar-margin-top-lg});
+}
+
+@media only screen and (min-width: 768px) {
+	.form-builder-field-settings-sidebar.form-builder-sidebar,
+	.form-builder-field-types-sidebar.form-builder-sidebar {
+		margin-top: $sidebar-margin-top-lg;
+	}
 }
 
 .form-builder-sidebar {
-	margin-top: $sidebar-margin-top;
+	margin-top: $sidebar-margin-top-sm;
 
 	&.sidenav-fixed.sidenav-menu-slider {
 		z-index: $sidebar-z-index;

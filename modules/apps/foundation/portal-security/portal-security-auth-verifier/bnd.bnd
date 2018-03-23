@@ -3,4 +3,5 @@ Bundle-SymbolicName: com.liferay.portal.security.auth.verifier
 Bundle-Version: 3.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Security Frameworks
+Liferay-Require-SchemaVersion: 1.0.0
 -metatype-inherit: True

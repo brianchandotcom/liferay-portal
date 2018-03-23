@@ -14,68 +14,24 @@
  */
 --%>
 
-<%
-for (int i = 0; i < deprecatedCategorySections.length; i++) {
-	String section = deprecatedCategorySections[i];
+<c:choose>
+	<c:when test='<%= displayStyle.equals("steps") %>'>
+		<%@ include file="/form_navigator/steps.jspf" %>
+	</c:when>
+	<c:otherwise>
+		<aui:fieldset-group markupView="lexicon">
 
-	String sectionId = namespace + _getSectionId(section);
-	String sectionJsp = jspPath + _getSectionJsp(section) + ".jsp";
-%>
+			<%
+			final FormNavigatorEntry formNavigatorEntry = formNavigatorEntries.get(0);
 
-	<!-- Begin fragment <%= sectionId %> -->
+			String sectionId = namespace + _getSectionId(formNavigatorEntry.getKey());
 
-	<c:choose>
-		<c:when test='<%= displayStyle.equals("panel") %>'>
-			<liferay-ui:panel
-				cssClass="list-unstyled panel-page-category"
-				defaultState='<%= i == 0 ? "open" : "closed" %>'
-				extended="<%= true %>"
-				id="<%= sectionId %>"
-				title="<%= section %>"
-			>
-				<liferay-util:include page="<%= sectionJsp %>" portletId="<%= portletDisplay.getRootPortletId() %>" />
-			</liferay-ui:panel>
-		</c:when>
-		<c:otherwise>
-			<div class="form-section <%= (curSection.equals(section) || curSection.equals(sectionId)) ? "active" : StringPool.BLANK %>" id="<%= sectionId %>">
-				<liferay-util:include page="<%= sectionJsp %>" portletId="<%= portletDisplay.getRootPortletId() %>" />
-			</div>
-		</c:otherwise>
-	</c:choose>
+			String errorSection = null;
+			%>
 
-	<!-- End fragment <%= sectionId %> -->
+			<!-- Begin fragment <%= sectionId %> -->
 
-<%
-}
-
-List<FormNavigatorEntry<Object>> formNavigatorEntries = FormNavigatorEntryUtil.getFormNavigatorEntries(id, user, formModelBean);
-
-for (int i = 0; i < formNavigatorEntries.size(); i++) {
-	final FormNavigatorEntry formNavigatorEntry = formNavigatorEntries.get(i);
-
-	String sectionId = namespace + _getSectionId(formNavigatorEntry.getKey());
-%>
-
-	<!-- Begin fragment <%= sectionId %> -->
-
-	<c:choose>
-		<c:when test='<%= displayStyle.equals("panel") %>'>
-			<liferay-ui:panel
-				cssClass="list-unstyled panel-page-category"
-				defaultState='<%= i == 0 ? "open" : "closed" %>'
-				extended="<%= true %>"
-				id="<%= sectionId %>"
-				title="<%= formNavigatorEntry.getLabel(locale) %>"
-			>
-
-				<%
-				formNavigatorEntry.include(request, response);
-				%>
-
-			</liferay-ui:panel>
-		</c:when>
-		<c:otherwise>
-			<div class="form-section <%= (curSection.equals(formNavigatorEntry.getKey()) || curSection.equals(sectionId)) ? "active" : StringPool.BLANK %>" id="<%= sectionId %>">
+			<aui:fieldset id="<%= _getSectionId(formNavigatorEntry.getKey()) %>">
 
 				<%
 				PortalIncludeUtil.include(
@@ -87,14 +43,109 @@ for (int i = 0; i < formNavigatorEntries.size(); i++) {
 						}
 
 					});
+
+				errorSection = (String)request.getAttribute(WebKeys.ERROR_SECTION);
+
+				if (Objects.equals(formNavigatorEntry.getKey(), errorSection)) {
+					request.setAttribute(WebKeys.ERROR_SECTION, null);
+				}
 				%>
 
-			</div>
-		</c:otherwise>
-	</c:choose>
+			</aui:fieldset>
 
-	<!-- End fragment <%= sectionId %> -->
+			<!-- End fragment <%= sectionId %> -->
 
-<%
-}
-%>
+			<%
+			for (int i = 1; i < formNavigatorEntries.size(); i++) {
+				final FormNavigatorEntry curFormNavigatorEntry = formNavigatorEntries.get(i);
+
+				sectionId = namespace + _getSectionId(curFormNavigatorEntry.getKey());
+			%>
+
+				<!-- Begin fragment <%= sectionId %> -->
+
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id="<%= _getSectionId(curFormNavigatorEntry.getKey()) %>" label="<%= curFormNavigatorEntry.getLabel(locale) %>">
+
+					<%
+					PortalIncludeUtil.include(
+						pageContext,
+						new PortalIncludeUtil.HTMLRenderer() {
+
+							public void renderHTML(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+								curFormNavigatorEntry.include(request, response);
+							}
+
+						});
+					%>
+
+				</aui:fieldset>
+
+				<!-- End fragment <%= sectionId %> -->
+
+			<%
+				String curErrorSection = (String)request.getAttribute(WebKeys.ERROR_SECTION);
+
+				if (Objects.equals(_getSectionId(curFormNavigatorEntry.getKey()), _getSectionId(curErrorSection))) {
+					errorSection = curErrorSection;
+
+					request.setAttribute(WebKeys.ERROR_SECTION, null);
+				}
+			}
+			%>
+
+			<%
+			if (Validator.isNotNull(errorSection)) {
+				String currentTab = (String)request.getAttribute("currentTab");
+
+				request.setAttribute("errorTab", currentTab);
+			%>
+
+				<aui:script sandbox="<%= true %>">
+					var focusField;
+
+					var sectionContent = $('#<%= _getSectionId(errorSection) %>Content');
+
+					<%
+					String focusField = (String)request.getAttribute("liferay-ui:error:focusField");
+					%>
+
+					<c:choose>
+						<c:when test="<%= Validator.isNotNull(focusField) %>">
+							focusField = sectionContent.find('#<portlet:namespace /><%= focusField %>');
+						</c:when>
+						<c:otherwise>
+							focusField = sectionContent.find('input:not([type="hidden"]).field').first();
+						</c:otherwise>
+					</c:choose>
+
+					Liferay.once(
+						'<portlet:namespace />formReady',
+						function(event) {
+							var hasFocusField = focusField.length;
+
+							if (!sectionContent.hasClass('in')) {
+								if (hasFocusField) {
+									sectionContent.one(
+										'shown.bs.collapse',
+										function() {
+											Liferay.Util.focusFormField(focusField);
+										}
+									);
+								}
+
+								sectionContent.collapse('show');
+							}
+							else if (hasFocusField) {
+								Liferay.Util.focusFormField(focusField);
+							}
+						}
+					);
+				</aui:script>
+
+			<%
+			}
+			%>
+
+		</aui:fieldset-group>
+	</c:otherwise>
+</c:choose>

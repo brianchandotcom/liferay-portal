@@ -16,423 +16,120 @@
 
 <%@ include file="/form_navigator/init.jsp" %>
 
-<div class="taglib-form-navigator" id="<portlet:namespace />tabsBoundingBox">
-	<aui:input name="modifiedSections" type="hidden" />
+<%
+String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_form_navigator_init") + StringPool.UNDERLINE;
 
-	<c:choose>
-		<c:when test='<%= displayStyle.equals("panel") %>'>
-			<liferay-ui:panel-container
-				accordion="<%= true %>"
-				extended="<%= true %>"
-				id="tabs"
-				persistState="<%= true %>"
-			>
-				<%@ include file="/form_navigator/sections.jspf" %>
-			</liferay-ui:panel-container>
+String tabs1Param = randomNamespace + "tabs1";
+String tabs1Value = GetterUtil.getString(SessionClicks.get(request, namespace + id, null));
 
-			<aui:button-row>
-				<aui:button primary="<%= true %>" type="submit" />
+List<String> filterCategoryKeys = new ArrayList<String>();
 
-				<aui:button href="<%= backURL %>" type="cancel" />
-			</aui:button-row>
-		</c:when>
-		<c:otherwise>
+for (String categoryKey : categoryKeys) {
+	List<FormNavigatorEntry<Object>> formNavigatorEntries = FormNavigatorEntryUtil.getFormNavigatorEntries(id, categoryKey, user, formModelBean);
+
+	if (ListUtil.isNotEmpty(formNavigatorEntries)) {
+		filterCategoryKeys.add(categoryKey);
+	}
+}
+%>
+
+<c:choose>
+	<c:when test="<%= deprecatedCategorySections.length > 0 %>">
+		<%@ include file="/form_navigator/deprecated_sections.jspf" %>
+	</c:when>
+	<c:when test="<%= filterCategoryKeys.size() > 1 %>">
+		<liferay-ui:tabs
+			names="<%= StringUtil.merge(filterCategoryKeys) %>"
+			param="<%= tabs1Param %>"
+			refresh="<%= false %>"
+			type="tabs nav-tabs-default"
+			value="<%= tabs1Value %>"
+		>
 
 			<%
-			String wrapperCssClass = StringPool.BLANK;
+			for (String categoryKey : filterCategoryKeys) {
+				List<FormNavigatorEntry<Object>> formNavigatorEntries = FormNavigatorEntryUtil.getFormNavigatorEntries(id, categoryKey, user, formModelBean);
 
-			if (displayStyle.equals("steps")) {
-				wrapperCssClass = "form-steps";
+				request.setAttribute("currentTab", categoryKey);
+			%>
+
+				<liferay-ui:section>
+					<%@ include file="/form_navigator/sections.jspf" %>
+				</liferay-ui:section>
+
+			<%
+			}
+
+			String errorTab = (String)request.getAttribute("errorTab");
+
+			if (Validator.isNotNull(errorTab)) {
+				request.setAttribute(WebKeys.ERROR_SECTION, errorTab);
 			}
 			%>
 
-			<div class="<%= wrapperCssClass %>" id="<portlet:namespace />tabs">
-				<liferay-util:buffer
-					var="formNavigatorBottom"
-				>
-					<c:if test="<%= showButtons %>">
-						<aui:button-row>
-							<aui:button primary="<%= true %>" type="submit" />
+		</liferay-ui:tabs>
+	</c:when>
+	<c:otherwise>
 
-							<aui:button href="<%= backURL %>" type="cancel" />
-						</aui:button-row>
-					</c:if>
+		<%
+		List<FormNavigatorEntry<Object>> formNavigatorEntries = FormNavigatorEntryUtil.getFormNavigatorEntries(id, user, formModelBean);
+		%>
 
-					<%= Validator.isNotNull(htmlBottom) ? htmlBottom : StringPool.BLANK %>
-				</liferay-util:buffer>
+		<%@ include file="/form_navigator/sections.jspf" %>
+	</c:otherwise>
+</c:choose>
 
-				<liferay-util:buffer
-					var="formSectionsBuffer"
-				>
+<c:if test="<%= showButtons %>">
+	<aui:button-row>
+		<aui:button primary="<%= true %>" type="submit" />
 
-					<%
-					String contentCssClass = "form-navigator-content";
+		<aui:button href="<%= backURL %>" type="cancel" />
+	</aui:button-row>
+</c:if>
 
-					if (!displayStyle.equals("steps")) {
-						contentCssClass += " col-md-8 col-md-pull-4";
-					}
-					%>
+<aui:script require="metal-dom/src/dom,metal-uri/src/Uri">
+	AUI().use(
+		'liferay-store',
+		function(A) {
+			var dom = metalDomSrcDom.default;
+			var uri = metalUriSrcUri.default;
 
-					<div class="<%= contentCssClass %>">
-						<%@ include file="/form_navigator/sections.jspf" %>
-					</div>
-				</liferay-util:buffer>
+			var redirectField = dom.toElement('input[name="<portlet:namespace />redirect"]');
+			var tabs1Param = '<portlet:namespace /><%= tabs1Param %>';
 
-				<%
-				String listGroupCssClass = "form-navigator list-group nav";
+			var updateRedirectField = function(event) {
+				var redirectURL = new uri(redirectField.value);
 
-				if (!displayStyle.equals("steps")) {
-					listGroupCssClass += " col-md-4 col-md-push-8";
+				redirectURL.setParameterValue(tabs1Param, event.id);
+
+				redirectField.value = redirectURL.toString();
+
+				Liferay.Store('<portlet:namespace /><%= id %>', event.id);
+			};
+
+			var clearFormNavigatorHandles = function(event) {
+				if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+					Liferay.detach('showTab', updateRedirectField);
+					Liferay.detach('destroyPortlet', clearFormNavigatorHandles);
 				}
-				%>
+			};
 
-				<ul class="<%= listGroupCssClass %>">
-					<%= Validator.isNotNull(htmlTop) ? htmlTop : StringPool.BLANK %>
+			if (redirectField) {
+				var currentURL = new uri(document.location.href);
 
-					<%
-					String[] modifiedSections = StringUtil.split(ParamUtil.getString(request, "modifiedSections"));
+				var tabs1Value = currentURL.getParameterValue(tabs1Param);
 
-					String errorSection = (String)request.getAttribute(WebKeys.ERROR_SECTION);
-
-					if (Validator.isNull(errorSection)) {
-						modifiedSections = null;
-					}
-
-					boolean error = false;
-
-					for (int i = 0; i < categoryLabels.length; i++) {
-						String category = categoryLabels[i];
-						String[] sectionKeys = categorySectionKeys[i];
-						String[] sectionLabels = categorySectionLabels[i];
-
-						if (sectionKeys.length > 0) {
-					%>
-
-							<c:if test="<%= Validator.isNotNull(category) %>">
-								<li class="list-group-item nav-header "><liferay-ui:message key="<%= category %>" /></li>
-							</c:if>
-
-							<%
-							if (Validator.isNotNull(errorSection)) {
-								curSection = StringPool.BLANK;
-
-								error = true;
-							}
-
-							int step = 1;
-
-							for (int j = 0; j < sectionKeys.length; j++) {
-								String sectionKey = sectionKeys[j];
-								String sectionLabel = sectionLabels[j];
-
-								String sectionId = namespace + _getSectionId(sectionKey);
-
-								Boolean show = (Boolean)request.getAttribute(WebKeys.FORM_NAVIGATOR_SECTION_SHOW + sectionId);
-
-								if ((show != null) && !show.booleanValue()) {
-									continue;
-								}
-
-								String cssClass = "list-group-item tab";
-
-								if (sectionId.equals(namespace + errorSection)) {
-									cssClass += " section-error";
-
-									curSection = sectionKey;
-								}
-
-								if (curSection.equals(sectionKey) || curSection.equals(sectionId)) {
-									cssClass += " active";
-								}
-
-								if (ArrayUtil.contains(modifiedSections, sectionId)) {
-									cssClass += " section-modified";
-								}
-							%>
-
-								<li class="<%= cssClass %>" data-sectionId="<%= sectionId %>" id="<%= sectionId %>Tab">
-									<a class="tab-label" href="#<%= sectionId %>" id="<%= sectionId %>Link">
-										<span class="badge badge-important error-notice">!</span>
-
-										<c:choose>
-											<c:when test='<%= displayStyle.equals("steps") %>'>
-												<span class="number"><liferay-ui:message key="<%= String.valueOf(step) %>" /></span>
-
-												<span class="message"><liferay-ui:message key="<%= sectionLabel %>" /></span>
-
-												<aui:icon cssClass="tab-icon" image="long-arrow-right" />
-											</c:when>
-											<c:otherwise>
-												<liferay-ui:message key="<%= sectionLabel %>" />
-											</c:otherwise>
-										</c:choose>
-
-										<span class="modified-notice"> (<liferay-ui:message key="modified" />) </span>
-									</a>
-								</li>
-
-							<%
-								step++;
-							}
-							%>
-
-					<%
-						}
-					}
-					%>
-
-					<c:if test='<%= !displayStyle.equals("steps") %>'>
-						<%= formNavigatorBottom %>
-					</c:if>
-				</ul>
-
-				<%= formSectionsBuffer %>
-
-				<c:if test='<%= displayStyle.equals("steps") %>'>
-					<%= formNavigatorBottom %>
-				</c:if>
-			</div>
-
-			<aui:script use="anim,aui-event-input,aui-tabview,aui-url,history,io-form,scrollview">
-				var formNode = A.one('#<portlet:namespace /><%= formName %>');
-
-				Liferay.component(
-					'<portlet:namespace /><%= formName %>Tabview',
-					function() {
-						return new A.TabView(
-							{
-								boundingBox: '#<portlet:namespace />tabsBoundingBox',
-								srcNode: '#<portlet:namespace />tabs',
-								type: 'list'
-							}
-						).render();
-					}
-				);
-
-				var tabview = Liferay.component('<portlet:namespace /><%= formName %>Tabview');
-
-				<c:if test='<%= displayStyle.equals("steps") %>'>
-					var listNode = tabview.get('listNode');
-
-					var scrollAnim = new A.Anim(
+				if (tabs1Value) {
+					updateRedirectField(
 						{
-							duration: 0.3,
-							node: listNode,
-							to: {
-								scrollLeft: function() {
-									var activeTabNode = tabview.getActiveTab();
-
-									var scrollLeft = listNode.get('scrollLeft');
-
-									return activeTabNode.getX() + scrollLeft - listNode.getX();
-								}
-							}
+							id: tabs1Value
 						}
 					);
-				</c:if>
-
-				function selectTabBySectionId(sectionId) {
-					var instance = this;
-
-					var tabNode = A.one('#' + sectionId + 'Tab');
-
-					var tab = A.Widget.getByNode(tabNode);
-
-					var tabIndex = tabview.indexOf(tab);
-
-					if (tab && (tabIndex > -1)) {
-						tabview.selectChild(tabIndex);
-					}
-
-					updateRedirectForSectionId(sectionId);
-
-					<c:if test='<%= displayStyle.equals("steps") %>'>
-						var listNodeRegion = listNode.get('region');
-
-						if (tabNode && !tabNode.inRegion(listNodeRegion, true)) {
-							scrollAnim.run();
-						}
-					</c:if>
-
-					Liferay.fire('formNavigator:reveal' + sectionId);
 				}
 
-				function updateSectionError() {
-					var tabNode = tabview.get('selection').get('boundingBox');
-
-					var sectionId = tabNode.getData('sectionId');
-
-					tabNode.toggleClass(
-						'section-error',
-						A.one('#' + sectionId).one('.error-field')
-					);
-				}
-
-				function updateSectionStatus() {
-					var tabNode = tabview.get('selection').get('boundingBox');
-
-					var sectionId = tabNode.getData('sectionId');
-
-					var modifiedSectionsNode = A.one('#<portlet:namespace />modifiedSections');
-
-					var modifiedSections = modifiedSectionsNode.val().split(',');
-
-					modifiedSections.push(sectionId);
-					modifiedSections = A.Array.dedupe(modifiedSections);
-					modifiedSectionsNode.val(modifiedSections.join());
-
-					tabNode.addClass('section-modified');
-				}
-
-				function updateRedirectForSectionId(sectionId) {
-					var redirect = A.one('#<portlet:namespace />redirect');
-
-					if (redirect) {
-						var url = new A.Url(redirect.val() || '<%= portletURL %>');
-
-						url.setAnchor(null);
-						url.setParameter('<portlet:namespace />historyKey', sectionId);
-
-						redirect.val(url.toString());
-					}
-				}
-
-				var history = new A.HistoryHash();
-
-				tabview.after(
-					'selectionChange',
-					function(event) {
-						var tab = event.newVal;
-
-						var boundingBox = tab.get('boundingBox');
-
-						var sectionId = boundingBox.getData('sectionId');
-
-						history.addValue('<portlet:namespace />tab', sectionId);
-					}
-				);
-
-				A.on(
-					'history:change',
-					function(event) {
-						var state = event.newVal;
-
-						var changed = event.changed.<portlet:namespace />tab;
-
-						var removed = event.removed.<portlet:namespace />tab;
-
-						if (event.src === A.HistoryHash.SRC_HASH || event.src === A.HistoryBase.SRC_ADD) {
-							if (changed) {
-								selectTabBySectionId(changed.newVal);
-							}
-							else if (removed) {
-								tabview.selectChild(0);
-							}
-							else if (state) {
-								var sectionId = state.<portlet:namespace />tab;
-
-								if (!sectionId) {
-									sectionId = '<portlet:namespace />' + state.tab;
-								}
-
-								selectTabBySectionId(sectionId);
-							}
-						}
-					}
-				);
-
-				if (<%= error %>) {
-					history.addValue('<portlet:namespace />tab', '<portlet:namespace /><%= errorSection %>');
-				}
-				else {
-					var currentUrl = new A.Url(location.href);
-
-					var currentAnchor = currentUrl.getAnchor();
-
-					if (!currentAnchor) {
-						currentAnchor = currentUrl.getParameter('<portlet:namespace />historyKey');
-					}
-
-					if (currentAnchor) {
-						var locationSectionId = currentAnchor.substring(currentAnchor.indexOf('=') + 1);
-
-						if (locationSectionId.indexOf('<portlet:namespace />') === -1) {
-							locationSectionId = '<portlet:namespace />' + locationSectionId;
-						}
-
-						selectTabBySectionId(locationSectionId);
-					}
-				}
-
-				if (formNode) {
-
-					<%
-					String focusField = (String)request.getAttribute("liferay-ui:error:focusField");
-					%>
-
-					var focusField;
-
-					<c:choose>
-						<c:when test="<%= Validator.isNotNull(focusField) %>">
-							focusField = formNode.one('#<portlet:namespace /><%= focusField %>');
-						</c:when>
-						<c:otherwise>
-							focusField = formNode.one('.form-section.active input:not([type="hidden"]).field');
-						</c:otherwise>
-					</c:choose>
-
-					if (focusField) {
-						Liferay.Util.focusFormField(focusField);
-					}
-
-					formNode.all('.modify-link').on('click', updateSectionStatus);
-
-					formNode.delegate('change', updateSectionStatus, 'input, select, textarea');
-
-					formNode.on('blur', updateSectionError, 'input, select, textarea');
-
-					formNode.on('autofields:update', updateSectionError);
-
-					var updateSectionOnError = function(event) {
-						var form = event.form;
-
-						if (form.formNode.compareTo(formNode)) {
-							var validator = form.formValidator;
-
-							validator.on(
-								'submitError',
-								function() {
-									var errorClass = validator.get('errorClass');
-
-									var errorField = formNode.one('.' + errorClass);
-
-									if (errorField) {
-										var errorSection = errorField.ancestor('.form-section');
-
-										var errorSectionId = errorSection.attr('id');
-
-										selectTabBySectionId(errorSectionId);
-
-										updateSectionError();
-									}
-								}
-							);
-						}
-					};
-
-					var detachUpdateSection = function(event) {
-						if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
-							Liferay.detach('form:registered', updateSectionOnError);
-
-							Liferay.detach('destroyPortlet', detachUpdateSection);
-						}
-					};
-
-					Liferay.after('form:registered', updateSectionOnError);
-
-					Liferay.on('destroyPortlet', detachUpdateSection);
-				}
-			</aui:script>
-		</c:otherwise>
-	</c:choose>
-</div>
+				Liferay.on('showTab', updateRedirectField);
+				Liferay.on('destroyPortlet', clearFormNavigatorHandles);
+			}
+		}
+	);
+</aui:script>

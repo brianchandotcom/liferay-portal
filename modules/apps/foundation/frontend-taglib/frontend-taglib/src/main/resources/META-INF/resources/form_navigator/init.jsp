@@ -59,18 +59,6 @@ PortletURL portletURL = liferayPortletResponse.createRenderURL();
 if (Validator.isNull(backURL)) {
 	backURL = portletURL.toString();
 }
-
-String curSection = StringPool.BLANK;
-
-if (categorySectionKeys[0].length > 0) {
-	curSection = categorySectionKeys[0][0];
-}
-
-String historyKey = ParamUtil.getString(request, "historyKey");
-
-if (Validator.isNotNull(historyKey)) {
-	curSection = historyKey;
-}
 %>
 
 <%!

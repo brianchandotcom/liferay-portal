@@ -25,14 +25,19 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.mockito.Mockito;
 
 import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Adolfo Pérez
  */
+@PrepareForTest(URLCodec.class)
+@RunWith(PowerMockRunner.class)
 public class AMImageConfigurationEntryParserTest extends PowerMockito {
 
 	@Before
@@ -41,6 +46,8 @@ public class AMImageConfigurationEntryParserTest extends PowerMockito {
 
 		_amImageConfigurationEntryParser = new AMImageConfigurationEntryParser(
 			_http);
+
+		PowerMockito.mockStatic(URLCodec.class);
 
 		when(
 			URLCodec.encodeURL(Mockito.eq("desc"))

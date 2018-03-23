@@ -3,8 +3,10 @@ import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
+import './dialogs/SelectMappingTypeDialog.es';
 import './sidebar/SidebarAddedFragments.es';
 import './sidebar/SidebarFragmentCollections.es';
+import './sidebar/SidebarMapping.es';
 import FragmentEntryLink from './FragmentEntryLink.es';
 import templates from './FragmentsEditor.soy';
 
@@ -337,6 +339,26 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
+	 * Callback executed when the SelectMappingTypeDialog should be shown
+	 * @review
+	 */
+
+	_handleSelectAssetTypeButtonClick() {
+		this._selectMappingTypeDialogVisible = true;
+	}
+
+	/**
+	 * Callback executed when the SelectMappingTypeDialog visibility changes
+	 * @param {{ newVal: boolean }} change
+	 * @private
+	 * @review
+	 */
+
+	_handleSelectMappingTypeDialogVisibleChanged(change) {
+		this._selectMappingTypeDialogVisible = change.newVal;
+	}
+
+	/**
 	 * Updates _sidebarSelectedTab according to the clicked element
 	 * @param {!Event} event
 	 * @private
@@ -664,6 +686,21 @@ FragmentsEditor.STATE = {
 	_lastSaveDate: Config.string()
 		.internal()
 		.value(''),
+
+	/**
+	 * Flag indicating if the SelectMappingTypeDialog should be shown
+	 * @default false
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @private
+	 * @review
+	 * @type {boolean}
+	 */
+
+	_selectMappingTypeDialogVisible: Config
+		.bool()
+		.internal()
+		.value(false),
 
 	/**
 	 * Tab selected inside sidebar

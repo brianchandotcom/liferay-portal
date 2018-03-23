@@ -26,8 +26,11 @@
 	{@param? _handleFragmentRemove: any}
 	{@param? _handleHideContextualSidebar: any}
 	{@param? _handleToggleContextualSidebarButtonClick: any}
+	{@param? _handleSelectAssetTypeButtonClick: any}
+	{@param? _handleSelectMappingTypeDialogVisibleChanged: any}
 	{@param? _handleSidebarTabClick: any}
 	{@param? _lastSaveDate: string}
+	{@param? _selectMappingTypeDialogVisible: bool}
 	{@param? _sidebarSelectedTab: string}
 	{@param? fragmentEntryLinks: list<[
 		content: html|null,
@@ -72,6 +75,12 @@
 				{/if}
 			</div>
 
+			{call com.liferay.layout.admin.web.SelectMappingTypeDialog.render}
+				{param events: ['visibleChanged': $_handleSelectMappingTypeDialogVisibleChanged] /}
+				{param spritemap: $spritemap /}
+				{param visible: $_selectMappingTypeDialogVisible ?: false /}
+			{/call}
+
 			{call liferay.frontend.ContextualSidebar.render}
 				{param body kind="html"}
 					{if $_sidebarSelectedTab == 'fragments'}
@@ -85,6 +94,10 @@
 							{param events: ['fragmentRemoveButtonClick': $_handleFragmentRemove] /}
 							{param fragmentEntryLinks: $fragmentEntryLinks /}
 							{param spritemap: $spritemap /}
+						{/call}
+					{elseif $_sidebarSelectedTab == 'mapping'}
+						{call com.liferay.layout.admin.web.SidebarMapping.render}
+							{param events: ['selectAssetTypeButtonClick': $_handleSelectAssetTypeButtonClick] /}
 						{/call}
 					{/if}
 				{/param}

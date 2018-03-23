@@ -200,8 +200,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			commerceOrder.getCommerceShippingMethodId(),
 			commerceOrder.getShippingOptionName(), purchaseOrderNumber,
 			commerceOrder.getSubtotal(), commerceOrder.getShippingPrice(),
-			commerceOrder.getTotal(), advanceStatus, paymentStatus,
-			commerceOrder.getOrderStatus());
+			commerceOrder.getTotal(), advanceStatus, paymentStatus);
 	}
 
 	protected void updateShippingAddress(ActionRequest actionRequest)
@@ -253,7 +252,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			commerceOrder.getShippingOptionName(),
 			commerceOrder.getPurchaseOrderNumber(), subtotal, shippingPrice,
 			total, commerceOrder.getAdvanceStatus(),
-			commerceOrder.getPaymentStatus(), commerceOrder.getOrderStatus());
+			commerceOrder.getPaymentStatus());
 	}
 
 	@Reference

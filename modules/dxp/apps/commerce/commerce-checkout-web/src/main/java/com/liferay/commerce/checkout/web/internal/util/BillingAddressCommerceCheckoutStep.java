@@ -95,8 +95,7 @@ public class BillingAddressCommerceCheckoutStep
 			commerceOrder.getShippingOptionName(),
 			commerceOrder.getPurchaseOrderNumber(), commerceOrder.getSubtotal(),
 			commerceOrder.getShippingPrice(), commerceOrder.getTotal(),
-			commerceOrder.getAdvanceStatus(), commerceOrder.getPaymentStatus(),
-			commerceOrder.getOrderStatus());
+			commerceOrder.getAdvanceStatus(), commerceOrder.getPaymentStatus());
 	}
 
 	@Reference

@@ -22,6 +22,7 @@ import com.liferay.commerce.exception.CommerceOrderPaymentMethodException;
 import com.liferay.commerce.exception.CommerceOrderPurchaseOrderNumberException;
 import com.liferay.commerce.exception.CommerceOrderShippingAddressException;
 import com.liferay.commerce.exception.CommerceOrderShippingMethodException;
+import com.liferay.commerce.exception.CommerceOrderStatusException;
 import com.liferay.commerce.exception.CommercePaymentEngineException;
 import com.liferay.commerce.exception.NoSuchPaymentMethodException;
 import com.liferay.commerce.model.CommerceAddress;
@@ -574,7 +575,7 @@ public class CommerceOrderLocalServiceImpl
 			commerceOrder.getCommercePaymentMethodId(), 0, null,
 			commerceOrder.getPurchaseOrderNumber(), commerceOrder.getSubtotal(),
 			0, commerceOrder.getTotal(), commerceOrder.getAdvanceStatus(),
-			commerceOrder.getPaymentStatus(), commerceOrder.getOrderStatus());
+			commerceOrder.getPaymentStatus());
 	}
 
 	@Override
@@ -739,7 +740,7 @@ public class CommerceOrderLocalServiceImpl
 			long commercePaymentMethodId, long commerceShippingMethodId,
 			String shippingOptionName, String purchaseOrderNumber,
 			double subtotal, double shippingPrice, double total,
-			String advanceStatus, int paymentStatus, int orderStatus)
+			String advanceStatus, int paymentStatus)
 		throws PortalException {
 
 		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
@@ -756,7 +757,6 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setTotal(total);
 		commerceOrder.setAdvanceStatus(advanceStatus);
 		commerceOrder.setPaymentStatus(paymentStatus);
-		commerceOrder.setOrderStatus(orderStatus);
 
 		commerceOrderPersistence.update(commerceOrder);
 
@@ -772,7 +772,7 @@ public class CommerceOrderLocalServiceImpl
 		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
 			commerceOrderId);
 
-		validateOrderStatus(commerceOrder, orderStatus);
+		validateOrderStatus(commerceOrder.getCommerceOrderId(), orderStatus);
 
 		commerceOrder.setOrderStatus(orderStatus);
 
@@ -1150,12 +1150,11 @@ public class CommerceOrderLocalServiceImpl
 		}
 	}
 
-	protected void validateOrderStatus(
-			CommerceOrder commerceOrder, int orderStatus)
+	protected void validateOrderStatus(long commerceOrderId, int orderStatus)
 		throws PortalException {
 
 		int[] availableOrderStatuses = getAvailableOrderStatuses(
-			commerceOrder.getCommerceCurrencyId(), orderStatus);
+			commerceOrderId);
 
 		if (!ArrayUtil.contains(availableOrderStatuses, orderStatus)) {
 			throw new CommerceOrderStatusException();

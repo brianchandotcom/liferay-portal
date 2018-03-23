@@ -421,8 +421,7 @@ public class CommerceAddressLocalServiceImpl
 				commerceOrder.getPurchaseOrderNumber(),
 				commerceOrder.getSubtotal(), shippingPrice,
 				commerceOrder.getTotal(), commerceOrder.getAdvanceStatus(),
-				commerceOrder.getPaymentStatus(),
-				commerceOrder.getOrderStatus());
+				commerceOrder.getPaymentStatus());
 		}
 	}
 

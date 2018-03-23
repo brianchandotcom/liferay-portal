@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.oauth2.provider.service.persistence.OAuth2ScopeGrantFinder.findByC_A_A_B">
+		<![CDATA[
+			SELECT
+				{OAuth2ScopeGrant.*}
+		 	FROM
+			 	OAuth2ScopeGrant
+			INNER JOIN
+				OAuth2Auth_ScopeGrants ON
+					OAuth2ScopeGrant.oAuth2ScopeGrantId = OAuth2Auth_ScopeGrants.oAuth2ScopeGrantId
+			INNER JOIN
+				OAuth2Authorization ON
+					OAuth2Authorization.oAuth2AuthorizationId = OAuth2Auth_ScopeGrants.oAuth2AuthorizationId
+			WHERE
+				(OAuth2ScopeGrant.companyId = ?) AND
+				(OAuth2ScopeGrant.applicationName = ?) AND
+				(OAuth2ScopeGrant.bundleSymbolicName = ?) AND
+				(OAuth2Authorization.accessTokenContent = ?)
+		]]>
+	</sql>
+</custom-sql>

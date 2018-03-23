@@ -43,6 +43,18 @@ body {
 		max-height: 32px;
 		max-width: 32px;
 	}
+
+	.company-details {
+	    float: left;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	    white-space: nowrap;
+	    width: calc(100% - 32px);
+
+	    @include sm {
+	        width: 100%;
+	    }
+	}
 }
 
 .product-menu {

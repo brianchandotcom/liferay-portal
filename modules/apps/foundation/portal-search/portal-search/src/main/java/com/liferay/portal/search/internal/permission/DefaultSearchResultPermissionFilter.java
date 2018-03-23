@@ -75,6 +75,9 @@ public class DefaultSearchResultPermissionFilter
 		_relatedEntryIndexerRegistry = relatedEntryIndexerRegistry;
 		_searchFunction = searchFunction;
 
+		_permissionFilteredSearchResultAccurateCountThreshold =
+			defaultSearchResultPermissionFilterConfiguration.
+				permissionFilteredSearchResultAccurateCountThreshold();
 		_searchQueryResultWindowLimit =
 			defaultSearchResultPermissionFilterConfiguration.
 				searchQueryResultWindowLimit();
@@ -289,6 +292,7 @@ public class DefaultSearchResultPermissionFilter
 	private final IndexerRegistry _indexerRegistry;
 	private double _indexPermissionFilterSearchAmplificationFactor;
 	private final PermissionChecker _permissionChecker;
+	private final int _permissionFilteredSearchResultAccurateCountThreshold;
 	private Props _props;
 	private final RelatedEntryIndexerRegistry _relatedEntryIndexerRegistry;
 	private final Function<SearchContext, Hits> _searchFunction;
@@ -297,6 +301,8 @@ public class DefaultSearchResultPermissionFilter
 	private class SlidingWindowSearcher {
 
 		public Hits search(int start, int end, SearchContext searchContext) {
+			int amplifiedCount =
+				_permissionFilteredSearchResultAccurateCountThreshold;
 			double amplificationFactor = 1.0;
 			int excludedDocsSize = 0;
 			int filteredDocsCount = 0;
@@ -307,9 +313,16 @@ public class DefaultSearchResultPermissionFilter
 			while (true) {
 				int count = end - documents.size();
 
-				int amplifiedCount = Math.min(
-					(int)Math.ceil(count * amplificationFactor),
-					_searchQueryResultWindowLimit);
+				if ((offset > 0) || (amplifiedCount <= 0)) {
+					amplifiedCount = (int)Math.ceil(
+						count * amplificationFactor);
+				}
+
+				if ((amplifiedCount > _searchQueryResultWindowLimit) &&
+					(_searchQueryResultWindowLimit > 0)) {
+
+					amplifiedCount = _searchQueryResultWindowLimit;
+				}
 
 				int amplifiedEnd = offset + amplifiedCount;
 

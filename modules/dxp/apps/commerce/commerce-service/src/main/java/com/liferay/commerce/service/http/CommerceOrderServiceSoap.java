@@ -250,6 +250,20 @@ public class CommerceOrderServiceSoap {
 		}
 	}
 
+	public static int[] getAvailableOrderStatuses(long commerceOrderId)
+		throws RemoteException {
+		try {
+			int[] returnValue = CommerceOrderServiceUtil.getAvailableOrderStatuses(commerceOrderId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceOrderSoap getCommerceOrder(
 		long commerceOrderId) throws RemoteException {
 		try {
@@ -401,13 +415,27 @@ public class CommerceOrderServiceSoap {
 		java.lang.String shippingOptionName,
 		java.lang.String purchaseOrderNumber, double subtotal,
 		double shippingPrice, double total, java.lang.String advanceStatus,
-		int paymentStatus, int orderStatus) throws RemoteException {
+		int paymentStatus) throws RemoteException {
 		try {
 			com.liferay.commerce.model.CommerceOrder returnValue = CommerceOrderServiceUtil.updateCommerceOrder(commerceOrderId,
 					billingAddressId, shippingAddressId,
 					commercePaymentMethodId, commerceShippingMethodId,
 					shippingOptionName, purchaseOrderNumber, subtotal,
-					shippingPrice, total, advanceStatus, paymentStatus,
+					shippingPrice, total, advanceStatus, paymentStatus);
+
+			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderSoap updateOrderStatus(
+		long commerceOrderId, int orderStatus) throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceOrder returnValue = CommerceOrderServiceUtil.updateOrderStatus(commerceOrderId,
 					orderStatus);
 
 			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModel(returnValue);

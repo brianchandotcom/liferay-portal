@@ -268,6 +268,11 @@ public class CommerceOrderLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static int[] getAvailableOrderStatuses(long commerceOrderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getAvailableOrderStatuses(commerceOrderId);
+	}
+
 	/**
 	* Returns the commerce order with the primary key.
 	*
@@ -474,14 +479,19 @@ public class CommerceOrderLocalServiceUtil {
 		java.lang.String shippingOptionName,
 		java.lang.String purchaseOrderNumber, double subtotal,
 		double shippingPrice, double total, java.lang.String advanceStatus,
-		int paymentStatus, int orderStatus)
+		int paymentStatus)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCommerceOrder(commerceOrderId, billingAddressId,
 			shippingAddressId, commercePaymentMethodId,
 			commerceShippingMethodId, shippingOptionName, purchaseOrderNumber,
-			subtotal, shippingPrice, total, advanceStatus, paymentStatus,
-			orderStatus);
+			subtotal, shippingPrice, total, advanceStatus, paymentStatus);
+	}
+
+	public static com.liferay.commerce.model.CommerceOrder updateOrderStatus(
+		long commerceOrderId, int orderStatus)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateOrderStatus(commerceOrderId, orderStatus);
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder updatePurchaseOrderNumber(

@@ -228,6 +228,10 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int[] getAvailableOrderStatuses(long commerceOrderId)
+		throws PortalException;
+
 	/**
 	* Returns the commerce order with the primary key.
 	*
@@ -384,7 +388,11 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 		java.lang.String shippingOptionName,
 		java.lang.String purchaseOrderNumber, double subtotal,
 		double shippingPrice, double total, java.lang.String advanceStatus,
-		int paymentStatus, int orderStatus) throws PortalException;
+		int paymentStatus) throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceOrder updateOrderStatus(long commerceOrderId, int orderStatus)
+		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder updatePurchaseOrderNumber(long commerceOrderId,

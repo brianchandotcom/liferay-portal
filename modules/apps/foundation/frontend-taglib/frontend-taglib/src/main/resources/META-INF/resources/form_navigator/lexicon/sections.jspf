@@ -16,7 +16,7 @@
 
 <c:choose>
 	<c:when test='<%= displayStyle.equals("steps") %>'>
-		<%@ include file="/html/taglib/ui/form_navigator/lexicon/steps.jspf" %>
+		<%@ include file="/form_navigator/lexicon/steps.jspf" %>
 	</c:when>
 	<c:otherwise>
 		<aui:fieldset-group markupView="lexicon">

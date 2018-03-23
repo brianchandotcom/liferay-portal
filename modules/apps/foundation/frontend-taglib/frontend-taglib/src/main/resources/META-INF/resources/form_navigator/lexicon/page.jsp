@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/form_navigator/init.jsp" %>
+<%@ include file="/form_navigator/init.jsp" %>
 
 <%
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_form_navigator_init") + StringPool.UNDERLINE;
@@ -35,7 +35,7 @@ for (String categoryKey : categoryKeys) {
 
 <c:choose>
 	<c:when test="<%= deprecatedCategorySections.length > 0 %>">
-		<%@ include file="/html/taglib/ui/form_navigator/lexicon/deprecated_sections.jspf" %>
+		<%@ include file="/form_navigator/lexicon/deprecated_sections.jspf" %>
 	</c:when>
 	<c:when test="<%= filterCategoryKeys.size() > 1 %>">
 		<liferay-ui:tabs
@@ -54,7 +54,7 @@ for (String categoryKey : categoryKeys) {
 			%>
 
 				<liferay-ui:section>
-					<%@ include file="/html/taglib/ui/form_navigator/lexicon/sections.jspf" %>
+					<%@ include file="/form_navigator/lexicon/sections.jspf" %>
 				</liferay-ui:section>
 
 			<%
@@ -75,7 +75,7 @@ for (String categoryKey : categoryKeys) {
 		List<FormNavigatorEntry<Object>> formNavigatorEntries = FormNavigatorEntryUtil.getFormNavigatorEntries(id, user, formModelBean);
 		%>
 
-		<%@ include file="/html/taglib/ui/form_navigator/lexicon/sections.jspf" %>
+		<%@ include file="/form_navigator/lexicon/sections.jspf" %>
 	</c:otherwise>
 </c:choose>
 

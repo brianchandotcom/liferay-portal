@@ -75,7 +75,7 @@
 			<%= Validator.isNotNull(htmlTop) ? htmlTop : StringPool.BLANK %>
 
 			<%
-			String[] modifiedSections = StringUtil.split(ParamUtil.getString(request, "modifiedSections"));
+			List<String> modifiedSections = StringUtil.split(ParamUtil.getString(request, "modifiedSections"));
 
 			String errorSection = (String)request.getAttribute(WebKeys.ERROR_SECTION);
 
@@ -136,7 +136,7 @@
 							cssClass += " complete";
 						}
 
-						if (ArrayUtil.contains(modifiedSections, sectionId)) {
+						if (modifiedSections.contains(sectionId)) {
 							cssClass += " section-modified";
 						}
 					%>

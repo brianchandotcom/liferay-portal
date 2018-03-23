@@ -25,8 +25,7 @@ import com.liferay.taglib.util.IncludeTag;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Julio Camarero
- * @author Sergio González
+ * @author Eudaldo Alonso
  */
 public class FormNavigatorTag extends IncludeTag {
 
@@ -196,41 +195,45 @@ public class FormNavigatorTag extends IncludeTag {
 	@Override
 	protected String getPage() {
 		if (Validator.isNotNull(_markupView)) {
-			return
-				"/html/taglib/ui/form_navigator/" + _markupView + "/page.jsp";
+			return "/form_navigator/" + _markupView + "/page.jsp";
 		}
 
-		return "/html/taglib/ui/form_navigator/page.jsp";
+		return "/form_navigator/page.jsp";
 	}
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-ui:form-navigator:backURL", _backURL);
 		request.setAttribute(
-			"liferay-ui:form-navigator:categoryKeys", getCategoryKeys());
+			"liferay-frontend:form-navigator:backURL", _backURL);
 		request.setAttribute(
-			"liferay-ui:form-navigator:categoryLabels", getCategoryLabels());
+			"liferay-frontend:form-navigator:categoryKeys", getCategoryKeys());
 		request.setAttribute(
-			"liferay-ui:form-navigator:categorySectionKeys",
+			"liferay-frontend:form-navigator:categoryLabels",
+			getCategoryLabels());
+		request.setAttribute(
+			"liferay-frontend:form-navigator:categorySectionKeys",
 			getCategorySectionKeys());
 		request.setAttribute(
-			"liferay-ui:form-navigator:categorySectionLabels",
+			"liferay-frontend:form-navigator:categorySectionLabels",
 			getCategorySectionLabels());
 		request.setAttribute(
-			"liferay-ui:form-navigator:deprecatedCategorySections",
+			"liferay-frontend:form-navigator:deprecatedCategorySections",
 			getDeprecatedCategorySections());
 		request.setAttribute(
-			"liferay-ui:form-navigator:displayStyle", _displayStyle);
+			"liferay-frontend:form-navigator:displayStyle", _displayStyle);
 		request.setAttribute(
-			"liferay-ui:form-navigator:formModelBean", _formModelBean);
-		request.setAttribute("liferay-ui:form-navigator:formName", _formName);
+			"liferay-frontend:form-navigator:formModelBean", _formModelBean);
 		request.setAttribute(
-			"liferay-ui:form-navigator:htmlBottom", _htmlBottom);
-		request.setAttribute("liferay-ui:form-navigator:htmlTop", _htmlTop);
-		request.setAttribute("liferay-ui:form-navigator:id", _id);
-		request.setAttribute("liferay-ui:form-navigator:jspPath", _jspPath);
+			"liferay-frontend:form-navigator:formName", _formName);
 		request.setAttribute(
-			"liferay-ui:form-navigator:showButtons",
+			"liferay-frontend:form-navigator:htmlBottom", _htmlBottom);
+		request.setAttribute(
+			"liferay-frontend:form-navigator:htmlTop", _htmlTop);
+		request.setAttribute("liferay-frontend:form-navigator:id", _id);
+		request.setAttribute(
+			"liferay-frontend:form-navigator:jspPath", _jspPath);
+		request.setAttribute(
+			"liferay-frontend:form-navigator:showButtons",
 			String.valueOf(_showButtons));
 	}
 

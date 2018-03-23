@@ -48,16 +48,20 @@ public class TestBatchGroup {
 
 	public TestBatchGroup(
 			GitWorkingDirectory gitWorkingDirectory, String batchName,
-			String testSuite)
+			String testSuiteName)
 		throws Exception {
 
 		_gitWorkingDirectory = gitWorkingDirectory;
 
 		_batchName = batchName;
 
+		_testSuiteName = testSuiteName;
+
 		_portalTestProperties = JenkinsResultsParserUtil.getProperties(
 			new File(
 				_gitWorkingDirectory.getWorkingDirectory(), "test.properties"));
+
+		_setTestBatchCurrentBranch();
 
 		_setTestClassNamesExcludes();
 		_setTestClassNamesIncludes();
@@ -187,6 +191,26 @@ public class TestBatchGroup {
 		return filePath.replace(".java", ".class");
 	}
 
+	private void _setTestBatchCurrentBranch() {
+		String testBatchClassesPerGroup = _portalTestProperties.getProperty(
+			_TEST_BATCH_CURRENT_BRANCH_PROPERTY_NAME + "[" + _testSuiteName +
+				"]");
+
+		if (testBatchClassesPerGroup == null) {
+			testBatchClassesPerGroup = _portalTestProperties.getProperty(
+				_TEST_BATCH_CURRENT_BRANCH_PROPERTY_NAME);
+		}
+
+		if (testBatchClassesPerGroup != null) {
+			_testBatchCurrentBranch = Boolean.parseBoolean(
+				testBatchClassesPerGroup);
+
+			return;
+		}
+
+		_testBatchCurrentBranch = false;
+	}
+
 	private void _setTestClassGroups() throws Exception {
 		final List<String> testClassFileNames = new ArrayList<>();
 
@@ -197,7 +221,7 @@ public class TestBatchGroup {
 		int testBatchClassesPerGroup = _getTestBatchClassesPerGroup();
 
 		for (int i = 0; i < testClassFileNames.size();
-			i += testBatchClassesPerGroup) {
+			 i += testBatchClassesPerGroup) {
 
 			_testClassGroups.add(
 				testClassFileNames.subList(
@@ -208,7 +232,7 @@ public class TestBatchGroup {
 		}
 	}
 
-	private void _setTestClassNamesExcludes() {
+	private void _setTestClassNamesExcludes() throws IOException {
 		String testClassNamesExcludes = _portalTestProperties.getProperty(
 			_TEST_CLASS_NAMES_EXCLUDES_PROPERTY_NAME + "[" + _batchName + "]");
 
@@ -218,8 +242,38 @@ public class TestBatchGroup {
 		}
 
 		if (testClassNamesExcludes != null) {
-			Collections.addAll(
-				_testClassNamesExcludes, testClassNamesExcludes.split(","));
+			if (_testBatchCurrentBranch) {
+				PortalGitWorkingDirectory portalGitWorkingDirectory =
+					(PortalGitWorkingDirectory)_gitWorkingDirectory;
+
+				File workingDirectory =
+					portalGitWorkingDirectory.getWorkingDirectory();
+
+				String workingDirectoryPath =
+					workingDirectory.getCanonicalPath();
+
+				List<File> moduleGroupDirs =
+					portalGitWorkingDirectory.getCurrentBranchModuleGroupDirs();
+
+				for (File moduleGroupDir : moduleGroupDirs) {
+					String moduleGroupDirPath =
+						moduleGroupDir.getCanonicalPath();
+
+					moduleGroupDirPath = moduleGroupDirPath.replace(
+						workingDirectoryPath + "/", "");
+
+					for (String testClassNames :
+							testClassNamesExcludes.split(",")) {
+
+						_testClassNamesIncludes.add(
+							moduleGroupDirPath + "/" + testClassNames);
+					}
+				}
+			}
+			else {
+				Collections.addAll(
+					_testClassNamesIncludes, testClassNamesExcludes.split(","));
+			}
 		}
 	}
 
@@ -237,7 +291,7 @@ public class TestBatchGroup {
 		}
 	}
 
-	private void _setTestClassNamesIncludes() {
+	private void _setTestClassNamesIncludes() throws IOException {
 		String testClassNamesIncludes = _portalTestProperties.getProperty(
 			_TEST_CLASS_NAMES_INCLUDES_PROPERTY_NAME + "[" + _batchName + "]");
 
@@ -247,8 +301,38 @@ public class TestBatchGroup {
 		}
 
 		if (testClassNamesIncludes != null) {
-			Collections.addAll(
-				_testClassNamesIncludes, testClassNamesIncludes.split(","));
+			if (_testBatchCurrentBranch) {
+				PortalGitWorkingDirectory portalGitWorkingDirectory =
+					(PortalGitWorkingDirectory)_gitWorkingDirectory;
+
+				File workingDirectory =
+					portalGitWorkingDirectory.getWorkingDirectory();
+
+				String workingDirectoryPath =
+					workingDirectory.getCanonicalPath();
+
+				List<File> moduleGroupDirs =
+					portalGitWorkingDirectory.getCurrentBranchModuleGroupDirs();
+
+				for (File moduleGroupDir : moduleGroupDirs) {
+					String moduleGroupDirPath =
+						moduleGroupDir.getCanonicalPath();
+
+					moduleGroupDirPath = moduleGroupDirPath.replace(
+						workingDirectoryPath + "/", "");
+
+					for (String testClassNames :
+							testClassNamesIncludes.split(",")) {
+
+						_testClassNamesIncludes.add(
+							moduleGroupDirPath + "/" + testClassNames);
+					}
+				}
+			}
+			else {
+				Collections.addAll(
+					_testClassNamesIncludes, testClassNamesIncludes.split(","));
+			}
 		}
 	}
 
@@ -271,6 +355,9 @@ public class TestBatchGroup {
 	private static final String _TEST_BATCH_CLASSES_PER_GROUP_PROPERTY_NAME =
 		"test.batch.classes.per.group";
 
+	private static final String _TEST_BATCH_CURRENT_BRANCH_PROPERTY_NAME =
+		"test.batch.current.branch";
+
 	private static final String _TEST_CLASS_NAMES_EXCLUDES_PROPERTY_NAME =
 		"test.class.names.excludes";
 
@@ -280,6 +367,7 @@ public class TestBatchGroup {
 	private final String _batchName;
 	private final GitWorkingDirectory _gitWorkingDirectory;
 	private final Properties _portalTestProperties;
+	private boolean _testBatchCurrentBranch;
 	private final List<List<String>> _testClassGroups = new ArrayList<>();
 	private final List<String> _testClassNamesExcludes = new ArrayList<>();
 	private final List<PathMatcher> _testClassNamesExcludesPathMatchers =
@@ -289,5 +377,6 @@ public class TestBatchGroup {
 		new ArrayList<>();
 	private final Pattern _testClassPackagePathPattern = Pattern.compile(
 		"(.*)(?<packagePath>com/.*)");
+	private final String _testSuiteName;
 
 }

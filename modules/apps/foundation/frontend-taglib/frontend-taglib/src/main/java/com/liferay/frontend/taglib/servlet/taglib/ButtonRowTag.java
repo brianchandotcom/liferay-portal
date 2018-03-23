@@ -14,19 +14,56 @@
 
 package com.liferay.frontend.taglib.servlet.taglib;
 
-import com.liferay.frontend.taglib.servlet.taglib.base.BaseButtonRowTag;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.util.IncludeTag;
 import com.liferay.taglib.util.InlineUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 
 /**
  * @author Eudaldo Alonso
  */
-public class ButtonRowTag extends BaseButtonRowTag {
+public class ButtonRowTag extends IncludeTag {
+
+	@Override
+	public int doStartTag() throws JspException {
+		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
+
+		return super.doStartTag();
+	}
+
+	public String getCssClass() {
+		return _cssClass;
+	}
+
+	public String getId() {
+		return _id;
+	}
+
+	public void setCssClass(String cssClass) {
+		_cssClass = cssClass;
+	}
+
+	public void setId(String id) {
+		_id = id;
+	}
+
+	@Override
+	protected void cleanUp() {
+		super.cleanUp();
+
+		_cssClass = null;
+		_id = null;
+	}
+
+	@Override
+	protected String getStartPage() {
+		return _START_PAGE;
+	}
 
 	@Override
 	protected boolean isCleanUpSetAttributes() {
@@ -87,9 +124,18 @@ public class ButtonRowTag extends BaseButtonRowTag {
 			setCssClass(cssClass);
 		}
 
-		super.setAttributes(request);
+		request.setAttribute("liferay-frontend:button-row:cssClass", _cssClass);
+		request.setAttribute("liferay-frontend:button-row:id", _id);
 	}
 
+	private static final String _ATTRIBUTE_NAMESPACE =
+		"liferay-frontend:button-row:";
+
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
+
+	private static final String _START_PAGE = "/button_row/start.jsp";
+
+	private String _cssClass;
+	private String _id;
 
 }

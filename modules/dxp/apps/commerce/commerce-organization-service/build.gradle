@@ -1,3 +1,5 @@
+task deployConfigs(type: Copy)
+
 buildService {
 	apiDir = "../commerce-organization-api/src/main/java"
 }
@@ -18,4 +20,17 @@ dependencies {
 	provided project(":private:apps:commerce:commerce-api")
 	provided project(":private:apps:commerce:commerce-organization-api")
 	provided project(":private:apps:commerce:commerce-product-service")
+}
+
+deploy {
+	finalizedBy deployConfigs
+}
+
+deployConfigs {
+	ext {
+		autoClean = false
+	}
+
+	from "configs"
+	into new File(liferay.liferayHome, "osgi/configs")
 }

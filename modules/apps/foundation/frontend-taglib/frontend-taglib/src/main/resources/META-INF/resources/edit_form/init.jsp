@@ -26,12 +26,12 @@ String action = GetterUtil.getString((java.lang.String)request.getAttribute("lif
 List<String> checkboxNames = (List<String>)request.getAttribute("LIFERAY_SHARED_aui:form:checkboxNames");
 String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-frontend:edit-form:cssClass"));
 boolean inlineLabels = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-frontend:edit-form:inlineLabels")));
-String method = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-frontend:edit-form:method"), "post");
-String name = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-frontend:edit-form:name"), "fm");
+String method = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-frontend:edit-form:method"));
+String name = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-frontend:edit-form:name"));
 String onSubmit = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-frontend:edit-form:onSubmit"));
 String portletNamespace = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-frontend:edit-form:portletNamespace"));
-boolean useNamespace = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-frontend:edit-form:useNamespace")), true);
-boolean validateOnBlur = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-frontend:edit-form:validateOnBlur")), true);
+boolean useNamespace = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-frontend:edit-form:useNamespace")));
+boolean validateOnBlur = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-frontend:edit-form:validateOnBlur")));
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("liferay-frontend:edit-form:dynamicAttributes");
 Map<String, List<ValidatorTag>> validatorTagsMap = (Map<String, List<ValidatorTag>>)request.getAttribute("liferay-frontend:edit-form:validatorTagsMap");
 

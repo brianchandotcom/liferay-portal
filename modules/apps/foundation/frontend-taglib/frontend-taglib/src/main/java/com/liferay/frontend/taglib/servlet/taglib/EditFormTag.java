@@ -39,46 +39,6 @@ public class EditFormTag extends IncludeTag {
 		return super.doStartTag();
 	}
 
-	public String getAction() {
-		return _action;
-	}
-
-	public String getCssClass() {
-		return _cssClass;
-	}
-
-	public boolean getEscapeXml() {
-		return _escapeXml;
-	}
-
-	public boolean getInlineLabels() {
-		return _inlineLabels;
-	}
-
-	public String getMethod() {
-		return _method;
-	}
-
-	public String getName() {
-		return _name;
-	}
-
-	public String getOnSubmit() {
-		return _onSubmit;
-	}
-
-	public String getPortletNamespace() {
-		return _portletNamespace;
-	}
-
-	public boolean getUseNamespace() {
-		return _useNamespace;
-	}
-
-	public boolean getValidateOnBlur() {
-		return _validateOnBlur;
-	}
-
 	public void setAction(PortletURL portletURL) {
 		if (portletURL != null) {
 			setAction(portletURL.toString());

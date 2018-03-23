@@ -77,11 +77,11 @@ for (String categoryKey : categoryKeys) {
 </c:choose>
 
 <c:if test="<%= showButtons %>">
-	<aui:button-row>
+	<liferay-frontend:button-row>
 		<aui:button primary="<%= true %>" type="submit" />
 
 		<aui:button href="<%= backURL %>" type="cancel" />
-	</aui:button-row>
+	</liferay-frontend:button-row>
 </c:if>
 
 <aui:script require="metal-dom/src/dom,metal-uri/src/Uri">

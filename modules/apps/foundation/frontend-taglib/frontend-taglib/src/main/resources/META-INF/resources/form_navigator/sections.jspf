@@ -14,7 +14,7 @@
  */
 --%>
 
-<aui:fieldset-group markupView="lexicon">
+<liferay-frontend:fieldset-group>
 
 	<%
 	final FormNavigatorEntry formNavigatorEntry = formNavigatorEntries.get(0);
@@ -26,7 +26,9 @@
 
 	<!-- Begin fragment <%= sectionId %> -->
 
-	<aui:fieldset id="<%= _getSectionId(formNavigatorEntry.getKey()) %>">
+	<liferay-frontend:fieldset
+		id="<%= _getSectionId(formNavigatorEntry.getKey()) %>"
+	>
 
 		<%
 		PortalIncludeUtil.include(
@@ -46,7 +48,7 @@
 		}
 		%>
 
-	</aui:fieldset>
+	</liferay-frontend:fieldset>
 
 	<!-- End fragment <%= sectionId %> -->
 
@@ -59,7 +61,12 @@
 
 		<!-- Begin fragment <%= sectionId %> -->
 
-		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id="<%= _getSectionId(curFormNavigatorEntry.getKey()) %>" label="<%= curFormNavigatorEntry.getLabel(locale) %>">
+		<liferay-frontend:fieldset
+			collapsed="<%= true %>"
+			collapsible="<%= true %>"
+			id="<%= _getSectionId(curFormNavigatorEntry.getKey()) %>"
+			label="<%= curFormNavigatorEntry.getLabel(locale) %>"
+		>
 
 			<%
 			PortalIncludeUtil.include(
@@ -73,7 +80,7 @@
 				});
 			%>
 
-		</aui:fieldset>
+		</liferay-frontend:fieldset>
 
 		<!-- End fragment <%= sectionId %> -->
 
@@ -141,4 +148,4 @@
 	}
 	%>
 
-</aui:fieldset-group>
+</liferay-frontend:fieldset-group>

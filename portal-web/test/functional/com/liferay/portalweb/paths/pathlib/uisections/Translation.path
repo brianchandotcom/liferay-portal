@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>CURRENT_LOCALE</td>
-	<td>//div[contains(@class,'localized')]//button[contains(@class,'localized')]//span[contains(@class,'btn-section')]</td>
+	<td>//div[contains(@class,'localized')]//button[contains(@class,'localized')][*[normalize-space(text())='${key_locale}']]</td>
 	<td></td>
 </tr>
 <tr>

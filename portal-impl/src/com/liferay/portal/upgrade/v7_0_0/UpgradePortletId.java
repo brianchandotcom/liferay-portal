@@ -27,7 +27,7 @@ public class UpgradePortletId
 	protected void doUpgrade() throws Exception {
 		_deleteLegacyResourcePermission();
 
-		upgrade(UpgradeUserNotificationEvent.class);
+		upgrade(new UpgradeUserNotificationEvent());
 
 		super.doUpgrade();
 	}

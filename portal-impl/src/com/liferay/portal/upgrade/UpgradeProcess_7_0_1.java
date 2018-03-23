@@ -36,14 +36,14 @@ public class UpgradeProcess_7_0_1 extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgrade(UpgradeSchema.class);
+		upgrade(new UpgradeSchema());
 
-		upgrade(UpgradeCompany.class);
-		upgrade(UpgradeDocumentLibrary.class);
-		upgrade(UpgradeLayoutBranch.class);
-		upgrade(UpgradeMessageBoards.class);
-		upgrade(UpgradeModules.class);
-		upgrade(UpgradeUserNotificationEvent.class);
+		upgrade(new UpgradeCompany());
+		upgrade(new UpgradeDocumentLibrary());
+		upgrade(new UpgradeLayoutBranch());
+		upgrade(new UpgradeMessageBoards());
+		upgrade(new UpgradeModules());
+		upgrade(new UpgradeUserNotificationEvent());
 
 		clearIndexesCache();
 	}

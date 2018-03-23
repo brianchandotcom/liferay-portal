@@ -36,13 +36,13 @@ public class UpgradeProcess_7_0_3 extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgrade(UpgradeGroup.class);
-		upgrade(UpgradeMessageBoards.class);
-		upgrade(UpgradeModules.class);
-		upgrade(UpgradeOrganization.class);
-		upgrade(UpgradeOracle.class);
-		upgrade(UpgradeSQLServer.class);
-		upgrade(UpgradeSybase.class);
+		upgrade(new UpgradeGroup());
+		upgrade(new UpgradeMessageBoards());
+		upgrade(new UpgradeModules());
+		upgrade(new UpgradeOrganization());
+		upgrade(new UpgradeOracle());
+		upgrade(new UpgradeSQLServer());
+		upgrade(new UpgradeSybase());
 
 		clearIndexesCache();
 	}

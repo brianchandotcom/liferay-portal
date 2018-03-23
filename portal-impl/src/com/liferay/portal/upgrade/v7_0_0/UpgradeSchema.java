@@ -30,7 +30,7 @@ public class UpgradeSchema extends UpgradeProcess {
 			"update-6.2.0-7.0.0-group.sql", "update-6.2.0-7.0.0-layoutset.sql",
 			"update-6.2.0-7.0.0-layoutsetbranch.sql");
 
-		upgrade(UpgradeMVCCVersion.class);
+		upgrade(new UpgradeMVCCVersion());
 	}
 
 }

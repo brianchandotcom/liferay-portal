@@ -58,36 +58,36 @@ public class UpgradeProcess_6_2_0 extends Pre7UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgrade(UpgradeSchema.class);
+		upgrade(new UpgradeSchema());
 
-		upgrade(UpgradeAnnouncements.class);
-		upgrade(UpgradeAssetPublisher.class);
-		upgrade(UpgradeBlogs.class);
-		upgrade(UpgradeBlogsAggregator.class);
-		upgrade(UpgradeCalendar.class);
-		upgrade(UpgradeCompany.class);
-		upgrade(UpgradeCustomizablePortlets.class);
-		upgrade(UpgradeDocumentLibrary.class);
-		upgrade(UpgradeDynamicDataListDisplay.class);
-		upgrade(UpgradeDynamicDataMapping.class);
-		upgrade(UpgradeGroup.class);
-		upgrade(UpgradeImageGallery.class);
-		upgrade(UpgradeJournal.class);
-		upgrade(UpgradeLayout.class);
-		upgrade(UpgradeLayoutFriendlyURL.class);
-		upgrade(UpgradeLayoutRevision.class);
-		upgrade(UpgradeLayoutSet.class);
-		upgrade(UpgradeLayoutSetBranch.class);
-		upgrade(UpgradeMessageBoards.class);
-		upgrade(UpgradeMessageBoardsAttachments.class);
-		upgrade(UpgradePortletItem.class);
-		upgrade(UpgradePortletPreferences.class);
-		upgrade(UpgradeRepository.class);
-		upgrade(UpgradeSearch.class);
-		upgrade(UpgradeSocial.class);
-		upgrade(UpgradeUser.class);
-		upgrade(UpgradeWiki.class);
-		upgrade(UpgradeWikiAttachments.class);
+		upgrade(new UpgradeAnnouncements());
+		upgrade(new UpgradeAssetPublisher());
+		upgrade(new UpgradeBlogs());
+		upgrade(new UpgradeBlogsAggregator());
+		upgrade(new UpgradeCalendar());
+		upgrade(new UpgradeCompany());
+		upgrade(new UpgradeCustomizablePortlets());
+		upgrade(new UpgradeDocumentLibrary());
+		upgrade(new UpgradeDynamicDataListDisplay());
+		upgrade(new UpgradeDynamicDataMapping());
+		upgrade(new UpgradeGroup());
+		upgrade(new UpgradeImageGallery());
+		upgrade(new UpgradeJournal());
+		upgrade(new UpgradeLayout());
+		upgrade(new UpgradeLayoutFriendlyURL());
+		upgrade(new UpgradeLayoutRevision());
+		upgrade(new UpgradeLayoutSet());
+		upgrade(new UpgradeLayoutSetBranch());
+		upgrade(new UpgradeMessageBoards());
+		upgrade(new UpgradeMessageBoardsAttachments());
+		upgrade(new UpgradePortletItem());
+		upgrade(new UpgradePortletPreferences());
+		upgrade(new UpgradeRepository());
+		upgrade(new UpgradeSearch());
+		upgrade(new UpgradeSocial());
+		upgrade(new UpgradeUser());
+		upgrade(new UpgradeWiki());
+		upgrade(new UpgradeWikiAttachments());
 
 		clearIndexesCache();
 	}

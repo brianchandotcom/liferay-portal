@@ -66,47 +66,47 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgrade(UpgradeSchema.class);
+		upgrade(new UpgradeSchema());
 
-		upgrade(UpgradeKernelPackage.class);
+		upgrade(new UpgradeKernelPackage());
 
-		upgrade(UpgradeSharding.class);
+		upgrade(new UpgradeSharding());
 
-		upgrade(UpgradeAddress.class);
-		upgrade(UpgradeAsset.class);
-		upgrade(UpgradeAssetTagsResourcePermission.class);
-		upgrade(UpgradeCompanyId.class);
-		upgrade(UpgradeDocumentLibrary.class);
-		upgrade(UpgradeDocumentLibraryPortletId.class);
-		upgrade(UpgradeDocumentLibraryPreferences.class);
-		upgrade(UpgradeEmailAddress.class);
-		upgrade(UpgradeEmailNotificationPreferences.class);
-		upgrade(UpgradeExpando.class);
-		upgrade(UpgradeGroup.class);
-		upgrade(UpgradeLastPublishDate.class);
-		upgrade(UpgradeListType.class);
-		upgrade(UpgradeLookAndFeel.class);
-		upgrade(UpgradeMembershipRequest.class);
-		upgrade(UpgradeMessageBoards.class);
-		upgrade(UpgradeModules.class);
-		upgrade(UpgradeMySQL.class);
-		upgrade(UpgradeOrganization.class);
-		upgrade(UpgradeOrgLabor.class);
-		upgrade(UpgradePhone.class);
-		upgrade(UpgradePortalPreferences.class);
-		upgrade(UpgradePortletDisplayTemplatePreferences.class);
-		upgrade(UpgradePortletId.class);
-		upgrade(UpgradePostgreSQL.class);
-		upgrade(UpgradeRatings.class);
-		upgrade(UpgradeRelease.class);
-		upgrade(UpgradeRepository.class);
-		upgrade(UpgradeRepositoryEntry.class);
-		upgrade(UpgradeResourcePermission.class);
-		upgrade(UpgradeSocial.class);
-		upgrade(UpgradeSubscription.class);
-		upgrade(UpgradeWebsite.class);
+		upgrade(new UpgradeAddress());
+		upgrade(new UpgradeAsset());
+		upgrade(new UpgradeAssetTagsResourcePermission());
+		upgrade(new UpgradeCompanyId());
+		upgrade(new UpgradeDocumentLibrary());
+		upgrade(new UpgradeDocumentLibraryPortletId());
+		upgrade(new UpgradeDocumentLibraryPreferences());
+		upgrade(new UpgradeEmailAddress());
+		upgrade(new UpgradeEmailNotificationPreferences());
+		upgrade(new UpgradeExpando());
+		upgrade(new UpgradeGroup());
+		upgrade(new UpgradeLastPublishDate());
+		upgrade(new UpgradeListType());
+		upgrade(new UpgradeLookAndFeel());
+		upgrade(new UpgradeMembershipRequest());
+		upgrade(new UpgradeMessageBoards());
+		upgrade(new UpgradeModules());
+		upgrade(new UpgradeMySQL());
+		upgrade(new UpgradeOrganization());
+		upgrade(new UpgradeOrgLabor());
+		upgrade(new UpgradePhone());
+		upgrade(new UpgradePortalPreferences());
+		upgrade(new UpgradePortletDisplayTemplatePreferences());
+		upgrade(new UpgradePortletId());
+		upgrade(new UpgradePostgreSQL());
+		upgrade(new UpgradeRatings());
+		upgrade(new UpgradeRelease());
+		upgrade(new UpgradeRepository());
+		upgrade(new UpgradeRepositoryEntry());
+		upgrade(new UpgradeResourcePermission());
+		upgrade(new UpgradeSocial());
+		upgrade(new UpgradeSubscription());
+		upgrade(new UpgradeWebsite());
 
-		upgrade(UpgradeMobileDeviceRules.class);
+		upgrade(new UpgradeMobileDeviceRules());
 
 		clearIndexesCache();
 	}

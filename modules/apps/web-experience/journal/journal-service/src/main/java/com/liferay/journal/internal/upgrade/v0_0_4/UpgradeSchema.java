@@ -32,7 +32,7 @@ public class UpgradeSchema extends UpgradeProcess {
 
 		runSQLTemplateString(template, false, false);
 
-		upgrade(UpgradeMVCCVersion.class);
+		upgrade(new UpgradeMVCCVersion());
 
 		alter(
 			JournalArticleTable.class,

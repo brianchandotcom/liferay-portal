@@ -30,7 +30,7 @@ public class UpgradeSchema extends UpgradeProcess {
 			"update-6.1.1-6.2.0-journal.sql", "update-6.1.1-6.2.0-user.sql",
 			"update-6.1.1-6.2.0-wiki.sql");
 
-		upgrade(UpgradeMVCCVersion.class);
+		upgrade(new UpgradeMVCCVersion());
 	}
 
 }

@@ -378,6 +378,80 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description><![CDATA[Creates a <code>&lt;div&gt;</code> tag to group related form elements and offer additional styling.]]></description>
+		<name>fieldset</name>
+		<tag-class>com.liferay.taglib.aui.FieldsetTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>collapsed</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<name>collapsible</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Whether to display the field set as a column instead of a row.]]></description>
+			<name>column</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[A CSS class for styling the component.]]></description>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Text to display as a help tooltip on mouse over of the component's help icon.]]></description>
+			<name>helpMessage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description><![CDATA[An ID for the component instance.]]></description>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Text for the field set's label and renders it as a legend, with a horizontal rule, above the fieldset.]]></description>
+			<name>label</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Sets whether to translate the label's text into the user's language. The default value is <code>true</code>.]]></description>
+			<name>localizeLabel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<name>markupView</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
+	<tag>
+		<description><![CDATA[Creates a <code>&lt;div&gt;</code> tag to group fieldset elements and offer additional styling.]]></description>
+		<name>fieldset-group</name>
+		<tag-class>com.liferay.taglib.aui.FieldsetGroupTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>markupView</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
+	<tag>
 		<description>Creates a lexicon-based card component.</description>
 		<name>horizontal-card</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.HorizontalCardTag</tag-class>

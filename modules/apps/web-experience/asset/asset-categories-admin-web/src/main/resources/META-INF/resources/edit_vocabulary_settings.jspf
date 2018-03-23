@@ -48,7 +48,12 @@ if (vocabulary != null) {
 
 <liferay-ui:error exception="<%= NoSuchClassTypeException.class %>" message="one-of-your-associated-asset-types-contains-an-invalid-value.-please-configure-it-again-or-remove-it" />
 
-<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "extraFields" %>' label="associated-asset-types">
+<liferay-frontend:fieldset
+	collapsed="<%= true %>"
+	collapsible="<%= true %>"
+	id='<%= renderResponse.getNamespace() + "extraFields" %>'
+	label="associated-asset-types"
+>
 
 	<%
 	List<String> indexes = new ArrayList<String>();
@@ -155,7 +160,7 @@ if (vocabulary != null) {
 	%>
 
 	<aui:input name="indexes" type="hidden" value="<%= indexes.toString() %>" />
-</aui:fieldset>
+</liferay-frontend:fieldset>
 
 <aui:script use="liferay-auto-fields">
 	var extraFields = A.one('#<portlet:namespace />extraFields');

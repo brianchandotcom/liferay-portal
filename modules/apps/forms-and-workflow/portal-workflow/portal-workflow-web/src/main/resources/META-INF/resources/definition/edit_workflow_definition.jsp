@@ -122,7 +122,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 					<aui:icon cssClass="icon-monospaced sidenav-close text-default visible-xs-inline-block" image="times" markupView="lexicon" url="javascript:;" />
 
 					<h4>
-						<%= workflowDefinition.getTitle(LanguageUtil.getLanguageId(request)) %>
+						<%= HtmlUtil.escape(workflowDefinition.getTitle(LanguageUtil.getLanguageId(request))) %>
 					</h4>
 				</div>
 

@@ -112,7 +112,9 @@
 	</command>
 
 	<command name="viewLocale">
-		<execute function="AssertTextEquals" locator1="Translation#CURRENT_LOCALE" value1="${locale}" />
+		<execute function="AssertElementPresent" locator1="Translation#CURRENT_LOCALE">
+			<var name="key_locale" value="${locale}" />
+		</execute>
 	</command>
 
 	<command name="viewNoNavItemLink">

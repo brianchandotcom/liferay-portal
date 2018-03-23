@@ -1,0 +1,16 @@
+{
+	"ahead": 123,
+	"callbackURL": "https://example.com",
+	"companyId": "foo",
+	"frequency": "DAILY",
+	"levels": [
+		"COMPANY"
+	],
+	"periods": [
+		"MONTHLY", "WEEKLY"
+	],
+	"targets": [
+		"REVENUE"
+	],
+	"timeZoneId": "+03:00"
+}

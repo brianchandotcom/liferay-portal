@@ -1,0 +1,416 @@
+---
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "Eleflow Predictive Commerce"
+host: "b2l9j0pz3i.execute-api.us-west-2.amazonaws.com"
+basePath: "/Prod"
+schemes:
+- "https"
+paths:
+  /forecast:
+    get:
+      produces:
+      - "application/json"
+      parameters:
+      - name: "date"
+        in: "query"
+        required: true
+        type: "string"
+      - name: "companyId"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "200 OK"
+          schema:
+            $ref: "#/definitions/Forecast"
+      x-amazon-apigateway-request-validator: "basic"
+      x-amazon-apigateway-integration:
+        uri: "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:410615956476:function:PredictiveCommerceAPI-GetForecastsFunction-5H8LFLL0CJAN/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
+  /orders:
+    post:
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "OrderList"
+        required: true
+        schema:
+          $ref: "#/definitions/OrderList"
+      responses:
+        200:
+          description: "200 response"
+      x-amazon-apigateway-request-validator: "basic"
+      x-amazon-apigateway-integration:
+        uri: "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:410615956476:function:PredictiveCommerceAPI-PostOrdersFunction-1TDHYCTTX36GW/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
+  /scheduler:
+    get:
+      produces:
+      - "application/json"
+      parameters:
+      - name: "companyId"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/ForecastScheduler"
+      x-amazon-apigateway-request-validator: "basic"
+      x-amazon-apigateway-integration:
+        uri: "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:410615956476:function:PredictiveCommerceAPI-GetForecastSchedulerFunction-1I5U48TC4UADG/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
+    put:
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "ForecastScheduler"
+        required: true
+        schema:
+          $ref: "#/definitions/ForecastScheduler"
+      responses:
+        200:
+          description: "200 response"
+      x-amazon-apigateway-request-validator: "basic"
+      x-amazon-apigateway-integration:
+        uri: "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:410615956476:function:PredictiveCommerceAPI-PutForecastSchedulerFunction-1D7PF57BK45ZN/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
+definitions:
+  Order:
+    type: "object"
+    required:
+    - "companyId"
+    - "createDate"
+    - "items"
+    - "orderId"
+    properties:
+      companyId:
+        type: "string"
+        description: "A company global unique identifier."
+      orderId:
+        type: "string"
+        description: "Order unique identifier inside a store."
+      customerId:
+        type: "string"
+        description: "User that placed the order. Id is unique in the company. Used\
+          \ to do Product Recommendations."
+      items:
+        type: "array"
+        description: "Items ordered"
+        items:
+          type: "object"
+          properties:
+            quantity:
+              type: "number"
+              description: "Amount of goods ordered. Used to Forecast Demand"
+            price:
+              type: "number"
+              description: "Price of goods ordered. Used to Forecast Revenue."
+            sku:
+              type: "string"
+              description: "SKU of the goods ordered. Used to Forecast and Recommend\
+                \ Product."
+          required:
+          - "quantity"
+          - "sku"
+      createDate:
+        type: "string"
+        format: "date-time"
+        description: "Date time the order was placed (ISO 8061)."
+    description: "An E-Commerce Order"
+  ForecastScheduler:
+    type: "object"
+    required:
+    - "frequency"
+    - "timezone"
+    properties:
+      ahead:
+        type: "number"
+        description: "Forecast n periods ahead."
+      timezone:
+        type: "string"
+        description: "Forecast  process is  supposed to run in the first minutes of\
+          \ the day in this timezone."
+        pattern: "^(?:Z|[+-](?:2[0-3]|[01][0-9]):[0-5][0-9])$"
+      periods:
+        type: "array"
+        description: "Periodicity of the forecast."
+        items:
+          type: "string"
+          enum:
+          - "monthly"
+          - "weekly"
+      callbackURL:
+        type: "string"
+        description: "URL to POST the date when the forecast is done. The receive\
+          \ is supposed to call the GET /forecast with the date passed."
+      targets:
+        type: "array"
+        description: "Targets of the forecast."
+        items:
+          type: "string"
+          enum:
+          - "revenue"
+          - "quantity"
+      levels:
+        type: "array"
+        description: "The levels the target has to be aggregated and forecasted"
+        items:
+          type: "string"
+          enum:
+          - "company"
+          - "customer"
+          - "sku"
+          - "customer-sku"
+      frequency:
+        type: "string"
+        description: "The frequency that the scheduler has to run."
+        enum:
+        - "daily"
+        - "weekly"
+        - "monthly"
+        default: "daily"
+  Forecast:
+    type: "object"
+    required:
+    - "date"
+    - "forecasts"
+    - "scheduler"
+    properties:
+      date:
+        type: "string"
+        format: "date"
+        description: "Reference date for the forecast."
+      scheduler:
+        description: "Process parameters that created this forecast."
+        $ref: "#/definitions/ForecastScheduler"
+      forecasts:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            companyId:
+              type: "string"
+            period:
+              type: "string"
+            timeseries:
+              type: "array"
+              items:
+                type: "object"
+                properties:
+                  date:
+                    type: "string"
+                    format: "date"
+                    description: "Future date of the forecast point."
+                  value:
+                    type: "number"
+                    description: "forecasted value"
+                required:
+                - "date"
+                - "value"
+            sku:
+              type: "string"
+            assertiveness:
+              type: "number"
+            customer:
+              type: "string"
+            target:
+              type: "string"
+          required:
+          - "assertiveness"
+          - "period"
+          - "target"
+  OrderList:
+    type: "array"
+    description: "A list E-Commerce Orders"
+    items:
+      $ref: "#/definitions/Order"
+x-amazon-apigateway-documentation:
+  version: "0.0.1"
+  createdDate: "2018-03-14T19:58:38Z"
+  documentationParts:
+  - location:
+      type: "MODEL"
+      name: "Forecast.date"
+    properties:
+      description: "Reference date for the forecast."
+  - location:
+      type: "MODEL"
+      name: "Forecast.forecasts.items.timeseries.items.confidenceHi"
+    properties:
+      description: "95% confidence value higher bound."
+  - location:
+      type: "MODEL"
+      name: "Forecast.forecasts.items.timeseries.items.confidenceLo"
+    properties:
+      description: "95% confidence value lower bound."
+  - location:
+      type: "MODEL"
+      name: "Forecast.forecasts.items.timeseries.items.date"
+    properties:
+      description: "Future date of the forecast point."
+  - location:
+      type: "MODEL"
+      name: "Forecast.forecasts.items.timeseries.items.value"
+    properties:
+      description: "forecasted value"
+  - location:
+      type: "MODEL"
+      name: "Forecast.scheduler"
+    properties:
+      description: "Process parameters that created this forecast."
+  - location:
+      type: "MODEL"
+      name: "ForecastScheduler.ahead"
+    properties:
+      description: "Forecast n periods ahead."
+  - location:
+      type: "MODEL"
+      name: "ForecastScheduler.callbackURL"
+    properties:
+      description: "URL to POST the date when the forecast is done. The receive is\
+        \ supposed to call the GET /forecast with the date passed."
+  - location:
+      type: "MODEL"
+      name: "ForecastScheduler.companyId"
+    properties:
+      description: "Unique identifier of the company."
+  - location:
+      type: "MODEL"
+      name: "ForecastScheduler.frequency"
+    properties:
+      description: "The frequency that the scheduler has to run."
+  - location:
+      type: "MODEL"
+      name: "ForecastScheduler.levels"
+    properties:
+      description: "The levels the target has to be aggregated and forecasted"
+  - location:
+      type: "MODEL"
+      name: "ForecastScheduler.periods"
+    properties:
+      description: "Periodicity of the forecast."
+  - location:
+      type: "MODEL"
+      name: "ForecastScheduler.target"
+    properties:
+      description: "Target of the forecast."
+  - location:
+      type: "MODEL"
+      name: "ForecastScheduler.timezone"
+    properties:
+      description: "Forecast  process is  supposed to run in the first minutes of\
+        \ the day in this timezone."
+  - location:
+      type: "MODEL"
+      name: "Order.companyId"
+    properties:
+      description: "A company global unique identifier."
+  - location:
+      type: "MODEL"
+      name: "Order.createDate"
+    properties:
+      description: "Date time the order was placed (ISO 8061)."
+  - location:
+      type: "MODEL"
+      name: "Order.customerId"
+    properties:
+      description: "User that placed the order. Id is unique in the company. Used\
+        \ to do Product Recommendations."
+  - location:
+      type: "MODEL"
+      name: "Order.items.items.price"
+    properties:
+      description: "Price of goods ordered. Used to Forecast Revenue."
+  - location:
+      type: "MODEL"
+      name: "Order.items.items.quantity"
+    properties:
+      description: "Amount of goods ordered. Used to Forecast Demand"
+  - location:
+      type: "MODEL"
+      name: "Order.items.items.sku"
+    properties:
+      description: "SKU of the goods ordered. Used to Forecast and Recommend Product."
+  - location:
+      type: "MODEL"
+      name: "Order.items"
+    properties:
+      description: "Items ordered"
+  - location:
+      type: "MODEL"
+      name: "Order.orderId"
+    properties:
+      description: "Order unique identifier inside a store."
+  - location:
+      type: "MODEL"
+      name: "Order"
+    properties:
+      description: "An E-Commerce Order"
+  - location:
+      type: "MODEL"
+      name: "OrderList"
+    properties:
+      description: "A list E-Commerce Orders"
+  - location:
+      type: "RESPONSE"
+      path: "/forecast"
+      method: "GET"
+      statusCode: "200"
+    properties:
+      description: "200 OK"
+  - location:
+      type: "RESPONSE"
+      path: "/orders"
+      method: "POST"
+      statusCode: "200"
+    properties:
+      description: "200 response"
+  - location:
+      type: "RESPONSE"
+      path: "/scheduler"
+      method: "GET"
+      statusCode: "200"
+    properties:
+      description: "200 response"
+  - location:
+      type: "RESPONSE"
+      path: "/scheduler"
+      method: "PUT"
+      statusCode: "200"
+    properties:
+      description: "200 response"
+x-amazon-apigateway-request-validators:
+  basic:
+    validateRequestParameters: true
+    validateRequestBody: true

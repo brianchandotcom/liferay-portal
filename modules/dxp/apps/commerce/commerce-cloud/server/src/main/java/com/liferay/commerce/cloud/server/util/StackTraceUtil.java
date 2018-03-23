@@ -1,0 +1,35 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.commerce.cloud.server.util;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
+/**
+ * @author Andrea Di Giorgi
+ */
+public class StackTraceUtil {
+
+	public static String getStackTrace(Throwable t) {
+		StringWriter stringWriter = new StringWriter();
+
+		try (PrintWriter printWriter = new PrintWriter(stringWriter)) {
+			t.printStackTrace(printWriter);
+		}
+
+		return stringWriter.toString();
+	}
+
+}

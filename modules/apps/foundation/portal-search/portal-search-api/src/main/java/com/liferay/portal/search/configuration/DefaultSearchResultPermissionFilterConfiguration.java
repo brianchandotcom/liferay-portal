@@ -32,6 +32,14 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface DefaultSearchResultPermissionFilterConfiguration {
 
 	@Meta.AD(
+		deflt = "100",
+		description = "permission-filtered-search-result-accurate-count-threshold-help",
+		name = "permission-filtered-search-result-accurate-count-threshold",
+		required = false
+	)
+	public int permissionFilteredSearchResultAccurateCountThreshold();
+
+	@Meta.AD(
 		deflt = "1000", description = "search-query-result-window-limit-help",
 		name = "search-query-result-window-limit", required = false
 	)

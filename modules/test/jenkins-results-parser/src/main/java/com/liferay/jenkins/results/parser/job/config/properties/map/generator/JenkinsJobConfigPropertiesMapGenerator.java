@@ -229,14 +229,14 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 	}
 
 	private String _getFirstPatternMatchGroup(String string, Pattern pattern) {
-		List<String> patternMatchGroupList = _getPatternMatchGroupList(
+		List<String> patternMatchGroupsList = _getPatternMatchGroupsList(
 			string, pattern);
 
-		if (patternMatchGroupList.isEmpty()) {
+		if (patternMatchGroupsList.isEmpty()) {
 			return null;
 		}
 
-		return patternMatchGroupList.get(0);
+		return patternMatchGroupsList.get(0);
 	}
 
 	private String _getFormattedXML(Element element) {
@@ -343,7 +343,7 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 		return osxEnvironmentVariablesMap;
 	}
 
-	private List<String> _getPatternMatchGroupList(
+	private List<String> _getPatternMatchGroupsList(
 		String string, Pattern pattern) {
 
 		Matcher matcher = pattern.matcher(string);
@@ -516,7 +516,7 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 	}
 
 	private void _processJobProperty(String basePropertyName) {
-		List<String> regexMatchGroupList = _getPatternMatchGroupList(
+		List<String> regexMatchGroupList = _getPatternMatchGroupsList(
 			basePropertyName, _masterPropertyPattern);
 
 		String jobName = regexMatchGroupList.get(0);
@@ -957,21 +957,21 @@ public class JenkinsJobConfigPropertiesMapGenerator {
 	}
 
 	private void _processMasterJobProperty(String basePropertyName) {
-		List<String> patternMatchGroupList = _getPatternMatchGroupList(
+		List<String> patternMatchGroupsList = _getPatternMatchGroupsList(
 			basePropertyName, _masterJobPropertyPattern);
 
-		String jobName = patternMatchGroupList.get(1);
-		String masterHostName = patternMatchGroupList.get(0);
+		String jobName = patternMatchGroupsList.get(1);
+		String masterHostName = patternMatchGroupsList.get(0);
 
 		String generatedPropertyName = JenkinsResultsParserUtil.combine(
 			"master.job.properties(", masterHostName, "/", jobName, ")");
 
 		_appendToGeneratedJenkinsJobConfigPropertyValue(
-			generatedPropertyName, patternMatchGroupList.get(2));
+			generatedPropertyName, patternMatchGroupsList.get(2));
 	}
 
 	private void _processMasterProperty(String basePropertyName) {
-		List<String> regexMatchGroupList = _getPatternMatchGroupList(
+		List<String> regexMatchGroupList = _getPatternMatchGroupsList(
 			basePropertyName, _masterPropertyPattern);
 
 		String masterHostName = regexMatchGroupList.get(0);

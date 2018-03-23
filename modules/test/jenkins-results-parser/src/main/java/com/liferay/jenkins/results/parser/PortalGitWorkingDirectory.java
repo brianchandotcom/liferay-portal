@@ -17,8 +17,6 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -82,8 +80,6 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 		}
 
 		final List<File> moduleGroupDirs = new ArrayList<>();
-
-		FileSystem fileSystem = FileSystems.getDefault();
 
 		Files.walkFileTree(
 			modulesDir.toPath(),

@@ -611,6 +611,9 @@ AUI.add(
 
 						var container = option.get('container');
 
+						container.one('input').setAttribute('data-predefined-value', Liferay.Language.get('option'));
+						container.one('input').setAttribute('data-interaction', true);
+
 						container.append(TPL_DRAG_HANDLE + TPL_REMOVE_BUTTON);
 					},
 

@@ -10,7 +10,7 @@
 			<execute macro="CommerceEntry#selectAssociatedOptionsValue">
 				<var name="optionValue" value="${optionValues}" />
 			</execute>
-	
+
 			<execute macro="CommerceEntry#publishEntry" />
 
 			<execute macro="Alert#waitForSuccessMessageHide" />

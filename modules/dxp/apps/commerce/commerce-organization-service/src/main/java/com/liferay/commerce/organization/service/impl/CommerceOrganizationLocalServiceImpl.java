@@ -22,9 +22,12 @@ import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocalCloseable;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
@@ -58,6 +61,10 @@ import java.util.Map;
  */
 public class CommerceOrganizationLocalServiceImpl
 	extends CommerceOrganizationLocalServiceBaseImpl {
+
+	public static final String ORGANIZATION_NAME_SUFFIX = " LFR_ORGANIZATION";
+
+	public static final String ORGANIZATION_STAGING_SUFFIX = " (Staging)";
 
 	@Override
 	public Organization addOrganization(
@@ -113,6 +120,57 @@ public class CommerceOrganizationLocalServiceImpl
 
 			userLocalService.addOrganizationUsers(organizationId, userIds);
 		}
+	}
+
+	@Override
+	public void configureB2BSite(long groupId, ServiceContext serviceContext)
+		throws PortalException {
+
+		Group group = groupLocalService.getGroup(groupId);
+
+		String groupNameCurrentValue = group.getNameCurrentValue();
+
+		Organization organization = createOrganization(
+			groupNameCurrentValue, serviceContext);
+
+		long classPK = organization.getOrganizationId();
+
+		String groupKey = groupNameCurrentValue + ORGANIZATION_NAME_SUFFIX;
+		Map<Locale, String> nameMap = group.getNameMap();
+		String friendlyURL = group.getFriendlyURL();
+
+		if (group.isStagingGroup()) {
+			classPK = group.getLiveGroupId();
+			groupKey = groupKey.concat("-staging");
+
+			for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
+				String name = entry.getValue();
+
+				if (Validator.isNull(name)) {
+					continue;
+				}
+
+				nameMap.put(
+					entry.getKey(), name.concat(ORGANIZATION_STAGING_SUFFIX));
+			}
+
+			friendlyURL = friendlyURL.concat("-staging");
+		}
+
+		group.setParentGroupId(organization.getParentOrganizationId());
+		group.setClassName(organization.getModelClassName());
+		group.setClassPK(classPK);
+		group.setTreePath(group.buildTreePath());
+		group.setGroupKey(groupKey);
+		group.setNameMap(nameMap);
+		group.setType(GroupConstants.TYPE_SITE_PRIVATE);
+		group.setManualMembership(false);
+		group.setMembershipRestriction(
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION);
+		group.setFriendlyURL(friendlyURL);
+		group.setSite(true);
+
+		groupLocalService.updateGroup(group);
 	}
 
 	@Override
@@ -373,6 +431,67 @@ public class CommerceOrganizationLocalServiceImpl
 		return searchContext;
 	}
 
+	protected Organization createOrganization(
+			String name, ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userLocalService.getUser(serviceContext.getUserId());
+
+		name = _getUniqueName(serviceContext.getCompanyId(), name, 0);
+
+		long organizationId = counterLocalService.increment();
+
+		Organization organization = organizationPersistence.create(
+			organizationId);
+
+		if (serviceContext != null) {
+			organization.setUuid(serviceContext.getUuid());
+		}
+
+		organization.setCompanyId(user.getCompanyId());
+		organization.setUserId(user.getUserId());
+		organization.setUserName(user.getFullName());
+		organization.setParentOrganizationId(
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
+		organization.setTreePath(organization.buildTreePath());
+		organization.setName(name);
+		organization.setType(OrganizationConstants.TYPE_ORGANIZATION);
+		organization.setRecursable(true);
+		organization.setStatusId(ListTypeConstants.ORGANIZATION_STATUS_DEFAULT);
+
+		organizationPersistence.update(organization);
+
+		// Role
+
+		Role role = roleLocalService.getRole(
+			organization.getCompanyId(), RoleConstants.ORGANIZATION_OWNER);
+
+		userGroupRoleLocalService.addUserGroupRoles(
+			user.getUserId(), serviceContext.getScopeGroupId(),
+			new long[] {role.getRoleId()});
+
+		// Resources
+
+		organizationLocalService.addOrganizationResources(
+			user.getUserId(), organization);
+
+		// Asset
+
+		organizationLocalService.updateAsset(
+			user.getUserId(), organization,
+			serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames());
+
+		// Indexer
+
+		Indexer<Organization> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			Organization.class);
+
+		indexer.reindex(organization);
+
+		return organization;
+	}
+
 	protected void updateAddress(
 			long addressId, String className, long classPK, String street1,
 			String street2, String street3, String city, String zip,
@@ -411,6 +530,19 @@ public class CommerceOrganizationLocalServiceImpl
 		emailAddressLocalService.addEmailAddress(
 			serviceContext.getUserId(), className, classPK, address, 0L, true,
 			serviceContext);
+	}
+
+	private String _getUniqueName(long companyId, String name, int count) {
+		Organization organization = organizationLocalService.fetchOrganization(
+			companyId, name);
+
+		if (organization != null) {
+			name = name + StringPool.UNDERLINE + count++;
+
+			name = _getUniqueName(companyId, name, count);
+		}
+
+		return name;
 	}
 
 }

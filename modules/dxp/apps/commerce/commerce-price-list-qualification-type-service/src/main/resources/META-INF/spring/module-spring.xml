@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
 	<bean class="com.liferay.commerce.price.list.qualification.type.service.impl.CommercePriceListUserRelLocalServiceImpl" id="com.liferay.commerce.price.list.qualification.type.service.CommercePriceListUserRelLocalService" />
 	<bean class="com.liferay.commerce.price.list.qualification.type.service.impl.CommercePriceListUserRelServiceImpl" id="com.liferay.commerce.price.list.qualification.type.service.CommercePriceListUserRelService" />
 	<bean class="com.liferay.commerce.price.list.qualification.type.service.persistence.impl.CommercePriceListUserRelPersistenceImpl" id="com.liferay.commerce.price.list.qualification.type.service.persistence.CommercePriceListUserRelPersistence" parent="basePersistence" />

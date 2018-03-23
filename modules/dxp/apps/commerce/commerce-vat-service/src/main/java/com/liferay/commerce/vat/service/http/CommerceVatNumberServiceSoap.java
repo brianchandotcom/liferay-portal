@@ -66,12 +66,12 @@ import java.rmi.RemoteException;
 @ProviderType
 public class CommerceVatNumberServiceSoap {
 	public static com.liferay.commerce.vat.model.CommerceVatNumberSoap addCommerceVatNumber(
-		java.lang.String className, long classPK, java.lang.String vatNumber,
+		java.lang.String className, long classPK, java.lang.String value,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.commerce.vat.model.CommerceVatNumber returnValue = CommerceVatNumberServiceUtil.addCommerceVatNumber(className,
-					classPK, vatNumber, serviceContext);
+					classPK, value, serviceContext);
 
 			return com.liferay.commerce.vat.model.CommerceVatNumberSoap.toSoapModel(returnValue);
 		}
@@ -157,11 +157,11 @@ public class CommerceVatNumberServiceSoap {
 	}
 
 	public static com.liferay.commerce.vat.model.CommerceVatNumberSoap updateCommerceVatNumber(
-		long commerceVatNumberId, java.lang.String vatNumber)
+		long commerceVatNumberId, java.lang.String value)
 		throws RemoteException {
 		try {
 			com.liferay.commerce.vat.model.CommerceVatNumber returnValue = CommerceVatNumberServiceUtil.updateCommerceVatNumber(commerceVatNumberId,
-					vatNumber);
+					value);
 
 			return com.liferay.commerce.vat.model.CommerceVatNumberSoap.toSoapModel(returnValue);
 		}

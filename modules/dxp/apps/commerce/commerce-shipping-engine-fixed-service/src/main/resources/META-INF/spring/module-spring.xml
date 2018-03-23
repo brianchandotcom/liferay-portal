@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
 	<bean class="com.liferay.commerce.shipping.engine.fixed.service.impl.CommerceShippingFixedOptionLocalServiceImpl" id="com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionLocalService" />
 	<bean class="com.liferay.commerce.shipping.engine.fixed.service.impl.CommerceShippingFixedOptionServiceImpl" id="com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService" />
 	<bean class="com.liferay.commerce.shipping.engine.fixed.service.persistence.impl.CommerceShippingFixedOptionPersistenceImpl" id="com.liferay.commerce.shipping.engine.fixed.service.persistence.CommerceShippingFixedOptionPersistence" parent="basePersistence" />

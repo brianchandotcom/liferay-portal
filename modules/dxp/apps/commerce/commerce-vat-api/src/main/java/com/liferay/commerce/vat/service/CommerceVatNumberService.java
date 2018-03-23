@@ -59,7 +59,7 @@ public interface CommerceVatNumberService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CommerceVatNumberServiceUtil} to access the commerce vat number remote service. Add custom service methods to {@link com.liferay.commerce.vat.service.impl.CommerceVatNumberServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CommerceVatNumber addCommerceVatNumber(java.lang.String className,
-		long classPK, java.lang.String vatNumber, ServiceContext serviceContext)
+		long classPK, java.lang.String value, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteCommerceVatNumber(long commerceVatNumberId)
@@ -96,5 +96,5 @@ public interface CommerceVatNumberService extends BaseService {
 		int end, Sort sort) throws PortalException;
 
 	public CommerceVatNumber updateCommerceVatNumber(long commerceVatNumberId,
-		java.lang.String vatNumber) throws PortalException;
+		java.lang.String value) throws PortalException;
 }

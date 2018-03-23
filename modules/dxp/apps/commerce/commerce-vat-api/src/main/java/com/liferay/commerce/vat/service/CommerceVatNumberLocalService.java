@@ -76,7 +76,7 @@ public interface CommerceVatNumberLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceVatNumber addCommerceVatNumber(java.lang.String className,
-		long classPK, java.lang.String vatNumber, ServiceContext serviceContext)
+		long classPK, java.lang.String value, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -260,5 +260,5 @@ public interface CommerceVatNumberLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceVatNumber updateCommerceVatNumber(long commerceVatNumberId,
-		java.lang.String vatNumber) throws PortalException;
+		java.lang.String value) throws PortalException;
 }

@@ -199,21 +199,6 @@ public class CPDefinitionOptionRelServiceSoap {
 		}
 	}
 
-	public static int getCPDefinitionOptionRelsCount(long cpDefinitionId,
-		boolean skuContributor) throws RemoteException {
-		try {
-			int returnValue = CPDefinitionOptionRelServiceUtil.getCPDefinitionOptionRelsCount(cpDefinitionId,
-					skuContributor);
-
-			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static com.liferay.commerce.product.model.CPDefinitionOptionRelSoap[] getCPDefinitionOptionRels(
 		long cpDefinitionId, boolean skuContributor) throws RemoteException {
 		try {
@@ -268,6 +253,21 @@ public class CPDefinitionOptionRelServiceSoap {
 		throws RemoteException {
 		try {
 			int returnValue = CPDefinitionOptionRelServiceUtil.getCPDefinitionOptionRelsCount(cpDefinitionId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCPDefinitionOptionRelsCount(long cpDefinitionId,
+		boolean skuContributor) throws RemoteException {
+		try {
+			int returnValue = CPDefinitionOptionRelServiceUtil.getCPDefinitionOptionRelsCount(cpDefinitionId,
+					skuContributor);
 
 			return returnValue;
 		}

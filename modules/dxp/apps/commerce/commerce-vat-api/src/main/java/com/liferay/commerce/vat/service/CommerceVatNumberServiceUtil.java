@@ -42,11 +42,11 @@ public class CommerceVatNumberServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.vat.service.impl.CommerceVatNumberServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.commerce.vat.model.CommerceVatNumber addCommerceVatNumber(
-		java.lang.String className, long classPK, java.lang.String vatNumber,
+		java.lang.String className, long classPK, java.lang.String value,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addCommerceVatNumber(className, classPK, vatNumber,
+				   .addCommerceVatNumber(className, classPK, value,
 			serviceContext);
 	}
 
@@ -99,10 +99,9 @@ public class CommerceVatNumberServiceUtil {
 	}
 
 	public static com.liferay.commerce.vat.model.CommerceVatNumber updateCommerceVatNumber(
-		long commerceVatNumberId, java.lang.String vatNumber)
+		long commerceVatNumberId, java.lang.String value)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateCommerceVatNumber(commerceVatNumberId, vatNumber);
+		return getService().updateCommerceVatNumber(commerceVatNumberId, value);
 	}
 
 	public static CommerceVatNumberService getService() {

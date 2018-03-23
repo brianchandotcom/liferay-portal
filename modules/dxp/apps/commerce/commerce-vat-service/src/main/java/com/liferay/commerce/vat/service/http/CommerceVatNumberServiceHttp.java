@@ -57,7 +57,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CommerceVatNumberServiceHttp {
 	public static com.liferay.commerce.vat.model.CommerceVatNumber addCommerceVatNumber(
 		HttpPrincipal httpPrincipal, java.lang.String className, long classPK,
-		java.lang.String vatNumber,
+		java.lang.String value,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -65,7 +65,7 @@ public class CommerceVatNumberServiceHttp {
 					"addCommerceVatNumber", _addCommerceVatNumberParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					className, classPK, vatNumber, serviceContext);
+					className, classPK, value, serviceContext);
 
 			Object returnObj = null;
 
@@ -288,7 +288,7 @@ public class CommerceVatNumberServiceHttp {
 
 	public static com.liferay.commerce.vat.model.CommerceVatNumber updateCommerceVatNumber(
 		HttpPrincipal httpPrincipal, long commerceVatNumberId,
-		java.lang.String vatNumber)
+		java.lang.String value)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceVatNumberServiceUtil.class,
@@ -296,7 +296,7 @@ public class CommerceVatNumberServiceHttp {
 					_updateCommerceVatNumberParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commerceVatNumberId, vatNumber);
+					commerceVatNumberId, value);
 
 			Object returnObj = null;
 

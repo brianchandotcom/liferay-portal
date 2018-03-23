@@ -35,11 +35,11 @@ public class CommerceVatNumberServiceWrapper implements CommerceVatNumberService
 
 	@Override
 	public com.liferay.commerce.vat.model.CommerceVatNumber addCommerceVatNumber(
-		java.lang.String className, long classPK, java.lang.String vatNumber,
+		java.lang.String className, long classPK, java.lang.String value,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceVatNumberService.addCommerceVatNumber(className,
-			classPK, vatNumber, serviceContext);
+			classPK, value, serviceContext);
 	}
 
 	@Override
@@ -99,10 +99,10 @@ public class CommerceVatNumberServiceWrapper implements CommerceVatNumberService
 
 	@Override
 	public com.liferay.commerce.vat.model.CommerceVatNumber updateCommerceVatNumber(
-		long commerceVatNumberId, java.lang.String vatNumber)
+		long commerceVatNumberId, java.lang.String value)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceVatNumberService.updateCommerceVatNumber(commerceVatNumberId,
-			vatNumber);
+			value);
 	}
 
 	@Override

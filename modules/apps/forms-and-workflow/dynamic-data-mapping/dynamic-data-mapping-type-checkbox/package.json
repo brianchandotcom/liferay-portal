@@ -15,9 +15,9 @@
 		"liferay-npm-bundler-preset-standard": "^1.6.1",
 		"metal-tools-soy": "^4.2.1"
 	},
+	"name": "dynamic-data-mapping-type-checkbox",
 	"scripts": {
 		"build": "gulp && babel -d classes/META-INF/resources src/main/resources/META-INF/resources --ignore config.js,checkbox_field.js && liferay-npm-bundler"
 	},
-	"name": "dynamic-data-mapping-type-checkbox",
 	"version": "3.0.0"
 }

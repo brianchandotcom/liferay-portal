@@ -14,9 +14,9 @@
 		"liferay-npm-bundler-preset-standard": "^1.3.0",
 		"metal-tools-soy": "^4.2.1"
 	},
+	"name": "dynamic-data-mapping-type-editor",
 	"scripts": {
 		"build": "gulp && babel -d classes/META-INF/resources src/main/resources/META-INF/resources --ignore config.js,editor_field.js && liferay-npm-bundler"
 	},
-	"name": "dynamic-data-mapping-type-editor",
 	"version": "3.0.0"
 }

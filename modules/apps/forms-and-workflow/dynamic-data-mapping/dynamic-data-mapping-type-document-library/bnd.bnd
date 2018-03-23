@@ -5,4 +5,4 @@ Liferay-JS-Config: /META-INF/resources/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Dynamic Data Mapping
 Web-ContextPath: /dynamic-data-mapping-type-document-library
-Include-Resource: package.json
+-includeresource: package.json

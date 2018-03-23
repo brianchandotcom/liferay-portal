@@ -14,9 +14,9 @@
 		"liferay-npm-bundler-preset-standard": "^1.3.0",
 		"metal-tools-soy": "^4.2.1"
 	},
+	"name": "dynamic-data-mapping-type-grid",
 	"scripts": {
 		"build": "gulp && babel -d classes/META-INF/resources src/main/resources/META-INF/resources --ignore config.js,grid_field.js && liferay-npm-bundler"
 	},
-	"name": "dynamic-data-mapping-type-grid",
 	"version": "1.0.0"
 }

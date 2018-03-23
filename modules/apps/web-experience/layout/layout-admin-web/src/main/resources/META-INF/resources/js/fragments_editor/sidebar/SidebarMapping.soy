@@ -1,0 +1,22 @@
+{namespace com.liferay.layout.admin.web.SidebarMapping}
+
+/**
+ * SidebarMapping
+ */
+{template .render}
+	{@param? _handleSelectAssetTypeButtonClick: any}
+
+	<div class="sidebar-mapping">
+		<dt class="sidebar-dt">
+			{msg desc=""}asset-type{/msg}
+		</dt>
+
+		<button
+			class="btn btn-secondary"
+			data-onclick="{$_handleSelectAssetTypeButtonClick}"
+			type="button"
+		>
+			{msg desc=""}select{/msg}
+		</button>
+	</div>
+{/template}

@@ -1,44 +1,21 @@
 [
 	{
-		"instanceId": "footer_navigation_menu_01",
-		"portletName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet",
+		"instanceId": "customer_portal",
+		"layoutFriendlyURL": "/product-detail",
+		"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet",
 		"portletPreferences": {
-			"displayDepth": "0",
-			"displayStyle": "ddmTemplate_NAV-PILLS-STACKED-FTL",
-			"displayStyleGroupId": "",
-			"includedLayouts": "auto",
-			"rootLayoutLevel": "0",
-			"rootLayoutType": "select",
-			"rootLayoutUuid": ""
-		},
-		"rootLayoutFriendlyURL": "/company"
+			"cpType": "simple",
+			"displayStyle": "",
+			"displayStyleGroupId": ""
+		}
 	},
 	{
-		"instanceId": "footer_navigation_menu_02",
-		"portletName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet",
+		"instanceId": "customer_portal",
+		"layoutFriendlyURL": "/catalog",
+		"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet",
 		"portletPreferences": {
-			"displayDepth": "0",
-			"displayStyle": "ddmTemplate_NAV-PILLS-STACKED-FTL",
-			"displayStyleGroupId": "",
-			"includedLayouts": "auto",
-			"rootLayoutLevel": "0",
-			"rootLayoutType": "select",
-			"rootLayoutUuid": ""
-		},
-		"rootLayoutFriendlyURL": "/company"
-	},
-	{
-		"instanceId": "footer_navigation_menu_03",
-		"portletName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet",
-		"portletPreferences": {
-			"displayDepth": "0",
-			"displayStyle": "ddmTemplate_NAV-PILLS-STACKED-FTL",
-			"displayStyleGroupId": "",
-			"includedLayouts": "auto",
-			"rootLayoutLevel": "0",
-			"rootLayoutType": "select",
-			"rootLayoutUuid": ""
-		},
-		"rootLayoutFriendlyURL": "/company"
+			"displayStyle": "",
+			"displayStyleGroupId": ""
+		}
 	}
 ]

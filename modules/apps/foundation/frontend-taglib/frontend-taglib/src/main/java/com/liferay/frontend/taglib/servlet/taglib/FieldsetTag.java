@@ -14,7 +14,6 @@
 
 package com.liferay.frontend.taglib.servlet.taglib;
 
-import com.liferay.frontend.taglib.servlet.taglib.base.BaseFieldsetTag;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -24,6 +23,7 @@ import com.liferay.taglib.aui.AUIUtil;
 import com.liferay.taglib.aui.FieldsetGroupTag;
 import com.liferay.taglib.ui.IconHelpTag;
 import com.liferay.taglib.ui.MessageTag;
+import com.liferay.taglib.util.IncludeTag;
 import com.liferay.taglib.util.InlineUtil;
 
 import javax.portlet.PortletResponse;
@@ -35,10 +35,12 @@ import javax.servlet.jsp.JspWriter;
 /**
  * @author Eudaldo Alonso
  */
-public class FieldsetTag extends BaseFieldsetTag {
+public class FieldsetTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
+		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
+
 		FieldsetGroupTag fieldsetGroupTag =
 			(FieldsetGroupTag)findAncestorWithClass(
 				this, FieldsetGroupTag.class);
@@ -50,13 +52,100 @@ public class FieldsetTag extends BaseFieldsetTag {
 		return super.doStartTag();
 	}
 
+	public boolean getCollapsed() {
+		return _collapsed;
+	}
+
+	public boolean getCollapsible() {
+		return _collapsible;
+	}
+
+	public boolean getColumn() {
+		return _column;
+	}
+
+	public String getCssClass() {
+		return _cssClass;
+	}
+
+	public String getHelpMessage() {
+		return _helpMessage;
+	}
+
+	public String getId() {
+		return _id;
+	}
+
+	public String getLabel() {
+		return _label;
+	}
+
+	public boolean getLocalizeLabel() {
+		return _localizeLabel;
+	}
+
+	public String getMarkupView() {
+		return _markupView;
+	}
+
+	public void setCollapsed(boolean collapsed) {
+		_collapsed = collapsed;
+	}
+
+	public void setCollapsible(boolean collapsible) {
+		_collapsible = collapsible;
+	}
+
+	public void setColumn(boolean column) {
+		_column = column;
+	}
+
+	public void setCssClass(String cssClass) {
+		_cssClass = cssClass;
+	}
+
+	public void setHelpMessage(String helpMessage) {
+		_helpMessage = helpMessage;
+	}
+
+	public void setId(String id) {
+		_id = id;
+	}
+
+	public void setLabel(String label) {
+		_label = label;
+	}
+
+	public void setLocalizeLabel(boolean localizeLabel) {
+		_localizeLabel = localizeLabel;
+	}
+
+	public void setMarkupView(String markupView) {
+		_markupView = markupView;
+	}
+
+	@Override
+	protected void cleanUp() {
+		super.cleanUp();
+
+		_collapsed = false;
+		_collapsible = false;
+		_column = false;
+		_cssClass = null;
+		_helpMessage = null;
+		_id = null;
+		_label = null;
+		_localizeLabel = true;
+		_markupView = null;
+	}
+
 	@Override
 	protected String getEndPage() {
 		if (Validator.isNotNull(getMarkupView())) {
 			return "/fieldset/" + getMarkupView() + "/end.jsp";
 		}
 
-		return "/fieldset/end.jsp";
+		return _END_PAGE;
 	}
 
 	@Override
@@ -65,7 +154,7 @@ public class FieldsetTag extends BaseFieldsetTag {
 			return "/fieldset/" + getMarkupView() + "/start.jsp";
 		}
 
-		return "/fieldset/start.jsp";
+		return _START_PAGE;
 	}
 
 	@Override
@@ -150,7 +239,23 @@ public class FieldsetTag extends BaseFieldsetTag {
 			setId(_getNamespace() + id);
 		}
 
-		super.setAttributes(request);
+		request.setAttribute(
+			"liferay-frontend:fieldset:collapsed", String.valueOf(_collapsed));
+		request.setAttribute(
+			"liferay-frontend:fieldset:collapsible",
+			String.valueOf(_collapsible));
+		request.setAttribute(
+			"liferay-frontend:fieldset:column", String.valueOf(_column));
+		request.setAttribute("liferay-frontend:fieldset:cssClass", _cssClass);
+		request.setAttribute(
+			"liferay-frontend:fieldset:helpMessage", _helpMessage);
+		request.setAttribute("liferay-frontend:fieldset:id", _id);
+		request.setAttribute("liferay-frontend:fieldset:label", _label);
+		request.setAttribute(
+			"liferay-frontend:fieldset:localizeLabel",
+			String.valueOf(_localizeLabel));
+		request.setAttribute(
+			"liferay-frontend:fieldset:markupView", _markupView);
 	}
 
 	private String _getNamespace() {
@@ -167,6 +272,23 @@ public class FieldsetTag extends BaseFieldsetTag {
 		return StringPool.BLANK;
 	}
 
+	private static final String _ATTRIBUTE_NAMESPACE =
+		"liferay-frontend:fieldset:";
+
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
+
+	private static final String _END_PAGE = "/fieldset/end.jsp";
+
+	private static final String _START_PAGE = "/fieldset/start.jsp";
+
+	private boolean _collapsed;
+	private boolean _collapsible;
+	private boolean _column;
+	private String _cssClass;
+	private String _helpMessage;
+	private String _id;
+	private String _label;
+	private boolean _localizeLabel = true;
+	private String _markupView;
 
 }

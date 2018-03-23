@@ -14,15 +14,39 @@
 
 package com.liferay.frontend.taglib.servlet.taglib;
 
-import com.liferay.frontend.taglib.servlet.taglib.base.BaseFieldsetGroupTag;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.taglib.util.IncludeTag;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 
 /**
  * @author Eudaldo Alonso
  */
-public class FieldsetGroupTag extends BaseFieldsetGroupTag {
+public class FieldsetGroupTag extends IncludeTag {
+
+	@Override
+	public int doStartTag() throws JspException {
+		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
+
+		return super.doStartTag();
+	}
+
+	public String getMarkupView() {
+		return _markupView;
+	}
+
+	public void setMarkupView(String markupView) {
+		_markupView = markupView;
+	}
+
+	@Override
+	protected void cleanUp() {
+		super.cleanUp();
+
+		_markupView = null;
+	}
 
 	@Override
 	protected String getEndPage() {
@@ -30,7 +54,7 @@ public class FieldsetGroupTag extends BaseFieldsetGroupTag {
 			return "/fieldset_group/" + getMarkupView() + "/end.jsp";
 		}
 
-		return "/fieldset_group/end.jsp";
+		return _END_PAGE;
 	}
 
 	@Override
@@ -39,7 +63,7 @@ public class FieldsetGroupTag extends BaseFieldsetGroupTag {
 			return "/fieldset_group/" + getMarkupView() + "/start.jsp";
 		}
 
-		return "/fieldset_group/start.jsp";
+		return _START_PAGE;
 	}
 
 	@Override
@@ -50,5 +74,20 @@ public class FieldsetGroupTag extends BaseFieldsetGroupTag {
 
 		return EVAL_PAGE;
 	}
+
+	@Override
+	protected void setAttributes(HttpServletRequest request) {
+		request.setAttribute(
+			"liferay-frontend:fieldset-group:markupView", _markupView);
+	}
+
+	private static final String _ATTRIBUTE_NAMESPACE =
+		"liferay-frontend:fieldset-group:";
+
+	private static final String _END_PAGE = "/fieldset_group/end.jsp";
+
+	private static final String _START_PAGE = "/fieldset_group/start.jsp";
+
+	private String _markupView;
 
 }

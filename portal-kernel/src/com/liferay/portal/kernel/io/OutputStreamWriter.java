@@ -149,9 +149,16 @@ public class OutputStreamWriter extends Writer {
 
 		_inputCharBuffer.flip();
 
-		_encodeLoop(_inputCharBuffer, endOfInput);
+		try {
+			_encodeLoop(_inputCharBuffer, endOfInput);
 
-		_inputCharBuffer.compact();
+			_inputCharBuffer.compact();
+		}
+		catch (IOException ioe) {
+			_inputCharBuffer.clear();
+
+			throw ioe;
+		}
 	}
 
 	private void _encodeLoop(CharBuffer inputCharBuffer, boolean endOfInput)

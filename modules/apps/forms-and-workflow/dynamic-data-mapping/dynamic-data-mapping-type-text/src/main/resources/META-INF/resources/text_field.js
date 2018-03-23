@@ -56,7 +56,8 @@ AUI.add(
 
 						instance._eventHandlers.push(
 							instance.after('optionsChange', instance._afterOptionsChange),
-							instance.after('valueChange', instance._onTextFieldValueChange)
+							instance.after('valueChange', instance._onTextFieldValueChange),
+							instance.bindInputEvent('focus', A.bind('_onTextFieldFocus', instance))
 						);
 
 						instance.evaluate = A.debounce(
@@ -180,6 +181,18 @@ AUI.add(
 								source: instance.get('options')
 							}
 						);
+					},
+
+					_onTextFieldFocus: function() {
+						var instance = this;
+
+						var input = instance.get('container').one('input');
+
+						if ((input.getData('predefined-value') == input.val()) && (input.getData('interaction'))) {
+							input.setData('interaction', false);
+							instance.set('value', '');
+							instance.setValue('');
+						}
 					},
 
 					_onTextFieldValueChange: function() {

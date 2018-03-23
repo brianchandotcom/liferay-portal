@@ -37,10 +37,12 @@ page import="com.liferay.portal.kernel.util.JavaConstants" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.PropsUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.taglib.aui.AUIUtil" %>
+page import="com.liferay.taglib.aui.AUIUtil" %><%@
+page import="com.liferay.taglib.util.TagResourceBundleUtil" %>
 
 <%@ page import="java.util.List" %><%@
-page import="java.util.Map" %>
+page import="java.util.Map" %><%@
+page import="java.util.ResourceBundle" %>
 
 <%@ page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.PortletResponse" %><%@
@@ -73,4 +75,6 @@ if ((portletRequest != null) && (portletResponse != null)) {
 else {
 	currentURL = PortalUtil.getCurrentURL(request);
 }
+
+ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(request, locale);
 %>

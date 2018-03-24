@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
+import java.util.Map;
+
 /**
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
@@ -57,11 +59,26 @@ public class WorkflowLockingAdvice {
 			StringUtil.toHexString(version));
 	}
 
-	private static final String _START_WORKFLOW_INSTANCE_METHOD_NAME =
-		"startWorkflowInstance";
+	private static final Method _START_WORKFLOW_INSTANCE_METHOD;
 
-	private static final String _UNDEPLOY_WORKFLOW_DEFINITION_METHOD_NAME =
-		"undeployWorkflowDefinition";
+	private static final Method _UNDEPLOY_WORKFLOW_DEFINITION_METHOD;
+
+	static {
+		try {
+			_START_WORKFLOW_INSTANCE_METHOD =
+				WorkflowInstanceManager.class.getMethod(
+					"startWorkflowInstance", long.class, long.class, long.class,
+					String.class, Integer.class, String.class, Map.class);
+
+			_UNDEPLOY_WORKFLOW_DEFINITION_METHOD =
+				WorkflowDefinitionManager.class.getMethod(
+					"undeployWorkflowDefinition", long.class, long.class,
+					String.class, int.class);
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new ExceptionInInitializerError(nsme);
+		}
+	}
 
 	private static class WorkflowLockingInvocationHandler
 		implements InvocationHandler {
@@ -70,9 +87,7 @@ public class WorkflowLockingAdvice {
 		public Object invoke(Object proxy, Method method, Object[] arguments)
 			throws Throwable {
 
-			String methodName = method.getName();
-
-			if (methodName.equals(_START_WORKFLOW_INSTANCE_METHOD_NAME)) {
+			if (_START_WORKFLOW_INSTANCE_METHOD.equals(method)) {
 				String workflowDefinitionName = (String)arguments[3];
 				Integer workflowDefinitionVersion = (Integer)arguments[4];
 
@@ -91,9 +106,7 @@ public class WorkflowLockingAdvice {
 
 				return method.invoke(_targetObject, arguments);
 			}
-			else if (!methodName.equals(
-						_UNDEPLOY_WORKFLOW_DEFINITION_METHOD_NAME)) {
-
+			else if (!_UNDEPLOY_WORKFLOW_DEFINITION_METHOD.equals(method)) {
 				return method.invoke(_targetObject, arguments);
 			}
 

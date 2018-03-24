@@ -39,7 +39,18 @@ public class WorkflowLinkAdvice {
 			new WorkflowLinkInvocationHandler(workflowDefinitionManager));
 	}
 
-	private static final String _UPDATE_ACTIVE = "updateActive";
+	private static final Method _UPDATE_ACTIVE_METHOD;
+
+	static {
+		try {
+			_UPDATE_ACTIVE_METHOD = WorkflowDefinitionManager.class.getMethod(
+				"updateActive", long.class, long.class, String.class, int.class,
+				boolean.class);
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new ExceptionInInitializerError(nsme);
+		}
+	}
 
 	private static class WorkflowLinkInvocationHandler
 		implements InvocationHandler {
@@ -48,9 +59,7 @@ public class WorkflowLinkAdvice {
 		public Object invoke(Object proxy, Method method, Object[] arguments)
 			throws Throwable {
 
-			String methodName = method.getName();
-
-			if (methodName.equals(_UPDATE_ACTIVE)) {
+			if (_UPDATE_ACTIVE_METHOD.equals(method)) {
 				long companyId = (Long)arguments[0];
 				String name = (String)arguments[2];
 				int version = (Integer)arguments[3];

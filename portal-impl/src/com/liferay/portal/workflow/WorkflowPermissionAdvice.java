@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
+import java.util.Date;
+import java.util.Map;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -37,8 +40,20 @@ public class WorkflowPermissionAdvice {
 			new WorkflowPermissionInvocationHandler(workflowTaskManager));
 	}
 
-	private static final String _ASSIGN_WORKFLOW_TASK_TO_USER_METHOD_NAME =
-		"assignWorkflowTaskToUser";
+	private static final Method _ASSIGN_WORKFLOW_TASK_TO_USER_METHOD;
+
+	static {
+		try {
+			_ASSIGN_WORKFLOW_TASK_TO_USER_METHOD =
+				WorkflowTaskManager.class.getMethod(
+					"assignWorkflowTaskToUser", long.class, long.class,
+					long.class, long.class, String.class, Date.class,
+					Map.class);
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new ExceptionInInitializerError(nsme);
+		}
+	}
 
 	private static class WorkflowPermissionInvocationHandler
 		implements InvocationHandler {
@@ -47,9 +62,7 @@ public class WorkflowPermissionAdvice {
 		public Object invoke(Object proxy, Method method, Object[] arguments)
 			throws Throwable {
 
-			String methodName = method.getName();
-
-			if (methodName.equals(_ASSIGN_WORKFLOW_TASK_TO_USER_METHOD_NAME)) {
+			if (_ASSIGN_WORKFLOW_TASK_TO_USER_METHOD.equals(method)) {
 				long userId = (Long)arguments[1];
 
 				PermissionChecker permissionChecker =

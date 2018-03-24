@@ -97,16 +97,27 @@ public class TestBatchGroup {
 	private int _getMaxClassGroupSize() {
 		List<String> orderedPropertyNames = new ArrayList<>();
 
-		orderedPropertyNames.add(
-			JenkinsResultsParserUtil.combine(
-				"test.batch.max.class.group.size[", _batchName, "][",
-				_testSuiteName, "]"));
+		if (_testSuiteName != null) {
+			orderedPropertyNames.add(
+				JenkinsResultsParserUtil.combine(
+					"test.batch.max.class.group.size[", _batchName, "][",
+					_testSuiteName, "]"));
+			orderedPropertyNames.add(
+				_getWildcardPropertyName(
+					_portalTestProperties, "test.batch.max.class.group.size",
+					_batchName, _testSuiteName));
+			orderedPropertyNames.add(
+				JenkinsResultsParserUtil.combine(
+					"test.batch.max.class.group.size[", _testSuiteName, "]"));
+		}
+
 		orderedPropertyNames.add(
 			JenkinsResultsParserUtil.combine(
 				"test.batch.max.class.group.size[", _batchName, "]"));
 		orderedPropertyNames.add(
-			JenkinsResultsParserUtil.combine(
-				"test.batch.max.class.group.size[", _testSuiteName, "]"));
+			_getWildcardPropertyName(
+				_portalTestProperties, "test.batch.max.class.group.size",
+				_batchName));
 		orderedPropertyNames.add("test.batch.max.class.group.size");
 
 		String propertyValue = _getPropertyValueFromOrderedPropertyNames(
@@ -214,9 +225,12 @@ public class TestBatchGroup {
 	private void _setCurrentBranch() {
 		List<String> orderedPropertyNames = new ArrayList<>();
 
-		orderedPropertyNames.add(
-			JenkinsResultsParserUtil.combine(
-				"test.batch.current.branch[", _testSuiteName, "]"));
+		if (_testSuiteName != null) {
+			orderedPropertyNames.add(
+				JenkinsResultsParserUtil.combine(
+					"test.batch.current.branch[", _testSuiteName, "]"));
+		}
+
 		orderedPropertyNames.add("test.batch.current.branch");
 
 		String propertyValue = _getPropertyValueFromOrderedPropertyNames(
@@ -298,19 +312,86 @@ public class TestBatchGroup {
 		return currentBranchTestClassGlobs;
 	}
 
+	private String _getWildcardPropertyName(
+		Properties properties, String propertyName, String batchName) {
+
+		return _getWildcardPropertyName(
+			properties, propertyName, batchName, null);
+	}
+
+	private String _getWildcardPropertyName(
+		Properties properties, String propertyName, String batchName,
+		String testSuiteName) {
+
+		for (String wildcardPropertyName : properties.stringPropertyNames()) {
+			if (!wildcardPropertyName.startsWith(propertyName)) {
+				continue;
+			}
+
+			Matcher matcher = _propertyNamePattern.matcher(
+				wildcardPropertyName);
+
+			if (matcher.find()) {
+				String batchNameMatcher = matcher.group("batchName");
+
+				batchNameMatcher = batchNameMatcher.replace("*", ".+");
+
+				String testSuiteNameMatcher = matcher.group("testSuiteName");
+
+				if (testSuiteName == null) {
+					if (testSuiteNameMatcher != null) {
+						continue;
+					}
+
+					if (!batchName.matches(batchNameMatcher)) {
+						continue;
+					}
+				}
+				else {
+					if (testSuiteNameMatcher == null) {
+						continue;
+					}
+
+					if (!testSuiteName.equals(testSuiteNameMatcher)) {
+						continue;
+					}
+
+					if (!batchName.matches(batchNameMatcher)) {
+						continue;
+					}
+				}
+
+				return wildcardPropertyName;
+			}
+		}
+
+		return null;
+	}
+
 	private void _setTestClassNamesExcludes() throws IOException {
 		List<String> orderedPropertyNames = new ArrayList<>();
 
+		if (_testSuiteName != null) {
+			orderedPropertyNames.add(
+				JenkinsResultsParserUtil.combine(
+					"test.batch.class.names.excludes[", _batchName, "][",
+					_testSuiteName, "]"));
+			orderedPropertyNames.add(
+				_getWildcardPropertyName(
+					_portalTestProperties, "test.batch.class.names.excludes",
+					_batchName, _testSuiteName));
+			orderedPropertyNames.add(
+				JenkinsResultsParserUtil.combine(
+					"test.batch.class.names.excludes[", _testSuiteName, "]"));
+		}
+
 		orderedPropertyNames.add(
-			JenkinsResultsParserUtil.combine(
-				"test.batch.class.names.excludes[", _batchName, "][",
-				_testSuiteName, "]"));
+			_getWildcardPropertyName(
+				_portalTestProperties, "test.batch.class.names.excludes",
+				_batchName));
 		orderedPropertyNames.add(
 			JenkinsResultsParserUtil.combine(
 				"test.batch.class.names.excludes[", _batchName, "]"));
-		orderedPropertyNames.add(
-			JenkinsResultsParserUtil.combine(
-				"test.batch.class.names.excludes[", _testSuiteName, "]"));
 		orderedPropertyNames.add("test.batch.class.names.excludes");
 		orderedPropertyNames.add("test.class.names.excludes");
 
@@ -362,16 +443,27 @@ public class TestBatchGroup {
 	private void _setTestClassNamesIncludes() throws IOException {
 		List<String> orderedPropertyNames = new ArrayList<>();
 
-		orderedPropertyNames.add(
-			JenkinsResultsParserUtil.combine(
-				"test.batch.class.names.includes[", _batchName, "][",
-				_testSuiteName, "]"));
+		if (_testSuiteName != null) {
+			orderedPropertyNames.add(
+				JenkinsResultsParserUtil.combine(
+					"test.batch.class.names.includes[", _batchName, "][",
+					_testSuiteName, "]"));
+			orderedPropertyNames.add(
+				_getWildcardPropertyName(
+					_portalTestProperties, "test.batch.class.names.includes",
+					_batchName, _testSuiteName));
+			orderedPropertyNames.add(
+				JenkinsResultsParserUtil.combine(
+					"test.batch.class.names.includes[", _testSuiteName, "]"));
+		}
+
 		orderedPropertyNames.add(
 			JenkinsResultsParserUtil.combine(
 				"test.batch.class.names.includes[", _batchName, "]"));
 		orderedPropertyNames.add(
-			JenkinsResultsParserUtil.combine(
-				"test.batch.class.names.includes[", _testSuiteName, "]"));
+			_getWildcardPropertyName(
+				_portalTestProperties, "test.batch.class.names.includes",
+				_batchName));
 		orderedPropertyNames.add("test.batch.class.names.includes");
 		orderedPropertyNames.add("test.class.names.includes");
 
@@ -415,6 +507,9 @@ public class TestBatchGroup {
 	private boolean _testBatchCurrentBranch;
 	private final Pattern _packagePathPattern = Pattern.compile(
 		".*/(?<packagePath>com/.*)");
+	private final Pattern _propertyNamePattern = Pattern.compile(
+		"[^\\]]+\\[(?<batchName>[^\\]]+)\\](\\[(?<testSuiteName>[^\\]]+)\\])?");
+
 	private final String _testSuiteName;
 
 }

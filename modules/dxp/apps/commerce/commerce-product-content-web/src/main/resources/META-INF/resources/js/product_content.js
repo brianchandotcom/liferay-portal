@@ -217,7 +217,7 @@ AUI.add(
 
 								thumbContainer.setAttribute('data-url', image.url);
 
-								var imageNode = A.Node.create('<img class="center-block img-responsive" />');
+								var imageNode = A.Node.create('<img class="img-fluid" />');
 
 								imageNode.setAttribute('src', image.url);
 

@@ -68,7 +68,7 @@ public class BookmarksEntryUADEntityExporterTest
 		BookmarksEntry bookmarksEntry = addBookmarksEntry(_user.getUserId());
 
 		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
-			_user.getUserId());
+			_user.getUserId(), 0, 1);
 
 		UADEntity uadEntity = uadEntities.get(0);
 

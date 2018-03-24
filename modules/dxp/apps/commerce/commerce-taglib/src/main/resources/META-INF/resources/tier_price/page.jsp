@@ -33,13 +33,13 @@ String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 	%>
 
 		<div class="form-group-item">
+			<button class="btn commerce-custom-control-button" onclick="" type="button"></button>
 			<div class="input-group">
-				<div class="input-group-item input-group-item-shrink input-group-prepend">
-					<button class="btn btn-secondary" onclick="<%= randomNamespace %>setQuantity('<%= commerceTierPriceEntry.getMinQuantity() %>')" type="button" >x<%= commerceTierPriceEntry.getMinQuantity() %></button>
+				<div class="input-group-item input-group-prepend input-group-item-shrink">
+					<span class="input-group-text input-group-text-secondary">x4</span>
 				</div>
-
-				<div class="input-group-append input-group-item">
-					<input class="form-control" disabled="disabled" placeholder="<%= formattedPrice %>" type="text">
+				<div class="input-group-item">
+					<input class="form-control" readonly tabindex="-1" type="text" value="$75.03 /ea">
 				</div>
 			</div>
 		</div>

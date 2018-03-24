@@ -34,9 +34,8 @@ import java.lang.reflect.Method;
  */
 public class WorkflowLockingAdvice {
 
-	public static WorkflowDefinitionManager
-		createWorkflowDefinitionManagerProxy(
-			WorkflowDefinitionManager workflowDefinitionManager) {
+	public static WorkflowDefinitionManager create(
+		WorkflowDefinitionManager workflowDefinitionManager) {
 
 		return (WorkflowDefinitionManager)ProxyUtil.newProxyInstance(
 			WorkflowLockingAdvice.class.getClassLoader(),
@@ -44,7 +43,7 @@ public class WorkflowLockingAdvice {
 			new WorkflowLockingInvocationHandler(workflowDefinitionManager));
 	}
 
-	public static WorkflowInstanceManager createWorkflowInstanceManagerProxy(
+	public static WorkflowInstanceManager create(
 		WorkflowInstanceManager workflowInstanceManager) {
 
 		return (WorkflowInstanceManager)ProxyUtil.newProxyInstance(

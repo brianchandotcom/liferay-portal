@@ -25,9 +25,9 @@
 
 	<!-- Proxy -->
 
-	<bean class="com.liferay.portal.workflow.WorkflowLockingAdvice" factory-method="createWorkflowDefinitionManagerProxy" id="com.liferay.portal.workflow.WorkflowDefinitionManagerProxyBean">
+	<bean class="com.liferay.portal.workflow.WorkflowLockingAdvice" factory-method="create" id="com.liferay.portal.workflow.WorkflowDefinitionManagerProxyBean">
 		<constructor-arg name="workflowDefinitionManager">
-			<bean class="com.liferay.portal.workflow.WorkflowLinkAdvice" factory-method="createWorkflowDefinitionManagerProxy">
+			<bean class="com.liferay.portal.workflow.WorkflowLinkAdvice" factory-method="create">
 				<constructor-arg name="workflowDefinitionManager">
 					<bean class="com.liferay.portal.workflow.WorkflowDefinitionManagerProxyBean">
 						<property name="destinationName" value="liferay/workflow_definition" />
@@ -43,7 +43,7 @@
 		<property name="synchronousDestinationName" value="liferay/workflow_engine" />
 		<property name="synchronousMessageSenderMode" value="DIRECT" />
 	</bean>
-	<bean class="com.liferay.portal.workflow.WorkflowLockingAdvice" factory-method="createWorkflowInstanceManagerProxy" id="com.liferay.portal.workflow.WorkflowInstanceManagerProxyBean">
+	<bean class="com.liferay.portal.workflow.WorkflowLockingAdvice" factory-method="create" id="com.liferay.portal.workflow.WorkflowInstanceManagerProxyBean">
 		<constructor-arg name="workflowInstanceManager">
 			<bean class="com.liferay.portal.workflow.WorkflowInstanceManagerProxyBean">
 				<property name="destinationName" value="liferay/workflow_instance" />
@@ -62,7 +62,7 @@
 		<property name="synchronousDestinationName" value="liferay/workflow_status" />
 		<property name="synchronousMessageSenderMode" value="DIRECT" />
 	</bean>
-	<bean class="com.liferay.portal.workflow.WorkflowPermissionAdvice" factory-method="createWorkflowTaskManagerProxy" id="com.liferay.portal.workflow.WorkflowTaskManagerProxyBean">
+	<bean class="com.liferay.portal.workflow.WorkflowPermissionAdvice" factory-method="create" id="com.liferay.portal.workflow.WorkflowTaskManagerProxyBean">
 		<constructor-arg name="workflowTaskManager">
 			<bean class="com.liferay.portal.workflow.WorkflowTaskManagerProxyBean">
 				<property name="destinationName" value="liferay/workflow_task" />

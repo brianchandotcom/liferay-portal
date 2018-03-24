@@ -28,7 +28,7 @@ import java.lang.reflect.Method;
  */
 public class WorkflowPermissionAdvice {
 
-	public static WorkflowTaskManager createWorkflowTaskManagerProxy(
+	public static WorkflowTaskManager create(
 		WorkflowTaskManager workflowTaskManager) {
 
 		return (WorkflowTaskManager)ProxyUtil.newProxyInstance(

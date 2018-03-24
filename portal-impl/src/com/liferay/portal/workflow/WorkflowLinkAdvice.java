@@ -30,9 +30,8 @@ import java.util.List;
  */
 public class WorkflowLinkAdvice {
 
-	public static WorkflowDefinitionManager
-		createWorkflowDefinitionManagerProxy(
-			WorkflowDefinitionManager workflowDefinitionManager) {
+	public static WorkflowDefinitionManager create(
+		WorkflowDefinitionManager workflowDefinitionManager) {
 
 		return (WorkflowDefinitionManager)ProxyUtil.newProxyInstance(
 			WorkflowLinkAdvice.class.getClassLoader(),

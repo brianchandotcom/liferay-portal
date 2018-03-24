@@ -170,6 +170,10 @@ public class TestBatchGroup {
 		Properties properties, List<String> orderedPropertyNames) {
 
 		for (String propertyName : orderedPropertyNames) {
+			if (propertyName == null) {
+				continue;
+			}
+
 			if (properties.containsKey(propertyName)) {
 				String propertyValue = properties.getProperty(propertyName);
 
@@ -350,6 +354,8 @@ public class TestBatchGroup {
 
 		if (propertyValue != null) {
 			_testBatchCurrentBranch = Boolean.parseBoolean(propertyValue);
+
+			return;
 		}
 
 		_testBatchCurrentBranch = false;
@@ -364,14 +370,14 @@ public class TestBatchGroup {
 		int maxClassGroupSize = _getMaxClassGroupSize();
 		int testClassFileNamesCount = testClassFileNames.size();
 
-		int testBatchGroupSize = testClassFileNamesCount / maxClassGroupSize;
+		int testBatchGroupSize = (int)Math.ceil(
+			(double)testClassFileNamesCount / maxClassGroupSize);
 
-		if ((testClassFileNamesCount % maxClassGroupSize) != 0) {
-			testBatchGroupSize++;
-		}
+		int classGroupSize = (int)Math.ceil(
+			(double)testClassFileNamesCount / testBatchGroupSize);
 
 		_testClassGroups.addAll(
-			Lists.partition(testClassFileNames, testBatchGroupSize));
+			Lists.partition(testClassFileNames, classGroupSize));
 	}
 
 	private void _setTestClassNamesExcludes() throws IOException {

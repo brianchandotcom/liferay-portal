@@ -14,15 +14,13 @@
 
 package com.liferay.contacts.uad.display;
 
+import com.liferay.contacts.model.Entry;
 import com.liferay.contacts.uad.constants.ContactsUADConstants;
-import com.liferay.contacts.uad.entity.EntryUADEntity;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
-import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
-import com.liferay.user.associated.data.entity.UADEntity;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -35,7 +33,7 @@ import java.util.Map;
  */
 @Component(immediate = true, property =  {
 	"model.class.name=" + ContactsUADConstants.CLASS_NAME_ENTRY}, service = UADEntityDisplay.class)
-public class EntryUADEntityDisplay implements UADEntityDisplay {
+public class EntryUADEntityDisplay implements UADEntityDisplay<Entry> {
 	public String getApplicationName() {
 		return ContactsUADConstants.UAD_ENTITY_SET_NAME;
 	}
@@ -45,13 +43,11 @@ public class EntryUADEntityDisplay implements UADEntityDisplay {
 	}
 
 	@Override
-	public String getEditURL(UADEntity uadEntity,
+	public String getEditURL(Entry entry,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
-		EntryUADEntity entryUADEntity = (EntryUADEntity)uadEntity;
-
-		return _entryUADEntityDisplayHelper.getEntryEditURL(entryUADEntity.getEntry(),
+		return _entryUADEntityDisplayHelper.getEntryEditURL(entry,
 			liferayPortletRequest, liferayPortletResponse);
 	}
 
@@ -60,11 +56,8 @@ public class EntryUADEntityDisplay implements UADEntityDisplay {
 	}
 
 	@Override
-	public Map<String, Object> getUADEntityNonanonymizableFieldValues(
-		UADEntity uadEntity) {
-		EntryUADEntity entryUADEntity = (EntryUADEntity)uadEntity;
-
-		return _entryUADEntityDisplayHelper.getUADEntityNonanonymizableFieldValues(entryUADEntity.getEntry());
+	public Map<String, Object> getNonanonymizableFieldValues(Entry entry) {
+		return _entryUADEntityDisplayHelper.getUADEntityNonanonymizableFieldValues(entry);
 	}
 
 	@Override
@@ -79,7 +72,4 @@ public class EntryUADEntityDisplay implements UADEntityDisplay {
 
 	@Reference
 	private EntryUADEntityDisplayHelper _entryUADEntityDisplayHelper;
-	@Reference(target = "(model.class.name=" +
-	ContactsUADConstants.CLASS_NAME_ENTRY + ")")
-	private UADEntityAnonymizer _uadEntityAnonymizer;
 }

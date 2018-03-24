@@ -490,41 +490,6 @@ elasticsearch.ssl.certificateAuthorities: [ "${elasticsearch.dir}/config/certs/c
 		<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}discovery.zen.minimum_master_nodes: ${elasticsearch.master-eligible.nodes.quorum}</echo>
 	</target>
 
-	<target name="configure-elasticsearch-osgi-bundle-properties">
-		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration.config">httpEnabled=B&quot;false&quot;
-logExceptionsOnly=B&quot;false&quot;
-operationMode=&quot;REMOTE&quot;</echo>
-	</target>
-
-	<target name="configure-elasticsearch-properties">
-		<replace
-			file="${elasticsearch.dir}/config/elasticsearch.yml"
-		>
-			<replacetoken><![CDATA[#cluster.name: my-application]]></replacetoken>
-			<replacevalue><![CDATA[cluster.name: LiferayElasticsearchCluster]]></replacevalue>
-		</replace>
-
-		<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}action.auto_create_index: .security,.monitoring*,.watches,.triggered_watches,.watcher-history*,.ml*${line.separator}bootstrap.system_call_filter: false</echo>
-	</target>
-
-	<target name="configure-kibana-properties">
-		<replace
-			file="${elastic.kibana.dir}/config/kibana.yml"
-		>
-			<replacetoken><![CDATA[#pid.file: /var/run/kibana.pid]]></replacetoken>
-			<replacevalue><![CDATA[pid.file: ${elastic.kibana.dir}/bin/pid-kibana]]></replacevalue>
-		</replace>
-
-		<replace
-			file="${elastic.kibana.dir}/config/kibana.yml"
-		>
-			<replacetoken><![CDATA[#elasticsearc.username: "user"
-#elasticsearch.password: "pass"]]></replacetoken>
-			<replacevalue><![CDATA[elasticsearch.username: "kibana"
-elasticsearch.password: "kibanapassword"]]></replacevalue>
-		</replace>
-	</target>
-
 	<target name="prepare-additional-elasticsearch-dirs">
 		<var name="elasticsearch.node.number" value="0" />
 

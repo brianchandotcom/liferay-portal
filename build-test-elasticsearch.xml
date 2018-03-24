@@ -636,7 +636,7 @@ elasticsearch.ssl.certificateAuthorities: [ "${elasticsearch.dir}/config/certs/c
 					<then>
 						<exec dir="${elasticsearch.dir}-${elasticsearch.node.number}/bin" executable="/bin/bash">
 							<arg value="-c" />
-							<arg value="./elasticsearch -d -p pid-elasticsearch'" />
+							<arg value="./elasticsearch -d -p pid-elasticsearch" />
 						</exec>
 					</then>
 					<elseif>

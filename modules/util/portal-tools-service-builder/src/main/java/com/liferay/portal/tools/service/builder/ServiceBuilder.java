@@ -897,10 +897,8 @@ public class ServiceBuilder {
 						}
 
 						if (entity.isUADEnabled()) {
-							_createUADEntity(entity);
 							_createUADEntityAggregator(entity);
 							_createUADEntityAnonymizer(entity);
-							_createUADEntityTest(entity);
 							_createUADEntityTestHelper(entity);
 							_createUADEntityAggregatorTest(entity);
 							_createUADEntityAnonymizerTest(entity);
@@ -920,12 +918,10 @@ public class ServiceBuilder {
 							}
 						}
 						else {
-							//_removeUADEntity(entity);
 							//_removeUADEntityAggregator(entity);
 							//_removeUADEntityAnonymizer(entity);
 							//_removeUADEntityDisplay(entity);
 							//_removeUADEntityDisplayHelper(entity);
-							//_removeUADEntityTest(entity);
 							//_removeUADEntityTestHelper(entity);
 							//_removeUADEntityAggregatorTest(entity);
 							//_removeUADEntityAnonymizerTest(entity);
@@ -3959,26 +3955,6 @@ public class ServiceBuilder {
 			file, content, _author, _jalopySettings, _modifiedFileNames);
 	}
 
-	private void _createUADEntity(Entity entity) throws Exception {
-		Map<String, Object> context = _getContext();
-
-		context.put("entity", entity);
-
-		// Content
-
-		String content = _processTemplate(_tplUADEntity, context);
-
-		// Write file
-
-		File file = new File(
-			StringBundler.concat(
-				_uadOutputPath, "/uad/entity/", entity.getName(),
-				"UADEntity.java"));
-
-		ToolsUtil.writeFile(
-			file, content, _author, _jalopySettings, _modifiedFileNames);
-	}
-
 	private void _createUADEntityAggregator(Entity entity) throws Exception {
 		Map<String, Object> context = _getContext();
 
@@ -4130,26 +4106,6 @@ public class ServiceBuilder {
 			StringBundler.concat(
 				_uadTestIntegrationOutputPath, "/uad/display/test/",
 				entity.getName(), "UADEntityDisplayTest.java"));
-
-		ToolsUtil.writeFile(
-			file, content, _author, _jalopySettings, _modifiedFileNames);
-	}
-
-	private void _createUADEntityTest(Entity entity) throws Exception {
-		Map<String, Object> context = _getContext();
-
-		context.put("entity", entity);
-
-		// Content
-
-		String content = _processTemplate(_tplUADEntityTest, context);
-
-		// Write file
-
-		File file = new File(
-			StringBundler.concat(
-				_uadTestUnitOutputPath, "/uad/entity/", entity.getName(),
-				"UADEntityTest.java"));
 
 		ToolsUtil.writeFile(
 			file, content, _author, _jalopySettings, _modifiedFileNames);
@@ -6715,7 +6671,6 @@ public class ServiceBuilder {
 	private String _tplSpringXml = _TPL_ROOT + "spring_xml.ftl";
 	private String _tplUADBnd = _TPL_ROOT + "uad_bnd.ftl";
 	private String _tplUADConstants = _TPL_ROOT + "uad_constants.ftl";
-	private String _tplUADEntity = _TPL_ROOT + "uad_entity.ftl";
 	private String _tplUADEntityAggregator =
 		_TPL_ROOT + "uad_entity_aggregator.ftl";
 	private String _tplUADEntityAggregatorTest =
@@ -6729,7 +6684,6 @@ public class ServiceBuilder {
 		_TPL_ROOT + "uad_entity_display_helper.ftl";
 	private String _tplUADEntityDisplayTest =
 		_TPL_ROOT + "uad_entity_display_test.ftl";
-	private String _tplUADEntityTest = _TPL_ROOT + "uad_entity_test.ftl";
 	private String _tplUADEntityTestHelper =
 		_TPL_ROOT + "uad_entity_test_helper.ftl";
 	private String _tplUADTestBnd = _TPL_ROOT + "uad_test_bnd.ftl";

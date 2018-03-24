@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.workflow.RequiredWorkflowDefinitionException;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.List;
@@ -78,7 +79,16 @@ public class WorkflowLinkAdvice {
 				}
 			}
 
-			return method.invoke(_workflowDefinitionManager, arguments);
+			try {
+				return method.invoke(_workflowDefinitionManager, arguments);
+			}
+			catch (Throwable t) {
+				if (t instanceof InvocationTargetException) {
+					t = t.getCause();
+				}
+
+				throw t;
+			}
 		}
 
 		private WorkflowLinkInvocationHandler(

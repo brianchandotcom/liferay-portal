@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Date;
@@ -73,7 +74,16 @@ public class WorkflowPermissionAdvice {
 				}
 			}
 
-			return method.invoke(_workflowTaskManager, arguments);
+			try {
+				return method.invoke(_workflowTaskManager, arguments);
+			}
+			catch (Throwable t) {
+				if (t instanceof InvocationTargetException) {
+					t = t.getCause();
+				}
+
+				throw t;
+			}
 		}
 
 		private WorkflowPermissionInvocationHandler(

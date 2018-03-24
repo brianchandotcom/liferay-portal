@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Map;
@@ -104,10 +105,10 @@ public class WorkflowLockingAdvice {
 							" is being undeployed"));
 				}
 
-				return method.invoke(_targetObject, arguments);
+				return _invoke(method, arguments);
 			}
 			else if (!_UNDEPLOY_WORKFLOW_DEFINITION_METHOD.equals(method)) {
-				return method.invoke(_targetObject, arguments);
+				return _invoke(method, arguments);
 			}
 
 			long userId = (Long)arguments[1];
@@ -129,7 +130,7 @@ public class WorkflowLockingAdvice {
 					userId, className, key, String.valueOf(userId), false,
 					Time.HOUR);
 
-				return method.invoke(_targetObject, arguments);
+				return _invoke(method, arguments);
 			}
 			finally {
 				LockManagerUtil.unlock(className, key);
@@ -138,6 +139,21 @@ public class WorkflowLockingAdvice {
 
 		private WorkflowLockingInvocationHandler(Object targetObject) {
 			_targetObject = targetObject;
+		}
+
+		private Object _invoke(Method method, Object[] arguments)
+			throws Throwable {
+
+			try {
+				return method.invoke(_targetObject, arguments);
+			}
+			catch (Throwable t) {
+				if (t instanceof InvocationTargetException) {
+					t = t.getCause();
+				}
+
+				throw t;
+			}
 		}
 
 		private final Object _targetObject;

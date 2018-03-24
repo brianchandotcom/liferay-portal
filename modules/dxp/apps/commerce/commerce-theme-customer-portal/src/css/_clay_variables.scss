@@ -43,6 +43,10 @@ $btn-light: (
 	active-box-shadow: none
 ) !default;
 
+// Form
+
+$input-group-secondary-addon-border-color: lighten(saturate(adjust-hue($secondary, 3), 6.13), 46.08) !default;
+
 // Card
 
 $card-border-color: #CFCED4 !default;

@@ -231,6 +231,65 @@ a[type="button"] {
 	margin-bottom: 1.5rem;
 }
 
+// Customer Portal Custom Form
+
+.commerce-custom-control-button {
+	height: $input-height;
+	opacity: 0;
+	position: absolute;
+	width: 100%;
+	z-index: 5;
+
+	+ .input-group {
+		.form-control[readonly] {
+			background-color: $input-bg;
+		}
+
+		.input-group-text {
+			transition: $input-transition;
+		}
+	}
+
+	&:focus + .input-group {
+		.form-control, .input-group-text {
+			background-color: #FFF;
+			border-color: $input-focus-border-color;
+		}
+	}
+}
+
+.commerce-custom-control-input {
+	height: $input-height;
+	opacity: 0;
+	position: absolute;
+	width: 100%;
+	z-index: 5;
+
+	+ .input-group {
+		.form-control[readonly] {
+			background-color: $input-bg;
+		}
+
+		.input-group-text {
+			transition: $input-transition;
+		}
+	}
+
+	&:focus + .input-group {
+		.form-control, .input-group-text {
+			background-color: $input-focus-bg;
+			border-color: $input-focus-border-color;
+		}
+	}
+
+	&:checked + .input-group {
+		.form-control, .input-group-text {
+			background-color: #FFF;
+			border-color: $input-focus-border-color;
+		}
+	}
+}
+
 // Customer Portal
 
 #content {
@@ -240,6 +299,11 @@ a[type="button"] {
 	padding-top: 2.5rem;
 
 	@include media-breakpoint-up(md) {
+		padding-left: 2rem;
+		padding-right: 2rem;
+	}
+
+	@include media-breakpoint-up(lg) {
 		padding-left: 4rem;
 		padding-right: 4rem;
 	}
@@ -406,6 +470,30 @@ a[type="button"] {
 			right: 0;
 			width: auto;
 		}
+	}
+}
+
+.nav-underline-light {
+	margin-bottom: 2rem;
+
+	.nav-link {
+		color: $body-color;
+		font-size: 0.9375rem;
+		font-weight: $font-weight-semi-bold;
+		padding-left: 2rem;
+		padding-right: 2rem;
+	}
+
+	.nav-link:after {
+		background-color: #F1F2F5;
+		bottom: 0;
+		content: '';
+		display: block;
+		height: 0.25rem;
+		left: 0;
+		position: absolute;
+		right: 0;
+		width: auto;
 	}
 }
 

@@ -17,20 +17,18 @@ package com.liferay.contacts.uad.aggregator;
 import com.liferay.contacts.model.Entry;
 import com.liferay.contacts.service.EntryLocalService;
 import com.liferay.contacts.uad.constants.ContactsUADConstants;
-import com.liferay.contacts.uad.entity.EntryUADEntity;
 
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import com.liferay.user.associated.data.aggregator.BaseUADEntityAggregator;
+import com.liferay.user.associated.data.aggregator.DynamicQueryUADEntityAggregator;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
-import com.liferay.user.associated.data.entity.UADEntity;
-import com.liferay.user.associated.data.util.UADDynamicQueryHelper;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import java.util.ArrayList;
+import java.io.Serializable;
+
 import java.util.List;
 
 /**
@@ -39,64 +37,38 @@ import java.util.List;
  */
 @Component(immediate = true, property =  {
 	"model.class.name=" + ContactsUADConstants.CLASS_NAME_ENTRY}, service = UADEntityAggregator.class)
-public class EntryUADEntityAggregator extends BaseUADEntityAggregator {
+public class EntryUADEntityAggregator extends DynamicQueryUADEntityAggregator<Entry> {
 	@Override
-	public int count(long userId) {
-		return (int)_entryLocalService.dynamicQueryCount(_getDynamicQuery(
-				userId));
-	}
-
-	@Override
-	public List<UADEntity> getUADEntities(long userId, int start, int end) {
-		List<Entry> entries = _entryLocalService.dynamicQuery(_getDynamicQuery(
-					userId), start, end);
-
-		List<UADEntity> uadEntities = new ArrayList<UADEntity>(entries.size());
-
-		for (Entry entry : entries) {
-			uadEntities.add(new EntryUADEntity(userId,
-					_getUADEntityId(userId, entry), entry));
-		}
-
-		return uadEntities;
-	}
-
-	@Override
-	public UADEntity getUADEntity(String uadEntityId) throws PortalException {
-		Entry entry = _entryLocalService.getEntry(_getEntryId(uadEntityId));
-
-		return new EntryUADEntity(_getUserId(uadEntityId), uadEntityId, entry);
-	}
-
-	@Override
-	public String getUADEntitySetName() {
+	public String getApplicationName() {
 		return ContactsUADConstants.UAD_ENTITY_SET_NAME;
 	}
 
-	private DynamicQuery _getDynamicQuery(long userId) {
-		return _uadDynamicQueryHelper.addDynamicQueryCriteria(_entryLocalService.dynamicQuery(),
-			ContactsUADConstants.USER_ID_FIELD_NAMES_ENTRY, userId);
+	@Override
+	public Entry getEntity(Serializable entityId) throws PortalException {
+		return _entryLocalService.getEntry(Long.valueOf(entityId.toString()));
 	}
 
-	private long _getEntryId(String uadEntityId) {
-		String[] uadEntityIdParts = uadEntityId.split("#");
-
-		return Long.parseLong(uadEntityIdParts[0]);
+	@Override
+	protected long doCount(DynamicQuery dynamicQuery) {
+		return _entryLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	private String _getUADEntityId(long userId, Entry entry) {
-		return String.valueOf(entry.getEntryId()) + "#" +
-		String.valueOf(userId);
+	@Override
+	protected DynamicQuery doGetDynamicQuery() {
+		return _entryLocalService.dynamicQuery();
 	}
 
-	private long _getUserId(String uadEntityId) {
-		String[] uadEntityIdParts = uadEntityId.split("#");
+	@Override
+	protected List<Entry> doGetEntities(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return _entryLocalService.dynamicQuery(dynamicQuery, start, end);
+	}
 
-		return Long.parseLong(uadEntityIdParts[1]);
+	@Override
+	protected String[] doGetUserIdFieldNames() {
+		return ContactsUADConstants.USER_ID_FIELD_NAMES_ENTRY;
 	}
 
 	@Reference
 	private EntryLocalService _entryLocalService;
-	@Reference
-	private UADDynamicQueryHelper _uadDynamicQueryHelper;
 }

@@ -76,15 +76,6 @@
 				);
 
 				editor.addCommand('bbcode', commandObject);
-
-				editor.ui.addButton(
-					'Code',
-					{
-						command: 'bbcode',
-						icon: editor.config.imagesPath + 'code.png',
-						label: editor.config.lang.code
-					}
-				);
 			}
 		}
 	);

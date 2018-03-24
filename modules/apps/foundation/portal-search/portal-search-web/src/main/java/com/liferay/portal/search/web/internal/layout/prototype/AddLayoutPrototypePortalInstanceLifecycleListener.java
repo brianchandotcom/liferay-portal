@@ -18,27 +18,14 @@ import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
-import com.liferay.portal.kernel.util.DefaultLayoutPrototypesUtil;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.language.LanguageResources;
-import com.liferay.portal.search.web.layout.prototype.SearchLayoutPrototypeCustomizer;
+import com.liferay.portal.kernel.service.GroupLocalService;
 
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author André de Oliveira
@@ -50,84 +37,14 @@ public class AddLayoutPrototypePortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		long companyId = company.getCompanyId();
+		searchLayoutFactory.createSearchLayoutPrototype(company);
 
-		long defaultUserId = userLocalService.getDefaultUserId(companyId);
+		List<Group> groups = groupLocalService.getCompanyGroups(
+			company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		ResourceBundleLoader resourceBundleLoader = getResourceBundleLoader();
-
-		Map<Locale, String> nameMap = getLocalizationMap(
-			"layout-prototype-search-title", resourceBundleLoader);
-
-		Map<Locale, String> descriptionMap = getLocalizationMap(
-			"layout-prototype-search-description", resourceBundleLoader);
-
-		createSearchPageTemplate(
-			companyId, defaultUserId, nameMap, descriptionMap);
-	}
-
-	protected Layout createLayout(
-			long companyId, long defaultUserId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String layoutTemplateId)
-		throws Exception {
-
-		List<LayoutPrototype> layoutPrototypes =
-			layoutPrototypeLocalService.search(
-				companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		Layout layout = DefaultLayoutPrototypesUtil.addLayoutPrototype(
-			companyId, defaultUserId, nameMap, descriptionMap, layoutTemplateId,
-			layoutPrototypes);
-
-		return layout;
-	}
-
-	protected void createSearchPageTemplate(
-			long companyId, long defaultUserId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap)
-		throws Exception {
-
-		String layoutTemplateId = getLayoutTemplateId();
-
-		Layout layout = createLayout(
-			companyId, defaultUserId, nameMap, descriptionMap,
-			layoutTemplateId);
-
-		if (layout == null) {
-			return;
+		for (Group group : groups) {
+			searchLayoutFactory.createSearchLayout(group);
 		}
-
-		customize(layout);
-	}
-
-	protected void customize(Layout layout) throws Exception {
-		if (searchLayoutPrototypeCustomizer != null) {
-			searchLayoutPrototypeCustomizer.customize(layout);
-		}
-		else {
-			_defaultSearchLayoutPrototypeCustomizer.customize(layout);
-		}
-	}
-
-	protected String getLayoutTemplateId() {
-		if (searchLayoutPrototypeCustomizer != null) {
-			return searchLayoutPrototypeCustomizer.getLayoutTemplateId();
-		}
-
-		return _defaultSearchLayoutPrototypeCustomizer.getLayoutTemplateId();
-	}
-
-	protected Map<Locale, String> getLocalizationMap(
-		String key, ResourceBundleLoader resourceBundleLoader) {
-
-		return ResourceBundleUtil.getLocalizationMap(resourceBundleLoader, key);
-	}
-
-	protected AggregateResourceBundleLoader getResourceBundleLoader() {
-		return new AggregateResourceBundleLoader(
-			ResourceBundleUtil.getResourceBundleLoader(
-				"content.Language", getClassLoader()),
-			LanguageResources.RESOURCE_BUNDLE_LOADER);
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -136,21 +53,9 @@ public class AddLayoutPrototypePortalInstanceLifecycleListener
 	}
 
 	@Reference
-	protected LayoutPrototypeLocalService layoutPrototypeLocalService;
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected volatile SearchLayoutPrototypeCustomizer
-		searchLayoutPrototypeCustomizer;
+	protected GroupLocalService groupLocalService;
 
 	@Reference
-	protected UserLocalService userLocalService;
-
-	private final SearchLayoutPrototypeCustomizer
-		_defaultSearchLayoutPrototypeCustomizer =
-			new DefaultSearchLayoutPrototypeCustomizer();
+	protected SearchLayoutFactory searchLayoutFactory;
 
 }

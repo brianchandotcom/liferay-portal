@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.PortletConstants;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -222,10 +222,10 @@ public class UpgradeJournalArticles extends BaseUpgradePortletId {
 
 				String newPreferences = getNewPreferences(plid, preferences);
 
-				long userId = PortletConstants.getUserId(portletId);
-				String instanceId = PortletConstants.getInstanceId(portletId);
+				long userId = PortletIdCodec.decodeUserId(portletId);
+				String instanceId = PortletIdCodec.decodeInstanceId(portletId);
 
-				String newPortletId = PortletConstants.assemblePortletId(
+				String newPortletId = PortletIdCodec.encode(
 					_PORTLET_ID_ASSET_PUBLISHER, userId, instanceId);
 
 				updatePortletPreference(

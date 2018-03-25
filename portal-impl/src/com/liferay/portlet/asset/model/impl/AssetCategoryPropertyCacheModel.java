@@ -34,8 +34,10 @@ import java.util.Date;
  *
  * @author Brian Wing Shun Chan
  * @see AssetCategoryProperty
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public class AssetCategoryPropertyCacheModel implements CacheModel<AssetCategoryProperty>,
 	Externalizable {

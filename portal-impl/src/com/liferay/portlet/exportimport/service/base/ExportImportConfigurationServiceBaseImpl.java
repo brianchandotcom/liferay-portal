@@ -383,6 +383,7 @@ public abstract class ExportImportConfigurationServiceBaseImpl
 	 *
 	 * @return the trash entry local service
 	 */
+	@SuppressWarnings("deprecation")
 	public com.liferay.trash.kernel.service.TrashEntryLocalService getTrashEntryLocalService() {
 		return trashEntryLocalService;
 	}
@@ -392,6 +393,7 @@ public abstract class ExportImportConfigurationServiceBaseImpl
 	 *
 	 * @param trashEntryLocalService the trash entry local service
 	 */
+	@SuppressWarnings("deprecation")
 	public void setTrashEntryLocalService(
 		com.liferay.trash.kernel.service.TrashEntryLocalService trashEntryLocalService) {
 		this.trashEntryLocalService = trashEntryLocalService;
@@ -402,6 +404,7 @@ public abstract class ExportImportConfigurationServiceBaseImpl
 	 *
 	 * @return the trash entry remote service
 	 */
+	@SuppressWarnings("deprecation")
 	public com.liferay.trash.kernel.service.TrashEntryService getTrashEntryService() {
 		return trashEntryService;
 	}
@@ -411,6 +414,7 @@ public abstract class ExportImportConfigurationServiceBaseImpl
 	 *
 	 * @param trashEntryService the trash entry remote service
 	 */
+	@SuppressWarnings("deprecation")
 	public void setTrashEntryService(
 		com.liferay.trash.kernel.service.TrashEntryService trashEntryService) {
 		this.trashEntryService = trashEntryService;
@@ -518,8 +522,10 @@ public abstract class ExportImportConfigurationServiceBaseImpl
 	@BeanReference(type = UserFinder.class)
 	protected UserFinder userFinder;
 	@BeanReference(type = com.liferay.trash.kernel.service.TrashEntryLocalService.class)
+	@SuppressWarnings("deprecation")
 	protected com.liferay.trash.kernel.service.TrashEntryLocalService trashEntryLocalService;
 	@BeanReference(type = com.liferay.trash.kernel.service.TrashEntryService.class)
+	@SuppressWarnings("deprecation")
 	protected com.liferay.trash.kernel.service.TrashEntryService trashEntryService;
 	@BeanReference(type = TrashEntryPersistence.class)
 	protected TrashEntryPersistence trashEntryPersistence;

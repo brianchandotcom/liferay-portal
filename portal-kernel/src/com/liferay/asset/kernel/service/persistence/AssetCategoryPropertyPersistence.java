@@ -31,8 +31,10 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.asset.service.persistence.impl.AssetCategoryPropertyPersistenceImpl
  * @see AssetCategoryPropertyUtil
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetCategoryProperty> {
 	/*

@@ -18,8 +18,10 @@ import aQute.bnd.annotation.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface AssetCategoryPropertyFinder {
 	public int countByG_K(long groupId, java.lang.String key);

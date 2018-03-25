@@ -56,8 +56,10 @@ import java.util.Map;
  * @see AssetCategoryPropertyImpl
  * @see AssetCategoryProperty
  * @see AssetCategoryPropertyModel
+ * @deprecated
  * @generated
  */
+@Deprecated
 @JSON(strict = true)
 @ProviderType
 public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryProperty>

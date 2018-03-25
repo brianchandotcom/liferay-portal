@@ -33,12 +33,12 @@ public class UpgradeProcess_6_1_1 extends Pre7UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgrade(UpgradeSchema.class);
+		upgrade(new UpgradeSchema());
 
-		upgrade(UpgradeDocumentLibrary.class);
-		upgrade(UpgradeLayout.class);
-		upgrade(UpgradeLayoutSet.class);
-		upgrade(UpgradeLayoutSetBranch.class);
+		upgrade(new UpgradeDocumentLibrary());
+		upgrade(new UpgradeLayout());
+		upgrade(new UpgradeLayoutSet());
+		upgrade(new UpgradeLayoutSetBranch());
 
 		clearIndexesCache();
 	}

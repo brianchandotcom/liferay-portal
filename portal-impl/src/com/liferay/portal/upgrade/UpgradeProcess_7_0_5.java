@@ -41,17 +41,17 @@ public class UpgradeProcess_7_0_5 extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgrade(UpgradeBookmarks.class);
-		upgrade(UpgradeCompany.class);
-		upgrade(UpgradeContact.class);
-		upgrade(UpgradeGroup.class);
-		upgrade(UpgradeEmailAddress.class);
-		upgrade(UpgradeExpando.class);
-		upgrade(UpgradeMBMailingList.class);
-		upgrade(UpgradePortalPreferences.class);
-		upgrade(UpgradeThemeId.class);
-		upgrade(UpgradeUser.class);
-		upgrade(UpgradeVirtualHost.class);
+		upgrade(new UpgradeBookmarks());
+		upgrade(new UpgradeCompany());
+		upgrade(new UpgradeContact());
+		upgrade(new UpgradeGroup());
+		upgrade(new UpgradeEmailAddress());
+		upgrade(new UpgradeExpando());
+		upgrade(new UpgradeMBMailingList());
+		upgrade(new UpgradePortalPreferences());
+		upgrade(new UpgradeThemeId());
+		upgrade(new UpgradeUser());
+		upgrade(new UpgradeVirtualHost());
 
 		clearIndexesCache();
 	}

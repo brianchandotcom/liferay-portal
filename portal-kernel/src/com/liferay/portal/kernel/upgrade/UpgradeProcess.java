@@ -109,6 +109,10 @@ public abstract class UpgradeProcess
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #upgrade(UpgradeProcess)}
+	 */
+	@Deprecated
 	public void upgrade(Class<?> upgradeProcessClass) throws UpgradeException {
 		UpgradeProcess upgradeProcess = null;
 

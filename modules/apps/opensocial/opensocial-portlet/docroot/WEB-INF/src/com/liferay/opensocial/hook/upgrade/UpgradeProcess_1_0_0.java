@@ -29,7 +29,7 @@ public class UpgradeProcess_1_0_0 extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgrade(UpgradeGadget.class);
+		upgrade(new UpgradeGadget());
 	}
 
 }

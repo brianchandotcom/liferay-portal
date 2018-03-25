@@ -23,7 +23,7 @@ public class UpgradeSchema extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgrade(UpgradeMVCCVersion.class);
+		upgrade(new UpgradeMVCCVersion());
 	}
 
 }

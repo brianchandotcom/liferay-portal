@@ -14,21 +14,14 @@
 
 package com.liferay.bookmarks.uad.exporter;
 
-import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.service.BookmarksEntryLocalService;
 import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
 import com.liferay.bookmarks.uad.entity.BookmarksEntryUADEntity;
-import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
-import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.entity.UADEntity;
 import com.liferay.user.associated.data.exception.UADEntityException;
@@ -37,7 +30,8 @@ import com.liferay.user.associated.data.exporter.BaseUADEntityExporter;
 import com.liferay.user.associated.data.exporter.UADEntityExporter;
 import com.liferay.user.associated.data.util.UADDynamicQueryHelper;
 
-import java.io.InputStream;
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import org.osgi.service.component.annotations.Component;
@@ -62,25 +56,15 @@ public class BookmarksEntryUADEntityExporter extends BaseUADEntityExporter {
 	}
 
 	@Override
-	public void export(UADEntity uadEntity) throws PortalException {
+	public byte[] export(UADEntity uadEntity) throws PortalException {
 		BookmarksEntry bookmarksEntry = _getBookmarksEntry(uadEntity);
 
-		String json = getJSON(bookmarksEntry);
+		String xml = bookmarksEntry.toXmlString();
 
-		Folder folder = getFolder(
-			bookmarksEntry.getCompanyId(), BookmarksPortletKeys.BOOKMARKS,
-			_FOLDER_NAME);
+		xml = formatXML(xml);
 
 		try {
-			InputStream is = new UnsyncByteArrayInputStream(
-				json.getBytes(StringPool.UTF8));
-
-			PortletFileRepositoryUtil.addPortletFileEntry(
-				folder.getGroupId(), bookmarksEntry.getUserId(),
-				Group.class.getName(), folder.getGroupId(),
-				BookmarksPortletKeys.BOOKMARKS, folder.getFolderId(), is,
-				uadEntity.getUADEntityId() + ".json",
-				ContentTypes.APPLICATION_JSON, false);
+			return xml.getBytes(StringPool.UTF8);
 		}
 		catch (UnsupportedEncodingException uee) {
 			throw new UADEntityExporterException(uee);
@@ -88,12 +72,11 @@ public class BookmarksEntryUADEntityExporter extends BaseUADEntityExporter {
 	}
 
 	@Override
-	public void exportAll(
-			final long userId, final PortletDataContext portletDataContext)
-		throws PortalException {
-
+	public File exportAll(final long userId) throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
 			_getActionableDynamicQuery(userId);
+
+		ZipWriter zipWriter = getZipWriter(userId);
 
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<BookmarksEntry>() {
@@ -102,27 +85,35 @@ public class BookmarksEntryUADEntityExporter extends BaseUADEntityExporter {
 				public void performAction(BookmarksEntry bookmarksEntry)
 					throws PortalException {
 
-					StagedModelDataHandler stagedModelDataHandler =
-						getStagedModelDataHandler();
+					BookmarksEntryUADEntity bookmarksEntryUADEntity =
+						_getBookmarksEntryUADEntity(userId, bookmarksEntry);
 
-					stagedModelDataHandler.exportStagedModel(
-						portletDataContext,
-						_getBookmarksEntryUADEntity(userId, bookmarksEntry));
+					byte[] data = export(bookmarksEntryUADEntity);
+
+					try {
+						zipWriter.addEntry(
+							bookmarksEntry.getEntryId() + ".xml", data);
+					}
+					catch (IOException ioe) {
+						throw new PortalException(ioe);
+					}
 				}
 
 			});
 
 		actionableDynamicQuery.performActions();
+
+		return zipWriter.getFile();
+	}
+
+	@Override
+	protected String getEntityName() {
+		return BookmarksEntry.class.getName();
 	}
 
 	@Override
 	protected UADEntityAggregator getUADEntityAggregator() {
 		return _uadEntityAggregator;
-	}
-
-	@Override
-	protected String getUADEntityName() {
-		return BookmarksEntryUADEntity.class.getName();
 	}
 
 	private ActionableDynamicQuery _getActionableDynamicQuery(long userId) {
@@ -159,8 +150,6 @@ public class BookmarksEntryUADEntityExporter extends BaseUADEntityExporter {
 			throw new UADEntityException();
 		}
 	}
-
-	private static final String _FOLDER_NAME = "UADExport";
 
 	@Reference
 	private BookmarksEntryLocalService _bookmarksEntryLocalService;

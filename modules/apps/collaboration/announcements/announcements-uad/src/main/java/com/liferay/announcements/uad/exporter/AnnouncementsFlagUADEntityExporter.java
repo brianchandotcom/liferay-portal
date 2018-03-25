@@ -14,25 +14,24 @@
 
 package com.liferay.announcements.uad.exporter;
 
-import com.liferay.announcements.constants.AnnouncementsPortletKeys;
 import com.liferay.announcements.kernel.model.AnnouncementsFlag;
+import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.announcements.uad.entity.AnnouncementsFlagUADEntity;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
-import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.entity.UADEntity;
 import com.liferay.user.associated.data.exception.UADEntityException;
 import com.liferay.user.associated.data.exception.UADEntityExporterException;
 import com.liferay.user.associated.data.exporter.BaseUADEntityExporter;
 import com.liferay.user.associated.data.exporter.UADEntityExporter;
+import com.liferay.user.associated.data.util.UADDynamicQueryHelper;
 
-import java.io.InputStream;
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import org.osgi.service.component.annotations.Component;
@@ -49,25 +48,15 @@ import org.osgi.service.component.annotations.Reference;
 public class AnnouncementsFlagUADEntityExporter extends BaseUADEntityExporter {
 
 	@Override
-	public void export(UADEntity uadEntity) throws PortalException {
+	public byte[] export(UADEntity uadEntity) throws PortalException {
 		AnnouncementsFlag announcementsFlag = _getAnnouncementsFlag(uadEntity);
 
-		String json = getJSON(announcementsFlag);
+		String xml = announcementsFlag.toXmlString();
 
-		Folder folder = getFolder(
-			announcementsFlag.getCompanyId(),
-			AnnouncementsPortletKeys.ANNOUNCEMENTS, _FOLDER_NAME);
+		xml = formatXML(xml);
 
 		try {
-			InputStream is = new UnsyncByteArrayInputStream(
-				json.getBytes(StringPool.UTF8));
-
-			PortletFileRepositoryUtil.addPortletFileEntry(
-				folder.getGroupId(), announcementsFlag.getUserId(),
-				Group.class.getName(), folder.getGroupId(),
-				AnnouncementsPortletKeys.ANNOUNCEMENTS, folder.getFolderId(),
-				is, uadEntity.getUADEntityId() + ".json",
-				ContentTypes.APPLICATION_JSON, false);
+			return xml.getBytes(StringPool.UTF8);
 		}
 		catch (UnsupportedEncodingException uee) {
 			throw new UADEntityExporterException(uee);
@@ -75,8 +64,57 @@ public class AnnouncementsFlagUADEntityExporter extends BaseUADEntityExporter {
 	}
 
 	@Override
+	public File exportAll(long userId) throws PortalException {
+		ActionableDynamicQuery actionableDynamicQuery =
+			_getActionableDynamicQuery(userId);
+
+		ZipWriter zipWriter = getZipWriter(userId);
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.
+				PerformActionMethod<AnnouncementsFlag>() {
+
+				@Override
+				public void performAction(AnnouncementsFlag announcementsFlag)
+					throws PortalException {
+
+					AnnouncementsFlagUADEntity announcementsFlagUADEntity =
+						_getAnnouncementsFlagUADEntity(
+							userId, announcementsFlag);
+
+					byte[] data = export(announcementsFlagUADEntity);
+
+					try {
+						zipWriter.addEntry(
+							announcementsFlag.getFlagId() + ".xml", data);
+					}
+					catch (IOException ioe) {
+						throw new PortalException(ioe);
+					}
+				}
+
+			});
+
+		actionableDynamicQuery.performActions();
+
+		return zipWriter.getFile();
+	}
+
+	@Override
+	protected String getEntityName() {
+		return AnnouncementsFlag.class.getName();
+	}
+
+	@Override
 	protected UADEntityAggregator getUADEntityAggregator() {
 		return _uadEntityAggregator;
+	}
+
+	private ActionableDynamicQuery _getActionableDynamicQuery(long userId) {
+		return _uadDynamicQueryHelper.addActionableDynamicQueryCriteria(
+			_announcementsFlagLocalService.getActionableDynamicQuery(),
+			AnnouncementsUADConstants.USER_ID_FIELD_NAMES_ANNOUNCEMENTS_FLAG,
+			userId);
 	}
 
 	private AnnouncementsFlag _getAnnouncementsFlag(UADEntity uadEntity)
@@ -90,13 +128,25 @@ public class AnnouncementsFlagUADEntityExporter extends BaseUADEntityExporter {
 		return announcementsFlagUADEntity.getAnnouncementsFlag();
 	}
 
+	private AnnouncementsFlagUADEntity _getAnnouncementsFlagUADEntity(
+		long userId, AnnouncementsFlag announcementsFlag) {
+
+		return new AnnouncementsFlagUADEntity(
+			userId, String.valueOf(announcementsFlag.getFlagId()),
+			announcementsFlag);
+	}
+
 	private void _validate(UADEntity uadEntity) throws PortalException {
 		if (!(uadEntity instanceof AnnouncementsFlagUADEntity)) {
 			throw new UADEntityException();
 		}
 	}
 
-	private static final String _FOLDER_NAME = "UADExport";
+	@Reference
+	private AnnouncementsFlagLocalService _announcementsFlagLocalService;
+
+	@Reference
+	private UADDynamicQueryHelper _uadDynamicQueryHelper;
 
 	@Reference(
 		target = "(model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_FLAG + ")"

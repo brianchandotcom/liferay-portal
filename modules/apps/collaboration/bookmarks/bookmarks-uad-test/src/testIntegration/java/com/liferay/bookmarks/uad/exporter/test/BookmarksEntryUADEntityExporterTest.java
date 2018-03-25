@@ -15,38 +15,28 @@
 package com.liferay.bookmarks.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
 import com.liferay.bookmarks.uad.test.BaseBookmarksEntryUADEntityTestCase;
-import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Node;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.zip.ZipReader;
+import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.entity.UADEntity;
 import com.liferay.user.associated.data.exporter.UADEntityExporter;
 
-import java.io.InputStream;
-import java.io.StringWriter;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 
 import java.util.List;
-
-import org.apache.commons.io.IOUtils;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -82,57 +72,36 @@ public class BookmarksEntryUADEntityExporterTest
 
 		UADEntity uadEntity = uadEntities.get(0);
 
-		_uadEntityExporter.export(uadEntity);
+		byte[] bytes = _uadEntityExporter.export(uadEntity);
 
-		FileEntry fileEntry = _getFileEntry(
-			bookmarksEntry.getCompanyId(), uadEntity.getUADEntityId());
+		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
+			bytes);
 
-		_verifyFileEntry(fileEntry, bookmarksEntry);
+		Document document = SAXReaderUtil.read(byteArrayInputStream);
 
-		PortletFileRepositoryUtil.deletePortletFileEntry(
-			fileEntry.getFileEntryId());
-	}
-
-	private FileEntry _getFileEntry(long companyId, String uadEntityId)
-		throws Exception {
-
-		Group guestGroup = _groupLocalService.getGroup(
-			companyId, GroupConstants.GUEST);
-
-		Repository repository = PortletFileRepositoryUtil.getPortletRepository(
-			guestGroup.getGroupId(), BookmarksPortletKeys.BOOKMARKS);
-
-		Folder folder = PortletFileRepositoryUtil.getPortletFolder(
-			repository.getRepositoryId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "UADExport");
-
-		return PortletFileRepositoryUtil.getPortletFileEntry(
-			guestGroup.getGroupId(), folder.getFolderId(),
-			uadEntityId + ".json");
-	}
-
-	private void _verifyFileEntry(
-			FileEntry fileEntry, BookmarksEntry bookmarksEntry)
-		throws Exception {
-
-		InputStream is = _dlFileEntryLocalService.getFileAsStream(
-			fileEntry.getFileEntryId(), fileEntry.getVersion());
-		StringWriter stringWriter = new StringWriter();
-
-		IOUtils.copy(is, stringWriter, StringPool.UTF8);
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			stringWriter.toString());
+		Node entryIdNode = document.selectSingleNode(
+			"/model/column[column-name='entryId']/column-value");
+		Node userIdNode = document.selectSingleNode(
+			"/model/column[column-name='userId']/column-value");
 
 		Assert.assertEquals(
-			bookmarksEntry.getEntryId(), jsonObject.getInt("entryId"));
+			String.valueOf(bookmarksEntry.getEntryId()), entryIdNode.getText());
+		Assert.assertEquals(
+			String.valueOf(_user.getUserId()), userIdNode.getText());
 	}
 
-	@Inject
-	private DLFileEntryLocalService _dlFileEntryLocalService;
+	@Test
+	public void testExportAll() throws Exception {
+		addBookmarksEntry(_user.getUserId());
 
-	@Inject
-	private GroupLocalService _groupLocalService;
+		File file = _uadEntityExporter.exportAll(_user.getUserId());
+
+		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+
+		List<String> entries = zipReader.getEntries();
+
+		Assert.assertEquals(entries.toString(), 1, entries.size());
+	}
 
 	@Inject(
 		filter = "model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY

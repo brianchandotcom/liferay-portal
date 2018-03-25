@@ -14,28 +14,20 @@
 
 package com.liferay.user.associated.data.exporter;
 
-import com.liferay.document.library.kernel.exception.NoSuchFolderException;
-import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.exportimport.kernel.lar.ManifestSummary;
-import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
-import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
-import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.Repository;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
-import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.zip.ZipWriter;
+import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
-import com.liferay.user.associated.data.util.UADEntityChunkedCommandUtil;
+
+import java.io.File;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -49,89 +41,42 @@ public abstract class BaseUADEntityExporter implements UADEntityExporter {
 		return getUADEntityAggregator().count(userId);
 	}
 
-	@Override
-	public void exportAll(long userId, PortletDataContext portletDataContext)
-		throws PortalException {
+	protected File createFolder(long userId) {
+		StringBundler sb = new StringBundler(3);
 
-		UADEntityChunkedCommandUtil.executeChunkedCommand(
-			userId, getUADEntityAggregator(), this::export);
+		sb.append(SystemProperties.get(SystemProperties.TMP_DIR));
+		sb.append("/liferay/uad/");
+		sb.append(userId);
+
+		File file = new File(sb.toString());
+
+		file.mkdirs();
+
+		return file;
 	}
 
-	@Override
-	public StagedModelDataHandler getStagedModelDataHandler() {
-		StagedModelDataHandler stagedModelDataHandler =
-			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
-				getUADEntityName());
-
-		return stagedModelDataHandler;
+	protected String formatXML(String xml) {
+		return XMLUtil.formatXML(xml);
 	}
 
-	@Override
-	public void prepareManifestSummary(
-			long userId, PortletDataContext portletDataContext)
-		throws PortalException {
-
-		ManifestSummary manifestSummary =
-			portletDataContext.getManifestSummary();
-
-		StagedModelType stagedModelType = new StagedModelType(
-			getUADEntityName());
-
-		manifestSummary.addModelAdditionCount(stagedModelType, count(userId));
-	}
-
-	protected Folder getFolder(
-			long companyId, String portletId, String folderName)
-		throws PortalException {
-
-		Group guestGroup = groupLocalService.getGroup(
-			companyId, GroupConstants.GUEST);
-
-		Repository repository =
-			PortletFileRepositoryUtil.fetchPortletRepository(
-				guestGroup.getGroupId(), portletId);
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		if (repository == null) {
-			repository = PortletFileRepositoryUtil.addPortletRepository(
-				guestGroup.getGroupId(), portletId, serviceContext);
-		}
-
-		Folder folder = null;
-
-		try {
-			folder = PortletFileRepositoryUtil.getPortletFolder(
-				repository.getRepositoryId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, folderName);
-		}
-		catch (NoSuchFolderException nsfe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(nsfe, nsfe);
-			}
-
-			folder = PortletFileRepositoryUtil.addPortletFolder(
-				userLocalService.getDefaultUserId(companyId),
-				repository.getRepositoryId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, folderName,
-				serviceContext);
-		}
-
-		return folder;
-	}
-
-	protected String getJSON(Object object) {
-		return JSONFactoryUtil.looseSerialize(object);
-	}
+	protected abstract String getEntityName();
 
 	protected abstract UADEntityAggregator getUADEntityAggregator();
 
-	protected String getUADEntityName() {
-		return StringPool.BLANK;
-	}
+	protected ZipWriter getZipWriter(long userId) {
+		File file = createFolder(userId);
 
-	@Reference
-	protected GroupLocalService groupLocalService;
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(file.getAbsolutePath());
+		sb.append(StringPool.SLASH);
+		sb.append(getEntityName());
+		sb.append(StringPool.UNDERLINE);
+		sb.append(Time.getShortTimestamp());
+		sb.append(".zip");
+
+		return ZipWriterFactoryUtil.getZipWriter(new File(sb.toString()));
+	}
 
 	@Reference
 	protected UserLocalService userLocalService;

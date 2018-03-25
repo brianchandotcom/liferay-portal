@@ -14,37 +14,29 @@
 
 package com.liferay.announcements.uad.exporter.test;
 
-import com.liferay.announcements.constants.AnnouncementsPortletKeys;
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.announcements.uad.test.BaseAnnouncementsEntryUADEntityTestCase;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Node;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.zip.ZipReader;
+import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.entity.UADEntity;
 import com.liferay.user.associated.data.exporter.UADEntityExporter;
 
-import java.io.InputStream;
-import java.io.StringWriter;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 
-import org.apache.commons.io.IOUtils;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -78,60 +70,42 @@ public class AnnouncementsEntryUADEntityExporterTest
 		AnnouncementsEntry announcementsEntry = addAnnouncementsEntry(
 			_user.getUserId());
 
-		UADEntity uadEntity = _uadEntityAggregator.getUADEntity(
-			String.valueOf(announcementsEntry.getEntryId()));
+		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
+			_user.getUserId());
 
-		_uadEntityExporter.export(uadEntity);
+		UADEntity uadEntity = uadEntities.get(0);
 
-		FileEntry fileEntry = _getFileEntry(
-			announcementsEntry.getCompanyId(), uadEntity.getUADEntityId());
+		byte[] bytes = _uadEntityExporter.export(uadEntity);
 
-		_verifyFileEntry(fileEntry, announcementsEntry);
+		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
+			bytes);
 
-		PortletFileRepositoryUtil.deletePortletFileEntry(
-			fileEntry.getFileEntryId());
-	}
+		Document document = SAXReaderUtil.read(byteArrayInputStream);
 
-	private FileEntry _getFileEntry(long companyId, String uadEntityId)
-		throws Exception {
-
-		Group guestGroup = _groupLocalService.getGroup(
-			companyId, GroupConstants.GUEST);
-
-		Repository repository = PortletFileRepositoryUtil.getPortletRepository(
-			guestGroup.getGroupId(), AnnouncementsPortletKeys.ANNOUNCEMENTS);
-
-		Folder folder = PortletFileRepositoryUtil.getPortletFolder(
-			repository.getRepositoryId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "UADExport");
-
-		return PortletFileRepositoryUtil.getPortletFileEntry(
-			guestGroup.getGroupId(), folder.getFolderId(),
-			uadEntityId + ".json");
-	}
-
-	private void _verifyFileEntry(
-			FileEntry fileEntry, AnnouncementsEntry announcementsEntry)
-		throws Exception {
-
-		InputStream is = _dlFileEntryLocalService.getFileAsStream(
-			fileEntry.getFileEntryId(), fileEntry.getVersion());
-		StringWriter stringWriter = new StringWriter();
-
-		IOUtils.copy(is, stringWriter, StringPool.UTF8);
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			stringWriter.toString());
+		Node entryIdNode = document.selectSingleNode(
+			"/model/column[column-name='entryId']/column-value");
+		Node userIdNode = document.selectSingleNode(
+			"/model/column[column-name='userId']/column-value");
 
 		Assert.assertEquals(
-			announcementsEntry.getEntryId(), jsonObject.getInt("entryId"));
+			String.valueOf(announcementsEntry.getEntryId()),
+			entryIdNode.getText());
+		Assert.assertEquals(
+			String.valueOf(_user.getUserId()), userIdNode.getText());
 	}
 
-	@Inject
-	private DLFileEntryLocalService _dlFileEntryLocalService;
+	@Test
+	public void testExportAll() throws Exception {
+		addAnnouncementsEntry(_user.getUserId());
 
-	@Inject
-	private GroupLocalService _groupLocalService;
+		File file = _uadEntityExporter.exportAll(_user.getUserId());
+
+		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+
+		List<String> entries = zipReader.getEntries();
+
+		Assert.assertEquals(entries.toString(), 1, entries.size());
+	}
 
 	@Inject(
 		filter = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_ENTRY

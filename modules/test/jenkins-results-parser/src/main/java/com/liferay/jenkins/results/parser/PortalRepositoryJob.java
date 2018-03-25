@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -46,6 +47,11 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 		return getListFromString(testBatchDistAppServers);
 	}
 
+	@Override
+	public GitWorkingDirectory getGitWorkingDirectory() {
+		return _getPortalGitWorkingDirectory();
+	}
+
 	public String getPoshiQuery(String testBatchName) {
 		String propertyName = JenkinsResultsParserUtil.combine(
 			"test.batch.run.property.query[", testBatchName, "]");
@@ -66,10 +72,11 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 		super(jobName);
 
 		branchName = _getBranchName();
-		gitWorkingDirectory = _getGitWorkingDirectory();
+		gitWorkingDirectory = _getPortalGitWorkingDirectory();
 
-		portalTestProperties = getGitWorkingDirectoryProperties(
-			"test.properties");
+		portalTestProperties = JenkinsResultsParserUtil.getProperties(
+			new File(
+				gitWorkingDirectory.getWorkingDirectory(), "test.properties"));
 	}
 
 	protected List<String> getListFromString(String string) {
@@ -123,7 +130,13 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 		return "master";
 	}
 
-	private GitWorkingDirectory _getGitWorkingDirectory() {
+	private PortalGitWorkingDirectory _getPortalGitWorkingDirectory() {
+		if ((gitWorkingDirectory != null) &&
+			gitWorkingDirectory instanceof PortalGitWorkingDirectory) {
+
+			return (PortalGitWorkingDirectory)gitWorkingDirectory;
+		}
+
 		String branchName = _getBranchName();
 		String workingDirectoryPath = "/opt/dev/projects/github/liferay-portal";
 
@@ -132,13 +145,20 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 				workingDirectoryPath, "-", branchName);
 		}
 
+		PortalGitWorkingDirectory portalGitWorkingDirectory = null;
+
 		try {
-			return new GitWorkingDirectory(branchName, workingDirectoryPath);
+			portalGitWorkingDirectory = new PortalGitWorkingDirectory(
+				branchName, workingDirectoryPath);
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(
 				"Invalid Git working directory " + workingDirectoryPath, ioe);
 		}
+
+		gitWorkingDirectory = portalGitWorkingDirectory;
+
+		return portalGitWorkingDirectory;
 	}
 
 	private static final Pattern _jobNamePattern = Pattern.compile(

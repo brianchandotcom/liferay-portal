@@ -34,6 +34,8 @@ public interface SearchSettings {
 
 	public void addFacet(Facet facet);
 
+	public Optional<String> getKeywordsParameterName();
+
 	public Optional<Integer> getPaginationDelta();
 
 	public Optional<String> getPaginationDeltaParameterName();
@@ -47,6 +49,8 @@ public interface SearchSettings {
 	public SearchContext getSearchContext();
 
 	public void setKeywords(String keywords);
+
+	public void setKeywordsParameterName(String keywordsParameterName);
 
 	public void setPaginationDelta(int paginationDelta);
 

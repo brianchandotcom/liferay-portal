@@ -92,6 +92,8 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 				return;
 			}
 
+			_log.error(e, e);
+
 			throw e;
 		}
 	}

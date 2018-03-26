@@ -138,6 +138,11 @@ public class CPMeasurementUnitLocalServiceImpl
 	}
 
 	@Override
+	public int getCPMeasurementUnitsCount(long groupId) {
+		return cpMeasurementUnitPersistence.countByGroupId(groupId);
+	}
+
+	@Override
 	public int getCPMeasurementUnitsCount(long groupId, int type) {
 		return cpMeasurementUnitPersistence.countByG_T(groupId, type);
 	}

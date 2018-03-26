@@ -1,14 +1,17 @@
-const ANALYTICS_KEY = 'ANALYTICS_KEY';
+import AnalyticsClient from '../src/analytics';
+import {assert, expect} from 'chai';
+
+let Analytics = AnalyticsClient.create();
+
 const ANALYTICS_IDENTITY = {email: 'foo@bar.com'};
+const ANALYTICS_KEY = 'ANALYTICS_KEY';
 const FLUSH_INTERVAL = 100;
 const LOCAL_USER_ID = 'LOCAL_USER_ID';
+const MOCKED_REQUEST_DURATION = 5000;
 const SERVICE_USER_ID = 'SERVICE_USER_ID';
 const STORAGE_KEY_EVENTS = 'lcs_client_batch';
 const STORAGE_KEY_USER_ID = 'lcs_client_user_id';
 
-const Analytics = window.Analytics;
-const assert = chai.assert;
-const expect = chai.expect;
 const fetchMock = window.fetchMock;
 
 /**
@@ -31,13 +34,11 @@ function sendDummyEvents(eventsNumber = 5) {
 
 describe('Analytics Client', () => {
 	afterEach(() => {
-		Analytics.dispose();
 		fetchMock.restore();
 	});
 
 	beforeEach(
 		() => {
-			Analytics.create();
 			localStorage.removeItem(STORAGE_KEY_EVENTS);
 			localStorage.removeItem(STORAGE_KEY_USER_ID);
 		}
@@ -54,8 +55,9 @@ describe('Analytics Client', () => {
 	it('should accept a configuration object', () => {
 		const config = {a: 1, b: 2, c: 3};
 
-		Analytics.create(config);
-		Analytics.config.should.deep.equal(config);
+		const client = Analytics.create(config);
+		client.config.should.deep.equal(config);
+		client.dispose();
 	});
 
 	describe('.flush', () => {
@@ -73,28 +75,27 @@ describe('Analytics Client', () => {
 
 					return new Promise(
 						resolve => {
-							setTimeout(resolve, 10000);
+							setTimeout(() => resolve({}), MOCKED_REQUEST_DURATION);
 						}
 					);
 				}
 			);
 
-			Analytics.dispose();
 			Analytics.create(
 				{
 					flushInterval: FLUSH_INTERVAL,
 				}
 			);
 
-			sendDummyEvents();
-
 			const spy = sinon.spy(Analytics, 'flush');
+
+			sendDummyEvents(10);
 
 			setTimeout(
 				() => {
-					// Flush must be called 3 times
+					// Flush must be called at least 3 times
 
-					assert.isTrue(spy.calledThrice);
+					expect(spy.callCount).to.be.at.least(2);
 
 					// Without sending another Fetch Request
 
@@ -102,9 +103,11 @@ describe('Analytics Client', () => {
 
 					Analytics.flush.restore();
 
+					Analytics.dispose();
+
 					done();
 				},
-				FLUSH_INTERVAL * 3.9
+				FLUSH_INTERVAL * 3
 			);
 		});
 
@@ -151,6 +154,8 @@ describe('Analytics Client', () => {
 						// Analytics Service was called and passed the Service User Id
 
 						expect(identityReceived).to.equal(SERVICE_USER_ID);
+
+						Analytics.dispose();
 
 						done();
 					}
@@ -202,6 +207,8 @@ describe('Analytics Client', () => {
 						// Analytics Service was NOT called and passed the Local User Id
 
 						expect(identityReceived).to.equal(LOCAL_USER_ID);
+
+						Analytics.dispose();
 
 						done();
 					}
@@ -258,6 +265,8 @@ describe('Analytics Client', () => {
 
 						expect(identityReceived).to.equal(SERVICE_USER_ID);
 
+						Analytics.dispose();
+
 						done();
 					}
 				);
@@ -286,6 +295,8 @@ describe('Analytics Client', () => {
 				applicationId,
 				properties,
 			});
+
+			Analytics.dispose();
 		});
 
 		it('should persist the given events to the LocalStorage', () => {
@@ -298,6 +309,8 @@ describe('Analytics Client', () => {
 			const events = JSON.parse(localStorage.getItem(STORAGE_KEY_EVENTS));
 
 			events.should.have.lengthOf.at.least(eventsNumber);
+
+			Analytics.dispose();
 		});
 	});
 });

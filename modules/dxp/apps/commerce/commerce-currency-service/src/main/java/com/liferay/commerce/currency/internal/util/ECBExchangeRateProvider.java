@@ -16,12 +16,16 @@ package com.liferay.commerce.currency.internal.util;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.util.ExchangeRateProvider;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
+
+import java.io.IOException;
 
 import java.util.List;
 
@@ -50,7 +54,24 @@ public class ECBExchangeRateProvider implements ExchangeRateProvider {
 		primaryCurrencyCode = StringUtil.toUpperCase(primaryCurrencyCode);
 		secondaryCurrencyCode = StringUtil.toUpperCase(secondaryCurrencyCode);
 
-		String xml = _http.URLtoString(_ECB_URL);
+		String xml = null;
+
+		int i = 0;
+
+		while (Validator.isNull(xml)) {
+			try {
+				xml = _http.URLtoString(_ECB_URL);
+			}
+			catch (IOException ioe) {
+				if (i++ >= 10) {
+					throw ioe;
+				}
+			}
+
+			if (i >= 10) {
+				throw new PortalException("Impossible to load " + _ECB_URL);
+			}
+		}
 
 		Document document = _saxReader.read(xml);
 

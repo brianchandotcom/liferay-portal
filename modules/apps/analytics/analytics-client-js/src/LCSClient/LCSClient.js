@@ -54,7 +54,7 @@ class LCSClient {
 		const requestBody = {
 			analyticsKey: analytics.config.analyticsKey,
 			context: {},
-			events: analytics.events.filter((event) => {
+			events: analytics.events.filter(event => {
 				return event.applicationId && event.eventId;
 			}),
 			protocolVersion: '1.0',
@@ -75,9 +75,7 @@ class LCSClient {
 	 */
 	_validateResponse(response) {
 		if (!response.ok) {
-			response = new Promise(
-				(resolve, reject) => reject(response)
-			);
+			response = new Promise((resolve, reject) => reject(response));
 		}
 
 		return response;

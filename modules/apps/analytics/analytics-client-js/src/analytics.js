@@ -38,15 +38,15 @@ class Analytics {
 		instance._sendData = client.send.bind(client, instance);
 
 		instance.config = config;
-		instance.identityEndpoint = `https://contacts-prod.liferay.com/${config.analyticsKey}/identity`;
+		instance.identityEndpoint = `https://contacts-prod.liferay.com/${
+			config.analyticsKey
+		}/identity`;
 		instance.events = storage.get(STORAGE_KEY_EVENTS) || [];
 		instance.isFlushInProgress = false;
 
 		// Initializes default plugins
 
-		defaultPlugins.forEach(
-			plugin => plugin(instance)
-		);
+		defaultPlugins.forEach(plugin => plugin(instance));
 
 		// Starts flush loop
 
@@ -85,9 +85,9 @@ class Analytics {
 		const eventDate = new Date().toISOString();
 
 		return {
-			eventId,
-			eventDate,
 			applicationId,
+			eventDate,
+			eventId,
 			properties,
 		};
 	}
@@ -98,9 +98,7 @@ class Analytics {
 	 * @return {object} Promise
 	 */
 	_timeout(timeout) {
-		return new Promise(
-			(resolve, reject) => setTimeout(reject, timeout)
-		);
+		return new Promise((resolve, reject) => setTimeout(reject, timeout));
 	}
 
 	/**
@@ -114,8 +112,7 @@ class Analytics {
 
 		if (userId) {
 			return Promise.resolve(userId);
-		}
-		else {
+		} else {
 			const bodyData = {
 				...this.config.identity,
 				...fingerprint(),
@@ -153,17 +150,14 @@ class Analytics {
 		if (!this.isFlushInProgress && this.events.length) {
 			this.isFlushInProgress = true;
 
-			result = Promise.race(
-				[
-					this._getUserId().then(instance._sendData),
-					this._timeout(REQUEST_TIMEOUT)
-				]
-			)
+			result = Promise.race([
+				this._getUserId().then(instance._sendData),
+				this._timeout(REQUEST_TIMEOUT),
+			])
 				.then(() => this.reset())
 				.catch(console.error)
 				.then(() => (this.isFlushInProgress = false));
-		}
-		else {
+		} else {
 			result = Promise.resolve();
 		}
 
@@ -233,9 +227,9 @@ class Analytics {
 		storage.remove(STORAGE_KEY_USER_ID);
 
 		instance.config.identity = {
-			userId,
 			identity,
-		}
+			userId,
+		};
 	}
 
 	/**

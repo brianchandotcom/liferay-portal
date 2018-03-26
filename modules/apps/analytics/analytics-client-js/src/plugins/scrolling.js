@@ -45,13 +45,9 @@ function processScrollPosition(analytics) {
 		levelsReached.push(depthLevel);
 
 		if (depthLevel > 0) {
-			analytics.send(
-				'depthReached',
-				'scrolling',
-				{
-					scrollDepth: depthLevel * step,
-				}
-			);
+			analytics.send('depthReached', 'scrolling', {
+				scrollDepth: depthLevel * step,
+			});
 		}
 	}
 }
@@ -63,10 +59,7 @@ function processScrollPosition(analytics) {
 function scrolling(analytics) {
 	document.addEventListener(
 		'scroll',
-		debounce(
-			processScrollPosition.bind(null, analytics),
-			1500,
-		)
+		debounce(processScrollPosition.bind(null, analytics), 1500)
 	);
 
 	// Reset levels on SPA-enabled environments

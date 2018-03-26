@@ -15,17 +15,21 @@
 package com.liferay.currency.converter.web.internal.util;
 
 import com.liferay.currency.converter.web.internal.model.CurrencyConverter;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.webcache.WebCacheException;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
-import java.util.StringTokenizer;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Hugo Huijser
  */
 public class CurrencyConverterWebCacheItem implements WebCacheItem {
 
@@ -39,40 +43,31 @@ public class CurrencyConverterWebCacheItem implements WebCacheItem {
 		double rate = 0.0;
 
 		try {
-			if (symbol.length() == 6) {
-				String fromSymbol = symbol.substring(0, 3);
-				String toSymbol = symbol.substring(3, 6);
-
-				if (!CurrencyConverterUtil.isCurrency(fromSymbol) ||
-					!CurrencyConverterUtil.isCurrency(toSymbol)) {
-
-					throw new WebCacheException(symbol);
-				}
+			if (symbol.length() != 6) {
+				throw new WebCacheException(symbol);
 			}
-			else if (symbol.length() == 3) {
-				if (!CurrencyConverterUtil.isCurrency(symbol)) {
-					throw new WebCacheException(symbol);
-				}
-			}
-			else {
+
+			String fromSymbol = symbol.substring(0, 3);
+			String toSymbol = symbol.substring(3, 6);
+
+			if (!CurrencyConverterUtil.isCurrency(fromSymbol) ||
+				!CurrencyConverterUtil.isCurrency(toSymbol)) {
+
 				throw new WebCacheException(symbol);
 			}
 
 			String text = HttpUtil.URLtoString(
-				"http://finance.yahoo.com/d/quotes.csv?s=" + symbol +
-					"=X&f=sl1d1t1c1ohgv&e=.csv");
+				"http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml");
 
-			StringTokenizer st = new StringTokenizer(text, StringPool.COMMA);
+			Document document = SAXReaderUtil.read(text);
 
-			// Skip symbol
+			Element rootElement = document.getRootElement();
 
-			st.nextToken();
+			String fromRate = _getRate(fromSymbol, rootElement);
+			String toRate = _getRate(toSymbol, rootElement);
 
-			String token = st.nextToken();
-
-			token = token.replace('"', ' ');
-
-			rate = GetterUtil.getDouble(token.trim());
+			rate =
+				GetterUtil.getDouble(toRate) / GetterUtil.getDouble(fromRate);
 		}
 		catch (Exception e) {
 			throw new WebCacheException(e);
@@ -86,7 +81,29 @@ public class CurrencyConverterWebCacheItem implements WebCacheItem {
 		return _REFRESH_TIME;
 	}
 
+	private String _getRate(String symbol, Element element) {
+		if (symbol.equals(_SYMBOL_EURO)) {
+			return "1.0";
+		}
+
+		String rate = null;
+
+		for (Element cubeElement : (List<Element>)element.elements("Cube")) {
+			if (Objects.equals(
+					cubeElement.attributeValue("currency"), symbol)) {
+
+				return cubeElement.attributeValue("rate");
+			}
+
+			rate = _getRate(symbol, cubeElement);
+		}
+
+		return rate;
+	}
+
 	private static final long _REFRESH_TIME = Time.MINUTE * 20;
+
+	private static final String _SYMBOL_EURO = "EUR";
 
 	private final String _symbol;
 

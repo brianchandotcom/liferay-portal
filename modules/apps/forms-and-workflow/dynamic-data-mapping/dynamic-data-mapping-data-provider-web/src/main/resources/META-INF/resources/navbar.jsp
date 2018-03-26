@@ -17,8 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
-DDMDataProviderDisplayTerms displayTerms = new DDMDataProviderDisplayTerms(renderRequest);
-PortletURL portletURL = ddmDataProviderDisplayContext.getPortletURL();
+	DDMDataProviderDisplayTerms displayTerms = new DDMDataProviderDisplayTerms(renderRequest);
+	PortletURL portletURL = ddmDataProviderDisplayContext.getPortletURL();
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" id="toolbar" markupView="lexicon">

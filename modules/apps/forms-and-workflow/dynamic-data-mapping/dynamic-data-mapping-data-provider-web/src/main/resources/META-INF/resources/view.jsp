@@ -39,7 +39,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "data-providers"));
 
 <liferay-ui:error exception="<%= RequiredDataProviderInstanceException.MustNotDeleteDataProviderInstanceReferencedByDataProviderInstanceLinks.class %>" message="the-data-provider-cannot-be-deleted-because-it-is-required-by-one-or-more-forms" />
 
-<liferay-util:include page="/search_bar.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/navbar.jsp" servletContext="<%= application %>" />
 
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-buttons>

@@ -4,7 +4,12 @@
  * @return {object} Either form id, name or action.
  */
 function getFormKey(form) {
-	return form.dataset.analyticsFormId || form.id || form.getAttribute('name') || form.action;
+	return (
+		form.dataset.analyticsFormId ||
+		form.id ||
+		form.getAttribute('name') ||
+		form.action
+	);
 }
 
 /**
@@ -14,8 +19,8 @@ function getFormKey(form) {
  */
 function getFieldPayload({form, name}) {
 	return {
+		fieldName: name,
 		formId: getFormKey(form),
-		fieldName: name
 	};
 }
 
@@ -34,7 +39,7 @@ function getFormPayload(form) {
  * @return {boolean} True if the form is trackable.
  */
 function isTrackableForm(form) {
-	return ('analytics' in form.dataset) && !!getFormKey(form);
+	return 'analytics' in form.dataset && !!getFormKey(form);
 }
 
 /**
@@ -58,14 +63,15 @@ function trackFieldBlurred(analytics) {
 			const focusMark = `${payload.formId}${payload.fieldName}focused`;
 			performance.measure('focusDuration', focusMark, blurMark);
 
-			const perfData = performance.getEntriesByName('focusDuration').pop();
+			const perfData = performance
+				.getEntriesByName('focusDuration')
+				.pop();
 			const focusDuration = perfData.duration;
 
-			analytics.send(
-				'fieldBlurred',
-				'forms',
-				{...payload, focusDuration}
-			);
+			analytics.send('fieldBlurred', 'forms', {
+				...payload,
+				focusDuration,
+			});
 
 			performance.clearMarks('focusDuration');
 		},
@@ -91,11 +97,7 @@ function trackFieldFocused(analytics) {
 			const focusMark = `${payload.formId}${payload.fieldName}focused`;
 			performance.mark(focusMark);
 
-			analytics.send(
-				'fieldFocused',
-				'forms',
-				payload
-			);
+			analytics.send('fieldFocused', 'forms', payload);
 		},
 		true
 	);
@@ -112,11 +114,7 @@ function trackFormSubmitted(analytics) {
 		({target}) => {
 			if (!isTrackableForm(target)) return;
 
-			analytics.send(
-				'formSubmitted',
-				'forms',
-				getFormPayload(target)
-			);
+			analytics.send('formSubmitted', 'forms', getFormPayload(target));
 		},
 		true
 	);

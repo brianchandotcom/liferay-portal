@@ -38,6 +38,8 @@ import com.liferay.dynamic.data.mapping.util.DDMFormLayoutFactory;
 import com.liferay.dynamic.data.mapping.util.comparator.DataProviderInstanceCreateDateComparator;
 import com.liferay.dynamic.data.mapping.util.comparator.DataProviderInstanceModifiedDateComparator;
 import com.liferay.dynamic.data.mapping.util.comparator.DataProviderInstanceNameComparator;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -187,6 +189,25 @@ public class DDMDataProviderDisplayContext {
 	public String[] getDisplayViews() {
 		return _DISPLAY_VIEWS;
 	}
+
+	public List<NavigationItem> getNavigationItems() {
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			_renderRequest);
+
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(
+							getPortletURL(), "currentTab", "data-providers");
+						navigationItem.setLabel(
+							LanguageUtil.get(request, "data-providers"));
+					});
+			}
+		};
+	}
+
 	public String getOrderByCol() {
 		String orderByCol = ParamUtil.getString(
 			_renderRequest, "orderByCol", "modified-date");

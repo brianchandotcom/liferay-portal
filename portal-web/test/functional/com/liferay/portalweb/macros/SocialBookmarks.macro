@@ -1,8 +1,10 @@
 <definition>
 	<command name="viewDefaultSharableBookmarks">
-		<execute function="AssertElementPresent" locator1="SocialBookmarks#TWITTER" />
-		<execute function="AssertElementPresent" locator1="SocialBookmarks#FACEBOOK" />
-		<execute function="AssertElementPresent" locator1="SocialBookmarks#LINKEDIN" />
+		<for list="Facebook,LinkedIn,Twitter" param="socialBookmark">
+			<execute function="AssertElementPresent" locator1="SocialBookmarks#SOCIAL_BOOKMARK_ICON">
+				<var method="StringUtiL#toLowerCase('${socialBookmark}')" name="${key_socialBookmark}" />
+			</execute>
+		</for>
 
 		<execute function="Click" locator1="Icon#SHARE" />
 

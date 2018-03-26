@@ -22,6 +22,7 @@ import com.liferay.portal.search.web.internal.display.context.ThemeDisplaySuppli
 import com.liferay.portal.search.web.internal.portlet.shared.task.PortletSharedRequestHelper;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 import com.liferay.portal.search.web.search.request.SearchResponse;
+import com.liferay.portal.search.web.search.request.SearchSettings;
 
 import java.util.List;
 import java.util.Optional;
@@ -63,8 +64,8 @@ public class PortletSharedSearchResponseImpl
 	}
 
 	@Override
-	public Optional<String> getKeywords() {
-		return _searchResponse.getKeywords();
+	public Optional<String> getKeywordsOptional() {
+		return _searchResponse.getKeywordsOptional();
 	}
 
 	@Override
@@ -102,6 +103,21 @@ public class PortletSharedSearchResponseImpl
 	@Override
 	public String getQueryString() {
 		return _searchResponse.getQueryString();
+	}
+
+	@Override
+	public List<String> getRelatedQueriesSuggestions() {
+		return _searchResponse.getRelatedQueriesSuggestions();
+	}
+
+	@Override
+	public SearchSettings getSearchSettings() {
+		return _searchResponse.getSearchSettings();
+	}
+
+	@Override
+	public Optional<String> getSpellCheckSuggestionOptional() {
+		return _searchResponse.getSpellCheckSuggestionOptional();
 	}
 
 	@Override

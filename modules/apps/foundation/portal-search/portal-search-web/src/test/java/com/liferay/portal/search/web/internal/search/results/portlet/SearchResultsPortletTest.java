@@ -254,7 +254,7 @@ public class SearchResultsPortletTest {
 			Optional.empty()
 		).when(
 			_portletSharedSearchResponse
-		).getKeywords();
+		).getKeywordsOptional();
 
 		Mockito.doReturn(
 			Optional.empty()

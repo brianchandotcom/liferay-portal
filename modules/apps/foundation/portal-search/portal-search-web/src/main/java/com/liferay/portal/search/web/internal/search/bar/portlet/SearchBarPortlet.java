@@ -31,6 +31,8 @@ import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSe
 import java.io.IOException;
 
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -109,6 +111,12 @@ public class SearchBarPortlet
 		super.render(renderRequest, renderResponse);
 	}
 
+	protected static <T> void copy(Supplier<Optional<T>> from, Consumer<T> to) {
+		Optional<T> optional = from.get();
+
+		optional.ifPresent(to);
+	}
+
 	protected SearchBarPortletDisplayContext buildDisplayContext(
 		SearchBarPortletPreferences searchBarPortletPreferences,
 		PortletSharedSearchResponse portletSharedSearchResponse,
@@ -117,10 +125,9 @@ public class SearchBarPortlet
 		SearchBarPortletDisplayBuilder searchBarPortletDisplayBuilder =
 			new SearchBarPortletDisplayBuilder();
 
-		Optional<String> keywordsOptional =
-			portletSharedSearchResponse.getKeywords();
-
-		keywordsOptional.ifPresent(searchBarPortletDisplayBuilder::setKeywords);
+		copy(
+			portletSharedSearchResponse::getKeywordsOptional,
+			searchBarPortletDisplayBuilder::setKeywords);
 
 		searchBarPortletDisplayBuilder.setKeywordsParameterName(
 			searchBarPortletPreferences.getKeywordsParameterName());
@@ -131,11 +138,9 @@ public class SearchBarPortlet
 		searchBarPortletDisplayBuilder.setScopeParameterName(
 			scopeParameterName);
 
-		Optional<String> scopeParameterValueOptional =
-			portletSharedSearchResponse.getParameter(
-				scopeParameterName, renderRequest);
-
-		scopeParameterValueOptional.ifPresent(
+		copy(
+			() -> portletSharedSearchResponse.getParameter(
+				scopeParameterName, renderRequest),
 			searchBarPortletDisplayBuilder::setScopeParameterValue);
 
 		searchBarPortletDisplayBuilder.setSearchScopePreference(
@@ -212,6 +217,9 @@ public class SearchBarPortlet
 
 		parameterValueOptional.ifPresent(
 			portletSharedSearchSettings::setKeywords);
+
+		portletSharedSearchSettings.setKeywordsParameterName(
+			searchBarPortletPreferences.getKeywordsParameterName());
 	}
 
 	@Reference

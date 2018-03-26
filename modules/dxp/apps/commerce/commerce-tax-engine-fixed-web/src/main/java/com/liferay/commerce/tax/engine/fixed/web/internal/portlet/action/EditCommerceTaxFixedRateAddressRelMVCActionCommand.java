@@ -114,8 +114,8 @@ public class EditCommerceTaxFixedRateAddressRelMVCActionCommand
 
 		long commerceTaxMethodId = ParamUtil.getLong(
 			actionRequest, "commerceTaxMethodId");
-		long commerceTaxFixedRateId = ParamUtil.getLong(
-			actionRequest, "commerceTaxFixedRateId");
+		long commerceTaxCategoryId = ParamUtil.getLong(
+			actionRequest, "commerceTaxCategoryId");
 		long commerceCountryId = ParamUtil.getLong(
 			actionRequest, "commerceCountryId");
 		long commerceRegionId = ParamUtil.getLong(
@@ -135,7 +135,7 @@ public class EditCommerceTaxFixedRateAddressRelMVCActionCommand
 		else {
 			_commerceTaxFixedRateAddressRelService.
 				addCommerceTaxFixedRateAddressRel(
-					commerceTaxMethodId, commerceTaxFixedRateId,
+					commerceTaxMethodId, commerceTaxCategoryId,
 					commerceCountryId, commerceRegionId, zip, rate,
 					serviceContext);
 		}

@@ -19,9 +19,8 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+String displayStyle = ddmDataProviderDisplayContext.getDisplayStyle();
 PortletURL portletURL = ddmDataProviderDisplayContext.getPortletURL();
-
-portletURL.setParameter("displayStyle", "descriptive");
 
 DDMDataProviderSearch ddmDataProviderSearch = new DDMDataProviderSearch(renderRequest, portletURL);
 
@@ -30,6 +29,7 @@ OrderByComparator<DDMDataProviderInstance> orderByComparator = DDMDataProviderPo
 ddmDataProviderSearch.setOrderByCol(ddmDataProviderDisplayContext.getOrderByCol());
 ddmDataProviderSearch.setOrderByComparator(orderByComparator);
 ddmDataProviderSearch.setOrderByType(ddmDataProviderDisplayContext.getOrderByType());
+portletURL.setParameter("displayStyle", displayStyle);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -73,26 +73,54 @@ renderResponse.setTitle(LanguageUtil.get(request, "data-providers"));
 					<portlet:param name="mvcPath" value="/edit_data_provider.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="dataProviderInstanceId" value="<%= String.valueOf(dataProviderInstance.getDataProviderInstanceId()) %>" />
+					<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 				</portlet:renderURL>
 
-				<liferay-ui:search-container-column-image
-					src="<%= ddmDataProviderDisplayContext.getUserPortraitURL(dataProviderInstance.getUserId()) %>"
-					toggleRowChecker="<%= true %>"
-				/>
+				<c:choose>
+					<c:when test='<%= displayStyle.equals("descriptive") %>'>
+						<liferay-ui:search-container-column-image
+							src="<%= ddmDataProviderDisplayContext.getUserPortraitURL(dataProviderInstance.getUserId()) %>"
+							toggleRowChecker="<%= true %>"
+						/>
 
-				<liferay-ui:search-container-column-jsp
-					colspan="<%= 2 %>"
-					href="<%= rowURL %>"
-					path="/data_provider_descriptive.jsp"
-				/>
+						<liferay-ui:search-container-column-jsp
+							colspan="<%= 2 %>"
+							href="<%= rowURL %>"
+							path="/data_provider_descriptive.jsp"
+						/>
 
-				<liferay-ui:search-container-column-jsp
-					path="/data_provider_action.jsp"
-				/>
+						<liferay-ui:search-container-column-jsp
+							path="/data_provider_action.jsp"
+						/>
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:search-container-column-text
+							cssClass="table-cell-content"
+							href="<%= rowURL %>"
+							name="name"
+							value="<%= HtmlUtil.escape(dataProviderInstance.getName(locale)) %>"
+						/>
+
+						<liferay-ui:search-container-column-text
+							cssClass="table-cell-content"
+							name="description"
+							value="<%= HtmlUtil.escape(dataProviderInstance.getDescription(locale)) %>"
+						/>
+
+						<liferay-ui:search-container-column-date
+							name="modified-date"
+							value="<%= dataProviderInstance.getModifiedDate() %>"
+						/>
+
+						<liferay-ui:search-container-column-jsp
+							path="/data_provider_action.jsp"
+						/>
+					</c:otherwise>
+				</c:choose>
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator
-				displayStyle="descriptive"
+				displayStyle="<%= displayStyle %>"
 				markupView="lexicon"
 			/>
 		</liferay-ui:search-container>

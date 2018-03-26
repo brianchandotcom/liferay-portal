@@ -163,6 +163,17 @@ public class DDMDataProviderDisplayContext {
 		return _ddmDataProviderTracker.getDDMDataProviderTypes();
 	}
 
+	public String getDisplayStyle() {
+		if (_displayStyle == null) {
+			_displayStyle = getDisplayStyle(_renderRequest, getDisplayViews());
+		}
+
+		return _displayStyle;
+	}
+
+	public String[] getDisplayViews() {
+		return _DISPLAY_VIEWS;
+	}
 	public String getOrderByCol() {
 		String orderByCol = ParamUtil.getString(
 			_renderRequest, "orderByCol", "modified-date");
@@ -293,6 +304,32 @@ public class DDMDataProviderDisplayContext {
 		return ddmFormRenderingContext;
 	}
 
+	protected String getDisplayStyle(
+		PortletRequest portletRequest, String[] displayViews) {
+
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(portletRequest);
+
+		String displayStyle = ParamUtil.getString(
+			portletRequest, "displayStyle");
+
+		if (Validator.isNull(displayStyle)) {
+			displayStyle = portalPreferences.getValue(
+				DDMDataProviderPortletKeys.DYNAMIC_DATA_MAPPING_DATA_PROVIDER,
+				"display-style", "descriptive");
+		}
+		else if (ArrayUtil.contains(displayViews, displayStyle)) {
+			portalPreferences.setValue(
+				DDMDataProviderPortletKeys.DYNAMIC_DATA_MAPPING_DATA_PROVIDER,
+				"display-style", displayStyle);
+		}
+
+		if (!ArrayUtil.contains(displayViews, displayStyle)) {
+			displayStyle = displayViews[0];
+		}
+
+		return displayStyle;
+	}
 	protected void obfuscateDDMFormFieldValue(
 		DDMFormFieldValue ddmFormFieldValue) {
 
@@ -320,6 +357,9 @@ public class DDMDataProviderDisplayContext {
 		}
 	}
 
+
+	private static final String[] _DISPLAY_VIEWS = {"descriptive", "list"};
+
 	private DDMDataProviderInstance _ddmDataProviderInstance;
 	private final DDMDataProviderInstanceService
 		_ddmDataProviderInstanceService;
@@ -327,6 +367,7 @@ public class DDMDataProviderDisplayContext {
 	private final DDMDataProviderTracker _ddmDataProviderTracker;
 	private final DDMFormRenderer _ddmFormRenderer;
 	private final DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
+	private String _displayStyle;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final UserLocalService _userLocalService;

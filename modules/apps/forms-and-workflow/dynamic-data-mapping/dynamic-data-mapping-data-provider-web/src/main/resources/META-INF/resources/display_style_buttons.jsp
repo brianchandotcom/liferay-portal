@@ -16,10 +16,18 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-buttons>
-		<liferay-util:include page="/display_style_buttons.jsp" servletContext="<%= application %>" />
+<%
+PortletURL portletURL = ddmDataProviderDisplayContext.getPortletURL();
 
-		<liferay-util:include page="/display_add_button.jsp" servletContext="<%= application %>" />
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+int delta = ParamUtil.getInteger(request, "delta");
+
+if (delta > 0) {
+	portletURL.setParameter("delta", String.valueOf(delta));
+}
+%>
+
+<liferay-frontend:management-bar-display-buttons
+	displayViews="<%= ddmDataProviderDisplayContext.getDisplayViews() %>"
+	portletURL="<%= portletURL %>"
+	selectedDisplayStyle="<%= ddmDataProviderDisplayContext.getDisplayStyle() %>"
+/>

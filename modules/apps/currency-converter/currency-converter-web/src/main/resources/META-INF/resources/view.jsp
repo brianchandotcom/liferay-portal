@@ -36,9 +36,6 @@ double number = ParamUtil.getDouble(request, "number", 1.0);
 String chartId = ParamUtil.getString(request, "chartId", "90");
 
 NumberFormat decimalFormat = NumberFormat.getNumberInstance(locale);
-
-decimalFormat.setMaximumFractionDigits(2);
-decimalFormat.setMinimumFractionDigits(2);
 %>
 
 <portlet:renderURL var="convertURL" windowState="<%= WindowState.MAXIMIZED.toString() %>" />
@@ -96,6 +93,8 @@ decimalFormat.setMinimumFractionDigits(2);
 								</th>
 
 								<%
+								decimalFormat.setMaximumFractionDigits(4);
+
 								for (int i = 0; i < symbols.length; i++) {
 									String symbol = symbols[i];
 								%>
@@ -135,7 +134,7 @@ decimalFormat.setMinimumFractionDigits(2);
 
 											<td>
 												<c:if test="<%= i != j %>">
-													<%= currencyConverter.getRate() %>
+													<%= decimalFormat.format(currencyConverter.getRate()) %>
 												</c:if>
 
 												<c:if test="<%= i == j %>">
@@ -173,6 +172,12 @@ decimalFormat.setMinimumFractionDigits(2);
 							<%= number %>
 						</td>
 						<td class="col-md-4 currency-data">
+
+							<%
+							decimalFormat.setMaximumFractionDigits(2);
+							decimalFormat.setMinimumFractionDigits(2);
+							%>
+
 							<span class="currency-header"><%= currencyConverter.getToSymbol() %></span>
 							<%= decimalFormat.format(number * currencyConverter.getRate()) %>
 						</td>

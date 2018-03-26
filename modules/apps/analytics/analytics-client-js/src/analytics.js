@@ -46,7 +46,9 @@ class Analytics {
 
 		// Initializes default plugins
 
-		defaultPlugins.forEach(plugin => plugin(instance));
+		instance._pluginDisposers = defaultPlugins.map(plugin =>
+			plugin(instance)
+		);
 
 		// Starts flush loop
 
@@ -60,6 +62,19 @@ class Analytics {
 		);
 
 		return instance;
+	}
+
+	/**
+	 * Clears interval and calls plugins disposers if available
+	 */
+	disposeInternal() {
+		if (this.flushInterval) {
+			clearInterval(this.flushInterval);
+		}
+
+		instance._pluginDisposers
+			.filter(disposer => typeof disposer === 'function')
+			.forEach(disposer => disposer());
 	}
 
 	/**
@@ -248,6 +263,20 @@ class Analytics {
 	static create(config = {}) {
 		ENV.Analytics = new Analytics(config);
 		ENV.Analytics.create = Analytics.create;
+		ENV.Analytics.dispose = Analytics.dispose;
+	}
+
+	/**
+	 * Disposes events and stops interval timer
+	 * @example
+	 * Analytics.dispose();
+	 */
+	static dispose() {
+		const instance = ENV.Analytics;
+
+		if (instance) {
+			instance.disposeInternal();
+		}
 	}
 }
 

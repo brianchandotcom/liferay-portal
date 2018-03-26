@@ -425,7 +425,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 		}
 	);
 
-	document.querySelector('#<portlet:namespace />title').addEventListener(
+	A.one('#<portlet:namespace />title').on(
 		'keypress',
 		function(event) {
 			var keycode = (event.keyCode ? event.keyCode : event.which);

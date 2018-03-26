@@ -1252,7 +1252,7 @@
 
 		<var method="selenium#getText(BlogsEntry#ENTRY_VIEW_COUNT)" name="entryViewCount" />
 
-		<var method="StringUtil#extractLast('${entryViewCount}',',')" name="entryViewCount" />
+		<var method="StringUtil#extractLast('${entryViewCount}','-')" name="entryViewCount" />
 		<var method="StringUtil#extractDigits('${entryViewCount}')" name="entryViewCount" />
 
 		<if>

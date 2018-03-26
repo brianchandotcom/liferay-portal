@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>ENTRY_VIEW_COUNT</td>
-	<td>//div[contains(@class,'profile-header')]//div[contains(@class,'nameplate')]</td>
+	<td>//div[contains(@class,'metadata')]//div[@class='autofit-row']/div/div</td>
 	<td></td>
 </tr>
 <tr>

@@ -290,8 +290,7 @@ public class DDMDataProviderDisplayContext {
 	}
 
 	public boolean isShowDeleteDataProviderIcon(
-			DDMDataProviderInstance dataProviderInstance)
-		throws PortalException {
+		DDMDataProviderInstance dataProviderInstance) {
 
 		return DDMDataProviderInstancePermission.contains(
 			_ddmDataProviderRequestHelper.getPermissionChecker(),
@@ -299,8 +298,7 @@ public class DDMDataProviderDisplayContext {
 	}
 
 	public boolean isShowEditDataProviderIcon(
-			DDMDataProviderInstance dataProviderInstance)
-		throws PortalException {
+		DDMDataProviderInstance dataProviderInstance) {
 
 		return DDMDataProviderInstancePermission.contains(
 			_ddmDataProviderRequestHelper.getPermissionChecker(),

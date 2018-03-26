@@ -178,6 +178,20 @@ public class CommerceOrderListDisplayContext {
 			commerceOrder.getCommerceOrderId(), false);
 	}
 
+	public String getCommerceOrderPaymentStatus(CommerceOrder commerceOrder) {
+		return LanguageUtil.get(
+			_commerceOrderRequestHelper.getRequest(),
+			CommerceOrderConstants.getPaymentStatusLabel(
+				commerceOrder.getPaymentStatus()));
+	}
+
+	public String getCommerceOrderStatus(CommerceOrder commerceOrder) {
+		return LanguageUtil.get(
+			_commerceOrderRequestHelper.getRequest(),
+			CommerceOrderConstants.getOrderStatusLabel(
+				commerceOrder.getOrderStatus()));
+	}
+
 	public String getCommerceOrderTransitionMessage(String transitionName) {
 		if (Validator.isNull(transitionName)) {
 			transitionName = "proceed";
@@ -349,20 +363,6 @@ public class CommerceOrderListDisplayContext {
 		_addFacetOrderStatus(
 			searchContext, _tabs1, commerceOrderDisplayTerms.getOrderStatus(),
 			false);
-	}
-
-	public String getCommerceOrderStatus(CommerceOrder commerceOrder) {
-		return LanguageUtil.get(
-			_commerceOrderRequestHelper.getRequest(),
-			CommerceOrderConstants.getOrderStatusLabel(
-				commerceOrder.getOrderStatus()));
-	}
-
-	public String getCommerceOrderPaymentStatus(CommerceOrder commerceOrder) {
-		return LanguageUtil.get(
-			_commerceOrderRequestHelper.getRequest(),
-			CommerceOrderConstants.getPaymentStatusLabel(
-				commerceOrder.getPaymentStatus()));
 	}
 
 	private void _addFacetOrderStatus(

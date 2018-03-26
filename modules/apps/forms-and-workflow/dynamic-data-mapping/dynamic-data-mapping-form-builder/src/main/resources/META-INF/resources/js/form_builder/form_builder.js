@@ -1239,9 +1239,7 @@ AUI.add(
 										message: Lang.sub(
 											Liferay.Language.get('all-fields-marked-with-x-are-required'),
 											[
-												'<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">' +
-											 		'<use xlink:href="' + themeDisplay.getPathThemeImages() + '/lexicon/icons.svg#asterisk" />' +
-												'</svg>'
+												'<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">' + '<use xlink:href="' + themeDisplay.getPathThemeImages() + '/lexicon/icons.svg#asterisk" />' + '</svg>'
 											]
 										)
 									}

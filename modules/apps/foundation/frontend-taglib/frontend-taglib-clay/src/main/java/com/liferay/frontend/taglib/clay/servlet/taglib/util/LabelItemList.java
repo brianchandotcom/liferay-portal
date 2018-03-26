@@ -20,10 +20,7 @@ import java.util.function.Consumer;
 /**
  * @author Carlos Lancha
  */
-public class LabelItemList extends ArrayList<Object> {
-
-	public LabelItemList() {
-	}
+public class LabelItemList extends ArrayList<LabelItem> {
 
 	public void add(Consumer<LabelItem> consumer) {
 		LabelItem labelItem = new LabelItem();

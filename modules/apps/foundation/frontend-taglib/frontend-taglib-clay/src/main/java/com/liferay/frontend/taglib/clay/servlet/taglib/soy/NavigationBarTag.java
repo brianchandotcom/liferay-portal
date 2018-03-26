@@ -15,7 +15,6 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 
 /**
  * @author Chema Balsas

@@ -19,14 +19,8 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.util;
  */
 public class ViewTypeItem extends NavigationItem {
 
-	public String getIcon() {
-		return _icon;
-	}
-
 	public void setIcon(String icon) {
-		_icon = icon;
+		put("icon", icon);
 	}
-
-	private String _icon;
 
 }

@@ -14,30 +14,17 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
-import com.liferay.portal.kernel.json.JSON;
-
 /**
  * @author Carlos Lancha
  */
 public class DropdownGroupItem extends DropdownItem {
 
 	public DropdownGroupItem() {
-		this("group");
-	}
-
-	public DropdownGroupItem(String type) {
-		super(type);
-	}
-
-	@JSON(name = "items")
-	public DropdownItemList getDropdownItems() {
-		return _dropdownItems;
+		put("type", "group");
 	}
 
 	public void setDropdownItems(DropdownItemList dropdownItems) {
-		_dropdownItems = dropdownItems;
+		put("items", dropdownItems);
 	}
-
-	private DropdownItemList _dropdownItems;
 
 }

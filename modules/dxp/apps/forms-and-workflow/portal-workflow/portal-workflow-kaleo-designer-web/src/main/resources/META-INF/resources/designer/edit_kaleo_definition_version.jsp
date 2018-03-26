@@ -247,6 +247,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 					<aui:fieldset-group markupView="lexicon">
 						<aui:fieldset>
 							<liferay-ui:input-localized
+								disabled="<%= (kaleoDefinitionVersion != null) && !KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE) %>"
 								name="title"
 								placeholder="untitled-workflow"
 								xml='<%= BeanPropertiesUtil.getString(kaleoDefinitionVersion, "title") %>'

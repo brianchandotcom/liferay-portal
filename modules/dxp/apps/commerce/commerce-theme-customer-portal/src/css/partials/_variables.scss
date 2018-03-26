@@ -133,3 +133,9 @@ $commerce-checkout-summary-footer-commerce-description: map-merge((
 	font-size: 0.8125rem,
 	font-weight: $font-weight-light
 ), $commerce-checkout-summary-footer-commerce-description);
+
+$commerce-checkout-success-messsage: () !default;
+$commerce-checkout-success-messsage: map-merge((
+	font-size: 1.125rem,
+	font-weight: $font-weight-bold,
+), $commerce-checkout-success-messsage);

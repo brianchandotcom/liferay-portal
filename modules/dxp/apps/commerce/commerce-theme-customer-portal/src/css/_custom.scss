@@ -1069,3 +1069,11 @@ a[type="button"] {
 		}
 	}
 }
+
+.commerce-checkout-confirmation {
+	text-align: center;
+
+	.success-message {
+		@include clay-text-typography($commerce-checkout-success-messsage);
+	}
+}

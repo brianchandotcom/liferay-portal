@@ -19,7 +19,6 @@
 <%
 OrderConfirmationCheckoutStepDisplayContext orderConfirmationCheckoutStepDisplayContext = (OrderConfirmationCheckoutStepDisplayContext)request.getAttribute(CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT);
 
-CommerceOrder commerceOrder = orderConfirmationCheckoutStepDisplayContext.getCommerceOrder();
 CommerceOrderPayment commerceOrderPayment = orderConfirmationCheckoutStepDisplayContext.getCommerceOrderPayment();
 
 int paymentStatus = CommerceOrderPaymentConstants.STATUS_ANY;
@@ -29,23 +28,38 @@ if (commerceOrderPayment != null) {
 }
 %>
 
-Order <%= commerceOrder.getCommerceOrderId() %>
+<div class="commerce-checkout-confirmation">
+	<c:choose>
+		<c:when test="<%= (paymentStatus == CommerceOrderPaymentConstants.STATUS_CANCELLED) || (paymentStatus == CommerceOrderPaymentConstants.STATUS_FAILED) %>">
+			<div class="alert alert-warning">
 
-<c:if test="<%= (paymentStatus == CommerceOrderPaymentConstants.STATUS_CANCELLED) || (paymentStatus == CommerceOrderPaymentConstants.STATUS_FAILED) %>">
-	<div class="alert alert-warning">
+				<%
+				String taglibMessageKey = "an-error-occurred-while-processing-your-payment";
+				String taglibValue = "retry";
 
-		<%
-		String taglibMessageKey = "an-error-occurred-while-processing-your-payment";
-		String taglibValue = "retry";
+				if (paymentStatus == CommerceOrderPaymentConstants.STATUS_CANCELLED) {
+					taglibMessageKey = "your-payment-has-been-canceled";
+					taglibValue = "pay-now";
+				}
+				%>
 
-		if (paymentStatus == CommerceOrderPaymentConstants.STATUS_CANCELLED) {
-			taglibMessageKey = "your-payment-has-been-cancelled";
-			taglibValue = "pay-now";
-		}
-		%>
+				<liferay-ui:message key="<%= taglibMessageKey %>" />
 
-		<liferay-ui:message key="<%= taglibMessageKey %>" />
+				<aui:button-row>
+					<aui:button cssClass="alert-link btn-link" type="submit" value="<%= taglibValue %>" />
+				</aui:button-row>
+			</div>
+		</c:when>
+		<c:otherwise>
+			<div class="success-message">
+				<liferay-ui:message key="success-your-payment-has-been-processed" />
+			</div>
 
-		<aui:button cssClass="alert-link btn-link" type="submit" value="<%= taglibValue %>" />
-	</div>
-</c:if>
+			<liferay-ui:message key="you-will-be-redireted-in-a-few-seconds" />
+
+			<aui:button-row>
+				<aui:button primary="<%= true %>" type="submit" value="go-to-order-details" />
+			</aui:button-row>
+		</c:otherwise>
+	</c:choose>
+</div>

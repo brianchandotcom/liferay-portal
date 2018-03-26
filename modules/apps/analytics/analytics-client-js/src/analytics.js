@@ -261,9 +261,13 @@ class Analytics {
 	 * );
 	 */
 	static create(config = {}) {
-		ENV.Analytics = new Analytics(config);
+		const instance = new Analytics(config);
+
+		ENV.Analytics = instance;
 		ENV.Analytics.create = Analytics.create;
 		ENV.Analytics.dispose = Analytics.dispose;
+
+		return instance;
 	}
 
 	/**

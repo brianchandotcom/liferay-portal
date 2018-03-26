@@ -347,13 +347,18 @@ public class TestBatchGroup {
 	}
 
 	private void _setTestClassGroups() throws Exception {
-		final List<String> testClassFileNames = new ArrayList<>(
+		List<String> testClassFileNames = new ArrayList<>(
 			_getTestClassFileNames());
 
 		Collections.sort(testClassFileNames);
 
-		int maxClassGroupSize = _getMaxClassGroupSize();
 		int testClassFileNamesCount = testClassFileNames.size();
+
+		if (testClassFileNamesCount == 0) {
+			return;
+		}
+
+		int maxClassGroupSize = _getMaxClassGroupSize();
 
 		int testBatchGroupSize = (int)Math.ceil(
 			(double)testClassFileNamesCount / maxClassGroupSize);

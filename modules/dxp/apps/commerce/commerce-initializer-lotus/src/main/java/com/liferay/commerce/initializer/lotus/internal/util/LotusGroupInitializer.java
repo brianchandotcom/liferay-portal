@@ -16,16 +16,12 @@ package com.liferay.commerce.initializer.lotus.internal.util;
 
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.model.CommercePaymentEngine;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.product.demo.data.creator.CPDemoDataCreator;
 import com.liferay.commerce.product.importer.CPFileImporter;
-import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
-import com.liferay.commerce.service.CommerceCountryLocalService;
 import com.liferay.commerce.service.CommercePaymentMethodLocalService;
-import com.liferay.commerce.service.CommerceRegionLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionLocalService;
 import com.liferay.commerce.util.CommercePaymentEngineRegistry;
@@ -160,14 +156,6 @@ public class LotusGroupInitializer implements GroupInitializer {
 			createLayouts(serviceContext);
 
 			createSampleData(serviceContext);
-
-			_commerceCountryLocalService.importDefaultCountries(serviceContext);
-
-			_commerceRegionLocalService.importCommerceRegions(serviceContext);
-
-			_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
-
-			_commerceCurrencyLocalService.importDefaultValues(serviceContext);
 
 			setPaymentMethod(serviceContext);
 
@@ -639,20 +627,11 @@ public class LotusGroupInitializer implements GroupInitializer {
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Reference
-	private CommerceCountryLocalService _commerceCountryLocalService;
-
-	@Reference
-	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
-
-	@Reference
 	private CommercePaymentEngineRegistry _commercePaymentEngineRegistry;
 
 	@Reference
 	private CommercePaymentMethodLocalService
 		_commercePaymentMethodLocalService;
-
-	@Reference
-	private CommerceRegionLocalService _commerceRegionLocalService;
 
 	@Reference
 	private CommerceShippingEngineRegistry _commerceShippingEngineRegistry;
@@ -670,9 +649,6 @@ public class LotusGroupInitializer implements GroupInitializer {
 
 	@Reference
 	private CPFileImporter _cpFileImporter;
-
-	@Reference
-	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

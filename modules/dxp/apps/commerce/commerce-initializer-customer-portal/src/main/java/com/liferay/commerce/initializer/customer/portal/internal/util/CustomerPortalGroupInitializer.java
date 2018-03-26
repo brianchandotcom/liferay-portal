@@ -14,12 +14,8 @@
 
 package com.liferay.commerce.initializer.customer.portal.internal.util;
 
-import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.product.demo.data.creator.CPDemoDataCreator;
 import com.liferay.commerce.product.importer.CPFileImporter;
-import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
-import com.liferay.commerce.service.CommerceCountryLocalService;
-import com.liferay.commerce.service.CommerceRegionLocalService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -127,14 +123,6 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 			createLayouts(serviceContext);
 
 			createSampleData(serviceContext);
-
-			_commerceCountryLocalService.importDefaultCountries(serviceContext);
-
-			_commerceRegionLocalService.importCommerceRegions(serviceContext);
-
-			_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
-
-			_commerceCurrencyLocalService.importDefaultValues(serviceContext);
 
 			setThemePortletSettings(serviceContext);
 		}
@@ -304,22 +292,10 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 		CustomerPortalGroupInitializer.class);
 
 	@Reference
-	private CommerceCountryLocalService _commerceCountryLocalService;
-
-	@Reference
-	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
-
-	@Reference
-	private CommerceRegionLocalService _commerceRegionLocalService;
-
-	@Reference
 	private CPDemoDataCreator _cpDemoDataCreator;
 
 	@Reference
 	private CPFileImporter _cpFileImporter;
-
-	@Reference
-	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

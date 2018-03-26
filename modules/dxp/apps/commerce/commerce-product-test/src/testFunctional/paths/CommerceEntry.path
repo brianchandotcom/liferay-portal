@@ -253,6 +253,11 @@
 	<td>//fieldset//div/a[contains(.,'${key_accordionTitle}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>IGNORE_SKU_COMBINATIONS_FLAG</td>
+	<td>//div/label[contains (@for,'ignoreSKUCombinations')]//span[contains (@class,'switch-bar')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -17,6 +17,7 @@ package com.liferay.fragment.service.impl;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.base.FragmentEntryLinkLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -80,6 +81,16 @@ public class FragmentEntryLinkLocalServiceImpl
 		fragmentEntryLinkPersistence.remove(fragmentEntryLink);
 
 		return fragmentEntryLink;
+	}
+
+	public void deleteFragmentEntryLinks(long groupId) throws PortalException {
+		List<FragmentEntryLink> fragmentEntryLinks =
+			fragmentEntryLinkPersistence.findByGroupId(groupId);
+
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			fragmentEntryLinkLocalService.deleteFragmentEntryLink(
+				fragmentEntryLink);
+		}
 	}
 
 	@Override

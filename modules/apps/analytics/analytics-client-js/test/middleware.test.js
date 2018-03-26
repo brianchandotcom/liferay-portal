@@ -1,5 +1,7 @@
-const Analytics = window.Analytics;
-const assert = chai.assert;
+import AnalyticsClient from '../src/analytics';
+import {assert, expect} from 'chai';
+
+let Analytics = AnalyticsClient.create();
 
 /**
  * Sends dummy events to test the Analytics API

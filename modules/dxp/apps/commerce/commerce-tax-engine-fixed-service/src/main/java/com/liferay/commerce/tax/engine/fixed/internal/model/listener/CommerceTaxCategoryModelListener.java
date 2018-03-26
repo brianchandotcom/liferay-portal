@@ -15,6 +15,7 @@
 package com.liferay.commerce.tax.engine.fixed.internal.model.listener;
 
 import com.liferay.commerce.model.CommerceTaxCategory;
+import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateAddressRelLocalService;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -35,6 +36,9 @@ public class CommerceTaxCategoryModelListener
 	@Override
 	public void onBeforeRemove(CommerceTaxCategory commerceTaxCategory) {
 		try {
+			_commerceTaxFixedRateAddressRelLocalService.
+				deleteCommerceTaxFixedRateAddressRels(
+					commerceTaxCategory.getCommerceTaxCategoryId());
 			_commerceTaxFixedRateLocalService.deleteCommerceTaxFixedRates(
 				commerceTaxCategory.getCommerceTaxCategoryId());
 		}
@@ -47,6 +51,10 @@ public class CommerceTaxCategoryModelListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceTaxCategoryModelListener.class);
+
+	@Reference
+	private CommerceTaxFixedRateAddressRelLocalService
+		_commerceTaxFixedRateAddressRelLocalService;
 
 	@Reference
 	private CommerceTaxFixedRateLocalService _commerceTaxFixedRateLocalService;

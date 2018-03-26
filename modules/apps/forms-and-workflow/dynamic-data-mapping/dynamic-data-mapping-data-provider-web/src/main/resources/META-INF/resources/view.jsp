@@ -41,38 +41,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "data-providers"));
 
 <liferay-util:include page="/navbar.jsp" servletContext="<%= application %>" />
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-buttons>
-		<c:if test="<%= ddmDataProviderDisplayContext.isShowAddDataProviderButton() %>">
-			<liferay-frontend:add-menu
-				inline="<%= true %>"
-			>
-
-				<%
-				for (String ddmDataProviderType : ddmDataProviderDisplayContext.getDDMDataProviderTypes()) {
-				%>
-
-					<portlet:renderURL var="addDataProviderURL">
-						<portlet:param name="mvcPath" value="/edit_data_provider.jsp" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-						<portlet:param name="type" value="<%= ddmDataProviderType %>" />
-					</portlet:renderURL>
-
-					<liferay-frontend:add-menu-item
-						title="<%= LanguageUtil.get(request, ddmDataProviderType) %>"
-						url="<%= addDataProviderURL.toString() %>"
-					/>
-
-				<%
-				}
-				%>
-
-			</liferay-frontend:add-menu>
-		</c:if>
-
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
 
 <div class="container-fluid-1280" id="<portlet:namespace />formContainer">
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="searchContainerForm">

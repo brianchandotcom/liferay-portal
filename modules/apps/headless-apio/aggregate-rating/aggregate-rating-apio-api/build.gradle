@@ -5,5 +5,5 @@ dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided project(":apps:foundation:apio-architect:apio-architect-api")
-	provided project(":apps:web-experience-apio:portal:portal-apio-api")
+	provided project(":apps:headless-apio:portal:portal-apio-api")
 }

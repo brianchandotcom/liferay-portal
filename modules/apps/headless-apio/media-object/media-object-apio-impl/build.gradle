@@ -7,9 +7,9 @@ dependencies {
 	provided group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.0.1"
 	provided project(":apps:collaboration:document-library:document-library-api")
 	provided project(":apps:foundation:apio-architect:apio-architect-api")
-	provided project(":apps:web-experience-apio:folder:folder-apio-api")
-	provided project(":apps:web-experience-apio:media-object:media-object-apio-api")
-	provided project(":apps:web-experience-apio:person:person-apio-api")
-	provided project(":apps:web-experience-apio:portal:portal-apio-api")
-	provided project(":apps:web-experience-apio:site:site-apio-api")
+	provided project(":apps:headless-apio:folder:folder-apio-api")
+	provided project(":apps:headless-apio:media-object:media-object-apio-api")
+	provided project(":apps:headless-apio:person:person-apio-api")
+	provided project(":apps:headless-apio:portal:portal-apio-api")
+	provided project(":apps:headless-apio:site:site-apio-api")
 }

@@ -20,14 +20,22 @@ function sendDummyEvents(eventsNumber = 5) {
 }
 
 describe('Analytics MiddleWare Integration', () => {
+	beforeEach(() => {
+		fetchMock.mock('*', () => 200);
+		Analytics.create();
+	});
+
+	afterEach(() => {
+		Analytics.dispose();
+		fetchMock.restore();
+	});
+
 	describe('.registerMiddleware', () => {
 		it('should be exposed as an Analytics static method', () => {
 			Analytics.registerMiddleware.should.be.a('function');
 		});
 
-		it('shuld process the given middleware', function() {
-			Analytics.create();
-
+		it('shuld process the given middleware', () => {
 			const middleware = (req, analytics) => {
 				analytics.should.be.equal(Analytics);
 				req.should.be.a('object');
@@ -41,11 +49,17 @@ describe('Analytics MiddleWare Integration', () => {
 
 			sendDummyEvents();
 
-			return Analytics.flush().then(
-				() => {
-					assert.isTrue(spy.calledOnce);
-				}
-			);
+			return Analytics.flush()
+				.then(
+					() => {
+						assert.isTrue(spy.calledOnce);
+					}
+				)
+				.catch(
+					(e) => {
+						console.log('caught', e);
+					}
+				)
 		});
 	});
 
@@ -53,6 +67,7 @@ describe('Analytics MiddleWare Integration', () => {
 		it('should include document metadata by default', (done) => {
 			let body = null;
 
+			fetchMock.restore();
 			fetchMock.mock(
 				'*',
 				function(url, opts) {
@@ -61,8 +76,6 @@ describe('Analytics MiddleWare Integration', () => {
 					return 200;
 				}
 			);
-
-			Analytics.create();
 
 			sendDummyEvents();
 

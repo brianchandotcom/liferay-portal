@@ -3,15 +3,22 @@ const assert = chai.assert;
 const expect = chai.expect;
 
 describe('Forms Plugin', () => {
+	beforeEach(() => {
+		// Force attaching DOM Content Loaded event
+		Object.defineProperty(document, 'readyState', {
+			value: 'loading',
+			writable: false
+		});
+
+		Analytics.create();
+	});
+
+	afterEach(() => {
+		Analytics.dispose();
+	});
+
 	describe('formViewed event', () => {
 		it('should be fired for every form on the page', () => {
-			Object.defineProperty(document, 'readyState', {
-				value: 'loading',
-				writable: false
-			});
-
-			Analytics.create();
-
 			const form = document.createElement('form');
 			form.dataset.analytics = 'true';
 			form.id = 'myId';
@@ -38,8 +45,6 @@ describe('Forms Plugin', () => {
 
 	describe('formSubmitted event', () => {
 		it('should be fired when a form is submitted', () => {
-			Analytics.create();
-
 			const form = document.createElement('form');
 			form.dataset.analytics = 'true';
 			form.id = 'myId';
@@ -69,8 +74,6 @@ describe('Forms Plugin', () => {
 
 	describe('fieldFocused event', () => {
 		it('should be fired whenever a field is focused', () => {
-			Analytics.create();
-
 			const form = document.createElement('form');
 			form.dataset.analytics = 'true';
 			form.id = 'myId';
@@ -101,8 +104,6 @@ describe('Forms Plugin', () => {
 
 	describe('fieldBlurred event', () => {
 		it('should be fired whenever a field is blurred', (done) => {
-			Analytics.create();
-
 			const form = document.createElement('form');
 			form.dataset.analytics = 'true';
 			form.id = 'myId';

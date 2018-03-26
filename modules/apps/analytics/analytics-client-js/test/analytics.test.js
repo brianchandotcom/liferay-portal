@@ -30,10 +30,14 @@ function sendDummyEvents(eventsNumber = 5) {
 }
 
 describe('Analytics Client', () => {
-	afterEach(fetchMock.restore);
+	afterEach(() => {
+		Analytics.dispose();
+		fetchMock.restore();
+	});
 
 	beforeEach(
 		() => {
+			Analytics.create();
 			localStorage.removeItem(STORAGE_KEY_EVENTS);
 			localStorage.removeItem(STORAGE_KEY_USER_ID);
 		}
@@ -75,6 +79,7 @@ describe('Analytics Client', () => {
 				}
 			);
 
+			Analytics.dispose();
 			Analytics.create(
 				{
 					flushInterval: FLUSH_INTERVAL,

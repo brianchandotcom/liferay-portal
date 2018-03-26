@@ -82,6 +82,31 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
+	 * Focus a fragmentEntryLink for a given ID
+	 * @param {string} fragmentEntryLinkId
+	 * @review
+	 */
+
+	_focusFragmentEntryLink(fragmentEntryLinkId) {
+		requestAnimationFrame(
+			() => {
+				const index = this.fragmentEntryLinks.findIndex(
+					_fragmentEntryLink => {
+						return _fragmentEntryLink.fragmentEntryLinkId === fragmentEntryLinkId;
+					}
+				);
+
+				const fragmentEntryLinkElement = this.refs.fragmentEntryLinks.querySelectorAll(
+					'.fragment-entry-link-wrapper'
+				)[index];
+
+				fragmentEntryLinkElement.focus();
+				fragmentEntryLinkElement.scrollIntoView();
+			}
+		);
+	}
+
+	/**
 	 * Gets a new FragmentEntryLink position.
 	 * @returns {number}
 	 * @private
@@ -187,6 +212,10 @@ class FragmentsEditor extends Component {
 						}
 					];
 
+					this._focusFragmentEntryLink(
+						response.fragmentEntryLinkId
+					);
+
 					return this._fetchFragmentContent(
 						response.fragmentEntryLinkId
 					).then(
@@ -206,6 +235,10 @@ class FragmentsEditor extends Component {
 							this._lastSaveDate = new Date().toLocaleTimeString();
 
 							this._dirty = false;
+
+							this._focusFragmentEntryLink(
+								response.fragmentEntryLinkId
+							);
 						}
 					);
 				}

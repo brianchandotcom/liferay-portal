@@ -9,6 +9,7 @@
 	"description": "Javascript client to capture and send analytics data to LCS server",
 	"devDependencies": {
 		"babel-core": "^6.26.0",
+		"babel-eslint": "7.2.3",
 		"babel-loader": "^7.1.2",
 		"babel-plugin-transform-object-rest-spread": "^6.26.0",
 		"babel-preset-env": "^1.6.1",
@@ -46,7 +47,9 @@
 	},
 	"scripts": {
 		"build": "rimraf build/ && webpack",
-		"test": "npm run build && karma start"
+		"format": "prettier-eslint --write 'src/**/*.js' 'src/**/*.js'",
+		"test": "npm run build && karma start",
+		"lint": "eslint src/"
 	},
 	"version": "1.0.0"
 }

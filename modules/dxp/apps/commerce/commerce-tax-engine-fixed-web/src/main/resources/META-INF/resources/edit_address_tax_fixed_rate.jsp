@@ -77,25 +77,26 @@ renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 			<aui:fieldset>
 				<div class="row">
 					<div class="col-md-6">
-						<aui:select label="tax-rate" name="commerceTaxFixedRateId" required="<%= true %>">
+						<c:if test="<%= commerceTaxFixedRateAddressRel == null %>">
+							<aui:select disabled="<%= commerceTaxFixedRateAddressRel != null %>" label="tax-category" name="commerceTaxCategoryId">
 
-							<%
-							List<CommerceTaxFixedRate> commerceTaxFixedRates = commerceTaxFixedRateAddressRelsDisplayContext.getCommerceTaxFixedRates();
+								<%
+								List<CommerceTaxCategory> commerceTaxCategories = commerceTaxFixedRateAddressRelsDisplayContext.getAvailableCommerceTaxCategories();
 
-							for (CommerceTaxFixedRate commerceTaxFixedRate : commerceTaxFixedRates) {
-								CommerceTaxCategory commerceTaxCategory = commerceTaxFixedRate.getCommerceTaxCategory();
-							%>
+								for (CommerceTaxCategory commerceTaxCategory : commerceTaxCategories) {
+								%>
 
-								<aui:option
-									label="<%= commerceTaxCategory.getName(languageId) %>"
-									value="<%= commerceTaxFixedRate.getCommerceTaxFixedRateId() %>"
-								/>
+									<aui:option
+										label="<%= commerceTaxCategory.getName(locale) %>"
+										value="<%= commerceTaxCategory.getCommerceTaxCategoryId() %>"
+									/>
 
-							<%
-							}
-							%>
+								<%
+								}
+								%>
 
-						</aui:select>
+							</aui:select>
+						</c:if>
 					</div>
 
 					<div class="col-md-6">

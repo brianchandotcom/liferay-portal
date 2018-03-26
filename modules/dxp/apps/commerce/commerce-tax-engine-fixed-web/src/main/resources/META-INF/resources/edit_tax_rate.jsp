@@ -61,9 +61,7 @@ if (commerceTaxFixedRate != null) {
 			</aui:select>
 		</c:if>
 
-		<c:if test="<%= commerceTaxFixedRatesDisplayContext.isFixed() %>">
-			<aui:input name="rate" suffix="<%= commerceTaxFixedRatesDisplayContext.getCommerceCurrencyCode() %>" />
-		</c:if>
+		<aui:input name="rate" suffix="<%= commerceTaxFixedRatesDisplayContext.getCommerceCurrencyCode() %>" />
 	</div>
 
 	<aui:button-row>

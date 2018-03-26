@@ -22,9 +22,6 @@ import java.util.function.Consumer;
  */
 public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 
-	public ViewTypeItemList() {
-	}
-
 	public void add(Consumer<ViewTypeItem> consumer) {
 		ViewTypeItem viewTypeItem = new ViewTypeItem();
 

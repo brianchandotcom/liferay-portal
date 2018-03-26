@@ -19,9 +19,9 @@ import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.model.CommerceTaxMethod;
 import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceRegionService;
+import com.liferay.commerce.service.CommerceTaxCategoryService;
 import com.liferay.commerce.service.CommerceTaxMethodService;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateAddressRelService;
-import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateService;
 import com.liferay.commerce.tax.engine.fixed.web.internal.ByAddressCommerceTaxEngine;
 import com.liferay.commerce.tax.engine.fixed.web.internal.display.context.CommerceTaxFixedRateAddressRelsDisplayContext;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
@@ -112,7 +112,7 @@ public class CommerceTaxMethodAddressRateRelsScreenNavigationEntry
 			commerceTaxFixedRateAddressRelsDisplayContext =
 				new CommerceTaxFixedRateAddressRelsDisplayContext(
 					_commerceCountryService, _commerceCurrencyService,
-					_commerceRegionService, _commerceTaxFixedRateService,
+					_commerceRegionService, _commerceTaxCategoryService,
 					_commerceTaxMethodService,
 					_commerceTaxFixedRateAddressRelService, renderRequest,
 					renderResponse);
@@ -136,11 +136,11 @@ public class CommerceTaxMethodAddressRateRelsScreenNavigationEntry
 	private CommerceRegionService _commerceRegionService;
 
 	@Reference
-	private CommerceTaxFixedRateAddressRelService
-		_commerceTaxFixedRateAddressRelService;
+	private CommerceTaxCategoryService _commerceTaxCategoryService;
 
 	@Reference
-	private CommerceTaxFixedRateService _commerceTaxFixedRateService;
+	private CommerceTaxFixedRateAddressRelService
+		_commerceTaxFixedRateAddressRelService;
 
 	@Reference
 	private CommerceTaxMethodService _commerceTaxMethodService;

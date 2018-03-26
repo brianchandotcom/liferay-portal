@@ -19,7 +19,6 @@ import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.model.CommerceTaxMethod;
 import com.liferay.commerce.service.CommerceTaxMethodService;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateService;
-import com.liferay.commerce.tax.engine.fixed.web.internal.ByAddressCommerceTaxEngine;
 import com.liferay.commerce.tax.engine.fixed.web.internal.FixedCommerceTaxEngine;
 import com.liferay.commerce.tax.engine.fixed.web.internal.display.context.CommerceTaxFixedRatesDisplayContext;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
@@ -86,9 +85,7 @@ public class CommerceTaxMethodFixedRatesScreenNavigationEntry
 	public boolean isVisible(User user, CommerceTaxMethod commerceTaxMethod) {
 		String engineKey = commerceTaxMethod.getEngineKey();
 
-		if (engineKey.equals(FixedCommerceTaxEngine.KEY) ||
-			engineKey.equals(ByAddressCommerceTaxEngine.KEY)) {
-
+		if (engineKey.equals(FixedCommerceTaxEngine.KEY)) {
 			return true;
 		}
 

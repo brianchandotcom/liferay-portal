@@ -59,8 +59,18 @@ CommerceOrderListDisplayContext commerceOrderListDisplayContext = (CommerceOrder
 				value="<%= HtmlUtil.escape(commerceOrderListDisplayContext.getCommerceOrderDateTime(commerceOrder)) %>"
 			/>
 
+			<liferay-ui:search-container-column-text
+				name="order-status"
+				value="<%= commerceOrderListDisplayContext.getCommerceOrderStatus(commerceOrder) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				name="payment-status"
+				value="<%= commerceOrderListDisplayContext.getCommerceOrderPaymentStatus(commerceOrder) %>"
+			/>
+
 			<liferay-ui:search-container-column-status
-				name="status"
+				name="buyer-workflow-status"
 				status="<%= commerceOrder.getStatus() %>"
 				statusByUserId="<%= commerceOrder.getStatusByUserId() %>"
 				statusDate="<%= commerceOrder.getStatusDate() %>"

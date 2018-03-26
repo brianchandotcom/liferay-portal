@@ -3089,7 +3089,7 @@ marker file.
 ### Changed
 - [LPS-78741]: Configure the `npmInstall` task to run `npm install` instead of
 `npm ci`.
-- [LPS-78741]: Update the [Liferay Gradle Plugins] dependency to version 3.9.8.
+- [LPS-78741]: Update the [Liferay Gradle Plugins] dependency to version 3.9.10.
 - [LPS-78741]: Update the [Liferay Gradle Plugins JSDoc] dependency to version
 2.0.3.
 

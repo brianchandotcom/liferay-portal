@@ -374,15 +374,15 @@ AUI.add(
 				var instance = this;
 
 				if (activeLayout.get('rows').length == 1 && instance._verifyEmptyForm(activeLayout.get('rows')[0]) && !A.one('#lfr-initial-col-message')) {
-					var colNode = activeLayout.get('rows')[0].get('cols')[0].get('node');
+					var columnNode = activeLayout.get('rows')[0].get('cols')[0].get('node');
 					var columnMessageNode = A.Node.create('<div/>');
 
 					columnMessageNode.text(Liferay.Language.get('drag-from-sidebar-and-drop-here'));
 					columnMessageNode.setAttribute('id', 'lfr-initial-col-message');
 
-					colNode.get('parentNode').all('.layout-builder-add-col-draggable').remove();
-					colNode.addClass('lfr-initial-col');
-					colNode.append(columnMessageNode);
+					columnNode.get('parentNode').all('.layout-builder-add-col-draggable').remove();
+					columnNode.addClass('lfr-initial-col');
+					columnNode.append(columnMessageNode);
 				}
 			},
 

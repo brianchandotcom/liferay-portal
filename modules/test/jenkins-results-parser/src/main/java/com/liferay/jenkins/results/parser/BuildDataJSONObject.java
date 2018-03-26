@@ -83,7 +83,7 @@ public class BuildDataJSONObject extends JSONObject {
 	}
 
 	public void writeFilteredPropertiesToFile(
-			String destFile, String filter, String key)
+			String destFilePath, String filter, String key)
 		throws IOException {
 
 		Map<String, String> buildDataMap = getBuildDataMapWithFilter(
@@ -97,13 +97,13 @@ public class BuildDataJSONObject extends JSONObject {
 			sb.append(entry.getValue());
 		}
 
-		JenkinsResultsParserUtil.write(destFile, sb.toString());
+		JenkinsResultsParserUtil.write(destFilePath, sb.toString());
 	}
 
-	public void writePropertiesToFile(String destFile, String key)
+	public void writePropertiesToFile(String destFilePath, String key)
 		throws IOException {
 
-		writeFilteredPropertiesToFile(destFile, null, key);
+		writeFilteredPropertiesToFile(destFilePath, null, key);
 	}
 
 	private JSONArray _toJSONArray(Properties properties) {

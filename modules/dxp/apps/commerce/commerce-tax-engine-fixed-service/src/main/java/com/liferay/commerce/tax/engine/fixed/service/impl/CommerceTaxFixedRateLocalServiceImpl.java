@@ -68,23 +68,6 @@ public class CommerceTaxFixedRateLocalServiceImpl
 	}
 
 	@Override
-	public CommerceTaxFixedRate deleteCommerceTaxFixedRate(
-		CommerceTaxFixedRate commerceTaxFixedRate) {
-
-		// Commerce tax fixed rate
-
-		commerceTaxFixedRatePersistence.remove(commerceTaxFixedRate);
-
-		// Commerce tax fixed rate address rels
-
-		commerceTaxFixedRateAddressRelLocalService.
-			deleteCommerceTaxFixedRateAddressRels(
-				commerceTaxFixedRate.getCommerceTaxFixedRateId());
-
-		return commerceTaxFixedRate;
-	}
-
-	@Override
 	public void deleteCommerceTaxFixedRates(long commerceTaxCategoryId)
 		throws PortalException {
 

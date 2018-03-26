@@ -14,7 +14,11 @@
 
 package com.liferay.portal.kernel.dao.orm;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.CalendarUtil;
+
+import java.math.BigDecimal;
 
 import java.sql.Timestamp;
 
@@ -24,10 +28,27 @@ import java.util.Date;
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
+@ProviderType
 public class QueryPos {
 
 	public static QueryPos getInstance(Query query) {
 		return new QueryPos(query);
+	}
+
+	public void add(BigDecimal value) {
+		_query.setBigDecimal(_pos++, value);
+	}
+
+	public void add(BigDecimal[] values) {
+		add(values, _DEFAULT_ARRAY_COUNT);
+	}
+
+	public void add(BigDecimal[] values, int count) {
+		for (int i = 0; i < values.length; i++) {
+			for (int j = 0; j < count; j++) {
+				add(values[i]);
+			}
+		}
 	}
 
 	public void add(boolean value) {
@@ -240,7 +261,10 @@ public class QueryPos {
 
 		Class<?> clazz = obj.getClass();
 
-		if (clazz == Boolean.class) {
+		if (clazz == BigDecimal.class) {
+			add((BigDecimal)obj);
+		}
+		else if (clazz == Boolean.class) {
 			add(((Boolean)obj).booleanValue());
 		}
 		else if (clazz == Date.class) {

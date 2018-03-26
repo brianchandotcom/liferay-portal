@@ -71,7 +71,7 @@ public class CommerceUserPermissionsScreenNavigationEntry
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "permissions");
+		return LanguageUtil.get(resourceBundle, "entitlements");
 	}
 
 	@Override

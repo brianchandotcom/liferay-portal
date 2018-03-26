@@ -100,7 +100,7 @@ class CPOptionValueDetail extends Component {
 	}
 
 	_handleDeleteOptionValue() {
-		if (confirm("Are you sure to delte?")) {
+		if (confirm("Are you sure to delete?")) {
 			this._deleteOptionValue();
 		}
 	}

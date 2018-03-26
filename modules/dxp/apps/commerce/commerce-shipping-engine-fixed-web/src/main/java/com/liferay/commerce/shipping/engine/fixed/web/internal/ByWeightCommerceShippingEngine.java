@@ -96,7 +96,7 @@ public class ByWeightCommerceShippingEngine implements CommerceShippingEngine {
 	public String getName(Locale locale) {
 		ResourceBundle resourceBundle = _getResourceBundle(locale);
 
-		return LanguageUtil.get(resourceBundle, "by-weight");
+		return LanguageUtil.get(resourceBundle, "variable-rate");
 	}
 
 	private List<CommerceShippingFixedOption> _getCommerceShippingFixedOptions(

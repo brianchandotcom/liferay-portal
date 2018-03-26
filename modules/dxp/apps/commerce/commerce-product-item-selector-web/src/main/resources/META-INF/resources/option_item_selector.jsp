@@ -80,6 +80,7 @@ PortletURL portletURL = cpOptionItemSelectorViewDisplayContext.getPortletURL();
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
+				name="use-in-faceted-navigation"
 				property="facetable"
 			/>
 

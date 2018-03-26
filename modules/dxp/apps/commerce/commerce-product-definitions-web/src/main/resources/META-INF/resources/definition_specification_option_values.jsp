@@ -167,12 +167,12 @@ PortletURL portletURL = cpDefinitionSpecificationOptionValueDisplayContext.getPo
 </aui:form>
 
 <liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item id="addCommerceProductDefinitionSpecificationOptionValue" title='<%= LanguageUtil.get(request, "add-specification-value") %>' url="javascript:;" />
+	<liferay-frontend:add-menu-item id="addCommerceProductDefinitionSpecificationOptionValue" title='<%= LanguageUtil.get(request, "add-specification") %>' url="javascript:;" />
 </liferay-frontend:add-menu>
 
 <aui:script>
 	function <portlet:namespace />deleteCPDefinitionSpecificationOptionValues() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-specification-values" />')) {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-specifications" />')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.attr('method', 'post');
@@ -206,7 +206,7 @@ PortletURL portletURL = cpDefinitionSpecificationOptionValueDisplayContext.getPo
 							}
 						}
 					},
-					title: '<liferay-ui:message arguments="<%= cpDefinition.getTitle(languageId) %>" key="add-new-specification-value-to-x" />',
+					title: '<liferay-ui:message arguments="<%= cpDefinition.getTitle(languageId) %>" key="add-new-specification-to-x" />',
 					url: '<%= cpDefinitionSpecificationOptionValueDisplayContext.getItemSelectorUrl() %>'
 				}
 			);

@@ -174,12 +174,12 @@ renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 </liferay-portlet:renderURL>
 
 <liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-option-category") %>' url="<%= addProductOptionCategoryURL.toString() %>" />
+	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-specification-group") %>' url="<%= addProductOptionCategoryURL.toString() %>" />
 </liferay-frontend:add-menu>
 
 <aui:script>
 	function <portlet:namespace />deleteCPOptionCategories() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-option-categories" />')) {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-specification-groups" />')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.attr('method', 'post');

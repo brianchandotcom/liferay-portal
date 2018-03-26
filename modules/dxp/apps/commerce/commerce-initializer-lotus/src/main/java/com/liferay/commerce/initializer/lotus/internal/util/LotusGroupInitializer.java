@@ -102,7 +102,7 @@ public class LotusGroupInitializer implements GroupInitializer {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "lotus-store-description");
+		return LanguageUtil.get(resourceBundle, "lotus-description");
 	}
 
 	@Override
@@ -115,7 +115,7 @@ public class LotusGroupInitializer implements GroupInitializer {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "lotus-store");
+		return LanguageUtil.get(resourceBundle, KEY);
 	}
 
 	public ServiceContext getServiceContext(long groupId)

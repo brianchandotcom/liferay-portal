@@ -16,7 +16,7 @@
 
 	<h4 class="section-header">
 
-		Options
+		{msg desc=""}option-templates{/msg}
 
 		<button class="btn btn-primary nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none" onClick="{$_handleAddOptionClick}" type="button">
 			<svg aria-hidden="true" class="lexicon-icon lexicon-icon-plus">
@@ -95,7 +95,7 @@
 				{$title}
 			{else}
 				{if $title == ''}
-					[{msg desc=""}new-option{/msg}]
+					[{msg desc=""}new-option-template{/msg}]
 				{else}
 					{$title}
 				{/if}

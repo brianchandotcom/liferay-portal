@@ -58,7 +58,7 @@ public class CPOptionCategoryDisplayContext
 			liferayPortletRequest, getPortletURL(), null, null);
 
 		searchContainer.setEmptyResultsMessage(
-			"no-option-categories-were-found");
+			"no-specification-groups-were-found");
 
 		OrderByComparator<CPOptionCategory> orderByComparator =
 			CPOptionsPortletUtil.getCPOptionCategoryOrderByComparator(

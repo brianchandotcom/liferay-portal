@@ -25,13 +25,11 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -67,11 +65,8 @@ public class CommerceShippingMethodDetailsScreenNavigationEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
 		return LanguageUtil.get(
-			resourceBundle,
+			locale,
 			CommerceShippingScreenNavigationConstants.
 				ENTRY_KEY_COMMERCE_SHIPPING_METHOD_DETAILS);
 	}

@@ -90,7 +90,8 @@ public class CPSpecificationOptionDisplayContext
 		searchContainer = new SearchContainer<>(
 			liferayPortletRequest, getPortletURL(), null, null);
 
-		searchContainer.setEmptyResultsMessage("no-specifications-were-found");
+		searchContainer.setEmptyResultsMessage(
+			"no-specification-labels-were-found");
 
 		OrderByComparator<CPSpecificationOption> orderByComparator =
 			CPOptionsPortletUtil.getCPSpecificationOptionOrderByComparator(

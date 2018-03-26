@@ -68,7 +68,7 @@ boolean hasCustomAttributesAvailable = CustomAttributesUtil.hasCustomAttributes(
 
 			</aui:select>
 
-			<aui:input name="facetable" />
+			<aui:input label="use-in-faceted-navigation" name="facetable" />
 
 			<aui:input name="required" />
 

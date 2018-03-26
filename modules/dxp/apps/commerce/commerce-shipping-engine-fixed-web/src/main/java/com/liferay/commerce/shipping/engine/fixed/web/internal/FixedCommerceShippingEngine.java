@@ -91,7 +91,7 @@ public class FixedCommerceShippingEngine implements CommerceShippingEngine {
 	public String getName(Locale locale) {
 		ResourceBundle resourceBundle = _getResourceBundle(locale);
 
-		return LanguageUtil.get(resourceBundle, "fixed");
+		return LanguageUtil.get(resourceBundle, "flat-rate");
 	}
 
 	private List<CommerceShippingFixedOption> _getCommerceShippingFixedOptions(

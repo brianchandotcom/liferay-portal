@@ -90,7 +90,7 @@ public class CPMeasurementUnitsDisplayContext {
 				toolbarItem.equals(
 					"view-all-dimension-product-measurement-units"),
 				viewDimensionProductMeasurementUnitsURL,
-				LanguageUtil.get(themeDisplay.getLocale(), "dimension"));
+				LanguageUtil.get(themeDisplay.getLocale(), "dimensions"));
 
 		NavigationItem weightCPMeasurementUnitsNavigationItem =
 			getNavigationItem(

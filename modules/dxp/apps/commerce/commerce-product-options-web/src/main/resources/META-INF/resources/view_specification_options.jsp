@@ -146,6 +146,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
+								name="use-in-faceted-navigation"
 								property="facetable"
 							/>
 
@@ -180,12 +181,12 @@ renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 </liferay-portlet:renderURL>
 
 <liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-specification") %>' url="<%= addProductSpecificationOptionURL.toString() %>" />
+	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-specification-label") %>' url="<%= addProductSpecificationOptionURL.toString() %>" />
 </liferay-frontend:add-menu>
 
 <aui:script>
 	function <portlet:namespace />deleteCPSpecificationOptions() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-specifications" />')) {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-specification-labels" />')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.attr('method', 'post');

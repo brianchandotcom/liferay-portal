@@ -37,9 +37,9 @@ List<CPOptionCategory> cpOptionCategories = cpSpecificationOptionDisplayContext.
 
 	<aui:input name="description" />
 
-	<aui:input name="facetable" />
+	<aui:input label="use-in-faceted-navigation" name="facetable" />
 
-	<aui:select label="category" name="CPOptionCategoryId" showEmptyOption="<%= true %>">
+	<aui:select label="specification-group" name="CPOptionCategoryId" showEmptyOption="<%= true %>">
 
 		<%
 		for (CPOptionCategory cpOptionCategory : cpOptionCategories) {

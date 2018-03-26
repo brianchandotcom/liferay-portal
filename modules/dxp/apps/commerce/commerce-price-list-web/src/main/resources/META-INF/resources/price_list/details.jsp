@@ -62,7 +62,7 @@ List<CommercePriceListQualificationTypeRel> commercePriceListQualificationTypeRe
 	<aui:input name="priority" />
 </aui:fieldset>
 
-<h5 class="text-default"><liferay-ui:message key="qualification-type" /></h5>
+<h5 class="text-default"><liferay-ui:message key="criteria" /></h5>
 
 <liferay-ui:search-container
 	cssClass="lfr-search-container-qualification-type-rels"
@@ -126,7 +126,7 @@ List<CommercePriceListQualificationTypeRel> commercePriceListQualificationTypeRe
 							}
 						}
 					},
-					title: '<liferay-ui:message arguments="qualification-type" key="select-x" />',
+					title: '<liferay-ui:message arguments="criterion" key="select-x" />',
 					url: '<%= commercePriceListDisplayContext.getItemSelectorUrl() %>'
 				}
 			);

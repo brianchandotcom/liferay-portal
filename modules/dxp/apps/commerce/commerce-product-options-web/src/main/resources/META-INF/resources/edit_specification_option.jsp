@@ -23,7 +23,7 @@ CPSpecificationOption cpSpecificationOption = (CPSpecificationOption)request.get
 
 long cpSpecificationOptionId = BeanParamUtil.getLong(cpSpecificationOption, request, "CPSpecificationOptionId");
 
-String title = LanguageUtil.get(request, "add-specification");
+String title = LanguageUtil.get(request, "add-specification-label");
 
 if (cpSpecificationOption != null) {
 	title = cpSpecificationOption.getTitle(locale);
@@ -33,7 +33,7 @@ Map<String, Object> data = new HashMap<>();
 
 data.put("direction-right", StringPool.TRUE);
 
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "specifications"), specificationOptionsURL, data);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "specification-labels"), specificationOptionsURL, data);
 PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 
 renderResponse.setTitle(LanguageUtil.get(request, "catalog"));

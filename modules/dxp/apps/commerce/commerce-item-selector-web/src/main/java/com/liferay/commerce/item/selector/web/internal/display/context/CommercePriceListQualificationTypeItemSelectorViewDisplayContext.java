@@ -60,8 +60,7 @@ public class CommercePriceListQualificationTypeItemSelectorViewDisplayContext
 		searchContainer = new SearchContainer<>(
 			cpRequestHelper.getRenderRequest(), getPortletURL(), null, null);
 
-		searchContainer.setEmptyResultsMessage(
-			"there-are-no-qualification-types");
+		searchContainer.setEmptyResultsMessage("there-are-no-criteria");
 
 		RowChecker rowChecker =
 			new CommercePriceListQualificationTypeItemSelectorChecker(

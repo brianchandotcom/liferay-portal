@@ -74,7 +74,7 @@ public class CommercePriceListQualificationTypeItemSelectorView
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "qualification-types");
+		return LanguageUtil.get(resourceBundle, "criteria");
 	}
 
 	@Override

@@ -23,7 +23,7 @@ CPOptionCategory cpOptionCategory = (CPOptionCategory)request.getAttribute(CPWeb
 
 long cpOptionCategoryId = BeanParamUtil.getLong(cpOptionCategory, request, "CPOptionCategoryId");
 
-String title = LanguageUtil.get(request, "add-option-category");
+String title = LanguageUtil.get(request, "add-specification-group");
 
 if (cpOptionCategory != null) {
 	title = cpOptionCategory.getTitle(locale);
@@ -33,7 +33,7 @@ Map<String, Object> data = new HashMap<>();
 
 data.put("direction-right", StringPool.TRUE);
 
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "option-categories"), optionCategoriesURL, data);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "specification-groups"), optionCategoriesURL, data);
 PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 
 renderResponse.setTitle(LanguageUtil.get(request, "catalog"));

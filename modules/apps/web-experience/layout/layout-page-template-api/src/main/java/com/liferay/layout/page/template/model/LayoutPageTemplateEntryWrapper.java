@@ -70,6 +70,7 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 		attributes.put("layoutPageTemplateCollectionId",
 			getLayoutPageTemplateCollectionId());
 		attributes.put("classNameId", getClassNameId());
+		attributes.put("classTypeId", getClassTypeId());
 		attributes.put("name", getName());
 		attributes.put("htmlPreviewEntryId", getHtmlPreviewEntryId());
 		attributes.put("defaultTemplate", getDefaultTemplate());
@@ -135,6 +136,12 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 			setClassNameId(classNameId);
 		}
 
+		Long classTypeId = (Long)attributes.get("classTypeId");
+
+		if (classTypeId != null) {
+			setClassTypeId(classTypeId);
+		}
+
 		String name = (String)attributes.get("name");
 
 		if (name != null) {
@@ -182,6 +189,16 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 	@Override
 	public long getClassNameId() {
 		return _layoutPageTemplateEntry.getClassNameId();
+	}
+
+	/**
+	* Returns the class type ID of this layout page template entry.
+	*
+	* @return the class type ID of this layout page template entry
+	*/
+	@Override
+	public long getClassTypeId() {
+		return _layoutPageTemplateEntry.getClassTypeId();
 	}
 
 	/**
@@ -389,6 +406,16 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 	@Override
 	public void setClassNameId(long classNameId) {
 		_layoutPageTemplateEntry.setClassNameId(classNameId);
+	}
+
+	/**
+	* Sets the class type ID of this layout page template entry.
+	*
+	* @param classTypeId the class type ID of this layout page template entry
+	*/
+	@Override
+	public void setClassTypeId(long classTypeId) {
+		_layoutPageTemplateEntry.setClassTypeId(classTypeId);
 	}
 
 	/**

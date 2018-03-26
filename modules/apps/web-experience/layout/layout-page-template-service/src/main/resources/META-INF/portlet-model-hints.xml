@@ -27,6 +27,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="layoutPageTemplateCollectionId" type="long" />
 		<field name="classNameId" type="long" />
+		<field name="classTypeId" type="long" />
 		<field name="name" type="String" />
 		<field name="htmlPreviewEntryId" type="long" />
 		<field name="defaultTemplate" type="boolean" />

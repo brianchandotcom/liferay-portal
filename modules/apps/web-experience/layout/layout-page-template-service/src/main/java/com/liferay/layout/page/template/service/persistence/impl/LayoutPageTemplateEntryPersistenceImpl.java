@@ -4698,6 +4698,7 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		layoutPageTemplateEntryImpl.setModifiedDate(layoutPageTemplateEntry.getModifiedDate());
 		layoutPageTemplateEntryImpl.setLayoutPageTemplateCollectionId(layoutPageTemplateEntry.getLayoutPageTemplateCollectionId());
 		layoutPageTemplateEntryImpl.setClassNameId(layoutPageTemplateEntry.getClassNameId());
+		layoutPageTemplateEntryImpl.setClassTypeId(layoutPageTemplateEntry.getClassTypeId());
 		layoutPageTemplateEntryImpl.setName(layoutPageTemplateEntry.getName());
 		layoutPageTemplateEntryImpl.setHtmlPreviewEntryId(layoutPageTemplateEntry.getHtmlPreviewEntryId());
 		layoutPageTemplateEntryImpl.setDefaultTemplate(layoutPageTemplateEntry.isDefaultTemplate());

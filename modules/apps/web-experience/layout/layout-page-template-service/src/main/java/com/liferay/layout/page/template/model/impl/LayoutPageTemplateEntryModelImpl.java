@@ -80,6 +80,7 @@ public class LayoutPageTemplateEntryModelImpl extends BaseModelImpl<LayoutPageTe
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "layoutPageTemplateCollectionId", Types.BIGINT },
 			{ "classNameId", Types.BIGINT },
+			{ "classTypeId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "htmlPreviewEntryId", Types.BIGINT },
 			{ "defaultTemplate", Types.BOOLEAN }
@@ -96,12 +97,13 @@ public class LayoutPageTemplateEntryModelImpl extends BaseModelImpl<LayoutPageTe
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("layoutPageTemplateCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("classTypeId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("htmlPreviewEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("defaultTemplate", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table LayoutPageTemplateEntry (layoutPageTemplateEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,layoutPageTemplateCollectionId LONG,classNameId LONG,name VARCHAR(75) null,htmlPreviewEntryId LONG,defaultTemplate BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table LayoutPageTemplateEntry (layoutPageTemplateEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,layoutPageTemplateCollectionId LONG,classNameId LONG,classTypeId LONG,name VARCHAR(75) null,htmlPreviewEntryId LONG,defaultTemplate BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table LayoutPageTemplateEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY layoutPageTemplateEntry.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LayoutPageTemplateEntry.name ASC";
@@ -146,6 +148,7 @@ public class LayoutPageTemplateEntryModelImpl extends BaseModelImpl<LayoutPageTe
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setLayoutPageTemplateCollectionId(soapModel.getLayoutPageTemplateCollectionId());
 		model.setClassNameId(soapModel.getClassNameId());
+		model.setClassTypeId(soapModel.getClassTypeId());
 		model.setName(soapModel.getName());
 		model.setHtmlPreviewEntryId(soapModel.getHtmlPreviewEntryId());
 		model.setDefaultTemplate(soapModel.getDefaultTemplate());
@@ -225,6 +228,7 @@ public class LayoutPageTemplateEntryModelImpl extends BaseModelImpl<LayoutPageTe
 		attributes.put("layoutPageTemplateCollectionId",
 			getLayoutPageTemplateCollectionId());
 		attributes.put("classNameId", getClassNameId());
+		attributes.put("classTypeId", getClassTypeId());
 		attributes.put("name", getName());
 		attributes.put("htmlPreviewEntryId", getHtmlPreviewEntryId());
 		attributes.put("defaultTemplate", getDefaultTemplate());
@@ -291,6 +295,12 @@ public class LayoutPageTemplateEntryModelImpl extends BaseModelImpl<LayoutPageTe
 
 		if (classNameId != null) {
 			setClassNameId(classNameId);
+		}
+
+		Long classTypeId = (Long)attributes.get("classTypeId");
+
+		if (classTypeId != null) {
+			setClassTypeId(classTypeId);
 		}
 
 		String name = (String)attributes.get("name");
@@ -497,6 +507,17 @@ public class LayoutPageTemplateEntryModelImpl extends BaseModelImpl<LayoutPageTe
 
 	@JSON
 	@Override
+	public long getClassTypeId() {
+		return _classTypeId;
+	}
+
+	@Override
+	public void setClassTypeId(long classTypeId) {
+		_classTypeId = classTypeId;
+	}
+
+	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return "";
@@ -601,6 +622,7 @@ public class LayoutPageTemplateEntryModelImpl extends BaseModelImpl<LayoutPageTe
 		layoutPageTemplateEntryImpl.setModifiedDate(getModifiedDate());
 		layoutPageTemplateEntryImpl.setLayoutPageTemplateCollectionId(getLayoutPageTemplateCollectionId());
 		layoutPageTemplateEntryImpl.setClassNameId(getClassNameId());
+		layoutPageTemplateEntryImpl.setClassTypeId(getClassTypeId());
 		layoutPageTemplateEntryImpl.setName(getName());
 		layoutPageTemplateEntryImpl.setHtmlPreviewEntryId(getHtmlPreviewEntryId());
 		layoutPageTemplateEntryImpl.setDefaultTemplate(getDefaultTemplate());
@@ -729,6 +751,8 @@ public class LayoutPageTemplateEntryModelImpl extends BaseModelImpl<LayoutPageTe
 
 		layoutPageTemplateEntryCacheModel.classNameId = getClassNameId();
 
+		layoutPageTemplateEntryCacheModel.classTypeId = getClassTypeId();
+
 		layoutPageTemplateEntryCacheModel.name = getName();
 
 		String name = layoutPageTemplateEntryCacheModel.name;
@@ -746,7 +770,7 @@ public class LayoutPageTemplateEntryModelImpl extends BaseModelImpl<LayoutPageTe
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{layoutPageTemplateEntryId=");
 		sb.append(getLayoutPageTemplateEntryId());
@@ -766,6 +790,8 @@ public class LayoutPageTemplateEntryModelImpl extends BaseModelImpl<LayoutPageTe
 		sb.append(getLayoutPageTemplateCollectionId());
 		sb.append(", classNameId=");
 		sb.append(getClassNameId());
+		sb.append(", classTypeId=");
+		sb.append(getClassTypeId());
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", htmlPreviewEntryId=");
@@ -779,7 +805,7 @@ public class LayoutPageTemplateEntryModelImpl extends BaseModelImpl<LayoutPageTe
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("<model><model-name>");
 		sb.append(
@@ -823,6 +849,10 @@ public class LayoutPageTemplateEntryModelImpl extends BaseModelImpl<LayoutPageTe
 		sb.append(getClassNameId());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>classTypeId</column-name><column-value><![CDATA[");
+		sb.append(getClassTypeId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
 		sb.append(getName());
 		sb.append("]]></column-value></column>");
@@ -860,6 +890,7 @@ public class LayoutPageTemplateEntryModelImpl extends BaseModelImpl<LayoutPageTe
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;
+	private long _classTypeId;
 	private String _name;
 	private String _originalName;
 	private long _htmlPreviewEntryId;

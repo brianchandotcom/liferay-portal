@@ -2,6 +2,7 @@ import AnalyticsClient from '../src/analytics';
 import {assert, expect} from 'chai';
 
 let Analytics = AnalyticsClient.create();
+let EVENT_ID = 0;
 
 const ANALYTICS_IDENTITY = {email: 'foo@bar.com'};
 const ANALYTICS_KEY = 'ANALYTICS_KEY';
@@ -19,9 +20,9 @@ const fetchMock = window.fetchMock;
  * @param {number} eventsNumber Number of events to send
  */
 function sendDummyEvents(eventsNumber = 5) {
-	for (let i = 0; i <= eventsNumber; i++) {
+	for (let i = 0; i < eventsNumber; i++) {
 		const applicationId = 'test';
-		const eventId = i;
+		const eventId = EVENT_ID++;
 		const properties = {
 			a: 1,
 			b: 2,
@@ -39,6 +40,8 @@ describe('Analytics Client', () => {
 
 	beforeEach(
 		() => {
+			Analytics.reset();
+
 			localStorage.removeItem(STORAGE_KEY_EVENTS);
 			localStorage.removeItem(STORAGE_KEY_USER_ID);
 		}
@@ -270,6 +273,40 @@ describe('Analytics Client', () => {
 						done();
 					}
 				);
+		});
+
+		it('should only clear the persisted events when done', function() {
+			const analytics = Analytics.create(
+				{
+					flushInterval: FLUSH_INTERVAL * 10
+				}
+			);
+
+			fetchMock.mock(/identity$/, () => Promise.resolve({}));
+
+			fetchMock.mock(
+				/send\-analytics\-events$/,
+				function() {
+					// Send events while flush is in progress
+					sendDummyEvents(7);
+
+					return new Promise(
+						resolve => {
+							setTimeout(() => resolve({}), 300);
+						}
+					);
+				}
+			);
+
+			sendDummyEvents(5);
+
+			return analytics.flush().then(() => {
+				const events = analytics.events;
+
+				events.should.have.lengthOf(7);
+
+				Analytics.dispose();
+			});
 		});
 	});
 

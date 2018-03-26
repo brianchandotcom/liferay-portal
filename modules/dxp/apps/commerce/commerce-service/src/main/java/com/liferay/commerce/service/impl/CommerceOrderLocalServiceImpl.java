@@ -676,15 +676,16 @@ public class CommerceOrderLocalServiceImpl
 			status = CommerceOrderPaymentConstants.STATUS_FAILED;
 		}
 
-		if (Validator.isNotNull(output)) {
+		if ((status == CommerceOrderPaymentConstants.STATUS_FAILED) ||
+			Validator.isNotNull(content)) {
+
 			commerceOrderPaymentLocalService.addCommerceOrderPayment(
 				commerceOrder.getCommerceOrderId(), status, content,
 				serviceContext);
 		}
-		else {
-			commerceOrder = updatePaymentStatus(
-				commerceOrder.getCommerceOrderId(),
-				CommerceOrderConstants.PAYMENT_STATUS_PENDING, serviceContext);
+
+		if ((status == CommerceOrderPaymentConstants.STATUS_PENDING) &&
+			Validator.isNull(output)) {
 
 			setCommerceOrderToTransmit(commerceOrder, serviceContext);
 		}

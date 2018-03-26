@@ -216,6 +216,11 @@ public class UploadServletRequestImpl
 			if (_log.isDebugEnabled()) {
 				_log.debug(e, e);
 			}
+			else if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Unable to parse upload request: ", e.getMessage()));
+			}
 		}
 
 		_liferayServletRequest = liferayServletRequest;

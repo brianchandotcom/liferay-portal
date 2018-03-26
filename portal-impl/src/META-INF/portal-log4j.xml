@@ -860,6 +860,10 @@
 		<priority value="INFO" />
 	</category>
 
+	<category name="com.liferay.portal.upload.UploadServletRequestImpl">
+		<priority value="WARN" />
+	</category>
+
 	<category name="com.liferay.portal.util">
 		<priority value="ERROR" />
 	</category>

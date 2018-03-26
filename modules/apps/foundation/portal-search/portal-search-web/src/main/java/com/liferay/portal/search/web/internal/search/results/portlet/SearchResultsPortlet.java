@@ -160,7 +160,7 @@ public class SearchResultsPortlet
 		searchResultsPortletDisplayContext.setDocuments(documents);
 
 		Optional<String> keywordsOptional =
-			portletSharedSearchResponse.getKeywords();
+			portletSharedSearchResponse.getKeywordsOptional();
 
 		searchResultsPortletDisplayContext.setKeywords(
 			keywordsOptional.orElse(StringPool.BLANK));

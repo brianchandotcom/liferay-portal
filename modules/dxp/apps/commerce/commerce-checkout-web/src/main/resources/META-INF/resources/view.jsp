@@ -76,7 +76,7 @@ String currentCheckoutStepName = checkoutDisplayContext.getCurrentCheckoutStepNa
 
 		<portlet:actionURL name="saveStep" var="saveStepURL" />
 
-		<aui:form action="<%= saveStepURL %>" data-senna-off="<%= checkoutDisplayContext.isSennaDisabled() %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCheckoutStep();" %>'>
+		<aui:form action="<%= saveStepURL %>" cssClass="container-fluid-1280" data-senna-off="<%= checkoutDisplayContext.isSennaDisabled() %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCheckoutStep();" %>'>
 			<aui:input name="checkoutStepName" type="hidden" value="<%= currentCheckoutStepName %>" />
 			<aui:input name="commerceOrderId" type="hidden" value="<%= checkoutDisplayContext.getCommerceOrderId() %>" />
 			<aui:input name="redirect" type="hidden" value="<%= checkoutDisplayContext.getRedirect() %>" />

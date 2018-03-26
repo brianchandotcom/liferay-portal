@@ -29,7 +29,7 @@ if (Validator.isNull(commerceShippingOptionKey)) {
 }
 %>
 
-<aui:container fluid="<%= true %>" id="commerceShippingMethodsContainer">
+<div id="commerceShippingMethodsContainer">
 	<liferay-ui:error exception="<%= CommerceOrderShippingMethodException.class %>" message="please-select-a-valid-shipping-method" />
 
 	<c:choose>
@@ -86,4 +86,4 @@ if (Validator.isNull(commerceShippingOptionKey)) {
 			</ul>
 		</c:otherwise>
 	</c:choose>
-</aui:container>
+</div>

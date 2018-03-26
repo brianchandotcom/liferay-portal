@@ -26,7 +26,7 @@ CommerceOrder commerceOrder = paymentMethodCheckoutStepDisplayContext.getCommerc
 long commercePaymentMethodId = BeanParamUtil.getLong(commerceOrder, request, "commercePaymentMethodId");
 %>
 
-<aui:container fluid="<%= true %>" id="commercePaymentMethodsContainer">
+<div id="commercePaymentMethodsContainer">
 	<liferay-ui:error exception="<%= CommerceOrderPaymentMethodException.class %>" message="please-select-a-valid-payment-method" />
 
 	<c:choose>
@@ -69,7 +69,7 @@ long commercePaymentMethodId = BeanParamUtil.getLong(commerceOrder, request, "co
 			</ul>
 		</c:otherwise>
 	</c:choose>
-</aui:container>
+</div>
 
 <c:if test="<%= commercePaymentMethods.isEmpty() %>">
 	<aui:script use="aui-base">

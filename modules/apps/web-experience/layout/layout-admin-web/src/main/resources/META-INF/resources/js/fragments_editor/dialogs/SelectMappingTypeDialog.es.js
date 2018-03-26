@@ -93,9 +93,7 @@ class SelectMappingTypeDialog extends Component {
 		this._selectedMappingTypeId = mappingType.id;
 		this._mappingSubtypes = [];
 
-		if (mappingType.hasSubtypes) {
-			this._loadMappingSubtypes();
-		}
+		this._loadMappingSubtypes();
 	}
 
 	/**
@@ -108,12 +106,37 @@ class SelectMappingTypeDialog extends Component {
 	_handleSubmitButtonClick() {
 		this._savingChanges = true;
 
-		setTimeout(
+		const formData = new FormData();
+
+		formData.append(
+			`${this.portletNamespace}classPK`,
+			this.classPK
+		);
+
+		formData.append(
+			`${this.portletNamespace}classNameId`,
+			this._selectedMappingTypeId
+		);
+
+		formData.append(
+			`${this.portletNamespace}classTypeId`,
+			this._selectedMappingSubtypeId
+		);
+
+		return fetch(
+			this.updateLayoutPageTemplateEntryAssetTypeURL,
+			{
+				body: formData,
+				credentials: 'include',
+				method: 'POST'
+			}
+		).then(
+			response => response.json()
+		).then(
 			() => {
 				this._emitSelectedMappingLabels();
 				this.visible = false;
-			},
-			1000
+			}
 		);
 	}
 
@@ -144,7 +167,29 @@ class SelectMappingTypeDialog extends Component {
 	 */
 
 	_loadMappingSubtypes() {
-		this._mappingSubtypes = [];
+		this._mappingSubtypes = null;
+
+		const formData = new FormData();
+
+		formData.append(
+			`${this.portletNamespace}classNameId`,
+			this._selectedMappingTypeId
+		);
+
+		return fetch(
+			this.getAssetClassTypesURL,
+			{
+				body: formData,
+				credentials: 'include',
+				method: 'POST'
+			}
+		).then(
+			response => response.json()
+		).then(
+			response => {
+				this._mappingSubtypes = response;
+			}
+		);
 	}
 
 	/**
@@ -154,7 +199,19 @@ class SelectMappingTypeDialog extends Component {
 	 */
 
 	_loadMappingTypes() {
-		this._mappingTypes = []
+		return fetch(
+			this.getAssetDisplayContributorsURL,
+			{
+				credentials: 'include',
+				method: 'POST'
+			}
+		).then(
+			response => response.json()
+		).then(
+			response => {
+				this._mappingTypes = response;
+			}
+		);
 	}
 }
 
@@ -254,7 +311,6 @@ SelectMappingTypeDialog.STATE = {
 	 * @private
 	 * @review
 	 * @type {Array<{
-	 *   hasSubtypes: !boolean,
 	 *   id: !string,
 	 *   label: !string
 	 * }>}
@@ -264,7 +320,6 @@ SelectMappingTypeDialog.STATE = {
 		.arrayOf(
 			Config.shapeOf(
 				{
-					hasSubtypes: Config.bool().required(),
 					id: Config.string().required(),
 					label: Config.string().required()
 				}

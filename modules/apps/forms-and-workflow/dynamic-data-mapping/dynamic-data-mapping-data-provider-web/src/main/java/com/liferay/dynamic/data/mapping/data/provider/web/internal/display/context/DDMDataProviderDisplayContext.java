@@ -294,6 +294,18 @@ public class DDMDataProviderDisplayContext {
 			dataProviderInstance, ActionKeys.PERMISSIONS);
 	}
 
+	public boolean isShowSearch() throws PortalException {
+		if (hasResults()) {
+			return true;
+		}
+
+		if (isSearch()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	protected DDMFormRenderingContext createDDMFormRenderingContext() {
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();

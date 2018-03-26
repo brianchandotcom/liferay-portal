@@ -42,6 +42,16 @@ PortletURL portletURL = ddmDataProviderDisplayContext.getPortletURL();
 			orderColumns='<%= new String[] {"create-date", "modified-date", "name"} %>'
 			portletURL="<%= portletURL %>"
 		/>
+
+		<li>
+			<c:if test="<%= ddmDataProviderDisplayContext.isShowSearch() %>">
+				<aui:form action="<%= ddmDataProviderDisplayContext.getPortletURL() %>" method="post" name="fm1">
+					<liferay-ui:input-search
+						markupView="lexicon"
+					/>
+				</aui:form>
+			</c:if>
+		</li>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>

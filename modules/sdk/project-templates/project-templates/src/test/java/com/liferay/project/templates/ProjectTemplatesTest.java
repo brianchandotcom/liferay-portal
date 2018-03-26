@@ -992,15 +992,12 @@ public class ProjectTemplatesTest {
 
 		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
 
-		File gradleBundleFile = _testExists(
-			gradleProjectDir, "build/libs/servicepreaction-1.0.0.jar");
+		_testExists(gradleProjectDir, "build/libs/servicepreaction-1.0.0.jar");
 
 		_executeGradle(workspaceDir, ":modules:servicepreaction:build");
 
-		File workspaceBundleFile = _testExists(
+		_testExists(
 			workspaceProjectDir, "build/libs/servicepreaction-1.0.0.jar");
-
-		_testBundlesDiff(gradleBundleFile, workspaceBundleFile);
 	}
 
 	@Test
@@ -1055,15 +1052,12 @@ public class ProjectTemplatesTest {
 
 		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
 
-		File gradleBundleFile = _testExists(
-			gradleProjectDir, "build/libs/serviceoverride-1.0.0.jar");
+		_testExists(gradleProjectDir, "build/libs/serviceoverride-1.0.0.jar");
 
 		_executeGradle(workspaceDir, ":modules:serviceoverride:build");
 
-		File workspaceBundleFile = _testExists(
+		_testExists(
 			workspaceProjectDir, "build/libs/serviceoverride-1.0.0.jar");
-
-		_testBundlesDiff(gradleBundleFile, workspaceBundleFile);
 	}
 
 	@Test
@@ -1739,14 +1733,10 @@ public class ProjectTemplatesTest {
 			"mvc-portlet", "foo-portlet", "com.test", "-DclassName=Foo",
 			"-Dpackage=foo.portlet", "-DprojectType=workspace");
 
-		File gradleOutputDir = new File(
-			gradleModulesDir, "foo-portlet/build/libs");
-		File mavenOutputDir = new File(mavenModulesDir, "foo-portlet/target");
-
-		_buildProjects(
-			gradleWorkspaceProjectDir, mavenWorkspaceProjectDir,
-			gradleOutputDir, mavenOutputDir,
-			":modules:foo-portlet" + _GRADLE_TASK_PATH_BUILD);
+		_testExists(
+			gradleModulesDir, "foo-portlet/build/libs/com.test-1.0.0.jar");
+		_testExists(
+			mavenModulesDir, "foo-portlet/target/foo-portlet-1.0.0.jar");
 	}
 
 	@Test
@@ -3026,14 +3016,11 @@ public class ProjectTemplatesTest {
 
 		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
 
-		File gradleBundleFile = _testExists(gradleProjectDir, jarFilePath);
+		_testExists(gradleProjectDir, jarFilePath);
 
 		_executeGradle(workspaceDir, ":modules:" + name + ":build");
 
-		File workspaceBundleFile = _testExists(
-			workspaceProjectDir, jarFilePath);
-
-		_testBundlesDiff(gradleBundleFile, workspaceBundleFile);
+		_testExists(workspaceProjectDir, jarFilePath);
 	}
 
 	private static final String _BUNDLES_DIFF_IGNORES = StringTestUtil.merge(

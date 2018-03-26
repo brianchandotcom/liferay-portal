@@ -168,7 +168,7 @@ version 3.2.1.
 ### Changed
 - [LPS-76221]: Update the [Liferay Gradle Plugins] dependency to version 3.5.57.
 
-## 1.9.0 - *(Unreleased)*
+## 1.9.0 - 2018-03-26
 
 ### Added
 - [LPS-77425]: Automatically set the `portal.version` property for all projects
@@ -182,7 +182,7 @@ Gradle plugin to the root project, if the `target.platform.version` property in
 `gradle.properties` is set.
 
 ### Changed
-- [LPS-78023]: Update the [Liferay Gradle Plugins] dependency to version 3.8.20.
+- [LPS-78911]: Update the [Liferay Gradle Plugins] dependency to version 3.9.11.
 
 [Gradle Download Task]: https://github.com/michel-kraemer/gradle-download-task/
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -224,5 +224,5 @@ Gradle plugin to the root project, if the `target.platform.version` property in
 [LPS-76271]: https://issues.liferay.com/browse/LPS-76271
 [LPS-77425]: https://issues.liferay.com/browse/LPS-77425
 [LPS-77586]: https://issues.liferay.com/browse/LPS-77586
-[LPS-78023]: https://issues.liferay.com/browse/LPS-78023
 [LPS-78149]: https://issues.liferay.com/browse/LPS-78149
+[LPS-78911]: https://issues.liferay.com/browse/LPS-78911

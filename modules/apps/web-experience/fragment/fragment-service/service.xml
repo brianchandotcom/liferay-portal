@@ -125,7 +125,7 @@
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="FragmentEntryLink" remote-service="false">
+	<entity local-service="true" name="FragmentEntryLink" remote-service="false" uuid="true">
 
 		<!-- PK fields -->
 
@@ -134,6 +134,14 @@
 		<!-- Group instance -->
 
 		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
 
 		<!-- Other fields -->
 

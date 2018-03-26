@@ -12,12 +12,10 @@
  * details.
  */
 
-package com.liferay.commerce.internal.model.listener;
+package com.liferay.commerce.product.internal.model.listener;
 
-import com.liferay.commerce.service.CommerceCountryLocalService;
-import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -29,7 +27,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Andrea Di Giorgi
  * @author Marco Leo
  */
 @Component(immediate = true, service = ModelListener.class)
@@ -46,22 +43,10 @@ public class GroupModelListener extends BaseModelListener<Group> {
 		serviceContext.setUserId(group.getCreatorUserId());
 
 		try {
-			_commerceCountryLocalService.importDefaultCountries(serviceContext);
+			_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
-		}
-	}
-
-	@Override
-	public void onBeforeRemove(Group group) {
-		try {
-			_commerceOrderLocalService.deleteCommerceOrders(group.getGroupId());
-		}
-		catch (PortalException pe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(pe, pe);
-			}
 		}
 	}
 
@@ -69,9 +54,6 @@ public class GroupModelListener extends BaseModelListener<Group> {
 		GroupModelListener.class);
 
 	@Reference
-	private CommerceCountryLocalService _commerceCountryLocalService;
-
-	@Reference
-	private CommerceOrderLocalService _commerceOrderLocalService;
+	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
 
 }

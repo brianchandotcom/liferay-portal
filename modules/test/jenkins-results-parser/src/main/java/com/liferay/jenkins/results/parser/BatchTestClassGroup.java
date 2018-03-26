@@ -288,29 +288,14 @@ public class TestBatchGroup {
 
 				batchNameMatcher = batchNameMatcher.replace("*", ".+");
 
+				if (!batchName.matches(batchNameMatcher)) {
+					continue;
+				}
+
 				String testSuiteNameMatcher = matcher.group("testSuiteName");
 
-				if (testSuiteName == null) {
-					if (testSuiteNameMatcher != null) {
-						continue;
-					}
-
-					if (!batchName.matches(batchNameMatcher)) {
-						continue;
-					}
-				}
-				else {
-					if (testSuiteNameMatcher == null) {
-						continue;
-					}
-
-					if (!testSuiteName.equals(testSuiteNameMatcher)) {
-						continue;
-					}
-
-					if (!batchName.matches(batchNameMatcher)) {
-						continue;
-					}
+				if (testSuiteName != testSuiteNameMatcher) {
+					continue;
 				}
 
 				return wildcardPropertyName;

@@ -545,7 +545,11 @@
 
 		<execute function="Click" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
 
-		<execute function="AssertClick" locator1="MessageBoardsThread#THREAD_ACTIONS_LOCK" value1="Lock" />
+		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Lock">
+			<var name="key_menuItem" value="Lock" />
+		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>

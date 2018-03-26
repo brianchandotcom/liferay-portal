@@ -25,7 +25,28 @@
 
 .portlet-polls {
 	.input-choices-wrapper .btn-delete {
-		margin-left: 10px;
 		margin-top: 0;
+	}
+
+	.input-choices-wrapper .input-group-item {
+		width: 100px;
+	}
+
+	.input-choices-wrapper .input-localized-input {
+		align-items: stretch;
+		display: flex;
+		flex-wrap: wrap;
+		position: relative;
+		width: 100%;
+	}
+
+	.input-choices-wrapper .input-group-default {
+		display: flex;
+	}
+
+	.input-choices-wrapper .control-label {
+		display: flex;
+		margin-right: 13px;
+		position: relative;
 	}
 }

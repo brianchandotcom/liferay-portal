@@ -17,16 +17,15 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
+String backURL = ParamUtil.getString(request, "backURL");
 
 String displayStyle = ddmDataProviderDisplayContext.getDisplayStyle();
 PortletURL portletURL = ddmDataProviderDisplayContext.getPortletURL();
 portletURL.setParameter("displayStyle", displayStyle);
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
-
-renderResponse.setTitle(LanguageUtil.get(request, "data-providers"));
+portletDisplay.setTitle(LanguageUtil.get(request, "data-providers"));
+portletDisplay.setURLBack(backURL);
 %>
 
 <liferay-ui:error exception="<%= RequiredDataProviderInstanceException.MustNotDeleteDataProviderInstanceReferencedByDataProviderInstanceLinks.class %>" message="the-data-provider-cannot-be-deleted-because-it-is-required-by-one-or-more-forms" />

@@ -1,0 +1,12 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+dependencies {
+	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	provided group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.0.1"
+	provided project(":apps:foundation:apio-architect:apio-architect-api")
+	provided project(":apps:headless-apio:person:person-apio-api")
+	provided project(":apps:headless-apio:portal:portal-apio-api")
+	provided project(":core:petra:petra-string")
+}

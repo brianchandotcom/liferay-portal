@@ -25,6 +25,7 @@
 	{@param? _handleFragmentMove: any}
 	{@param? _handleFragmentRemove: any}
 	{@param? _handleHideContextualSidebar: any}
+	{@param? _handleMappingTypeSelected: any}
 	{@param? _handleToggleContextualSidebarButtonClick: any}
 	{@param? _handleSelectAssetTypeButtonClick: any}
 	{@param? _handleSelectMappingTypeDialogVisibleChanged: any}
@@ -39,6 +40,10 @@
 		name: string
 	]>}
 	{@param? id: string}
+	{@param? selectedMappingTypeLabel: [
+		type: string,
+		subtype: string
+	]}
 
 	<div id="{$id}">
 		{call .managementBar}
@@ -76,7 +81,10 @@
 			</div>
 
 			{call com.liferay.layout.admin.web.SelectMappingTypeDialog.render}
-				{param events: ['visibleChanged': $_handleSelectMappingTypeDialogVisibleChanged] /}
+				{param events: [
+					'mappingTypeSelected': $_handleMappingTypeSelected,
+					'visibleChanged': $_handleSelectMappingTypeDialogVisibleChanged
+				] /}
 				{param spritemap: $spritemap /}
 				{param visible: $_selectMappingTypeDialogVisible ?: false /}
 			{/call}
@@ -98,6 +106,8 @@
 					{elseif $_sidebarSelectedTab == 'mapping'}
 						{call com.liferay.layout.admin.web.SidebarMapping.render}
 							{param events: ['selectAssetTypeButtonClick': $_handleSelectAssetTypeButtonClick] /}
+							{param selectedMappingTypeLabel: $selectedMappingTypeLabel /}
+							{param spritemap: $spritemap /}
 						{/call}
 					{/if}
 				{/param}

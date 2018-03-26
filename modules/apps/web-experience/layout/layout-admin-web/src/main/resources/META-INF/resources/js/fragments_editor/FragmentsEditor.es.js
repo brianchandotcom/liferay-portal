@@ -339,6 +339,17 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
+	 * Callback executed when a mapping type hsa been selected
+	 * @param {{ labels: Array<string> }} event
+	 * @private
+	 * @review
+	 */
+
+	_handleMappingTypeSelected(event) {
+		this.selectedMappingTypeLabel = event.label;
+	}
+
+	/**
 	 * Callback executed when the SelectMappingTypeDialog should be shown
 	 * @review
 	 */
@@ -602,6 +613,27 @@ FragmentsEditor.STATE = {
 	 */
 
 	renderFragmentEntryURL: Config.string().required(),
+
+	/**
+	 * Selected mapping type label
+	 * @default {}
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {{
+	 *   subtype: string,
+	 *   type: string
+	 * }}
+	 */
+
+	selectedMappingTypeLabel: Config
+		.shapeOf(
+			{
+				subtype: Config.string().value(''),
+				type: Config.string().value('')
+			}
+		)
+		.value({}),
 
 	/**
 	 * Tabs being shown in sidebar

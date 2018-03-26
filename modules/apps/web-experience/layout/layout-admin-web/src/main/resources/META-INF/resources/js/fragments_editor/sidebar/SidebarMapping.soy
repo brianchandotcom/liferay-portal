@@ -4,19 +4,47 @@
  * SidebarMapping
  */
 {template .render}
+	{@param spritemap: string}
 	{@param? _handleSelectAssetTypeButtonClick: any}
+	{@param? selectedMappingTypeLabel: [
+		type: string,
+		subtype: string
+	]}
 
 	<div class="sidebar-mapping">
 		<dt class="sidebar-dt">
 			{msg desc=""}asset-type{/msg}
 		</dt>
 
+		<div class="panel panel-secondary">
+			<div class="panel-body">
+				{if $selectedMappingTypeLabel and $selectedMappingTypeLabel.type}
+					{$selectedMappingTypeLabel.type}
+
+					{if $selectedMappingTypeLabel.subtype}
+						<span class="inline-item inline-item-after inline-item-before">
+							<svg class="lexicon-icon">
+								<use xlink:href="{$spritemap}#angle-right"></use>
+							</svg>
+						</span>
+						{$selectedMappingTypeLabel.subtype}
+					{/if}
+				{else}
+					{msg desc=""}no-asset-type-selected{/msg}
+				{/if}
+			</div>
+		</div>
+
 		<button
 			class="btn btn-secondary"
 			data-onclick="{$_handleSelectAssetTypeButtonClick}"
 			type="button"
 		>
-			{msg desc=""}select{/msg}
+			{if $selectedMappingTypeLabel and $selectedMappingTypeLabel.type}
+				{msg desc=""}change-asset-type{/msg}
+			{else}
+				{msg desc=""}select{/msg}
+			{/if}
 		</button>
 	</div>
 {/template}

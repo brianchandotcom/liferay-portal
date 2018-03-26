@@ -1,4 +1,5 @@
 import Component from 'metal-component';
+import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
 import 'frontend-js-web/liferay/compat/modal/Modal.es';
@@ -29,7 +30,30 @@ class SidebarMapping extends Component {
  * @type {!Object}
  */
 
-SidebarMapping.STATE = {};
+SidebarMapping.STATE = {
+
+	/**
+	 * Selected mapping type label
+	 * @default {}
+	 * @instance
+	 * @memberOf SidebarMapping
+	 * @review
+	 * @type {{
+	 *   subtype: string,
+	 *   type: string
+	 * }}
+	 */
+
+	selectedMappingTypeLabel: Config
+		.shapeOf(
+			{
+				subtype: Config.string().value(''),
+				type: Config.string().value('')
+			}
+		)
+		.value({})
+
+};
 
 Soy.register(SidebarMapping, templates);
 

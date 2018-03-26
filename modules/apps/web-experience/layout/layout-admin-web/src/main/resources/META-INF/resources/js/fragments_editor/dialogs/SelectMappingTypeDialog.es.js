@@ -23,6 +23,34 @@ class SelectMappingTypeDialog extends Component {
 	}
 
 	/**
+	 * Emits a mappingTypeSelected event with the corresponding labels
+	 * @review
+	 */
+
+	_emitSelectedMappingLabels() {
+		const label = {
+			subtype: '',
+			type: ''
+		};
+		const subtype = this._mappingSubtypes.find(
+			subtype => subtype.id === this._selectedMappingSubtypeId
+		);
+		const type = this._mappingTypes.find(
+			type => type.id === this._selectedMappingTypeId
+		);
+
+		if (subtype) {
+			label.subtype = subtype.label;
+		}
+
+		if (type) {
+			label.type = type.label;
+		}
+
+		this.emit('mappingTypeSelected', {label});
+	}
+
+	/**
 	 * Close asset type selection dialog
 	 * @private
 	 * @review
@@ -82,11 +110,7 @@ class SelectMappingTypeDialog extends Component {
 
 		setTimeout(
 			() => {
-				this._mappingSubtypes = [];
-				this._mappingTypes = [];
-				this._savingChanges = false;
-				this._selectedMappingTypeId = '';
-				this._selectedMappingSubtypeId = '';
+				this._emitSelectedMappingLabels();
 				this.visible = false;
 			},
 			1000
@@ -100,7 +124,17 @@ class SelectMappingTypeDialog extends Component {
 	 */
 
 	_handleVisibleChanged(change) {
-		this.visible = change.newVal;
+		if (this.visible !== change.newVal) {
+			this.visible = change.newVal;
+		}
+
+		if (!change.newVal) {
+			this._mappingSubtypes = [];
+			this._mappingTypes = [];
+			this._savingChanges = false;
+			this._selectedMappingTypeId = '';
+			this._selectedMappingSubtypeId = '';
+		}
 	}
 
 	/**

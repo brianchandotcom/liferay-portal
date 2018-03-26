@@ -42,6 +42,12 @@ public class CommerceHealthStatusConstants {
 		COMMERCE_WISH_LIST_CONTENT_COMMERCE_HEALTH_STATUS_KEY =
 			"commerce.wish.list.content.commerce.health.status.key";
 
+	public static final String CP_COMPARE_CONTENT_COMMERCE_HEALTH_STATUS_KEY =
+		"cp.compare.content.commerce.health.status.key";
+
+	public static final String CP_COMPARE_CONTENT_COMMERCE_HEALTH_STATUS_DESCRIPTION =
+		"cp.compare.content.commerce.health.status.description";
+
 	public static final String CP_CONTENT_COMMERCE_HEALTH_STATUS_DESCRIPTION =
 		"cp.content.commerce.health.status.description";
 

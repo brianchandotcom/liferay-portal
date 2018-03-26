@@ -117,6 +117,15 @@ class Analytics {
 	}
 
 	/**
+	 * Returns a unique identifier for an event
+	 * @param {object} The event
+	 * @return {string} The generated id
+	 */
+	_getEventKey({applicationId, eventDate, eventId}) {
+		return `${applicationId}${eventDate}${eventId}`;
+	}
+
+	/**
 	 * Gets the userId for the existing analytics user. Previously generated ids
 	 * are stored and retrieved before attempting to query the Identity Service
 	 * for a new id based on the current machine fingerprint.
@@ -165,11 +174,22 @@ class Analytics {
 		if (!this.isFlushInProgress && this.events.length) {
 			this.isFlushInProgress = true;
 
+			const eventKeys = this.events.map(event =>
+				this._getEventKey(event)
+			);
+
 			result = Promise.race([
 				this._getUserId().then(instance._sendData),
 				this._timeout(REQUEST_TIMEOUT),
 			])
-				.then(() => this.reset())
+				.then(() => {
+					const events = this.events.filter(
+						event =>
+							eventKeys.indexOf(this._getEventKey(event)) > -1
+					);
+
+					this.reset(events);
+				})
 				.catch(console.error)
 				.then(() => (this.isFlushInProgress = false));
 		} else {
@@ -208,9 +228,21 @@ class Analytics {
 
 	/**
 	 * Resets the event queue
+	 * @param {Array} A list of events to be cleared from the queue. If not passed,
+	 * clears everything.
 	 */
-	reset() {
-		this.events.length = 0;
+	reset(events) {
+		if (events) {
+			this.events = this.events.filter(event => {
+				const eventKey = this._getEventKey(event);
+
+				return !events.find(evt => {
+					return this._getEventKey(evt) === eventKey;
+				});
+			});
+		} else {
+			this.events.length = 0;
+		}
 
 		this._persist(STORAGE_KEY_EVENTS, this.events);
 	}

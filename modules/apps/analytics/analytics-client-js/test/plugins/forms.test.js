@@ -1,6 +1,7 @@
-const Analytics = window.Analytics;
-const assert = chai.assert;
-const expect = chai.expect;
+import AnalyticsClient from '../../src/analytics';
+import {assert, expect} from 'chai';
+
+let Analytics = AnalyticsClient.create();
 
 describe('Forms Plugin', () => {
 	beforeEach(() => {

@@ -1,3 +1,8 @@
+import AnalyticsClient from '../src/analytics';
+import {assert} from 'chai';
+
+let Analytics = AnalyticsClient.create();
+
 describe('Analytics Plugin Integration', () => {
 	describe('.registerPlugin', () => {
 		it('should be exposed as an Analytics static method', () => {

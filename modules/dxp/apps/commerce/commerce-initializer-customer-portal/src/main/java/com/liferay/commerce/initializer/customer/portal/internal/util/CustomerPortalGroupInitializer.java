@@ -18,6 +18,9 @@ import com.liferay.commerce.organization.constants.CommerceOrganizationConstants
 import com.liferay.commerce.organization.service.CommerceOrganizationLocalService;
 import com.liferay.commerce.product.demo.data.creator.CPDemoDataCreator;
 import com.liferay.commerce.product.importer.CPFileImporter;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -53,24 +56,21 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.GroupInitializer;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-
-import java.util.Dictionary;
-import java.util.Iterator;
-import java.util.Locale;
-import java.util.ResourceBundle;
-
-import javax.portlet.PortletPreferences;
-
-import javax.servlet.ServletContext;
-
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
+import javax.portlet.PortletPreferences;
+import javax.servlet.ServletContext;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Dictionary;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * @author Marco Leo
@@ -153,6 +153,8 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 
 			createLayouts(serviceContext);
 
+			createRoles(serviceContext);
+
 			createSampleData(serviceContext);
 
 			setThemePortletSettings(serviceContext);
@@ -221,6 +223,31 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 			_getFile(filePath), classNameId, 0L, resourceClassNameId, name,
 			DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
 			TemplateConstants.LANG_TYPE_FTL, serviceContext);
+	}
+
+	protected void createRoles(ServiceContext serviceContext) throws Exception {
+		Class<?> clazz = getClass();
+
+		String rolePath = _DEPENDENCY_PATH + "roles.json";
+
+		String rolesJSON = StringUtil.read(
+			clazz.getClassLoader(), rolePath, true);
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(rolesJSON);
+
+		_cpFileImporter.createRoles(jsonArray, serviceContext);
+
+		createCommerceRoles(jsonArray);
+	}
+
+	protected void createCommerceRoles(JSONArray jsonArray) throws Exception {
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			String name = jsonObject.getString("name");
+
+			_createConfiguration(name);
+		}
 	}
 
 	protected JSONArray getThemePortletSettingJSONArray() throws Exception {
@@ -407,13 +434,13 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 		}
 	}
 
-	private String _getConfigurationFilter() {
+	private String _getConfigurationFilter(String configurationPid) {
 		StringBundler sb = new StringBundler(5);
 
 		sb.append(StringPool.OPEN_PARENTHESIS);
 		sb.append(ConfigurationAdmin.SERVICE_FACTORYPID);
 		sb.append(StringPool.EQUAL);
-		sb.append(_CONFIGURATION_PID);
+		sb.append(configurationPid);
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		return sb.toString();
@@ -445,7 +472,7 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 
 	private void _updateOrganizationType() throws Exception {
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			_getConfigurationFilter());
+			_getConfigurationFilter(_ORGANIZATION_TYPE_CONFIGURATION_PID));
 
 		for (Configuration configuration : configurations) {
 			Dictionary<String, Object> props = configuration.getProperties();
@@ -461,7 +488,40 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 		}
 	}
 
-	private static final String _CONFIGURATION_PID =
+	private void _createConfiguration(String name) throws Exception {
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			_getConfigurationFilter(_ORGANIZATION_TYPE_CONFIGURATION_PID));
+
+		for (Configuration configuration : configurations) {
+			Dictionary<String, Object> props = configuration.getProperties();
+
+			String roleName = (String)props.get("roleName");
+
+			if (name.equals(roleName)) {
+				return;
+			}
+		}
+
+		Configuration configuration =
+			_configurationAdmin.createFactoryConfiguration(
+				_COMMERCE_ROLE_CONFIGURATION_PID, StringPool.QUESTION);
+
+		Dictionary<String, Object> props = configuration.getProperties();
+
+		if (props == null) {
+			props = new Hashtable<>();
+		}
+
+		props.put("roleName", name);
+
+		configuration.update(props);
+	}
+
+	private static final String _COMMERCE_ROLE_CONFIGURATION_PID =
+		"com.liferay.commerce.user.web.internal.configuration." +
+			"CommerceRoleGroupServiceConfiguration";
+
+	private static final String _ORGANIZATION_TYPE_CONFIGURATION_PID =
 		"com.liferay.organizations.service.internal.configuration." +
 			"OrganizationTypeConfiguration";
 

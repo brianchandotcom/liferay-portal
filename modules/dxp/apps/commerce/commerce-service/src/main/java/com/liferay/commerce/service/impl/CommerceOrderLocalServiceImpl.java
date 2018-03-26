@@ -297,10 +297,8 @@ public class CommerceOrderLocalServiceImpl
 			content = commercePaymentEngineResult.getContent();
 
 			commerceOrder = updatePaymentStatus(
-				commerceOrder, CommerceOrderConstants.PAYMENT_STATUS_PAID);
-
-			commerceOrder = setCommerceOrderToTransmit(
-				commerceOrder, serviceContext);
+				commerceOrder.getCommerceOrderId(),
+				CommerceOrderConstants.PAYMENT_STATUS_PAID, serviceContext);
 		}
 		catch (CommercePaymentEngineException cpee) {
 			_log.error(
@@ -574,8 +572,7 @@ public class CommerceOrderLocalServiceImpl
 			commerceOrder.getShippingAddressId(),
 			commerceOrder.getCommercePaymentMethodId(), 0, null,
 			commerceOrder.getPurchaseOrderNumber(), commerceOrder.getSubtotal(),
-			0, commerceOrder.getTotal(), commerceOrder.getAdvanceStatus(),
-			commerceOrder.getPaymentStatus());
+			0, commerceOrder.getTotal(), commerceOrder.getAdvanceStatus());
 	}
 
 	@Override
@@ -624,9 +621,8 @@ public class CommerceOrderLocalServiceImpl
 
 		if (commercePaymentEngine == null) {
 			commerceOrder = updatePaymentStatus(
-				commerceOrder, CommerceOrderConstants.PAYMENT_STATUS_PAID);
-
-			setCommerceOrderToTransmit(commerceOrder, serviceContext);
+				commerceOrder.getCommerceOrderId(),
+				CommerceOrderConstants.PAYMENT_STATUS_PAID, serviceContext);
 
 			return null;
 		}
@@ -687,7 +683,8 @@ public class CommerceOrderLocalServiceImpl
 		}
 		else {
 			commerceOrder = updatePaymentStatus(
-				commerceOrder, CommerceOrderConstants.PAYMENT_STATUS_PENDING);
+				commerceOrder.getCommerceOrderId(),
+				CommerceOrderConstants.PAYMENT_STATUS_PENDING, serviceContext);
 
 			setCommerceOrderToTransmit(commerceOrder, serviceContext);
 		}
@@ -740,7 +737,7 @@ public class CommerceOrderLocalServiceImpl
 			long commercePaymentMethodId, long commerceShippingMethodId,
 			String shippingOptionName, String purchaseOrderNumber,
 			double subtotal, double shippingPrice, double total,
-			String advanceStatus, int paymentStatus)
+			String advanceStatus)
 		throws PortalException {
 
 		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
@@ -756,7 +753,6 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setShippingPrice(shippingPrice);
 		commerceOrder.setTotal(total);
 		commerceOrder.setAdvanceStatus(advanceStatus);
-		commerceOrder.setPaymentStatus(paymentStatus);
 
 		commerceOrderPersistence.update(commerceOrder);
 
@@ -777,6 +773,31 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setOrderStatus(orderStatus);
 
 		return commerceOrderPersistence.update(commerceOrder);
+	}
+
+	@Override
+	public CommerceOrder updatePaymentStatus(
+			long commerceOrderId, int paymentStatus,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
+			commerceOrderId);
+
+		commerceOrder.setPaymentStatus(paymentStatus);
+
+		commerceOrderPersistence.update(commerceOrder);
+
+		if ((commerceOrder.getOrderStatus() ==
+				CommerceOrderConstants.ORDER_STATUS_IN_PROGRESS) &&
+			(commerceOrder.getPaymentStatus() ==
+				CommerceOrderConstants.PAYMENT_STATUS_PAID)) {
+
+			commerceOrder = setCommerceOrderToTransmit(
+				commerceOrder, serviceContext);
+		}
+
+		return commerceOrder;
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -1081,14 +1102,6 @@ public class CommerceOrderLocalServiceImpl
 
 		commerceAddressIdSetter.accept(
 			commerceOrder, commerceAddress.getCommerceAddressId());
-
-		return commerceOrderPersistence.update(commerceOrder);
-	}
-
-	protected CommerceOrder updatePaymentStatus(
-		CommerceOrder commerceOrder, int paymentStatus) {
-
-		commerceOrder.setPaymentStatus(paymentStatus);
 
 		return commerceOrderPersistence.update(commerceOrder);
 	}

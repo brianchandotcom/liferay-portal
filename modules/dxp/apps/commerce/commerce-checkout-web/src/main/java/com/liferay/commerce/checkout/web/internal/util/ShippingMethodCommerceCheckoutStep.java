@@ -214,7 +214,7 @@ public class ShippingMethodCommerceCheckoutStep
 			commerceShippingMethodId, shippingOptionName,
 			commerceOrder.getPurchaseOrderNumber(), commerceOrder.getSubtotal(),
 			shippingPrice, commerceOrder.getTotal(),
-			commerceOrder.getAdvanceStatus(), commerceOrder.getPaymentStatus());
+			commerceOrder.getAdvanceStatus());
 	}
 
 	@Reference

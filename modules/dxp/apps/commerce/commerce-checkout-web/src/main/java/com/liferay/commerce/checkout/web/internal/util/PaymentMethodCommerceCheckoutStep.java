@@ -139,7 +139,7 @@ public class PaymentMethodCommerceCheckoutStep
 			commerceOrder.getShippingOptionName(),
 			commerceOrder.getPurchaseOrderNumber(), commerceOrder.getSubtotal(),
 			commerceOrder.getShippingPrice(), commerceOrder.getTotal(),
-			commerceOrder.getAdvanceStatus(), commerceOrder.getPaymentStatus());
+			commerceOrder.getAdvanceStatus());
 	}
 
 	@Reference

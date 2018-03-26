@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -29,8 +32,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 
+import java.util.concurrent.Callable;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -138,6 +144,18 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			commerceOrderId, workflowTaskId, transitionName, comment);
 	}
 
+	protected void invokeTransaction(Callable<Void> callable) throws Exception {
+		try {
+			TransactionInvokerUtil.invoke(_transactionConfig, callable);
+		}
+		catch (Exception e) {
+			throw e;
+		}
+		catch (Throwable t) {
+			throw new PortletException(t);
+		}
+	}
+
 	protected void updateBillingAddress(ActionRequest actionRequest)
 		throws Exception {
 
@@ -193,14 +211,33 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		String purchaseOrderNumber = ParamUtil.getString(
 			actionRequest, "purchaseOrderNumber");
 
-		_commerceOrderService.updateCommerceOrder(
-			commerceOrder.getCommerceOrderId(),
-			commerceOrder.getBillingAddressId(),
-			commerceOrder.getShippingAddressId(), commercePaymentMethodId,
-			commerceOrder.getCommerceShippingMethodId(),
-			commerceOrder.getShippingOptionName(), purchaseOrderNumber,
-			commerceOrder.getSubtotal(), commerceOrder.getShippingPrice(),
-			commerceOrder.getTotal(), advanceStatus, paymentStatus);
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CommerceOrder.class.getName(), actionRequest);
+
+		invokeTransaction(
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					_commerceOrderService.updateCommerceOrder(
+						commerceOrder.getCommerceOrderId(),
+						commerceOrder.getBillingAddressId(),
+						commerceOrder.getShippingAddressId(),
+						commercePaymentMethodId,
+						commerceOrder.getCommerceShippingMethodId(),
+						commerceOrder.getShippingOptionName(),
+						purchaseOrderNumber, commerceOrder.getSubtotal(),
+						commerceOrder.getShippingPrice(),
+						commerceOrder.getTotal(), advanceStatus);
+
+					_commerceOrderService.updatePaymentStatus(
+						commerceOrder.getCommerceOrderId(), paymentStatus,
+						serviceContext);
+
+					return null;
+				}
+
+			});
 	}
 
 	protected void updateShippingAddress(ActionRequest actionRequest)
@@ -251,8 +288,18 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			commerceOrder.getCommerceShippingMethodId(),
 			commerceOrder.getShippingOptionName(),
 			commerceOrder.getPurchaseOrderNumber(), subtotal, shippingPrice,
-			total, commerceOrder.getAdvanceStatus(),
-			commerceOrder.getPaymentStatus());
+			total, commerceOrder.getAdvanceStatus());
+	}
+
+	private static final TransactionConfig _transactionConfig;
+
+	static {
+		TransactionConfig.Builder builder = new TransactionConfig.Builder();
+
+		builder.setPropagation(Propagation.REQUIRES_NEW);
+		builder.setRollbackForClasses(Exception.class);
+
+		_transactionConfig = builder.build();
 	}
 
 	@Reference

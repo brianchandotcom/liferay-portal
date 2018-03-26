@@ -348,7 +348,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			long commercePaymentMethodId, long commerceShippingMethodId,
 			String shippingOptionName, String purchaseOrderNumber,
 			double subtotal, double shippingPrice, double total,
-			String advanceStatus, int paymentStatus)
+			String advanceStatus)
 		throws PortalException {
 
 		_commerceOrderModelResourcePermission.check(
@@ -358,7 +358,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			commerceOrderId, billingAddressId, shippingAddressId,
 			commercePaymentMethodId, commerceShippingMethodId,
 			shippingOptionName, purchaseOrderNumber, subtotal, shippingPrice,
-			total, advanceStatus, paymentStatus);
+			total, advanceStatus);
 	}
 
 	@Override
@@ -371,6 +371,19 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 
 		return commerceOrderLocalService.updateOrderStatus(
 			commerceOrderId, orderStatus);
+	}
+
+	@Override
+	public CommerceOrder updatePaymentStatus(
+			long commerceOrderId, int paymentStatus,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderId, ActionKeys.UPDATE);
+
+		return commerceOrderLocalService.updatePaymentStatus(
+			commerceOrderId, paymentStatus, serviceContext);
 	}
 
 	@Override

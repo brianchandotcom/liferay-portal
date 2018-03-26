@@ -1,0 +1,40 @@
+[
+	{
+		"actions": {
+			"actionIds": [],
+			"resource": "com.liferay.commerce.order"
+		},
+		"name": "Account Manager",
+		"scope": 3,
+		"type": 3
+	},
+	{
+		"actions": {
+			"actionIds": [
+				"APPROVE_OPEN_COMMERCE_ORDERS",
+				"CHECKOUT_OPEN_COMMERCE_ORDERS",
+				"DELETE_COMMERCE_ORDERS",
+				"MANAGE_COMMERCE_ORDERS",
+				"VIEW_COMMERCE_ORDERS",
+				"VIEW_OPEN_COMMERCE_ORDERS"
+			],
+			"resource": "com.liferay.commerce.order"
+		},
+		"name": "Order Manager",
+		"scope": 3,
+		"type": 3
+	},
+	{
+		"actions": {
+			"actionIds": [
+				"CHECKOUT_OPEN_COMMERCE_ORDERS",
+				"VIEW_COMMERCE_ORDERS",
+				"VIEW_OPEN_COMMERCE_ORDERS"
+			],
+			"resource": "com.liferay.commerce.order"
+		},
+		"name": "Buyer",
+		"scope": 3,
+		"type": 3
+	}
+]

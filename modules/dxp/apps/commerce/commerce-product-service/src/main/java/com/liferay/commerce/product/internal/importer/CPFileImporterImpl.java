@@ -33,11 +33,14 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.ThemeSetting;
 import com.liferay.portal.kernel.model.UserConstants;
@@ -46,6 +49,8 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -59,12 +64,14 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.ThemeSettingImpl;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
+import javax.portlet.PortletPreferences;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -74,11 +81,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.portlet.PortletPreferences;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -125,6 +127,89 @@ public class CPFileImporterImpl implements CPFileImporter {
 		throws Exception {
 
 		createLayouts(jsonArray, null, privateLayout, serviceContext);
+	}
+
+	@Override
+	public void createRoles(JSONArray jsonArray, ServiceContext serviceContext)
+		throws PortalException {
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			JSONObject actionsJSONObject = jsonObject.getJSONObject("actions");
+			String name = jsonObject.getString("name");
+			int scope = jsonObject.getInt("scope");
+			int type = jsonObject.getInt("type");
+
+			Role role = getRole(name, type, serviceContext);
+
+			updateActions(role, actionsJSONObject, scope, serviceContext);
+		}
+	}
+
+	protected void updateActions(
+			Role role, JSONObject jsonObject, int scope,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		String resource = jsonObject.getString("resource");
+		JSONArray actionIdsJSONArray = jsonObject.getJSONArray("actionIds");
+
+		for (int i = 0; i < actionIdsJSONArray.length(); i++) {
+			String actionId = actionIdsJSONArray.getString(i);
+
+			updateAction(role, resource, actionId, scope, serviceContext);
+		}
+	}
+
+	protected void updateAction(
+			Role role, String resource, String actionId, int scope,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		if (scope == ResourceConstants.SCOPE_COMPANY) {
+			_resourcePermissionLocalService.addResourcePermission(
+				serviceContext.getCompanyId(), resource, scope,
+				String.valueOf(role.getCompanyId()), role.getRoleId(),
+				actionId);
+		}
+		else if (scope == ResourceConstants.SCOPE_GROUP_TEMPLATE) {
+			_resourcePermissionLocalService.addResourcePermission(
+				serviceContext.getCompanyId(), resource,
+				ResourceConstants.SCOPE_GROUP_TEMPLATE,
+				String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+				role.getRoleId(), actionId);
+		}
+		else if (scope == ResourceConstants.SCOPE_GROUP) {
+			_resourcePermissionLocalService.removeResourcePermissions(
+				serviceContext.getCompanyId(), resource,
+				ResourceConstants.SCOPE_GROUP, role.getRoleId(), actionId);
+
+			_resourcePermissionLocalService.addResourcePermission(
+				serviceContext.getCompanyId(), resource,
+				ResourceConstants.SCOPE_GROUP,
+				String.valueOf(serviceContext.getScopeGroupId()),
+				role.getRoleId(), actionId);
+		}
+	}
+
+	protected Role getRole(String name, int type, ServiceContext serviceContext)
+		throws PortalException {
+
+		Map<Locale, String> titleMap = new HashMap<>();
+
+		titleMap.put(serviceContext.getLocale(), name);
+
+		Role role = _roleLocalService.fetchRole(
+			serviceContext.getCompanyId(), name);
+
+		if (role == null) {
+			role = _roleLocalService.addRole(
+				serviceContext.getUserId(), null, 0, name, titleMap, null, type,
+				null, serviceContext);
+		}
+
+		return role;
 	}
 
 	@Override
@@ -613,6 +698,12 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 	@Reference
 	private ThemeLocalService _themeLocalService;

@@ -25,6 +25,7 @@ import java.io.File;
 
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 @ProviderType
 public interface CPFileImporter {
@@ -41,6 +42,9 @@ public interface CPFileImporter {
 			JSONArray jsonArray, boolean privateLayout,
 			ServiceContext serviceContext)
 		throws Exception;
+
+	public void createRoles(JSONArray jsonArray, ServiceContext serviceContext)
+		throws PortalException;
 
 	public DDMTemplate getDDMTemplate(
 			File file, long classNameId, long classPK, long resourceClassNameId,

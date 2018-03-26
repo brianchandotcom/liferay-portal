@@ -270,11 +270,18 @@ public class LiferayCIPlugin implements Plugin<Project> {
 						continue;
 					}
 
-					File file = dependencyProject.file(".lfrbuild-portal");
+					File lfrBuildPortalFile = dependencyProject.file(
+						".lfrbuild-portal");
 
-					if (!file.exists()) {
-						throw new GradleException(
-							"Please create marker file " + file);
+					if (!lfrBuildPortalFile.exists()) {
+						File lfrBuildCIFile = dependencyProject.file(
+							".lfrbuild-ci");
+
+						if (!lfrBuildCIFile.exists()) {
+							throw new GradleException(
+								"Please create marker file " +
+									lfrBuildPortalFile);
+						}
 					}
 				}
 			}

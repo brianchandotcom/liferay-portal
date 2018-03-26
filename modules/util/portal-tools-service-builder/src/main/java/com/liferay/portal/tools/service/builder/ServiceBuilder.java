@@ -1522,6 +1522,9 @@ public class ServiceBuilder {
 		else if (type.equals("short") || type.equals("Short")) {
 			return "INTEGER";
 		}
+		else if (type.equals("BigDecimal")) {
+			return "DECIMAL";
+		}
 		else if (type.equals("Date")) {
 			return "TIMESTAMP";
 		}
@@ -1551,6 +1554,9 @@ public class ServiceBuilder {
 		}
 		else if (type.equals("short") || type.equals("Short")) {
 			return "INTEGER";
+		}
+		else if (type.equals("BigDecimal")) {
+			return "DECIMAL";
 		}
 		else if (type.equals("Blob")) {
 			return "BLOB";
@@ -4747,6 +4753,25 @@ public class ServiceBuilder {
 					sb.append("TEXT");
 				}
 			}
+			else if (type.equals("BigDecimal")) {
+				Map<String, String> hints = ModelHintsUtil.getHints(
+					_apiPackagePath + ".model." + entity.getName(),
+					entityColumn.getName());
+
+				String precision = "30";
+				String scale = "16";
+
+				if (hints != null) {
+					precision = hints.getOrDefault("precision", precision);
+					scale = hints.getOrDefault("scale", scale);
+				}
+
+				sb.append("DECIMAL(");
+				sb.append(precision);
+				sb.append(", ");
+				sb.append(scale);
+				sb.append(")");
+			}
 			else {
 				sb.append("invalid");
 			}
@@ -4758,8 +4783,8 @@ public class ServiceBuilder {
 					sb.append(" primary key");
 				}
 			}
-			else if (type.equals("Date") || type.equals("Map") ||
-					 type.equals("String")) {
+			else if (type.equals("BigDecimal") || type.equals("Date") ||
+					 type.equals("Map") || type.equals("String")) {
 
 				sb.append(" null");
 			}

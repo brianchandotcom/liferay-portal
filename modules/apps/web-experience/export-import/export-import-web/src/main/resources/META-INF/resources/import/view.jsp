@@ -57,20 +57,6 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 			<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 			<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
 		</liferay-util:include>
-
-		<portlet:renderURL var="addNewImportProcessURL">
-			<portlet:param name="mvcPath" value="/import/new_import/import_layouts.jsp" />
-			<portlet:param name="groupId" value="<%= String.valueOf(groupDisplayContextHelper.getGroupId()) %>" />
-			<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-			<portlet:param name="validate" value="<%= String.valueOf(Boolean.TRUE) %>" />
-		</portlet:renderURL>
-
-		<liferay-frontend:add-menu>
-			<liferay-frontend:add-menu-item
-				title='<%= LanguageUtil.get(request, "import") %>'
-				url="<%= addNewImportProcessURL %>"
-			/>
-		</liferay-frontend:add-menu>
 	</c:otherwise>
 </c:choose>
 

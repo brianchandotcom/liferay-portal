@@ -60,13 +60,6 @@ String searchContainerId = "exportLayoutProcesses";
 			<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 			<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
 		</liferay-util:include>
-
-		<liferay-util:include page="/export/add_button.jsp" servletContext="<%= application %>">
-			<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-			<liferay-util:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
-			<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-			<liferay-util:param name="displayStyle" value="<%= displayStyle %>" />
-		</liferay-util:include>
 	</c:otherwise>
 </c:choose>
 

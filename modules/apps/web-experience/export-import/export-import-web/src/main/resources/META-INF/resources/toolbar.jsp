@@ -64,6 +64,27 @@ portletURL.setParameter("searchContainerId", String.valueOf(searchContainerId));
 			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
+
+		<%
+		GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHelper(request);
+		%>
+
+		<c:choose>
+			<c:when test='<%= mvcRenderCommandName.equals("importLayoutsView") %>'>
+				<liferay-util:include page="/import/add_button.jsp" servletContext="<%= application %>">
+					<liferay-util:param name="groupId" value="<%= String.valueOf(groupDisplayContextHelper.getGroupId()) %>" />
+					<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+				</liferay-util:include>
+			</c:when>
+			<c:when test='<%= mvcRenderCommandName.equals("exportLayoutsView") %>'>
+				<liferay-util:include page="/export/add_button.jsp" servletContext="<%= application %>">
+					<liferay-util:param name="groupId" value="<%= String.valueOf(groupDisplayContextHelper.getGroupId()) %>" />
+					<liferay-util:param name="liveGroupId" value="<%= String.valueOf(groupDisplayContextHelper.getLiveGroupId()) %>" />
+					<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+					<liferay-util:param name="displayStyle" value="<%= displayStyle %>" />
+				</liferay-util:include>
+			</c:when>
+		</c:choose>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-action-buttons>

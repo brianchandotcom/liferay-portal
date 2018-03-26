@@ -21,14 +21,6 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String displayStyle = ddmDataProviderDisplayContext.getDisplayStyle();
 PortletURL portletURL = ddmDataProviderDisplayContext.getPortletURL();
-
-DDMDataProviderSearch ddmDataProviderSearch = new DDMDataProviderSearch(renderRequest, portletURL);
-
-OrderByComparator<DDMDataProviderInstance> orderByComparator = DDMDataProviderPortletUtil.getDDMDataProviderOrderByComparator(ddmDataProviderDisplayContext.getOrderByCol(), ddmDataProviderDisplayContext.getOrderByType());
-
-ddmDataProviderSearch.setOrderByCol(ddmDataProviderDisplayContext.getOrderByCol());
-ddmDataProviderSearch.setOrderByComparator(orderByComparator);
-ddmDataProviderSearch.setOrderByType(ddmDataProviderDisplayContext.getOrderByType());
 portletURL.setParameter("displayStyle", displayStyle);
 
 portletDisplay.setShowBackIcon(true);
@@ -46,23 +38,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "data-providers"));
 <div class="container-fluid-1280" id="<portlet:namespace />formContainer">
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="searchContainerForm">
 		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+		<aui:input name="deleteDataProviderInstanceIds" type="hidden" />
 
 		<liferay-ui:search-container
-			emptyResultsMessage="no-data-providers-were-found"
-			id="searchContainer"
-			searchContainer="<%= ddmDataProviderSearch %>"
+			id="dataProviderInstance"
+			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
+			searchContainer="<%= ddmDataProviderDisplayContext.getSearch() %>"
 		>
-
-			<%
-			searchContainer.setTotal(ddmDataProviderDisplayContext.getSearchContainerTotal(searchContainer));
-
-			request.setAttribute(WebKeys.SEARCH_CONTAINER, searchContainer);
-			%>
-
-			<liferay-ui:search-container-results
-				results="<%= ddmDataProviderDisplayContext.getSearchContainerResults(searchContainer) %>"
-			/>
-
 			<liferay-ui:search-container-row
 				className="com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance"
 				cssClass="entry-display-style"

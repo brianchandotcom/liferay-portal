@@ -16,10 +16,54 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-frontend:management-bar>
+<%
+PortletURL portletURL = ddmDataProviderDisplayContext.getPortletURL();
+%>
+
+<liferay-frontend:management-bar
+	includeCheckBox="<%= true %>"
+	searchContainerId="dataProviderInstance"
+>
 	<liferay-frontend:management-bar-buttons>
 		<liferay-util:include page="/display_style_buttons.jsp" servletContext="<%= application %>" />
 
 		<liferay-util:include page="/display_add_button.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= portletURL %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= ddmDataProviderDisplayContext.getOrderByCol() %>"
+			orderByType="<%= ddmDataProviderDisplayContext.getOrderByType() %>"
+			orderColumns='<%= new String[] {"create-date", "modified-date", "name"} %>'
+			portletURL="<%= portletURL %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+
+	<liferay-frontend:management-bar-action-buttons>
+		<liferay-frontend:management-bar-button
+			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteDataProviderInstances();" %>'
+			icon="trash"
+			label="delete"
+		/>
+	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
+
+<aui:script>
+	function <portlet:namespace />deleteDataProviderInstances() {
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
+			var form = AUI.$(document.<portlet:namespace />searchContainerForm);
+
+			var searchContainer = AUI.$('#<portlet:namespace />dataProviderInstance', form);
+
+			form.attr('method', 'post');
+			form.fm('deleteDataProviderInstanceIds').val(Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds'));
+
+			submitForm(form, '<portlet:actionURL name="deleteDataProvider"><portlet:param name="mvcPath" value="/view.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+		}
+	}
+</aui:script>

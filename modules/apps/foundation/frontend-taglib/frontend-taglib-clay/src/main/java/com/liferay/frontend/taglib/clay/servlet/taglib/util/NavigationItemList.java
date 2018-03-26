@@ -22,9 +22,6 @@ import java.util.function.Consumer;
  */
 public class NavigationItemList extends ArrayList<NavigationItem> {
 
-	public NavigationItemList() {
-	}
-
 	public void add(Consumer<NavigationItem> consumer) {
 		NavigationItem navigationItem = new NavigationItem();
 

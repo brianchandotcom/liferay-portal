@@ -22,9 +22,6 @@ import java.util.function.Consumer;
  */
 public class DropdownItemList extends ArrayList<DropdownItem> {
 
-	public DropdownItemList() {
-	}
-
 	public void add(Consumer<DropdownItem> consumer) {
 		DropdownItem dropdownItem = new DropdownItem();
 

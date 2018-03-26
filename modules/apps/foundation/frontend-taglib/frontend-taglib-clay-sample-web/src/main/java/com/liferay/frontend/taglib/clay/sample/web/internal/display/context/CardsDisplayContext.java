@@ -60,7 +60,9 @@ public class CardsDisplayContext {
 				label1.setLabel("Approved");
 				label1.setStyle("success");
 
-				String label2 = "Pending";
+				LabelItem label2 = new LabelItem();
+
+				label2.setLabel("Pending");
 
 				LabelItem label3 = new LabelItem();
 

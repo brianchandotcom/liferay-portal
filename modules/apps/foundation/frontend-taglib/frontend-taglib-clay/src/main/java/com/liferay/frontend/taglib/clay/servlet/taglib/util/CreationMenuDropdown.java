@@ -14,11 +14,9 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
-import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
-import java.io.Serializable;
-
+import java.util.HashMap;
 import java.util.function.Consumer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,10 +24,12 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Carlos Lancha
  */
-public class CreationMenuDropdown implements Serializable {
+public class CreationMenuDropdown extends HashMap {
 
 	public CreationMenuDropdown(HttpServletRequest request) {
 		_request = request;
+
+		put("primaryItems", _primaryDropdownItemList);
 	}
 
 	public void addDropdownItem(Consumer<DropdownItem> consumer) {
@@ -42,6 +42,8 @@ public class CreationMenuDropdown implements Serializable {
 		consumer.accept(dropdownItem);
 
 		_favoriteDropdownItemList.add(dropdownItem);
+
+		put("secondaryItems", _buildSecondaryDropdownItemList());
 	}
 
 	public void addPrimaryDropdownItem(Consumer<DropdownItem> consumer) {
@@ -58,19 +60,23 @@ public class CreationMenuDropdown implements Serializable {
 		consumer.accept(dropdownItem);
 
 		_restDropdownItemList.add(dropdownItem);
+
+		put("secondaryItems", _buildSecondaryDropdownItemList());
 	}
 
-	public String getHelpText() {
-		return _helpText;
+	public void setCaption(String caption) {
+		put("caption", caption);
 	}
 
-	@JSON(name = "primaryItems")
-	public DropdownItemList getPrimaryDropdownItemList() {
-		return _primaryDropdownItemList;
+	public void setHelpText(String helpText) {
+		put("helpText", helpText);
 	}
 
-	@JSON(name = "secondaryItems")
-	public DropdownItemList getSecondaryDropdownItemList() {
+	public void setViewMoreURL(String viewMoreURL) {
+		put("viewMoreURL", viewMoreURL);
+	}
+
+	private DropdownItemList _buildSecondaryDropdownItemList() {
 		DropdownItemList secondaryDropdownItemList = new DropdownItemList();
 
 		if (!_favoriteDropdownItemList.isEmpty()) {
@@ -97,28 +103,9 @@ public class CreationMenuDropdown implements Serializable {
 		return secondaryDropdownItemList;
 	}
 
-	public String getViewMoreURL() {
-		return _viewMoreURL;
-	}
-
-	public void setCaption(String caption) {
-		_caption = caption;
-	}
-
-	public void setHelpText(String helpText) {
-		_helpText = helpText;
-	}
-
-	public void setViewMoreURL(String viewMoreURL) {
-		_viewMoreURL = viewMoreURL;
-	}
-
-	private String _caption;
 	private DropdownItemList _favoriteDropdownItemList = new DropdownItemList();
-	private String _helpText;
 	private DropdownItemList _primaryDropdownItemList = new DropdownItemList();
 	private final HttpServletRequest _request;
 	private DropdownItemList _restDropdownItemList = new DropdownItemList();
-	private String _viewMoreURL;
 
 }

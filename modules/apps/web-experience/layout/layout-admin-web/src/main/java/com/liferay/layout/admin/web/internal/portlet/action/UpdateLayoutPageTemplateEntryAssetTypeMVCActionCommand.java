@@ -50,7 +50,7 @@ public class UpdateLayoutPageTemplateEntryAssetTypeMVCActionCommand
 		throws Exception {
 
 		long layoutPageTemplateEntryId = ParamUtil.getLong(
-			actionRequest, "layoutPageTemplateEntryId");
+			actionRequest, "classPK");
 
 		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
 		long classTypeId = ParamUtil.getLong(actionRequest, "classTypeId");

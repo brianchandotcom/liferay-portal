@@ -39,11 +39,14 @@
 		fragmentEntryLinkId: number,
 		name: string
 	]>}
+	{@param? getAssetClassTypesURL: any}
+	{@param? getAssetDisplayContributorsURL: any}
 	{@param? id: string}
 	{@param? selectedMappingTypeLabel: [
 		type: string,
 		subtype: string
 	]}
+	{@param? updateLayoutPageTemplateEntryAssetTypeURL: any}
 
 	<div id="{$id}">
 		{call .managementBar}
@@ -85,7 +88,10 @@
 					'mappingTypeSelected': $_handleMappingTypeSelected,
 					'visibleChanged': $_handleSelectMappingTypeDialogVisibleChanged
 				] /}
+				{param getAssetClassTypesURL: $getAssetClassTypesURL /}
+				{param getAssetDisplayContributorsURL: $getAssetDisplayContributorsURL /}
 				{param spritemap: $spritemap /}
+				{param updateLayoutPageTemplateEntryAssetTypeURL: $updateLayoutPageTemplateEntryAssetTypeURL /}
 				{param visible: $_selectMappingTypeDialogVisible ?: false /}
 			{/call}
 

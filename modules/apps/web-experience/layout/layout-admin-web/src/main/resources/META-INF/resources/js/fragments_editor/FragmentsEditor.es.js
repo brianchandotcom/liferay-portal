@@ -547,6 +547,30 @@ FragmentsEditor.STATE = {
 	).required(),
 
 	/**
+	 * URL for obtaining the class types of an asset
+	 * created.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	getAssetClassTypesURL: Config.string().required(),
+
+	/**
+	 * URL for obtaining the asset types for which asset display pages can be
+	 * created.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	getAssetDisplayContributorsURL: Config.string().required(),
+
+	/**
 	 * Optional ID provided by the template system.
 	 * @default ''
 	 * @instance
@@ -677,6 +701,17 @@ FragmentsEditor.STATE = {
      */
 
 	updateFragmentEntryLinksURL: Config.string().required(),
+
+	/**
+	 * URL for updating the asset type associated to a template.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	updateLayoutPageTemplateEntryAssetTypeURL: Config.string().required(),
 
 	/**
 	 * Allow opening/closing contextual sidebar

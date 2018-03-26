@@ -168,6 +168,30 @@ class SelectMappingTypeDialog extends Component {
 SelectMappingTypeDialog.STATE = {
 
 	/**
+	 * URL for obtaining the asset types for which asset display pages can be
+	 * created.
+	 * @default undefined
+	 * @instance
+	 * @memberOf SelectMappingTypeDialog
+	 * @review
+	 * @type {!string}
+	 */
+
+	getAssetClassTypesURL: Config.string().required(),
+
+	/**
+	 * URL for obtaining the asset types for which asset display pages can be
+	 * created.
+	 * @default undefined
+	 * @instance
+	 * @memberOf SelectMappingTypeDialog
+	 * @review
+	 * @type {!string}
+	 */
+
+	getAssetDisplayContributorsURL: Config.string().required(),
+
+	/**
 	 * Path of the available icons.
 	 * @default undefined
 	 * @instance
@@ -177,6 +201,17 @@ SelectMappingTypeDialog.STATE = {
 	 */
 
 	spritemap: Config.string().required(),
+
+	/**
+	 * URL for updating the asset type associated to a template.
+	 * @default undefined
+	 * @instance
+	 * @memberOf SelectMappingTypeDialog
+	 * @review
+	 * @type {!string}
+	 */
+
+	updateLayoutPageTemplateEntryAssetTypeURL: Config.string().required(),
 
 	/**
 	 * Whether to show the mapping dialog or not

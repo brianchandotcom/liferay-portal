@@ -1,19 +1,31 @@
 <definition>
-	<command name="viewDefaultSharableBookmarks">
-		<for list="Facebook,LinkedIn,Twitter" param="socialBookmark">
+	<command name="viewBookmarkIcons">
+		<for list="${socialBookmarks}" param="socialBookmark">
 			<execute function="AssertElementPresent" locator1="SocialBookmarks#SOCIAL_BOOKMARK_ICON">
 				<var method="StringUtiL#toLowerCase('${socialBookmark}')" name="${key_socialBookmark}" />
 			</execute>
 		</for>
+	</command>
 
+	<command name="viewBookmarksPresent">
 		<execute function="Click" locator1="Icon#SHARE" />
 
-		<for list="Google+,AddThis,Delicious,Digg,Evernote,Newsvine,Reddit,Slashdot,StumbleUpon,Tuenti" param="socialBookmark">
+		<for list="${socialBookmarks}" param="socialBookmark">
 			<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM">
 				<var name="key_menuItem" value="${socialBookmark}" />
 			</execute>
 		</for>
 
 		<execute function="Click" locator1="Icon#SHARE" />
+	</command>
+
+	<command name="viewDefaultSharableBookmarks">
+		<execute macro="SocialBookmarks#viewBookmarkIcons">
+			<var name="socialBookmarks" value="Facebook,LinkedIn,Twitter" />
+		</execute>
+
+		<execute macro="SocialBookmarks#viewBookmarksPresent">
+			<var name="socialBookmarks" value="Google+,AddThis,Delicious,Digg,Evernote,Newsfine,Reddit,Slasdot,StumbleUpon,Tuenti" />
+		</execute>
 	</command>
 </definition>

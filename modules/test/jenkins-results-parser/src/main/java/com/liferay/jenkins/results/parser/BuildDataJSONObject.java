@@ -15,8 +15,6 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import java.util.HashMap;
@@ -45,11 +43,12 @@ public class BuildDataJSONObject extends JSONObject {
 	}
 
 	public void addPropertiesToBuildData(
-			String key, String pathToPropertiesFile)
-		throws FileNotFoundException, IOException {
+		String key, String pathToPropertiesFile) {
 
 		addPropertiesToBuildData(
-			key, _getPropertiesFromFile(pathToPropertiesFile));
+			key,
+			JenkinsResultsParserUtil.getProperties(
+				new File(pathToPropertiesFile)));
 	}
 
 	public Map<String, String> getBuildDataMap(String key) {
@@ -105,18 +104,6 @@ public class BuildDataJSONObject extends JSONObject {
 		throws IOException {
 
 		writeFilteredPropertiesToFile(destFile, null, key);
-	}
-
-	private Properties _getPropertiesFromFile(String filePath)
-		throws FileNotFoundException, IOException {
-
-		File file = new File(filePath);
-
-		Properties properties = new Properties();
-
-		properties.load(new FileInputStream(file));
-
-		return properties;
 	}
 
 	private JSONArray _toJSONArray(Properties properties) {

@@ -15,8 +15,6 @@
 --%>
 
 <%
-UserNotificationFeedEntry userNotificationFeedEntry = UserNotificationManagerUtil.interpret(StringPool.BLANK, userNotificationEvent, ServiceContextFactory.getInstance(request));
-
 JSONObject jsonObject = JSONFactoryUtil.createJSONObject(userNotificationEvent.getPayload());
 
 boolean anonymous = jsonObject.getBoolean("anonymous");
@@ -84,7 +82,7 @@ if (notificationUnread) {
 				<span title="<%= dateFormatDateTime.format(userNotificationEvent.getTimestamp()) %>">
 					<%= Time.getRelativeTimeDescription(userNotificationEvent.getTimestamp(), themeDisplay.getLocale(), themeDisplay.getTimeZone(), dateFormatDateTime) %>
 				</span>
-			</h5>
+			</h5>ç
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-jsp

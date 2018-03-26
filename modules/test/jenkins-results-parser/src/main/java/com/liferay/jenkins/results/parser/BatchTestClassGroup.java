@@ -43,6 +43,14 @@ public class TestBatchGroup {
 			GitWorkingDirectory gitWorkingDirectory, String batchName)
 		throws Exception {
 
+		this(gitWorkingDirectory, batchName, null);
+	}
+
+	public TestBatchGroup(
+			GitWorkingDirectory gitWorkingDirectory, String batchName,
+			String testSuite)
+		throws Exception {
+
 		_gitWorkingDirectory = gitWorkingDirectory;
 
 		_batchName = batchName;

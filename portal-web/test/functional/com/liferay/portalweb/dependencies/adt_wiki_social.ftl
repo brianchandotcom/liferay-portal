@@ -26,7 +26,9 @@
 	</div>
 
 	<div class="wiki-content">
-		<@liferay_ui["social-bookmarks"]
+		<@liferay_social_bookmarks["bookmarks"]
+			className=wikiPageClassName
+			classPK=entry.getResourcePrimKey()
 			displayStyle="normal"
 			target="_blank"
 			title=entry.getTitle()

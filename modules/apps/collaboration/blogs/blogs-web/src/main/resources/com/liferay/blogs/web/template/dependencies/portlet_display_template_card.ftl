@@ -186,8 +186,9 @@
 										${bookmarkURL.setParameter("entryId", curBlogEntry.getEntryId()?string)}
 									</#if>
 
-									<@liferay_ui["social-bookmarks"]
-										contentId=curBlogEntry.getEntryId()?string
+									<@liferay_social_bookmarks["bookmarks"]
+										className="com.liferay.blogs.model.BlogsEntry"
+										classPK=curBlogEntry.getEntryId()
 										displayStyle="menu"
 										target="_blank"
 										title=blogsEntryUtil.getDisplayTitle(resourceBundle, curBlogEntry)

@@ -201,7 +201,9 @@
 </#macro>
 
 <#macro getSocialBookmarks>
-	<@liferay_ui["social-bookmarks"]
+	<@liferay_social_bookmarks["bookmarks"]
+		className=entry.getClassName()
+		classPK=entry.getClassPK()
 		displayStyle="${socialBookmarksDisplayStyle}"
 		target="_blank"
 		title=entry.getTitle(locale)

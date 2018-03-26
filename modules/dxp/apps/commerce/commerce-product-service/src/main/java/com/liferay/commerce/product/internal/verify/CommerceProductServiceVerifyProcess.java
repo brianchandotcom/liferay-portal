@@ -41,10 +41,10 @@ public class CommerceProductServiceVerifyProcess extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		veifyCPMeasurementUnits();
+		verifyCPMeasurementUnits();
 	}
 
-	protected void veifyCPMeasurementUnits() throws Exception {
+	protected void verifyCPMeasurementUnits() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			List<Company> companies = _companyLocalService.getCompanies();
 
@@ -54,13 +54,13 @@ public class CommerceProductServiceVerifyProcess extends VerifyProcess {
 					true);
 
 				for (Group group : groups) {
-					veifyCPMeasurementUnits(group);
+					verifyCPMeasurementUnits(group);
 				}
 			}
 		}
 	}
 
-	protected void veifyCPMeasurementUnits(Group group) throws Exception {
+	protected void verifyCPMeasurementUnits(Group group) throws Exception {
 		if (_cpMeasurementUnitLocalService.getCPMeasurementUnitsCount(
 				group.getGroupId()) == 0) {
 

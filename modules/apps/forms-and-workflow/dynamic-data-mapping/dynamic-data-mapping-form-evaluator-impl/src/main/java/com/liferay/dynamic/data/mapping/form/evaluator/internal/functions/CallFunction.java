@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationRes
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -199,7 +200,19 @@ public class CallFunction extends BaseDDMFormRuleFunction {
 			return StringPool.BLANK;
 		}
 
-		return String.valueOf(value);
+		try {
+			JSONArray jsonArray = _jsonFactory.createJSONArray(
+				String.valueOf(value));
+
+			return (String)jsonArray.get(0);
+		}
+		catch (JSONException jsone) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsone, jsone);
+			}
+
+			return String.valueOf(value);
+		}
 	}
 
 	protected void setDDMFormFieldOptions(

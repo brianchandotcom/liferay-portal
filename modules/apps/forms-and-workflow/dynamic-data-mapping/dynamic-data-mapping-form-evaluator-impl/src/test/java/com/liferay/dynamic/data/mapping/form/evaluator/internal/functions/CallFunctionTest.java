@@ -39,7 +39,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 public class CallFunctionTest {
 
 	@Test
-	public void testAutoSelectOption() throws Exception {
+	public void testAutoSelectOption() {
 		Map<String, List<DDMFormFieldEvaluationResult>>
 			ddmFormFieldEvaluationResults = new HashMap<>();
 
@@ -65,6 +65,50 @@ public class CallFunctionTest {
 		Object value = ddmFormFieldEvaluationResult.getValue();
 
 		Assert.assertEquals(jsonArray.toString(), value.toString());
+	}
+
+	@Test
+	public void testGetFieldValueFromJSONArray() {
+		Map<String, List<DDMFormFieldEvaluationResult>>
+			ddmFormFieldEvaluationResults = new HashMap<>();
+
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
+			new DDMFormFieldEvaluationResult("field0", "1");
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		jsonArray.put("test");
+
+		ddmFormFieldEvaluationResult.setValue(jsonArray);
+
+		ddmFormFieldEvaluationResults.put(
+			"field0", Arrays.asList(ddmFormFieldEvaluationResult));
+
+		CallFunction callFunction = new CallFunction(
+			null, ddmFormFieldEvaluationResults, null, _jsonFactory);
+
+		Assert.assertEquals(
+			"test", callFunction.getDDMFormFieldValue("field0"));
+	}
+
+	@Test
+	public void testGetFieldValueFromString() {
+		Map<String, List<DDMFormFieldEvaluationResult>>
+			ddmFormFieldEvaluationResults = new HashMap<>();
+
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
+			new DDMFormFieldEvaluationResult("field0", "1");
+
+		ddmFormFieldEvaluationResult.setValue("test");
+
+		ddmFormFieldEvaluationResults.put(
+			"field0", Arrays.asList(ddmFormFieldEvaluationResult));
+
+		CallFunction callFunction = new CallFunction(
+			null, ddmFormFieldEvaluationResults, null, _jsonFactory);
+
+		Assert.assertEquals(
+			"test", callFunction.getDDMFormFieldValue("field0"));
 	}
 
 	@Test

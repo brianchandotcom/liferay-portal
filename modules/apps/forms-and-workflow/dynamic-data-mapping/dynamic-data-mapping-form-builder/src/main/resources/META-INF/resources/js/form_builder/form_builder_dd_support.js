@@ -208,6 +208,10 @@ AUI.add(
 
 						instance._addToStack(fieldNodeStart);
 
+						if (instance._sidebar.isOpen()) {
+							instance._sidebar.close();
+						}
+
 						if (proxyActive) {
 							proxyActive.empty();
 							proxyActive.append(clonedNode);

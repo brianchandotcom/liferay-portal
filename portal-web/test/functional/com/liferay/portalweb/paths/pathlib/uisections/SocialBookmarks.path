@@ -15,10 +15,6 @@
 </tr><tr>
 	<td></td>
 	<td></td>
-</tr>
-<tr>
-	<td>DROPDOWN_ELEMENT</td>
-	<td>//div[contains(@class,'dropdown-menu')]//a[contains(.,'${key_socialBookmark')]</td>
 	<td></td>
 </tr>
 <!--ENABLE_SOCIAL_BOOKMARKS-->

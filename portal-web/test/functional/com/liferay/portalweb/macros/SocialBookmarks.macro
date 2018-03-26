@@ -9,8 +9,8 @@
 		<execute function="Click" locator1="Icon#SHARE" />
 
 		<for list="Google+,AddThis,Delicious,Digg,Evernote,Newsvine,Reddit,Slashdot,StumbleUpon,Tuenti" param="socialBookmark">
-			<execute function="AssertElementPresent" locator1="SocialBookmarks#DROPDOWN_ELEMENT">
-				<var name="key_socialBookmark" value="${socialBookmark}" />
+			<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM">
+				<var name="key_menuItem" value="${socialBookmark}" />
 			</execute>
 		</for>
 

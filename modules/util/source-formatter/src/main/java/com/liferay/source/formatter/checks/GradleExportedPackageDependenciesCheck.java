@@ -64,17 +64,19 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 			return content;
 		}
 
-		if (absolutePath.contains("/modules/apps/")) {
-			int x = absolutePath.lastIndexOf(StringPool.SLASH);
+		if (!absolutePath.contains("/modules/apps/")) {
+			return content;
+		}
 
-			int y = absolutePath.lastIndexOf(StringPool.SLASH, x - 1);
+		int x = absolutePath.lastIndexOf(StringPool.SLASH);
 
-			String moduleName = absolutePath.substring(y + 1, x);
+		int y = absolutePath.lastIndexOf(StringPool.SLASH, x - 1);
 
-			if (!moduleName.contains("test")) {
-				for (String dependencies : _getDependenciesBlocks(content)) {
-					content = _formatDependencies(content, dependencies);
-				}
+		String moduleName = absolutePath.substring(y + 1, x);
+
+		if (!moduleName.contains("test")) {
+			for (String dependencies : _getDependenciesBlocks(content)) {
+				content = _formatDependencies(content, dependencies);
 			}
 		}
 

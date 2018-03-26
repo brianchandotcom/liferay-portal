@@ -5,6 +5,11 @@ const expect = chai.expect;
 describe('Forms Plugin', () => {
 	describe('formViewed event', () => {
 		it('should be fired for every form on the page', () => {
+			Object.defineProperty(document, 'readyState', {
+				value: 'loading',
+				writable: false
+			});
+
 			Analytics.create();
 
 			const form = document.createElement('form');
@@ -12,8 +17,8 @@ describe('Forms Plugin', () => {
 			form.id = 'myId';
 			document.body.appendChild(form);
 
-			const event = new Event('load');
-			window.dispatchEvent(event);
+			const domContentLoaded = new Event('DOMContentLoaded');
+			document.dispatchEvent(domContentLoaded);
 
 			const events = Analytics.events.filter(
 				({eventId}) => eventId === 'formViewed'

@@ -345,7 +345,7 @@ public class WorldpayCommercePaymentEngine implements CommercePaymentEngine {
 
 		CommerceCurrency commerceCurrency =
 			_commerceCurrencyLocalService.fetchPrimaryCommerceCurrency(
-				commerceOrder.getGroupId());
+				commerceOrder.getSiteGroupId());
 
 		if (commerceCurrency == null) {
 			throw new CommercePaymentEngineException.MustSetPrimaryCurrency();
@@ -433,7 +433,7 @@ public class WorldpayCommercePaymentEngine implements CommercePaymentEngine {
 					WorldpayCommercePaymentEngineGroupServiceConfiguration.
 						class,
 					new GroupServiceSettingsLocator(
-						commerceOrder.getGroupId(),
+						commerceOrder.getSiteGroupId(),
 						WorldpayCommercePaymentEngineConstants.SERVICE_NAME));
 
 		WorldpayRestClient worldpayRestClient = new WorldpayRestClient(

@@ -503,15 +503,15 @@ public class AuthorizeNetCommercePaymentEngine
 			ServiceContext serviceContext)
 		throws Exception {
 
+		long groupId = commerceOrder.getSiteGroupId();
+
 		CommerceCurrency commerceCurrency =
-			_commerceCurrencyLocalService.fetchPrimaryCommerceCurrency(
-				commerceOrder.getGroupId());
+			_commerceCurrencyLocalService.fetchPrimaryCommerceCurrency(groupId);
 
 		if (commerceCurrency == null) {
 			throw new CommercePaymentEngineException.MustSetPrimaryCurrency();
 		}
 
-		long groupId = commerceOrder.getGroupId();
 		Locale locale = serviceContext.getLocale();
 
 		AuthorizeNetCommercePaymentEngineGroupServiceConfiguration

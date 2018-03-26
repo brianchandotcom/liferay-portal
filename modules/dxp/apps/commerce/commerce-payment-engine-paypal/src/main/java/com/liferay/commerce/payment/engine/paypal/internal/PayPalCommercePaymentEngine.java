@@ -255,7 +255,7 @@ public class PayPalCommercePaymentEngine implements CommercePaymentEngine {
 				_configurationProvider.getConfiguration(
 					PayPalCommercePaymentEngineGroupServiceConfiguration.class,
 					new GroupServiceSettingsLocator(
-						commerceOrder.getGroupId(),
+						commerceOrder.getSiteGroupId(),
 						PayPalCommercePaymentEngineConstants.SERVICE_NAME));
 
 		return new APIContext(
@@ -371,7 +371,7 @@ public class PayPalCommercePaymentEngine implements CommercePaymentEngine {
 
 		CommerceCurrency commerceCurrency =
 			_commerceCurrencyLocalService.fetchPrimaryCommerceCurrency(
-				commerceOrder.getGroupId());
+				commerceOrder.getSiteGroupId());
 
 		if (commerceCurrency == null) {
 			throw new CommercePaymentEngineException.MustSetPrimaryCurrency();

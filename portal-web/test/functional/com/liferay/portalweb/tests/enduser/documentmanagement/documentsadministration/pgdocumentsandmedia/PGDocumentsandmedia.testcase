@@ -1789,6 +1789,10 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="descriptive" />
+		</execute>
+
 		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>

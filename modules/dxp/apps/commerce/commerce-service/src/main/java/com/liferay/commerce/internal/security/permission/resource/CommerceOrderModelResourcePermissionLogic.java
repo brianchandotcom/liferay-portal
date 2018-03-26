@@ -109,6 +109,12 @@ public class CommerceOrderModelResourcePermissionLogic
 			return false;
 		}
 
+		if (commerceOrder.isApproved() &&
+			_hasOwnerPermission(permissionChecker, commerceOrder)) {
+
+			return true;
+		}
+
 		return _portletResourcePermission.contains(
 			permissionChecker, commerceOrder.getGroupId(),
 			CommerceOrderActionKeys.CHECKOUT_OPEN_COMMERCE_ORDERS);

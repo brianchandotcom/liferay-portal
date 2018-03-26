@@ -43,12 +43,12 @@ public class BuildDataJSONObject extends JSONObject {
 	}
 
 	public void addPropertiesToBuildData(
-		String key, String pathToPropertiesFile) {
+		String key, String propertiesFilePath) {
 
 		addPropertiesToBuildData(
 			key,
 			JenkinsResultsParserUtil.getProperties(
-				new File(pathToPropertiesFile)));
+				new File(propertiesFilePath)));
 	}
 
 	public Map<String, String> getBuildDataMap(String key) {

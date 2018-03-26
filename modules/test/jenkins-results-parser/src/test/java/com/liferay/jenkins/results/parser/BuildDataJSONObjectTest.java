@@ -22,6 +22,7 @@ import java.net.URL;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -61,7 +62,7 @@ public class BuildDataJSONObjectTest
 	}
 
 	@Test
-	public void testGetBuildDataMapWithFilter()
+	public void testGetBuildDataMapWithPattern()
 		throws IOException, MalformedURLException {
 
 		File file = new File(dependenciesDirs.get(0), "test.json");
@@ -73,9 +74,8 @@ public class BuildDataJSONObjectTest
 		BuildDataJSONObject buildDataJSONObject = new BuildDataJSONObject(
 			jsonString);
 
-		Map<String, String> actualMap =
-			buildDataJSONObject.getBuildDataMapWithFilter(
-				"git.portal.properties", "local.");
+		Map<String, String> actualMap = buildDataJSONObject.getBuildDataMap(
+			"git.portal.properties", _localPropertyNamePattern);
 
 		Map<String, String> expectedMap = new HashMap<>();
 
@@ -83,5 +83,8 @@ public class BuildDataJSONObjectTest
 
 		Assert.assertEquals(expectedMap, actualMap);
 	}
+
+	private static final Pattern _localPropertyNamePattern = Pattern.compile(
+		".*local\\..*");
 
 }

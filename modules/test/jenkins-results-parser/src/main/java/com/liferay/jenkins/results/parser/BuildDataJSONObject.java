@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -52,12 +54,10 @@ public class BuildDataJSONObject extends JSONObject {
 	}
 
 	public Map<String, String> getBuildDataMap(String key) {
-		return getBuildDataMapWithFilter(key, null);
+		return getBuildDataMap(key, null);
 	}
 
-	public Map<String, String> getBuildDataMapWithFilter(
-		String key, String filter) {
-
+	public Map<String, String> getBuildDataMap(String key, Pattern pattern) {
 		if (!has(key)) {
 			throw new RuntimeException(
 				"Unable to find build data for '" + key + "'");
@@ -72,9 +72,15 @@ public class BuildDataJSONObject extends JSONObject {
 
 			String propertyName = jsonObject.getString("name");
 
-			if ((filter == null) ||
-				((filter != null) && propertyName.contains(filter))) {
+			if (pattern == null) {
+				buildDataMap.put(propertyName, jsonObject.getString("value"));
 
+				continue;
+			}
+
+			Matcher matcher = pattern.matcher(propertyName);
+
+			if (matcher.matches()) {
 				buildDataMap.put(propertyName, jsonObject.getString("value"));
 			}
 		}
@@ -83,11 +89,10 @@ public class BuildDataJSONObject extends JSONObject {
 	}
 
 	public void writeFilteredPropertiesToFile(
-			String destFilePath, String filter, String key)
+			String destFilePath, Pattern pattern, String key)
 		throws IOException {
 
-		Map<String, String> buildDataMap = getBuildDataMapWithFilter(
-			key, filter);
+		Map<String, String> buildDataMap = getBuildDataMap(key, pattern);
 
 		StringBuilder sb = new StringBuilder();
 

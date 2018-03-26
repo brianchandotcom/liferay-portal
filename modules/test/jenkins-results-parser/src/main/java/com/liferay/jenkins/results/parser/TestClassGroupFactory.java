@@ -26,4 +26,24 @@ public class TestBatchGroupFactory {
 		return new TestBatchGroup(gitWorkingDirectory, batchName);
 	}
 
+	public static TestBatchGroup newTestBatchGroup(
+			PortalRepositoryJob portalRepositoryJob, String batchName)
+		throws Exception {
+
+		GitWorkingDirectory gitWorkingDirectory =
+			portalRepositoryJob.getGitWorkingDirectory();
+
+		String testSuiteName = null;
+
+		if (portalRepositoryJob instanceof PortalAcceptancePullRequestJob) {
+			PortalAcceptancePullRequestJob portalAcceptancePullRequestJob =
+				(PortalAcceptancePullRequestJob)portalRepositoryJob;
+
+			testSuiteName = portalAcceptancePullRequestJob.getTestSuiteName();
+		}
+
+		return new TestBatchGroup(
+			gitWorkingDirectory, batchName, testSuiteName);
+	}
+
 }

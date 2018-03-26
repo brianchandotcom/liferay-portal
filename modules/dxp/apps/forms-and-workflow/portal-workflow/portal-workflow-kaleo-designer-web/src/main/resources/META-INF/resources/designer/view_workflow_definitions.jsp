@@ -26,6 +26,8 @@ int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM);
 
 String definitionsNavigation = ParamUtil.getString(request, "definitionsNavigation");
 
+portletURL.setParameter("definitionsNavigation", definitionsNavigation);
+
 int displayedStatus = KaleoDefinitionVersionConstants.STATUS_ALL;
 
 if (StringUtil.equals(definitionsNavigation, "published")) {
@@ -37,8 +39,6 @@ else if (StringUtil.equals(definitionsNavigation, "not-published")) {
 
 String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-portletURL.setParameter("definitionsNavigation", definitionsNavigation);
 
 PortletURL navigationPortletURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
 

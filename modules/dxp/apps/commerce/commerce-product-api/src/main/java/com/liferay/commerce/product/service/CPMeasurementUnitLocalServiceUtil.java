@@ -312,6 +312,10 @@ public class CPMeasurementUnitLocalServiceUtil {
 		return getService().getCPMeasurementUnitsCount();
 	}
 
+	public static int getCPMeasurementUnitsCount(long groupId) {
+		return getService().getCPMeasurementUnitsCount(groupId);
+	}
+
 	public static int getCPMeasurementUnitsCount(long groupId, int type) {
 		return getService().getCPMeasurementUnitsCount(groupId, type);
 	}

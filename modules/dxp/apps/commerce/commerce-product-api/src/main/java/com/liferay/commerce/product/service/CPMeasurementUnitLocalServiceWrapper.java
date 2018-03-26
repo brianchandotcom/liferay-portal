@@ -333,6 +333,11 @@ public class CPMeasurementUnitLocalServiceWrapper
 	}
 
 	@Override
+	public int getCPMeasurementUnitsCount(long groupId) {
+		return _cpMeasurementUnitLocalService.getCPMeasurementUnitsCount(groupId);
+	}
+
+	@Override
 	public int getCPMeasurementUnitsCount(long groupId, int type) {
 		return _cpMeasurementUnitLocalService.getCPMeasurementUnitsCount(groupId,
 			type);

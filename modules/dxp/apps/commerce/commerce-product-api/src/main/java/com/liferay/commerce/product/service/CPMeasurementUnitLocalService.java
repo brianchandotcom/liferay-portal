@@ -284,6 +284,9 @@ public interface CPMeasurementUnitLocalService extends BaseLocalService,
 	public int getCPMeasurementUnitsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPMeasurementUnitsCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPMeasurementUnitsCount(long groupId, int type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

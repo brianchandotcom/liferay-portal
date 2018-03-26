@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.tax.engine.fixed.web.internal.display.context;
 
-import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.model.CommerceTaxCategory;
 import com.liferay.commerce.model.CommerceTaxMethod;
@@ -36,7 +35,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -137,31 +135,6 @@ public class CommerceTaxFixedRatesDisplayContext
 		searchContainer.setResults(results);
 
 		return searchContainer;
-	}
-
-	public String getTaglibOnClick(String functionName) {
-		StringBundler sb = new StringBundler(9);
-
-		sb.append("javascript:");
-		sb.append(renderResponse.getNamespace());
-		sb.append(functionName);
-		sb.append(StringPool.OPEN_PARENTHESIS);
-		sb.append(StringPool.APOSTROPHE);
-
-		PortletURL portletURL = renderResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"commerceAdminModuleKey",
-			CommerceConstants.TAXES_COMMERCE_ADMIN_MODULE_KEY);
-		portletURL.setParameter("screenNavigationEntryKey", "tax-categories");
-
-		sb.append(HtmlUtil.escapeJS(portletURL.toString()));
-
-		sb.append(StringPool.APOSTROPHE);
-		sb.append(StringPool.CLOSE_PARENTHESIS);
-		sb.append(StringPool.SEMICOLON);
-
-		return sb.toString();
 	}
 
 	public boolean isFixed() throws PortalException {

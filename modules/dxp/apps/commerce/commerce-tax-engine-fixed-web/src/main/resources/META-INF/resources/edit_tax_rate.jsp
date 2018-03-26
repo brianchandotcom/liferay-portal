@@ -60,7 +60,12 @@ if (commerceTaxFixedRate != null) {
 
 			</aui:select>
 
-			<a href="<%= commerceTaxFixedRatesDisplayContext.getTaglibOnClick("taxCategoriesRedirect") %>"><liferay-ui:message key="manage-tax-categories" /></a>
+			<liferay-portlet:renderURL var="taxCategoriesURL">
+				<portlet:param name="commerceAdminModuleKey" value="<%= CommerceConstants.TAXES_COMMERCE_ADMIN_MODULE_KEY %>" />
+				<portlet:param name="screenNavigationEntryKey" value="tax-categories" />
+			</liferay-portlet:renderURL>
+
+			<a data-senna-off target="_parent" href="<%= taxCategoriesURL %>"><liferay-ui:message key="manage-tax-categories" /></a>
 		</c:if>
 
 		<aui:input name="rate" suffix="<%= commerceTaxFixedRatesDisplayContext.getCommerceCurrencyCode() %>" />

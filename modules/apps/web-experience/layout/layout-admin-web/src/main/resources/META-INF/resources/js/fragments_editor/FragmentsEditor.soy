@@ -5,6 +5,7 @@
  */
 {template .render}
 	{@param defaultEditorConfiguration: ?}
+	{@param classPK: ?}
 	{@param fragmentCollections: list<[
 		fragmentEntries: list<[
 			fragmentEntryId: string,
@@ -84,12 +85,14 @@
 			</div>
 
 			{call com.liferay.layout.admin.web.SelectMappingTypeDialog.render}
+				{param classPK: $classPK /}
 				{param events: [
 					'mappingTypeSelected': $_handleMappingTypeSelected,
 					'visibleChanged': $_handleSelectMappingTypeDialogVisibleChanged
 				] /}
 				{param getAssetClassTypesURL: $getAssetClassTypesURL /}
 				{param getAssetDisplayContributorsURL: $getAssetDisplayContributorsURL /}
+				{param portletNamespace: $portletNamespace /}
 				{param spritemap: $spritemap /}
 				{param updateLayoutPageTemplateEntryAssetTypeURL: $updateLayoutPageTemplateEntryAssetTypeURL /}
 				{param visible: $_selectMappingTypeDialogVisible ?: false /}

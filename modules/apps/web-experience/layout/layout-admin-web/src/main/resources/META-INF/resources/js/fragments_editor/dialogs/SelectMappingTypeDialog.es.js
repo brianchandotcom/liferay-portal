@@ -168,6 +168,17 @@ class SelectMappingTypeDialog extends Component {
 SelectMappingTypeDialog.STATE = {
 
 	/**
+	 * Class primary key used for storing changes.
+	 * @default undefined
+	 * @instance
+	 * @memberOf SelectMappingTypeDialog
+	 * @review
+	 * @type {!string}
+	 */
+
+	classPK: Config.string().required(),
+
+	/**
 	 * URL for obtaining the asset types for which asset display pages can be
 	 * created.
 	 * @default undefined
@@ -190,6 +201,17 @@ SelectMappingTypeDialog.STATE = {
 	 */
 
 	getAssetDisplayContributorsURL: Config.string().required(),
+
+	/**
+	 * Portlet namespace needed for prefixing form inputs
+	 * @default undefined
+	 * @instance
+	 * @memberOf SelectMappingTypeDialog
+	 * @review
+	 * @type {!string}
+	 */
+
+	portletNamespace: Config.string().required(),
 
 	/**
 	 * Path of the available icons.

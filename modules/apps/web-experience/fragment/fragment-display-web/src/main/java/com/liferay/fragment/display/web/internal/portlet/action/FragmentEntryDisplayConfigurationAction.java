@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -137,11 +139,14 @@ public class FragmentEntryDisplayConfigurationAction
 
 		long classNameId = _portal.getClassNameId(PortletPreferences.class);
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
 		fragmentEntryLink = _fragmentEntryLinkLocalService.addFragmentEntryLink(
-			themeDisplay.getScopeGroupId(), fragmentEntryId, classNameId,
-			preferences.getPortletPreferencesId(), fragmentEntry.getCss(),
-			fragmentEntry.getHtml(), fragmentEntry.getJs(), StringPool.BLANK,
-			0);
+			serviceContext.getUserId(), themeDisplay.getScopeGroupId(),
+			fragmentEntryId, classNameId, preferences.getPortletPreferencesId(),
+			fragmentEntry.getCss(), fragmentEntry.getHtml(),
+			fragmentEntry.getJs(), StringPool.BLANK, 0, serviceContext);
 
 		return fragmentEntryLink.getFragmentEntryLinkId();
 	}

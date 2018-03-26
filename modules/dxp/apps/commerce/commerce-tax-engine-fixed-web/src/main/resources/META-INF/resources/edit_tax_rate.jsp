@@ -59,6 +59,8 @@ if (commerceTaxFixedRate != null) {
 				%>
 
 			</aui:select>
+
+			<a href="<%= commerceTaxFixedRatesDisplayContext.getTaglibOnClick("taxCategoriesRedirect") %>"><liferay-ui:message key="manage-tax-categories" /></a>
 		</c:if>
 
 		<aui:input name="rate" suffix="<%= commerceTaxFixedRatesDisplayContext.getCommerceCurrencyCode() %>" />

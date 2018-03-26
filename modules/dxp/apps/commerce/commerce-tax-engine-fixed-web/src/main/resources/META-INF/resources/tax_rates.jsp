@@ -177,6 +177,17 @@ boolean hasManageCommerceTaxMethodsPermission = CommercePermission.contains(perm
 		['liferay-util-window']
 	);
 
+	Liferay.provide(
+		window,
+		'<portlet:namespace/>taxCategoriesRedirect',
+		function(url) {
+			Liferay.Util.getOpener().closePopup('editTaxFixedRateDialog');
+
+			window.location.href = url;
+		},
+		['liferay-util-window']
+	);
+
 	function <portlet:namespace />deleteCommerceTaxFixedRates() {
 		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-tax-rates" />')) {
 			var form = AUI.$(document.<portlet:namespace />fm);

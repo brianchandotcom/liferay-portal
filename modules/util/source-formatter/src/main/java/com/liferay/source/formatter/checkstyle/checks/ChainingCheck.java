@@ -310,6 +310,10 @@ public class ChainingCheck extends BaseCheck {
 		if (nameAST != null) {
 			String classOrVariableName = nameAST.getText();
 
+			if (_isLambdaVariable(methodCallAST, classOrVariableName)) {
+				return true;
+			}
+
 			for (String allowedClassName : _allowedClassNames) {
 				if (classOrVariableName.matches(allowedClassName)) {
 					return true;
@@ -388,6 +392,30 @@ public class ChainingCheck extends BaseCheck {
 			}
 
 			parentAST = parentAST.getParent();
+		}
+
+		return false;
+	}
+
+	private boolean _isLambdaVariable(
+		DetailAST methodCallAST, String variableName) {
+
+		DetailAST parentAST = methodCallAST.getParent();
+
+		while (parentAST != null) {
+			if (parentAST.getType() != TokenTypes.LAMBDA) {
+				parentAST = parentAST.getParent();
+
+				continue;
+			}
+
+			DetailAST nameAST = parentAST.findFirstToken(TokenTypes.IDENT);
+
+			if ((nameAST != null) && variableName.equals(nameAST.getText())) {
+				return true;
+			}
+
+			return false;
 		}
 
 		return false;

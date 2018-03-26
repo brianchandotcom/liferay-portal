@@ -34,7 +34,7 @@ long commerceCountryId = BeanParamUtil.getLong(billingAddress, request, "commerc
 long commerceRegionId = BeanParamUtil.getLong(billingAddress, request, "commerceRegionId");
 
 int paymentStatus = BeanParamUtil.getInteger(commerceOrder, request, "paymentStatus");
-long commercePaymentMethodId = BeanParamUtil.getLong(commerceOrder, request, "commerceOrderId");
+long commercePaymentMethodId = BeanParamUtil.getLong(commerceOrder, request, "commercePaymentMethodId");
 %>
 
 <liferay-portlet:actionURL name="editCommerceOrder" var="editCommerceOrderURL" />

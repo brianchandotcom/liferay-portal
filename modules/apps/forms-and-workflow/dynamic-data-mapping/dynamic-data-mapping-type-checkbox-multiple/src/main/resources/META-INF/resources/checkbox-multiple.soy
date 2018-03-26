@@ -30,23 +30,25 @@
 	<div class="form-group liferay-ddm-form-field-checkbox-multiple"
 		data-fieldname="{$name}">
 
-		{if $showLabel}
-			<div>
-				<label for="{$name}">
+		<div>
+			<label for="{$name}">
+				{if $showLabel}
 					{$label}{sp}
+				{/if}
 
-					{if $required and length($options) > 1}
-						<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">
-							<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#asterisk" />
-						</svg>
-					{/if}
-				</label>
+				{if $required and length($options) > 1}
+					<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">
+						<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#asterisk" />
+					</svg>
+				{/if}
+			</label>
 
+			{if $showLabel}
 				{if $tip}
 					<span class="form-text">{$tip}</span>
 				{/if}
-			</div>
-		{/if}
+			{/if}
+		</div>
 
 		{foreach $option in $options}
 			{let $checked kind="attributes"}

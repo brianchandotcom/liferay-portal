@@ -19,6 +19,8 @@ import com.liferay.commerce.exception.CommerceCountryThreeLettersISOCodeExceptio
 import com.liferay.commerce.exception.CommerceCountryTwoLettersISOCodeException;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.service.base.CommerceCountryLocalServiceBaseImpl;
+import com.liferay.commerce.starter.CommerceRegionsStarter;
+import com.liferay.commerce.starter.CommerceRegionsStarterRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -43,6 +45,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -246,9 +249,17 @@ public class CommerceCountryLocalServiceImpl
 
 			nameMap.put(serviceContext.getLocale(), localizedName);
 
-			addCommerceCountry(
+			commerceCountryLocalService.addCommerceCountry(
 				nameMap, true, true, twoLettersISOCode, threeLettersISOCode,
 				numericISOCode, false, priority, true, serviceContext);
+
+			CommerceRegionsStarter commerceRegionsStarter =
+				_commerceRegionsStarterRegistry.getCommerceRegionsStarter(
+					String.valueOf(numericISOCode));
+
+			if (commerceRegionsStarter != null) {
+				commerceRegionsStarter.start(serviceContext);
+			}
 		}
 	}
 
@@ -368,5 +379,8 @@ public class CommerceCountryLocalServiceImpl
 
 	private static final String[] _SELECTED_FIELD_NAMES =
 		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
+
+	@ServiceReference(type = CommerceRegionsStarterRegistry.class)
+	private CommerceRegionsStarterRegistry _commerceRegionsStarterRegistry;
 
 }

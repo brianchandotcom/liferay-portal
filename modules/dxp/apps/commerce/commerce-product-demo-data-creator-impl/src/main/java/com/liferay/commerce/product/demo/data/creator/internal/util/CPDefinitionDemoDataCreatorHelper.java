@@ -227,7 +227,7 @@ public class CPDefinitionDemoDataCreatorHelper
 			true, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,
 			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, true, serviceContext);
+			expirationDateMinute, true, false, serviceContext);
 
 		_cpDefinitions.put(title, cpDefinition);
 

@@ -63,7 +63,7 @@ public interface CommerceTaxFixedRateAddressRel
 	public com.liferay.commerce.model.CommerceRegion getCommerceRegion()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public CommerceTaxFixedRate getCommerceTaxFixedRate()
+	public com.liferay.commerce.model.CommerceTaxCategory getCommerceTaxCategory()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.commerce.model.CommerceTaxMethod getCommerceTaxMethod()

@@ -69,7 +69,7 @@ public class CommerceTaxFixedRateAddressRelWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("commerceTaxMethodId", getCommerceTaxMethodId());
-		attributes.put("commerceTaxFixedRateId", getCommerceTaxFixedRateId());
+		attributes.put("commerceTaxCategoryId", getCommerceTaxCategoryId());
 		attributes.put("commerceCountryId", getCommerceCountryId());
 		attributes.put("commerceRegionId", getCommerceRegionId());
 		attributes.put("zip", getZip());
@@ -129,11 +129,11 @@ public class CommerceTaxFixedRateAddressRelWrapper
 			setCommerceTaxMethodId(commerceTaxMethodId);
 		}
 
-		Long commerceTaxFixedRateId = (Long)attributes.get(
-				"commerceTaxFixedRateId");
+		Long commerceTaxCategoryId = (Long)attributes.get(
+				"commerceTaxCategoryId");
 
-		if (commerceTaxFixedRateId != null) {
-			setCommerceTaxFixedRateId(commerceTaxFixedRateId);
+		if (commerceTaxCategoryId != null) {
+			setCommerceTaxCategoryId(commerceTaxCategoryId);
 		}
 
 		Long commerceCountryId = (Long)attributes.get("commerceCountryId");
@@ -205,9 +205,19 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	}
 
 	@Override
-	public CommerceTaxFixedRate getCommerceTaxFixedRate()
+	public com.liferay.commerce.model.CommerceTaxCategory getCommerceTaxCategory()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceTaxFixedRateAddressRel.getCommerceTaxFixedRate();
+		return _commerceTaxFixedRateAddressRel.getCommerceTaxCategory();
+	}
+
+	/**
+	* Returns the commerce tax category ID of this commerce tax fixed rate address rel.
+	*
+	* @return the commerce tax category ID of this commerce tax fixed rate address rel
+	*/
+	@Override
+	public long getCommerceTaxCategoryId() {
+		return _commerceTaxFixedRateAddressRel.getCommerceTaxCategoryId();
 	}
 
 	/**
@@ -218,16 +228,6 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	@Override
 	public long getCommerceTaxFixedRateAddressRelId() {
 		return _commerceTaxFixedRateAddressRel.getCommerceTaxFixedRateAddressRelId();
-	}
-
-	/**
-	* Returns the commerce tax fixed rate ID of this commerce tax fixed rate address rel.
-	*
-	* @return the commerce tax fixed rate ID of this commerce tax fixed rate address rel
-	*/
-	@Override
-	public long getCommerceTaxFixedRateId() {
-		return _commerceTaxFixedRateAddressRel.getCommerceTaxFixedRateId();
 	}
 
 	@Override
@@ -407,6 +407,16 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	}
 
 	/**
+	* Sets the commerce tax category ID of this commerce tax fixed rate address rel.
+	*
+	* @param commerceTaxCategoryId the commerce tax category ID of this commerce tax fixed rate address rel
+	*/
+	@Override
+	public void setCommerceTaxCategoryId(long commerceTaxCategoryId) {
+		_commerceTaxFixedRateAddressRel.setCommerceTaxCategoryId(commerceTaxCategoryId);
+	}
+
+	/**
 	* Sets the commerce tax fixed rate address rel ID of this commerce tax fixed rate address rel.
 	*
 	* @param commerceTaxFixedRateAddressRelId the commerce tax fixed rate address rel ID of this commerce tax fixed rate address rel
@@ -415,16 +425,6 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	public void setCommerceTaxFixedRateAddressRelId(
 		long commerceTaxFixedRateAddressRelId) {
 		_commerceTaxFixedRateAddressRel.setCommerceTaxFixedRateAddressRelId(commerceTaxFixedRateAddressRelId);
-	}
-
-	/**
-	* Sets the commerce tax fixed rate ID of this commerce tax fixed rate address rel.
-	*
-	* @param commerceTaxFixedRateId the commerce tax fixed rate ID of this commerce tax fixed rate address rel
-	*/
-	@Override
-	public void setCommerceTaxFixedRateId(long commerceTaxFixedRateId) {
-		_commerceTaxFixedRateAddressRel.setCommerceTaxFixedRateId(commerceTaxFixedRateId);
 	}
 
 	/**

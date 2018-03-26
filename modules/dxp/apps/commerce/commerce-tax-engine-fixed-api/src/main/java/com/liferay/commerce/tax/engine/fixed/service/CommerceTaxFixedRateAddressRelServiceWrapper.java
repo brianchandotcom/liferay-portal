@@ -36,13 +36,13 @@ public class CommerceTaxFixedRateAddressRelServiceWrapper
 
 	@Override
 	public com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
-		long commerceTaxMethodId, long commerceTaxFixedRateId,
+		long commerceTaxMethodId, long commerceTaxCategoryId,
 		long commerceCountryId, long commerceRegionId, java.lang.String zip,
 		double rate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceTaxFixedRateAddressRelService.addCommerceTaxFixedRateAddressRel(commerceTaxMethodId,
-			commerceTaxFixedRateId, commerceCountryId, commerceRegionId, zip,
+			commerceTaxCategoryId, commerceCountryId, commerceRegionId, zip,
 			rate, serviceContext);
 	}
 
@@ -69,23 +69,23 @@ public class CommerceTaxFixedRateAddressRelServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel> getCommerceTaxFixedRateAddressRels(
-		long commerceTaxFixedRateId, int start, int end) {
-		return _commerceTaxFixedRateAddressRelService.getCommerceTaxFixedRateAddressRels(commerceTaxFixedRateId,
+		long commerceTaxCategoryId, int start, int end) {
+		return _commerceTaxFixedRateAddressRelService.getCommerceTaxFixedRateAddressRels(commerceTaxCategoryId,
 			start, end);
 	}
 
 	@Override
 	public java.util.List<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel> getCommerceTaxFixedRateAddressRels(
-		long commerceTaxFixedRateId, int start, int end,
+		long commerceTaxCategoryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel> orderByComparator) {
-		return _commerceTaxFixedRateAddressRelService.getCommerceTaxFixedRateAddressRels(commerceTaxFixedRateId,
+		return _commerceTaxFixedRateAddressRelService.getCommerceTaxFixedRateAddressRels(commerceTaxCategoryId,
 			start, end, orderByComparator);
 	}
 
 	@Override
 	public int getCommerceTaxFixedRateAddressRelsCount(
-		long commerceTaxFixedRateId) {
-		return _commerceTaxFixedRateAddressRelService.getCommerceTaxFixedRateAddressRelsCount(commerceTaxFixedRateId);
+		long commerceTaxCategoryId) {
+		return _commerceTaxFixedRateAddressRelService.getCommerceTaxFixedRateAddressRelsCount(commerceTaxCategoryId);
 	}
 
 	@Override

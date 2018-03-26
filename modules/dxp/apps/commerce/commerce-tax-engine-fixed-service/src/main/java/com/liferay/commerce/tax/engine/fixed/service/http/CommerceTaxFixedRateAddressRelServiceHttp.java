@@ -57,7 +57,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CommerceTaxFixedRateAddressRelServiceHttp {
 	public static com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
 		HttpPrincipal httpPrincipal, long commerceTaxMethodId,
-		long commerceTaxFixedRateId, long commerceCountryId,
+		long commerceTaxCategoryId, long commerceCountryId,
 		long commerceRegionId, java.lang.String zip, double rate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -67,7 +67,7 @@ public class CommerceTaxFixedRateAddressRelServiceHttp {
 					_addCommerceTaxFixedRateAddressRelParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commerceTaxMethodId, commerceTaxFixedRateId,
+					commerceTaxMethodId, commerceTaxCategoryId,
 					commerceCountryId, commerceRegionId, zip, rate,
 					serviceContext);
 
@@ -181,7 +181,7 @@ public class CommerceTaxFixedRateAddressRelServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel> getCommerceTaxFixedRateAddressRels(
-		HttpPrincipal httpPrincipal, long commerceTaxFixedRateId, int start,
+		HttpPrincipal httpPrincipal, long commerceTaxCategoryId, int start,
 		int end) {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceTaxFixedRateAddressRelServiceUtil.class,
@@ -189,7 +189,7 @@ public class CommerceTaxFixedRateAddressRelServiceHttp {
 					_getCommerceTaxFixedRateAddressRelsParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commerceTaxFixedRateId, start, end);
+					commerceTaxCategoryId, start, end);
 
 			Object returnObj = null;
 
@@ -210,7 +210,7 @@ public class CommerceTaxFixedRateAddressRelServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel> getCommerceTaxFixedRateAddressRels(
-		HttpPrincipal httpPrincipal, long commerceTaxFixedRateId, int start,
+		HttpPrincipal httpPrincipal, long commerceTaxCategoryId, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel> orderByComparator) {
 		try {
@@ -219,7 +219,7 @@ public class CommerceTaxFixedRateAddressRelServiceHttp {
 					_getCommerceTaxFixedRateAddressRelsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commerceTaxFixedRateId, start, end, orderByComparator);
+					commerceTaxCategoryId, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -240,14 +240,14 @@ public class CommerceTaxFixedRateAddressRelServiceHttp {
 	}
 
 	public static int getCommerceTaxFixedRateAddressRelsCount(
-		HttpPrincipal httpPrincipal, long commerceTaxFixedRateId) {
+		HttpPrincipal httpPrincipal, long commerceTaxCategoryId) {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceTaxFixedRateAddressRelServiceUtil.class,
 					"getCommerceTaxFixedRateAddressRelsCount",
 					_getCommerceTaxFixedRateAddressRelsCountParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commerceTaxFixedRateId);
+					commerceTaxCategoryId);
 
 			Object returnObj = null;
 

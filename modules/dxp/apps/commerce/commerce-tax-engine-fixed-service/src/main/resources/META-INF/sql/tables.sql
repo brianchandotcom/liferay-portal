@@ -20,7 +20,7 @@ create table CommerceTaxFixedRateAddressRel (
 	createDate DATE null,
 	modifiedDate DATE null,
 	commerceTaxMethodId LONG,
-	commerceTaxFixedRateId LONG,
+	commerceTaxCategoryId LONG,
 	commerceCountryId LONG,
 	commerceRegionId LONG,
 	zip VARCHAR(75) null,

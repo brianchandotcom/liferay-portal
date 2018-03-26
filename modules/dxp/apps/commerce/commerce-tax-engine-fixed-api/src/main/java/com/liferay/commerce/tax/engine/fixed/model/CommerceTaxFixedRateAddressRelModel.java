@@ -208,18 +208,18 @@ public interface CommerceTaxFixedRateAddressRelModel extends BaseModel<CommerceT
 	public void setCommerceTaxMethodId(long commerceTaxMethodId);
 
 	/**
-	 * Returns the commerce tax fixed rate ID of this commerce tax fixed rate address rel.
+	 * Returns the commerce tax category ID of this commerce tax fixed rate address rel.
 	 *
-	 * @return the commerce tax fixed rate ID of this commerce tax fixed rate address rel
+	 * @return the commerce tax category ID of this commerce tax fixed rate address rel
 	 */
-	public long getCommerceTaxFixedRateId();
+	public long getCommerceTaxCategoryId();
 
 	/**
-	 * Sets the commerce tax fixed rate ID of this commerce tax fixed rate address rel.
+	 * Sets the commerce tax category ID of this commerce tax fixed rate address rel.
 	 *
-	 * @param commerceTaxFixedRateId the commerce tax fixed rate ID of this commerce tax fixed rate address rel
+	 * @param commerceTaxCategoryId the commerce tax category ID of this commerce tax fixed rate address rel
 	 */
-	public void setCommerceTaxFixedRateId(long commerceTaxFixedRateId);
+	public void setCommerceTaxCategoryId(long commerceTaxCategoryId);
 
 	/**
 	 * Returns the commerce country ID of this commerce tax fixed rate address rel.

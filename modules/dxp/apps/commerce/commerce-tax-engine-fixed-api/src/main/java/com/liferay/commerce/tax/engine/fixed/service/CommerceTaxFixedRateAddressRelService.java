@@ -57,7 +57,7 @@ public interface CommerceTaxFixedRateAddressRelService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CommerceTaxFixedRateAddressRelServiceUtil} to access the commerce tax fixed rate address rel remote service. Add custom service methods to {@link com.liferay.commerce.tax.engine.fixed.service.impl.CommerceTaxFixedRateAddressRelServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
-		long commerceTaxMethodId, long commerceTaxFixedRateId,
+		long commerceTaxMethodId, long commerceTaxCategoryId,
 		long commerceCountryId, long commerceRegionId, java.lang.String zip,
 		double rate, ServiceContext serviceContext) throws PortalException;
 
@@ -75,16 +75,16 @@ public interface CommerceTaxFixedRateAddressRelService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceTaxFixedRateAddressRel> getCommerceTaxFixedRateAddressRels(
-		long commerceTaxFixedRateId, int start, int end);
+		long commerceTaxCategoryId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceTaxFixedRateAddressRel> getCommerceTaxFixedRateAddressRels(
-		long commerceTaxFixedRateId, int start, int end,
+		long commerceTaxCategoryId, int start, int end,
 		OrderByComparator<CommerceTaxFixedRateAddressRel> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceTaxFixedRateAddressRelsCount(
-		long commerceTaxFixedRateId);
+		long commerceTaxCategoryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceTaxFixedRateAddressRel> getCommerceTaxMethodFixedRateAddressRels(

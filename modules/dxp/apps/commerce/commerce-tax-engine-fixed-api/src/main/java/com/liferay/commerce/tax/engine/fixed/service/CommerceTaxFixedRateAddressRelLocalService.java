@@ -73,7 +73,7 @@ public interface CommerceTaxFixedRateAddressRelLocalService
 		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel);
 
 	public CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
-		long commerceTaxMethodId, long commerceTaxFixedRateId,
+		long commerceTaxMethodId, long commerceTaxCategoryId,
 		long commerceCountryId, long commerceRegionId, java.lang.String zip,
 		double rate, ServiceContext serviceContext) throws PortalException;
 
@@ -107,7 +107,11 @@ public interface CommerceTaxFixedRateAddressRelLocalService
 	public CommerceTaxFixedRateAddressRel deleteCommerceTaxFixedRateAddressRel(
 		long commerceTaxFixedRateAddressRelId) throws PortalException;
 
-	public void deleteCommerceTaxFixedRateAddressRels(long commerceTaxMethodId);
+	public void deleteCommerceTaxFixedRateAddressRels(
+		long commerceTaxCategoryId);
+
+	public void deleteCommerceTaxMethodFixedRateAddressRels(
+		long commerceTaxMethodId);
 
 	/**
 	* @throws PortalException
@@ -215,11 +219,11 @@ public interface CommerceTaxFixedRateAddressRelLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceTaxFixedRateAddressRel> getCommerceTaxFixedRateAddressRels(
-		long commerceTaxFixedRateId, int start, int end);
+		long commerceTaxCategoryId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceTaxFixedRateAddressRel> getCommerceTaxFixedRateAddressRels(
-		long commerceTaxFixedRateId, int start, int end,
+		long commerceTaxCategoryId, int start, int end,
 		OrderByComparator<CommerceTaxFixedRateAddressRel> orderByComparator);
 
 	/**
@@ -232,7 +236,7 @@ public interface CommerceTaxFixedRateAddressRelLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceTaxFixedRateAddressRelsCount(
-		long commerceTaxFixedRateId);
+		long commerceTaxCategoryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceTaxFixedRateAddressRel> getCommerceTaxMethodFixedRateAddressRels(

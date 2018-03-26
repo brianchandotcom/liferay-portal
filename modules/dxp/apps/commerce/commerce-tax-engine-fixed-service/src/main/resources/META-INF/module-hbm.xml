@@ -29,7 +29,7 @@
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="commerceTaxMethodId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="commerceTaxFixedRateId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="commerceTaxCategoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="commerceCountryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="commerceRegionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="zip" type="com.liferay.portal.dao.orm.hibernate.StringType" />

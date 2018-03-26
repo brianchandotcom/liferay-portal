@@ -66,7 +66,7 @@ import java.rmi.RemoteException;
 @ProviderType
 public class CommerceTaxFixedRateAddressRelServiceSoap {
 	public static com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRelSoap addCommerceTaxFixedRateAddressRel(
-		long commerceTaxMethodId, long commerceTaxFixedRateId,
+		long commerceTaxMethodId, long commerceTaxCategoryId,
 		long commerceCountryId, long commerceRegionId, java.lang.String zip,
 		double rate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -74,8 +74,8 @@ public class CommerceTaxFixedRateAddressRelServiceSoap {
 		try {
 			com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel returnValue =
 				CommerceTaxFixedRateAddressRelServiceUtil.addCommerceTaxFixedRateAddressRel(commerceTaxMethodId,
-					commerceTaxFixedRateId, commerceCountryId,
-					commerceRegionId, zip, rate, serviceContext);
+					commerceTaxCategoryId, commerceCountryId, commerceRegionId,
+					zip, rate, serviceContext);
 
 			return com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRelSoap.toSoapModel(returnValue);
 		}
@@ -131,11 +131,11 @@ public class CommerceTaxFixedRateAddressRelServiceSoap {
 	}
 
 	public static com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRelSoap[] getCommerceTaxFixedRateAddressRels(
-		long commerceTaxFixedRateId, int start, int end)
+		long commerceTaxCategoryId, int start, int end)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel> returnValue =
-				CommerceTaxFixedRateAddressRelServiceUtil.getCommerceTaxFixedRateAddressRels(commerceTaxFixedRateId,
+				CommerceTaxFixedRateAddressRelServiceUtil.getCommerceTaxFixedRateAddressRels(commerceTaxCategoryId,
 					start, end);
 
 			return com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRelSoap.toSoapModels(returnValue);
@@ -148,12 +148,12 @@ public class CommerceTaxFixedRateAddressRelServiceSoap {
 	}
 
 	public static com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRelSoap[] getCommerceTaxFixedRateAddressRels(
-		long commerceTaxFixedRateId, int start, int end,
+		long commerceTaxCategoryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel> orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel> returnValue =
-				CommerceTaxFixedRateAddressRelServiceUtil.getCommerceTaxFixedRateAddressRels(commerceTaxFixedRateId,
+				CommerceTaxFixedRateAddressRelServiceUtil.getCommerceTaxFixedRateAddressRels(commerceTaxCategoryId,
 					start, end, orderByComparator);
 
 			return com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRelSoap.toSoapModels(returnValue);
@@ -166,9 +166,9 @@ public class CommerceTaxFixedRateAddressRelServiceSoap {
 	}
 
 	public static int getCommerceTaxFixedRateAddressRelsCount(
-		long commerceTaxFixedRateId) throws RemoteException {
+		long commerceTaxCategoryId) throws RemoteException {
 		try {
-			int returnValue = CommerceTaxFixedRateAddressRelServiceUtil.getCommerceTaxFixedRateAddressRelsCount(commerceTaxFixedRateId);
+			int returnValue = CommerceTaxFixedRateAddressRelServiceUtil.getCommerceTaxFixedRateAddressRelsCount(commerceTaxCategoryId);
 
 			return returnValue;
 		}

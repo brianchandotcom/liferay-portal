@@ -17,9 +17,6 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -34,17 +31,11 @@ public class BuildDataJSONObjectTest
 	extends com.liferay.jenkins.results.parser.Test {
 
 	@Test
-	public void testGetBuildDataMap()
-		throws IOException, MalformedURLException {
-
+	public void testGetBuildDataMap() throws IOException {
 		File file = new File(dependenciesDirs.get(0), "test.json");
 
-		URL url = file.toURL();
-
-		String jsonString = JenkinsResultsParserUtil.toString(url.toString());
-
 		BuildDataJSONObject buildDataJSONObject = new BuildDataJSONObject(
-			jsonString);
+			JenkinsResultsParserUtil.read(file));
 
 		Map<String, String> actualMap = buildDataJSONObject.getBuildDataMap(
 			"git.portal.properties");
@@ -62,17 +53,11 @@ public class BuildDataJSONObjectTest
 	}
 
 	@Test
-	public void testGetBuildDataMapWithPattern()
-		throws IOException, MalformedURLException {
-
+	public void testGetBuildDataMapWithPattern() throws IOException {
 		File file = new File(dependenciesDirs.get(0), "test.json");
 
-		URL url = file.toURL();
-
-		String jsonString = JenkinsResultsParserUtil.toString(url.toString());
-
 		BuildDataJSONObject buildDataJSONObject = new BuildDataJSONObject(
-			jsonString);
+			JenkinsResultsParserUtil.read(file));
 
 		Map<String, String> actualMap = buildDataJSONObject.getBuildDataMap(
 			"git.portal.properties", _localPropertyNamePattern);

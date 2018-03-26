@@ -103,3 +103,33 @@ $commerce-order-items-body-list-group-subtitle: map-merge((
 
 $commerce-order-items-footer-bg: #30323E !default;
 $commerce-order-items-footer-color: #FFF !default;
+
+// Checkout Summary
+
+$commerce-checkout-summary-body-list-group-text: () !default;
+$commerce-checkout-summary-body-list-group-text: map-merge((
+	color: inherit,
+	font-size: 0.8125rem,
+	font-weight: $font-weight-light,
+	margin-top: -0.25rem
+), $commerce-checkout-summary-body-list-group-text);
+
+$commerce-checkout-summary-body-list-group-title: () !default;
+$commerce-checkout-summary-body-list-group-title: map-merge((
+	font-size: 1rem,
+	font-weight: $font-weight-normal,
+	margin-bottom: 0.125rem,
+	margin-top: -0.125rem
+), $commerce-checkout-summary-body-list-group-title);
+
+$commerce-checkout-summary-body-list-group-subtitle: () !default;
+$commerce-checkout-summary-body-list-group-subtitle: map-merge((
+	color: inherit,
+	font-size: 0.75rem
+), $commerce-checkout-summary-body-list-group-subtitle);
+
+$commerce-checkout-summary-footer-commerce-description: () !default;
+$commerce-checkout-summary-footer-commerce-description: map-merge((
+	font-size: 0.8125rem,
+	font-weight: $font-weight-light
+), $commerce-checkout-summary-footer-commerce-description);

@@ -985,3 +985,87 @@ a[type="button"] {
 		border-top-width: 0;
 	}
 }
+
+.commerce-order-summary {
+	.commerce-checkout-summary {
+		border-right: 1px solid #E7E7E7;
+		padding-right: 2rem;
+
+		.commerce-checkout-summary-header {
+			padding: 0;
+
+			.commerce-title {
+				margin-bottom: 0;
+			}
+		}
+
+		.commerce-checkout-summary-body {
+			.table {
+				border-bottom: 1px solid #E7E7E7;
+
+				td {
+					border-width: 0;
+				}
+			}
+
+			.list-group-text {
+				@include clay-text-typography($commerce-checkout-summary-body-list-group-text);
+			}
+
+			.list-group-title {
+				@include clay-text-typography($commerce-checkout-summary-body-list-group-title);
+			}
+
+			.list-group-subtitle {
+				@include clay-text-typography($commerce-checkout-summary-body-list-group-subtitle);
+			}
+
+			.sticker {
+				border: 1px solid #6B6C7E;
+			}
+		}
+
+		.commerce-checkout-summary-footer {
+			margin-top: 0.75rem;
+
+			.autofit-row {
+				align-items: center;
+
+				.autofit-col {
+					padding-left: 0.5rem;
+					padding-right: 0.5rem;
+				}
+			}
+
+			.commerce-description {
+				@include clay-text-typography($commerce-checkout-summary-footer-commerce-description);
+			}
+
+			.commerce-total {
+				.commerce-description, .commerce-value {
+					font-weight: $font-weight-bold;
+				}
+			}
+		}
+	}
+
+	.commerce-checkout-info {
+		padding-left: 2rem;
+
+		.payment-method, .shipping-address, .shipping-method {
+			@include clay-text-typography($commerce-checkout-summary-body-list-group-subtitle);
+		}
+
+		.shipping-address, .shipping-method {
+			margin-bottom: 1.5rem;
+		}
+
+		.payment-method {
+			padding-bottom: 1.5rem;
+		}
+
+		.payment-method {
+			border-bottom: 1px solid #E7E7E7;
+		}
+	}
+}

@@ -60,7 +60,8 @@ public class BuildDataJSONObject extends JSONObject {
 		String key, String filter) {
 
 		if (!has(key)) {
-			throw new RuntimeException("No build data found for '" + key + "'");
+			throw new RuntimeException(
+				"Unable to find build data for '" + key + "'");
 		}
 
 		Map<String, String> buildDataMap = new HashMap<>();

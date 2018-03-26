@@ -166,6 +166,7 @@
 		<execute macro="PortletEntry#viewEmptyMessage">
 			<var name="entity" value="Categories" />
 		</execute>
+
 		<execute function="AssertTextNotPresent" value1="${categoryName}" />
 	</command>
 
@@ -202,6 +203,7 @@
 		<execute macro="PortletEntry#viewEmptyMessage">
 			<var name="entity" value="Categories" />
 		</execute>
+
 		<execute function="AssertTextNotPresent" value1="${categoryName}" />
 	</command>
 

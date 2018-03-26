@@ -64,7 +64,7 @@
 		<!-- Other fields -->
 
 		<column name="commerceTaxMethodId" type="long" />
-		<column name="commerceTaxFixedRateId" type="long" />
+		<column name="commerceTaxCategoryId" type="long" />
 		<column name="commerceCountryId" type="long" />
 		<column name="commerceRegionId" type="long" />
 		<column name="zip" type="String" />
@@ -81,8 +81,8 @@
 		<finder name="CommerceTaxMethodId" return-type="Collection">
 			<finder-column name="commerceTaxMethodId" />
 		</finder>
-		<finder name="commerceTaxFixedRateId" return-type="Collection">
-			<finder-column name="commerceTaxFixedRateId" />
+		<finder name="CommerceTaxCategoryId" return-type="Collection">
+			<finder-column name="commerceTaxCategoryId" />
 		</finder>
 	</entity>
 	<exceptions>

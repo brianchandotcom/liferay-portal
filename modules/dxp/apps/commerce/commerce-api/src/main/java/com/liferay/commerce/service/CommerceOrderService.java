@@ -152,10 +152,14 @@ public interface CommerceOrderService extends BaseService {
 		long commercePaymentMethodId, long commerceShippingMethodId,
 		java.lang.String shippingOptionName,
 		java.lang.String purchaseOrderNumber, double subtotal,
-		double shippingPrice, double total, java.lang.String advanceStatus,
-		int paymentStatus) throws PortalException;
+		double shippingPrice, double total, java.lang.String advanceStatus)
+		throws PortalException;
 
 	public CommerceOrder updateOrderStatus(long commerceOrderId, int orderStatus)
+		throws PortalException;
+
+	public CommerceOrder updatePaymentStatus(long commerceOrderId,
+		int paymentStatus, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceOrder updatePurchaseOrderNumber(long commerceOrderId,

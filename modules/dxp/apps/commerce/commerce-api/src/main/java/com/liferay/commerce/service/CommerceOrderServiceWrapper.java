@@ -224,13 +224,12 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 		long commercePaymentMethodId, long commerceShippingMethodId,
 		java.lang.String shippingOptionName,
 		java.lang.String purchaseOrderNumber, double subtotal,
-		double shippingPrice, double total, java.lang.String advanceStatus,
-		int paymentStatus)
+		double shippingPrice, double total, java.lang.String advanceStatus)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderService.updateCommerceOrder(commerceOrderId,
 			billingAddressId, shippingAddressId, commercePaymentMethodId,
 			commerceShippingMethodId, shippingOptionName, purchaseOrderNumber,
-			subtotal, shippingPrice, total, advanceStatus, paymentStatus);
+			subtotal, shippingPrice, total, advanceStatus);
 	}
 
 	@Override
@@ -239,6 +238,15 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderService.updateOrderStatus(commerceOrderId,
 			orderStatus);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrder updatePaymentStatus(
+		long commerceOrderId, int paymentStatus,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderService.updatePaymentStatus(commerceOrderId,
+			paymentStatus, serviceContext);
 	}
 
 	@Override

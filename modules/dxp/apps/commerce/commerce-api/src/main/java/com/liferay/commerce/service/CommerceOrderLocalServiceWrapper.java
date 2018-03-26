@@ -523,13 +523,12 @@ public class CommerceOrderLocalServiceWrapper
 		long commercePaymentMethodId, long commerceShippingMethodId,
 		java.lang.String shippingOptionName,
 		java.lang.String purchaseOrderNumber, double subtotal,
-		double shippingPrice, double total, java.lang.String advanceStatus,
-		int paymentStatus)
+		double shippingPrice, double total, java.lang.String advanceStatus)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderLocalService.updateCommerceOrder(commerceOrderId,
 			billingAddressId, shippingAddressId, commercePaymentMethodId,
 			commerceShippingMethodId, shippingOptionName, purchaseOrderNumber,
-			subtotal, shippingPrice, total, advanceStatus, paymentStatus);
+			subtotal, shippingPrice, total, advanceStatus);
 	}
 
 	@Override
@@ -538,6 +537,15 @@ public class CommerceOrderLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderLocalService.updateOrderStatus(commerceOrderId,
 			orderStatus);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrder updatePaymentStatus(
+		long commerceOrderId, int paymentStatus,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderLocalService.updatePaymentStatus(commerceOrderId,
+			paymentStatus, serviceContext);
 	}
 
 	@Override

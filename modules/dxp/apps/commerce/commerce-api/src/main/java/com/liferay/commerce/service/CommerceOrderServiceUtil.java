@@ -212,20 +212,28 @@ public class CommerceOrderServiceUtil {
 		long commercePaymentMethodId, long commerceShippingMethodId,
 		java.lang.String shippingOptionName,
 		java.lang.String purchaseOrderNumber, double subtotal,
-		double shippingPrice, double total, java.lang.String advanceStatus,
-		int paymentStatus)
+		double shippingPrice, double total, java.lang.String advanceStatus)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCommerceOrder(commerceOrderId, billingAddressId,
 			shippingAddressId, commercePaymentMethodId,
 			commerceShippingMethodId, shippingOptionName, purchaseOrderNumber,
-			subtotal, shippingPrice, total, advanceStatus, paymentStatus);
+			subtotal, shippingPrice, total, advanceStatus);
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder updateOrderStatus(
 		long commerceOrderId, int orderStatus)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateOrderStatus(commerceOrderId, orderStatus);
+	}
+
+	public static com.liferay.commerce.model.CommerceOrder updatePaymentStatus(
+		long commerceOrderId, int paymentStatus,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updatePaymentStatus(commerceOrderId, paymentStatus,
+			serviceContext);
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder updatePurchaseOrderNumber(

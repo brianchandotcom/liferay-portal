@@ -5,10 +5,7 @@
 function getBrowserPluginDetails() {
 	return Array.from(navigator.plugins)
 		.map(plugin => plugin.name)
-		.reduce(
-			(plugins, plugin) => `${plugins},${plugin}`,
-			''
-		);
+		.reduce((plugins, plugin) => `${plugins},${plugin}`, '');
 }
 
 /**
@@ -26,7 +23,7 @@ function getCanvasFingerprint() {
 
 		// Execute canvas context operations and export the result
 		context.textBaseline = 'top';
-		context.font = '14px \'Arial\'';
+		context.font = "14px 'Arial'";
 		context.textBaseline = 'alphabetic';
 		context.fillStyle = '#f60';
 		context.fillRect(125, 1, 62, 20);
@@ -36,8 +33,7 @@ function getCanvasFingerprint() {
 		context.fillText(fingerPrintText, 4, 17);
 
 		canvasFingerprint = canvas.toDataURL();
-	}
-	catch(error) {}
+	} catch (error) {}
 
 	return canvasFingerprint;
 }
@@ -64,7 +60,7 @@ function getCanvasFingerprint() {
  * temporaryUserID
  * touchSupport
  * webGLFingerPrint
- * @return {object} A fingerprint object
+ * @return {object} A fingerprint object
  */
 function fingerprint() {
 	const browserPluginDetails = getBrowserPluginDetails();
@@ -80,7 +76,7 @@ function fingerprint() {
 		language,
 		platform,
 		timezone,
-		userAgent
+		userAgent,
 	};
 }
 

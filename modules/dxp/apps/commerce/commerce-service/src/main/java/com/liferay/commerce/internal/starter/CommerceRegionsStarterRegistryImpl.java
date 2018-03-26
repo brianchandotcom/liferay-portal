@@ -18,6 +18,7 @@ import com.liferay.commerce.starter.CommerceRegionsStarter;
 import com.liferay.commerce.starter.CommerceRegionsStarterRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,6 +35,15 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(immediate = true)
 public class CommerceRegionsStarterRegistryImpl
 	implements CommerceRegionsStarterRegistry {
+
+	@Override
+	public CommerceRegionsStarter getCommerceRegionsStarter(String key) {
+		if (Validator.isNull(key)) {
+			return null;
+		}
+
+		return _serviceTrackerMap.getService(key);
+	}
 
 	@Override
 	public List<CommerceRegionsStarter> getCommerceRegionsStarters() {

@@ -24,6 +24,8 @@ import java.util.List;
 @ProviderType
 public interface CommerceRegionsStarterRegistry {
 
+	public CommerceRegionsStarter getCommerceRegionsStarter(String key);
+
 	public List<CommerceRegionsStarter> getCommerceRegionsStarters();
 
 }

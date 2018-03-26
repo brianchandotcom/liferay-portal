@@ -14,6 +14,7 @@
 
 package com.liferay.media.object.apio.internal.architect;
 
+import com.liferay.apio.architect.file.BinaryFile;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -92,7 +93,10 @@ public class MediaObjectNestedCollectionResource
 			"folder", "mediaObjects", DLFolderIdentifier.class,
 			DLFileEntryModel::getFolderId
 		).addBinary(
-			"contentStream", this::_getInputStream
+			"contentStream",
+			dlFileEntry -> new BinaryFile(
+				_getInputStream(dlFileEntry), dlFileEntry.getSize(),
+				dlFileEntry.getMimeType())
 		).addDate(
 			"dateCreated", DLFileEntry::getCreateDate
 		).addDate(

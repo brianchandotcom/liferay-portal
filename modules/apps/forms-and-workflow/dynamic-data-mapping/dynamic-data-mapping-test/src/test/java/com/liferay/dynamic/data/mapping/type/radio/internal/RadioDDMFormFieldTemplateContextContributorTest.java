@@ -189,6 +189,24 @@ public class RadioDDMFormFieldTemplateContextContributorTest
 		Assert.assertEquals("value", parameters.get("value"));
 	}
 
+	@Test
+	public void testGetValueInJSONArrayFormat() {
+		DDMFormField ddmFormField = createDDMFormField();
+
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			new DDMFormFieldRenderingContext();
+
+		ddmFormFieldRenderingContext.setLocale(LocaleUtil.US);
+
+		ddmFormFieldRenderingContext.setValue("[\"value\"]");
+
+		Map<String, Object> parameters =
+			_radioDDMFormFieldTemplateContextContributor.getParameters(
+				ddmFormField, ddmFormFieldRenderingContext);
+
+		Assert.assertEquals("value", parameters.get("value"));
+	}
+
 	protected DDMFormField createDDMFormField() {
 		DDMFormField ddmFormField = DDMFormTestUtil.createTextDDMFormField(
 			"name", false, false, false);

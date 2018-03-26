@@ -67,7 +67,11 @@ public class RadioDDMFormFieldTemplateContextContributor
 			parameters.put("predefinedValue", predefinedValue);
 		}
 
-		parameters.put("value", ddmFormFieldRenderingContext.getValue());
+		parameters.put(
+			"value",
+			getValue(
+				GetterUtil.getString(
+					ddmFormFieldRenderingContext.getValue(), "[]")));
 
 		return parameters;
 	}
@@ -128,9 +132,12 @@ public class RadioDDMFormFieldTemplateContextContributor
 			predefinedValue.getString(ddmFormFieldRenderingContext.getLocale()),
 			"[]");
 
+		return getValue(predefinedValueString);
+	}
+
+	protected String getValue(String valueString) {
 		try {
-			JSONArray jsonArray = jsonFactory.createJSONArray(
-				predefinedValueString);
+			JSONArray jsonArray = jsonFactory.createJSONArray(valueString);
 
 			return GetterUtil.getString(jsonArray.get(0));
 		}
@@ -139,7 +146,7 @@ public class RadioDDMFormFieldTemplateContextContributor
 				_log.debug(jsone, jsone);
 			}
 
-			return predefinedValueString;
+			return valueString;
 		}
 	}
 

@@ -118,6 +118,11 @@ boolean hasManageCommerceTaxMethodsPermission = CommercePermission.contains(perm
 				property="zip"
 			/>
 
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				property="rate"
+			/>
+
 			<liferay-ui:search-container-column-date
 				name="create-date"
 				property="createDate"

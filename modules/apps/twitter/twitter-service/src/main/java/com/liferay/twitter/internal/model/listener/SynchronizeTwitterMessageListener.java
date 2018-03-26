@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Fellwock
  */
 @Component(
-	configurationPid = "com.liferay.twitter.configuration.TwitterConfiguration",
+	configurationPid = "com.liferay.twitter.internal.configuration.TwitterGroupServiceConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	service = SynchronizeTwitterMessageListener.class
 )

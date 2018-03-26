@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Fellwock
  */
 @Component(
-	configurationPid = "com.liferay.twitter.configuration.TwitterConfiguration",
+	configurationPid = "com.liferay.wsrp.configuration.WSRPGroupServiceConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {"destination.name=" + DestinationNames.WSRP},
 	service = MessageListener.class

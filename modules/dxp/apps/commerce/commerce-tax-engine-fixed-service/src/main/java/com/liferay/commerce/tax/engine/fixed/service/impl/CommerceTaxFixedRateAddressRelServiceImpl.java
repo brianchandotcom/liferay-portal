@@ -32,7 +32,7 @@ public class CommerceTaxFixedRateAddressRelServiceImpl
 
 	@Override
 	public CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
-			long commerceTaxMethodId, long commerceTaxFixedRateId,
+			long commerceTaxMethodId, long commerceTaxCategoryId,
 			long commerceCountryId, long commerceRegionId, String zip,
 			double rate, ServiceContext serviceContext)
 		throws PortalException {
@@ -43,7 +43,7 @@ public class CommerceTaxFixedRateAddressRelServiceImpl
 
 		return commerceTaxFixedRateAddressRelLocalService.
 			addCommerceTaxFixedRateAddressRel(
-				commerceTaxMethodId, commerceTaxFixedRateId, commerceCountryId,
+				commerceTaxMethodId, commerceTaxCategoryId, commerceCountryId,
 				commerceRegionId, zip, rate, serviceContext);
 	}
 
@@ -88,31 +88,31 @@ public class CommerceTaxFixedRateAddressRelServiceImpl
 	@Override
 	public List<CommerceTaxFixedRateAddressRel>
 		getCommerceTaxFixedRateAddressRels(
-			long commerceTaxFixedRateId, int start, int end) {
+			long commerceTaxCategoryId, int start, int end) {
 
 		return commerceTaxFixedRateAddressRelLocalService.
 			getCommerceTaxFixedRateAddressRels(
-				commerceTaxFixedRateId, start, end);
+				commerceTaxCategoryId, start, end);
 	}
 
 	@Override
 	public List<CommerceTaxFixedRateAddressRel>
 		getCommerceTaxFixedRateAddressRels(
-			long commerceTaxFixedRateId, int start, int end,
+			long commerceTaxCategoryId, int start, int end,
 			OrderByComparator<CommerceTaxFixedRateAddressRel>
 				orderByComparator) {
 
 		return commerceTaxFixedRateAddressRelLocalService.
 			getCommerceTaxFixedRateAddressRels(
-				commerceTaxFixedRateId, start, end, orderByComparator);
+				commerceTaxCategoryId, start, end, orderByComparator);
 	}
 
 	@Override
 	public int getCommerceTaxFixedRateAddressRelsCount(
-		long commerceTaxFixedRateId) {
+		long commerceTaxCategoryId) {
 
 		return commerceTaxFixedRateAddressRelLocalService.
-			getCommerceTaxFixedRateAddressRelsCount(commerceTaxFixedRateId);
+			getCommerceTaxFixedRateAddressRelsCount(commerceTaxCategoryId);
 	}
 
 	@Override

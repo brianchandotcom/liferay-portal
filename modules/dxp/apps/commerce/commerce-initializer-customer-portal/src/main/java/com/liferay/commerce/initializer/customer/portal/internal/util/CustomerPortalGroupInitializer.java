@@ -56,21 +56,25 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.GroupInitializer;
-import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
-import javax.portlet.PortletPreferences;
-import javax.servlet.ServletContext;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.ResourceBundle;
+
+import javax.portlet.PortletPreferences;
+
+import javax.servlet.ServletContext;
+
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -195,6 +199,16 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 			serviceContext);
 	}
 
+	protected void createCommerceRoles(JSONArray jsonArray) throws Exception {
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			String name = jsonObject.getString("name");
+
+			_createConfiguration(name);
+		}
+	}
+
 	protected void createLayouts(ServiceContext serviceContext)
 		throws Exception {
 
@@ -208,21 +222,6 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(layoutsJSON);
 
 		_cpFileImporter.createLayouts(jsonArray, false, serviceContext);
-	}
-
-	protected DDMTemplate getDDMTemplate(
-			String portletClassName, String filePath, String name,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		long classNameId = _portal.getClassNameId(portletClassName);
-		long resourceClassNameId = _portal.getClassNameId(
-			PortletDisplayTemplate.class);
-
-		return _cpFileImporter.getDDMTemplate(
-			_getFile(filePath), classNameId, 0L, resourceClassNameId, name,
-			DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
-			TemplateConstants.LANG_TYPE_FTL, serviceContext);
 	}
 
 	protected void createRoles(ServiceContext serviceContext) throws Exception {
@@ -240,14 +239,19 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 		createCommerceRoles(jsonArray);
 	}
 
-	protected void createCommerceRoles(JSONArray jsonArray) throws Exception {
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
+	protected DDMTemplate getDDMTemplate(
+			String portletClassName, String filePath, String name,
+			ServiceContext serviceContext)
+		throws Exception {
 
-			String name = jsonObject.getString("name");
+		long classNameId = _portal.getClassNameId(portletClassName);
+		long resourceClassNameId = _portal.getClassNameId(
+			PortletDisplayTemplate.class);
 
-			_createConfiguration(name);
-		}
+		return _cpFileImporter.getDDMTemplate(
+			_getFile(filePath), classNameId, 0L, resourceClassNameId, name,
+			DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
+			TemplateConstants.LANG_TYPE_FTL, serviceContext);
 	}
 
 	protected JSONArray getThemePortletSettingJSONArray() throws Exception {
@@ -434,6 +438,35 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 		}
 	}
 
+	private void _createConfiguration(String name) throws Exception {
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			_getConfigurationFilter(_ORGANIZATION_TYPE_CONFIGURATION_PID));
+
+		for (Configuration configuration : configurations) {
+			Dictionary<String, Object> props = configuration.getProperties();
+
+			String roleName = (String)props.get("roleName");
+
+			if (name.equals(roleName)) {
+				return;
+			}
+		}
+
+		Configuration configuration =
+			_configurationAdmin.createFactoryConfiguration(
+				_COMMERCE_ROLE_CONFIGURATION_PID, StringPool.QUESTION);
+
+		Dictionary<String, Object> props = configuration.getProperties();
+
+		if (props == null) {
+			props = new Hashtable<>();
+		}
+
+		props.put("roleName", name);
+
+		configuration.update(props);
+	}
+
 	private String _getConfigurationFilter(String configurationPid) {
 		StringBundler sb = new StringBundler(5);
 
@@ -488,42 +521,9 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 		}
 	}
 
-	private void _createConfiguration(String name) throws Exception {
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			_getConfigurationFilter(_ORGANIZATION_TYPE_CONFIGURATION_PID));
-
-		for (Configuration configuration : configurations) {
-			Dictionary<String, Object> props = configuration.getProperties();
-
-			String roleName = (String)props.get("roleName");
-
-			if (name.equals(roleName)) {
-				return;
-			}
-		}
-
-		Configuration configuration =
-			_configurationAdmin.createFactoryConfiguration(
-				_COMMERCE_ROLE_CONFIGURATION_PID, StringPool.QUESTION);
-
-		Dictionary<String, Object> props = configuration.getProperties();
-
-		if (props == null) {
-			props = new Hashtable<>();
-		}
-
-		props.put("roleName", name);
-
-		configuration.update(props);
-	}
-
 	private static final String _COMMERCE_ROLE_CONFIGURATION_PID =
 		"com.liferay.commerce.user.web.internal.configuration." +
 			"CommerceRoleGroupServiceConfiguration";
-
-	private static final String _ORGANIZATION_TYPE_CONFIGURATION_PID =
-		"com.liferay.organizations.service.internal.configuration." +
-			"OrganizationTypeConfiguration";
 
 	private static final String _CP_CONTENT_PORTLET_NAME =
 		"com_liferay_commerce_product_content_web_internal_portlet_" +
@@ -543,6 +543,10 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 	private static final String _DEPENDENCY_PATH =
 		"com/liferay/commerce/initializer/customer/portal/internal" +
 			"/dependencies/";
+
+	private static final String _ORGANIZATION_TYPE_CONFIGURATION_PID =
+		"com.liferay.organizations.service.internal.configuration." +
+			"OrganizationTypeConfiguration";
 
 	private static final String _SIMPLE_CP_TYPE_CLASS_NAME =
 		"com.liferay.commerce.product.type.simple.internal.SimpleCPType";

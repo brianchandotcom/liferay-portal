@@ -64,14 +64,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.ThemeSettingImpl;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
-import javax.portlet.PortletPreferences;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -81,6 +79,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.portlet.PortletPreferences;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -145,71 +148,6 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 			updateActions(role, actionsJSONObject, scope, serviceContext);
 		}
-	}
-
-	protected void updateActions(
-			Role role, JSONObject jsonObject, int scope,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		String resource = jsonObject.getString("resource");
-		JSONArray actionIdsJSONArray = jsonObject.getJSONArray("actionIds");
-
-		for (int i = 0; i < actionIdsJSONArray.length(); i++) {
-			String actionId = actionIdsJSONArray.getString(i);
-
-			updateAction(role, resource, actionId, scope, serviceContext);
-		}
-	}
-
-	protected void updateAction(
-			Role role, String resource, String actionId, int scope,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		if (scope == ResourceConstants.SCOPE_COMPANY) {
-			_resourcePermissionLocalService.addResourcePermission(
-				serviceContext.getCompanyId(), resource, scope,
-				String.valueOf(role.getCompanyId()), role.getRoleId(),
-				actionId);
-		}
-		else if (scope == ResourceConstants.SCOPE_GROUP_TEMPLATE) {
-			_resourcePermissionLocalService.addResourcePermission(
-				serviceContext.getCompanyId(), resource,
-				ResourceConstants.SCOPE_GROUP_TEMPLATE,
-				String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
-				role.getRoleId(), actionId);
-		}
-		else if (scope == ResourceConstants.SCOPE_GROUP) {
-			_resourcePermissionLocalService.removeResourcePermissions(
-				serviceContext.getCompanyId(), resource,
-				ResourceConstants.SCOPE_GROUP, role.getRoleId(), actionId);
-
-			_resourcePermissionLocalService.addResourcePermission(
-				serviceContext.getCompanyId(), resource,
-				ResourceConstants.SCOPE_GROUP,
-				String.valueOf(serviceContext.getScopeGroupId()),
-				role.getRoleId(), actionId);
-		}
-	}
-
-	protected Role getRole(String name, int type, ServiceContext serviceContext)
-		throws PortalException {
-
-		Map<Locale, String> titleMap = new HashMap<>();
-
-		titleMap.put(serviceContext.getLocale(), name);
-
-		Role role = _roleLocalService.fetchRole(
-			serviceContext.getCompanyId(), name);
-
-		if (role == null) {
-			role = _roleLocalService.addRole(
-				serviceContext.getUserId(), null, 0, name, titleMap, null, type,
-				null, serviceContext);
-		}
-
-		return role;
 	}
 
 	@Override
@@ -599,6 +537,25 @@ public class CPFileImporterImpl implements CPFileImporter {
 		return content;
 	}
 
+	protected Role getRole(String name, int type, ServiceContext serviceContext)
+		throws PortalException {
+
+		Map<Locale, String> titleMap = new HashMap<>();
+
+		titleMap.put(serviceContext.getLocale(), name);
+
+		Role role = _roleLocalService.fetchRole(
+			serviceContext.getCompanyId(), name);
+
+		if (role == null) {
+			role = _roleLocalService.addRole(
+				serviceContext.getUserId(), null, 0, name, titleMap, null, type,
+				null, serviceContext);
+		}
+
+		return role;
+	}
+
 	protected void setPortletPreferences(
 			JSONObject jsonObject, Layout layout, String portletId,
 			ServiceContext serviceContext)
@@ -660,6 +617,52 @@ public class CPFileImporterImpl implements CPFileImporter {
 				typeSettingProperties.setProperty(
 					ThemeSettingImpl.namespaceProperty(device, key), value);
 			}
+		}
+	}
+
+	protected void updateAction(
+			Role role, String resource, String actionId, int scope,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		if (scope == ResourceConstants.SCOPE_COMPANY) {
+			_resourcePermissionLocalService.addResourcePermission(
+				serviceContext.getCompanyId(), resource, scope,
+				String.valueOf(role.getCompanyId()), role.getRoleId(),
+				actionId);
+		}
+		else if (scope == ResourceConstants.SCOPE_GROUP_TEMPLATE) {
+			_resourcePermissionLocalService.addResourcePermission(
+				serviceContext.getCompanyId(), resource,
+				ResourceConstants.SCOPE_GROUP_TEMPLATE,
+				String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+				role.getRoleId(), actionId);
+		}
+		else if (scope == ResourceConstants.SCOPE_GROUP) {
+			_resourcePermissionLocalService.removeResourcePermissions(
+				serviceContext.getCompanyId(), resource,
+				ResourceConstants.SCOPE_GROUP, role.getRoleId(), actionId);
+
+			_resourcePermissionLocalService.addResourcePermission(
+				serviceContext.getCompanyId(), resource,
+				ResourceConstants.SCOPE_GROUP,
+				String.valueOf(serviceContext.getScopeGroupId()),
+				role.getRoleId(), actionId);
+		}
+	}
+
+	protected void updateActions(
+			Role role, JSONObject jsonObject, int scope,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		String resource = jsonObject.getString("resource");
+		JSONArray actionIdsJSONArray = jsonObject.getJSONArray("actionIds");
+
+		for (int i = 0; i < actionIdsJSONArray.length(); i++) {
+			String actionId = actionIdsJSONArray.getString(i);
+
+			updateAction(role, resource, actionId, scope, serviceContext);
 		}
 	}
 

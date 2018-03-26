@@ -351,6 +351,20 @@ public class CommerceOrderListDisplayContext {
 			false);
 	}
 
+	public String getCommerceOrderStatus(CommerceOrder commerceOrder) {
+		return LanguageUtil.get(
+			_commerceOrderRequestHelper.getRequest(),
+			CommerceOrderConstants.getOrderStatusLabel(
+				commerceOrder.getOrderStatus()));
+	}
+
+	public String getCommerceOrderPaymentStatus(CommerceOrder commerceOrder) {
+		return LanguageUtil.get(
+			_commerceOrderRequestHelper.getRequest(),
+			CommerceOrderConstants.getPaymentStatusLabel(
+				commerceOrder.getPaymentStatus()));
+	}
+
 	private void _addFacetOrderStatus(
 		SearchContext searchContext, String tabs1, int orderStatus,
 		boolean staticFacet) {
@@ -366,8 +380,10 @@ public class CommerceOrderListDisplayContext {
 		int[] orderStatuses = null;
 
 		if (tabs1.equals("open")) {
-			orderStatuses =
-				new int[] {CommerceOrderConstants.ORDER_STATUS_OPEN};
+			orderStatuses = new int[] {
+				CommerceOrderConstants.ORDER_STATUS_IN_PROGRESS,
+				CommerceOrderConstants.ORDER_STATUS_OPEN
+			};
 		}
 		else if (tabs1.equals("pending")) {
 			orderStatuses =
@@ -377,6 +393,7 @@ public class CommerceOrderListDisplayContext {
 			negated = true;
 
 			orderStatuses = new int[] {
+				CommerceOrderConstants.ORDER_STATUS_IN_PROGRESS,
 				CommerceOrderConstants.ORDER_STATUS_OPEN,
 				CommerceOrderConstants.ORDER_STATUS_TO_TRANSMIT
 			};

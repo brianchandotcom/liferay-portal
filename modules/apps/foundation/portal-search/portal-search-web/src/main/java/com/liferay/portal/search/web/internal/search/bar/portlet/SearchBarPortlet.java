@@ -212,6 +212,9 @@ public class SearchBarPortlet
 
 		parameterValueOptional.ifPresent(
 			portletSharedSearchSettings::setKeywords);
+
+		portletSharedSearchSettings.setKeywordsParameterName(
+			searchBarPortletPreferences.getKeywordsParameterName());
 	}
 
 	@Reference

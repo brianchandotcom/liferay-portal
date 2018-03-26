@@ -224,7 +224,7 @@ public class CommerceOrderLocalServiceImpl
 			commerceOrderLocalService.approveCommerceOrder(
 				serviceContext.getUserId(), commerceOrderId);
 
-		validate(commerceOrder);
+		validateCheckout(commerceOrder);
 
 		serviceContext.setScopeGroupId(commerceOrder.getGroupId());
 
@@ -1093,8 +1093,12 @@ public class CommerceOrderLocalServiceImpl
 		return commerceOrderPersistence.update(commerceOrder);
 	}
 
-	protected void validate(CommerceOrder commerceOrder)
+	protected void validateCheckout(CommerceOrder commerceOrder)
 		throws PortalException {
+
+		if (commerceOrder.isDraft() || !commerceOrder.isOpen()) {
+			throw new CommerceOrderStatusException();
+		}
 
 		CommercePaymentMethod commercePaymentMethod = null;
 

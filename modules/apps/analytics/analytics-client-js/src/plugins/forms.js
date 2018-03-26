@@ -125,20 +125,31 @@ function trackFormSubmitted(analytics) {
  * @param {object} The Analytics client instance
  */
 function trackFormViewed(analytics) {
-	window.addEventListener('load', () => {
-		Array.prototype.slice.call(document.querySelectorAll('form'))
-		.filter(form => isTrackableForm(form))
-		.forEach((form) => {
-			analytics.send(
-				'formViewed',
-				'forms',
-				{
-					title: form.dataset.analyticsTitle,
-					...getFormPayload(form)
+	const sendFormViewed = () => {
+		Array.prototype.slice
+			.call(document.querySelectorAll('form'))
+			.filter(form => isTrackableForm(form))
+			.forEach(form => {
+				let payload = getFormPayload(form);
+				const title = form.dataset.analyticsTitle;
+
+				if (title) {
+					payload = {title, ...payload};
 				}
-			);
-		});
-	});
+
+				analytics.send('formViewed', 'forms', payload);
+			});
+	};
+
+	if (
+		document.readyState === 'interactive' ||
+		document.readyState === 'complete' ||
+		document.readyState === 'loaded'
+	) {
+		sendFormViewed();
+	} else {
+		document.addEventListener('DOMContentLoaded', () => sendFormViewed());
+	}
 }
 
 /**

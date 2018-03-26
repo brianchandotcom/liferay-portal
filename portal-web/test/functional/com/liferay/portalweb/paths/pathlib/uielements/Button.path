@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>ADD_CATEGORY</td>
-	<td>//span[contains(.,'Add Category')]</td>
+	<td>//a[contains(.,'Add Category')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -500,7 +500,7 @@
 </tr>
 <tr>
 	<td>NEW_THREAD</td>
-	<td>//span[contains(.,'New Thread')]</td>
+	<td>//a[contains(.,'New Thread')]</td>
 	<td></td>
 </tr>
 <tr>

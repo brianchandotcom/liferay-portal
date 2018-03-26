@@ -227,9 +227,6 @@ int rssDelta = mbGroupServiceSettings.getRSSDelta();
 String rssDisplayStyle = mbGroupServiceSettings.getRSSDisplayStyle();
 String rssFeedType = mbGroupServiceSettings.getRSSFeedType();
 
-boolean childrenMessagesTaggable = true;
-boolean showSearch = true;
-
 MBWebComponentProvider mbWebComponentProvider = MBWebComponentProvider.getMBWebComponentProvider();
 
 MBDisplayContextProvider mbDisplayContextProvider = mbWebComponentProvider.getMBDisplayContextProvider();

@@ -545,7 +545,11 @@
 
 		<execute function="Click" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
 
-		<execute function="AssertClick" locator1="MessageBoardsThread#THREAD_ACTIONS_LOCK" value1="Lock" />
+		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Lock">
+			<var name="key_menuItem" value="Lock" />
+		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
@@ -1017,7 +1021,9 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsThread#MESSAGE_ANSWER_1" value1="Answer" />
 
-		<execute function="Click" locator1="MessageBoardsThread#THREAD_CONTROLS_BACK" />
+		<execute function="Click" locator1="Breadcrumb#BREADCRUMB_ENTRY_LINK">
+			<var name="key_breadcrumbName" value="Home" />
+		</execute>
 	</command>
 
 	<command name="viewAsWorkflowAsset">

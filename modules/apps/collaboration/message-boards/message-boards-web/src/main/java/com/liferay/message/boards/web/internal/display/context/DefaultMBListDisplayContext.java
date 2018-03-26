@@ -145,6 +145,10 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 			SearchContainer searchContainer)
 		throws PortalException {
 
+		if (isShowSearch()) {
+			return;
+		}
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

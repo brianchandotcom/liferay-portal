@@ -40,10 +40,21 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 
 <div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
 	<c:if test="<%= !portletTitleBasedNavigation %>">
-		<liferay-util:include page="/message_boards/top_links.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/message_boards/nav.jsp" servletContext="<%= application %>" />
 	</c:if>
 
-	<liferay-util:include page="/message_boards/view_message_content.jsp" servletContext="<%= application %>" />
+	<div <%= !portletTitleBasedNavigation ? "class=\"main-content-body\"" : StringPool.BLANK %>>
+		<c:if test="<%= !portletTitleBasedNavigation %>">
+			<liferay-ui:breadcrumb
+				showCurrentGroup="<%= false %>"
+				showGuestGroup="<%= false %>"
+				showLayout="<%= false %>"
+				showParentGroups="<%= false %>"
+			/>
+		</c:if>
+
+		<liferay-util:include page="/message_boards/view_message_content.jsp" servletContext="<%= application %>" />
+	</div>
 </div>
 
 <aui:script>

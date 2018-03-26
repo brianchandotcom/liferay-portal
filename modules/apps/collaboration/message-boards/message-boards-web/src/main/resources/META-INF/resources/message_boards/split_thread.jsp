@@ -57,10 +57,7 @@ if (portletTitleBasedNavigation) {
 		<aui:input name="mbCategoryId" type="hidden" value="<%= categoryId %>" />
 
 		<c:if test="<%= !portletTitleBasedNavigation %>">
-			<liferay-ui:header
-				backURL="<%= redirect %>"
-				title="<%= headerTitle %>"
-			/>
+			<h3><%= headerTitle %></h3>
 		</c:if>
 
 		<liferay-ui:error exception="<%= MessageBodyException.class %>" message="please-enter-a-valid-message" />

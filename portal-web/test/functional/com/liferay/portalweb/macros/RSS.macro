@@ -1,6 +1,10 @@
 <definition>
 	<command name="gotoFeed">
-		<execute function="AssertClick" locator1="Link#RSS" value1="RSS" />
+		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="RSS">
+			<var name="key_menuItem" value="RSS" />
+		</execute>
 
 		<execute function="Pause" locator1="3000" />
 

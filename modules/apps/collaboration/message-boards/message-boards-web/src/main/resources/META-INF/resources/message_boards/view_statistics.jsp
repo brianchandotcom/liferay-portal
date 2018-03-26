@@ -29,9 +29,11 @@ portletURL.setParameter("mvcRenderCommandName", "/message_boards/view_statistics
 portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 %>
 
-<liferay-util:include page="/message_boards/top_links.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/message_boards/nav.jsp" servletContext="<%= application %>" />
 
 <div class="main-content-body">
+	<h3><liferay-ui:message key="statistics" /></h3>
+
 	<liferay-ui:panel-container
 		cssClass="statistics-panel"
 		extended="<%= false %>"

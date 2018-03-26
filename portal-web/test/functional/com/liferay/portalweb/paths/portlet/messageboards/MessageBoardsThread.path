@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>TITLE_HEADER</td>
-	<td>//h3[@class='header-title']</td>
+	<td>//h3</td>
 	<td></td>
 </tr>
 <tr>
@@ -76,11 +76,6 @@
 </tr>
 <!--THREAD_CONTROLS-->
 <tr>
-	<td>THREAD_CONTROLS_BACK</td>
-	<td>//a[contains(@id,'TabsBack')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>THREAD_CONTROLS_MOVE_TO_THE_RECYCLE_BIN</td>
 	<td>//div[@class='thread-actions']/ul/li/a[contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>
@@ -104,11 +99,6 @@
 <tr>
 	<td>THREAD_ACTIONS_UNSUBSCRIBE</td>
 	<td>//div[@class='thread-actions']/ul/li/a/span[contains(.,'Unsubscribe')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>THREAD_ACTIONS_LOCK</td>
-	<td>//div[@class='thread-actions']/ul/li/a/span[contains(.,'Lock')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1993,7 +1993,6 @@
 		<var name="key_categoryName" value="MB Category Name" />
 		<var name="key_threadSubject" value="MB Thread Message Subject" />
 
-		<execute function="AssertTextEquals" locator1="MessageBoards#SUBSCRIBE_LINK" value1="Subscribe" />
 		<execute function="Click" locator1="MessageBoards#CATEGORY_LIST_ACTIONS" />
 		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Subscribe">
 			<var name="key_menuItem" value="Subscribe" />
@@ -2034,13 +2033,14 @@
 			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="MessageBoards#SUBSCRIBE_LINK" />
 		<execute function="Click" locator1="MessageBoards#CATEGORY_LIST_ACTIONS" />
+
 		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
 			<var name="key_menuItem" value="Subscribe" />
 		</execute>
 
 		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" value1="MB Category Name" />
+
 		<execute function="AssertElementNotPresent" locator1="Link#SUBSCRIBE" />
 
 		<execute macro="Navigator#gotoPage">

@@ -139,11 +139,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RSS</td>
-	<td>//a/span[contains(@class,'taglib-text') and contains(.,'RSS')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PERMISSIONS</td>
 	<td>//a/span[contains(@class,'taglib-text') and contains(.,'Permissions')]</td>
 	<td></td>

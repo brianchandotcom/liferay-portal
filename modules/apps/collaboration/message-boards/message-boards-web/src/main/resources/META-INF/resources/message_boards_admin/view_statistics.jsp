@@ -19,7 +19,7 @@
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcRenderCommandName", "/message_boards/view_banned_users");
+portletURL.setParameter("mvcRenderCommandName", "/message_boards/view_statistics");
 %>
 
 <liferay-util:include page="/message_boards_admin/nav.jsp" servletContext="<%= application %>">

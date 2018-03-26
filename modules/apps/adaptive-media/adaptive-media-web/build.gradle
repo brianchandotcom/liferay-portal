@@ -19,6 +19,7 @@ dependencies {
 	provided project(":apps:foundation:portal-background-task:portal-background-task-api")
 	provided project(":apps:foundation:portal:portal-upgrade-api")
 	provided project(":apps:static:portal-configuration:portal-configuration-metatype-api")
+	provided project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 	provided project(":apps:web-experience:application-list:application-list-api")
 	provided project(":core:osgi-service-tracker-collections")
 	provided project(":core:petra:petra-lang")

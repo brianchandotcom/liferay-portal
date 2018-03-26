@@ -53,7 +53,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 <%@ include file="/breadcrumb.jspf" %>
 
 <liferay-frontend:screen-navigation
+	containerCssClass="col-md-10"
 	context="<%= commerceCountry %>"
 	key="<%= CommerceCountryScreenNavigationConstants.SCREEN_NAVIGATION_KEY_COMMERCE_COUNTRY_GENERAL %>"
 	portletURL="<%= currentURLObj %>"
+	navCssClass="col-md-2"
 />

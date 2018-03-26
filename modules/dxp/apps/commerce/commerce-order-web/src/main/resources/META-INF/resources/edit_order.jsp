@@ -38,9 +38,11 @@ renderResponse.setTitle(title);
 
 <div id="<portlet:namespace />editOrderContainer">
 	<liferay-frontend:screen-navigation
+		containerCssClass="col-md-10"
 		key="<%= CommerceOrderScreenNavigationConstants.SCREEN_NAVIGATION_KEY_COMMERCE_ORDER_GENERAL %>"
 		modelBean="<%= commerceOrder %>"
 		portletURL="<%= currentURLObj %>"
+		navCssClass="col-md-2"
 	/>
 </div>
 

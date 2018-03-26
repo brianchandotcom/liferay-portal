@@ -17,7 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <liferay-frontend:screen-navigation
+	containerCssClass="col-md-10"
 	key="<%= CommerceTaxScreenNavigationConstants.SCREEN_NAVIGATION_KEY_COMMERCE_TAXES %>"
 	modelBean="<%= null %>"
+	navCssClass="col-md-2"
 	portletURL="<%= currentURLObj %>"
 />

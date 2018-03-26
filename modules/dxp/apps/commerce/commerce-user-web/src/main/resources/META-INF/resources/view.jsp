@@ -32,7 +32,9 @@ User curUser = commerceUserDetailDisplayContext.getSelectedUser();
 <h1><%= HtmlUtil.escape(LanguageUtil.get(request, "manage-account")) %></h1>
 
 <liferay-frontend:screen-navigation
+	containerCssClass="col-md-10"
 	context="<%= curUser %>"
 	key="<%= CommerceUserScreenNavigationConstants.SCREEN_NAVIGATION_KEY %>"
+	navCssClass="col-md-2"
 	portletURL="<%= currentURLObj %>"
 />

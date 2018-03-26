@@ -54,9 +54,9 @@ request.setAttribute("view.jsp-showSearch", false);
 <%@ include file="/definition_breadcrumb.jspf" %>
 
 <liferay-frontend:screen-navigation
+	containerCssClass="col-md-10"
 	key="<%= CPDefinitionScreenNavigationConstants.SCREEN_NAVIGATION_KEY_CP_DEFINITION_GENERAL %>"
 	modelBean="<%= cpDefinition %>"
 	portletURL="<%= currentURLObj %>"
 	navCssClass="col-md-2"
-	containerCssClass="col-md-10"
 />

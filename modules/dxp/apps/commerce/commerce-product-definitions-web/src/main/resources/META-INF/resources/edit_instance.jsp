@@ -47,7 +47,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 <%@ include file="/breadcrumb.jspf" %>
 
 <liferay-frontend:screen-navigation
+	containerCssClass="col-md-10"
 	key="<%= CPInstanceScreenNavigationConstants.SCREEN_NAVIGATION_KEY_CP_INSTANCE_GENERAL %>"
 	modelBean="<%= cpInstance %>"
 	portletURL="<%= currentURLObj %>"
+	navCssClass="col-md-2"
 />

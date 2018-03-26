@@ -47,7 +47,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "price-lists"));
 <%@ include file="/breadcrumb.jspf" %>
 
 <liferay-frontend:screen-navigation
+	containerCssClass="col-md-10"
 	key="<%= CommercePriceListScreenNavigationConstants.SCREEN_NAVIGATION_KEY_COMMERCE_PRICE_LIST_GENERAL %>"
 	modelBean="<%= commercePriceList %>"
 	portletURL="<%= currentURLObj %>"
+	navCssClass="col-md-2"
 />

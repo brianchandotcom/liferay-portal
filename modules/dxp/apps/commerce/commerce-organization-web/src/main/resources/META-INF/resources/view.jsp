@@ -48,9 +48,11 @@ commerceOrganizationDetailDisplayContext.setBreadcrumbs(organization);
 	</c:when>
 	<c:otherwise>
 		<liferay-frontend:screen-navigation
+			containerCssClass="col-md-10"
 			context="<%= commerceOrganizationDetailDisplayContext.getCurrentOrganization() %>"
 			key="<%= CommerceOrganizationScreenNavigationConstants.SCREEN_NAVIGATION_KEY %>"
 			portletURL="<%= currentURLObj %>"
+			navCssClass="col-md-2"
 		/>
 	</c:otherwise>
 </c:choose>

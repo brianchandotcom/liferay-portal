@@ -217,7 +217,7 @@ don't match, the `node_modules` directory is deleted before running
 ### Fixed
 - [LPS-73472]: Allow single `"bin"` values in the `package.json` files.
 
-## 4.3.1 - 2018-03-21
+## 4.3.1 - 2018-03-22
 
 ### Fixed
 - [LPS-78741]: If the `nodeModulesDigestFile` matches the `node_modules` directory's

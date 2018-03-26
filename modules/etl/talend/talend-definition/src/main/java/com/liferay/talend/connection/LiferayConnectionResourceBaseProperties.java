@@ -18,6 +18,9 @@ import com.liferay.talend.resource.LiferayResourceProperties;
 
 import org.apache.avro.Schema;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.talend.components.api.component.Connector;
 import org.talend.components.api.component.PropertyPathConnector;
 import org.talend.components.common.FixedConnectorsComponentProperties;
@@ -33,6 +36,50 @@ public abstract class LiferayConnectionResourceBaseProperties
 
 	public LiferayConnectionResourceBaseProperties(String name) {
 		super(name);
+	}
+
+	/**
+	 * This method returns the connection properties from the referenced
+	 * connection component if it was specified by the user otherwise the actual
+	 * component's connection properties
+	 *
+	 * @return LiferayConnectionProperties
+	 */
+	public LiferayConnectionProperties getEffectiveConnectionProperties() {
+		LiferayConnectionProperties liferayConnectionProperties =
+			getLiferayConnectionProperties();
+
+		if (liferayConnectionProperties == null) {
+			_log.error("LiferayConnectionProperties is null");
+		}
+
+		LiferayConnectionProperties referencedLiferayConnectionProperties =
+			liferayConnectionProperties.getReferencedConnectionProperties();
+
+		if (referencedLiferayConnectionProperties != null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Using a reference connection properties.");
+				_log.debug(
+					"User ID: " +
+						referencedLiferayConnectionProperties.userId.
+							getValue());
+				_log.debug(
+					"Endpoint: " +
+						referencedLiferayConnectionProperties.endpoint.
+							getValue());
+			}
+
+			return referencedLiferayConnectionProperties;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"User ID: " + liferayConnectionProperties.userId.getValue());
+			_log.debug(
+				"Endpoint: " + liferayConnectionProperties.endpoint.getValue());
+		}
+
+		return liferayConnectionProperties;
 	}
 
 	@Override
@@ -87,6 +134,9 @@ public abstract class LiferayConnectionResourceBaseProperties
 		new PropertyPathConnector(Connector.MAIN_NAME, "resource.main");
 	protected transient Schema temporaryMainSchema =
 		SchemaProperties.EMPTY_SCHEMA;
+
+	private static final Logger _log = LoggerFactory.getLogger(
+		LiferayConnectionResourceBaseProperties.class);
 
 	private static final long serialVersionUID = 4534371813009904L;
 

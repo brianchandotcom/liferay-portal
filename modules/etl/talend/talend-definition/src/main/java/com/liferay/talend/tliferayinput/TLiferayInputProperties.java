@@ -114,7 +114,7 @@ public class TLiferayInputProperties
 
 			ValidationResult validationResult =
 				liferaySourceOrSinkRuntime.initialize(
-					null, _getEffectiveConnectionProperties());
+					null, getEffectiveConnectionProperties());
 
 			if (validationResult.getStatus() == Result.ERROR) {
 				return validationResult;
@@ -154,43 +154,6 @@ public class TLiferayInputProperties
 		}
 
 		return Collections.<PropertyPathConnector>emptySet();
-	}
-
-	private LiferayConnectionProperties _getEffectiveConnectionProperties() {
-		LiferayConnectionProperties liferayConnectionProperties =
-			getLiferayConnectionProperties();
-
-		if (liferayConnectionProperties == null) {
-			_log.error("LiferayConnectionProperties is null");
-		}
-
-		LiferayConnectionProperties referencedLiferayConnectionProperties =
-			liferayConnectionProperties.getReferencedConnectionProperties();
-
-		if (referencedLiferayConnectionProperties != null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Using a reference connection properties.");
-				_log.debug(
-					"User ID: " +
-						referencedLiferayConnectionProperties.userId.
-							getValue());
-				_log.debug(
-					"Endpoint: " +
-						referencedLiferayConnectionProperties.endpoint.
-							getValue());
-			}
-
-			return referencedLiferayConnectionProperties;
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"User ID: " + liferayConnectionProperties.userId.getValue());
-			_log.debug(
-				"Endpoint: " + liferayConnectionProperties.endpoint.getValue());
-		}
-
-		return liferayConnectionProperties;
 	}
 
 	private void _setHidden(

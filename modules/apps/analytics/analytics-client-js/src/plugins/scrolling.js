@@ -57,16 +57,23 @@ function processScrollPosition(analytics) {
  * @param {object} analytics The Analytics client
  */
 function scrolling(analytics) {
-	document.addEventListener(
-		'scroll',
-		debounce(processScrollPosition.bind(null, analytics), 1500)
+	const onScroll = debounce(
+		processScrollPosition.bind(null, analytics),
+		1500
 	);
+
+	document.addEventListener('scroll', onScroll);
 
 	// Reset levels on SPA-enabled environments
 
-	window.addEventListener('load', () =>
-		levelsReached.splice(0, levelsReached.length)
-	);
+	const onLoad = () => levelsReached.splice(0, levelsReached.length);
+
+	window.addEventListener('load', onLoad);
+
+	return () => {
+		document.removeEventListener('scroll', onScroll);
+		window.removeEventListener('load', onLoad);
+	};
 }
 
 export {scrolling};

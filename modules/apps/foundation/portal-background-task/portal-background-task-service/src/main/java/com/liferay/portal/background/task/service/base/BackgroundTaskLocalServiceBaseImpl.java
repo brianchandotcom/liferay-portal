@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
+import com.liferay.portal.background.task.service.persistence.BackgroundTaskFinder;
 import com.liferay.portal.background.task.service.persistence.BackgroundTaskPersistence;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -353,6 +354,25 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the background task finder.
+	 *
+	 * @return the background task finder
+	 */
+	public BackgroundTaskFinder getBackgroundTaskFinder() {
+		return backgroundTaskFinder;
+	}
+
+	/**
+	 * Sets the background task finder.
+	 *
+	 * @param backgroundTaskFinder the background task finder
+	 */
+	public void setBackgroundTaskFinder(
+		BackgroundTaskFinder backgroundTaskFinder) {
+		this.backgroundTaskFinder = backgroundTaskFinder;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -464,6 +484,8 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	protected BackgroundTaskLocalService backgroundTaskLocalService;
 	@BeanReference(type = BackgroundTaskPersistence.class)
 	protected BackgroundTaskPersistence backgroundTaskPersistence;
+	@BeanReference(type = BackgroundTaskFinder.class)
+	protected BackgroundTaskFinder backgroundTaskFinder;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)

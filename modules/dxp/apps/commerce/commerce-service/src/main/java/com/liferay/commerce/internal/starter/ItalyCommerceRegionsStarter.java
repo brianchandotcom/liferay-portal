@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.region.starter.key=italyRegionsStarter",
+	property = "commerce.region.starter.key=" + ItalyCommerceRegionsStarter.ITALY_NUMERIC_ISO_CODE,
 	service = CommerceRegionsStarter.class
 )
 public class ItalyCommerceRegionsStarter implements CommerceRegionsStarter {

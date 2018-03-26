@@ -343,12 +343,7 @@ public class WorkflowDefinitionLinkDisplayContext {
 				LanguageUtil.getLanguageId(
 					_workflowDefinitionLinkRequestHelper.getRequest())));
 
-		String workflowDefinitionVersion = LanguageUtil.format(
-			_workflowDefinitionLinkRequestHelper.getLocale(), "version-x",
-			workflowDefinition.getVersion(), false);
-
-		return StringBundler.concat(
-			workflowDefinitionName, " (", workflowDefinitionVersion, ")");
+		return workflowDefinitionName;
 	}
 
 	public List<WorkflowDefinition> getWorkflowDefinitions()

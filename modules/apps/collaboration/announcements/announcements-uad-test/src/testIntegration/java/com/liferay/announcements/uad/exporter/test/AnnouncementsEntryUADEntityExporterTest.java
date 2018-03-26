@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
-import com.liferay.user.associated.data.entity.UADEntity;
 import com.liferay.user.associated.data.exporter.UADEntityExporter;
 
 import java.io.ByteArrayInputStream;
@@ -70,12 +69,12 @@ public class AnnouncementsEntryUADEntityExporterTest
 		AnnouncementsEntry announcementsEntry = addAnnouncementsEntry(
 			_user.getUserId());
 
-		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
-			_user.getUserId());
+		List<AnnouncementsEntry> announcementsEntries =
+			_uadEntityAggregator.getEntities(_user.getUserId());
 
-		UADEntity uadEntity = uadEntities.get(0);
+		AnnouncementsEntry announcementsEntry1 = announcementsEntries.get(0);
 
-		byte[] bytes = _uadEntityExporter.export(uadEntity);
+		byte[] bytes = _uadEntityExporter.export(announcementsEntry1);
 
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
 			bytes);

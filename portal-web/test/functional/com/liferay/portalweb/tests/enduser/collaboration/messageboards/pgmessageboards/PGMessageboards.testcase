@@ -883,7 +883,9 @@
 
 		<execute macro="MessageboardsThread#downloadAttachmentPG" />
 
-		<execute function="Click" locator1="MessageBoardsThread#THREAD_CONTROLS_BACK" />
+		<execute function="Click" locator1="Breadcrumb#BREADCRUMB_ENTRY_LINK">
+			<var name="key_breadcrumbName" value="Home" />
+		</execute>
 
 		<execute macro="MessageboardsThread#replyPG">
 			<var name="threadReplyBody" value="MB Thread Reply Body" />

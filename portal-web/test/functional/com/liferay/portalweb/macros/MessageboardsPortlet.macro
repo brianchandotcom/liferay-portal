@@ -365,7 +365,6 @@
 	</command>
 
 	<command name="viewSearchResultPG">
-		<execute function="AssertVisible" locator1="MessageBoardsThread#THREAD_CONTROLS_BACK" />
 
 		<var name="key_threadSubject" value="${threadSubject}" />
 

@@ -1017,7 +1017,9 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsThread#MESSAGE_ANSWER_1" value1="Answer" />
 
-		<execute function="Click" locator1="MessageBoardsThread#THREAD_CONTROLS_BACK" />
+		<execute function="Click" locator1="Breadcrumb#BREADCRUMB_ENTRY_LINK">
+			<var name="key_breadcrumbName" value="Home" />
+		</execute>
 	</command>
 
 	<command name="viewAsWorkflowAsset">

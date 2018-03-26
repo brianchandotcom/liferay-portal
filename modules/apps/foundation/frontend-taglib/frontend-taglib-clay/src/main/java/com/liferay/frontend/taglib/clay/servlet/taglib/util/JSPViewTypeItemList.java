@@ -14,21 +14,23 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
+import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
+
 /**
  * @author Carlos Lancha
  */
-public class DropdownRadioItem extends DropdownItem {
+public class JSPViewTypeItemList extends ViewTypeItemList {
 
-	public DropdownRadioItem() {
-		put("type", "radio");
+	public JSPViewTypeItemList(PageContext pageContext) {
+		renderResponse = (RenderResponse)pageContext.findAttribute(
+			"renderResponse");
+		request = (HttpServletRequest)pageContext.getRequest();
 	}
 
-	public void setChecked(boolean checked) {
-		put("checked", checked);
-	}
-
-	public void setInputValue(String inputValue) {
-		put("inputValue", inputValue);
-	}
+	protected RenderResponse renderResponse;
+	protected HttpServletRequest request;
 
 }

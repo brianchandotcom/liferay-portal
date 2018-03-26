@@ -15,6 +15,7 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayCardTag;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 
 /**
  * @author Julien Castelain
@@ -37,7 +38,7 @@ public class ImageCardTag extends BaseClayCardTag {
 		putValue("imageSrc", imageSrc);
 	}
 
-	public void setLabels(Object labels) {
+	public void setLabels(LabelItemList labels) {
 		putValue("labels", labels);
 	}
 

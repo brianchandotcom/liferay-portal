@@ -62,7 +62,7 @@
 		<echo message="Associating the Option to the Product..." />
 
 		<execute macro="CommerceEntry#gotoMenuTab">
-			<var name="menuTab" value="Options" />
+			<var name="menuTab" value="Option Templates" />
 		</execute>
 
 		<execute macro="CommerceOptionsRel#assignOptionToProductsEntry">

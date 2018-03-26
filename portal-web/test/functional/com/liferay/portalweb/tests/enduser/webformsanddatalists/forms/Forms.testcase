@@ -2252,6 +2252,160 @@
 		<execute macro="Form#save" />
 	</command>
 
+	<command name="EditTranslatedGridField" priority="4">
+		<description message="This is a use case for LPS-78697." />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoAddForm" />
+
+		<execute macro="Form#editName" />
+
+		<execute macro="Form#gotoAddField">
+			<var name="fieldType" value="Grid" />
+		</execute>
+
+		<execute macro="Form#editFieldLabel">
+			<var name="fieldValue" value="Grid Field Translated" />
+		</execute>
+
+		<for list="1,2,3,4" param="optionNumber">
+			<execute macro="FormFields#editGridOptions">
+				<var name="gridField" value="row" />
+				<var name="optionValue" value="Row ${optionNumber}" />
+				<var name="rowNumber" value="${optionNumber}" />
+			</execute>
+
+			<execute macro="FormFields#editGridOptions">
+				<var name="gridField" value="column" />
+				<var name="optionValue" value="Column ${optionNumber}" />
+				<var name="rowNumber" value="${optionNumber}" />
+			</execute>
+		</for>
+
+		<execute macro="Form#closeSidebar" />
+
+		<for list="Japanese (Japan):日本語,Portuguese (Brazil):Português" param="locale">
+			<var method="StringUtil#extractFirst('${locale}', ':'')" name="locale" />
+			<var method="StringUtil#extractLast('${locale}', ':')" name="translated" />
+
+			<execute macro="DDLRecord#addTranslation">
+				<var name="localizedLanguage" value="${locale}" />
+			</execute>
+
+			<execute macro="FormsAdminNavigator#gotoEditField">
+				<var name="fieldName" value="GridFieldTranslated" />
+			</execute>
+
+			<for list="1,2,3,4" param="optionNumber">
+				<execute macro="FormFields#editGridOptions">
+					<var name="gridField" value="row" />
+					<var name="optionValue" value="${translated} Row ${optionNumber}" />
+					<var name="rowNumber" value="${optionNumber}" />
+				</execute>
+
+				<execute macro="FormFields#editGridOptions">
+					<var name="gridField" value="column" />
+					<var name="optionValue" value="${translated} Column ${optionNumber}" />
+					<var name="rowNumber" value="${optionNumber}" />
+				</execute>
+			</for>
+		</for>
+
+		<execute macro="Form#save" />
+
+		<execute macro="FormsAdminNavigator#gotoEditField">
+			<var name="fieldName" value="GridFieldTranslated" />
+		</execute>
+
+		<execute macro="FormFields#deleteGridOptionsRow">
+			<var name="gridField" value="row" />
+			<var name="rowNumber" value="2" />
+		</execute>
+
+		<execute macro="Form#save" />
+
+		<execute macro="FormsAdminNavigator#gotoEditField">
+			<var name="fieldName" value="GridFieldTranslated" />
+		</execute>
+
+		<execute macro="FormFields#moveGridOptionsRow">
+			<var name="gridField" value="row" />
+			<var name="rowNumberEnd" value="1" />
+			<var name="rowNumberStart" value="3" />
+		</execute>
+
+		<execute macro="FormFields#moveGridOptionsRow">
+			<var name="gridField" value="column" />
+			<var name="rowNumberEnd" value="2" />
+			<var name="rowNumberStart" value="4" />
+		</execute>
+
+		<execute macro="Form#closeSidebar" />
+
+		<execute macro="FormsAdminNavigator#gotoEditField">
+			<var name="fieldName" value="GridFieldTranslated" />
+		</execute>
+
+		<execute macro="FormFields#deleteGridOptionsRow">
+			<var name="gridField" value="column" />
+			<var name="rowNumber" value="1" />
+		</execute>
+
+		<execute macro="Form#closeSidebar" />
+
+		<execute macro="Form#save" />
+
+		<for list="Japanese (Japan):日本語,Portuguese (Brazil):Português" param="locale">
+			<var method="StringUtil#extractFirst('${locale}', ':'')" name="locale" />
+			<var method="StringUtil#extractLast('${locale}', ':')" name="translated" />
+
+			<execute macro="DDLRecord#selectTranslation">
+				<var name="localizedLanguage" value="${locale}" />
+			</execute>
+
+			<execute macro="FormsAdminNavigator#gotoEditField">
+				<var name="fieldName" value="GridFieldTranslated" />
+			</execute>
+
+			<for list="1:4,2:1,3:3" param="optionNumber">
+				<var method="StringUtil#extractLast('${optionNumber}', ':')" name="fieldOptionNumber" />
+				<var method="StringUtil#extractFirst('${optionNumber}', ':'')" name="rowNumber" />
+
+				<execute macro="FormFields#viewGridOptionsFieldValue">
+					<var name="fieldValue" value="${translated} Row ${fieldOptionNumber}" />
+					<var name="gridField" value="row" />
+					<var name="rowNumber" value="${rowNumber}" />
+				</execute>
+			</for>
+
+			<for list="1:4,2:2,3:3" param="optionNumber">
+				<var method="StringUtil#extractLast('${optionNumber}', ':')" name="fieldOptionNumber" />
+				<var method="StringUtil#extractFirst('${optionNumber}', ':'')" name="rowNumber" />
+
+				<execute macro="FormFields#viewGridOptionsFieldValue">
+					<var name="fieldValue" value="${translated} Column ${fieldOptionNumber}" />
+					<var name="gridField" value="column" />
+					<var name="rowNumber" value="${rowNumber}" />
+				</execute>
+			</for>
+
+			<execute macro="FormFields#viewGridOptionNotPresent">
+				<var name="gridField" value="row" />
+				<var name="rowNumber" value="4" />
+			</execute>
+
+			<execute macro="FormFields#viewGridOptionNotPresent">
+				<var name="gridField" value="column" />
+				<var name="rowNumber" value="4" />
+			</execute>
+
+			<execute macro="Form#closeSidebar" />
+		</for>
+	</command>
+
 	<command name="NavigateToCorrectForm" priority="5">
 		<description message="This is a use case for LPS-59331" />
 

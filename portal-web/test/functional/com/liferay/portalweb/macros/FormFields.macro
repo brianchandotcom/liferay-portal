@@ -16,6 +16,13 @@
 		</execute>
 	</command>
 
+	<command name="deleteGridOptionsRow">
+		<execute function="Click" locator1="FormFields#GRID_OPTIONS_OPTION_DELETE_ROW_BUTTON">
+			<var name="key_gridField" value="${gridField}" />
+			<var name="key_rowNumber" value="${rowNumber}" />
+		</execute>
+	</command>
+
 	<command name="deleteOptionsRow">
 		<var name="key_rowNumber" value="${rowNumber}" />
 
@@ -199,6 +206,14 @@
 		<var method="selenium#getElementValue(FormFields#FIELD_NAME_EDIT)" name="fieldName" />
 
 		<return name="fieldName" value="${fieldName}" />
+	</command>
+
+	<command name="moveGridOptionsRow">
+		<execute function="DragAndDrop" locator1="FormFields#GRID_OPTIONS_DRAG_ICON_1" locator2="FormFields#GRID_OPTIONS_DRAG_ICON_2" value1="">
+			<var name="key_gridField" value="${gridField}" />
+			<var name="key_rowNumber1" value="${rowNumberStart}" />
+			<var name="key_rowNumber2" value="${rowNumberEnd}" />
+		</execute>
 	</command>
 
 	<command name="moveOptionsRow">
@@ -460,6 +475,21 @@
 		</if>
 
 		<execute function="AssertTextEquals" locator1="Message#ERROR_SPECIFIC_FORM_FIELD_REQUIRED" value1="${fieldValidationErrorMessage}" />
+	</command>
+
+	<command name="viewGridOptionNotPresent">
+		<execute macro="FormFields#viewGridOptionsFieldValue">
+			<var name="fieldValue" value="" />
+			<var name="key_gridField" value="${gridField}" />
+			<var name="key_rowNumber" value="${rowNumber}" />
+		</execute>
+	</command>
+
+	<command name="viewGridOptionsFieldValue">
+		<execute function="AssertTextEquals" locator1="FormFields#GRID_OPTIONS_OPTION_VALUE_FIELD" value1="${fieldValue}">
+			<var name="key_gridField" value="${gridField}" />
+			<var name="key_rowNumber" value="${rowNumber}" />
+		</execute>
 	</command>
 
 	<command name="viewMultilineTextValue">

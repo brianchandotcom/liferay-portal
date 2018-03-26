@@ -164,6 +164,11 @@
 </tr>
 <!--GRID-->
 <tr>
+	<td>GRID_OPTIONS_OPTION_DELETE_ROW_BUTTON</td>
+	<td>//div[contains(@data-fieldname,'${key_gridField}sOption')]/../../div[${key_rowNumber}]//button[contains(@class,'close-modal')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GRID_OPTIONS_OPTION_VALUE_FIELD</td>
 	<td>//div[contains(@data-fieldname,'${key_gridField}sOption')]/../../div[${key_rowNumber}]//input</td>
 	<td></td>
@@ -176,6 +181,16 @@
 <tr>
 	<td>GRID_RADIO_OPTIONS</td>
 	<td>//div[contains(@class,'field-grid')]//tr[@name='${key_optionRowName}']//input[@value='${key_categoryColumnName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GRID_OPTIONS_DRAG_ICON_1</td>
+	<td>//div[contains(@data-fieldname,'${key_gridField}sOption')]/../../div[${key_rowNumber1}]//div[contains(@class,'drag-handle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GRID_OPTIONS_DRAG_ICON_2</td>
+	<td>//div[contains(@data-fieldname,'${key_gridField}sOption')]/../../div[${key_rowNumber2}]//div[contains(@class,'drag-handle')]</td>
 	<td></td>
 </tr>
 <tr>

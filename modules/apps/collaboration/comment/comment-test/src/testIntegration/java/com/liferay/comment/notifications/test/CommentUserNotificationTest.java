@@ -27,19 +27,29 @@ import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.message.boards.test.util.MBTestUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.mail.MailServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portlet.notifications.test.BaseUserNotificationTestCase;
 
+import java.util.List;
+
+import javax.portlet.PortletPreferences;
+
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -66,6 +76,89 @@ public class CommentUserNotificationTest extends BaseUserNotificationTestCase {
 		_entry = BlogsEntryLocalServiceUtil.addEntry(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
+	}
+
+	@Test
+	public void testAddUserNotificationWhenDiscussionEmailPortalPropertyDisabled()
+		throws Exception {
+
+		PortletPreferences portletPreferences =
+			givenThatDiscussionEmailCommentsAddedIsDisabled();
+
+		try {
+			subscribeToContainer();
+
+			BaseModel<?> baseModel = addBaseModel();
+
+			Assert.assertEquals(0, MailServiceTestUtil.getInboxSize());
+
+			List<JSONObject> userNotificationEventsJSONObjects =
+				getUserNotificationEventsJSONObjects(
+					user.getUserId(), (Long)baseModel.getPrimaryKeyObj());
+
+			Assert.assertEquals(
+				userNotificationEventsJSONObjects.toString(), 1,
+				userNotificationEventsJSONObjects.size());
+
+			for (JSONObject userNotificationEventsJSONObject :
+					userNotificationEventsJSONObjects) {
+
+				Assert.assertTrue(
+					isValidUserNotificationEventObject(
+						(Long)baseModel.getPrimaryKeyObj(),
+						userNotificationEventsJSONObject));
+				Assert.assertEquals(
+					UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
+					userNotificationEventsJSONObject.getInt(
+						"notificationType"));
+			}
+		}
+		finally {
+			restorePortletPreferences(portletPreferences);
+		}
+	}
+
+	@Test
+	public void testUpdateUserNotificationWhenDiscussionEmailPortalPropertyDisabled()
+		throws Exception {
+
+		PortletPreferences portletPreferences =
+			givenThatDiscussionEmailCommentsAddedIsDisabled();
+
+		try {
+			BaseModel<?> baseModel = addBaseModel();
+
+			subscribeToContainer();
+
+			BaseModel<?> updatedBasemodel = updateBaseModel(baseModel);
+
+			Assert.assertEquals(0, MailServiceTestUtil.getInboxSize());
+
+			List<JSONObject> userNotificationEventsJSONObjects =
+				getUserNotificationEventsJSONObjects(
+					user.getUserId(),
+					(Long)updatedBasemodel.getPrimaryKeyObj());
+
+			Assert.assertEquals(
+				userNotificationEventsJSONObjects.toString(), 1,
+				userNotificationEventsJSONObjects.size());
+
+			for (JSONObject userNotificationEventsJSONObject :
+					userNotificationEventsJSONObjects) {
+
+				Assert.assertTrue(
+					isValidUserNotificationEventObject(
+						(Long)baseModel.getPrimaryKeyObj(),
+						userNotificationEventsJSONObject));
+				Assert.assertEquals(
+					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
+					userNotificationEventsJSONObject.getInt(
+						"notificationType"));
+			}
+		}
+		finally {
+			restorePortletPreferences(portletPreferences);
+		}
 	}
 
 	@Override
@@ -98,6 +191,22 @@ public class CommentUserNotificationTest extends BaseUserNotificationTestCase {
 		return "com_liferay_comment_web_portlet_CommentPortlet";
 	}
 
+	protected PortletPreferences
+			givenThatDiscussionEmailCommentsAddedIsDisabled()
+		throws Exception {
+
+		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
+			user.getCompanyId(), false);
+
+		portletPreferences.setValue(
+			PropsKeys.DISCUSSION_EMAIL_COMMENTS_ADDED_ENABLED,
+			Boolean.FALSE.toString());
+
+		portletPreferences.store();
+
+		return portletPreferences;
+	}
+
 	@Override
 	protected boolean isValidUserNotificationEventObject(
 			long baseEntryId, JSONObject userNotificationEventJSONObject)
@@ -120,6 +229,16 @@ public class CommentUserNotificationTest extends BaseUserNotificationTestCase {
 		}
 
 		return true;
+	}
+
+	protected void restorePortletPreferences(
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		portletPreferences.reset(
+			PropsKeys.DISCUSSION_EMAIL_COMMENTS_ADDED_ENABLED);
+
+		portletPreferences.store();
 	}
 
 	@Override

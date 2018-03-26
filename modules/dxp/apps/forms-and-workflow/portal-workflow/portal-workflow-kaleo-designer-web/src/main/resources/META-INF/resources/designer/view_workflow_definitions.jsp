@@ -38,6 +38,8 @@ else if (StringUtil.equals(definitionsNavigation, "not-published")) {
 String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
+portletURL.setParameter("definitionsNavigation", definitionsNavigation);
+
 PortletURL navigationPortletURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
 
 if (delta > 0) {

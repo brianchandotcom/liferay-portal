@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.google.common.collect.Lists;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -364,28 +366,12 @@ public class TestBatchGroup {
 
 		int testBatchGroupSize = testClassFileNamesCount / maxClassGroupSize;
 
-		/* Add guava and clean this up */
-
 		if ((testClassFileNamesCount % maxClassGroupSize) != 0) {
 			testBatchGroupSize++;
 		}
 
-		int balancedTestBatchClassesPerGroup =
-			testClassFileNamesCount / testBatchGroupSize;
-
-		if ((testClassFileNamesCount % testBatchGroupSize) != 0) {
-			balancedTestBatchClassesPerGroup++;
-		}
-
-		for (int i = 0; i < testBatchGroupSize; i++) {
-			_testClassGroups.add(
-				testClassFileNames.subList(
-					i * balancedTestBatchClassesPerGroup,
-					Math.min(
-						testClassFileNamesCount,
-						i * balancedTestBatchClassesPerGroup +
-							balancedTestBatchClassesPerGroup)));
-		}
+		_testClassGroups.addAll(
+			Lists.partition(testClassFileNames, testBatchGroupSize));
 	}
 
 	private void _setTestClassNamesExcludes() throws IOException {
@@ -499,6 +485,8 @@ public class TestBatchGroup {
 	private final Pattern _packagePathPattern = Pattern.compile(
 		".*/(?<packagePath>com/.*)");
 	private final Properties _portalTestProperties;
+	private final Pattern _propertyNamePattern = Pattern.compile(
+		"[^\\]]+\\[(?<batchName>[^\\]]+)\\](\\[(?<testSuiteName>[^\\]]+)\\])?");
 	private boolean _testBatchCurrentBranch;
 	private final List<List<String>> _testClassGroups = new ArrayList<>();
 	private final List<String> _testClassNamesExcludes = new ArrayList<>();
@@ -507,9 +495,6 @@ public class TestBatchGroup {
 	private final List<String> _testClassNamesIncludes = new ArrayList<>();
 	private final List<PathMatcher> _testClassNamesIncludesPathMatchers =
 		new ArrayList<>();
-	private final Pattern _propertyNamePattern = Pattern.compile(
-		"[^\\]]+\\[(?<batchName>[^\\]]+)\\](\\[(?<testSuiteName>[^\\]]+)\\])?");
-
 	private final String _testSuiteName;
 
 }

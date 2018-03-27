@@ -166,6 +166,10 @@ AUI.add(
 						}
 
 						editor.set('value', content);
+
+						if (instance.get('readOnly')) {
+							editor.set('readOnly',true);
+						}
 					},
 
 					showSuccessMessage: function() {

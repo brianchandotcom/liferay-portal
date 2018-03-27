@@ -579,6 +579,18 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 									}
 								).render();
 
+								<c:if test="<%= (kaleoDefinitionVersion != null) && !KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE) %>">
+									<portlet:namespace />kaleoDesigner.after(
+										'render',
+										function() {
+											$('#<portlet:namespace />propertyBuilder').find('.diagram-builder-controls').detach();
+
+											<portlet:namespace />kaleoDesigner.detachAll();
+
+											<portlet:namespace />kaleoDesigner.set('readOnly', true);
+									});
+								</c:if>
+
 								var uploadFile = $('#<portlet:namespace />upload');
 
 								var previousContent = '';

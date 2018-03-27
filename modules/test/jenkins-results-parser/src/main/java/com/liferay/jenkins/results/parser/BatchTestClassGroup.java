@@ -137,7 +137,7 @@ public class TestBatchGroup {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to get current branch module group directories ",
-					"under ", workingDirectory.getPath()),
+					"in ", workingDirectory.getPath()),
 				ioe);
 		}
 
@@ -298,7 +298,7 @@ public class TestBatchGroup {
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(
-				"Unable to search for test file names under" +
+				"Unable to search for test file names in " +
 					workingDirectory.getPath(),
 				ioe);
 		}

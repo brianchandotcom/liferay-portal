@@ -144,7 +144,7 @@ public class ChainingCheck extends BaseCheck {
 			}
 
 			log(
-				methodCallAST.getLineNo(), _MSG_AVOID_CHAINING_MULTIPLE,
+				methodCallAST.getLineNo(), _MSG_AVOID_CHAINING,
 				DetailASTUtil.getMethodName(methodCallAST));
 		}
 	}
@@ -429,9 +429,6 @@ public class ChainingCheck extends BaseCheck {
 	}
 
 	private static final String _MSG_AVOID_CHAINING = "chaining.avoid";
-
-	private static final String _MSG_AVOID_CHAINING_MULTIPLE =
-		"chaining.avoid.multiple";
 
 	private static final String _MSG_AVOID_TOO_MANY_CONCAT =
 		"concat.avoid.too.many";

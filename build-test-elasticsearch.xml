@@ -135,7 +135,7 @@ elasticsearch.ssl.certificateAuthorities: [ "${elasticsearch.dir}-1/config/certs
 				<then>
 					<exec dir="${elasticsearch.dir}/bin/x-pack" executable="/bin/bash">
 						<arg value="-c" />
-						<arg value="./certutil cert --ca-cert ca/ca.crt --ca-key ca/ca.key --pem --out certificate-bundle.zip" />
+						<arg value="./certutil cert --ca-cert ca/ca.crt --ca-key ca/ca.key --pem --ip 127.0.0.1 --dns localhost --out certificate-bundle.zip" />
 					</exec>
 				</then>
 				<elseif>
@@ -295,6 +295,19 @@ elasticsearch.ssl.certificateAuthorities: [ "${elasticsearch.dir}-1/config/certs
 
 	<macrodef name="prepare-kibana-x-pack">
 		<sequential>
+			<if>
+				<not>
+					<available file="${elastic.kibana.dir}/${elastic.x-pack.zip.name}" />
+				</not>
+				<then>
+					<mirrors-get
+						dest="${elastic.kibana.dir}/${elastic.x-pack.zip.name}"
+						skipChecksum="true"
+						src="${elastic.x-pack.zip.url}"
+					/>
+				</then>
+			</if>
+
 			<if>
 				<os family="unix" />
 				<then>

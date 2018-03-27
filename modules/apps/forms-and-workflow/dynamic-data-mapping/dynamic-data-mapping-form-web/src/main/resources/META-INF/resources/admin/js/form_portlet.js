@@ -625,18 +625,6 @@ AUI.add(
 						}
 					},
 
-					_fillRuleDraft: function() {
-						var instance = this;
-
-						var ruleBuilder = instance.get('ruleBuilder');
-
-						var ruleDraft = ruleBuilder.get('ruleDraft');
-
-						if (!ruleBuilder.isRuleDraftEmpty(ruleDraft) || (typeof ruleDraft == 'undefined')) {
-							ruleBuilder.renderRule();
-						}
-					},
-
 					_getDescription: function() {
 						var instance = this;
 
@@ -920,8 +908,6 @@ AUI.add(
 						instance._showRuleBuilder();
 
 						instance._addRuleButton();
-
-						instance._fillRuleDraft();
 					},
 
 					_onSaveButtonClick: function(event) {

@@ -946,7 +946,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 							new HashMap<String, Serializable>());
 					}
 
-					if ((cpInstanceId <= 0) && DDMFormValuesUtil.equals(
+					if ((cpInstanceId <= 0) &&
+						DDMFormValuesUtil.equals(
 							ddmContent, cpInstance.getDDMContent())) {
 
 						throw new CPInstanceDDMContentException();

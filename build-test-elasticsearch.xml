@@ -77,9 +77,9 @@ xpack.security.encryptionKey: "xsomethingxatxleastx32xcharactersx"
 xpack.security.sessionTimeout: 600000
 
 server.ssl.enabled: true
-server.ssl.certificate: ${elasticsearch.dir}/config/certs/instance/instance.crt
-server.ssl.key: ${elasticsearch.dir}/config/certs/instance/instance.key
-elasticsearch.ssl.certificateAuthorities: [ "${elasticsearch.dir}/config/certs/ca/ca.crt" ]
+server.ssl.certificate: ${elasticsearch.dir}-1/config/certs/instance/instance.crt
+server.ssl.key: ${elasticsearch.dir}-1/config/certs/instance/instance.key
+elasticsearch.ssl.certificateAuthorities: [ "${elasticsearch.dir}-1/config/certs/ca/ca.crt" ]
 
 elasticsearch.url: "https://localhost:9200"</echo>
 		</sequential>

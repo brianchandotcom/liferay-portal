@@ -365,18 +365,18 @@ public class TestBatchGroup {
 	}
 
 	private void _setTestBatchCurrentBranch() {
-		List<String> orderedPropertyNames = new ArrayList<>();
+		List<String> propertyNames = new ArrayList<>();
 
 		if (_testSuiteName != null) {
-			orderedPropertyNames.add(
+			propertyNames.add(
 				JenkinsResultsParserUtil.combine(
 					"test.batch.current.branch[", _testSuiteName, "]"));
 		}
 
-		orderedPropertyNames.add("test.batch.current.branch");
+		propertyNames.add("test.batch.current.branch");
 
 		String propertyValue = _getPropertyValueFromOrderedPropertyNames(
-			_portalTestProperties, orderedPropertyNames);
+			_portalTestProperties, propertyNames);
 
 		if (propertyValue != null) {
 			_testBatchCurrentBranch = Boolean.parseBoolean(propertyValue);
@@ -425,40 +425,40 @@ public class TestBatchGroup {
 	}
 
 	private void _setTestClassNamesExcludes() {
-		List<String> orderedPropertyNames = new ArrayList<>();
+		List<String> propertyNames = new ArrayList<>();
 
 		if (_testSuiteName != null) {
-			orderedPropertyNames.add(
+			propertyNames.add(
 				JenkinsResultsParserUtil.combine(
 					"test.batch.class.names.excludes[", _batchName, "][",
 					_testSuiteName, "]"));
 
-			orderedPropertyNames.add(
+			propertyNames.add(
 				_getWildcardPropertyName(
 					_portalTestProperties, "test.batch.class.names.excludes",
 					_batchName, _testSuiteName));
 
-			orderedPropertyNames.add(
+			propertyNames.add(
 				JenkinsResultsParserUtil.combine(
 					"test.batch.class.names.excludes[", _testSuiteName, "]"));
 		}
 
-		orderedPropertyNames.add(
+		propertyNames.add(
 			_getWildcardPropertyName(
 				_portalTestProperties, "test.batch.class.names.excludes",
 				_batchName));
 
-		orderedPropertyNames.add(
+		propertyNames.add(
 			JenkinsResultsParserUtil.combine(
 				"test.batch.class.names.excludes[", _batchName, "]"));
 
-		orderedPropertyNames.add("test.batch.class.names.excludes");
+		propertyNames.add("test.batch.class.names.excludes");
 
-		orderedPropertyNames.add("test.class.names.excludes");
+		propertyNames.add("test.class.names.excludes");
 
 		String testClassNamesExcludes =
 			_getPropertyValueFromOrderedPropertyNames(
-				_portalTestProperties, orderedPropertyNames);
+				_portalTestProperties, propertyNames);
 
 		if ((testClassNamesExcludes != null) &&
 			!testClassNamesExcludes.isEmpty()) {
@@ -482,40 +482,40 @@ public class TestBatchGroup {
 	}
 
 	private void _setTestClassNamesIncludes() {
-		List<String> orderedPropertyNames = new ArrayList<>();
+		List<String> propertyNames = new ArrayList<>();
 
 		if (_testSuiteName != null) {
-			orderedPropertyNames.add(
+			propertyNames.add(
 				JenkinsResultsParserUtil.combine(
 					"test.batch.class.names.includes[", _batchName, "][",
 					_testSuiteName, "]"));
 
-			orderedPropertyNames.add(
+			propertyNames.add(
 				_getWildcardPropertyName(
 					_portalTestProperties, "test.batch.class.names.includes",
 					_batchName, _testSuiteName));
 
-			orderedPropertyNames.add(
+			propertyNames.add(
 				JenkinsResultsParserUtil.combine(
 					"test.batch.class.names.includes[", _testSuiteName, "]"));
 		}
 
-		orderedPropertyNames.add(
+		propertyNames.add(
 			JenkinsResultsParserUtil.combine(
 				"test.batch.class.names.includes[", _batchName, "]"));
 
-		orderedPropertyNames.add(
+		propertyNames.add(
 			_getWildcardPropertyName(
 				_portalTestProperties, "test.batch.class.names.includes",
 				_batchName));
 
-		orderedPropertyNames.add("test.batch.class.names.includes");
+		propertyNames.add("test.batch.class.names.includes");
 
-		orderedPropertyNames.add("test.class.names.includes");
+		propertyNames.add("test.class.names.includes");
 
 		String testClassNamesIncludes =
 			_getPropertyValueFromOrderedPropertyNames(
-				_portalTestProperties, orderedPropertyNames);
+				_portalTestProperties, propertyNames);
 
 		if ((testClassNamesIncludes != null) &&
 			!testClassNamesIncludes.isEmpty()) {

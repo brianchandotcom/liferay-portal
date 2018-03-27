@@ -65,11 +65,11 @@ public class ManagementToolbarsDisplayContext {
 	}
 
 	public CreationMenuDropdown getCreationMenu() {
-		if (Validator.isNotNull(_creationMenu)) {
-			return _creationMenu;
+		if (Validator.isNotNull(_creationMenuDropdown)) {
+			return _creationMenuDropdown;
 		}
 
-		_creationMenu = new CreationMenuDropdown(_request) {
+		_creationMenuDropdown = new CreationMenuDropdown(_request) {
 			{
 				addPrimaryDropdownItem(
 					dropdownItem -> {
@@ -97,7 +97,7 @@ public class ManagementToolbarsDisplayContext {
 			}
 		};
 
-		return _creationMenu;
+		return _creationMenuDropdown;
 	}
 
 	public DropdownItemList getFilterItems() {
@@ -185,7 +185,7 @@ public class ManagementToolbarsDisplayContext {
 	}
 
 	private DropdownItemList _actionDropdownItems;
-	private CreationMenuDropdown _creationMenu;
+	private CreationMenuDropdown _creationMenuDropdown;
 	private DropdownItemList _filterItems;
 	private final HttpServletRequest _request;
 	private ViewTypeItemList _viewTypes;

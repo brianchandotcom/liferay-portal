@@ -33,8 +33,18 @@ function unload(analytics) {
  * @param {object} analytics The Analytics client
  */
 function timing(analytics) {
-	window.addEventListener('load', onload.bind(null, analytics));
-	window.addEventListener('unload', unload.bind(null, analytics));
+	const onLoad = onload.bind(null, analytics);
+
+	window.addEventListener('load', onLoad);
+
+	const onUnload = unload.bind(null, analytics);
+
+	window.addEventListener('unload', onUnload);
+
+	return () => {
+		window.removeEventListener('load', onLoad);
+		window.removeEventListener('unload', onUnload);
+	};
 }
 
 export {timing};

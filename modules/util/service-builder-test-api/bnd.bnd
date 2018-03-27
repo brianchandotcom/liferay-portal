@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Service Builder Test API
+Bundle-SymbolicName: com.liferay.service.builder.test.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.service.builder.test.exception,\
+	com.liferay.service.builder.test.model,\
+	com.liferay.service.builder.test.service.persistence
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:

@@ -52,6 +52,7 @@ public class FragmentEntryLinkLocalServiceImpl
 		FragmentEntryLink fragmentEntryLink =
 			fragmentEntryLinkPersistence.create(fragmentEntryLinkId);
 
+		fragmentEntryLink.setUuid(serviceContext.getUuid());
 		fragmentEntryLink.setGroupId(groupId);
 		fragmentEntryLink.setCompanyId(user.getCompanyId());
 		fragmentEntryLink.setUserId(user.getUserId());

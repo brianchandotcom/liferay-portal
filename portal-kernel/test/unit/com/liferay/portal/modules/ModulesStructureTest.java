@@ -73,6 +73,12 @@ public class ModulesStructureTest {
 			_buildProperties.load(inputStream);
 		}
 
+		_branchName = _buildProperties.getProperty("git.working.branch.name");
+
+		if (_branchName.contains("master")) {
+			_masterBranch = true;
+		}
+
 		_modulesDirPath = Paths.get("modules");
 	}
 
@@ -736,7 +742,6 @@ public class ModulesStructureTest {
 		return false;
 	}
 
-	@SuppressWarnings("unused")
 	private boolean _isInGitRepoReadOnly(Path dirPath) throws IOException {
 		Path gitRepoPath = _getGitRepoPath(dirPath);
 
@@ -751,14 +756,58 @@ public class ModulesStructureTest {
 		return false;
 	}
 
-	private boolean _isInPrivateModulesDir(Path dirPath) {
+	private boolean _isInModulesRootDir(Path dirPath, String... rootDirNames) {
 		Path relativePath = _modulesDirPath.relativize(dirPath);
 
-		if (relativePath.startsWith("private")) {
-			return true;
+		for (String rootDirName : rootDirNames) {
+			if (relativePath.startsWith(rootDirName)) {
+				return true;
+			}
 		}
 
 		return false;
+	}
+
+	private boolean _isInPrivateModulesDir(Path dirPath) {
+		return _isInModulesRootDir(dirPath, "private");
+	}
+
+	private boolean _shouldBecomeProjectDependency(
+			GradleDependency gradleDependency, Path dirPath)
+		throws IOException {
+
+		if (!_masterBranch || dirPath.equals(_modulesDirPath) ||
+			gradleDependency.isProjectDependency()) {
+
+			return false;
+		}
+
+		String group = gradleDependency.getModuleGroup();
+
+		if (!group.equals("com.liferay") &&
+			!group.equals("com.liferay.portal")) {
+
+			return false;
+		}
+
+		String name = gradleDependency.getModuleName();
+
+		if (name.equals("com.liferay.ant.bnd") ||
+			name.equals("com.liferay.arquillian.extension.junit.bridge") ||
+			name.equals("com.liferay.portal.cache.test.util") ||
+			name.equals("com.liferay.whip") ||
+			!name.startsWith("com.liferay.")) {
+
+			return false;
+		}
+
+		if (_isInModulesRootDir(dirPath, "sdk", "third-party", "util") ||
+			_isInGitRepoReadOnly(dirPath)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private void _testAntPluginIgnoreFiles(Path dirPath) throws IOException {
@@ -1134,6 +1183,31 @@ public class ModulesStructureTest {
 			"testIntegrationRuntime", hasSrcTestIntegrationDir);
 
 		for (GradleDependency gradleDependency : gradleDependencies) {
+			if (_shouldBecomeProjectDependency(gradleDependency, dirPath)) {
+				StringBundler sb = new StringBundler(9);
+
+				sb.append("Artifact dependency {");
+				sb.append(gradleDependency);
+				sb.append("} in ");
+				sb.append(path);
+				sb.append(" not permitted on ");
+				sb.append(_branchName);
+				sb.append(" branch. Use ");
+
+				String moduleGroup = gradleDependency.getModuleGroup();
+
+				if (moduleGroup.equals("com.liferay.portal")) {
+					sb.append("version \"default\"");
+				}
+				else {
+					sb.append("a project dependency");
+				}
+
+				sb.append(" instead.");
+
+				Assert.fail(sb.toString());
+			}
+
 			Boolean allowed = allowedConfigurationsMap.get(
 				gradleDependency.getConfiguration());
 
@@ -1254,6 +1328,7 @@ public class ModulesStructureTest {
 	private static final String _SOURCE_FORMATTER_IGNORE_FILE_NAME =
 		"source_formatter.ignore";
 
+	private static String _branchName;
 	private static Properties _buildProperties;
 	private static final Pattern _gitRepoGradleProjectGroupPattern =
 		Pattern.compile("com\\.liferay(?:\\.[a-z]+)+");
@@ -1265,6 +1340,7 @@ public class ModulesStructureTest {
 	private static final List<String> _gradleConfigurations = Arrays.asList(
 		"compileOnly", "provided", "compile", "runtime", "testCompile",
 		"testRuntime", "testIntegrationCompile", "testIntegrationRuntime");
+	private static boolean _masterBranch;
 	private static Path _modulesDirPath;
 	private static final Set<String> _nonemptyMarkerFileNames =
 		Collections.singleton(".lfrbuild-lowest-major-version");

@@ -16,13 +16,14 @@ package com.liferay.twitter.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import com.liferay.twitter.model.Feed;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -324,6 +325,16 @@ public class FeedUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<FeedPersistence, FeedPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(FeedPersistence.class);
+	private static ServiceTracker<FeedPersistence, FeedPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(FeedPersistence.class);
+
+		ServiceTracker<FeedPersistence, FeedPersistence> serviceTracker = new ServiceTracker<FeedPersistence, FeedPersistence>(bundle.getBundleContext(),
+				FeedPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

@@ -16,7 +16,8 @@ package com.liferay.site.navigation.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -355,6 +356,17 @@ public class SiteNavigationMenuLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<SiteNavigationMenuLocalService, SiteNavigationMenuLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(SiteNavigationMenuLocalService.class);
+	private static ServiceTracker<SiteNavigationMenuLocalService, SiteNavigationMenuLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(SiteNavigationMenuLocalService.class);
+
+		ServiceTracker<SiteNavigationMenuLocalService, SiteNavigationMenuLocalService> serviceTracker =
+			new ServiceTracker<SiteNavigationMenuLocalService, SiteNavigationMenuLocalService>(bundle.getBundleContext(),
+				SiteNavigationMenuLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

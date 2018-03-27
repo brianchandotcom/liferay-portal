@@ -16,7 +16,8 @@ package com.liferay.asset.tag.stats.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -359,6 +360,17 @@ public class AssetTagStatsLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<AssetTagStatsLocalService, AssetTagStatsLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(AssetTagStatsLocalService.class);
+	private static ServiceTracker<AssetTagStatsLocalService, AssetTagStatsLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(AssetTagStatsLocalService.class);
+
+		ServiceTracker<AssetTagStatsLocalService, AssetTagStatsLocalService> serviceTracker =
+			new ServiceTracker<AssetTagStatsLocalService, AssetTagStatsLocalService>(bundle.getBundleContext(),
+				AssetTagStatsLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

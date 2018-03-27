@@ -16,7 +16,8 @@ package com.liferay.external.data.source.test.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -254,6 +255,17 @@ public class TestEntityLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<TestEntityLocalService, TestEntityLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(TestEntityLocalService.class);
+	private static ServiceTracker<TestEntityLocalService, TestEntityLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(TestEntityLocalService.class);
+
+		ServiceTracker<TestEntityLocalService, TestEntityLocalService> serviceTracker =
+			new ServiceTracker<TestEntityLocalService, TestEntityLocalService>(bundle.getBundleContext(),
+				TestEntityLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

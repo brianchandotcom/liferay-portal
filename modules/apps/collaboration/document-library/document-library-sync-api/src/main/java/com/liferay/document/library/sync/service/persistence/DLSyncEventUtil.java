@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.document.library.sync.model.DLSyncEvent;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -484,6 +485,17 @@ public class DLSyncEventUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<DLSyncEventPersistence, DLSyncEventPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(DLSyncEventPersistence.class);
+	private static ServiceTracker<DLSyncEventPersistence, DLSyncEventPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(DLSyncEventPersistence.class);
+
+		ServiceTracker<DLSyncEventPersistence, DLSyncEventPersistence> serviceTracker =
+			new ServiceTracker<DLSyncEventPersistence, DLSyncEventPersistence>(bundle.getBundleContext(),
+				DLSyncEventPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

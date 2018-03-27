@@ -16,7 +16,8 @@ package com.liferay.mobile.device.rules.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -420,6 +421,16 @@ public class MDRRuleLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<MDRRuleLocalService, MDRRuleLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(MDRRuleLocalService.class);
+	private static ServiceTracker<MDRRuleLocalService, MDRRuleLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(MDRRuleLocalService.class);
+
+		ServiceTracker<MDRRuleLocalService, MDRRuleLocalService> serviceTracker = new ServiceTracker<MDRRuleLocalService, MDRRuleLocalService>(bundle.getBundleContext(),
+				MDRRuleLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

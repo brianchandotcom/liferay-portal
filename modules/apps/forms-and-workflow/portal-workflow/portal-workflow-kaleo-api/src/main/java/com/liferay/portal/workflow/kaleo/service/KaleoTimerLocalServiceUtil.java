@@ -16,7 +16,8 @@ package com.liferay.portal.workflow.kaleo.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -278,6 +279,17 @@ public class KaleoTimerLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<KaleoTimerLocalService, KaleoTimerLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(KaleoTimerLocalService.class);
+	private static ServiceTracker<KaleoTimerLocalService, KaleoTimerLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(KaleoTimerLocalService.class);
+
+		ServiceTracker<KaleoTimerLocalService, KaleoTimerLocalService> serviceTracker =
+			new ServiceTracker<KaleoTimerLocalService, KaleoTimerLocalService>(bundle.getBundleContext(),
+				KaleoTimerLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.bookmarks.model.BookmarksFolder;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -2262,6 +2263,17 @@ public class BookmarksFolderUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<BookmarksFolderPersistence, BookmarksFolderPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(BookmarksFolderPersistence.class);
+	private static ServiceTracker<BookmarksFolderPersistence, BookmarksFolderPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(BookmarksFolderPersistence.class);
+
+		ServiceTracker<BookmarksFolderPersistence, BookmarksFolderPersistence> serviceTracker =
+			new ServiceTracker<BookmarksFolderPersistence, BookmarksFolderPersistence>(bundle.getBundleContext(),
+				BookmarksFolderPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

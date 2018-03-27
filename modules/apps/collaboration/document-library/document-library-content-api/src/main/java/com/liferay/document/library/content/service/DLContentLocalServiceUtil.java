@@ -16,7 +16,8 @@ package com.liferay.document.library.content.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -332,6 +333,17 @@ public class DLContentLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<DLContentLocalService, DLContentLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(DLContentLocalService.class);
+	private static ServiceTracker<DLContentLocalService, DLContentLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(DLContentLocalService.class);
+
+		ServiceTracker<DLContentLocalService, DLContentLocalService> serviceTracker =
+			new ServiceTracker<DLContentLocalService, DLContentLocalService>(bundle.getBundleContext(),
+				DLContentLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

@@ -16,7 +16,8 @@ package com.liferay.sync.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -68,6 +69,16 @@ public class SyncDeviceServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<SyncDeviceService, SyncDeviceService> _serviceTracker =
-		ServiceTrackerFactory.open(SyncDeviceService.class);
+	private static ServiceTracker<SyncDeviceService, SyncDeviceService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(SyncDeviceService.class);
+
+		ServiceTracker<SyncDeviceService, SyncDeviceService> serviceTracker = new ServiceTracker<SyncDeviceService, SyncDeviceService>(bundle.getBundleContext(),
+				SyncDeviceService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

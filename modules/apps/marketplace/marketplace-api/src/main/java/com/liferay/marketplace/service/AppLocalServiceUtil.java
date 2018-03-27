@@ -16,7 +16,8 @@ package com.liferay.marketplace.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -336,6 +337,16 @@ public class AppLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<AppLocalService, AppLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(AppLocalService.class);
+	private static ServiceTracker<AppLocalService, AppLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(AppLocalService.class);
+
+		ServiceTracker<AppLocalService, AppLocalService> serviceTracker = new ServiceTracker<AppLocalService, AppLocalService>(bundle.getBundleContext(),
+				AppLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

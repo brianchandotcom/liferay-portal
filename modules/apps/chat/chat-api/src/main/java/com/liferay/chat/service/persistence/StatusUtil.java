@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.chat.model.Status;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -804,6 +805,16 @@ public class StatusUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<StatusPersistence, StatusPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(StatusPersistence.class);
+	private static ServiceTracker<StatusPersistence, StatusPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(StatusPersistence.class);
+
+		ServiceTracker<StatusPersistence, StatusPersistence> serviceTracker = new ServiceTracker<StatusPersistence, StatusPersistence>(bundle.getBundleContext(),
+				StatusPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

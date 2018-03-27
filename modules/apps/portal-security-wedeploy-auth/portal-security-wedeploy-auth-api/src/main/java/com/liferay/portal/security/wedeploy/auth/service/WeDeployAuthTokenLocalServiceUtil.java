@@ -16,7 +16,8 @@ package com.liferay.portal.security.wedeploy.auth.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -291,6 +292,17 @@ public class WeDeployAuthTokenLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<WeDeployAuthTokenLocalService, WeDeployAuthTokenLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(WeDeployAuthTokenLocalService.class);
+	private static ServiceTracker<WeDeployAuthTokenLocalService, WeDeployAuthTokenLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(WeDeployAuthTokenLocalService.class);
+
+		ServiceTracker<WeDeployAuthTokenLocalService, WeDeployAuthTokenLocalService> serviceTracker =
+			new ServiceTracker<WeDeployAuthTokenLocalService, WeDeployAuthTokenLocalService>(bundle.getBundleContext(),
+				WeDeployAuthTokenLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

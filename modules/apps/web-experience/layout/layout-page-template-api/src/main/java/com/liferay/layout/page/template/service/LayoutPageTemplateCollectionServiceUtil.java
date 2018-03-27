@@ -16,7 +16,8 @@ package com.liferay.layout.page.template.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -147,6 +148,17 @@ public class LayoutPageTemplateCollectionServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<LayoutPageTemplateCollectionService, LayoutPageTemplateCollectionService> _serviceTracker =
-		ServiceTrackerFactory.open(LayoutPageTemplateCollectionService.class);
+	private static ServiceTracker<LayoutPageTemplateCollectionService, LayoutPageTemplateCollectionService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(LayoutPageTemplateCollectionService.class);
+
+		ServiceTracker<LayoutPageTemplateCollectionService, LayoutPageTemplateCollectionService> serviceTracker =
+			new ServiceTracker<LayoutPageTemplateCollectionService, LayoutPageTemplateCollectionService>(bundle.getBundleContext(),
+				LayoutPageTemplateCollectionService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

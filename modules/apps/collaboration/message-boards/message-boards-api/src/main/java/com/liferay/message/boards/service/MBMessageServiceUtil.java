@@ -16,7 +16,8 @@ package com.liferay.message.boards.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -315,6 +316,16 @@ public class MBMessageServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<MBMessageService, MBMessageService> _serviceTracker =
-		ServiceTrackerFactory.open(MBMessageService.class);
+	private static ServiceTracker<MBMessageService, MBMessageService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(MBMessageService.class);
+
+		ServiceTracker<MBMessageService, MBMessageService> serviceTracker = new ServiceTracker<MBMessageService, MBMessageService>(bundle.getBundleContext(),
+				MBMessageService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

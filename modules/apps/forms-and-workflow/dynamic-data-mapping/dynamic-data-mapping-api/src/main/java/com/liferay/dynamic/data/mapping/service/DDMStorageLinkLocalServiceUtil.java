@@ -16,7 +16,8 @@ package com.liferay.dynamic.data.mapping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -347,6 +348,17 @@ public class DDMStorageLinkLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<DDMStorageLinkLocalService, DDMStorageLinkLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(DDMStorageLinkLocalService.class);
+	private static ServiceTracker<DDMStorageLinkLocalService, DDMStorageLinkLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(DDMStorageLinkLocalService.class);
+
+		ServiceTracker<DDMStorageLinkLocalService, DDMStorageLinkLocalService> serviceTracker =
+			new ServiceTracker<DDMStorageLinkLocalService, DDMStorageLinkLocalService>(bundle.getBundleContext(),
+				DDMStorageLinkLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

@@ -16,7 +16,8 @@ package com.liferay.portal.security.wedeploy.auth.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -67,6 +68,17 @@ public class WeDeployAuthAppServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<WeDeployAuthAppService, WeDeployAuthAppService> _serviceTracker =
-		ServiceTrackerFactory.open(WeDeployAuthAppService.class);
+	private static ServiceTracker<WeDeployAuthAppService, WeDeployAuthAppService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(WeDeployAuthAppService.class);
+
+		ServiceTracker<WeDeployAuthAppService, WeDeployAuthAppService> serviceTracker =
+			new ServiceTracker<WeDeployAuthAppService, WeDeployAuthAppService>(bundle.getBundleContext(),
+				WeDeployAuthAppService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

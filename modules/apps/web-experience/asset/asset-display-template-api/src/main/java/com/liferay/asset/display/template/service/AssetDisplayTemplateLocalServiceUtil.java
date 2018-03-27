@@ -16,7 +16,8 @@ package com.liferay.asset.display.template.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -320,6 +321,17 @@ public class AssetDisplayTemplateLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<AssetDisplayTemplateLocalService, AssetDisplayTemplateLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(AssetDisplayTemplateLocalService.class);
+	private static ServiceTracker<AssetDisplayTemplateLocalService, AssetDisplayTemplateLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(AssetDisplayTemplateLocalService.class);
+
+		ServiceTracker<AssetDisplayTemplateLocalService, AssetDisplayTemplateLocalService> serviceTracker =
+			new ServiceTracker<AssetDisplayTemplateLocalService, AssetDisplayTemplateLocalService>(bundle.getBundleContext(),
+				AssetDisplayTemplateLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

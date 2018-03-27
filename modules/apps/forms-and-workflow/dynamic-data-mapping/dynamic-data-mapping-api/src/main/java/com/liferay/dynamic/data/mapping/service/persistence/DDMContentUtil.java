@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.mapping.model.DDMContent;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -972,6 +973,17 @@ public class DDMContentUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<DDMContentPersistence, DDMContentPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(DDMContentPersistence.class);
+	private static ServiceTracker<DDMContentPersistence, DDMContentPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(DDMContentPersistence.class);
+
+		ServiceTracker<DDMContentPersistence, DDMContentPersistence> serviceTracker =
+			new ServiceTracker<DDMContentPersistence, DDMContentPersistence>(bundle.getBundleContext(),
+				DDMContentPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

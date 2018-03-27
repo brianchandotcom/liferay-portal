@@ -16,7 +16,8 @@ package com.liferay.screens.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -88,6 +89,17 @@ public class ScreensDDLRecordServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<ScreensDDLRecordService, ScreensDDLRecordService> _serviceTracker =
-		ServiceTrackerFactory.open(ScreensDDLRecordService.class);
+	private static ServiceTracker<ScreensDDLRecordService, ScreensDDLRecordService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(ScreensDDLRecordService.class);
+
+		ServiceTracker<ScreensDDLRecordService, ScreensDDLRecordService> serviceTracker =
+			new ServiceTracker<ScreensDDLRecordService, ScreensDDLRecordService>(bundle.getBundleContext(),
+				ScreensDDLRecordService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

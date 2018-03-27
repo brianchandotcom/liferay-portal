@@ -16,7 +16,8 @@ package com.liferay.knowledge.base.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -375,6 +376,17 @@ public class KBTemplateLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<KBTemplateLocalService, KBTemplateLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(KBTemplateLocalService.class);
+	private static ServiceTracker<KBTemplateLocalService, KBTemplateLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(KBTemplateLocalService.class);
+
+		ServiceTracker<KBTemplateLocalService, KBTemplateLocalService> serviceTracker =
+			new ServiceTracker<KBTemplateLocalService, KBTemplateLocalService>(bundle.getBundleContext(),
+				KBTemplateLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

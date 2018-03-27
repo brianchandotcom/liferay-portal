@@ -16,13 +16,14 @@ package com.liferay.shopping.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import com.liferay.shopping.model.ShoppingOrderItem;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -423,6 +424,17 @@ public class ShoppingOrderItemUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<ShoppingOrderItemPersistence, ShoppingOrderItemPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(ShoppingOrderItemPersistence.class);
+	private static ServiceTracker<ShoppingOrderItemPersistence, ShoppingOrderItemPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(ShoppingOrderItemPersistence.class);
+
+		ServiceTracker<ShoppingOrderItemPersistence, ShoppingOrderItemPersistence> serviceTracker =
+			new ServiceTracker<ShoppingOrderItemPersistence, ShoppingOrderItemPersistence>(bundle.getBundleContext(),
+				ShoppingOrderItemPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

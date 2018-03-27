@@ -16,13 +16,14 @@ package com.liferay.sync.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import com.liferay.sync.model.SyncDevice;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -930,6 +931,17 @@ public class SyncDeviceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<SyncDevicePersistence, SyncDevicePersistence> _serviceTracker =
-		ServiceTrackerFactory.open(SyncDevicePersistence.class);
+	private static ServiceTracker<SyncDevicePersistence, SyncDevicePersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(SyncDevicePersistence.class);
+
+		ServiceTracker<SyncDevicePersistence, SyncDevicePersistence> serviceTracker =
+			new ServiceTracker<SyncDevicePersistence, SyncDevicePersistence>(bundle.getBundleContext(),
+				SyncDevicePersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

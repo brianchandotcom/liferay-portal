@@ -16,7 +16,8 @@ package com.liferay.portal.lock.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -390,6 +391,16 @@ public class LockLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<LockLocalService, LockLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(LockLocalService.class);
+	private static ServiceTracker<LockLocalService, LockLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(LockLocalService.class);
+
+		ServiceTracker<LockLocalService, LockLocalService> serviceTracker = new ServiceTracker<LockLocalService, LockLocalService>(bundle.getBundleContext(),
+				LockLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

@@ -16,12 +16,13 @@ package com.liferay.portal.security.wedeploy.auth.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -397,6 +398,17 @@ public class WeDeployAuthTokenUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<WeDeployAuthTokenPersistence, WeDeployAuthTokenPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(WeDeployAuthTokenPersistence.class);
+	private static ServiceTracker<WeDeployAuthTokenPersistence, WeDeployAuthTokenPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(WeDeployAuthTokenPersistence.class);
+
+		ServiceTracker<WeDeployAuthTokenPersistence, WeDeployAuthTokenPersistence> serviceTracker =
+			new ServiceTracker<WeDeployAuthTokenPersistence, WeDeployAuthTokenPersistence>(bundle.getBundleContext(),
+				WeDeployAuthTokenPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

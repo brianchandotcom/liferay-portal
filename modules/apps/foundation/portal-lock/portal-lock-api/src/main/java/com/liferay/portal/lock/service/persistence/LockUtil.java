@@ -16,12 +16,13 @@ package com.liferay.portal.lock.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.lock.model.Lock;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -820,6 +821,16 @@ public class LockUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<LockPersistence, LockPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(LockPersistence.class);
+	private static ServiceTracker<LockPersistence, LockPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(LockPersistence.class);
+
+		ServiceTracker<LockPersistence, LockPersistence> serviceTracker = new ServiceTracker<LockPersistence, LockPersistence>(bundle.getBundleContext(),
+				LockPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

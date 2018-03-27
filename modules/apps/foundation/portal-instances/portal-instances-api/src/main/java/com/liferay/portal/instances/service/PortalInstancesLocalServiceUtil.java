@@ -16,7 +16,8 @@ package com.liferay.portal.instances.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -116,6 +117,17 @@ public class PortalInstancesLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<PortalInstancesLocalService, PortalInstancesLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(PortalInstancesLocalService.class);
+	private static ServiceTracker<PortalInstancesLocalService, PortalInstancesLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(PortalInstancesLocalService.class);
+
+		ServiceTracker<PortalInstancesLocalService, PortalInstancesLocalService> serviceTracker =
+			new ServiceTracker<PortalInstancesLocalService, PortalInstancesLocalService>(bundle.getBundleContext(),
+				PortalInstancesLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

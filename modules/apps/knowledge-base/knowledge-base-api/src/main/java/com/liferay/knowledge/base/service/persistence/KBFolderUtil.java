@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.knowledge.base.model.KBFolder;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -1055,6 +1056,16 @@ public class KBFolderUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<KBFolderPersistence, KBFolderPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(KBFolderPersistence.class);
+	private static ServiceTracker<KBFolderPersistence, KBFolderPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(KBFolderPersistence.class);
+
+		ServiceTracker<KBFolderPersistence, KBFolderPersistence> serviceTracker = new ServiceTracker<KBFolderPersistence, KBFolderPersistence>(bundle.getBundleContext(),
+				KBFolderPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

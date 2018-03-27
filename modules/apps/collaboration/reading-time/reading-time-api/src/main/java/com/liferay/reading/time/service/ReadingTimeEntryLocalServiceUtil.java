@@ -16,7 +16,8 @@ package com.liferay.reading.time.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -370,6 +371,17 @@ public class ReadingTimeEntryLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<ReadingTimeEntryLocalService, ReadingTimeEntryLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(ReadingTimeEntryLocalService.class);
+	private static ServiceTracker<ReadingTimeEntryLocalService, ReadingTimeEntryLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(ReadingTimeEntryLocalService.class);
+
+		ServiceTracker<ReadingTimeEntryLocalService, ReadingTimeEntryLocalService> serviceTracker =
+			new ServiceTracker<ReadingTimeEntryLocalService, ReadingTimeEntryLocalService>(bundle.getBundleContext(),
+				ReadingTimeEntryLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

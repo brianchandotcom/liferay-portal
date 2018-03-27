@@ -16,7 +16,8 @@ package com.liferay.oauth2.provider.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -55,6 +56,17 @@ public class OAuth2AccessTokenServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<OAuth2AccessTokenService, OAuth2AccessTokenService> _serviceTracker =
-		ServiceTrackerFactory.open(OAuth2AccessTokenService.class);
+	private static ServiceTracker<OAuth2AccessTokenService, OAuth2AccessTokenService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(OAuth2AccessTokenService.class);
+
+		ServiceTracker<OAuth2AccessTokenService, OAuth2AccessTokenService> serviceTracker =
+			new ServiceTracker<OAuth2AccessTokenService, OAuth2AccessTokenService>(bundle.getBundleContext(),
+				OAuth2AccessTokenService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

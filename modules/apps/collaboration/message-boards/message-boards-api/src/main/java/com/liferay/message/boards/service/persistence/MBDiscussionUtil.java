@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.message.boards.model.MBDiscussion;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -934,6 +935,17 @@ public class MBDiscussionUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<MBDiscussionPersistence, MBDiscussionPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(MBDiscussionPersistence.class);
+	private static ServiceTracker<MBDiscussionPersistence, MBDiscussionPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(MBDiscussionPersistence.class);
+
+		ServiceTracker<MBDiscussionPersistence, MBDiscussionPersistence> serviceTracker =
+			new ServiceTracker<MBDiscussionPersistence, MBDiscussionPersistence>(bundle.getBundleContext(),
+				MBDiscussionPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

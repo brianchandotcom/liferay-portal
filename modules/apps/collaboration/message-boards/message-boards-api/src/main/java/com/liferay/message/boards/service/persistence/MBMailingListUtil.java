@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.message.boards.model.MBMailingList;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -877,6 +878,17 @@ public class MBMailingListUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<MBMailingListPersistence, MBMailingListPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(MBMailingListPersistence.class);
+	private static ServiceTracker<MBMailingListPersistence, MBMailingListPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(MBMailingListPersistence.class);
+
+		ServiceTracker<MBMailingListPersistence, MBMailingListPersistence> serviceTracker =
+			new ServiceTracker<MBMailingListPersistence, MBMailingListPersistence>(bundle.getBundleContext(),
+				MBMailingListPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

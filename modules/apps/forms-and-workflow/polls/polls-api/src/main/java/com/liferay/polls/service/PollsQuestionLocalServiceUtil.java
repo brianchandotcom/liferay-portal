@@ -16,7 +16,8 @@ package com.liferay.polls.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -448,6 +449,17 @@ public class PollsQuestionLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<PollsQuestionLocalService, PollsQuestionLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(PollsQuestionLocalService.class);
+	private static ServiceTracker<PollsQuestionLocalService, PollsQuestionLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(PollsQuestionLocalService.class);
+
+		ServiceTracker<PollsQuestionLocalService, PollsQuestionLocalService> serviceTracker =
+			new ServiceTracker<PollsQuestionLocalService, PollsQuestionLocalService>(bundle.getBundleContext(),
+				PollsQuestionLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

@@ -16,13 +16,14 @@ package com.liferay.site.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import com.liferay.site.model.SiteFriendlyURL;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -1042,6 +1043,17 @@ public class SiteFriendlyURLUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<SiteFriendlyURLPersistence, SiteFriendlyURLPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(SiteFriendlyURLPersistence.class);
+	private static ServiceTracker<SiteFriendlyURLPersistence, SiteFriendlyURLPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(SiteFriendlyURLPersistence.class);
+
+		ServiceTracker<SiteFriendlyURLPersistence, SiteFriendlyURLPersistence> serviceTracker =
+			new ServiceTracker<SiteFriendlyURLPersistence, SiteFriendlyURLPersistence>(bundle.getBundleContext(),
+				SiteFriendlyURLPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

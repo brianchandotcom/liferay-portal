@@ -87,6 +87,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 				<portlet:param name="portletResource" value="<%= portletDisplay.getPortletName() %>" />
 				<portlet:param name="parentLayoutId" value="<%= String.valueOf(layoutsAdminDisplayContext.getParentLayoutId()) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(layoutsAdminDisplayContext.isPrivateLayout()) %>" />
+				<portlet:param name="explicitCreation" value="<%= String.valueOf(true) %>" />
 			</portlet:actionURL>
 
 			<%

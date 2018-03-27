@@ -223,9 +223,8 @@ public class Changeset implements Serializable {
 					_getChildrenStagedModels(
 						stagedModel, parentClassName, hierarchyFunction));
 			}
-			else {
-				stagedModels.add(stagedModel);
-			}
+
+			stagedModels.add(stagedModel);
 		}
 
 		return stagedModels;

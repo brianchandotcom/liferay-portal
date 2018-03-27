@@ -116,7 +116,7 @@ boolean hasManageCommerceTaxMethodsPermission = CommercePermission.contains(perm
 	</liferay-portlet:renderURL>
 
 	<%
-	String url = commerceTaxFixedRatesDisplayContext.getAddTaxRateURL("editCommerceTaxFixedRate", true, addCommerceTaxFixedRateURL);
+	String url = commerceTaxFixedRatesDisplayContext.getEditTaxRateURL("editCommerceTaxFixedRate", true, addCommerceTaxFixedRateURL);
 	%>
 
 	<liferay-frontend:add-menu>

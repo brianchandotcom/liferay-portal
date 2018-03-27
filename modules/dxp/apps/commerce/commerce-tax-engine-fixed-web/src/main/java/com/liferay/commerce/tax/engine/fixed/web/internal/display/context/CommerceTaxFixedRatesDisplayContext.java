@@ -59,7 +59,25 @@ public class CommerceTaxFixedRatesDisplayContext
 		_commerceTaxFixedRateService = commerceTaxFixedRateService;
 	}
 
-	public String getAddTaxRateURL(
+	public List<CommerceTaxCategory> getAvailableCommerceTaxCategories()
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return _commerceTaxFixedRateService.getAvailableCommerceTaxCategories(
+			themeDisplay.getScopeGroupId());
+	}
+
+	public CommerceTaxFixedRate getCommerceTaxFixedRate() {
+		long commerceTaxFixedRateId = ParamUtil.getLong(
+			renderRequest, "commerceTaxFixedRateId");
+
+		return _commerceTaxFixedRateService.fetchCommerceTaxFixedRate(
+			commerceTaxFixedRateId);
+	}
+
+	public String getEditTaxRateURL(
 		String functionName, boolean isNew, String url) {
 
 		StringBundler sb = new StringBundler(11);
@@ -77,24 +95,6 @@ public class CommerceTaxFixedRatesDisplayContext
 		sb.append(StringPool.SEMICOLON);
 
 		return sb.toString();
-	}
-
-	public List<CommerceTaxCategory> getAvailableCommerceTaxCategories()
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return _commerceTaxFixedRateService.getAvailableCommerceTaxCategories(
-			themeDisplay.getScopeGroupId());
-	}
-
-	public CommerceTaxFixedRate getCommerceTaxFixedRate() {
-		long commerceTaxFixedRateId = ParamUtil.getLong(
-			renderRequest, "commerceTaxFixedRateId");
-
-		return _commerceTaxFixedRateService.fetchCommerceTaxFixedRate(
-			commerceTaxFixedRateId);
 	}
 
 	@Override

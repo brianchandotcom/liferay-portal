@@ -423,10 +423,12 @@ public class ClusterLinkBootstrapLoaderHelperUtil {
 						for (Serializable key : keys) {
 							Serializable value = portalCache.get(key);
 
-							CacheElement cacheElement = new CacheElement(
-								key, value);
+							if (value != null) {
+								CacheElement cacheElement = new CacheElement(
+									key, value);
 
-							objectOutputStream.writeObject(cacheElement);
+								objectOutputStream.writeObject(cacheElement);
+							}
 						}
 					}
 

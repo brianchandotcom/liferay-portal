@@ -39,16 +39,11 @@ public class IncompleteProcessMessageTag extends IncludeTag {
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
-	public void setTaskExecutorClassName(String taskExecutorClassName) {
-		_taskExecutorClassName = taskExecutorClassName;
-	}
-
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 
 		_localPublishing = false;
-		_taskExecutorClassName = null;
 	}
 
 	@Override
@@ -61,14 +56,10 @@ public class IncompleteProcessMessageTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-staging:incomplete-process-message:localPublishing",
 			_localPublishing);
-		request.setAttribute(
-			"liferay-staging:incomplete-process-message:taskExecutorClassName",
-			_taskExecutorClassName);
 	}
 
 	private static final String _PAGE = "/incomplete_process_message/page.jsp";
 
 	private boolean _localPublishing;
-	private String _taskExecutorClassName;
 
 }

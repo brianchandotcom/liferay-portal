@@ -175,7 +175,6 @@
 
 <liferay-staging:incomplete-process-message
 	localPublishing="<%= localPublishing %>"
-	taskExecutorClassName="<%= taskExecutorClassName %>"
 />
 
 <aui:script>

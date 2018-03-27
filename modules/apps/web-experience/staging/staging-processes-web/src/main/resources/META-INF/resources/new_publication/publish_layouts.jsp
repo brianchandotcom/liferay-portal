@@ -16,153 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String cmd = ParamUtil.getString(request, Constants.CMD, Constants.PUBLISH_TO_LIVE);
-String originalCmd = ParamUtil.getString(request, "originalCmd", Constants.PUBLISH_TO_LIVE);
-
-if (Validator.isNull(cmd)) {
-	cmd = originalCmd;
-}
-
-long exportImportConfigurationId = 0;
-
-ExportImportConfiguration exportImportConfiguration = null;
-
-Map<String, Serializable> exportImportConfigurationSettingsMap = Collections.emptyMap();
-
-Map<String, String[]> parameterMap = Collections.emptyMap();
-
-if (SessionMessages.contains(liferayPortletRequest, portletDisplay.getId() + "exportImportConfigurationId")) {
-	exportImportConfigurationId = (Long)SessionMessages.get(liferayPortletRequest, portletDisplay.getId() + "exportImportConfigurationId");
-
-	if (exportImportConfigurationId > 0) {
-		exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
-	}
-
-	exportImportConfigurationSettingsMap = (Map<String, Serializable>)SessionMessages.get(liferayPortletRequest, portletDisplay.getId() + "settingsMap");
-
-	parameterMap = (Map<String, String[]>)exportImportConfigurationSettingsMap.get("parameterMap");
-}
-else {
-	exportImportConfigurationId = ParamUtil.getLong(request, "exportImportConfigurationId");
-
-	if (exportImportConfigurationId > 0) {
-		exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
-
-		exportImportConfigurationSettingsMap = exportImportConfiguration.getSettingsMap();
-
-		parameterMap = (Map<String, String[]>)exportImportConfigurationSettingsMap.get("parameterMap");
-	}
-}
-
-boolean configuredPublish = (exportImportConfiguration == null) ? false : true;
-
-long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
-String layoutSetBranchName = ParamUtil.getString(request, "layoutSetBranchName");
-
-boolean localPublishing = true;
-
-if ((liveGroup.isStaged() && liveGroup.isStagedRemotely()) || cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
-	localPublishing = false;
-}
-
-String treeId = "liveLayoutsTree";
-
-if (liveGroup.isStaged()) {
-	if (!liveGroup.isStagedRemotely()) {
-		treeId = "stageLayoutsTree";
-	}
-	else {
-		treeId = "remoteLayoutsTree";
-	}
-}
-
-treeId = treeId + liveGroupId;
-
-String publishMessageKey = "publish-to-live";
-
-if (cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
-	publishMessageKey = "publish-to-remote-live";
-}
-
-long selPlid = ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-Layout selLayout = null;
-
-try {
-	selLayout = LayoutLocalServiceUtil.getLayout(selPlid);
-}
-catch (NoSuchLayoutException nsle) {
-}
-
-if (configuredPublish) {
-	privateLayout = MapUtil.getBoolean(exportImportConfigurationSettingsMap, "privateLayout", privateLayout);
-}
-
-treeId = treeId + privateLayout + layoutSetBranchId;
-
-long[] selectedLayoutIds = null;
-
-if (configuredPublish) {
-	if (cmd.equals(Constants.PUBLISH_TO_LIVE)) {
-		selectedLayoutIds = GetterUtil.getLongValues(exportImportConfigurationSettingsMap.get("layoutIds"));
-	}
-	else if (cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
-		Map<Long, Boolean> layoutIdMap = (Map<Long, Boolean>)exportImportConfigurationSettingsMap.get("layoutIdMap");
-
-		selectedLayoutIds = ExportImportHelperUtil.getLayoutIds(layoutIdMap);
-	}
-}
-else {
-	String openNodes = SessionTreeJSClicks.getOpenNodes(request, treeId + "SelectedNode");
-
-	if (openNodes == null) {
-		selectedLayoutIds = ExportImportHelperUtil.getAllLayoutIds(stagingGroupId, privateLayout);
-
-		for (long selectedLayoutId : selectedLayoutIds) {
-			SessionTreeJSClicks.openLayoutNodes(request, treeId + "SelectedNode", privateLayout, selectedLayoutId, true);
-		}
-	}
-	else {
-		selectedLayoutIds = GetterUtil.getLongValues(StringUtil.split(openNodes, ','));
-	}
-}
-
-if (group.isStaged() && group.isStagedRemotely()) {
-	cmd = Constants.PUBLISH_TO_REMOTE;
-}
-
-PortletURL portletURL = renderResponse.createActionURL();
-
-portletURL.setParameter(ActionRequest.ACTION_NAME, "publishLayouts");
-portletURL.setParameter("mvcRenderCommandName", "publishLayouts");
-portletURL.setParameter("stagingGroupId", String.valueOf(stagingGroupId));
-
-PortletURL renderURL = renderResponse.createRenderURL();
-
-renderURL.setParameter("mvcRenderCommandName", "publishLayouts");
-renderURL.setParameter("groupId", String.valueOf(stagingGroupId));
-renderURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranchId));
-renderURL.setParameter("layoutSetBranchName", layoutSetBranchName);
-renderURL.setParameter("privateLayout", String.valueOf(privateLayout));
-
-response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
-
-renderResponse.setTitle(!configuredPublish ? LanguageUtil.get(request, "new-publication") : LanguageUtil.format(request, "new-publication-based-on-x", exportImportConfiguration.getName(), false));
-%>
-
-<c:if test='<%= SessionMessages.contains(renderRequest, "requestProcessed") %>'>
-
-	<%
-	String successMessage = (String)SessionMessages.get(renderRequest, "requestProcessed");
-	%>
-
-	<c:if test='<%= Validator.isNotNull(successMessage) && !successMessage.equals("request_processed") %>'>
-		<div class="alert alert-success">
-			<%= HtmlUtil.escape(successMessage) %>
-		</div>
-	</c:if>
-</c:if>
+<%@ include file="/new_publication/publish_layouts_setup.jspf" %>
 
 <portlet:renderURL var="basePortletURL">
 	<portlet:param name="mvcRenderCommandName" value="processesList" />
@@ -185,85 +39,21 @@ renderResponse.setTitle(!configuredPublish ? LanguageUtil.get(request, "new-publ
 	<aui:input name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="hidden" value="<%= true %>" />
 	<aui:input name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>" type="hidden" value="<%= true %>" />
 
-	<liferay-ui:error exception="<%= DuplicateLockException.class %>" message="another-publishing-process-is-in-progress,-please-try-again-later" />
-
-	<liferay-ui:error exception="<%= LayoutPrototypeException.class %>">
-
-		<%
-		LayoutPrototypeException lpe = (LayoutPrototypeException)errorException;
-		%>
-
-		<liferay-ui:message key="the-pages-could-not-be-published-because-one-or-more-required-page-templates-could-not-be-found-on-the-remote-system.-please-import-the-following-templates-manually" />
-
-		<ul>
-
-			<%
-			List<Tuple> missingLayoutPrototypes = lpe.getMissingLayoutPrototypes();
-
-			for (Tuple missingLayoutPrototype : missingLayoutPrototypes) {
-				String layoutPrototypeClassName = (String)missingLayoutPrototype.getObject(0);
-				String layoutPrototypeUuid = (String)missingLayoutPrototype.getObject(1);
-				String layoutPrototypeName = (String)missingLayoutPrototype.getObject(2);
-			%>
-
-				<li>
-					<%= ResourceActionsUtil.getModelResource(locale, layoutPrototypeClassName) %>: <strong><%= HtmlUtil.escape(layoutPrototypeName) %></strong> (<%= HtmlUtil.escape(layoutPrototypeUuid) %>)
-				</li>
-
-			<%
-			}
-			%>
-
-		</ul>
-	</liferay-ui:error>
-
-	<%@ include file="/error/error_auth_exception.jspf" %>
-
-	<%@ include file="/error/error_illegal_argument_exception.jspf" %>
-
-	<%@ include file="/error/error_remote_export_exception.jspf" %>
-
-	<%@ include file="/error/error_remote_options_exception.jspf" %>
-
-	<liferay-ui:error exception="<%= SystemException.class %>">
-
-		<%
-		SystemException se = (SystemException)errorException;
-		%>
-
-		<liferay-ui:message key="<%= se.getMessage() %>" />
-	</liferay-ui:error>
+	<liferay-staging:process-error
+		authException="<%= true %>"
+		duplicateLockException="<%= true %>"
+		illegalArgumentException="<%= true %>"
+		layoutPrototypeException="<%= true %>"
+		remoteExportException="<%= true %>"
+		remoteOptionsException="<%= true %>"
+		systemException="<%= true %>"
+	/>
 
 	<div id="<portlet:namespace />publishOptions">
 		<div class="export-dialog-tree">
-
-			<%
-			String taskExecutorClassName = localPublishing ? BackgroundTaskExecutorNames.LAYOUT_STAGING_BACKGROUND_TASK_EXECUTOR : BackgroundTaskExecutorNames.LAYOUT_REMOTE_STAGING_BACKGROUND_TASK_EXECUTOR;
-
-			int incompleteBackgroundTaskCount = BackgroundTaskManagerUtil.getBackgroundTasksCount(stagingGroupId, taskExecutorClassName, false);
-
-			incompleteBackgroundTaskCount += BackgroundTaskManagerUtil.getBackgroundTasksCount(liveGroupId, taskExecutorClassName, false);
-			%>
-
-			<div class="<%= incompleteBackgroundTaskCount == 0 ? "hide" : "in-progress" %>" id="<portlet:namespace />incompleteProcessMessage">
-				<liferay-util:include page="/processes_list/incomplete_processes_message.jsp" servletContext="<%= application %>">
-					<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
-				</liferay-util:include>
-			</div>
-
-			<%
-			String scheduleCMD = StringPool.BLANK;
-
-			if (cmd.equals(Constants.PUBLISH_TO_LIVE)) {
-				scheduleCMD = "schedule_publish_to_live";
-			}
-			else if (cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
-				scheduleCMD = "schedule_publish_to_remote";
-			}
-			else if (cmd.equals("copy_from_live")) {
-				scheduleCMD = "schedule_copy_from_live";
-			}
-			%>
+			<liferay-staging:incomplete-process-message
+				localPublishing="<%= localPublishing %>"
+			/>
 
 			<aui:fieldset-group markupView="lexicon">
 				<aui:fieldset>

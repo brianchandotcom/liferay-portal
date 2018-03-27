@@ -32,8 +32,16 @@ public class ProcessErrorTag extends IncludeTag {
 		_authException = authException;
 	}
 
+	public void setDuplicateLockException(boolean duplicateLockException) {
+		_duplicateLockException = duplicateLockException;
+	}
+
 	public void setIllegalArgumentException(boolean illegalArgumentException) {
 		_illegalArgumentException = illegalArgumentException;
+	}
+
+	public void setLayoutPrototypeException(boolean layoutPrototypeException) {
+		_layoutPrototypeException = layoutPrototypeException;
 	}
 
 	public void setNoSuchExceptions(boolean noSuchExceptions) {
@@ -55,15 +63,22 @@ public class ProcessErrorTag extends IncludeTag {
 		_remoteOptionsException = remoteOptionsException;
 	}
 
+	public void setSystemException(boolean systemException) {
+		_systemException = systemException;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 
 		_authException = false;
+		_duplicateLockException = false;
 		_illegalArgumentException = false;
+		_layoutPrototypeException = false;
 		_noSuchExceptions = false;
 		_remoteExportException = false;
 		_remoteOptionsException = false;
+		_systemException = false;
 	}
 
 	@Override
@@ -76,8 +91,14 @@ public class ProcessErrorTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-staging:process-error:authException", _authException);
 		request.setAttribute(
+			"liferay-staging:process-error:duplicateLockException",
+			_duplicateLockException);
+		request.setAttribute(
 			"liferay-staging:process-error:illegalArgumentException",
 			_illegalArgumentException);
+		request.setAttribute(
+			"liferay-staging:process-error:layoutPrototypeException",
+			_layoutPrototypeException);
 		request.setAttribute(
 			"liferay-staging:process-error:noSuchExceptions",
 			_noSuchExceptions);
@@ -87,14 +108,19 @@ public class ProcessErrorTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-staging:process-error:remoteOptionsException",
 			_remoteOptionsException);
+		request.setAttribute(
+			"liferay-staging:process-error:systemException", _systemException);
 	}
 
 	private static final String _PAGE = "/process_error/page.jsp";
 
 	private boolean _authException;
+	private boolean _duplicateLockException;
 	private boolean _illegalArgumentException;
+	private boolean _layoutPrototypeException;
 	private boolean _noSuchExceptions;
 	private boolean _remoteExportException;
 	private boolean _remoteOptionsException;
+	private boolean _systemException;
 
 }

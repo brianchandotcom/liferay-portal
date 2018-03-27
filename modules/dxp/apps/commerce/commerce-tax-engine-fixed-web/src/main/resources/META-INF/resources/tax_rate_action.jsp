@@ -35,7 +35,7 @@ CommerceTaxFixedRate commerceTaxFixedRate = (CommerceTaxFixedRate)row.getObject(
 
 		<liferay-ui:icon
 			message="edit"
-			url='<%= commerceTaxFixedRatesDisplayContext.getEditTaxRateURL("editCommerceTaxFixedRate", false, editURL) %>'
+			url='<%= commerceTaxFixedRatesDisplayContext.getEditTaxRateURL(commerceTaxFixedRate, "editCommerceTaxFixedRate", false, editURL) %>'
 		/>
 
 		<portlet:actionURL name="editCommerceTaxFixedRate" var="deleteURL">

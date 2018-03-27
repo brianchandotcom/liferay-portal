@@ -37,7 +37,7 @@ if (commerceTaxFixedRate != null) {
 	<aui:input name="commerceTaxFixedOptionId" type="hidden" value="<%= commerceTaxFixedRateId %>" />
 	<aui:input name="commerceTaxMethodId" type="hidden" value="<%= commerceTaxMethodId %>" />
 
-	<div class="lfr-form-content">
+	<div class="lfr-form-content sheet">
 		<aui:model-context bean="<%= commerceTaxFixedRate %>" model="<%= CommerceTaxFixedRate.class %>" />
 
 		<c:if test="<%= commerceTaxFixedRate == null %>">
@@ -72,7 +72,7 @@ if (commerceTaxFixedRate != null) {
 	</div>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" name="saveButton" value="save" />
+		<aui:button cssClass="btn-lg" name="saveButton" primary="<%= true %>" value="save" />
 
 		<aui:button cssClass="btn-lg" name="cancelButton" type="cancel" />
 	</aui:button-row>

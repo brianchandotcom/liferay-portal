@@ -76,15 +76,33 @@ public class CommerceTaxFixedRatesDisplayContext
 	}
 
 	public String getEditTaxRateURL(
-		String functionName, boolean isNew, String url) {
+			CommerceTaxFixedRate commerceTaxFixedRate, String functionName,
+			boolean isNew, String url)
+		throws PortalException {
 
-		StringBundler sb = new StringBundler(11);
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String arg = StringPool.BLANK;
+
+		if (!isNew && (commerceTaxFixedRate != null)) {
+			CommerceTaxCategory commerceTaxCategory =
+				commerceTaxFixedRate.getCommerceTaxCategory();
+
+			arg = commerceTaxCategory.getName(themeDisplay.getLanguageId());
+		}
+
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("javascript:");
 		sb.append(renderResponse.getNamespace());
 		sb.append(functionName);
 		sb.append(StringPool.OPEN_PARENTHESIS);
 		sb.append(isNew);
+		sb.append(StringPool.COMMA_AND_SPACE);
+		sb.append(StringPool.APOSTROPHE);
+		sb.append(HtmlUtil.escapeJS(arg));
+		sb.append(StringPool.APOSTROPHE);
 		sb.append(StringPool.COMMA_AND_SPACE);
 		sb.append(StringPool.APOSTROPHE);
 		sb.append(HtmlUtil.escapeJS(url));

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.users.admin.configuration.UserFileUploadsConfiguration;
 
@@ -34,13 +35,15 @@ public class CommerceOrganizationDetailDisplayContext
 	public CommerceOrganizationDetailDisplayContext(
 		CommerceOrganizationHelper commerceOrganizationHelper,
 		CommerceOrganizationService commerceOrganizationService,
-		HttpServletRequest httpServletRequest, Portal portal,
+		HttpServletRequest httpServletRequest,
+		OrganizationLocalService organizationLocalService, Portal portal,
 		UserFileUploadsConfiguration userFileUploadsConfiguration) {
 
 		super(
 			commerceOrganizationHelper, commerceOrganizationService,
 			httpServletRequest, portal);
 
+		_organizationLocalService = organizationLocalService;
 		_userFileUploadsConfiguration = userFileUploadsConfiguration;
 	}
 
@@ -60,10 +63,15 @@ public class CommerceOrganizationDetailDisplayContext
 			organization.getOrganizationId());
 	}
 
+	public String[] getOrganizationTypes() {
+		return _organizationLocalService.getTypes();
+	}
+
 	public UserFileUploadsConfiguration getUserFileUploadsConfiguration() {
 		return _userFileUploadsConfiguration;
 	}
 
+	private final OrganizationLocalService _organizationLocalService;
 	private final UserFileUploadsConfiguration _userFileUploadsConfiguration;
 
 }

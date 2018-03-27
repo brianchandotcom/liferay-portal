@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.tools.DBUpgrader;
+import com.liferay.portal.upgrade.CoreServiceUpgrade;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
@@ -152,6 +153,16 @@ public class SlimRuntimeServlet extends HttpServlet {
 		}
 
 		DBUpgrader.checkRequiredBuildNumber(ReleaseInfo.getParentBuildNumber());
+
+		if (!CoreServiceUpgrade.isInRequiredSchemaVersion()) {
+			String msg =
+				"You must first upgrade the Core to the required Schema " +
+					"Version " + CoreServiceUpgrade.getRequiredSchemaVersion();
+
+			System.out.println(msg);
+
+			throw new RuntimeException(msg);
+		}
 
 		Registry registry = RegistryUtil.getRegistry();
 

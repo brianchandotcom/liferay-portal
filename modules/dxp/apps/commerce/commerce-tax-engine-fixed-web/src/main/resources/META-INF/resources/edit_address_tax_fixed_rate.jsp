@@ -76,32 +76,39 @@ renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
 				<div class="row">
-					<div class="col-md-6">
-						<c:if test="<%= commerceTaxFixedRateAddressRel == null %>">
-							<aui:select disabled="<%= commerceTaxFixedRateAddressRel != null %>" label="tax-category" name="commerceTaxCategoryId">
+					<c:choose>
+						<c:when test="<%= commerceTaxFixedRateAddressRel == null %>">
+							<div class="col-md-6">
+								<aui:select disabled="<%= commerceTaxFixedRateAddressRel != null %>" label="tax-category" name="commerceTaxCategoryId">
 
-								<%
-								List<CommerceTaxCategory> commerceTaxCategories = commerceTaxFixedRateAddressRelsDisplayContext.getAvailableCommerceTaxCategories();
+									<%
+									List<CommerceTaxCategory> commerceTaxCategories = commerceTaxFixedRateAddressRelsDisplayContext.getAvailableCommerceTaxCategories();
 
-								for (CommerceTaxCategory commerceTaxCategory : commerceTaxCategories) {
-								%>
+									for (CommerceTaxCategory commerceTaxCategory : commerceTaxCategories) {
+									%>
 
-									<aui:option
-										label="<%= commerceTaxCategory.getName(locale) %>"
-										value="<%= commerceTaxCategory.getCommerceTaxCategoryId() %>"
-									/>
+										<aui:option
+											label="<%= commerceTaxCategory.getName(languageId) %>"
+											value="<%= commerceTaxCategory.getCommerceTaxCategoryId() %>"
+										/>
 
-								<%
-								}
-								%>
+									<%
+									}
+									%>
 
-							</aui:select>
-						</c:if>
-					</div>
+								</aui:select>
+							</div>
 
-					<div class="col-md-6">
-						<aui:input name="rate" suffix="<%= commerceTaxFixedRateAddressRelsDisplayContext.getCommerceCurrencyCode() %>" />
-					</div>
+							<div class="col-md-6">
+								<aui:input name="rate" suffix="<%= commerceTaxFixedRateAddressRelsDisplayContext.getCommerceCurrencyCode() %>" />
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="col-md-12">
+								<aui:input name="rate" suffix="<%= commerceTaxFixedRateAddressRelsDisplayContext.getCommerceCurrencyCode() %>" />
+							</div>
+						</c:otherwise>
+					</c:choose>
 				</div>
 
 				<div class="row">

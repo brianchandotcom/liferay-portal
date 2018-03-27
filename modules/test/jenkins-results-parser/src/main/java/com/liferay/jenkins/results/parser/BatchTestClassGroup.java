@@ -273,6 +273,28 @@ public class TestBatchGroup {
 						return filePath.replace(".java", ".class");
 					}
 
+					private boolean _pathExcluded(Path path) {
+						return _pathMatches(
+							path, _testClassNamesExcludesPathMatchers);
+					}
+
+					private boolean _pathIncluded(Path path) {
+						return _pathMatches(
+							path, _testClassNamesIncludesPathMatchers);
+					}
+
+					private boolean _pathMatches(
+						Path path, List<PathMatcher> pathMatchers) {
+
+						for (PathMatcher pathMatcher : pathMatchers) {
+							if (pathMatcher.matches(path)) {
+								return true;
+							}
+						}
+
+						return false;
+					}
+
 				});
 		}
 		catch (IOException ioe) {
@@ -344,24 +366,6 @@ public class TestBatchGroup {
 		}
 
 		return null;
-	}
-
-	private boolean _pathExcluded(Path path) {
-		return _pathMatches(path, _testClassNamesExcludesPathMatchers);
-	}
-
-	private boolean _pathIncluded(Path path) {
-		return _pathMatches(path, _testClassNamesIncludesPathMatchers);
-	}
-
-	private boolean _pathMatches(Path path, List<PathMatcher> pathMatchers) {
-		for (PathMatcher pathMatcher : pathMatchers) {
-			if (pathMatcher.matches(path)) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	private void _setTestBatchCurrentBranch() {

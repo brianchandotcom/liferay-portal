@@ -187,7 +187,7 @@ public class ModulesStructureTest {
 
 							_testThemeBuildScripts(dirPath);
 						}
-						else {
+						else if (!dirName.contains("project-templates")) {
 							Path packageLockJSONPath = dirPath.resolve(
 								"package-lock.json");
 

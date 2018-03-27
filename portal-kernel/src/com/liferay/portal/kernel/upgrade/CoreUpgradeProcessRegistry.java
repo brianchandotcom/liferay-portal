@@ -24,6 +24,6 @@ import java.util.TreeMap;
 public interface CoreUpgradeProcessRegistry {
 
 	public void registerUpgradeProcesses(
-		TreeMap<Version, Class<?>> upgradeProcesses);
+		TreeMap<Version, UpgradeProcess> upgradeProcesses);
 
 }

@@ -256,12 +256,16 @@
 			<property name="allowedClassNames" value="com.liferay.blogs.verify.VerifyBlogsTrackbacks" />
 			<property name="allowedClassNames" value="com.liferay.bookmarks.configuration.definition.BookmarksGroupServiceConfigurationBeanDeclaration" />
 			<property name="allowedClassNames" value="com.liferay.bookmarks.configuration.definition.BookmarksGroupServiceConfigurationPidMapping" />
+			<property name="allowedClassNames" value="com.liferay.bookmarks.trash.BookmarksEntryTrashHandler" />
+			<property name="allowedClassNames" value="com.liferay.bookmarks.trash.BookmarksFolderTrashHandler" />
+			<property name="allowedClassNames" value="com.liferay.bookmarks.verify.BookmarksServiceVerifyProcess" />
 			<property name="allowedClassNames" value="com.liferay.captcha.configuration.CaptchaConfigurationModelListener" />
 			<property name="allowedClassNames" value="com.liferay.captcha.configuration.definition.CaptchaConfigurationBeanDeclaration" />
 			<property name="allowedClassNames" value="com.liferay.captcha.recaptcha.ReCaptchaImpl" />
 			<property name="allowedClassNames" value="com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl" />
 			<property name="allowedClassNames" value="com.liferay.captcha.util.CaptchaUtil" />
 			<property name="allowedClassNames" value="com.liferay.comment.internal.jsonws.CommentManagerJSONWS" />
+			<property name="allowedClassNames" value="com.liferay.contacts.web.internal.social.ContactsCenterRequestInterpreter" />
 			<property name="allowedClassNames" value="com.liferay.document.library.definition.DLConfigurationBeanDeclaration" />
 			<property name="allowedClassNames" value="com.liferay.document.library.definition.DLFileEntryConfigurationBeanDeclaration" />
 			<property name="allowedClassNames" value="com.liferay.document.library.demo.data.creator.internal.BaseFolderDemoDataCreatorImpl" />
@@ -272,6 +276,7 @@
 			<property name="allowedClassNames" value="com.liferay.dynamic.data.mapping.form.analytics.internal.model.listener.DDMFormBaseModelListener" />
 			<property name="allowedClassNames" value="com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry" />
 			<property name="allowedClassNames" value="com.liferay.exportimport.lifecycle.NotificationExportImportLifecycleListener" />
+			<property name="allowedClassNames" value="com.liferay.exportimport.web.trash.ExportImportConfigurationTrashHandler" />
 			<property name="allowedClassNames" value="com.liferay.flags.configuration.FlagsGroupServiceConfigurationBeanDeclaration" />
 			<property name="allowedClassNames" value="com.liferay.fragment.processor.FragmentEntryProcessorRegistry" />
 			<property name="allowedClassNames" value="com.liferay.fragment.processor.PortletRegistry" />
@@ -370,6 +375,9 @@
 			<property name="allowedClassNames" value="com.liferay.wiki.editor.link.browse.web.internal.editor.configuration.BaseWikiContentAlloyEditorLinkBrowseConfigContributor" />
 			<property name="allowedClassNames" value="com.liferay.wiki.internal.item.selector.handler.WikiAttachmentItemSelectorCriterionHandler" />
 			<property name="allowedClassNames" value="com.liferay.wsrp.configuration.definition.WSRPGroupServiceConfigurationBeanDeclaration" />
+			<property name="allowedClassNames" value="com.liferay.wiki.trash.WikiNodeTrashHandler" />
+			<property name="allowedClassNames" value="com.liferay.wiki.trash.WikiPageTrashHandler" />
+			<property name="allowedClassNames" value="com.liferay.wiki.verify.WikiServiceVerifyProcess" />
 			<property name="allowedClassNames" value="com.liferay.xstream.configurator.XStreamConfiguratorRegistryUtil" />
 			<property name="allowedClassNames" value="org.eclipse.core.runtime.FileLocator" />
 		</check>

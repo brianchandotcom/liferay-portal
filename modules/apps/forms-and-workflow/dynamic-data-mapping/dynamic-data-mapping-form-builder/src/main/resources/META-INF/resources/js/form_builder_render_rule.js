@@ -100,7 +100,7 @@ AUI.add(
 						boundingBox.delegate('click', A.bind(instance._handleDeleteActionClick, instance), '.action-card-delete');
 						boundingBox.delegate('click', A.bind(instance._handleSaveClick, instance), '.form-builder-rule-settings-save');
 
-						A.one('body').delegate('click', A.bind(instance._handleFormBuildClick, instance), '#' + Liferay.DDM.Settings.portletNamespace + 'showForm');
+						A.one('body').delegate('click', A.bind(instance._handleFormBuilderClick, instance), '#' + Liferay.DDM.Settings.portletNamespace + 'showForm');
 
 						instance.after(instance._toggleDeleteActionButton, instance, '_addAction');
 						instance.after(instance._validateRule, instance, '_addCondition');
@@ -512,7 +512,7 @@ AUI.add(
 						instance._validateRule();
 					},
 
-					_handleFormBuildClick: function() {
+					_handleFormBuilderClick: function() {
 						var instance = this;
 
 						var actions = {};

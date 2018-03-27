@@ -83,11 +83,15 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 						property="entityId"
 					/>
 
+					<%
+					String editURL = uadEntityDisplay.getEditURL(uadEntity.getEntity(), liferayPortletRequest, liferayPortletResponse);
+					%>
+
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-expand"
-						href="<%= uadEntityDisplay.getEditURL(uadEntity, liferayPortletRequest, liferayPortletResponse) %>"
+						href="<%= editURL %>"
 						name="edit-url"
-						value="<%= uadEntityDisplay.getEditURL(uadEntity, liferayPortletRequest, liferayPortletResponse) %>"
+						value="<%= editURL %>"
 					/>
 
 					<liferay-ui:search-container-column-jsp

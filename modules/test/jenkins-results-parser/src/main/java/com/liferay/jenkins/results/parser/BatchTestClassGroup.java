@@ -463,22 +463,24 @@ public class TestBatchGroup {
 		String testClassNamesExcludesPropertyValue = _getFirstPropertyValue(
 			_portalTestProperties, propertyNames);
 
-		if ((testClassNamesExcludesPropertyValue != null) &&
-			!testClassNamesExcludesPropertyValue.isEmpty()) {
+		if ((testClassNamesExcludesPropertyValue == null) ||
+			testClassNamesExcludesPropertyValue.isEmpty()) {
 
-			List<String> testClassNamesExcludesRelativeGlobs = Arrays.asList(
-				testClassNamesExcludesPropertyValue.split(","));
-
-			if (_testBatchCurrentBranch) {
-				testClassNamesExcludesRelativeGlobs =
-					_getCurrentBranchTestClassNamesRelativeGlobs(
-						testClassNamesExcludesRelativeGlobs);
-			}
-
-			_testClassNamesExcludesPathMatchers.addAll(
-				_getTestClassNamesPathMatchers(
-					testClassNamesExcludesRelativeGlobs));
+			return;
 		}
+
+		List<String> testClassNamesExcludesRelativeGlobs = Arrays.asList(
+			testClassNamesExcludesPropertyValue.split(","));
+
+		if (_testBatchCurrentBranch) {
+			testClassNamesExcludesRelativeGlobs =
+				_getCurrentBranchTestClassNamesRelativeGlobs(
+					testClassNamesExcludesRelativeGlobs);
+		}
+
+		_testClassNamesExcludesPathMatchers.addAll(
+			_getTestClassNamesPathMatchers(
+				testClassNamesExcludesRelativeGlobs));
 	}
 
 	private void _setTestClassNamesIncludesRelativeGlobs() {
@@ -516,22 +518,24 @@ public class TestBatchGroup {
 		String testClassNamesIncludesPropertyValue = _getFirstPropertyValue(
 			_portalTestProperties, propertyNames);
 
-		if ((testClassNamesIncludesPropertyValue != null) &&
-			!testClassNamesIncludesPropertyValue.isEmpty()) {
+		if ((testClassNamesIncludesPropertyValue == null) ||
+			testClassNamesIncludesPropertyValue.isEmpty()) {
 
-			List<String> testClassNamesIncludesRelativeGlobs = Arrays.asList(
-				testClassNamesIncludesPropertyValue.split(","));
-
-			if (_testBatchCurrentBranch) {
-				testClassNamesIncludesRelativeGlobs =
-					_getCurrentBranchTestClassNamesRelativeGlobs(
-						testClassNamesIncludesRelativeGlobs);
-			}
-
-			_testClassNamesIncludesPathMatchers.addAll(
-				_getTestClassNamesPathMatchers(
-					testClassNamesIncludesRelativeGlobs));
+			return;
 		}
+
+		List<String> testClassNamesIncludesRelativeGlobs = Arrays.asList(
+			testClassNamesIncludesPropertyValue.split(","));
+
+		if (_testBatchCurrentBranch) {
+			testClassNamesIncludesRelativeGlobs =
+				_getCurrentBranchTestClassNamesRelativeGlobs(
+					testClassNamesIncludesRelativeGlobs);
+		}
+
+		_testClassNamesIncludesPathMatchers.addAll(
+			_getTestClassNamesPathMatchers(
+				testClassNamesIncludesRelativeGlobs));
 	}
 
 	private static final int _DEFAULT_MAX_CLASS_GROUP_SIZE = 5000;

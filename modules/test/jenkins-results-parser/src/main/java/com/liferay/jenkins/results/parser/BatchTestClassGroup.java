@@ -65,13 +65,10 @@ public class TestBatchGroup {
 			new File(
 				_gitWorkingDirectory.getWorkingDirectory(), "test.properties"));
 
-		_setCurrentBranch();
+		_setTestBatchCurrentBranch();
 
 		_setTestClassNamesExcludes();
 		_setTestClassNamesIncludes();
-
-		_setTestClassNamesExcludesPathMatchers();
-		_setTestClassNamesIncludesPathMatchers();
 
 		_setTestClassGroups();
 	}
@@ -96,11 +93,11 @@ public class TestBatchGroup {
 		return _testClassGroups.get(i);
 	}
 
-	private List<String> _getCurrentBranchTestClassGlobs(
-			List<String> testClassGlobs)
+	private List<String> _getCurrentBranchTestClassNamesGlobs(
+			List<String> testClassNamesGlobs)
 		throws IOException {
 
-		List<String> currentBranchTestClassGlobs = new ArrayList<>();
+		List<String> currentBranchTestClassNameGlobs = new ArrayList<>();
 
 		File workingDirectory = _gitWorkingDirectory.getWorkingDirectory();
 
@@ -116,18 +113,19 @@ public class TestBatchGroup {
 			moduleGroupDirPath = moduleGroupDirPath.replace(
 				workingDirectory.getCanonicalPath() + "/", "");
 
-			for (String testClassGlob : testClassGlobs) {
-				currentBranchTestClassGlobs.add(
-					moduleGroupDirPath + "/" + testClassGlob);
+			for (String testClassNamesGlob : testClassNamesGlobs) {
+				currentBranchTestClassNameGlobs.add(
+					moduleGroupDirPath + "/" + testClassNamesGlob);
 
-				if (testClassGlob.startsWith("**/")) {
-					currentBranchTestClassGlobs.add(
-						moduleGroupDirPath + "/" + testClassGlob.substring(3));
+				if (testClassNamesGlob.startsWith("**/")) {
+					currentBranchTestClassNameGlobs.add(
+						moduleGroupDirPath + "/" +
+							testClassNamesGlob.substring(3));
 				}
 			}
 		}
 
-		return currentBranchTestClassGlobs;
+		return currentBranchTestClassNameGlobs;
 	}
 
 	private int _getMaxClassGroupSize() {
@@ -212,12 +210,7 @@ public class TestBatchGroup {
 						Path filePath, BasicFileAttributes attrs)
 					throws IOException {
 
-					if (filePath.toFile().isDirectory()) {
-						visitFile(filePath, attrs);
-					}
-					else if (_pathIncluded(filePath) &&
-							 !_pathExcluded(filePath)) {
-
+					if (_pathIncluded(filePath) && !_pathExcluded(filePath)) {
 						testClassFileNames.add(
 							_getPackagePath(filePath.toString()));
 					}
@@ -245,7 +238,7 @@ public class TestBatchGroup {
 	}
 
 	private List<PathMatcher> _getTestClassNamesPathMatchers(
-		List<String> testClassGlobs) {
+		List<String> testClassNamesGlobs) {
 
 		List<PathMatcher> pathMatchers = new ArrayList<>();
 
@@ -253,12 +246,12 @@ public class TestBatchGroup {
 
 		String workingDirectoryPath = workingDirectory.getAbsolutePath();
 
-		for (String testClassGlob : testClassGlobs) {
+		for (String testClassNamesGlob : testClassNamesGlobs) {
 			FileSystem fileSystem = FileSystems.getDefault();
 
 			pathMatchers.add(
 				fileSystem.getPathMatcher(
-					"glob:" + workingDirectoryPath + "/" + testClassGlob));
+					"glob:" + workingDirectoryPath + "/" + testClassNamesGlob));
 		}
 
 		return pathMatchers;
@@ -323,7 +316,7 @@ public class TestBatchGroup {
 		return false;
 	}
 
-	private void _setCurrentBranch() {
+	private void _setTestBatchCurrentBranch() {
 		List<String> orderedPropertyNames = new ArrayList<>();
 
 		if (_testSuiteName != null) {
@@ -343,7 +336,7 @@ public class TestBatchGroup {
 			return;
 		}
 
-		_testBatchCurrentBranch = false;
+		_testBatchCurrentBranch = _DEFAULT_TEST_BATCH_CURRENT_BRANCH;
 	}
 
 	private void _setTestClassGroups() throws Exception {
@@ -404,22 +397,22 @@ public class TestBatchGroup {
 		if ((testClassNamesExcludes != null) &&
 			!testClassNamesExcludes.isEmpty()) {
 
-			List<String> testClassExcludeGlobs = Arrays.asList(
+			List<String> testClassNamesExcludesGlobs = Arrays.asList(
 				testClassNamesExcludes.split(","));
 
 			if (_testBatchCurrentBranch) {
-				_testClassNamesExcludes.addAll(
-					_getCurrentBranchTestClassGlobs(testClassExcludeGlobs));
+				_testClassNamesExcludesGlobs.addAll(
+					_getCurrentBranchTestClassNamesGlobs(
+						testClassNamesExcludesGlobs));
 			}
 			else {
-				_testClassNamesExcludes.addAll(testClassExcludeGlobs);
+				_testClassNamesExcludesGlobs.addAll(
+					testClassNamesExcludesGlobs);
 			}
 		}
-	}
 
-	private void _setTestClassNamesExcludesPathMatchers() {
 		_testClassNamesExcludesPathMatchers.addAll(
-			_getTestClassNamesPathMatchers(_testClassNamesExcludes));
+			_getTestClassNamesPathMatchers(_testClassNamesExcludesGlobs));
 	}
 
 	private void _setTestClassNamesIncludes() throws IOException {
@@ -456,25 +449,27 @@ public class TestBatchGroup {
 		if ((testClassNamesIncludes != null) &&
 			!testClassNamesIncludes.isEmpty()) {
 
-			List<String> testClassIncludeGlobs = Arrays.asList(
+			List<String> testClassNamesIncludesGlobs = Arrays.asList(
 				testClassNamesIncludes.split(","));
 
 			if (_testBatchCurrentBranch) {
-				_testClassNamesIncludes.addAll(
-					_getCurrentBranchTestClassGlobs(testClassIncludeGlobs));
+				_testClassNamesIncludesGlobs.addAll(
+					_getCurrentBranchTestClassNamesGlobs(
+						testClassNamesIncludesGlobs));
 			}
 			else {
-				_testClassNamesIncludes.addAll(testClassIncludeGlobs);
+				_testClassNamesIncludesGlobs.addAll(
+					testClassNamesIncludesGlobs);
 			}
 		}
-	}
 
-	private void _setTestClassNamesIncludesPathMatchers() {
 		_testClassNamesIncludesPathMatchers.addAll(
-			_getTestClassNamesPathMatchers(_testClassNamesIncludes));
+			_getTestClassNamesPathMatchers(_testClassNamesIncludesGlobs));
 	}
 
 	private static final int _DEFAULT_MAX_CLASS_GROUP_SIZE = 5000;
+
+	private static final boolean _DEFAULT_TEST_BATCH_CURRENT_BRANCH = false;
 
 	private final String _batchName;
 	private final GitWorkingDirectory _gitWorkingDirectory;
@@ -485,10 +480,10 @@ public class TestBatchGroup {
 		"[^\\]]+\\[(?<batchName>[^\\]]+)\\](\\[(?<testSuiteName>[^\\]]+)\\])?");
 	private boolean _testBatchCurrentBranch;
 	private final List<List<String>> _testClassGroups = new ArrayList<>();
-	private final List<String> _testClassNamesExcludes = new ArrayList<>();
+	private final List<String> _testClassNamesExcludesGlobs = new ArrayList<>();
 	private final List<PathMatcher> _testClassNamesExcludesPathMatchers =
 		new ArrayList<>();
-	private final List<String> _testClassNamesIncludes = new ArrayList<>();
+	private final List<String> _testClassNamesIncludesGlobs = new ArrayList<>();
 	private final List<PathMatcher> _testClassNamesIncludesPathMatchers =
 		new ArrayList<>();
 	private final String _testSuiteName;

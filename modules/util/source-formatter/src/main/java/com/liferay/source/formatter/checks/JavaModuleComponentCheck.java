@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
+import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaTerm;
 
 import java.util.ArrayList;
@@ -50,18 +51,33 @@ public class JavaModuleComponentCheck extends BaseJavaTermCheck {
 			return javaTerm.getContent();
 		}
 
-		if (javaTerm.hasAnnotation("Component") &&
-			(absolutePath.contains("-api/") ||
-			 absolutePath.contains("-spi/"))) {
+		if (javaTerm.hasAnnotation("Component")) {
+			if (absolutePath.contains("-api/") ||
+				absolutePath.contains("-spi/")) {
 
-			String packageName = JavaSourceUtil.getPackageName(fileContent);
+				String packageName = JavaSourceUtil.getPackageName(fileContent);
 
-			if (!_allowedClassNames.contains(
-					packageName + "." + javaTerm.getName())) {
+				if (!_allowedClassNames.contains(
+						packageName + "." + javaTerm.getName())) {
 
-				addMessage(
-					fileName,
-					"Do not use @Component in '-api' or '-spi' module");
+					addMessage(
+						fileName,
+						"Do not use @Component in '-api' or '-spi' module");
+				}
+			}
+		}
+		else {
+			JavaClass javaClass = (JavaClass)javaTerm;
+
+			for (JavaTerm childJavaTerm : javaClass.getChildJavaTerms()) {
+				if (childJavaTerm.hasAnnotation("Reference")) {
+					addMessage(
+						fileName,
+						"@Reference should not be used in a class without " +
+							"@Component");
+
+					break;
+				}
 			}
 		}
 

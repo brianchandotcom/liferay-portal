@@ -168,6 +168,7 @@ public class HttpClientFactory {
 		BundleContext bundleContext, Map<String, Object> properties) {
 
 		deactivate();
+
 		activate(bundleContext, properties);
 	}
 

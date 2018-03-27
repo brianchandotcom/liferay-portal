@@ -51,19 +51,21 @@ public class JavaModuleComponentCheck extends BaseJavaTermCheck {
 			return javaTerm.getContent();
 		}
 
+		String packageName = JavaSourceUtil.getPackageName(fileContent);
+
+		if (_allowedClassNames.contains(
+				packageName + "." + javaTerm.getName())) {
+
+			return javaTerm.getContent();
+		}
+
 		if (javaTerm.hasAnnotation("Component")) {
 			if (absolutePath.contains("-api/") ||
 				absolutePath.contains("-spi/")) {
 
-				String packageName = JavaSourceUtil.getPackageName(fileContent);
-
-				if (!_allowedClassNames.contains(
-						packageName + "." + javaTerm.getName())) {
-
-					addMessage(
-						fileName,
-						"Do not use @Component in '-api' or '-spi' module");
-				}
+				addMessage(
+					fileName,
+					"Do not use @Component in '-api' or '-spi' module");
 			}
 		}
 		else {

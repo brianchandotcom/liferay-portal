@@ -45,19 +45,15 @@ if (sampleFileEntryId > 0) {
 <liferay-ui:error exception="<%= CPDefinitionVirtualSettingSampleUrlException.class %>" message="please-enter-a-valid-sample-url" />
 
 <aui:fieldset>
-	<aui:input name="useSample" />
+	<aui:input label="enable-sample" name="useSample" />
 </aui:fieldset>
 
 <div class="col-md-3">
-	<h4 class="text-default"><liferay-ui:message key="insert-the-url-or-select-a-file-of-your-sample" /></h4>
+	<h4 class="text-default"><liferay-ui:message key="select-existing-content-or-add-the-url-below" /></h4>
 </div>
 
 <div class="col-md-9">
 	<aui:fieldset>
-		<aui:input disabled="<%= useSampleFileEntry %>" name="sampleUrl" />
-
-		<h4 class="<%= textCssClass %>" id="lfr-definition-virtual-sample-button-row-message"><liferay-ui:message key="or" /></h4>
-
 		<p class="text-default">
 			<span class="<%= (sampleFileEntryId > 0) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />sampleFileEntryRemove" role="button">
 				<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
@@ -75,9 +71,13 @@ if (sampleFileEntryId > 0) {
 				</c:choose>
 			</span>
 		</p>
-	</aui:fieldset>
 
-	<aui:button name="selectSampleFile" value="select" />
+		<aui:button name="selectSampleFile" value="select" />
+
+		<h4 class="<%= textCssClass %>" id="lfr-definition-virtual-sample-button-row-message"><liferay-ui:message key="or" /></h4>
+
+		<aui:input disabled="<%= useSampleFileEntry %>" label="sample-file-url" name="sampleUrl" />
+	</aui:fieldset>
 </div>
 
 <aui:script use="liferay-item-selector-dialog">

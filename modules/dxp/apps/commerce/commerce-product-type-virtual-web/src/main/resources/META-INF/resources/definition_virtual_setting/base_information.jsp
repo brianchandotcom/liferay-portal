@@ -39,5 +39,5 @@ if ((cpDefinitionVirtualSetting != null) && (cpDefinitionVirtualSetting.getDurat
 		<aui:validator name="number" />
 	</aui:input>
 
-	<aui:input name="maxUsages" />
+	<aui:input label="max-number-of-downloads" name="maxUsages" />
 </aui:fieldset>

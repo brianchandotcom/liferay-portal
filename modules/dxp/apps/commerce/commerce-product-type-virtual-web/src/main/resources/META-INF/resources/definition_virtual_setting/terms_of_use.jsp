@@ -41,11 +41,11 @@ if (termsOfUseJournalArticleResourcePrimKey > 0) {
 <liferay-ui:error exception="<%= CPDefinitionVirtualSettingTermsOfUseException.class %>" message="please-select-an-existing-web-content-or-enter-terms-of-use-content" />
 
 <aui:fieldset>
-	<aui:input name="termsOfUseRequired" />
+	<aui:input label="enable-terms-of-use" name="termsOfUseRequired" />
 </aui:fieldset>
 
 <div class="col-md-3">
-	<h4 class="text-default"><liferay-ui:message key="select-a-web-content-or-write-a-new-content-for-terms-of-use" /></h4>
+	<h4 class="text-default"><liferay-ui:message key="select-existing-content-or-add-terms-of-use-in-the-space-below" /></h4>
 </div>
 
 <div class="col-md-9">

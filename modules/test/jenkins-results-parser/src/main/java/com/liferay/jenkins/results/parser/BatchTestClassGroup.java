@@ -63,6 +63,31 @@ public class TestBatchGroup {
 		return _testClassGroups.get(i);
 	}
 
+	public static class TestBatchAxis {
+
+		public void addTestClassFile(File testClassFile) {
+			_testClassFiles.add(testClassFile);
+		}
+
+		public int getId() {
+			return _id;
+		}
+
+		public List<File> getTestClassFiles() {
+			return _testClassFiles;
+		}
+
+		private TestBatchAxis(int id) {
+			_id = id;
+
+			_testClassFiles = new ArrayList<>();
+		}
+
+		private final int _id;
+		private final List<File> _testClassFiles;
+
+	}
+
 	protected TestBatchGroup(
 		GitWorkingDirectory gitWorkingDirectory, String batchName) {
 

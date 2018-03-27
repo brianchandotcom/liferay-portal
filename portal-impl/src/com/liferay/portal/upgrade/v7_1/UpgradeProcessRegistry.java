@@ -17,6 +17,7 @@ package com.liferay.portal.upgrade.v7_1;
 import aQute.bnd.version.Version;
 
 import com.liferay.portal.kernel.upgrade.CoreUpgradeProcessRegistry;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.util.TreeMap;
 
@@ -26,15 +27,15 @@ import java.util.TreeMap;
 public class UpgradeProcessRegistry implements CoreUpgradeProcessRegistry {
 
 	public void registerUpgradeProcesses(
-		TreeMap<Version, Class<?>> upgradeProcesses) {
+		TreeMap<Version, UpgradeProcess> upgradeProcesses) {
 
-		upgradeProcesses.put(new Version("1.0.0"), UpgradeSchema.class);
+		upgradeProcesses.put(new Version("1.0.0"), new UpgradeSchema());
 
-		upgradeProcesses.put(new Version("1.1.0"), UpgradeModules.class);
+		upgradeProcesses.put(new Version("1.1.0"), new UpgradeModules());
 
-		upgradeProcesses.put(new Version("1.1.1"), UpgradeCounter.class);
+		upgradeProcesses.put(new Version("1.1.1"), new UpgradeCounter());
 
-		upgradeProcesses.put(new Version("1.1.2"), UpgradeRepository.class);
+		upgradeProcesses.put(new Version("1.1.2"), new UpgradeRepository());
 	}
 
 }

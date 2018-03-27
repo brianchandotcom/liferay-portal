@@ -42,14 +42,14 @@ public class CoreServiceUpgrade extends UpgradeProcess {
 	public static Version getLatestSchemaVersion() throws Exception {
 		initializeUpgradeProcesses();
 
-		return upgradeProcesses.lastKey();
+		return _upgradeProcesses.lastKey();
 	}
 
 	public static Version getRequiredSchemaVersion() throws Exception {
 		initializeUpgradeProcesses();
 
 		NavigableSet<Version> reverseSchemaVersions =
-			upgradeProcesses.descendingKeySet();
+			_upgradeProcesses.descendingKeySet();
 
 		Iterator<Version> itr = reverseSchemaVersions.iterator();
 
@@ -115,11 +115,11 @@ public class CoreServiceUpgrade extends UpgradeProcess {
 	}
 
 	protected static void initializeUpgradeProcesses() throws Exception {
-		if (upgradeProcesses != null) {
+		if (_upgradeProcesses != null) {
 			return;
 		}
 
-		upgradeProcesses = new TreeMap<>();
+		_upgradeProcesses = new TreeMap<>();
 
 		for (Class<?> coreUpgradeProcessRegistry :
 				_CORE_UPGRADE_PROCESS_REGISTRIES) {
@@ -128,7 +128,7 @@ public class CoreServiceUpgrade extends UpgradeProcess {
 				(CoreUpgradeProcessRegistry)
 					coreUpgradeProcessRegistry.newInstance();
 
-			registry.registerUpgradeProcesses(upgradeProcesses);
+			registry.registerUpgradeProcesses(_upgradeProcesses);
 		}
 	}
 
@@ -137,7 +137,7 @@ public class CoreServiceUpgrade extends UpgradeProcess {
 		for (Version pendingSchemaVersion :
 				getPendingSchemaVersions(getCurrentSchemaVersion())) {
 
-			upgrade(upgradeProcesses.get(pendingSchemaVersion));
+			upgrade(_upgradeProcesses.get(pendingSchemaVersion));
 
 			updateSchemaVersion(pendingSchemaVersion);
 		}
@@ -146,11 +146,11 @@ public class CoreServiceUpgrade extends UpgradeProcess {
 	}
 
 	protected Set<Version> getPendingSchemaVersions(Version fromSchemaVersion) {
-		SortedMap<Version, Class<?>>  pendingUpgradeProcesses =
-			new TreeMap<>(upgradeProcesses);
+		SortedMap<Version, UpgradeProcess> pendingUpgradeProcesses =
+			new TreeMap<>(_upgradeProcesses);
 
 		if (fromSchemaVersion != null) {
-			pendingUpgradeProcesses = upgradeProcesses.tailMap(
+			pendingUpgradeProcesses = _upgradeProcesses.tailMap(
 				fromSchemaVersion, false);
 		}
 
@@ -171,12 +171,11 @@ public class CoreServiceUpgrade extends UpgradeProcess {
 		}
 	}
 
-	protected static TreeMap<Version, Class<?>> upgradeProcesses =
- 		new TreeMap<>();
-
 	private static final Class<?>[] _CORE_UPGRADE_PROCESS_REGISTRIES =
 		{UpgradeProcessRegistry.class};
 
 	private static final String _INITIAL_SCHEMA_VERSION = "7.1.0";
+
+	private static TreeMap<Version, UpgradeProcess> _upgradeProcesses;
 
 }

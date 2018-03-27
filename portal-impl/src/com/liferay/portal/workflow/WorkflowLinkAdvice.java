@@ -16,48 +16,85 @@ package com.liferay.portal.workflow;
 
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.workflow.RequiredWorkflowDefinitionException;
+import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import java.util.List;
-
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.Signature;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class WorkflowLinkAdvice {
 
-	public Object invoke(ProceedingJoinPoint proceedingJoinPoint)
-		throws Throwable {
+	public static WorkflowDefinitionManager create(
+		WorkflowDefinitionManager workflowDefinitionManager) {
 
-		Signature signature = proceedingJoinPoint.getSignature();
+		return (WorkflowDefinitionManager)ProxyUtil.newProxyInstance(
+			WorkflowLinkAdvice.class.getClassLoader(),
+			new Class<?>[] {WorkflowDefinitionManager.class},
+			new WorkflowLinkInvocationHandler(workflowDefinitionManager));
+	}
 
-		String methodName = signature.getName();
+	private static final Method _UPDATE_ACTIVE_METHOD;
 
-		Object[] arguments = proceedingJoinPoint.getArgs();
+	static {
+		try {
+			_UPDATE_ACTIVE_METHOD = WorkflowDefinitionManager.class.getMethod(
+				"updateActive", long.class, long.class, String.class, int.class,
+				boolean.class);
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new ExceptionInInitializerError(nsme);
+		}
+	}
 
-		if (methodName.equals(_UPDATE_ACTIVE)) {
-			long companyId = (Long)arguments[0];
-			String name = (String)arguments[2];
-			int version = (Integer)arguments[3];
-			boolean active = (Boolean)arguments[4];
+	private static class WorkflowLinkInvocationHandler
+		implements InvocationHandler {
 
-			if (!active) {
-				List<WorkflowDefinitionLink> workflowDefinitionLinks =
-					WorkflowDefinitionLinkLocalServiceUtil.
-						getWorkflowDefinitionLinks(companyId, name, version);
+		@Override
+		public Object invoke(Object proxy, Method method, Object[] arguments)
+			throws Throwable {
 
-				if (!workflowDefinitionLinks.isEmpty()) {
-					throw new RequiredWorkflowDefinitionException(
-						workflowDefinitionLinks);
+			if (_UPDATE_ACTIVE_METHOD.equals(method)) {
+				long companyId = (Long)arguments[0];
+				String name = (String)arguments[2];
+				int version = (Integer)arguments[3];
+				boolean active = (Boolean)arguments[4];
+
+				if (!active) {
+					List<WorkflowDefinitionLink> workflowDefinitionLinks =
+						WorkflowDefinitionLinkLocalServiceUtil.
+							getWorkflowDefinitionLinks(
+								companyId, name, version);
+
+					if (!workflowDefinitionLinks.isEmpty()) {
+						throw new RequiredWorkflowDefinitionException(
+							workflowDefinitionLinks);
+					}
 				}
+			}
+
+			try {
+				return method.invoke(_workflowDefinitionManager, arguments);
+			}
+			catch (InvocationTargetException ite) {
+				throw ite.getCause();
 			}
 		}
 
-		return proceedingJoinPoint.proceed();
-	}
+		private WorkflowLinkInvocationHandler(
+			WorkflowDefinitionManager workflowDefinitionManager) {
 
-	private static final String _UPDATE_ACTIVE = "updateActive";
+			_workflowDefinitionManager = workflowDefinitionManager;
+		}
+
+		private final WorkflowDefinitionManager _workflowDefinitionManager;
+
+	}
 
 }

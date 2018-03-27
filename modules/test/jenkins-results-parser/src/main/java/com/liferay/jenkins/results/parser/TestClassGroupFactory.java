@@ -20,15 +20,13 @@ package com.liferay.jenkins.results.parser;
 public class TestBatchGroupFactory {
 
 	public static TestBatchGroup newTestBatchGroup(
-			GitWorkingDirectory gitWorkingDirectory, String batchName)
-		throws Exception {
+		GitWorkingDirectory gitWorkingDirectory, String batchName) {
 
 		return new TestBatchGroup(gitWorkingDirectory, batchName);
 	}
 
 	public static TestBatchGroup newTestBatchGroup(
-			PortalRepositoryJob portalRepositoryJob, String batchName)
-		throws Exception {
+		PortalRepositoryJob portalRepositoryJob, String batchName) {
 
 		GitWorkingDirectory gitWorkingDirectory =
 			portalRepositoryJob.getGitWorkingDirectory();

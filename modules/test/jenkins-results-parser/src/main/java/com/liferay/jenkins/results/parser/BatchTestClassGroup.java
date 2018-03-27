@@ -59,21 +59,19 @@ public class TestBatchGroup {
 		return _testClassGroups.size();
 	}
 
-	public List<String> getTestClassGroup(int i) throws Exception {
+	public List<String> getTestClassGroup(int i) {
 		return _testClassGroups.get(i);
 	}
 
 	protected TestBatchGroup(
-			GitWorkingDirectory gitWorkingDirectory, String batchName)
-		throws Exception {
+		GitWorkingDirectory gitWorkingDirectory, String batchName) {
 
 		this(gitWorkingDirectory, batchName, null);
 	}
 
 	protected TestBatchGroup(
-			GitWorkingDirectory gitWorkingDirectory, String batchName,
-			String testSuiteName)
-		throws Exception {
+		GitWorkingDirectory gitWorkingDirectory, String batchName,
+		String testSuiteName) {
 
 		_gitWorkingDirectory = gitWorkingDirectory;
 
@@ -94,8 +92,7 @@ public class TestBatchGroup {
 	}
 
 	private List<String> _getCurrentBranchTestClassNamesGlobs(
-			List<String> testClassNamesGlobs)
-		throws IOException {
+		List<String> testClassNamesGlobs) {
 
 		List<String> currentBranchTestClassNameGlobs = new ArrayList<>();
 
@@ -104,14 +101,25 @@ public class TestBatchGroup {
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
 			(PortalGitWorkingDirectory)_gitWorkingDirectory;
 
-		List<File> moduleGroupDirs =
-			portalGitWorkingDirectory.getCurrentBranchModuleGroupDirs();
+		List<File> moduleGroupDirs = null;
+
+		try {
+			moduleGroupDirs =
+				portalGitWorkingDirectory.getCurrentBranchModuleGroupDirs();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to get current branch module group directories ",
+					"under ", workingDirectory.getPath()),
+				ioe);
+		}
 
 		for (File moduleGroupDir : moduleGroupDirs) {
-			String moduleGroupDirPath = moduleGroupDir.getCanonicalPath();
+			String moduleGroupDirPath = moduleGroupDir.getAbsolutePath();
 
 			moduleGroupDirPath = moduleGroupDirPath.replace(
-				workingDirectory.getCanonicalPath() + "/", "");
+				workingDirectory.getAbsolutePath() + "/", "");
 
 			for (String testClassNamesGlob : testClassNamesGlobs) {
 				currentBranchTestClassNameGlobs.add(
@@ -184,55 +192,66 @@ public class TestBatchGroup {
 		return null;
 	}
 
-	private Set<String> _getTestClassFileNames() throws Exception {
+	private Set<String> _getTestClassFileNames() {
 		File workingDirectory = _gitWorkingDirectory.getWorkingDirectory();
 
 		final Set<String> testClassFileNames = new HashSet<>();
 
-		Files.walkFileTree(
-			workingDirectory.toPath(),
-			new SimpleFileVisitor<Path>() {
+		try {
+			Files.walkFileTree(
+				workingDirectory.toPath(),
+				new SimpleFileVisitor<Path>() {
 
-				@Override
-				public FileVisitResult preVisitDirectory(
-						Path filePath, BasicFileAttributes attrs)
-					throws IOException {
+					@Override
+					public FileVisitResult preVisitDirectory(
+							Path filePath, BasicFileAttributes attrs)
+						throws IOException {
 
-					if (_pathExcluded(filePath)) {
-						return FileVisitResult.SKIP_SUBTREE;
+						if (_pathExcluded(filePath)) {
+							return FileVisitResult.SKIP_SUBTREE;
+						}
+
+						return FileVisitResult.CONTINUE;
 					}
 
-					return FileVisitResult.CONTINUE;
-				}
+					@Override
+					public FileVisitResult visitFile(
+							Path filePath, BasicFileAttributes attrs)
+						throws IOException {
 
-				@Override
-				public FileVisitResult visitFile(
-						Path filePath, BasicFileAttributes attrs)
-					throws IOException {
+						if (_pathIncluded(filePath) &&
+							!_pathExcluded(filePath)) {
 
-					if (_pathIncluded(filePath) && !_pathExcluded(filePath)) {
-						testClassFileNames.add(
-							_getPackagePath(filePath.toString()));
+							testClassFileNames.add(
+								_getPackagePath(filePath.toString()));
+						}
+
+						return FileVisitResult.CONTINUE;
 					}
 
-					return FileVisitResult.CONTINUE;
-				}
+					private String _getPackagePath(String filePath) {
+						Matcher matcher = _packagePathPattern.matcher(filePath);
 
-				private String _getPackagePath(String filePath) {
-					Matcher matcher = _packagePathPattern.matcher(filePath);
+						if (matcher.find()) {
+							String packagePath = matcher.group("packagePath");
 
-					if (matcher.find()) {
-						String packagePath = matcher.group("packagePath");
+							packagePath = packagePath.replace(
+								".java", ".class");
 
-						packagePath = packagePath.replace(".java", ".class");
+							return packagePath;
+						}
 
-						return packagePath;
+						return filePath.replace(".java", ".class");
 					}
 
-					return filePath.replace(".java", ".class");
-				}
-
-			});
+				});
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to search for test file names under" +
+					workingDirectory.getPath(),
+				ioe);
+		}
 
 		return testClassFileNames;
 	}
@@ -339,7 +358,7 @@ public class TestBatchGroup {
 		_testBatchCurrentBranch = _DEFAULT_TEST_BATCH_CURRENT_BRANCH;
 	}
 
-	private void _setTestClassGroups() throws Exception {
+	private void _setTestClassGroups() {
 		List<String> testClassFileNames = new ArrayList<>(
 			_getTestClassFileNames());
 
@@ -363,7 +382,7 @@ public class TestBatchGroup {
 			Lists.partition(testClassFileNames, classGroupSize));
 	}
 
-	private void _setTestClassNamesExcludes() throws IOException {
+	private void _setTestClassNamesExcludes() {
 		List<String> orderedPropertyNames = new ArrayList<>();
 
 		if (_testSuiteName != null) {
@@ -415,7 +434,7 @@ public class TestBatchGroup {
 			_getTestClassNamesPathMatchers(_testClassNamesExcludesGlobs));
 	}
 
-	private void _setTestClassNamesIncludes() throws IOException {
+	private void _setTestClassNamesIncludes() {
 		List<String> orderedPropertyNames = new ArrayList<>();
 
 		if (_testSuiteName != null) {

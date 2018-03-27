@@ -207,4 +207,10 @@ else {
 			url="<%= deleteURL %>"
 		/>
 	</c:if>
+
+	<liferay-export-import-changeset:publish-entity-menu-item
+		className="<%= JournalArticle.class.getName() %>"
+		groupId="<%= article.getGroupId() %>"
+		uuid="<%= article.getUuid() %>"
+	/>
 </liferay-ui:icon-menu>

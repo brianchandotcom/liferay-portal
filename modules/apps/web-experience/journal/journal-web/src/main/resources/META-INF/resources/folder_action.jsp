@@ -188,4 +188,21 @@ else {
 			url="<%= deleteURL %>"
 		/>
 	</c:if>
+
+	<%
+	boolean bookmarksAdmin = portletName.equals(JournalPortletKeys.JOURNAL);
+	boolean inStagingGroup = stagingGroupHelper.isStagingGroup(scopeGroupId);
+	boolean portletStaged = stagingGroupHelper.isStagedPortlet(scopeGroupId, JournalPortletKeys.JOURNAL);
+	%>
+
+	<c:if test="<%= (folder != null) && bookmarksAdmin && inStagingGroup && portletStaged %>">
+		<portlet:actionURL name="/journal/publish_folder" var="publishFolderURL">
+			<portlet:param name="folderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon
+			message="publish"
+			url="<%= publishFolderURL %>"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>

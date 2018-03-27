@@ -108,7 +108,7 @@ public class ModulesStructureTestUtil {
 			try {
 				GradleDependency gradleDependency = new GradleDependency(
 					dependency, configuration, moduleGroup, moduleName,
-					moduleVersion);
+					moduleVersion, false);
 
 				gradleDependencies.add(gradleDependency);
 			}
@@ -180,7 +180,7 @@ public class ModulesStructureTestUtil {
 
 			GradleDependency gradleDependency = new GradleDependency(
 				dependency, configuration, moduleGroup, moduleName,
-				moduleVersion);
+				moduleVersion, true);
 
 			gradleDependencies.add(gradleDependency);
 		}

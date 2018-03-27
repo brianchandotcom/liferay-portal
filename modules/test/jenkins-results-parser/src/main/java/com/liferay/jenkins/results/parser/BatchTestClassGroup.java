@@ -320,7 +320,9 @@ public class TestBatchGroup {
 
 			pathMatchers.add(
 				fileSystem.getPathMatcher(
-					"glob:" + workingDirectoryPath + "/" + testClassNamesGlob));
+					JenkinsResultsParserUtil.combine(
+						"glob:", workingDirectoryPath, "/",
+						testClassNamesGlob)));
 		}
 
 		return pathMatchers;

@@ -17,7 +17,6 @@ package com.liferay.user.associated.data.web.internal.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
-import com.liferay.user.associated.data.entity.UADEntity;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
 import javax.portlet.ActionRequest;
@@ -29,16 +28,16 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 
-	protected UADEntity getUADEntity(
+	protected Object getUADEntity(
 			ActionRequest actionRequest, String uadRegistryKey)
 		throws Exception {
 
 		UADEntityAggregator uadEntityAggregator =
 			uadRegistry.getUADEntityAggregator(uadRegistryKey);
 
-		String uadEntityId = ParamUtil.getString(actionRequest, "uadEntityId");
+		String entityId = ParamUtil.getString(actionRequest, "entityId");
 
-		return uadEntityAggregator.getUADEntity(uadEntityId);
+		return uadEntityAggregator.getEntity(entityId);
 	}
 
 	@Reference

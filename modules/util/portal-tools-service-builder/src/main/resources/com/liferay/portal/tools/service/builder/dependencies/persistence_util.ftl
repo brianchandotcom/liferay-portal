@@ -12,6 +12,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 import java.util.List;
 

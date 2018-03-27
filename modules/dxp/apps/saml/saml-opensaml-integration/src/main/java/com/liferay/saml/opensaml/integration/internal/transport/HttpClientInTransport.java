@@ -38,10 +38,9 @@ public class HttpClientInTransport implements HTTPInTransport {
 
 	public HttpClientInTransport(HttpPost httpPost, String location) {
 		_httpPost = httpPost;
+		_location = location;
 
 		_httpEntity = _httpPost.getEntity();
-
-		_location = location;
 	}
 
 	@Override

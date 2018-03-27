@@ -556,18 +556,24 @@ elasticsearch.password: "kibanapassword"]]></replacevalue>
 
 		<prepare-elasticsearch />
 
+		<configure-elasticsearch-properties />
+
 		<get-testcase-property property.name="elastic.xpack.enabled" />
 
 		<if>
 			<equals arg1="${elastic.xpack.enabled}" arg2="true" />
 			<then>
 				<prepare-elasticsearch-x-pack />
+
+				<property name="xpack.certificate.password" value="liferay" />
+
+				<generate-elasticsearch-x-pack-security-certificates certificate.password="${xpack.certificate.password}" />
+
+				<configure-elasticsearch-x-pack-security-properties />
 			</then>
 		</if>
 
-		<antcall target="configure-elasticsearch-properties" />
-
-		<antcall target="configure-elasticsearch-osgi-bundle-properties" />
+		<configure-elasticsearch-osgi-bundle-properties />
 
 		<get-testcase-property property.name="remote.elasticsearch.cluster.size" />
 
@@ -586,11 +592,45 @@ elasticsearch.password: "kibanapassword"]]></replacevalue>
 
 		<antcall target="start-elasticsearch-node" />
 
-		<waitfor maxwait="30" maxwaitunit="second" timeoutproperty="elasticsearch.cluster.not.started">
-			<http url="http://localhost:9200/" />
-		</waitfor>
+		<if>
+			<equals arg1="${elastic.xpack.enabled}" arg2="true" />
+			<then>
+				<sleep seconds="30" />
 
-		<fail if="elasticsearch.cluster.not.started" message="Elasticsearch cluster failed to start." />
+				<set-elasticsearch-x-pack-user-passwords />
+
+				<exec executable="curl" outputproperty="curl.output">
+					<arg value="https://localhost:9200" />
+					<arg value="-ku" />
+					<arg value="elastic:${elastic.xpack.elastic.user.password}" />
+				</exec>
+
+				<echo>${curl.output}</echo>
+
+				<if>
+					<contains string="${curl.output}" substring="You Know, for Search" />
+					<then>
+						<echo>Elasticshield successfully started with X-Pack Security.</echo>
+					</then>
+					<else>
+						<fail>Elasticsearch failed to start with X-Pack Security.</fail>
+					</else>
+				</if>
+
+				<configure-elasticsearch-x-pack-security-osgi-bundle-properties />
+
+				<configure-elasticsearch-x-pack-monitoring-osgi-bundle-properties />
+
+				<antcall target="start-kibana" />
+			</then>
+			<else>
+				<waitfor maxwait="20" maxwaitunit="second" timeoutproperty="elasticsearch.server.not.started">
+					<http url="http://localhost:9200/" />
+				</waitfor>
+
+				<fail if="elasticsearch.server.not.started" message="Elasticsearch server failed to initialize." />
+			</else>
+		</if>
 	</target>
 
 	<target name="start-elasticsearch-node">

@@ -1,0 +1,67 @@
+Alloy UI
+Liferay Portal
+Liferay Audience Targeting
+Liferay Connected Services
+Liferay Documentation
+Liferay Faces
+Liferay IDE
+Liferay Marketplace
+Liferay Social Office
+Liferay Sync
+Mobile
+Liferay Mobile SDK
+Liferay Screens
+Using Marketplace
+Marketplace Announcements
+Miscellaneous
+Installation / Deployment / Setup
+Using Liferay
+Development
+Custom Theme Development
+Portal Framework
+Suggestions and Feature Requests
+Third Party Application Integration
+Announcements
+Liferay's Community
+Migrating to Liferay from other products
+UX Interest Group
+Liferay Core Development & Contributions
+Liferay Legacy
+Miscellaneous
+Education
+100 PaperCuts
+BugSquad
+Community Leadership Team
+Community Security Team
+Community Verifier Team
+Expert Groups
+General
+Liferay Community Projects
+Liferay Jobs
+Liferay User Groups
+Accessibility
+Contributions
+Translations
+Liferay Austin User Group
+Liferay Australia User Group
+Liferay Bangladesh User Group
+Liferay Belgium User Group
+Liferay Birmingham User Group
+Liferay Chicago User Group
+Liferay Colorado Springs User Group
+Liferay Denver User Group
+Liferay Detroit User Group
+Liferay Greece User Group
+Liferay India User Group
+Liferay Indianapolis User Group
+Liferay Indonesia User Group
+Liferay Morocco User Group
+Liferay Nigeria User Group
+Liferay Portland User Group
+Liferay San Jose (CA) User Group
+Liferay Seattle User Group
+Arkadiko
+Facebook/Liferay Integration Project
+JRebel/Liferay Integration Project
+Nativity
+Project Learn

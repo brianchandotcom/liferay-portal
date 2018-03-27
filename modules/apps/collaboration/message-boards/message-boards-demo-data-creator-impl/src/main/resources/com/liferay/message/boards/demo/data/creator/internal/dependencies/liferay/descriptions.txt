@@ -1,0 +1,65 @@
+Hang out with the community of users and developers surrounding AlloyUI. Post your questions or your stories here!
+Multi-lingual discussions related to Liferay Portal. Feature discussions, development details, and Liferay's Community forum can be found here.
+Discussions regarding Liferay's Audience Targeting - segmenting users, targeting content to different user segments, creating campaigns, tracking user actions and generating reports. Also included are setup issues and troubleshooting.
+Discussions related to Liferay Connected Services: https://www.liferay.com/products/liferay-connected-services
+Discussions about the official documentation for all of Liferay's projects, including suggestions for improvements and the contribution process.
+Discussion related to Liferay Faces Alloy, Liferay Faces Bridge, Liferay Faces Portal, JSF portlet development, etc.
+A forum for Eclipse developers who use the Liferay IDE. The Liferay IDE is the official set of Eclipse plugins for Liferay Portal development from the Liferay team.	1
+Discussions related to using the Liferay Marketplace (i.e. finding, using, and managing apps) can be found here. For questions related to developing/selling apps for the Liferay Marketplace, please visit the Developer Forum on the Marketplace Developer Portal: dev.liferay.com.
+Discussions related to Liferay's Social Office product.
+Discussions regarding Liferay Sync, an extension to Liferay's Documents and Media system for desktop and mobile environments.
+Discussions related to mobile features and products.
+Discussions related to the Liferay Mobile SDK.
+Discussions related to the Liferay Screens.
+Questions and discussion regarding the usage of Liferay Marketplace. Have questions about how to find, buy, download, deploy, or manage purchased Liferay Apps? You've come to the right place. For questions related to developing/selling apps for the Liferay Marketplace, please visit the Developer Forum on the Marketplace Developer Portal (dev.liferay.com).
+Late-breaking news about the Liferay Marketplace. Subscribe to this category to keep abreast of the latest news surrounding the Liferay Marketplace!
+Questions about the Liferay Marketplace that don't fit anywhere else.
+Post questions on getting your ext environment setup or configuration issues with database, webapps, and such here.
+General functionality of the portlets in the portal, management of the portal, common structure of the portal entities, etc. from the user point of view
+Relevant topics: Developing new portlets, extending Liferay portlets, and using the EXT Environment.
+Discuss topics related to custom theme development here, such as css, velocity, etc. If you have questions regarding theme installation, please post to the Installation category.
+Relevant topics: Integration, security, LDAP, web services, ServiceBuilder, business tier, Hibernate.
+Have great ideas and requests for Liferay Portal? Discuss them here!
+Discussion on integration with Alfresco, Intalio, Pentaho, ICEfaces, JasperReports, or other third party applications
+Check here for the latest information pertaining to the Liferay community.
+Questions and suggestions about the community wiki, forums, plugins repositories, JIRA, etc. Also, how to get the best out of Liferay's community and be a part of it.
+Threads about migrating to Liferay from products by Sun, Oracle, BEA, Plumtree, UPortal, Peoplesoft, etc.
+This is a category for anyone interested in UX. Use this category to discuss about UI and usability for applications built on top of Liferay, suggestions, best practices, or even request for improvements for Liferay Portal itself
+This category functions as a traditional "developers mailing list" for discussing the development of the Liferay core. To limit traffic, only Liferay core developers can post new threads to this category. Anyone can read or reply to an existing thread. Subcategories are available to propose and discuss about some specific topics such as accessibility, translations and contributions.
+Posting of new threads has been disabled for this category. Replies to existing threads is still allowed so conversations can continue. Please use the new section with categories for all new posts.
+For all questions that don't fall into the above categories.
+Discussion of how to use Liferay in an education environment. That includes usage within schools, high schools, universities and all types of education institutions.
+Discussions and information on Liferay's 100 PaperCuts community program.
+A community-driven project team with the goal of improving the usability and functionality of Liferay.
+Liferay's Community Leadership Team discussions.
+Discussions regarding the Community Security Team - team process, potential and known vulnerabilities, secure configurations and coding techniques, and other topics related to security.
+A team dedicated to improving the quality and effectiveness of Liferay's Software Engineering Practices
+Discussion groups related to Liferay's Community Expert Groups.
+General discussion about the Liferay Community
+Discussions regarding projects driven by Liferay's community
+Post your open Liferay job offers here! Please do not post advertisements for your company's training or consulting services. This area is for companies and individuals seeking to hire Liferay developers and administrators.
+Discussion groups related to Liferay's User Groups.
+Discuss about how to make Liferay Portal a great platform to create accessible web sites. This covers obtaining the Section-508 and WAI AA specification but also anything that would make the sites easier to use for as many people as possible.
+The purpose of this category is to publicly discuss contributions made to Liferay
+Use this category to discuss and coordinate about how to translate Liferay Portal and its plugins
+Discussion relating to the Liferay Austin (Texas) User Group
+Discussions regarding the Liferay Australia User Group.
+Discussions related to the Bangladesh user group.
+Discussion related to the Liferay Belgium User Group.
+Discussions related to the Birmingham user group.
+Discussions related to the Chicago Liferay User Group
+Discussions regarding the Colorado Springs User Group
+Discussions regarding the Liferay Denver User Group
+Discussions regarding the Liferay Detroit (Michigan) User Group.
+Discussion relating to the Liferay India User Group
+Discussion relating to the Liferay Indonesia User Group
+Discussion relating to the Liferay Morocco User Group
+Discussion relating to the Liferay Nigeria User Group
+Discussion relating to the Liferay Portland (Oregon) User Group
+Discussion regarding the Liferay San Jose, California User Group
+Discussions regarding the Liferay Seattle, Washington, USA User Group
+Arkadiko is a small bridge between Spring and OSGi. See more at http://liferay.com/community/projects/arkadiko
+Discussion regarding the Facebook/Liferay Integration Project
+Discussions regarding the JRebel/Liferay Integration Community Project. See http://liferay.com/community/projects/jrebel for more information.
+Liferay Nativity is a cross-platform library for adding icon overlays and context menus to file browsers.
+This project aims to bring eLearning functionalities and opportunities to Liferay. The goal is to make it easy to use Liferay portal in environments for learning, like traditional learning management systems (LMSs).

@@ -2,24 +2,29 @@
 
 Emporio is an open source digital commerce platform written in Java.
 
-It was built from the ground up to work with Liferay Portal, which provides web experience management and best-in-breed portal capabilities.
+It was built from the ground up to work with Liferay Portal, which provides web
+experience management and best-in-breed portal capabilities.
 
-> **Attention:** This project is currently in a Developer Preview phase and should only be used for test purposes. A stable version that is ready for production will be released in the second half of 2018.
+> **Attention:** This project is currently in a Developer Preview phase and
+> should only be used for test purposes. A stable version that is ready for
+> production will be released in the second half of 2018.
 
 ## Why Commerce?
 
-While Liferay enthusiasts can use the platform to build marketing sites, customer portals, and intranets, they do not have an integrated Liferay product that helps them build modern digital commerce sites.
+While Liferay enthusiasts can use the platform to build marketing sites,
+customer portals, and intranets, they do not have an integrated Liferay product
+that helps them build modern digital commerce sites.
 
-Emporio is here not only to bridge that gap, but also to provide vendors the most complete platform to attract, convert and retain customers.
+Emporio is here not only to bridge that gap, but also to provide vendors the
+most complete platform to attract, convert and retain customers.
 
 ## Quick Start
 
 Requirements: [Liferay Portal 7.1 M1](https://github.com/liferay/liferay-portal)
 
-Clone the Emporio repository (this
-[repository](https://github.com/liferay/com-liferay-commerce-private)) to the
-same level of your directory tree as your Liferay Home folder. (Liferay Home is
-the folder that contains the Tomcat folder for Liferay 7.1).
+Clone the Emporio repository (this [repository](https://github.com/liferay/com-liferay-commerce-private))
+to the same level of your directory tree as your Liferay Home folder. (Liferay
+Home is the folder that contains the Tomcat folder for Liferay 7.1).
 
 Then start Liferay Portal 7.1.
 
@@ -40,22 +45,22 @@ Did you find a bug? Please open a ticket for it at [issues.liferay.com](https://
 
 ## Stay Connected
 
-There are many ways for you to learn what's new in Emporio, get answers to questions and connect with other Liferay community members.
+There are many ways for you to learn what's new in Emporio, get answers to
+questions and connect with other Liferay community members.
 
 ### Twitter
 
 Follow us on Twitter:
 
 - [@Liferay](http://twitter.com/Liferay) Latest announcements
-announcements
-
 - [@LiferayDocs](http://twitter.com/Liferaydocs) New articles
-
-- [@LiferayEng](http://twitter.com/Liferayeng) Tweets from the core engineering team
+- [@LiferayEng](http://twitter.com/Liferayeng) Tweets from the core engineering
+team
 
 ### Blog
 
-Read details on announcements, engage in discussions and learn more by following [Liferay's Blog](http://www.liferay.com/community/blogs).
+Read details on announcements, engage in discussions and learn more by following
+[Liferay's Blog](http://www.liferay.com/community/blogs).
 
 ### Forum
 

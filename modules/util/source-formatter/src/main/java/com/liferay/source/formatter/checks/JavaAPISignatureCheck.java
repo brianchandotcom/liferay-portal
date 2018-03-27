@@ -68,6 +68,10 @@ public class JavaAPISignatureCheck extends BaseJavaTermCheck {
 			return javaTerm.getContent();
 		}
 
+		if (javaTerm.hasAnnotation("Override")) {
+			return javaTerm.getContent();
+		}
+
 		String accessModifier = javaTerm.getAccessModifier();
 
 		if (!accessModifier.equals(JavaTerm.ACCESS_MODIFIER_PUBLIC)) {

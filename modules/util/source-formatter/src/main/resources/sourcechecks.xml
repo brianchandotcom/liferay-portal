@@ -327,8 +327,8 @@
 			<property name="allowedClassNames" value="com.liferay.users.admin.configuration.definition.UserFileUploadsConfigurationDDMFormDeclaration" />
 			<property name="allowedClassNames" value="com.liferay.wiki.configuration.definition.WikiGroupServiceConfigurationBeanDeclaration" />
 			<property name="allowedClassNames" value="com.liferay.wiki.configuration.definition.WikiGroupServiceConfigurationPidMapping" />
-			<property name="allowedClassNames" value="com.liferay.wsrp.configuration.definition.WSRPGroupServiceConfigurationBeanDeclaration" />
 			<property name="allowedClassNames" value="com.liferay.wiki.internal.item.selector.handler.WikiAttachmentItemSelectorCriterionHandler" />
+			<property name="allowedClassNames" value="com.liferay.wsrp.configuration.definition.WSRPGroupServiceConfigurationBeanDeclaration" />
 			<property name="allowedClassNames" value="com.liferay.xstream.configurator.XStreamConfiguratorRegistryUtil" />
 			<property name="allowedClassNames" value="org.eclipse.core.runtime.FileLocator" />
 		</check>

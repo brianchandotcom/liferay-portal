@@ -7,6 +7,4 @@ dependencies {
 	provided project(":apps:foundation:user-associated-data:user-associated-data-api")
 	provided project(":core:petra:petra-lang")
 	provided project(":core:petra:petra-string")
-
-	testCompile project(":apps:foundation:user-associated-data:user-associated-data-test-util")
 }

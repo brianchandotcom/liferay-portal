@@ -16,11 +16,14 @@ package com.liferay.portal.upgrade;
 
 import aQute.bnd.version.Version;
 
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.upgrade.CoreUpgradeProcessRegistry;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.v7_1.UpgradeProcessRegistry;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,25 +37,17 @@ import java.util.TreeMap;
 /**
  * @author Alberto Chaparro
  */
-public class CoreUpgradeProcess extends UpgradeProcess {
+public class CoreServiceUpgrade extends UpgradeProcess {
 
-	public CoreUpgradeProcess() throws Exception {
-		for (Class<?> coreUpgradeProcessRegistry :
-				_CORE_UPGRADE_PROCESS_REGISTRIES) {
+	public static Version getLatestSchemaVersion() throws Exception {
+		initializeUpgradeProcesses();
 
-			CoreUpgradeProcessRegistry registry =
-				(CoreUpgradeProcessRegistry)
-					coreUpgradeProcessRegistry.newInstance();
-
-			registry.registerUpgradeProcesses(upgradeProcesses);
-		}
-	}
-
-	public Version getLatestSchemaVersion() {
 		return upgradeProcesses.lastKey();
 	}
 
-	public Version getRequiredSchemaVersion() {
+	public static Version getRequiredSchemaVersion() throws Exception {
+		initializeUpgradeProcesses();
+
 		NavigableSet<Version> reverseSchemaVersions =
 			upgradeProcesses.descendingKeySet();
 
@@ -77,11 +72,11 @@ public class CoreUpgradeProcess extends UpgradeProcess {
 		return requiredSchemaVersion;
 	}
 
-	public boolean isInLatestSchemaVersion() throws SQLException {
+	public static boolean isInLatestSchemaVersion() throws Exception {
 		return getLatestSchemaVersion().equals(getCurrentSchemaVersion());
 	}
 
-	public boolean isInRequiredSchemaVersion() throws SQLException {
+	public static boolean isInRequiredSchemaVersion() throws Exception {
 		if (getRequiredSchemaVersion().compareTo(getCurrentSchemaVersion()) <=
 				0) {
 
@@ -91,24 +86,13 @@ public class CoreUpgradeProcess extends UpgradeProcess {
 		return false;
 	}
 
-	@Override
-	protected void doUpgrade() throws Exception {
-		for (Version pendingSchemaVersion :
-				getPendingSchemaVersions(getCurrentSchemaVersion())) {
-
-			Class<?> pendingUpgradeClass = upgradeProcesses.get(
-				pendingSchemaVersion);
-
-			upgrade(pendingUpgradeClass);
-
-			updateSchemaVersion(pendingSchemaVersion);
-		}
-
-		clearIndexesCache();
+	public CoreServiceUpgrade() throws Exception {
+		initializeUpgradeProcesses();
 	}
 
-	protected Version getCurrentSchemaVersion() throws SQLException {
-		try (PreparedStatement ps = connection.prepareStatement(
+	protected static Version getCurrentSchemaVersion() throws SQLException {
+		try (Connection con = DataAccess.getConnection();
+			PreparedStatement ps = con.prepareStatement(
 				"select schemaVersion from Release_ where servletContextName " +
 					"= ?");) {
 
@@ -130,9 +114,40 @@ public class CoreUpgradeProcess extends UpgradeProcess {
 		return null;
 	}
 
+	protected static void initializeUpgradeProcesses() throws Exception {
+		if (upgradeProcesses != null) {
+			return;
+		}
+
+		upgradeProcesses = new TreeMap<>();
+
+		for (Class<?> coreUpgradeProcessRegistry :
+				_CORE_UPGRADE_PROCESS_REGISTRIES) {
+
+			CoreUpgradeProcessRegistry registry =
+				(CoreUpgradeProcessRegistry)
+					coreUpgradeProcessRegistry.newInstance();
+
+			registry.registerUpgradeProcesses(upgradeProcesses);
+		}
+	}
+
+	@Override
+	protected void doUpgrade() throws Exception {
+		for (Version pendingSchemaVersion :
+				getPendingSchemaVersions(getCurrentSchemaVersion())) {
+
+			upgrade(upgradeProcesses.get(pendingSchemaVersion));
+
+			updateSchemaVersion(pendingSchemaVersion);
+		}
+
+		clearIndexesCache();
+	}
+
 	protected Set<Version> getPendingSchemaVersions(Version fromSchemaVersion) {
-		SortedMap<Version, Class<?>> pendingUpgradeProcesses = new TreeMap<>(
-			upgradeProcesses);
+		SortedMap<Version, Class<?>>  pendingUpgradeProcesses =
+			new TreeMap<>(upgradeProcesses);
 
 		if (fromSchemaVersion != null) {
 			pendingUpgradeProcesses = upgradeProcesses.tailMap(
@@ -157,7 +172,7 @@ public class CoreUpgradeProcess extends UpgradeProcess {
 	}
 
 	protected static TreeMap<Version, Class<?>> upgradeProcesses =
-		new TreeMap<>();
+ 		new TreeMap<>();
 
 	private static final Class<?>[] _CORE_UPGRADE_PROCESS_REGISTRIES =
 		{UpgradeProcessRegistry.class};

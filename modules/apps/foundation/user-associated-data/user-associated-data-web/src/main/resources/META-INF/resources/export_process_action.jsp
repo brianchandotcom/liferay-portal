@@ -27,7 +27,7 @@ BackgroundTask backgroundTask = (BackgroundTask)row.getObject();
 	markupView="lexicon"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= backgroundTask.isCompleted() %>">
+	<c:if test="<%= backgroundTask.isCompleted() && (backgroundTask.getAttachmentsFileEntriesCount() > 0) %>">
 
 		<%
 		FileEntry fileEntry = UADExportProcessUtil.getFileEntry(backgroundTask);

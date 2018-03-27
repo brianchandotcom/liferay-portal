@@ -191,10 +191,9 @@ public class LotusGroupInitializer implements GroupInitializer {
 
 		Class<?> clazz = getClass();
 
-		String journalArticlePath = _DEPENDENCY_PATH + "journal-articles.json";
-
 		String journalArticleJSON = StringUtil.read(
-			clazz.getClassLoader(), journalArticlePath, false);
+			clazz.getClassLoader(), _DEPENDENCY_PATH + "journal-articles.json",
+			false);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 			journalArticleJSON);
@@ -209,10 +208,8 @@ public class LotusGroupInitializer implements GroupInitializer {
 
 		Class<?> clazz = getClass();
 
-		String layoutsPath = _DEPENDENCY_PATH + "layouts.json";
-
 		String layoutsJSON = StringUtil.read(
-			clazz.getClassLoader(), layoutsPath, false);
+			clazz.getClassLoader(), _DEPENDENCY_PATH + "layouts.json", false);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(layoutsJSON);
 
@@ -222,10 +219,10 @@ public class LotusGroupInitializer implements GroupInitializer {
 	protected DDMTemplate getDDMTemplate(ServiceContext serviceContext)
 		throws Exception {
 
-		String filePath =
+		File file = _getFile(
 			_DEPENDENCY_PATH +
 				"asset_categories_navigation_portlet_display_template_lotus." +
-					"ftl";
+					"ftl");
 
 		long classNameId = _portal.getClassNameId(
 			_CP_ASSET_CATEGORIES_NAVIGATION_PORTLET_CLASS_NAME);
@@ -233,7 +230,7 @@ public class LotusGroupInitializer implements GroupInitializer {
 			PortletDisplayTemplate.class);
 
 		return _cpFileImporter.getDDMTemplate(
-			_getFile(filePath), classNameId, 0L, resourceClassNameId,
+			file, classNameId, 0L, resourceClassNameId,
 			"Commerce Categories Navigation Lotus",
 			DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
 			TemplateConstants.LANG_TYPE_FTL, serviceContext);
@@ -242,11 +239,9 @@ public class LotusGroupInitializer implements GroupInitializer {
 	protected JSONArray getThemePortletSettingJSONArray() throws Exception {
 		Class<?> clazz = getClass();
 
-		String themePortletSettingsPath =
-			_DEPENDENCY_PATH + "theme-portlet-settings.json";
-
 		String themePortletSettingsJSON = StringUtil.read(
-			clazz.getClassLoader(), themePortletSettingsPath, false);
+			clazz.getClassLoader(),
+			_DEPENDENCY_PATH + "theme-portlet-settings.json", false);
 
 		return JSONFactoryUtil.createJSONArray(themePortletSettingsJSON);
 	}
@@ -254,10 +249,9 @@ public class LotusGroupInitializer implements GroupInitializer {
 	protected JSONObject getThemeSettingsJSONObject() throws Exception {
 		Class<?> clazz = getClass();
 
-		String themeSettingsPath = _DEPENDENCY_PATH + "theme-settings.json";
-
 		String themeSettingsJSON = StringUtil.read(
-			clazz.getClassLoader(), themeSettingsPath, false);
+			clazz.getClassLoader(), _DEPENDENCY_PATH + "theme-settings.json",
+			false);
 
 		return JSONFactoryUtil.createJSONObject(themeSettingsJSON);
 	}

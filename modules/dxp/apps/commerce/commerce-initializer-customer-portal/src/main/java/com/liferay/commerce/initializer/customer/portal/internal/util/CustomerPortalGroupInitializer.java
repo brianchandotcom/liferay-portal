@@ -213,10 +213,8 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 
 		Class<?> clazz = getClass();
 
-		String layoutsPath = _DEPENDENCY_PATH + "layouts.json";
-
 		String layoutsJSON = StringUtil.read(
-			clazz.getClassLoader(), layoutsPath, false);
+			clazz.getClassLoader(), _DEPENDENCY_PATH + "layouts.json", false);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(layoutsJSON);
 
@@ -226,10 +224,8 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 	protected void createRoles(ServiceContext serviceContext) throws Exception {
 		Class<?> clazz = getClass();
 
-		String rolePath = _DEPENDENCY_PATH + "roles.json";
-
 		String rolesJSON = StringUtil.read(
-			clazz.getClassLoader(), rolePath, true);
+			clazz.getClassLoader(), _DEPENDENCY_PATH + "roles.json", true);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(rolesJSON);
 
@@ -256,11 +252,9 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 	protected JSONArray getThemePortletSettingJSONArray() throws Exception {
 		Class<?> clazz = getClass();
 
-		String themePortletSettingsPath =
-			_DEPENDENCY_PATH + "theme-portlet-settings.json";
-
 		String themePortletSettingsJSON = StringUtil.read(
-			clazz.getClassLoader(), themePortletSettingsPath, true);
+			clazz.getClassLoader(),
+			_DEPENDENCY_PATH + "theme-portlet-settings.json", true);
 
 		return JSONFactoryUtil.createJSONArray(themePortletSettingsJSON);
 	}
@@ -301,10 +295,9 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 				portletSetup.setValue(key, value);
 			}
 
-			String filePath = _DEPENDENCY_PATH + "product_display_template.ftl";
-
 			DDMTemplate ddmTemplate = getDDMTemplate(
-				_SIMPLE_CP_TYPE_CLASS_NAME, filePath,
+				_SIMPLE_CP_TYPE_CLASS_NAME,
+				_DEPENDENCY_PATH + "product_display_template.ftl",
 				"Commerce Product Customer Portal", serviceContext);
 
 			String ddmTemplateKey =
@@ -367,10 +360,9 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 				portletSetup.setValue(key, value);
 			}
 
-			String filePath = _DEPENDENCY_PATH + "catalog_display_template.ftl";
-
 			DDMTemplate ddmTemplate = getDDMTemplate(
-				_CP_SEARCH_RESULT_PORTLET_CLASS_NAME, filePath,
+				_CP_SEARCH_RESULT_PORTLET_CLASS_NAME,
+				_DEPENDENCY_PATH + "catalog_display_template.ftl",
 				"Commerce Catalog Customer Portal", serviceContext);
 
 			String ddmTemplateKey =

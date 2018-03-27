@@ -221,23 +221,20 @@ AUI.add(
 					isRuleDraftEmpty: function(ruleDraft) {
 						var instance = this;
 
-						var ruleDraftIsEmpty = true;
+						var ruleDraftIsEmpty = [];
 						var ruleDraftKeys = A.Object.keys(ruleDraft);
 						var ruleDraftValues = A.Object.values(ruleDraft);
 
 						if (!(ruleDraftKeys.length === 0)) {
 							ruleDraftIsEmpty = ruleDraftValues.filter(
 								function(ruleDraftValue) {
-									var empty;
-
-									if (ruleDraftValue.length > 0) {
-										empty = false;
+									if ((typeof (ruleDraftValue) !== 'string') && ruleDraftValue.length > 0) {
+										return ruleDraftValue;
 									}
-									return empty;
 								}
 							);
 						}
-						return ruleDraftIsEmpty;
+						return ruleDraftIsEmpty.length == 0;
 					},
 
 					renderRule: function(rule) {
@@ -533,12 +530,6 @@ AUI.add(
 						instance._showAddRuleButton();
 					},
 
-					_hideAddRuleButton: function() {
-						var instance = this;
-
-						A.one('.lfr-ddm-add-rule').addClass('hide');
-					},
-
 					_handleSaveRuleDraft: function(event) {
 						var instance = this;
 
@@ -549,6 +540,12 @@ AUI.add(
 						};
 
 						instance.set('ruleDraft', rule);
+					},
+
+					_hideAddRuleButton: function() {
+						var instance = this;
+
+						A.one('.lfr-ddm-add-rule').addClass('hide');
 					},
 
 					_onRulesChange: function(val) {

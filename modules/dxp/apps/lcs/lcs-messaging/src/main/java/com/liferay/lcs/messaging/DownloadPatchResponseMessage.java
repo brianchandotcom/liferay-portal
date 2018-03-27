@@ -14,41 +14,28 @@
 
 package com.liferay.lcs.messaging;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author Ivica Cardic
  */
-public class DownloadPatchesCommandMessage extends CommandMessage {
+public class DownloadPatchResponseMessage extends ResponseMessage {
 
-	public String getMd5Sum() {
-		return _md5Sum;
+	public String getPatchFileName() {
+		return _patchFileName;
 	}
 
-	public Map<String, String> getPatches() {
-		return _patches;
+	public int getStatus() {
+		return _status;
 	}
 
-	@Override
-	public String getSignatureString() {
-		String signatureString = super.getSignatureString();
-
-		signatureString = signatureString.concat(
-			_patches.toString()).concat(_md5Sum);
-
-		return signatureString;
+	public void setPatchFileName(String patchFileName) {
+		_patchFileName = patchFileName;
 	}
 
-	public void setMd5Sum(String md5Sum) {
-		_md5Sum = md5Sum;
+	public void setStatus(int status) {
+		_status = status;
 	}
 
-	public void setPatches(Map<String, String> patches) {
-		_patches = patches;
-	}
-
-	private String _md5Sum;
-	private Map<String, String> _patches = new HashMap<String, String>();
+	private String _patchFileName;
+	private int _status;
 
 }

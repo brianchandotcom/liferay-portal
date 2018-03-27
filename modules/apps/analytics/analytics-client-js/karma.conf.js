@@ -6,15 +6,13 @@ module.exports = function(config) {
 		browsers: ['Chrome'],
 
 		coverageReporter: {
-			reporters: [
-				{
-					type: 'lcov',
-					subdir: 'lcov',
-				},
-				{
-					type: 'text-summary',
-				},
-			],
+			reporters: [{
+				type: 'lcov',
+				subdir: 'lcov',
+			}, {
+				type: 'text-summary',
+			}, ],
+		},
 		},
 
 		files: [
@@ -25,14 +23,14 @@ module.exports = function(config) {
 		frameworks: ['chai', 'mocha', 'sinon'],
 
 		preprocessors: {
-			'test.webpack.js': ['webpack', 'sourcemap' ],
+			'test.webpack.js': ['webpack', 'sourcemap'],
 		},
 
 		reporters: ['progress', 'coverage-istanbul'],
 
-		 coverageIstanbulReporter: {
-		 	dir: path.join(__dirname, 'test-coverage'),
-	      	reports: ['html', 'lcovonly', 'text-summary']
+		coverageIstanbulReporter: {
+			dir: path.join(__dirname, 'test-coverage'),
+			reports: ['html', 'lcovonly', 'text-summary']
 		},
 
 		webpack: webpack,

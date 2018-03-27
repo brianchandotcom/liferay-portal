@@ -161,6 +161,26 @@ public class TestBatchGroup {
 		return currentBranchTestClassNameGlobs;
 	}
 
+	private String _getFirstPropertyValue(
+		Properties properties, List<String> propertyNames) {
+
+		for (String propertyName : propertyNames) {
+			if (propertyName == null) {
+				continue;
+			}
+
+			if (properties.containsKey(propertyName)) {
+				String propertyValue = properties.getProperty(propertyName);
+
+				if ((propertyValue != null) && !propertyValue.isEmpty()) {
+					return propertyValue;
+				}
+			}
+		}
+
+		return null;
+	}
+
 	private int _getMaxClassGroupSize() {
 		List<String> orderedPropertyNames = new ArrayList<>();
 
@@ -191,7 +211,7 @@ public class TestBatchGroup {
 
 		orderedPropertyNames.add("test.batch.max.class.group.size");
 
-		String propertyValue = _getPropertyValueFromOrderedPropertyNames(
+		String propertyValue = _getFirstPropertyValue(
 			_portalTestProperties, orderedPropertyNames);
 
 		if (propertyValue != null) {
@@ -199,26 +219,6 @@ public class TestBatchGroup {
 		}
 
 		return _DEFAULT_MAX_CLASS_GROUP_SIZE;
-	}
-
-	private String _getPropertyValueFromOrderedPropertyNames(
-		Properties properties, List<String> orderedPropertyNames) {
-
-		for (String propertyName : orderedPropertyNames) {
-			if (propertyName == null) {
-				continue;
-			}
-
-			if (properties.containsKey(propertyName)) {
-				String propertyValue = properties.getProperty(propertyName);
-
-				if ((propertyValue != null) && !propertyValue.isEmpty()) {
-					return propertyValue;
-				}
-			}
-		}
-
-		return null;
 	}
 
 	private Set<String> _getTestClassFileNames() {
@@ -375,7 +375,7 @@ public class TestBatchGroup {
 
 		propertyNames.add("test.batch.current.branch");
 
-		String propertyValue = _getPropertyValueFromOrderedPropertyNames(
+		String propertyValue = _getFirstPropertyValue(
 			_portalTestProperties, propertyNames);
 
 		if (propertyValue != null) {
@@ -456,9 +456,8 @@ public class TestBatchGroup {
 
 		propertyNames.add("test.class.names.excludes");
 
-		String testClassNamesExcludes =
-			_getPropertyValueFromOrderedPropertyNames(
-				_portalTestProperties, propertyNames);
+		String testClassNamesExcludes = _getFirstPropertyValue(
+			_portalTestProperties, propertyNames);
 
 		if ((testClassNamesExcludes != null) &&
 			!testClassNamesExcludes.isEmpty()) {
@@ -513,9 +512,8 @@ public class TestBatchGroup {
 
 		propertyNames.add("test.class.names.includes");
 
-		String testClassNamesIncludes =
-			_getPropertyValueFromOrderedPropertyNames(
-				_portalTestProperties, propertyNames);
+		String testClassNamesIncludes = _getFirstPropertyValue(
+			_portalTestProperties, propertyNames);
 
 		if ((testClassNamesIncludes != null) &&
 			!testClassNamesIncludes.isEmpty()) {

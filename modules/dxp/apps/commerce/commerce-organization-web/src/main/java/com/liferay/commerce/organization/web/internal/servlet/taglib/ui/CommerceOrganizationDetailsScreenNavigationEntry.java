@@ -24,6 +24,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -98,7 +99,8 @@ public class CommerceOrganizationDetailsScreenNavigationEntry
 			commerceOrganizationDetailDisplayContext =
 				new CommerceOrganizationDetailDisplayContext(
 					_commerceOrganizationHelper, _commerceOrganizationService,
-					httpServletRequest, _portal, _userFileUploadsConfiguration);
+					httpServletRequest, _organizationLocalService, _portal,
+					_userFileUploadsConfiguration);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -124,6 +126,9 @@ public class CommerceOrganizationDetailsScreenNavigationEntry
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private OrganizationLocalService _organizationLocalService;
 
 	@Reference
 	private Portal _portal;

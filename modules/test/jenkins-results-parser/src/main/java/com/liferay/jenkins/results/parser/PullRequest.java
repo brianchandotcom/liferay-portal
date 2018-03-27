@@ -91,6 +91,10 @@ public class PullRequest {
 		return StringUtils.replace(labelsURL, "{/name}", "");
 	}
 
+	public String getNumber() {
+		return Integer.toString(_number);
+	}
+
 	public String getOwnerUserName() {
 		return _ownerUserName;
 	}
@@ -103,6 +107,12 @@ public class PullRequest {
 		JSONObject headJSONObject = _jsonObject.getJSONObject("head");
 
 		return headJSONObject.getString("ref");
+	}
+
+	public String getSenderSHA() {
+		JSONObject headJSONObject = _jsonObject.getJSONObject("head");
+
+		return headJSONObject.getString("sha");
 	}
 
 	public String getSenderUsername() {

@@ -56,6 +56,6 @@ public abstract class DDMFormBaseModelListener<T extends BaseModel<T>>
 	private static final String _APPLICATION_ID = "Forms";
 
 	@Reference
-	private AnalyticsClient _analyticsClient;
+	protected AnalyticsClient _analyticsClient;
 
 }

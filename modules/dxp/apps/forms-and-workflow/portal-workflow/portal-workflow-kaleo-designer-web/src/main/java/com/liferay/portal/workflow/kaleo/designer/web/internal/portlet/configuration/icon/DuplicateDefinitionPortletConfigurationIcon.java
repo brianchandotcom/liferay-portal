@@ -14,17 +14,19 @@
 
 package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.configuration.icon;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerWebKeys;
-import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
+import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDefinitionVersionPermission;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 
 import java.util.ResourceBundle;
@@ -79,35 +81,26 @@ public class DuplicateDefinitionPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		KaleoDefinitionVersion kaleoDefinitionVersion =
-			(KaleoDefinitionVersion)portletRequest.getAttribute(
-				KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION);
+			getKaleoDefinitionVersion(portletRequest);
 
-		KaleoDefinition kaleoDefinition = _getKaleoDefinition(
-			kaleoDefinitionVersion);
-
-		if (kaleoDefinition != null) {
-			return true;
+		if (kaleoDefinitionVersion == null) {
+			return false;
 		}
 
-		return false;
+		return KaleoDefinitionVersionPermission.contains(
+			themeDisplay.getPermissionChecker(), kaleoDefinitionVersion,
+			ActionKeys.VIEW);
 	}
 
-	private KaleoDefinition _getKaleoDefinition(
-		KaleoDefinitionVersion kaleoDefinitionVersion) {
+	protected KaleoDefinitionVersion getKaleoDefinitionVersion(
+		PortletRequest portletRequest) {
 
-		try {
-			if (kaleoDefinitionVersion != null) {
-				return kaleoDefinitionVersion.getKaleoDefinition();
-			}
-		}
-		catch (PortalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
-		}
-
-		return null;
+		return (KaleoDefinitionVersion)portletRequest.getAttribute(
+			KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

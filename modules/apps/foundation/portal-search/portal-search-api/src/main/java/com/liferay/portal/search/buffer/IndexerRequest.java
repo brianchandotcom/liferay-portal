@@ -90,7 +90,9 @@ public class IndexerRequest {
 
 			ProxyModeThreadLocal.setForceSync(_forceSync);
 
-			if (_method.getParameterTypes().length == 1) {
+			Class<?>[] parameterTypes = _method.getParameterTypes();
+
+			if (parameterTypes.length == 1) {
 				_method.invoke(_indexer, _classedModel);
 			}
 			else {

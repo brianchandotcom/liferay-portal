@@ -122,7 +122,9 @@ public abstract class HitsOpenSearchImpl extends BaseOpenSearchImpl {
 				(com.liferay.portal.kernel.xml.Document)values[0];
 			Element root = (Element)values[1];
 
-			for (int i = 0; i < results.getDocs().length; i++) {
+			Document[] docs = results.getDocs();
+
+			for (int i = 0; i < docs.length; i++) {
 				Document result = results.doc(i);
 
 				String snippet = result.get(Field.SNIPPET);

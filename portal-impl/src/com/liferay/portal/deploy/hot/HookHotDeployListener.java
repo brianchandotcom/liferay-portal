@@ -381,9 +381,10 @@ public class HookHotDeployListener
 			_log.debug(
 				"Portlet locales " + portalProperties.getProperty(LOCALES));
 			_log.debug("Original locales " + PropsUtil.get(LOCALES));
-			_log.debug(
-				"Original locales array length " +
-					PropsUtil.getArray(LOCALES).length);
+
+			String[] locales = PropsUtil.getArray(LOCALES);
+
+			_log.debug("Original locales array length " + locales.length);
 		}
 
 		resetPortalProperties(servletContextName, portalProperties, false);
@@ -1361,9 +1362,10 @@ public class HookHotDeployListener
 			_log.debug(
 				"Portlet locales " + portalProperties.getProperty(LOCALES));
 			_log.debug("Merged locales " + PropsUtil.get(LOCALES));
-			_log.debug(
-				"Merged locales array length " +
-					PropsUtil.getArray(LOCALES).length);
+
+			String[] locales = PropsUtil.getArray(LOCALES);
+
+			_log.debug("Merged locales array length " + locales.length);
 		}
 
 		for (String key : _PROPS_VALUES_OBSOLETE) {

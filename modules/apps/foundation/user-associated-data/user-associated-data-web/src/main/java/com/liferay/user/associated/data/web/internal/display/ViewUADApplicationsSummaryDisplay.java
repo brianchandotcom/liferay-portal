@@ -16,9 +16,6 @@ package com.liferay.user.associated.data.web.internal.display;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 
-import java.util.List;
-import java.util.stream.Stream;
-
 /**
  * @author Drew Brokke
  */
@@ -29,16 +26,7 @@ public class ViewUADApplicationsSummaryDisplay {
 	}
 
 	public int getTotalCount() {
-		List<UADApplicationSummaryDisplay> uadApplicationSummaryDisplays =
-			_searchContainer.getResults();
-
-		Stream<UADApplicationSummaryDisplay>
-			uadApplicationSummaryDisplaysStream =
-				uadApplicationSummaryDisplays.stream();
-
-		return uadApplicationSummaryDisplaysStream.mapToInt(
-			UADApplicationSummaryDisplay::getCount
-		).sum();
+		return _totalCount;
 	}
 
 	public void setSearchContainer(
@@ -47,6 +35,11 @@ public class ViewUADApplicationsSummaryDisplay {
 		_searchContainer = searchContainer;
 	}
 
+	public void setTotalCount(int totalCount) {
+		_totalCount = totalCount;
+	}
+
 	private SearchContainer<UADApplicationSummaryDisplay> _searchContainer;
+	private int _totalCount;
 
 }

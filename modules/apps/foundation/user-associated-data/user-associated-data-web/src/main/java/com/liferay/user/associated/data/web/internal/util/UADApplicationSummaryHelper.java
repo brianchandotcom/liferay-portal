@@ -126,6 +126,11 @@ public class UADApplicationSummaryHelper {
 		).sum();
 	}
 
+	public int getTotalReviewableUADEntitiesCount(long userId) {
+		return getReviewableUADEntitiesCount(
+			_uadRegistry.getUADEntityDisplayStream(), userId);
+	}
+
 	public UADApplicationSummaryDisplay getUADApplicationSummaryDisplay(
 		String applicationName, long userId) {
 

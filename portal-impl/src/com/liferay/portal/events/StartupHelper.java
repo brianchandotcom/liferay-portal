@@ -164,7 +164,7 @@ public class StartupHelper {
 		"com.liferay.portal.upgrade.UpgradeProcess_7_0_1",
 		"com.liferay.portal.upgrade.UpgradeProcess_7_0_3",
 		"com.liferay.portal.upgrade.UpgradeProcess_7_0_5",
-		"com.liferay.portal.upgrade.CoreUpgradeProcess"
+		"com.liferay.portal.upgrade.CoreServiceUpgrade"
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(StartupHelper.class);

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping auto-import="false" default-lazy="false">
+	<import class="com.liferay.service.builder.test.model.BigDecimalEntry" />
+	<class name="com.liferay.service.builder.test.model.impl.BigDecimalEntryImpl" table="BigDecimalEntry">
+		<id name="bigDecimalEntryId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="bigDecimalValue" type="org.hibernate.type.BigDecimalType" />
+	</class>
+</hibernate-mapping>

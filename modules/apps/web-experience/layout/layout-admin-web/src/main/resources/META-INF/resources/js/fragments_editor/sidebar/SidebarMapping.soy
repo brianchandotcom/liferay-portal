@@ -35,16 +35,14 @@
 			</div>
 		</div>
 
-		<button
-			class="btn btn-secondary"
-			data-onclick="{$_handleSelectAssetTypeButtonClick}"
-			type="button"
-		>
-			{if $selectedMappingTypeLabel and $selectedMappingTypeLabel.type}
-				{msg desc=""}change-asset-type{/msg}
-			{else}
+		{if not $selectedMappingTypeLabel or not $selectedMappingTypeLabel.type}
+			<button
+				class="btn btn-secondary"
+				data-onclick="{$_handleSelectAssetTypeButtonClick}"
+				type="button"
+			>
 				{msg desc=""}select{/msg}
-			{/if}
-		</button>
+			</button>
+		{/if}
 	</div>
 {/template}

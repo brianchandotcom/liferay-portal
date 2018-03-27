@@ -65,7 +65,7 @@ public class ManagementToolbarsDisplayContext {
 	}
 
 	public CreationMenuDropdown getCreationMenu() {
-		if (Validator.isNotNull(_creationMenuDropdown)) {
+		if (_creationMenuDropdown != null) {
 			return _creationMenuDropdown;
 		}
 

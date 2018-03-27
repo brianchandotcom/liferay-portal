@@ -307,7 +307,7 @@ public class TestBatchGroup {
 	}
 
 	private List<PathMatcher> _getTestClassNamesPathMatchers(
-		List<String> testClassNamesGlobs) {
+		List<String> testClassNamesRelativeGlobs) {
 
 		List<PathMatcher> pathMatchers = new ArrayList<>();
 
@@ -315,14 +315,14 @@ public class TestBatchGroup {
 
 		String workingDirectoryPath = workingDirectory.getAbsolutePath();
 
-		for (String testClassNamesGlob : testClassNamesGlobs) {
+		for (String testClassNamesRelativeGlob : testClassNamesRelativeGlobs) {
 			FileSystem fileSystem = FileSystems.getDefault();
 
 			pathMatchers.add(
 				fileSystem.getPathMatcher(
 					JenkinsResultsParserUtil.combine(
 						"glob:", workingDirectoryPath, "/",
-						testClassNamesGlob)));
+						testClassNamesRelativeGlob)));
 		}
 
 		return pathMatchers;

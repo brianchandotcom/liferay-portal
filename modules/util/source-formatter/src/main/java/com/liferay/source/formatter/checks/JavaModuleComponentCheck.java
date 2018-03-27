@@ -42,6 +42,10 @@ public class JavaModuleComponentCheck extends BaseJavaTermCheck {
 		String fileName, String absolutePath, JavaTerm javaTerm,
 		String fileContent) {
 
+		if (isSubrepository() || isReadOnly(absolutePath)) {
+			return javaTerm.getContent();
+		}
+
 		if (javaTerm.getParentJavaClass() != null) {
 			return javaTerm.getContent();
 		}

@@ -21,7 +21,16 @@ CommerceOrganizationDetailDisplayContext commerceOrganizationDetailDisplayContex
 
 Organization organization = commerceOrganizationDetailDisplayContext.getCurrentOrganization();
 
-String type = BeanParamUtil.getString(organization, request, "type", PropsValues.ORGANIZATIONS_TYPES[0]);
+String[] organizationTypes = commerceOrganizationDetailDisplayContext.getOrganizationTypes();
+
+String defaultType = StringPool.BLANK;
+
+if ((organizationTypes != null) && (organizationTypes.length > 0)) {
+	defaultType = organizationTypes[0];
+}
+
+String type = BeanParamUtil.getString(organization, request, "type", defaultType);
+
 long groupId = 0;
 
 if (organization != null) {
@@ -69,11 +78,11 @@ EmailAddress emailAddress = commerceOrganizationDetailDisplayContext.getOrganiza
 			</c:choose>
 
 			<c:choose>
-				<c:when test="<%= (organization == null) && (PropsValues.ORGANIZATIONS_TYPES.length > 1) %>">
+				<c:when test="<%= (organization == null) && (organizationTypes.length > 1) %>">
 					<aui:select name="type">
 
 						<%
-						for (String curType : PropsValues.ORGANIZATIONS_TYPES) {
+						for (String curType : organizationTypes) {
 						%>
 
 							<aui:option label="<%= curType %>" selected="<%= type.equals(curType) %>" />
@@ -85,10 +94,10 @@ EmailAddress emailAddress = commerceOrganizationDetailDisplayContext.getOrganiza
 					</aui:select>
 				</c:when>
 				<c:when test="<%= organization == null %>">
-					<aui:input name="type" type="hidden" value="<%= PropsValues.ORGANIZATIONS_TYPES[0] %>" />
+					<aui:input name="type" type="hidden" value="<%= defaultType %>" />
 				</c:when>
 				<c:otherwise>
-					<c:if test="<%= PropsValues.ORGANIZATIONS_TYPES.length > 1 %>">
+					<c:if test="<%= organizationTypes.length > 1 %>">
 						<aui:input name="typeLabel" type="resource" value="<%= LanguageUtil.get(request, organization.getType()) %>" />
 					</c:if>
 

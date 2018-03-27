@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.service.base.AssetEntryServiceBaseImpl;
 import com.liferay.portlet.asset.service.permission.AssetEntryPermission;
@@ -364,8 +365,13 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 		AssetEntryQuery originalEntryQuery,
 		AssetEntryQuery filteredEntryQuery) {
 
-		if (originalEntryQuery.getAllCategoryIds().length >
-				filteredEntryQuery.getAllCategoryIds().length) {
+		long[] filteredEntryQueryAllCategoryIds =
+			filteredEntryQuery.getAllCategoryIds();
+		long[] originalEntryQueryAllCategoryIds =
+			originalEntryQuery.getAllCategoryIds();
+
+		if (originalEntryQueryAllCategoryIds.length >
+				filteredEntryQueryAllCategoryIds.length) {
 
 			// No results will be available if the user must have access to all
 			// category ids, but the user has access to fewer category ids in
@@ -375,8 +381,11 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			return true;
 		}
 
-		if (originalEntryQuery.getAllTagIds().length >
-				filteredEntryQuery.getAllTagIds().length) {
+		long[] filteredEntryQueryAllTagIds = filteredEntryQuery.getAllTagIds();
+		long[] originalEntryQueryAllTagIds = originalEntryQuery.getAllTagIds();
+
+		if (originalEntryQueryAllTagIds.length >
+				filteredEntryQueryAllTagIds.length) {
 
 			// No results will be available if the user must have access to all
 			// tag ids, but the user has access to fewer tag ids in the filtered
@@ -385,8 +394,8 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			return true;
 		}
 
-		if ((originalEntryQuery.getAnyCategoryIds().length > 0) &&
-			(filteredEntryQuery.getAnyCategoryIds().length == 0)) {
+		if (ArrayUtil.isNotEmpty(originalEntryQuery.getAnyCategoryIds()) &&
+			ArrayUtil.isEmpty(filteredEntryQuery.getAnyCategoryIds())) {
 
 			// No results will be available if the original entry query
 			// specified at least one category id, but the filtered entry query
@@ -395,8 +404,8 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			return true;
 		}
 
-		if ((originalEntryQuery.getAnyTagIds().length > 0) &&
-			(filteredEntryQuery.getAnyTagIds().length == 0)) {
+		if (ArrayUtil.isNotEmpty(originalEntryQuery.getAnyTagIds()) &&
+			ArrayUtil.isEmpty(filteredEntryQuery.getAnyTagIds())) {
 
 			// No results will be available if the original entry query
 			// specified at least one tag id, but the filtered entry query shows

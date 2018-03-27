@@ -63,7 +63,9 @@ public class ShoppingCartImpl extends ShoppingCartBaseImpl {
 
 	@Override
 	public int getItemsSize() {
-		return StringUtil.split(getItemIds()).length;
+		String[] itemIds = StringUtil.split(getItemIds());
+
+		return itemIds.length;
 	}
 
 }

@@ -191,7 +191,9 @@ public class ConcurrentLFUCache<K, V> {
 
 			K key = entry.getKey();
 
-			V value = entry.getValue()._value;
+			ValueWrapper valueWrapper = entry.getValue();
+
+			V value = valueWrapper._value;
 
 			_cache.remove(key);
 

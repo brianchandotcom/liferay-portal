@@ -53,9 +53,11 @@ public class NtlmManager {
 
 		Type3Message type3Message = new Type3Message(material);
 
+		byte[] ntResponse = type3Message.getNTResponse();
+
 		if (type3Message.getFlag(
 				_NTLMSSP_NEGOTIATE_EXTENDED_SESSION_SECURITY) &&
-			(type3Message.getNTResponse().length == 24)) {
+			(ntResponse.length == 24)) {
 
 			MessageDigest messageDigest = MessageDigest.getInstance("MD5");
 

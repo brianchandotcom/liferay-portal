@@ -365,7 +365,9 @@ public class MessageLocalServiceImpl extends MessageLocalServiceBaseImpl {
 			return 0;
 		}
 
-		long size = body.getBytes().length;
+		byte[] bytes = body.getBytes();
+
+		long size = bytes.length;
 
 		List<Attachment> attachments = attachmentPersistence.findByMessageId(
 			messageId);

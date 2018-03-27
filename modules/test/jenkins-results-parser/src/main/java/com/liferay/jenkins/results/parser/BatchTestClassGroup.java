@@ -89,13 +89,13 @@ public class TestBatchGroup {
 	}
 
 	protected TestBatchGroup(
-		GitWorkingDirectory gitWorkingDirectory, String batchName) {
+		String batchName, GitWorkingDirectory gitWorkingDirectory) {
 
-		this(gitWorkingDirectory, batchName, null);
+		this(batchName, gitWorkingDirectory, null);
 	}
 
 	protected TestBatchGroup(
-		GitWorkingDirectory gitWorkingDirectory, String batchName,
+		String batchName, GitWorkingDirectory gitWorkingDirectory,
 		String testSuiteName) {
 
 		_gitWorkingDirectory = gitWorkingDirectory;

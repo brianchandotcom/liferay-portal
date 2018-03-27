@@ -38,19 +38,19 @@ body {
 .product-menu {
 	background-color: $product-menu-body-bg;
 
-	.company-details .company-logo {
-		margin-right: 16px;
-		max-height: 32px;
-		max-width: 32px;
-	}
-
 	.company-details {
-	    float: left;
-	    width: calc(100% - 32px);
+		float: left;
+		width: calc(100% - 32px);
 
-	    @include sm {
-	        width: 100%;
-	    }
+		@include sm {
+			width: 100%;
+		}
+
+		.company-logo {
+			margin-right: 16px;
+			max-height: 32px;
+			max-width: 32px;
+		}
 	}
 }
 

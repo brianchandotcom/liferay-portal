@@ -252,7 +252,7 @@ elasticsearch.url: "https://localhost:9200"</echo>
 					<mirrors-get
 						dest="${elasticsearch.dir}/${elastic.x-pack.zip.name}"
 						skipChecksum="true"
-						src="${elasticsearch.x-pack.zip.url}"
+						src="${elastic.x-pack.zip.url}"
 					/>
 				</then>
 			</if>
@@ -285,7 +285,7 @@ elasticsearch.url: "https://localhost:9200"</echo>
 				<then>
 					<exec dir="${elastic.kibana.dir}/bin" executable="/bin/bash">
 						<arg value="-c" />
-						<arg value="./kibana-plugin install file:///${elasticsearch.dir}/${elastic.x-pack.zip.name}" />
+						<arg value="./kibana-plugin install file:///${elastic.kibana.dir}/${elastic.x-pack.zip.name}" />
 					</exec>
 				</then>
 				<elseif>
@@ -293,7 +293,7 @@ elasticsearch.url: "https://localhost:9200"</echo>
 					<then>
 						<exec dir="${elastic.kibana.dir}/bin" executable="cmd" spawn="true">
 							<arg value="/c" />
-							<arg value="kibana-plugin install file:///${elasticsearch.dir}/${elastic.x-pack.zip.name}" />
+							<arg value="kibana-plugin install file:///${elastic.kibana.dir}/${elastic.x-pack.zip.name}" />
 						</exec>
 					</then>
 				</elseif>
@@ -306,7 +306,7 @@ elasticsearch.url: "https://localhost:9200"</echo>
 			<if>
 				<os family="unix" />
 				<then>
-					<exec dir="${elasticsearch.dir}/bin/x-pack" executable="/bin/bash" outputproperty="elastic.xpack.user.passwords">
+					<exec dir="${elasticsearch.dir}-1/bin/x-pack" executable="/bin/bash" outputproperty="elastic.xpack.user.passwords">
 						<arg value="-c" />
 						<arg value="./setup-passwords auto --batch" />
 					</exec>
@@ -314,7 +314,7 @@ elasticsearch.url: "https://localhost:9200"</echo>
 				<elseif>
 					<os family="windows" />
 					<then>
-						<exec dir="${elasticsearch.dir}/bin/x-pack" executable="cmd" outputproperty="elastic.xpack.user.passwords">
+						<exec dir="${elasticsearch.dir}-1/bin/x-pack" executable="cmd" outputproperty="elastic.xpack.user.passwords">
 							<arg value="/c" />
 							<arg value="setup-passwords auto --batch" />
 						</exec>
@@ -458,7 +458,7 @@ elasticsearch.url: "https://localhost:9200"</echo>
 				<os family="mac" />
 				<then>
 					<move
-						file="${app.server.parent.dir}/kibana-${elastic.kibana.version}-darwin-x86_64"
+						file="${app.server.parent.dir}/kibana-${elasticsearch.version}-darwin-x86_64"
 						tofile="${elastic.kibana.dir}"
 					/>
 				</then>
@@ -466,7 +466,7 @@ elasticsearch.url: "https://localhost:9200"</echo>
 					<os family="unix" />
 					<then>
 						<move
-							file="${app.server.parent.dir}/kibana-${elastic.kibana.version}-linux-x86_64"
+							file="${app.server.parent.dir}/kibana-${elasticsearch.version}-linux-x86_64"
 							tofile="${elastic.kibana.dir}"
 						/>
 					</then>
@@ -475,7 +475,7 @@ elasticsearch.url: "https://localhost:9200"</echo>
 					<os family="windows" />
 					<then>
 						<move
-							file="${app.server.parent.dir}/kibana-${elastic.kibana.version}-windows-x86"
+							file="${app.server.parent.dir}/kibana-${elasticsearch.version}-windows-x86"
 							tofile="${elastic.kibana.dir}"
 						/>
 					</then>

@@ -74,25 +74,25 @@ public class ManagementToolbarsDisplayContext {
 				addPrimaryDropdownItem(
 					dropdownItem -> {
 						dropdownItem.setHref("#1");
-						dropdownItem.setLabel(("Sample 1"));
+						dropdownItem.setLabel("Sample 1");
 					});
 
 				addPrimaryDropdownItem(
 					dropdownItem -> {
 						dropdownItem.setHref("#2");
-						dropdownItem.setLabel(("Sample 2"));
+						dropdownItem.setLabel("Sample 2");
 					});
 
 				addFavoriteDropdownItem(
 					dropdownItem -> {
 						dropdownItem.setHref("#3");
-						dropdownItem.setLabel(("Favorite 1"));
+						dropdownItem.setLabel("Favorite 1");
 					});
 
 				addFavoriteDropdownItem(
 					dropdownItem -> {
 						dropdownItem.setHref("#4");
-						dropdownItem.setLabel(("Other item"));
+						dropdownItem.setLabel("Other item");
 					});
 			}
 		};

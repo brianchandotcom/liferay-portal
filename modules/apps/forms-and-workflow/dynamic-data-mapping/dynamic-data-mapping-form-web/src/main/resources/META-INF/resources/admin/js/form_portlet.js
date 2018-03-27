@@ -813,10 +813,6 @@ AUI.add(
 
 						var nameEditor = instance._getNameEditor();
 
-						if (event.editor.element.$.textContent.length > 10) {
-							return;
-						}
-
 						localizedName[editingLanguageId] = nameEditor.getHTML();
 					},
 

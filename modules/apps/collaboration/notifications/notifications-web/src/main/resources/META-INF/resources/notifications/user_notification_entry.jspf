@@ -82,7 +82,7 @@ if (notificationUnread) {
 				<span title="<%= dateFormatDateTime.format(userNotificationEvent.getTimestamp()) %>">
 					<%= Time.getRelativeTimeDescription(userNotificationEvent.getTimestamp(), themeDisplay.getLocale(), themeDisplay.getTimeZone(), dateFormatDateTime) %>
 				</span>
-			</h5>ç
+			</h5>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-jsp

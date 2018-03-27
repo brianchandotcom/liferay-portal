@@ -139,7 +139,7 @@ Organization organization = commerceOrganizationMembersDisplayContext.getCurrent
 					method: 'POST',
 					on: {
 						success: function() {
-							Liferay.Util.getOpener().closePopup('inviteUserDialog');
+							Liferay.Util.getOpener().<portlet:namespace />closePopup('inviteUserDialog');
 
 							Liferay.Util.getOpener().Liferay.Portlet.refresh('#p_p_id<portlet:namespace />');
 						}

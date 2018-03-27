@@ -14,7 +14,11 @@
 
 package com.liferay.source.formatter.parser;
 
-import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.source.formatter.checks.util.SourceUtil;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
@@ -57,14 +61,14 @@ public abstract class BaseJavaTerm implements JavaTerm {
 
 	@Override
 	public boolean hasAnnotation(String annotation) {
-		if (_content.contains("\t@" + annotation + "\n") ||
-			_content.contains(
-				"\t@" + annotation + StringPool.OPEN_PARENTHESIS)) {
+		Pattern pattern = Pattern.compile(
+			StringBundler.concat(
+				"(\\A|\n)", SourceUtil.getIndent(_content), "@", annotation,
+				"(\\(|\n)"));
 
-			return true;
-		}
+		Matcher matcher = pattern.matcher(_content);
 
-		return false;
+		return matcher.find();
 	}
 
 	@Override

@@ -691,7 +691,7 @@ elasticsearch.password: "kibanapassword"]]></replacevalue>
 	<target name="start-kibana">
 		<unzip-kibana />
 
-		<antcall target="configure-kibana-properties" />
+		<configure-kibana-properties />
 
 		<get-testcase-property property.name="elastic.xpack.enabled" />
 
@@ -699,6 +699,8 @@ elasticsearch.password: "kibanapassword"]]></replacevalue>
 			<equals arg1="${elastic.xpack.enabled}" arg2="true" />
 			<then>
 				<prepare-kibana-x-pack />
+
+				<configure-kibana-x-pack-security-properties />
 			</then>
 		</if>
 

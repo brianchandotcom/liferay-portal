@@ -53,7 +53,6 @@ announcements
 
 - [@LiferayEng](http://twitter.com/Liferayeng) Tweets from the core engineering team
 
-
 ### Blog
 
 Read details on announcements, engage in discussions and learn more by following [Liferay's Blog](http://www.liferay.com/community/blogs).

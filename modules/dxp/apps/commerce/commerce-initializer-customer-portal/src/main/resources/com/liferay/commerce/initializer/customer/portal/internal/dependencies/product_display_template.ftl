@@ -19,7 +19,7 @@
 
 	categories = simpleCPTypeDisplayContext.getAssetCategories()
 />
-<#if isIgnoreSKUCombinations >
+<#if isIgnoreSKUCombinations>
 	<#assign
 		cpInstance =  simpleCPTypeDisplayContext.getDefaultCPInstance()
 	/>
@@ -33,7 +33,6 @@
 	</#if>
 </#if>
 
-
 <div class="product-detail" id="<@portlet.namespace />${cpDefinition.getCPDefinitionId()}ProductContent">
 	<div class="product-detail-header">
 		<div class="commerce-brand-name">Brand Name</div>
@@ -45,11 +44,13 @@
 					Model #<span data-text-cp-instance-manufacturer-part-number>${modelNumber}</span>
 				</div>
 			</div>
+
 			<div class="autofit-col">
 				<div class="commerce-gtin">
 					GTIN #<span data-text-cp-instance-gtin>${gtin}</span>
 				</div>
 			</div>
+
 			<div class="autofit-col">
 				<div class="commerce-sku">
 					SKU:
@@ -73,6 +74,7 @@
 						</#list>
 					</#if>
 				</div>
+
 				<div class="product-detail-thumbnail-container">
 					<a class="thumb" href="#placeholder">
 						<span class="rounded-circle sticker sticker-primary sticker-sm sticker-top-left">
@@ -83,11 +85,12 @@
 						</span>
 					</a>
 				</div>
+
 				<div class="product-detail-thumbnail-container">
 					<a class="thumb" href="#placeholder">7 +</a>
 				</div>
 			</div>
-			<#if defaultImage != "" >
+			<#if validator.isNotNull(defaultImage)>
 				<div class="product-detail-image-column">
 					<div class="full-image product-detail-image-container">
 						<img class="img-fluid" id="<@portlet.namespace />full-image" src="${simpleCPTypeDisplayContext.getImageURL(defaultImage.getFileEntry(), themeDisplay)}">
@@ -113,9 +116,7 @@
 						<div class="autofit-section">
 							was
 							<strong data-text-cp-instance-price>
-								<@liferay_commerce["price"]
-									CPInstanceId= cpInstanceId
-								/>
+								<@liferay_commerce["price"] CPInstanceId=cpInstanceId />
 							</strong>
 						</div>
 					</div>
@@ -150,8 +151,8 @@
 
 					<div class="form-group-autofit">
 							<@liferay_commerce["tier-price"]
-								CPInstanceId= cpInstanceId
-								taglibQuantityInputId= renderResponse.getNamespace() +  cpDefinition.getCPDefinitionId() + 'Quantity'
+								CPInstanceId=cpInstanceId
+								taglibQuantityInputId=renderResponse.getNamespace() +  cpDefinition.getCPDefinitionId() + 'Quantity'
 							/>
 					</div>
 				</div>
@@ -160,10 +161,11 @@
 			<div class="form-group-autofit product-detail-info-selections">
 				<div class="commerce-quantity-input form-group-item">
 					<@liferay_commerce["quantity-input"]
-						CPDefinitionId= cpDefinitionId
+						CPDefinitionId=cpDefinitionId
 						useSelect=false
 					/>
 				</div>
+
 				<div class="commerce-size-input form-group-item">
 					${simpleCPTypeDisplayContext.renderOptions(renderRequest, renderResponse)}
 				</div>
@@ -172,13 +174,14 @@
 			<div class="autofit-float autofit-row autofit-row-center product-detail-info-actions">
 				<div class="autofit-col">
 					<@liferay_commerce_cart["add-to-cart"]
-						CPDefinitionId= cpDefinitionId
-						CPInstanceId= cpInstanceId
+						CPDefinitionId=cpDefinitionId
+						CPInstanceId=cpInstanceId
 						elementClasses="btn-primary text-truncate"
-						productContentId= renderResponse.getNamespace() +  cpDefinition.getCPDefinitionId() + 'ProductContent'
-						taglibQuantityInputId= renderResponse.getNamespace() +  cpDefinition.getCPDefinitionId() + 'Quantity'
+						productContentId=renderResponse.getNamespace() +  cpDefinition.getCPDefinitionId() + 'ProductContent'
+						taglibQuantityInputId=renderResponse.getNamespace() +  cpDefinition.getCPDefinitionId() + 'Quantity'
 					/>
 				</div>
+
 				<div class="autofit-col">
 					<a href="#placeholder">Add to List +</a>
 				</div>
@@ -236,10 +239,10 @@
 			<#if simpleCPTypeDisplayContext.hasCPDefinitionSpecificationOptionValues()>
 				<div class="fade tab-pane" id="<@portlet.namespace />specification">
 					<div class="row">
-						<#assign columnClass = "col-md-12 specification-column">
+						<#assign columnClass = "col-md-12 specification-column" />
 
 						<#if cpDefinitionSpecificationOptionValues?has_content>
-							<#assign columnClass="col-lg-6 ">
+							<#assign columnClass ="col-lg-6 " />
 
 							<div class="${columnClass}">
 								<div class="table-responsive">

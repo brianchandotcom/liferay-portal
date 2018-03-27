@@ -29,7 +29,6 @@ String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 
 	<%
 	for (CommerceTierPriceEntry commerceTierPriceEntry : commerceTierPriceEntries) {
-	String formattedPrice = CommercePriceCalculationLocalServiceUtil.getFormattedFinalPrice(scopeGroupId, commerceCurrencyId, user.getUserId(), cpInstanceId, commerceTierPriceEntry.getMinQuantity());
 	%>
 
 		<div class="form-group-item">
@@ -38,6 +37,7 @@ String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 				<div class="input-group-item input-group-prepend input-group-item-shrink">
 					<span class="input-group-text input-group-text-secondary">x4</span>
 				</div>
+
 				<div class="input-group-item">
 					<input class="form-control" readonly tabindex="-1" type="text" value="$75.03 /ea">
 				</div>

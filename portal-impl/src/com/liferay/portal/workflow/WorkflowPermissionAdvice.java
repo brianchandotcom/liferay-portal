@@ -77,12 +77,8 @@ public class WorkflowPermissionAdvice {
 			try {
 				return method.invoke(_workflowTaskManager, arguments);
 			}
-			catch (Throwable t) {
-				if (t instanceof InvocationTargetException) {
-					t = t.getCause();
-				}
-
-				throw t;
+			catch (InvocationTargetException ite) {
+				throw ite.getCause();
 			}
 		}
 

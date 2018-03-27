@@ -82,12 +82,8 @@ public class WorkflowLinkAdvice {
 			try {
 				return method.invoke(_workflowDefinitionManager, arguments);
 			}
-			catch (Throwable t) {
-				if (t instanceof InvocationTargetException) {
-					t = t.getCause();
-				}
-
-				throw t;
+			catch (InvocationTargetException ite) {
+				throw ite.getCause();
 			}
 		}
 

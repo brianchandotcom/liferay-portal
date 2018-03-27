@@ -18,6 +18,7 @@
 	<macrodef name="configure-elasticsearch-x-pack-monitoring-osgi-bundle-properties">
 		<sequential>
 			<propertyregex
+				defaultValue="${elastic.xpack.kibana.user.password}"
 				input="${elastic.xpack.kibana.user.password}"
 				override="true"
 				property="osgi.config.kibana.user.password"
@@ -35,6 +36,7 @@ kibanaURL="https://localhost:5601"</echo>
 	<macrodef name="configure-elasticsearch-x-pack-security-osgi-bundle-properties">
 		<sequential>
 			<propertyregex
+				defaultValue="${elastic.xpack.elastic.user.password}"
 				input="${elastic.xpack.elastic.user.password}"
 				override="true"
 				property="osgi.config.elastic.user.password"

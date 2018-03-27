@@ -98,10 +98,8 @@ public class TestBatchGroup {
 		String batchName, GitWorkingDirectory gitWorkingDirectory,
 		String testSuiteName) {
 
-		_gitWorkingDirectory = gitWorkingDirectory;
-
 		_batchName = batchName;
-
+		_gitWorkingDirectory = gitWorkingDirectory;
 		_testSuiteName = testSuiteName;
 
 		_portalTestProperties = JenkinsResultsParserUtil.getProperties(

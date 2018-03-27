@@ -205,7 +205,7 @@ public class TLiferayOutputProperties
 
 		mainForm.addRow(calculateSchemaWidget);
 
-		Form advancedForm = getForm(Form.ADVANCED);
+		Form advancedForm = new Form(this, Form.ADVANCED);
 
 		advancedForm.addRow(dieOnError);
 	}

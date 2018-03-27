@@ -22,7 +22,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -216,7 +216,7 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 		String layoutsJSON = StringUtil.read(
 			clazz.getClassLoader(), _DEPENDENCY_PATH + "layouts.json", false);
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(layoutsJSON);
+		JSONArray jsonArray = _jsonFactory.createJSONArray(layoutsJSON);
 
 		_cpFileImporter.createLayouts(jsonArray, false, serviceContext);
 	}
@@ -227,7 +227,7 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 		String rolesJSON = StringUtil.read(
 			clazz.getClassLoader(), _DEPENDENCY_PATH + "roles.json", true);
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(rolesJSON);
+		JSONArray jsonArray = _jsonFactory.createJSONArray(rolesJSON);
 
 		_cpFileImporter.createRoles(jsonArray, serviceContext);
 
@@ -256,7 +256,7 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 			clazz.getClassLoader(),
 			_DEPENDENCY_PATH + "theme-portlet-settings.json", true);
 
-		return JSONFactoryUtil.createJSONArray(themePortletSettingsJSON);
+		return _jsonFactory.createJSONArray(themePortletSettingsJSON);
 	}
 
 	protected void setCPContentPortletSettings(
@@ -538,6 +538,9 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

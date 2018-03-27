@@ -23,7 +23,7 @@ import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -285,8 +285,7 @@ public class CPDefinitionDemoDataCreatorHelper
 		String catalogJSON = StringUtil.read(
 			clazz.getClassLoader(), catalogPath, false);
 
-		JSONArray catalogJSONArray = JSONFactoryUtil.createJSONArray(
-			catalogJSON);
+		JSONArray catalogJSONArray = _jsonFactory.createJSONArray(catalogJSON);
 
 		return catalogJSONArray;
 	}
@@ -328,5 +327,8 @@ public class CPDefinitionDemoDataCreatorHelper
 	@Reference
 	private CPSpecificationOptionDemoDataCreatorHelper
 		_cpSpecificationOptionDemoDataCreatorHelper;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

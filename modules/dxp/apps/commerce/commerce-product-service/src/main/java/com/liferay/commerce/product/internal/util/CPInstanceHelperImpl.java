@@ -38,7 +38,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -95,7 +95,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		long cpDefinitionClassNameId = _portal.getClassNameId(
 			CPDefinition.class);
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+		JSONArray jsonArray = _jsonFactory.createJSONArray(
 			serializedDDMFormValues);
 
 		Indexer<CPAttachmentFileEntry> indexer =
@@ -125,7 +125,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 			optionsKeys.add(fieldName);
 
-			JSONArray valuesJSONArray = JSONFactoryUtil.createJSONArray(
+			JSONArray valuesJSONArray = _jsonFactory.createJSONArray(
 				jsonObject.getString("value"));
 
 			String[] values = new String[valuesJSONArray.length()];
@@ -190,7 +190,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			return cpDefinitionOptionRelListMap;
 		}
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -312,7 +312,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			serializedDDMFormValues = "[]";
 		}
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+		JSONArray jsonArray = _jsonFactory.createJSONArray(
 			serializedDDMFormValues);
 
 		Indexer<CPInstance> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
@@ -345,7 +345,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 			String fieldName = "ATTRIBUTE_" + key + "_VALUE_ID";
 
-			JSONArray valuesJSONArray = JSONFactoryUtil.createJSONArray(
+			JSONArray valuesJSONArray = _jsonFactory.createJSONArray(
 				jsonObject.getString("value"));
 
 			if (valuesJSONArray.length() == 0) {
@@ -407,7 +407,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			return values;
 		}
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -786,6 +786,9 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 	@Reference
 	private DDMFormValuesHelper _ddmFormValuesHelper;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

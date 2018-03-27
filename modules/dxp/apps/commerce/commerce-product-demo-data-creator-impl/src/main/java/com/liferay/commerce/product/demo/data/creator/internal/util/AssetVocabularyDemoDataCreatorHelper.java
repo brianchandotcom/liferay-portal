@@ -18,7 +18,7 @@ import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -90,7 +90,7 @@ public class AssetVocabularyDemoDataCreatorHelper
 		String assetVocabulariesJSON = StringUtil.read(
 			clazz.getClassLoader(), assetVocabulariesPath, false);
 
-		return JSONFactoryUtil.createJSONArray(assetVocabulariesJSON);
+		return _jsonFactory.createJSONArray(assetVocabulariesJSON);
 	}
 
 	@Reference
@@ -99,5 +99,8 @@ public class AssetVocabularyDemoDataCreatorHelper
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

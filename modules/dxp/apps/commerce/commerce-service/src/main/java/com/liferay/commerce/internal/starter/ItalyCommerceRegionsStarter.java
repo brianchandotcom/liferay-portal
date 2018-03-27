@@ -20,7 +20,7 @@ import com.liferay.commerce.service.CommerceRegionLocalService;
 import com.liferay.commerce.starter.CommerceRegionsStarter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -55,7 +55,7 @@ public class ItalyCommerceRegionsStarter implements CommerceRegionsStarter {
 		String regionsJSON = StringUtil.read(
 			clazz.getClassLoader(), layoutsPath, false);
 
-		return JSONFactoryUtil.createJSONArray(regionsJSON);
+		return _jsonFactory.createJSONArray(regionsJSON);
 	}
 
 	@Override
@@ -87,5 +87,8 @@ public class ItalyCommerceRegionsStarter implements CommerceRegionsStarter {
 
 	@Reference
 	private CommerceRegionLocalService _commerceRegionLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

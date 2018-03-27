@@ -20,7 +20,7 @@ import com.liferay.commerce.product.exception.CPAttachmentFileEntrySizeException
 import com.liferay.item.selector.ItemSelectorUploadResponseHandler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
@@ -73,7 +73,7 @@ public class AttachmentsUploadResponseHandler implements UploadResponseHandler {
 				errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
 			}
 
-			JSONObject errorJSONObject = JSONFactoryUtil.createJSONObject();
+			JSONObject errorJSONObject = _jsonFactory.createJSONObject();
 
 			errorJSONObject.put("errorType", errorType);
 			errorJSONObject.put("message", errorMessage);
@@ -107,5 +107,8 @@ public class AttachmentsUploadResponseHandler implements UploadResponseHandler {
 	@Reference
 	private ItemSelectorUploadResponseHandler
 		_itemSelectorUploadResponseHandler;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

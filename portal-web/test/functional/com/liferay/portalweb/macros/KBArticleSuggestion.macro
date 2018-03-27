@@ -102,7 +102,9 @@
 	</command>
 
 	<command name="viewNoSuggestions">
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no suggestions." />
+		<execute macro="PortletEntry#viewEmptyMessage">
+			<var name="entity" value="Suggestions" />
+		</execute>
 	</command>
 
 	<command name="viewNoSuggestionsPG">

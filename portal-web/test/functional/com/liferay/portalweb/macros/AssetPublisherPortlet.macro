@@ -616,7 +616,9 @@
 
 		<execute macro="Alert#viewSuccessMessage" />
 
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no configuration templates." />
+		<execute macro="PortletEntry#viewEmptyMessage">
+			<var name="entity" value="Configuration Templates" />
+		</execute>
 	</command>
 
 	<command name="enableRSSSubscription">
@@ -715,7 +717,9 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no configuration templates." />
+		<execute macro="PortletEntry#viewEmptyMessage">
+			<var name="entity" value="Configuration Templates" />
+		</execute>
 
 		<execute function="AssertClick" locator1="Configuration#SAVE_CONFIGURATION_TEMPLATE" value1="Save Current Configuration as Template" />
 

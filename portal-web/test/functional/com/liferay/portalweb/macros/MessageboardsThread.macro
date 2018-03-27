@@ -1486,7 +1486,9 @@
 		<execute function="AssertTextEquals" locator1="MessageBoardsStatistics#GENERAL_NUMBER_OF_CATEGORIES" value1="0" />
 		<execute function="AssertTextEquals" locator1="MessageBoardsStatistics#GENERAL_NUMBER_OF_POSTS" value1="0" />
 		<execute function="AssertTextEquals" locator1="MessageBoardsStatistics#GENERAL_NUMBER_OF_PARTICIPANTS" value1="0" />
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no top posters." />
+		<execute macro="PortletEntry#viewEmptyMessage">
+			<var name="entity" value="Top Posters" />
+		</execute>
 	</command>
 
 	<command name="viewStatisticsPostsCountPG">

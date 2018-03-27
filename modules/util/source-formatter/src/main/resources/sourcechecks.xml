@@ -239,6 +239,7 @@
 
 		<!-- Module checks -->
 
+		<check name="JavaModuleComponentCheck" />
 		<check name="JavaModuleExtendedObjectClassDefinitionCheck" />
 		<check name="JavaModuleIllegalImportsCheck">
 			<property name="checkRegistryInTestClasses" value="false" />

@@ -51,10 +51,10 @@ public class HttpSoap11Encoder extends HTTPSOAP11Encoder {
 			HttpClientOutTransport httpClientTransport =
 				(HttpClientOutTransport)outTransport;
 
-			HttpPost postMethod = httpClientTransport.getHttpPost();
+			HttpPost httpPost = httpClientTransport.getHttpPost();
 
 			try {
-				_httpClient.execute(postMethod);
+				_httpClient.execute(httpPost);
 			}
 			catch (Exception e) {
 				throw new MessageEncodingException(e);

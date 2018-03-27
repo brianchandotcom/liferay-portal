@@ -5,9 +5,7 @@
 
 	<macrodef name="configure-elasticsearch-osgi-bundle-properties">
 		<sequential>
-			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration.config">httpEnabled=B&quot;false&quot;
-logExceptionsOnly=B&quot;false&quot;
-operationMode=&quot;REMOTE&quot;</echo>
+			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration.config">${line.separator}operationMode=&quot;REMOTE&quot;</echo>
 		</sequential>
 	</macrodef>
 

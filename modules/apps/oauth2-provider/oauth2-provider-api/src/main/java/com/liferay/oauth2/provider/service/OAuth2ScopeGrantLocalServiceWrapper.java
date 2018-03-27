@@ -34,6 +34,36 @@ public class OAuth2ScopeGrantLocalServiceWrapper
 		_oAuth2ScopeGrantLocalService = oAuth2ScopeGrantLocalService;
 	}
 
+	@Override
+	public void addOAuth2AuthorizationOAuth2ScopeGrant(
+		long oAuth2AuthorizationId, long oAuth2ScopeGrantId) {
+		_oAuth2ScopeGrantLocalService.addOAuth2AuthorizationOAuth2ScopeGrant(oAuth2AuthorizationId,
+			oAuth2ScopeGrantId);
+	}
+
+	@Override
+	public void addOAuth2AuthorizationOAuth2ScopeGrant(
+		long oAuth2AuthorizationId,
+		com.liferay.oauth2.provider.model.OAuth2ScopeGrant oAuth2ScopeGrant) {
+		_oAuth2ScopeGrantLocalService.addOAuth2AuthorizationOAuth2ScopeGrant(oAuth2AuthorizationId,
+			oAuth2ScopeGrant);
+	}
+
+	@Override
+	public void addOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId,
+		java.util.List<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> oAuth2ScopeGrants) {
+		_oAuth2ScopeGrantLocalService.addOAuth2AuthorizationOAuth2ScopeGrants(oAuth2AuthorizationId,
+			oAuth2ScopeGrants);
+	}
+
+	@Override
+	public void addOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId, long[] oAuth2ScopeGrantIds) {
+		_oAuth2ScopeGrantLocalService.addOAuth2AuthorizationOAuth2ScopeGrants(oAuth2AuthorizationId,
+			oAuth2ScopeGrantIds);
+	}
+
 	/**
 	* Adds the o auth2 scope grant to the database. Also notifies the appropriate model listeners.
 	*
@@ -46,6 +76,12 @@ public class OAuth2ScopeGrantLocalServiceWrapper
 		return _oAuth2ScopeGrantLocalService.addOAuth2ScopeGrant(oAuth2ScopeGrant);
 	}
 
+	@Override
+	public void clearOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId) {
+		_oAuth2ScopeGrantLocalService.clearOAuth2AuthorizationOAuth2ScopeGrants(oAuth2AuthorizationId);
+	}
+
 	/**
 	* Creates a new o auth2 scope grant with the primary key. Does not add the o auth2 scope grant to the database.
 	*
@@ -56,6 +92,47 @@ public class OAuth2ScopeGrantLocalServiceWrapper
 	public com.liferay.oauth2.provider.model.OAuth2ScopeGrant createOAuth2ScopeGrant(
 		long oAuth2ScopeGrantId) {
 		return _oAuth2ScopeGrantLocalService.createOAuth2ScopeGrant(oAuth2ScopeGrantId);
+	}
+
+	@Override
+	public com.liferay.oauth2.provider.model.OAuth2ScopeGrant createOAuth2ScopeGrant(
+		long companyId, long oAuth2ApplicationScopeAliasesId,
+		java.lang.String applicationName, java.lang.String bundleSymbolicName,
+		java.lang.String scope)
+		throws com.liferay.oauth2.provider.exception.DuplicateOAuth2ScopeGrantException {
+		return _oAuth2ScopeGrantLocalService.createOAuth2ScopeGrant(companyId,
+			oAuth2ApplicationScopeAliasesId, applicationName,
+			bundleSymbolicName, scope);
+	}
+
+	@Override
+	public void deleteOAuth2AuthorizationOAuth2ScopeGrant(
+		long oAuth2AuthorizationId, long oAuth2ScopeGrantId) {
+		_oAuth2ScopeGrantLocalService.deleteOAuth2AuthorizationOAuth2ScopeGrant(oAuth2AuthorizationId,
+			oAuth2ScopeGrantId);
+	}
+
+	@Override
+	public void deleteOAuth2AuthorizationOAuth2ScopeGrant(
+		long oAuth2AuthorizationId,
+		com.liferay.oauth2.provider.model.OAuth2ScopeGrant oAuth2ScopeGrant) {
+		_oAuth2ScopeGrantLocalService.deleteOAuth2AuthorizationOAuth2ScopeGrant(oAuth2AuthorizationId,
+			oAuth2ScopeGrant);
+	}
+
+	@Override
+	public void deleteOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId,
+		java.util.List<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> oAuth2ScopeGrants) {
+		_oAuth2ScopeGrantLocalService.deleteOAuth2AuthorizationOAuth2ScopeGrants(oAuth2AuthorizationId,
+			oAuth2ScopeGrants);
+	}
+
+	@Override
+	public void deleteOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId, long[] oAuth2ScopeGrantIds) {
+		_oAuth2ScopeGrantLocalService.deleteOAuth2AuthorizationOAuth2ScopeGrants(oAuth2AuthorizationId,
+			oAuth2ScopeGrantIds);
 	}
 
 	/**
@@ -196,6 +273,44 @@ public class OAuth2ScopeGrantLocalServiceWrapper
 		return _oAuth2ScopeGrantLocalService.getIndexableActionableDynamicQuery();
 	}
 
+	@Override
+	public java.util.List<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> getOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId) {
+		return _oAuth2ScopeGrantLocalService.getOAuth2AuthorizationOAuth2ScopeGrants(oAuth2AuthorizationId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> getOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId, int start, int end) {
+		return _oAuth2ScopeGrantLocalService.getOAuth2AuthorizationOAuth2ScopeGrants(oAuth2AuthorizationId,
+			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> getOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> orderByComparator) {
+		return _oAuth2ScopeGrantLocalService.getOAuth2AuthorizationOAuth2ScopeGrants(oAuth2AuthorizationId,
+			start, end, orderByComparator);
+	}
+
+	@Override
+	public int getOAuth2AuthorizationOAuth2ScopeGrantsCount(
+		long oAuth2AuthorizationId) {
+		return _oAuth2ScopeGrantLocalService.getOAuth2AuthorizationOAuth2ScopeGrantsCount(oAuth2AuthorizationId);
+	}
+
+	/**
+	* Returns the oAuth2AuthorizationIds of the o auth2 authorizations associated with the o auth2 scope grant.
+	*
+	* @param oAuth2ScopeGrantId the oAuth2ScopeGrantId of the o auth2 scope grant
+	* @return long[] the oAuth2AuthorizationIds of o auth2 authorizations associated with the o auth2 scope grant
+	*/
+	@Override
+	public long[] getOAuth2AuthorizationPrimaryKeys(long oAuth2ScopeGrantId) {
+		return _oAuth2ScopeGrantLocalService.getOAuth2AuthorizationPrimaryKeys(oAuth2ScopeGrantId);
+	}
+
 	/**
 	* Returns the o auth2 scope grant with the primary key.
 	*
@@ -227,6 +342,22 @@ public class OAuth2ScopeGrantLocalServiceWrapper
 		return _oAuth2ScopeGrantLocalService.getOAuth2ScopeGrants(start, end);
 	}
 
+	@Override
+	public java.util.Collection<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> getOAuth2ScopeGrants(
+		long oAuth2ApplicationScopeAliasesId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> orderByComparator) {
+		return _oAuth2ScopeGrantLocalService.getOAuth2ScopeGrants(oAuth2ApplicationScopeAliasesId,
+			start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.Collection<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> getOAuth2ScopeGrants(
+		long companyId, java.lang.String applicationName,
+		java.lang.String bundleSymbolicName, java.lang.String accessTokenContent) {
+		return _oAuth2ScopeGrantLocalService.getOAuth2ScopeGrants(companyId,
+			applicationName, bundleSymbolicName, accessTokenContent);
+	}
+
 	/**
 	* Returns the number of o auth2 scope grants.
 	*
@@ -252,6 +383,35 @@ public class OAuth2ScopeGrantLocalServiceWrapper
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _oAuth2ScopeGrantLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public java.util.Collection<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> grantScopesToAuthorization(
+		long oAuth2AuthorizationId,
+		java.util.Collection<com.liferay.oauth2.provider.scope.liferay.LiferayOAuth2Scope> liferayOAuth2Scopes)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _oAuth2ScopeGrantLocalService.grantScopesToAuthorization(oAuth2AuthorizationId,
+			liferayOAuth2Scopes);
+	}
+
+	@Override
+	public boolean hasOAuth2AuthorizationOAuth2ScopeGrant(
+		long oAuth2AuthorizationId, long oAuth2ScopeGrantId) {
+		return _oAuth2ScopeGrantLocalService.hasOAuth2AuthorizationOAuth2ScopeGrant(oAuth2AuthorizationId,
+			oAuth2ScopeGrantId);
+	}
+
+	@Override
+	public boolean hasOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId) {
+		return _oAuth2ScopeGrantLocalService.hasOAuth2AuthorizationOAuth2ScopeGrants(oAuth2AuthorizationId);
+	}
+
+	@Override
+	public void setOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId, long[] oAuth2ScopeGrantIds) {
+		_oAuth2ScopeGrantLocalService.setOAuth2AuthorizationOAuth2ScopeGrants(oAuth2AuthorizationId,
+			oAuth2ScopeGrantIds);
 	}
 
 	/**

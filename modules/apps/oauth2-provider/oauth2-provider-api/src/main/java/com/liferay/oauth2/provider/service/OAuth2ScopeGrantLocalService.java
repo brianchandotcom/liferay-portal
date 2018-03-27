@@ -16,7 +16,9 @@ package com.liferay.oauth2.provider.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.oauth2.provider.exception.DuplicateOAuth2ScopeGrantException;
 import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
+import com.liferay.oauth2.provider.scope.liferay.LiferayOAuth2Scope;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -36,6 +38,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -60,6 +63,17 @@ public interface OAuth2ScopeGrantLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuth2ScopeGrantLocalServiceUtil} to access the o auth2 scope grant local service. Add custom service methods to {@link com.liferay.oauth2.provider.service.impl.OAuth2ScopeGrantLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public void addOAuth2AuthorizationOAuth2ScopeGrant(
+		long oAuth2AuthorizationId, long oAuth2ScopeGrantId);
+
+	public void addOAuth2AuthorizationOAuth2ScopeGrant(
+		long oAuth2AuthorizationId, OAuth2ScopeGrant oAuth2ScopeGrant);
+
+	public void addOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId, List<OAuth2ScopeGrant> oAuth2ScopeGrants);
+
+	public void addOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId, long[] oAuth2ScopeGrantIds);
 
 	/**
 	* Adds the o auth2 scope grant to the database. Also notifies the appropriate model listeners.
@@ -71,6 +85,9 @@ public interface OAuth2ScopeGrantLocalService extends BaseLocalService,
 	public OAuth2ScopeGrant addOAuth2ScopeGrant(
 		OAuth2ScopeGrant oAuth2ScopeGrant);
 
+	public void clearOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId);
+
 	/**
 	* Creates a new o auth2 scope grant with the primary key. Does not add the o auth2 scope grant to the database.
 	*
@@ -78,6 +95,23 @@ public interface OAuth2ScopeGrantLocalService extends BaseLocalService,
 	* @return the new o auth2 scope grant
 	*/
 	public OAuth2ScopeGrant createOAuth2ScopeGrant(long oAuth2ScopeGrantId);
+
+	public OAuth2ScopeGrant createOAuth2ScopeGrant(long companyId,
+		long oAuth2ApplicationScopeAliasesId, java.lang.String applicationName,
+		java.lang.String bundleSymbolicName, java.lang.String scope)
+		throws DuplicateOAuth2ScopeGrantException;
+
+	public void deleteOAuth2AuthorizationOAuth2ScopeGrant(
+		long oAuth2AuthorizationId, long oAuth2ScopeGrantId);
+
+	public void deleteOAuth2AuthorizationOAuth2ScopeGrant(
+		long oAuth2AuthorizationId, OAuth2ScopeGrant oAuth2ScopeGrant);
+
+	public void deleteOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId, List<OAuth2ScopeGrant> oAuth2ScopeGrants);
+
+	public void deleteOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId, long[] oAuth2ScopeGrantIds);
 
 	/**
 	* Deletes the o auth2 scope grant with the primary key from the database. Also notifies the appropriate model listeners.
@@ -175,6 +209,32 @@ public interface OAuth2ScopeGrantLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<OAuth2ScopeGrant> getOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<OAuth2ScopeGrant> getOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<OAuth2ScopeGrant> getOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId, int start, int end,
+		OrderByComparator<OAuth2ScopeGrant> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getOAuth2AuthorizationOAuth2ScopeGrantsCount(
+		long oAuth2AuthorizationId);
+
+	/**
+	* Returns the oAuth2AuthorizationIds of the o auth2 authorizations associated with the o auth2 scope grant.
+	*
+	* @param oAuth2ScopeGrantId the oAuth2ScopeGrantId of the o auth2 scope grant
+	* @return long[] the oAuth2AuthorizationIds of o auth2 authorizations associated with the o auth2 scope grant
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getOAuth2AuthorizationPrimaryKeys(long oAuth2ScopeGrantId);
+
 	/**
 	* Returns the o auth2 scope grant with the primary key.
 	*
@@ -200,6 +260,16 @@ public interface OAuth2ScopeGrantLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<OAuth2ScopeGrant> getOAuth2ScopeGrants(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Collection<OAuth2ScopeGrant> getOAuth2ScopeGrants(
+		long oAuth2ApplicationScopeAliasesId, int start, int end,
+		OrderByComparator<OAuth2ScopeGrant> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Collection<OAuth2ScopeGrant> getOAuth2ScopeGrants(long companyId,
+		java.lang.String applicationName, java.lang.String bundleSymbolicName,
+		java.lang.String accessTokenContent);
+
 	/**
 	* Returns the number of o auth2 scope grants.
 	*
@@ -219,6 +289,22 @@ public interface OAuth2ScopeGrantLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	public Collection<OAuth2ScopeGrant> grantScopesToAuthorization(
+		long oAuth2AuthorizationId,
+		Collection<LiferayOAuth2Scope> liferayOAuth2Scopes)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasOAuth2AuthorizationOAuth2ScopeGrant(
+		long oAuth2AuthorizationId, long oAuth2ScopeGrantId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId);
+
+	public void setOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId, long[] oAuth2ScopeGrantIds);
 
 	/**
 	* Updates the o auth2 scope grant in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

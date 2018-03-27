@@ -64,6 +64,8 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("oAuth2ApplicationScopeAliasesId",
+			getOAuth2ApplicationScopeAliasesId());
 		attributes.put("allowedGrantTypes", getAllowedGrantTypes());
 		attributes.put("clientId", getClientId());
 		attributes.put("clientProfile", getClientProfile());
@@ -75,7 +77,6 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 		attributes.put("name", getName());
 		attributes.put("privacyPolicyURL", getPrivacyPolicyURL());
 		attributes.put("redirectURIs", getRedirectURIs());
-		attributes.put("scopeAliases", getScopeAliases());
 
 		return attributes;
 	}
@@ -116,6 +117,13 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Long oAuth2ApplicationScopeAliasesId = (Long)attributes.get(
+				"oAuth2ApplicationScopeAliasesId");
+
+		if (oAuth2ApplicationScopeAliasesId != null) {
+			setOAuth2ApplicationScopeAliasesId(oAuth2ApplicationScopeAliasesId);
 		}
 
 		String allowedGrantTypes = (String)attributes.get("allowedGrantTypes");
@@ -183,12 +191,6 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 		if (redirectURIs != null) {
 			setRedirectURIs(redirectURIs);
 		}
-
-		String scopeAliases = (String)attributes.get("scopeAliases");
-
-		if (scopeAliases != null) {
-			setScopeAliases(scopeAliases);
-		}
 	}
 
 	@Override
@@ -209,6 +211,11 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	@Override
 	public java.lang.String getAllowedGrantTypes() {
 		return _oAuth2Application.getAllowedGrantTypes();
+	}
+
+	@Override
+	public java.util.List<com.liferay.oauth2.provider.constants.GrantType> getAllowedGrantTypesList() {
+		return _oAuth2Application.getAllowedGrantTypesList();
 	}
 
 	/**
@@ -286,6 +293,11 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 		return _oAuth2Application.getFeatures();
 	}
 
+	@Override
+	public java.util.List<java.lang.String> getFeaturesList() {
+		return _oAuth2Application.getFeaturesList();
+	}
+
 	/**
 	* Returns the home page url of this o auth2 application.
 	*
@@ -337,6 +349,16 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	}
 
 	/**
+	* Returns the o auth2 application scope aliases ID of this o auth2 application.
+	*
+	* @return the o auth2 application scope aliases ID of this o auth2 application
+	*/
+	@Override
+	public long getOAuth2ApplicationScopeAliasesId() {
+		return _oAuth2Application.getOAuth2ApplicationScopeAliasesId();
+	}
+
+	/**
 	* Returns the primary key of this o auth2 application.
 	*
 	* @return the primary key of this o auth2 application
@@ -371,14 +393,9 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 		return _oAuth2Application.getRedirectURIs();
 	}
 
-	/**
-	* Returns the scope aliases of this o auth2 application.
-	*
-	* @return the scope aliases of this o auth2 application
-	*/
 	@Override
-	public java.lang.String getScopeAliases() {
-		return _oAuth2Application.getScopeAliases();
+	public java.util.List<java.lang.String> getRedirectURIsList() {
+		return _oAuth2Application.getRedirectURIsList();
 	}
 
 	/**
@@ -444,6 +461,12 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	@Override
 	public void setAllowedGrantTypes(java.lang.String allowedGrantTypes) {
 		_oAuth2Application.setAllowedGrantTypes(allowedGrantTypes);
+	}
+
+	@Override
+	public void setAllowedGrantTypesList(
+		java.util.List<com.liferay.oauth2.provider.constants.GrantType> allowedGrantTypesList) {
+		_oAuth2Application.setAllowedGrantTypesList(allowedGrantTypesList);
 	}
 
 	@Override
@@ -537,6 +560,11 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 		_oAuth2Application.setFeatures(features);
 	}
 
+	@Override
+	public void setFeaturesList(java.util.List<java.lang.String> featuresList) {
+		_oAuth2Application.setFeaturesList(featuresList);
+	}
+
 	/**
 	* Sets the home page url of this o auth2 application.
 	*
@@ -593,6 +621,17 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	}
 
 	/**
+	* Sets the o auth2 application scope aliases ID of this o auth2 application.
+	*
+	* @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID of this o auth2 application
+	*/
+	@Override
+	public void setOAuth2ApplicationScopeAliasesId(
+		long oAuth2ApplicationScopeAliasesId) {
+		_oAuth2Application.setOAuth2ApplicationScopeAliasesId(oAuth2ApplicationScopeAliasesId);
+	}
+
+	/**
 	* Sets the primary key of this o auth2 application.
 	*
 	* @param primaryKey the primary key of this o auth2 application
@@ -627,14 +666,10 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 		_oAuth2Application.setRedirectURIs(redirectURIs);
 	}
 
-	/**
-	* Sets the scope aliases of this o auth2 application.
-	*
-	* @param scopeAliases the scope aliases of this o auth2 application
-	*/
 	@Override
-	public void setScopeAliases(java.lang.String scopeAliases) {
-		_oAuth2Application.setScopeAliases(scopeAliases);
+	public void setRedirectURIsList(
+		java.util.List<java.lang.String> redirectURIsList) {
+		_oAuth2Application.setRedirectURIsList(redirectURIsList);
 	}
 
 	/**

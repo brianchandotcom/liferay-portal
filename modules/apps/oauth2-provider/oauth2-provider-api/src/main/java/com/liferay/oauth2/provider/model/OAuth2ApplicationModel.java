@@ -177,6 +177,21 @@ public interface OAuth2ApplicationModel extends AuditedModel,
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the o auth2 application scope aliases ID of this o auth2 application.
+	 *
+	 * @return the o auth2 application scope aliases ID of this o auth2 application
+	 */
+	public long getOAuth2ApplicationScopeAliasesId();
+
+	/**
+	 * Sets the o auth2 application scope aliases ID of this o auth2 application.
+	 *
+	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID of this o auth2 application
+	 */
+	public void setOAuth2ApplicationScopeAliasesId(
+		long oAuth2ApplicationScopeAliasesId);
+
+	/**
 	 * Returns the allowed grant types of this o auth2 application.
 	 *
 	 * @return the allowed grant types of this o auth2 application
@@ -338,21 +353,6 @@ public interface OAuth2ApplicationModel extends AuditedModel,
 	 * @param redirectURIs the redirect ur is of this o auth2 application
 	 */
 	public void setRedirectURIs(String redirectURIs);
-
-	/**
-	 * Returns the scope aliases of this o auth2 application.
-	 *
-	 * @return the scope aliases of this o auth2 application
-	 */
-	@AutoEscape
-	public String getScopeAliases();
-
-	/**
-	 * Sets the scope aliases of this o auth2 application.
-	 *
-	 * @param scopeAliases the scope aliases of this o auth2 application
-	 */
-	public void setScopeAliases(String scopeAliases);
 
 	@Override
 	public boolean isNew();

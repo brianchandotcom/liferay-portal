@@ -119,7 +119,7 @@ public class AlloyMVCCheckstyleUtil {
 
 			if (!content.equals(sb.toString())) {
 				File tempSuppressionsFile = new File(
-					suppressionsFile.getParentFile() + "/tmp/" +
+					suppressionsFile.getParentFile() + _TMP_DIR +
 						suppressionsFile.getName());
 
 				FileUtil.write(tempSuppressionsFile, sb.toString());

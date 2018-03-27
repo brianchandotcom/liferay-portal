@@ -26,11 +26,47 @@ Map<String, String> resourceTooltips = (Map<String, String>)row.getParameter("re
 String classname = workflowDefinitionLinkSearchEntry.getClassName();
 
 String resource = workflowDefinitionLinkSearchEntry.getResource();
+
+String randomNamespace = (String)row.getParameter("randomNamespace");
 %>
 
 <c:choose>
 	<c:when test="<%= resourceTooltips.containsKey(classname) %>">
-		<span class="lfr-portal-tooltip" title="<%= resourceTooltips.get(classname) %>"><%= resource %></span>
+		<div class="workflow-definition-link-resource">
+			<span id="<%= randomNamespace %>resourceTooltip">
+				<%= resource %>
+				<div class="clay-tooltip-right tooltip" id="<%= randomNamespace %>tooltip" role="tooltip">
+					<div class="arrow"></div>
+					<div class="tooltip-inner">
+						<div><%= resourceTooltips.get(classname) %></div>
+					</div>
+				</div>
+			</span>
+		</div>
 	</c:when>
 	<c:otherwise><span><%= resource %></span></c:otherwise>
 </c:choose>
+
+<aui:script require="metal-dom/src/dom">
+
+	var dom = metalDomSrcDom.default;
+
+	var tooltip = document.getElementById('<%= randomNamespace %>tooltip');
+
+	var resourceTooltip = document.getElementById('<%= randomNamespace %>resourceTooltip');
+
+	if (resourceTooltip) {
+		resourceTooltip.addEventListener(
+			'mouseover',
+			function() {
+				dom.toggleClasses(tooltip,'show');
+			});
+
+		resourceTooltip.addEventListener(
+			'mouseout',
+			function() {
+				dom.toggleClasses(tooltip,'show');
+			});
+
+	}
+</aui:script>

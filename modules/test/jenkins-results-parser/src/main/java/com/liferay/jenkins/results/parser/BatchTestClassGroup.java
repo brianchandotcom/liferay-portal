@@ -117,9 +117,10 @@ public class TestBatchGroup {
 	}
 
 	private List<String> _getCurrentBranchTestClassNamesRelativeGlobs(
-		List<String> testClassNamesGlobs) {
+		List<String> testClassNamesRelativeGlobs) {
 
-		List<String> currentBranchTestClassNameGlobs = new ArrayList<>();
+		List<String> currentBranchTestClassNameRelativeGlobs =
+			new ArrayList<>();
 
 		File workingDirectory = _gitWorkingDirectory.getWorkingDirectory();
 
@@ -146,19 +147,23 @@ public class TestBatchGroup {
 			moduleGroupDirPath = moduleGroupDirPath.replace(
 				workingDirectory.getAbsolutePath() + "/", "");
 
-			for (String testClassNamesGlob : testClassNamesGlobs) {
-				currentBranchTestClassNameGlobs.add(
-					moduleGroupDirPath + "/" + testClassNamesGlob);
+			for (String testClassNamesRelativeGlob :
+					testClassNamesRelativeGlobs) {
 
-				if (testClassNamesGlob.startsWith("**/")) {
-					currentBranchTestClassNameGlobs.add(
-						moduleGroupDirPath + "/" +
-							testClassNamesGlob.substring(3));
+				currentBranchTestClassNameRelativeGlobs.add(
+					JenkinsResultsParserUtil.combine(
+						moduleGroupDirPath, "/", testClassNamesRelativeGlob));
+
+				if (testClassNamesRelativeGlob.startsWith("**/")) {
+					currentBranchTestClassNameRelativeGlobs.add(
+						JenkinsResultsParserUtil.combine(
+							moduleGroupDirPath, "/",
+							testClassNamesRelativeGlob.substring(3)));
 				}
 			}
 		}
 
-		return currentBranchTestClassNameGlobs;
+		return currentBranchTestClassNameRelativeGlobs;
 	}
 
 	private String _getFirstPropertyValue(

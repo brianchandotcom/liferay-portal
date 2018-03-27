@@ -1,0 +1,15 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+buildService {
+	apiDir = "../service-builder-test-api/src/main/java"
+	testDir = "../service-builder-test-test/src/testIntegration/java"
+}
+
+dependencies {
+	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	provided project(":apps:foundation:portal:portal-spring-extender-api")
+	provided project(":util:service-builder-test-api")
+}

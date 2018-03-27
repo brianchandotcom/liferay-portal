@@ -23,7 +23,7 @@ most complete platform to attract, convert and retain customers.
 Requirements: [Liferay Portal 7.1 M1](https://github.com/liferay/liferay-portal)
 
 Clone the Emporio repository (this [repository](https://github.com/liferay/com-liferay-commerce-private))
-to the same level of your directory tree as your Liferay Home folder. (Liferay
+to the same level of your directory tree as your Liferay Home folder (Liferay
 Home is the folder that contains the Tomcat folder for Liferay 7.1).
 
 Then start Liferay Portal 7.1.
@@ -35,9 +35,9 @@ Windows Users: enter `gradlew.bat deploy -Dbuild.profile=portal`
 
 MacOS/Linux: enter `./gradlew deploy -Dbuild.profile=portal`
 
-This takes a few minutes. When the build is complete, go to
-http://localhost:8080 in your browser and select *Commerce* &rarr; *Enable
-Features* in the Site Menu to activate Emporio in your Portal instance.
+This takes a few minutes. When the build is complete, go to--or refresh--
+http://localhost:8080 in your browser. Emporio's features are now available in
+your Portal instance.
 
 ## Bug Reporting
 

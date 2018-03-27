@@ -131,7 +131,7 @@ public class ChainingCheck extends BaseCheck {
 					detailAST, methodCallAST, chainedMethodNames)) {
 
 				if (chainSize > 2) {
-					_checkStyling(methodCallAST);
+					_checkStyling(detailAST, methodCallAST);
 				}
 
 				continue;
@@ -171,7 +171,14 @@ public class ChainingCheck extends BaseCheck {
 		}
 	}
 
-	private void _checkStyling(DetailAST methodCallAST) {
+	private void _checkStyling(DetailAST detailAST, DetailAST methodCallAST) {
+		if (_isInsideConstructorThisCall(methodCallAST, detailAST) ||
+			DetailASTUtil.hasParentWithTokenType(
+				methodCallAST, TokenTypes.SUPER_CTOR_CALL)) {
+
+			return;
+		}
+
 		for (int i = DetailASTUtil.getStartLine(methodCallAST) + 1;
 			 i <= DetailASTUtil.getEndLine(methodCallAST); i++) {
 
@@ -199,11 +206,19 @@ public class ChainingCheck extends BaseCheck {
 				return chainedMethodNames;
 			}
 
-			methodCallAST = parentAST.getParent();
+			DetailAST grandParentAST = parentAST.getParent();
 
-			if (methodCallAST.getType() != TokenTypes.METHOD_CALL) {
+			if (grandParentAST.getType() != TokenTypes.METHOD_CALL) {
+				DetailAST siblingAST = methodCallAST.getNextSibling();
+
+				if (siblingAST.getType() == TokenTypes.IDENT) {
+					chainedMethodNames.add(siblingAST.getText());
+				}
+
 				return chainedMethodNames;
 			}
+
+			methodCallAST = grandParentAST;
 
 			chainedMethodNames.add(DetailASTUtil.getMethodName(methodCallAST));
 		}

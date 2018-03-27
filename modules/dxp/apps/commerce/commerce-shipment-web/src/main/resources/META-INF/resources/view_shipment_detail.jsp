@@ -239,6 +239,38 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	</aui:form>
 </div>
 
+<liferay-frontend:management-bar
+	searchContainerId="commerceShipmentItems"
+>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= portletURL %>"
+			selectedDisplayStyle="list"
+		/>
+
+		<portlet:actionURL name="editCommerceShipmentItem" var="addCommerceShipmentItemURL" />
+
+		<aui:form action="<%= addCommerceShipmentItemURL %>" cssClass="hide" name="addCommerceShipmentItemFm">
+			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
+			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+			<aui:input name="commerceShipmentId" type="hidden" value="<%= commerceShipmentId %>" />
+			<aui:input name="commerceOrderItemIds" type="hidden" value="" />
+		</aui:form>
+
+		<liferay-frontend:add-menu inline="<%= true %>">
+			<liferay-frontend:add-menu-item id="addCommerceShipmentItem" title='<%= LanguageUtil.get(request, "add-shipment-item") %>' url="javascript:;" />
+		</liferay-frontend:add-menu>
+	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= portletURL %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+</liferay-frontend:management-bar>
+
 <div class="container-fluid-1280" id="<portlet:namespace />shipmentItemsContainer">
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
@@ -293,19 +325,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		</div>
 	</aui:form>
 </div>
-
-<portlet:actionURL name="editCommerceShipmentItem" var="addCommerceShipmentItemURL" />
-
-<aui:form action="<%= addCommerceShipmentItemURL %>" cssClass="hide" name="addCommerceShipmentItemFm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="commerceShipmentId" type="hidden" value="<%= commerceShipmentId %>" />
-	<aui:input name="commerceOrderItemIds" type="hidden" value="" />
-</aui:form>
-
-<liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item id="addCommerceShipmentItem" title='<%= LanguageUtil.get(request, "add-shipment-item") %>' url="javascript:;" />
-</liferay-frontend:add-menu>
 
 <aui:script>
 	function <portlet:namespace />deleteCommerceShipmentItems() {

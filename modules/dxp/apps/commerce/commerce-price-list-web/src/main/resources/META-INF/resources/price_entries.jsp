@@ -45,6 +45,19 @@ PortletURL portletURL = commercePriceEntryDisplayContext.getPortletURL();
 			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="list"
 		/>
+
+		<portlet:actionURL name="editCommercePriceEntry" var="addCommercePriceEntryURL" />
+
+		<aui:form action="<%= addCommercePriceEntryURL %>" cssClass="hide" name="addCommercePriceEntryFm">
+			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD_MULTIPLE %>" />
+			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+			<aui:input name="commercePriceListId" type="hidden" value="<%= commercePriceListId %>" />
+			<aui:input name="cpInstanceIds" type="hidden" value="" />
+		</aui:form>
+
+		<liferay-frontend:add-menu inline="<%= true %>">
+			<liferay-frontend:add-menu-item id="addCommercePriceEntry" title='<%= LanguageUtil.get(request, "add-entry") %>' url="javascript:;" />
+		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
@@ -166,19 +179,6 @@ PortletURL portletURL = commercePriceEntryDisplayContext.getPortletURL();
 		</div>
 	</div>
 </div>
-
-<portlet:actionURL name="editCommercePriceEntry" var="addCommercePriceEntryURL" />
-
-<aui:form action="<%= addCommercePriceEntryURL %>" cssClass="hide" name="addCommercePriceEntryFm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD_MULTIPLE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="commercePriceListId" type="hidden" value="<%= commercePriceListId %>" />
-	<aui:input name="cpInstanceIds" type="hidden" value="" />
-</aui:form>
-
-<liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item id="addCommercePriceEntry" title='<%= LanguageUtil.get(request, "add-entry") %>' url="javascript:;" />
-</liferay-frontend:add-menu>
 
 <aui:script>
 	function <portlet:namespace />deleteCommercePriceEntries() {

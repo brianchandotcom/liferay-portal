@@ -47,6 +47,21 @@ PortletURL portletURL = cpDefinitionLinkDisplayContext.getPortletURL();
 			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="<%= cpDefinitionLinkDisplayContext.getDisplayStyle() %>"
 		/>
+
+		<portlet:actionURL name="editCPDefinitionLink" var="addCPDefinitionLinkURL" />
+
+		<aui:form action="<%= addCPDefinitionLinkURL %>" cssClass="hide" name="addCPDefinitionLinkFm">
+			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
+			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+			<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinitionId %>" />
+			<aui:input name="cpDefinitionIds" type="hidden" value="" />
+			<aui:input name="screenNavigationCategoryKey" type="hidden" value="<%= cpDefinitionLinkDisplayContext.getScreenNavigationCategoryKey() %>" />
+			<aui:input name="type" type="hidden" value="<%= type %>" />
+		</aui:form>
+
+		<liferay-frontend:add-menu inline="<%= true %>">
+			<liferay-frontend:add-menu-item id="addCommerceProductDefinition" title="<%= LanguageUtil.format(request, "add-x-product", type, true) %>" url="javascript:;" />
+		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
@@ -154,21 +169,6 @@ PortletURL portletURL = cpDefinitionLinkDisplayContext.getPortletURL();
 		</div>
 	</div>
 </div>
-
-<portlet:actionURL name="editCPDefinitionLink" var="addCPDefinitionLinkURL" />
-
-<aui:form action="<%= addCPDefinitionLinkURL %>" cssClass="hide" name="addCPDefinitionLinkFm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinitionId %>" />
-	<aui:input name="cpDefinitionIds" type="hidden" value="" />
-	<aui:input name="screenNavigationCategoryKey" type="hidden" value="<%= cpDefinitionLinkDisplayContext.getScreenNavigationCategoryKey() %>" />
-	<aui:input name="type" type="hidden" value="<%= type %>" />
-</aui:form>
-
-<liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item id="addCommerceProductDefinition" title="<%= LanguageUtil.format(request, "add-x-product", type, true) %>" url="javascript:;" />
-</liferay-frontend:add-menu>
 
 <aui:script>
 	function <portlet:namespace />deleteCPDefinitionLinks() {

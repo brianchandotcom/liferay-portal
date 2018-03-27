@@ -48,6 +48,17 @@ boolean hasManageCommerceCurrenciesPermission = CommerceCurrencyPermission.conta
 			portletURL="<%= commerceCurrenciesDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="list"
 		/>
+
+		<c:if test="<%= hasManageCommerceCurrenciesPermission %>">
+			<portlet:renderURL var="addCommerceCurrencyURL">
+				<portlet:param name="mvcRenderCommandName" value="editCommerceCurrency" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:add-menu inline="<%= true %>">
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-currency") %>' url="<%= addCommerceCurrencyURL.toString() %>" />
+			</liferay-frontend:add-menu>
+		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<c:if test="<%= hasManageCommerceCurrenciesPermission %>">
@@ -153,17 +164,6 @@ boolean hasManageCommerceCurrenciesPermission = CommerceCurrencyPermission.conta
 		</liferay-ui:search-container>
 	</aui:form>
 </div>
-
-<c:if test="<%= hasManageCommerceCurrenciesPermission %>">
-	<portlet:renderURL var="addCommerceCurrencyURL">
-		<portlet:param name="mvcRenderCommandName" value="editCommerceCurrency" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-	</portlet:renderURL>
-
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-currency") %>' url="<%= addCommerceCurrencyURL.toString() %>" />
-	</liferay-frontend:add-menu>
-</c:if>
 
 <aui:script>
 	function <portlet:namespace />deleteCommerceCurrencies() {

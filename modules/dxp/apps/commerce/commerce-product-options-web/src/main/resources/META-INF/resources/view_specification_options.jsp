@@ -54,6 +54,14 @@ renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 			portletURL="<%= cpSpecificationOptionDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
+
+		<liferay-portlet:renderURL var="addProductSpecificationOptionURL">
+			<portlet:param name="mvcRenderCommandName" value="editProductSpecificationOption" />
+		</liferay-portlet:renderURL>
+
+		<liferay-frontend:add-menu inline="<%= true %>">
+			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-specification-label") %>' url="<%= addProductSpecificationOptionURL.toString() %>" />
+		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
@@ -175,14 +183,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 		</div>
 	</div>
 </div>
-
-<liferay-portlet:renderURL var="addProductSpecificationOptionURL">
-	<portlet:param name="mvcRenderCommandName" value="editProductSpecificationOption" />
-</liferay-portlet:renderURL>
-
-<liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-specification-label") %>' url="<%= addProductSpecificationOptionURL.toString() %>" />
-</liferay-frontend:add-menu>
 
 <aui:script>
 	function <portlet:namespace />deleteCPSpecificationOptions() {

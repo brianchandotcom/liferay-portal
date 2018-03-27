@@ -48,6 +48,18 @@ boolean hasManageCommerceTaxMethodsPermission = CommercePermission.contains(perm
 			portletURL="<%= commerceTaxFixedRateAddressRelsDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="list"
 		/>
+
+		<c:if test="<%= hasManageCommerceTaxMethodsPermission %>">
+			<portlet:renderURL var="addCommerceTaxFixedRateAddressRelURL">
+				<portlet:param name="mvcRenderCommandName" value="editCommerceTaxFixedRateAddressRel" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="commerceTaxMethodId" value="<%= String.valueOf(commerceTaxFixedRateAddressRelsDisplayContext.getCommerceTaxMethodId()) %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:add-menu inline="<%= true %>">
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(resourceBundle, "add-tax-rate-setting") %>' url="<%= addCommerceTaxFixedRateAddressRelURL.toString() %>" />
+			</liferay-frontend:add-menu>
+		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<c:if test="<%= hasManageCommerceTaxMethodsPermission %>">
@@ -137,18 +149,6 @@ boolean hasManageCommerceTaxMethodsPermission = CommercePermission.contains(perm
 		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
-
-<c:if test="<%= hasManageCommerceTaxMethodsPermission %>">
-	<portlet:renderURL var="addCommerceTaxFixedRateAddressRelURL">
-		<portlet:param name="mvcRenderCommandName" value="editCommerceTaxFixedRateAddressRel" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="commerceTaxMethodId" value="<%= String.valueOf(commerceTaxFixedRateAddressRelsDisplayContext.getCommerceTaxMethodId()) %>" />
-	</portlet:renderURL>
-
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(resourceBundle, "add-tax-rate-setting") %>' url="<%= addCommerceTaxFixedRateAddressRelURL.toString() %>" />
-	</liferay-frontend:add-menu>
-</c:if>
 
 <aui:script>
 	function <portlet:namespace />deleteCommerceTaxFixedRateAddressRels() {

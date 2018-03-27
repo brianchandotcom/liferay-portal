@@ -55,6 +55,18 @@ boolean hasManageCPMeasurementUnitsPermission = CPMeasurementUnitPermission.cont
 			portletURL="<%= cpMeasurementUnitsDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="list"
 		/>
+
+		<c:if test="<%= hasManageCPMeasurementUnitsPermission %>">
+			<portlet:renderURL var="addCPMeasurementUnitURL">
+				<portlet:param name="mvcRenderCommandName" value="editCPMeasurementUnit" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="type" value="<%= String.valueOf(type) %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:add-menu inline="<%= true %>">
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-measurement-unit") %>' url="<%= addCPMeasurementUnitURL.toString() %>" />
+			</liferay-frontend:add-menu>
+		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<c:if test="<%= hasManageCPMeasurementUnitsPermission %>">
@@ -129,18 +141,6 @@ boolean hasManageCPMeasurementUnitsPermission = CPMeasurementUnitPermission.cont
 		</liferay-ui:search-container>
 	</aui:form>
 </div>
-
-<c:if test="<%= hasManageCPMeasurementUnitsPermission %>">
-	<portlet:renderURL var="addCPMeasurementUnitURL">
-		<portlet:param name="mvcRenderCommandName" value="editCPMeasurementUnit" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="type" value="<%= String.valueOf(type) %>" />
-	</portlet:renderURL>
-
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-measurement-unit") %>' url="<%= addCPMeasurementUnitURL.toString() %>" />
-	</liferay-frontend:add-menu>
-</c:if>
 
 <aui:script>
 	function <portlet:namespace />deleteCPMeasurementUnits() {

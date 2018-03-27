@@ -49,6 +49,21 @@ renderResponse.setTitle(cpDefinition.getTitle(themeDisplay.getLanguageId()));
 			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="<%= cpDefinitionGroupedEntriesDisplayContext.getDisplayStyle() %>"
 		/>
+
+		<portlet:actionURL name="editCPDefinitionGroupedEntry" var="addDefinitionGroupedEntryURL">
+			<portlet:param name="mvcRenderCommandName" value="viewCPDefinitionGroupedEntries" />
+		</portlet:actionURL>
+
+		<aui:form action="<%= addDefinitionGroupedEntryURL %>" cssClass="hide" name="addCPDefinitionGroupedEntryFm">
+			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
+			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+			<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinition.getCPDefinitionId() %>" />
+			<aui:input name="entryCPDefinitionIds" type="hidden" value="" />
+		</aui:form>
+
+		<liferay-frontend:add-menu inline="<%= true %>">
+			<liferay-frontend:add-menu-item id="addDefinitionGroupedEntry" title='<%= cpDefinitionGroupedEntriesDisplayContext.getLabel(locale, "add-grouped-entry") %>' url="javascript:;" />
+		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
@@ -153,21 +168,6 @@ renderResponse.setTitle(cpDefinition.getTitle(themeDisplay.getLanguageId()));
 		</div>
 	</div>
 </div>
-
-<portlet:actionURL name="editCPDefinitionGroupedEntry" var="addDefinitionGroupedEntryURL">
-	<portlet:param name="mvcRenderCommandName" value="viewCPDefinitionGroupedEntries" />
-</portlet:actionURL>
-
-<aui:form action="<%= addDefinitionGroupedEntryURL %>" cssClass="hide" name="addCPDefinitionGroupedEntryFm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinition.getCPDefinitionId() %>" />
-	<aui:input name="entryCPDefinitionIds" type="hidden" value="" />
-</aui:form>
-
-<liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item id="addDefinitionGroupedEntry" title='<%= cpDefinitionGroupedEntriesDisplayContext.getLabel(locale, "add-grouped-entry") %>' url="javascript:;" />
-</liferay-frontend:add-menu>
 
 <aui:script>
 	function <portlet:namespace />deleteCPDefinitionGroupedEntries() {

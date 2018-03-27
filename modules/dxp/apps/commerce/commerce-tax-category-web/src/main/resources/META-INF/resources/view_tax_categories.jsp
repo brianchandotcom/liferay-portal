@@ -44,6 +44,17 @@ CommerceTaxCategoryDisplayContext commerceTaxCategoryDisplayContext = (CommerceT
 			portletURL="<%= commerceTaxCategoryDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="list"
 		/>
+
+		<c:if test="<%= hasManageCommerceTaxCategoriesPermission %>">
+			<portlet:renderURL var="addCommerceTaxCategoryURL">
+				<portlet:param name="mvcRenderCommandName" value="editCommerceTaxCategory" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:add-menu inline="<%= true %>">
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-tax-category") %>' url="<%= addCommerceTaxCategoryURL.toString() %>" />
+			</liferay-frontend:add-menu>
+		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<c:if test="<%= hasManageCommerceTaxCategoriesPermission %>">
@@ -108,17 +119,6 @@ CommerceTaxCategoryDisplayContext commerceTaxCategoryDisplayContext = (CommerceT
 		</liferay-ui:search-container>
 	</aui:form>
 </div>
-
-<c:if test="<%= hasManageCommerceTaxCategoriesPermission %>">
-	<portlet:renderURL var="addCommerceTaxCategoryURL">
-		<portlet:param name="mvcRenderCommandName" value="editCommerceTaxCategory" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-	</portlet:renderURL>
-
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-tax-category") %>' url="<%= addCommerceTaxCategoryURL.toString() %>" />
-	</liferay-frontend:add-menu>
-</c:if>
 
 <aui:script>
 	function <portlet:namespace />deleteCommerceTaxCategories() {

@@ -49,6 +49,18 @@ boolean hasManageCommerceCountriesPermission = CommercePermission.contains(permi
 			portletURL="<%= commerceRegionsDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="list"
 		/>
+
+		<c:if test="<%= hasManageCommerceCountriesPermission %>">
+			<portlet:renderURL var="addCommerceRegionURL">
+				<portlet:param name="mvcRenderCommandName" value="editCommerceRegion" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="commerceCountryId" value="<%= String.valueOf(commerceCountry.getCommerceCountryId()) %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:add-menu inline="<%= true %>">
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-region") %>' url="<%= addCommerceRegionURL.toString() %>" />
+			</liferay-frontend:add-menu>
+		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<c:if test="<%= hasManageCommerceCountriesPermission %>">
@@ -117,18 +129,6 @@ boolean hasManageCommerceCountriesPermission = CommercePermission.contains(permi
 		</liferay-ui:search-container>
 	</aui:form>
 </div>
-
-<c:if test="<%= hasManageCommerceCountriesPermission %>">
-	<portlet:renderURL var="addCommerceRegionURL">
-		<portlet:param name="mvcRenderCommandName" value="editCommerceRegion" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="commerceCountryId" value="<%= String.valueOf(commerceCountry.getCommerceCountryId()) %>" />
-	</portlet:renderURL>
-
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-region") %>' url="<%= addCommerceRegionURL.toString() %>" />
-	</liferay-frontend:add-menu>
-</c:if>
 
 <aui:script>
 	function <portlet:namespace />deleteCommerceRegions() {

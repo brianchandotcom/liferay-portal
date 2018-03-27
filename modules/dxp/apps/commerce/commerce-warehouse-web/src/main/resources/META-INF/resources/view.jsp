@@ -67,6 +67,18 @@ for (ManagementBarFilterItem managementBarFilterItem : managementBarFilterItems)
 			portletURL="<%= commerceWarehousesDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="list"
 		/>
+
+		<c:if test="<%= commerceWarehousesDisplayContext.isShowAddButton() %>">
+			<portlet:renderURL var="addCommerceWarehouseURL">
+				<portlet:param name="mvcRenderCommandName" value="editCommerceWarehouse" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="commerceCountryId" value="<%= String.valueOf(commerceCountryId) %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:add-menu inline="<%= true %>">
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-warehouse") %>' url="<%= addCommerceWarehouseURL.toString() %>" />
+			</liferay-frontend:add-menu>
+		</c:if>
 	</liferay-frontend:management-bar-buttons>
 </liferay-frontend:management-bar>
 
@@ -115,15 +127,3 @@ for (ManagementBarFilterItem managementBarFilterItem : managementBarFilterItems)
 		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>
-
-<c:if test="<%= commerceWarehousesDisplayContext.isShowAddButton() %>">
-	<portlet:renderURL var="addCommerceWarehouseURL">
-		<portlet:param name="mvcRenderCommandName" value="editCommerceWarehouse" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="commerceCountryId" value="<%= String.valueOf(commerceCountryId) %>" />
-	</portlet:renderURL>
-
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-warehouse") %>' url="<%= addCommerceWarehouseURL.toString() %>" />
-	</liferay-frontend:add-menu>
-</c:if>

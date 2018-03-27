@@ -36,6 +36,20 @@ PortletURL portletURL = commerceTaxCategoryRelDisplayContext.getPortletURL();
 			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="list"
 		/>
+
+		<portlet:actionURL name="editCommerceTaxCategoryRel" var="addCommercetaxCategoryRelURL" />
+
+		<aui:form action="<%= addCommercetaxCategoryRelURL %>" cssClass="hide" name="addCommerceTaxCategoryRelFm">
+			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
+			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+			<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinitionId %>" />
+			<aui:input name="commerceTaxCategoryIds" type="hidden" value="" />
+			<aui:input name="screenNavigationCategoryKey" type="hidden" value="<%= commerceTaxCategoryRelDisplayContext.getScreenNavigationCategoryKey() %>" />
+		</aui:form>
+
+		<liferay-frontend:add-menu inline="<%= true %>">
+			<liferay-frontend:add-menu-item id="addCommerceTaxCategory" title='<%= LanguageUtil.get(request, "add-tax-category") %>' url="javascript:;" />
+		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
@@ -106,20 +120,6 @@ PortletURL portletURL = commerceTaxCategoryRelDisplayContext.getPortletURL();
 		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
-
-<portlet:actionURL name="editCommerceTaxCategoryRel" var="addCommercetaxCategoryRelURL" />
-
-<aui:form action="<%= addCommercetaxCategoryRelURL %>" cssClass="hide" name="addCommerceTaxCategoryRelFm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinitionId %>" />
-	<aui:input name="commerceTaxCategoryIds" type="hidden" value="" />
-	<aui:input name="screenNavigationCategoryKey" type="hidden" value="<%= commerceTaxCategoryRelDisplayContext.getScreenNavigationCategoryKey() %>" />
-</aui:form>
-
-<liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item id="addCommerceTaxCategory" title='<%= LanguageUtil.get(request, "add-tax-category") %>' url="javascript:;" />
-</liferay-frontend:add-menu>
 
 <aui:script>
 	function <portlet:namespace />deleteCommerceTaxCategoryRels() {

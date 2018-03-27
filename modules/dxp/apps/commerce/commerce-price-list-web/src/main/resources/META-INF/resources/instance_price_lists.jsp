@@ -45,6 +45,19 @@ productSkusURL.setParameter("screenNavigationCategoryKey", "skus");
 			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="list"
 		/>
+
+		<portlet:actionURL name="editCPInstanceCommercePriceEntry" var="addCommercePriceEntryURL" />
+
+		<aui:form action="<%= addCommercePriceEntryURL %>" cssClass="hide" name="addCommercePriceEntryFm">
+			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD_MULTIPLE %>" />
+			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+			<aui:input name="cpInstanceId" type="hidden" value="<%= cpInstanceId %>" />
+			<aui:input name="commercePriceListIds" type="hidden" value="" />
+		</aui:form>
+
+		<liferay-frontend:add-menu inline="<%= true %>">
+			<liferay-frontend:add-menu-item id="addCommercePriceEntry" title='<%= LanguageUtil.format(request, "add-x-to-price-list", cpInstance.getSku(), false) %>' url="javascript:;" />
+		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
@@ -128,19 +141,6 @@ productSkusURL.setParameter("screenNavigationCategoryKey", "skus");
 		</div>
 	</aui:form>
 </div>
-
-<portlet:actionURL name="editCPInstanceCommercePriceEntry" var="addCommercePriceEntryURL" />
-
-<aui:form action="<%= addCommercePriceEntryURL %>" cssClass="hide" name="addCommercePriceEntryFm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD_MULTIPLE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="cpInstanceId" type="hidden" value="<%= cpInstanceId %>" />
-	<aui:input name="commercePriceListIds" type="hidden" value="" />
-</aui:form>
-
-<liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item id="addCommercePriceEntry" title='<%= LanguageUtil.format(request, "add-x-to-price-list", cpInstance.getSku(), false) %>' url="javascript:;" />
-</liferay-frontend:add-menu>
 
 <aui:script>
 	function <portlet:namespace />deleteCommercePriceEntries() {

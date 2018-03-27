@@ -63,6 +63,22 @@ renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 				portletURL="<%= commercePaymentMethodRestrictionsDisplayContext.getPortletURL() %>"
 				selectedDisplayStyle="list"
 			/>
+
+			<c:if test="<%= hasManageCommercePaymentMethodsPermission %>">
+				<portlet:actionURL name="editCommercePaymentMethodAddressRestriction" var="addCommercePaymentMethodAddressRestrictionURL" />
+
+				<aui:form action="<%= addCommercePaymentMethodAddressRestrictionURL %>" cssClass="hide" name="addCommerceAddressRestrictionFm">
+					<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD_MULTIPLE %>" />
+					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+					<aui:input name="className" type="hidden" value="<%= CommercePaymentMethod.class.getName() %>" />
+					<aui:input name="classPK" type="hidden" value="<%= commercePaymentMethodRestrictionsDisplayContext.getCommercePaymentMethodId() %>" />
+					<aui:input name="commerceCountryIds" type="hidden" value="" />
+				</aui:form>
+
+				<liferay-frontend:add-menu inline="<%= true %>">
+					<liferay-frontend:add-menu-item id="addCommerceAddressRestriction" title='<%= LanguageUtil.get(request, "add-restriction") %>' url="javascript:;" />
+				</liferay-frontend:add-menu>
+			</c:if>
 		</liferay-frontend:management-bar-buttons>
 
 		<c:if test="<%= hasManageCommercePaymentMethodsPermission %>">
@@ -129,22 +145,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 		</liferay-ui:search-container>
 	</aui:form>
 </div>
-
-<c:if test="<%= hasManageCommercePaymentMethodsPermission %>">
-	<portlet:actionURL name="editCommercePaymentMethodAddressRestriction" var="addCommercePaymentMethodAddressRestrictionURL" />
-
-	<aui:form action="<%= addCommercePaymentMethodAddressRestrictionURL %>" cssClass="hide" name="addCommerceAddressRestrictionFm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD_MULTIPLE %>" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-		<aui:input name="className" type="hidden" value="<%= CommercePaymentMethod.class.getName() %>" />
-		<aui:input name="classPK" type="hidden" value="<%= commercePaymentMethodRestrictionsDisplayContext.getCommercePaymentMethodId() %>" />
-		<aui:input name="commerceCountryIds" type="hidden" value="" />
-	</aui:form>
-
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item id="addCommerceAddressRestriction" title='<%= LanguageUtil.get(request, "add-restriction") %>' url="javascript:;" />
-	</liferay-frontend:add-menu>
-</c:if>
 
 <aui:script>
 	function <portlet:namespace />deleteCommerceAddressRestrictions() {

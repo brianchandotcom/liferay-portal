@@ -76,6 +76,19 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="list"
 		/>
+
+		<liferay-portlet:renderURL var="addCommerceTierPriceEntryURL">
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
+			<portlet:param name="mvcRenderCommandName" value="editCPInstanceCommerceTierPriceEntry" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="commercePriceEntryId" value="<%= String.valueOf(commercePriceEntryId) %>" />
+			<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
+			<portlet:param name="cpInstanceId" value="<%= String.valueOf(cpInstanceId) %>" />
+		</liferay-portlet:renderURL>
+
+		<liferay-frontend:add-menu inline="<%= true %>">
+			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-tier-price-entry") %>' url="<%= addCommerceTierPriceEntryURL.toString() %>" />
+		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
@@ -173,19 +186,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 		</div>
 	</aui:form>
 </div>
-
-<liferay-portlet:renderURL var="addCommerceTierPriceEntryURL">
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
-	<portlet:param name="mvcRenderCommandName" value="editCPInstanceCommerceTierPriceEntry" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="commercePriceEntryId" value="<%= String.valueOf(commercePriceEntryId) %>" />
-	<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
-	<portlet:param name="cpInstanceId" value="<%= String.valueOf(cpInstanceId) %>" />
-</liferay-portlet:renderURL>
-
-<liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-tier-price-entry") %>' url="<%= addCommerceTierPriceEntryURL.toString() %>" />
-</liferay-frontend:add-menu>
 
 <aui:script>
 	function <portlet:namespace />deleteCommerceTierPriceEntries() {

@@ -125,13 +125,3 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		</div>
 	</div>
 </div>
-
-<liferay-portlet:renderURL var="addProductDefinitionURL">
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
-	<portlet:param name="mvcRenderCommandName" value="editCommercePriceList" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</liferay-portlet:renderURL>
-
-<liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-price-list") %>' url="<%= addProductDefinitionURL.toString() %>" />
-</liferay-frontend:add-menu>

@@ -31,6 +31,34 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 <div class="container-fluid-1280">
 	<h1><liferay-ui:message key="shipments" /></h1>
 
+	<liferay-frontend:management-bar
+		searchContainerId="commerceShipments"
+	>
+		<liferay-frontend:management-bar-buttons>
+			<liferay-frontend:management-bar-display-buttons
+				displayViews='<%= new String[] {"list"} %>'
+				portletURL="<%= portletURL %>"
+				selectedDisplayStyle="list"
+			/>
+
+			<portlet:renderURL var="addCommerceShipmentURL">
+				<portlet:param name="mvcRenderCommandName" value="editCommerceShipment" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:add-menu inline="<%= true %>">
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-shipment") %>' url="<%= addCommerceShipmentURL.toString() %>" />
+			</liferay-frontend:add-menu>
+		</liferay-frontend:management-bar-buttons>
+
+		<liferay-frontend:management-bar-filters>
+			<liferay-frontend:management-bar-navigation
+				navigationKeys='<%= new String[] {"all"} %>'
+				portletURL="<%= portletURL %>"
+			/>
+		</liferay-frontend:management-bar-filters>
+	</liferay-frontend:management-bar>
+
 	<div id="<portlet:namespace />shipmentsContainer">
 		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 			<aui:input name="<%= Constants.CMD %>" type="hidden" />
@@ -113,15 +141,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		</aui:form>
 	</div>
 </div>
-
-<portlet:renderURL var="addCommerceShipmentURL">
-	<portlet:param name="mvcRenderCommandName" value="editCommerceShipment" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</portlet:renderURL>
-
-<liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-shipment") %>' url="<%= addCommerceShipmentURL.toString() %>" />
-</liferay-frontend:add-menu>
 
 <aui:script>
 	function <portlet:namespace />deleteCommerceShipments() {

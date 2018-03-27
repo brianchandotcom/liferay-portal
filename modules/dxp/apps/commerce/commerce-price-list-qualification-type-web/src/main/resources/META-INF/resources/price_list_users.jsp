@@ -52,6 +52,20 @@ renderResponse.setTitle(commercePriceList.getName() + " - " + commercePriceListQ
 			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="list"
 		/>
+
+		<portlet:actionURL name="editCommercePriceListUserRel" var="addCommercePriceListUserRelURL" />
+
+		<aui:form action="<%= addCommercePriceListUserRelURL %>" cssClass="hide" name="addCommercePriceListUserRelFm">
+			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD_MULTIPLE %>" />
+			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+			<aui:input name="addClassPKs" type="hidden" value="" />
+			<aui:input name="className" type="hidden" value="<%= User.class.getName() %>" />
+			<aui:input name="commercePriceListQualificationTypeRelId" type="hidden" value="<%= commercePriceListQualificationTypeRelId %>" />
+		</aui:form>
+
+		<liferay-frontend:add-menu inline="<%= true %>">
+			<liferay-frontend:add-menu-item id="addCommercePriceListUserRel" title='<%= LanguageUtil.get(request, "add-user") %>' url="javascript:;" />
+		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
@@ -130,20 +144,6 @@ renderResponse.setTitle(commercePriceList.getName() + " - " + commercePriceListQ
 		</div>
 	</aui:form>
 </div>
-
-<portlet:actionURL name="editCommercePriceListUserRel" var="addCommercePriceListUserRelURL" />
-
-<aui:form action="<%= addCommercePriceListUserRelURL %>" cssClass="hide" name="addCommercePriceListUserRelFm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD_MULTIPLE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="addClassPKs" type="hidden" value="" />
-	<aui:input name="className" type="hidden" value="<%= User.class.getName() %>" />
-	<aui:input name="commercePriceListQualificationTypeRelId" type="hidden" value="<%= commercePriceListQualificationTypeRelId %>" />
-</aui:form>
-
-<liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item id="addCommercePriceListUserRel" title='<%= LanguageUtil.get(request, "add-user") %>' url="javascript:;" />
-</liferay-frontend:add-menu>
 
 <aui:script>
 	function <portlet:namespace />deleteCommercePriceListUserRels() {

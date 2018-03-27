@@ -57,6 +57,15 @@ productOptionRelsURL.setParameter("screenNavigationCategoryKey", cpDefinitionOpt
 			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="<%= cpDefinitionOptionValueRelDisplayContext.getDisplayStyle() %>"
 		/>
+
+		<liferay-portlet:renderURL var="addProductDefinitionOptionValueRelURL">
+			<portlet:param name="mvcRenderCommandName" value="editProductDefinitionOptionValueRel" />
+			<portlet:param name="cpDefinitionOptionRelId" value="<%= String.valueOf(cpDefinitionOptionRelId) %>" />
+		</liferay-portlet:renderURL>
+
+		<liferay-frontend:add-menu inline="<%= true %>">
+			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-option-value") %>' url="<%= addProductDefinitionOptionValueRelURL.toString() %>" />
+		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
@@ -159,15 +168,6 @@ productOptionRelsURL.setParameter("screenNavigationCategoryKey", cpDefinitionOpt
 		</div>
 	</div>
 </div>
-
-<liferay-portlet:renderURL var="addProductDefinitionOptionValueRelURL">
-	<portlet:param name="mvcRenderCommandName" value="editProductDefinitionOptionValueRel" />
-	<portlet:param name="cpDefinitionOptionRelId" value="<%= String.valueOf(cpDefinitionOptionRelId) %>" />
-</liferay-portlet:renderURL>
-
-<liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-option-value") %>' url="<%= addProductDefinitionOptionValueRelURL.toString() %>" />
-</liferay-frontend:add-menu>
 
 <aui:script>
 	function <portlet:namespace />deleteCPDefinitionOptionValueRels() {

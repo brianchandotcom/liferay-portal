@@ -48,6 +48,21 @@ boolean hasManageCommerceTaxMethodsPermission = CommercePermission.contains(perm
 			portletURL="<%= commerceTaxFixedRatesDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="list"
 		/>
+
+		<c:if test="<%= hasManageCommerceTaxMethodsPermission %>">
+			<liferay-portlet:renderURL var="addCommerceTaxFixedRateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<portlet:param name="mvcRenderCommandName" value="editCommerceTaxFixedRate" />
+				<portlet:param name="commerceTaxMethodId" value="<%= String.valueOf(commerceTaxFixedRatesDisplayContext.getCommerceTaxMethodId()) %>" />
+			</liferay-portlet:renderURL>
+
+			<%
+			String url = commerceTaxFixedRatesDisplayContext.getEditTaxRateURL(null, "editCommerceTaxFixedRate", true, addCommerceTaxFixedRateURL);
+			%>
+
+			<liferay-frontend:add-menu inline="<%= true %>">
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(resourceBundle, "add-tax-rate") %>' url="<%= url %>" />
+			</liferay-frontend:add-menu>
+		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<c:if test="<%= hasManageCommerceTaxMethodsPermission %>">
@@ -109,27 +124,12 @@ boolean hasManageCommerceTaxMethodsPermission = CommercePermission.contains(perm
 	</liferay-ui:search-container>
 </aui:form>
 
-<c:if test="<%= hasManageCommerceTaxMethodsPermission %>">
-	<liferay-portlet:renderURL var="addCommerceTaxFixedRateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcRenderCommandName" value="editCommerceTaxFixedRate" />
-		<portlet:param name="commerceTaxMethodId" value="<%= String.valueOf(commerceTaxFixedRatesDisplayContext.getCommerceTaxMethodId()) %>" />
-	</liferay-portlet:renderURL>
-
-	<%
-	String url = commerceTaxFixedRatesDisplayContext.getEditTaxRateURL("editCommerceTaxFixedRate", true, addCommerceTaxFixedRateURL);
-	%>
-
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(resourceBundle, "add-tax-rate") %>' url="<%= url %>" />
-	</liferay-frontend:add-menu>
-</c:if>
-
 <aui:script>
 	Liferay.provide(
 		window,
 		'<portlet:namespace/>editCommerceTaxFixedRate',
-		function(isNew, uri) {
-			var title = '<liferay-ui:message key="edit-tax-rate" />';
+		function(isNew, arg, uri) {
+			var title = '<liferay-ui:message key="edit" />' + ' ' + arg;
 
 			if (isNew) {
 				title = '<liferay-ui:message key="add-tax-rate" />';

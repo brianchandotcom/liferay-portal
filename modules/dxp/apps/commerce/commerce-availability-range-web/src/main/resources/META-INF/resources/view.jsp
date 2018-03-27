@@ -48,6 +48,17 @@ boolean hasManageCommerceAvailabilityRangesPermission = CommercePermission.conta
 			portletURL="<%= commerceAvailabilityRangeDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="list"
 		/>
+
+		<c:if test="<%= hasManageCommerceAvailabilityRangesPermission %>">
+			<portlet:renderURL var="addCommerceAvailabilityRangeURL">
+				<portlet:param name="mvcRenderCommandName" value="editCommerceAvailabilityRange" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:add-menu inline="<%= true %>">
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-availability-range") %>' url="<%= addCommerceAvailabilityRangeURL.toString() %>" />
+			</liferay-frontend:add-menu>
+		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<c:if test="<%= hasManageCommerceAvailabilityRangesPermission %>">
@@ -111,17 +122,6 @@ boolean hasManageCommerceAvailabilityRangesPermission = CommercePermission.conta
 		</liferay-ui:search-container>
 	</aui:form>
 </div>
-
-<c:if test="<%= hasManageCommerceAvailabilityRangesPermission %>">
-	<portlet:renderURL var="addCommerceAvailabilityRangeURL">
-		<portlet:param name="mvcRenderCommandName" value="editCommerceAvailabilityRange" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-	</portlet:renderURL>
-
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-availability-range") %>' url="<%= addCommerceAvailabilityRangeURL.toString() %>" />
-	</liferay-frontend:add-menu>
-</c:if>
 
 <aui:script>
 	function <portlet:namespace />deleteCommerceAvailabilityRanges() {

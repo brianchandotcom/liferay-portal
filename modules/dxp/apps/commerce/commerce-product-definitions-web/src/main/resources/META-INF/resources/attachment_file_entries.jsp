@@ -55,6 +55,16 @@ PortletURL portletURL = cpAttachmentFileEntriesDisplayContext.getPortletURL();
 			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="<%= cpAttachmentFileEntriesDisplayContext.getDisplayStyle() %>"
 		/>
+
+		<liferay-portlet:renderURL var="addAttachmentFileEntryURL">
+			<portlet:param name="mvcRenderCommandName" value="editCPAttachmentFileEntry" />
+			<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
+			<portlet:param name="type" value="<%= String.valueOf(type) %>" />
+		</liferay-portlet:renderURL>
+
+		<liferay-frontend:add-menu inline="<%= true %>">
+			<liferay-frontend:add-menu-item title="<%= addMenuTitle %>" url="<%= addAttachmentFileEntryURL.toString() %>" />
+		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
@@ -197,16 +207,6 @@ PortletURL portletURL = cpAttachmentFileEntriesDisplayContext.getPortletURL();
 		</div>
 	</div>
 </div>
-
-<liferay-portlet:renderURL var="addAttachmentFileEntryURL">
-	<portlet:param name="mvcRenderCommandName" value="editCPAttachmentFileEntry" />
-	<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
-	<portlet:param name="type" value="<%= String.valueOf(type) %>" />
-</liferay-portlet:renderURL>
-
-<liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item title="<%= addMenuTitle %>" url="<%= addAttachmentFileEntryURL.toString() %>" />
-</liferay-frontend:add-menu>
 
 <aui:script>
 	function <portlet:namespace />deleteCPAttachmentFileEntries() {

@@ -25,8 +25,6 @@ SearchContainer productDefinitionSearchContainer = cpDefinitionsDisplayContext.g
 
 String displayStyle = cpDefinitionsDisplayContext.getDisplayStyle();
 
-List<CPType> cpTypes = cpDefinitionsDisplayContext.getCPTypes();
-
 PortletURL portletURL = cpDefinitionsDisplayContext.getPortletURL();
 
 portletURL.setParameter("toolbarItem", toolbarItem);
@@ -150,25 +148,3 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		</div>
 	</div>
 </div>
-
-<liferay-frontend:add-menu>
-
-	<%
-	for (CPType curCPType : cpTypes) {
-	%>
-
-		<liferay-portlet:renderURL var="addProductDefinitionURL">
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
-			<portlet:param name="mvcRenderCommandName" value="editProductDefinition" />
-			<portlet:param name="backURL" value="<%= PortalUtil.getCurrentCompleteURL(request) %>" />
-			<portlet:param name="productTypeName" value="<%= curCPType.getName() %>" />
-			<portlet:param name="toolbarItem" value="view-product-definition-details" />
-		</liferay-portlet:renderURL>
-
-		<liferay-frontend:add-menu-item title="<%= curCPType.getLabel(locale) %>" url="<%= addProductDefinitionURL.toString() %>" />
-
-	<%
-	}
-	%>
-
-</liferay-frontend:add-menu>

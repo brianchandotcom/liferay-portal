@@ -50,6 +50,18 @@ boolean hasManageCommerceShippingMethodsPermission = CommercePermission.contains
 					portletURL="<%= commerceShippingFixedOptionRelsDisplayContext.getPortletURL() %>"
 					selectedDisplayStyle="list"
 				/>
+
+				<c:if test="<%= hasManageCommerceShippingMethodsPermission %>">
+					<portlet:renderURL var="addCommerceShippingFixedOptionRelURL">
+						<portlet:param name="mvcRenderCommandName" value="editCommerceShippingFixedOptionRel" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="commerceShippingMethodId" value="<%= String.valueOf(commerceShippingFixedOptionRelsDisplayContext.getCommerceShippingMethodId()) %>" />
+					</portlet:renderURL>
+
+					<liferay-frontend:add-menu inline="<%= true %>">
+						<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(resourceBundle, "add-shipping-option-setting") %>' url="<%= addCommerceShippingFixedOptionRelURL.toString() %>" />
+					</liferay-frontend:add-menu>
+				</c:if>
 			</liferay-frontend:management-bar-buttons>
 
 			<c:if test="<%= hasManageCommerceShippingMethodsPermission %>">
@@ -133,18 +145,6 @@ boolean hasManageCommerceShippingMethodsPermission = CommercePermission.contains
 				<liferay-ui:search-iterator markupView="lexicon" />
 			</liferay-ui:search-container>
 		</aui:form>
-
-		<c:if test="<%= hasManageCommerceShippingMethodsPermission %>">
-			<portlet:renderURL var="addCommerceShippingFixedOptionRelURL">
-				<portlet:param name="mvcRenderCommandName" value="editCommerceShippingFixedOptionRel" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="commerceShippingMethodId" value="<%= String.valueOf(commerceShippingFixedOptionRelsDisplayContext.getCommerceShippingMethodId()) %>" />
-			</portlet:renderURL>
-
-			<liferay-frontend:add-menu>
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(resourceBundle, "add-shipping-option-setting") %>' url="<%= addCommerceShippingFixedOptionRelURL.toString() %>" />
-			</liferay-frontend:add-menu>
-		</c:if>
 
 		<aui:script>
 			function <portlet:namespace />deleteCommerceShippingFixedOptionRels() {

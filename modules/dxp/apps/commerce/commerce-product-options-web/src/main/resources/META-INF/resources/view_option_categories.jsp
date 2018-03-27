@@ -54,6 +54,14 @@ renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 			portletURL="<%= cpOptionCategoryDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
+
+		<liferay-portlet:renderURL var="addProductOptionCategoryURL">
+			<portlet:param name="mvcRenderCommandName" value="editProductOptionCategory" />
+		</liferay-portlet:renderURL>
+
+		<liferay-frontend:add-menu inline="<%= true %>">
+			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-specification-group") %>' url="<%= addProductOptionCategoryURL.toString() %>" />
+		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
@@ -168,14 +176,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 		</div>
 	</div>
 </div>
-
-<liferay-portlet:renderURL var="addProductOptionCategoryURL">
-	<portlet:param name="mvcRenderCommandName" value="editProductOptionCategory" />
-</liferay-portlet:renderURL>
-
-<liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-specification-group") %>' url="<%= addProductOptionCategoryURL.toString() %>" />
-</liferay-frontend:add-menu>
 
 <aui:script>
 	function <portlet:namespace />deleteCPOptionCategories() {

@@ -41,6 +41,22 @@ boolean hasManageCommerceShippingMethodsPermission = CommercePermission.contains
 			portletURL="<%= commerceShippingMethodRestrictionsDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="list"
 		/>
+
+		<c:if test="<%= hasManageCommerceShippingMethodsPermission %>">
+			<portlet:actionURL name="editCommerceShippingMethodAddressRestriction" var="addCommerceShippingMethodAddressRestrictionURL" />
+
+			<aui:form action="<%= addCommerceShippingMethodAddressRestrictionURL %>" cssClass="hide" name="addCommerceAddressRestrictionFm">
+				<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD_MULTIPLE %>" />
+				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+				<aui:input name="className" type="hidden" value="<%= CommerceShippingMethod.class.getName() %>" />
+				<aui:input name="classPK" type="hidden" value="<%= commerceShippingMethodRestrictionsDisplayContext.getCommerceShippingMethodId() %>" />
+				<aui:input name="commerceCountryIds" type="hidden" value="" />
+			</aui:form>
+
+			<liferay-frontend:add-menu inline="<%= true %>">
+				<liferay-frontend:add-menu-item id="addCommerceAddressRestriction" title='<%= LanguageUtil.get(request, "add-restriction") %>' url="javascript:;" />
+			</liferay-frontend:add-menu>
+		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<c:if test="<%= hasManageCommerceShippingMethodsPermission %>">
@@ -106,22 +122,6 @@ boolean hasManageCommerceShippingMethodsPermission = CommercePermission.contains
 		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
-
-<c:if test="<%= hasManageCommerceShippingMethodsPermission %>">
-	<portlet:actionURL name="editCommerceShippingMethodAddressRestriction" var="addCommerceShippingMethodAddressRestrictionURL" />
-
-	<aui:form action="<%= addCommerceShippingMethodAddressRestrictionURL %>" cssClass="hide" name="addCommerceAddressRestrictionFm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD_MULTIPLE %>" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-		<aui:input name="className" type="hidden" value="<%= CommerceShippingMethod.class.getName() %>" />
-		<aui:input name="classPK" type="hidden" value="<%= commerceShippingMethodRestrictionsDisplayContext.getCommerceShippingMethodId() %>" />
-		<aui:input name="commerceCountryIds" type="hidden" value="" />
-	</aui:form>
-
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item id="addCommerceAddressRestriction" title='<%= LanguageUtil.get(request, "add-restriction") %>' url="javascript:;" />
-	</liferay-frontend:add-menu>
-</c:if>
 
 <aui:script>
 	function <portlet:namespace />deleteCommerceAddressRestrictions() {

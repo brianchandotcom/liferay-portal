@@ -45,6 +45,19 @@ PortletURL portletURL = cpDefinitionSpecificationOptionValueDisplayContext.getPo
 			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="<%= cpDefinitionSpecificationOptionValueDisplayContext.getDisplayStyle() %>"
 		/>
+
+		<portlet:actionURL name="editProductDefinitionSpecificationOptionValue" var="addCPDefinitionSpecificationOptionValueURL" />
+
+		<aui:form action="<%= addCPDefinitionSpecificationOptionValueURL %>" cssClass="hide" name="addCPDefinitionSpecificationOptionValueFm">
+			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
+			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+			<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinitionId %>" />
+			<aui:input name="cpSpecificationOptionIds" type="hidden" value="" />
+		</aui:form>
+
+		<liferay-frontend:add-menu inline="<%= true %>">
+			<liferay-frontend:add-menu-item id="addCommerceProductDefinitionSpecificationOptionValue" title='<%= LanguageUtil.get(request, "add-specification") %>' url="javascript:;" />
+		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
@@ -156,19 +169,6 @@ PortletURL portletURL = cpDefinitionSpecificationOptionValueDisplayContext.getPo
 		</div>
 	</div>
 </div>
-
-<portlet:actionURL name="editProductDefinitionSpecificationOptionValue" var="addCPDefinitionSpecificationOptionValueURL" />
-
-<aui:form action="<%= addCPDefinitionSpecificationOptionValueURL %>" cssClass="hide" name="addCPDefinitionSpecificationOptionValueFm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinitionId %>" />
-	<aui:input name="cpSpecificationOptionIds" type="hidden" value="" />
-</aui:form>
-
-<liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item id="addCommerceProductDefinitionSpecificationOptionValue" title='<%= LanguageUtil.get(request, "add-specification") %>' url="javascript:;" />
-</liferay-frontend:add-menu>
 
 <aui:script>
 	function <portlet:namespace />deleteCPDefinitionSpecificationOptionValues() {

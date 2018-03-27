@@ -58,6 +58,11 @@
 				"layoutColumnId": "column-3",
 				"layoutColumnPos": "0",
 				"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet"
+			},
+			{
+				"layoutColumnId": "column-3",
+				"layoutColumnPos": "1",
+				"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentMiniPortlet"
 			}
 		]
 	},
@@ -75,6 +80,11 @@
 				"layoutColumnId": "column-1",
 				"layoutColumnPos": "1",
 				"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet_INSTANCE_related_products"
+			},
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": "2",
+				"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentMiniPortlet"
 			}
 		]
 	},
@@ -103,6 +113,18 @@
 					"ddmTemplateKey": "BASIC-WEB-CONTENT",
 					"groupId": ""
 				}
+			}
+		]
+	},
+	{
+		"hidden": true,
+		"layoutTemplateId": "1_column",
+		"name": "Compare",
+		"portlets": [
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": "0",
+				"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentPortlet"
 			}
 		]
 	},

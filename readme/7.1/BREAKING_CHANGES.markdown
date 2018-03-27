@@ -592,6 +592,34 @@ configuration changes.
 
 ---------------------------------------
 
+### Updated JQuery and Lodash Bundled Versions 
+- **Date:** 2018-Feb-07
+- **JIRA Ticket:** LPS-66645
+- **JIRA Ticket:** LPS-66646
+
+#### What changed?
+
+The bundled JQuery version was updated from 2.1.4 to 3.3.1. The bundled Lodash 
+version was updated from 3.10.1 to 4.17.4.
+
+#### Who is affected?
+
+This affects anyone using the previous version APIs in their code.
+
+#### How should I update my code?
+
+Follow the changelogs on the 
+[JQuery](http://jquery.com/upgrade-guide/3.0/) 
+and 
+[Lodash](https://github.com/lodash/lodash/wiki/Changelog#v400) 
+sites to update any affected code.
+
+#### Why was this change made?
+
+This change was made to make the latest JQuery and Lodash versions available.
+
+---------------------------------------
+
 ### Removed JavaScript Minification Properties minifier.javascript.impl and yui.compressor.* from portal.properties
 - **Date:** 2018-Feb-28
 - **JIRA Ticket:** LPS-74375

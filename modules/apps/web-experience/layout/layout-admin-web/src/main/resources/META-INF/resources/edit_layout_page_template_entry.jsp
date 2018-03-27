@@ -19,7 +19,7 @@
 <%
 LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPageTemplateDisplayContext(renderRequest, renderResponse, request);
 
-FragmentsEditorContext fragmentsEditorContext = new FragmentsEditorContext(request, renderResponse, LayoutPageTemplateEntry.class.getName(), layoutPageTemplateDisplayContext.getLayoutPageTemplateEntryId(), layoutPageTemplateDisplayContext.isAssetDisplayPageCollection());
+FragmentsEditorContext fragmentsEditorContext = new FragmentsEditorContext(renderRequest, renderResponse, LayoutPageTemplateEntry.class.getName(), layoutPageTemplateDisplayContext.getLayoutPageTemplateEntryId(), layoutPageTemplateDisplayContext.isAssetDisplayPageCollection());
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(layoutPageTemplateDisplayContext.getEditLayoutPageTemplateEntryRedirect());

@@ -43,14 +43,34 @@ import java.util.regex.Pattern;
  */
 public class TestBatchGroup {
 
-	public TestBatchGroup(
+	public String getBatchName() {
+		return _batchName;
+	}
+
+	public GitWorkingDirectory getGitWorkingDirectory() {
+		return _gitWorkingDirectory;
+	}
+
+	public Properties getPortalTestProperties() {
+		return _portalTestProperties;
+	}
+
+	public int getTestBatchGroupSize() {
+		return _testClassGroups.size();
+	}
+
+	public List<String> getTestClassGroup(int i) throws Exception {
+		return _testClassGroups.get(i);
+	}
+
+	protected TestBatchGroup(
 			GitWorkingDirectory gitWorkingDirectory, String batchName)
 		throws Exception {
 
 		this(gitWorkingDirectory, batchName, null);
 	}
 
-	public TestBatchGroup(
+	protected TestBatchGroup(
 			GitWorkingDirectory gitWorkingDirectory, String batchName,
 			String testSuiteName)
 		throws Exception {
@@ -71,26 +91,6 @@ public class TestBatchGroup {
 		_setTestClassNamesIncludes();
 
 		_setTestClassGroups();
-	}
-
-	public String getBatchName() {
-		return _batchName;
-	}
-
-	public GitWorkingDirectory getGitWorkingDirectory() {
-		return _gitWorkingDirectory;
-	}
-
-	public Properties getPortalTestProperties() {
-		return _portalTestProperties;
-	}
-
-	public int getTestBatchGroupSize() {
-		return _testClassGroups.size();
-	}
-
-	public List<String> getTestClassGroup(int i) throws Exception {
-		return _testClassGroups.get(i);
 	}
 
 	private List<String> _getCurrentBranchTestClassNamesGlobs(

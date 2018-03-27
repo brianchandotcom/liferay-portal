@@ -22,10 +22,12 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.NamespaceServletRequest;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -100,12 +102,22 @@ public class GetCommentsStrutsAction extends BaseStrutsAction {
 			"liferay-comment:discussion:userId", String.valueOf(userId));
 
 		RequestDispatcher requestDispatcher =
-			namespacedRequest.getRequestDispatcher(
+			_servletContext.getRequestDispatcher(
 				"/discussion/page_resources.jsp");
 
 		requestDispatcher.include(namespacedRequest, response);
 
 		return null;
 	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.comment.taglib)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
+	}
+
+	private ServletContext _servletContext;
 
 }

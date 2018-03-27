@@ -18,11 +18,11 @@ import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderConstants;
-import com.liferay.commerce.service.permission.CommercePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -62,7 +62,7 @@ public class EditCommerceOrderSettingsMVCActionCommand
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			CommercePermission.check(
+			_portletResourcePermission.check(
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(),
 				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS);
@@ -96,6 +96,16 @@ public class EditCommerceOrderSettingsMVCActionCommand
 		return new ObjectValuePair<>(typePK, workflowDefinition);
 	}
 
+	@Reference(
+		target = "(resource.name=" + CommerceOrderConstants.RESOURCE_NAME + ")",
+		unbind = "-"
+	)
+	protected void setPortletResourcePermission(
+		PortletResourcePermission portletResourcePermission) {
+
+		_portletResourcePermission = portletResourcePermission;
+	}
+
 	protected void updateWorkflowDefinitionLinks(
 			ActionRequest actionRequest, ThemeDisplay themeDisplay)
 		throws PortalException {
@@ -117,6 +127,8 @@ public class EditCommerceOrderSettingsMVCActionCommand
 			themeDisplay.getScopeGroupId(), CommerceOrder.class.getName(), 0,
 			workflowDefinitionOVPs);
 	}
+
+	private static PortletResourcePermission _portletResourcePermission;
 
 	@Reference
 	private WorkflowDefinitionLinkLocalService

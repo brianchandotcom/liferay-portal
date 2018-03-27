@@ -84,22 +84,6 @@ public class ReleaseInfoBuilder {
 			// Update ReleaseInfo.java
 
 			_fileUtil.write(file, content);
-
-			// Update portal-release.sql
-
-			file = new File("../sql/portal-data-release.sql");
-
-			content = _fileUtil.read(file);
-
-			x = content.indexOf("insert into Release_");
-
-			y = content.indexOf(", FALSE);", x);
-
-			x = content.lastIndexOf(" ", y - 1) + 1;
-
-			content = content.substring(0, x) + build + content.substring(y);
-
-			_fileUtil.write(file, content);
 		}
 		catch (Exception e) {
 			e.printStackTrace();

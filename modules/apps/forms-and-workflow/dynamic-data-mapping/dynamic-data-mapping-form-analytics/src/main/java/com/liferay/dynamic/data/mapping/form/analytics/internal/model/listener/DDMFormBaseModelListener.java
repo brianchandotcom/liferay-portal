@@ -47,15 +47,15 @@ public abstract class DDMFormBaseModelListener<T extends BaseModel<T>>
 
 		builder = builder.event(event);
 
-		_analyticsClient.sendAnalytics(builder.build());
+		analyticsClient.sendAnalytics(builder.build());
 	}
+
+	@Reference
+	protected AnalyticsClient analyticsClient;
 
 	private static final String _ANALYTICS_KEY = System.getProperty(
 		"analytics.key");
 
 	private static final String _APPLICATION_ID = "Forms";
-
-	@Reference
-	private AnalyticsClient _analyticsClient;
 
 }

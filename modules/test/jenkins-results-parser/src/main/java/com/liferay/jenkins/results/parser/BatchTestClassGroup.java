@@ -460,29 +460,25 @@ public class TestBatchGroup {
 
 		propertyNames.add("test.class.names.excludes");
 
-		String testClassNamesExcludes = _getFirstPropertyValue(
+		String testClassNamesExcludesPropertyValue = _getFirstPropertyValue(
 			_portalTestProperties, propertyNames);
 
-		if ((testClassNamesExcludes != null) &&
-			!testClassNamesExcludes.isEmpty()) {
+		if ((testClassNamesExcludesPropertyValue != null) &&
+			!testClassNamesExcludesPropertyValue.isEmpty()) {
 
 			List<String> testClassNamesExcludesRelativeGlobs = Arrays.asList(
-				testClassNamesExcludes.split(","));
+				testClassNamesExcludesPropertyValue.split(","));
 
 			if (_testBatchCurrentBranch) {
-				_testClassNamesExcludesRelativeGlobs.addAll(
+				testClassNamesExcludesRelativeGlobs =
 					_getCurrentBranchTestClassNamesRelativeGlobs(
-						testClassNamesExcludesRelativeGlobs));
+						testClassNamesExcludesRelativeGlobs);
 			}
-			else {
-				_testClassNamesExcludesRelativeGlobs.addAll(
-					testClassNamesExcludesRelativeGlobs);
-			}
-		}
 
-		_testClassNamesExcludesPathMatchers.addAll(
-			_getTestClassNamesPathMatchers(
-				_testClassNamesExcludesRelativeGlobs));
+			_testClassNamesExcludesPathMatchers.addAll(
+				_getTestClassNamesPathMatchers(
+					testClassNamesExcludesRelativeGlobs));
+		}
 	}
 
 	private void _setTestClassNamesIncludesRelativeGlobs() {
@@ -552,8 +548,6 @@ public class TestBatchGroup {
 	private final List<TestBatchAxis> _testBatchAxes = new ArrayList<>();
 	private boolean _testBatchCurrentBranch;
 	private final List<PathMatcher> _testClassNamesExcludesPathMatchers =
-		new ArrayList<>();
-	private final List<String> _testClassNamesExcludesRelativeGlobs =
 		new ArrayList<>();
 	private final List<PathMatcher> _testClassNamesIncludesPathMatchers =
 		new ArrayList<>();

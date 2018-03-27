@@ -16,10 +16,13 @@ package com.liferay.source.formatter.checkstyle.util;
 
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 import java.io.IOException;
+
+import java.nio.file.Files;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +31,22 @@ import java.util.List;
  * @author Peter Shin
  */
 public class AlloyMVCCheckstyleUtil {
+
+	public static void cleanUpSuppressionsFiles(List<File> suppressionsFiles)
+		throws Exception {
+
+		if (suppressionsFiles == null) {
+			return;
+		}
+
+		for (File suppressionsFile : suppressionsFiles) {
+			String path = SourceUtil.getAbsolutePath(suppressionsFile);
+
+			if (path.contains(_TMP_DIR)) {
+				Files.deleteIfExists(suppressionsFile.toPath());
+			}
+		}
+	}
 
 	public static File getJavaFile(String absolutePath, String content)
 		throws IOException {

@@ -45,15 +45,53 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 <aui:form cssClass="container-fluid-1280">
 	<liferay-ui:search-container
 		emptyResultsMessage="no-personal-data-export-processes-were-found"
-		total="<%= 0 %>"
+		orderByComparator='<%= BackgroundTaskComparatorFactoryUtil.getBackgroundTaskOrderByComparator("name", "asc") %>'
+		total="<%= BackgroundTaskManagerUtil.getBackgroundTasksCount(themeDisplay.getScopeGroupId(), UADExportBackgroundTaskExecutor.class.getName()) %>"
 	>
 		<liferay-ui:search-container-results
-			results="<%= null %>"
+			results="<%= BackgroundTaskManagerUtil.getBackgroundTasks(themeDisplay.getScopeGroupId(), UADExportBackgroundTaskExecutor.class.getName(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
 		/>
 
+		<liferay-ui:search-container-row
+			className="com.liferay.portal.kernel.backgroundtask.BackgroundTask"
+			keyProperty="backgroundTaskId"
+			modelVar="backgroundTask"
+		>
+			<liferay-ui:search-container-column-text
+				cssClass="autofit-col-expand"
+			>
+				<div>
+					<h5>
+						<liferay-ui:message key="<%= backgroundTask.getName() %>" />
+					</h5>
+
+					<clay:label
+						label="<%= LanguageUtil.get(request, backgroundTask.getStatusLabel()) %>"
+						style="<%= UADExportProcessUtil.getStatusStyle(backgroundTask.getStatus()) %>"
+					/>
+				</div>
+			</liferay-ui:search-container-column-text>
+
+			<%
+			Format dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("yyyy.MM.dd - hh:mm a", locale, themeDisplay.getTimeZone());
+			%>
+
+			<liferay-ui:search-container-column-text
+				cssClass="autofit-col-expand"
+			>
+				<%= LanguageUtil.get(request, "start-date") + StringPool.COLON + dateFormat.format(backgroundTask.getCreateDate()) %>
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-text
+				cssClass="autofit-col-expand"
+			>
+				<%= LanguageUtil.get(request, "completion-date") + StringPool.COLON + dateFormat.format(backgroundTask.getCompletionDate()) %>
+			</liferay-ui:search-container-column-text>
+		</liferay-ui:search-container-row>
+
 		<liferay-ui:search-iterator
+			displayStyle="descriptive"
 			markupView="lexicon"
-			searchContainer="<%= null %>"
 		/>
 	</liferay-ui:search-container>
 </aui:form>

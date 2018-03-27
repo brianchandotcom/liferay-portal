@@ -114,7 +114,7 @@ KaleoDefinitionVersionSearch kaleoDefinitionVersionSearch = new KaleoDefinitionV
 		%>
 
 		<liferay-ui:search-container-results
-			results="<%= kaleoDesignerDisplayContext.getSearchContainerResults(searchContainer, displayedStatus) %>"
+			results="<%= kaleoDesignerDisplayContext.getSearchContainerResults(searchContainer, displayedStatus, permissionChecker) %>"
 		/>
 
 		<liferay-ui:search-container-row

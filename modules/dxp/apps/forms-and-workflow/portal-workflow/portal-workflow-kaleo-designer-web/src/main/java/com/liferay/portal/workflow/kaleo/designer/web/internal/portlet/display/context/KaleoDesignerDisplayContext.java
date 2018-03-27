@@ -45,6 +45,7 @@ import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoD
 import com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.display.context.util.KaleoDesignerRequestHelper;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.search.KaleoDefinitionVersionSearchTerms;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.util.filter.KaleoDefinitionVersionActivePredicateFilter;
+import com.liferay.portal.workflow.kaleo.designer.web.internal.util.filter.KaleoDefinitionVersionViewPermissionPredicateFilter;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
@@ -301,7 +302,8 @@ public class KaleoDesignerDisplayContext {
 	}
 
 	public List<KaleoDefinitionVersion> getSearchContainerResults(
-			SearchContainer<KaleoDefinitionVersion> searchContainer, int status)
+			SearchContainer<KaleoDefinitionVersion> searchContainer, int status,
+			PermissionChecker permissionChecker)
 		throws PortalException {
 
 		KaleoDefinitionVersionSearchTerms searchTerms =
@@ -317,6 +319,11 @@ public class KaleoDesignerDisplayContext {
 		kaleoDefinitionVersions = ListUtil.filter(
 			kaleoDefinitionVersions,
 			new KaleoDefinitionVersionActivePredicateFilter(status));
+
+		kaleoDefinitionVersions = ListUtil.filter(
+			kaleoDefinitionVersions,
+			new KaleoDefinitionVersionViewPermissionPredicateFilter(
+				permissionChecker));
 
 		searchContainer.setTotal(kaleoDefinitionVersions.size());
 

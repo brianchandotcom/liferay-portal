@@ -191,8 +191,8 @@ public class TestBatchGroup {
 
 			propertyNames.add(
 				_getWildcardPropertyName(
-					_portalTestProperties, "test.batch.max.class.group.size",
-					_batchName, _testSuiteName));
+					_batchName, _portalTestProperties,
+					"test.batch.max.class.group.size", _testSuiteName));
 
 			propertyNames.add(
 				JenkinsResultsParserUtil.combine(
@@ -205,8 +205,8 @@ public class TestBatchGroup {
 
 		propertyNames.add(
 			_getWildcardPropertyName(
-				_portalTestProperties, "test.batch.max.class.group.size",
-				_batchName));
+				_batchName, _portalTestProperties,
+				"test.batch.max.class.group.size"));
 
 		propertyNames.add("test.batch.max.class.group.size");
 
@@ -329,14 +329,14 @@ public class TestBatchGroup {
 	}
 
 	private String _getWildcardPropertyName(
-		Properties properties, String propertyName, String batchName) {
+		String batchName, Properties properties, String propertyName) {
 
 		return _getWildcardPropertyName(
-			properties, propertyName, batchName, null);
+			batchName, properties, propertyName, null);
 	}
 
 	private String _getWildcardPropertyName(
-		Properties properties, String propertyName, String batchName,
+		String batchName, Properties properties, String propertyName,
 		String testSuiteName) {
 
 		for (String wildcardPropertyName : properties.stringPropertyNames()) {
@@ -440,8 +440,8 @@ public class TestBatchGroup {
 
 			propertyNames.add(
 				_getWildcardPropertyName(
-					_portalTestProperties, "test.batch.class.names.excludes",
-					_batchName, _testSuiteName));
+					_batchName, _portalTestProperties,
+					"test.batch.class.names.excludes", _testSuiteName));
 
 			propertyNames.add(
 				JenkinsResultsParserUtil.combine(
@@ -450,8 +450,8 @@ public class TestBatchGroup {
 
 		propertyNames.add(
 			_getWildcardPropertyName(
-				_portalTestProperties, "test.batch.class.names.excludes",
-				_batchName));
+				_batchName, _portalTestProperties,
+				"test.batch.class.names.excludes"));
 
 		propertyNames.add(
 			JenkinsResultsParserUtil.combine(
@@ -495,8 +495,8 @@ public class TestBatchGroup {
 
 			propertyNames.add(
 				_getWildcardPropertyName(
-					_portalTestProperties, "test.batch.class.names.includes",
-					_batchName, _testSuiteName));
+					_batchName, _portalTestProperties,
+					"test.batch.class.names.includes", _testSuiteName));
 
 			propertyNames.add(
 				JenkinsResultsParserUtil.combine(
@@ -509,8 +509,8 @@ public class TestBatchGroup {
 
 		propertyNames.add(
 			_getWildcardPropertyName(
-				_portalTestProperties, "test.batch.class.names.includes",
-				_batchName));
+				_batchName, _portalTestProperties,
+				"test.batch.class.names.includes"));
 
 		propertyNames.add("test.batch.class.names.includes");
 

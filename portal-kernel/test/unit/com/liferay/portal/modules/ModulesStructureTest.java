@@ -801,7 +801,8 @@ public class ModulesStructureTest {
 			return false;
 		}
 
-		if (_isInModulesRootDir(dirPath, "sdk", "third-party", "util") ||
+		if (_isInModulesRootDir(
+				dirPath, "private", "sdk", "third-party", "util") ||
 			_isInGitRepoReadOnly(dirPath)) {
 
 			return false;

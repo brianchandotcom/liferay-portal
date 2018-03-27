@@ -15,12 +15,31 @@
 package com.liferay.user.associated.data.web.internal.util;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.ListUtil;
+
+import java.util.List;
 
 /**
  * @author Pei-Jung Lan
  */
 public class UADExportProcessUtil {
+
+	public static FileEntry getFileEntry(BackgroundTask backgroundTask)
+		throws PortalException {
+
+		List<FileEntry> attachmentsFileEntries =
+			backgroundTask.getAttachmentsFileEntries();
+
+		if (ListUtil.isNotEmpty(attachmentsFileEntries)) {
+			return attachmentsFileEntries.get(0);
+		}
+
+		return null;
+	}
 
 	public static String getStatusStyle(int status) {
 		if (status == BackgroundTaskConstants.STATUS_FAILED) {

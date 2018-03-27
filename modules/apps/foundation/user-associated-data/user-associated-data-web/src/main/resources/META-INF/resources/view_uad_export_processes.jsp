@@ -87,6 +87,11 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 			>
 				<%= LanguageUtil.get(request, "completion-date") + StringPool.COLON + dateFormat.format(backgroundTask.getCompletionDate()) %>
 			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-jsp
+				cssClass="entry-action-column"
+				path="/export_process_action.jsp"
+			/>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

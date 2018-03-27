@@ -1,12 +1,10 @@
 [
 	{
-		"hidden": false,
 		"layoutTemplateId": "1_column",
 		"name": "Home",
 		"portlets": []
 	},
 	{
-		"hidden": false,
 		"layoutTemplateId": "1_2_columns_i",
 		"name": "Catalog",
 		"portlets": [
@@ -50,7 +48,6 @@
 		]
 	},
 	{
-		"hidden": false,
 		"layoutTemplateId": "1_column",
 		"name": "Orders",
 		"portlets": [
@@ -103,7 +100,6 @@
 		]
 	},
 	{
-		"hidden": false,
 		"layoutTemplateId": "1_column",
 		"name": "Account management",
 		"portlets": [
@@ -115,7 +111,6 @@
 		]
 	},
 	{
-		"hidden": false,
 		"layoutTemplateId": "1_column",
 		"name": "User management",
 		"portlets": [

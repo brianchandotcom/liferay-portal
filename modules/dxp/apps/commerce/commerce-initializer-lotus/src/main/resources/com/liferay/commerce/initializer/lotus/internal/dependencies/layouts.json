@@ -1,6 +1,5 @@
 [
 	{
-		"hidden": false,
 		"layoutTemplateId": "1_column",
 		"name": "Home",
 		"portlets": [
@@ -153,12 +152,10 @@
 		]
 	},
 	{
-		"hidden": false,
 		"layoutTemplateId": "1_column",
 		"name": "My Account",
 		"subLayouts": [
 			{
-				"hidden": false,
 				"layoutTemplateId": "1_column",
 				"name": "Addresses",
 				"portlets": [
@@ -185,7 +182,6 @@
 				]
 			},
 			{
-				"hidden": false,
 				"layoutTemplateId": "1_column",
 				"name": "Orders",
 				"portlets": [
@@ -214,27 +210,22 @@
 		]
 	},
 	{
-		"hidden": false,
 		"layoutTemplateId": "1_column",
 		"name": "Company",
 		"subLayouts": [
 			{
-				"hidden": false,
 				"layoutTemplateId": "1_column",
 				"name": "About us"
 			},
 			{
-				"hidden": false,
 				"layoutTemplateId": "1_column",
 				"name": "Careers"
 			},
 			{
-				"hidden": false,
 				"layoutTemplateId": "1_column",
 				"name": "Manufacturers"
 			},
 			{
-				"hidden": false,
 				"layoutTemplateId": "1_column",
 				"name": "Contact us"
 			}

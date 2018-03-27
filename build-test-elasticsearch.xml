@@ -352,6 +352,24 @@ elasticsearch.ssl.certificateAuthorities: [ "${elasticsearch.dir}-1/config/certs
 				regexp="(PASSWORD elastic = )(\S*)"
 				select="\2"
 			/>
+
+			<exec executable="curl" outputproperty="curl.output">
+				<arg value="https://localhost:9200" />
+				<arg value="-ku" />
+				<arg value="elastic:${elastic.xpack.elastic.user.password}" />
+			</exec>
+
+			<echo>${curl.output}</echo>
+
+			<if>
+				<contains string="${curl.output}" substring="You Know, for Search" />
+				<then>
+					<echo>Elasticsearch started with X-Pack Security.</echo>
+				</then>
+				<else>
+					<fail>Elasticsearch failed to start with X-Pack Security.</fail>
+				</else>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -574,24 +592,6 @@ elasticsearch.ssl.certificateAuthorities: [ "${elasticsearch.dir}-1/config/certs
 				<sleep seconds="30" />
 
 				<set-elasticsearch-x-pack-user-passwords />
-
-				<exec executable="curl" outputproperty="curl.output">
-					<arg value="https://localhost:9200" />
-					<arg value="-ku" />
-					<arg value="elastic:${elastic.xpack.elastic.user.password}" />
-				</exec>
-
-				<echo>${curl.output}</echo>
-
-				<if>
-					<contains string="${curl.output}" substring="You Know, for Search" />
-					<then>
-						<echo>Elasticshield successfully started with X-Pack Security.</echo>
-					</then>
-					<else>
-						<fail>Elasticsearch failed to start with X-Pack Security.</fail>
-					</else>
-				</if>
 
 				<configure-elasticsearch-x-pack-security-osgi-bundle-properties />
 

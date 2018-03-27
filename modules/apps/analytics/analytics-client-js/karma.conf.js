@@ -3,7 +3,7 @@ const webpack = require('./webpack.test.config');
 
 module.exports = function(config) {
 	config.set({
-		browsers: ['Chrome'],
+		browsers: ['ChromeHeadless'],
 
 		coverageReporter: {
 			reporters: [{
@@ -13,6 +13,19 @@ module.exports = function(config) {
 				type: 'text-summary',
 			}, ],
 		},
+
+		customLaunchers: {
+			ChromeHeadless: {
+				base: 'Chrome',
+				flags: [
+					'--no-sandbox',
+					'--headless',
+					'--disable-gpu',
+					'--disable-translate',
+					'--disable-extensions',
+					'--remote-debugging-port=9222'
+				]
+			}
 		},
 
 		files: [

@@ -142,24 +142,18 @@ public class TestBatchGroup {
 		}
 
 		for (File moduleGroupDir : moduleGroupDirs) {
-			String moduleGroupDirPath = moduleGroupDir.getAbsolutePath();
-
-			moduleGroupDirPath = moduleGroupDirPath.replace(
-				workingDirectory.getAbsolutePath() + "/", "");
-
 			for (String testClassNamesRelativeGlob :
 					testClassNamesRelativeGlobs) {
 
+				if (testClassNamesRelativeGlob.startsWith("**/")) {
+					testClassNamesRelativeGlob =
+						testClassNamesRelativeGlob.substring(3);
+				}
+
 				currentBranchTestClassNameRelativeGlobs.add(
 					JenkinsResultsParserUtil.combine(
-						moduleGroupDirPath, "/", testClassNamesRelativeGlob));
-
-				if (testClassNamesRelativeGlob.startsWith("**/")) {
-					currentBranchTestClassNameRelativeGlobs.add(
-						JenkinsResultsParserUtil.combine(
-							moduleGroupDirPath, "/",
-							testClassNamesRelativeGlob.substring(3)));
-				}
+						moduleGroupDir.getPath(), "/",
+						testClassNamesRelativeGlob));
 			}
 		}
 

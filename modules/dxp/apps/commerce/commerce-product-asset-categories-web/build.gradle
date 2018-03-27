@@ -8,7 +8,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.asset.categories.admin.web", version: "1.0.19"
 	provided group: "com.liferay", name: "com.liferay.document.library.api", version: "3.0.0"
 	provided group: "com.liferay", name: "com.liferay.document.library.service", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.3.0-20170731.162128-3"
+	provided group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.3.0-20180131.001308-11"
 	provided group: "com.liferay", name: "com.liferay.frontend.taglib.soy", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.item.selector.api", version: "2.3.0"
 	provided group: "com.liferay", name: "com.liferay.item.selector.criteria.api", version: "2.0.0"

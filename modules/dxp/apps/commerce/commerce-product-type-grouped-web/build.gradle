@@ -2,7 +2,7 @@ apply plugin: "com.liferay.lang.merger"
 
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.taglib", version: "2.0.0"
-	provided group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.3.0-20170731.162128-3"
+	provided group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.3.0-20180131.001308-11"
 	provided group: "com.liferay", name: "com.liferay.item.selector.api", version: "2.3.0"
 	provided group: "com.liferay", name: "com.liferay.item.selector.criteria.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portlet.display.template", version: "2.0.0"

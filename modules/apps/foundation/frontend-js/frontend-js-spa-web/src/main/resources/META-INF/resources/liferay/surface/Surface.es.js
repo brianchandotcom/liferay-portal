@@ -7,16 +7,14 @@ import Surface from 'senna/src/surface/Surface';
 /**
  * LiferaySurface
  *
- * This class inherits from Senna's Surface. It calls Liferay.DOMTaskRunner
- * whenever we add content to a Surface.
- * @review
+ * Inherits from Senna's Surface and calls {@link https://github.com/liferay/liferay-portal/blob/7.1.x/modules/apps/foundation/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/dom_task_runner.js|Liferay.DOMTaskRunner}
+ * when content is added to a Surface
  */
 
 class LiferaySurface extends Surface {
 
 	/**
 	 * @inheritDoc
-	 * @review
 	 */
 
 	addContent(screenId, content) {

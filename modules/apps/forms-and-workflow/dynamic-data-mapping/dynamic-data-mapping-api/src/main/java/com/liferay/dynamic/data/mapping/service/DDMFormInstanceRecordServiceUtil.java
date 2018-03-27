@@ -69,6 +69,20 @@ public class DDMFormInstanceRecordServiceUtil {
 		return getService().getFormInstanceRecords(ddmFormInstanceId);
 	}
 
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord> getFormInstanceRecords(
+		long ddmFormInstanceId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getFormInstanceRecords(ddmFormInstanceId, status, start,
+			end, orderByComparator);
+	}
+
+	public static int getFormInstanceRecordsCount(long ddmFormInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getFormInstanceRecordsCount(ddmFormInstanceId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

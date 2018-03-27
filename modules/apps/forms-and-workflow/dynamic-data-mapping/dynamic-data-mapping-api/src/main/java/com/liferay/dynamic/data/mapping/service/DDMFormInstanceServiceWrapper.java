@@ -67,8 +67,14 @@ public class DDMFormInstanceServiceWrapper implements DDMFormInstanceService,
 
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMFormInstance> getFormInstances(
-		long[] groupIds) {
-		return _ddmFormInstanceService.getFormInstances(groupIds);
+		long companyId, long groupId, int start, int end) {
+		return _ddmFormInstanceService.getFormInstances(companyId, groupId,
+			start, end);
+	}
+
+	@Override
+	public int getFormInstancesCount(long companyId, long groupId) {
+		return _ddmFormInstanceService.getFormInstancesCount(companyId, groupId);
 	}
 
 	/**

@@ -185,6 +185,74 @@ public class DDMFormInstanceRecordServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord> getFormInstanceRecords(
+		HttpPrincipal httpPrincipal, long ddmFormInstanceId, int status,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(DDMFormInstanceRecordServiceUtil.class,
+					"getFormInstanceRecords",
+					_getFormInstanceRecordsParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					ddmFormInstanceId, status, start, end, orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int getFormInstanceRecordsCount(HttpPrincipal httpPrincipal,
+		long ddmFormInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(DDMFormInstanceRecordServiceUtil.class,
+					"getFormInstanceRecordsCount",
+					_getFormInstanceRecordsCountParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					ddmFormInstanceId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static void revertFormInstanceRecord(HttpPrincipal httpPrincipal,
 		long ddmFormInstanceRecordId, java.lang.String version,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -192,7 +260,7 @@ public class DDMFormInstanceRecordServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(DDMFormInstanceRecordServiceUtil.class,
 					"revertFormInstanceRecord",
-					_revertFormInstanceRecordParameterTypes4);
+					_revertFormInstanceRecordParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					ddmFormInstanceRecordId, version, serviceContext);
@@ -224,7 +292,7 @@ public class DDMFormInstanceRecordServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(DDMFormInstanceRecordServiceUtil.class,
 					"updateFormInstanceRecord",
-					_updateFormInstanceRecordParameterTypes5);
+					_updateFormInstanceRecordParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					ddmFormInstanceRecordId, majorVersion, ddmFormValues,
@@ -267,11 +335,18 @@ public class DDMFormInstanceRecordServiceHttp {
 	private static final Class<?>[] _getFormInstanceRecordsParameterTypes3 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _revertFormInstanceRecordParameterTypes4 = new Class[] {
+	private static final Class<?>[] _getFormInstanceRecordsParameterTypes4 = new Class[] {
+			long.class, int.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
+	private static final Class<?>[] _getFormInstanceRecordsCountParameterTypes5 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _revertFormInstanceRecordParameterTypes6 = new Class[] {
 			long.class, java.lang.String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateFormInstanceRecordParameterTypes5 = new Class[] {
+	private static final Class<?>[] _updateFormInstanceRecordParameterTypes7 = new Class[] {
 			long.class, boolean.class,
 			com.liferay.dynamic.data.mapping.storage.DDMFormValues.class,
 			com.liferay.portal.kernel.service.ServiceContext.class

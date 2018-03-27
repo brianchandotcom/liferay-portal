@@ -55,12 +55,12 @@ public class TestBatchGroup {
 		return _portalTestProperties;
 	}
 
-	public int getTestBatchGroupSize() {
-		return _testClassGroups.size();
+	public TestBatchAxis getTestBatchAxis(int testBatchAxisId) {
+		return _testBatchAxes.get(testBatchAxisId);
 	}
 
-	public List<String> getTestClassGroup(int i) {
-		return _testClassGroups.get(i);
+	public int getTestBatchGroupSize() {
+		return _testBatchAxes.size();
 	}
 
 	public static class TestBatchAxis {
@@ -403,8 +403,21 @@ public class TestBatchGroup {
 		int classGroupSize = (int)Math.ceil(
 			(double)testClassFileNamesCount / testBatchGroupSize);
 
-		_testClassGroups.addAll(
-			Lists.partition(testClassFileNames, classGroupSize));
+		int id = 0;
+
+		for (List<String> axisTestClassFileNames :
+				Lists.partition(testClassFileNames, classGroupSize)) {
+
+			TestBatchAxis testBatchAxis = new TestBatchAxis(id);
+
+			_testBatchAxes.add(testBatchAxis);
+
+			for (String axisTestBatchFileName : axisTestClassFileNames) {
+				testBatchAxis.addTestClassFile(new File(axisTestBatchFileName));
+			}
+
+			id++;
+		}
 	}
 
 	private void _setTestClassNamesExcludes() {
@@ -522,8 +535,8 @@ public class TestBatchGroup {
 	private final Properties _portalTestProperties;
 	private final Pattern _propertyNamePattern = Pattern.compile(
 		"[^\\]]+\\[(?<batchName>[^\\]]+)\\](\\[(?<testSuiteName>[^\\]]+)\\])?");
+	private final List<TestBatchAxis> _testBatchAxes = new ArrayList<>();
 	private boolean _testBatchCurrentBranch;
-	private final List<List<String>> _testClassGroups = new ArrayList<>();
 	private final List<String> _testClassNamesExcludesGlobs = new ArrayList<>();
 	private final List<PathMatcher> _testClassNamesExcludesPathMatchers =
 		new ArrayList<>();

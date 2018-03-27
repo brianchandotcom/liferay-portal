@@ -42,11 +42,11 @@ kibanaURL="https://localhost:5601"</echo>
 				replace="\\\\="
 			/>
 
-			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.xpack.security.internal.configuration.XPackSecurityConfiguration.config">sslCertificatePath="${elasticsearch.dir}/config/certs/instance/instance.crt"
-sslCertificateAuthoritiesPaths="${elasticsearch.dir}/config/certs/ca/ca.crt"
+			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.xpack.security.internal.configuration.XPackSecurityConfiguration.config">sslCertificatePath="${elasticsearch.dir}-1/config/certs/instance/instance.crt"
+sslCertificateAuthoritiesPaths="${elasticsearch.dir}-1/config/certs/ca/ca.crt"
 requiresAuthentication="true"
 password="${osgi.config.elastic.user.password}"
-sslKeyPath="${elasticsearch.dir}/config/certs/instance/instance.key"
+sslKeyPath="${elasticsearch.dir}-1/config/certs/instance/instance.key"
 certificateFormat="PEM"
 transportSSLEnabled="true"</echo>
 		</sequential>
@@ -86,9 +86,11 @@ xpack.security.encryptionKey: "xsomethingxatxleastx32xcharactersx"
 xpack.security.sessionTimeout: 600000
 
 server.ssl.enabled: true
-server.ssl.certificate: ${elasticsearch.dir}/config/certs/instance/instance.crt
-server.ssl.key: ${elasticsearch.dir}/config/certs/instance/instance.key
-elasticsearch.ssl.certificateAuthorities: [ "${elasticsearch.dir}/config/certs/ca/ca.crt" ]</echo>
+
+server.ssl.certificate: ${elasticsearch.dir}-1/config/certs/instance/instance.crt
+server.ssl.key: ${elasticsearch.dir}-1/config/certs/instance/instance.key
+elasticsearch.ssl.certificateAuthorities: [ "${elasticsearch.dir}-1/config/certs/ca/ca.crt" ]</echo>
+
 			<replace
 				file="${elastic.kibana.dir}/config/kibana.yml"
 			>

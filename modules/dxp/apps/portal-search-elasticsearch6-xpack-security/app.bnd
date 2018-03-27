@@ -1,5 +1,5 @@
-Liferay-Releng-App-Description: The Liferay Connector for X-Pack Security [Elastic Stack 6.x] allows you to connect your Liferay DXP instance to an Elasticsearch cluster secured by X-Pack.<br />From Elastic's website, "With Security, you can password-protect your data as well as implement more advanced security measures such as encrypting communications, role-based access control, IP filtering, and auditing."<br />You must install Elastic's X-Pack plugin before using this Liferay DXP integration plugin. More information about X-Pack can be found at https://www.elastic.co/guide/en/x-pack/6.1/xpack-security.html.
-Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Connector for X-Pack Security [Elastic Stack 6.x]
+Liferay-Releng-App-Description: The Liferay Connector to X-Pack Security [Elastic Stack 6.x] allows you to connect your Liferay DXP instance to an Elasticsearch cluster secured by X-Pack.<br />From Elastic's website, "With Security, you can password-protect your data as well as implement more advanced security measures such as encrypting communications, role-based access control, IP filtering, and auditing."<br />You must install Elastic's X-Pack plugin before using this Liferay DXP integration plugin. More information about X-Pack can be found at https://www.elastic.co/guide/en/x-pack/6.1/xpack-security.html.
+Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Connector to X-Pack Security [Elastic Stack 6.x]
 Liferay-Releng-Bundle: false
 Liferay-Releng-Category: Utility
 Liferay-Releng-Demo-Url:

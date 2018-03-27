@@ -30,6 +30,7 @@
 	</li>
 </ul>
 
+
 <aui:script>
 	function <portlet:namespace />schedulePublishEvent() {
 		var form = AUI.$(document.<portlet:namespace />exportPagesFm);
@@ -52,7 +53,7 @@
 
 		<portlet:renderURL var="scheduledPublicationRedirectURL">
 			<portlet:param name="mvcPath" value="/view.jsp" />
-			<portlet:param name="tabs1" value="scheduled" />
+			<portlet:param name="tabs1" value="<%= StagingProcessesWebKeys.SCHEDULED_TAB %>" />
 		</portlet:renderURL>
 
 		form.fm('redirect').val('<%= scheduledPublicationRedirectURL %>');

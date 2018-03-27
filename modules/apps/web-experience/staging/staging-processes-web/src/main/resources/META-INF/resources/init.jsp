@@ -88,6 +88,7 @@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.staging.constants.StagingConfigurationPortletKeys" %><%@
 page import="com.liferay.staging.constants.StagingProcessesPortletKeys" %><%@
+page import="com.liferay.staging.constants.StagingProcessesWebKeys" %><%@
 page import="com.liferay.staging.processes.web.internal.dao.search.PublishResultRowSplitter" %><%@
 page import="com.liferay.staging.processes.web.internal.search.PublishConfigurationDisplayTerms" %><%@
 page import="com.liferay.staging.processes.web.internal.search.PublishConfigurationSearchTerms" %><%@

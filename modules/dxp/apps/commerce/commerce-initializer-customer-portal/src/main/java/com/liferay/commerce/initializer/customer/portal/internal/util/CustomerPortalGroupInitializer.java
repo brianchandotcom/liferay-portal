@@ -439,13 +439,16 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			_getConfigurationFilter());
 
-		for (Configuration configuration : configurations) {
-			Dictionary<String, Object> props = configuration.getProperties();
+		if (configurations != null) {
+			for (Configuration configuration : configurations) {
+				Dictionary<String, Object> props =
+					configuration.getProperties();
 
-			String roleName = (String)props.get("roleName");
+				String roleName = (String)props.get("roleName");
 
-			if (name.equals(roleName)) {
-				return;
+				if (name.equals(roleName)) {
+					return;
+				}
 			}
 		}
 

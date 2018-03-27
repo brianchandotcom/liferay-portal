@@ -111,7 +111,7 @@ public class TestBatchGroup {
 		_setTestClassNamesExcludesRelativeGlobs();
 		_setTestClassNamesIncludesRelativeGlobs();
 
-		_setTestClassGroups();
+		_setTestBatchAxes();
 	}
 
 	private List<String> _getCurrentBranchTestClassNamesRelativeGlobs(
@@ -441,30 +441,7 @@ public class TestBatchGroup {
 		return null;
 	}
 
-	private void _setTestBatchCurrentBranch() {
-		List<String> propertyNames = new ArrayList<>();
-
-		if (_testSuiteName != null) {
-			propertyNames.add(
-				JenkinsResultsParserUtil.combine(
-					"test.batch.current.branch[", _testSuiteName, "]"));
-		}
-
-		propertyNames.add("test.batch.current.branch");
-
-		String propertyValue = _getFirstPropertyValue(
-			_portalTestProperties, propertyNames);
-
-		if (propertyValue != null) {
-			_testBatchCurrentBranch = Boolean.parseBoolean(propertyValue);
-
-			return;
-		}
-
-		_testBatchCurrentBranch = _DEFAULT_TEST_BATCH_CURRENT_BRANCH;
-	}
-
-	private void _setTestClassGroups() {
+	private void _setTestBatchAxes() {
 		List<String> testClassFileNames = new ArrayList<>(
 			_getTestClassFileNames());
 
@@ -499,6 +476,29 @@ public class TestBatchGroup {
 
 			id++;
 		}
+	}
+
+	private void _setTestBatchCurrentBranch() {
+		List<String> propertyNames = new ArrayList<>();
+
+		if (_testSuiteName != null) {
+			propertyNames.add(
+				JenkinsResultsParserUtil.combine(
+					"test.batch.current.branch[", _testSuiteName, "]"));
+		}
+
+		propertyNames.add("test.batch.current.branch");
+
+		String propertyValue = _getFirstPropertyValue(
+			_portalTestProperties, propertyNames);
+
+		if (propertyValue != null) {
+			_testBatchCurrentBranch = Boolean.parseBoolean(propertyValue);
+
+			return;
+		}
+
+		_testBatchCurrentBranch = _DEFAULT_TEST_BATCH_CURRENT_BRANCH;
 	}
 
 	private void _setTestClassNamesExcludesRelativeGlobs() {

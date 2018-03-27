@@ -182,37 +182,37 @@ public class TestBatchGroup {
 	}
 
 	private int _getMaxClassGroupSize() {
-		List<String> orderedPropertyNames = new ArrayList<>();
+		List<String> propertyNames = new ArrayList<>();
 
 		if (_testSuiteName != null) {
-			orderedPropertyNames.add(
+			propertyNames.add(
 				JenkinsResultsParserUtil.combine(
 					"test.batch.max.class.group.size[", _batchName, "][",
 					_testSuiteName, "]"));
 
-			orderedPropertyNames.add(
+			propertyNames.add(
 				_getWildcardPropertyName(
 					_portalTestProperties, "test.batch.max.class.group.size",
 					_batchName, _testSuiteName));
 
-			orderedPropertyNames.add(
+			propertyNames.add(
 				JenkinsResultsParserUtil.combine(
 					"test.batch.max.class.group.size[", _testSuiteName, "]"));
 		}
 
-		orderedPropertyNames.add(
+		propertyNames.add(
 			JenkinsResultsParserUtil.combine(
 				"test.batch.max.class.group.size[", _batchName, "]"));
 
-		orderedPropertyNames.add(
+		propertyNames.add(
 			_getWildcardPropertyName(
 				_portalTestProperties, "test.batch.max.class.group.size",
 				_batchName));
 
-		orderedPropertyNames.add("test.batch.max.class.group.size");
+		propertyNames.add("test.batch.max.class.group.size");
 
 		String propertyValue = _getFirstPropertyValue(
-			_portalTestProperties, orderedPropertyNames);
+			_portalTestProperties, propertyNames);
 
 		if (propertyValue != null) {
 			return Integer.parseInt(propertyValue);

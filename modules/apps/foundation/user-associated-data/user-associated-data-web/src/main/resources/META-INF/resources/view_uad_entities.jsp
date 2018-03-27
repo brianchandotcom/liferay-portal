@@ -72,7 +72,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 				searchContainer="<%= viewUADEntitiesDisplay.getSearchContainer() %>"
 			>
 				<liferay-ui:search-container-row
-					className="com.liferay.user.associated.data.entity.UADEntity"
+					className="com.liferay.user.associated.data.web.internal.display.UADEntity"
 					escapedModel="<%= true %>"
 					keyProperty="name"
 					modelVar="uadEntity"
@@ -80,7 +80,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-expand"
 						name="entity-id"
-						property="UADEntityId"
+						property="entityId"
 					/>
 
 					<liferay-ui:search-container-column-text

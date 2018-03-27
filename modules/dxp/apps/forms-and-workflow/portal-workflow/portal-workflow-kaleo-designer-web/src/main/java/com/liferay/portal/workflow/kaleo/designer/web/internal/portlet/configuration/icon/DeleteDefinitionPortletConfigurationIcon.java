@@ -20,10 +20,14 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerWebKeys;
+import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDefinitionVersionPermission;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 
@@ -110,11 +114,22 @@ public class DeleteDefinitionPortletConfigurationIcon
 			return false;
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		boolean hasDeletePermission = KaleoDefinitionVersionPermission.contains(
+			themeDisplay.getPermissionChecker(), kaleoDefinitionVersion,
+			ActionKeys.DELETE);
+
 		try {
 			KaleoDefinition kaleoDefinition =
 				kaleoDefinitionVersion.getKaleoDefinition();
 
-			return !kaleoDefinition.isActive();
+			if (hasDeletePermission && !kaleoDefinition.isActive()) {
+				return true;
+			}
+
+			return false;
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {
@@ -122,7 +137,11 @@ public class DeleteDefinitionPortletConfigurationIcon
 			}
 		}
 
-		return kaleoDefinitionVersion.isDraft();
+		if (hasDeletePermission && kaleoDefinitionVersion.isDraft()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

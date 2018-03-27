@@ -55,17 +55,17 @@ public class HttpClientFactory {
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		HttpClientFactoryConfiguration httpClientFactoryConfiguration =
-			ConfigurableUtil.createConfigurable(
-				HttpClientFactoryConfiguration.class, properties);
+		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 
 		_poolingClientConnectionManager =
 			new PoolingHttpClientConnectionManager();
 
+		HttpClientFactoryConfiguration httpClientFactoryConfiguration =
+			ConfigurableUtil.createConfigurable(
+				HttpClientFactoryConfiguration.class, properties);
+
 		_poolingClientConnectionManager.setDefaultMaxPerRoute(
 			httpClientFactoryConfiguration.defaultMaxConnectionsPerRoute());
-		_poolingClientConnectionManager.setMaxTotal(
-			httpClientFactoryConfiguration.maxTotalConnections());
 
 		SocketConfig.Builder socketConfigBuilder = SocketConfig.custom();
 
@@ -75,7 +75,8 @@ public class HttpClientFactory {
 		_poolingClientConnectionManager.setDefaultSocketConfig(
 			socketConfigBuilder.build());
 
-		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
+		_poolingClientConnectionManager.setMaxTotal(
+			httpClientFactoryConfiguration.maxTotalConnections());
 
 		httpClientBuilder.setConnectionManager(_poolingClientConnectionManager);
 
@@ -86,10 +87,8 @@ public class HttpClientFactory {
 
 		httpClientBuilder.setDefaultRequestConfig(requestConfigBuilder.build());
 
-		HttpRequestRetryHandler httpRequestRetryHandler =
-			new DefaultHttpRequestRetryHandler(0, false);
-
-		httpClientBuilder.setRetryHandler(httpRequestRetryHandler);
+		httpClientBuilder.setRetryHandler(
+			new DefaultHttpRequestRetryHandler(0, false));
 
 		_closeableHttpClient = httpClientBuilder.build();
 

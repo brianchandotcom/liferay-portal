@@ -72,7 +72,7 @@ public class DuplicateWorkflowDefinitionMVCActionCommand
 			kaleoDefinitionLocalService.fetchKaleoDefinition(
 				duplicatedDefinitionName, serviceContext);
 
-		if (kaleoDefinition.isActive()) {
+		if ((kaleoDefinition != null) && kaleoDefinition.isActive()) {
 			workflowDefinitionManager.deployWorkflowDefinition(
 				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 				getTitle(actionRequest), name, content.getBytes());

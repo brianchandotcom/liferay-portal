@@ -12,13 +12,13 @@
 		<execute macro="Upgrade#reindexSearches" />
 	</set-up>
 
-	<command name="AddDataDefinitionsAfterUpgrade6130" priority="5">
+	<command name="AddDataDefinitionAfterUpgrade6130" priority="5">
 		<description message="This is a use case for LPS-52392." />
 
 		<property name="data.archive.type" value="data-archive-portal" />
 		<property name="database.types" value="db2" />
 		<property name="portal.version" value="6.1.30" />
 
-		<execute macro="Upgrade#addDataDefinitions" />
+		<execute macro="Upgrade#addDataDefinitionWithDB2" />
 	</command>
 </definition>

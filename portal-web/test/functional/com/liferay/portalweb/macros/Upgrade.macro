@@ -1,5 +1,5 @@
 <definition>
-	<command name="addDataDefinitions">
+	<command name="addDataDefinitionWithDB2">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
 			<var name="panel" value="Site Administration" />

@@ -3,15 +3,10 @@ AUI.add(
 	function(A) {
 		var TPL_WIZARD_SUCCESSPAGE = '<li class="{state} success-page multi-step-item multi-step-item-expand" data-success-page="true">' +
 				'<div class="multi-step-divider"></div>' +
-
 				'<div class="multi-step-indicator">' +
-
 					'<div class="multi-step-indicator-label">{title}</div>' +
-
 					'<a class="multi-step-icon" data-multi-step-icon="{index + 1}" href="#1"></a>' +
-
 				'</div>' +
-
 			'</li>';
 
 		var FormBuilderWizard = A.Component.create(

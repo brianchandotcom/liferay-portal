@@ -57,7 +57,7 @@ AUI.add(
 
 						var data = {};
 
-						data[instance.get('namespace') + 'ddmFormValues'] = ddmFormValues;
+						data['_' + CP_CONTENT_WEB_PORTLET_KEY + '_ddmFormValues'] = ddmFormValues;
 
 						A.io.request(
 							portletURL.toString(),

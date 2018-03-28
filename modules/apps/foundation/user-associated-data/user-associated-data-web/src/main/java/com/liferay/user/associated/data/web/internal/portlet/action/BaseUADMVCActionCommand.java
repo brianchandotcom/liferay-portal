@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 
-	protected Object getUADEntity(
+	protected Object getEntity(
 			ActionRequest actionRequest, String uadRegistryKey)
 		throws Exception {
 

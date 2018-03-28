@@ -17,13 +17,11 @@ package com.liferay.user.associated.data.aggregator;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.user.associated.data.util.UADDynamicQueryHelper;
+import com.liferay.user.associated.data.util.UADDynamicQueryUtil;
 
 import java.io.Serializable;
 
 import java.util.List;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Drew Brokke
@@ -60,11 +58,8 @@ public abstract class DynamicQueryUADEntityAggregator<T extends BaseModel>
 
 	protected abstract String[] doGetUserIdFieldNames();
 
-	@Reference
-	protected UADDynamicQueryHelper uadDynamicQueryHelper;
-
 	private DynamicQuery _getDynamicQuery(long userId) {
-		return uadDynamicQueryHelper.addDynamicQueryCriteria(
+		return UADDynamicQueryUtil.addDynamicQueryCriteria(
 			doGetDynamicQuery(), doGetUserIdFieldNames(), userId);
 	}
 

@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalService;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -56,6 +58,9 @@ public class WikiNodeUADEntityTestHelper {
 			serviceContext);
 
 		return wikiNode;
+	}
+
+	public void cleanUpDependencies(List<WikiNode> wikiNodes) throws Exception {
 	}
 
 	@Reference

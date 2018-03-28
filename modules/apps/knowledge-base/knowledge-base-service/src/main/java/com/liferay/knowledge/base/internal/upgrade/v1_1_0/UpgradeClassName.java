@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -41,14 +40,11 @@ public class UpgradeClassName extends UpgradeProcess {
 	}
 
 	protected long getClassNameId(String className) throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select classNameId from ClassName_ where value = ?");
 
 			ps.setString(1, className);
@@ -62,7 +58,7 @@ public class UpgradeClassName extends UpgradeProcess {
 			return 0;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

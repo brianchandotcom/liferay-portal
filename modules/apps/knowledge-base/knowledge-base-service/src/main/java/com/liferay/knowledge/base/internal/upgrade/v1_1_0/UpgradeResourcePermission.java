@@ -17,7 +17,6 @@ package com.liferay.knowledge.base.internal.upgrade.v1_1_0;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -38,14 +37,11 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 	}
 
 	protected boolean hasResourcePermission(String name) throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select count(*) from ResourcePermission where name = ?");
 
 			ps.setString(1, name);
@@ -63,7 +59,7 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 			return false;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

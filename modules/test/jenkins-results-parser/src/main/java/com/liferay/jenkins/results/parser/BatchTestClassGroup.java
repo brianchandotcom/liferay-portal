@@ -104,7 +104,7 @@ public class Batch {
 			new File(
 				_gitWorkingDirectory.getWorkingDirectory(), "test.properties"));
 
-		_setBatchCurrentBranch();
+		_setBatchRelevantChanges();
 
 		_setTestClassNamesExcludesRelativeGlobs();
 		_setTestClassNamesIncludesRelativeGlobs();
@@ -145,50 +145,6 @@ public class Batch {
 		return _getFirstPropertyValue(_portalTestProperties, propertyNames);
 	}
 
-	private List<String> _getCurrentBranchTestClassNamesRelativeGlobs(
-		List<String> testClassNamesRelativeGlobs) {
-
-		List<String> currentBranchTestClassNameRelativeGlobs =
-			new ArrayList<>();
-
-		File workingDirectory = _gitWorkingDirectory.getWorkingDirectory();
-
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			(PortalGitWorkingDirectory)_gitWorkingDirectory;
-
-		List<File> moduleGroupDirs = null;
-
-		try {
-			moduleGroupDirs =
-				portalGitWorkingDirectory.getCurrentBranchModuleGroupDirs();
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to get current branch module group directories ",
-					"in ", workingDirectory.getPath()),
-				ioe);
-		}
-
-		for (File moduleGroupDir : moduleGroupDirs) {
-			for (String testClassNamesRelativeGlob :
-					testClassNamesRelativeGlobs) {
-
-				if (testClassNamesRelativeGlob.startsWith("**/")) {
-					testClassNamesRelativeGlob =
-						testClassNamesRelativeGlob.substring(3);
-				}
-
-				currentBranchTestClassNameRelativeGlobs.add(
-					JenkinsResultsParserUtil.combine(
-						moduleGroupDir.getPath(), "/",
-						testClassNamesRelativeGlob));
-			}
-		}
-
-		return currentBranchTestClassNameRelativeGlobs;
-	}
-
 	private String _getFirstPropertyValue(
 		Properties properties, List<String> propertyNames) {
 
@@ -218,6 +174,51 @@ public class Batch {
 		}
 
 		return _DEFAULT_MAX_CLASS_GROUP_SIZE;
+	}
+
+	private List<String> _getRelevantTestClassNamesRelativeGlobs(
+		List<String> testClassNamesRelativeGlobs) {
+
+		List<String> relevantTestClassNameRelativeGlobs = new ArrayList<>();
+
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			(PortalGitWorkingDirectory)_gitWorkingDirectory;
+
+		List<File> moduleGroupDirs = null;
+
+		try {
+			moduleGroupDirs =
+				portalGitWorkingDirectory.getCurrentBranchModuleGroupDirs();
+		}
+		catch (IOException ioe) {
+			File workingDirectory = _gitWorkingDirectory.getWorkingDirectory();
+
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to get relevant module group directories in ",
+					workingDirectory.getPath()),
+				ioe);
+		}
+
+		for (File moduleGroupDir : moduleGroupDirs) {
+			for (String testClassNamesRelativeGlob :
+					testClassNamesRelativeGlobs) {
+
+				relevantTestClassNameRelativeGlobs.add(
+					JenkinsResultsParserUtil.combine(
+						moduleGroupDir.getPath(), "/",
+						testClassNamesRelativeGlob));
+
+				if (testClassNamesRelativeGlob.startsWith("**/")) {
+					relevantTestClassNameRelativeGlobs.add(
+						JenkinsResultsParserUtil.combine(
+							moduleGroupDir.getPath(), "/",
+							testClassNamesRelativeGlob.substring(3)));
+				}
+			}
+		}
+
+		return relevantTestClassNameRelativeGlobs;
 	}
 
 	private Set<String> _getTestClassFileNames() {
@@ -479,27 +480,27 @@ public class Batch {
 		}
 	}
 
-	private void _setBatchCurrentBranch() {
+	private void _setBatchRelevantChanges() {
 		List<String> propertyNames = new ArrayList<>();
 
 		if (_testSuiteName != null) {
 			propertyNames.add(
 				JenkinsResultsParserUtil.combine(
-					"test.batch.current.branch[", _testSuiteName, "]"));
+					"test.relevant.changes[", _testSuiteName, "]"));
 		}
 
-		propertyNames.add("test.batch.current.branch");
+		propertyNames.add("test.relevant.changes");
 
 		String propertyValue = _getFirstPropertyValue(
 			_portalTestProperties, propertyNames);
 
 		if (propertyValue != null) {
-			_batchCurrentBranch = Boolean.parseBoolean(propertyValue);
+			_testRelevantChanges = Boolean.parseBoolean(propertyValue);
 
 			return;
 		}
 
-		_batchCurrentBranch = _DEFAULT_BATCH_CURRENT_BRANCH;
+		_testRelevantChanges = _DEFAULT_TEST_RELEVANT_CHANGES;
 	}
 
 	private void _setTestClassNamesExcludesRelativeGlobs() {
@@ -515,9 +516,9 @@ public class Batch {
 		List<String> testClassNamesExcludesRelativeGlobs = Arrays.asList(
 			testClassNamesExcludesPropertyValue.split(","));
 
-		if (_batchCurrentBranch) {
+		if (_testRelevantChanges) {
 			testClassNamesExcludesRelativeGlobs =
-				_getCurrentBranchTestClassNamesRelativeGlobs(
+				_getRelevantTestClassNamesRelativeGlobs(
 					testClassNamesExcludesRelativeGlobs);
 		}
 
@@ -539,9 +540,9 @@ public class Batch {
 		List<String> testClassNamesIncludesRelativeGlobs = Arrays.asList(
 			testClassNamesIncludesPropertyValue.split(","));
 
-		if (_batchCurrentBranch) {
+		if (_testRelevantChanges) {
 			testClassNamesIncludesRelativeGlobs =
-				_getCurrentBranchTestClassNamesRelativeGlobs(
+				_getRelevantTestClassNamesRelativeGlobs(
 					testClassNamesIncludesRelativeGlobs);
 		}
 
@@ -550,12 +551,11 @@ public class Batch {
 				testClassNamesIncludesRelativeGlobs));
 	}
 
-	private static final boolean _DEFAULT_BATCH_CURRENT_BRANCH = false;
-
 	private static final int _DEFAULT_MAX_CLASS_GROUP_SIZE = 5000;
 
+	private static final boolean _DEFAULT_TEST_RELEVANT_CHANGES = false;
+
 	private final List<BatchAxis> _batchAxes = new ArrayList<>();
-	private boolean _batchCurrentBranch;
 	private final String _batchName;
 	private final GitWorkingDirectory _gitWorkingDirectory;
 	private final Pattern _packagePathPattern = Pattern.compile(
@@ -567,6 +567,7 @@ public class Batch {
 		new ArrayList<>();
 	private final List<PathMatcher> _testClassNamesIncludesPathMatchers =
 		new ArrayList<>();
+	private boolean _testRelevantChanges;
 	private final String _testSuiteName;
 
 }

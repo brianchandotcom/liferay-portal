@@ -676,14 +676,14 @@ public class GitWorkingDirectory {
 	public List<File> getCurrentBranchFiles() {
 		List<File> currentBranchFiles = new ArrayList<>();
 
-		Branch headBranch = getBranch("HEAD", null);
+		Branch currentBranch = getCurrentBranch();
 
 		ExecutionResult executionResult = executeBashCommands(
 			JenkinsResultsParserUtil.combine(
 				"git diff --diff-filter=AM --name-only ",
 				_getMergeBaseCommitSHA(
-					headBranch, getBranch(_upstreamBranchName, null)),
-				" ", headBranch.getSHA()));
+					currentBranch, getBranch(_upstreamBranchName, null)),
+				" ", currentBranch.getSHA()));
 
 		if (executionResult.getExitValue() != 0) {
 			throw new RuntimeException(

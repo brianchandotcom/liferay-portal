@@ -41,7 +41,6 @@ CommerceOrganizationOrderDisplayContext commerceOrganizationOrderDisplayContext 
 			<aui:input name="deleteCommerceOrderIds" type="hidden" />
 
 			<liferay-ui:search-container
-				cssClass="table-nowrap"
 				id="commerceOrders"
 				searchContainer="<%= commerceOrganizationOrderDisplayContext.getSearchContainer() %>"
 			>
@@ -59,7 +58,7 @@ CommerceOrganizationOrderDisplayContext commerceOrganizationOrderDisplayContext 
 					%>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand table-list-title"
+						cssClass="table-list-title"
 						href="<%= rowURL %>"
 						name="order-date"
 						value="<%= HtmlUtil.escape(commerceOrganizationOrderDisplayContext.getCommerceOrderDateTime(commerceOrder)) %>"
@@ -73,6 +72,7 @@ CommerceOrganizationOrderDisplayContext commerceOrganizationOrderDisplayContext 
 					/>
 
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand "
 						name="customer-name"
 						property="customerName"
 					/>

@@ -20,8 +20,10 @@ import com.liferay.oauth2.provider.exception.NoSuchOAuth2ScopeGrantException;
 import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
 import com.liferay.oauth2.provider.model.impl.OAuth2ScopeGrantImpl;
 import com.liferay.oauth2.provider.model.impl.OAuth2ScopeGrantModelImpl;
+import com.liferay.oauth2.provider.service.persistence.OAuth2AuthorizationPersistence;
 import com.liferay.oauth2.provider.service.persistence.OAuth2ScopeGrantPersistence;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -34,12 +36,19 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
+import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.Field;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -86,89 +95,93 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(OAuth2ScopeGrantModelImpl.ENTITY_CACHE_ENABLED,
 			OAuth2ScopeGrantModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_OAUTH2ACCESSTOKENID =
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_OAUTH2APPLICATIONSCOPEALIASESID =
 		new FinderPath(OAuth2ScopeGrantModelImpl.ENTITY_CACHE_ENABLED,
 			OAuth2ScopeGrantModelImpl.FINDER_CACHE_ENABLED,
 			OAuth2ScopeGrantImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByOAuth2AccessTokenId",
+			"findByOAuth2ApplicationScopeAliasesId",
 			new String[] {
 				Long.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_OAUTH2ACCESSTOKENID =
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_OAUTH2APPLICATIONSCOPEALIASESID =
 		new FinderPath(OAuth2ScopeGrantModelImpl.ENTITY_CACHE_ENABLED,
 			OAuth2ScopeGrantModelImpl.FINDER_CACHE_ENABLED,
 			OAuth2ScopeGrantImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByOAuth2AccessTokenId", new String[] { Long.class.getName() },
-			OAuth2ScopeGrantModelImpl.OAUTH2ACCESSTOKENID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_OAUTH2ACCESSTOKENID = new FinderPath(OAuth2ScopeGrantModelImpl.ENTITY_CACHE_ENABLED,
+			"findByOAuth2ApplicationScopeAliasesId",
+			new String[] { Long.class.getName() },
+			OAuth2ScopeGrantModelImpl.OAUTH2APPLICATIONSCOPEALIASESID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_OAUTH2APPLICATIONSCOPEALIASESID =
+		new FinderPath(OAuth2ScopeGrantModelImpl.ENTITY_CACHE_ENABLED,
 			OAuth2ScopeGrantModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByOAuth2AccessTokenId", new String[] { Long.class.getName() });
+			"countByOAuth2ApplicationScopeAliasesId",
+			new String[] { Long.class.getName() });
 
 	/**
-	 * Returns all the o auth2 scope grants where oAuth2AccessTokenId = &#63;.
+	 * Returns all the o auth2 scope grants where oAuth2ApplicationScopeAliasesId = &#63;.
 	 *
-	 * @param oAuth2AccessTokenId the o auth2 access token ID
+	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	 * @return the matching o auth2 scope grants
 	 */
 	@Override
-	public List<OAuth2ScopeGrant> findByOAuth2AccessTokenId(
-		long oAuth2AccessTokenId) {
-		return findByOAuth2AccessTokenId(oAuth2AccessTokenId,
+	public List<OAuth2ScopeGrant> findByOAuth2ApplicationScopeAliasesId(
+		long oAuth2ApplicationScopeAliasesId) {
+		return findByOAuth2ApplicationScopeAliasesId(oAuth2ApplicationScopeAliasesId,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the o auth2 scope grants where oAuth2AccessTokenId = &#63;.
+	 * Returns a range of all the o auth2 scope grants where oAuth2ApplicationScopeAliasesId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OAuth2ScopeGrantModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param oAuth2AccessTokenId the o auth2 access token ID
+	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	 * @param start the lower bound of the range of o auth2 scope grants
 	 * @param end the upper bound of the range of o auth2 scope grants (not inclusive)
 	 * @return the range of matching o auth2 scope grants
 	 */
 	@Override
-	public List<OAuth2ScopeGrant> findByOAuth2AccessTokenId(
-		long oAuth2AccessTokenId, int start, int end) {
-		return findByOAuth2AccessTokenId(oAuth2AccessTokenId, start, end, null);
+	public List<OAuth2ScopeGrant> findByOAuth2ApplicationScopeAliasesId(
+		long oAuth2ApplicationScopeAliasesId, int start, int end) {
+		return findByOAuth2ApplicationScopeAliasesId(oAuth2ApplicationScopeAliasesId,
+			start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the o auth2 scope grants where oAuth2AccessTokenId = &#63;.
+	 * Returns an ordered range of all the o auth2 scope grants where oAuth2ApplicationScopeAliasesId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OAuth2ScopeGrantModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param oAuth2AccessTokenId the o auth2 access token ID
+	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	 * @param start the lower bound of the range of o auth2 scope grants
 	 * @param end the upper bound of the range of o auth2 scope grants (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching o auth2 scope grants
 	 */
 	@Override
-	public List<OAuth2ScopeGrant> findByOAuth2AccessTokenId(
-		long oAuth2AccessTokenId, int start, int end,
+	public List<OAuth2ScopeGrant> findByOAuth2ApplicationScopeAliasesId(
+		long oAuth2ApplicationScopeAliasesId, int start, int end,
 		OrderByComparator<OAuth2ScopeGrant> orderByComparator) {
-		return findByOAuth2AccessTokenId(oAuth2AccessTokenId, start, end,
-			orderByComparator, true);
+		return findByOAuth2ApplicationScopeAliasesId(oAuth2ApplicationScopeAliasesId,
+			start, end, orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the o auth2 scope grants where oAuth2AccessTokenId = &#63;.
+	 * Returns an ordered range of all the o auth2 scope grants where oAuth2ApplicationScopeAliasesId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OAuth2ScopeGrantModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param oAuth2AccessTokenId the o auth2 access token ID
+	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	 * @param start the lower bound of the range of o auth2 scope grants
 	 * @param end the upper bound of the range of o auth2 scope grants (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -176,8 +189,8 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	 * @return the ordered range of matching o auth2 scope grants
 	 */
 	@Override
-	public List<OAuth2ScopeGrant> findByOAuth2AccessTokenId(
-		long oAuth2AccessTokenId, int start, int end,
+	public List<OAuth2ScopeGrant> findByOAuth2ApplicationScopeAliasesId(
+		long oAuth2ApplicationScopeAliasesId, int start, int end,
 		OrderByComparator<OAuth2ScopeGrant> orderByComparator,
 		boolean retrieveFromCache) {
 		boolean pagination = true;
@@ -187,13 +200,13 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_OAUTH2ACCESSTOKENID;
-			finderArgs = new Object[] { oAuth2AccessTokenId };
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_OAUTH2APPLICATIONSCOPEALIASESID;
+			finderArgs = new Object[] { oAuth2ApplicationScopeAliasesId };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_OAUTH2ACCESSTOKENID;
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_OAUTH2APPLICATIONSCOPEALIASESID;
 			finderArgs = new Object[] {
-					oAuth2AccessTokenId,
+					oAuth2ApplicationScopeAliasesId,
 					
 					start, end, orderByComparator
 				};
@@ -207,7 +220,7 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 
 			if ((list != null) && !list.isEmpty()) {
 				for (OAuth2ScopeGrant oAuth2ScopeGrant : list) {
-					if ((oAuth2AccessTokenId != oAuth2ScopeGrant.getOAuth2AccessTokenId())) {
+					if ((oAuth2ApplicationScopeAliasesId != oAuth2ScopeGrant.getOAuth2ApplicationScopeAliasesId())) {
 						list = null;
 
 						break;
@@ -229,7 +242,7 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 
 			query.append(_SQL_SELECT_OAUTH2SCOPEGRANT_WHERE);
 
-			query.append(_FINDER_COLUMN_OAUTH2ACCESSTOKENID_OAUTH2ACCESSTOKENID_2);
+			query.append(_FINDER_COLUMN_OAUTH2APPLICATIONSCOPEALIASESID_OAUTH2APPLICATIONSCOPEALIASESID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -251,7 +264,7 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(oAuth2AccessTokenId);
+				qPos.add(oAuth2ApplicationScopeAliasesId);
 
 				if (!pagination) {
 					list = (List<OAuth2ScopeGrant>)QueryUtil.list(q,
@@ -284,19 +297,19 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	}
 
 	/**
-	 * Returns the first o auth2 scope grant in the ordered set where oAuth2AccessTokenId = &#63;.
+	 * Returns the first o auth2 scope grant in the ordered set where oAuth2ApplicationScopeAliasesId = &#63;.
 	 *
-	 * @param oAuth2AccessTokenId the o auth2 access token ID
+	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching o auth2 scope grant
 	 * @throws NoSuchOAuth2ScopeGrantException if a matching o auth2 scope grant could not be found
 	 */
 	@Override
-	public OAuth2ScopeGrant findByOAuth2AccessTokenId_First(
-		long oAuth2AccessTokenId,
+	public OAuth2ScopeGrant findByOAuth2ApplicationScopeAliasesId_First(
+		long oAuth2ApplicationScopeAliasesId,
 		OrderByComparator<OAuth2ScopeGrant> orderByComparator)
 		throws NoSuchOAuth2ScopeGrantException {
-		OAuth2ScopeGrant oAuth2ScopeGrant = fetchByOAuth2AccessTokenId_First(oAuth2AccessTokenId,
+		OAuth2ScopeGrant oAuth2ScopeGrant = fetchByOAuth2ApplicationScopeAliasesId_First(oAuth2ApplicationScopeAliasesId,
 				orderByComparator);
 
 		if (oAuth2ScopeGrant != null) {
@@ -307,8 +320,8 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("oAuth2AccessTokenId=");
-		msg.append(oAuth2AccessTokenId);
+		msg.append("oAuth2ApplicationScopeAliasesId=");
+		msg.append(oAuth2ApplicationScopeAliasesId);
 
 		msg.append("}");
 
@@ -316,17 +329,17 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	}
 
 	/**
-	 * Returns the first o auth2 scope grant in the ordered set where oAuth2AccessTokenId = &#63;.
+	 * Returns the first o auth2 scope grant in the ordered set where oAuth2ApplicationScopeAliasesId = &#63;.
 	 *
-	 * @param oAuth2AccessTokenId the o auth2 access token ID
+	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching o auth2 scope grant, or <code>null</code> if a matching o auth2 scope grant could not be found
 	 */
 	@Override
-	public OAuth2ScopeGrant fetchByOAuth2AccessTokenId_First(
-		long oAuth2AccessTokenId,
+	public OAuth2ScopeGrant fetchByOAuth2ApplicationScopeAliasesId_First(
+		long oAuth2ApplicationScopeAliasesId,
 		OrderByComparator<OAuth2ScopeGrant> orderByComparator) {
-		List<OAuth2ScopeGrant> list = findByOAuth2AccessTokenId(oAuth2AccessTokenId,
+		List<OAuth2ScopeGrant> list = findByOAuth2ApplicationScopeAliasesId(oAuth2ApplicationScopeAliasesId,
 				0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -337,19 +350,19 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	}
 
 	/**
-	 * Returns the last o auth2 scope grant in the ordered set where oAuth2AccessTokenId = &#63;.
+	 * Returns the last o auth2 scope grant in the ordered set where oAuth2ApplicationScopeAliasesId = &#63;.
 	 *
-	 * @param oAuth2AccessTokenId the o auth2 access token ID
+	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching o auth2 scope grant
 	 * @throws NoSuchOAuth2ScopeGrantException if a matching o auth2 scope grant could not be found
 	 */
 	@Override
-	public OAuth2ScopeGrant findByOAuth2AccessTokenId_Last(
-		long oAuth2AccessTokenId,
+	public OAuth2ScopeGrant findByOAuth2ApplicationScopeAliasesId_Last(
+		long oAuth2ApplicationScopeAliasesId,
 		OrderByComparator<OAuth2ScopeGrant> orderByComparator)
 		throws NoSuchOAuth2ScopeGrantException {
-		OAuth2ScopeGrant oAuth2ScopeGrant = fetchByOAuth2AccessTokenId_Last(oAuth2AccessTokenId,
+		OAuth2ScopeGrant oAuth2ScopeGrant = fetchByOAuth2ApplicationScopeAliasesId_Last(oAuth2ApplicationScopeAliasesId,
 				orderByComparator);
 
 		if (oAuth2ScopeGrant != null) {
@@ -360,8 +373,8 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("oAuth2AccessTokenId=");
-		msg.append(oAuth2AccessTokenId);
+		msg.append("oAuth2ApplicationScopeAliasesId=");
+		msg.append(oAuth2ApplicationScopeAliasesId);
 
 		msg.append("}");
 
@@ -369,23 +382,23 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	}
 
 	/**
-	 * Returns the last o auth2 scope grant in the ordered set where oAuth2AccessTokenId = &#63;.
+	 * Returns the last o auth2 scope grant in the ordered set where oAuth2ApplicationScopeAliasesId = &#63;.
 	 *
-	 * @param oAuth2AccessTokenId the o auth2 access token ID
+	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching o auth2 scope grant, or <code>null</code> if a matching o auth2 scope grant could not be found
 	 */
 	@Override
-	public OAuth2ScopeGrant fetchByOAuth2AccessTokenId_Last(
-		long oAuth2AccessTokenId,
+	public OAuth2ScopeGrant fetchByOAuth2ApplicationScopeAliasesId_Last(
+		long oAuth2ApplicationScopeAliasesId,
 		OrderByComparator<OAuth2ScopeGrant> orderByComparator) {
-		int count = countByOAuth2AccessTokenId(oAuth2AccessTokenId);
+		int count = countByOAuth2ApplicationScopeAliasesId(oAuth2ApplicationScopeAliasesId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<OAuth2ScopeGrant> list = findByOAuth2AccessTokenId(oAuth2AccessTokenId,
+		List<OAuth2ScopeGrant> list = findByOAuth2ApplicationScopeAliasesId(oAuth2ApplicationScopeAliasesId,
 				count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -396,17 +409,17 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	}
 
 	/**
-	 * Returns the o auth2 scope grants before and after the current o auth2 scope grant in the ordered set where oAuth2AccessTokenId = &#63;.
+	 * Returns the o auth2 scope grants before and after the current o auth2 scope grant in the ordered set where oAuth2ApplicationScopeAliasesId = &#63;.
 	 *
 	 * @param oAuth2ScopeGrantId the primary key of the current o auth2 scope grant
-	 * @param oAuth2AccessTokenId the o auth2 access token ID
+	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next o auth2 scope grant
 	 * @throws NoSuchOAuth2ScopeGrantException if a o auth2 scope grant with the primary key could not be found
 	 */
 	@Override
-	public OAuth2ScopeGrant[] findByOAuth2AccessTokenId_PrevAndNext(
-		long oAuth2ScopeGrantId, long oAuth2AccessTokenId,
+	public OAuth2ScopeGrant[] findByOAuth2ApplicationScopeAliasesId_PrevAndNext(
+		long oAuth2ScopeGrantId, long oAuth2ApplicationScopeAliasesId,
 		OrderByComparator<OAuth2ScopeGrant> orderByComparator)
 		throws NoSuchOAuth2ScopeGrantException {
 		OAuth2ScopeGrant oAuth2ScopeGrant = findByPrimaryKey(oAuth2ScopeGrantId);
@@ -418,15 +431,15 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 
 			OAuth2ScopeGrant[] array = new OAuth2ScopeGrantImpl[3];
 
-			array[0] = getByOAuth2AccessTokenId_PrevAndNext(session,
-					oAuth2ScopeGrant, oAuth2AccessTokenId, orderByComparator,
-					true);
+			array[0] = getByOAuth2ApplicationScopeAliasesId_PrevAndNext(session,
+					oAuth2ScopeGrant, oAuth2ApplicationScopeAliasesId,
+					orderByComparator, true);
 
 			array[1] = oAuth2ScopeGrant;
 
-			array[2] = getByOAuth2AccessTokenId_PrevAndNext(session,
-					oAuth2ScopeGrant, oAuth2AccessTokenId, orderByComparator,
-					false);
+			array[2] = getByOAuth2ApplicationScopeAliasesId_PrevAndNext(session,
+					oAuth2ScopeGrant, oAuth2ApplicationScopeAliasesId,
+					orderByComparator, false);
 
 			return array;
 		}
@@ -438,9 +451,9 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 		}
 	}
 
-	protected OAuth2ScopeGrant getByOAuth2AccessTokenId_PrevAndNext(
+	protected OAuth2ScopeGrant getByOAuth2ApplicationScopeAliasesId_PrevAndNext(
 		Session session, OAuth2ScopeGrant oAuth2ScopeGrant,
-		long oAuth2AccessTokenId,
+		long oAuth2ApplicationScopeAliasesId,
 		OrderByComparator<OAuth2ScopeGrant> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -455,7 +468,7 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 
 		query.append(_SQL_SELECT_OAUTH2SCOPEGRANT_WHERE);
 
-		query.append(_FINDER_COLUMN_OAUTH2ACCESSTOKENID_OAUTH2ACCESSTOKENID_2);
+		query.append(_FINDER_COLUMN_OAUTH2APPLICATIONSCOPEALIASESID_OAUTH2APPLICATIONSCOPEALIASESID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -525,7 +538,7 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		qPos.add(oAuth2AccessTokenId);
+		qPos.add(oAuth2ApplicationScopeAliasesId);
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(oAuth2ScopeGrant);
@@ -546,29 +559,32 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	}
 
 	/**
-	 * Removes all the o auth2 scope grants where oAuth2AccessTokenId = &#63; from the database.
+	 * Removes all the o auth2 scope grants where oAuth2ApplicationScopeAliasesId = &#63; from the database.
 	 *
-	 * @param oAuth2AccessTokenId the o auth2 access token ID
+	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	 */
 	@Override
-	public void removeByOAuth2AccessTokenId(long oAuth2AccessTokenId) {
-		for (OAuth2ScopeGrant oAuth2ScopeGrant : findByOAuth2AccessTokenId(
-				oAuth2AccessTokenId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+	public void removeByOAuth2ApplicationScopeAliasesId(
+		long oAuth2ApplicationScopeAliasesId) {
+		for (OAuth2ScopeGrant oAuth2ScopeGrant : findByOAuth2ApplicationScopeAliasesId(
+				oAuth2ApplicationScopeAliasesId, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
 			remove(oAuth2ScopeGrant);
 		}
 	}
 
 	/**
-	 * Returns the number of o auth2 scope grants where oAuth2AccessTokenId = &#63;.
+	 * Returns the number of o auth2 scope grants where oAuth2ApplicationScopeAliasesId = &#63;.
 	 *
-	 * @param oAuth2AccessTokenId the o auth2 access token ID
+	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	 * @return the number of matching o auth2 scope grants
 	 */
 	@Override
-	public int countByOAuth2AccessTokenId(long oAuth2AccessTokenId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_OAUTH2ACCESSTOKENID;
+	public int countByOAuth2ApplicationScopeAliasesId(
+		long oAuth2ApplicationScopeAliasesId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_OAUTH2APPLICATIONSCOPEALIASESID;
 
-		Object[] finderArgs = new Object[] { oAuth2AccessTokenId };
+		Object[] finderArgs = new Object[] { oAuth2ApplicationScopeAliasesId };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -577,7 +593,7 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 
 			query.append(_SQL_COUNT_OAUTH2SCOPEGRANT_WHERE);
 
-			query.append(_FINDER_COLUMN_OAUTH2ACCESSTOKENID_OAUTH2ACCESSTOKENID_2);
+			query.append(_FINDER_COLUMN_OAUTH2APPLICATIONSCOPEALIASESID_OAUTH2APPLICATIONSCOPEALIASESID_2);
 
 			String sql = query.toString();
 
@@ -590,7 +606,7 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(oAuth2AccessTokenId);
+				qPos.add(oAuth2ApplicationScopeAliasesId);
 
 				count = (Long)q.uniqueResult();
 
@@ -609,8 +625,8 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_OAUTH2ACCESSTOKENID_OAUTH2ACCESSTOKENID_2 =
-		"oAuth2ScopeGrant.oAuth2AccessTokenId = ?";
+	private static final String _FINDER_COLUMN_OAUTH2APPLICATIONSCOPEALIASESID_OAUTH2APPLICATIONSCOPEALIASESID_2 =
+		"oAuth2ScopeGrant.oAuth2ApplicationScopeAliasesId = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_O_A_B_S = new FinderPath(OAuth2ScopeGrantModelImpl.ENTITY_CACHE_ENABLED,
 			OAuth2ScopeGrantModelImpl.FINDER_CACHE_ENABLED,
 			OAuth2ScopeGrantImpl.class, FINDER_CLASS_NAME_ENTITY,
@@ -621,7 +637,7 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 				String.class.getName()
 			},
 			OAuth2ScopeGrantModelImpl.COMPANYID_COLUMN_BITMASK |
-			OAuth2ScopeGrantModelImpl.OAUTH2ACCESSTOKENID_COLUMN_BITMASK |
+			OAuth2ScopeGrantModelImpl.OAUTH2APPLICATIONSCOPEALIASESID_COLUMN_BITMASK |
 			OAuth2ScopeGrantModelImpl.APPLICATIONNAME_COLUMN_BITMASK |
 			OAuth2ScopeGrantModelImpl.BUNDLESYMBOLICNAME_COLUMN_BITMASK |
 			OAuth2ScopeGrantModelImpl.SCOPE_COLUMN_BITMASK);
@@ -635,10 +651,10 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 			});
 
 	/**
-	 * Returns the o auth2 scope grant where companyId = &#63; and oAuth2AccessTokenId = &#63; and applicationName = &#63; and bundleSymbolicName = &#63; and scope = &#63; or throws a {@link NoSuchOAuth2ScopeGrantException} if it could not be found.
+	 * Returns the o auth2 scope grant where companyId = &#63; and oAuth2ApplicationScopeAliasesId = &#63; and applicationName = &#63; and bundleSymbolicName = &#63; and scope = &#63; or throws a {@link NoSuchOAuth2ScopeGrantException} if it could not be found.
 	 *
 	 * @param companyId the company ID
-	 * @param oAuth2AccessTokenId the o auth2 access token ID
+	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	 * @param applicationName the application name
 	 * @param bundleSymbolicName the bundle symbolic name
 	 * @param scope the scope
@@ -647,11 +663,12 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	 */
 	@Override
 	public OAuth2ScopeGrant findByC_O_A_B_S(long companyId,
-		long oAuth2AccessTokenId, String applicationName,
+		long oAuth2ApplicationScopeAliasesId, String applicationName,
 		String bundleSymbolicName, String scope)
 		throws NoSuchOAuth2ScopeGrantException {
 		OAuth2ScopeGrant oAuth2ScopeGrant = fetchByC_O_A_B_S(companyId,
-				oAuth2AccessTokenId, applicationName, bundleSymbolicName, scope);
+				oAuth2ApplicationScopeAliasesId, applicationName,
+				bundleSymbolicName, scope);
 
 		if (oAuth2ScopeGrant == null) {
 			StringBundler msg = new StringBundler(12);
@@ -661,8 +678,8 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 			msg.append("companyId=");
 			msg.append(companyId);
 
-			msg.append(", oAuth2AccessTokenId=");
-			msg.append(oAuth2AccessTokenId);
+			msg.append(", oAuth2ApplicationScopeAliasesId=");
+			msg.append(oAuth2ApplicationScopeAliasesId);
 
 			msg.append(", applicationName=");
 			msg.append(applicationName);
@@ -686,10 +703,10 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	}
 
 	/**
-	 * Returns the o auth2 scope grant where companyId = &#63; and oAuth2AccessTokenId = &#63; and applicationName = &#63; and bundleSymbolicName = &#63; and scope = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the o auth2 scope grant where companyId = &#63; and oAuth2ApplicationScopeAliasesId = &#63; and applicationName = &#63; and bundleSymbolicName = &#63; and scope = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param companyId the company ID
-	 * @param oAuth2AccessTokenId the o auth2 access token ID
+	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	 * @param applicationName the application name
 	 * @param bundleSymbolicName the bundle symbolic name
 	 * @param scope the scope
@@ -697,17 +714,17 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	 */
 	@Override
 	public OAuth2ScopeGrant fetchByC_O_A_B_S(long companyId,
-		long oAuth2AccessTokenId, String applicationName,
+		long oAuth2ApplicationScopeAliasesId, String applicationName,
 		String bundleSymbolicName, String scope) {
-		return fetchByC_O_A_B_S(companyId, oAuth2AccessTokenId,
+		return fetchByC_O_A_B_S(companyId, oAuth2ApplicationScopeAliasesId,
 			applicationName, bundleSymbolicName, scope, true);
 	}
 
 	/**
-	 * Returns the o auth2 scope grant where companyId = &#63; and oAuth2AccessTokenId = &#63; and applicationName = &#63; and bundleSymbolicName = &#63; and scope = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the o auth2 scope grant where companyId = &#63; and oAuth2ApplicationScopeAliasesId = &#63; and applicationName = &#63; and bundleSymbolicName = &#63; and scope = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
-	 * @param oAuth2AccessTokenId the o auth2 access token ID
+	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	 * @param applicationName the application name
 	 * @param bundleSymbolicName the bundle symbolic name
 	 * @param scope the scope
@@ -716,10 +733,10 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	 */
 	@Override
 	public OAuth2ScopeGrant fetchByC_O_A_B_S(long companyId,
-		long oAuth2AccessTokenId, String applicationName,
+		long oAuth2ApplicationScopeAliasesId, String applicationName,
 		String bundleSymbolicName, String scope, boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] {
-				companyId, oAuth2AccessTokenId, applicationName,
+				companyId, oAuth2ApplicationScopeAliasesId, applicationName,
 				bundleSymbolicName, scope
 			};
 
@@ -734,7 +751,7 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 			OAuth2ScopeGrant oAuth2ScopeGrant = (OAuth2ScopeGrant)result;
 
 			if ((companyId != oAuth2ScopeGrant.getCompanyId()) ||
-					(oAuth2AccessTokenId != oAuth2ScopeGrant.getOAuth2AccessTokenId()) ||
+					(oAuth2ApplicationScopeAliasesId != oAuth2ScopeGrant.getOAuth2ApplicationScopeAliasesId()) ||
 					!Objects.equals(applicationName,
 						oAuth2ScopeGrant.getApplicationName()) ||
 					!Objects.equals(bundleSymbolicName,
@@ -751,7 +768,7 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 
 			query.append(_FINDER_COLUMN_C_O_A_B_S_COMPANYID_2);
 
-			query.append(_FINDER_COLUMN_C_O_A_B_S_OAUTH2ACCESSTOKENID_2);
+			query.append(_FINDER_COLUMN_C_O_A_B_S_OAUTH2APPLICATIONSCOPEALIASESID_2);
 
 			boolean bindApplicationName = false;
 
@@ -808,7 +825,7 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 
 				qPos.add(companyId);
 
-				qPos.add(oAuth2AccessTokenId);
+				qPos.add(oAuth2ApplicationScopeAliasesId);
 
 				if (bindApplicationName) {
 					qPos.add(applicationName);
@@ -847,7 +864,7 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 					cacheResult(oAuth2ScopeGrant);
 
 					if ((oAuth2ScopeGrant.getCompanyId() != companyId) ||
-							(oAuth2ScopeGrant.getOAuth2AccessTokenId() != oAuth2AccessTokenId) ||
+							(oAuth2ScopeGrant.getOAuth2ApplicationScopeAliasesId() != oAuth2ApplicationScopeAliasesId) ||
 							(oAuth2ScopeGrant.getApplicationName() == null) ||
 							!oAuth2ScopeGrant.getApplicationName()
 												 .equals(applicationName) ||
@@ -881,10 +898,10 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	}
 
 	/**
-	 * Removes the o auth2 scope grant where companyId = &#63; and oAuth2AccessTokenId = &#63; and applicationName = &#63; and bundleSymbolicName = &#63; and scope = &#63; from the database.
+	 * Removes the o auth2 scope grant where companyId = &#63; and oAuth2ApplicationScopeAliasesId = &#63; and applicationName = &#63; and bundleSymbolicName = &#63; and scope = &#63; from the database.
 	 *
 	 * @param companyId the company ID
-	 * @param oAuth2AccessTokenId the o auth2 access token ID
+	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	 * @param applicationName the application name
 	 * @param bundleSymbolicName the bundle symbolic name
 	 * @param scope the scope
@@ -892,32 +909,34 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	 */
 	@Override
 	public OAuth2ScopeGrant removeByC_O_A_B_S(long companyId,
-		long oAuth2AccessTokenId, String applicationName,
+		long oAuth2ApplicationScopeAliasesId, String applicationName,
 		String bundleSymbolicName, String scope)
 		throws NoSuchOAuth2ScopeGrantException {
 		OAuth2ScopeGrant oAuth2ScopeGrant = findByC_O_A_B_S(companyId,
-				oAuth2AccessTokenId, applicationName, bundleSymbolicName, scope);
+				oAuth2ApplicationScopeAliasesId, applicationName,
+				bundleSymbolicName, scope);
 
 		return remove(oAuth2ScopeGrant);
 	}
 
 	/**
-	 * Returns the number of o auth2 scope grants where companyId = &#63; and oAuth2AccessTokenId = &#63; and applicationName = &#63; and bundleSymbolicName = &#63; and scope = &#63;.
+	 * Returns the number of o auth2 scope grants where companyId = &#63; and oAuth2ApplicationScopeAliasesId = &#63; and applicationName = &#63; and bundleSymbolicName = &#63; and scope = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param oAuth2AccessTokenId the o auth2 access token ID
+	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	 * @param applicationName the application name
 	 * @param bundleSymbolicName the bundle symbolic name
 	 * @param scope the scope
 	 * @return the number of matching o auth2 scope grants
 	 */
 	@Override
-	public int countByC_O_A_B_S(long companyId, long oAuth2AccessTokenId,
-		String applicationName, String bundleSymbolicName, String scope) {
+	public int countByC_O_A_B_S(long companyId,
+		long oAuth2ApplicationScopeAliasesId, String applicationName,
+		String bundleSymbolicName, String scope) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_O_A_B_S;
 
 		Object[] finderArgs = new Object[] {
-				companyId, oAuth2AccessTokenId, applicationName,
+				companyId, oAuth2ApplicationScopeAliasesId, applicationName,
 				bundleSymbolicName, scope
 			};
 
@@ -930,7 +949,7 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 
 			query.append(_FINDER_COLUMN_C_O_A_B_S_COMPANYID_2);
 
-			query.append(_FINDER_COLUMN_C_O_A_B_S_OAUTH2ACCESSTOKENID_2);
+			query.append(_FINDER_COLUMN_C_O_A_B_S_OAUTH2APPLICATIONSCOPEALIASESID_2);
 
 			boolean bindApplicationName = false;
 
@@ -987,7 +1006,7 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 
 				qPos.add(companyId);
 
-				qPos.add(oAuth2AccessTokenId);
+				qPos.add(oAuth2ApplicationScopeAliasesId);
 
 				if (bindApplicationName) {
 					qPos.add(applicationName);
@@ -1019,7 +1038,8 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	}
 
 	private static final String _FINDER_COLUMN_C_O_A_B_S_COMPANYID_2 = "oAuth2ScopeGrant.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_O_A_B_S_OAUTH2ACCESSTOKENID_2 = "oAuth2ScopeGrant.oAuth2AccessTokenId = ? AND ";
+	private static final String _FINDER_COLUMN_C_O_A_B_S_OAUTH2APPLICATIONSCOPEALIASESID_2 =
+		"oAuth2ScopeGrant.oAuth2ApplicationScopeAliasesId = ? AND ";
 	private static final String _FINDER_COLUMN_C_O_A_B_S_APPLICATIONNAME_1 = "oAuth2ScopeGrant.applicationName IS NULL AND ";
 	private static final String _FINDER_COLUMN_C_O_A_B_S_APPLICATIONNAME_2 = "oAuth2ScopeGrant.applicationName = ? AND ";
 	private static final String _FINDER_COLUMN_C_O_A_B_S_APPLICATIONNAME_3 = "(oAuth2ScopeGrant.applicationName IS NULL OR oAuth2ScopeGrant.applicationName = '') AND ";
@@ -1032,6 +1052,25 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 
 	public OAuth2ScopeGrantPersistenceImpl() {
 		setModelClass(OAuth2ScopeGrant.class);
+
+		try {
+			Field field = BasePersistenceImpl.class.getDeclaredField(
+					"_dbColumnNames");
+
+			field.setAccessible(true);
+
+			Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+			dbColumnNames.put("oAuth2ApplicationScopeAliasesId",
+				"oA2AScopeAliasesId");
+
+			field.set(this, dbColumnNames);
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+		}
 	}
 
 	/**
@@ -1048,7 +1087,7 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 		finderCache.putResult(FINDER_PATH_FETCH_BY_C_O_A_B_S,
 			new Object[] {
 				oAuth2ScopeGrant.getCompanyId(),
-				oAuth2ScopeGrant.getOAuth2AccessTokenId(),
+				oAuth2ScopeGrant.getOAuth2ApplicationScopeAliasesId(),
 				oAuth2ScopeGrant.getApplicationName(),
 				oAuth2ScopeGrant.getBundleSymbolicName(),
 				oAuth2ScopeGrant.getScope()
@@ -1130,7 +1169,7 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 		OAuth2ScopeGrantModelImpl oAuth2ScopeGrantModelImpl) {
 		Object[] args = new Object[] {
 				oAuth2ScopeGrantModelImpl.getCompanyId(),
-				oAuth2ScopeGrantModelImpl.getOAuth2AccessTokenId(),
+				oAuth2ScopeGrantModelImpl.getOAuth2ApplicationScopeAliasesId(),
 				oAuth2ScopeGrantModelImpl.getApplicationName(),
 				oAuth2ScopeGrantModelImpl.getBundleSymbolicName(),
 				oAuth2ScopeGrantModelImpl.getScope()
@@ -1148,7 +1187,7 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 		if (clearCurrent) {
 			Object[] args = new Object[] {
 					oAuth2ScopeGrantModelImpl.getCompanyId(),
-					oAuth2ScopeGrantModelImpl.getOAuth2AccessTokenId(),
+					oAuth2ScopeGrantModelImpl.getOAuth2ApplicationScopeAliasesId(),
 					oAuth2ScopeGrantModelImpl.getApplicationName(),
 					oAuth2ScopeGrantModelImpl.getBundleSymbolicName(),
 					oAuth2ScopeGrantModelImpl.getScope()
@@ -1162,7 +1201,7 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 				FINDER_PATH_FETCH_BY_C_O_A_B_S.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
 					oAuth2ScopeGrantModelImpl.getOriginalCompanyId(),
-					oAuth2ScopeGrantModelImpl.getOriginalOAuth2AccessTokenId(),
+					oAuth2ScopeGrantModelImpl.getOriginalOAuth2ApplicationScopeAliasesId(),
 					oAuth2ScopeGrantModelImpl.getOriginalApplicationName(),
 					oAuth2ScopeGrantModelImpl.getOriginalBundleSymbolicName(),
 					oAuth2ScopeGrantModelImpl.getOriginalScope()
@@ -1248,6 +1287,8 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	protected OAuth2ScopeGrant removeImpl(OAuth2ScopeGrant oAuth2ScopeGrant) {
 		oAuth2ScopeGrant = toUnwrappedModel(oAuth2ScopeGrant);
 
+		oAuth2ScopeGrantToOAuth2AuthorizationTableMapper.deleteLeftPrimaryKeyTableMappings(oAuth2ScopeGrant.getPrimaryKey());
+
 		Session session = null;
 
 		try {
@@ -1313,12 +1354,12 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 		else
 		 if (isNew) {
 			Object[] args = new Object[] {
-					oAuth2ScopeGrantModelImpl.getOAuth2AccessTokenId()
+					oAuth2ScopeGrantModelImpl.getOAuth2ApplicationScopeAliasesId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_OAUTH2ACCESSTOKENID,
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_OAUTH2APPLICATIONSCOPEALIASESID,
 				args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_OAUTH2ACCESSTOKENID,
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_OAUTH2APPLICATIONSCOPEALIASESID,
 				args);
 
 			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
@@ -1328,23 +1369,23 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 
 		else {
 			if ((oAuth2ScopeGrantModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_OAUTH2ACCESSTOKENID.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_OAUTH2APPLICATIONSCOPEALIASESID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						oAuth2ScopeGrantModelImpl.getOriginalOAuth2AccessTokenId()
+						oAuth2ScopeGrantModelImpl.getOriginalOAuth2ApplicationScopeAliasesId()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_OAUTH2ACCESSTOKENID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_OAUTH2APPLICATIONSCOPEALIASESID,
 					args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_OAUTH2ACCESSTOKENID,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_OAUTH2APPLICATIONSCOPEALIASESID,
 					args);
 
 				args = new Object[] {
-						oAuth2ScopeGrantModelImpl.getOAuth2AccessTokenId()
+						oAuth2ScopeGrantModelImpl.getOAuth2ApplicationScopeAliasesId()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_OAUTH2ACCESSTOKENID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_OAUTH2APPLICATIONSCOPEALIASESID,
 					args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_OAUTH2ACCESSTOKENID,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_OAUTH2APPLICATIONSCOPEALIASESID,
 					args);
 			}
 		}
@@ -1374,7 +1415,7 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 
 		oAuth2ScopeGrantImpl.setOAuth2ScopeGrantId(oAuth2ScopeGrant.getOAuth2ScopeGrantId());
 		oAuth2ScopeGrantImpl.setCompanyId(oAuth2ScopeGrant.getCompanyId());
-		oAuth2ScopeGrantImpl.setOAuth2AccessTokenId(oAuth2ScopeGrant.getOAuth2AccessTokenId());
+		oAuth2ScopeGrantImpl.setOAuth2ApplicationScopeAliasesId(oAuth2ScopeGrant.getOAuth2ApplicationScopeAliasesId());
 		oAuth2ScopeGrantImpl.setApplicationName(oAuth2ScopeGrant.getApplicationName());
 		oAuth2ScopeGrantImpl.setBundleSymbolicName(oAuth2ScopeGrant.getBundleSymbolicName());
 		oAuth2ScopeGrantImpl.setScope(oAuth2ScopeGrant.getScope());
@@ -1763,6 +1804,320 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 		return count.intValue();
 	}
 
+	/**
+	 * Returns the primaryKeys of o auth2 authorizations associated with the o auth2 scope grant.
+	 *
+	 * @param pk the primary key of the o auth2 scope grant
+	 * @return long[] of the primaryKeys of o auth2 authorizations associated with the o auth2 scope grant
+	 */
+	@Override
+	public long[] getOAuth2AuthorizationPrimaryKeys(long pk) {
+		long[] pks = oAuth2ScopeGrantToOAuth2AuthorizationTableMapper.getRightPrimaryKeys(pk);
+
+		return pks.clone();
+	}
+
+	/**
+	 * Returns all the o auth2 authorizations associated with the o auth2 scope grant.
+	 *
+	 * @param pk the primary key of the o auth2 scope grant
+	 * @return the o auth2 authorizations associated with the o auth2 scope grant
+	 */
+	@Override
+	public List<com.liferay.oauth2.provider.model.OAuth2Authorization> getOAuth2Authorizations(
+		long pk) {
+		return getOAuth2Authorizations(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	/**
+	 * Returns a range of all the o auth2 authorizations associated with the o auth2 scope grant.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OAuth2ScopeGrantModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param pk the primary key of the o auth2 scope grant
+	 * @param start the lower bound of the range of o auth2 scope grants
+	 * @param end the upper bound of the range of o auth2 scope grants (not inclusive)
+	 * @return the range of o auth2 authorizations associated with the o auth2 scope grant
+	 */
+	@Override
+	public List<com.liferay.oauth2.provider.model.OAuth2Authorization> getOAuth2Authorizations(
+		long pk, int start, int end) {
+		return getOAuth2Authorizations(pk, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the o auth2 authorizations associated with the o auth2 scope grant.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OAuth2ScopeGrantModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param pk the primary key of the o auth2 scope grant
+	 * @param start the lower bound of the range of o auth2 scope grants
+	 * @param end the upper bound of the range of o auth2 scope grants (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of o auth2 authorizations associated with the o auth2 scope grant
+	 */
+	@Override
+	public List<com.liferay.oauth2.provider.model.OAuth2Authorization> getOAuth2Authorizations(
+		long pk, int start, int end,
+		OrderByComparator<com.liferay.oauth2.provider.model.OAuth2Authorization> orderByComparator) {
+		return oAuth2ScopeGrantToOAuth2AuthorizationTableMapper.getRightBaseModels(pk,
+			start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the number of o auth2 authorizations associated with the o auth2 scope grant.
+	 *
+	 * @param pk the primary key of the o auth2 scope grant
+	 * @return the number of o auth2 authorizations associated with the o auth2 scope grant
+	 */
+	@Override
+	public int getOAuth2AuthorizationsSize(long pk) {
+		long[] pks = oAuth2ScopeGrantToOAuth2AuthorizationTableMapper.getRightPrimaryKeys(pk);
+
+		return pks.length;
+	}
+
+	/**
+	 * Returns <code>true</code> if the o auth2 authorization is associated with the o auth2 scope grant.
+	 *
+	 * @param pk the primary key of the o auth2 scope grant
+	 * @param oAuth2AuthorizationPK the primary key of the o auth2 authorization
+	 * @return <code>true</code> if the o auth2 authorization is associated with the o auth2 scope grant; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean containsOAuth2Authorization(long pk,
+		long oAuth2AuthorizationPK) {
+		return oAuth2ScopeGrantToOAuth2AuthorizationTableMapper.containsTableMapping(pk,
+			oAuth2AuthorizationPK);
+	}
+
+	/**
+	 * Returns <code>true</code> if the o auth2 scope grant has any o auth2 authorizations associated with it.
+	 *
+	 * @param pk the primary key of the o auth2 scope grant to check for associations with o auth2 authorizations
+	 * @return <code>true</code> if the o auth2 scope grant has any o auth2 authorizations associated with it; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean containsOAuth2Authorizations(long pk) {
+		if (getOAuth2AuthorizationsSize(pk) > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Adds an association between the o auth2 scope grant and the o auth2 authorization. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the o auth2 scope grant
+	 * @param oAuth2AuthorizationPK the primary key of the o auth2 authorization
+	 */
+	@Override
+	public void addOAuth2Authorization(long pk, long oAuth2AuthorizationPK) {
+		OAuth2ScopeGrant oAuth2ScopeGrant = fetchByPrimaryKey(pk);
+
+		if (oAuth2ScopeGrant == null) {
+			oAuth2ScopeGrantToOAuth2AuthorizationTableMapper.addTableMapping(companyProvider.getCompanyId(),
+				pk, oAuth2AuthorizationPK);
+		}
+		else {
+			oAuth2ScopeGrantToOAuth2AuthorizationTableMapper.addTableMapping(oAuth2ScopeGrant.getCompanyId(),
+				pk, oAuth2AuthorizationPK);
+		}
+	}
+
+	/**
+	 * Adds an association between the o auth2 scope grant and the o auth2 authorization. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the o auth2 scope grant
+	 * @param oAuth2Authorization the o auth2 authorization
+	 */
+	@Override
+	public void addOAuth2Authorization(long pk,
+		com.liferay.oauth2.provider.model.OAuth2Authorization oAuth2Authorization) {
+		OAuth2ScopeGrant oAuth2ScopeGrant = fetchByPrimaryKey(pk);
+
+		if (oAuth2ScopeGrant == null) {
+			oAuth2ScopeGrantToOAuth2AuthorizationTableMapper.addTableMapping(companyProvider.getCompanyId(),
+				pk, oAuth2Authorization.getPrimaryKey());
+		}
+		else {
+			oAuth2ScopeGrantToOAuth2AuthorizationTableMapper.addTableMapping(oAuth2ScopeGrant.getCompanyId(),
+				pk, oAuth2Authorization.getPrimaryKey());
+		}
+	}
+
+	/**
+	 * Adds an association between the o auth2 scope grant and the o auth2 authorizations. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the o auth2 scope grant
+	 * @param oAuth2AuthorizationPKs the primary keys of the o auth2 authorizations
+	 */
+	@Override
+	public void addOAuth2Authorizations(long pk, long[] oAuth2AuthorizationPKs) {
+		long companyId = 0;
+
+		OAuth2ScopeGrant oAuth2ScopeGrant = fetchByPrimaryKey(pk);
+
+		if (oAuth2ScopeGrant == null) {
+			companyId = companyProvider.getCompanyId();
+		}
+		else {
+			companyId = oAuth2ScopeGrant.getCompanyId();
+		}
+
+		oAuth2ScopeGrantToOAuth2AuthorizationTableMapper.addTableMappings(companyId,
+			pk, oAuth2AuthorizationPKs);
+	}
+
+	/**
+	 * Adds an association between the o auth2 scope grant and the o auth2 authorizations. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the o auth2 scope grant
+	 * @param oAuth2Authorizations the o auth2 authorizations
+	 */
+	@Override
+	public void addOAuth2Authorizations(long pk,
+		List<com.liferay.oauth2.provider.model.OAuth2Authorization> oAuth2Authorizations) {
+		addOAuth2Authorizations(pk,
+			ListUtil.toLongArray(oAuth2Authorizations,
+				com.liferay.oauth2.provider.model.OAuth2Authorization.O_AUTH2_AUTHORIZATION_ID_ACCESSOR));
+	}
+
+	/**
+	 * Clears all associations between the o auth2 scope grant and its o auth2 authorizations. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the o auth2 scope grant to clear the associated o auth2 authorizations from
+	 */
+	@Override
+	public void clearOAuth2Authorizations(long pk) {
+		oAuth2ScopeGrantToOAuth2AuthorizationTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+	}
+
+	/**
+	 * Removes the association between the o auth2 scope grant and the o auth2 authorization. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the o auth2 scope grant
+	 * @param oAuth2AuthorizationPK the primary key of the o auth2 authorization
+	 */
+	@Override
+	public void removeOAuth2Authorization(long pk, long oAuth2AuthorizationPK) {
+		oAuth2ScopeGrantToOAuth2AuthorizationTableMapper.deleteTableMapping(pk,
+			oAuth2AuthorizationPK);
+	}
+
+	/**
+	 * Removes the association between the o auth2 scope grant and the o auth2 authorization. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the o auth2 scope grant
+	 * @param oAuth2Authorization the o auth2 authorization
+	 */
+	@Override
+	public void removeOAuth2Authorization(long pk,
+		com.liferay.oauth2.provider.model.OAuth2Authorization oAuth2Authorization) {
+		oAuth2ScopeGrantToOAuth2AuthorizationTableMapper.deleteTableMapping(pk,
+			oAuth2Authorization.getPrimaryKey());
+	}
+
+	/**
+	 * Removes the association between the o auth2 scope grant and the o auth2 authorizations. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the o auth2 scope grant
+	 * @param oAuth2AuthorizationPKs the primary keys of the o auth2 authorizations
+	 */
+	@Override
+	public void removeOAuth2Authorizations(long pk,
+		long[] oAuth2AuthorizationPKs) {
+		oAuth2ScopeGrantToOAuth2AuthorizationTableMapper.deleteTableMappings(pk,
+			oAuth2AuthorizationPKs);
+	}
+
+	/**
+	 * Removes the association between the o auth2 scope grant and the o auth2 authorizations. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the o auth2 scope grant
+	 * @param oAuth2Authorizations the o auth2 authorizations
+	 */
+	@Override
+	public void removeOAuth2Authorizations(long pk,
+		List<com.liferay.oauth2.provider.model.OAuth2Authorization> oAuth2Authorizations) {
+		removeOAuth2Authorizations(pk,
+			ListUtil.toLongArray(oAuth2Authorizations,
+				com.liferay.oauth2.provider.model.OAuth2Authorization.O_AUTH2_AUTHORIZATION_ID_ACCESSOR));
+	}
+
+	/**
+	 * Sets the o auth2 authorizations associated with the o auth2 scope grant, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the o auth2 scope grant
+	 * @param oAuth2AuthorizationPKs the primary keys of the o auth2 authorizations to be associated with the o auth2 scope grant
+	 */
+	@Override
+	public void setOAuth2Authorizations(long pk, long[] oAuth2AuthorizationPKs) {
+		Set<Long> newOAuth2AuthorizationPKsSet = SetUtil.fromArray(oAuth2AuthorizationPKs);
+		Set<Long> oldOAuth2AuthorizationPKsSet = SetUtil.fromArray(oAuth2ScopeGrantToOAuth2AuthorizationTableMapper.getRightPrimaryKeys(
+					pk));
+
+		Set<Long> removeOAuth2AuthorizationPKsSet = new HashSet<Long>(oldOAuth2AuthorizationPKsSet);
+
+		removeOAuth2AuthorizationPKsSet.removeAll(newOAuth2AuthorizationPKsSet);
+
+		oAuth2ScopeGrantToOAuth2AuthorizationTableMapper.deleteTableMappings(pk,
+			ArrayUtil.toLongArray(removeOAuth2AuthorizationPKsSet));
+
+		newOAuth2AuthorizationPKsSet.removeAll(oldOAuth2AuthorizationPKsSet);
+
+		long companyId = 0;
+
+		OAuth2ScopeGrant oAuth2ScopeGrant = fetchByPrimaryKey(pk);
+
+		if (oAuth2ScopeGrant == null) {
+			companyId = companyProvider.getCompanyId();
+		}
+		else {
+			companyId = oAuth2ScopeGrant.getCompanyId();
+		}
+
+		oAuth2ScopeGrantToOAuth2AuthorizationTableMapper.addTableMappings(companyId,
+			pk, ArrayUtil.toLongArray(newOAuth2AuthorizationPKsSet));
+	}
+
+	/**
+	 * Sets the o auth2 authorizations associated with the o auth2 scope grant, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the o auth2 scope grant
+	 * @param oAuth2Authorizations the o auth2 authorizations to be associated with the o auth2 scope grant
+	 */
+	@Override
+	public void setOAuth2Authorizations(long pk,
+		List<com.liferay.oauth2.provider.model.OAuth2Authorization> oAuth2Authorizations) {
+		try {
+			long[] oAuth2AuthorizationPKs = new long[oAuth2Authorizations.size()];
+
+			for (int i = 0; i < oAuth2Authorizations.size(); i++) {
+				com.liferay.oauth2.provider.model.OAuth2Authorization oAuth2Authorization =
+					oAuth2Authorizations.get(i);
+
+				oAuth2AuthorizationPKs[i] = oAuth2Authorization.getPrimaryKey();
+			}
+
+			setOAuth2Authorizations(pk, oAuth2AuthorizationPKs);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+	}
+
+	@Override
+	public Set<String> getBadColumnNames() {
+		return _badColumnNames;
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return OAuth2ScopeGrantModelImpl.TABLE_COLUMNS_MAP;
@@ -1772,6 +2127,9 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	 * Initializes the o auth2 scope grant persistence.
 	 */
 	public void afterPropertiesSet() {
+		oAuth2ScopeGrantToOAuth2AuthorizationTableMapper = TableMapperFactory.getTableMapper("OAuth2Auth_ScopeGrants",
+				"companyId", "oAuth2ScopeGrantId", "oAuth2AuthorizationId",
+				this, oAuth2AuthorizationPersistence);
 	}
 
 	public void destroy() {
@@ -1779,6 +2137,8 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		TableMapperFactory.removeTableMapper("OAuth2Auth_ScopeGrants");
 	}
 
 	@ServiceReference(type = CompanyProviderWrapper.class)
@@ -1787,6 +2147,9 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+	@BeanReference(type = OAuth2AuthorizationPersistence.class)
+	protected OAuth2AuthorizationPersistence oAuth2AuthorizationPersistence;
+	protected TableMapper<OAuth2ScopeGrant, com.liferay.oauth2.provider.model.OAuth2Authorization> oAuth2ScopeGrantToOAuth2AuthorizationTableMapper;
 	private static final String _SQL_SELECT_OAUTH2SCOPEGRANT = "SELECT oAuth2ScopeGrant FROM OAuth2ScopeGrant oAuth2ScopeGrant";
 	private static final String _SQL_SELECT_OAUTH2SCOPEGRANT_WHERE_PKS_IN = "SELECT oAuth2ScopeGrant FROM OAuth2ScopeGrant oAuth2ScopeGrant WHERE oAuth2ScopeGrantId IN (";
 	private static final String _SQL_SELECT_OAUTH2SCOPEGRANT_WHERE = "SELECT oAuth2ScopeGrant FROM OAuth2ScopeGrant oAuth2ScopeGrant WHERE ";
@@ -1796,4 +2159,7 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No OAuth2ScopeGrant exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No OAuth2ScopeGrant exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(OAuth2ScopeGrantPersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+				"oAuth2ApplicationScopeAliasesId"
+			});
 }

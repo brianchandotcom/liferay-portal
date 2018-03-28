@@ -1,24 +1,6 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.liferay.oauth2.provider.model.OAuth2AccessToken">
-		<field name="oAuth2AccessTokenId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="oAuth2ApplicationId" type="long" />
-		<field name="oAuth2RefreshTokenId" type="long" />
-		<field name="expirationDate" type="Date" />
-		<field name="remoteIPInfo" type="String" />
-		<field name="scopeAliases" type="String">
-			<hint-collection name="CLOB" />
-		</field>
-		<field name="tokenContent" type="String">
-			<hint-collection name="CLOB" />
-		</field>
-		<field name="tokenType" type="String" />
-	</model>
 	<model name="com.liferay.oauth2.provider.model.OAuth2Application">
 		<field name="oAuth2ApplicationId" type="long" />
 		<field name="companyId" type="long" />
@@ -26,6 +8,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="oAuth2ApplicationScopeAliasesId" type="long" />
 		<field name="allowedGrantTypes" type="String" />
 		<field name="clientId" type="String" />
 		<field name="clientProfile" type="int" />
@@ -47,30 +30,36 @@
 		<field name="redirectURIs" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
-		<field name="scopeAliases" type="String">
-			<hint-collection name="CLOB" />
-		</field>
 	</model>
-	<model name="com.liferay.oauth2.provider.model.OAuth2RefreshToken">
-		<field name="oAuth2RefreshTokenId" type="long" />
+	<model name="com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases">
+		<field name="oAuth2ApplicationScopeAliasesId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="oAuth2ApplicationId" type="long" />
-		<field name="expirationDate" type="Date" />
+		<field name="scopeAliases" type="String" />
+	</model>
+	<model name="com.liferay.oauth2.provider.model.OAuth2Authorization">
+		<field name="oAuth2AuthorizationId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="oAuth2ApplicationId" type="long" />
+		<field name="oAuth2ApplicationScopeAliasesId" type="long" />
+		<field name="accessTokenContent" type="String" />
+		<field name="accessTokenCreateDate" type="Date" />
+		<field name="accessTokenExpirationDate" type="Date" />
 		<field name="remoteIPInfo" type="String" />
-		<field name="scopeAliases" type="String">
-			<hint-collection name="CLOB" />
-		</field>
-		<field name="tokenContent" type="String">
-			<hint-collection name="CLOB" />
-		</field>
+		<field name="refreshTokenContent" type="String" />
+		<field name="refreshTokenCreateDate" type="Date" />
+		<field name="refreshTokenExpirationDate" type="Date" />
 	</model>
 	<model name="com.liferay.oauth2.provider.model.OAuth2ScopeGrant">
 		<field name="oAuth2ScopeGrantId" type="long" />
 		<field name="companyId" type="long" />
-		<field name="oAuth2AccessTokenId" type="long" />
+		<field name="oAuth2ApplicationScopeAliasesId" type="long" />
 		<field name="applicationName" type="String">
 			<hint name="max-length">255</hint>
 		</field>

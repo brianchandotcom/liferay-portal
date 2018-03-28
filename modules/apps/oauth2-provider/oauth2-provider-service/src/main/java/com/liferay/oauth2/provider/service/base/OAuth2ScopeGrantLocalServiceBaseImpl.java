@@ -18,7 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
 import com.liferay.oauth2.provider.service.OAuth2ScopeGrantLocalService;
-import com.liferay.oauth2.provider.service.persistence.OAuth2AccessTokenPersistence;
+import com.liferay.oauth2.provider.service.persistence.OAuth2ApplicationScopeAliasesPersistence;
+import com.liferay.oauth2.provider.service.persistence.OAuth2AuthorizationPersistence;
 import com.liferay.oauth2.provider.service.persistence.OAuth2ScopeGrantPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -317,6 +318,158 @@ public abstract class OAuth2ScopeGrantLocalServiceBaseImpl
 	}
 
 	/**
+	 */
+	@Override
+	public void addOAuth2AuthorizationOAuth2ScopeGrant(
+		long oAuth2AuthorizationId, long oAuth2ScopeGrantId) {
+		oAuth2AuthorizationPersistence.addOAuth2ScopeGrant(oAuth2AuthorizationId,
+			oAuth2ScopeGrantId);
+	}
+
+	/**
+	 */
+	@Override
+	public void addOAuth2AuthorizationOAuth2ScopeGrant(
+		long oAuth2AuthorizationId, OAuth2ScopeGrant oAuth2ScopeGrant) {
+		oAuth2AuthorizationPersistence.addOAuth2ScopeGrant(oAuth2AuthorizationId,
+			oAuth2ScopeGrant);
+	}
+
+	/**
+	 */
+	@Override
+	public void addOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId, long[] oAuth2ScopeGrantIds) {
+		oAuth2AuthorizationPersistence.addOAuth2ScopeGrants(oAuth2AuthorizationId,
+			oAuth2ScopeGrantIds);
+	}
+
+	/**
+	 */
+	@Override
+	public void addOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId, List<OAuth2ScopeGrant> oAuth2ScopeGrants) {
+		oAuth2AuthorizationPersistence.addOAuth2ScopeGrants(oAuth2AuthorizationId,
+			oAuth2ScopeGrants);
+	}
+
+	/**
+	 */
+	@Override
+	public void clearOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId) {
+		oAuth2AuthorizationPersistence.clearOAuth2ScopeGrants(oAuth2AuthorizationId);
+	}
+
+	/**
+	 */
+	@Override
+	public void deleteOAuth2AuthorizationOAuth2ScopeGrant(
+		long oAuth2AuthorizationId, long oAuth2ScopeGrantId) {
+		oAuth2AuthorizationPersistence.removeOAuth2ScopeGrant(oAuth2AuthorizationId,
+			oAuth2ScopeGrantId);
+	}
+
+	/**
+	 */
+	@Override
+	public void deleteOAuth2AuthorizationOAuth2ScopeGrant(
+		long oAuth2AuthorizationId, OAuth2ScopeGrant oAuth2ScopeGrant) {
+		oAuth2AuthorizationPersistence.removeOAuth2ScopeGrant(oAuth2AuthorizationId,
+			oAuth2ScopeGrant);
+	}
+
+	/**
+	 */
+	@Override
+	public void deleteOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId, long[] oAuth2ScopeGrantIds) {
+		oAuth2AuthorizationPersistence.removeOAuth2ScopeGrants(oAuth2AuthorizationId,
+			oAuth2ScopeGrantIds);
+	}
+
+	/**
+	 */
+	@Override
+	public void deleteOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId, List<OAuth2ScopeGrant> oAuth2ScopeGrants) {
+		oAuth2AuthorizationPersistence.removeOAuth2ScopeGrants(oAuth2AuthorizationId,
+			oAuth2ScopeGrants);
+	}
+
+	/**
+	 * Returns the oAuth2AuthorizationIds of the o auth2 authorizations associated with the o auth2 scope grant.
+	 *
+	 * @param oAuth2ScopeGrantId the oAuth2ScopeGrantId of the o auth2 scope grant
+	 * @return long[] the oAuth2AuthorizationIds of o auth2 authorizations associated with the o auth2 scope grant
+	 */
+	@Override
+	public long[] getOAuth2AuthorizationPrimaryKeys(long oAuth2ScopeGrantId) {
+		return oAuth2ScopeGrantPersistence.getOAuth2AuthorizationPrimaryKeys(oAuth2ScopeGrantId);
+	}
+
+	/**
+	 */
+	@Override
+	public List<OAuth2ScopeGrant> getOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId) {
+		return oAuth2AuthorizationPersistence.getOAuth2ScopeGrants(oAuth2AuthorizationId);
+	}
+
+	/**
+	 */
+	@Override
+	public List<OAuth2ScopeGrant> getOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId, int start, int end) {
+		return oAuth2AuthorizationPersistence.getOAuth2ScopeGrants(oAuth2AuthorizationId,
+			start, end);
+	}
+
+	/**
+	 */
+	@Override
+	public List<OAuth2ScopeGrant> getOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId, int start, int end,
+		OrderByComparator<OAuth2ScopeGrant> orderByComparator) {
+		return oAuth2AuthorizationPersistence.getOAuth2ScopeGrants(oAuth2AuthorizationId,
+			start, end, orderByComparator);
+	}
+
+	/**
+	 */
+	@Override
+	public int getOAuth2AuthorizationOAuth2ScopeGrantsCount(
+		long oAuth2AuthorizationId) {
+		return oAuth2AuthorizationPersistence.getOAuth2ScopeGrantsSize(oAuth2AuthorizationId);
+	}
+
+	/**
+	 */
+	@Override
+	public boolean hasOAuth2AuthorizationOAuth2ScopeGrant(
+		long oAuth2AuthorizationId, long oAuth2ScopeGrantId) {
+		return oAuth2AuthorizationPersistence.containsOAuth2ScopeGrant(oAuth2AuthorizationId,
+			oAuth2ScopeGrantId);
+	}
+
+	/**
+	 */
+	@Override
+	public boolean hasOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId) {
+		return oAuth2AuthorizationPersistence.containsOAuth2ScopeGrants(oAuth2AuthorizationId);
+	}
+
+	/**
+	 */
+	@Override
+	public void setOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId, long[] oAuth2ScopeGrantIds) {
+		oAuth2AuthorizationPersistence.setOAuth2ScopeGrants(oAuth2AuthorizationId,
+			oAuth2ScopeGrantIds);
+	}
+
+	/**
 	 * Returns the o auth2 scope grant local service.
 	 *
 	 * @return the o auth2 scope grant local service
@@ -374,41 +527,79 @@ public abstract class OAuth2ScopeGrantLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the o auth2 access token local service.
+	 * Returns the o auth2 application scope aliases local service.
 	 *
-	 * @return the o auth2 access token local service
+	 * @return the o auth2 application scope aliases local service
 	 */
-	public com.liferay.oauth2.provider.service.OAuth2AccessTokenLocalService getOAuth2AccessTokenLocalService() {
-		return oAuth2AccessTokenLocalService;
+	public com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalService getOAuth2ApplicationScopeAliasesLocalService() {
+		return oAuth2ApplicationScopeAliasesLocalService;
 	}
 
 	/**
-	 * Sets the o auth2 access token local service.
+	 * Sets the o auth2 application scope aliases local service.
 	 *
-	 * @param oAuth2AccessTokenLocalService the o auth2 access token local service
+	 * @param oAuth2ApplicationScopeAliasesLocalService the o auth2 application scope aliases local service
 	 */
-	public void setOAuth2AccessTokenLocalService(
-		com.liferay.oauth2.provider.service.OAuth2AccessTokenLocalService oAuth2AccessTokenLocalService) {
-		this.oAuth2AccessTokenLocalService = oAuth2AccessTokenLocalService;
+	public void setOAuth2ApplicationScopeAliasesLocalService(
+		com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalService oAuth2ApplicationScopeAliasesLocalService) {
+		this.oAuth2ApplicationScopeAliasesLocalService = oAuth2ApplicationScopeAliasesLocalService;
 	}
 
 	/**
-	 * Returns the o auth2 access token persistence.
+	 * Returns the o auth2 application scope aliases persistence.
 	 *
-	 * @return the o auth2 access token persistence
+	 * @return the o auth2 application scope aliases persistence
 	 */
-	public OAuth2AccessTokenPersistence getOAuth2AccessTokenPersistence() {
-		return oAuth2AccessTokenPersistence;
+	public OAuth2ApplicationScopeAliasesPersistence getOAuth2ApplicationScopeAliasesPersistence() {
+		return oAuth2ApplicationScopeAliasesPersistence;
 	}
 
 	/**
-	 * Sets the o auth2 access token persistence.
+	 * Sets the o auth2 application scope aliases persistence.
 	 *
-	 * @param oAuth2AccessTokenPersistence the o auth2 access token persistence
+	 * @param oAuth2ApplicationScopeAliasesPersistence the o auth2 application scope aliases persistence
 	 */
-	public void setOAuth2AccessTokenPersistence(
-		OAuth2AccessTokenPersistence oAuth2AccessTokenPersistence) {
-		this.oAuth2AccessTokenPersistence = oAuth2AccessTokenPersistence;
+	public void setOAuth2ApplicationScopeAliasesPersistence(
+		OAuth2ApplicationScopeAliasesPersistence oAuth2ApplicationScopeAliasesPersistence) {
+		this.oAuth2ApplicationScopeAliasesPersistence = oAuth2ApplicationScopeAliasesPersistence;
+	}
+
+	/**
+	 * Returns the o auth2 authorization local service.
+	 *
+	 * @return the o auth2 authorization local service
+	 */
+	public com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService getOAuth2AuthorizationLocalService() {
+		return oAuth2AuthorizationLocalService;
+	}
+
+	/**
+	 * Sets the o auth2 authorization local service.
+	 *
+	 * @param oAuth2AuthorizationLocalService the o auth2 authorization local service
+	 */
+	public void setOAuth2AuthorizationLocalService(
+		com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService oAuth2AuthorizationLocalService) {
+		this.oAuth2AuthorizationLocalService = oAuth2AuthorizationLocalService;
+	}
+
+	/**
+	 * Returns the o auth2 authorization persistence.
+	 *
+	 * @return the o auth2 authorization persistence
+	 */
+	public OAuth2AuthorizationPersistence getOAuth2AuthorizationPersistence() {
+		return oAuth2AuthorizationPersistence;
+	}
+
+	/**
+	 * Sets the o auth2 authorization persistence.
+	 *
+	 * @param oAuth2AuthorizationPersistence the o auth2 authorization persistence
+	 */
+	public void setOAuth2AuthorizationPersistence(
+		OAuth2AuthorizationPersistence oAuth2AuthorizationPersistence) {
+		this.oAuth2AuthorizationPersistence = oAuth2AuthorizationPersistence;
 	}
 
 	public void afterPropertiesSet() {
@@ -469,10 +660,14 @@ public abstract class OAuth2ScopeGrantLocalServiceBaseImpl
 	protected OAuth2ScopeGrantPersistence oAuth2ScopeGrantPersistence;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.oauth2.provider.service.OAuth2AccessTokenLocalService.class)
-	protected com.liferay.oauth2.provider.service.OAuth2AccessTokenLocalService oAuth2AccessTokenLocalService;
-	@BeanReference(type = OAuth2AccessTokenPersistence.class)
-	protected OAuth2AccessTokenPersistence oAuth2AccessTokenPersistence;
+	@BeanReference(type = com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalService.class)
+	protected com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalService oAuth2ApplicationScopeAliasesLocalService;
+	@BeanReference(type = OAuth2ApplicationScopeAliasesPersistence.class)
+	protected OAuth2ApplicationScopeAliasesPersistence oAuth2ApplicationScopeAliasesPersistence;
+	@BeanReference(type = com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService.class)
+	protected com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService oAuth2AuthorizationLocalService;
+	@BeanReference(type = OAuth2AuthorizationPersistence.class)
+	protected OAuth2AuthorizationPersistence oAuth2AuthorizationPersistence;
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

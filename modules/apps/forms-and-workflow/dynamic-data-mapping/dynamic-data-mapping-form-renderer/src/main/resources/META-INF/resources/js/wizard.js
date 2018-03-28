@@ -4,12 +4,12 @@ AUI.add(
 		var Lang = A.Lang;
 
 		var TPL_WIZARD_ITEM = '<li class="{state} multi-step-item multi-step-item-expand">' +
-		'<div class="multi-step-divider"></div>' +
-		'<div class="multi-step-indicator">' +
-		'<div class="multi-step-indicator-label">{title}</div>' +
-		'<a class="multi-step-icon" data-multi-step-icon="{number}" href="#1"></a>' +
-		'</div>' +
-		'</li>';
+				'<div class="multi-step-divider"></div>' +
+				'<div class="multi-step-indicator">' +
+					'<div class="multi-step-indicator-label">{title}</div>' +
+					'<a class="multi-step-icon" data-multi-step-icon="{number}" href="#1"></a>' +
+				'</div>' +
+			'</li>';
 
 		var Wizard = A.Component.create(
 			{

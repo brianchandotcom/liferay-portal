@@ -20,7 +20,7 @@ Here are some of the types of changes documented in this file:
   replaces an old API, in spite of the old API being kept in Liferay Portal for
   backwards compatibility.
 
-*This document has been reviewed through commit `6771e082b1f0`.*
+*This document has been reviewed through commit `fc099e3999f4`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -592,31 +592,28 @@ configuration changes.
 
 ---------------------------------------
 
-### Updated JQuery and Lodash Bundled Versions 
+### Updated jQuery and Lodash Bundled Versions
 - **Date:** 2018-Feb-07
-- **JIRA Ticket:** LPS-66645
-- **JIRA Ticket:** LPS-66646
+- **JIRA Ticket:** LPS-66645, LPS-66646
 
 #### What changed?
 
-The bundled JQuery version was updated from 2.1.4 to 3.3.1. The bundled Lodash 
-version was updated from 3.10.1 to 4.17.4.
+The bundled jQuery version has been updated from 2.1.4 to 3.3.1. The bundled
+Lodash version has been updated from 3.10.1 to 4.17.4.
 
 #### Who is affected?
 
-This affects anyone using the previous version APIs in their code.
+This affects anyone using the previous API versions in their code.
 
 #### How should I update my code?
 
-Follow the changelogs on the 
-[JQuery](http://jquery.com/upgrade-guide/3.0/) 
-and 
-[Lodash](https://github.com/lodash/lodash/wiki/Changelog#v400) 
-sites to update any affected code.
+Follow the changelogs on the [jQuery](http://jquery.com/upgrade-guide/3.0/) and
+[Lodash](https://github.com/lodash/lodash/wiki/Changelog#v400) sites to update
+any affected code.
 
 #### Why was this change made?
 
-This change was made to make the latest JQuery and Lodash versions available.
+This change provides the latest jQuery and Lodash versions available.
 
 ---------------------------------------
 

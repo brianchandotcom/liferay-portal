@@ -216,6 +216,8 @@
 			<property name="allowedClassNames" value="com.liferay.map.util.MapProviderHelper" />
 			<property name="allowedClassNames" value="com.liferay.map.util.MapProviderTracker" />
 			<property name="allowedClassNames" value="com.liferay.mentions.configuration.definition.MentionsGroupServiceConfigurationBeanDeclaration" />
+			<property name="allowedClassNames" value="com.liferay.message.boards.demo.data.creator.internal.BaseMBCategoryDemoDataCreatorImpl" />
+			<property name="allowedClassNames" value="com.liferay.message.boards.demo.data.creator.internal.BaseMBMessageDemoDataCreator" />
 			<property name="allowedClassNames" value="com.liferay.message.boards.service.permission.MBDiscussionPermission" />
 			<property name="allowedClassNames" value="com.liferay.organizations.api.configuration.definition.OrganizationLinkConfigurationBeanDeclaration" />
 			<property name="allowedClassNames" value="com.liferay.osgi.util.test.TestInstance" />

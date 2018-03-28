@@ -53,7 +53,7 @@ public class JavaCleanUpMethodVariablesCheck extends BaseJavaTermCheck {
 		String cleanUpMethodContent = _getCleanUpMethodContent(javaClass);
 
 		if (cleanUpMethodContent != null) {
-			_checkVariableValues(fileName, cleanUpMethodContent, javaClass);
+			_checkVariables(fileName, cleanUpMethodContent, javaClass);
 		}
 
 		return javaTerm.getContent();
@@ -64,7 +64,30 @@ public class JavaCleanUpMethodVariablesCheck extends BaseJavaTermCheck {
 		return new String[] {JAVA_CLASS};
 	}
 
-	private void _checkVariableValues(
+	private void _checkMissingVariable(
+		String fileName, String variableName, JavaClass javaClass) {
+
+		String setterMethodName = "set" + variableName.substring(1);
+
+		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
+			if (!(javaTerm instanceof JavaMethod)) {
+				continue;
+			}
+
+			if (StringUtil.equalsIgnoreCase(
+					javaTerm.getName(), setterMethodName)) {
+
+				addMessage(
+					fileName,
+					"Variable '" + variableName +
+						"' is missing in method 'cleanUp'");
+
+				return;
+			}
+		}
+	}
+
+	private void _checkVariables(
 		String fileName, String cleanUpMethodContent, JavaClass javaClass) {
 
 		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
@@ -81,6 +104,8 @@ public class JavaCleanUpMethodVariablesCheck extends BaseJavaTermCheck {
 			String variableName = javaTerm.getName();
 
 			if (!cleanUpMethodContent.contains(variableName + " =")) {
+				_checkMissingVariable(fileName, variableName, javaClass);
+
 				continue;
 			}
 

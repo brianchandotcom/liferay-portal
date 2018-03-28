@@ -48,8 +48,7 @@ public class DDMFormInstanceRecordVersionModelListener
 
 		try {
 			sendAnalytics(
-				"formSubmitted",
-				String.valueOf(ddmFormInstanceRecordVersion.getUserId()),
+				ddmFormInstanceRecordVersion.getCompanyId(), "formSubmitted",
 				createEventProperties(ddmFormInstanceRecordVersion));
 
 			checkEmptyFields(ddmFormInstanceRecordVersion);
@@ -142,8 +141,7 @@ public class DDMFormInstanceRecordVersionModelListener
 		eventProperties.put("fieldName", fieldName);
 
 		sendAnalytics(
-			"fieldBlanked",
-			String.valueOf(ddmFormInstanceRecordVersion.getUserId()),
+			ddmFormInstanceRecordVersion.getCompanyId(), "fieldBlanked",
 			eventProperties);
 	}
 

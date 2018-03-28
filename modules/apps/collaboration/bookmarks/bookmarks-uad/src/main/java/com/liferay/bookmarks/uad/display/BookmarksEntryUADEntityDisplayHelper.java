@@ -45,7 +45,7 @@ public class BookmarksEntryUADEntityDisplayHelper {
 		return new String[] {"name", "description", "url"};
 	}
 
-	public Map<String, Object> getUADEntityNonanonymizableFieldValues(
+	public Map<String, Object> getNonanonymizableFieldValues(
 		BookmarksEntry bookmarksEntry) {
 
 		Map<String, Object> uadEntityNonanonymizableFieldValues =

@@ -36,7 +36,7 @@
 			</and>
 			<then>
 				<execute macro="Panel#expandPanel">
-					<var name="panelHeading" value="Enabling Xuggler provides video conversion functionality." />
+					<var name="panel" value="Enabling Xuggler provides video conversion functionality." />
 				</execute>
 
 				<execute function="Select" locator1="ServerAdministrationExternalServices#XUGGLER_JAR_FILE_SELECT" value1="${xugglerJarFile}" />
@@ -44,7 +44,7 @@
 				<execute function="AssertClick" locator1="ServerAdministrationExternalServices#XUGGLER_INSTALL_BUTTON" value1="Install" />
 
 				<execute macro="Panel#expandPanel">
-					<var name="panelHeading" value="Enabling Xuggler provides video conversion functionality." />
+					<var name="panel" value="Enabling Xuggler provides video conversion functionality." />
 				</execute>
 
 				<execute function="AssertTextNotEquals" locator1="Message#INFO" value1="Xuggler requires the installation of native libraries that are distributed under the GPL license. If you are able to find your environment specified below, the server can automatically download and install the libraries for you. You will subsequently be required to restart the server. If your environment is not listed below, you will need to compile and install the libraries manually. Read more." />
@@ -118,7 +118,7 @@
 		<execute function="AssertClick" locator1="NavBar#RESOURCES" value1="Resources" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Clean Up Actions" />
+			<var name="panel" value="Clean Up Actions" />
 		</execute>
 
 		<var name="key_actionsDescription" value="${actionsDescription}" />

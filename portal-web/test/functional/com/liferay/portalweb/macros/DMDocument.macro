@@ -4,7 +4,7 @@
 
 	<command name="addCategories">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Categorization" />
+			<var name="panel" value="Categorization" />
 		</execute>
 
 		<execute macro="AssetCategorization#addMultipleCategories">
@@ -138,7 +138,7 @@
 			<isset var="tagNameList" />
 			<then>
 				<execute macro="Panel#expandPanel">
-					<var name="panelHeading" value="Categorization" />
+					<var name="panel" value="Categorization" />
 				</execute>
 
 				<for list="${tagNameList}" param="tagName">
@@ -471,7 +471,7 @@
 				<var name="key_categoryName" value="${categoryName}" />
 
 				<execute macro="Panel#expandPanel">
-					<var name="panelHeading" value="Categorization" />
+					<var name="panel" value="Categorization" />
 				</execute>
 
 				<execute macro="AssetCategorization#addCategory">
@@ -495,7 +495,7 @@
 			<isset var="tagNameList" />
 			<then>
 				<execute macro="Panel#expandPanel">
-					<var name="panelHeading" value="Categorization" />
+					<var name="panel" value="Categorization" />
 				</execute>
 
 				<for list="${tagNameList}" param="tagName">
@@ -653,7 +653,7 @@
 
 	<command name="addRelatedAssetPG">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Related Assets" />
+			<var name="panel" value="Related Assets" />
 		</execute>
 
 		<var name="key_assetType" value="${assetType}" />
@@ -1151,7 +1151,7 @@
 			</not>
 			<then>
 				<execute macro="Panel#expandPanel">
-					<var name="panelHeading" value="Categorization" />
+					<var name="panel" value="Categorization" />
 				</execute>
 
 				<execute function="Type" locator1="AssetCategorization#TAGS_FIELD" value1="${dmDocumentTagName}" />
@@ -1946,7 +1946,7 @@
 
 	<command name="viewCategories">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Categorization" />
+			<var name="panel" value="Categorization" />
 		</execute>
 
 		<for list="${categoryNameList}" param="categoryName">
@@ -2140,7 +2140,7 @@
 		<execute function="Click" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_DROPDOWN" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Automatically Extracted Metadata" />
+			<var name="panel" value="Automatically Extracted Metadata" />
 		</execute>
 	</command>
 

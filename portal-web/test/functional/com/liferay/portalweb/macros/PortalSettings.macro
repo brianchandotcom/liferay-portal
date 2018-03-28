@@ -15,7 +15,7 @@
 
 	<command name="configureAudienceTargetingAnalytics">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Audience Targeting Analytics" />
+			<var name="panel" value="Audience Targeting Analytics" />
 		</execute>
 
 		<if>
@@ -55,7 +55,7 @@
 
 	<command name="configureContentSharingAcrossSitesCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Content Sharing" />
+			<var name="panel" value="Content Sharing" />
 		</execute>
 
 		<if>
@@ -66,7 +66,7 @@
 				<execute macro="PortletEntry#save" />
 
 				<execute macro="Panel#expandPanel">
-					<var name="panelHeading" value="Content Sharing" />
+					<var name="panel" value="Content Sharing" />
 				</execute>
 
 				<execute function="AssertChecked" locator1="PortalSettingsContentSharing#CONTENT_SHARING_CHECKBOX" />
@@ -79,7 +79,7 @@
 					<execute macro="PortletEntry#save" />
 
 					<execute macro="Panel#expandPanel">
-						<var name="panelHeading" value="Content Sharing" />
+						<var name="panel" value="Content Sharing" />
 					</execute>
 
 					<execute function="AssertNotChecked" locator1="PortalSettingsContentSharing#CONTENT_SHARING_CHECKBOX" />
@@ -90,7 +90,7 @@
 
 	<command name="configureContentSharingSubSitesCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Content Sharing" />
+			<var name="panel" value="Content Sharing" />
 		</execute>
 
 		<if>
@@ -101,7 +101,7 @@
 				<execute macro="PortletEntry#save" />
 
 				<execute macro="Panel#expandPanel">
-					<var name="panelHeading" value="Content Sharing" />
+					<var name="panel" value="Content Sharing" />
 				</execute>
 
 				<execute function="AssertSelectedLabel" locator1="PortalSettingsContentSharing#CONTENT_SHARING_SELECTOR" value1="Enabled by Default" />
@@ -114,7 +114,7 @@
 					<execute macro="PortletEntry#save" />
 
 					<execute macro="Panel#expandPanel">
-						<var name="panelHeading" value="Content Sharing" />
+						<var name="panel" value="Content Sharing" />
 					</execute>
 
 					<execute function="AssertSelectedLabel" locator1="PortalSettingsContentSharing#CONTENT_SHARING_SELECTOR" value1="Disabled by Default" />
@@ -128,7 +128,7 @@
 					<execute macro="PortletEntry#save" />
 
 					<execute macro="Panel#expandPanel">
-						<var name="panelHeading" value="Content Sharing" />
+						<var name="panel" value="Content Sharing" />
 					</execute>
 
 					<execute function="AssertSelectedLabel" locator1="PortalSettingsContentSharing#CONTENT_SHARING_SELECTOR" value1="Disabled" />
@@ -180,7 +180,7 @@
 
 	<command name="configureGoogleApps">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Google Apps" />
+			<var name="panel" value="Google Apps" />
 		</execute>
 
 		<execute function="Type" locator1="TextInput#GOOGLE_APPS_API_KEY" value1="${googleAppsAPIKey}" />
@@ -228,7 +228,7 @@
 
 	<command name="editConfigurationAuthenticationCAS">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Authentication" />
+			<var name="panel" value="Authentication" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#CAS" value1="CAS" />
@@ -262,7 +262,7 @@
 
 	<command name="editConfigurationAuthenticationGeneral">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Authentication" />
+			<var name="panel" value="Authentication" />
 		</execute>
 
 		<if>
@@ -288,7 +288,7 @@
 
 	<command name="editConfigurationUsersDefaultUserAssociationsOrganizationSitesCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Users" />
+			<var name="panel" value="Users" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
@@ -300,7 +300,7 @@
 		<execute macro="PortletEntry#save" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Users" />
+			<var name="panel" value="Users" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
@@ -310,7 +310,7 @@
 
 	<command name="editConfigurationUsersDefaultUserAssociationsRolesCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Users" />
+			<var name="panel" value="Users" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
@@ -322,7 +322,7 @@
 		<execute macro="PortletEntry#save" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Users" />
+			<var name="panel" value="Users" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
@@ -332,7 +332,7 @@
 
 	<command name="editConfigurationUsersDefaultUserAssociationsSitesCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Users" />
+			<var name="panel" value="Users" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
@@ -344,7 +344,7 @@
 		<execute macro="PortletEntry#save" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Users" />
+			<var name="panel" value="Users" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
@@ -354,7 +354,7 @@
 
 	<command name="editConfigurationUsersDefaultUserAssociationsUserGroupsCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Users" />
+			<var name="panel" value="Users" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
@@ -365,7 +365,7 @@
 		<execute macro="PortletEntry#save" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Users" />
+			<var name="panel" value="Users" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
@@ -375,7 +375,7 @@
 
 	<command name="editConfigurationUsersEmailNotificationsCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Email Notifications" />
+			<var name="panel" value="Email Notifications" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#ACCOUNT_CREATED_NOTIFICATION" value1="Account Created Notification" />
@@ -387,7 +387,7 @@
 
 	<command name="editConfigurationUsersEmailVerificationNotificationsCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Email Notifications" />
+			<var name="panel" value="Email Notifications" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#EMAIL_VERIFICATION_NOTIFICATION" value1="Email Verification Notification" />
@@ -457,7 +457,7 @@
 		<execute macro="PortletEntry#save" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Authentication" />
+			<var name="panel" value="Authentication" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#OPENID" value1="OpenID" />
@@ -467,7 +467,7 @@
 
 	<command name="enterReservedEmailAddressCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Users" />
+			<var name="panel" value="Users" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#RESERVED_CREDENTIALS" value1="Reserved Credentials" />
@@ -479,7 +479,7 @@
 		<execute macro="PortletEntry#save" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Users" />
+			<var name="panel" value="Users" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#RESERVED_CREDENTIALS" value1="Reserved Credentials" />
@@ -489,7 +489,7 @@
 
 	<command name="enterReservedScreenNameCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Users" />
+			<var name="panel" value="Users" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#RESERVED_CREDENTIALS" value1="Reserved Credentials" />
@@ -501,7 +501,7 @@
 		<execute macro="PortletEntry#save" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Users" />
+			<var name="panel" value="Users" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#RESERVED_CREDENTIALS" value1="Reserved Credentials" />
@@ -517,14 +517,14 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Authentication" />
+			<var name="panel" value="Authentication" />
 		</execute>
 
 		<execute function="Select" locator1="PortalSettingsAuthentication#AUTHENTICATION_GENERAL_HOW_DO_USERS_AUTHENTICATE_SELECT" value1="By Email Address" />
 		<execute macro="PortletEntry#save" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Authentication" />
+			<var name="panel" value="Authentication" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#CAS" value1="CAS" />
@@ -546,7 +546,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Users" />
+			<var name="panel" value="Users" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
@@ -602,7 +602,7 @@
 
 	<command name="viewAuthenticationCASCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Authentication" />
+			<var name="panel" value="Authentication" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#CAS" value1="CAS" />
@@ -626,7 +626,7 @@
 
 	<command name="viewAuthenticationGeneralCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Authentication" />
+			<var name="panel" value="Authentication" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#GENERAL" value1="General" />
@@ -668,7 +668,7 @@
 
 	<command name="viewAuthenticationNTLMCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Authentication" />
+			<var name="panel" value="Authentication" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#NTLM" value1="NTLM" />
@@ -688,7 +688,7 @@
 
 	<command name="viewAuthenticationOpenIDCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Authentication" />
+			<var name="panel" value="Authentication" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#OPENID" value1="OpenID" />
@@ -697,7 +697,7 @@
 
 	<command name="viewAuthenticationOpenSSOCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Authentication" />
+			<var name="panel" value="Authentication" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#OPENSSO" value1="OpenSSO" />
@@ -722,7 +722,7 @@
 
 	<command name="viewConfigurationUsersDefaultUserAssociationsOrganizationSitesCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Users" />
+			<var name="panel" value="Users" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
@@ -732,7 +732,7 @@
 
 	<command name="viewConfigurationUsersDefaultUserAssociationsRolesCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Users" />
+			<var name="panel" value="Users" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
@@ -742,7 +742,7 @@
 
 	<command name="viewConfigurationUsersDefaultUserAssociationsSitesCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Users" />
+			<var name="panel" value="Users" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
@@ -752,7 +752,7 @@
 
 	<command name="viewConfigurationUsersDefaultUserAssociationsUserGroupsCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Users" />
+			<var name="panel" value="Users" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
@@ -787,7 +787,7 @@
 
 	<command name="viewDefaultUserAssociationsCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Users" />
+			<var name="panel" value="Users" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
@@ -805,7 +805,7 @@
 
 	<command name="viewEmailNotificationsAccountCreatedNotificationCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Email Notifications" />
+			<var name="panel" value="Email Notifications" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#ACCOUNT_CREATED_NOTIFICATION" value1="Account Created Notification" />
@@ -821,7 +821,7 @@
 
 	<command name="viewEmailNotificationsPasswordChangedNotificationCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Email Notifications" />
+			<var name="panel" value="Email Notifications" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#PASSWORD_CHANGED_NOTIFICATION" value1="Password Changed Notification" />
@@ -834,7 +834,7 @@
 
 	<command name="viewEmailNotificationsSenderCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Email Notifications" />
+			<var name="panel" value="Email Notifications" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#SENDER" value1="Sender" />
@@ -851,7 +851,7 @@
 
 	<command name="viewReservedCredentialsScreenNamesCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Users" />
+			<var name="panel" value="Users" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#RESERVED_CREDENTIALS" value1="Reserved Credentials" />

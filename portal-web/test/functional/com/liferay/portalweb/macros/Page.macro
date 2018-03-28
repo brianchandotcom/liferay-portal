@@ -45,7 +45,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="JavaScript" />
+			<var name="panel" value="JavaScript" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="SitePages#JAVASCRIPT_LABEL" value1="Paste JavaScript code that is executed at the bottom of the page." />
@@ -61,7 +61,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="SEO" />
+			<var name="panel" value="SEO" />
 		</execute>
 
 		<var name="key_vocabularyName" value="${vocabularyName}" />
@@ -186,7 +186,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Logo" />
+			<var name="panel" value="Logo" />
 		</execute>
 
 		<execute macro="Page#uploadFileForLogo">
@@ -248,7 +248,7 @@
 			</then>
 			<else>
 				<execute macro="Panel#expandPanel">
-					<var name="panelHeading" value="Logo" />
+					<var name="panel" value="Logo" />
 				</execute>
 			</else>
 		</if>
@@ -866,7 +866,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Categorization" />
+			<var name="panel" value="Categorization" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="AssetCategorization#CATEGORY_SELECT">

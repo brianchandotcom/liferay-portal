@@ -16,8 +16,7 @@ package com.liferay.user.associated.data.aggregator;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.user.associated.data.entity.UADEntity;
+import java.io.Serializable;
 
 import java.util.List;
 
@@ -25,16 +24,18 @@ import java.util.List;
  * @author William Newbury
  */
 @ProviderType
-public interface UADEntityAggregator {
+public interface UADEntityAggregator<T> {
 
-	public int count(long userId);
+	public long count(long userId);
 
-	public List<UADEntity> getUADEntities(long userId);
+	public String getApplicationName();
 
-	public List<UADEntity> getUADEntities(long userId, int start, int end);
+	public List<T> getEntities(long userId);
 
-	public UADEntity getUADEntity(String uadEntityId) throws PortalException;
+	public List<T> getEntities(long userId, int start, int end);
 
-	public String getUADEntitySetName();
+	public T getEntity(Serializable primKeyObj) throws Exception;
+
+	public Serializable getPrimaryKeyObj(T entity);
 
 }

@@ -100,7 +100,7 @@
 					<equals arg1="${uncheckPropagation}" arg2="true" />
 					<then>
 						<execute macro="Panel#expandPanel">
-							<var name="panelHeading" value="Pages" />
+							<var name="panel" value="Pages" />
 						</execute>
 
 						<execute function="Uncheck#uncheckToggleSwitch" locator1="Checkbox#ENABLE_PROPAGATION" />
@@ -181,7 +181,7 @@
 
 	<command name="addVirtualHostsURLCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Site URL" />
+			<var name="panel" value="Site URL" />
 		</execute>
 
 		<if>
@@ -529,7 +529,7 @@
 		<execute function="AssertClick" locator1="SitesEditSite#MENU_ADVANCED_TAB" value1="Advanced" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Recycle Bin" />
+			<var name="panel" value="Recycle Bin" />
 		</execute>
 
 		<execute function="Uncheck#uncheckToggleSwitchNoErrorNoAssert" locator1="Checkbox#ENABLE_RECYCLE_BIN" />
@@ -555,7 +555,7 @@
 
 	<command name="editFriendlyURLCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Site URL" />
+			<var name="panel" value="Site URL" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="SiteSettingsSiteURL#SITE_URL_FRIENDLY_URL_LABEL" value1="Friendly URL" />
@@ -584,7 +584,7 @@
 		<execute function="AssertClick" locator1="SitesEditSite#MENU_ADVANCED_TAB" value1="Advanced" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Analytics" />
+			<var name="panel" value="Analytics" />
 		</execute>
 
 		<execute function="Type" locator1="TextInput#GOOGLE_ANALYTICS_ID" value1="${googleAnalyticsID}" />
@@ -921,7 +921,7 @@
 
 	<command name="selectPageType">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Pages" />
+			<var name="panel" value="Pages" />
 		</execute>
 
 		<if>
@@ -938,7 +938,7 @@
 						<equals arg1="${checkPropagation}" arg2="true" />
 						<then>
 							<execute macro="Panel#expandPanel">
-								<var name="panelHeading" value="Pages" />
+								<var name="panel" value="Pages" />
 							</execute>
 
 							<execute function="Check#checkToggleSwitch" locator1="Checkbox#PRIVATE_PAGES_ENABLE_PROPAGATION" />
@@ -1277,7 +1277,7 @@
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Site Template" />
+			<var name="panel" value="Site Template" />
 		</execute>
 
 		<if>

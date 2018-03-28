@@ -72,15 +72,23 @@
 		<execute function="Pause" locator1="5000" />
 
 		<if>
-			<condition function="IsElementPresent" locator1="Configuration#SETUP_DISPLAY_SETTINGS" />
+			<condition function="IsElementPresent" locator1="NavTab#TAB_LINK">
+				<var name="key_tab" value="Display Settings" />
+			</condition>
+
 			<then>
-				<execute function="AssertClick" locator1="Configuration#SETUP_DISPLAY_SETTINGS" value1="Display Settings" />
+				<execute macro="Navigator#gotoNavTab">
+					<var name="key_tab" value="Display Settings" />
+				</execute>
 			</then>
 			<elseif>
-				<condition function="IsElementPresent" locator1="Configuration#SETUP_DISPLAY_SETTINGS_PANEL" />
+				<condition function="IsElementPresent" locator1="Panel#PANEL">
+					<var name="key_panel" value="Display Settings" />
+				</condition>
+
 				<then>
 					<execute macro="Panel#expandPanel">
-						<var name="panelHeading" value="Display Settings" />
+						<var name="panel" value="Display Settings" />
 					</execute>
 				</then>
 			</elseif>

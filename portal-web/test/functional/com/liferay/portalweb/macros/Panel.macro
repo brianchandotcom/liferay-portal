@@ -1,18 +1,18 @@
 <definition>
 	<command name="expandPanel">
-		<var name="key_panelHeading" value="${panelHeading}" />
+		<var name="key_panel" value="${panel}" />
 
 		<if>
 			<and>
-				<condition function="IsElementPresent" locator1="Panel#PANEL_HEADING_COLLAPSED" value1="${panelHeading}" />
-				<condition function="IsVisible" locator1="Panel#PANEL_HEADING_COLLAPSED" value1="${panelHeading}" />
+				<condition function="IsElementPresent" locator1="Panel#PANEL_COLLAPSED" value1="${panel}" />
+				<condition function="IsVisible" locator1="Panel#PANEL_COLLAPSED" value1="${panel}" />
 			</and>
 			<then>
-				<execute function="AssertClick" locator1="Panel#PANEL_HEADING_COLLAPSED" value1="${panelHeading}" />
+				<execute function="AssertClick" locator1="Panel#PANEL_COLLAPSED" value1="${panel}" />
 			</then>
 		</if>
 
-		<execute function="AssertElementPresent" locator1="Panel#PANEL_HEADING_EXPANDED" />
+		<execute function="AssertElementPresent" locator1="Panel#PANEL_EXPANDED" />
 	</command>
 
 	<command name="expandSidebarApplicationsPanel">

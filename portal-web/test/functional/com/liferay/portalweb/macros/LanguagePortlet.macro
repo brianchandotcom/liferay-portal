@@ -3,7 +3,7 @@
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Languages" />
+			<var name="panel" value="Languages" />
 		</execute>
 
 		<for list="${availableLanguages}" param="availableLanguage">
@@ -17,7 +17,7 @@
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Languages" />
+			<var name="panel" value="Languages" />
 		</execute>
 
 		<for list="${currentLanguages}" param="currentLanguage">
@@ -31,7 +31,7 @@
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Languages" />
+			<var name="panel" value="Languages" />
 		</execute>
 
 		<while>
@@ -83,7 +83,7 @@
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Languages" />
+			<var name="panel" value="Languages" />
 		</execute>
 
 		<execute function="Select" locator1="LanguageConfiguration#DISPLAY_TEMPLATE_SELECT" value1="${displayStyle}" />

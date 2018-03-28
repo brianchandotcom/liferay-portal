@@ -1,7 +1,7 @@
 <definition>
 	<command name="approveProcess">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Assigned to My Roles" />
+			<var name="panel" value="Assigned to My Roles" />
 		</execute>
 
 		<var name="key_kfProcessName" value="${kfProcessName}" />
@@ -30,7 +30,7 @@
 
 	<command name="assignProcessToMe">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Assigned to Me" />
+			<var name="panel" value="Assigned to Me" />
 		</execute>
 
 		<var name="key_kfProcessName" value="${kfProcessName}" />
@@ -503,7 +503,7 @@
 
 	<command name="viewNoTasks">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Assigned to Me" />
+			<var name="panel" value="Assigned to Me" />
 		</execute>
 
 		<execute macro="PortletEntry#viewEmptyMessage">
@@ -511,7 +511,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Assigned to My Roles" />
+			<var name="panel" value="Assigned to My Roles" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO_2" value1="There are no tasks." />

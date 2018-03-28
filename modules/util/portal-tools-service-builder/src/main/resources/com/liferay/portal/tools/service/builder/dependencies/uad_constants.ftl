@@ -6,13 +6,13 @@ package ${packagePath}.uad.constants;
  */
 public class ${portletShortName}UADConstants {
 
+	public static final String APPLICATION_NAME = "${portletShortName}";
+
 	<#list entities as entity>
 		<#if entity.isUADEnabled()>
 			public static final String CLASS_NAME_${entity.constantName} = "${apiPackagePath}.model.${entity.name}";
 		</#if>
 	</#list>
-
-	public static final String UAD_ENTITY_SET_NAME = "${portletShortName}";
 
 	<#list entities as entity>
 		<#if entity.isUADEnabled()>

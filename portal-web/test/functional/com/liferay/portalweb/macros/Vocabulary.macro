@@ -1,7 +1,7 @@
 <definition>
 	<command name="addAssociatedAssetType">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Associated Asset Types" />
+			<var name="panel" value="Associated Asset Types" />
 		</execute>
 
 		<if>
@@ -87,7 +87,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Permissions" />
+			<var name="panel" value="Permissions" />
 		</execute>
 
 		<execute function="Select" locator1="CategoriesEditVocabulary#PERMISSIONS_VIEWABLE_BY_SELECT" value1="${viewableBy}" />
@@ -149,7 +149,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Associated Asset Types" />
+			<var name="panel" value="Associated Asset Types" />
 		</execute>
 
 		<execute function="Click" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_DELETE_BUTTON_2" />
@@ -351,7 +351,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Associated Asset Types" />
+			<var name="panel" value="Associated Asset Types" />
 		</execute>
 
 		<execute function="AssertSelectedLabel" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_SELECT" value1="${vocabularyAssociatedAssetType}" />

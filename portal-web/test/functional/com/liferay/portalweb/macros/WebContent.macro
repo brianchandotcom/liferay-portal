@@ -47,7 +47,7 @@
 			<isset var="viewableBy" />
 			<then>
 				<execute macro="Panel#expandPanel">
-					<var name="panelHeading" value="Permissions" />
+					<var name="panel" value="Permissions" />
 				</execute>
 
 				<execute function="Select" locator1="WCEditWebContent#PERMISSIONS_VIEWABLE_BY_SELECT" value1="${viewableBy}" />
@@ -90,7 +90,7 @@
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Related Assets" />
+			<var name="panel" value="Related Assets" />
 		</execute>
 
 		<execute function="AssertClick" locator1="AssetRelatedAssets#RELATED_ASSETS_SELECT" value1="Select" />
@@ -121,7 +121,7 @@
 
 	<command name="addExpirationDateCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Schedule" />
+			<var name="panel" value="Schedule" />
 		</execute>
 
 		<execute function="AssertChecked" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />
@@ -147,7 +147,7 @@
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Metadata" />
+			<var name="panel" value="Metadata" />
 		</execute>
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please select at least one category for ${vocabularyName}." />
@@ -165,7 +165,7 @@
 		<execute function="Type" locator1="TextInput#URL" value1="${targetFriendlyUrl}" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Web Content Constraints" />
+			<var name="panel" value="Web Content Constraints" />
 		</execute>
 
 		<execute function="AssertClick" locator1="WCEditWebContent#SELECT_STRUCTURE" value1="Select" />
@@ -183,7 +183,7 @@
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Presentation Settings" />
+			<var name="panel" value="Presentation Settings" />
 		</execute>
 
 		<execute function="Select" locator1="Select#FEED_ITEM_CONTENT" value1="${feedContent}" />
@@ -299,7 +299,7 @@
 
 	<command name="addPriority">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Metadata" />
+			<var name="panel" value="Metadata" />
 		</execute>
 
 		<execute function="Type" locator1="WC#PRIORITY" value1="${priority}" />
@@ -330,7 +330,7 @@
 
 	<command name="addTagPGViaWCD">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Metadata" />
+			<var name="panel" value="Metadata" />
 		</execute>
 
 		<execute function="Type" locator1="AssetCategorization#TAGS_FIELD" value1="${tagName}" />
@@ -405,7 +405,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Structure and Template" />
+			<var name="panel" value="Structure and Template" />
 		</execute>
 
 		<execute function="AssertClick" locator1="WCEditWebContent#SELECT_STRUCTURE" value1="Select" />
@@ -425,7 +425,7 @@
 		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Structure and Template" />
+			<var name="panel" value="Structure and Template" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="WCEditWebContent#SELECTED_STRUCTURE" value1="${structureName}" />
@@ -461,7 +461,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Metadata" />
+			<var name="panel" value="Metadata" />
 		</execute>
 
 		<execute macro="AssetCategorization#addMultipleCategories">
@@ -702,7 +702,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Metadata" />
+			<var name="panel" value="Metadata" />
 		</execute>
 
 		<for list="${tagNameList}" param="tagName">
@@ -919,7 +919,7 @@
 
 	<command name="editDisplayPage">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Display Page" />
+			<var name="panel" value="Display Page" />
 		</execute>
 
 		<execute function="AssertClick" locator1="Button#CHOOSE" value1="Choose" />
@@ -1241,7 +1241,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Related Assets" />
+			<var name="panel" value="Related Assets" />
 		</execute>
 
 		<execute function="AssertClick" locator1="AssetRelatedAssets#RELATED_ASSETS_SELECT" value1="Select" />
@@ -1325,7 +1325,7 @@
 
 	<command name="selectCategory">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Metadata" />
+			<var name="panel" value="Metadata" />
 		</execute>
 
 		<if>
@@ -1373,7 +1373,7 @@
 		<execute function="ScrollBy" value1="0, 50" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Structure and Template" />
+			<var name="panel" value="Structure and Template" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="WCEditWebContent#SELECTED_STRUCTURE" value1="${structureName}" />
@@ -1400,7 +1400,7 @@
 		</if>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Structure and Template" />
+			<var name="panel" value="Structure and Template" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="WCEditWebContent#SELECTED_TEMPLATE" value1="${templateName}" />
@@ -1521,7 +1521,7 @@
 
 	<command name="viewCategorizationCategoryCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Metadata" />
+			<var name="panel" value="Metadata" />
 		</execute>
 
 		<for list="${categoryNameList}" param="categoryName">
@@ -1533,7 +1533,7 @@
 
 	<command name="viewCategorizationCategoryNotVisibleCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Metadata" />
+			<var name="panel" value="Metadata" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="AssetCategorization#CATEGORY">
@@ -1543,7 +1543,7 @@
 
 	<command name="viewCategorizationVocabularyCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Metadata" />
+			<var name="panel" value="Metadata" />
 		</execute>
 
 		<var name="count" value="1" />
@@ -1694,7 +1694,7 @@
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Display Page" />
+			<var name="panel" value="Display Page" />
 		</execute>
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="WCSelectDisplayPage#PUBLIC_DISPLAY_PAGE_ITEM" value1="${displayPageSelection}" />
@@ -1775,7 +1775,7 @@
 
 	<command name="viewExpirationDateCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Schedule" />
+			<var name="panel" value="Schedule" />
 		</execute>
 
 		<execute function="AssertNotChecked" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />
@@ -1927,7 +1927,7 @@
 
 	<command name="viewSelectedTemplateCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Structure and Template" />
+			<var name="panel" value="Structure and Template" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="WCEditWebContent#SELECTED_TEMPLATE" value1="${templateName}" />
@@ -1974,7 +1974,7 @@
 			<isset var="structureLocalizationName" />
 			<then>
 				<execute macro="Panel#expandPanel">
-					<var name="panelHeading" value="${panelHeading}" />
+					<var name="panel" value="${panel}" />
 				</execute>
 
 				<execute function="AssertTextEquals" locator1="WCEditWebContent#SELECTED_STRUCTURE" value1="${structureLocalizationName}" />
@@ -1985,7 +1985,7 @@
 			<isset var="templateLocalizationName" />
 			<then>
 				<execute macro="Panel#expandPanel">
-					<var name="panelHeading" value="${panelHeading}" />
+					<var name="panel" value="${panel}" />
 				</execute>
 
 				<execute function="AssertTextEquals" locator1="WCEditWebContent#SELECTED_TEMPLATE" value1="${templateLocalizationName}" />
@@ -2096,7 +2096,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Permissions" />
+			<var name="panel" value="Permissions" />
 		</execute>
 
 		<execute function="AssertSelectedLabel" locator1="WCEditWebContent#PERMISSIONS_VIEWABLE_BY_SELECT" value1="Site Members" />

@@ -48,7 +48,7 @@
 		<execute function="AssertClick" locator1="Link#EDIT" value1="Edit" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Attachments" />
+			<var name="panel" value="Attachments" />
 		</execute>
 
 		<execute function="AssertVisible" locator1="Button#SELECT_FILES" />
@@ -224,7 +224,7 @@
 			<equals arg1="${creoleSource}" arg2="true" />
 			<then>
 				<execute macro="Panel#expandPanel">
-					<var name="panelHeading" value="Configuration" />
+					<var name="panel" value="Configuration" />
 				</execute>
 
 				<execute function="Select#pauseSelect" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" value1="Creole" />
@@ -237,7 +237,7 @@
 				<equals arg1="${htmlSource}" arg2="true" />
 				<then>
 					<execute macro="Panel#expandPanel">
-						<var name="panelHeading" value="Configuration" />
+						<var name="panel" value="Configuration" />
 					</execute>
 
 					<execute function="SelectNoError#pauseSelect" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" value1="HTML" />
@@ -432,7 +432,7 @@
 			<isset var="customFieldText" />
 			<then>
 				<execute macro="Panel#expandPanel">
-					<var name="panelHeading" value="Custom Fields" />
+					<var name="panel" value="Custom Fields" />
 				</execute>
 
 				<execute function="Type" locator1="TextInput#CUSTOM_FIELD" value1="${customFieldText}" />
@@ -446,7 +446,7 @@
 
 	<command name="addTagPGCmd">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Categorization" />
+			<var name="panel" value="Categorization" />
 		</execute>
 
 		<if>
@@ -803,7 +803,7 @@
 			<isset var="customFieldTextEdit" />
 			<then>
 				<execute macro="Panel#expandPanel">
-					<var name="panelHeading" value="Custom Fields" />
+					<var name="panel" value="Custom Fields" />
 				</execute>
 
 				<execute function="Type" locator1="TextInput#CUSTOM_FIELD" value1="${customFieldTextEdit}" />
@@ -927,7 +927,7 @@
 		<execute macro="AlloyEditor#clickContentField" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Configuration" />
+			<var name="panel" value="Configuration" />
 		</execute>
 
 		<execute function="Select" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" value1="Creole" />
@@ -1008,7 +1008,7 @@
 		<execute function="AssertClick" locator1="Link#EDIT" value1="Edit" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Attachments" />
+			<var name="panel" value="Attachments" />
 		</execute>
 
 		<var name="key_attachmentFileName" value="${attachmentFileName}" />
@@ -1260,7 +1260,7 @@
 		<execute function="AssertClick" locator1="Link#EDIT" value1="Edit" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Attachments" />
+			<var name="panel" value="Attachments" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Wiki#ATTACHMENT_TABLE_FILE_NAME" value1="${attachmentFileName}" />

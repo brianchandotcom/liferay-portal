@@ -5,7 +5,7 @@
 		<execute function="Type#clickAtType" locator1="TextInput#NAME" value1="${templateName}" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Details" />
+			<var name="panel" value="Details" />
 		</execute>
 
 		<if>
@@ -34,7 +34,7 @@
 		</if>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Details" />
+			<var name="panel" value="Details" />
 		</execute>
 
 		<if>
@@ -110,7 +110,7 @@
 
 	<command name="addStructure">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Details" />
+			<var name="panel" value="Details" />
 		</execute>
 
 		<execute function="AssertClick" locator1="DDMEditTemplate#DETAILS_SELECT_STRUCTURE" value1="Select" />
@@ -345,7 +345,7 @@
 				<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${templateName}" />
 
 				<execute macro="Panel#expandPanel">
-					<var name="panelHeading" value="Details" />
+					<var name="panel" value="Details" />
 				</execute>
 
 				<execute function="AssertTextEquals" locator1="TextArea#DESCRIPTION" value1="${templateDescription}" />

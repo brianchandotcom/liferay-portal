@@ -15,7 +15,7 @@
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Scope" />
+			<var name="panel" value="Scope" />
 		</execute>
 
 		<execute function="AssertClick" locator1="Configuration#SCOPE_SELECT" value1="Select" />
@@ -37,7 +37,7 @@
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Scope" />
+			<var name="panel" value="Scope" />
 		</execute>
 
 		<if>
@@ -94,7 +94,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Source" />
+			<var name="panel" value="Source" />
 		</execute>
 
 		<execute function="Select" locator1="APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT" value1="Select More Than One..." />
@@ -126,7 +126,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Ordering and Grouping" />
+			<var name="panel" value="Ordering and Grouping" />
 		</execute>
 
 		<execute function="Select" locator1="APConfiguration#ORDERING_AND_GROUPING_ORDER_BY_SELECT" value1="${fieldNameOrder}" />
@@ -153,7 +153,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Set and Enable" />
+			<var name="panel" value="Set and Enable" />
 		</execute>
 
 		<if>
@@ -174,7 +174,7 @@
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Source" />
+			<var name="panel" value="Source" />
 		</execute>
 
 		<execute function="Select" locator1="APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT" value1="${selectedAsset}" />
@@ -212,7 +212,7 @@
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Filter" />
+			<var name="panel" value="Filter" />
 		</execute>
 
 		<execute function="Select" locator1="APConfiguration#FILTER_CATEGORIZATION_SELECT" value1="Categories" />
@@ -235,7 +235,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Set and Enable" />
+			<var name="panel" value="Set and Enable" />
 		</execute>
 
 		<for list="${documentTypes}" param="documentType">
@@ -268,7 +268,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Set and Enable" />
+			<var name="panel" value="Set and Enable" />
 		</execute>
 
 		<for list="${displaySettings}" param="displaySetting">
@@ -314,7 +314,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Filter" />
+			<var name="panel" value="Filter" />
 		</execute>
 
 		<execute function="Select" locator1="APConfiguration#FILTER_CATEGORIZATION_SELECT" value1="Categories" />
@@ -333,7 +333,7 @@
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Source" />
+			<var name="panel" value="Source" />
 		</execute>
 
 		<execute function="Select" locator1="APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT" value1="${selectedAsset}" />
@@ -380,7 +380,7 @@
 		<execute macro="PortletEntry#save" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Source" />
+			<var name="panel" value="Source" />
 		</execute>
 
 		<execute function="AssertSelectedLabel" locator1="APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT" value1="${selectedAsset}" />
@@ -398,7 +398,7 @@
 			<isset var="assetTitle" />
 			<then>
 				<execute macro="Panel#expandPanel">
-					<var name="panelHeading" value="Asset Entries" />
+					<var name="panel" value="Asset Entries" />
 				</execute>
 
 				<execute function="Click" locator1="APConfiguration#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT_BUTTON" />
@@ -444,7 +444,7 @@
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Source" />
+			<var name="panel" value="Source" />
 		</execute>
 
 		<execute function="Select" locator1="APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT" value1="${selectedAsset}" />
@@ -462,7 +462,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Metadata" />
+			<var name="panel" value="Metadata" />
 		</execute>
 
 		<for list="${metadataFieldList}" param="metadataField">
@@ -514,7 +514,7 @@
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Scope" />
+			<var name="panel" value="Scope" />
 		</execute>
 
 		<execute function="AssertClick" locator1="Configuration#SCOPE_SELECT" value1="Select" />
@@ -566,7 +566,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Scope" />
+			<var name="panel" value="Scope" />
 		</execute>
 
 		<var name="key_siteName" value="${siteName}" />
@@ -585,7 +585,7 @@
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Filter" />
+			<var name="panel" value="Filter" />
 		</execute>
 
 		<execute function="Select" locator1="APConfiguration#FILTER_CATEGORIZATION_SELECT" value1="Tags" />
@@ -679,7 +679,7 @@
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Source" />
+			<var name="panel" value="Source" />
 		</execute>
 
 		<for list="${removeSiteScopes}" param="removeSiteScope">
@@ -837,7 +837,7 @@
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Source" />
+			<var name="panel" value="Source" />
 		</execute>
 
 		<execute function="AssertTextNotEquals" locator1="APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT" value1="${assetType}" />
@@ -958,7 +958,7 @@
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Scope" />
+			<var name="panel" value="Scope" />
 		</execute>
 
 		<execute function="AssertClick" locator1="Configuration#SCOPE_SELECT" value1="Select" />
@@ -1095,7 +1095,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Set and Enable" />
+			<var name="panel" value="Set and Enable" />
 		</execute>
 
 		<for list="${displaySettings}" param="displaySetting">
@@ -1124,9 +1124,9 @@
 
 		<execute function="Click" locator1="APConfiguration#ASSET_SELECTION_DYNAMIC" />
 
-		<for list="Source,Filter,Custom User Attributes,Ordering and Grouping" param="panelHeading">
-			<execute function="AssertElementPresent" locator1="Panel#PANEL_HEADING_COLLAPSED">
-				<var name="key_panelHeading" value="${panelHeading}" />
+		<for list="Source,Filter,Custom User Attributes,Ordering and Grouping" param="panel">
+			<execute function="AssertElementPresent" locator1="Panel#PANEL_COLLAPSED">
+				<var name="key_panel" value="${panel}" />
 			</execute>
 		</for>
 
@@ -1147,7 +1147,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Source" />
+			<var name="panel" value="Source" />
 		</execute>
 
 		<execute function="Select" locator1="APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT" value1="${selectedAsset}" />
@@ -1186,7 +1186,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Asset Entries" />
+			<var name="panel" value="Asset Entries" />
 		</execute>
 
 		<execute function="Click" locator1="APConfiguration#ASSET_SELECTION_MANUAL" />
@@ -1207,7 +1207,7 @@
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Asset Entries" />
+			<var name="panel" value="Asset Entries" />
 		</execute>
 
 		<execute function="Click" locator1="APConfigurationManual#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT" />
@@ -1340,7 +1340,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Asset Entries" />
+			<var name="panel" value="Asset Entries" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="APConfigurationManual#ASSET_SELECTION_MANUAL_NONE" value1="None" />
@@ -1362,7 +1362,7 @@
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Source" />
+			<var name="panel" value="Source" />
 		</execute>
 
 		<execute function="AssertSelectedLabel" locator1="APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT" value1="${selectedAssetConfiguration}" />

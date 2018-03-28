@@ -8,7 +8,7 @@
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Source" />
+			<var name="panel" value="Source" />
 		</execute>
 
 		<if>

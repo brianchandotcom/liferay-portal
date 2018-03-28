@@ -3,7 +3,7 @@
 
 	<command name="addAdditionalEmailAddressesCP">
 		<execute macro="Organization#gotoIdentificationCP">
-			<var name="panelHeading" value="Additional Email Addresses" />
+			<var name="panel" value="Additional Email Addresses" />
 		</execute>
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditOrganization#ADDITIONAL_EMAIL_ADDRESSES_EMAIL_ADDRESS_FIELD" value1="${orgAdditionalEmailAddress}" />
@@ -13,7 +13,7 @@
 		<execute macro="PortletEntry#save" />
 
 		<execute macro="Organization#gotoIdentificationCP">
-			<var name="panelHeading" value="Additional Email Addresses" />
+			<var name="panel" value="Additional Email Addresses" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#ADDITIONAL_EMAIL_ADDRESSES_EMAIL_ADDRESS_FIELD" value1="${orgAdditionalEmailAddress}" />
@@ -39,7 +39,7 @@
 	<command name="addCategorizationCP">
 		<execute macro="Organization#editOrganizationInformationCP">
 			<var name="orgName" value="${orgName}" />
-			<var name="panelHeading" value="Categorization" />
+			<var name="panel" value="Categorization" />
 		</execute>
 
 		<var name="key_tagName" value="${tagName}" />
@@ -55,7 +55,7 @@
 		<execute macro="PortletEntry#save" />
 
 		<execute macro="Organization#gotoOrganizationInformationCP">
-			<var name="panelHeading" value="Categorization" />
+			<var name="panel" value="Categorization" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#CATEGORIZATION_TAG" value1="${tagName}" />
@@ -156,7 +156,7 @@
 
 	<command name="addPhoneNumbersCP">
 		<execute macro="Organization#gotoIdentificationCP">
-			<var name="panelHeading" value="Phone Numbers" />
+			<var name="panel" value="Phone Numbers" />
 		</execute>
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditOrganization#PHONE_NUMBERS_NUMBER_FIELD" value1="${orgPhoneNumber}" />
@@ -165,7 +165,7 @@
 		<execute macro="PortletEntry#save" />
 
 		<execute macro="Organization#gotoIdentificationCP">
-			<var name="panelHeading" value="Phone Numbers" />
+			<var name="panel" value="Phone Numbers" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#PHONE_NUMBERS_NUMBER_FIELD" value1="${orgPhoneNumber}" />
@@ -173,7 +173,7 @@
 
 	<command name="addReminderQueriesCP">
 		<execute macro="Organization#gotoMiscellaneousCP">
-			<var name="panelHeading" value="Reminder Queries" />
+			<var name="panel" value="Reminder Queries" />
 		</execute>
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditOrganization#REMINDER_QUERIES_DEFAULT_LANGUAGE_FIELD" value1="${orgReminderQueriesDefaultLanguage}" />
@@ -185,7 +185,7 @@
 		<execute macro="PortletEntry#save" />
 
 		<execute macro="Organization#gotoMiscellaneousCP">
-			<var name="panelHeading" value="Reminder Queries" />
+			<var name="panel" value="Reminder Queries" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#REMINDER_QUERIES_DEFAULT_LANGUAGE_FIELD" value1="${orgReminderQueriesDefaultLanguage}" />
@@ -196,7 +196,7 @@
 
 	<command name="addServicesCP">
 		<execute macro="Organization#gotoIdentificationCP">
-			<var name="panelHeading" value="Services" />
+			<var name="panel" value="Services" />
 		</execute>
 
 		<execute function="Select" locator1="UsersAndOrganizationsEditOrganization#SERVICES_MONDAY_OPEN_SELECT" value1="${orgServicesOpen}" />
@@ -206,7 +206,7 @@
 		<execute macro="PortletEntry#save" />
 
 		<execute macro="Organization#gotoIdentificationCP">
-			<var name="panelHeading" value="Services" />
+			<var name="panel" value="Services" />
 		</execute>
 
 		<execute function="AssertSelectedLabel" locator1="UsersAndOrganizationsEditOrganization#SERVICES_MONDAY_OPEN_SELECT" value1="${orgServicesOpen}" />
@@ -216,7 +216,7 @@
 	<command name="addSiteCP">
 		<execute macro="Organization#editOrganizationInformationCP">
 			<var name="orgName" value="${orgName}" />
-			<var name="panelHeading" value="Organization Site" />
+			<var name="panel" value="Organization Site" />
 		</execute>
 
 		<execute function="Check" locator1="UsersAndOrganizationsEditOrganization#ORGANIZATION_SITE_CREATE_SITE_CHECKBOX" />
@@ -244,7 +244,7 @@
 		<execute macro="PortletEntry#save" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Organization Site" />
+			<var name="panel" value="Organization Site" />
 		</execute>
 
 		<if>
@@ -257,7 +257,7 @@
 
 	<command name="addWebsitesCP">
 		<execute macro="Organization#gotoIdentificationCP">
-			<var name="panelHeading" value="Websites" />
+			<var name="panel" value="Websites" />
 		</execute>
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditOrganization#WEBSITES_URL_FIELD" value1="${orgWebsite}" />
@@ -266,7 +266,7 @@
 		<execute macro="PortletEntry#save" />
 
 		<execute macro="Organization#gotoIdentificationCP">
-			<var name="panelHeading" value="Websites" />
+			<var name="panel" value="Websites" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#WEBSITES_URL_FIELD" value1="${orgWebsite}" />
@@ -449,7 +449,7 @@
 		</execute>
 
 		<execute macro="Organization#gotoIdentificationCP">
-			<var name="panelHeading" value="${panelHeading}" />
+			<var name="panel" value="${panel}" />
 		</execute>
 	</command>
 
@@ -467,7 +467,7 @@
 		</execute>
 
 		<execute macro="Organization#gotoMiscellaneousCP">
-			<var name="panelHeading" value="${panelHeading}" />
+			<var name="panel" value="${panel}" />
 		</execute>
 	</command>
 
@@ -485,7 +485,7 @@
 		</execute>
 
 		<execute macro="Organization#gotoOrganizationInformationCP">
-			<var name="panelHeading" value="${panelHeading}" />
+			<var name="panel" value="${panel}" />
 		</execute>
 	</command>
 
@@ -543,10 +543,10 @@
 		<execute function="AssertClick" locator1="NavTab#IDENTIFICATION" value1="Identification" />
 
 		<if>
-			<isset var="panelHeading" />
+			<isset var="panel" />
 			<then>
 				<execute macro="Panel#expandPanel">
-					<var name="panelHeading" value="${panelHeading}" />
+					<var name="panel" value="${panel}" />
 				</execute>
 			</then>
 		</if>
@@ -556,10 +556,10 @@
 		<execute function="AssertClick" locator1="UsersAndOrganizations#MISCELLANEOUS" value1="Miscellaneous" />
 
 		<if>
-			<isset var="panelHeading" />
+			<isset var="panel" />
 			<then>
 				<execute macro="Panel#expandPanel">
-					<var name="panelHeading" value="${panelHeading}" />
+					<var name="panel" value="${panel}" />
 				</execute>
 			</then>
 		</if>
@@ -569,10 +569,10 @@
 		<execute function="AssertClick" locator1="UsersAndOrganizations#ORGANIZATION_INFORMATION" value1="Organization Information" />
 
 		<if>
-			<isset var="panelHeading" />
+			<isset var="panel" />
 			<then>
 				<execute macro="Panel#expandPanel">
-					<var name="panelHeading" value="${panelHeading}" />
+					<var name="panel" value="${panel}" />
 				</execute>
 			</then>
 		</if>

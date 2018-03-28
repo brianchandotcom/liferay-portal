@@ -98,7 +98,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Authentication" />
+			<var name="panel" value="Authentication" />
 		</execute>
 
 		<execute macro="PortalSettingsNavigator#gotoAuthenticationFacebook" />
@@ -147,7 +147,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Authentication" />
+			<var name="panel" value="Authentication" />
 		</execute>
 
 		<execute macro="PortalSettingsNavigator#gotoAuthenticationGoogle" />
@@ -242,7 +242,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Authentication" />
+			<var name="panel" value="Authentication" />
 		</execute>
 
 		<execute macro="PortalSettingsNavigator#gotoAuthenticationOpenID" />
@@ -315,7 +315,7 @@
 		<execute function="Pause" locator1="30000" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Authentication" />
+			<var name="panel" value="Authentication" />
 		</execute>
 
 		<execute macro="PortalSettingsNavigator#gotoAuthenticationOpenSSO" />

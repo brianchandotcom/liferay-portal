@@ -310,5 +310,7 @@
 		<var name="key_numberOfAdaptedImages" value="${numberOfAdaptedImages}" />
 
 		<execute function="AssertTextEquals" locator1="AdaptiveMediaTable#IMAGE_INFO_DETAILS_ADAPTED_IMAGES" value1="${numberOfAdaptedImages}" />
+
+		<execute function="Click" locator1="AdaptiveMediaTable#INFO_ICON" />
 	</command>
 </definition>

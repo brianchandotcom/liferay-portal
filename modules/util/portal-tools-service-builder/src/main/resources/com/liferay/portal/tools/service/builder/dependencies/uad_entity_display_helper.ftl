@@ -5,6 +5,9 @@ import ${apiPackagePath}.model.${entity.name};
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -39,7 +42,6 @@ public class ${entity.name}UADEntityDisplayHelper {
 		return "";
 	}
 
-	@Override
 	public Map<String, Object> getUADEntityNonanonymizableFieldValues(${entity.name} ${entity.varName}) {
 		Map<String, Object> uadEntityNonanonymizableFieldValues = new HashMap<String, Object>();
 

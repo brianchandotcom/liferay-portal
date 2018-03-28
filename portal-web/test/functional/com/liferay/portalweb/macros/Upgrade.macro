@@ -10,9 +10,11 @@
 
 		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
 
-		<execute function="AssertElementPresent" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_2">
-			<var name="key_ddlDataDefinitionName" value="Contacts" />
-		</execute>
+		<for list="Contacts,Events,Inventory,Issues Tracking,Meeting Minutes,To Do" param="ddlDataDefinitionName">
+			<execute macro="DDLDataDefinition#viewName">
+				<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			</execute>
+		</for>
 
 		<execute function="AssertConsoleTextNotPresent" value1="DB2 SQL Error: SQLCODE=-134, SQLSTATE=42907, SQLERRMC=XSD407_0_, DRIVER=4.8.87" />
 
@@ -34,8 +36,17 @@
 
 		<execute macro="DDLDataDefinition#save" />
 
-		<execute function="AssertElementPresent" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_2">
-			<var name="key_ddlDataDefinitionName" value="Data Definition" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#viewCP">
+			<var name="ddlDataDefinitionName" value="Data Definition" />
+			<var name="fieldFieldLabel" value="Text" />
 		</execute>
 
 		<execute function="AssertConsoleTextNotPresent" value1="DB2 SQL Error: SQLCODE=-134, SQLSTATE=42907, SQLERRMC=XSD407_0_, DRIVER=4.8.87" />

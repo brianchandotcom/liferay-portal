@@ -33,6 +33,7 @@ import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.uad.constants.WikiUADConstants;
 import com.liferay.wiki.uad.test.WikiPageUADEntityTestHelper;
 
+import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 
@@ -116,6 +117,11 @@ public class WikiPageUADEntityAnonymizerTest
 		}
 
 		return false;
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_wikiPageUADEntityTestHelper.cleanUpDependencies(_wikiPages);
 	}
 
 	@DeleteAfterTestRun

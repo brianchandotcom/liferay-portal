@@ -35,7 +35,7 @@ public abstract class DDMFormBaseModelListener<T extends BaseModel<T>>
 	extends BaseModelListener<T> {
 
 	protected void sendAnalytics(
-			long companyId, String userId, String eventId, Map<String, String> properties)
+			long companyId, String eventId, Map<String, String> properties)
 		throws Exception {
 
 		String analyticsKey = PrefsPropsUtil.getString(
@@ -52,8 +52,7 @@ public abstract class DDMFormBaseModelListener<T extends BaseModel<T>>
 
 		Event event = eventBuilder.build();
 
-		Builder builder = AnalyticsEventsMessage.builder(
-			_ANALYTICS_KEY, userId);
+		Builder builder = AnalyticsEventsMessage.builder(analyticsKey, null);
 
 		builder = builder.event(event);
 

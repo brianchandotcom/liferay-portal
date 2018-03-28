@@ -36,20 +36,18 @@ import java.util.stream.Stream;
 public class FolderSearchFacetDisplayBuilder {
 
 	public FolderSearchFacetDisplayContext build() {
-		boolean nothingSelected = isNothingSelected();
-
 		List<TermCollector> termCollectors = getTermsCollectors();
 
-		boolean renderNothing = false;
+		List<FolderSearchFacetTermDisplayContext> termDisplayContexts =
+			buildTermDisplayContexts();
 
-		if (nothingSelected && termCollectors.isEmpty()) {
-			renderNothing = true;
-		}
+		boolean renderNothing = isRenderNothing(
+			termCollectors, termDisplayContexts);
 
 		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
 			new FolderSearchFacetDisplayContext();
 
-		folderSearchFacetDisplayContext.setNothingSelected(nothingSelected);
+		folderSearchFacetDisplayContext.setNothingSelected(isNothingSelected());
 		folderSearchFacetDisplayContext.setParameterName(_parameterName);
 		folderSearchFacetDisplayContext.setParameterValue(
 			getFirstParameterValueString());
@@ -57,7 +55,7 @@ public class FolderSearchFacetDisplayBuilder {
 			getParameterValueStrings());
 		folderSearchFacetDisplayContext.setRenderNothing(renderNothing);
 		folderSearchFacetDisplayContext.setTermDisplayContexts(
-			buildTermDisplayContexts());
+			termDisplayContexts);
 
 		return folderSearchFacetDisplayContext;
 	}
@@ -242,6 +240,21 @@ public class FolderSearchFacetDisplayBuilder {
 
 	protected boolean isNothingSelected() {
 		if (_selectedFolderIds.isEmpty()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isRenderNothing(
+		List<TermCollector> termCollectors,
+		List<FolderSearchFacetTermDisplayContext> termDisplayContexts) {
+
+		if (isNothingSelected() && termCollectors.isEmpty()) {
+			return true;
+		}
+
+		if (termDisplayContexts.isEmpty()) {
 			return true;
 		}
 

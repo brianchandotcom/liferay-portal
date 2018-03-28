@@ -50,7 +50,7 @@ String kaleoNamespace = PortalUtil.getPortletNamespace(KaleoDesignerPortletKeys.
 	</liferay-portlet:renderURL>
 
 	<c:choose>
-		<c:when test="<%= KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE) %>">
+		<c:when test="<%= kaleoDesignerDisplayContext.isSaveKaleoDefinitionVersionButtonVisible(permissionChecker, kaleoDefinitionVersion) %>">
 			<liferay-ui:icon
 				message="edit"
 				method="get"
@@ -58,12 +58,10 @@ String kaleoNamespace = PortalUtil.getPortletNamespace(KaleoDesignerPortletKeys.
 			/>
 		</c:when>
 		<c:otherwise>
-			<c:if test="<%= KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.VIEW) %>">
-				<liferay-ui:icon
-					message="view"
-					url="<%= editURL %>"
-				/>
-			</c:if>
+			<liferay-ui:icon
+				message="view"
+				url="<%= editURL %>"
+			/>
 		</c:otherwise>
 	</c:choose>
 
@@ -92,7 +90,7 @@ String kaleoNamespace = PortalUtil.getPortletNamespace(KaleoDesignerPortletKeys.
 
 	<c:choose>
 		<c:when test="<%= (kaleoDefinition != null) && kaleoDefinition.isActive() %>">
-			<c:if test="<%= KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE) %>">
+			<c:if test="<%= kaleoDesignerDisplayContext.isSaveKaleoDefinitionVersionButtonVisible(permissionChecker, kaleoDefinitionVersion) %>">
 				<liferay-portlet:actionURL name="unpublishKaleoDefinitionVersion" portletName="<%= KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW %>" var="unpublishURL">
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />

@@ -165,7 +165,7 @@ KaleoDefinitionVersionSearch kaleoDefinitionVersionSearch = new KaleoDefinitionV
 	</liferay-ui:search-container>
 </div>
 
-<c:if test="<%= KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), KaleoDesignerActionKeys.ADD_DRAFT) %>">
+<c:if test="<%= kaleoDesignerDisplayContext.isSaveKaleoDefinitionVersionButtonVisible(permissionChecker, null) %>">
 	<liferay-portlet:renderURL portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="editKaleoDefinitionVersionURL">
 		<portlet:param name="mvcPath" value='<%= "/designer/edit_kaleo_definition_version.jsp" %>' />
 		<portlet:param name="redirect" value="<%= currentURL %>" />

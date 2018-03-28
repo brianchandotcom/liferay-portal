@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -41,6 +42,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerActionKeys;
+import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDefinitionVersionPermission;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDesignerPermission;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.display.context.util.KaleoDesignerRequestHelper;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.search.KaleoDefinitionVersionSearchTerms;
@@ -323,7 +325,7 @@ public class KaleoDesignerDisplayContext {
 		kaleoDefinitionVersions = ListUtil.filter(
 			kaleoDefinitionVersions,
 			new KaleoDefinitionVersionViewPermissionPredicateFilter(
-				permissionChecker));
+				permissionChecker, _themeDisplay.getCompanyGroupId()));
 
 		searchContainer.setTotal(kaleoDefinitionVersions.size());
 
@@ -386,34 +388,28 @@ public class KaleoDesignerDisplayContext {
 	public boolean isPublishKaleoDefinitionVersionButtonVisible(
 		PermissionChecker permissionChecker) {
 
-		return KaleoDesignerPermission.contains(
-			permissionChecker, _themeDisplay.getCompanyGroupId(),
-			KaleoDesignerActionKeys.PUBLISH);
+		return isSaveKaleoDefinitionVersionButtonVisible(
+			permissionChecker, null);
 	}
 
 	public boolean isSaveKaleoDefinitionVersionButtonVisible(
 		PermissionChecker permissionChecker,
 		KaleoDefinitionVersion kaleoDefinitionVersion) {
 
-		if (!KaleoDesignerPermission.contains(
-				permissionChecker, _themeDisplay.getCompanyGroupId(),
-				KaleoDesignerActionKeys.ADD_DRAFT)) {
+		boolean hasAddNewWorkflowPermission = KaleoDesignerPermission.contains(
+			permissionChecker, _themeDisplay.getCompanyGroupId(),
+			KaleoDesignerActionKeys.ADD_NEW_WORKFLOW);
 
-			return false;
-		}
-
-		if (kaleoDefinitionVersion == null) {
+		if (hasAddNewWorkflowPermission) {
 			return true;
 		}
 
-		KaleoDefinition kaleoDefinition = getKaleoDefinition(
-			kaleoDefinitionVersion);
-
-		if (Validator.isNull(kaleoDefinition) || !kaleoDefinition.isActive()) {
-			return true;
+		if (kaleoDefinitionVersion != null) {
+			return KaleoDefinitionVersionPermission.contains(
+				permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE);
 		}
 
-		return kaleoDefinitionVersion.isDraft();
+		return false;
 	}
 
 	protected String getConfigureAssignementLink(HttpServletRequest request)

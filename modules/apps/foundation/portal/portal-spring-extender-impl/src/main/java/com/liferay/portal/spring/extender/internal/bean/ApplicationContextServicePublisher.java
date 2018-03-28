@@ -14,8 +14,6 @@
 
 package com.liferay.portal.spring.extender.internal.bean;
 
-import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
@@ -24,11 +22,10 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.util.PropsValues;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Dictionary;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.osgi.framework.Bundle;
@@ -114,31 +111,6 @@ public class ApplicationContextServicePublisher {
 		return properties;
 	}
 
-	protected Set<Class<?>> getInterfaces(Object object) throws Exception {
-		Class<? extends Object> clazz = getTargetClass(object);
-
-		OSGiBeanProperties osgiBeanProperties = AnnotationUtils.findAnnotation(
-			clazz, OSGiBeanProperties.class);
-
-		if (osgiBeanProperties == null) {
-			return new HashSet<>(
-				Arrays.asList(ReflectionUtil.getInterfaces(object)));
-		}
-
-		Class<?>[] serviceClasses = osgiBeanProperties.service();
-
-		if (serviceClasses.length == 0) {
-			return new HashSet<>(
-				Arrays.asList(ReflectionUtil.getInterfaces(object)));
-		}
-
-		for (Class<?> serviceClazz : serviceClasses) {
-			serviceClazz.cast(object);
-		}
-
-		return new HashSet<>(Arrays.asList(osgiBeanProperties.service()));
-	}
-
 	protected Class<?> getTargetClass(Object service) throws Exception {
 		Class<?> clazz = service.getClass();
 
@@ -156,24 +128,6 @@ public class ApplicationContextServicePublisher {
 		return clazz;
 	}
 
-	protected boolean isIgnoredInterface(String interfaceClassName) {
-		for (String ignoredInterfaceClassName :
-				PropsValues.MODULE_FRAMEWORK_SERVICES_IGNORED_INTERFACES) {
-
-			if (!ignoredInterfaceClassName.startsWith(StringPool.EXCLAMATION) &&
-				(ignoredInterfaceClassName.equals(interfaceClassName) ||
-				 (ignoredInterfaceClassName.endsWith(StringPool.STAR) &&
-				  interfaceClassName.startsWith(
-					  ignoredInterfaceClassName.substring(
-						  0, ignoredInterfaceClassName.length() - 1))))) {
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	protected void registerApplicationContext(
 		ApplicationContext applicationContext, String bundleSymbolicName) {
 
@@ -189,26 +143,19 @@ public class ApplicationContextServicePublisher {
 	}
 
 	protected void registerService(BundleContext bundleContext, Object bean) {
-		Set<Class<?>> interfaces = null;
+		OSGiBeanProperties osgiBeanProperties = null;
 
 		try {
-			interfaces = getInterfaces(bean);
+			osgiBeanProperties = AnnotationUtils.findAnnotation(
+				getTargetClass(bean), OSGiBeanProperties.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to register service " + bean, e);
 		}
 
-		interfaces.add(bean.getClass());
-
-		List<String> names = new ArrayList<>(interfaces.size());
-
-		for (Class<?> interfaceClass : interfaces) {
-			String interfaceClassName = interfaceClass.getName();
-
-			if (!isIgnoredInterface(interfaceClassName)) {
-				names.add(interfaceClassName);
-			}
-		}
+		Set<String> names = OSGiBeanProperties.Service.interfaces(
+			bean, osgiBeanProperties,
+			PropsValues.MODULE_FRAMEWORK_SERVICES_IGNORED_INTERFACES);
 
 		if (names.isEmpty()) {
 			if (_log.isDebugEnabled()) {
@@ -228,7 +175,7 @@ public class ApplicationContextServicePublisher {
 	}
 
 	protected void registerService(
-		BundleContext bundleContext, Object bean, List<String> interfaces,
+		BundleContext bundleContext, Object bean, Collection<String> interfaces,
 		Dictionary<String, Object> properties) {
 
 		ServiceRegistration<?> serviceRegistration =

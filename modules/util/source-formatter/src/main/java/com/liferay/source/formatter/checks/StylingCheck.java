@@ -30,6 +30,11 @@ public abstract class StylingCheck extends BaseFileCheck {
 		content = _formatStyling(content, "\nfor (;;) {", "\nwhile (true) {");
 		content = _formatStyling(content, "\tfor (;;) {", "\twhile (true) {");
 
+		content = _formatStyling(
+			content, "String.valueOf(false)", "Boolean.FALSE.toString()");
+		content = _formatStyling(
+			content, "String.valueOf(true)", "Boolean.TRUE.toString()");
+
 		return content;
 	}
 

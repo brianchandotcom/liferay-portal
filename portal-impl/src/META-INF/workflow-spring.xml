@@ -65,6 +65,11 @@
 		<property name="synchronousDestinationName" value="liferay/workflow_log" />
 		<property name="synchronousMessageSenderMode" value="DIRECT" />
 	</bean>
+	<bean class="com.liferay.portal.workflow.WorkflowStatusManagerProxyBean" id="com.liferay.portal.workflow.WorkflowStatusManagerProxyBean">
+		<property name="destinationName" value="liferay/workflow_status" />
+		<property name="synchronousDestinationName" value="liferay/workflow_status" />
+		<property name="synchronousMessageSenderMode" value="DIRECT" />
+	</bean>
 	<bean class="com.liferay.portal.workflow.WorkflowPermissionAdvice" factory-method="create" id="com.liferay.portal.workflow.WorkflowTaskManagerProxyBean">
 		<constructor-arg name="workflowTaskManager">
 			<bean class="com.liferay.portal.kernel.messaging.proxy.MessagingProxyInvocationHandler" factory-method="createProxy">
@@ -77,11 +82,6 @@
 				</constructor-arg>
 			</bean>
 		</constructor-arg>
-	</bean>
-	<bean class="com.liferay.portal.workflow.WorkflowStatusManagerProxyBean" id="com.liferay.portal.workflow.WorkflowStatusManagerProxyBean">
-		<property name="destinationName" value="liferay/workflow_status" />
-		<property name="synchronousDestinationName" value="liferay/workflow_status" />
-		<property name="synchronousMessageSenderMode" value="DIRECT" />
 	</bean>
 	<bean class="com.liferay.portal.workflow.comparator.WorkflowComparatorFactoryProxyBean" id="com.liferay.portal.workflow.comparator.WorkflowComparatorFactoryProxyBean">
 		<property name="destinationName" value="liferay/workflow_comparator" />

@@ -57,6 +57,7 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 
 		npmInstallTask.setNodeModulesDigestFile(
 			new File(npmInstallTask.getNodeModulesDir(), ".digest"));
+		npmInstallTask.setUseNpmCI(Boolean.TRUE);
 	}
 
 	private void _configureTaskPublishNodeModule(

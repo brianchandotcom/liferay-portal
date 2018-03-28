@@ -12,7 +12,8 @@
 	<td>SOCIAL_BOOKMARK_ICON</td>
 	<td>//li[contains(@class,'taglib-social-bookmark-${key_socialBookmark}')]/a</td>
 	<td></td>
-</tr><tr>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

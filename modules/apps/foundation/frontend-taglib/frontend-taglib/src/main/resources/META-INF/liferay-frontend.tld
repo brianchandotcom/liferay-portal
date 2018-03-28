@@ -461,7 +461,7 @@
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>
-		<description>Creates a navigable form for multiple section forms. The default navigation is a side navigation box with links to each section. The navigation can be configured as a progressive step navigation positioned above the form, or as vertically stacked accordion style sections that expand when clicked.</description>
+		<description>Creates a navigable form for multiple section forms. The navigation is a side navigation box with links to each section that renders as vertically stacked accordion style sections that expand when clicked.</description>
 		<name>form-navigator</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.FormNavigatorTag</tag-class>
 		<body-content>JSP</body-content>

@@ -43,8 +43,16 @@ import java.util.regex.Pattern;
  */
 public class Batch {
 
+	public BatchAxis getBatchAxis(int batchAxisId) {
+		return _batchAxes.get(batchAxisId);
+	}
+
 	public String getBatchName() {
 		return _batchName;
+	}
+
+	public int getBatchSize() {
+		return _batchAxes.size();
 	}
 
 	public GitWorkingDirectory getGitWorkingDirectory() {
@@ -53,14 +61,6 @@ public class Batch {
 
 	public Properties getPortalTestProperties() {
 		return _portalTestProperties;
-	}
-
-	public BatchAxis getBatchAxis(int batchAxisId) {
-		return _batchAxes.get(batchAxisId);
-	}
-
-	public int getBatchSize() {
-		return _batchAxes.size();
 	}
 
 	public static class BatchAxis {
@@ -88,9 +88,7 @@ public class Batch {
 
 	}
 
-	protected Batch(
-		String batchName, GitWorkingDirectory gitWorkingDirectory) {
-
+	protected Batch(String batchName, GitWorkingDirectory gitWorkingDirectory) {
 		this(batchName, gitWorkingDirectory, null);
 	}
 
@@ -112,6 +110,39 @@ public class Batch {
 		_setTestClassNamesIncludesRelativeGlobs();
 
 		_setBatchAxes();
+	}
+
+	private String _getBatchMaxClassGroupSizePropertyValue() {
+		List<String> propertyNames = new ArrayList<>();
+
+		if (_testSuiteName != null) {
+			propertyNames.add(
+				JenkinsResultsParserUtil.combine(
+					"test.batch.max.class.group.size[", _batchName, "][",
+					_testSuiteName, "]"));
+
+			propertyNames.add(
+				_getWildcardPropertyName(
+					_batchName, _portalTestProperties,
+					"test.batch.max.class.group.size", _testSuiteName));
+
+			propertyNames.add(
+				JenkinsResultsParserUtil.combine(
+					"test.batch.max.class.group.size[", _testSuiteName, "]"));
+		}
+
+		propertyNames.add(
+			JenkinsResultsParserUtil.combine(
+				"test.batch.max.class.group.size[", _batchName, "]"));
+
+		propertyNames.add(
+			_getWildcardPropertyName(
+				_batchName, _portalTestProperties,
+				"test.batch.max.class.group.size"));
+
+		propertyNames.add("test.batch.max.class.group.size");
+
+		return _getFirstPropertyValue(_portalTestProperties, propertyNames);
 	}
 
 	private List<String> _getCurrentBranchTestClassNamesRelativeGlobs(
@@ -187,39 +218,6 @@ public class Batch {
 		}
 
 		return _DEFAULT_MAX_CLASS_GROUP_SIZE;
-	}
-
-	private String _getBatchMaxClassGroupSizePropertyValue() {
-		List<String> propertyNames = new ArrayList<>();
-
-		if (_testSuiteName != null) {
-			propertyNames.add(
-				JenkinsResultsParserUtil.combine(
-					"test.batch.max.class.group.size[", _batchName, "][",
-					_testSuiteName, "]"));
-
-			propertyNames.add(
-				_getWildcardPropertyName(
-					_batchName, _portalTestProperties,
-					"test.batch.max.class.group.size", _testSuiteName));
-
-			propertyNames.add(
-				JenkinsResultsParserUtil.combine(
-					"test.batch.max.class.group.size[", _testSuiteName, "]"));
-		}
-
-		propertyNames.add(
-			JenkinsResultsParserUtil.combine(
-				"test.batch.max.class.group.size[", _batchName, "]"));
-
-		propertyNames.add(
-			_getWildcardPropertyName(
-				_batchName, _portalTestProperties,
-				"test.batch.max.class.group.size"));
-
-		propertyNames.add("test.batch.max.class.group.size");
-
-		return _getFirstPropertyValue(_portalTestProperties, propertyNames);
 	}
 
 	private Set<String> _getTestClassFileNames() {
@@ -552,10 +550,12 @@ public class Batch {
 				testClassNamesIncludesRelativeGlobs));
 	}
 
-	private static final int _DEFAULT_MAX_CLASS_GROUP_SIZE = 5000;
-
 	private static final boolean _DEFAULT_BATCH_CURRENT_BRANCH = false;
 
+	private static final int _DEFAULT_MAX_CLASS_GROUP_SIZE = 5000;
+
+	private final List<BatchAxis> _batchAxes = new ArrayList<>();
+	private boolean _batchCurrentBranch;
 	private final String _batchName;
 	private final GitWorkingDirectory _gitWorkingDirectory;
 	private final Pattern _packagePathPattern = Pattern.compile(
@@ -563,8 +563,6 @@ public class Batch {
 	private final Properties _portalTestProperties;
 	private final Pattern _propertyNamePattern = Pattern.compile(
 		"[^\\]]+\\[(?<batchName>[^\\]]+)\\](\\[(?<testSuiteName>[^\\]]+)\\])?");
-	private final List<BatchAxis> _batchAxes = new ArrayList<>();
-	private boolean _batchCurrentBranch;
 	private final List<PathMatcher> _testClassNamesExcludesPathMatchers =
 		new ArrayList<>();
 	private final List<PathMatcher> _testClassNamesIncludesPathMatchers =

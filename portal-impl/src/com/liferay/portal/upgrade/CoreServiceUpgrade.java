@@ -102,9 +102,7 @@ public class CoreServiceUpgrade extends UpgradeProcess {
 				while (rs.next()) {
 					String schemaVersion = rs.getString("schemaVersion");
 
-					if (!_INITIAL_SCHEMA_VERSION.equals(schemaVersion) &&
-						Version.isVersion(schemaVersion)) {
-
+					if (Version.isVersion(schemaVersion)) {
 						return new Version(schemaVersion);
 					}
 				}
@@ -114,12 +112,28 @@ public class CoreServiceUpgrade extends UpgradeProcess {
 		return null;
 	}
 
+	protected static void initializeSchemaVersion() throws SQLException {
+		try (Connection con = DataAccess.getConnection();
+			PreparedStatement ps = con.prepareStatement(
+				"update Release_ set schemaVersion = ? where " +
+					"servletContextName = ? and buildNumber < 7100")) {
+
+			ps.setString(1, _INITIAL_SCHEMA_VERSION);
+			ps.setString(2, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
+
+			ps.execute();
+		}
+	}
+
 	protected static void initializeUpgradeProcesses() throws Exception {
 		if (_upgradeProcesses != null) {
 			return;
 		}
 
 		_upgradeProcesses = new TreeMap<>();
+
+		_upgradeProcesses.put(
+			new Version(_INITIAL_SCHEMA_VERSION), new DummyUpgradeProcess());
 
 		for (Class<?> coreUpgradeProcessRegistry :
 				_CORE_UPGRADE_PROCESS_REGISTRIES) {
@@ -134,6 +148,8 @@ public class CoreServiceUpgrade extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		initializeSchemaVersion();
+
 		for (Version pendingSchemaVersion :
 				getPendingSchemaVersions(getCurrentSchemaVersion())) {
 
@@ -174,7 +190,7 @@ public class CoreServiceUpgrade extends UpgradeProcess {
 	private static final Class<?>[] _CORE_UPGRADE_PROCESS_REGISTRIES =
 		{UpgradeProcessRegistry.class};
 
-	private static final String _INITIAL_SCHEMA_VERSION = "7.1.0";
+	private static final String _INITIAL_SCHEMA_VERSION = "0.1.0";
 
 	private static TreeMap<Version, UpgradeProcess> _upgradeProcesses;
 

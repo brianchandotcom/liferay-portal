@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -680,6 +681,17 @@ public class OAuth2ApplicationScopeAliasesUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<OAuth2ApplicationScopeAliasesPersistence, OAuth2ApplicationScopeAliasesPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(OAuth2ApplicationScopeAliasesPersistence.class);
+	private static ServiceTracker<OAuth2ApplicationScopeAliasesPersistence, OAuth2ApplicationScopeAliasesPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(OAuth2ApplicationScopeAliasesPersistence.class);
+
+		ServiceTracker<OAuth2ApplicationScopeAliasesPersistence, OAuth2ApplicationScopeAliasesPersistence> serviceTracker =
+			new ServiceTracker<OAuth2ApplicationScopeAliasesPersistence, OAuth2ApplicationScopeAliasesPersistence>(bundle.getBundleContext(),
+				OAuth2ApplicationScopeAliasesPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

@@ -17,4 +17,5 @@
 	<bean class="com.liferay.oauth2.provider.service.persistence.impl.OAuth2AuthorizationPersistenceImpl" id="com.liferay.oauth2.provider.service.persistence.OAuth2AuthorizationPersistence" parent="basePersistence" />
 	<bean class="com.liferay.oauth2.provider.service.impl.OAuth2ScopeGrantLocalServiceImpl" id="com.liferay.oauth2.provider.service.OAuth2ScopeGrantLocalService" />
 	<bean class="com.liferay.oauth2.provider.service.persistence.impl.OAuth2ScopeGrantPersistenceImpl" id="com.liferay.oauth2.provider.service.persistence.OAuth2ScopeGrantPersistence" parent="basePersistence" />
+	<bean class="com.liferay.oauth2.provider.service.persistence.impl.OAuth2ScopeGrantFinderImpl" id="com.liferay.oauth2.provider.service.persistence.OAuth2ScopeGrantFinder" parent="basePersistence" />
 </beans>

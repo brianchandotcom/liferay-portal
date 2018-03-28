@@ -20,6 +20,7 @@ import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
 import com.liferay.oauth2.provider.service.OAuth2ScopeGrantLocalService;
 import com.liferay.oauth2.provider.service.persistence.OAuth2ApplicationScopeAliasesPersistence;
 import com.liferay.oauth2.provider.service.persistence.OAuth2AuthorizationPersistence;
+import com.liferay.oauth2.provider.service.persistence.OAuth2ScopeGrantFinder;
 import com.liferay.oauth2.provider.service.persistence.OAuth2ScopeGrantPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -508,6 +509,25 @@ public abstract class OAuth2ScopeGrantLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the o auth2 scope grant finder.
+	 *
+	 * @return the o auth2 scope grant finder
+	 */
+	public OAuth2ScopeGrantFinder getOAuth2ScopeGrantFinder() {
+		return oAuth2ScopeGrantFinder;
+	}
+
+	/**
+	 * Sets the o auth2 scope grant finder.
+	 *
+	 * @param oAuth2ScopeGrantFinder the o auth2 scope grant finder
+	 */
+	public void setOAuth2ScopeGrantFinder(
+		OAuth2ScopeGrantFinder oAuth2ScopeGrantFinder) {
+		this.oAuth2ScopeGrantFinder = oAuth2ScopeGrantFinder;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -658,6 +678,8 @@ public abstract class OAuth2ScopeGrantLocalServiceBaseImpl
 	protected OAuth2ScopeGrantLocalService oAuth2ScopeGrantLocalService;
 	@BeanReference(type = OAuth2ScopeGrantPersistence.class)
 	protected OAuth2ScopeGrantPersistence oAuth2ScopeGrantPersistence;
+	@BeanReference(type = OAuth2ScopeGrantFinder.class)
+	protected OAuth2ScopeGrantFinder oAuth2ScopeGrantFinder;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalService.class)

@@ -53,12 +53,24 @@ public class RobotsUtil {
 			return getDefaultRobots(null);
 		}
 
-		Group group = layoutSet.getGroup();
+		String defaultRobots = getDefaultRobots(
+			PortalUtil.getVirtualHostname(layoutSet));
 
-		return GetterUtil.get(
-			group.getTypeSettingsProperty(
+		String robots = GetterUtil.get(
+			layoutSet.getSettingsProperty(
 				layoutSet.isPrivateLayout() + "-robots.txt"),
-			getDefaultRobots(PortalUtil.getVirtualHostname(layoutSet)));
+			defaultRobots);
+
+		if (robots.equals(defaultRobots)) {
+			Group group = layoutSet.getGroup();
+
+			robots = GetterUtil.get(
+				group.getTypeSettingsProperty(
+					layoutSet.isPrivateLayout() + "-robots.txt"),
+				defaultRobots);
+		}
+
+		return robots;
 	}
 
 }

@@ -79,8 +79,6 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 
 		updateMergePages(actionRequest, liveGroupId);
 
-		updateRobots(actionRequest, liveGroupId, privateLayout);
-
 		updateSettings(
 			actionRequest, liveGroupId, stagingGroupId, privateLayout,
 			layoutSet.getSettingsProperties());
@@ -169,7 +167,7 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 		_groupService.updateGroup(liveGroupId, liveGroup.getTypeSettings());
 	}
 
-	protected void updateRobots(
+	protected String updateRobots(
 			ActionRequest actionRequest, long liveGroupId,
 			boolean privateLayout)
 		throws Exception {
@@ -193,6 +191,8 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 
 		_groupService.updateGroup(
 			liveGroup.getGroupId(), typeSettingsProperties.toString());
+
+		return robots;
 	}
 
 	protected void updateSettings(
@@ -211,6 +211,16 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 		if (stagingGroupId > 0) {
 			groupId = stagingGroupId;
 		}
+
+		String robots = updateRobots(actionRequest, liveGroupId, privateLayout);
+
+		String robotsPropertyName = "false-robots.txt";
+
+		if (privateLayout) {
+			robotsPropertyName = "true-robots.txt";
+		}
+
+		settingsProperties.put(robotsPropertyName, robots);
 
 		_layoutSetService.updateSettings(
 			groupId, privateLayout, settingsProperties.toString());

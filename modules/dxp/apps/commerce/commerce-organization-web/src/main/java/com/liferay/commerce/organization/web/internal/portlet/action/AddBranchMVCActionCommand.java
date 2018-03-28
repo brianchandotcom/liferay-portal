@@ -16,12 +16,24 @@ package com.liferay.commerce.organization.web.internal.portlet.action;
 
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.commerce.organization.web.internal.constants.CommerceOrganizationPortletKeys;
+import com.liferay.portal.kernel.exception.DuplicateOrganizationException;
+import com.liferay.portal.kernel.exception.OrganizationNameException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.OrganizationConstants;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -47,18 +59,66 @@ public class AddBranchMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long organizationId = ParamUtil.getLong(
-			actionRequest, "organizationId");
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		String name = ParamUtil.getString(actionRequest, "name");
-		String type = ParamUtil.getString(actionRequest, "type");
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			Organization.class.getName(), actionRequest);
+		try {
+			long organizationId = ParamUtil.getLong(
+				actionRequest, "organizationId");
 
-		_commerceOrganizationService.addOrganization(
-			organizationId, name, type, serviceContext);
+			String name = ParamUtil.getString(actionRequest, "name");
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+			String type = ParamUtil.getString(actionRequest, "type");
+
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				Organization.class.getName(), actionRequest);
+
+			_commerceOrganizationService.addOrganization(
+				organizationId, name, type, serviceContext);
+
+			jsonObject.put("redirectURL", redirect);
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse, jsonObject);
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
+			String error;
+
+			if (pe instanceof DuplicateOrganizationException) {
+				error = LanguageUtil.get(
+					themeDisplay.getLocale(),
+					"the-organization-name-is-already-taken");
+			}
+			else if (pe instanceof OrganizationNameException) {
+				error = LanguageUtil.format(
+					themeDisplay.getLocale(),
+					"the-x-cannot-be-x-or-a-reserved-word-such-as-x",
+					new String[] {
+						OrganizationConstants.NAME_LABEL,
+						OrganizationConstants.NAME_GENERAL_RESTRICTIONS,
+						OrganizationConstants.NAME_RESERVED_WORDS
+					});
+			}
+			else {
+				error = LanguageUtil.get(
+					themeDisplay.getLocale(), "an-unexpected-error-occurred");
+			}
+
+			jsonObject.put("error", error);
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse, jsonObject);
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AddBranchMVCActionCommand.class);
 
 	@Reference
 	private CommerceOrganizationService _commerceOrganizationService;

@@ -22,21 +22,13 @@ CommerceOrganizationBranchesDisplayContext commerceOrganizationBranchesDisplayCo
 
 <aui:form action="" method="post" name="searchFm">
 	<liferay-frontend:management-bar
-		includeCheckBox="<%= true %>"
+		includeCheckBox="<%= false %>"
 		searchContainerId="organizations"
 	>
 		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "toggleFilter(false);" %>' iconCssClass="icon-filter" id="filterButton" label="filter" />
-
 			<c:if test="<%= commerceOrganizationBranchesDisplayContext.hasManageBranchesPermission() %>">
-				<liferay-portlet:renderURL var="addOrganizationURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-					<portlet:param name="mvcRenderCommandName" value="addBranch" />
-					<portlet:param name="type" value="branch" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-				</liferay-portlet:renderURL>
-
 				<liferay-frontend:add-menu inline="<%= true %>">
-					<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-branch") %>' type="<%= AddMenuKeys.AddMenuType.PRIMARY %>" url='<%= "javascript:"+ renderResponse.getNamespace() +"addBranch('" + addOrganizationURL.toString() + "');" %>' />
+					<liferay-frontend:add-menu-item cssClass="add-branch-action" title='<%= LanguageUtil.get(request, "add-branch") %>' type="<%= AddMenuKeys.AddMenuType.PRIMARY %>" url='#' />
 				</liferay-frontend:add-menu>
 			</c:if>
 		</liferay-frontend:management-bar-buttons>
@@ -48,17 +40,7 @@ CommerceOrganizationBranchesDisplayContext commerceOrganizationBranchesDisplayCo
 				<liferay-ui:input-search markupView="lexicon" />
 			</li>
 		</liferay-frontend:management-bar-filters>
-
-		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteBranch();" %>' icon="times" label="delete" />
-		</liferay-frontend:management-bar-action-buttons>
 	</liferay-frontend:management-bar>
-
-	<div class="form-group-autofit hide" id="<portlet:namespace />filterSettings">
-		<div class="form-group-item">
-			<aui:button cssClass="btn-outline-borderless btn-outline-primary" type="submit" value="apply-filters" />
-		</div>
-	</div>
 </aui:form>
 
 <div class="container-fluid-1280">
@@ -95,53 +77,43 @@ CommerceOrganizationBranchesDisplayContext commerceOrganizationBranchesDisplayCo
 	</liferay-ui:search-container>
 </div>
 
-<aui:script>
-	function <portlet:namespace />addBranch(uri) {
-		Liferay.Util.openWindow(
-			{
-				dialog: {
-					centered: true,
-					destroyOnClose: true,
-					height: 600,
-					modal: true,
-					width: 600
-				},
-				dialogIframe: {
-					bodyCssClass: 'dialog-with-footer'
-				},
-				id: 'addBranchDialog',
-				title: '<liferay-ui:message key="add-branch" />',
-				uri: uri
+<portlet:actionURL name="addBranch" var="addBranchURL">
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
+	<portlet:param name="organizationId" value="<%= String.valueOf(commerceOrganizationBranchesDisplayContext.getCurrentOrganizationId()) %>" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="type" value="<%= CommerceOrganizationConstants.TYPE_BRANCH %>" />
+</portlet:actionURL>
+
+<c:if test="<%= commerceOrganizationBranchesDisplayContext.hasManageBranchesPermission() %>">
+	<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
+
+		var addSiteActionOptionQueryClickHandler = dom.delegate(
+			document.body,
+			'click',
+			'.add-branch-action',
+			function(event) {
+
+				modalCommands.openSimpleInputModal(
+					{
+						dialogTitle: '<liferay-ui:message key="add-branch" />',
+						formSubmitURL: '<%= addBranchURL %>',
+						idFieldName: 'organizationId',
+						idFieldValue: '<%= commerceOrganizationBranchesDisplayContext.getCurrentOrganizationId() %>',
+						mainFieldName: 'name',
+						mainFieldLabel: '<liferay-ui:message key="name" />',
+						namespace: '<portlet:namespace />',
+						spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+					}
+				);
 			}
 		);
-	}
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />closePopup',
-		function(dialogId) {
-			var dialog = Liferay.Util.Window.getById(dialogId);
+		function handleDestroyPortlet () {
+			addSiteActionOptionQueryClickHandler.removeListener();
 
-			dialog.destroy();
-		},
-		['liferay-util-window']
-	);
+			Liferay.detach('destroyPortlet', handleDestroyPortlet);
+		}
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />toggleFilter',
-		function(state) {
-			var A = AUI();
-
-			var filterButton = A.one('#<portlet:namespace />filterButton');
-			var filterSettings = A.one('#<portlet:namespace />filterSettings');
-
-			if (filterButton && filterSettings) {
-				filterButton.toggleClass('active');
-
-				filterSettings.toggle();
-			}
-		},
-		['aui-base']
-	);
-</aui:script>
+		Liferay.on('destroyPortlet', handleDestroyPortlet);
+	</aui:script>
+</c:if>

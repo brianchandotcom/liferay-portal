@@ -14,20 +14,38 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
-import java.util.ArrayList;
 import java.util.function.Consumer;
 
 /**
+ * Defines a {@code Consumer} that can throw an exception.
+ *
+ * <p>
+ * This interface can be implemented with a lambda function.
+ * </p>
+ *
  * @author Carlos Lancha
+ * @param  <A> the type of the first argument of the consumer
  */
-public class LabelItemList extends ArrayList<LabelItem> {
+@FunctionalInterface
+public interface SafeConsumer<A> {
 
-	public void add(Consumer<LabelItem> consumer) {
-		LabelItem labelItem = new LabelItem();
-
-		consumer.accept(labelItem);
-
-		add(labelItem);
+	public static <T> Consumer<T> ignore(SafeConsumer<T> safeConsumer) {
+		return t -> {
+			try {
+				safeConsumer.accept(t);
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
+
+	/**
+	 * Operates with one parameter and returns {@code void}. This function can
+	 * be implemented explicitly or with a lambda.
+	 *
+	 * @param a the first function argument
+	 */
+	public void accept(A a) throws Exception;
 
 }

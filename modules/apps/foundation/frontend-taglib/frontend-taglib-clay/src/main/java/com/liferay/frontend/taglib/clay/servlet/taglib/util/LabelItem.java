@@ -14,30 +14,19 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
-import java.io.Serializable;
+import java.util.HashMap;
 
 /**
  * @author Carlos Lancha
  */
-public class LabelItem implements Serializable {
-
-	public String getLabel() {
-		return _label;
-	}
-
-	public String getStyle() {
-		return _style;
-	}
+public class LabelItem extends HashMap<String, String> {
 
 	public void setLabel(String label) {
-		_label = label;
+		put("label", label);
 	}
 
 	public void setStyle(String style) {
-		_style = style;
+		put("style", style);
 	}
-
-	private String _label;
-	private String _style;
 
 }

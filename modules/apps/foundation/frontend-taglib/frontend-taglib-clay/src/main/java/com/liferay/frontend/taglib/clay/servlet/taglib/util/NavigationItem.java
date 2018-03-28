@@ -14,37 +14,21 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
-import java.io.Serializable;
+import java.util.HashMap;
 
 import javax.portlet.PortletURL;
 
 /**
  * @author Chema Balsas
  */
-public class NavigationItem implements Serializable {
-
-	public String getHref() {
-		return _href;
-	}
-
-	public String getLabel() {
-		return _label;
-	}
-
-	public boolean isActive() {
-		return _active;
-	}
-
-	public boolean isDisabled() {
-		return _disabled;
-	}
+public class NavigationItem extends HashMap<String, Object> {
 
 	public void setActive(boolean active) {
-		_active = active;
+		put("active", active);
 	}
 
 	public void setDisabled(boolean disabled) {
-		_disabled = disabled;
+		put("disabled", disabled);
 	}
 
 	public void setHref(PortletURL portletURL, Object... parameters) {
@@ -62,20 +46,15 @@ public class NavigationItem implements Serializable {
 			}
 		}
 
-		_href = portletURL.toString();
+		setHref(portletURL.toString());
 	}
 
 	public void setHref(String href) {
-		_href = href;
+		put("href", href);
 	}
 
 	public void setLabel(String label) {
-		_label = label;
+		put("label", label);
 	}
-
-	private boolean _active;
-	private boolean _disabled;
-	private String _href;
-	private String _label;
 
 }

@@ -17,18 +17,10 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 /**
  * @author Carlos Lancha
  */
-public class DropdownRadioItem extends DropdownItem {
+public class ViewTypeItem extends NavigationItem {
 
-	public DropdownRadioItem() {
-		put("type", "radio");
-	}
-
-	public void setChecked(boolean checked) {
-		put("checked", checked);
-	}
-
-	public void setInputValue(String inputValue) {
-		put("inputValue", inputValue);
+	public void setIcon(String icon) {
+		put("icon", icon);
 	}
 
 }

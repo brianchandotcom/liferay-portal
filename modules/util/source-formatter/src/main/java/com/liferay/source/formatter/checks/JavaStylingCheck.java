@@ -53,13 +53,11 @@ public class JavaStylingCheck extends StylingCheck {
 				"\n */\n\npackage "
 			});
 
-		content = formatStyling(content);
-
 		Matcher matcher = _incorrectSynchronizedPattern.matcher(content);
 
 		content = matcher.replaceAll("$1$3 $2");
 
-		return content;
+		return formatStyling(content);
 	}
 
 	private final Pattern _incorrectSynchronizedPattern = Pattern.compile(

@@ -14,7 +14,6 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
@@ -23,15 +22,38 @@ import com.liferay.portal.kernel.util.StringUtil;
 public abstract class StylingCheck extends BaseFileCheck {
 
 	protected String formatStyling(String content) {
-		content = StringUtil.replace(
-			content, new String[] {"Validator.isNull(", "Validator.isNotNull("},
-			new String[] {"Validator.isNull(", "Validator.isNotNull("});
+		content = _formatStyling(
+			content, "!Validator.isNotNull(", "Validator.isNull(");
+		content = _formatStyling(
+			content, "!Validator.isNull(", "Validator.isNotNull(");
 
-		content = StringUtil.replace(
-			content, StringPool.TAB + "for (;;) {",
-			StringPool.TAB + "while (true) {");
+		content = _formatStyling(content, "\nfor (;;) {", "\nwhile (true) {");
+		content = _formatStyling(content, "\tfor (;;) {", "\twhile (true) {");
 
 		return content;
+	}
+
+	protected boolean isJavaSource(String content, int pos) {
+		return true;
+	}
+
+	private String _formatStyling(
+		String content, String incorrectStyling, String correctStyling) {
+
+		int x = -1;
+
+		while (true) {
+			x = content.indexOf(incorrectStyling, x + 1);
+
+			if (x == -1) {
+				return content;
+			}
+
+			if (isJavaSource(content, x)) {
+				return StringUtil.replaceFirst(
+					content, incorrectStyling, correctStyling);
+			}
+		}
 	}
 
 }

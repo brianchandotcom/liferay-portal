@@ -31,8 +31,10 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -465,7 +467,7 @@ public class Batch {
 
 			BatchAxis batchAxis = new BatchAxis(id);
 
-			_batchAxes.add(batchAxis);
+			_batchAxes.put(id, batchAxis);
 
 			for (String batchAxisTestClassFileName :
 					batchAxisTestClassFileNames) {
@@ -553,7 +555,7 @@ public class Batch {
 
 	private static final boolean _DEFAULT_TEST_RELEVANT_CHANGES = false;
 
-	private final List<BatchAxis> _batchAxes = new ArrayList<>();
+	private final Map<Integer, BatchAxis> _batchAxes = new HashMap<>();
 	private final String _batchName;
 	private final GitWorkingDirectory _gitWorkingDirectory;
 	private final Pattern _packagePathPattern = Pattern.compile(

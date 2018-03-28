@@ -202,9 +202,13 @@ public class UnprocessedExceptionCheck extends BaseCheck {
 		if ((parentAST.getType() == TokenTypes.LITERAL_THROW) ||
 			(parentAST.getType() == TokenTypes.SLIST)) {
 
-			log(
-				detailAST.getLineNo(), _MSG_UNPROCESSED_EXCEPTION,
-				exceptionVariableName);
+			String exceptionClassName = _getExceptionClassName(parameterDefAST);
+
+			if (!exceptionClassName.equals("JSONException")) {
+				log(
+					detailAST.getLineNo(), _MSG_UNPROCESSED_EXCEPTION,
+					exceptionVariableName);
+			}
 		}
 	}
 

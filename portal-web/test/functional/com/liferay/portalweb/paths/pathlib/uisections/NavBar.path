@@ -120,7 +120,7 @@
 </tr>
 <tr>
 	<td>HOME</td>
-	<td>//div[contains(@class,'navbar-default')]//a/span[contains(.,'Home')]</td>
+	<td>//div[contains(@class,'navbar')]//a/span[contains(.,'Home')]</td>
 	<td></td>
 </tr>
 <tr>

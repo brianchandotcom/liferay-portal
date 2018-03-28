@@ -147,8 +147,17 @@ public class LiferayResourceProperties
 
 			if (validationResult.getStatus() == ValidationResult.Result.OK) {
 				try {
-					List<NamedThing> moduleNames =
-						liferaySourceOrSinkRuntime.getSchemaNames(null);
+					List<NamedThing> moduleNames = null;
+
+					if (useWebSiteRelatedResource.getValue()) {
+						moduleNames =
+							liferaySourceOrSinkRuntime.getResourceList(
+								webSiteURL.getValue());
+					}
+					else {
+						moduleNames = liferaySourceOrSinkRuntime.getSchemaNames(
+							null);
+					}
 
 					resourceURL.setPossibleNamedThingValues(moduleNames);
 				}

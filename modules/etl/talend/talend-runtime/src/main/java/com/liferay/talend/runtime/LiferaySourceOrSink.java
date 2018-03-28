@@ -32,6 +32,7 @@ import com.liferay.talend.runtime.apio.constants.SchemaOrgConstants;
 import com.liferay.talend.runtime.apio.jsonld.ApioForm;
 import com.liferay.talend.runtime.apio.jsonld.ApioResourceCollection;
 import com.liferay.talend.runtime.apio.jsonld.ApioSingleModel;
+import com.liferay.talend.runtime.apio.jsonld.ApioUtils;
 import com.liferay.talend.runtime.apio.operation.Operation;
 import com.liferay.talend.runtime.client.RESTClient;
 
@@ -234,6 +235,10 @@ public class LiferaySourceOrSink
 			jsonNode = doApioGetRequest(runtimeContainer);
 		}
 		catch (IOException ioe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to fetch resources: " + ioe.getMessage());
+			}
+
 			return Collections.emptyMap();
 		}
 
@@ -373,6 +378,33 @@ public class LiferaySourceOrSink
 		throws IOException {
 
 		return _getResourceCollectionSchema(resourceURL);
+	}
+
+	@Override
+	public List<NamedThing> getResourceList(String webSiteURL)
+		throws IOException {
+
+		if (StringUtils.isEmpty(webSiteURL)) {
+			return getSchemaNames(null);
+		}
+
+		List<NamedThing> resourceNames = new ArrayList<>();
+
+		Map<String, String> resourceCollections =
+			_getWebSiteResourceEndpointsMap(webSiteURL);
+
+		for (Map.Entry<String, String> entry : resourceCollections.entrySet()) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"resource name: {}, href: {} ", entry.getKey(),
+					entry.getValue());
+			}
+
+			resourceNames.add(
+				new SimpleNamedThing(entry.getKey(), entry.getValue()));
+		}
+
+		return resourceNames;
 	}
 
 	@Override
@@ -669,6 +701,47 @@ public class LiferaySourceOrSink
 		}
 
 		return resourcesMap;
+	}
+
+	private Map<String, String> _getWebSiteResourceCollectionsDescriptor(
+			JsonNode jsonNode)
+		throws IOException {
+
+		ApioSingleModel apioSingleModel = new ApioSingleModel(jsonNode);
+
+		JsonNode contextJsonNode = apioSingleModel.getContextJsonNode();
+
+		Map<String, String> resourcesMap = new HashMap<>();
+		List<String> typeCoercionTermKeys = ApioUtils.getTypeCoercionTermKeys(
+			contextJsonNode);
+
+		for (String typeCoercionTermKey : typeCoercionTermKeys) {
+			JsonNode resourceHrefJsonNode = jsonNode.path(typeCoercionTermKey);
+
+			resourcesMap.put(
+				resourceHrefJsonNode.asText(), typeCoercionTermKey);
+		}
+
+		return resourcesMap;
+	}
+
+	private Map<String, String> _getWebSiteResourceEndpointsMap(
+		String webSiteURL) {
+
+		JsonNode jsonNode;
+
+		try {
+			jsonNode = doApioGetRequest(webSiteURL);
+
+			return _getWebSiteResourceCollectionsDescriptor(jsonNode);
+		}
+		catch (IOException ioe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to fetch resources: " + ioe.getMessage());
+			}
+		}
+
+		return Collections.emptyMap();
 	}
 
 	private String _getWebSitesEndpointURL() throws IOException {

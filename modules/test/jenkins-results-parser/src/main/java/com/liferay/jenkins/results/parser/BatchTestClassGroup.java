@@ -47,12 +47,12 @@ public class Batch {
 		return _batchAxes.get(batchAxisId);
 	}
 
-	public String getBatchName() {
-		return _batchName;
+	public int getBatchAxisCount() {
+		return _batchAxes.size();
 	}
 
-	public int getBatchSize() {
-		return _batchAxes.size();
+	public String getBatchName() {
+		return _batchName;
 	}
 
 	public GitWorkingDirectory getGitWorkingDirectory() {
@@ -112,35 +112,44 @@ public class Batch {
 		_setBatchAxes();
 	}
 
-	private String _getBatchMaxClassGroupSizePropertyValue() {
+	private int _getBatchAxisMaxSize() {
+		String batchAxisMaxSize = _getBatchAxisMaxSizePropertyValue();
+
+		if (batchAxisMaxSize != null) {
+			return Integer.parseInt(batchAxisMaxSize);
+		}
+
+		return _DEFAULT_BATCH_AXIS_MAX_SIZE;
+	}
+
+	private String _getBatchAxisMaxSizePropertyValue() {
 		List<String> propertyNames = new ArrayList<>();
 
 		if (_testSuiteName != null) {
 			propertyNames.add(
 				JenkinsResultsParserUtil.combine(
-					"test.batch.max.class.group.size[", _batchName, "][",
+					"test.batch.axis.max.size[", _batchName, "][",
 					_testSuiteName, "]"));
 
 			propertyNames.add(
 				_getWildcardPropertyName(
 					_batchName, _portalTestProperties,
-					"test.batch.max.class.group.size", _testSuiteName));
+					"test.batch.axis.max.size", _testSuiteName));
 
 			propertyNames.add(
 				JenkinsResultsParserUtil.combine(
-					"test.batch.max.class.group.size[", _testSuiteName, "]"));
+					"test.batch.axis.max.size[", _testSuiteName, "]"));
 		}
 
 		propertyNames.add(
 			JenkinsResultsParserUtil.combine(
-				"test.batch.max.class.group.size[", _batchName, "]"));
+				"test.batch.axis.max.size[", _batchName, "]"));
 
 		propertyNames.add(
 			_getWildcardPropertyName(
-				_batchName, _portalTestProperties,
-				"test.batch.max.class.group.size"));
+				_batchName, _portalTestProperties, "test.batch.axis.max.size"));
 
-		propertyNames.add("test.batch.max.class.group.size");
+		propertyNames.add("test.batch.axis.max.size");
 
 		return _getFirstPropertyValue(_portalTestProperties, propertyNames);
 	}
@@ -163,17 +172,6 @@ public class Batch {
 		}
 
 		return null;
-	}
-
-	private int _getMaxClassGroupSize() {
-		String testBatchMaxClassGroupSizePropertyValue =
-			_getBatchMaxClassGroupSizePropertyValue();
-
-		if (testBatchMaxClassGroupSizePropertyValue != null) {
-			return Integer.parseInt(testBatchMaxClassGroupSizePropertyValue);
-		}
-
-		return _DEFAULT_MAX_CLASS_GROUP_SIZE;
 	}
 
 	private List<String> _getRelevantTestClassNamesRelativeGlobs(
@@ -452,18 +450,18 @@ public class Batch {
 			return;
 		}
 
-		int maxClassGroupSize = _getMaxClassGroupSize();
+		int batchAxisMaxSize = _getBatchAxisMaxSize();
 
-		int batchSize = (int)Math.ceil(
-			(double)testClassFileNamesCount / maxClassGroupSize);
+		int batchAxisCount = (int)Math.ceil(
+			(double)testClassFileNamesCount / batchAxisMaxSize);
 
-		int classGroupSize = (int)Math.ceil(
-			(double)testClassFileNamesCount / batchSize);
+		int batchAxisSize = (int)Math.ceil(
+			(double)testClassFileNamesCount / batchAxisCount);
 
 		int id = 0;
 
 		for (List<String> batchAxisTestClassFileNames :
-				Lists.partition(testClassFileNames, classGroupSize)) {
+				Lists.partition(testClassFileNames, batchAxisSize)) {
 
 			BatchAxis batchAxis = new BatchAxis(id);
 
@@ -551,7 +549,7 @@ public class Batch {
 				testClassNamesIncludesRelativeGlobs));
 	}
 
-	private static final int _DEFAULT_MAX_CLASS_GROUP_SIZE = 5000;
+	private static final int _DEFAULT_BATCH_AXIS_MAX_SIZE = 5000;
 
 	private static final boolean _DEFAULT_TEST_RELEVANT_CHANGES = false;
 

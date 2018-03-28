@@ -55,8 +55,7 @@ public class AutoAnonymizeUADEntityMVCActionCommand
 			uadRegistry.getUADEntityAnonymizer(uadRegistryKey);
 
 		uadEntityAnonymizer.autoAnonymize(
-			getUADEntity(actionRequest, uadRegistryKey),
-			selectedUser.getUserId());
+			getEntity(actionRequest, uadRegistryKey), selectedUser.getUserId());
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 

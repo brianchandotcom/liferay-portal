@@ -284,8 +284,9 @@ public class LiferaySourceOrSink
 				webSitesApioResourceCollection = new ApioResourceCollection(
 					doApioGetRequest(nextPage));
 			}
-		} while (StringUtils.isNotBlank(nextPage) &&
-		 !lastPage.equals(actualPage));
+		}
+		while (StringUtils.isNotBlank(nextPage) &&
+			   !lastPage.equals(actualPage));
 
 		return webSitesList;
 	}

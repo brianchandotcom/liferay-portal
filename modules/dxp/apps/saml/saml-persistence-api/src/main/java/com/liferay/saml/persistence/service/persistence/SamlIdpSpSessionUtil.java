@@ -16,13 +16,14 @@ package com.liferay.saml.persistence.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import com.liferay.saml.persistence.model.SamlIdpSpSession;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -671,6 +672,17 @@ public class SamlIdpSpSessionUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<SamlIdpSpSessionPersistence, SamlIdpSpSessionPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(SamlIdpSpSessionPersistence.class);
+	private static ServiceTracker<SamlIdpSpSessionPersistence, SamlIdpSpSessionPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(SamlIdpSpSessionPersistence.class);
+
+		ServiceTracker<SamlIdpSpSessionPersistence, SamlIdpSpSessionPersistence> serviceTracker =
+			new ServiceTracker<SamlIdpSpSessionPersistence, SamlIdpSpSessionPersistence>(bundle.getBundleContext(),
+				SamlIdpSpSessionPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

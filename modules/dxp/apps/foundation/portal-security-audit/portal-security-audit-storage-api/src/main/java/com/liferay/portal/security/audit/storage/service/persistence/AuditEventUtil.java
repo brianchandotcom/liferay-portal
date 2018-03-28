@@ -16,12 +16,13 @@ package com.liferay.portal.security.audit.storage.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.audit.storage.model.AuditEvent;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -422,6 +423,17 @@ public class AuditEventUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<AuditEventPersistence, AuditEventPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(AuditEventPersistence.class);
+	private static ServiceTracker<AuditEventPersistence, AuditEventPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(AuditEventPersistence.class);
+
+		ServiceTracker<AuditEventPersistence, AuditEventPersistence> serviceTracker =
+			new ServiceTracker<AuditEventPersistence, AuditEventPersistence>(bundle.getBundleContext(),
+				AuditEventPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

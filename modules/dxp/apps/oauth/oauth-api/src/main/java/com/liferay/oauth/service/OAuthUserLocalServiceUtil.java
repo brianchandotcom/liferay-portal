@@ -16,7 +16,8 @@ package com.liferay.oauth.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -330,6 +331,17 @@ public class OAuthUserLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<OAuthUserLocalService, OAuthUserLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(OAuthUserLocalService.class);
+	private static ServiceTracker<OAuthUserLocalService, OAuthUserLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(OAuthUserLocalService.class);
+
+		ServiceTracker<OAuthUserLocalService, OAuthUserLocalService> serviceTracker =
+			new ServiceTracker<OAuthUserLocalService, OAuthUserLocalService>(bundle.getBundleContext(),
+				OAuthUserLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

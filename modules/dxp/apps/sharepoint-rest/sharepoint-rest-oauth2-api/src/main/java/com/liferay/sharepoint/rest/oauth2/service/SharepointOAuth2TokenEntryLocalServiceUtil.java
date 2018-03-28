@@ -16,7 +16,8 @@ package com.liferay.sharepoint.rest.oauth2.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -291,6 +292,17 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<SharepointOAuth2TokenEntryLocalService, SharepointOAuth2TokenEntryLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(SharepointOAuth2TokenEntryLocalService.class);
+	private static ServiceTracker<SharepointOAuth2TokenEntryLocalService, SharepointOAuth2TokenEntryLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(SharepointOAuth2TokenEntryLocalService.class);
+
+		ServiceTracker<SharepointOAuth2TokenEntryLocalService, SharepointOAuth2TokenEntryLocalService> serviceTracker =
+			new ServiceTracker<SharepointOAuth2TokenEntryLocalService, SharepointOAuth2TokenEntryLocalService>(bundle.getBundleContext(),
+				SharepointOAuth2TokenEntryLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

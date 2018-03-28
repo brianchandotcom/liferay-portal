@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.oauth.model.OAuthApplication;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -996,6 +997,17 @@ public class OAuthApplicationUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<OAuthApplicationPersistence, OAuthApplicationPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(OAuthApplicationPersistence.class);
+	private static ServiceTracker<OAuthApplicationPersistence, OAuthApplicationPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(OAuthApplicationPersistence.class);
+
+		ServiceTracker<OAuthApplicationPersistence, OAuthApplicationPersistence> serviceTracker =
+			new ServiceTracker<OAuthApplicationPersistence, OAuthApplicationPersistence>(bundle.getBundleContext(),
+				OAuthApplicationPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

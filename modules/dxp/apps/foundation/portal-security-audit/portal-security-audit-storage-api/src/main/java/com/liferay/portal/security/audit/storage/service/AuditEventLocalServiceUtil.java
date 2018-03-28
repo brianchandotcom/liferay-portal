@@ -16,7 +16,8 @@ package com.liferay.portal.security.audit.storage.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -300,6 +301,17 @@ public class AuditEventLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<AuditEventLocalService, AuditEventLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(AuditEventLocalService.class);
+	private static ServiceTracker<AuditEventLocalService, AuditEventLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(AuditEventLocalService.class);
+
+		ServiceTracker<AuditEventLocalService, AuditEventLocalService> serviceTracker =
+			new ServiceTracker<AuditEventLocalService, AuditEventLocalService>(bundle.getBundleContext(),
+				AuditEventLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

@@ -16,7 +16,8 @@ package com.liferay.saml.persistence.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -282,6 +283,17 @@ public class SamlSpAuthRequestLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<SamlSpAuthRequestLocalService, SamlSpAuthRequestLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(SamlSpAuthRequestLocalService.class);
+	private static ServiceTracker<SamlSpAuthRequestLocalService, SamlSpAuthRequestLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(SamlSpAuthRequestLocalService.class);
+
+		ServiceTracker<SamlSpAuthRequestLocalService, SamlSpAuthRequestLocalService> serviceTracker =
+			new ServiceTracker<SamlSpAuthRequestLocalService, SamlSpAuthRequestLocalService>(bundle.getBundleContext(),
+				SamlSpAuthRequestLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

@@ -16,13 +16,14 @@ package com.liferay.sharepoint.rest.oauth2.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -338,6 +339,17 @@ public class SharepointOAuth2TokenEntryUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<SharepointOAuth2TokenEntryPersistence, SharepointOAuth2TokenEntryPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(SharepointOAuth2TokenEntryPersistence.class);
+	private static ServiceTracker<SharepointOAuth2TokenEntryPersistence, SharepointOAuth2TokenEntryPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(SharepointOAuth2TokenEntryPersistence.class);
+
+		ServiceTracker<SharepointOAuth2TokenEntryPersistence, SharepointOAuth2TokenEntryPersistence> serviceTracker =
+			new ServiceTracker<SharepointOAuth2TokenEntryPersistence, SharepointOAuth2TokenEntryPersistence>(bundle.getBundleContext(),
+				SharepointOAuth2TokenEntryPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

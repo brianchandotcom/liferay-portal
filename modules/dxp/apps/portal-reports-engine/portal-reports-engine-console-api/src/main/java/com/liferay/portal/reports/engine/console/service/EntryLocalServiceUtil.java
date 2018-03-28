@@ -16,7 +16,8 @@ package com.liferay.portal.reports.engine.console.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -351,6 +352,16 @@ public class EntryLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<EntryLocalService, EntryLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(EntryLocalService.class);
+	private static ServiceTracker<EntryLocalService, EntryLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(EntryLocalService.class);
+
+		ServiceTracker<EntryLocalService, EntryLocalService> serviceTracker = new ServiceTracker<EntryLocalService, EntryLocalService>(bundle.getBundleContext(),
+				EntryLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

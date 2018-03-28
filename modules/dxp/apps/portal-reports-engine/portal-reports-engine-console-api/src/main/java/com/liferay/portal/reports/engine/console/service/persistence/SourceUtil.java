@@ -16,12 +16,13 @@ package com.liferay.portal.reports.engine.console.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.reports.engine.console.model.Source;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -1037,6 +1038,16 @@ public class SourceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<SourcePersistence, SourcePersistence> _serviceTracker =
-		ServiceTrackerFactory.open(SourcePersistence.class);
+	private static ServiceTracker<SourcePersistence, SourcePersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(SourcePersistence.class);
+
+		ServiceTracker<SourcePersistence, SourcePersistence> serviceTracker = new ServiceTracker<SourcePersistence, SourcePersistence>(bundle.getBundleContext(),
+				SourcePersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

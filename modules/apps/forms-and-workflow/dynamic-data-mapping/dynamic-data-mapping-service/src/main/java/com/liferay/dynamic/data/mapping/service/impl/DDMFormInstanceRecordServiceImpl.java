@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
@@ -88,6 +89,30 @@ public class DDMFormInstanceRecordServiceImpl
 			getPermissionChecker(), ddmFormInstanceId, ActionKeys.VIEW);
 
 		return ddmFormInstanceRecordLocalService.getFormInstanceRecords(
+			ddmFormInstanceId);
+	}
+
+	@Override
+	public List<DDMFormInstanceRecord> getFormInstanceRecords(
+			long ddmFormInstanceId, int status, int start, int end,
+			OrderByComparator<DDMFormInstanceRecord> orderByComparator)
+		throws PortalException {
+
+		DDMFormInstancePermission.contains(
+			getPermissionChecker(), ddmFormInstanceId, ActionKeys.VIEW);
+
+		return ddmFormInstanceRecordLocalService.getFormInstanceRecords(
+			ddmFormInstanceId, status, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getFormInstanceRecordsCount(long ddmFormInstanceId)
+		throws PortalException {
+
+		DDMFormInstancePermission.contains(
+			getPermissionChecker(), ddmFormInstanceId, ActionKeys.VIEW);
+
+		return ddmFormInstanceRecordLocalService.getFormInstanceRecordsCount(
 			ddmFormInstanceId);
 	}
 

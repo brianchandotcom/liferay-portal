@@ -68,6 +68,13 @@ public class DDMDataProviderInstanceFinderImpl
 	}
 
 	@Override
+	public List<DDMDataProviderInstance> filterByC_G(
+		long companyId, long[] groupIds, int start, int end) {
+
+		return filterByKeywords(companyId, groupIds, null, start, end, null);
+	}
+
+	@Override
 	public List<DDMDataProviderInstance> filterByKeywords(
 		long companyId, long[] groupIds, String keywords, int start, int end,
 		OrderByComparator<DDMDataProviderInstance> orderByComparator) {
@@ -94,6 +101,11 @@ public class DDMDataProviderInstanceFinderImpl
 		long companyId, long[] groupIds, String keywords) {
 
 		return doCountByKeywords(companyId, groupIds, keywords, true);
+	}
+
+	@Override
+	public int filterCountByC_G(long companyId, long[] groupIds) {
+		return doCountByKeywords(companyId, groupIds, null, true);
 	}
 
 	@Override

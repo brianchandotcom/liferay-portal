@@ -17,9 +17,7 @@ package com.liferay.user.associated.data.anonymizer;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.user.associated.data.util.UADDynamicQueryHelper;
-
-import org.osgi.service.component.annotations.Reference;
+import com.liferay.user.associated.data.util.UADDynamicQueryUtil;
 
 /**
  * @author William Newbury
@@ -53,11 +51,8 @@ public abstract class DynamicQueryUADEntityAnonymizer<T extends BaseModel>
 
 	protected abstract String[] doGetUserIdFieldNames();
 
-	@Reference
-	protected UADDynamicQueryHelper uadDynamicQueryHelper;
-
 	private ActionableDynamicQuery _getActionableDynamicQuery(long userId) {
-		return uadDynamicQueryHelper.addActionableDynamicQueryCriteria(
+		return UADDynamicQueryUtil.addActionableDynamicQueryCriteria(
 			doGetActionableDynamicQuery(), doGetUserIdFieldNames(), userId);
 	}
 

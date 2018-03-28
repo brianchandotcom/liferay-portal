@@ -38,7 +38,7 @@ public class ViewUADEntitiesDisplay {
 	}
 
 	public String getUADEntitySetName() {
-		return _uadEntitySetName;
+		return _applicationName;
 	}
 
 	public String getUADRegistryKey() {
@@ -57,18 +57,18 @@ public class ViewUADEntitiesDisplay {
 		_uadEntityDisplay = uadEntityDisplay;
 	}
 
-	public void setUADEntitySetName(String uadEntitySetName) {
-		_uadEntitySetName = uadEntitySetName;
+	public void setUADEntitySetName(String applicationName) {
+		_applicationName = applicationName;
 	}
 
 	public void setUADRegistryKey(String uadRegistryKey) {
 		_uadRegistryKey = uadRegistryKey;
 	}
 
+	private String _applicationName;
 	private List<NavigationItem> _navigationItems;
 	private SearchContainer<UADEntity> _searchContainer;
 	private UADEntityDisplay _uadEntityDisplay;
-	private String _uadEntitySetName;
 	private String _uadRegistryKey;
 
 }

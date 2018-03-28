@@ -417,6 +417,10 @@ public class AssetBrowserDisplayContext {
 			portletURL.setParameter("listable", String.valueOf(getListable()));
 		}
 
+		if (getKeywords() != null) {
+			portletURL.setParameter("keywords", String.valueOf(getKeywords()));
+		}
+
 		portletURL.setParameter("eventName", getEventName());
 
 		return portletURL;

@@ -27,15 +27,13 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.user.associated.data.exception.UADEntityExporterException;
-import com.liferay.user.associated.data.util.UADDynamicQueryHelper;
+import com.liferay.user.associated.data.util.UADDynamicQueryUtil;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import java.util.concurrent.atomic.AtomicReference;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author William Newbury
@@ -132,11 +130,8 @@ public abstract class DynamicQueryUADEntityExporter<T extends BaseModel>
 		return ZipWriterFactoryUtil.getZipWriter(new File(sb.toString()));
 	}
 
-	@Reference
-	protected UADDynamicQueryHelper uadDynamicQueryHelper;
-
 	private ActionableDynamicQuery _getActionableDynamicQuery(long userId) {
-		return uadDynamicQueryHelper.addActionableDynamicQueryCriteria(
+		return UADDynamicQueryUtil.addActionableDynamicQueryCriteria(
 			doGetActionableDynamicQuery(), doGetUserIdFieldNames(), userId);
 	}
 

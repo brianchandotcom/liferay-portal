@@ -62,12 +62,12 @@ public class EditFormTag extends IncludeTag {
 		_escapeXml = escapeXml;
 	}
 
-	public void setInlineLabels(boolean inlineLabels) {
-		_inlineLabels = inlineLabels;
+	public void setFluid(boolean fluid) {
+		_fluid = fluid;
 	}
 
-	public void setLarge(boolean large) {
-		_large = large;
+	public void setInlineLabels(boolean inlineLabels) {
+		_inlineLabels = inlineLabels;
 	}
 
 	public void setMethod(String method) {
@@ -109,8 +109,8 @@ public class EditFormTag extends IncludeTag {
 		_checkboxNames.clear();
 		_cssClass = null;
 		_escapeXml = true;
+		_fluid = false;
 		_inlineLabels = false;
-		_large = false;
 		_method = "post";
 		_name = "fm";
 		_onSubmit = null;
@@ -153,10 +153,10 @@ public class EditFormTag extends IncludeTag {
 		request.setAttribute("liferay-frontend:edit-form:cssClass", _cssClass);
 		request.setAttribute(
 			"liferay-frontend:edit-form:escapeXml", String.valueOf(_escapeXml));
+		request.setAttribute("liferay-frontend:edit-form:fluid", _fluid);
 		request.setAttribute(
 			"liferay-frontend:edit-form:inlineLabels",
 			String.valueOf(_inlineLabels));
-		request.setAttribute("liferay-frontend:edit-form:large", _large);
 		request.setAttribute("liferay-frontend:edit-form:method", _method);
 		request.setAttribute("liferay-frontend:edit-form:name", _name);
 		request.setAttribute("liferay-frontend:edit-form:onSubmit", _onSubmit);
@@ -199,8 +199,8 @@ public class EditFormTag extends IncludeTag {
 	private final List<String> _checkboxNames = new ArrayList<>();
 	private String _cssClass;
 	private boolean _escapeXml = true;
+	private boolean _fluid;
 	private boolean _inlineLabels;
-	private boolean _large;
 	private String _method = "post";
 	private String _name = "fm";
 	private String _onSubmit;

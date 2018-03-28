@@ -3914,6 +3914,9 @@ version 1.0.186.
 
 ## 3.10.0 - 2018-03-30
 
+### Added
+- [LPS-78741]: Add method to get the project property `portal.version`.
+
 ### Changed
 - [LPS-79282]: Update the [Liferay Gradle Plugins Source Formatter] dependency
 to version 2.3.115.

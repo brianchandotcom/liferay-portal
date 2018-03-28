@@ -724,6 +724,12 @@ a[type="button"] {
 
 // Catalog Cards
 
+.card-page {
+	.product-expand {
+		flex-grow: 1;
+	}
+}
+
 .catalog-card-page {
 	.card {
 		display: flex;
@@ -738,10 +744,6 @@ a[type="button"] {
 		@include media-breakpoint-up(xl) {
 			max-width: 16.66667%;
 		}
-	}
-
-	.product-expand {
-		flex-grow: 1;
 	}
 
 	.product-sku {

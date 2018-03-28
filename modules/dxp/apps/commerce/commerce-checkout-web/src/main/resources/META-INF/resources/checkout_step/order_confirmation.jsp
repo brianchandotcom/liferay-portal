@@ -52,7 +52,7 @@ if (commerceOrderPayment != null) {
 		</c:when>
 		<c:otherwise>
 			<div class="success-message">
-				<liferay-ui:message key="success-your-payment-has-been-processed" />
+				<liferay-ui:message key="success-your-order-has-been-processed" />
 			</div>
 
 			<liferay-ui:message key="you-will-be-redireted-in-a-few-seconds" />

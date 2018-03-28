@@ -18,6 +18,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import com.liferay.talend.runtime.apio.constants.JSONLDConstants;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +38,42 @@ public class ApioUtils {
 	 */
 	public static JsonNode getContextJsonNode(JsonNode jsonNode) {
 		return _findJsonNode(jsonNode, JSONLDConstants.CONTEXT);
+	}
+
+	/**
+	 * Parses the given JsonNode which is a <code>@context</code> node and find
+	 * the type coercion terms.
+	 *
+	 * @param  contextJsonNode
+	 * @return the name of the type coercion term keys otherwise empty
+	 *         <code>List<String></code>
+	 */
+	public static List<String> getTypeCoercionTermKeys(
+		JsonNode contextJsonNode) {
+
+		List<String> typeCoercionTermKeys = new ArrayList<>();
+
+		for (JsonNode jsonNode : contextJsonNode) {
+			if (jsonNode.isObject()) {
+				JsonNode typeObjectJsonNode = jsonNode.findParent(
+					JSONLDConstants.TYPE);
+
+				if (typeObjectJsonNode != null) {
+					JsonNode typeJsonNode = typeObjectJsonNode.path(
+						JSONLDConstants.TYPE);
+
+					if (JSONLDConstants.ID.equals(typeJsonNode.asText())) {
+						Iterator<String> it = jsonNode.fieldNames();
+
+						while (it.hasNext()) {
+							typeCoercionTermKeys.add(it.next());
+						}
+					}
+				}
+			}
+		}
+
+		return typeCoercionTermKeys;
 	}
 
 	/**

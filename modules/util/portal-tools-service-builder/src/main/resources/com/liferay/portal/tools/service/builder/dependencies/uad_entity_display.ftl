@@ -24,7 +24,7 @@ import java.util.Map;
 public class ${entity.name}UADEntityDisplay implements UADEntityDisplay<${entity.name}> {
 
 	public String getApplicationName() {
-		return ${portletShortName}UADConstants.UAD_ENTITY_SET_NAME;
+		return ${portletShortName}UADConstants.APPLICATION_NAME;
 	}
 
 	public String[] getDisplayFieldNames() {

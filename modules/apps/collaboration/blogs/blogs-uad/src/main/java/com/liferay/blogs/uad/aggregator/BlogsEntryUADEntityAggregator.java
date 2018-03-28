@@ -41,7 +41,7 @@ public class BlogsEntryUADEntityAggregator
 	extends DynamicQueryUADEntityAggregator<BlogsEntry> {
 	@Override
 	public String getApplicationName() {
-		return BlogsUADConstants.UAD_ENTITY_SET_NAME;
+		return BlogsUADConstants.APPLICATION_NAME;
 	}
 
 	@Override

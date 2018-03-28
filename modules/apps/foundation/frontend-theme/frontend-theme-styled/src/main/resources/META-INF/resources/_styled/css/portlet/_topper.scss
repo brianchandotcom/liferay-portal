@@ -1,4 +1,4 @@
-%showPortletTopper {
+%display-portlet-topper {
 	@include media-query(sm) {
 		opacity: 1;
 
@@ -30,8 +30,8 @@
 			top: 0;
 		}
 
-		&.menu-open {
-			@extend %showPortletTopper;
+		&.open {
+			@extend %display-portlet-topper;
 		}
 	}
 }
@@ -47,7 +47,7 @@
 		}
 
 		> .portlet-topper {
-			@extend %showPortletTopper;
+			@extend %display-portlet-topper;
 		}
 	}
 }

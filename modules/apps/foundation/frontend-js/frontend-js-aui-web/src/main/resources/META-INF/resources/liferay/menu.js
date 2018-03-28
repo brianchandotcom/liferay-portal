@@ -15,7 +15,7 @@ AUI.add(
 
 		var CSS_OPEN = 'open';
 
-		var CSS_MENU_OPEN = 'menu-open';
+		var CSS_PORTLET_TOPPER = '.portlet-topper';
 
 		var DEFAULT_ALIGN_POINTS = ['tl', 'bl'];
 
@@ -115,7 +115,11 @@ AUI.add(
 					else {
 						trigger.get(PARENT_NODE).removeClass(CSS_OPEN);
 
-						trigger.ancestor('.portlet-topper').removeClass(CSS_MENU_OPEN);
+						var portletTopper = trigger.ancestor(CSS_PORTLET_TOPPER);
+
+						if (portletTopper) {
+							portletTopper.removeClass(CSS_OPEN);
+						}
 					}
 				}
 			},
@@ -375,7 +379,12 @@ AUI.add(
 					}
 					else {
 						trigger.get(PARENT_NODE).addClass(CSS_OPEN);
-						trigger.ancestor('.portlet-topper').addClass(CSS_MENU_OPEN);
+
+						var portletTopper = trigger.ancestor(CSS_PORTLET_TOPPER);
+
+						if (portletTopper) {
+							portletTopper.addClass(CSS_OPEN);
+						}
 					}
 				}
 			},
@@ -589,7 +598,11 @@ AUI.add(
 
 						activeTrigger.get(PARENT_NODE).removeClass(CSS_OPEN);
 
-						activeTrigger.ancestor('.portlet-topper').removeClass(CSS_MENU_OPEN);
+						var portletTopper = activeTrigger.ancestor(CSS_PORTLET_TOPPER);
+
+						if (portletTopper) {
+							portletTopper.removeClass(CSS_OPEN);
+						}
 					}
 					else {
 						menuInstance._closeActiveMenu();

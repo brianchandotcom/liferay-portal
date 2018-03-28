@@ -19,7 +19,7 @@
 
 		<!-- Other fields -->
 
-		<column name="oAuth2ApplicationScopeAliasesId" type="long" />
+		<column db-name="oA2AScopeAliasesId" name="oAuth2ApplicationScopeAliasesId" type="long" />
 		<column name="allowedGrantTypes" type="String" />
 		<column name="clientId" type="String" />
 		<column name="clientProfile" type="int" />
@@ -54,7 +54,7 @@
 
 		<!-- PK fields -->
 
-		<column name="oAuth2ApplicationScopeAliasesId" primary="true" type="long" />
+		<column db-name="oA2AScopeAliasesId" name="oAuth2ApplicationScopeAliasesId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -104,7 +104,7 @@
 		<!-- Other fields -->
 
 		<column name="oAuth2ApplicationId" type="long" />
-		<column name="oAuth2ApplicationScopeAliasesId" type="long" />
+		<column db-name="oA2AScopeAliasesId" name="oAuth2ApplicationScopeAliasesId" type="long" />
 		<column name="accessTokenContent" type="String" />
 		<column name="accessTokenCreateDate" type="Date" />
 		<column name="accessTokenExpirationDate" type="Date" />
@@ -115,7 +115,7 @@
 
 		<!-- Relationships -->
 
-		<column entity="OAuth2ScopeGrant" mapping-table="OAuth2Authorizations_OAuth2ScopeGrants" name="oAuth2ScopeGrants" type="Collection" />
+		<column entity="OAuth2ScopeGrant" mapping-table="OAuth2Auth_ScopeGrants" name="oAuth2ScopeGrants" type="Collection" />
 
 		<!-- Finder methods -->
 
@@ -149,14 +149,14 @@
 
 		<!-- Other fields -->
 
-		<column name="oAuth2ApplicationScopeAliasesId" type="long" />
+		<column db-name="oA2AScopeAliasesId" name="oAuth2ApplicationScopeAliasesId" type="long" />
 		<column name="applicationName" type="String" />
 		<column name="bundleSymbolicName" type="String" />
 		<column name="scope" type="String" />
 
 		<!-- Relationships -->
 
-		<column entity="OAuth2Authorization" mapping-table="OAuth2Authorizations_OAuth2ScopeGrants" name="oAuth2Authorizations" type="Collection" />
+		<column entity="OAuth2Authorization" mapping-table="OAuth2Auth_ScopeGrants" name="oAuth2Authorizations" type="Collection" />
 
 		<!-- Finder methods -->
 

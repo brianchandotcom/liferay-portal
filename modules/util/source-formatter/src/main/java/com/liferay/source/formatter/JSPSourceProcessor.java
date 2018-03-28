@@ -32,6 +32,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Hugo Huijser
@@ -161,7 +162,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private AlloyMVCCheckstyleLogger _checkstyleLogger;
 	private Configuration _configuration;
 	private final Set<SourceFormatterMessage> _sourceFormatterMessages =
-		new HashSet<>();
+		new TreeSet<>();
 	private final List<File> _ungeneratedFiles = new ArrayList<>();
 
 }

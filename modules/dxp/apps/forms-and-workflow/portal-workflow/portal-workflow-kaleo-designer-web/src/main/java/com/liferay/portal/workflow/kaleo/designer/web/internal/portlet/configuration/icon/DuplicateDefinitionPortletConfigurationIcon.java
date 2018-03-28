@@ -86,7 +86,7 @@ public class DuplicateDefinitionPortletConfigurationIcon
 		KaleoDefinition kaleoDefinition = _getKaleoDefinition(
 			kaleoDefinitionVersion);
 
-		if ((kaleoDefinition != null) && kaleoDefinition.isActive()) {
+		if (kaleoDefinition != null) {
 			return true;
 		}
 

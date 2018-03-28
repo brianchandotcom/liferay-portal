@@ -30,6 +30,7 @@ import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.uad.constants.WikiUADConstants;
 import com.liferay.wiki.uad.test.WikiNodeUADEntityTestHelper;
 
+import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 
@@ -73,6 +74,11 @@ public class WikiNodeUADEntityAggregatorTest
 	@Override
 	protected UADEntityAggregator getUADEntityAggregator() {
 		return _uadEntityAggregator;
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_wikiNodeUADEntityTestHelper.cleanUpDependencies(_wikiNodes);
 	}
 
 	@DeleteAfterTestRun

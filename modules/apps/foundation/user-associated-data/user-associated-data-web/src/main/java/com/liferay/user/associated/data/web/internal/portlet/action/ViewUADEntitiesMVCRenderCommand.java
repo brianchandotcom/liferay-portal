@@ -69,8 +69,8 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 		try {
 			User selectedUser = _portal.getSelectedUser(renderRequest);
 
-			String uadEntitySetName = ParamUtil.getString(
-				renderRequest, "uadEntitySetName");
+			String applicationName = ParamUtil.getString(
+				renderRequest, "applicationName");
 			String uadRegistryKey = ParamUtil.getString(
 				renderRequest, "uadRegistryKey");
 
@@ -91,7 +91,7 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 
 			viewUADEntitiesDisplay.setNavigationItems(
 				_getNaviagationItems(
-					uadEntitySetName, uadRegistryKey, currentURL,
+					applicationName, uadRegistryKey, currentURL,
 					liferayPortletResponse));
 
 			viewUADEntitiesDisplay.setSearchContainer(
@@ -101,7 +101,7 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 
 			viewUADEntitiesDisplay.setUADEntityDisplay(
 				_uadRegistry.getUADEntityDisplay(uadRegistryKey));
-			viewUADEntitiesDisplay.setUADEntitySetName(uadEntitySetName);
+			viewUADEntitiesDisplay.setUADEntitySetName(applicationName);
 			viewUADEntitiesDisplay.setUADRegistryKey(uadRegistryKey);
 
 			renderRequest.setAttribute(
@@ -115,7 +115,7 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	private List<NavigationItem> _getNaviagationItems(
-			String uadEntitySetName, String uadRegistryKey,
+			String applicationName, String uadRegistryKey,
 			PortletURL currentURL,
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortletException {
@@ -125,7 +125,7 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 		for (UADEntityDisplay uadEntityDisplay :
 				_uadRegistry.getUADEntityDisplays()) {
 
-			if (!uadEntitySetName.equals(
+			if (!applicationName.equals(
 					uadEntityDisplay.getApplicationName())) {
 
 				continue;

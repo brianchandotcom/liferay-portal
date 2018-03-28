@@ -157,7 +157,7 @@
 
 		<execute macro="DMFolder#configureWorkflowCP">
 			<var name="dmFolderName" value="Financial Reports" />
-			<var name="workflowDefinition" value="Quarterly Reports Review Process (Version 1)" />
+			<var name="workflowDefinition" value="Quarterly Reports Review Process" />
 			<var name="workflowRestriction" value="Default Workflow" />
 		</execute>
 
@@ -320,7 +320,7 @@
 		</execute>
 
 		<execute macro="Workflow#configureWorkflowViaFolderInfo">
-			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowDefinition" value="Single Approver" />
 		</execute>
 
 		<execute macro="DMFolder#addCP">
@@ -330,7 +330,7 @@
 
 		<execute macro="DMFolder#configureWorkflowCP">
 			<var name="dmFolderName" value="DM Folder Name" />
-			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowRestriction" value="Default Workflow" />
 		</execute>
 
@@ -342,7 +342,7 @@
 		<execute macro="DMFolder#configureWorkflowCP">
 			<var name="dmDocumentTypeName" value="Marketing Banner" />
 			<var name="dmFolderName" value="DM Folder Name" />
-			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowRestriction" value="Specific Restrictions" />
 		</execute>
 
@@ -405,7 +405,7 @@
 
 		<execute macro="DMFolder#configureWorkflowCP">
 			<var name="dmFolderName" value="DM Folder Name" />
-			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowRestriction" value="Default Workflow" />
 		</execute>
 

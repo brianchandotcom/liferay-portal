@@ -59,7 +59,7 @@
 		</execute>
 
 		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowResourceValue" value="Blogs Entry" />
 		</execute>
 
@@ -300,7 +300,7 @@
 		</execute>
 
 		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowResourceValue" value="Blogs Entry" />
 		</execute>
 
@@ -462,7 +462,7 @@
 		</execute>
 
 		<execute macro="DDLList#addCP">
-			<var name="workflowDefinition" value="Double Approver Definition (Version 1)" />
+			<var name="workflowDefinition" value="Double Approver Definition" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#selectCP" />
@@ -679,7 +679,7 @@
 		</execute>
 
 		<execute macro="Workflow#configureWorkflowViaFolderInfo">
-			<var name="workflowDefinition" value="Category Specific (Version 1)" />
+			<var name="workflowDefinition" value="Category Specific" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -838,7 +838,7 @@
 		</execute>
 
 		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowResourceValue" value="Wiki Page" />
 		</execute>
 
@@ -1106,7 +1106,7 @@
 		</execute>
 
 		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowResourceValue" value="Blogs Entry" />
 		</execute>
 
@@ -1227,7 +1227,7 @@
 		</execute>
 
 		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowResourceValue" value="Blogs Entry" />
 		</execute>
 
@@ -1240,7 +1240,7 @@
 		</execute>
 
 		<execute macro="Workflow#configureWorkflowViaFolderInfo">
-			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowDefinition" value="Single Approver" />
 		</execute>
 
 		<for list="1,2,3" param="number">
@@ -1341,7 +1341,7 @@
 		</execute>
 
 		<execute macro="Workflow#configureWorkflowViaFolderInfo">
-			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowDefinition" value="Single Approver" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -1387,7 +1387,7 @@
 		</execute>
 
 		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowResourceValue" value="Calendar Event" />
 		</execute>
 
@@ -1398,7 +1398,7 @@
 		</execute>
 
 		<execute macro="Workflow#viewConfigurationSelected">
-			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowResourceValue" value="Calendar Event" />
 		</execute>
 
@@ -1418,7 +1418,7 @@
 		</execute>
 
 		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowResourceValue" value="Blogs Entry" />
 		</execute>
 
@@ -1431,7 +1431,7 @@
 		</execute>
 
 		<execute macro="Workflow#viewConfigurationSelected">
-			<var name="workflowDefinition" value="Single Approver (1)" />
+			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowResourceValue" value="Blogs Entry" />
 		</execute>
 
@@ -1451,12 +1451,12 @@
 		</execute>
 
 		<execute macro="Workflow#viewConfigurationSelected">
-			<var name="workflowDefinition" value="Single Approver (1)" />
+			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowResourceValue" value="Blogs Entry" />
 		</execute>
 
 		<execute macro="Workflow#viewConfigurationSelected">
-			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowResourceValue" value="Calendar Event" />
 		</execute>
 	</command>
@@ -1480,7 +1480,7 @@
 		</execute>
 
 		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowResourceValue" value="Blogs Entry" />
 		</execute>
 
@@ -1691,7 +1691,7 @@
 		</execute>
 
 		<execute macro="Workflow#configureWorkflowViaFolderInfo">
-			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowDefinition" value="Single Approver" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />

@@ -106,7 +106,7 @@
 
 		<execute macro="WebContentFolder#configureWorkflowCP">
 			<var name="folderName" value="WC Subfolder Name" />
-			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowRestriction" value="Default Workflow" />
 		</execute>
 

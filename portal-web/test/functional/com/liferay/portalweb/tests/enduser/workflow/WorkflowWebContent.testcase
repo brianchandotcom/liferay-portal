@@ -39,7 +39,7 @@
 
 	<command name="ConfigureFolderWorkflow" priority="4">
 		<execute macro="Workflow#configureWorkflowViaFolderInfo">
-			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowDefinition" value="Single Approver" />
 		</execute>
 
 		<execute macro="WebContentFolder#addCP">
@@ -49,7 +49,7 @@
 
 		<execute macro="WebContentFolder#configureWorkflowCP">
 			<var name="folderName" value="WC Folder Name" />
-			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowRestriction" value="Default Workflow" />
 		</execute>
 
@@ -61,7 +61,7 @@
 		<execute macro="WebContentFolder#configureWorkflowCP">
 			<var name="folderName" value="WC Folder Name" />
 			<var name="structureName" value="Basic Web Content" />
-			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowRestriction" value="Specific Restrictions" />
 		</execute>
 
@@ -127,7 +127,7 @@
 		</execute>
 
 		<execute macro="Workflow#configureWorkflowViaFolderInfo">
-			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowDefinition" value="Single Approver" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">

@@ -23,6 +23,8 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ModelListener;
 
 import java.util.HashMap;
@@ -54,7 +56,9 @@ public class DDMFormInstanceRecordVersionModelListener
 			checkEmptyFields(ddmFormInstanceRecordVersion);
 		}
 		catch (Exception e) {
-			throw new ModelListenerException(e);
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 		}
 	}
 
@@ -144,6 +148,9 @@ public class DDMFormInstanceRecordVersionModelListener
 			ddmFormInstanceRecordVersion.getCompanyId(), "fieldBlanked",
 			eventProperties);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMFormInstanceRecordVersionModelListener.class);
 
 	@Reference
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;

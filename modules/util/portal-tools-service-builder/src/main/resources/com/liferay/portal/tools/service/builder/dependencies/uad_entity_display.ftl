@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ${entity.name}UADEntityDisplay implements UADEntityDisplay<${entity.name}> {
 
 	public String getApplicationName() {
-		return ${portletShortName}UADConstants.UAD_ENTITY_SET_NAME;
+		return ${portletShortName}UADConstants.APPLICATION_NAME;
 	}
 
 	public String[] getDisplayFieldNames() {

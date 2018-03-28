@@ -25,6 +25,10 @@ import java.util.List;
  */
 public class ViewUADEntitiesDisplay {
 
+	public String getApplicationName() {
+		return _applicationName;
+	}
+
 	public List<NavigationItem> getNavigationItems() {
 		return _navigationItems;
 	}
@@ -37,12 +41,12 @@ public class ViewUADEntitiesDisplay {
 		return _uadEntityDisplay;
 	}
 
-	public String getUADEntitySetName() {
-		return _applicationName;
-	}
-
 	public String getUADRegistryKey() {
 		return _uadRegistryKey;
+	}
+
+	public void setApplicationName(String applicationName) {
+		_applicationName = applicationName;
 	}
 
 	public void setNavigationItems(List<NavigationItem> navigationItems) {
@@ -55,10 +59,6 @@ public class ViewUADEntitiesDisplay {
 
 	public void setUADEntityDisplay(UADEntityDisplay uadEntityDisplay) {
 		_uadEntityDisplay = uadEntityDisplay;
-	}
-
-	public void setUADEntitySetName(String applicationName) {
-		_applicationName = applicationName;
 	}
 
 	public void setUADRegistryKey(String uadRegistryKey) {

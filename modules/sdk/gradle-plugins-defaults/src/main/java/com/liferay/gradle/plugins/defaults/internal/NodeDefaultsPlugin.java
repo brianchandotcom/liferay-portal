@@ -17,9 +17,12 @@ package com.liferay.gradle.plugins.defaults.internal;
 import com.liferay.gradle.plugins.BaseDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.node.NodeExtension;
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
+import com.liferay.gradle.plugins.util.PortalTools;
+import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
@@ -39,6 +42,7 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 
 	@Override
 	protected void configureDefaults(Project project, NodePlugin nodePlugin) {
+		_configureNode(project);
 		_configureTaskNpmInstall(project);
 		_configureTasksPublishNodeModule(project);
 	}
@@ -49,6 +53,19 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 	}
 
 	private NodeDefaultsPlugin() {
+	}
+
+	private void _configureNode(Project project) {
+		String portalVersion = PortalTools.getPortalVersion(project);
+
+		if (Validator.isNotNull(portalVersion) &&
+			portalVersion.equals(PortalTools.PORTAL_VERSION_7_0_X)) {
+
+			NodeExtension nodeExtension = GradleUtil.getExtension(
+				project, NodeExtension.class);
+
+			nodeExtension.setNodeVersion(_NODE_VERSION);
+		}
 	}
 
 	private void _configureTaskNpmInstall(Project project) {
@@ -124,5 +141,7 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 
 			});
 	}
+
+	private static final String _NODE_VERSION = "6.6.0";
 
 }

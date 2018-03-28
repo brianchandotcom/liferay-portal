@@ -384,12 +384,9 @@ public class CommerceOrganizationLocalServiceImpl
 			treePaths.add(organization.getTreePath());
 		}
 
-		boolean andSearch = true;
-
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 		params.put(Field.TREE_PATH, parentOrganization.getTreePath());
-
 		params.put("organizationTreePaths", treePaths);
 
 		if (Validator.isNotNull(type)) {
@@ -399,27 +396,17 @@ public class CommerceOrganizationLocalServiceImpl
 		Map<String, Serializable> attributes = new HashMap<>();
 
 		attributes.put("params", params);
-
 		attributes.put(
 			"parentOrganizationId",
 			String.valueOf(OrganizationConstants.ANY_PARENT_ORGANIZATION_ID));
 
 		if (Validator.isNotNull(keywords)) {
-			attributes.put("city", keywords);
-			attributes.put("country", keywords);
 			attributes.put("name", keywords);
-			attributes.put("region", keywords);
-			attributes.put("street", keywords);
-			attributes.put("zip", keywords);
-
-			andSearch = false;
-
 			searchContext.setKeywords(keywords);
 		}
 
-		searchContext.setAndSearch(andSearch);
+		searchContext.setAndSearch(false);
 		searchContext.setAttributes(attributes);
-
 		searchContext.setCompanyId(parentOrganization.getCompanyId());
 		searchContext.setEnd(end);
 

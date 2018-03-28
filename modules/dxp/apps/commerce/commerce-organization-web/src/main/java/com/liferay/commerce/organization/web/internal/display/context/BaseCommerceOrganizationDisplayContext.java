@@ -69,6 +69,16 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 		return _getCurrentAccountOrganization();
 	}
 
+	public long getCurrentOrganizationId() throws PortalException {
+		Organization organization = getCurrentOrganization();
+
+		if (organization != null) {
+			return organization.getOrganizationId();
+		}
+
+		return 0;
+	}
+
 	public String getDisplayStyle() {
 		if (_displayStyle == null) {
 			_displayStyle = ParamUtil.getString(

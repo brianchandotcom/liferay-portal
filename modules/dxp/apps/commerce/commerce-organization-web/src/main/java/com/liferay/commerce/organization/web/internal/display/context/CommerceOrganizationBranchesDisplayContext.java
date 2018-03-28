@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,6 +44,17 @@ public class CommerceOrganizationBranchesDisplayContext
 			httpServletRequest, portal);
 
 		setDefaultOrderByCol("nameTreePath");
+	}
+
+	public String getKeywords() {
+		if (_keywords != null) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(
+			commerceOrganizationRequestHelper.getRequest(), "keywords");
+
+		return _keywords;
 	}
 
 	public SearchContainer<Organization> getSearchContainer()
@@ -66,7 +78,7 @@ public class CommerceOrganizationBranchesDisplayContext
 		BaseModelSearchResult<Organization> organizationBaseModelSearchResult =
 			commerceOrganizationService.searchOrganizations(
 				userId, organization.getOrganizationId(),
-				CommerceOrganizationConstants.TYPE_BRANCH, null,
+				CommerceOrganizationConstants.TYPE_BRANCH, getKeywords(),
 				_searchContainer.getStart(), _searchContainer.getEnd(),
 				new Sort[] {sort});
 
@@ -83,6 +95,7 @@ public class CommerceOrganizationBranchesDisplayContext
 		return true;
 	}
 
+	private String _keywords;
 	private SearchContainer<Organization> _searchContainer;
 
 }

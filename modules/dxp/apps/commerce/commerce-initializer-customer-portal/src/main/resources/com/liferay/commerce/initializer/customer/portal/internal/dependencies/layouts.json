@@ -101,7 +101,7 @@
 	},
 	{
 		"layoutTemplateId": "1_column",
-		"name": "Account management",
+		"name": "Account Management",
 		"portlets": [
 			{
 				"layoutColumnId": "column-1",
@@ -112,7 +112,7 @@
 	},
 	{
 		"layoutTemplateId": "1_column",
-		"name": "User management",
+		"name": "User Management",
 		"portlets": [
 			{
 				"layoutColumnId": "column-1",

@@ -17,6 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
+UADExportProcessDisplayContext uadExportProcessDisplayContext = new UADExportProcessDisplayContext(request, renderResponse);
+
+String navigation = uadExportProcessDisplayContext.getNavigation();
+String orderByCol = uadExportProcessDisplayContext.getOrderByCol();
+String orderByType = uadExportProcessDisplayContext.getOrderByType();
+PortletURL portletURL = uadExportProcessDisplayContext.getPortletURL();
+
 portletDisplay.setShowBackIcon(true);
 
 LiferayPortletURL usersAdminURL = liferayPortletResponse.createLiferayPortletURL(UsersAdminPortletKeys.USERS_ADMIN, PortletRequest.RENDER_PHASE);
@@ -42,18 +49,72 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 	%>'
 />
 
-<aui:form cssClass="container-fluid-1280">
-	<liferay-ui:search-container
-		emptyResultsMessage="no-personal-data-export-processes-were-found"
-		total="<%= 0 %>"
-	>
-		<liferay-ui:search-container-results
-			results="<%= null %>"
+<liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all", "in-progress", "successful", "failed"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 		/>
 
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= orderByCol %>"
+			orderByType="<%= orderByType %>"
+			orderColumns='<%= new String[] {"create-date", "name"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+</liferay-frontend:management-bar>
+
+<aui:form cssClass="container-fluid-1280">
+	<liferay-ui:search-container
+		searchContainer="<%= uadExportProcessDisplayContext.getSearchContainer() %>"
+	>
+		<liferay-ui:search-container-row
+			className="com.liferay.portal.kernel.backgroundtask.BackgroundTask"
+			keyProperty="backgroundTaskId"
+			modelVar="backgroundTask"
+		>
+			<liferay-ui:search-container-column-text
+				cssClass="autofit-col-expand"
+			>
+				<div>
+					<h5>
+						<liferay-ui:message key="<%= backgroundTask.getName() %>" />
+					</h5>
+
+					<clay:label
+						label="<%= LanguageUtil.get(request, backgroundTask.getStatusLabel()) %>"
+						style="<%= UADExportProcessUtil.getStatusStyle(backgroundTask.getStatus()) %>"
+					/>
+				</div>
+			</liferay-ui:search-container-column-text>
+
+			<%
+			Format dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("yyyy.MM.dd - hh:mm a", locale, themeDisplay.getTimeZone());
+			%>
+
+			<liferay-ui:search-container-column-text
+				cssClass="autofit-col-expand"
+			>
+				<%= LanguageUtil.get(request, "create-date") + StringPool.COLON + dateFormat.format(backgroundTask.getCreateDate()) %>
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-text
+				cssClass="autofit-col-expand"
+			>
+				<%= LanguageUtil.get(request, "completion-date") + StringPool.COLON + dateFormat.format(backgroundTask.getCompletionDate()) %>
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-jsp
+				cssClass="entry-action-column"
+				path="/export_process_action.jsp"
+			/>
+		</liferay-ui:search-container-row>
+
 		<liferay-ui:search-iterator
+			displayStyle="descriptive"
 			markupView="lexicon"
-			searchContainer="<%= null %>"
+			resultRowSplitter="<%= new UADExportProcessResultRowSplitter() %>"
 		/>
 	</liferay-ui:search-container>
 </aui:form>

@@ -51,6 +51,7 @@ page import="com.liferay.user.associated.data.web.internal.display.UADApplicatio
 page import="com.liferay.user.associated.data.web.internal.display.ViewUADApplicationsSummaryDisplay" %><%@
 page import="com.liferay.user.associated.data.web.internal.display.ViewUADEntitiesDisplay" %><%@
 page import="com.liferay.user.associated.data.web.internal.display.context.UADExportProcessDisplayContext" %><%@
+page import="com.liferay.user.associated.data.web.internal.search.UADExportProcessResultRowSplitter" %><%@
 page import="com.liferay.user.associated.data.web.internal.util.UADExportProcessUtil" %><%@
 page import="com.liferay.users.admin.constants.UsersAdminPortletKeys" %>
 

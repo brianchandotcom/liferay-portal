@@ -114,6 +114,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		<liferay-ui:search-iterator
 			displayStyle="descriptive"
 			markupView="lexicon"
+			resultRowSplitter="<%= new UADExportProcessResultRowSplitter() %>"
 		/>
 	</liferay-ui:search-container>
 </aui:form>

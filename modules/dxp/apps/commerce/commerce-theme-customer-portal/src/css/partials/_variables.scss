@@ -50,6 +50,38 @@ $b2b-site-navigation-open-width: 13.75rem !default; // 220px
 
 $b2b-site-navigation-bg: #393B4A !default;
 
+// Footer
+
+$footer-bg: #2F313E !default;
+$footer-color: #FFF !default;
+$footer-height: 373px !default;
+
+$footer-main-list-title: (
+	color: #FFF,
+	font-size: 1.125rem,
+	margin-bottom: 1.5rem,
+	margin-top: 0
+) !default;
+
+$footer-main-link: (
+	color: #86868F,
+	hover-color: #86868F
+) !default;
+
+$footer-main-social-media-link: (
+	color: #FFF,
+	hover-color: #FFF,
+	display: block,
+	font-size: 1rem,
+	margin-top: -0.5rem,
+	padding-bottom: 0.5rem
+) !default;
+
+$footer-secondary-link: (
+	color: #FFF,
+	hover-color: #FFF
+) !default;
+
 // Orders
 
 $order-details-title: () !default;

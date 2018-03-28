@@ -57,6 +57,7 @@
 
 	&.b2b-site-navigation {
 		display: block;
+		overflow: hidden;
 		transition: all 0.15s ease-in-out;
 	}
 }
@@ -75,7 +76,6 @@
 	background-color: $b2b-site-navigation-bg;
 	bottom: 0;
 	left: 0;
-	min-height: calc(100% - #{$application-bar-height});
 	overflow: auto;
 	position: fixed;
 	top: 0;

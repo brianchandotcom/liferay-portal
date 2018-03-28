@@ -1,3 +1,23 @@
+body, html {
+	height: 100%;
+}
+
+body.has-control-menu {
+	height: calc(100% - 48px);
+
+	@include media-breakpoint-up(md) {
+		height: calc(100% - 64px);
+	}
+}
+
+#content {
+	min-height: calc(100vh - #{map-get($b2b-main-navbar-size, height)} - #{$footer-height});
+}
+
+.has-control-menu #content {
+	min-height: calc(100vh - 64px - #{map-get($b2b-main-navbar-size, height)} - #{$footer-height});
+}
+
 #wrapper {
 	padding-top: 0;
 }
@@ -293,6 +313,7 @@ a[type="button"] {
 // Customer Portal
 
 #content {
+	background-color: #FFF;
 	padding-bottom: 2.5rem;
 	padding-left: $grid-gutter-width / 2;
 	padding-right: $grid-gutter-width / 2;
@@ -314,6 +335,10 @@ a[type="button"] {
 	padding-left: 0;
 	padding-right: 0;
 	position: relative;
+}
+
+.b2b-wrapper {
+	background-color: #393B49;
 }
 
 // Login

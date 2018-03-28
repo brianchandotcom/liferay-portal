@@ -13,7 +13,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Operating System and Type" />
+			<var name="panel" value="Operating System and Type" />
 		</execute>
 
 		<var name="key_ruleOSScope" value="${ruleOSScope}" />

@@ -1,7 +1,7 @@
 <definition>
 	<command name="checkContentNameList">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Content" />
+			<var name="panel" value="Content" />
 		</execute>
 
 		<for list="${checkContentNameList}" param="contentName">
@@ -118,7 +118,7 @@
 
 	<command name="contentDeletion">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Deletions" />
+			<var name="panel" value="Deletions" />
 		</execute>
 
 		<execute function="Check" locator1="StagingPublishToLive#CONTENT_CHOOSE_CONTENT_DELETION_CHECKBOX" />
@@ -130,7 +130,7 @@
 
 	<command name="exportPermissions">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Permissions" />
+			<var name="panel" value="Permissions" />
 		</execute>
 
 		<execute function="Check" locator1="Checkbox#PERMISSIONS" />
@@ -138,7 +138,7 @@
 
 	<command name="uncheckContentNameList">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Content" />
+			<var name="panel" value="Content" />
 		</execute>
 
 		<for list="${uncheckContentNameList}" param="contentName">

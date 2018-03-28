@@ -293,7 +293,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Mobile Device Rules" />
+			<var name="panel" value="Mobile Device Rules" />
 		</execute>
 
 		<execute macro="Page#disableMobileDeviceRulesAreInheritedFromPublicPages" />

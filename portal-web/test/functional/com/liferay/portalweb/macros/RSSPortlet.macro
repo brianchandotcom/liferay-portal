@@ -7,7 +7,7 @@
 		<execute function="SelectFrame" locator1="RSSFeed#RSS_CONFIGURATION_IFRAME" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Feeds" />
+			<var name="panel" value="Feeds" />
 		</execute>
 
 		<if>
@@ -36,7 +36,7 @@
 		<var name="key_toRowNumber" value="${toRowNumber}" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Feeds" />
+			<var name="panel" value="Feeds" />
 		</execute>
 
 		<execute function="DragAndDrop" locator1="RSSFeed#FEEDS_1" locator2="RSSFeed#FEEDS_2" value1="${rowLocation}" />
@@ -47,7 +47,7 @@
 		<execute function="SelectFrame" locator1="RSSFeed#RSS_CONFIGURATION_IFRAME" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Feeds" />
+			<var name="panel" value="Feeds" />
 		</execute>
 
 		<execute function="Select" locator1="RSSFeed#DISPLAY_SETTINGS_DISPLAY_TEMPLATE_OPTION" value1="${feedDisplayStyle}" />
@@ -59,7 +59,7 @@
 		<execute function="SelectFrame" locator1="RSSFeed#RSS_CONFIGURATION_IFRAME" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Feeds" />
+			<var name="panel" value="Feeds" />
 		</execute>
 
 		<execute function="Click" locator1="RSSFeed#FEEDS_DELETE_ROW_BUTTON" />
@@ -70,7 +70,7 @@
 		<execute function="SelectFrame" locator1="RSSFeed#RSS_CONFIGURATION_IFRAME" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Feeds" />
+			<var name="panel" value="Feeds" />
 		</execute>
 
 		<execute function="Uncheck#uncheckToggleSwitch" locator1="RSSFeed#DISPLAY_SETTINGS_SHOW_FEED_TITLE" value1="Show Feed Title" />
@@ -116,7 +116,7 @@
 
 	<command name="viewFeedContent">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="${feedEntryTitle}" />
+			<var name="panel" value="${feedEntryTitle}" />
 		</execute>
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="RSSFeed#FEEDS_CONTENT" value1="${feedEntryContent}" />
@@ -149,7 +149,7 @@
 		<execute function="SelectFrame" locator1="RSSFeed#RSS_CONFIGURATION_IFRAME" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Feeds" />
+			<var name="panel" value="Feeds" />
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="RSSFeed#FEEDS_DEFAULT" />

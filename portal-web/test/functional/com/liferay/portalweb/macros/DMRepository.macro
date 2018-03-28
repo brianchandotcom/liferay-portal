@@ -1,7 +1,7 @@
 <definition>
 	<command name="addDocumentum">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Repository Configuration" />
+			<var name="panel" value="Repository Configuration" />
 		</execute>
 
 		<execute function="Select" locator1="DocumentsAndMediaEditRepository#REPOSITORY_TYPE_SELECT" value1="Documentum" />
@@ -12,7 +12,7 @@
 
 	<command name="addSharepoint">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Repository Configuration" />
+			<var name="panel" value="Repository Configuration" />
 		</execute>
 
 		<execute function="Select" locator1="DocumentsAndMediaEditRepository#REPOSITORY_TYPE_SELECT" value1="${dmRepositoryName}" />

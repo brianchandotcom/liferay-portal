@@ -53,7 +53,7 @@
 
 	<command name="editPasswordInvalidCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Password" />
+			<var name="panel" value="Password" />
 		</execute>
 
 		<if>

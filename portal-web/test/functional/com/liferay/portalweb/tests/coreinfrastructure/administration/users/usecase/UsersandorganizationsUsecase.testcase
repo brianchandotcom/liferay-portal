@@ -1264,7 +1264,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Password Syntax Checking" />
+			<var name="panel" value="Password Syntax Checking" />
 		</execute>
 
 		<execute function="Check#checkToggleSwitch" locator1="Checkbox#ENABLE_SYNTAX_CHECKING" />
@@ -1320,7 +1320,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Password Syntax Checking" />
+			<var name="panel" value="Password Syntax Checking" />
 		</execute>
 
 		<execute function="Type" locator1="TextInput#REGULAR_EXPRESSION" value1="(?=.{6})(?:[a-zA-Z0-9]*)" />
@@ -1381,7 +1381,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Password Syntax Checking" />
+			<var name="panel" value="Password Syntax Checking" />
 		</execute>
 
 		<execute function="Type" locator1="TextInput#MINIMUM_NUMBERS" value1="2" />

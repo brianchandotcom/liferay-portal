@@ -1,10 +1,10 @@
 <definition>
 	<command name="disableUserDeliveries">
 		<var name="key_contentType" value="${contentType}" />
-		<var name="key_panelHeading" value="${contentType}" />
+		<var name="key_panel" value="${contentType}" />
 
 		<if>
-			<condition function="IsElementPresent" locator1="Panel#PANEL_HEADING_COLLAPSED" />
+			<condition function="IsElementPresent" locator1="Panel#PANEL_COLLAPSED" />
 			<then>
 				<execute function="AssertClick#assertTextClickAt" locator1="Notifications#NOTIFICATION_DELIVERY_PANEL" value1="${contentType}" />
 			</then>

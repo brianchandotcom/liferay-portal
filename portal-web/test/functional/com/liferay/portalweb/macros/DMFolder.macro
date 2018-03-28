@@ -54,7 +54,7 @@
 			<isset var="viewableBy" />
 			<then>
 				<execute macro="Panel#expandPanel">
-					<var name="panelHeading" value="Permissions" />
+					<var name="panel" value="Permissions" />
 				</execute>
 
 				<execute function="Select" locator1="DocumentsAndMediaEditFolder#PERMISSIONS_SELECT" value1="${viewableBy}" />

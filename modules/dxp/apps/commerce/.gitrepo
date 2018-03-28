@@ -4,8 +4,8 @@
 [subrepo]
 	autopull = true
 	cmdver = liferay
-	commit = 6faa755f95847126ae05abb23851cb3b4f66889b
+	commit = 04237eee26d9d87282217866d51eb5412be50e9f
 	mergebuttonmergecommits = false
 	mode = pull
-	parent = 4d174831c69843b60e2bb8dcca4e85b8aa796b44
+	parent = 8a7ca834e705cf4f54587f9ad32092369719ab6d
 	remote = git@github.com:liferay/com-liferay-commerce-private.git

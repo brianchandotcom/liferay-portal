@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
@@ -91,9 +90,9 @@ public class DuplicateDefinitionPortletConfigurationIcon
 			return false;
 		}
 
-		return KaleoDefinitionVersionPermission.contains(
+		return KaleoDefinitionVersionPermission.hasViewPermission(
 			themeDisplay.getPermissionChecker(), kaleoDefinitionVersion,
-			ActionKeys.VIEW);
+			themeDisplay.getCompanyGroupId());
 	}
 
 	protected KaleoDefinitionVersion getKaleoDefinitionVersion(

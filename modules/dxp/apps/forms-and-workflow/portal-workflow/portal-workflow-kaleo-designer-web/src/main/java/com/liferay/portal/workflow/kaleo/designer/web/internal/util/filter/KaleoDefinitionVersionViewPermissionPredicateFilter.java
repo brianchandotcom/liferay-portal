@@ -14,12 +14,9 @@
 
 package com.liferay.portal.workflow.kaleo.designer.web.internal.util.filter;
 
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.PredicateFilter;
-import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerActionKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDefinitionVersionPermission;
-import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDesignerPermission;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 
 /**
@@ -37,19 +34,8 @@ public class KaleoDefinitionVersionViewPermissionPredicateFilter
 
 	@Override
 	public boolean filter(KaleoDefinitionVersion kaleoDefinitionVersion) {
-		if (KaleoDefinitionVersionPermission.contains(
-				_permissionChecker, kaleoDefinitionVersion, ActionKeys.VIEW) ||
-			KaleoDefinitionVersionPermission.contains(
-				_permissionChecker, kaleoDefinitionVersion,
-				ActionKeys.UPDATE) ||
-			KaleoDesignerPermission.contains(
-				_permissionChecker, _companyGroupId,
-				KaleoDesignerActionKeys.ADD_NEW_WORKFLOW)) {
-
-			return true;
-		}
-
-		return false;
+		return KaleoDefinitionVersionPermission.hasViewPermission(
+			_permissionChecker, kaleoDefinitionVersion, _companyGroupId);
 	}
 
 	private final long _companyGroupId;

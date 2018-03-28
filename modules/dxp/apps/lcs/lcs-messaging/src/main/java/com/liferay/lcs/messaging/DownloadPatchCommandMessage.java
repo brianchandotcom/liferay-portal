@@ -35,8 +35,9 @@ public class DownloadPatchCommandMessage extends CommandMessage {
 	public String getSignatureString() {
 		String signatureString = super.getSignatureString();
 
-		StringBuilder sb = new StringBuilder(signatureString);
+		StringBuilder sb = new StringBuilder(4);
 
+		sb.append(signatureString);
 		sb.append(_md5Sum);
 		sb.append(_patchFileName);
 		sb.append(_patchURL);

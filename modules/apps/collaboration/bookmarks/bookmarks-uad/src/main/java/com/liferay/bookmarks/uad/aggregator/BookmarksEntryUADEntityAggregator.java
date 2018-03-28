@@ -42,7 +42,7 @@ public class BookmarksEntryUADEntityAggregator
 
 	@Override
 	public String getApplicationName() {
-		return BookmarksUADConstants.UAD_ENTITY_SET_NAME;
+		return BookmarksUADConstants.APPLICATION_NAME;
 	}
 
 	@Override

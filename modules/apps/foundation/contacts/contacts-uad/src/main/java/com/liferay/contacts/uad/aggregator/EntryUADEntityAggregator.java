@@ -40,7 +40,7 @@ import java.util.List;
 public class EntryUADEntityAggregator extends DynamicQueryUADEntityAggregator<Entry> {
 	@Override
 	public String getApplicationName() {
-		return ContactsUADConstants.UAD_ENTITY_SET_NAME;
+		return ContactsUADConstants.APPLICATION_NAME;
 	}
 
 	@Override

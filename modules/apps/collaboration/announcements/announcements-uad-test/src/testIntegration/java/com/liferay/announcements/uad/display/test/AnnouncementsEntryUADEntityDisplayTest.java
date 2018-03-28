@@ -59,7 +59,7 @@ public class AnnouncementsEntryUADEntityDisplayTest
 
 	@Override
 	protected String getApplicationName() {
-		return AnnouncementsUADConstants.UAD_ENTITY_SET_NAME;
+		return AnnouncementsUADConstants.APPLICATION_NAME;
 	}
 
 	@Override

@@ -37,7 +37,7 @@ public class BookmarksEntryUADEntityDisplay
 	implements UADEntityDisplay<BookmarksEntry> {
 
 	public String getApplicationName() {
-		return BookmarksUADConstants.UAD_ENTITY_SET_NAME;
+		return BookmarksUADConstants.APPLICATION_NAME;
 	}
 
 	public String[] getDisplayFieldNames() {

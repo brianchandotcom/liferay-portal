@@ -72,10 +72,16 @@ public class CommerceOrganizationLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return organizationLocalService.addOrganization(
+		ProxyModeThreadLocal.setForceSync(true);
+
+		Organization organization = organizationLocalService.addOrganization(
 			serviceContext.getUserId(), parentOrganizationId, name, type, 0, 0,
 			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
 			false, serviceContext);
+
+		ProxyModeThreadLocal.setForceSync(false);
+
+		return organization;
 	}
 
 	@Override

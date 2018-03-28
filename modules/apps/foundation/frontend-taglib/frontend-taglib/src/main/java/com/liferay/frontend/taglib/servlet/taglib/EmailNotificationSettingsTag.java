@@ -106,10 +106,12 @@ public class EmailNotificationSettingsTag extends IncludeTag {
 
 		_bodyLabel = null;
 		_emailBody = null;
+		_emailBodyLocalizedValuesMap = null;
 		_emailDefinitionTerms = null;
 		_emailEnabled = false;
 		_emailParam = null;
 		_emailSubject = null;
+		_emailSubjectLocalizedValuesMap = null;
 		_fieldPrefix = null;
 		_fieldPrefixSeparator = null;
 		_helpMessage = null;

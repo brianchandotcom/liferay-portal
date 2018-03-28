@@ -175,6 +175,7 @@ public class AssetDisplayTag extends IncludeTag {
 
 		_abstractLength = 200;
 		_assetEntry = null;
+		_assetRendererFactory = null;
 		_className = null;
 		_classPK = 0;
 		_page = null;

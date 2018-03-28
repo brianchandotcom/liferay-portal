@@ -131,7 +131,9 @@ public class InputLocalizedTag extends IncludeTag {
 
 		_autoFocus = false;
 		_autoSize = false;
+		_availableLocales = null;
 		_cssClass = null;
+		_defaultLanguageId = null;
 		_disabled = false;
 		_displayWidth = ModelHintsConstants.TEXT_DISPLAY_WIDTH;
 		_editorName = _EDITOR_WYSIWYG_DEFAULT;

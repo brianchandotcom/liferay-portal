@@ -75,7 +75,7 @@
 	background-color: $b2b-site-navigation-bg;
 	bottom: 0;
 	left: 0;
-	min-height: calc(100vh - #{$application-bar-height});
+	min-height: calc(100% - #{$application-bar-height});
 	overflow: auto;
 	position: fixed;
 	top: 0;

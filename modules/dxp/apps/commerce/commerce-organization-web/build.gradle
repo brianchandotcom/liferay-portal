@@ -6,6 +6,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.item.selector.api", version: "2.3.0"
 	provided group: "com.liferay", name: "com.liferay.item.selector.criteria.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.item.selector.taglib", version: "1.0.0"
+	provided group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.users.admin.api", version: "2.1.0-20171204.192937-5"

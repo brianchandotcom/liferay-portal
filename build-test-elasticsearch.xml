@@ -27,9 +27,9 @@
 			/>
 
 			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.xpack.monitoring.web.internal.configuration.XPackMonitoringConfiguration.config">kibanaPassword="${osgi.config.kibana.user.password}"
-proxyServletLogEnable="true"
+kibanaURL="https://localhost:5601"
 kibanaUserName="kibana"
-kibanaURL="https://localhost:5601"</echo>
+proxyServletLogEnable="true"</echo>
 		</sequential>
 	</macrodef>
 
@@ -44,54 +44,45 @@ kibanaURL="https://localhost:5601"</echo>
 				replace="\\\\="
 			/>
 
-			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.xpack.security.internal.configuration.XPackSecurityConfiguration.config">sslCertificatePath="${elasticsearch.dir}-1/config/certs/instance/instance.crt"
-sslCertificateAuthoritiesPaths="${elasticsearch.dir}-1/config/certs/ca/ca.crt"
-requiresAuthentication="true"
+			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.xpack.security.internal.configuration.XPackSecurityConfiguration.config">certificateFormat="PEM"
 password="${osgi.config.elastic.user.password}"
+requiresAuthentication="true"
+sslCertificateAuthoritiesPaths="${elasticsearch.dir}-1/config/certs/ca/ca.crt"
+sslCertificatePath="${elasticsearch.dir}-1/config/certs/instance/instance.crt"
 sslKeyPath="${elasticsearch.dir}-1/config/certs/instance/instance.key"
-certificateFormat="PEM"
 transportSSLEnabled="true"</echo>
 		</sequential>
 	</macrodef>
 
 	<macrodef name="configure-elasticsearch-x-pack-security-properties">
 		<sequential>
-			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">
-${line.separator}xpack.ssl.key: certs/instance/instance.key
-xpack.ssl.certificate: certs/instance/instance.crt
-xpack.ssl.certificate_authorities: [ "certs/ca/ca.crt" ]
-
+			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}xpack.security.http.ssl.enabled: true
 xpack.security.transport.ssl.enabled: true
 xpack.security.transport.ssl.verification_mode: certificate
-xpack.security.http.ssl.enabled: true</echo>
+xpack.ssl.certificate: certs/instance/instance.crt
+xpack.ssl.certificate_authorities: [ "certs/ca/ca.crt" ]
+xpack.ssl.key: certs/instance/instance.key</echo>
 		</sequential>
 	</macrodef>
 
 	<macrodef name="configure-kibana-properties">
 		<sequential>
-			<echo append="true" file="${elastic.kibana.dir}/config/kibana.yml">
+			<echo append="true" file="${elastic.kibana.dir}/config/kibana.yml">${line.separator}elasticsearch.url: "http://localhost:9200"
 pid.file: ${elastic.kibana.dir}/bin/pid-kibana
-
-server.basePath: "/o/portal-search-elasticsearch-xpack-monitoring/xpack-monitoring-proxy"
-
-elasticsearch.url: "http://localhost:9200"</echo>
+server.basePath: "/o/portal-search-elasticsearch-xpack-monitoring/xpack-monitoring-proxy"</echo>
 		</sequential>
 	</macrodef>
 
 	<macrodef name="configure-kibana-x-pack-security-properties">
 		<sequential>
-			<echo append="true" file="${elastic.kibana.dir}/config/kibana.yml">
-${line.separator}elasticsearch.username: "kibana"
-elasticsearch.password: "${elastic.xpack.kibana.user.password}"
-
-xpack.security.encryptionKey: "xsomethingxatxleastx32xcharactersx"
-xpack.security.sessionTimeout: 600000
-
-server.ssl.enabled: true
-
+			<echo append="true" file="${elastic.kibana.dir}/config/kibana.yml">${line.separator}elasticsearch.password: "${elastic.xpack.kibana.user.password}"
+elasticsearch.ssl.certificateAuthorities: [ "${elasticsearch.dir}-1/config/certs/ca/ca.crt" ]
+elasticsearch.username: "kibana"
 server.ssl.certificate: ${elasticsearch.dir}-1/config/certs/instance/instance.crt
+server.ssl.enabled: true
 server.ssl.key: ${elasticsearch.dir}-1/config/certs/instance/instance.key
-elasticsearch.ssl.certificateAuthorities: [ "${elasticsearch.dir}-1/config/certs/ca/ca.crt" ]</echo>
+xpack.security.encryptionKey: "xsomethingxatxleastx32xcharactersx"
+xpack.security.sessionTimeout: 600000</echo>
 
 			<replace
 				file="${elastic.kibana.dir}/config/kibana.yml"

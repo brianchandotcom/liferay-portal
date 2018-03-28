@@ -24,9 +24,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Carlos Lancha
  */
-public class CreationMenuDropdown extends HashMap {
+public class CreationMenu extends HashMap {
 
-	public CreationMenuDropdown(HttpServletRequest request) {
+	public CreationMenu(HttpServletRequest request) {
 		_request = request;
 
 		put("primaryItems", _primaryDropdownItemList);

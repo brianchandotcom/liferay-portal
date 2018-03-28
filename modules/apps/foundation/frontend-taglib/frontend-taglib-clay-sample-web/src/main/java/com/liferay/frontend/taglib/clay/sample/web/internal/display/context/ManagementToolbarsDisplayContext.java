@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.taglib.clay.sample.web.internal.display.context;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuDropdown;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.portal.kernel.util.Validator;
@@ -64,12 +64,12 @@ public class ManagementToolbarsDisplayContext {
 		return _actionDropdownItems;
 	}
 
-	public CreationMenuDropdown getCreationMenu() {
-		if (_creationMenuDropdown != null) {
-			return _creationMenuDropdown;
+	public CreationMenu getCreationMenu() {
+		if (_creationMenu != null) {
+			return _creationMenu;
 		}
 
-		_creationMenuDropdown = new CreationMenuDropdown(_request) {
+		_creationMenu = new CreationMenu(_request) {
 			{
 				addPrimaryDropdownItem(
 					dropdownItem -> {
@@ -97,7 +97,7 @@ public class ManagementToolbarsDisplayContext {
 			}
 		};
 
-		return _creationMenuDropdown;
+		return _creationMenu;
 	}
 
 	public DropdownItemList getFilterItems() {
@@ -185,7 +185,7 @@ public class ManagementToolbarsDisplayContext {
 	}
 
 	private DropdownItemList _actionDropdownItems;
-	private CreationMenuDropdown _creationMenuDropdown;
+	private CreationMenu _creationMenu;
 	private DropdownItemList _filterItems;
 	private final HttpServletRequest _request;
 	private ViewTypeItemList _viewTypes;

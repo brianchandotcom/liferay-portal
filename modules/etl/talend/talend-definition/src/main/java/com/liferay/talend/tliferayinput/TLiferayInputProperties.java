@@ -19,6 +19,7 @@ import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayConnectionResourceBaseProperties;
 import com.liferay.talend.exception.ExceptionUtils;
 import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
+import com.liferay.talend.utils.PropertiesUtils;
 
 import java.io.IOException;
 
@@ -31,7 +32,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.talend.components.api.component.PropertyPathConnector;
-import org.talend.daikon.SimpleNamedThing;
 import org.talend.daikon.properties.PresentationItem;
 import org.talend.daikon.properties.ValidationResult;
 import org.talend.daikon.properties.ValidationResult.Result;
@@ -75,8 +75,8 @@ public class TLiferayInputProperties
 		if (formName.equals(Form.MAIN) ||
 			formName.equals(LiferayConnectionProperties.FORM_WIZARD)) {
 
-			_setHidden(form, guessSchema, hideDevWidgets);
-			_setHidden(form, queryString, hideDevWidgets);
+			PropertiesUtils.setHidden(form, guessSchema, hideDevWidgets);
+			PropertiesUtils.setHidden(form, queryString, hideDevWidgets);
 		}
 	}
 
@@ -154,14 +154,6 @@ public class TLiferayInputProperties
 		}
 
 		return Collections.<PropertyPathConnector>emptySet();
-	}
-
-	private void _setHidden(
-		Form form, SimpleNamedThing simpleNamedThing, boolean hidden) {
-
-		Widget widget = form.getWidget(simpleNamedThing.getName());
-
-		widget.setHidden(hidden);
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger(

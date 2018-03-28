@@ -19,6 +19,7 @@ import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
 import com.liferay.talend.exception.ExceptionUtils;
 import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
+import com.liferay.talend.utils.PropertiesUtils;
 
 import java.io.IOException;
 
@@ -33,7 +34,6 @@ import org.slf4j.LoggerFactory;
 import org.talend.components.api.component.ISchemaListener;
 import org.talend.components.common.SchemaProperties;
 import org.talend.daikon.NamedThing;
-import org.talend.daikon.SimpleNamedThing;
 import org.talend.daikon.properties.PropertiesImpl;
 import org.talend.daikon.properties.ValidationResult;
 import org.talend.daikon.properties.ValidationResult.Result;
@@ -170,11 +170,10 @@ public class LiferayResourceProperties
 			boolean hideRelatedCheckbox = StringUtils.isEmpty(
 				resourceURL.getStringValue());
 
-			_setHidden(form, useRelatedResource, hideRelatedCheckbox);
-
-			_setHidden(
 				form, relatedResourceCollections,
 				!useRelatedResource.getValue());
+			PropertiesUtils.setHidden(
+				form, webSiteURL, !useWebSiteRelatedResource.getValue());
 		}
 	}
 
@@ -297,14 +296,6 @@ public class LiferayResourceProperties
 		}
 
 		return liferayConnectionProperties;
-	}
-
-	private void _setHidden(
-		Form form, SimpleNamedThing simpleNamedThing, boolean hidden) {
-
-		Widget widget = form.getWidget(simpleNamedThing.getName());
-
-		widget.setHidden(hidden);
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger(

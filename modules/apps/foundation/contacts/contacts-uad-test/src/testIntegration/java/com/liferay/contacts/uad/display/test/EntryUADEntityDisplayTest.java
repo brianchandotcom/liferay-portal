@@ -59,7 +59,7 @@ public class EntryUADEntityDisplayTest extends BaseUADEntityDisplayTestCase {
 
 	@Override
 	protected String getApplicationName() {
-		return ContactsUADConstants.UAD_ENTITY_SET_NAME;
+		return ContactsUADConstants.APPLICATION_NAME;
 	}
 
 	@Override

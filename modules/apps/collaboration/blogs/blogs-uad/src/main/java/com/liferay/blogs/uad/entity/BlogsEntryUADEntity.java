@@ -12,16 +12,28 @@
  * details.
  */
 
-package com.liferay.blogs.uad.constants;
+package com.liferay.blogs.uad.entity;
+
+import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.uad.constants.BlogsUADConstants;
+
+import com.liferay.user.associated.data.entity.BaseUADEntity;
 
 /**
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class BlogsUADConstants {
-	public static final String APPLICATION_NAME = "Blogs";
-	public static final String CLASS_NAME_BLOGS_ENTRY = "com.liferay.blogs.model.BlogsEntry";
-	public static final String[] USER_ID_FIELD_NAMES_BLOGS_ENTRY = {
-			"userId", "statusByUserId"
-		};
+public class BlogsEntryUADEntity extends BaseUADEntity {
+	public BlogsEntryUADEntity(long userId, String uadEntityId,
+		BlogsEntry blogsEntry) {
+		super(userId, uadEntityId, BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY);
+
+		_blogsEntry = blogsEntry;
+	}
+
+	public BlogsEntry getBlogsEntry() {
+		return _blogsEntry;
+	}
+
+	private final BlogsEntry _blogsEntry;
 }

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.GitUtil;
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
+import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.checkstyle.util.AlloyMVCCheckstyleLogger;
 import com.liferay.source.formatter.checkstyle.util.AlloyMVCCheckstyleUtil;
 import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
@@ -143,28 +144,44 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		List<String> fileNames = Collections.emptyList();
 
 		if (sourceFormatterArgs.isFormatCurrentBranch()) {
-			fileNames = GitUtil.getCurrentBranchDeletedFileNames(
+			fileNames = GitUtil.getCurrentBranchFileNames(
 				sourceFormatterArgs.getBaseDirName(),
-				sourceFormatterArgs.getGitWorkingBranchName());
+				sourceFormatterArgs.getGitWorkingBranchName(), true);
 		}
 		else if (sourceFormatterArgs.isFormatLatestAuthor()) {
-			fileNames = GitUtil.getLatestAuthorDeletedFileNames(
-				sourceFormatterArgs.getBaseDirName());
+			fileNames = GitUtil.getLatestAuthorFileNames(
+				sourceFormatterArgs.getBaseDirName(), true);
 		}
 		else if (sourceFormatterArgs.isFormatLocalChanges()) {
-			fileNames = GitUtil.getLocalChangesDeletedFileNames(
-				sourceFormatterArgs.getBaseDirName());
+			fileNames = GitUtil.getLocalChangesFileNames(
+				sourceFormatterArgs.getBaseDirName(), true);
 		}
 
 		if (fileNames.isEmpty()) {
 			return Collections.emptyMap();
 		}
 
+		List<String> deletedFileNames = new ArrayList<>();
+
+		for (String fileName : fileNames) {
+			String absolutePath = SourceUtil.getAbsolutePath(fileName);
+
+			File file = new File(absolutePath);
+
+			if (!Files.exists(file.toPath())) {
+				deletedFileNames.add(fileName);
+			}
+		}
+
+		if (deletedFileNames.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
 		Map<String, String> contentsMap = new HashMap<>();
 
 		List<String> filteredFileNames = SourceFormatterUtil.filterFileNames(
-			fileNames, excludes, getIncludes(), getSourceFormatterExcludes(),
-			true);
+			deletedFileNames, excludes, getIncludes(),
+			getSourceFormatterExcludes(), true);
 
 		for (String filteredFileName : filteredFileNames) {
 			String content = GitUtil.getCurrentBranchFileContent(

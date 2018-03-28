@@ -39,14 +39,6 @@ import java.util.Set;
  */
 public class GitUtil {
 
-	public static List<String> getCurrentBranchDeletedFileNames(
-			String baseDirName, String gitWorkingBranchName)
-		throws Exception {
-
-		return getDeletedFileNames(
-			baseDirName, getCurrentBranchCommitId(gitWorkingBranchName));
-	}
-
 	public static String getCurrentBranchFileContent(
 			String gitWorkingBranchName, String fileName)
 		throws Exception {
@@ -70,13 +62,6 @@ public class GitUtil {
 		return fileNames;
 	}
 
-	public static List<String> getLatestAuthorDeletedFileNames(
-			String baseDirName)
-		throws Exception {
-
-		return getDeletedFileNames(baseDirName, getLatestAuthorCommitId());
-	}
-
 	public static String getLatestAuthorFileContent(String fileName)
 		throws Exception {
 
@@ -96,13 +81,6 @@ public class GitUtil {
 		}
 
 		return fileNames;
-	}
-
-	public static List<String> getLocalChangesDeletedFileNames(
-			String baseDirName)
-		throws Exception {
-
-		return getLocalChangesFileNames(baseDirName, "remove");
 	}
 
 	public static String getLocalChangesFileContent(String fileName)

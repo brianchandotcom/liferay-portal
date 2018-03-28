@@ -130,15 +130,15 @@ public class SourceFormatter {
 
 				sourceFormatterArgs.setRecentChangesFileNames(
 					GitUtil.getCurrentBranchFileNames(
-						baseDirName, gitWorkingBranchName));
+						baseDirName, gitWorkingBranchName, false));
 			}
 			else if (formatLatestAuthor) {
 				sourceFormatterArgs.setRecentChangesFileNames(
-					GitUtil.getLatestAuthorFileNames(baseDirName));
+					GitUtil.getLatestAuthorFileNames(baseDirName, false));
 			}
 			else if (formatLocalChanges) {
 				sourceFormatterArgs.setRecentChangesFileNames(
-					GitUtil.getLocalChangesFileNames(baseDirName));
+					GitUtil.getLocalChangesFileNames(baseDirName, false));
 			}
 
 			String fileNamesString = ArgumentsUtil.getString(

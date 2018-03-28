@@ -156,7 +156,7 @@ public class SetupWizardUtil {
 		updateLanguage(request, response);
 
 		unicodeProperties.put(
-			PropsKeys.SETUP_WIZARD_ENABLED, String.valueOf(false));
+			PropsKeys.SETUP_WIZARD_ENABLED, Boolean.FALSE.toString());
 
 		_updateCompany(request, unicodeProperties);
 

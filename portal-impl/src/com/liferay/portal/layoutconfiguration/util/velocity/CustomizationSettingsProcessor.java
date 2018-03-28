@@ -105,7 +105,7 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 		if (_customizationEnabled) {
 			customizable = GetterUtil.getBoolean(
 				_layoutTypeSettings.getProperty(
-					customizableKey, String.valueOf(false)));
+					customizableKey, Boolean.FALSE.toString()));
 		}
 
 		_writer.append("<div class=\"");

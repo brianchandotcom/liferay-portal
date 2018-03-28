@@ -40,7 +40,7 @@ public class UpgradeMessageBoardsTest extends PowerMockito {
 		when(
 			props.get(PropsKeys.MESSAGE_BOARDS_EMAIL_HTML_FORMAT)
 		).thenReturn(
-			String.valueOf(false)
+			Boolean.FALSE.toString()
 		);
 
 		PropsUtil.setProps(props);

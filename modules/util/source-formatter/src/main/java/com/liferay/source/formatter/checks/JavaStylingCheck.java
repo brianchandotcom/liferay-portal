@@ -14,7 +14,6 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.regex.Matcher;
@@ -23,7 +22,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class JavaStylingCheck extends BaseFileCheck {
+public class JavaStylingCheck extends StylingCheck {
 
 	@Override
 	protected String doProcess(
@@ -54,20 +53,11 @@ public class JavaStylingCheck extends BaseFileCheck {
 				"\n */\n\npackage "
 			});
 
-		content = StringUtil.replace(
-			content,
-			new String[] {"!Validator.isNotNull(", "!Validator.isNull("},
-			new String[] {"Validator.isNull(", "Validator.isNotNull("});
-
-		content = StringUtil.replace(
-			content, StringPool.TAB + "for (;;) {",
-			StringPool.TAB + "while (true) {");
-
 		Matcher matcher = _incorrectSynchronizedPattern.matcher(content);
 
 		content = matcher.replaceAll("$1$3 $2");
 
-		return content;
+		return formatStyling(content);
 	}
 
 	private final Pattern _incorrectSynchronizedPattern = Pattern.compile(

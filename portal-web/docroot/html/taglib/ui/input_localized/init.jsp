@@ -84,7 +84,7 @@ if (Validator.isNotNull(fieldPrefix)) {
 
 String fieldSuffix = StringPool.BLANK;
 
-if (!Validator.isNull(languageId)) {
+if (Validator.isNotNull(languageId)) {
 	fieldSuffix = StringPool.UNDERLINE + mainLanguageId;
 }
 

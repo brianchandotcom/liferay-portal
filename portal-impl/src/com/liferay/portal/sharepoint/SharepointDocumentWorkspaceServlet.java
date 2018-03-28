@@ -234,7 +234,7 @@ public class SharepointDocumentWorkspaceServlet extends HttpServlet {
 
 			Element moderatedEl = listInfoEl.addElement("Moderated");
 
-			moderatedEl.setText(String.valueOf(false));
+			moderatedEl.setText(Boolean.FALSE.toString());
 
 			Element listPermissionsEl = listInfoEl.addElement(
 				"ListPermissions");
@@ -258,7 +258,7 @@ public class SharepointDocumentWorkspaceServlet extends HttpServlet {
 
 		Element hasUniquePermEl = root.addElement("HasUniquePerm");
 
-		hasUniquePermEl.setText(String.valueOf(true));
+		hasUniquePermEl.setText(Boolean.TRUE.toString());
 
 		Element workspaceTypeEl = root.addElement("WorkspaceType");
 
@@ -266,7 +266,7 @@ public class SharepointDocumentWorkspaceServlet extends HttpServlet {
 
 		Element isADModeEl = root.addElement("IsADMode");
 
-		isADModeEl.setText(String.valueOf(false));
+		isADModeEl.setText(Boolean.FALSE.toString());
 
 		Element docUrlEl = root.addElement("DocUrl");
 
@@ -274,7 +274,7 @@ public class SharepointDocumentWorkspaceServlet extends HttpServlet {
 
 		Element minimalEl = root.addElement("Minimal");
 
-		minimalEl.setText(String.valueOf(true));
+		minimalEl.setText(Boolean.TRUE.toString());
 
 		Element resultsEl = root.addElement("Results");
 

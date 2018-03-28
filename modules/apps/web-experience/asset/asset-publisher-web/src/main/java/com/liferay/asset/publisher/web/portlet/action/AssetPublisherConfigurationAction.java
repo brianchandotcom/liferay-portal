@@ -613,7 +613,7 @@ public class AssetPublisherConfigurationAction
 		if (selectionStyle.equals("manual") ||
 			selectionStyle.equals("view-count")) {
 
-			preferences.setValue("enableRss", String.valueOf(false));
+			preferences.setValue("enableRss", Boolean.FALSE.toString());
 			preferences.setValue("showQueryLogic", Boolean.FALSE.toString());
 
 			preferences.reset("rssDelta");

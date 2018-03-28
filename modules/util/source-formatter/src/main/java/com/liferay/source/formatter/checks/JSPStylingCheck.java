@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -23,7 +24,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class JSPStylingCheck extends BaseFileCheck {
+public class JSPStylingCheck extends StylingCheck {
 
 	@Override
 	protected String doProcess(
@@ -68,7 +69,12 @@ public class JSPStylingCheck extends BaseFileCheck {
 			}
 		}
 
-		return content;
+		return formatStyling(content);
+	}
+
+	@Override
+	protected boolean isJavaSource(String content, int pos) {
+		return JSPSourceUtil.isJavaSource(content, pos, true);
 	}
 
 	private void _checkChaining(String fileName, String content) {

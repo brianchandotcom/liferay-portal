@@ -674,8 +674,16 @@ public class LiferaySourceOrSink
 		ApioResourceCollection apioResourceCollection =
 			new ApioResourceCollection(jsonNode);
 
-		return ResourceCollectionSchemaInferrer.inferSchemaByResourceFields(
-			apioResourceCollection);
+		try {
+			return ResourceCollectionSchemaInferrer.inferSchemaByResourceFields(
+				apioResourceCollection);
+		}
+		catch (IOException ioe) {
+			throw new IOException(
+				String.format(
+					"%s\nResource collection URL: %s",
+					ioe.getLocalizedMessage(), resourceURL));
+		}
 	}
 
 	private Map<String, String> _getResourceCollectionsDescriptor(

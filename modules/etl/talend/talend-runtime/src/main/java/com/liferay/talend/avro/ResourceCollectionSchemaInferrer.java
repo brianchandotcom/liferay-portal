@@ -16,6 +16,8 @@ package com.liferay.talend.avro;
 
 import com.liferay.talend.runtime.apio.jsonld.ApioResourceCollection;
 
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -57,12 +59,19 @@ public class ResourceCollectionSchemaInferrer {
 	 * @return Runtime AVRO schema
 	 */
 	public static Schema inferSchemaByResourceFields(
-		ApioResourceCollection apioJsonLDResource) {
+			ApioResourceCollection apioJsonLDResource)
+		throws IOException {
 
 		List<String> fieldNames =
 			apioJsonLDResource.getResourceElementFieldNames();
 
 		int size = fieldNames.size();
+
+		if (size == 0) {
+			throw new IOException(
+				"Unable to determine the fields of the selected resource " +
+					"because there were no entries for the given resource.");
+		}
 
 		List<Field> schemaFields = new ArrayList<>(size);
 

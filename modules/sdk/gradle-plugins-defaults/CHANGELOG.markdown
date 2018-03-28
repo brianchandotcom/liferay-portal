@@ -3108,6 +3108,11 @@ marker file.
 ### Changed
 - [LPS-79191]: Update the [Liferay Gradle Plugins] dependency to version 3.9.13.
 
+## 5.3.47 - 2018-03-27
+
+### Changed
+- [LPS-79192]: Update the [Liferay Gradle Plugins] dependency to version 3.9.14.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -3463,6 +3468,7 @@ marker file.
 [LPS-78845]: https://issues.liferay.com/browse/LPS-78845
 [LPS-78911]: https://issues.liferay.com/browse/LPS-78911
 [LPS-79191]: https://issues.liferay.com/browse/LPS-79191
+[LPS-79192]: https://issues.liferay.com/browse/LPS-79192
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

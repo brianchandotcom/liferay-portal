@@ -64,17 +64,11 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 
 		portletDisplay.setShowBackIcon(true);
 
-		String backURL = redirect;
+		PortletURL backPortletURL = PortalUtil.getControlPanelPortletURL(renderRequest, KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW, PortletRequest.RENDER_PHASE);
 
-		if (Validator.isNull(backURL)) {
-			PortletURL backPortletURL = PortalUtil.getControlPanelPortletURL(renderRequest, KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW, PortletRequest.RENDER_PHASE);
+		backPortletURL.setParameter("mvcPath", "/view.jsp");
 
-			backPortletURL.setParameter("mvcPath", "/view.jsp");
-
-			backURL = backPortletURL.toString();
-		}
-
-		portletDisplay.setURLBack(backURL);
+		portletDisplay.setURLBack(backPortletURL.toString());
 
 		renderResponse.setTitle((kaleoDefinitionVersion == null) ? LanguageUtil.get(request, "new-workflow") : kaleoDefinitionVersion.getTitle(locale));
 

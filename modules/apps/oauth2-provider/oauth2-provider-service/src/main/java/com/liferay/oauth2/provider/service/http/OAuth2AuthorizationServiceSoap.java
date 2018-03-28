@@ -24,6 +24,16 @@ import aQute.bnd.annotation.ProviderType;
  * support certain types.
  *
  * <p>
+ * ServiceBuilder follows certain rules in translating the methods. For example,
+ * if the method in the service utility returns a {@link java.util.List}, that
+ * is translated to an array of {@link com.liferay.oauth2.provider.model.OAuth2AuthorizationSoap}.
+ * If the method in the service utility returns a
+ * {@link com.liferay.oauth2.provider.model.OAuth2Authorization}, that is translated to a
+ * {@link com.liferay.oauth2.provider.model.OAuth2AuthorizationSoap}. Methods that SOAP cannot
+ * safely wire are skipped.
+ * </p>
+ *
+ * <p>
  * The benefits of using the SOAP utility is that it is cross platform
  * compatible. SOAP allows different languages like Java, .NET, C++, PHP, and
  * even Perl, to call the generated services. One drawback of SOAP is that it is
@@ -42,6 +52,7 @@ import aQute.bnd.annotation.ProviderType;
  *
  * @author Brian Wing Shun Chan
  * @see OAuth2AuthorizationServiceHttp
+ * @see com.liferay.oauth2.provider.model.OAuth2AuthorizationSoap
  * @see com.liferay.oauth2.provider.service.OAuth2AuthorizationServiceUtil
  * @generated
  */

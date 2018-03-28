@@ -69,8 +69,8 @@ public class OAuth2ScopeGrantCacheModel implements CacheModel<OAuth2ScopeGrant>,
 		sb.append(oAuth2ScopeGrantId);
 		sb.append(", companyId=");
 		sb.append(companyId);
-		sb.append(", oAuth2AccessTokenId=");
-		sb.append(oAuth2AccessTokenId);
+		sb.append(", oAuth2ApplicationScopeAliasesId=");
+		sb.append(oAuth2ApplicationScopeAliasesId);
 		sb.append(", applicationName=");
 		sb.append(applicationName);
 		sb.append(", bundleSymbolicName=");
@@ -88,7 +88,7 @@ public class OAuth2ScopeGrantCacheModel implements CacheModel<OAuth2ScopeGrant>,
 
 		oAuth2ScopeGrantImpl.setOAuth2ScopeGrantId(oAuth2ScopeGrantId);
 		oAuth2ScopeGrantImpl.setCompanyId(companyId);
-		oAuth2ScopeGrantImpl.setOAuth2AccessTokenId(oAuth2AccessTokenId);
+		oAuth2ScopeGrantImpl.setOAuth2ApplicationScopeAliasesId(oAuth2ApplicationScopeAliasesId);
 
 		if (applicationName == null) {
 			oAuth2ScopeGrantImpl.setApplicationName("");
@@ -122,7 +122,7 @@ public class OAuth2ScopeGrantCacheModel implements CacheModel<OAuth2ScopeGrant>,
 
 		companyId = objectInput.readLong();
 
-		oAuth2AccessTokenId = objectInput.readLong();
+		oAuth2ApplicationScopeAliasesId = objectInput.readLong();
 		applicationName = objectInput.readUTF();
 		bundleSymbolicName = objectInput.readUTF();
 		scope = objectInput.readUTF();
@@ -135,7 +135,7 @@ public class OAuth2ScopeGrantCacheModel implements CacheModel<OAuth2ScopeGrant>,
 
 		objectOutput.writeLong(companyId);
 
-		objectOutput.writeLong(oAuth2AccessTokenId);
+		objectOutput.writeLong(oAuth2ApplicationScopeAliasesId);
 
 		if (applicationName == null) {
 			objectOutput.writeUTF("");
@@ -161,7 +161,7 @@ public class OAuth2ScopeGrantCacheModel implements CacheModel<OAuth2ScopeGrant>,
 
 	public long oAuth2ScopeGrantId;
 	public long companyId;
-	public long oAuth2AccessTokenId;
+	public long oAuth2ApplicationScopeAliasesId;
 	public String applicationName;
 	public String bundleSymbolicName;
 	public String scope;

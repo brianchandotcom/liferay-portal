@@ -7,17 +7,14 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
-	<bean class="com.liferay.oauth2.provider.service.impl.OAuth2AccessTokenLocalServiceImpl" id="com.liferay.oauth2.provider.service.OAuth2AccessTokenLocalService" />
-	<bean class="com.liferay.oauth2.provider.service.impl.OAuth2AccessTokenServiceImpl" id="com.liferay.oauth2.provider.service.OAuth2AccessTokenService" />
-	<bean class="com.liferay.oauth2.provider.service.persistence.impl.OAuth2AccessTokenPersistenceImpl" id="com.liferay.oauth2.provider.service.persistence.OAuth2AccessTokenPersistence" parent="basePersistence" />
 	<bean class="com.liferay.oauth2.provider.service.impl.OAuth2ApplicationLocalServiceImpl" id="com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService" />
 	<bean class="com.liferay.oauth2.provider.service.impl.OAuth2ApplicationServiceImpl" id="com.liferay.oauth2.provider.service.OAuth2ApplicationService" />
 	<bean class="com.liferay.oauth2.provider.service.persistence.impl.OAuth2ApplicationPersistenceImpl" id="com.liferay.oauth2.provider.service.persistence.OAuth2ApplicationPersistence" parent="basePersistence" />
+	<bean class="com.liferay.oauth2.provider.service.impl.OAuth2ApplicationScopeAliasesLocalServiceImpl" id="com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalService" />
+	<bean class="com.liferay.oauth2.provider.service.persistence.impl.OAuth2ApplicationScopeAliasesPersistenceImpl" id="com.liferay.oauth2.provider.service.persistence.OAuth2ApplicationScopeAliasesPersistence" parent="basePersistence" />
 	<bean class="com.liferay.oauth2.provider.service.impl.OAuth2AuthorizationLocalServiceImpl" id="com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService" />
 	<bean class="com.liferay.oauth2.provider.service.impl.OAuth2AuthorizationServiceImpl" id="com.liferay.oauth2.provider.service.OAuth2AuthorizationService" />
-	<bean class="com.liferay.oauth2.provider.service.impl.OAuth2RefreshTokenLocalServiceImpl" id="com.liferay.oauth2.provider.service.OAuth2RefreshTokenLocalService" />
-	<bean class="com.liferay.oauth2.provider.service.impl.OAuth2RefreshTokenServiceImpl" id="com.liferay.oauth2.provider.service.OAuth2RefreshTokenService" />
-	<bean class="com.liferay.oauth2.provider.service.persistence.impl.OAuth2RefreshTokenPersistenceImpl" id="com.liferay.oauth2.provider.service.persistence.OAuth2RefreshTokenPersistence" parent="basePersistence" />
+	<bean class="com.liferay.oauth2.provider.service.persistence.impl.OAuth2AuthorizationPersistenceImpl" id="com.liferay.oauth2.provider.service.persistence.OAuth2AuthorizationPersistence" parent="basePersistence" />
 	<bean class="com.liferay.oauth2.provider.service.impl.OAuth2ScopeGrantLocalServiceImpl" id="com.liferay.oauth2.provider.service.OAuth2ScopeGrantLocalService" />
 	<bean class="com.liferay.oauth2.provider.service.persistence.impl.OAuth2ScopeGrantPersistenceImpl" id="com.liferay.oauth2.provider.service.persistence.OAuth2ScopeGrantPersistence" parent="basePersistence" />
 </beans>

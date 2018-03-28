@@ -20,17 +20,11 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 public class DropdownRadioGroupItem extends DropdownGroupItem {
 
 	public DropdownRadioGroupItem() {
-		super("radiogroup");
-	}
-
-	public String getInputName() {
-		return _inputName;
+		put("type", "radiogroup");
 	}
 
 	public void setInputName(String inputName) {
-		_inputName = inputName;
+		put("inputName", inputName);
 	}
-
-	private String _inputName;
 
 }

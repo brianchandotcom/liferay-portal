@@ -20,6 +20,7 @@ import com.liferay.frontend.taglib.clay.sample.web.internal.display.context.Drop
 import com.liferay.frontend.taglib.clay.sample.web.internal.display.context.ManagementToolbarsDisplayContext;
 import com.liferay.frontend.taglib.clay.sample.web.internal.display.context.NavigationBarsDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
 
@@ -29,6 +30,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Chema Balsas
@@ -75,7 +77,8 @@ public class ClaySamplePortlet extends MVCPortlet {
 			dropdownsDisplayContext);
 
 		ManagementToolbarsDisplayContext managementToolbarsDisplayContext =
-			new ManagementToolbarsDisplayContext();
+			new ManagementToolbarsDisplayContext(
+				_portal.getHttpServletRequest(renderRequest));
 
 		renderRequest.setAttribute(
 			ClaySamplePortletKeys.MANAGEMENT_TOOLBARS_DISPLAY_CONTEXT,
@@ -90,5 +93,8 @@ public class ClaySamplePortlet extends MVCPortlet {
 
 		super.doDispatch(renderRequest, renderResponse);
 	}
+
+	@Reference
+	private Portal _portal;
 
 }

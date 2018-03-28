@@ -76,7 +76,7 @@ public class LocalizedItemSelectorRendering {
 
 					navigationItem.setActive(true);
 
-					_selectedNavigationItem = navigationItem;
+					_selectedNavigationItemLabel = title;
 				}
 			});
 	}
@@ -90,8 +90,7 @@ public class LocalizedItemSelectorRendering {
 	}
 
 	public ItemSelectorViewRenderer getSelectedItemSelectorViewRenderer() {
-		return _itemSelectorViewRenderers.get(
-			_selectedNavigationItem.getLabel());
+		return _itemSelectorViewRenderers.get(_selectedNavigationItemLabel);
 	}
 
 	public void store(PortletRequest portletRequest) {
@@ -105,6 +104,6 @@ public class LocalizedItemSelectorRendering {
 	private final Locale _locale;
 	private final NavigationItemList _navigationItems =
 		new NavigationItemList();
-	private NavigationItem _selectedNavigationItem;
+	private String _selectedNavigationItemLabel;
 
 }

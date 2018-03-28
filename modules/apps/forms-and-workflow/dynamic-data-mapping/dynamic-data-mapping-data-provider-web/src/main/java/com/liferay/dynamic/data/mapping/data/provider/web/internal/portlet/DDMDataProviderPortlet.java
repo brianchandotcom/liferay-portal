@@ -41,6 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
+		"com.liferay.portlet.autopropagated-parameters=backURL",
 		"com.liferay.portlet.css-class-wrapper=portlet-dynamic-data-mapping-data-provider",
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",

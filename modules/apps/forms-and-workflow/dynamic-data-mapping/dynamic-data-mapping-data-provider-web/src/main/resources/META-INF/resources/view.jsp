@@ -17,83 +17,34 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
+String backURL = ParamUtil.getString(request, "backURL");
 
+String displayStyle = ddmDataProviderDisplayContext.getDisplayStyle();
 PortletURL portletURL = ddmDataProviderDisplayContext.getPortletURL();
-
-portletURL.setParameter("displayStyle", "descriptive");
-
-DDMDataProviderSearch ddmDataProviderSearch = new DDMDataProviderSearch(renderRequest, portletURL);
-
-OrderByComparator<DDMDataProviderInstance> orderByComparator = DDMDataProviderPortletUtil.getDDMDataProviderOrderByComparator(ddmDataProviderDisplayContext.getOrderByCol(), ddmDataProviderDisplayContext.getOrderByType());
-
-ddmDataProviderSearch.setOrderByCol(ddmDataProviderDisplayContext.getOrderByCol());
-ddmDataProviderSearch.setOrderByComparator(orderByComparator);
-ddmDataProviderSearch.setOrderByType(ddmDataProviderDisplayContext.getOrderByType());
+portletURL.setParameter("displayStyle", displayStyle);
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBack(backURL);
 
 renderResponse.setTitle(LanguageUtil.get(request, "data-providers"));
 %>
 
 <liferay-ui:error exception="<%= RequiredDataProviderInstanceException.MustNotDeleteDataProviderInstanceReferencedByDataProviderInstanceLinks.class %>" message="the-data-provider-cannot-be-deleted-because-it-is-required-by-one-or-more-forms" />
 
-<liferay-util:include page="/search_bar.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/navbar.jsp" servletContext="<%= application %>" />
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-buttons>
-		<c:if test="<%= ddmDataProviderDisplayContext.isShowAddDataProviderButton() %>">
-			<liferay-frontend:add-menu
-				inline="<%= true %>"
-			>
-
-				<%
-				for (String ddmDataProviderType : ddmDataProviderDisplayContext.getDDMDataProviderTypes()) {
-				%>
-
-					<portlet:renderURL var="addDataProviderURL">
-						<portlet:param name="mvcPath" value="/edit_data_provider.jsp" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-						<portlet:param name="type" value="<%= ddmDataProviderType %>" />
-					</portlet:renderURL>
-
-					<liferay-frontend:add-menu-item
-						title="<%= LanguageUtil.get(request, ddmDataProviderType) %>"
-						url="<%= addDataProviderURL.toString() %>"
-					/>
-
-				<%
-				}
-				%>
-
-			</liferay-frontend:add-menu>
-		</c:if>
-
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
 
 <div class="container-fluid-1280" id="<portlet:namespace />formContainer">
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="searchContainerForm">
 		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+		<aui:input name="deleteDataProviderInstanceIds" type="hidden" />
 
 		<liferay-ui:search-container
-			emptyResultsMessage="no-data-providers-were-found"
-			id="searchContainer"
-			searchContainer="<%= ddmDataProviderSearch %>"
+			id="dataProviderInstance"
+			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
+			searchContainer="<%= ddmDataProviderDisplayContext.getSearch() %>"
 		>
-
-			<%
-			searchContainer.setTotal(ddmDataProviderDisplayContext.getSearchContainerTotal(searchContainer));
-
-			request.setAttribute(WebKeys.SEARCH_CONTAINER, searchContainer);
-			%>
-
-			<liferay-ui:search-container-results
-				results="<%= ddmDataProviderDisplayContext.getSearchContainerResults(searchContainer) %>"
-			/>
-
 			<liferay-ui:search-container-row
 				className="com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance"
 				cssClass="entry-display-style"
@@ -104,45 +55,56 @@ renderResponse.setTitle(LanguageUtil.get(request, "data-providers"));
 					<portlet:param name="mvcPath" value="/edit_data_provider.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="dataProviderInstanceId" value="<%= String.valueOf(dataProviderInstance.getDataProviderInstanceId()) %>" />
+					<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 				</portlet:renderURL>
 
-				<liferay-ui:search-container-column-image
-					src="<%= ddmDataProviderDisplayContext.getUserPortraitURL(dataProviderInstance.getUserId()) %>"
-					toggleRowChecker="<%= true %>"
-				/>
+				<c:choose>
+					<c:when test='<%= displayStyle.equals("descriptive") %>'>
+						<liferay-ui:search-container-column-image
+							src="<%= ddmDataProviderDisplayContext.getUserPortraitURL(dataProviderInstance.getUserId()) %>"
+							toggleRowChecker="<%= true %>"
+						/>
 
-				<liferay-ui:search-container-column-jsp
-					colspan="<%= 2 %>"
-					href="<%= rowURL %>"
-					path="/data_provider_descriptive.jsp"
-				/>
+						<liferay-ui:search-container-column-jsp
+							colspan="<%= 2 %>"
+							href="<%= rowURL %>"
+							path="/data_provider_descriptive.jsp"
+						/>
 
-				<liferay-ui:search-container-column-jsp
-					path="/data_provider_action.jsp"
-				/>
+						<liferay-ui:search-container-column-jsp
+							path="/data_provider_action.jsp"
+						/>
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:search-container-column-text
+							cssClass="table-cell-content"
+							href="<%= rowURL %>"
+							name="name"
+							value="<%= HtmlUtil.escape(dataProviderInstance.getName(locale)) %>"
+						/>
+
+						<liferay-ui:search-container-column-text
+							cssClass="table-cell-content"
+							name="description"
+							value="<%= HtmlUtil.escape(dataProviderInstance.getDescription(locale)) %>"
+						/>
+
+						<liferay-ui:search-container-column-date
+							name="modified-date"
+							value="<%= dataProviderInstance.getModifiedDate() %>"
+						/>
+
+						<liferay-ui:search-container-column-jsp
+							path="/data_provider_action.jsp"
+						/>
+					</c:otherwise>
+				</c:choose>
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator
-				displayStyle="descriptive"
+				displayStyle="<%= displayStyle %>"
 				markupView="lexicon"
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
 </div>
-
-<c:if test="<%= windowState.equals(LiferayWindowState.POP_UP) %>">
-	<aui:script>
-		var modal = Liferay.Util.getWindow();
-
-		if (modal) {
-			var footerNode = modal.footerNode;
-
-			if (footerNode) {
-				modal.removeToolbar('footer');
-				modal.setStdModContent('footer', null);
-
-				modal.fillHeight(modal.bodyNode);
-			}
-		}
-	</aui:script>
-</c:if>

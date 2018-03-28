@@ -196,7 +196,7 @@ public class CommerceOrganizationLocalServiceImpl
 			}
 		}
 
-		return addressPersistence.create(0);
+		return addressLocalService.createAddress(0);
 	}
 
 	@Override
@@ -217,7 +217,7 @@ public class CommerceOrganizationLocalServiceImpl
 			}
 		}
 
-		return emailAddressPersistence.create(0);
+		return emailAddressLocalService.createEmailAddress(0);
 	}
 
 	@Override
@@ -413,7 +413,7 @@ public class CommerceOrganizationLocalServiceImpl
 
 		long organizationId = counterLocalService.increment();
 
-		Organization organization = organizationPersistence.create(
+		Organization organization = organizationLocalService.createOrganization(
 			organizationId);
 
 		if (serviceContext != null) {
@@ -431,7 +431,7 @@ public class CommerceOrganizationLocalServiceImpl
 		organization.setRecursable(true);
 		organization.setStatusId(ListTypeConstants.ORGANIZATION_STATUS_DEFAULT);
 
-		organizationPersistence.update(organization);
+		organizationLocalService.addOrganization(organization);
 
 		// Role
 

@@ -223,6 +223,12 @@ don't match, the `node_modules` directory is deleted before running
 - [LPS-78741]: If the `nodeModulesDigestFile` matches the `node_modules`
 directory's digest, do not run `npm install`.
 
+## 4.3.2 - 2018-03-28
+
+### Changed
+- [LPS-78741]: If the `nodeModulesDigestFile` matches the `node_modules`
+directory's digest, do not run `npm ci`.
+
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573

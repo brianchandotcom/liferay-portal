@@ -41,7 +41,7 @@ import java.util.regex.Pattern;
 /**
  * @author Michael Hashimoto
  */
-public class TestBatchGroup {
+public class Batch {
 
 	public String getBatchName() {
 		return _batchName;
@@ -55,15 +55,15 @@ public class TestBatchGroup {
 		return _portalTestProperties;
 	}
 
-	public TestBatchAxis getTestBatchAxis(int testBatchAxisId) {
-		return _testBatchAxes.get(testBatchAxisId);
+	public BatchAxis getBatchAxis(int batchAxisId) {
+		return _batchAxes.get(batchAxisId);
 	}
 
-	public int getTestBatchGroupSize() {
-		return _testBatchAxes.size();
+	public int getBatchSize() {
+		return _batchAxes.size();
 	}
 
-	public static class TestBatchAxis {
+	public static class BatchAxis {
 
 		public void addTestClassFile(File testClassFile) {
 			_testClassFiles.add(testClassFile);
@@ -77,7 +77,7 @@ public class TestBatchGroup {
 			return _testClassFiles;
 		}
 
-		private TestBatchAxis(int id) {
+		private BatchAxis(int id) {
 			_id = id;
 
 			_testClassFiles = new ArrayList<>();
@@ -88,13 +88,13 @@ public class TestBatchGroup {
 
 	}
 
-	protected TestBatchGroup(
+	protected Batch(
 		String batchName, GitWorkingDirectory gitWorkingDirectory) {
 
 		this(batchName, gitWorkingDirectory, null);
 	}
 
-	protected TestBatchGroup(
+	protected Batch(
 		String batchName, GitWorkingDirectory gitWorkingDirectory,
 		String testSuiteName) {
 
@@ -106,12 +106,12 @@ public class TestBatchGroup {
 			new File(
 				_gitWorkingDirectory.getWorkingDirectory(), "test.properties"));
 
-		_setTestBatchCurrentBranch();
+		_setBatchCurrentBranch();
 
 		_setTestClassNamesExcludesRelativeGlobs();
 		_setTestClassNamesIncludesRelativeGlobs();
 
-		_setTestBatchAxes();
+		_setBatchAxes();
 	}
 
 	private List<String> _getCurrentBranchTestClassNamesRelativeGlobs(
@@ -180,7 +180,7 @@ public class TestBatchGroup {
 
 	private int _getMaxClassGroupSize() {
 		String testBatchMaxClassGroupSizePropertyValue =
-			_getTestBatchMaxClassGroupSizePropertyValue();
+			_getBatchMaxClassGroupSizePropertyValue();
 
 		if (testBatchMaxClassGroupSizePropertyValue != null) {
 			return Integer.parseInt(testBatchMaxClassGroupSizePropertyValue);
@@ -189,7 +189,7 @@ public class TestBatchGroup {
 		return _DEFAULT_MAX_CLASS_GROUP_SIZE;
 	}
 
-	private String _getTestBatchMaxClassGroupSizePropertyValue() {
+	private String _getBatchMaxClassGroupSizePropertyValue() {
 		List<String> propertyNames = new ArrayList<>();
 
 		if (_testSuiteName != null) {
@@ -441,7 +441,7 @@ public class TestBatchGroup {
 		return null;
 	}
 
-	private void _setTestBatchAxes() {
+	private void _setBatchAxes() {
 		List<String> testClassFileNames = new ArrayList<>(
 			_getTestClassFileNames());
 
@@ -455,30 +455,33 @@ public class TestBatchGroup {
 
 		int maxClassGroupSize = _getMaxClassGroupSize();
 
-		int testBatchGroupSize = (int)Math.ceil(
+		int batchSize = (int)Math.ceil(
 			(double)testClassFileNamesCount / maxClassGroupSize);
 
 		int classGroupSize = (int)Math.ceil(
-			(double)testClassFileNamesCount / testBatchGroupSize);
+			(double)testClassFileNamesCount / batchSize);
 
 		int id = 0;
 
-		for (List<String> axisTestClassFileNames :
+		for (List<String> batchAxisTestClassFileNames :
 				Lists.partition(testClassFileNames, classGroupSize)) {
 
-			TestBatchAxis testBatchAxis = new TestBatchAxis(id);
+			BatchAxis batchAxis = new BatchAxis(id);
 
-			_testBatchAxes.add(testBatchAxis);
+			_batchAxes.add(batchAxis);
 
-			for (String axisTestBatchFileName : axisTestClassFileNames) {
-				testBatchAxis.addTestClassFile(new File(axisTestBatchFileName));
+			for (String batchAxisTestClassFileName :
+					batchAxisTestClassFileNames) {
+
+				batchAxis.addTestClassFile(
+					new File(batchAxisTestClassFileName));
 			}
 
 			id++;
 		}
 	}
 
-	private void _setTestBatchCurrentBranch() {
+	private void _setBatchCurrentBranch() {
 		List<String> propertyNames = new ArrayList<>();
 
 		if (_testSuiteName != null) {
@@ -493,12 +496,12 @@ public class TestBatchGroup {
 			_portalTestProperties, propertyNames);
 
 		if (propertyValue != null) {
-			_testBatchCurrentBranch = Boolean.parseBoolean(propertyValue);
+			_batchCurrentBranch = Boolean.parseBoolean(propertyValue);
 
 			return;
 		}
 
-		_testBatchCurrentBranch = _DEFAULT_TEST_BATCH_CURRENT_BRANCH;
+		_batchCurrentBranch = _DEFAULT_BATCH_CURRENT_BRANCH;
 	}
 
 	private void _setTestClassNamesExcludesRelativeGlobs() {
@@ -514,7 +517,7 @@ public class TestBatchGroup {
 		List<String> testClassNamesExcludesRelativeGlobs = Arrays.asList(
 			testClassNamesExcludesPropertyValue.split(","));
 
-		if (_testBatchCurrentBranch) {
+		if (_batchCurrentBranch) {
 			testClassNamesExcludesRelativeGlobs =
 				_getCurrentBranchTestClassNamesRelativeGlobs(
 					testClassNamesExcludesRelativeGlobs);
@@ -538,7 +541,7 @@ public class TestBatchGroup {
 		List<String> testClassNamesIncludesRelativeGlobs = Arrays.asList(
 			testClassNamesIncludesPropertyValue.split(","));
 
-		if (_testBatchCurrentBranch) {
+		if (_batchCurrentBranch) {
 			testClassNamesIncludesRelativeGlobs =
 				_getCurrentBranchTestClassNamesRelativeGlobs(
 					testClassNamesIncludesRelativeGlobs);
@@ -551,7 +554,7 @@ public class TestBatchGroup {
 
 	private static final int _DEFAULT_MAX_CLASS_GROUP_SIZE = 5000;
 
-	private static final boolean _DEFAULT_TEST_BATCH_CURRENT_BRANCH = false;
+	private static final boolean _DEFAULT_BATCH_CURRENT_BRANCH = false;
 
 	private final String _batchName;
 	private final GitWorkingDirectory _gitWorkingDirectory;
@@ -560,8 +563,8 @@ public class TestBatchGroup {
 	private final Properties _portalTestProperties;
 	private final Pattern _propertyNamePattern = Pattern.compile(
 		"[^\\]]+\\[(?<batchName>[^\\]]+)\\](\\[(?<testSuiteName>[^\\]]+)\\])?");
-	private final List<TestBatchAxis> _testBatchAxes = new ArrayList<>();
-	private boolean _testBatchCurrentBranch;
+	private final List<BatchAxis> _batchAxes = new ArrayList<>();
+	private boolean _batchCurrentBranch;
 	private final List<PathMatcher> _testClassNamesExcludesPathMatchers =
 		new ArrayList<>();
 	private final List<PathMatcher> _testClassNamesIncludesPathMatchers =

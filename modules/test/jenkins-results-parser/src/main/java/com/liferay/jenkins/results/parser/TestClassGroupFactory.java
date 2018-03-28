@@ -17,15 +17,15 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public class TestBatchGroupFactory {
+public class BatchFactory {
 
-	public static TestBatchGroup newTestBatchGroup(
+	public static Batch newBatch(
 		String batchName, GitWorkingDirectory gitWorkingDirectory) {
 
-		return new TestBatchGroup(batchName, gitWorkingDirectory);
+		return new Batch(batchName, gitWorkingDirectory);
 	}
 
-	public static TestBatchGroup newTestBatchGroup(
+	public static Batch newBatch(
 		String batchName, PortalRepositoryJob portalRepositoryJob) {
 
 		GitWorkingDirectory gitWorkingDirectory =
@@ -40,8 +40,7 @@ public class TestBatchGroupFactory {
 			testSuiteName = portalAcceptancePullRequestJob.getTestSuiteName();
 		}
 
-		return new TestBatchGroup(
-			batchName, gitWorkingDirectory, testSuiteName);
+		return new Batch(batchName, gitWorkingDirectory, testSuiteName);
 	}
 
 }

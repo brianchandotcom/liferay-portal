@@ -26,7 +26,7 @@ public abstract class BaseAnnouncementsUADEntityAggregator<T extends BaseModel>
 
 	@Override
 	public String getApplicationName() {
-		return AnnouncementsUADConstants.UAD_ENTITY_SET_NAME;
+		return AnnouncementsUADConstants.APPLICATION_NAME;
 	}
 
 }

@@ -29,7 +29,7 @@ public class ${entity.name}UADEntityAggregator extends DynamicQueryUADEntityAggr
 
 	@Override
 	public String getApplicationName() {
-		return ${portletShortName}UADConstants.UAD_ENTITY_SET_NAME;
+		return ${portletShortName}UADConstants.APPLICATION_NAME;
 	}
 
 	@Override

@@ -43,7 +43,7 @@ public class ${entity.name}UADEntityDisplayTest extends BaseUADEntityDisplayTest
 
 	@Override
 	protected String getApplicationName() {
-		return ${portletShortName}UADConstants.UAD_ENTITY_SET_NAME;
+		return ${portletShortName}UADConstants.APPLICATION_NAME;
 	}
 
 	@Override

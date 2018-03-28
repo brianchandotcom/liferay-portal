@@ -37,7 +37,7 @@ public class AnnouncementsEntryUADEntityDisplay
 	implements UADEntityDisplay<AnnouncementsEntry> {
 
 	public String getApplicationName() {
-		return AnnouncementsUADConstants.UAD_ENTITY_SET_NAME;
+		return AnnouncementsUADConstants.APPLICATION_NAME;
 	}
 
 	public String[] getDisplayFieldNames() {

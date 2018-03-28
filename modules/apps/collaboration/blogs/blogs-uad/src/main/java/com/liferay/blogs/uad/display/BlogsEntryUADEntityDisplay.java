@@ -35,7 +35,7 @@ import java.util.Map;
 	"model.class.name=" + BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY}, service = UADEntityDisplay.class)
 public class BlogsEntryUADEntityDisplay implements UADEntityDisplay<BlogsEntry> {
 	public String getApplicationName() {
-		return BlogsUADConstants.UAD_ENTITY_SET_NAME;
+		return BlogsUADConstants.APPLICATION_NAME;
 	}
 
 	public String[] getDisplayFieldNames() {

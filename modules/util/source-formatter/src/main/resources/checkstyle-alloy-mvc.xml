@@ -133,6 +133,7 @@
 			<message key="whitespace.incorrect" value="The value of ''{0}'' should not have spaces around ''='', see LPS-70526" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.FullyQualifiedNameCheck">
+			<property name="enabled" value="false" />
 			<message key="import.statement.use" value="Use import statement instead of Fully Qualified Name for ''{0}'" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.IndentationCheck">

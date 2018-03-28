@@ -450,6 +450,12 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
+		if (absolutePath.contains("/src/main/resources/alloy_mvc/jsp/") &&
+			absolutePath.endsWith(".jspf")) {
+
+			return content;
+		}
+
 		Set<String> checkedFileNames = new HashSet<>();
 		Set<String> includeFileNames = new HashSet<>();
 

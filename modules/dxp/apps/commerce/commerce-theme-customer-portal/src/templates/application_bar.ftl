@@ -34,6 +34,7 @@
 		</li>
 		<li class="b2b-cart dropdown dropdown-wide nav-item">
 			<a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle nav-link" data-toggle="dropdown" href="/" role="button">
+			<a aria-expanded="false" aria-haspopup="true" class="animate dropdown-toggle nav-link" data-toggle="dropdown" href="/" role="button">
 				<span class="b2b-cart-notification sticker">
 					<svg aria-hidden="true" class="lexicon-icon lexicon-icon-archive" focusable="false"><use xlink:href="${images_folder}/lexicon/icons.svg#archive" /></svg>
 					<span class="sticker sticker-light sticker-sm rounded-circle sticker-outside sticker-top-right">

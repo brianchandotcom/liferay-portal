@@ -20,6 +20,7 @@ import com.liferay.user.associated.data.test.util.BaseUADAggregatorTestCase;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -58,6 +59,11 @@ public class ${entity.name}UADAggregatorTest extends BaseUADAggregatorTestCase <
 	@Override
 	protected UADAggregator getUADAggregator() {
 		return _uadAggregator;
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_${entity.varName}UADEntityTestHelper.cleanUpDependencies(_${entity.varNames});
 	}
 
 	@DeleteAfterTestRun

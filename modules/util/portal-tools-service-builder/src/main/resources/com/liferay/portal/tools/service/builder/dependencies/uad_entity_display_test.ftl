@@ -17,6 +17,7 @@ import com.liferay.user.associated.data.test.util.BaseUADEntityDisplayTestCase;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -59,6 +60,11 @@ public class ${entity.name}UADEntityDisplayTest extends BaseUADEntityDisplayTest
 	@Override
 	protected String getTypeDescription() {
 		return "${entity.UADTypeDescription}";
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_${entity.varName}UADEntityTestHelper.cleanUpDependencies(_${entity.varNames});
 	}
 
 	@DeleteAfterTestRun

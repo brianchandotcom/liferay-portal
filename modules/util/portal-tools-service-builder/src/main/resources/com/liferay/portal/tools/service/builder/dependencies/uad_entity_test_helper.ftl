@@ -2,6 +2,8 @@ package ${packagePath}.uad.test;
 
 import ${apiPackagePath}.model.${entity.name};
 
+import java.util.List;
+
 import org.junit.Assume;
 
 import org.osgi.service.component.annotations.Component;
@@ -44,5 +46,16 @@ public class ${entity.name}UADEntityTestHelper {
 			return null;
 		}
 	</#if>
+
+	/**
+	 * Implement cleanUpDependencies(List<${entity.name}> ${entity.varNames}) if tests require additional tear down logic.
+	 *
+	 * <p>
+	 * Several UAD tests depend on creating one or more valid ${entity.names} with specified user ID and status by user ID in order to execute correctly. Implement cleanUpDependencies(List<${entity.name}> ${entity.varNames}) such that any additional objects created during the construction of ${entity.varNames} are safely removed.
+	 * </p>
+	 *
+	 */
+	public void cleanUpDependencies(List<${entity.name}> ${entity.varNames}) throws Exception {
+	}
 
 }

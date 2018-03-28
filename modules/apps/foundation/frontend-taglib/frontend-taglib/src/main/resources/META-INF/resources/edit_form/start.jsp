@@ -21,7 +21,7 @@ String fullName = namespace.concat(HtmlUtil.escapeAttribute(name));
 %>
 
 <form action="<%= HtmlUtil.escapeAttribute(action) %>" class="container container-no-gutters-sm-down container-view form <%= cssClass %> <%= inlineLabels ? "field-labels-inline" : StringPool.BLANK %>" data-fm-namespace="<%= namespace %>" id="<%= fullName %>" method="<%= method %>" name="<%= fullName %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
-	<div class="sheet <%= large ? StringPool.BLANK : "sheet-lg" %>">
+	<div class="sheet <%= fluid ? StringPool.BLANK : "sheet-lg" %>">
 		<c:if test="<%= Validator.isNotNull(onSubmit) %>">
 			<fieldset class="input-container" disabled="disabled">
 		</c:if>

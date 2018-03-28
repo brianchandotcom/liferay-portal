@@ -274,14 +274,14 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to align the form's labels. The default value is <code>false</code>.]]></description>
-			<name>inlineLabels</name>
+			<name>fluid</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<name>large</name>
+			<description><![CDATA[Whether to align the form's labels. The default value is <code>false</code>.]]></description>
+			<name>inlineLabels</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>

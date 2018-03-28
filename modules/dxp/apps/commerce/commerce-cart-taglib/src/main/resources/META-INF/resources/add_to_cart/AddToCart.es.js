@@ -68,7 +68,7 @@ class AddToCart extends PortletBase {
 					);
 				}
 				else {
-					that._showNotification(response.error, 'danger');
+					that._showNotification(jsonresponse.error, 'danger');
 				}
 			}
 		});

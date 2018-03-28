@@ -229,7 +229,7 @@ public class LiferaySourceOrSink
 	public Map<String, String> getApioResourceEndpointsMap(
 		RuntimeContainer runtimeContainer) {
 
-		JsonNode jsonNode;
+		JsonNode jsonNode = null;
 
 		try {
 			jsonNode = doApioGetRequest(runtimeContainer);
@@ -520,7 +520,7 @@ public class LiferaySourceOrSink
 
 	@Override
 	public boolean hasWebSiteResource() {
-		JsonNode jsonNode;
+		JsonNode jsonNode = null;
 
 		try {
 			jsonNode = doApioGetRequest((RuntimeContainer)null);
@@ -736,7 +736,7 @@ public class LiferaySourceOrSink
 	private Map<String, String> _getWebSiteResourceEndpointsMap(
 		String webSiteURL) {
 
-		JsonNode jsonNode;
+		JsonNode jsonNode = null;
 
 		try {
 			jsonNode = doApioGetRequest(webSiteURL);
@@ -753,7 +753,7 @@ public class LiferaySourceOrSink
 	}
 
 	private String _getWebSitesEndpointURL() throws IOException {
-		JsonNode jsonNode;
+		JsonNode jsonNode = null;
 
 		try {
 			jsonNode = doApioGetRequest((RuntimeContainer)null);

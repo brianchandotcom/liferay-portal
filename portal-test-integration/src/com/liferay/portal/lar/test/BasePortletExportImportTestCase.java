@@ -133,7 +133,7 @@ public abstract class BasePortletExportImportTestCase
 
 		exportParameterMap.put(
 			PortletDataHandlerKeys.DELETIONS,
-			new String[] {String.valueOf(true)});
+			new String[] {Boolean.TRUE.toString()});
 
 		exportImportPortlet(
 			getPortletId(), exportParameterMap, getImportParameterMap());
@@ -147,7 +147,7 @@ public abstract class BasePortletExportImportTestCase
 
 		importParameterMap.put(
 			PortletDataHandlerKeys.DELETIONS,
-			new String[] {String.valueOf(true)});
+			new String[] {Boolean.TRUE.toString()});
 
 		exportImportPortlet(
 			getPortletId(), exportParameterMap, importParameterMap);
@@ -237,7 +237,7 @@ public abstract class BasePortletExportImportTestCase
 
 		exportParameterMap.put(
 			PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE,
-			new String[] {String.valueOf(true)});
+			new String[] {Boolean.TRUE.toString()});
 		exportParameterMap.put(
 			"range",
 			new String[] {ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE});

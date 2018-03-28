@@ -107,13 +107,13 @@ public class MBExportImportTest extends BasePortletExportImportTestCase {
 
 		exportParameterMap.put(
 			PortletDataHandlerKeys.DELETIONS,
-			new String[] {String.valueOf(true)});
+			new String[] {Boolean.TRUE.toString()});
 
 		Map<String, String[]> importParameterMap = new LinkedHashMap<>();
 
 		importParameterMap.put(
 			PortletDataHandlerKeys.DELETIONS,
-			new String[] {String.valueOf(true)});
+			new String[] {Boolean.TRUE.toString()});
 
 		exportImportPortlet(
 			getPortletId(), exportParameterMap, importParameterMap);

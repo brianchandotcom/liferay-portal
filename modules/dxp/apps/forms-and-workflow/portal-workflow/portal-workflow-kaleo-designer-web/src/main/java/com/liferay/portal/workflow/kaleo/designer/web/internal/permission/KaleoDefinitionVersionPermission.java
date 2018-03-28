@@ -16,8 +16,10 @@ package com.liferay.portal.workflow.kaleo.designer.web.internal.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerActionKeys;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 
@@ -77,6 +79,28 @@ public class KaleoDefinitionVersionPermission
 				kaleoDefinitionVersionId);
 
 		return contains(permissionChecker, kaleoDefinitionVersion, actionId);
+	}
+
+	public static boolean hasViewPermission(
+		PermissionChecker permissionChecker,
+		KaleoDefinitionVersion kaleoDefinitionVersion, long companyGroupId) {
+
+		if (contains(
+				permissionChecker, kaleoDefinitionVersion,
+				ActionKeys.VIEW) ||
+			contains(
+				permissionChecker, kaleoDefinitionVersion,
+				ActionKeys.UPDATE) ||
+			KaleoDesignerPermission.contains(
+				permissionChecker, companyGroupId,
+				KaleoDesignerActionKeys.ADD_NEW_WORKFLOW) ||
+			KaleoDesignerPermission.contains(
+				permissionChecker, companyGroupId, ActionKeys.VIEW)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

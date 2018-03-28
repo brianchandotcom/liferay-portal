@@ -38,6 +38,27 @@ public class CommercePriceCalculationLocalServiceImpl
 	extends CommercePriceCalculationLocalServiceBaseImpl {
 
 	@Override
+	public String formatPrice(long groupId, double price)
+		throws PortalException {
+
+		CommerceCurrency commerceCurrency =
+			_commerceCurrencyService.fetchPrimaryCommerceCurrency(groupId);
+
+		return commercePriceCalculationLocalService.formatPriceWithCurrency(
+			commerceCurrency.getCommerceCurrencyId(), price);
+	}
+
+	@Override
+	public String formatPriceWithCurrency(long commerceCurrencyId, double price)
+		throws PortalException {
+
+		CommerceCurrency commerceCurrency =
+			_commerceCurrencyService.getCommerceCurrency(commerceCurrencyId);
+
+		return _commercePriceFormatter.format(commerceCurrency, price);
+	}
+
+	@Override
 	public double getFinalPrice(
 			long groupId, long userId, long cpInstanceId, int quantity)
 		throws PortalException {

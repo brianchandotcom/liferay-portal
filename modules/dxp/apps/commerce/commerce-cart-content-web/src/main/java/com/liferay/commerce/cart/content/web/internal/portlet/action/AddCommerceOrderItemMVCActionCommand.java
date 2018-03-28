@@ -94,14 +94,15 @@ public class AddCommerceOrderItemMVCActionCommand extends BaseMVCActionCommand {
 					commerceOrder.getCommerceOrderId(), cpInstanceId, quantity,
 					0, ddmFormValues, null, serviceContext);
 
-			int commerceOrderItemsCount =
-				_commerceOrderItemService.getCommerceOrderItemsCount(
+			int commerceOrderItemsQuantity =
+				_commerceOrderItemService.getCommerceOrderItemsQuantity(
 					commerceOrder.getCommerceOrderId());
 
 			jsonObject.put(
 				"commerceOrderItemId",
 				commerceOrderItem.getCommerceOrderItemId());
-			jsonObject.put("commerceOrderItemsCount", commerceOrderItemsCount);
+			jsonObject.put(
+				"commerceOrderItemsQuantity", commerceOrderItemsQuantity);
 			jsonObject.put("success", true);
 		}
 		catch (CommerceOrderValidatorException cove) {

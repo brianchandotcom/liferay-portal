@@ -42,12 +42,12 @@ public interface CommerceOrderHelper {
 			HttpServletRequest httpServletRequest)
 		throws PortalException;
 
-	public CommerceOrder getCurrentCommerceOrder(
+	public int getCommerceOrderItemsQuantity(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws PortalException;
 
-	public int getCurrentCommerceOrderItemsCount(
+	public CommerceOrder getCurrentCommerceOrder(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws PortalException;

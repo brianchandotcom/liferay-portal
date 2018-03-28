@@ -82,6 +82,23 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 	}
 
 	@Override
+	public int getCommerceOrderItemsQuantity(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws PortalException {
+
+		CommerceOrder commerceOrder = getCurrentCommerceOrder(
+			httpServletRequest, httpServletResponse);
+
+		if (commerceOrder == null) {
+			return 0;
+		}
+
+		return _commerceOrderItemService.getCommerceOrderItemsQuantity(
+			commerceOrder.getCommerceOrderId());
+	}
+
+	@Override
 	public CommerceOrder getCurrentCommerceOrder(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
@@ -108,23 +125,6 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 		commerceOrder = _checkGuestOrder(themeDisplay, commerceOrder);
 
 		return commerceOrder;
-	}
-
-	@Override
-	public int getCurrentCommerceOrderItemsCount(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws PortalException {
-
-		CommerceOrder commerceOrder = getCurrentCommerceOrder(
-			httpServletRequest, httpServletResponse);
-
-		if (commerceOrder == null) {
-			return 0;
-		}
-
-		return _commerceOrderItemService.getCommerceOrderItemsCount(
-			commerceOrder.getCommerceOrderId());
 	}
 
 	@Override

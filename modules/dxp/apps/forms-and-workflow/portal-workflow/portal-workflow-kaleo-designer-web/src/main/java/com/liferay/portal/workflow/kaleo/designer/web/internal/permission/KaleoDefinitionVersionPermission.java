@@ -91,6 +91,12 @@ public class KaleoDefinitionVersionPermission
 			contains(
 				permissionChecker, kaleoDefinitionVersion,
 				ActionKeys.UPDATE) ||
+			contains(
+				permissionChecker, kaleoDefinitionVersion,
+				ActionKeys.DELETE) ||
+			contains(
+				permissionChecker, kaleoDefinitionVersion,
+				ActionKeys.PERMISSIONS) ||
 			KaleoDesignerPermission.contains(
 				permissionChecker, companyGroupId,
 				KaleoDesignerActionKeys.ADD_NEW_WORKFLOW) ||

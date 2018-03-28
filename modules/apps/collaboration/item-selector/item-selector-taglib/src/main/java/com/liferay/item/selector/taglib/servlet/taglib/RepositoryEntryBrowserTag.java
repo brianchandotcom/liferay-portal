@@ -137,12 +137,14 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		_dlMimeTypeDisplayContext = null;
 		_extensions = new ArrayList<>();
 		_itemSelectedEventName = null;
+		_itemSelectorReturnTypeResolver = null;
 		_maxFileSize = UploadServletRequestConfigurationHelperUtil.getMaxSize();
 		_portletURL = null;
 		_repositoryEntries = new ArrayList<>();
 		_repositoryEntriesCount = 0;
 		_showBreadcrumb = false;
 		_showDragAndDropZone = true;
+		_showSearch = true;
 		_tabName = null;
 		_uploadURL = null;
 	}

@@ -158,6 +158,7 @@ public class PanelContainerTag extends BaseBodyTagSupport implements BodyTag {
 		_endPage = null;
 		_extended = null;
 		_id = null;
+		_markupView = null;
 		_persistState = false;
 		_startPage = null;
 	}

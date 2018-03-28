@@ -130,6 +130,7 @@ public class InputDateTag extends BaseValidatorTagSupport {
 		_monthAndYearParam = StringPool.BLANK;
 		_monthParam = null;
 		_monthValue = -1;
+		_name = null;
 		_nullable = false;
 		_required = false;
 		_showDisableCheckbox = true;

@@ -60,6 +60,7 @@ public class AddMenuItemTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_anchorData = null;
 		_cssClass = null;
 		_id = null;
 		_title = null;

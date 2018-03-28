@@ -20,8 +20,8 @@ function isOpenGraphElement(element) {
 		const property = element.getAttribute('property');
 
 		if (property) {
-			isOpenGraphMetaTag = openGraphTagPatterns.some(
-				regExp => property.match(regExp)
+			isOpenGraphMetaTag = openGraphTagPatterns.some(regExp =>
+				property.match(regExp)
 			);
 		}
 	}
@@ -39,15 +39,12 @@ function openGraph(request) {
 	const elements = [].slice.call(document.querySelectorAll('meta'));
 	const openGraphElements = elements.filter(isOpenGraphElement);
 
-	const openGraphData = openGraphElements.reduce(
-		(data, meta) => {
-			return {
-				[meta.getAttribute('property')]: meta.getAttribute('content'),
-				...data,
-			};
-		},
-		{}
-	);
+	const openGraphData = openGraphElements.reduce((data, meta) => {
+		return {
+			[meta.getAttribute('property')]: meta.getAttribute('content'),
+			...data,
+		};
+	}, {});
 
 	request.context = {
 		...openGraphData,

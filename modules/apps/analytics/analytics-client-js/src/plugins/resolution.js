@@ -6,11 +6,13 @@
 function extendContextWithResolutionData(request) {
 	const devicePixelRatio = window.devicePixelRatio || 1;
 
-	const screenHeight = window.innerHeight ||
+	const screenHeight =
+		window.innerHeight ||
 		document.documentElement.clientHeight ||
 		document.body.clientHeight;
 
-	const screenWidth = window.innerWidth ||
+	const screenWidth =
+		window.innerWidth ||
 		document.documentElement.clientWidth ||
 		document.body.clientWidth;
 

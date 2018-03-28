@@ -1,3 +1,6 @@
+
+<%@ page import="com.liferay.commerce.service.CommercePriceCalculationLocalServiceUtil" %>
+
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -39,7 +42,7 @@ String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 				</div>
 
 				<div class="input-group-item">
-					<input class="form-control" readonly tabindex="-1" type="text" value="<%= formattedPrice %>">
+					<input class="form-control" readonly tabindex="-1" type="text" value="<%= CommercePriceCalculationLocalServiceUtil.formatPrice(scopeGroupId, commerceTierPriceEntry.getPrice()) %>">
 				</div>
 			</div>
 		</div>

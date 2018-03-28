@@ -1,6 +1,15 @@
 (function() {
 	AUI().ready(
 		function(A) {
+
+			var animateNodes = A.all('.animate');
+
+			animateNodes.each(
+				function(node) {
+					node.getDOMNode().addEventListener('animationend', animationEnd);
+				}
+			);
+
 			var sidenavToggle = [
 				$('#b2bSiteNavigation [data-toggle="sidenav"]'),
 				$('.b2b-site-navigation-toggle [data-toggle="sidenav"]')
@@ -28,13 +37,15 @@
 				function(event) {
 					Liferay.Portlet.refresh('#p_p_id_com_liferay_commerce_cart_content_web_internal_portlet_CommerceCartContentMiniPortlet_INSTANCE_commerceCartContentMiniPortlet_0_');
 
+					var cartIcon = A.one('#b2b-mini-cart > a');
+
 					if (cartIcon) {
 						cartIcon.addClass('animBounce');
 
-						var cartIconCount = A.one('#cartIcon > a .sticker');
+						var cartIconCount = A.one('#b2b-mini-cart-items-count');
 
 						if (cartIconCount) {
-							var orderItemCount = event.commerceOrderItemsCount;
+							var orderItemCount = event.commerceOrderItemsQuantity;
 
 							cartIconCount.html(orderItemCount);
 						}
@@ -78,6 +89,10 @@
 			if (!b2bLoginImage.length && b2bResizeEvent) {
 				win.off('resize.b2bLogin');
 				body.data('b2bResizeEvent', false);
+			}
+
+			function animationEnd(event) {
+				A.one(event.target).removeClass('animBounce');
 			}
 		}
 	);

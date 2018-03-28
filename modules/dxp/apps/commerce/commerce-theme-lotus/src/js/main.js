@@ -71,7 +71,7 @@
 						var wishListIconCount = A.one('#wishListIcon > a .sticker');
 
 						if (wishListIconCount) {
-							var orderItemCount = event.commerceOrderItemsCount;
+							var orderItemCount = event.commerceOrderItemsQuantity;
 
 							wishListIconCount.html(orderItemCount);
 						}

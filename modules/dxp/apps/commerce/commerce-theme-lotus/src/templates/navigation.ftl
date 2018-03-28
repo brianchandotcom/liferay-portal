@@ -61,8 +61,8 @@
 		<#if show_cart_icon>
 			<li class="collapse-hover nav-item" id="cartIcon">
 				<a class="animate nav-link" href="${cartUrl}">
-					<#if orderItemsCount != 0>
-						<span class="sticker sticker-outside">${orderItemsCount}</span>
+					<#if orderItemsQuantity != 0>
+						<span class="sticker sticker-outside">${orderItemsQuantity}</span>
 
 						<svg class="commerce-icon lexicon-icon icon-bag-full">
 							<use xlink:href="${images_folder}/theme-icons.svg#icon-bag-full" />

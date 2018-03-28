@@ -32,13 +32,12 @@
 				<@commerce_search_organization default_preferences=freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") />
 			</div>
 		</li>
-		<li class="b2b-cart dropdown dropdown-wide nav-item">
-			<a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle nav-link" data-toggle="dropdown" href="/" role="button">
+		<li id="b2b-mini-cart" class="b2b-cart dropdown dropdown-wide nav-item">
 			<a aria-expanded="false" aria-haspopup="true" class="animate dropdown-toggle nav-link" data-toggle="dropdown" href="/" role="button">
 				<span class="b2b-cart-notification sticker">
 					<svg aria-hidden="true" class="lexicon-icon lexicon-icon-archive" focusable="false"><use xlink:href="${images_folder}/lexicon/icons.svg#archive" /></svg>
-					<span class="sticker sticker-light sticker-sm rounded-circle sticker-outside sticker-top-right">
-						${orderItemsCount}
+					<span id="b2b-mini-cart-items-count" class="sticker sticker-light sticker-sm rounded-circle sticker-outside sticker-top-right">
+						${orderItemsQuantity}
 					</span>
 				</span><span class="inline-item-after navbar-breakpoint-down-d-none"><span class="text-truncate-inline"><span class="text-truncate">12345-67</span></span></span>
 				<span class="inline-item inline-item-after navbar-breakpoint-down-d-none"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-down" focusable="false"><use xlink:href="${images_folder}/lexicon/icons.svg#angle-down" /></svg></span>

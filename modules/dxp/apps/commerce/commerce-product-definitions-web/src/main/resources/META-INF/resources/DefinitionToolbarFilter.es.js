@@ -1,11 +1,6 @@
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
-import {dom, globalEval} from 'metal-dom';
-import {CancellablePromise} from 'metal-promise';
-import {async, core} from 'metal';
-import {RequestScreen, utils} from 'senna';
-import Router from 'metal-router';
 
 import templates from './DefinitionToolbarFilter.soy';
 
@@ -38,10 +33,10 @@ class DefinitionToolbarFilter extends Component {
 						eventName: this.namespace + 'selectCategory',
 						groupIds: this.groupIds,
 						hiddenInput: '#categoryIds',
-						singleSelect: true,
 						portletURL: this.categorySelectorURL,
-						vocabularyIds: this.vocabularyIds,
-						title: Liferay.Language.get('select-category')
+						singleSelect: true,
+						title: Liferay.Language.get('select-category'),
+						vocabularyIds: this.vocabularyIds
 					};
 
 					this.categoriesSelector_ = new Liferay.AssetTaglibCategoriesSelector(config);
@@ -77,20 +72,22 @@ class DefinitionToolbarFilter extends Component {
 	}
 
 	_getLabel(selection) {
+		var label = '';
+
 		if (this._currentSelection == 'optionsNames') {
-			return Liferay.Language.get('option');
+			label = Liferay.Language.get('option');
 		}
 		else if (this._currentSelection == 'assetCategoryIds') {
-			return Liferay.Language.get('category');
+			label = Liferay.Language.get('category');
 		}
 		else if (this._currentSelection == 'productTypeName') {
-			return Liferay.Language.get('product-type');
+			label = Liferay.Language.get('product-type');
 		}
 		else if (this._currentSelection == 'status') {
-			return Liferay.Language.get('status');
+			label = Liferay.Language.get('status');
 		}
 
-		return '';
+		return label;
 	}
 
 	_handleAddFilter() {
@@ -195,12 +192,12 @@ class DefinitionToolbarFilter extends Component {
 		var filters = [];
 
 		filterFields.forEach(
-			function(field, index) {
+			(field, index) => {
 				filters.push(
 					{
 						field: field,
-						value: filtersValues[index],
-						label: filtersLabels[index]
+						label: filtersLabels[index],
+						value: filtersValues[index]
 					}
 				);
 			}
@@ -216,11 +213,13 @@ class DefinitionToolbarFilter extends Component {
 		var filtersLabels = [];
 		var filtersValues = [];
 
-		this._filters.forEach(function(filter) {
-			filterFields.push(filter.field);
-			filtersLabels.push(filter.label);
-			filtersValues.push(filter.value);
-		});
+		this._filters.forEach(
+			(filter) => {
+				filterFields.push(filter.field);
+				filtersLabels.push(filter.label);
+				filtersValues.push(filter.value);
+			}
+		);
 
 		url.searchParams.set(this.namespace + 'filterFields', filterFields.join(','));
 		url.searchParams.set(this.namespace + 'filtersLabels', filtersLabels.join(','));
@@ -239,15 +238,19 @@ class DefinitionToolbarFilter extends Component {
 
 		url.searchParams.append(this.namespace + 'fieldName', this._currentSelection);
 
-		var promise = fetch(url, {
-			credentials: 'include',
-			method: 'GET'
-		})
-			.then(response => response.json())
-			.then((jsonResponse) => {
+		fetch(
+			url,
+			{
+				credentials: 'include',
+				method: 'GET'
+			}
+		).then(
+			response => response.json()
+		).then(
+			(jsonResponse) => {
 				this._terms = jsonResponse;
 			}
-			);
+		);
 	}
 
 	_loadOptionValues() {
@@ -255,15 +258,19 @@ class DefinitionToolbarFilter extends Component {
 
 		url.searchParams.append(this.namespace + 'fieldName', 'OPTION_' + this._currentOption);
 
-		var promise = fetch(url, {
-			credentials: 'include',
-			method: 'GET'
-		})
-			.then(response => response.json())
-			.then((jsonResponse) => {
+		fetch(
+			url,
+			{
+				credentials: 'include',
+				method: 'GET'
+			}
+		).then(
+			response => response.json()
+		).then(
+			(jsonResponse) => {
 				this._optionValues = jsonResponse;
 			}
-			);
+		);
 	}
 }
 

@@ -1,9 +1,7 @@
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
-import {dom, globalEval} from 'metal-dom';
-import {CancellablePromise} from 'metal-promise';
-import {async, core} from 'metal';
+import globalEval from 'metal-dom';
 
 import templates from './CPOptionDetail.soy';
 
@@ -23,7 +21,7 @@ class CPOptionDetail extends Component {
 	}
 
 	loadOptionDetail(cpOptionId) {
-		var that = this;
+		var instance = this;
 
 		let optionDetail = this.refs['option-detail'];
 
@@ -31,29 +29,34 @@ class CPOptionDetail extends Component {
 
 		url.searchParams.append(this.namespace + 'cpOptionId', cpOptionId);
 
-		var promise = fetch(url, {
-			credentials: 'include',
-			method: 'GET'
-		})
-			.then(response => response.text())
-			.then((text) => {
-
+		fetch(
+			url,
+			{
+				credentials: 'include',
+				method: 'GET'
+			}
+		).then(
+			response => response.text()
+		).then(
+			(text) => {
 				optionDetail.innerHTML = text;
 
 				globalEval.runScriptsInElement(optionDetail);
 
-				var title = optionDetail.querySelector('#' + that.namespace + 'title');
+				var title = optionDetail.querySelector('#' + instance.namespace + 'title');
 
 				if (title) {
 					title.addEventListener(
 						'keyup',
-						function(event) {
+						(event) => {
 							var target = event.target;
 
-							that.emit('titleChange', target.value);
-						});
+							instance.emit('titleChange', target.value);
+						}
+					);
 				}
-			});
+			}
+		);
 	}
 
 	_handleCPOptionChange(event) {
@@ -61,14 +64,16 @@ class CPOptionDetail extends Component {
 	}
 
 	_handleSaveOption() {
-		var that = this;
+		var instance = this;
 
 		AUI().use(
-			'aui-base', 'aui-form-validator', 'liferay-form',
-			function(A) {
+			'aui-base',
+			'aui-form-validator',
+			'liferay-form',
+			(A) => {
 				var hasErrors = false;
 
-				let form = that.element.querySelector('.option-detail form');
+				let form = instance.element.querySelector('.option-detail form');
 
 				var liferayForm = Liferay.Form.get(form.getAttribute('id'));
 
@@ -87,7 +92,7 @@ class CPOptionDetail extends Component {
 				}
 
 				if (!hasErrors) {
-					that._saveOption();
+					instance._saveOption();
 				}
 			}
 		);
@@ -110,15 +115,20 @@ class CPOptionDetail extends Component {
 
 		formData.set(this.namespace + 'cmd', 'delete');
 
-		var promise = fetch(form.action, {
-			body: formData,
-			credentials: 'include',
-			method: 'POST'
-		})
-			.then(response => response.json())
-			.then((jsonResponse) => {
+		fetch(
+			form.action,
+			{
+				body: formData,
+				credentials: 'include',
+				method: 'POST'
+			}
+		).then(
+			response => response.json()
+		).then(
+			(jsonResponse) => {
 				this.emit('optionDeleted', jsonResponse);
-			});
+			}
+		);
 	}
 
 	_saveOption() {
@@ -126,15 +136,20 @@ class CPOptionDetail extends Component {
 
 		var formData = new FormData(form);
 
-		var promise = fetch(form.action, {
-			body: formData,
-			credentials: 'include',
-			method: 'POST'
-		})
-			.then(response => response.json())
-			.then((jsonResponse) => {
+		fetch(
+			form.action,
+			{
+				body: formData,
+				credentials: 'include',
+				method: 'POST'
+			}
+		).then(
+			response => response.json()
+		).then(
+			(jsonResponse) => {
 				this.emit('optionSaved', jsonResponse);
-			});
+			}
+		);
 	}
 
 }

@@ -1,5 +1,4 @@
 import {Config} from 'metal-state';
-import dom from 'metal-dom';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import Soy from 'metal-soy';
 
@@ -20,7 +19,7 @@ class AddToCart extends PortletBase {
 	 */
 
 	_addToCart() {
-		var that = this;
+		var instance = this;
 
 		var _quantity = this.quantity;
 		var ddmFormValues = '[]';
@@ -48,13 +47,17 @@ class AddToCart extends PortletBase {
 		formData.append(this.portletNamespace + 'ddmFormValues', ddmFormValues);
 		formData.append(this.portletNamespace + 'quantity', _quantity);
 
-		fetch(this.uri, {
-			body: formData,
-			credentials: 'include',
-			method: 'post'
-		})
-			.then(response => response.json())
-			.then((jsonresponse) => {
+		fetch(
+			this.uri,
+			{
+				body: formData,
+				credentials: 'include',
+				method: 'post'
+			}
+		).then(
+			response => response.json()
+		).then(
+			(jsonresponse) => {
 				if (jsonresponse.success) {
 					Liferay.fire('commerce:productAddedToCart', jsonresponse);
 				}
@@ -62,18 +65,18 @@ class AddToCart extends PortletBase {
 					var validatorErrors = jsonresponse.validatorErrors;
 
 					if (validatorErrors) {
-
 						validatorErrors.forEach(
 							function(validatorError) {
-								that._showNotification(validatorError.message, 'danger');
+								instance._showNotification(validatorError.message, 'danger');
 							}
 						);
 					}
 					else {
-						that._showNotification(jsonresponse.error, 'danger');
+						instance._showNotification(jsonresponse.error, 'danger');
 					}
 				}
-			});
+			}
+		);
 	}
 
 	_getProductContent() {
@@ -81,7 +84,7 @@ class AddToCart extends PortletBase {
 	}
 
 	_handleClick() {
-		var that = this;
+		var instance = this;
 
 		var productContent = this._getProductContent();
 
@@ -89,7 +92,7 @@ class AddToCart extends PortletBase {
 			productContent.validateProduct(
 				function(hasError) {
 					if (!hasError) {
-						that._addToCart();
+						instance._addToCart();
 					}
 				}
 			);
@@ -99,19 +102,22 @@ class AddToCart extends PortletBase {
 		}
 	}
 
-	_showNotification(messageKey, type) {
-		AUI().use('liferay-notification', () => {
-			new Liferay.Notification(
-				{
-					message: Liferay.Language.get(messageKey),
-					render: true,
-					title: '',
-					type: type
-				}
-			);
-		});
+	_showNotification(message, type) {
+		AUI().use(
+			'liferay-notification',
+			() => {
+				new Liferay.Notification(
+					{
+						message: message,
+						render: true,
+						title: '',
+						type: type
+					}
+				);
+			}
+		);
 	}
-};
+}
 
 /**
  * State definition.
@@ -162,9 +168,8 @@ AddToCart.STATE = {
 
 	taglibQuantityInputId: Config.string(),
 
-
 	/**
-	 * Defaukt quantity to add to cart.
+	 * Default quantity to add to cart.
 	 * @instance
 	 * @memberof AddToCart
 	 * @type {?string}

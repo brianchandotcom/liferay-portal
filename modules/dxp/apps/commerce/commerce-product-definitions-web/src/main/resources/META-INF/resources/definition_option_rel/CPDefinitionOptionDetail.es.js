@@ -1,9 +1,7 @@
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
-import {dom, globalEval} from 'metal-dom';
-import {CancellablePromise} from 'metal-promise';
-import {async, core} from 'metal';
+import globalEval from 'metal-dom';
 
 import templates from './CPDefinitionOptionDetail.soy';
 
@@ -23,7 +21,7 @@ class CPDefinitionOptionDetail extends Component {
 	}
 
 	loadOptionDetail(cpDefinitionOptionRelId) {
-		var that = this;
+		var instance = this;
 
 		let optionDetail = this.refs['option-detail'];
 
@@ -31,17 +29,21 @@ class CPDefinitionOptionDetail extends Component {
 
 		url.searchParams.append(this.namespace + 'cpDefinitionOptionRelId', cpDefinitionOptionRelId);
 
-		var promise = fetch(url, {
-			credentials: 'include',
-			method: 'GET'
-		})
-			.then(response => response.text())
-			.then((text) => {
-
+		fetch(
+			url,
+			{
+				credentials: 'include',
+				method: 'GET'
+			}
+		).then(
+			response => response.text()
+		).then(
+			(text) => {
 				optionDetail.innerHTML = text;
 
 				globalEval.runScriptsInElement(optionDetail);
-			});
+			}
+		);
 	}
 
 	_handleCPDefinitionOptionChange(event) {
@@ -49,14 +51,16 @@ class CPDefinitionOptionDetail extends Component {
 	}
 
 	_handleSaveOption() {
-		var that = this;
+		var instance = this;
 
 		AUI().use(
-			'aui-base', 'aui-form-validator', 'liferay-form',
-			function(A) {
+			'aui-base',
+			'aui-form-validator',
+			'liferay-form',
+			(A) => {
 				var hasErrors = false;
 
-				let form = that.element.querySelector('.option-detail form');
+				let form = instance.element.querySelector('.option-detail form');
 
 				var liferayForm = Liferay.Form.get(form.getAttribute('id'));
 
@@ -75,7 +79,7 @@ class CPDefinitionOptionDetail extends Component {
 				}
 
 				if (!hasErrors) {
-					that._saveOption();
+					instance._saveOption();
 				}
 			}
 		);
@@ -98,15 +102,20 @@ class CPDefinitionOptionDetail extends Component {
 
 		formData.set(this.namespace + 'cmd', 'delete');
 
-		var promise = fetch(form.action, {
-			body: formData,
-			credentials: 'include',
-			method: 'POST'
-		})
-			.then(response => response.json())
-			.then((jsonResponse) => {
+		fetch(
+			form.action,
+			{
+				body: formData,
+				credentials: 'include',
+				method: 'POST'
+			}
+		).then(
+			response => response.json()
+		).then(
+			(jsonResponse) => {
 				this.emit('optionDeleted', jsonResponse);
-			});
+			}
+		);
 	}
 
 	_saveOption() {
@@ -114,15 +123,20 @@ class CPDefinitionOptionDetail extends Component {
 
 		var formData = new FormData(form);
 
-		var promise = fetch(form.action, {
-			body: formData,
-			credentials: 'include',
-			method: 'POST'
-		})
-			.then(response => response.json())
-			.then((jsonResponse) => {
+		fetch(
+			form.action,
+			{
+				body: formData,
+				credentials: 'include',
+				method: 'POST'
+			}
+		).then(
+			response => response.json()
+		).then(
+			(jsonResponse) => {
 				this.emit('optionSaved', jsonResponse);
-			});
+			}
+		);
 	}
 
 }

@@ -1,13 +1,6 @@
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
-import {dom, globalEval} from 'metal-dom';
-import {CancellablePromise} from 'metal-promise';
-import {async, core} from 'metal';
-
-import CPDefinitionOptionList from './CPDefinitionOptionList.es';
-import CPDefinitionOptionDetail from './CPDefinitionOptionDetail.es';
-import CPDefinitionOptionValuesEditor from './CPDefinitionOptionValuesEditor.es';
 
 import templates from './CPDefinitionOptionsEditor.soy';
 
@@ -23,49 +16,61 @@ class CPDefinitionOptionsEditor extends Component {
 	}
 
 	_handleAddOption() {
-		var that = this;
+		var instance = this;
 
-		AUI().use('liferay-item-selector-dialog', function(A) {
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-				{
-					eventName: 'productOptionsSelectItem',
-					on: {
-						selectedItemChange: function(event) {
-							var selectedItems = event.newVal;
+		AUI().use(
+			'liferay-item-selector-dialog',
+			(A) => {
+				var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+					{
+						eventName: 'productOptionsSelectItem',
+						on: {
+							selectedItemChange: function(event) {
+								var selectedItems = event.newVal;
 
-							var formData = new FormData();
+								var formData = new FormData();
 
-							formData.set(that.namespace + 'cmd', 'add_multiple');
-							formData.set(that.namespace + 'cpDefinitionId', that.cpDefinitionId);
-							formData.set(that.namespace + 'cpOptionIds', selectedItems);
+								formData.set(instance.namespace + 'cmd', 'add_multiple');
+								formData.set(instance.namespace + 'cpDefinitionId', instance.cpDefinitionId);
+								formData.set(instance.namespace + 'cpOptionIds', selectedItems);
 
-							var promise = fetch(that.editProductDefinitionOptionRelURL, {
-								body: formData,
-								credentials: 'include',
-								method: 'POST'
-							})
-								.then(response => response.json())
-								.then((jsonResponse) => {
-									that.loadOptions();
-								});
-						}
-					},
-					title: Liferay.Language.get('select-options-to-add'),
-					url: that.optionsItemSelectorURL
-				}
-			);
+								fetch(
+									instance.editProductDefinitionOptionRelURL,
+									{
+										body: formData,
+										credentials: 'include',
+										method: 'POST'
+									}
+								).then(
+									response => response.json()
+								).then(
+									(jsonResponse) => {
+										instance.loadOptions();
+									}
+								);
+							}
+						},
+						title: Liferay.Language.get('select-options-to-add'),
+						url: instance.optionsItemSelectorURL
+					}
+				);
 
-			itemSelectorDialog.open();
-		});
+				itemSelectorDialog.open();
+			}
+		);
 	}
 
 	loadOptions() {
-		var promise = fetch(this.cpDefinitionOptionsURL, {
-			credentials: 'include',
-			method: 'GET'
-		})
-			.then(response => response.json())
-			.then((jsonResponse) => {
+		fetch(
+			this.cpDefinitionOptionsURL,
+			{
+				credentials: 'include',
+				method: 'GET'
+			}
+		).then(
+			response => response.json()
+		).then(
+			(jsonResponse) => {
 				this._cpDefinitionOptions = jsonResponse;
 
 				if ((this._cpDefinitionOptions && this._cpDefinitionOptions.length > 0)) {
@@ -73,7 +78,8 @@ class CPDefinitionOptionsEditor extends Component {
 						this._currentOption = this._cpDefinitionOptions[0].cpDefinitionOptionRelId;
 					}
 				}
-			});
+			}
+		);
 	}
 
 	_handleOptionSelected(cpDefinitionOptionRelId) {
@@ -117,14 +123,14 @@ class CPDefinitionOptionsEditor extends Component {
  */
 
 CPDefinitionOptionsEditor.STATE = {
-	editProductDefinitionOptionRelURL: Config.string().required(),
-	optionsItemSelectorURL: Config.string().required(),
 	cpDefinitionId: Config.string().required(),
-	namespace: Config.string().required(),
-	optionURL: Config.string().required(),
-	cpDefinitionOptionValueRelURL: Config.string().required(),
-	cpDefinitionOptionValueRelsURL: Config.string().required(),
 	cpDefinitionOptionsURL: Config.string().required(),
+	cpDefinitionOptionValueRelsURL: Config.string().required(),
+	cpDefinitionOptionValueRelURL: Config.string().required(),
+	editProductDefinitionOptionRelURL: Config.string().required(),
+	namespace: Config.string().required(),
+	optionsItemSelectorURL: Config.string().required(),
+	optionURL: Config.string().required(),
 	pathThemeImages: Config.string().required(),
 	_cpDefinitionOptions: Config.array().value([])
 };

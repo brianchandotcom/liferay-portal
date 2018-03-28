@@ -1,9 +1,6 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import {CancellablePromise} from 'metal-promise';
 import {Config} from 'metal-state';
-import {async, core} from 'metal';
-import {dom, globalEval} from 'metal-dom';
 
 import templates from './CPDefinitionOptionList.soy';
 
@@ -46,8 +43,8 @@ class CPDefinitionOptionList extends Component {
  */
 
 CPDefinitionOptionList.STATE = {
-	currentCPDefinitionOptionId: Config.string(),
-	cpDefinitionOptions: Config.array().value([])
+	cpDefinitionOptions: Config.array().value([]),
+	currentCPDefinitionOptionId: Config.string()
 };
 
 // Register component

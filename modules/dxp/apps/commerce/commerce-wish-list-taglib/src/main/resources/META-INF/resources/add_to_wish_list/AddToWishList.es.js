@@ -1,5 +1,4 @@
 import {Config} from 'metal-state';
-import dom from 'metal-dom';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import Soy from 'metal-soy';
 
@@ -8,7 +7,7 @@ import templates from './AddToWishList.soy';
 class AddToWishList extends PortletBase {
 
 	_addToWishList() {
-		var that = this;
+		var instance = this;
 
 		var ddmFormValues = '[]';
 
@@ -25,13 +24,17 @@ class AddToWishList extends PortletBase {
 		formData.append(this.portletNamespace + 'cpInstanceId', this.cpInstanceId);
 		formData.append(this.portletNamespace + 'ddmFormValues', ddmFormValues);
 
-		fetch(this.uri, {
-			body: formData,
-			credentials: 'include',
-			method: 'post'
-		})
-			.then(response => response.json())
-			.then((jsonresponse) => {
+		fetch(
+			this.uri,
+			{
+				body: formData,
+				credentials: 'include',
+				method: 'post'
+			}
+		).then(
+			response => response.json()
+		).then(
+			(jsonresponse) => {
 				if (jsonresponse.success) {
 					Liferay.fire('commerce:productAddedToWishList', jsonresponse);
 				}
@@ -39,18 +42,18 @@ class AddToWishList extends PortletBase {
 					var validatorErrors = jsonresponse.validatorErrors;
 
 					if (validatorErrors) {
-
 						validatorErrors.forEach(
 							function(validatorError) {
-								that._showNotification(validatorError.message, 'danger');
+								instance._showNotification(validatorError.message, 'danger');
 							}
 						);
 					}
 					else {
-						that._showNotification(response.error, 'danger');
+						instance._showNotification(jsonresponse.error, 'danger');
 					}
 				}
-			});
+			}
+		);
 	}
 
 	_getProductContent() {
@@ -58,7 +61,7 @@ class AddToWishList extends PortletBase {
 	}
 
 	_handleClick() {
-		var that = this;
+		var instance = this;
 
 		var productContent = this._getProductContent();
 
@@ -66,7 +69,7 @@ class AddToWishList extends PortletBase {
 			productContent.validateProduct(
 				function(hasError) {
 					if (!hasError) {
-						that._addToWishList();
+						instance._addToWishList();
 					}
 				}
 			);
@@ -76,17 +79,17 @@ class AddToWishList extends PortletBase {
 		}
 	}
 
-	_showNotification(messageKey, type) {
+	_showNotification(message, type) {
 		new Liferay.Notification(
 			{
-				message: Liferay.Language.get(messageKey),
+				message: message,
 				render: true,
 				title: '',
 				type: type
 			}
 		);
 	}
-};
+}
 
 AddToWishList.STATE = {
 	cpDefinitionId: Config.string(),

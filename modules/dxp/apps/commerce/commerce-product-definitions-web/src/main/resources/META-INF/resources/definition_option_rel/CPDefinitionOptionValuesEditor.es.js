@@ -1,12 +1,6 @@
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
-import {dom, globalEval} from 'metal-dom';
-import {CancellablePromise} from 'metal-promise';
-import {async, core} from 'metal';
-
-import CPDefinitionOptionValueList from './CPDefinitionOptionValueList.es';
-import CPDefinitionOptionValueDetail from './CPDefinitionOptionValueDetail.es';
 
 import templates from './CPDefinitionOptionValuesEditor.soy';
 
@@ -45,13 +39,16 @@ class CPDefinitionOptionValuesEditor extends Component {
 
 		url.searchParams.append(this.namespace + 'cpDefinitionOptionRelId', this.cpDefinitionOptionRelId);
 
-		var promise = fetch(url, {
-			credentials: 'include',
-			method: 'GET'
-		})
-			.then(response => response.json())
-			.then((jsonResponse) => {
-
+		fetch(
+			url,
+			{
+				credentials: 'include',
+				method: 'GET'
+			}
+		).then(
+			response => response.json()
+		).then(
+			(jsonResponse) => {
 				this._cpDefinitionOptionValueRels = jsonResponse;
 
 				if ((this._cpDefinitionOptionValueRels && this._cpDefinitionOptionValueRels.length > 0)) {
@@ -63,8 +60,8 @@ class CPDefinitionOptionValuesEditor extends Component {
 					this._newCPDefinitionOptionValueRelTitle = '';
 					this._currentCPDefinitionOptionValueRelId = '0';
 				}
-
-			});
+			}
+		);
 	}
 
 	_handleShowChange(event) {
@@ -111,8 +108,8 @@ class CPDefinitionOptionValuesEditor extends Component {
 
 CPDefinitionOptionValuesEditor.STATE = {
 	cpDefinitionOptionRelId: Config.string().required(),
-	cpDefinitionOptionValueRelURL: Config.string().required(),
 	cpDefinitionOptionValueRelsURL: Config.string().required(),
+	cpDefinitionOptionValueRelURL: Config.string().required(),
 	namespace: Config.string().required(),
 	pathThemeImages: Config.string().required(),
 	show: Config.bool().value(false),

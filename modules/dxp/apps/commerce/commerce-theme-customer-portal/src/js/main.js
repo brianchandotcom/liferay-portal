@@ -1,7 +1,6 @@
 (function() {
 	AUI().ready(
 		function(A) {
-
 			var animateNodes = A.all('.animate');
 
 			animateNodes.each(

@@ -1,12 +1,6 @@
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
-import {dom, globalEval} from 'metal-dom';
-import {CancellablePromise} from 'metal-promise';
-import {async, core} from 'metal';
-
-import CPOptionValueList from './CPOptionValueList.es';
-import CPOptionValueDetail from './CPOptionValueDetail.es';
 
 import templates from './CPOptionValuesEditor.soy';
 
@@ -45,13 +39,16 @@ class CPOptionValuesEditor extends Component {
 
 		url.searchParams.append(this.namespace + 'cpOptionId', this.cpOptionId);
 
-		var promise = fetch(url, {
-			credentials: 'include',
-			method: 'GET'
-		})
-			.then(response => response.json())
-			.then((jsonResponse) => {
-
+		fetch(
+			url,
+			{
+				credentials: 'include',
+				method: 'GET'
+			}
+		).then(
+			response => response.json()
+		).then(
+			(jsonResponse) => {
 				this._optionValues = jsonResponse;
 
 				if ((this._optionValues && this._optionValues.length > 0)) {
@@ -63,8 +60,8 @@ class CPOptionValuesEditor extends Component {
 					this._newOptionValueTitle = '';
 					this._currentOptionValue = '0';
 				}
-
-			});
+			}
+		);
 	}
 
 	_handleShowChange(event) {
@@ -112,8 +109,8 @@ class CPOptionValuesEditor extends Component {
 CPOptionValuesEditor.STATE = {
 	cpOptionId: Config.string().required(),
 	namespace: Config.string().required(),
-	optionValueURL: Config.string().required(),
 	optionValuesURL: Config.string().required(),
+	optionValueURL: Config.string().required(),
 	pathThemeImages: Config.string().required(),
 	show: Config.bool().value(false),
 	_newOptionValueTitle: Config.string().value(''),

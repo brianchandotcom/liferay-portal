@@ -55,11 +55,19 @@ public class GitUtil {
 	}
 
 	public static List<String> getCurrentBranchFileNames(
-			String baseDirName, String gitWorkingBranchName)
+			String baseDirName, String gitWorkingBranchName,
+			boolean includeDeletedFileNames)
 		throws Exception {
 
-		return getFileNames(
-			baseDirName, getCurrentBranchCommitId(gitWorkingBranchName));
+		String commitId = getCurrentBranchCommitId(gitWorkingBranchName);
+
+		List<String> fileNames = getFileNames(baseDirName, commitId);
+
+		if (includeDeletedFileNames) {
+			fileNames.addAll(getDeletedFileNames(baseDirName, commitId));
+		}
+
+		return fileNames;
 	}
 
 	public static List<String> getLatestAuthorDeletedFileNames(
@@ -75,10 +83,19 @@ public class GitUtil {
 		return getFileContent(getLatestAuthorCommitId(), fileName);
 	}
 
-	public static List<String> getLatestAuthorFileNames(String baseDirName)
+	public static List<String> getLatestAuthorFileNames(
+			String baseDirName, boolean includeDeletedFileNames)
 		throws Exception {
 
-		return getFileNames(baseDirName, getLatestAuthorCommitId());
+		String commitId = getLatestAuthorCommitId();
+
+		List<String> fileNames = getFileNames(baseDirName, commitId);
+
+		if (includeDeletedFileNames) {
+			fileNames.addAll(getDeletedFileNames(baseDirName, commitId));
+		}
+
+		return fileNames;
 	}
 
 	public static List<String> getLocalChangesDeletedFileNames(
@@ -94,10 +111,17 @@ public class GitUtil {
 		return getFileContent("HEAD", fileName);
 	}
 
-	public static List<String> getLocalChangesFileNames(String baseDirName)
+	public static List<String> getLocalChangesFileNames(
+			String baseDirName, boolean includeDeletedFileNames)
 		throws Exception {
 
-		return getLocalChangesFileNames(baseDirName, "add");
+		List<String> fileNames = getLocalChangesFileNames(baseDirName, "add");
+
+		if (includeDeletedFileNames) {
+			fileNames.addAll(getLocalChangesFileNames(baseDirName, "remove"));
+		}
+
+		return fileNames;
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -118,13 +142,13 @@ public class GitUtil {
 					arguments, "git.working.branch.name", "master");
 
 				fileNames = getCurrentBranchFileNames(
-					baseDirName, gitWorkingBranchName);
+					baseDirName, gitWorkingBranchName, false);
 			}
 			else if (type.equals("latest-author")) {
-				fileNames = getLatestAuthorFileNames(baseDirName);
+				fileNames = getLatestAuthorFileNames(baseDirName, false);
 			}
 			else if (type.equals("local-changes")) {
-				fileNames = getLocalChangesFileNames(baseDirName);
+				fileNames = getLocalChangesFileNames(baseDirName, false);
 			}
 			else {
 				throw new IllegalArgumentException();

@@ -70,7 +70,7 @@ public class ResourceCollectionSchemaInferrer {
 		if (size == 0) {
 			throw new IOException(
 				"Unable to determine the fields of the selected resource " +
-					"because there were no entries for the given resource.");
+					"because there were no entries for the given resource");
 		}
 
 		List<Field> schemaFields = new ArrayList<>(size);

@@ -40,8 +40,8 @@ public abstract class LiferayConnectionResourceBaseProperties
 
 	/**
 	 * This method returns the connection properties from the referenced
-	 * connection component if it was specified by the user otherwise the actual
-	 * component's connection properties
+	 * connection component if it was specified by the user, otherwise the
+	 * actual component's connection properties.
 	 *
 	 * @return LiferayConnectionProperties
 	 */

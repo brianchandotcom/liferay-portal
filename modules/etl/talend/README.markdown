@@ -37,7 +37,7 @@ Here is a brief summary:
 1. From the root folder of the project, `/components-liferay/` in this example,
 	execute `mvn clean install` to build the component.
 
-1. Let's assume that Studio has been extracted like this:
+2. Let's assume that Studio has been extracted like this:
 
 	```sh
 	$ cd $HOME/tmp
@@ -46,14 +46,14 @@ Here is a brief summary:
 	$ STUDIO_ROOT=$HOME/tmp/TOS_ESB-20180116_1512-V6.5.1
 	```
 
-1. Now copy the component definition bundle into `$STUDIO_ROOT/plugins`
+3. Now copy the component definition bundle into `$STUDIO_ROOT/plugins`
 
 	```sh
 	$ cp [COMPONENTS-LIFERAY]/talend-definition/target/com.liferay.talend.definition-0.1.0-SNAPSHOT.jar \
 		 $STUDIO_ROOT/plugins
 	```
 
-1. Edit `$STUDIO_ROOT/configuration/config.ini` as it described in wiki page above.
+4. Edit `$STUDIO_ROOT/configuration/config.ini` as it described in wiki page above.
 	The diff should look like this:
 
 	```diff
@@ -70,10 +70,10 @@ Here is a brief summary:
 	 osgi.framework.extensions=org.talend.osgi.lib.loader
 	```
 
-1. In the `configuration` folder, remove any folders which start their names
+5. In the `configuration` folder, remove any folders which start their names
 with `org.eclipse`.
 
-1. Copy the `com.liferay.talend.runtime` folder from your local
+6. Copy the `com.liferay.talend.runtime` folder from your local
 `$USER_HOME/.m2/repository/com/liferay/` to
 `$STUDIO_ROOT/configuration/.m2/repository/com/liferay/`
 
@@ -84,8 +84,8 @@ with `org.eclipse`.
 * Now start the Studio, and you should be able to see new components on palette
 under `Business/Liferay` category.
 
-1. There is a bug in Talend Open Studio 6.5.1 which requires you to manually add
+7. There is a bug in Talend Open Studio 6.5.1 which requires you to manually add
 	the component dependency and runtime artifacts to the job's classpath in
 	order to be able to run the job with a custom component.
 
-	See my bug report: https://community.talend.com/t5/Design-and-Development/Component-definition-is-not-added-to-the-job-s-classpath-in/m-p/49285/highlight/true#M15736
+	See bug report: https://community.talend.com/t5/Design-and-Development/Component-definition-is-not-added-to-the-job-s-classpath-in/m-p/49285/highlight/true#M15736

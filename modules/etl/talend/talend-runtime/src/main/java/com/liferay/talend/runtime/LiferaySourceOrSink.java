@@ -14,6 +14,8 @@
 
 package com.liferay.talend.runtime;
 
+import static com.liferay.talend.runtime.apio.constants.SchemaOrgConstants.Vocabulary.WEB_SITES;
+
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,6 +28,7 @@ import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
 import com.liferay.talend.runtime.apio.ApioException;
 import com.liferay.talend.runtime.apio.ApioResult;
 import com.liferay.talend.runtime.apio.constants.JSONLDConstants;
+import com.liferay.talend.runtime.apio.constants.SchemaOrgConstants;
 import com.liferay.talend.runtime.apio.jsonld.ApioForm;
 import com.liferay.talend.runtime.apio.jsonld.ApioResourceCollection;
 import com.liferay.talend.runtime.apio.jsonld.ApioSingleModel;
@@ -40,6 +43,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.ws.rs.ProcessingException;
 
@@ -232,6 +238,51 @@ public class LiferaySourceOrSink
 		}
 
 		return _getResourceCollectionsDescriptor(jsonNode);
+	}
+
+	@Override
+	public List<NamedThing> getAvailableWebSites() throws IOException {
+		String webSitesEndpointURL = _getWebSitesEndpointURL();
+
+		JsonNode resourceCollectionJsonNode = doApioGetRequest(
+			webSitesEndpointURL);
+
+		ApioResourceCollection webSitesApioResourceCollection =
+			new ApioResourceCollection(resourceCollectionJsonNode);
+
+		List<NamedThing> webSitesList = new ArrayList<>();
+
+		String actualPage =
+			webSitesApioResourceCollection.getResourceActualPage();
+		String nextPage = webSitesApioResourceCollection.getResourceNextPage();
+		String lastPage = webSitesApioResourceCollection.getResourceLastPage();
+
+		do {
+			JsonNode webSitesJsonNode =
+				webSitesApioResourceCollection.getMemberJsonNode();
+
+			for (JsonNode jsonNode : webSitesJsonNode) {
+				JsonNode webSiteURLJsonNode = jsonNode.path(JSONLDConstants.ID);
+				JsonNode webSiteNameJsonNode = jsonNode.path(
+					SchemaOrgConstants.Property.NAME);
+
+				webSitesList.add(
+					new SimpleNamedThing(
+						webSiteURLJsonNode.asText(),
+						webSiteNameJsonNode.asText()));
+			}
+
+			actualPage = webSitesApioResourceCollection.getResourceActualPage();
+			nextPage = webSitesApioResourceCollection.getResourceNextPage();
+
+			if (StringUtils.isNotBlank(nextPage)) {
+				webSitesApioResourceCollection = new ApioResourceCollection(
+					doApioGetRequest(nextPage));
+			}
+		} while (StringUtils.isNotBlank(nextPage) &&
+		 !lastPage.equals(actualPage));
+
+		return webSitesList;
 	}
 
 	public LiferayConnectionProperties getConnectionProperties() {
@@ -436,6 +487,31 @@ public class LiferaySourceOrSink
 	}
 
 	@Override
+	public boolean hasWebSiteResource() {
+		JsonNode jsonNode;
+
+		try {
+			jsonNode = doApioGetRequest((RuntimeContainer)null);
+		}
+		catch (IOException ioe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to fetch the list of exposed resources", ioe);
+			}
+
+			return false;
+		}
+
+		Set<Map.Entry<String, String>> resourceCollectionEntrySet =
+			_getResourceCollectionsDescriptor(jsonNode).entrySet();
+
+		Stream<Map.Entry<String, String>> stream =
+			resourceCollectionEntrySet.stream();
+
+		return stream.anyMatch(entry -> WEB_SITES.equals(entry.getValue()));
+	}
+
+	@Override
 	public ValidationResult initialize(
 		RuntimeContainer runtimeContainer,
 		ComponentProperties componentProperties) {
@@ -593,6 +669,36 @@ public class LiferaySourceOrSink
 		}
 
 		return resourcesMap;
+	}
+
+	private String _getWebSitesEndpointURL() throws IOException {
+		JsonNode jsonNode;
+
+		try {
+			jsonNode = doApioGetRequest((RuntimeContainer)null);
+		}
+		catch (IOException ioe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to fetch the list of exposed resources", ioe);
+			}
+
+			throw ioe;
+		}
+
+		Set<Map.Entry<String, String>> resourceCollectionEntrySet =
+			_getResourceCollectionsDescriptor(jsonNode).entrySet();
+
+		Stream<Map.Entry<String, String>> stream =
+			resourceCollectionEntrySet.stream();
+
+		Optional<String> webSiteHrefOptional = stream.filter(
+			entry -> WEB_SITES.equals(entry.getValue())
+		).map(
+			Map.Entry::getKey
+		).findFirst();
+
+		return webSiteHrefOptional.get();
 	}
 
 	private JsonNode _toJsonNode(ApioResult apioResult) throws IOException {

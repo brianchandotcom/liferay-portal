@@ -101,7 +101,7 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 
 			viewUADEntitiesDisplay.setUADEntityDisplay(
 				_uadRegistry.getUADEntityDisplay(uadRegistryKey));
-			viewUADEntitiesDisplay.setUADEntitySetName(applicationName);
+			viewUADEntitiesDisplay.setApplicationName(applicationName);
 			viewUADEntitiesDisplay.setUADRegistryKey(uadRegistryKey);
 
 			renderRequest.setAttribute(

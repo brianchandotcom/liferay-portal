@@ -188,12 +188,7 @@
 			</div>
 
 			<div class="product-detail-info-compare">
-				<div class="form-check">
-					<label class="form-check-label">
-						<input class="form-check-input" type="checkbox" value="">
-						<span class="form-check-label-text">Compare</span>
-					</label>
-				</div>
+				<@liferay_commerce["compare-product"] CPDefinitionId=cpDefinitionId />
 			</div>
 		</div>
 	</div>

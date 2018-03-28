@@ -1,9 +1,9 @@
 import Component from 'metal-component';
-import { Config } from 'metal-state';
+import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 import {dom, globalEval} from 'metal-dom';
-import { CancellablePromise } from 'metal-promise';
-import { async, core } from 'metal';
+import {CancellablePromise} from 'metal-promise';
+import {async, core} from 'metal';
 
 import CPDefinitionOptionValueList from './CPDefinitionOptionValueList.es';
 import CPDefinitionOptionValueDetail from './CPDefinitionOptionValueDetail.es';
@@ -14,10 +14,11 @@ import templates from './CPDefinitionOptionValuesEditor.soy';
  * CPDefinitionOptionValuesEditor
  *
  */
+
 class CPDefinitionOptionValuesEditor extends Component {
 
 	constructor(opt_config, opt_parentElement) {
-		super(opt_config, opt_parentElement)
+		super(opt_config, opt_parentElement);
 
 		this.on('showChanged', this._handleShowChange);
 		this.on('cpDefinitionOptionRelIdChanged', this._handleShowChange);
@@ -29,7 +30,7 @@ class CPDefinitionOptionValuesEditor extends Component {
 
 	_handleAddOptionValue() {
 		this._newCPDefinitionOptionValueRelTitle = '';
-		this._currentCPDefinitionOptionValueRelId = "0";
+		this._currentCPDefinitionOptionValueRelId = '0';
 	}
 
 	loadOptionValues() {
@@ -42,28 +43,28 @@ class CPDefinitionOptionValuesEditor extends Component {
 
 		var url = new URL(this.cpDefinitionOptionValueRelsURL);
 
-		url.searchParams.append(this.namespace + "cpDefinitionOptionRelId", this.cpDefinitionOptionRelId);
+		url.searchParams.append(this.namespace + 'cpDefinitionOptionRelId', this.cpDefinitionOptionRelId);
 
 		var promise = fetch(url, {
-				credentials: 'include',
-				method: 'GET',
-			})
+			credentials: 'include',
+			method: 'GET'
+		})
 			.then(response => response.json())
 			.then((jsonResponse) => {
 
-			this._cpDefinitionOptionValueRels = jsonResponse;
+				this._cpDefinitionOptionValueRels = jsonResponse;
 
-			if ((this._cpDefinitionOptionValueRels && this._cpDefinitionOptionValueRels.length > 0)) {
-				if (!this._currentCPDefinitionOptionValueRelId || this._currentCPDefinitionOptionValueRelId == null) {
-					this._currentCPDefinitionOptionValueRelId = this._cpDefinitionOptionValueRels[0].cpDefinitionOptionValueRelId;
+				if ((this._cpDefinitionOptionValueRels && this._cpDefinitionOptionValueRels.length > 0)) {
+					if (!this._currentCPDefinitionOptionValueRelId || this._currentCPDefinitionOptionValueRelId == null) {
+						this._currentCPDefinitionOptionValueRelId = this._cpDefinitionOptionValueRels[0].cpDefinitionOptionValueRelId;
+					}
 				}
-			}
-			else if ((this._cpDefinitionOptionValueRels && this._cpDefinitionOptionValueRels.length == 0)) {
-				this._newCPDefinitionOptionValueRelTitle = '';
-				this._currentCPDefinitionOptionValueRelId = '0';
-			}
+				else if ((this._cpDefinitionOptionValueRels && this._cpDefinitionOptionValueRels.length == 0)) {
+					this._newCPDefinitionOptionValueRelTitle = '';
+					this._currentCPDefinitionOptionValueRelId = '0';
+				}
 
-		});
+			});
 	}
 
 	_handleShowChange(event) {
@@ -107,6 +108,7 @@ class CPDefinitionOptionValuesEditor extends Component {
  * @type {!Object}
  * @static
  */
+
 CPDefinitionOptionValuesEditor.STATE = {
 	cpDefinitionOptionRelId: Config.string().required(),
 	cpDefinitionOptionValueRelURL: Config.string().required(),
@@ -119,6 +121,7 @@ CPDefinitionOptionValuesEditor.STATE = {
 };
 
 // Register component
+
 Soy.register(CPDefinitionOptionValuesEditor, templates);
 
 export default CPDefinitionOptionValuesEditor;

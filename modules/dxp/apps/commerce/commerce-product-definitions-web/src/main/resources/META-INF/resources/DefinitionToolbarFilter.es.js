@@ -1,10 +1,10 @@
 import Component from 'metal-component';
-import { Config } from 'metal-state';
+import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 import {dom, globalEval} from 'metal-dom';
-import { CancellablePromise } from 'metal-promise';
-import { async, core } from 'metal';
-import { RequestScreen, utils } from 'senna';
+import {CancellablePromise} from 'metal-promise';
+import {async, core} from 'metal';
+import {RequestScreen, utils} from 'senna';
 import Router from 'metal-router';
 
 import templates from './DefinitionToolbarFilter.soy';
@@ -13,15 +13,17 @@ import templates from './DefinitionToolbarFilter.soy';
  * DefinitionToolbarFilter
  *
  */
+
 class DefinitionToolbarFilter extends Component {
 
 	created() {
-		this._buildFilters()
+		this._buildFilters();
 	}
 
 	/**
 	 * @inheritDoc
 	 */
+
 	rendered() {
 		AUI().use(
 			'liferay-asset-taglib-categories-selector',
@@ -75,16 +77,16 @@ class DefinitionToolbarFilter extends Component {
 	}
 
 	_getLabel(selection) {
-		if (this._currentSelection == "optionsNames") {
+		if (this._currentSelection == 'optionsNames') {
 			return Liferay.Language.get('option');
 		}
-		else if (this._currentSelection == "assetCategoryIds") {
+		else if (this._currentSelection == 'assetCategoryIds') {
 			return Liferay.Language.get('category');
 		}
-		else if (this._currentSelection == "productTypeName") {
+		else if (this._currentSelection == 'productTypeName') {
 			return Liferay.Language.get('product-type');
 		}
-		else if (this._currentSelection == "status") {
+		else if (this._currentSelection == 'status') {
 			return Liferay.Language.get('status');
 		}
 
@@ -98,7 +100,7 @@ class DefinitionToolbarFilter extends Component {
 		var label = '';
 		var value = '';
 
-		if (this._currentSelection == "optionsNames") {
+		if (this._currentSelection == 'optionsNames') {
 			var optionNameSelect = this.element.querySelector('#optionsNames');
 			var optionValueSelect = this.element.querySelector('#optionValues');
 
@@ -109,11 +111,11 @@ class DefinitionToolbarFilter extends Component {
 
 			label = currentOptionName.getAttribute('data-label') + ' - ' + currentOptionValue.getAttribute('data-label');
 
-			field = "OPTION_" + this._currentOption;
+			field = 'OPTION_' + this._currentOption;
 
 			value = optionValue;
 		}
-		else if (this._currentSelection == "assetCategoryIds") {
+		else if (this._currentSelection == 'assetCategoryIds') {
 			var category = this.categoriesSelector_.entries.values[0];
 
 			label = category.value;
@@ -151,6 +153,7 @@ class DefinitionToolbarFilter extends Component {
 		var target = event.target;
 
 		// Chrome fix
+
 		if (target.nodeName != 'button') {
 			target = target.closest('button');
 		}
@@ -193,11 +196,10 @@ class DefinitionToolbarFilter extends Component {
 
 		filterFields.forEach(
 			function(field, index) {
-
 				filters.push(
 					{
-						field:field,
-						value:filtersValues[index],
+						field: field,
+						value: filtersValues[index],
 						label: filtersLabels[index]
 					}
 				);
@@ -205,7 +207,6 @@ class DefinitionToolbarFilter extends Component {
 		);
 
 		this._filters = filters;
-
 	}
 
 	_applyFilters() {
@@ -236,33 +237,33 @@ class DefinitionToolbarFilter extends Component {
 	_loadTerms() {
 		var url = new URL(this.cpDefinitionsFacetsURL);
 
-		url.searchParams.append(this.namespace + "fieldName", this._currentSelection);
+		url.searchParams.append(this.namespace + 'fieldName', this._currentSelection);
 
 		var promise = fetch(url, {
-				credentials: 'include',
-				method: 'GET',
-			})
+			credentials: 'include',
+			method: 'GET'
+		})
 			.then(response => response.json())
 			.then((jsonResponse) => {
 				this._terms = jsonResponse;
 			}
-		);
+			);
 	}
 
 	_loadOptionValues() {
 		var url = new URL(this.cpDefinitionsFacetsURL);
 
-		url.searchParams.append(this.namespace + "fieldName", "OPTION_" + this._currentOption);
+		url.searchParams.append(this.namespace + 'fieldName', 'OPTION_' + this._currentOption);
 
 		var promise = fetch(url, {
-				credentials: 'include',
-				method: 'GET',
-			})
+			credentials: 'include',
+			method: 'GET'
+		})
 			.then(response => response.json())
 			.then((jsonResponse) => {
 				this._optionValues = jsonResponse;
 			}
-		);
+			);
 	}
 }
 
@@ -271,6 +272,7 @@ class DefinitionToolbarFilter extends Component {
  * @type {!Object}
  * @static
  */
+
 DefinitionToolbarFilter.STATE = {
 	categorySelectorURL: Config.string().required(),
 	cpDefinitionsFacetsURL: Config.string().required(),
@@ -286,6 +288,7 @@ DefinitionToolbarFilter.STATE = {
 };
 
 // Register component
+
 Soy.register(DefinitionToolbarFilter, templates);
 
 export default DefinitionToolbarFilter;

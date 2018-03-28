@@ -10,6 +10,7 @@ import templates from './AddToCart.soy';
  * @abstract
  * @extends {PortletBase}
  */
+
 class AddToCart extends PortletBase {
 
 	/**
@@ -17,23 +18,24 @@ class AddToCart extends PortletBase {
 	 * @param {Event} event
 	 * @protected
 	 */
+
 	_addToCart() {
 		var that = this;
 
 		var _quantity = this.quantity;
-		var ddmFormValues = "[]";
+		var ddmFormValues = '[]';
 
 		var productContent = this._getProductContent();
 
 		if (productContent) {
 			ddmFormValues = JSON.stringify(productContent.getFormValues());
 
-			if(this.cpInstanceId == "0"){
+			if (this.cpInstanceId == '0') {
 				this.cpInstanceId = productContent.getCPInstanceId();
 			}
 		}
 
-		var quantityNode = document.querySelector('#' + this.taglibQuantityInputId )
+		var quantityNode = document.querySelector('#' + this.taglibQuantityInputId);
 
 		if (quantityNode) {
 			_quantity = quantityNode.value;
@@ -51,27 +53,27 @@ class AddToCart extends PortletBase {
 			credentials: 'include',
 			method: 'post'
 		})
-		.then(response => response.json())
-		.then((jsonresponse) => {
-			if (jsonresponse.success) {
-				Liferay.fire('commerce:productAddedToCart', jsonresponse);
-			}
-			else {
-				var validatorErrors = jsonresponse.validatorErrors;
-
-				if (validatorErrors) {
-
-					validatorErrors.forEach(
-						function(validatorError) {
-							that._showNotification(validatorError.message, 'danger');
-						}
-					);
+			.then(response => response.json())
+			.then((jsonresponse) => {
+				if (jsonresponse.success) {
+					Liferay.fire('commerce:productAddedToCart', jsonresponse);
 				}
 				else {
-					that._showNotification(jsonresponse.error, 'danger');
+					var validatorErrors = jsonresponse.validatorErrors;
+
+					if (validatorErrors) {
+
+						validatorErrors.forEach(
+							function(validatorError) {
+								that._showNotification(validatorError.message, 'danger');
+							}
+						);
+					}
+					else {
+						that._showNotification(jsonresponse.error, 'danger');
+					}
 				}
-			}
-		});
+			});
 	}
 
 	_getProductContent() {
@@ -83,7 +85,7 @@ class AddToCart extends PortletBase {
 
 		var productContent = this._getProductContent();
 
-		if(productContent) {
+		if (productContent) {
 			productContent.validateProduct(
 				function(hasError) {
 					if (!hasError) {
@@ -117,7 +119,9 @@ class AddToCart extends PortletBase {
  * @static
  * @type {!Object}
  */
+
 AddToCart.STATE = {
+
 	/**
 	 * CPDefinitionId.
 	 * @instance
@@ -125,6 +129,7 @@ AddToCart.STATE = {
 	 * @type {?number}
 	 * @default undefined
 	 */
+
 	cpDefinitionId: Config.string(),
 
 	/**
@@ -134,6 +139,7 @@ AddToCart.STATE = {
 	 * @type {?number}
 	 * @default undefined
 	 */
+
 	cpInstanceId: Config.string(),
 
 	/**
@@ -143,6 +149,7 @@ AddToCart.STATE = {
 	 * @type {?string}
 	 * @default undefined
 	 */
+
 	elementClasses: Config.string(),
 
 	/**
@@ -152,7 +159,8 @@ AddToCart.STATE = {
 	 * @type {?string}
 	 * @default undefined
 	 */
-    taglibQuantityInputId: Config.string(),
+
+	taglibQuantityInputId: Config.string(),
 
 
 	/**
@@ -162,6 +170,7 @@ AddToCart.STATE = {
 	 * @type {?string}
 	 * @default undefined
 	 */
+
 	quantity: Config.string(),
 
 	/**
@@ -170,6 +179,7 @@ AddToCart.STATE = {
 	 * @memberof AddToCart
 	 * @type {String}
 	 */
+
 	id: Config.string().required(),
 
 	/**
@@ -178,6 +188,7 @@ AddToCart.STATE = {
 	 * @memberof AddToCart
 	 * @type {String}
 	 */
+
 	label: Config.string().required(),
 
 	/**
@@ -186,6 +197,7 @@ AddToCart.STATE = {
 	 * @memberof AddToCart
 	 * @type {String}
 	 */
+
 	portletNamespace: Config.string().required(),
 
 	/**
@@ -194,6 +206,7 @@ AddToCart.STATE = {
 	 * @memberof AddToCart
 	 * @type {String}
 	 */
+
 	productContentId: Config.string(),
 
 	/**
@@ -202,10 +215,12 @@ AddToCart.STATE = {
 	 * @memberof AddToCart
 	 * @type {String}
 	 */
+
 	uri: Config.string().required()
 };
 
 // Register component
+
 Soy.register(AddToCart, templates);
 
 export default AddToCart;

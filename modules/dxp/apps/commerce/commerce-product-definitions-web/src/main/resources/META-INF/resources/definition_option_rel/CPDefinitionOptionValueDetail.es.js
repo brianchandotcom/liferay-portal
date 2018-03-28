@@ -1,9 +1,9 @@
 import Component from 'metal-component';
-import { Config } from 'metal-state';
+import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 import {dom, globalEval} from 'metal-dom';
-import { CancellablePromise } from 'metal-promise';
-import { async, core } from 'metal';
+import {CancellablePromise} from 'metal-promise';
+import {async, core} from 'metal';
 
 import templates from './CPDefinitionOptionValueDetail.soy';
 
@@ -11,10 +11,11 @@ import templates from './CPDefinitionOptionValueDetail.soy';
  * CPDefinitionOptionValueDetail
  *
  */
+
 class CPDefinitionOptionValueDetail extends Component {
 
 	constructor(opt_config, opt_parentElement) {
-		super(opt_config, opt_parentElement)
+		super(opt_config, opt_parentElement);
 
 		this.on('cpDefinitionOptionValueRelIdChanged', this._handleCPDefinitionOptionValueChange);
 	}
@@ -30,16 +31,16 @@ class CPDefinitionOptionValueDetail extends Component {
 
 		var url = new URL(this.cpDefinitionOptionValueRelURL);
 
-		url.searchParams.append(this.namespace + "cpDefinitionOptionValueRelId", cpDefinitionOptionValueRelId);
+		url.searchParams.append(this.namespace + 'cpDefinitionOptionValueRelId', cpDefinitionOptionValueRelId);
 
 		var promise = fetch(url, {
-				credentials: 'include',
-				method: 'GET'
-			})
+			credentials: 'include',
+			method: 'GET'
+		})
 			.then(response => response.text())
 			.then((text) => {
 
-			optionValueDetail.innerHTML = text;
+				optionValueDetail.innerHTML = text;
 
 				globalEval.runScriptsInElement(optionValueDetail);
 
@@ -59,7 +60,6 @@ class CPDefinitionOptionValueDetail extends Component {
 
 	_handleCPDefinitionOptionValueChange(event) {
 		this.loadOptionValueDetail(event.newVal);
-
 	}
 
 	_handleSaveOptionValue() {
@@ -72,7 +72,7 @@ class CPDefinitionOptionValueDetail extends Component {
 
 				let form = that.element.querySelector('.option-value-detail form');
 
-				var liferayForm = Liferay.Form.get(form.getAttribute("id"));
+				var liferayForm = Liferay.Form.get(form.getAttribute('id'));
 
 				if (liferayForm) {
 					var validator = liferayForm.formValidator;
@@ -100,7 +100,7 @@ class CPDefinitionOptionValueDetail extends Component {
 	}
 
 	_handleDeleteOptionValue() {
-		if (confirm("Are you sure to delte?")) {
+		if (confirm('Are you sure to delte?')) {
 			this._deleteOptionValue();
 		}
 	}
@@ -113,13 +113,13 @@ class CPDefinitionOptionValueDetail extends Component {
 		formData.set(this.namespace + 'cmd', 'delete');
 
 		var promise = fetch(form.action, {
-				body: formData,
-				credentials: 'include',
-				method: 'POST',
-			})
+			body: formData,
+			credentials: 'include',
+			method: 'POST'
+		})
 			.then(response => response.json())
 			.then((jsonResponse) => {
-					this.emit('optionValueDelated', jsonResponse);
+				this.emit('optionValueDelated', jsonResponse);
 			});
 	}
 
@@ -131,14 +131,14 @@ class CPDefinitionOptionValueDetail extends Component {
 		formData.set(this.namespace + 'cpDefinitionOptionRelId', this.cpDefinitionOptionRelId);
 
 		var promise = fetch(form.action, {
-				body: formData,
-				credentials: 'include',
-				method: 'POST',
-			})
-				.then(response => response.json())
-		.then((jsonResponse) => {
+			body: formData,
+			credentials: 'include',
+			method: 'POST'
+		})
+			.then(response => response.json())
+			.then((jsonResponse) => {
 				this.emit('optionValueSaved', jsonResponse);
-		});
+			});
 	}
 }
 
@@ -147,6 +147,7 @@ class CPDefinitionOptionValueDetail extends Component {
  * @type {!Object}
  * @static
  */
+
 CPDefinitionOptionValueDetail.STATE = {
 	cpDefinitionOptionRelId: Config.string().required(),
 	cpDefinitionOptionValueRelId: Config.string().required(),
@@ -156,6 +157,7 @@ CPDefinitionOptionValueDetail.STATE = {
 };
 
 // Register component
+
 Soy.register(CPDefinitionOptionValueDetail, templates);
 
 export default CPDefinitionOptionValueDetail;

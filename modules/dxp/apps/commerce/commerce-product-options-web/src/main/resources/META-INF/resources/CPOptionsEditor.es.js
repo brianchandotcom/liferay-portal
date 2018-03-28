@@ -1,9 +1,9 @@
 import Component from 'metal-component';
-import { Config } from 'metal-state';
+import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 import {dom, globalEval} from 'metal-dom';
-import { CancellablePromise } from 'metal-promise';
-import { async, core } from 'metal';
+import {CancellablePromise} from 'metal-promise';
+import {async, core} from 'metal';
 
 import CPOptionList from './CPOptionList.es';
 import CPOptionDetail from './CPOptionDetail.es';
@@ -15,6 +15,7 @@ import templates from './CPOptionsEditor.soy';
  * CPOptionsEditor
  *
  */
+
 class CPOptionsEditor extends Component {
 
 	created() {
@@ -23,14 +24,14 @@ class CPOptionsEditor extends Component {
 
 	_handleAddOption() {
 		this._newOptionTitle = '';
-		this._currentOption = "0";
+		this._currentOption = '0';
 	}
 
 	loadOptions() {
 		var promise = fetch(this.optionsURL, {
-				credentials: 'include',
-				method: 'GET',
-			})
+			credentials: 'include',
+			method: 'GET'
+		})
 			.then(response => response.json())
 			.then((jsonResponse) => {
 				this._options = jsonResponse;
@@ -94,6 +95,7 @@ class CPOptionsEditor extends Component {
  * @type {!Object}
  * @static
  */
+
 CPOptionsEditor.STATE = {
 	namespace: Config.string().required(),
 	optionURL: Config.string().required(),
@@ -106,6 +108,7 @@ CPOptionsEditor.STATE = {
 };
 
 // Register component
+
 Soy.register(CPOptionsEditor, templates);
 
 export default CPOptionsEditor;

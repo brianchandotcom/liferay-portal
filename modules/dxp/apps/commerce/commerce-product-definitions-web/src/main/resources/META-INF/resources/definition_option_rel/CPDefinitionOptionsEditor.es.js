@@ -1,9 +1,9 @@
 import Component from 'metal-component';
-import { Config } from 'metal-state';
+import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 import {dom, globalEval} from 'metal-dom';
-import { CancellablePromise } from 'metal-promise';
-import { async, core } from 'metal';
+import {CancellablePromise} from 'metal-promise';
+import {async, core} from 'metal';
 
 import CPDefinitionOptionList from './CPDefinitionOptionList.es';
 import CPDefinitionOptionDetail from './CPDefinitionOptionDetail.es';
@@ -15,6 +15,7 @@ import templates from './CPDefinitionOptionsEditor.soy';
  * CPDefinitionOptionsEditor
  *
  */
+
 class CPDefinitionOptionsEditor extends Component {
 
 	created() {
@@ -22,11 +23,9 @@ class CPDefinitionOptionsEditor extends Component {
 	}
 
 	_handleAddOption() {
-
 		var that = this;
 
 		AUI().use('liferay-item-selector-dialog', function(A) {
-
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 				{
 					eventName: 'productOptionsSelectItem',
@@ -41,14 +40,14 @@ class CPDefinitionOptionsEditor extends Component {
 							formData.set(that.namespace + 'cpOptionIds', selectedItems);
 
 							var promise = fetch(that.editProductDefinitionOptionRelURL, {
-									body: formData,
-									credentials: 'include',
-									method: 'POST',
-								})
-									.then(response => response.json())
-							.then((jsonResponse) => {
-								that.loadOptions();
-							});
+								body: formData,
+								credentials: 'include',
+								method: 'POST'
+							})
+								.then(response => response.json())
+								.then((jsonResponse) => {
+									that.loadOptions();
+								});
 						}
 					},
 					title: Liferay.Language.get('select-options-to-add'),
@@ -58,14 +57,13 @@ class CPDefinitionOptionsEditor extends Component {
 
 			itemSelectorDialog.open();
 		});
-
 	}
 
 	loadOptions() {
 		var promise = fetch(this.cpDefinitionOptionsURL, {
-				credentials: 'include',
-				method: 'GET',
-			})
+			credentials: 'include',
+			method: 'GET'
+		})
 			.then(response => response.json())
 			.then((jsonResponse) => {
 				this._cpDefinitionOptions = jsonResponse;
@@ -117,6 +115,7 @@ class CPDefinitionOptionsEditor extends Component {
  * @type {!Object}
  * @static
  */
+
 CPDefinitionOptionsEditor.STATE = {
 	editProductDefinitionOptionRelURL: Config.string().required(),
 	optionsItemSelectorURL: Config.string().required(),
@@ -131,6 +130,7 @@ CPDefinitionOptionsEditor.STATE = {
 };
 
 // Register component
+
 Soy.register(CPDefinitionOptionsEditor, templates);
 
 export default CPDefinitionOptionsEditor;

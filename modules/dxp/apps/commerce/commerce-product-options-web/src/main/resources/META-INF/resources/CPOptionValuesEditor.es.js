@@ -1,9 +1,9 @@
 import Component from 'metal-component';
-import { Config } from 'metal-state';
+import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 import {dom, globalEval} from 'metal-dom';
-import { CancellablePromise } from 'metal-promise';
-import { async, core } from 'metal';
+import {CancellablePromise} from 'metal-promise';
+import {async, core} from 'metal';
 
 import CPOptionValueList from './CPOptionValueList.es';
 import CPOptionValueDetail from './CPOptionValueDetail.es';
@@ -14,10 +14,11 @@ import templates from './CPOptionValuesEditor.soy';
  * CPOptionValuesEditor
  *
  */
+
 class CPOptionValuesEditor extends Component {
 
 	constructor(opt_config, opt_parentElement) {
-		super(opt_config, opt_parentElement)
+		super(opt_config, opt_parentElement);
 
 		this.on('showChanged', this._handleShowChange);
 		this.on('cpOptionIdChanged', this._handleShowChange);
@@ -29,7 +30,7 @@ class CPOptionValuesEditor extends Component {
 
 	_handleAddOptionValue() {
 		this._newOptionValueTitle = '';
-		this._currentOptionValue = "0";
+		this._currentOptionValue = '0';
 	}
 
 	loadOptionValues() {
@@ -42,28 +43,28 @@ class CPOptionValuesEditor extends Component {
 
 		var url = new URL(this.optionValuesURL);
 
-		url.searchParams.append(this.namespace + "cpOptionId", this.cpOptionId);
+		url.searchParams.append(this.namespace + 'cpOptionId', this.cpOptionId);
 
 		var promise = fetch(url, {
-				credentials: 'include',
-				method: 'GET',
-			})
+			credentials: 'include',
+			method: 'GET'
+		})
 			.then(response => response.json())
 			.then((jsonResponse) => {
 
-			this._optionValues = jsonResponse;
+				this._optionValues = jsonResponse;
 
-			if ((this._optionValues && this._optionValues.length > 0)) {
-				if (!this._currentOptionValue || this._currentOptionValue == null) {
-					this._currentOptionValue = this._optionValues[0].cpOptionValueId;
+				if ((this._optionValues && this._optionValues.length > 0)) {
+					if (!this._currentOptionValue || this._currentOptionValue == null) {
+						this._currentOptionValue = this._optionValues[0].cpOptionValueId;
+					}
 				}
-			}
-			else if ((this._optionValues && this._optionValues.length == 0)) {
-				this._newOptionValueTitle = '';
-				this._currentOptionValue = '0';
-			}
+				else if ((this._optionValues && this._optionValues.length == 0)) {
+					this._newOptionValueTitle = '';
+					this._currentOptionValue = '0';
+				}
 
-		});
+			});
 	}
 
 	_handleShowChange(event) {
@@ -107,6 +108,7 @@ class CPOptionValuesEditor extends Component {
  * @type {!Object}
  * @static
  */
+
 CPOptionValuesEditor.STATE = {
 	cpOptionId: Config.string().required(),
 	namespace: Config.string().required(),
@@ -119,6 +121,7 @@ CPOptionValuesEditor.STATE = {
 };
 
 // Register component
+
 Soy.register(CPOptionValuesEditor, templates);
 
 export default CPOptionValuesEditor;

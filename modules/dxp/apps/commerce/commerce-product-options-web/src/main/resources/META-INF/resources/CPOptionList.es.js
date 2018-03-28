@@ -1,9 +1,9 @@
 import Component from 'metal-component';
-import { Config } from 'metal-state';
+import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 import {dom, globalEval} from 'metal-dom';
-import { CancellablePromise } from 'metal-promise';
-import { async, core } from 'metal';
+import {CancellablePromise} from 'metal-promise';
+import {async, core} from 'metal';
 
 import templates from './CPOptionList.soy';
 
@@ -11,6 +11,7 @@ import templates from './CPOptionList.soy';
  * CPOptionList
  *
  */
+
 class CPOptionList extends Component {
 
 	_handleEditValues(event) {
@@ -43,12 +44,14 @@ class CPOptionList extends Component {
  * @type {!Object}
  * @static
  */
+
 CPOptionList.STATE = {
 	currentCPOptionId: Config.string(),
 	options: Config.array().value([])
 };
 
 // Register component
+
 Soy.register(CPOptionList, templates);
 
 export default CPOptionList;

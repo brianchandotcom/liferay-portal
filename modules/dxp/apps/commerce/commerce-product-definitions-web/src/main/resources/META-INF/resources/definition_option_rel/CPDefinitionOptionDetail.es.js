@@ -1,9 +1,9 @@
 import Component from 'metal-component';
-import { Config } from 'metal-state';
+import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 import {dom, globalEval} from 'metal-dom';
-import { CancellablePromise } from 'metal-promise';
-import { async, core } from 'metal';
+import {CancellablePromise} from 'metal-promise';
+import {async, core} from 'metal';
 
 import templates from './CPDefinitionOptionDetail.soy';
 
@@ -11,6 +11,7 @@ import templates from './CPDefinitionOptionDetail.soy';
  * CPDefinitionOptionDetail
  *
  */
+
 class CPDefinitionOptionDetail extends Component {
 
 	created() {
@@ -28,12 +29,12 @@ class CPDefinitionOptionDetail extends Component {
 
 		var url = new URL(this.optionURL);
 
-		url.searchParams.append(this.namespace + "cpDefinitionOptionRelId", cpDefinitionOptionRelId);
+		url.searchParams.append(this.namespace + 'cpDefinitionOptionRelId', cpDefinitionOptionRelId);
 
 		var promise = fetch(url, {
-				credentials: 'include',
-				method: 'GET'
-			})
+			credentials: 'include',
+			method: 'GET'
+		})
 			.then(response => response.text())
 			.then((text) => {
 
@@ -57,7 +58,7 @@ class CPDefinitionOptionDetail extends Component {
 
 				let form = that.element.querySelector('.option-detail form');
 
-				var liferayForm = Liferay.Form.get(form.getAttribute("id"));
+				var liferayForm = Liferay.Form.get(form.getAttribute('id'));
 
 				if (liferayForm) {
 					var validator = liferayForm.formValidator;
@@ -85,7 +86,7 @@ class CPDefinitionOptionDetail extends Component {
 	}
 
 	_handleDeleteOption() {
-		if (confirm("Are you sure to delte?")) {
+		if (confirm('Are you sure to delte?')) {
 			this._deleteOption();
 		}
 	}
@@ -98,13 +99,13 @@ class CPDefinitionOptionDetail extends Component {
 		formData.set(this.namespace + 'cmd', 'delete');
 
 		var promise = fetch(form.action, {
-				body: formData,
-				credentials: 'include',
-				method: 'POST',
-			})
+			body: formData,
+			credentials: 'include',
+			method: 'POST'
+		})
 			.then(response => response.json())
 			.then((jsonResponse) => {
-					this.emit('optionDeleted', jsonResponse);
+				this.emit('optionDeleted', jsonResponse);
 			});
 	}
 
@@ -114,14 +115,14 @@ class CPDefinitionOptionDetail extends Component {
 		var formData = new FormData(form);
 
 		var promise = fetch(form.action, {
-				body: formData,
-				credentials: 'include',
-				method: 'POST',
-			})
-				.then(response => response.json())
-		.then((jsonResponse) => {
+			body: formData,
+			credentials: 'include',
+			method: 'POST'
+		})
+			.then(response => response.json())
+			.then((jsonResponse) => {
 				this.emit('optionSaved', jsonResponse);
-		});
+			});
 	}
 
 }
@@ -131,6 +132,7 @@ class CPDefinitionOptionDetail extends Component {
  * @type {!Object}
  * @static
  */
+
 CPDefinitionOptionDetail.STATE = {
 	cpDefinitionOptionRelId: Config.string().required(),
 	namespace: Config.string().required(),
@@ -139,6 +141,7 @@ CPDefinitionOptionDetail.STATE = {
 };
 
 // Register component
+
 Soy.register(CPDefinitionOptionDetail, templates);
 
 export default CPDefinitionOptionDetail;

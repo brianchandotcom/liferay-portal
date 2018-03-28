@@ -10,7 +10,7 @@ class AddToWishList extends PortletBase {
 	_addToWishList() {
 		var that = this;
 
-		var ddmFormValues = "[]";
+		var ddmFormValues = '[]';
 
 		var productContent = this._getProductContent();
 
@@ -30,27 +30,27 @@ class AddToWishList extends PortletBase {
 			credentials: 'include',
 			method: 'post'
 		})
-		.then(response => response.json())
-		.then((jsonresponse) => {
-			if (jsonresponse.success) {
-				Liferay.fire('commerce:productAddedToWishList', jsonresponse);
-			}
-			else {
-				var validatorErrors = jsonresponse.validatorErrors;
-
-				if (validatorErrors) {
-
-					validatorErrors.forEach(
-						function(validatorError) {
-							that._showNotification(validatorError.message, 'danger');
-						}
-					);
+			.then(response => response.json())
+			.then((jsonresponse) => {
+				if (jsonresponse.success) {
+					Liferay.fire('commerce:productAddedToWishList', jsonresponse);
 				}
 				else {
-					that._showNotification(response.error, 'danger');
+					var validatorErrors = jsonresponse.validatorErrors;
+
+					if (validatorErrors) {
+
+						validatorErrors.forEach(
+							function(validatorError) {
+								that._showNotification(validatorError.message, 'danger');
+							}
+						);
+					}
+					else {
+						that._showNotification(response.error, 'danger');
+					}
 				}
-			}
-		});
+			});
 	}
 
 	_getProductContent() {
@@ -62,7 +62,7 @@ class AddToWishList extends PortletBase {
 
 		var productContent = this._getProductContent();
 
-		if(productContent) {
+		if (productContent) {
 			productContent.validateProduct(
 				function(hasError) {
 					if (!hasError) {
@@ -100,6 +100,7 @@ AddToWishList.STATE = {
 };
 
 // Register component
+
 Soy.register(AddToWishList, templates);
 
 export default AddToWishList;

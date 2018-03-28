@@ -5,9 +5,15 @@
 		"metal-state": "^2.13.2"
 	},
 	"devDependencies": {
+		"check-source-formatting": "^2.0.6",
 		"liferay-module-config-generator": "^1.1.10",
 		"metal-cli": "^4.2.0"
 	},
 	"name": "commerce-wish-list-taglib",
+	"scripts": {
+		"checkFormat": "npm run csf",
+		"csf": "csf src/**/*.es.js",
+		"format": "npm run csf -- -i"
+	},
 	"version": "1.0.0"
 }

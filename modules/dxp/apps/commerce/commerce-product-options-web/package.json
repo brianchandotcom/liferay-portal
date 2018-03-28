@@ -8,9 +8,15 @@
 		"metal-state": "^2.6.0"
 	},
 	"devDependencies": {
+		"check-source-formatting": "^2.0.6",
 		"liferay-module-config-generator": "^1.2.1",
 		"metal-cli": "^4.0.1"
 	},
 	"name": "commerce-product-options-web",
+	"scripts": {
+		"checkFormat": "npm run csf",
+		"csf": "csf src/**/*.es.js",
+		"format": "npm run csf -- -i"
+	},
 	"version": "1.0.0"
 }

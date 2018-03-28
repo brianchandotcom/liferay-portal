@@ -92,7 +92,7 @@
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
-		<execute macro="SocialBookmarks#viewBookmarksPresent">
+		<execute macro="SocialBookmarks#viewBookmarkMenuItems">
 			<var name="socialBookmarks" value="Twitter,Facebook,Google+,LinkedIn,Delicious,Digg,Evernote,Newsvine,Reddit,Slashdot,StumbleUpon,Tuenti" />
 		</execute>
 
@@ -113,7 +113,7 @@
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
-		<execute macro="SocialBookmarks#viewBookmarksPresent">
+		<execute macro="SocialBookmarks#viewBookmarkMenuItems">
 			<var name="socialBookmarks" value="Facebook,Google+,AddThis,LinkedIn,Delicious,Digg,Evernote" />
 		</execute>
 
@@ -175,7 +175,7 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="SocialBookmarks#viewBookmarksPresent">
+		<execute macro="SocialBookmarks#viewBookmarkMenuItems">
 			<var name="socialBookmarks" value="Twitter,Facebook,Google+,LinkedIn,Delicious,Digg,Evernote,Newsvine,Reddit,Slashdot,StumbleUpon,Tuenti" />
 		</execute>
 
@@ -253,7 +253,7 @@
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
-		<execute macro="SocialBookmarks#viewBookmarksPresent">
+		<execute macro="SocialBookmarks#viewBookmarkMenuItems">
 			<var name="socialBookmarks" value="Twitter,Facebook,Google+,AddThis,LinkedIn,Delicious,Digg,Evernote,Newsvine,Reddit,Slashdot,StumbleUpon,Tuenti" />
 		</execute>
 	</command>

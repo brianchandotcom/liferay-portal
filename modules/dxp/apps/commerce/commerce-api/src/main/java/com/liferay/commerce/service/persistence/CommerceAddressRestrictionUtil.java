@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.model.CommerceAddressRestriction;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -703,6 +704,17 @@ public class CommerceAddressRestrictionUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CommerceAddressRestrictionPersistence, CommerceAddressRestrictionPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(CommerceAddressRestrictionPersistence.class);
+	private static ServiceTracker<CommerceAddressRestrictionPersistence, CommerceAddressRestrictionPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CommerceAddressRestrictionPersistence.class);
+
+		ServiceTracker<CommerceAddressRestrictionPersistence, CommerceAddressRestrictionPersistence> serviceTracker =
+			new ServiceTracker<CommerceAddressRestrictionPersistence, CommerceAddressRestrictionPersistence>(bundle.getBundleContext(),
+				CommerceAddressRestrictionPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

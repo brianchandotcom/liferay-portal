@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.model.CommerceOrderNote;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -623,6 +624,17 @@ public class CommerceOrderNoteUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CommerceOrderNotePersistence, CommerceOrderNotePersistence> _serviceTracker =
-		ServiceTrackerFactory.open(CommerceOrderNotePersistence.class);
+	private static ServiceTracker<CommerceOrderNotePersistence, CommerceOrderNotePersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CommerceOrderNotePersistence.class);
+
+		ServiceTracker<CommerceOrderNotePersistence, CommerceOrderNotePersistence> serviceTracker =
+			new ServiceTracker<CommerceOrderNotePersistence, CommerceOrderNotePersistence>(bundle.getBundleContext(),
+				CommerceOrderNotePersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

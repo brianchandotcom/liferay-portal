@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.model.CommerceAvailabilityRange;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -842,6 +843,17 @@ public class CommerceAvailabilityRangeUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CommerceAvailabilityRangePersistence, CommerceAvailabilityRangePersistence> _serviceTracker =
-		ServiceTrackerFactory.open(CommerceAvailabilityRangePersistence.class);
+	private static ServiceTracker<CommerceAvailabilityRangePersistence, CommerceAvailabilityRangePersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CommerceAvailabilityRangePersistence.class);
+
+		ServiceTracker<CommerceAvailabilityRangePersistence, CommerceAvailabilityRangePersistence> serviceTracker =
+			new ServiceTracker<CommerceAvailabilityRangePersistence, CommerceAvailabilityRangePersistence>(bundle.getBundleContext(),
+				CommerceAvailabilityRangePersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

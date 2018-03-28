@@ -284,6 +284,11 @@ public class CommerceOrderItemLocalServiceWrapper
 	}
 
 	@Override
+	public int getCommerceOrderItemsQuantity(long commerceOrderId) {
+		return _commerceOrderItemLocalService.getCommerceOrderItemsQuantity(commerceOrderId);
+	}
+
+	@Override
 	public int getCommerceWarehouseItemQuantity(long commerceOrderItemId,
 		long commerceWarehouseId)
 		throws com.liferay.portal.kernel.exception.PortalException {

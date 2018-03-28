@@ -154,6 +154,20 @@ public class CommerceOrderItemServiceSoap {
 		}
 	}
 
+	public static int getCommerceOrderItemsQuantity(long commerceOrderId)
+		throws RemoteException {
+		try {
+			int returnValue = CommerceOrderItemServiceUtil.getCommerceOrderItemsQuantity(commerceOrderId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceOrderItemSoap updateCommerceOrderItem(
 		long commerceOrderItemId, int quantity, java.lang.String json,
 		double price) throws RemoteException {

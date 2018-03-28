@@ -238,6 +238,9 @@ public interface CommerceOrderItemLocalService extends BaseLocalService,
 	public int getCommerceOrderItemsCount(long commerceOrderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceOrderItemsQuantity(long commerceOrderId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceWarehouseItemQuantity(long commerceOrderItemId,
 		long commerceWarehouseId) throws PortalException;
 

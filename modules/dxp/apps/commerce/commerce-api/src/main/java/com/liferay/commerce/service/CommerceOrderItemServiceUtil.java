@@ -16,7 +16,8 @@ package com.liferay.commerce.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -79,6 +80,11 @@ public class CommerceOrderItemServiceUtil {
 		return getService().getCommerceOrderItemsCount(commerceOrderId);
 	}
 
+	public static int getCommerceOrderItemsQuantity(long commerceOrderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommerceOrderItemsQuantity(commerceOrderId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -118,6 +124,17 @@ public class CommerceOrderItemServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CommerceOrderItemService, CommerceOrderItemService> _serviceTracker =
-		ServiceTrackerFactory.open(CommerceOrderItemService.class);
+	private static ServiceTracker<CommerceOrderItemService, CommerceOrderItemService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CommerceOrderItemService.class);
+
+		ServiceTracker<CommerceOrderItemService, CommerceOrderItemService> serviceTracker =
+			new ServiceTracker<CommerceOrderItemService, CommerceOrderItemService>(bundle.getBundleContext(),
+				CommerceOrderItemService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

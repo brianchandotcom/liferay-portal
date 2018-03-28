@@ -16,7 +16,8 @@ package com.liferay.commerce.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -268,6 +269,10 @@ public class CommerceOrderItemLocalServiceUtil {
 		return getService().getCommerceOrderItemsCount(commerceOrderId);
 	}
 
+	public static int getCommerceOrderItemsQuantity(long commerceOrderId) {
+		return getService().getCommerceOrderItemsQuantity(commerceOrderId);
+	}
+
 	public static int getCommerceWarehouseItemQuantity(
 		long commerceOrderItemId, long commerceWarehouseId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -348,6 +353,17 @@ public class CommerceOrderItemLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CommerceOrderItemLocalService, CommerceOrderItemLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(CommerceOrderItemLocalService.class);
+	private static ServiceTracker<CommerceOrderItemLocalService, CommerceOrderItemLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CommerceOrderItemLocalService.class);
+
+		ServiceTracker<CommerceOrderItemLocalService, CommerceOrderItemLocalService> serviceTracker =
+			new ServiceTracker<CommerceOrderItemLocalService, CommerceOrderItemLocalService>(bundle.getBundleContext(),
+				CommerceOrderItemLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

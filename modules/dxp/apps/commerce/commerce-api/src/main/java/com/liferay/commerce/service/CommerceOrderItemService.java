@@ -81,6 +81,10 @@ public interface CommerceOrderItemService extends BaseService {
 	public int getCommerceOrderItemsCount(long commerceOrderId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceOrderItemsQuantity(long commerceOrderId)
+		throws PortalException;
+
 	/**
 	* Returns the OSGi service identifier.
 	*

@@ -16,7 +16,8 @@ package com.liferay.commerce.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -268,6 +269,17 @@ public class CommerceOrderServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CommerceOrderService, CommerceOrderService> _serviceTracker =
-		ServiceTrackerFactory.open(CommerceOrderService.class);
+	private static ServiceTracker<CommerceOrderService, CommerceOrderService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CommerceOrderService.class);
+
+		ServiceTracker<CommerceOrderService, CommerceOrderService> serviceTracker =
+			new ServiceTracker<CommerceOrderService, CommerceOrderService>(bundle.getBundleContext(),
+				CommerceOrderService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

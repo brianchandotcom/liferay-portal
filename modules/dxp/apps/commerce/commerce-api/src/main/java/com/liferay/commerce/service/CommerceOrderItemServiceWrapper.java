@@ -77,6 +77,12 @@ public class CommerceOrderItemServiceWrapper implements CommerceOrderItemService
 		return _commerceOrderItemService.getCommerceOrderItemsCount(commerceOrderId);
 	}
 
+	@Override
+	public int getCommerceOrderItemsQuantity(long commerceOrderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderItemService.getCommerceOrderItemsQuantity(commerceOrderId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

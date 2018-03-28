@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.model.CPDefinitionInventory;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -735,6 +736,17 @@ public class CPDefinitionInventoryUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CPDefinitionInventoryPersistence, CPDefinitionInventoryPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(CPDefinitionInventoryPersistence.class);
+	private static ServiceTracker<CPDefinitionInventoryPersistence, CPDefinitionInventoryPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CPDefinitionInventoryPersistence.class);
+
+		ServiceTracker<CPDefinitionInventoryPersistence, CPDefinitionInventoryPersistence> serviceTracker =
+			new ServiceTracker<CPDefinitionInventoryPersistence, CPDefinitionInventoryPersistence>(bundle.getBundleContext(),
+				CPDefinitionInventoryPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

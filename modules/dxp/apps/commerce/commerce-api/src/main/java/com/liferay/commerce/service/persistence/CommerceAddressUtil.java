@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.model.CommerceAddress;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -1416,6 +1417,17 @@ public class CommerceAddressUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CommerceAddressPersistence, CommerceAddressPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(CommerceAddressPersistence.class);
+	private static ServiceTracker<CommerceAddressPersistence, CommerceAddressPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CommerceAddressPersistence.class);
+
+		ServiceTracker<CommerceAddressPersistence, CommerceAddressPersistence> serviceTracker =
+			new ServiceTracker<CommerceAddressPersistence, CommerceAddressPersistence>(bundle.getBundleContext(),
+				CommerceAddressPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

@@ -16,7 +16,8 @@ package com.liferay.commerce.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -100,6 +101,17 @@ public class CommerceAvailabilityRangeServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CommerceAvailabilityRangeService, CommerceAvailabilityRangeService> _serviceTracker =
-		ServiceTrackerFactory.open(CommerceAvailabilityRangeService.class);
+	private static ServiceTracker<CommerceAvailabilityRangeService, CommerceAvailabilityRangeService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CommerceAvailabilityRangeService.class);
+
+		ServiceTracker<CommerceAvailabilityRangeService, CommerceAvailabilityRangeService> serviceTracker =
+			new ServiceTracker<CommerceAvailabilityRangeService, CommerceAvailabilityRangeService>(bundle.getBundleContext(),
+				CommerceAvailabilityRangeService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

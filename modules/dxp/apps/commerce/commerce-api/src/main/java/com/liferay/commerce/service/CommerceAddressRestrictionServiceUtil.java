@@ -16,7 +16,8 @@ package com.liferay.commerce.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -112,6 +113,17 @@ public class CommerceAddressRestrictionServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CommerceAddressRestrictionService, CommerceAddressRestrictionService> _serviceTracker =
-		ServiceTrackerFactory.open(CommerceAddressRestrictionService.class);
+	private static ServiceTracker<CommerceAddressRestrictionService, CommerceAddressRestrictionService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CommerceAddressRestrictionService.class);
+
+		ServiceTracker<CommerceAddressRestrictionService, CommerceAddressRestrictionService> serviceTracker =
+			new ServiceTracker<CommerceAddressRestrictionService, CommerceAddressRestrictionService>(bundle.getBundleContext(),
+				CommerceAddressRestrictionService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

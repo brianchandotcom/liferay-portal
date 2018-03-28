@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.model.CommerceTaxCategoryRel;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -703,6 +704,17 @@ public class CommerceTaxCategoryRelUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CommerceTaxCategoryRelPersistence, CommerceTaxCategoryRelPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(CommerceTaxCategoryRelPersistence.class);
+	private static ServiceTracker<CommerceTaxCategoryRelPersistence, CommerceTaxCategoryRelPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CommerceTaxCategoryRelPersistence.class);
+
+		ServiceTracker<CommerceTaxCategoryRelPersistence, CommerceTaxCategoryRelPersistence> serviceTracker =
+			new ServiceTracker<CommerceTaxCategoryRelPersistence, CommerceTaxCategoryRelPersistence>(bundle.getBundleContext(),
+				CommerceTaxCategoryRelPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

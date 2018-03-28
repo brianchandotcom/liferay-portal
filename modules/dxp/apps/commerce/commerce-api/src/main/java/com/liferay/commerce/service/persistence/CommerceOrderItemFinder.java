@@ -28,5 +28,7 @@ public interface CommerceOrderItemFinder {
 	public java.util.List<com.liferay.commerce.model.CommerceOrderItem> findByC_C(
 		long commerceWarehouseId, long commerceAddressId, int start, int end);
 
+	public int getCommerceOrderItemsQuantity(long commerceOrderId);
+
 	public int getCPInstanceQuantity(long cpInstanceId, int status);
 }

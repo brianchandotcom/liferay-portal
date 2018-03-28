@@ -3,16 +3,16 @@
 This project contains components for working with Liferay DXP from Talend
 Studio.
 
-Open Talend 6.4.1 (Components API v0.19.2).
+Open Talend 6.5.1 (Components API v0.19.9).
 
 ## Prerequisites
 
-* JDK 1.7+
+* JDK 1.8+
 * Apache Maven 3.3+
-* Open Talend 6.4.1
-	* Components API v0.19.2
+* Open Talend 6.5.1
+	* Components API v0.19.9
 
-Download Talend Open Studio 6.4.1: https://www.talend.com/download/talend-open-studio/
+Download Talend Open Studio 6.5.1: https://www.talend.com/download/talend-open-studio/
 
 ## Build
 
@@ -42,8 +42,8 @@ Here is a brief summary:
 	```sh
 	$ cd $HOME/tmp
 	... download distribution archive ...
-	$ unzip TOS_ESB-20170623_1246-V6.4.1.zip
-	$ STUDIO_ROOT=$HOME/tmp/TOS_ESB-20170623_1246-V6.4.1
+	$ unzip TOS_ESB-20180116_1512-V6.5.1.zip
+	$ STUDIO_ROOT=$HOME/tmp/TOS_ESB-20180116_1512-V6.5.1
 	```
 
 1. Now copy the component definition bundle into `$STUDIO_ROOT/plugins`
@@ -83,3 +83,9 @@ with `org.eclipse`.
 
 * Now start the Studio, and you should be able to see new components on palette
 under `Business/Liferay` category.
+
+1. There is a bug in Talend Open Studio 6.5.1 which requires you to manually add
+	the component dependency and runtime artifacts to the job's classpath in
+	order to be able to run the job with a custom component.
+
+	See my bug report: https://community.talend.com/t5/Design-and-Development/Component-definition-is-not-added-to-the-job-s-classpath-in/m-p/49285/highlight/true#M15736

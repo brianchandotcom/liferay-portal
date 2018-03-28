@@ -27,9 +27,9 @@
 			/>
 
 			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.xpack.monitoring.web.internal.configuration.XPackMonitoringConfiguration.config">kibanaPassword="${osgi.config.kibana.user.password}"
-proxyServletLogEnable="true"
+kibanaURL="https://localhost:5601"
 kibanaUserName="kibana"
-kibanaURL="https://localhost:5601"</echo>
+proxyServletLogEnable="true"</echo>
 		</sequential>
 	</macrodef>
 
@@ -44,12 +44,12 @@ kibanaURL="https://localhost:5601"</echo>
 				replace="\\\\="
 			/>
 
-			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.xpack.security.internal.configuration.XPackSecurityConfiguration.config">sslCertificatePath="${elasticsearch.dir}-1/config/certs/instance/instance.crt"
-sslCertificateAuthoritiesPaths="${elasticsearch.dir}-1/config/certs/ca/ca.crt"
-requiresAuthentication="true"
+			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.xpack.security.internal.configuration.XPackSecurityConfiguration.config">certificateFormat="PEM"
 password="${osgi.config.elastic.user.password}"
+requiresAuthentication="true"
+sslCertificateAuthoritiesPaths="${elasticsearch.dir}-1/config/certs/ca/ca.crt"
+sslCertificatePath="${elasticsearch.dir}-1/config/certs/instance/instance.crt"
 sslKeyPath="${elasticsearch.dir}-1/config/certs/instance/instance.key"
-certificateFormat="PEM"
 transportSSLEnabled="true"</echo>
 		</sequential>
 	</macrodef>

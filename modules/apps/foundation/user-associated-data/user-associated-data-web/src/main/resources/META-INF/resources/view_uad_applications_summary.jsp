@@ -65,6 +65,11 @@ SearchContainer<UADApplicationSummaryDisplay>
 
 			<liferay-frontend:management-bar>
 				<liferay-frontend:management-bar-filters>
+					<liferay-frontend:management-bar-navigation
+						navigationKeys='<%= new String[] {"all", "in-progress", "done"} %>'
+						portletURL="<%= PortletURLUtil.clone(currentURLObj, renderResponse) %>"
+					/>
+
 					<liferay-frontend:management-bar-sort
 						orderByCol="<%= uadApplicationsSummaryDisplaySearchContainer.getOrderByCol() %>"
 						orderByType="<%= uadApplicationsSummaryDisplaySearchContainer.getOrderByType() %>"

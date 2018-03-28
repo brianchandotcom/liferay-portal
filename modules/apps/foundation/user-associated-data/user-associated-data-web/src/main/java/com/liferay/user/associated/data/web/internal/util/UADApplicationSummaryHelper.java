@@ -29,6 +29,7 @@ import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -78,7 +79,10 @@ public class UADApplicationSummaryHelper {
 				getUADApplicationSummaryDisplayStream(userId);
 
 		List<UADApplicationSummaryDisplay> uadApplicationSummaryDisplays =
-			uadApplicationSummaryDisplayStream.sorted(
+			uadApplicationSummaryDisplayStream.filter(
+				getPredicate(
+					ParamUtil.getString(renderRequest, "navigation", "all"))
+			).sorted(
 				getComparator(
 					searchContainer.getOrderByCol(),
 					searchContainer.getOrderByType())
@@ -145,6 +149,19 @@ public class UADApplicationSummaryHelper {
 			UADEntityDisplay::getKey
 		).findFirst(
 		).get();
+	}
+
+	public Predicate<UADApplicationSummaryDisplay> getPredicate(
+		String navigation) {
+
+		if (navigation.equals("in-progress")) {
+			return display -> display.getCount() > 0;
+		}
+		else if (navigation.equals("done")) {
+			return display -> display.getCount() <= 0;
+		}
+
+		return display -> true;
 	}
 
 	public int getReviewableUADEntitiesCount(

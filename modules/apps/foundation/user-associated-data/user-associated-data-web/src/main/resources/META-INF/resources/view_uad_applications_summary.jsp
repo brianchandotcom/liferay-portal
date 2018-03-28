@@ -31,6 +31,9 @@ backURL.setParameter("p_u_i_d", String.valueOf(selectedUser.getUserId()));
 portletDisplay.setURLBack(backURL.toString());
 
 renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", LanguageUtil.get(request, "personal-data-erasure")));
+
+SearchContainer<UADApplicationSummaryDisplay>
+	uadApplicationsSummaryDisplaySearchContainer = viewUADApplicationsSummaryDisplay.getSearchContainer();
 %>
 
 <div class="container-fluid container-fluid-max-xl container-form-lg">
@@ -60,9 +63,20 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		<div class="sheet-section">
 			<h3 class="sheet-subtitle"><liferay-ui:message key="applications" /></h3>
 
+			<liferay-frontend:management-bar>
+				<liferay-frontend:management-bar-filters>
+					<liferay-frontend:management-bar-sort
+						orderByCol="<%= uadApplicationsSummaryDisplaySearchContainer.getOrderByCol() %>"
+						orderByType="<%= uadApplicationsSummaryDisplaySearchContainer.getOrderByType() %>"
+						orderColumns='<%= new String[] {"name", "items", "status"} %>'
+						portletURL="<%= PortletURLUtil.clone(currentURLObj, renderResponse) %>"
+					/>
+				</liferay-frontend:management-bar-filters>
+			</liferay-frontend:management-bar>
+
 			<liferay-ui:search-container
 				id="uadApplicationSummaryDisplays"
-				searchContainer="<%= viewUADApplicationsSummaryDisplay.getSearchContainer() %>"
+				searchContainer="<%= uadApplicationsSummaryDisplaySearchContainer %>"
 			>
 				<liferay-ui:search-container-row
 					className="com.liferay.user.associated.data.web.internal.display.UADApplicationSummaryDisplay"

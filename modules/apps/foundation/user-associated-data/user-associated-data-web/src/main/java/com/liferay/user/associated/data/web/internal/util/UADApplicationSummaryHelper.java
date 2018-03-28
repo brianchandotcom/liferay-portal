@@ -20,12 +20,14 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
 import com.liferay.user.associated.data.web.internal.display.UADApplicationSummaryDisplay;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -64,12 +66,25 @@ public class UADApplicationSummaryHelper {
 		SearchContainer<UADApplicationSummaryDisplay> searchContainer =
 			new SearchContainer<>(portletRequest, currentURL, null, null);
 
+		searchContainer.setOrderByCol(
+			ParamUtil.getString(
+				renderRequest, searchContainer.getOrderByColParam(), "name"));
+		searchContainer.setOrderByType(
+			ParamUtil.getString(
+				renderRequest, searchContainer.getOrderByTypeParam(), "asc"));
+
 		Stream<UADApplicationSummaryDisplay>
 			uadApplicationSummaryDisplayStream =
 				getUADApplicationSummaryDisplayStream(userId);
 
 		List<UADApplicationSummaryDisplay> uadApplicationSummaryDisplays =
-			uadApplicationSummaryDisplayStream.collect(Collectors.toList());
+			uadApplicationSummaryDisplayStream.sorted(
+				getComparator(
+					searchContainer.getOrderByCol(),
+					searchContainer.getOrderByType())
+			).collect(
+				Collectors.toList()
+			);
 
 		searchContainer.setResults(uadApplicationSummaryDisplays);
 
@@ -102,6 +117,24 @@ public class UADApplicationSummaryHelper {
 		return uadEntityDisplayStream.filter(
 			uadEntityDisplay -> applicationName.equals(
 				uadEntityDisplay.getApplicationName()));
+	}
+
+	public Comparator<UADApplicationSummaryDisplay> getComparator(
+		String orderByColumn, String orderByType) {
+
+		Comparator<UADApplicationSummaryDisplay> comparator =
+			Comparator.comparing(UADApplicationSummaryDisplay::getName);
+
+		if (orderByColumn.equals("items") || orderByColumn.equals("status")) {
+			comparator = Comparator.comparingInt(
+				UADApplicationSummaryDisplay::getCount);
+		}
+
+		if (orderByType.equals("desc")) {
+			comparator = comparator.reversed();
+		}
+
+		return comparator;
 	}
 
 	public String getDefaultUADRegistryKey(String applicationName) {

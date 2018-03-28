@@ -42,6 +42,17 @@ public class CommercePriceCalculationLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.service.impl.CommercePriceCalculationLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static java.lang.String formatPrice(long groupId, double price)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().formatPrice(groupId, price);
+	}
+
+	public static java.lang.String formatPriceWithCurrency(
+		long commerceCurrencyId, double price)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().formatPriceWithCurrency(commerceCurrencyId, price);
+	}
+
 	public static double getFinalPrice(long groupId, long userId,
 		long cpInstanceId, int quantity)
 		throws com.liferay.portal.kernel.exception.PortalException {

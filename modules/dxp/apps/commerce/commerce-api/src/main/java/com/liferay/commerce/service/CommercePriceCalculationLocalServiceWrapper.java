@@ -35,6 +35,20 @@ public class CommercePriceCalculationLocalServiceWrapper
 	}
 
 	@Override
+	public java.lang.String formatPrice(long groupId, double price)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commercePriceCalculationLocalService.formatPrice(groupId, price);
+	}
+
+	@Override
+	public java.lang.String formatPriceWithCurrency(long commerceCurrencyId,
+		double price)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commercePriceCalculationLocalService.formatPriceWithCurrency(commerceCurrencyId,
+			price);
+	}
+
+	@Override
 	public double getFinalPrice(long groupId, long userId, long cpInstanceId,
 		int quantity)
 		throws com.liferay.portal.kernel.exception.PortalException {

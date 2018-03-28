@@ -46,6 +46,12 @@ public interface CommercePriceCalculationLocalService extends BaseLocalService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommercePriceCalculationLocalServiceUtil} to access the commerce price calculation local service. Add custom service methods to {@link com.liferay.commerce.service.impl.CommercePriceCalculationLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public java.lang.String formatPrice(long groupId, double price)
+		throws PortalException;
+
+	public java.lang.String formatPriceWithCurrency(long commerceCurrencyId,
+		double price) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public double getFinalPrice(long groupId, long userId, long cpInstanceId,
 		int quantity) throws PortalException;

@@ -28,14 +28,13 @@ String message = GetterUtil.getString((String)request.getAttribute("liferay-ui:e
 		</p>
 	</c:when>
 	<c:otherwise>
-		<div class="card main-content-card taglib-empty-result-message">
-			<div class="card-row card-row-padded">
-				<div class="<%= cssClass %>"></div>
+		<div class="sheet">
+			<div class="<%= cssClass %>"></div>
 
-				<c:if test="<%= Validator.isNotNull(message) %>">
-					<div class="text-center text-muted">
-						<liferay-ui:message key="<%= message %>" />
-					</div>
-				</c:if>
+			<c:if test="<%= Validator.isNotNull(message) %>">
+				<div class="sheet-text text-center text-muted">
+					<liferay-ui:message key="<%= message %>" />
+				</div>
+			</c:if>
 	</c:otherwise>
 </c:choose>

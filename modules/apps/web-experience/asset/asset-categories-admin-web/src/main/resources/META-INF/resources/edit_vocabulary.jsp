@@ -43,7 +43,10 @@ renderResponse.setTitle(((vocabulary == null) ? LanguageUtil.get(request, "add-v
 	<portlet:param name="mvcPath" value="/edit_vocabulary.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= editVocabularyURL %>" cssClass="container-fluid-1280" name="fm">
+<liferay-frontend:edit-form
+	action="<%= editVocabularyURL %>"
+	name="fm"
+>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="vocabularyId" type="hidden" value="<%= vocabularyId %>" />
 
@@ -52,29 +55,33 @@ renderResponse.setTitle(((vocabulary == null) ? LanguageUtil.get(request, "add-v
 
 	<aui:model-context bean="<%= vocabulary %>" model="<%= AssetVocabulary.class %>" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
+	<liferay-frontend:fieldset-group>
+		<liferay-frontend:fieldset>
 			<aui:input autoFocus="<%= true %>" label="name" name="title" placeholder="name" />
 
 			<aui:input name="description" placeholder="description" />
 
 			<aui:input helpMessage="multi-valued-help" label="allow-multiple-categories" name="multiValued" type="toggle-switch" value="<%= (vocabulary != null) ? vocabulary.isMultiValued() : true %>" />
-		</aui:fieldset>
+		</liferay-frontend:fieldset>
 
 		<%@ include file="/edit_vocabulary_settings.jspf" %>
 
 		<c:if test="<%= vocabulary == null %>">
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+			<liferay-frontend:fieldset
+				collapsed="<%= true %>"
+				collapsible="<%= true %>"
+				label="permissions"
+			>
 				<liferay-ui:input-permissions
 					modelName="<%= AssetVocabulary.class.getName() %>"
 				/>
-			</aui:fieldset>
+			</liferay-frontend:fieldset>
 		</c:if>
-	</aui:fieldset-group>
+	</liferay-frontend:fieldset-group>
 
-	<aui:button-row>
+	<liferay-frontend:button-row>
 		<aui:button type="submit" />
 
 		<aui:button href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+	</liferay-frontend:button-row>
+</liferay-frontend:edit-form>

@@ -14,8 +14,6 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/empty_result_message/init.jsp" %>
+<%@ include file="/fieldset_group/init.jsp" %>
 
-<c:if test="<%= !compact %>">
-	</div>
-</c:if>
+<div aria-multiselectable="true" role="tablist">

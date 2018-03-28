@@ -149,7 +149,9 @@
 
 		<execute macro="PortletEntry#publish" />
 
-		<execute function="Click" locator1="Icon#ANGLE_LEFT_BACK" />
+		<execute function="AssertClick" locator1="Breadcrumb#BREADCRUMB_ENTRY_LINK" value1="${breadcrumbName}">
+			<var name="key_breadcrumbName" value="${breadcrumbName}" />
+		</execute>
 
 		<execute macro="MessageboardsThread#viewMarkedAsQuestionPG">
 			<var name="threadSubject" value="${threadSubject}" />

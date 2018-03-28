@@ -91,7 +91,7 @@
 			<then>
 				<var name="key_contentName" value="${uncheckContent}" />
 
-				<execute function="Check#checkHiddenToggleSwitch" locator1="SiteSettingsStaging#CONTENT_CHECKBOX" />
+				<execute function="Uncheck#uncheckHiddenToggleSwitch" locator1="SiteSettingsStaging#CONTENT_CHECKBOX" />
 			</then>
 		</if>
 

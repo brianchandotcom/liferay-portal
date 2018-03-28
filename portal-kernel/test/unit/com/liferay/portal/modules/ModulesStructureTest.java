@@ -803,6 +803,7 @@ public class ModulesStructureTest {
 
 		if (_isInModulesRootDir(
 				dirPath, "private", "sdk", "third-party", "util") ||
+			Files.exists(dirPath.resolve(".lfrbuild-ci")) ||
 			_isInGitRepoReadOnly(dirPath)) {
 
 			return false;

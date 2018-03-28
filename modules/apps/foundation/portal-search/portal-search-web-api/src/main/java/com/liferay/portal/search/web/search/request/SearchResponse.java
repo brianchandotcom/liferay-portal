@@ -39,13 +39,19 @@ public interface SearchResponse {
 	@Deprecated
 	public String[] getHighlights();
 
-	public Optional<String> getKeywords();
+	public Optional<String> getKeywordsOptional();
 
 	public int getPaginationDelta();
 
 	public int getPaginationStart();
 
 	public String getQueryString();
+
+	public List<String> getRelatedQueriesSuggestions();
+
+	public SearchSettings getSearchSettings();
+
+	public Optional<String> getSpellCheckSuggestionOptional();
 
 	public int getTotalHits();
 

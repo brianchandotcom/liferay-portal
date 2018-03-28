@@ -27,14 +27,12 @@ import java.util.function.Consumer;
  * @param  <A> the type of the first argument of the consumer
  */
 @FunctionalInterface
-public interface ThrowableConsumer<A> {
+public interface SafeConsumer<A> {
 
-	public static <T> Consumer<T> ignore(
-		ThrowableConsumer<T> throwableConsumer) {
-
+	public static <T> Consumer<T> ignore(SafeConsumer<T> safeConsumer) {
 		return t -> {
 			try {
-				throwableConsumer.accept(t);
+				safeConsumer.accept(t);
 			}
 			catch (Exception e) {
 				throw new RuntimeException(e);

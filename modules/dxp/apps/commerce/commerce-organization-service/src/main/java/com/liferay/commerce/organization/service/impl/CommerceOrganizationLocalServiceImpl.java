@@ -17,8 +17,6 @@ package com.liferay.commerce.organization.service.impl;
 import com.liferay.commerce.organization.constants.CommerceOrganizationConstants;
 import com.liferay.commerce.organization.service.base.CommerceOrganizationLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
-import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocalCloseable;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.Group;
@@ -72,16 +70,10 @@ public class CommerceOrganizationLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		ProxyModeThreadLocal.setForceSync(true);
-
-		Organization organization = organizationLocalService.addOrganization(
+		return organizationLocalService.addOrganization(
 			serviceContext.getUserId(), parentOrganizationId, name, type, 0, 0,
 			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
 			false, serviceContext);
-
-		ProxyModeThreadLocal.setForceSync(false);
-
-		return organization;
 	}
 
 	@Override
@@ -97,35 +89,28 @@ public class CommerceOrganizationLocalServiceImpl
 		long companyId = serviceContext.getCompanyId();
 		Locale locale = serviceContext.getLocale();
 
-		try (ProxyModeThreadLocalCloseable proxyModeThreadLocalCloseable =
-				new ProxyModeThreadLocalCloseable()) {
+		long[] userIds = new long[emailAddresses.length];
 
-			ProxyModeThreadLocal.setForceSync(true);
+		for (int i = 0; i < emailAddresses.length; i++) {
+			String emailAddress = emailAddresses[i];
 
-			long[] userIds = new long[emailAddresses.length];
+			User user = userLocalService.fetchUserByEmailAddress(
+				companyId, emailAddress);
 
-			for (int i = 0; i < emailAddresses.length; i++) {
-				String emailAddress = emailAddresses[i];
-
-				User user = userLocalService.fetchUserByEmailAddress(
-					companyId, emailAddress);
-
-				if (user == null) {
-					user = userLocalService.addUserWithWorkflow(
-						serviceContext.getUserId(), companyId, true,
-						StringPool.BLANK, StringPool.BLANK, true,
-						StringPool.BLANK, emailAddress, 0, StringPool.BLANK,
-						locale, emailAddress, StringPool.BLANK, emailAddress, 0,
-						0, true, 1, 1, 1970, StringPool.BLANK, null,
-						new long[] {organizationId}, null, null, true,
-						serviceContext);
-				}
-
-				userIds[i] = user.getUserId();
+			if (user == null) {
+				user = userLocalService.addUserWithWorkflow(
+					serviceContext.getUserId(), companyId, true,
+					StringPool.BLANK, StringPool.BLANK, true, StringPool.BLANK,
+					emailAddress, 0, StringPool.BLANK, locale, emailAddress,
+					StringPool.BLANK, emailAddress, 0, 0, true, 1, 1, 1970,
+					StringPool.BLANK, null, new long[] {organizationId}, null,
+					null, true, serviceContext);
 			}
 
-			userLocalService.addOrganizationUsers(organizationId, userIds);
+			userIds[i] = user.getUserId();
 		}
+
+		userLocalService.addOrganizationUsers(organizationId, userIds);
 	}
 
 	@Override
@@ -332,13 +317,7 @@ public class CommerceOrganizationLocalServiceImpl
 	public void unsetOrganizationUsers(long organizationId, long[] userIds)
 		throws PortalException {
 
-		try (ProxyModeThreadLocalCloseable proxyModeThreadLocalCloseable =
-				new ProxyModeThreadLocalCloseable()) {
-
-			ProxyModeThreadLocal.setForceSync(true);
-
-			userLocalService.unsetOrganizationUsers(organizationId, userIds);
-		}
+		userLocalService.unsetOrganizationUsers(organizationId, userIds);
 	}
 
 	@Override

@@ -58,6 +58,7 @@
 		<suppress checks="ValidatorIsNullCheck" files="portal-impl/src/com/liferay/portal/service/persistence/impl/UserFinderImpl\.java" />
 	</checkstyle>
 	<source-check>
+		<suppress checks="JavaCleanUpMethodVariablesCheck" files="util-taglib/src/com/liferay/taglib/util/IncludeTag\.java" />
 		<suppress checks="JavaDeserializationSecurityCheck" files="portal-impl/src/com/liferay/portal/bean/BeanPropertiesImpl\.java" />
 		<suppress checks="JavaDeserializationSecurityCheck" files="portal-kernel/src/com/liferay/portal/kernel/io/AnnotatedObjectInputStream\.java" />
 		<suppress checks="JavaDeserializationSecurityCheck" files="portal-kernel/src/com/liferay/portal/kernel/io/ProtectedObjectInputStream\.java" />

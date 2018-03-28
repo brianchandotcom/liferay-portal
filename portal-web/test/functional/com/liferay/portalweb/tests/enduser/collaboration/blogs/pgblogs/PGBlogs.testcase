@@ -1532,7 +1532,7 @@
 		</execute>
 
 		<execute macro="BlogsEntry#flagPG">
-			<var name="flagReason" value="spam" />
+			<var name="flagReason" value="Spam" />
 			<var name="siteName" value="${siteName}" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>

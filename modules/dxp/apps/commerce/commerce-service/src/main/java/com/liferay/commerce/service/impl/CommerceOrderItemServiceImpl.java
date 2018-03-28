@@ -120,6 +120,17 @@ public class CommerceOrderItemServiceImpl
 	}
 
 	@Override
+	public int getCommerceOrderItemsQuantity(long commerceOrderId)
+		throws PortalException {
+
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderId, ActionKeys.VIEW);
+
+		return commerceOrderItemLocalService.getCommerceOrderItemsQuantity(
+			commerceOrderId);
+	}
+
+	@Override
 	public BaseModelSearchResult<CommerceOrderItem> search(
 			long commerceOrderId, String keywords, int start, int end,
 			Sort sort)

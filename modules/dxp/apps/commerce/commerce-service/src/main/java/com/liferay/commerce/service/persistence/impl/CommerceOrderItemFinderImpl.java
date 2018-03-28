@@ -29,6 +29,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 public class CommerceOrderItemFinderImpl
@@ -36,6 +37,10 @@ public class CommerceOrderItemFinderImpl
 
 	public static final String FIND_BY_C_C =
 		CommerceOrderItemFinder.class.getName() + ".findByC_C";
+
+	public static final String GET_COMMERCE_ORDER_ITEMS_QUANTITY =
+		CommerceOrderItemFinder.class.getName() +
+			".getCommerceOrderItemsQuantity";
 
 	public static final String GET_CP_INSTANCE_QUANTITY =
 		CommerceOrderItemFinder.class.getName() + ".getCPInstanceQuantity";
@@ -73,6 +78,44 @@ public class CommerceOrderItemFinderImpl
 
 			return (List<CommerceOrderItem>)QueryUtil.list(
 				q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public int getCommerceOrderItemsQuantity(long commerceOrderId) {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(
+				getClass(), GET_COMMERCE_ORDER_ITEMS_QUANTITY);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(SUM_VALUE, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(commerceOrderId);
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long sum = itr.next();
+
+				if (sum != null) {
+					return sum.intValue();
+				}
+			}
+
+			return 0;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

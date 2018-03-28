@@ -199,6 +199,12 @@ public class CommerceOrderItemLocalServiceImpl
 	}
 
 	@Override
+	public int getCommerceOrderItemsQuantity(long commerceOrderId) {
+		return commerceOrderItemFinder.getCommerceOrderItemsQuantity(
+			commerceOrderId);
+	}
+
+	@Override
 	public int getCommerceWarehouseItemQuantity(
 			long commerceOrderItemId, long commerceWarehouseId)
 		throws PortalException {

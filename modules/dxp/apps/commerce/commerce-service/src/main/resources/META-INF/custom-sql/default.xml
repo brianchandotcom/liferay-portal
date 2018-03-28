@@ -39,6 +39,16 @@
 				(CommerceOrderItem.quantity > CommerceOrderItem.shippedQuantity)
 		]]>
 	</sql>
+	<sql id="com.liferay.commerce.service.persistence.CommerceOrderItemFinder.getCommerceOrderItemsQuantity">
+		<![CDATA[
+			SELECT
+				SUM(CommerceOrderItem.quantity) AS SUM_VALUE
+			FROM
+				CommerceOrderItem
+			WHERE
+				CommerceOrderItem.commerceOrderId = ?
+		]]>
+	</sql>
 	<sql id="com.liferay.commerce.service.persistence.CommerceOrderItemFinder.getCPInstanceQuantity">
 		<![CDATA[
 			SELECT

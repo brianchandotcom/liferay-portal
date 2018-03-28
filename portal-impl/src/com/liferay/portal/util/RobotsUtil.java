@@ -16,7 +16,6 @@ package com.liferay.portal.util;
 
 import com.liferay.petra.content.ContentUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -56,21 +55,10 @@ public class RobotsUtil {
 		String defaultRobots = getDefaultRobots(
 			PortalUtil.getVirtualHostname(layoutSet));
 
-		String robots = GetterUtil.get(
+		return GetterUtil.get(
 			layoutSet.getSettingsProperty(
 				layoutSet.isPrivateLayout() + "-robots.txt"),
 			defaultRobots);
-
-		if (robots.equals(defaultRobots)) {
-			Group group = layoutSet.getGroup();
-
-			robots = GetterUtil.get(
-				group.getTypeSettingsProperty(
-					layoutSet.isPrivateLayout() + "-robots.txt"),
-				defaultRobots);
-		}
-
-		return robots;
 	}
 
 }

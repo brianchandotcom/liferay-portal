@@ -40,6 +40,7 @@ public class SearchPaginatorTag<R> extends SearchFormTag<R> {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_id = null;
 		_markupView = StringPool.BLANK;
 		_type = "regular";
 	}

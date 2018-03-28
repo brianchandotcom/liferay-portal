@@ -22,15 +22,9 @@ package com.liferay.portal.workflow.kaleo.designer.web.internal.constants;
 public class KaleoDesignerActionKeys {
 
 	/**
-	 * {@value #ADD_DRAFT} is used to check permissions for adding a workflow
-	 * definition draft.
-	 */
-	public static final String ADD_DRAFT = "ADD_DRAFT";
-
-	/**
-	 * {@value #PUBLISH} is used to check permissions for publishing a workflow
+	 * {@value #ADD_NEW_WORKFLOW} is used to check permissions for adding a workflow
 	 * definition.
 	 */
-	public static final String PUBLISH = "PUBLISH";
+	public static final String ADD_NEW_WORKFLOW = "ADD_NEW_WORKFLOW";
 
 }

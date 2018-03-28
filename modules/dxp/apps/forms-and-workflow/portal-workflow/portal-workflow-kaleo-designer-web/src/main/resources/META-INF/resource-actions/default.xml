@@ -29,8 +29,7 @@
 		<root>true</root>
 		<permissions>
 			<supports>
-				<action-key>ADD_DRAFT</action-key>
-				<action-key>PUBLISH</action-key>
+				<action-key>ADD_NEW_WORKFLOW</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
 			<site-member-defaults>
@@ -38,8 +37,7 @@
 			</site-member-defaults>
 			<guest-defaults />
 			<guest-unsupported>
-				<action-key>ADD_DRAFT</action-key>
-				<action-key>PUBLISH</action-key>
+				<action-key>ADD_NEW_WORKFLOW</action-key>
 				<action-key>VIEW</action-key>
 			</guest-unsupported>
 		</permissions>
@@ -52,8 +50,7 @@
 		<root>true</root>
 		<permissions>
 			<supports>
-				<action-key>ADD_DRAFT</action-key>
-				<action-key>PUBLISH</action-key>
+				<action-key>ADD_NEW_WORKFLOW</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
 			<site-member-defaults>
@@ -61,8 +58,7 @@
 			</site-member-defaults>
 			<guest-defaults />
 			<guest-unsupported>
-				<action-key>ADD_DRAFT</action-key>
-				<action-key>PUBLISH</action-key>
+				<action-key>ADD_NEW_WORKFLOW</action-key>
 				<action-key>VIEW</action-key>
 			</guest-unsupported>
 		</permissions>

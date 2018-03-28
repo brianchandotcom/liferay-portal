@@ -27,7 +27,7 @@ import java.util.Map;
  */
 public class CardsDisplayContext {
 
-	public DropdownItemList getActionDropdownItems() {
+	public DropdownItemList getActionDropdownItemList() {
 		if (_actionDropdownItems != null) {
 			return _actionDropdownItems;
 		}
@@ -52,36 +52,36 @@ public class CardsDisplayContext {
 		return _actionDropdownItems;
 	}
 
-	public LabelItemList getLabels() {
+	public LabelItemList getLabelItemList() {
 		return new LabelItemList() {
 			{
-				LabelItem label1 = new LabelItem();
+				LabelItem labelItem1 = new LabelItem();
 
-				label1.setLabel("Approved");
-				label1.setStyle("success");
+				labelItem1.setLabel("Approved");
+				labelItem1.setStyle("success");
 
-				LabelItem label2 = new LabelItem();
+				LabelItem labelItem2 = new LabelItem();
 
-				label2.setLabel("Pending");
+				labelItem2.setLabel("Pending");
 
-				LabelItem label3 = new LabelItem();
+				LabelItem labelItem3 = new LabelItem();
 
-				label3.setLabel("Canceled");
-				label3.setStyle("danger");
+				labelItem3.setLabel("Canceled");
+				labelItem3.setStyle("danger");
 
 				int numItems = 1 + RandomUtil.nextInt(3);
 
 				if ((numItems == 0) || (numItems < 2)) {
-					add(label1);
+					add(labelItem1);
 				}
 				else if (numItems == 2) {
-					add(label1);
-					add(label2);
+					add(labelItem1);
+					add(labelItem2);
 				}
 				else if (numItems >= 3) {
-					add(label1);
-					add(label2);
-					add(label3);
+					add(labelItem1);
+					add(labelItem2);
+					add(labelItem3);
 				}
 			}
 		};

@@ -22,12 +22,12 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
  */
 public class NavigationBarsDisplayContext {
 
-	public NavigationItemList getNavigationItems() {
-		if (_navigationItems != null) {
-			return _navigationItems;
+	public NavigationItemList getNavigationItemList() {
+		if (_navigationItemList != null) {
+			return _navigationItemList;
 		}
 
-		_navigationItems = new NavigationItemList() {
+		_navigationItemList = new NavigationItemList() {
 			{
 				IntegerWrapper integerWrapper = new IntegerWrapper(1);
 
@@ -53,9 +53,9 @@ public class NavigationBarsDisplayContext {
 			}
 		};
 
-		return _navigationItems;
+		return _navigationItemList;
 	}
 
-	private NavigationItemList _navigationItems;
+	private NavigationItemList _navigationItemList;
 
 }

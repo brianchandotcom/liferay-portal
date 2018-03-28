@@ -74,7 +74,10 @@ long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
 	<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabularyId) %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= editPropertiesURL %>" cssClass="container-fluid-1280" name="fm">
+<liferay-frontend:edit-form
+	action="<%= editPropertiesURL %>"
+	name="fm"
+>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="categoryId" type="hidden" value="<%= categoryId %>" />
 
@@ -82,8 +85,8 @@ long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
 	<liferay-ui:error exception="<%= CategoryPropertyValueException.class %>" message="please-enter-a-valid-property-value" />
 	<liferay-ui:error exception="<%= DuplicateCategoryPropertyException.class %>" message="please-enter-a-unique-property-key" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
+	<liferay-frontend:fieldset-group>
+		<liferay-frontend:fieldset>
 			<div id="<portlet:namespace />categoryPropertiesId">
 				<p class="text-muted">
 					<liferay-ui:message key="properties-are-a-way-to-add-more-detailed-information-to-a-specific-category" />
@@ -113,15 +116,15 @@ long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
 			</div>
 
 			<aui:input name="categoryPropertiesIndexes" type="hidden" value="<%= StringUtil.merge(categoryPropertiesIndexes) %>" />
-		</aui:fieldset>
-	</aui:fieldset-group>
+		</liferay-frontend:fieldset>
+	</liferay-frontend:fieldset-group>
 
-	<aui:button-row>
+	<liferay-frontend:button-row>
 		<aui:button type="submit" />
 
 		<aui:button href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+	</liferay-frontend:button-row>
+</liferay-frontend:edit-form>
 
 <aui:script use="liferay-auto-fields">
 	var autoFields = new Liferay.AutoFields(

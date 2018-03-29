@@ -205,10 +205,15 @@ public class RadioDDMFormFieldTemplateContextContributorTest
 	public void testGetValueInJSONArrayFormat() {
 		DDMFormField ddmFormField = createDDMFormField();
 
+		ddmFormField.setProperty("dataSourceType", "manual");
+
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
 
 		ddmFormFieldRenderingContext.setLocale(LocaleUtil.US);
+
+		ddmFormFieldRenderingContext.setProperty(
+			"options", createDDMFormOptions());
 
 		ddmFormFieldRenderingContext.setValue("[\"value\"]");
 

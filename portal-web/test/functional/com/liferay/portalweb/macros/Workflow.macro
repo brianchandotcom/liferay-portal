@@ -171,9 +171,9 @@
 	</command>
 
 	<command name="assignByDetails">
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MyWorkflowTasksTask#MENU_ASSIGN" value1="Assign to..." />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Assign to..." />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#DIALOG_BOX_TITLE" value1="Assign to..." />
 
@@ -252,7 +252,9 @@
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
 
-		<execute macro="Workflow#clickAssignToMeByDetails" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Assign to Me" />
+		</execute>
 
 		<execute macro="Workflow#confirmWorkflowAction" />
 
@@ -264,18 +266,6 @@
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
-	</command>
-
-	<command name="clickApproveByDetails">
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MyWorkflowTasksTask#MENU_APPROVE" value1="Approve" />
-	</command>
-
-	<command name="clickAssignToMeByDetails">
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MyWorkflowTasksTask#MENU_ASSIGN_TO_ME" value1="Assign to Me" />
 	</command>
 
 	<command name="configureWorkflow">

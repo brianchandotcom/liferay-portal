@@ -1639,7 +1639,9 @@
 			<var name="user" value="Test Test" />
 		</execute>
 
-		<execute macro="Workflow#clickAssignToMeByDetails" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Assign to Me" />
+		</execute>
 
 		<execute macro="Workflow#confirmWorkflowAction" />
 

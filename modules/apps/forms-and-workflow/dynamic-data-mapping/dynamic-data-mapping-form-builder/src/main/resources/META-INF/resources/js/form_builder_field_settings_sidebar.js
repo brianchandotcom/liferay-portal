@@ -241,6 +241,8 @@ AUI.add(
 					_changeFieldTypeMenu: function(fieldType) {
 						var instance = this;
 
+						instance._disableHeader();
+
 						A.one('#field-type-menu-content').html(instance._getFieldTypeMenuLayout(fieldType));
 					},
 
@@ -290,6 +292,14 @@ AUI.add(
 						);
 
 						return toolbar;
+					},
+
+					_disableHeader: function() {
+						var instance = this;
+
+						var contentBox = instance.get('contentBox');
+
+						contentBox.all('.sidebar .sidebar-header .dropdown .dropdown-toggle.nav-link').addClass('disabled');
 					},
 
 					_enableHeader: function() {

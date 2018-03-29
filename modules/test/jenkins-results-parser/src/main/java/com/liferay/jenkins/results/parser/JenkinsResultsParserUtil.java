@@ -1590,23 +1590,6 @@ public class JenkinsResultsParserUtil {
 
 	}
 
-	public static class TokenHTTPAuthorization extends HTTPAuthorization {
-
-		public TokenHTTPAuthorization(String token) {
-			super(Type.TOKEN);
-
-			this.token = token;
-		}
-
-		@Override
-		public String toString() {
-			return combine("token ", token);
-		}
-
-		protected String token;
-
-	}
-
 	public abstract static class HTTPAuthorization {
 
 		public Type getType() {
@@ -1624,6 +1607,23 @@ public class JenkinsResultsParserUtil {
 		}
 
 		protected Type type;
+
+	}
+
+	public static class TokenHTTPAuthorization extends HTTPAuthorization {
+
+		public TokenHTTPAuthorization(String token) {
+			super(Type.TOKEN);
+
+			this.token = token;
+		}
+
+		@Override
+		public String toString() {
+			return combine("token ", token);
+		}
+
+		protected String token;
 
 	}
 

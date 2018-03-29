@@ -133,6 +133,85 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 
 	}
 
+	private abstract static class
+		BaseLicenseReportConfigurator<P extends Plugin<? extends Project>>
+			implements Action<P> {
+
+		public static final String LICENSE_REPORT_CONFIGURATION_NAME =
+			"licenseReport";
+
+		public BaseLicenseReportConfigurator(Project project) {
+			this.project = project;
+		}
+
+		@Override
+		public void execute(P plugin) {
+			GradleUtil.applyPlugin(project, LicenseReportPlugin.class);
+
+			LicenseReportExtension licenseReportExtension =
+				GradleUtil.getExtension(project, LicenseReportExtension.class);
+
+			try {
+				licenseReportExtension.setConfigurations(addConfigurations());
+			}
+			catch (IOException ioe) {
+				throw new UncheckedIOException(ioe);
+			}
+			catch (Exception e) {
+				throw new GradleException(
+					"Unable to configure license report for " + project, e);
+			}
+
+			// We need to pass a non-existent group to avoid excluding
+			// "com.liferay" dependencies.
+
+			licenseReportExtension.setExcludeGroups(
+				String.valueOf(System.currentTimeMillis()));
+
+			String fileName = "versions.xml";
+
+			String outputDir = System.getProperty("license.report.output.dir");
+
+			if (Validator.isNotNull(outputDir)) {
+				fileName = project.getName() + ".xml";
+
+				licenseReportExtension.setOutputDir(outputDir);
+			}
+
+			licenseReportExtension.setRenderer(
+				new ThirdPartyVersionsXmlReportRenderer(
+					fileName, licenseReportExtension,
+					new Callable<String>() {
+
+						@Override
+						public String call() throws Exception {
+							return
+								GradleUtil.getArchivesBaseName(project) + "." +
+									getArchiveExtension();
+						}
+
+					}));
+		}
+
+		protected String[] addConfigurations() throws Exception {
+			Configuration configuration = GradleUtil.addConfiguration(
+				project, LICENSE_REPORT_CONFIGURATION_NAME);
+
+			configuration.setDescription(
+				"Configures additional dependencies to add to the license " +
+					"report.");
+			configuration.setTransitive(false);
+			configuration.setVisible(false);
+
+			return new String[] {configuration.getName()};
+		}
+
+		protected abstract String getArchiveExtension();
+
+		protected final Project project;
+
+	}
+
 	private static class OSGiLicenseReportConfigurator
 		extends BaseLicenseReportConfigurator<LiferayOSGiPlugin> {
 
@@ -242,85 +321,6 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 
 			return false;
 		}
-
-	}
-
-	private abstract static class
-		BaseLicenseReportConfigurator<P extends Plugin<? extends Project>>
-			implements Action<P> {
-
-		public static final String LICENSE_REPORT_CONFIGURATION_NAME =
-			"licenseReport";
-
-		public BaseLicenseReportConfigurator(Project project) {
-			this.project = project;
-		}
-
-		@Override
-		public void execute(P plugin) {
-			GradleUtil.applyPlugin(project, LicenseReportPlugin.class);
-
-			LicenseReportExtension licenseReportExtension =
-				GradleUtil.getExtension(project, LicenseReportExtension.class);
-
-			try {
-				licenseReportExtension.setConfigurations(addConfigurations());
-			}
-			catch (IOException ioe) {
-				throw new UncheckedIOException(ioe);
-			}
-			catch (Exception e) {
-				throw new GradleException(
-					"Unable to configure license report for " + project, e);
-			}
-
-			// We need to pass a non-existent group to avoid excluding
-			// "com.liferay" dependencies.
-
-			licenseReportExtension.setExcludeGroups(
-				String.valueOf(System.currentTimeMillis()));
-
-			String fileName = "versions.xml";
-
-			String outputDir = System.getProperty("license.report.output.dir");
-
-			if (Validator.isNotNull(outputDir)) {
-				fileName = project.getName() + ".xml";
-
-				licenseReportExtension.setOutputDir(outputDir);
-			}
-
-			licenseReportExtension.setRenderer(
-				new ThirdPartyVersionsXmlReportRenderer(
-					fileName, licenseReportExtension,
-					new Callable<String>() {
-
-						@Override
-						public String call() throws Exception {
-							return
-								GradleUtil.getArchivesBaseName(project) + "." +
-									getArchiveExtension();
-						}
-
-					}));
-		}
-
-		protected String[] addConfigurations() throws Exception {
-			Configuration configuration = GradleUtil.addConfiguration(
-				project, LICENSE_REPORT_CONFIGURATION_NAME);
-
-			configuration.setDescription(
-				"Configures additional dependencies to add to the license " +
-					"report.");
-			configuration.setTransitive(false);
-			configuration.setVisible(false);
-
-			return new String[] {configuration.getName()};
-		}
-
-		protected abstract String getArchiveExtension();
-
-		protected final Project project;
 
 	}
 

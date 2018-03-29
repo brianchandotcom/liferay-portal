@@ -1004,9 +1004,7 @@ AUI.add(
 
 						A.one('.ddm-form-builder-buttons').removeClass('hide');
 
-						if (A.one('.lfr-ddm-add-rule').hasClass('hide')) {
-							A.one('.lfr-ddm-add-rule').removeClass('hide');
-						}
+						A.one('.lfr-ddm-plus-button').removeClass('hide');
 
 						instance.one('#showForm').addClass('active');
 					},
@@ -1028,7 +1026,7 @@ AUI.add(
 						}
 
 						if (!A.one('.form-builder-rule-builder-container')) {
-							A.one('.lfr-ddm-add-field').addClass('hide');
+							A.one('.lfr-ddm-plus-button').addClass('hide');
 						}
 
 						A.one('.portlet-forms').addClass('liferay-ddm-form-rule-builder');

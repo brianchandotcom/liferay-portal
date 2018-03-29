@@ -431,8 +431,6 @@
 		<if>
 			<isset var="userSegmentSelect" />
 			<then>
-				<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
 				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
 					<var name="key_menuItem" value="Edit" />
 				</execute>

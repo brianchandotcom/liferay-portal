@@ -240,16 +240,6 @@
 		</execute>
 	</command>
 
-	<command name="gotoManagePages">
-		<var name="key_userGroupName" value="${userGroupName}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Manage Pages">
-			<var name="key_menuItem" value="Manage Pages" />
-		</execute>
-	</command>
-
 	<command name="removeMemberCP">
 		<execute macro="Search#searchCP">
 			<var name="searchTerm" value="${userGroupName}" />

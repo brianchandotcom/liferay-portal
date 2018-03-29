@@ -112,8 +112,8 @@ public class BatchTestClassGroup extends TestClassGroup {
 
 			propertyNames.add(
 				_getWildcardPropertyName(
-					_batchName, _portalTestProperties,
-					"test.batch.axis.max.size", _testSuiteName));
+					_portalTestProperties, "test.batch.axis.max.size",
+					_testSuiteName));
 
 			propertyNames.add(
 				JenkinsResultsParserUtil.combine(
@@ -126,7 +126,7 @@ public class BatchTestClassGroup extends TestClassGroup {
 
 		propertyNames.add(
 			_getWildcardPropertyName(
-				_batchName, _portalTestProperties, "test.batch.axis.max.size"));
+				_portalTestProperties, "test.batch.axis.max.size"));
 
 		propertyNames.add("test.batch.axis.max.size");
 
@@ -214,8 +214,8 @@ public class BatchTestClassGroup extends TestClassGroup {
 
 			propertyNames.add(
 				_getWildcardPropertyName(
-					_batchName, _portalTestProperties,
-					"test.batch.class.names.excludes", _testSuiteName));
+					_portalTestProperties, "test.batch.class.names.excludes",
+					_testSuiteName));
 
 			propertyNames.add(
 				JenkinsResultsParserUtil.combine(
@@ -224,8 +224,7 @@ public class BatchTestClassGroup extends TestClassGroup {
 
 		propertyNames.add(
 			_getWildcardPropertyName(
-				_batchName, _portalTestProperties,
-				"test.batch.class.names.excludes"));
+				_portalTestProperties, "test.batch.class.names.excludes"));
 
 		propertyNames.add(
 			JenkinsResultsParserUtil.combine(
@@ -249,8 +248,8 @@ public class BatchTestClassGroup extends TestClassGroup {
 
 			propertyNames.add(
 				_getWildcardPropertyName(
-					_batchName, _portalTestProperties,
-					"test.batch.class.names.includes", _testSuiteName));
+					_portalTestProperties, "test.batch.class.names.includes",
+					_testSuiteName));
 
 			propertyNames.add(
 				JenkinsResultsParserUtil.combine(
@@ -263,8 +262,7 @@ public class BatchTestClassGroup extends TestClassGroup {
 
 		propertyNames.add(
 			_getWildcardPropertyName(
-				_batchName, _portalTestProperties,
-				"test.batch.class.names.includes"));
+				_portalTestProperties, "test.batch.class.names.includes"));
 
 		propertyNames.add("test.batch.class.names.includes");
 
@@ -296,15 +294,13 @@ public class BatchTestClassGroup extends TestClassGroup {
 	}
 
 	private String _getWildcardPropertyName(
-		String batchName, Properties properties, String propertyName) {
+		Properties properties, String propertyName) {
 
-		return _getWildcardPropertyName(
-			batchName, properties, propertyName, null);
+		return _getWildcardPropertyName(properties, propertyName, null);
 	}
 
 	private String _getWildcardPropertyName(
-		String batchName, Properties properties, String propertyName,
-		String testSuiteName) {
+		Properties properties, String propertyName, String testSuiteName) {
 
 		for (String wildcardPropertyName : properties.stringPropertyNames()) {
 			if (!wildcardPropertyName.startsWith(propertyName)) {
@@ -319,7 +315,7 @@ public class BatchTestClassGroup extends TestClassGroup {
 
 				batchNameMatcher = batchNameMatcher.replace("*", ".+");
 
-				if (!batchName.matches(batchNameMatcher)) {
+				if (!_batchName.matches(batchNameMatcher)) {
 					continue;
 				}
 

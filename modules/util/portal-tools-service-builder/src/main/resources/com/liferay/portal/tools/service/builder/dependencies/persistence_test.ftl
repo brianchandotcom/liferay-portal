@@ -48,6 +48,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 
 import java.math.BigDecimal;
@@ -56,8 +57,6 @@ import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
-import java.io.ByteArrayInputStream;
 
 import java.util.ArrayList;
 import java.util.Arrays;

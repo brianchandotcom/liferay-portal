@@ -241,6 +241,8 @@ AUI.add(
 					_changeFieldTypeMenu: function(fieldType) {
 						var instance = this;
 
+						instance._showLoading();
+
 						instance._disableHeader();
 
 						A.one('#field-type-menu-content').html(instance._getFieldTypeMenuLayout(fieldType));
@@ -465,14 +467,11 @@ AUI.add(
 					_showLoading: function() {
 						var instance = this;
 
-						var boundingBox = instance.get('boundingBox');
 						var contentBox = instance.get('contentBox');
 
-						if (!contentBox.one('.loading-icon')) {
+						if (!contentBox.one('.loading-animation')) {
 							contentBox.append(TPL_LOADING);
 						}
-
-						boundingBox.addClass('loading-data');
 					},
 
 					_updateField: function(previousField, field, column) {

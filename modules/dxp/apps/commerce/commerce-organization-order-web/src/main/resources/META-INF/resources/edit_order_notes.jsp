@@ -55,7 +55,7 @@ boolean hasManageRestrictedNotesPermission = commerceOrganizationOrderDisplayCon
 	</div>
 </div>
 
-<aui:form action="<%= editCommerceOrderNoteURL %>" method="post" name="fm">
+<aui:form action="<%= editCommerceOrderNoteURL %>" cssClass="order-notes-form" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrder.getCommerceOrderId() %>" />
@@ -85,7 +85,7 @@ boolean hasManageRestrictedNotesPermission = commerceOrganizationOrderDisplayCon
 								</c:if>
 
 								<aui:button-row>
-									<aui:button cssClass="btn-large btn-primary" type="submit" />
+									<aui:button cssClass="btn-lg btn-primary" type="submit" />
 								</aui:button-row>
 							</div>
 						</div>

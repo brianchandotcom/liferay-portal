@@ -850,6 +850,39 @@ a[type="button"] {
 	font-size: 1.1rem;
 }
 
+.order-notes-form {
+	.main-content-card {
+		border-color: $input-border-color;
+		border-width: 0;
+	}
+
+	.add-comment {
+		margin-bottom: 1.5rem;
+	}
+
+	.lfr-discussion {
+		margin-bottom: 1.5rem;
+
+		.dropdown-toggle.icon-monospaced {
+			font-size: 1rem;
+		}
+	}
+
+	.input-boolean-wrapper {
+		input[type="checkbox"] {
+			margin-right: 0.25rem;
+		}
+
+		.taglib-icon-help {
+			margin-left: 0.25rem;
+		}
+	}
+
+	.panel-body {
+		padding: 0;
+	}
+}
+
 .order-filter-settings {
 	background-color: #F1F2F5;
 	flex-direction: column;

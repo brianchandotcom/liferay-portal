@@ -36,8 +36,14 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 				<liferay-ui:message key="please-select-the-applications-for-which-you-want-to-start-an-export-process" />
 			</div>
 
+			<liferay-frontend:management-bar
+				includeCheckBox="<%= true %>"
+				searchContainerId="uadApplicationExportDisplay"
+			/>
+
 			<liferay-ui:search-container
 				id="uadApplicationExportDisplay"
+				rowChecker="<%= new UADApplicationExportDisplayChecker(renderResponse) %>"
 				total="<%= uadApplicationExportDisplayList.size() %>"
 			>
 				<liferay-ui:search-container-results

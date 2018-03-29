@@ -19,6 +19,7 @@ import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.knowledge.base.constants.KBConstants;
@@ -67,14 +68,16 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 			new StagedModelType(KBTemplate.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "kb-articles", true, true, null,
+				NAMESPACE, "kb-articles", true, false,
+				new PortletDataHandlerControl[] {
+					new PortletDataHandlerBoolean(
+						NAMESPACE, "kb-comments", true, false, null,
+						KBComment.class.getName())
+				},
 				KBArticle.class.getName()),
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "kb-templates", true, true, null,
-				KBTemplate.class.getName()),
-			new PortletDataHandlerBoolean(
-				NAMESPACE, "kb-comments", true, true, null,
-				KBComment.class.getName()));
+				NAMESPACE, "kb-templates", true, false, null,
+				KBTemplate.class.getName()));
 	}
 
 	@Override
@@ -123,21 +126,27 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
-		ActionableDynamicQuery kbArticleActionableDynamicQuery =
-			getKBArticleActionableDynamicQuery(portletDataContext);
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "kb-articles")) {
+			ActionableDynamicQuery kbArticleActionableDynamicQuery =
+				getKBArticleActionableDynamicQuery(portletDataContext);
 
-		kbArticleActionableDynamicQuery.performActions();
+			kbArticleActionableDynamicQuery.performActions();
+		}
 
-		ActionableDynamicQuery kbTemplateActionableDynamicQuery =
-			_kbTemplateLocalService.getExportActionableDynamicQuery(
-				portletDataContext);
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "kb-templates")) {
+			ActionableDynamicQuery kbTemplateActionableDynamicQuery =
+				_kbTemplateLocalService.getExportActionableDynamicQuery(
+					portletDataContext);
 
-		kbTemplateActionableDynamicQuery.performActions();
+			kbTemplateActionableDynamicQuery.performActions();
+		}
 
-		ActionableDynamicQuery kbCommentActionableDynamicQuery =
-			getKBCommentActionableDynamicQuery(portletDataContext);
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "kb-comments")) {
+			ActionableDynamicQuery kbCommentActionableDynamicQuery =
+				getKBCommentActionableDynamicQuery(portletDataContext);
 
-		kbCommentActionableDynamicQuery.performActions();
+			kbCommentActionableDynamicQuery.performActions();
+		}
 
 		return getExportDataRootElementString(rootElement);
 	}
@@ -151,34 +160,40 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 		portletDataContext.importPortletPermissions(
 			KBConstants.RESOURCE_NAME_ADMIN);
 
-		Element kbArticlesElement =
-			portletDataContext.getImportDataGroupElement(KBArticle.class);
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "kb-articles")) {
+			Element kbArticlesElement =
+				portletDataContext.getImportDataGroupElement(KBArticle.class);
 
-		List<Element> kbArticleElements = kbArticlesElement.elements();
+			List<Element> kbArticleElements = kbArticlesElement.elements();
 
-		for (Element kbArticleElement : kbArticleElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, kbArticleElement);
+			for (Element kbArticleElement : kbArticleElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, kbArticleElement);
+			}
 		}
 
-		Element kbTemplatesElement =
-			portletDataContext.getImportDataGroupElement(KBTemplate.class);
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "kb-templates")) {
+			Element kbTemplatesElement =
+				portletDataContext.getImportDataGroupElement(KBTemplate.class);
 
-		List<Element> kbTemplateElements = kbTemplatesElement.elements();
+			List<Element> kbTemplateElements = kbTemplatesElement.elements();
 
-		for (Element kbTemplateElement : kbTemplateElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, kbTemplateElement);
+			for (Element kbTemplateElement : kbTemplateElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, kbTemplateElement);
+			}
 		}
 
-		Element kbCommentsElement =
-			portletDataContext.getImportDataGroupElement(KBComment.class);
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "kb-comments")) {
+			Element kbCommentsElement =
+				portletDataContext.getImportDataGroupElement(KBComment.class);
 
-		List<Element> kbCommentElements = kbCommentsElement.elements();
+			List<Element> kbCommentElements = kbCommentsElement.elements();
 
-		for (Element kbCommentElement : kbCommentElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, kbCommentElement);
+			for (Element kbCommentElement : kbCommentElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, kbCommentElement);
+			}
 		}
 
 		return null;

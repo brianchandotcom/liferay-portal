@@ -767,6 +767,10 @@ AUI.add(
 							instance.updateTranslationsDefaultValue();
 
 							fieldJSON.value = instance.get('localizationMap');
+
+							var form = instance.getForm();
+
+							form.addAvailableLanguageIds(AObject.keys(fieldJSON.value));
 						}
 
 						var fields = instance.get('fields');
@@ -2886,7 +2890,11 @@ AUI.add(
 						if (inputLocalized) {
 							inputLocalized.get('items').forEach(
 								function(item) {
-									localizationMap[item] = inputLocalized.getValue(item);
+									var value = inputLocalized.getValue(item);
+
+									if (value.trim() !== '') {
+										localizationMap[item] = value;
+									}
 								}
 							);
 						}
@@ -3094,6 +3102,10 @@ AUI.add(
 		var Form = A.Component.create(
 			{
 				ATTRS: {
+					availableLanguageIds: {
+						value: []
+					},
+
 					ddmFormValuesInput: {
 						setter: A.one
 					},
@@ -3197,6 +3209,20 @@ AUI.add(
 						instance.repeatableInstances = null;
 					},
 
+					addAvailableLanguageIds: function(availableLanguageIds) {
+						var instance = this;
+
+						var currentAvailableLanguageIds = instance.get('availableLanguageIds');
+
+						availableLanguageIds.forEach(
+							function(item) {
+								if (currentAvailableLanguageIds.indexOf(item) == -1) {
+									currentAvailableLanguageIds.push(item);
+								}
+							}
+						);
+					},
+
 					moveField: function(parentField, oldIndex, newIndex) {
 						var instance = this;
 
@@ -3285,12 +3311,12 @@ AUI.add(
 					toJSON: function() {
 						var instance = this;
 
-						var translationManager = instance.get('translationManager');
+						var fieldValues = AArray.invoke(instance.get('fields'), 'toJSON');
 
 						return {
-							availableLanguageIds: translationManager.get('availableLocales'),
-							defaultLanguageId: translationManager.get('defaultLocale'),
-							fieldValues: AArray.invoke(instance.get('fields'), 'toJSON')
+							availableLanguageIds: instance.get('availableLocales'),
+							defaultLanguageId: themeDisplay.getLanguageId(),
+							fieldValues: fieldValues
 						};
 					},
 

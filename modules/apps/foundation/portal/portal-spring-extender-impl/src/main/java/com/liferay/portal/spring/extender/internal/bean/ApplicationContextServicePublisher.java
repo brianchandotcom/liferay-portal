@@ -98,23 +98,19 @@ public class ApplicationContextServicePublisher {
 
 		properties.put("origin.bundle.symbolic.name", symbloicName);
 
-		Class<? extends Object> clazz = null;
-
 		try {
-			clazz = getTargetClass(object);
+			Class<?> clazz = getTargetClass(object);
+
+			OSGiBeanProperties osgiBeanProperties =
+				AnnotationUtils.findAnnotation(clazz, OSGiBeanProperties.class);
+
+			if (osgiBeanProperties != null) {
+				properties.putAll(
+					OSGiBeanProperties.Convert.toMap(osgiBeanProperties));
+			}
 		}
 		catch (Exception e) {
-			return properties;
 		}
-
-		OSGiBeanProperties osgiBeanProperties = AnnotationUtils.findAnnotation(
-			clazz, OSGiBeanProperties.class);
-
-		if (osgiBeanProperties == null) {
-			return properties;
-		}
-
-		properties.putAll(OSGiBeanProperties.Convert.toMap(osgiBeanProperties));
 
 		return properties;
 	}

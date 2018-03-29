@@ -62,7 +62,7 @@ public class ApplicationContextServicePublisher {
 			}
 
 			if (bean != null) {
-				registerService(bean);
+				_registerService(bean);
 			}
 		}
 
@@ -90,7 +90,7 @@ public class ApplicationContextServicePublisher {
 		_serviceRegistrations.clear();
 	}
 
-	protected void registerService(Object bean) {
+	private void _registerService(Object bean) {
 		OSGiBeanProperties osgiBeanProperties = null;
 
 		try {

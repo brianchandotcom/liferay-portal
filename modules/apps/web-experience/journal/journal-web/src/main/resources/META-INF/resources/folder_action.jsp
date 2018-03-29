@@ -190,7 +190,6 @@ else {
 	</c:if>
 
 	<%
-	boolean bookmarksAdmin = portletName.equals(JournalPortletKeys.JOURNAL);
 	boolean inStagingGroup = stagingGroupHelper.isStagingGroup(scopeGroupId);
 	boolean portletStaged = stagingGroupHelper.isStagedPortlet(scopeGroupId, JournalPortletKeys.JOURNAL);
 	%>

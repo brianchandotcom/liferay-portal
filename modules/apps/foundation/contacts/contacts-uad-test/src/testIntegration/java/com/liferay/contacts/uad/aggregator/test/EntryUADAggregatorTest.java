@@ -29,6 +29,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.test.util.BaseUADAggregatorTestCase;
 
+import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 
@@ -59,6 +60,11 @@ public class EntryUADAggregatorTest extends BaseUADAggregatorTestCase {
 	@Override
 	protected UADAggregator getUADAggregator() {
 		return _uadAggregator;
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_entryUADEntityTestHelper.cleanUpDependencies(_entries);
 	}
 
 	@DeleteAfterTestRun

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Calendar;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -63,6 +64,10 @@ public class BlogsEntryUADEntityTestHelper {
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		return blogsEntry;
+	}
+
+	public void cleanUpDependencies(List<BlogsEntry> blogsEntries)
+		throws Exception {
 	}
 
 	@Reference

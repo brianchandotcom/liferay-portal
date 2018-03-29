@@ -64,7 +64,7 @@ public class JavaClassParser {
 				anonymousClasses.add(
 					_parseJavaClass(
 						StringPool.BLANK, classContent,
-						JavaTerm.ACCESS_MODIFIER_PRIVATE, false));
+						JavaTerm.ACCESS_MODIFIER_PRIVATE, false, false));
 
 				break;
 			}
@@ -94,8 +94,15 @@ public class JavaClassParser {
 
 		String classContent = content.substring(x + 2);
 
+		boolean isAbstract = false;
+
+		if (matcher.group(2) != null) {
+			isAbstract = true;
+		}
+
 		JavaClass javaClass = _parseJavaClass(
-			className, classContent, JavaTerm.ACCESS_MODIFIER_PUBLIC, false);
+			className, classContent, JavaTerm.ACCESS_MODIFIER_PUBLIC,
+			isAbstract, false);
 
 		javaClass.setPackageName(JavaSourceUtil.getPackageName(content));
 
@@ -193,6 +200,7 @@ public class JavaClassParser {
 			return null;
 		}
 
+		boolean isAbstract = startLine.contains(" abstract ");
 		boolean isStatic = startLine.contains(" static ");
 
 		int x = startLine.indexOf(CharPool.EQUAL);
@@ -204,7 +212,7 @@ public class JavaClassParser {
 
 			return _parseJavaClass(
 				_getClassName(startLine), javaTermContent, accessModifier,
-				isStatic);
+				isAbstract, isStatic);
 		}
 
 		if (((x > 0) && ((y == -1) || (y > x))) ||
@@ -212,7 +220,7 @@ public class JavaClassParser {
 
 			return new JavaVariable(
 				_getVariableName(startLine), javaTermContent, accessModifier,
-				isStatic);
+				isAbstract, isStatic);
 		}
 
 		if (y == -1) {
@@ -225,13 +233,13 @@ public class JavaClassParser {
 		if (isStatic || (spaceCount > 1)) {
 			return new JavaMethod(
 				_getConstructorOrMethodName(startLine, y), javaTermContent,
-				accessModifier, isStatic);
+				accessModifier, isAbstract, isStatic);
 		}
 
 		if (spaceCount == 1) {
 			return new JavaConstructor(
 				_getConstructorOrMethodName(startLine, y), javaTermContent,
-				accessModifier, isStatic);
+				accessModifier, isAbstract, isStatic);
 		}
 
 		return null;
@@ -318,11 +326,11 @@ public class JavaClassParser {
 
 	private static JavaClass _parseJavaClass(
 			String className, String classContent, String accessModifier,
-			boolean isStatic)
+			boolean isAbstract, boolean isStatic)
 		throws Exception {
 
 		JavaClass javaClass = new JavaClass(
-			className, classContent, accessModifier, isStatic);
+			className, classContent, accessModifier, isAbstract, isStatic);
 
 		String indent = SourceUtil.getIndent(classContent) + StringPool.TAB;
 

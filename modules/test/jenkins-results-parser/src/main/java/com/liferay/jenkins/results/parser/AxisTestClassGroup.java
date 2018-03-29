@@ -21,10 +21,6 @@ import java.io.File;
  */
 public class AxisTestClassGroup extends BaseTestClassGroup {
 
-	public void addTestClassFile(File testClassFile) {
-		testClassFiles.add(testClassFile);
-	}
-
 	public BatchTestClassGroup getBatchTestClassGroup() {
 		return _batchTestClassGroup;
 	}
@@ -38,6 +34,10 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 
 		_batchTestClassGroup = batchTestClassGroup;
 		_id = id;
+	}
+
+	protected void addTestClassFile(File testClassFile) {
+		testClassFiles.add(testClassFile);
 	}
 
 	private final BatchTestClassGroup _batchTestClassGroup;

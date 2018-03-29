@@ -21,6 +21,10 @@ import java.io.File;
  */
 public class AxisTestClassGroup extends BaseTestClassGroup {
 
+	public String getBatchName() {
+		return _batchTestClassGroup.getBatchName();
+	}
+
 	public BatchTestClassGroup getBatchTestClassGroup() {
 		return _batchTestClassGroup;
 	}

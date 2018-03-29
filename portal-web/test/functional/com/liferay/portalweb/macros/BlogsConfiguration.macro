@@ -125,9 +125,9 @@
 		<execute function="AssertChecked" locator1="Checkbox#ENABLE_COMMENTS" />
 		<execute function="AssertChecked" locator1="Checkbox#ENABLE_COMMENT_RATINGS" />
 
-		<var name="key_displayStyle" value="Menu" />
+		<var name="key_displayStyle" value="Inline" />
 
-		<execute function="AssertChecked" locator1="Radio#SOCIAL_BOOKMARKS_DISPLAY_STYLE" value1="Menu" />
+		<execute function="AssertChecked" locator1="Radio#SOCIAL_BOOKMARKS_DISPLAY_STYLE" value1="Inline" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SocialBookmarks#ENABLE_SOCIAL_BOOKMARK_CURRENT_SELECT" value1="Twitter" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SocialBookmarks#ENABLE_SOCIAL_BOOKMARK_CURRENT_SELECT" value1="Facebook" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SocialBookmarks#ENABLE_SOCIAL_BOOKMARK_CURRENT_SELECT" value1="Google+" />

@@ -72,9 +72,7 @@ if (!portletId.equals(BookmarksPortletKeys.BOOKMARKS) && !portletId.equals(Bookm
 	entryColumns = ArrayUtil.remove(entryColumns, "action");
 }
 
-StagingGroupHelperProvider stagingGroupHelperProvider = StagingGroupHelperProvider.getStagingGroupHelperProvider();
-
-StagingGroupHelper stagingGroupHelper = stagingGroupHelperProvider.getStagingGroupHelper();
+StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHelper();
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 %>

@@ -45,6 +45,10 @@ portletURL.setParameter("displayStyle", displayStyle);
 					<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 				</portlet:renderURL>
 
+				<%
+				rowURL = ddmFormAdminDisplayContext.isShowEditFormInstanceIcon(formInstance) ? rowURL : "";
+				%>
+
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>
 						<liferay-ui:search-container-column-icon

@@ -114,7 +114,8 @@ public class ApplicationContextServicePublisher {
 				clazz, OSGiBeanProperties.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to register service " + bean, e);
+			_log.error(
+				"Unable to unwrap service during registration " + bean, e);
 		}
 
 		Set<String> names = OSGiBeanProperties.Service.interfaces(

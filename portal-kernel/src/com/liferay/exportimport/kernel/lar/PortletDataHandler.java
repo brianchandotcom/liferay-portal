@@ -22,9 +22,7 @@ import javax.portlet.PortletPreferences;
 /**
  * A <code>PortletDataHandler</code> is a special class capable of exporting and
  * importing portlet specific data to a Liferay Archive file (LAR) when a site's
- * layouts are exported or imported. <code>PortletDataHandler</code>s are
- * defined by placing a <code>portlet-data-handler-class</code> element in the
- * <code>portlet</code> section of the <b>liferay-portlet.xml</b> file.
+ * layouts are exported or imported.
  *
  * @author Raymond Augé
  * @author Joel Kozikowski

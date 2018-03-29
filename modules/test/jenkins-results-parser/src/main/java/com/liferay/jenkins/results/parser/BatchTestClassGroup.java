@@ -178,18 +178,23 @@ public class BatchTestClassGroup extends TestClassGroup {
 		}
 
 		for (File moduleGroupDir : moduleGroupDirs) {
+			String modulesGroupRelativePath = moduleGroupDir.getPath();
+
+			modulesGroupRelativePath = modulesGroupRelativePath.substring(
+				modulesGroupRelativePath.indexOf("modules/"));
+
 			for (String testClassNamesRelativeGlob :
 					testClassNamesRelativeGlobs) {
 
 				relevantTestClassNameRelativeGlobs.add(
 					JenkinsResultsParserUtil.combine(
-						moduleGroupDir.getPath(), "/",
+						modulesGroupRelativePath, "/",
 						testClassNamesRelativeGlob));
 
 				if (testClassNamesRelativeGlob.startsWith("**/")) {
 					relevantTestClassNameRelativeGlobs.add(
 						JenkinsResultsParserUtil.combine(
-							moduleGroupDir.getPath(), "/",
+							modulesGroupRelativePath, "/",
 							testClassNamesRelativeGlob.substring(3)));
 				}
 			}

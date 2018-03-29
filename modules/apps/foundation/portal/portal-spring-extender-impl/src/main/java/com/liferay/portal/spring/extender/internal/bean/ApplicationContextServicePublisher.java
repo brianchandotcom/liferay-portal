@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.util.PropsValues;
 
-import java.util.Collection;
 import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.Set;
@@ -166,18 +165,10 @@ public class ApplicationContextServicePublisher {
 
 		Bundle bundle = _bundleContext.getBundle();
 
-		registerService(
-			bean, names, getBeanProperties(bundle.getSymbolicName(), bean));
-	}
-
-	protected void registerService(
-		Object bean, Collection<String> interfaces,
-		Dictionary<String, Object> properties) {
-
 		ServiceRegistration<?> serviceRegistration =
 			_bundleContext.registerService(
-				interfaces.toArray(new String[interfaces.size()]), bean,
-				properties);
+				names.toArray(new String[names.size()]), bean,
+				getBeanProperties(bundle.getSymbolicName(), bean));
 
 		_serviceRegistrations.add(serviceRegistration);
 	}

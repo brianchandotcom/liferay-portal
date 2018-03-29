@@ -906,7 +906,7 @@
 			<var name="kfProgressStep" value="3" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#SELECTED_WORKFLOW" value1="${workflowDefinitionTitle} (Version 1)" />
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#SELECTED_WORKFLOW" value1="${workflowDefinitionTitle}" />
 
 		<execute macro="KaleoFormsAdmin#next" />
 	</command>
@@ -925,10 +925,10 @@
 		<if>
 			<equals arg1="${edit}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#SELECTED_WORKFLOW" value1="${workflowDefinitionTitle} (Version 2)" />
+				<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#SELECTED_WORKFLOW" value1="${workflowDefinitionTitle}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#SELECTED_WORKFLOW" value1="${workflowDefinitionTitle} (Version 1)" />
+				<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#SELECTED_WORKFLOW" value1="${workflowDefinitionTitle}" />
 			</else>
 		</if>
 	</command>

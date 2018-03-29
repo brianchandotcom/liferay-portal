@@ -63,7 +63,7 @@
 
 		<execute macro="DDLList#addCP">
 			<var name="ddlListName" value="DDL List Name" />
-			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowDefinition" value="Single Approver" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#selectCP">
@@ -209,7 +209,7 @@
 		<execute macro="DDLList#addCP">
 			<var name="ddlListDescription" value="DDL List Description" />
 			<var name="ddlListName" value="DDL List" />
-			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowDefinition" value="Single Approver" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#selectCP">

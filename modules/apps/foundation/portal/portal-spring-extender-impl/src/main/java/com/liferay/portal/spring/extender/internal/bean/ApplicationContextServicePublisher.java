@@ -89,31 +89,28 @@ public class ApplicationContextServicePublisher {
 		_serviceRegistrations.clear();
 	}
 
-	protected Class<?> getTargetClass(Object service) throws Exception {
-		Class<?> clazz = service.getClass();
-
-		if (ProxyUtil.isProxyClass(clazz)) {
-			AdvisedSupport advisedSupport =
-				ServiceBeanAopProxy.getAdvisedSupport(service);
-
-			if (advisedSupport != null) {
-				TargetSource targetSource = advisedSupport.getTargetSource();
-
-				Object target = targetSource.getTarget();
-
-				clazz = target.getClass();
-			}
-		}
-
-		return clazz;
-	}
-
 	protected void registerService(Object bean) {
 		OSGiBeanProperties osgiBeanProperties = null;
 
 		try {
+			Class<?> clazz = bean.getClass();
+
+			if (ProxyUtil.isProxyClass(clazz)) {
+				AdvisedSupport advisedSupport =
+					ServiceBeanAopProxy.getAdvisedSupport(bean);
+
+				if (advisedSupport != null) {
+					TargetSource targetSource =
+						advisedSupport.getTargetSource();
+
+					Object target = targetSource.getTarget();
+
+					clazz = target.getClass();
+				}
+			}
+
 			osgiBeanProperties = AnnotationUtils.findAnnotation(
-				getTargetClass(bean), OSGiBeanProperties.class);
+				clazz, OSGiBeanProperties.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to register service " + bean, e);

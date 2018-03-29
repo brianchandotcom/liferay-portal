@@ -22,7 +22,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.util.PropsValues;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.osgi.framework.Bundle;
@@ -154,7 +155,7 @@ public class ApplicationContextServicePublisher {
 
 	private final ApplicationContext _applicationContext;
 	private final BundleContext _bundleContext;
-	private final Set<ServiceRegistration<?>> _serviceRegistrations =
-		new HashSet<>();
+	private final List<ServiceRegistration<?>> _serviceRegistrations =
+		new ArrayList<>();
 
 }

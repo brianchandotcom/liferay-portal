@@ -609,9 +609,7 @@
 			<var name="uploadFrom" value="${uploadFrom}" />
 		</execute>
 
-		<execute function="SelectFrame" value1="relative=top" />
-
-		<execute function="Click" locator1="Icon#CLOSE" />
+		<execute macro="IFrame#closeFrame" />
 	</command>
 
 	<command name="importSiteCP">

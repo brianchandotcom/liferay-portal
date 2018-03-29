@@ -351,7 +351,8 @@ public class BatchTestClassGroup extends BaseTestClassGroup {
 		for (List<File> axisTestClassFiles :
 				Lists.partition(testClassFiles, axisSize)) {
 
-			AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(id);
+			AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(
+				this, id);
 
 			_axisTestClassGroups.put(id, axisTestClassGroup);
 

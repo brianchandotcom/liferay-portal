@@ -25,14 +25,22 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 		testClassFiles.add(testClassFile);
 	}
 
+	public BatchTestClassGroup getBatchTestClassGroup() {
+		return _batchTestClassGroup;
+	}
+
 	public int getId() {
 		return _id;
 	}
 
-	protected AxisTestClassGroup(int id) {
+	protected AxisTestClassGroup(
+		BatchTestClassGroup batchTestClassGroup, int id) {
+
+		_batchTestClassGroup = batchTestClassGroup;
 		_id = id;
 	}
 
+	private final BatchTestClassGroup _batchTestClassGroup;
 	private final int _id;
 
 }

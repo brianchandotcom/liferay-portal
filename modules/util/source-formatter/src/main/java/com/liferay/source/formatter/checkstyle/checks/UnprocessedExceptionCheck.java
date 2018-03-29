@@ -37,6 +37,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -188,6 +189,12 @@ public class UnprocessedExceptionCheck extends BaseCheck {
 		DetailAST parameterDefAST = parentAST.findFirstToken(
 			TokenTypes.PARAMETER_DEF);
 
+		String exceptionClassName = _getExceptionClassName(parameterDefAST);
+
+		if (Objects.equals(exceptionClassName, "JSONException")) {
+			return;
+		}
+
 		String exceptionVariableName = _getName(parameterDefAST);
 
 		if (_containsVariable(
@@ -202,13 +209,9 @@ public class UnprocessedExceptionCheck extends BaseCheck {
 		if ((parentAST.getType() == TokenTypes.LITERAL_THROW) ||
 			(parentAST.getType() == TokenTypes.SLIST)) {
 
-			String exceptionClassName = _getExceptionClassName(parameterDefAST);
-
-			if (!exceptionClassName.equals("JSONException")) {
-				log(
-					detailAST.getLineNo(), _MSG_UNPROCESSED_EXCEPTION,
-					exceptionVariableName);
-			}
+			log(
+				detailAST.getLineNo(), _MSG_UNPROCESSED_EXCEPTION,
+				exceptionVariableName);
 		}
 	}
 

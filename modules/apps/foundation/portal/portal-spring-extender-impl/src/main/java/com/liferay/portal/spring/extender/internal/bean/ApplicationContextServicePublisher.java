@@ -127,11 +127,13 @@ public class ApplicationContextServicePublisher {
 			AdvisedSupport advisedSupport =
 				ServiceBeanAopProxy.getAdvisedSupport(service);
 
-			TargetSource targetSource = advisedSupport.getTargetSource();
+			if (advisedSupport != null) {
+				TargetSource targetSource = advisedSupport.getTargetSource();
 
-			Object target = targetSource.getTarget();
+				Object target = targetSource.getTarget();
 
-			clazz = target.getClass();
+				clazz = target.getClass();
+			}
 		}
 
 		return clazz;

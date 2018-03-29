@@ -139,9 +139,10 @@ if (recurrence != null) {
 
 						<%
 						for (Weekday weekday : weekdaysArray) {
+							String weekdayLabel = "weekday" + StringPool.PERIOD + weekday.getValue();
 						%>
 
-							<aui:input checked="<%= weekdays.contains(weekday) %>" id="<%= weekday.getValue() %>" label="<%= weekday.getValue() %>" name="weekdays" type="checkbox" value="<%= weekday.getValue() %>" />
+							<aui:input checked="<%= weekdays.contains(weekday) %>" id="<%= weekday.getValue() %>" label="<%= weekdayLabel %>" name="weekdays" type="checkbox" value="<%= weekday.getValue() %>" />
 
 						<%
 						}

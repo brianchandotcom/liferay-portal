@@ -40,12 +40,12 @@
 </tr>
 <tr>
 	<td>FORM_PAGE_ACTIVE</td>
-	<td>//ul[contains(@class,'pagination-content')]//li[@class='active']/a[contains(.,'${key_formPageName}')] | //ul[contains(@class,'multi-step-progress-bar')]/li[@class='active' and contains(.,'${key_formPageName}')]/div[@class='progress-bar-title']</td>
+	<td>//ol[contains(@class,'multi-step-nav')]//li[contains(@class,'active')]/div[contains(.,'${key_formPageName}')] | //ol[contains(@class,'multi-step-nav')]//li[contains(@class,'complete')]/div[contains(.,'${key_formPageName}')] | //ul[contains(@class,'multi-step-progress-bar')]/li[contains(@class,'active')]//div[contains(.,'${key_formPageName}') and contains(@class,'multi-step-indicator-label')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FORM_PAGE_INACTIVE</td>
-	<td>//ul[contains(@class,'pagination-content')]//li[contains(.,'${key_formPageName}')] | //ul[contains(@class,'multi-step-progress-bar')]/li[not(contains(@class,'active')) and contains(.,'${key_formPageName}')]/div[@class='progress-bar-title']</td>
+	<td>//ol[contains(@class,'multi-step-nav')]//li[not(contains(@class,'active'))]/div[contains(.,'${key_formPageName}')] | //ol[contains(@class,'multi-step-nav')]//li[not(contains(@class,'complete'))]/div[contains(.,'${key_formPageName}')] | //ul[contains(@class,'multi-step-progress-bar')]/li[not(contains(@class,'active'))]//div[contains(.,'${key_formPageName}') and contains(@class,'multi-step-indicator-label')]</td>
 	<td></td>
 </tr>
 <tr>

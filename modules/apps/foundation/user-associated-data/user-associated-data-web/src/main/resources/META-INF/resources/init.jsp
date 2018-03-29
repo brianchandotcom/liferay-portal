@@ -48,6 +48,7 @@ page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.user.associated.data.display.UADEntityDisplay" %><%@
 page import="com.liferay.user.associated.data.entity.UADEntity" %><%@
 page import="com.liferay.user.associated.data.web.internal.constants.UADWebKeys" %><%@
+page import="com.liferay.user.associated.data.web.internal.display.UADApplicationExportDisplay" %><%@
 page import="com.liferay.user.associated.data.web.internal.display.UADApplicationSummaryDisplay" %><%@
 page import="com.liferay.user.associated.data.web.internal.display.ViewUADApplicationsSummaryDisplay" %><%@
 page import="com.liferay.user.associated.data.web.internal.display.ViewUADEntitiesDisplay" %><%@
@@ -60,6 +61,7 @@ page import="com.liferay.users.admin.constants.UsersAdminPortletKeys" %>
 
 <%@ page import="java.util.Date" %><%@
 page import="java.util.HashMap" %><%@
+page import="java.util.List" %><%@
 page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletRequest" %><%@

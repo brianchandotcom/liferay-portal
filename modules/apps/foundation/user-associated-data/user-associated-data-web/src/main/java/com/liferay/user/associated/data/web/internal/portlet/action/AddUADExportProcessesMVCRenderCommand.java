@@ -14,9 +14,13 @@
 
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
+import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
+import com.liferay.user.associated.data.web.internal.util.UADApplicationExportHelper;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -43,10 +47,25 @@ public class AddUADExportProcessesMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		try {
+			User selectedUser = _portal.getSelectedUser(renderRequest);
+
+			renderRequest.setAttribute(
+				UADWebKeys.UAD_APPLICATION_EXPORT_DISPLAY_LIST,
+				_uadApplicationExportHelper.getUADApplicationExportDisplays(
+					selectedUser.getUserId()));
+		}
+		catch (PortalException pe) {
+			throw new PortletException(pe);
+		}
+
 		return "/add_uad_export_processes.jsp";
 	}
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UADApplicationExportHelper _uadApplicationExportHelper;
 
 }

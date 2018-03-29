@@ -19,6 +19,8 @@
 <%
 String backURL = ParamUtil.getString(request, "backURL");
 
+List<UADApplicationExportDisplay> uadApplicationExportDisplayList = (List<UADApplicationExportDisplay>)request.getAttribute(UADWebKeys.UAD_APPLICATION_EXPORT_DISPLAY_LIST);
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
@@ -27,12 +29,64 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 
 <div class="container-fluid container-fluid-max-xl container-form-lg">
 	<div class="sheet sheet-lg">
-		<div class="sheet-header">
+		<div class="sheet-section">
 			<h2 class="sheet-title"><liferay-ui:message key="export-personal-data" /></h2>
 
 			<div class="sheet-text">
 				<liferay-ui:message key="please-select-the-applications-for-which-you-want-to-start-an-export-process" />
 			</div>
+
+			<liferay-ui:search-container
+				id="uadApplicationExportDisplay"
+				total="<%= uadApplicationExportDisplayList.size() %>"
+			>
+				<liferay-ui:search-container-results
+					results="<%= uadApplicationExportDisplayList %>"
+				/>
+
+				<liferay-ui:search-container-row
+					className="com.liferay.user.associated.data.web.internal.display.UADApplicationExportDisplay"
+					keyProperty="applicationName"
+					modelVar="uadApplicationExportDisplay"
+				>
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand table-list-title"
+						name="application"
+						property="applicationName"
+					/>
+
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand"
+						name="data-to-export"
+					>
+						<c:choose>
+							<c:when test="<%= uadApplicationExportDisplay.getDataCount() > 0 %>">
+								<liferay-ui:message key="yes" />
+							</c:when>
+							<c:otherwise>
+								<liferay-ui:message key="no" />
+							</c:otherwise>
+						</c:choose>
+					</liferay-ui:search-container-column-text>
+
+					<%
+					Format dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("yyyy.MM.dd - hh:mm a", locale, themeDisplay.getTimeZone());
+
+					Date lastExportDate = uadApplicationExportDisplay.getLastExportDate();
+					%>
+
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand"
+						name="last-available-export"
+					>
+						<%= (lastExportDate != null) ? dateFormat.format(lastExportDate) : StringPool.DASH %>
+					</liferay-ui:search-container-column-text>
+				</liferay-ui:search-container-row>
+
+				<liferay-ui:search-iterator
+					markupView="lexicon"
+				/>
+			</liferay-ui:search-container>
 		</div>
 
 		<div class="sheet-footer">

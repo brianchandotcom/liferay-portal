@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -33,14 +32,11 @@ public class UpgradeRatingsEntry extends UpgradeProcess {
 	}
 
 	protected long getClassNameId(String className) throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select classNameId from ClassName_ where value = ?");
 
 			ps.setString(1, className);
@@ -54,21 +50,18 @@ public class UpgradeRatingsEntry extends UpgradeProcess {
 			return 0;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected void updateRatingsEntries() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
-
 			long classNameId = getClassNameId(_ARTICLE_CLASS_NAME);
 
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select entryId, score from RatingsEntry where classNameId = " +
 					classNameId);
 
@@ -89,7 +82,7 @@ public class UpgradeRatingsEntry extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

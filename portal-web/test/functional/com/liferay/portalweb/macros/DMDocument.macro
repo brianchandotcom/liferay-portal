@@ -1003,14 +1003,14 @@
 	</command>
 
 	<command name="deletePGViaMG">
-		<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
-
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute macro="PortletEntry#clickMoveToRecycleBin" />
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-		<execute function="AssertElementNotPresent" locator1="MediaGallery#IMAGE_TITLE" />
+		<execute function="AssertElementNotPresent" locator1="MediaGallery#IMAGE_TITLE">
+			<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
+		</execute>
 	</command>
 
 	<command name="deleteViaActionsPG">
@@ -1267,12 +1267,8 @@
 	</command>
 
 	<command name="editPGViaMG">
-		<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Edit" />
 		</execute>
 
 		<execute macro="PortletEntry#inputTitle">
@@ -1285,9 +1281,9 @@
 
 		<execute macro="PortletEntry#publish" />
 
-		<var name="key_mgDocumentTitle" value="${mgDocumentTitleEdit}" />
-
-		<execute function="AssertTextEquals" locator1="MediaGallery#IMAGE_TITLE" value1="${mgDocumentTitleEdit}" />
+		<execute function="AssertTextEquals" locator1="MediaGallery#IMAGE_TITLE" value1="${mgDocumentTitleEdit}">
+			<var name="key_mgDocumentTitle" value="${mgDocumentTitleEdit}" />
+		</execute>
 	</command>
 
 	<command name="editSaveAndCheckinPG">

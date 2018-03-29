@@ -912,10 +912,8 @@
 			<var name="key_mbAttachmentFile" value="${mbAttachmentFile}" />
 		</execute>
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Restore">
-			<var name="key_menuItem" value="Restore" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Restore" />
 		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />

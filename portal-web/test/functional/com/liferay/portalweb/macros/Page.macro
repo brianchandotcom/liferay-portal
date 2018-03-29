@@ -455,10 +455,8 @@
 	</command>
 
 	<command name="manageDeviceFamilyActions">
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Manage Actions">
-			<var name="key_menuItem" value="Manage Actions" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Manage Actions" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />

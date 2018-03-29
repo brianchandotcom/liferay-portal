@@ -193,32 +193,10 @@ public class JavaClassParser {
 			return null;
 		}
 
+		boolean isStatic = startLine.contains(" static ");
+
 		int x = startLine.indexOf(CharPool.EQUAL);
 		int y = startLine.indexOf(CharPool.OPEN_PARENTHESIS);
-
-		if (startLine.startsWith(accessModifier + " static ")) {
-			if (startLine.contains(" class ") || startLine.contains(" enum ")) {
-				return _parseJavaClass(
-					_getClassName(startLine), javaTermContent, accessModifier,
-					true);
-			}
-
-			if (((x > 0) && ((y == -1) || (y > x))) ||
-				(startLine.endsWith(StringPool.SEMICOLON) && (y == -1))) {
-
-				return new JavaVariable(
-					_getVariableName(startLine), javaTermContent,
-					accessModifier, true);
-			}
-
-			if (y != -1) {
-				return new JavaMethod(
-					_getConstructorOrMethodName(startLine, y), javaTermContent,
-					accessModifier, true);
-			}
-
-			return null;
-		}
 
 		if (startLine.contains(" @interface ") ||
 			startLine.contains(" class ") || startLine.contains(" enum ") ||
@@ -226,7 +204,7 @@ public class JavaClassParser {
 
 			return _parseJavaClass(
 				_getClassName(startLine), javaTermContent, accessModifier,
-				false);
+				isStatic);
 		}
 
 		if (((x > 0) && ((y == -1) || (y > x))) ||
@@ -234,24 +212,26 @@ public class JavaClassParser {
 
 			return new JavaVariable(
 				_getVariableName(startLine), javaTermContent, accessModifier,
-				false);
+				isStatic);
 		}
 
-		if (y != -1) {
-			int spaceCount = StringUtil.count(
-				startLine.substring(0, y), CharPool.SPACE);
+		if (y == -1) {
+			return null;
+		}
 
-			if (spaceCount == 1) {
-				return new JavaConstructor(
-					_getConstructorOrMethodName(startLine, y), javaTermContent,
-					accessModifier, false);
-			}
+		int spaceCount = StringUtil.count(
+			startLine.substring(0, y), CharPool.SPACE);
 
-			if (spaceCount > 1) {
-				return new JavaMethod(
-					_getConstructorOrMethodName(startLine, y), javaTermContent,
-					accessModifier, false);
-			}
+		if (isStatic || (spaceCount > 1)) {
+			return new JavaMethod(
+				_getConstructorOrMethodName(startLine, y), javaTermContent,
+				accessModifier, isStatic);
+		}
+
+		if (spaceCount == 1) {
+			return new JavaConstructor(
+				_getConstructorOrMethodName(startLine, y), javaTermContent,
+				accessModifier, isStatic);
 		}
 
 		return null;

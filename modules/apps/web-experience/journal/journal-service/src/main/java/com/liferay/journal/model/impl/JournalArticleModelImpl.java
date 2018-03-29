@@ -1262,7 +1262,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 		com.liferay.portal.kernel.trash.TrashHandler trashHandler = getTrashHandler();
 
-		if (!Validator.isNull(trashHandler.getContainerModelClassName(
+		if (Validator.isNotNull(trashHandler.getContainerModelClassName(
 						getPrimaryKey()))) {
 			ContainerModel containerModel = null;
 

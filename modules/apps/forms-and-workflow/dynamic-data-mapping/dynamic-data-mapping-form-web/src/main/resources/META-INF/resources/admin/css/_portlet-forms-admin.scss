@@ -120,10 +120,6 @@
 			}
 		}
 
-		.alloy-editor-container .alloy-editor.alloy-editor-placeholder {
-			color: $form-header-text-color;
-		}
-
 		.alloy-editor-container .alloy-editor.alloy-editor-placeholder:empty:not(:focus) {
 			color: $form-header-placeholder-color;
 		}

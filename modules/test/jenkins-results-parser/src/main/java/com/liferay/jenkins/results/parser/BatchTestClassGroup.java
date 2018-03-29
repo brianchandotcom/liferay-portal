@@ -43,14 +43,14 @@ import java.util.regex.Pattern;
 /**
  * @author Michael Hashimoto
  */
-public class Batch {
+public class BatchTestClassGroup extends TestClassGroup {
 
-	public BatchAxis getBatchAxis(int batchAxisId) {
-		return _batchAxes.get(batchAxisId);
+	public AxisTestClassGroup getAxisTestClassGroup(int axisId) {
+		return _axisTestClassGroups.get(axisId);
 	}
 
-	public int getBatchAxisCount() {
-		return _batchAxes.size();
+	public int getAxisCount() {
+		return _axisTestClassGroups.size();
 	}
 
 	public String getBatchName() {
@@ -65,36 +65,13 @@ public class Batch {
 		return _portalTestProperties;
 	}
 
-	public static class BatchAxis {
+	protected BatchTestClassGroup(
+		String batchName, GitWorkingDirectory gitWorkingDirectory) {
 
-		public void addTestClassFile(File testClassFile) {
-			_testClassFiles.add(testClassFile);
-		}
-
-		public int getId() {
-			return _id;
-		}
-
-		public List<File> getTestClassFiles() {
-			return _testClassFiles;
-		}
-
-		private BatchAxis(int id) {
-			_id = id;
-
-			_testClassFiles = new ArrayList<>();
-		}
-
-		private final int _id;
-		private final List<File> _testClassFiles;
-
-	}
-
-	protected Batch(String batchName, GitWorkingDirectory gitWorkingDirectory) {
 		this(batchName, gitWorkingDirectory, null);
 	}
 
-	protected Batch(
+	protected BatchTestClassGroup(
 		String batchName, GitWorkingDirectory gitWorkingDirectory,
 		String testSuiteName) {
 
@@ -106,25 +83,27 @@ public class Batch {
 			new File(
 				_gitWorkingDirectory.getWorkingDirectory(), "test.properties"));
 
-		_setBatchRelevantChanges();
+		_setTestRelevantChanges();
 
 		_setTestClassNamesExcludesRelativeGlobs();
 		_setTestClassNamesIncludesRelativeGlobs();
 
-		_setBatchAxes();
+		_setTestClassFiles();
+
+		_setAxisTestClassGroups();
 	}
 
-	private int _getBatchAxisMaxSize() {
-		String batchAxisMaxSize = _getBatchAxisMaxSizePropertyValue();
+	private int _getAxisMaxSize() {
+		String axisMaxSize = _getAxisMaxSizePropertyValue();
 
-		if (batchAxisMaxSize != null) {
-			return Integer.parseInt(batchAxisMaxSize);
+		if (axisMaxSize != null) {
+			return Integer.parseInt(axisMaxSize);
 		}
 
-		return _DEFAULT_BATCH_AXIS_MAX_SIZE;
+		return _DEFAULT_AXIS_MAX_SIZE;
 	}
 
-	private String _getBatchAxisMaxSizePropertyValue() {
+	private String _getAxisMaxSizePropertyValue() {
 		List<String> propertyNames = new ArrayList<>();
 
 		if (_testSuiteName != null) {
@@ -221,10 +200,8 @@ public class Batch {
 		return relevantTestClassNameRelativeGlobs;
 	}
 
-	private Set<String> _getTestClassFileNames() {
+	private void _setTestClassFiles() {
 		File workingDirectory = _gitWorkingDirectory.getWorkingDirectory();
-
-		final Set<String> testClassFileNames = new HashSet<>();
 
 		try {
 			Files.walkFileTree(
@@ -251,14 +228,16 @@ public class Batch {
 						if (_pathIncluded(filePath) &&
 							!_pathExcluded(filePath)) {
 
-							testClassFileNames.add(
-								_getPackagePath(filePath.toString()));
+							testClassFiles.add(
+								_getPackagePathClassFile(filePath));
 						}
 
 						return FileVisitResult.CONTINUE;
 					}
 
-					private String _getPackagePath(String filePath) {
+					private File _getPackagePathClassFile(Path path) {
+						String filePath = path.toString();
+
 						Matcher matcher = _packagePathPattern.matcher(filePath);
 
 						if (matcher.find()) {
@@ -267,10 +246,10 @@ public class Batch {
 							packagePath = packagePath.replace(
 								".java", ".class");
 
-							return packagePath;
+							return new File(packagePath);
 						}
 
-						return filePath.replace(".java", ".class");
+						return new File(filePath.replace(".java", ".class"));
 					}
 
 					private boolean _pathExcluded(Path path) {
@@ -304,7 +283,7 @@ public class Batch {
 				ioe);
 		}
 
-		return testClassFileNames;
+		Collections.sort(testClassFiles);
 	}
 
 	private String _getTestClassNamesExcludesPropertyValue() {
@@ -440,47 +419,38 @@ public class Batch {
 		return null;
 	}
 
-	private void _setBatchAxes() {
-		List<String> testClassFileNames = new ArrayList<>(
-			_getTestClassFileNames());
+	private void _setAxisTestClassGroups() {
+		int testClassFileCount = testClassFiles.size();
 
-		Collections.sort(testClassFileNames);
-
-		int testClassFileNamesCount = testClassFileNames.size();
-
-		if (testClassFileNamesCount == 0) {
+		if (testClassFileCount == 0) {
 			return;
 		}
 
-		int batchAxisMaxSize = _getBatchAxisMaxSize();
+		int axisMaxSize = _getAxisMaxSize();
 
-		int batchAxisCount = (int)Math.ceil(
-			(double)testClassFileNamesCount / batchAxisMaxSize);
+		int axisCount = (int)Math.ceil(
+			(double)testClassFileCount / axisMaxSize);
 
-		int batchAxisSize = (int)Math.ceil(
-			(double)testClassFileNamesCount / batchAxisCount);
+		int axisSize = (int)Math.ceil((double)testClassFileCount / axisCount);
 
 		int id = 0;
 
-		for (List<String> batchAxisTestClassFileNames :
-				Lists.partition(testClassFileNames, batchAxisSize)) {
+		for (List<File> axisTestClassFiles :
+				Lists.partition(testClassFiles, axisSize)) {
 
-			BatchAxis batchAxis = new BatchAxis(id);
+			AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(id);
 
-			_batchAxes.put(id, batchAxis);
+			_axisTestClassGroups.put(id, axisTestClassGroup);
 
-			for (String batchAxisTestClassFileName :
-					batchAxisTestClassFileNames) {
-
-				batchAxis.addTestClassFile(
-					new File(batchAxisTestClassFileName));
+			for (File axisTestClassFile : axisTestClassFiles) {
+				axisTestClassGroup.addTestClassFile(axisTestClassFile);
 			}
 
 			id++;
 		}
 	}
 
-	private void _setBatchRelevantChanges() {
+	private void _setTestRelevantChanges() {
 		List<String> propertyNames = new ArrayList<>();
 
 		if (_testSuiteName != null) {
@@ -551,11 +521,12 @@ public class Batch {
 				testClassNamesIncludesRelativeGlobs));
 	}
 
-	private static final int _DEFAULT_BATCH_AXIS_MAX_SIZE = 5000;
+	private static final int _DEFAULT_AXIS_MAX_SIZE = 5000;
 
 	private static final boolean _DEFAULT_TEST_RELEVANT_CHANGES = false;
 
-	private final Map<Integer, BatchAxis> _batchAxes = new HashMap<>();
+	private final Map<Integer, AxisTestClassGroup> _axisTestClassGroups =
+		new HashMap<>();
 	private final String _batchName;
 	private final GitWorkingDirectory _gitWorkingDirectory;
 	private final Pattern _packagePathPattern = Pattern.compile(

@@ -17,15 +17,23 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public class BatchFactory {
+public class TestClassGroupFactory {
 
-	public static Batch newBatch(
+	public static BatchTestClassGroup newBatchTestClassGroup(
 		String batchName, GitWorkingDirectory gitWorkingDirectory) {
 
-		return new Batch(batchName, gitWorkingDirectory);
+		return newBatchTestClassGroup(batchName, gitWorkingDirectory, null);
 	}
 
-	public static Batch newBatch(
+	public static BatchTestClassGroup newBatchTestClassGroup(
+		String batchName, GitWorkingDirectory gitWorkingDirectory,
+		String testSuiteName) {
+
+		return new BatchTestClassGroup(
+			batchName, gitWorkingDirectory, testSuiteName);
+	}
+
+	public static BatchTestClassGroup newBatchTestClassGroup(
 		String batchName, PortalRepositoryJob portalRepositoryJob) {
 
 		GitWorkingDirectory gitWorkingDirectory =
@@ -40,7 +48,8 @@ public class BatchFactory {
 			testSuiteName = portalAcceptancePullRequestJob.getTestSuiteName();
 		}
 
-		return new Batch(batchName, gitWorkingDirectory, testSuiteName);
+		return newBatchTestClassGroup(
+			batchName, gitWorkingDirectory, testSuiteName);
 	}
 
 }

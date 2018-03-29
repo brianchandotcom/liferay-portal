@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.util.PropsValues;
 
-import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -90,31 +89,6 @@ public class ApplicationContextServicePublisher {
 		_serviceRegistrations.clear();
 	}
 
-	protected Dictionary<String, Object> getBeanProperties(
-		String symbloicName, Object object) {
-
-		HashMapDictionary<String, Object> properties =
-			new HashMapDictionary<>();
-
-		properties.put("origin.bundle.symbolic.name", symbloicName);
-
-		try {
-			Class<?> clazz = getTargetClass(object);
-
-			OSGiBeanProperties osgiBeanProperties =
-				AnnotationUtils.findAnnotation(clazz, OSGiBeanProperties.class);
-
-			if (osgiBeanProperties != null) {
-				properties.putAll(
-					OSGiBeanProperties.Convert.toMap(osgiBeanProperties));
-			}
-		}
-		catch (Exception e) {
-		}
-
-		return properties;
-	}
-
 	protected Class<?> getTargetClass(Object service) throws Exception {
 		Class<?> clazz = service.getClass();
 
@@ -161,10 +135,19 @@ public class ApplicationContextServicePublisher {
 
 		Bundle bundle = _bundleContext.getBundle();
 
+		HashMapDictionary<String, Object> properties =
+			new HashMapDictionary<>();
+
+		properties.put("origin.bundle.symbolic.name", bundle.getSymbolicName());
+
+		if (osgiBeanProperties != null) {
+			properties.putAll(
+				OSGiBeanProperties.Convert.toMap(osgiBeanProperties));
+		}
+
 		ServiceRegistration<?> serviceRegistration =
 			_bundleContext.registerService(
-				names.toArray(new String[names.size()]), bean,
-				getBeanProperties(bundle.getSymbolicName(), bean));
+				names.toArray(new String[names.size()]), bean, properties);
 
 		_serviceRegistrations.add(serviceRegistration);
 	}

@@ -25,12 +25,12 @@
 </tr>
 <tr>
 	<td>PANEL_COLLAPSED</td>
-	<td>//div[@class='panel-heading']/div[contains(@class,'panel-title')]/a[normalize-space(text())='${key_panel}'][@aria-expanded='false']</td>
+	<td>//div[@class='panel-heading']/div[contains(@class,'panel-title')]/a[normalize-space(text())='${key_panel}'][@aria-expanded='false' or contains(@class,'collapsed')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PANEL_EXPANDED</td>
-	<td>//div[@class='panel-heading']/div[contains(@class,'panel-title')]/a[normalize-space(text())='${key_panel}'][@aria-expanded='true']</td>
+	<td>//div[@class='panel-heading']/div[contains(@class,'panel-title')]/a[normalize-space(text())='${key_panel}'][@aria-expanded='true' and not(contains(@class,'collapsed'))]</td>
 	<td></td>
 </tr>
 <tr>

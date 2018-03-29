@@ -173,7 +173,6 @@
 						<template></template>
 						<template-language>text</template-language>
 						<notification-type>im</notification-type>
-						<execution-type>onAssignment</execution-type>
 					</timer-notification>
 				</timer-actions>
 			</task-timer>

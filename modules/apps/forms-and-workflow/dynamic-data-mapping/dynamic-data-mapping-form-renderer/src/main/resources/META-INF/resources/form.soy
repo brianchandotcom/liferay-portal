@@ -172,21 +172,15 @@
 					<div class="lfr-ddm-form-wizard">
 						<ul class="multi-step-progress-bar multi-step-progress-bar-collapse">
 							{foreach $page in $pages}
+								<li {if isFirst($page)}class="active"{/if}>
+									<div class="multi-step-divider"></div>
 
-							<li {if isFirst($page)}class="active"{/if}>
+									<div class="multi-step-indicator">
+										<div class="multi-step-indicator-label">{$page.title}</div>
+									</div>
 
-								<div class="multi-step-divider"></div>
-
-								<div class="multi-step-indicator">
-
-									<div class="multi-step-indicator-label">{$page.title}</div>
-
-								</div>
-
-							<a class="multi-step-icon" data-multi-step-icon="{index($page) + 1}" href="#1"></a>
-
-							</li>
-
+									<a class="multi-step-icon" data-multi-step-icon="{index($page) + 1}" href="#1"></a>
+								</li>
 							{/foreach}
 						</ul>
 					</div>
@@ -354,7 +348,7 @@
 				{/foreach}
 			</ul>
 
-			<div class="tab-content lfr-ddm-form-tabs-content">
+			<div class="lfr-ddm-form-tabs-content tab-content">
 				{foreach $page in $pages}
 					<div class="lfr-ddm-form-page tab-pane {if isFirst($page)}active{/if}">
 						{call .required_warning_message data="all"}

@@ -180,30 +180,37 @@ public interface PortletDataHandler {
 	public int getRank();
 
 	/**
-	 * Returns the schema version of the <code>PortletDataHandler</code> which
-	 * represents the whole staging and export/import aspect of a component. The
-	 * component's primary staging schema version is returned by this method the
-	 * staging will this schema version to perform the compoent related
-	 * validation before importing any data.
+	 * Returns the schema version for this data handler, which represents the
+	 * staging and export/import aspect of a component. The schema version is
+	 * used to perform component related validation before importing data.
+	 * Validating the schema version avoids broken data when importing, which
+	 * is typically caused by import failures due to data schema inconsistency.
 	 *
-	 * The purpose of the schema version validation is to avoid broken data when
-	 * importing and generally import failures due to data schema inconsistency.
+	 * <p>
+	 * Schema versions follow the semantic versioning format
+	 * <code>major.minor.bugfix</code>. The schema version is added to the LAR
+	 * file for each application being processed. During import, the current
+	 * schema version in an environment is compared to the schema version in the
+	 * LAR file. The generic semantic versioning rules apply during this
+	 * comparison:
+	 * </p>
 	 *
-	 * An acceptable format is the normal semantic versioning format:
-	 * <i>major.minor.bugfix</i>
+	 * <ul>
+	 * <li>
+	 * The major version has to be an exact match
+	 * </li>
+	 * <li>
+	 * The minor version is backwards compatible for the same major version
+	 * </li>
+	 * <li>
+	 * The bug fix is always compatible in the context of the two other version
+	 * numbers
+	 * </li>
+	 * </ul>
 	 *
-	 * The schema version is added to the LAR file for each
-	 * application being processed. During import the schema version currently
-	 * present in an environment is
-	 * being compared to the schema version in the LAR file.
-	 *
-	 * For comparison the generic semantic versioning rules apply. The major
-	 * version has to be an exact match;
-	 * the minor version is backwards compatible for the same major and the
-	 * bugfix is always compatible in the context
-	 * of the two other version numbers.
-	 *
+	 * <p>
 	 * Examples:
+	 * </p>
 	 *
 	 * <ul>
 	 * <li>
@@ -220,7 +227,7 @@ public interface PortletDataHandler {
 	 * </li>
 	 * </ul>
 	 *
-	 * @return the schema version of the <code>PortletDataHandler</code>
+	 * @return the portlet data handler's schema version
 	 */
 	public String getSchemaVersion();
 

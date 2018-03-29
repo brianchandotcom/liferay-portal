@@ -423,9 +423,12 @@ AUI.add(
 					_removeLoading: function() {
 						var instance = this;
 
-						var boundingBox = instance.get('boundingBox');
+						var contentBox = instance.get('contentBox');
+						var loading = contentBox.one('.loading-animation');
 
-						boundingBox.removeClass('loading-data');
+						if (loading) {
+							loading.remove();
+						}
 					},
 
 					_saveCurrentContext: function() {

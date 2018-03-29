@@ -46,7 +46,7 @@ public interface XPackMonitoringConfiguration {
 
 	@Meta.AD(
 		description = "kibana-password-help", name = "kibana-password",
-		required = false
+		required = false, type = Meta.Type.Password
 	)
 	public String kibanaPassword();
 

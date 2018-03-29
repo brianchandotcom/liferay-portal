@@ -421,7 +421,7 @@
 
 		<execute macro="PortletEntry#clickMoveToRecycleBin" />
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="moveToRecycleBinDraftCP">
@@ -434,7 +434,7 @@
 
 		<execute macro="PortletEntry#clickMoveToRecycleBin" />
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="moveToRecycleBinNoPermissionPG">
@@ -458,7 +458,8 @@
 
 		<execute macro="PortletEntry#clickMoveToRecycleBin" />
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+		<execute macro="Alert#viewSuccessMessage" />
+
 		<execute function="AssertElementNotPresent" locator1="BlogsEntry#TITLE" />
 		<execute function="AssertElementNotPresent" locator1="BlogsEntry#CONTENT" />
 	</command>

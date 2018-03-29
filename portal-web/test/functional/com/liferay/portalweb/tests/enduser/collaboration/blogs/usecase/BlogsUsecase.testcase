@@ -2302,10 +2302,10 @@
 		<var name="key_entryAbstractDescription" value="Blogs Entry Abstract Description" />
 		<var name="key_entryTitle" value="Blogs Entry Title" />
 
-		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="Blogs Entry Title" />
+		<execute function="AssertTextEquals" locator1="BlogsAggregator#ENTRY_TITLE" value1="Blogs Entry Title" />
 		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT_ABSTRACT" value1="Blogs Entry Abstract Description" />
 
-		<execute function="AssertClick" locator1="BlogsEntry#TITLE_LINK" value1="Blogs Entry Title" />
+		<execute function="AssertClick" locator1="BlogsAggregator#ENTRY_TITLE" value1="Blogs Entry Title" />
 
 		<execute macro="BlogsEntry#viewEntry">
 			<var name="entryContent" value="Blogs Entry Content" />
@@ -2324,7 +2324,7 @@
 		<execute function="AssertTextEquals" locator1="Portlet#H2_HEADER" value1="Blogs Aggregator" />
 		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT_ABSTRACT" value1="Blogs Entry Abstract Description" />
 
-		<execute function="AssertClick" locator1="BlogsEntry#TITLE_LINK" value1="Blogs Entry Title" />
+		<execute function="AssertClick" locator1="BlogsAggregator#ENTRY_TITLE" value1="Blogs Entry Title" />
 
 		<execute macro="BlogsEntry#viewEntry">
 			<var name="entryContent" value="Blogs Entry Content" />

@@ -764,6 +764,7 @@ a[type="button"] {
 
 	.card-page-item-asset {
 		display: flex;
+		flex-basis: 17.25rem;
 		min-width: 17.25rem; // 276px
 
 		@include media-breakpoint-up(xl) {

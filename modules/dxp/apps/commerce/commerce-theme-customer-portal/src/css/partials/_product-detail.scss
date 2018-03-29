@@ -53,18 +53,6 @@
 
 // Product Detail Image
 
-$product-detail-image-widget-width: 250px !default;
-
-$product-detail-image-widget-height: calc(#{$product-detail-image-widget-width} * 0.84) !default;
-
-$product-detail-image-widget-width-lg: 300px !default;
-
-$product-detail-image-widget-height-lg: calc(#{$product-detail-image-widget-width-lg} * 0.84) !default;
-
-$product-detail-image-widget-width-xl: 450px !default;
-
-$product-detail-image-widget-height-xl: calc(#{$product-detail-image-widget-width-xl} * 0.84) !default;
-
 .product-detail-image-widget {
 	border: 1px solid #CCC;
 
@@ -91,6 +79,7 @@ $product-detail-image-widget-height-xl: calc(#{$product-detail-image-widget-widt
 
 .product-detail-thumbnail-column {
 	border-right: 1px solid #CCC;
+	height: 100%;
 	width: 25%;
 
 	+ .product-detail-image-column {

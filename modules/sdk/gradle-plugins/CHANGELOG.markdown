@@ -3918,6 +3918,12 @@ version 1.0.186.
 - [LPS-78741]: Add method to get the project property `portal.version`.
 
 ### Changed
+- [LPS-78741]: Update the [Liferay Gradle Plugins Gulp] dependency to version
+2.0.28.
+- [LPS-78741]: Update the [Liferay Gradle Plugins JS Module Config Generator]
+dependency to version 2.1.29.
+- [LPS-78741]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
+version 2.4.8.
 - [LPS-79282]: Update the [Liferay Gradle Plugins Source Formatter] dependency
 to version 2.3.115.
 - [LPS-79282]: Update the [Liferay Source Formatter] dependency to version

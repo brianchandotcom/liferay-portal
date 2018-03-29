@@ -3162,10 +3162,11 @@ projects defined in the `testIntegrationCompile` configuration does not have a
 
 ### Changed
 - [LPS-78741]: Configure the `npmInstall` task to run `npm ci` instead of
-`npm install` when not on Jenkins and the project property `portal.version` is
-null
-- [LPS-78741]: Set the Node.js version to `6.6.0` when the project property
-`portal.version` is `7.0.x`
+`npm install` when on the master branch and not on Jenkins.
+- [LPS-78741]: Set the Node.js version to `6.6.0` and disable global Node.js
+execution when on the `7.0.x` branch.
+- [LPS-78741]: Update the [Liferay Gradle Plugins JSDoc] dependency to version
+2.0.4.
 - [LPS-79282]: Update the [Liferay Gradle Plugins] dependency to version 3.10.0.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs

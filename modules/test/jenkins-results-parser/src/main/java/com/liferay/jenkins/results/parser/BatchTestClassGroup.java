@@ -41,7 +41,7 @@ import java.util.regex.Pattern;
 /**
  * @author Michael Hashimoto
  */
-public class BatchTestClassGroup extends TestClassGroup {
+public class BatchTestClassGroup extends BaseTestClassGroup {
 
 	public int getAxisCount() {
 		return _axisTestClassGroups.size();

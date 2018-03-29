@@ -16,18 +16,13 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Michael Hashimoto
  */
-public abstract class TestClassGroup {
+public interface TestClassGroup {
 
-	public List<File> getTestClassFiles() {
-		return testClassFiles;
-	}
-
-	protected final List<File> testClassFiles = new ArrayList<>();
+	public List<File> getTestClassFiles();
 
 }

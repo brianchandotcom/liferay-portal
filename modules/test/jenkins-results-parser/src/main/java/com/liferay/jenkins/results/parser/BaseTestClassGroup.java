@@ -16,23 +16,18 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * @author Michael Hashimoto
+ * @author Peter Yoo
  */
-public class AxisTestClassGroup extends BaseTestClassGroup {
+public abstract class BaseTestClassGroup implements TestClassGroup {
 
-	public void addTestClassFile(File testClassFile) {
-		testClassFiles.add(testClassFile);
+	public List<File> getTestClassFiles() {
+		return testClassFiles;
 	}
 
-	public int getId() {
-		return _id;
-	}
-
-	protected AxisTestClassGroup(int id) {
-		_id = id;
-	}
-
-	private final int _id;
+	protected final List<File> testClassFiles = new ArrayList<>();
 
 }

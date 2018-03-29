@@ -391,21 +391,6 @@ public class SourceFormatter {
 		return _sourceMismatchExceptions;
 	}
 
-	private boolean _containsSourceFormatterFile() {
-		List<String> recentChangesFileNames =
-			_sourceFormatterArgs.getRecentChangesFileNames();
-
-		if (recentChangesFileNames != null) {
-			for (String recentChangesFileName : recentChangesFileNames) {
-				if (recentChangesFileName.contains("/source-formatter/")) {
-					return true;
-				}
-			}
-		}
-
-		return false;
-	}
-
 	private List<String> _getCheckNames() {
 		List<String> checkNames = new ArrayList<>();
 
@@ -530,10 +515,6 @@ public class SourceFormatter {
 	}
 
 	private void _init() throws Exception {
-		if (_isPortalSource() && _containsSourceFormatterFile()) {
-			_sourceFormatterArgs.setRecentChangesFileNames(null);
-		}
-
 		_sourceFormatterExcludes = new SourceFormatterExcludes(
 			SetUtil.fromArray(DEFAULT_EXCLUDE_SYNTAX_PATTERNS));
 

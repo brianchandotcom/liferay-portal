@@ -181,8 +181,8 @@ public interface PortletDataHandler {
 	 * Returns the schema version for this data handler, which represents the
 	 * staging and export/import aspect of a component. The schema version is
 	 * used to perform component related validation before importing data.
-	 * Validating the schema version avoids broken data when importing, which
-	 * is typically caused by import failures due to data schema inconsistency.
+	 * Validating the schema version avoids broken data when importing, which is
+	 * typically caused by import failures due to data schema inconsistency.
 	 *
 	 * <p>
 	 * Schema versions follow the semantic versioning format

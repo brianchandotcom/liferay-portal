@@ -270,7 +270,13 @@ public class DDMFormDisplayContext {
 	}
 
 	public boolean isFormShared() {
-		return SessionParamUtil.getBoolean(_renderRequest, "shared");
+		PortletSession portletSession = _renderRequest.getPortletSession(false);
+
+		if (portletSession != null) {
+			return SessionParamUtil.getBoolean(_renderRequest, "shared");
+		}
+
+		return ParamUtil.getBoolean(_renderRequest, "shared");
 	}
 
 	public boolean isPreview() {

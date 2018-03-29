@@ -209,8 +209,13 @@ public class LibraryReferenceTest {
 
 		for (String jar : libJars) {
 			if ((fileName.equals(_ECLIPSE_FILE_NAME) ||
-				 fileName.equals(_NETBEANS_FILE_NAME) ||
-				 fileName.equals(_VERSIONS_FILE_NAME)) &&
+				 fileName.equals(_NETBEANS_PROPERTIES_FILE_NAME)) &&
+				_ideExcludeJars.contains(jar)) {
+
+				continue;
+			}
+
+			if (fileName.equals(_VERSIONS_FILE_NAME) &&
 				(_excludeJars.contains(jar) ||
 				 _libDependencyJars.contains(jar))) {
 
@@ -337,6 +342,7 @@ public class LibraryReferenceTest {
 		Path libDirPath = Paths.get(LIB_DIR_NAME);
 
 		_readLines(_excludeJars, libDirPath.resolve("versions-ignore.txt"));
+		_readLines(_ideExcludeJars, libDirPath.resolve("ide-ignore.txt"));
 
 		Files.walkFileTree(
 			libDirPath,
@@ -534,6 +540,7 @@ public class LibraryReferenceTest {
 	private static final Set<String> _eclipseModuleSourceDirs = new HashSet<>();
 	private static final Set<String> _excludeJars = new HashSet<>();
 	private static final Set<String> _gitIgnoreJars = new HashSet<>();
+	private static final Set<String> _ideExcludeJars = new HashSet<>();
 	private static final List<String> _intelliJFileNames = Arrays.asList(
 		"portal-impl/portal-impl.iml", "portal-kernel/portal-kernel.iml",
 		"portal-test-integration/portal-test-integration.iml",

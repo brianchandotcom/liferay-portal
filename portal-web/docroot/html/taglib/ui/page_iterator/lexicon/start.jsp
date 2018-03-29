@@ -183,7 +183,7 @@ if (forcePost && (portletURL != null)) {
 							<ul class="inline-scroller link-list" data-max-index="<%= pages - 2 %>">
 
 								<%
-								for (int i = 2; i < (initialPages); i++) {
+								for (int i = 2; i < (initialPages > (cur-2) ? cur-2 : initialPages); i++) {
 								%>
 
 									<li>

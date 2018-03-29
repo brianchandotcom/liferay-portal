@@ -20,7 +20,7 @@ Here are some of the types of changes documented in this file:
   replaces an old API, in spite of the old API being kept in Liferay Portal for
   backwards compatibility.
 
-*This document has been reviewed through commit `16080bf`.*
+*This document has been reviewed through commit `07cba9d23d9f`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -4307,6 +4307,41 @@ Portal by means of an OSGi container.
 
 ---------------------------------------
 
+### Moved Journal File Uploads Portlet Properties to OSGi Configuration
+- **Date:** 2017-Jan-04
+- **JIRA Ticket:** LPS-69209
+
+#### What changed?
+
+The Journal File Uploads portlet properties have been moved from Server
+Administration to an OSGi configuration named
+`JournalFileUploadsConfiguration.java` in the `journal-service` module.
+
+#### Who is affected?
+
+This affects anyone who is using the following portlet properties:
+
+- `journal.image.extensions`
+- `journal.image.small.max.size`
+
+#### How should I update my code?
+
+Instead of overriding the `portal.properties` file, you can manage the
+properties from Portal's configuration administrator. This can be accessed by
+navigating to Liferay's *Control Panel* &rarr; *Configuration* &rarr; *System
+Settings* &rarr; *Web Content File Uploads* and editing the settings there.
+
+If you would like to include the new configuration in your application, follow
+the instructions for
+[making your applications configurable in Liferay 7.0](https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/making-your-applications-configurable).
+
+#### Why was this change made?
+
+This change was made as part of the modularization efforts to ease portal
+configuration changes.
+
+---------------------------------------
+
 ### Deprecated the aui:tool Tag with No Direct Replacement
 - **Date:** 2017-Feb-02
 - **JIRA Ticket:** LPS-70422
@@ -4400,5 +4435,33 @@ you can no longer cast the returned `AssetRenderer` to `DDLRecordAssetRenderer`.
 #### Why was this change made?
 
 This change was made to clean up LPKG dependencies.
+
+---------------------------------------
+
+### Deprecated the social.activity.sets.enabled Property with No Direct Replacement
+- **Date:** 2018-Jan-24
+- **JIRA Ticket:** LPS-63635
+
+#### What changed?
+
+The `social.activity.sets.enabled` property is no longer recognized by the
+Social Activity portlet. From Liferay Portal 7.0 onwards, Social Activity Sets
+will always be used.
+
+#### Who is affected?
+
+This change affects anyone who has set the `social.activity.sets.enabled`
+property to `false`.
+
+#### How should I update my code?
+
+No changes are necessary.
+
+#### Why was this change made?
+
+The Social Activity portlet had two different versions with slightly different
+behaviors; one used in Liferay Portal and the other one in Social Office. To
+sync both components, and simplify its internal logic, activity sets are always
+enabled by default, with no option to disable them.
 
 ---------------------------------------

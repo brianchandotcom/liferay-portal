@@ -31,7 +31,7 @@ public class BundleSupportConstants {
 
 	public static final String DEFAULT_BUNDLE_URL =
 		"https://cdn.lfrs.sl/releases.liferay.com/portal/7.0.5-ga6" +
-			"/liferay-ce-portal-tomcat-7.0-ga6-20180320170724974.zip"
+			"/liferay-ce-portal-tomcat-7.0-ga6-20180320170724974.zip";
 
 	public static final URL DEFAULT_BUNDLE_URL_OBJECT;
 

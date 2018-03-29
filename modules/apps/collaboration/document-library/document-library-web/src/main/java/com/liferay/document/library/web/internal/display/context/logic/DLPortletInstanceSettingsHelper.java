@@ -216,7 +216,7 @@ public class DLPortletInstanceSettingsHelper {
 	}
 
 	private String[] _getAllEntryColumns() {
-		String allEntryColumns = "name,size,status";
+		String allEntryColumns = "name,description,size,status";
 
 		if (PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED) {
 			allEntryColumns += ",downloads";

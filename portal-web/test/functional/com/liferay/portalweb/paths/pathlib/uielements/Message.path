@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>EMPTY_INFO</td>
-	<td>//div[contains(@class,'empty-result-message')]</td>
+	<td>//div[@class='sheet']/div[contains(@class,'sheet-text')]</td>
 	<td></td>
 </tr>
 <tr>

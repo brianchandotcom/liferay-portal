@@ -64,7 +64,7 @@ public class ApplicationContextServicePublisher {
 			}
 
 			if (bean != null) {
-				registerService(_bundleContext, bean);
+				registerService(bean);
 			}
 		}
 
@@ -138,11 +138,11 @@ public class ApplicationContextServicePublisher {
 			"org.springframework.context.service.name", bundleSymbolicName);
 
 		registerService(
-			_bundleContext, applicationContext,
+			applicationContext,
 			Arrays.asList(ApplicationContext.class.getName()), properties);
 	}
 
-	protected void registerService(BundleContext bundleContext, Object bean) {
+	protected void registerService(Object bean) {
 		OSGiBeanProperties osgiBeanProperties = null;
 
 		try {
@@ -167,19 +167,18 @@ public class ApplicationContextServicePublisher {
 			return;
 		}
 
-		Bundle bundle = bundleContext.getBundle();
+		Bundle bundle = _bundleContext.getBundle();
 
 		registerService(
-			bundleContext, bean, names,
-			getBeanProperties(bundle.getSymbolicName(), bean));
+			bean, names, getBeanProperties(bundle.getSymbolicName(), bean));
 	}
 
 	protected void registerService(
-		BundleContext bundleContext, Object bean, Collection<String> interfaces,
+		Object bean, Collection<String> interfaces,
 		Dictionary<String, Object> properties) {
 
 		ServiceRegistration<?> serviceRegistration =
-			bundleContext.registerService(
+			_bundleContext.registerService(
 				interfaces.toArray(new String[interfaces.size()]), bean,
 				properties);
 

@@ -3,7 +3,7 @@ AUI.add(
 	function(A) {
 		var CSS_PREFIX = A.getClassName('form', 'builder', 'field', 'settings', 'sidebar');
 
-		var TPL_LOADING = '<div class="loading-icon loading-icon-lg"></div>';
+		var TPL_LOADING = '<div class="loading-animation"></div>';
 
 		var TPL_NAVBAR_WRAPER = '<nav class="navbar navbar-default navbar-no-collapse"></nav>';
 
@@ -317,7 +317,6 @@ AUI.add(
 					},
 
 					_isValueEmpty: function(settingsFormFieldContextValue) {
-
 						if (Lang.isString(settingsFormFieldContextValue)) {
 							return settingsFormFieldContextValue.trim() === '';
 						}
@@ -382,17 +381,14 @@ AUI.add(
 										var previousFieldName = previousSettingsFormFieldContext.fieldName;
 
 										if (!(fieldName === 'type') && fieldName === previousFieldName) {
-
 											if (fieldLocalizable && previousFieldLocalizable) {
 												settingsFormFieldContext.localizedValue = previousSettingsFormFieldContext.localizedValue;
 											}
-
 											if (instance._isSameType(previousSettingsFormFieldContext, settingsFormFieldContext)) {
 												if (!instance._isValueEmpty(previousSettingsFormFieldContext.value)) {
 													settingsFormFieldContext.value = previousSettingsFormFieldContext.value;
 													settingsFormFieldContext.dataType = previousSettingsFormFieldContext.dataType;
 												}
-
 											}
 											else if (settingsFormFieldContext.localizedValue) {
 												var settingsFormFieldContextLocalizedValueKeys = Object.keys(settingsFormFieldContext.localizedValue);
@@ -403,9 +399,7 @@ AUI.add(
 													}
 												);
 											}
-
 										}
-
 									}
 								);
 							}

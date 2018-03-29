@@ -42,8 +42,11 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 
 	@Override
 	protected void configureDefaults(Project project, NodePlugin nodePlugin) {
-		_configureNode(project);
-		_configureTaskNpmInstall(project);
+		String portalVersion = PortalTools.getPortalVersion(project);
+
+		_configureNode(project, portalVersion);
+		_configureTaskNpmInstall(project, portalVersion);
+
 		_configureTasksPublishNodeModule(project);
 	}
 
@@ -55,12 +58,8 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 	private NodeDefaultsPlugin() {
 	}
 
-	private void _configureNode(Project project) {
-		String portalVersion = PortalTools.getPortalVersion(project);
-
-		if (Validator.isNotNull(portalVersion) &&
-			portalVersion.equals(PortalTools.PORTAL_VERSION_7_0_X)) {
-
+	private void _configureNode(Project project, String portalVersion) {
+		if (PortalTools.PORTAL_VERSION_7_0_X.equals(portalVersion)) {
 			NodeExtension nodeExtension = GradleUtil.getExtension(
 				project, NodeExtension.class);
 
@@ -68,14 +67,14 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 		}
 	}
 
-	private void _configureTaskNpmInstall(Project project) {
+	private void _configureTaskNpmInstall(
+		Project project, String portalVersion) {
+
 		NpmInstallTask npmInstallTask = (NpmInstallTask)GradleUtil.getTask(
 			project, NodePlugin.NPM_INSTALL_TASK_NAME);
 
 		npmInstallTask.setNodeModulesDigestFile(
 			new File(npmInstallTask.getNodeModulesDir(), ".digest"));
-
-		String portalVersion = PortalTools.getPortalVersion(project);
 
 		if (Validator.isNull(portalVersion)) {
 			npmInstallTask.setUseNpmCI(Boolean.TRUE);

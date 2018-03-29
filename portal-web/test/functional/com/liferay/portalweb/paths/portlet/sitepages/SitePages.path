@@ -265,7 +265,7 @@
 </tr>
 <tr>
 	<td>DETAILS_FRIENDLY_BASE_URL</td>
-	<td>//span[contains(@id,'urlBase')]</td>
+	<td>//span[contains(@id,'friendlyURL')]</td>
 	<td></td>
 </tr>
 <tr>

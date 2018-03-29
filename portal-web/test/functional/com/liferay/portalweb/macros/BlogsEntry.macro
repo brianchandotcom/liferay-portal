@@ -236,11 +236,9 @@
 	</command>
 
 	<command name="editContentViaCardViewPG">
-		<execute macro="Portlet#mouseOverPortletTitle">
-			<var name="portletTitleName" value="Blogs" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Edit" />
 		</execute>
-
-		<execute macro="PortletEntry#clickEditFromEllipsis" />
 
 		<execute macro="BlogsEntry#editContent">
 			<var name="entryContent" value="${entryContent}" />
@@ -342,11 +340,9 @@
 	</command>
 
 	<command name="editTitleViaCardViewPG">
-		<execute macro="Portlet#mouseOverPortletTitle">
-			<var name="portletTitleName" value="Blogs" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Edit" />
 		</execute>
-
-		<execute macro="PortletEntry#clickEditFromEllipsis" />
 
 		<execute macro="BlogsEntry#editTitle">
 			<var name="entryTitle" value="${entryTitle}" />

@@ -384,7 +384,9 @@
 	</command>
 
 	<command name="editPGViaMG">
-		<execute macro="PortletEntry#clickEditFromEllipsis" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Edit" />
+		</execute>
 
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${mgFolderNameEdit}" />

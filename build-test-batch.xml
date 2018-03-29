@@ -3277,8 +3277,23 @@ information. Make sure to commit in all build services results.
 					</then>
 				</if>
 
+				<exec executable="git" failonerror="true" outputproperty="git.diff">
+					<arg value="diff" />
+					<arg value="--name-only" />
+					<arg value="${liferay.portal.branch}..HEAD" />
+				</exec>
+
+				<var name="format.current.branch" value="true" />
+
+				<if>
+					<contains string="${git.diff}" substring="source-formatter" />
+					<then>
+						<var name="format.current.branch" value="false" />
+					</then>
+				</if>
+
 				<ant dir="portal-impl" target="format-source-all">
-					<property name="format.current.branch" value="true" />
+					<property name="format.current.branch" value="${format.current.branch}" />
 					<property name="show.documentation" value="false" />
 					<property name="source.auto.fix" value="false" />
 					<property name="source.fail.on.error" value="true" />

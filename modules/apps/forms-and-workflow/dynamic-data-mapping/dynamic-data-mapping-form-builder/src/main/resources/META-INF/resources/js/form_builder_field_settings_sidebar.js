@@ -262,9 +262,11 @@ AUI.add(
 							}
 						);
 
-						settingsForm.render();
-
 						instance._removeLoading();
+
+						instance._enableHeader();
+
+						settingsForm.render();
 
 						instance._setFocusToFirstPageField(settingsForm);
 
@@ -288,6 +290,14 @@ AUI.add(
 						);
 
 						return toolbar;
+					},
+
+					_enableHeader: function() {
+						var instance = this;
+
+						var contentBox = instance.get('contentBox');
+
+						contentBox.all('.sidebar .sidebar-header .dropdown .dropdown-toggle.nav-link').removeClass('disabled');
 					},
 
 					_getFieldTypeMenuLayout: function(fieldType) {

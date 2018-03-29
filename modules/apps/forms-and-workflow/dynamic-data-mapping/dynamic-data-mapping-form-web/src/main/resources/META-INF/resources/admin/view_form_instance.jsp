@@ -46,7 +46,9 @@ portletURL.setParameter("displayStyle", displayStyle);
 				</portlet:renderURL>
 
 				<%
-				rowURL = ddmFormAdminDisplayContext.isShowEditFormInstanceIcon(formInstance) ? rowURL : "";
+				if (!ddmFormAdminDisplayContext.isShowEditFormInstanceIcon(formInstance)) {
+					rowURL = null;
+				}
 				%>
 
 				<c:choose>

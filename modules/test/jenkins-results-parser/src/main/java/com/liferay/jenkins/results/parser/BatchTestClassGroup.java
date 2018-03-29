@@ -32,11 +32,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -45,12 +43,12 @@ import java.util.regex.Pattern;
  */
 public class BatchTestClassGroup extends TestClassGroup {
 
-	public AxisTestClassGroup getAxisTestClassGroup(int axisId) {
-		return _axisTestClassGroups.get(axisId);
-	}
-
 	public int getAxisCount() {
 		return _axisTestClassGroups.size();
+	}
+
+	public AxisTestClassGroup getAxisTestClassGroup(int axisId) {
+		return _axisTestClassGroups.get(axisId);
 	}
 
 	public String getBatchName() {
@@ -198,92 +196,6 @@ public class BatchTestClassGroup extends TestClassGroup {
 		}
 
 		return relevantTestClassNameRelativeGlobs;
-	}
-
-	private void _setTestClassFiles() {
-		File workingDirectory = _gitWorkingDirectory.getWorkingDirectory();
-
-		try {
-			Files.walkFileTree(
-				workingDirectory.toPath(),
-				new SimpleFileVisitor<Path>() {
-
-					@Override
-					public FileVisitResult preVisitDirectory(
-							Path filePath, BasicFileAttributes attrs)
-						throws IOException {
-
-						if (_pathExcluded(filePath)) {
-							return FileVisitResult.SKIP_SUBTREE;
-						}
-
-						return FileVisitResult.CONTINUE;
-					}
-
-					@Override
-					public FileVisitResult visitFile(
-							Path filePath, BasicFileAttributes attrs)
-						throws IOException {
-
-						if (_pathIncluded(filePath) &&
-							!_pathExcluded(filePath)) {
-
-							testClassFiles.add(
-								_getPackagePathClassFile(filePath));
-						}
-
-						return FileVisitResult.CONTINUE;
-					}
-
-					private File _getPackagePathClassFile(Path path) {
-						String filePath = path.toString();
-
-						Matcher matcher = _packagePathPattern.matcher(filePath);
-
-						if (matcher.find()) {
-							String packagePath = matcher.group("packagePath");
-
-							packagePath = packagePath.replace(
-								".java", ".class");
-
-							return new File(packagePath);
-						}
-
-						return new File(filePath.replace(".java", ".class"));
-					}
-
-					private boolean _pathExcluded(Path path) {
-						return _pathMatches(
-							path, _testClassNamesExcludesPathMatchers);
-					}
-
-					private boolean _pathIncluded(Path path) {
-						return _pathMatches(
-							path, _testClassNamesIncludesPathMatchers);
-					}
-
-					private boolean _pathMatches(
-						Path path, List<PathMatcher> pathMatchers) {
-
-						for (PathMatcher pathMatcher : pathMatchers) {
-							if (pathMatcher.matches(path)) {
-								return true;
-							}
-						}
-
-						return false;
-					}
-
-				});
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(
-				"Unable to search for test file names in " +
-					workingDirectory.getPath(),
-				ioe);
-		}
-
-		Collections.sort(testClassFiles);
 	}
 
 	private String _getTestClassNamesExcludesPropertyValue() {
@@ -450,27 +362,90 @@ public class BatchTestClassGroup extends TestClassGroup {
 		}
 	}
 
-	private void _setTestRelevantChanges() {
-		List<String> propertyNames = new ArrayList<>();
+	private void _setTestClassFiles() {
+		File workingDirectory = _gitWorkingDirectory.getWorkingDirectory();
 
-		if (_testSuiteName != null) {
-			propertyNames.add(
-				JenkinsResultsParserUtil.combine(
-					"test.relevant.changes[", _testSuiteName, "]"));
+		try {
+			Files.walkFileTree(
+				workingDirectory.toPath(),
+				new SimpleFileVisitor<Path>() {
+
+					@Override
+					public FileVisitResult preVisitDirectory(
+							Path filePath, BasicFileAttributes attrs)
+						throws IOException {
+
+						if (_pathExcluded(filePath)) {
+							return FileVisitResult.SKIP_SUBTREE;
+						}
+
+						return FileVisitResult.CONTINUE;
+					}
+
+					@Override
+					public FileVisitResult visitFile(
+							Path filePath, BasicFileAttributes attrs)
+						throws IOException {
+
+						if (_pathIncluded(filePath) &&
+							!_pathExcluded(filePath)) {
+
+							testClassFiles.add(
+								_getPackagePathClassFile(filePath));
+						}
+
+						return FileVisitResult.CONTINUE;
+					}
+
+					private File _getPackagePathClassFile(Path path) {
+						String filePath = path.toString();
+
+						Matcher matcher = _packagePathPattern.matcher(filePath);
+
+						if (matcher.find()) {
+							String packagePath = matcher.group("packagePath");
+
+							packagePath = packagePath.replace(
+								".java", ".class");
+
+							return new File(packagePath);
+						}
+
+						return new File(filePath.replace(".java", ".class"));
+					}
+
+					private boolean _pathExcluded(Path path) {
+						return _pathMatches(
+							path, _testClassNamesExcludesPathMatchers);
+					}
+
+					private boolean _pathIncluded(Path path) {
+						return _pathMatches(
+							path, _testClassNamesIncludesPathMatchers);
+					}
+
+					private boolean _pathMatches(
+						Path path, List<PathMatcher> pathMatchers) {
+
+						for (PathMatcher pathMatcher : pathMatchers) {
+							if (pathMatcher.matches(path)) {
+								return true;
+							}
+						}
+
+						return false;
+					}
+
+				});
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to search for test file names in " +
+					workingDirectory.getPath(),
+				ioe);
 		}
 
-		propertyNames.add("test.relevant.changes");
-
-		String propertyValue = _getFirstPropertyValue(
-			_portalTestProperties, propertyNames);
-
-		if (propertyValue != null) {
-			_testRelevantChanges = Boolean.parseBoolean(propertyValue);
-
-			return;
-		}
-
-		_testRelevantChanges = _DEFAULT_TEST_RELEVANT_CHANGES;
+		Collections.sort(testClassFiles);
 	}
 
 	private void _setTestClassNamesExcludesRelativeGlobs() {
@@ -519,6 +494,29 @@ public class BatchTestClassGroup extends TestClassGroup {
 		_testClassNamesIncludesPathMatchers.addAll(
 			_getTestClassNamesPathMatchers(
 				testClassNamesIncludesRelativeGlobs));
+	}
+
+	private void _setTestRelevantChanges() {
+		List<String> propertyNames = new ArrayList<>();
+
+		if (_testSuiteName != null) {
+			propertyNames.add(
+				JenkinsResultsParserUtil.combine(
+					"test.relevant.changes[", _testSuiteName, "]"));
+		}
+
+		propertyNames.add("test.relevant.changes");
+
+		String propertyValue = _getFirstPropertyValue(
+			_portalTestProperties, propertyNames);
+
+		if (propertyValue != null) {
+			_testRelevantChanges = Boolean.parseBoolean(propertyValue);
+
+			return;
+		}
+
+		_testRelevantChanges = _DEFAULT_TEST_RELEVANT_CHANGES;
 	}
 
 	private static final int _DEFAULT_AXIS_MAX_SIZE = 5000;

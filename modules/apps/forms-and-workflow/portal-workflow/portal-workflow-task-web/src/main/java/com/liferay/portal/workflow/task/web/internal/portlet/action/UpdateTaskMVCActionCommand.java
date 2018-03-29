@@ -73,7 +73,7 @@ public class UpdateTaskMVCActionCommand
 
 		Date dueDate = _portal.getDate(
 			dueDateMonth, dueDateDay, dueDateYear, dueDateHour, dueDateMinute,
-			WorkflowTaskDueDateException.class);
+			themeDisplay.getTimeZone(), WorkflowTaskDueDateException.class);
 
 		workflowTaskManager.updateDueDate(
 			themeDisplay.getCompanyId(), themeDisplay.getUserId(),

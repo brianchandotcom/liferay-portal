@@ -36,6 +36,11 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 		return _INCLUDES;
 	}
 
+	@Override
+	protected boolean hasGeneratedTag(String content) {
+		return false;
+	}
+
 	private static final String[] _INCLUDES = {"**/*.ftl"};
 
 }

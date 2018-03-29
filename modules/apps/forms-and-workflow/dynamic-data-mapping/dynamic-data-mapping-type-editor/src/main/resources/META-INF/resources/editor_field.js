@@ -147,7 +147,7 @@ AUI.add(
 						var eventData = event.data;
 						var props = eventData.props;
 
-						if (props.tabKey == 'twitter') {
+						if (props.tabKey === 'twitter') {
 							instance._onChangeEditor();
 						}
 					},

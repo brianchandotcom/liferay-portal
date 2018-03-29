@@ -190,11 +190,12 @@ else {
 	</c:if>
 
 	<%
+	boolean hasExportImportPortletInfoPermission = GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
 	boolean inStagingGroup = stagingGroupHelper.isStagingGroup(scopeGroupId);
 	boolean portletStaged = stagingGroupHelper.isStagedPortlet(scopeGroupId, JournalPortletKeys.JOURNAL);
 	%>
 
-	<c:if test="<%= (folder != null) && bookmarksAdmin && inStagingGroup && portletStaged %>">
+	<c:if test="<%= (folder != null) && hasExportImportPortletInfoPermission && inStagingGroup && portletStaged %>">
 		<portlet:actionURL name="/journal/publish_folder" var="publishFolderURL">
 			<portlet:param name="folderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
 		</portlet:actionURL>

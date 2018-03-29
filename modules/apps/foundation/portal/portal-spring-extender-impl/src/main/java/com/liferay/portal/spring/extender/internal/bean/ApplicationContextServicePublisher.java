@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.util.PropsValues;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Dictionary;
 import java.util.HashSet;
@@ -77,9 +76,11 @@ public class ApplicationContextServicePublisher {
 			"org.springframework.context.service.name",
 			bundle.getSymbolicName());
 
-		registerService(
-			_applicationContext,
-			Arrays.asList(ApplicationContext.class.getName()), properties);
+		ServiceRegistration<ApplicationContext> serviceRegistration =
+			_bundleContext.registerService(
+				ApplicationContext.class, _applicationContext, properties);
+
+		_serviceRegistrations.add(serviceRegistration);
 	}
 
 	public void unregister() {

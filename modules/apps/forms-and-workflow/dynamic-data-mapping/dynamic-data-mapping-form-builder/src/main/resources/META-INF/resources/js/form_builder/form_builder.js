@@ -546,7 +546,8 @@ AUI.add(
 							confirmFn: confirmFn,
 							id: 'cancelFieldChangesDialog',
 							labelHTML: Liferay.Language.get('yes-cancel'),
-							title: Liferay.Language.get('cancel-field-changes-question')
+							title: Liferay.Language.get('cancel-field-changes-question'),
+							width: 300
 						};
 
 						FormBuilderConfirmDialog.open(config);

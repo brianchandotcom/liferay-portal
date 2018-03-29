@@ -47,6 +47,17 @@ AUI.add(
 						instance.get('container').focus();
 					},
 
+					getTemplateContext: function() {
+						var instance = this;
+
+						return A.merge(
+							ParagraphField.superclass.getTemplateContext.apply(instance, arguments),
+							{
+								text: instance.get('text')
+							}
+						);
+					},
+
 					getValue: function() {
 						var instance = this;
 
@@ -65,7 +76,7 @@ AUI.add(
 						if (!context) {
 							return {};
 						}
-						else if (context.text && !Lang.isFunction(context.text)) {
+						else if (context.text && Lang.isObject(context.text) && !Lang.isFunction(context.text)) {
 							return A.merge(
 								context,
 								{

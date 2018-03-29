@@ -1497,18 +1497,6 @@
 		<execute function="AssertElementNotPresent" locator1="KnowledgeBase#DISPLAY_TITLE" />
 	</command>
 
-	<command name="viewDisabledKBSocialBookmarkSites">
-		<execute function="AssertElementNotPresent" locator1="SocialBookmarks#SOCIAL_BOOKMARKS_SITE_LINK">
-			<var name="key_socialBookmarkSite" value="${socialBookmarkSite}" />
-		</execute>
-	</command>
-
-	<command name="viewEnabledKBSocialBookmarkSites">
-		<execute function="AssertElementPresent" locator1="SocialBookmarks#SOCIAL_BOOKMARKS_SITE_LINK">
-			<var name="key_socialBookmarkSite" value="${socialBookmarkSite}" />
-		</execute>
-	</command>
-
 	<command name="viewFriendlyURLCP">
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS_2">
 			<var name="key_rowEntry" value="${kbArticleTitle}" />

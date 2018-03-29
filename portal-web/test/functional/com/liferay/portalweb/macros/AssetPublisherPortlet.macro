@@ -1064,11 +1064,9 @@
 		<execute function="AssertElementPresent" locator1="Comments#SUBSCRIBE_TO_COMMENTS_LINK" />
 		<execute function="AssertElementPresent" locator1="Icon#CUSTOM_EDIT" />
 
-		<execute function="Click" locator1="Icon#SHARE" value1="Share" />
+		<execute function="Click" locator1="AP#ASSET_RICH_SUMMARY_TITLE" value1="${assetTitle}" />
 
-		<execute function="AssertElementPresent" locator1="Icon#TWITTER" />
-		<execute function="AssertElementPresent" locator1="Icon#FACEBOOK" />
-		<execute function="AssertElementPresent" locator1="Icon#GOOGLE_PLUS" />
+		<execute macro="SocialBookmarks#viewDefaultSharableBookmarks" />
 	</command>
 
 	<command name="viewDefaultWithAllDisplaySettingsCheckboxesPG">

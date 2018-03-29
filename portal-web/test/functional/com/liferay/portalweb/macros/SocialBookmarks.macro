@@ -1,0 +1,43 @@
+<definition>
+	<command name="viewBookmarkIcons">
+		<for list="${socialBookmarks}" param="socialBookmark">
+			<execute function="AssertElementPresent" locator1="SocialBookmarks#SOCIAL_BOOKMARK_ICON">
+				<var method="StringUtiL#toLowerCase('${socialBookmark}')" name="${key_socialBookmark}" />
+			</execute>
+		</for>
+	</command>
+
+	<command name="viewBookmarkMenuItems">
+		<execute function="Click" locator1="Icon#SHARE" />
+
+		<for list="${socialBookmarks}" param="socialBookmark">
+			<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM">
+				<var name="key_menuItem" value="${socialBookmark}" />
+			</execute>
+		</for>
+
+		<execute function="Click" locator1="Icon#SHARE" />
+	</command>
+
+	<command name="viewBookmarksNotPresent">
+		<execute function="Click" locator1="Icon#SHARE" />
+
+		<for list="${socialBookmarks}" param="socialBookmark">
+			<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
+				<var name="key_menuItem" value="${socialBookmark}" />
+			</execute>
+		</for>
+
+		<execute function="Click" locator1="Icon#SHARE" />
+	</command>
+
+	<command name="viewDefaultSharableBookmarks">
+		<execute macro="SocialBookmarks#viewBookmarkIcons">
+			<var name="socialBookmarks" value="Facebook,LinkedIn,Twitter" />
+		</execute>
+
+		<execute macro="SocialBookmarks#viewBookmarkMenuItems">
+			<var name="socialBookmarks" value="Google+,AddThis,Delicious,Digg,Evernote,Newsvine,Reddit,Slashdot,StumbleUpon,Tuenti" />
+		</execute>
+	</command>
+</definition>

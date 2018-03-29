@@ -9,13 +9,8 @@
 </thead>
 <tbody>
 <tr>
-	<td>GOOGLE_PLUS</td>
-	<td>//li[contains(@class,'taglib-social-bookmark-plusone')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TWITTER</td>
-	<td>//li[contains(@class,'taglib-social-bookmark-twitter')]</td>
+	<td>SOCIAL_BOOKMARK_ICON</td>
+	<td>//li[contains(@class,'taglib-social-bookmark-${key_socialBookmark}')]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -48,12 +43,6 @@
 <tr>
 	<td></td>
 	<td></td>
-	<td></td>
-</tr>
-<!--SOCIAL_BOOKMARKS-->
-<tr>
-	<td>SOCIAL_BOOKMARKS_SITE_LINK</td>
-	<td>//a[contains(@class,'social-bookmark')]//span[contains(.,'${key_socialBookmarkSite}')]</td>
 	<td></td>
 </tr>
 </tbody>

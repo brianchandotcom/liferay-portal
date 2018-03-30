@@ -32,6 +32,7 @@ String casServiceURL = ParamUtil.getString(request, "casServiceURL");
 
 			<%
 			String casLoginURLResult = _testURL(casLoginURL);
+
 			String casLoginURLCssClass = _getCssClass(casLoginURLResult);
 			%>
 
@@ -46,6 +47,7 @@ String casServiceURL = ParamUtil.getString(request, "casServiceURL");
 
 			<%
 			String casLogoutURLResult = _testURL(casLogoutURL);
+
 			String casLogoutURLCssClass = _getCssClass(casLogoutURLResult);
 			%>
 
@@ -62,6 +64,7 @@ String casServiceURL = ParamUtil.getString(request, "casServiceURL");
 
 				<%
 				String casServerURLResult = _testURL(casServerURL);
+
 				String casServerURLCssClass = _getCssClass(casServerURLResult);
 				%>
 
@@ -79,6 +82,7 @@ String casServiceURL = ParamUtil.getString(request, "casServiceURL");
 
 				<%
 				String casServiceURLResult = _testURL(casServiceURL);
+
 				String casServiceURLCssClass = _getCssClass(casServiceURLResult);
 				%>
 

@@ -1031,6 +1031,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			try {
 				String subject = String.valueOf(classPK);
+
 				//String body = subject;
 
 				message = addDiscussionMessage(

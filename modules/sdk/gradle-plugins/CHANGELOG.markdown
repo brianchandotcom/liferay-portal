@@ -3896,6 +3896,11 @@ version 2.1.2.
 - [LPS-78901]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 1.0.185.
 
+## 3.10.0 - 2018-03-29
+
+### Added
+- [LPS-78741]: Add method to get the project property `portal.version`.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

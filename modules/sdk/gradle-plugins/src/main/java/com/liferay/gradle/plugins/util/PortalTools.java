@@ -35,7 +35,13 @@ public class PortalTools {
 
 	public static final String GROUP = "com.liferay";
 
+	public static final String PORTAL_VERSION_7_0_X = "7.0.x";
+
 	public static final String PORTAL_VERSION_PROPERTY_NAME = "portal.version";
+
+	public static String getPortalVersion(Project project) {
+		return _getPortalVersion(project);
+	}
 
 	public static String getVersion(Project project, String name) {
 		return _getVersion(project, name, _getPortalVersion(project));
@@ -139,16 +145,18 @@ public class PortalTools {
 	private static final String[] _PORTAL_VERSION_PROPERTY_NAMES =
 		{"git.working.branch.name", PORTAL_VERSION_PROPERTY_NAME};
 
-	private static final Map<String, Properties> _versionsMap = new HashMap<>();
+	private static final Map<String, Properties> _versionsMap;
 
 	static {
+		_versionsMap = new HashMap<>();
+
 		ClassLoader classLoader = PortalTools.class.getClassLoader();
 
 		try {
 			Properties properties = _populateVersionsMap(
 				classLoader, null, null);
 
-			_populateVersionsMap(classLoader, "7.0.x", properties);
+			_populateVersionsMap(classLoader, PORTAL_VERSION_7_0_X, properties);
 		}
 		catch (IOException ioe) {
 			throw new ExceptionInInitializerError(ioe);

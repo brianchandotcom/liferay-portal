@@ -206,16 +206,24 @@ database.@{database.type}.version=@{database.version}]]></echo>
 			<if>
 				<and>
 					<equals arg1="@{database.type}" arg2="mysql" />
-					<equals arg1="@{database.version}" arg2="5.5" />
+					<or>
+						<equals arg1="@{database.version}" arg2="5.5" />
+						<equals arg1="@{database.version}" arg2="5.7" />
+					</or>
 				</and>
 				<then>
+					<var name="database.major.version.build" unset="true" />
 					<var name="database.mysql.service.cmd.start" unset="true" />
 					<var name="database.mysql.service.cmd.stop" unset="true" />
 					<var name="mysql.executable" unset="true" />
 
-					<property name="database.mysql.service.cmd.start" value="mysql55 start" />
-					<property name="database.mysql.service.cmd.stop" value="mysql55 stop" />
-					<property name="mysql.executable" value="mysql55" />
+					<antelope:stringutil property="database.major.version.build" string="@{database.version}">
+						<antelope:replace regex="\." replacement="" />
+					</antelope:stringutil>
+
+					<property name="database.mysql.service.cmd.start" value="mysql${database.major.version.build} start" />
+					<property name="database.mysql.service.cmd.stop" value="mysql${database.major.version.build} stop" />
+					<property name="mysql.executable" value="mysql${database.major.version.build}" />
 
 					<echo append="true" file="test.${env.HOSTNAME}.properties"><![CDATA[
 database.mysql.service.cmd.start=${database.mysql.service.cmd.start}

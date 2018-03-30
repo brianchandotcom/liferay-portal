@@ -65,50 +65,6 @@ public class LayoutSetLocalServiceStagingAdvice implements BeanFactoryAware {
 		_beanFactory = beanFactory;
 	}
 
-	private class LayoutSetLocalServiceStagingInvocationHandler
-		implements InvocationHandler {
-
-		@Override
-		public Object invoke(Object proxy, Method method, Object[] arguments)
-			throws Throwable {
-
-			try {
-				Object returnValue = method.invoke(_targetObject, arguments);
-
-				if (!StagingAdvicesThreadLocal.isEnabled()) {
-					return returnValue;
-				}
-
-				if (returnValue instanceof LayoutSet) {
-					return wrapLayoutSet((LayoutSet)returnValue);
-				}
-
-				if (returnValue instanceof List<?>) {
-					List<?> list = (List<?>)returnValue;
-
-					if (!list.isEmpty() && (list.get(0) instanceof LayoutSet)) {
-						returnValue = wrapLayoutSets(
-							(List<LayoutSet>)returnValue);
-					}
-				}
-
-				return returnValue;
-			}
-			catch (InvocationTargetException ite) {
-				throw ite.getCause();
-			}
-		}
-
-		private LayoutSetLocalServiceStagingInvocationHandler(
-			Object targetObject) {
-
-			_targetObject = targetObject;
-		}
-
-		private final Object _targetObject;
-
-	}
-
 	protected LayoutSet wrapLayoutSet(LayoutSet layoutSet) {
 		try {
 			if (!LayoutStagingUtil.isBranchingLayoutSet(
@@ -152,5 +108,49 @@ public class LayoutSetLocalServiceStagingAdvice implements BeanFactoryAware {
 		LayoutSetLocalServiceStagingAdvice.class);
 
 	private BeanFactory _beanFactory;
+
+	private class LayoutSetLocalServiceStagingInvocationHandler
+		implements InvocationHandler {
+
+		@Override
+		public Object invoke(Object proxy, Method method, Object[] arguments)
+			throws Throwable {
+
+			try {
+				Object returnValue = method.invoke(_targetObject, arguments);
+
+				if (!StagingAdvicesThreadLocal.isEnabled()) {
+					return returnValue;
+				}
+
+				if (returnValue instanceof LayoutSet) {
+					return wrapLayoutSet((LayoutSet)returnValue);
+				}
+
+				if (returnValue instanceof List<?>) {
+					List<?> list = (List<?>)returnValue;
+
+					if (!list.isEmpty() && (list.get(0) instanceof LayoutSet)) {
+						returnValue = wrapLayoutSets(
+							(List<LayoutSet>)returnValue);
+					}
+				}
+
+				return returnValue;
+			}
+			catch (InvocationTargetException ite) {
+				throw ite.getCause();
+			}
+		}
+
+		private LayoutSetLocalServiceStagingInvocationHandler(
+			Object targetObject) {
+
+			_targetObject = targetObject;
+		}
+
+		private final Object _targetObject;
+
+	}
 
 }

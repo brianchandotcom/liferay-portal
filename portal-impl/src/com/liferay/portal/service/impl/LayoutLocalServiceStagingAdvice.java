@@ -147,144 +147,6 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 		_beanFactory = beanFactory;
 	}
 
-	private class LayoutLocalServiceStagingInvocationHandler
-		implements InvocationHandler {
-
-		@Override
-		public Object invoke(Object proxy, Method method, Object[] arguments)
-			throws Throwable {
-
-			if (!StagingAdvicesThreadLocal.isEnabled()) {
-				return _invoke(method, arguments);
-			}
-
-			String methodName = method.getName();
-
-			if (!_layoutLocalServiceStagingAdviceMethodNames.contains(
-					methodName)) {
-
-				return wrapReturnValue(_invoke(method, arguments), false);
-			}
-
-			Object returnValue = null;
-
-			Class<?>[] parameterTypes = method.getParameterTypes();
-
-			if (methodName.equals("createLayout")) {
-				return _invoke(method, arguments);
-			}
-			else if (methodName.equals("deleteLayout")) {
-				if (arguments.length == 3) {
-					deleteLayout(
-						(LayoutLocalService)_targetObject, (Layout)arguments[0],
-						(Boolean)arguments[1], (ServiceContext)arguments[2]);
-				}
-				else if (arguments.length == 4) {
-					deleteLayout(
-						(LayoutLocalService)_targetObject, (Long)arguments[0],
-						(Boolean)arguments[1], (Long)arguments[2],
-						(ServiceContext)arguments[3]);
-				}
-				else {
-					return wrapReturnValue(_invoke(method, arguments), false);
-				}
-			}
-			else if (methodName.equals("getLayouts")) {
-				boolean showIncomplete = false;
-
-				if (arguments.length == 6) {
-					showIncomplete = (Boolean)arguments[3];
-				}
-				else if (arguments.length == 7) {
-					showIncomplete = (Boolean)arguments[3];
-				}
-				else if (Arrays.equals(parameterTypes, _GET_LAYOUTS_TYPES)) {
-					showIncomplete = true;
-				}
-
-				return wrapReturnValue(
-					_invoke(method, arguments), showIncomplete);
-			}
-			else if (methodName.equals("updateLayout") &&
-					 (arguments.length == 15)) {
-
-				Map<Locale, String> friendlyURLMap = null;
-
-				if (Arrays.equals(
-						parameterTypes, _UPDATE_LAYOUT_PARAMETER_TYPES)) {
-
-					friendlyURLMap = new HashMap<>();
-
-					friendlyURLMap.put(
-						LocaleUtil.getSiteDefault(), (String)arguments[11]);
-				}
-				else {
-					friendlyURLMap = (Map<Locale, String>)arguments[11];
-				}
-
-				returnValue = updateLayout(
-					(LayoutLocalService)_targetObject, (Long)arguments[0],
-					(Boolean)arguments[1], (Long)arguments[2],
-					(Long)arguments[3], (Map<Locale, String>)arguments[4],
-					(Map<Locale, String>)arguments[5],
-					(Map<Locale, String>)arguments[6],
-					(Map<Locale, String>)arguments[7],
-					(Map<Locale, String>)arguments[8], (String)arguments[9],
-					(Boolean)arguments[10], friendlyURLMap,
-					(Boolean)arguments[12], (byte[])arguments[13],
-					(ServiceContext)arguments[14]);
-			}
-			else {
-				try {
-					Class<?> clazz = getClass();
-
-					parameterTypes = ArrayUtil.append(
-						new Class<?>[] {LayoutLocalService.class},
-						parameterTypes);
-
-					Method layoutLocalServiceStagingAdviceMethod =
-						clazz.getMethod(methodName, parameterTypes);
-
-					arguments = ArrayUtil.append(
-						new Object[] {_targetObject}, arguments);
-
-					returnValue = layoutLocalServiceStagingAdviceMethod.invoke(
-						this, arguments);
-				}
-				catch (InvocationTargetException ite) {
-					throw ite.getTargetException();
-				}
-				catch (NoSuchMethodException nsme) {
-					returnValue = _invoke(method, arguments);
-				}
-			}
-
-			returnValue = wrapReturnValue(returnValue, false);
-
-			return returnValue;
-		}
-
-		private LayoutLocalServiceStagingInvocationHandler(
-			Object targetObject) {
-
-			_targetObject = targetObject;
-		}
-
-		private Object _invoke(Method method, Object[] arguments)
-			throws Throwable {
-
-			try {
-				return method.invoke(_targetObject, arguments);
-			}
-			catch (InvocationTargetException ite) {
-				throw ite.getCause();
-			}
-		}
-
-		private final Object _targetObject;
-
-	}
-
 	public Layout updateLayout(
 			LayoutLocalService layoutLocalService, long groupId,
 			boolean privateLayout, long layoutId, long parentLayoutId,
@@ -752,5 +614,143 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 	}
 
 	private BeanFactory _beanFactory;
+
+	private class LayoutLocalServiceStagingInvocationHandler
+		implements InvocationHandler {
+
+		@Override
+		public Object invoke(Object proxy, Method method, Object[] arguments)
+			throws Throwable {
+
+			if (!StagingAdvicesThreadLocal.isEnabled()) {
+				return _invoke(method, arguments);
+			}
+
+			String methodName = method.getName();
+
+			if (!_layoutLocalServiceStagingAdviceMethodNames.contains(
+					methodName)) {
+
+				return wrapReturnValue(_invoke(method, arguments), false);
+			}
+
+			Object returnValue = null;
+
+			Class<?>[] parameterTypes = method.getParameterTypes();
+
+			if (methodName.equals("createLayout")) {
+				return _invoke(method, arguments);
+			}
+			else if (methodName.equals("deleteLayout")) {
+				if (arguments.length == 3) {
+					deleteLayout(
+						(LayoutLocalService)_targetObject, (Layout)arguments[0],
+						(Boolean)arguments[1], (ServiceContext)arguments[2]);
+				}
+				else if (arguments.length == 4) {
+					deleteLayout(
+						(LayoutLocalService)_targetObject, (Long)arguments[0],
+						(Boolean)arguments[1], (Long)arguments[2],
+						(ServiceContext)arguments[3]);
+				}
+				else {
+					return wrapReturnValue(_invoke(method, arguments), false);
+				}
+			}
+			else if (methodName.equals("getLayouts")) {
+				boolean showIncomplete = false;
+
+				if (arguments.length == 6) {
+					showIncomplete = (Boolean)arguments[3];
+				}
+				else if (arguments.length == 7) {
+					showIncomplete = (Boolean)arguments[3];
+				}
+				else if (Arrays.equals(parameterTypes, _GET_LAYOUTS_TYPES)) {
+					showIncomplete = true;
+				}
+
+				return wrapReturnValue(
+					_invoke(method, arguments), showIncomplete);
+			}
+			else if (methodName.equals("updateLayout") &&
+					 (arguments.length == 15)) {
+
+				Map<Locale, String> friendlyURLMap = null;
+
+				if (Arrays.equals(
+						parameterTypes, _UPDATE_LAYOUT_PARAMETER_TYPES)) {
+
+					friendlyURLMap = new HashMap<>();
+
+					friendlyURLMap.put(
+						LocaleUtil.getSiteDefault(), (String)arguments[11]);
+				}
+				else {
+					friendlyURLMap = (Map<Locale, String>)arguments[11];
+				}
+
+				returnValue = updateLayout(
+					(LayoutLocalService)_targetObject, (Long)arguments[0],
+					(Boolean)arguments[1], (Long)arguments[2],
+					(Long)arguments[3], (Map<Locale, String>)arguments[4],
+					(Map<Locale, String>)arguments[5],
+					(Map<Locale, String>)arguments[6],
+					(Map<Locale, String>)arguments[7],
+					(Map<Locale, String>)arguments[8], (String)arguments[9],
+					(Boolean)arguments[10], friendlyURLMap,
+					(Boolean)arguments[12], (byte[])arguments[13],
+					(ServiceContext)arguments[14]);
+			}
+			else {
+				try {
+					Class<?> clazz = getClass();
+
+					parameterTypes = ArrayUtil.append(
+						new Class<?>[] {LayoutLocalService.class},
+						parameterTypes);
+
+					Method layoutLocalServiceStagingAdviceMethod =
+						clazz.getMethod(methodName, parameterTypes);
+
+					arguments = ArrayUtil.append(
+						new Object[] {_targetObject}, arguments);
+
+					returnValue = layoutLocalServiceStagingAdviceMethod.invoke(
+						this, arguments);
+				}
+				catch (InvocationTargetException ite) {
+					throw ite.getTargetException();
+				}
+				catch (NoSuchMethodException nsme) {
+					returnValue = _invoke(method, arguments);
+				}
+			}
+
+			returnValue = wrapReturnValue(returnValue, false);
+
+			return returnValue;
+		}
+
+		private LayoutLocalServiceStagingInvocationHandler(
+			Object targetObject) {
+
+			_targetObject = targetObject;
+		}
+
+		private Object _invoke(Method method, Object[] arguments)
+			throws Throwable {
+
+			try {
+				return method.invoke(_targetObject, arguments);
+			}
+			catch (InvocationTargetException ite) {
+				throw ite.getCause();
+			}
+		}
+
+		private final Object _targetObject;
+
+	}
 
 }

@@ -37,9 +37,7 @@ public class UADEntityChunkedCommandUtil {
 				end = count;
 			}
 
-			for (T entity :
-					uadEntityAggregator.getEntities(userId, start, end)) {
-
+			for (T entity : uadEntityAggregator.getRange(userId, start, end)) {
 				uadEntityUnsafeConsumer.accept(entity);
 			}
 

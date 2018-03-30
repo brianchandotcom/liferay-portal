@@ -47,9 +47,9 @@
 
 		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_SPECIFIC_TAB" value1="Blog Images" />
 
-		<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${imageFileName}" />
+		<execute function="Type" locator1="Search#TEMPLATE_SEARCH_BAR" value1="${imageFileName}" />
 
-		<execute function="KeyPress" locator1="Search#SEARCH_FIELD" value1="\RETURN" />
+		<execute function="KeyPress" locator1="Search#TEMPLATE_SEARCH_BAR" value1="\RETURN" />
 
 		<execute function="AssertTextEquals" locator1="Search#SEARCH_INFO" value1="Searched for ${imageFileName} in Blog Images" />
 
@@ -74,9 +74,9 @@
 
 		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_SPECIFIC_TAB" value1="Documents and Media" />
 
-		<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${imageFileName}" />
+		<execute function="Type" locator1="Search#TEMPLATE_SEARCH_BAR" value1="${imageFileName}" />
 
-		<execute function="KeyPress" locator1="Search#SEARCH_FIELD" value1="\RETURN" />
+		<execute function="KeyPress" locator1="Search#TEMPLATE_SEARCH_BAR" value1="\RETURN" />
 
 		<execute function="AssertTextEquals" locator1="Search#SEARCH_INFO" value1="Searched for ${imageFileName} everywhere." />
 

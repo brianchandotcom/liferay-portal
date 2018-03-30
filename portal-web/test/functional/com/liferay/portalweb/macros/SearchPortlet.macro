@@ -81,9 +81,9 @@
 	</command>
 
 	<command name="searchPG">
-		<execute function="AssertElementPresent" locator1="Search#SEARCH_FIELD" />
+		<execute function="AssertElementPresent" locator1="Search#TEMPLATE_SEARCH_BAR" />
 
-		<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${searchTerm}" />
+		<execute function="Type" locator1="Search#TEMPLATE_SEARCH_BAR" value1="${searchTerm}" />
 
 		<if>
 			<isset var="localizationIDName" />
@@ -110,7 +110,7 @@
 			</elseif>
 		</if>
 
-		<execute function="KeyPress" locator1="Search#SEARCH_FIELD" value1="\RETURN" />
+		<execute function="KeyPress" locator1="Search#TEMPLATE_SEARCH_BAR" value1="\RETURN" />
 	</command>
 
 	<command name="unscopeAssetFacetPG">
@@ -133,7 +133,7 @@
 	</command>
 
 	<command name="viewIncrementalSearchPG">
-		<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${searchTerm}" />
+		<execute function="Type" locator1="Search#TEMPLATE_SEARCH_BAR" value1="${searchTerm}" />
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<execute function="AssertTextEquals" locator1="Search#INCREMENTAL_SEARCH_SUGGESTION" value1="${kbArticleTitle}" />

@@ -742,18 +742,22 @@
 			<var name="key_fieldName" value="${fieldName}" />
 		</execute>
 
-		<for list="${currentLanguageList}" param="key_localizationName">
+		<for list="${currentLanguageList}" param="key_locale">
 			<execute function="AssertElementPresent" locator1="Translation#LOCALIZATION_NAME" />
 		</for>
 
 		<if>
 			<equals arg1="${assertUnavailableLanguages}" arg2="true" />
 			<then>
-				<for list="${unavailableLanguageList}" param="key_localizationName">
+				<for list="${unavailableLanguageList}" param="key_locale">
 					<execute function="AssertElementNotPresent" locator1="Translation#LOCALIZATION_NAME" />
 				</for>
 			</then>
 		</if>
+
+		<execute function="Click" locator1="Button#LOCALIZATION">
+			<var name="key_fieldName" value="${fieldName}" />
+		</execute>
 	</command>
 
 	<command name="viewInactiveRequestMessage">

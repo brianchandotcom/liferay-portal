@@ -67,7 +67,7 @@ public class AnnouncementsFlagUADEntityExporterTest
 			_user.getUserId());
 
 		List<AnnouncementsFlag> announcementsFlags =
-			_uadEntityAggregator.getEntities(_user.getUserId(), 0, 1);
+			_uadEntityAggregator.getRange(_user.getUserId(), 0, 1);
 
 		AnnouncementsFlag announcementsFlag1 = announcementsFlags.get(0);
 

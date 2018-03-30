@@ -102,9 +102,9 @@ public abstract class BaseUADEntityAnonymizerTestCase<T extends BaseModel> {
 	public void testDelete() throws Exception {
 		BaseModel baseModel = addBaseModel(_user.getUserId(), false);
 
-		List<T> entities = _uadEntityAggregator.getAll(_user.getUserId());
+		List<T> baseModels = _uadEntityAggregator.getAll(_user.getUserId());
 
-		_uadEntityAnonymizer.delete(entities.get(0));
+		_uadEntityAnonymizer.delete(baseModels.get(0));
 
 		long baseModelPK = getBaseModelPrimaryKey(baseModel);
 
@@ -152,9 +152,10 @@ public abstract class BaseUADEntityAnonymizerTestCase<T extends BaseModel> {
 	protected abstract boolean isBaseModelDeleted(long baseModelPK);
 
 	private void _testAutoAnonymize(BaseModel baseModel) throws Exception {
-		List<T> entities = _uadEntityAggregator.getAll(_user.getUserId());
+		List<T> baseModels = _uadEntityAggregator.getAll(_user.getUserId());
 
-		_uadEntityAnonymizer.autoAnonymize(entities.get(0), _user.getUserId());
+		_uadEntityAnonymizer.autoAnonymize(
+			baseModels.get(0), _user.getUserId());
 
 		long baseModelPK = getBaseModelPrimaryKey(baseModel);
 

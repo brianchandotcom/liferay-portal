@@ -47,20 +47,20 @@ public abstract class BaseUADEntityAggregatorTestCase<T extends BaseModel> {
 	}
 
 	@Test
-	public void testGetUADEntities() throws Exception {
+	public void testGetAll() throws Exception {
 		addBaseModel(TestPropsValues.getUserId());
 
 		T baseModel = addBaseModel(_user.getUserId());
 
-		List<T> entities = _uadEntityAggregator.getAll(_user.getUserId());
+		List<T> baseModels = _uadEntityAggregator.getAll(_user.getUserId());
 
-		Assert.assertEquals(entities.toString(), 1, entities.size());
+		Assert.assertEquals(baseModels.toString(), 1, baseModels.size());
 
-		Assert.assertEquals(baseModel, entities.get(0));
+		Assert.assertEquals(baseModel, baseModels.get(0));
 	}
 
 	@Test
-	public void testGetUADEntitiesByStatusByUserId() throws Exception {
+	public void testGetAllByStatusByUserId() throws Exception {
 		Assume.assumeTrue(this instanceof WhenHasStatusByUserIdField);
 
 		WhenHasStatusByUserIdField<T> whenHasStatusByUserIdField =
@@ -69,15 +69,15 @@ public abstract class BaseUADEntityAggregatorTestCase<T extends BaseModel> {
 		T baseModel = whenHasStatusByUserIdField.addBaseModelWithStatusByUserId(
 			TestPropsValues.getUserId(), _user.getUserId());
 
-		List<T> entities = _uadEntityAggregator.getAll(_user.getUserId());
+		List<T> baseModels = _uadEntityAggregator.getAll(_user.getUserId());
 
-		Assert.assertEquals(entities.toString(), 1, entities.size());
+		Assert.assertEquals(baseModels.toString(), 1, baseModels.size());
 
-		Assert.assertEquals(baseModel, entities.get(0));
+		Assert.assertEquals(baseModel, baseModels.get(0));
 	}
 
 	@Test
-	public void testGetUADEntitiesWithNoBaseModel() throws Exception {
+	public void testGetAllWithNoBaseModel() throws Exception {
 		Assert.assertEquals(0, _uadEntityAggregator.count(_user.getUserId()));
 	}
 

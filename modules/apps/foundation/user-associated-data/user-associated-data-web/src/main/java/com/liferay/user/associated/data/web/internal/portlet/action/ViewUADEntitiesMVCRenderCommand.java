@@ -159,7 +159,7 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 		UADEntityAggregator uadEntityAggregator =
 			_uadRegistry.getUADEntityAggregator(uadRegistryKey);
 
-		List<Object> entities = uadEntityAggregator.getEntities(
+		List<Object> entities = uadEntityAggregator.getRange(
 			selectedUserId, searchContainer.getStart(),
 			searchContainer.getEnd());
 

@@ -16,7 +16,11 @@
 			</execute>
 		</for>
 
-		<execute function="AssertConsoleTextNotPresent" value1="DB2 SQL Error: SQLCODE=-134, SQLSTATE=42907, SQLERRMC=XSD407_0_, DRIVER=4.8.87" />
+		<execute function="AssertConsoleTextNotPresent" value1="DB2 SQL Error:" />
+		<execute function="AssertConsoleTextNotPresent" value1="SQLCODE=" />
+		<execute function="AssertConsoleTextNotPresent" value1="SQLSTATE=" />
+		<execute function="AssertConsoleTextNotPresent" value1="SQLERRMC=" />
+		<execute function="AssertConsoleTextNotPresent" value1="DRIVER=4.8.87" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
@@ -49,7 +53,11 @@
 			<var name="fieldFieldLabel" value="Text" />
 		</execute>
 
-		<execute function="AssertConsoleTextNotPresent" value1="DB2 SQL Error: SQLCODE=-134, SQLSTATE=42907, SQLERRMC=XSD407_0_, DRIVER=4.8.87" />
+		<execute function="AssertConsoleTextNotPresent" value1="DB2 SQL Error:" />
+		<execute function="AssertConsoleTextNotPresent" value1="SQLCODE=" />
+		<execute function="AssertConsoleTextNotPresent" value1="SQLSTATE=" />
+		<execute function="AssertConsoleTextNotPresent" value1="SQLERRMC=" />
+		<execute function="AssertConsoleTextNotPresent" value1="DRIVER=4.8.87" />
 	</command>
 
 	<command name="addForm">

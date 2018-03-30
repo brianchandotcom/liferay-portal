@@ -31,26 +31,22 @@ UADEntity uadEntity = (UADEntity)row.getObject();
 	triggerCssClass="component-action"
 >
 	<portlet:actionURL name="/auto_anonymize_uad_entity" var="autoAnonymizeURL">
-		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="uadEntityId" value="<%= uadEntity.getUADEntityId() %>" />
-		<portlet:param name="uadRegistryKey" value="<%= uadEntity.getUADRegistryKey() %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon
 		message="anonymize"
-		onClick='<%= renderResponse.getNamespace() + "confirmAction('" + autoAnonymizeURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-anonymize-this-entity") + "')" %>'
+		onClick='<%= renderResponse.getNamespace() + "confirmAction('viewUADEntitiesFm', '" + autoAnonymizeURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-anonymize-this-entity") + "')" %>'
 		url="javascript:;"
 	/>
 
 	<portlet:actionURL name="/delete_uad_entity" var="deleteURL">
-		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="uadEntityId" value="<%= uadEntity.getUADEntityId() %>" />
-		<portlet:param name="uadRegistryKey" value="<%= uadEntity.getUADRegistryKey() %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon
 		message="delete"
-		onClick='<%= renderResponse.getNamespace() + "confirmAction('" + deleteURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this-entity") + "')" %>'
+		onClick='<%= renderResponse.getNamespace() + "confirmAction('viewUADEntitiesFm', '" + deleteURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this-entity") + "')" %>'
 		url="javascript:;"
 	/>
 </liferay-ui:icon-menu>

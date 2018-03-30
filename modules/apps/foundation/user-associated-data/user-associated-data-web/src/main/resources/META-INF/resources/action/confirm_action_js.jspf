@@ -15,13 +15,9 @@
 --%>
 
 <aui:script>
-	function <portlet:namespace />confirmAction(actionURL, message) {
-		var form = document.createElement('form');
-
-		form.setAttribute('method', 'post');
-
+	function <portlet:namespace />confirmAction(formId, actionURL, message) {
 		if (confirm(message)) {
-			submitForm(form, actionURL);
+			submitForm(document.getElementById('<portlet:namespace />' + formId), actionURL);
 		}
 	}
 </aui:script>

@@ -28,7 +28,10 @@ portletDisplay.setURLBack(usersAdminURL.toString());
 renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", LanguageUtil.get(request, "personal-data-erasure")));
 %>
 
-<div class="container-fluid container-fluid-max-xl container-form-lg">
+<aui:form class="container-fluid container-fluid-max-xl container-form-lg" method="post" name="viewUADSummaryFm">
+	<aui:input name="redirect" type="hidden" value="<%= currentURLObj.toString() %>" />
+	<aui:input name="p_u_i_d" type="hidden" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
+
 	<div class="sheet sheet-lg">
 		<div class="sheet-header">
 			<h2><liferay-ui:message key="personal-data-erasure" /></h2>
@@ -39,12 +42,9 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		</div>
 
 		<div class="sheet-text">
-			<portlet:actionURL name="/deactivate_user" var="deactivateUserURL">
-				<portlet:param name="redirect" value="<%= currentURLObj.toString() %>" />
-				<portlet:param name="p_u_i_d" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
-			</portlet:actionURL>
+			<portlet:actionURL name="/deactivate_user" var="deactivateUserURL" />
 
-			<aui:button cssClass="btn-sm" disabled="<%= step != 1 %>" onClick='<%= renderResponse.getNamespace() + "confirmAction('" + deactivateUserURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-deactivate-the-user") + "')" %>' value="deactivate-user" />
+			<aui:button cssClass="btn-sm" disabled="<%= step != 1 %>" onClick='<%= renderResponse.getNamespace() + "confirmAction('viewUADSummaryFm', '" + deactivateUserURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-deactivate-the-user") + "')" %>' value="deactivate-user" />
 
 			<c:if test="<%= step > 1 %>">
 				<liferay-ui:icon
@@ -91,12 +91,9 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		</div>
 
 		<div class="sheet-text">
-			<portlet:actionURL name="/forget_personal_site" var="forgetPersonalSiteURL">
-				<portlet:param name="redirect" value="<%= currentURLObj.toString() %>" />
-				<portlet:param name="p_u_i_d" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
-			</portlet:actionURL>
+			<portlet:actionURL name="/forget_personal_site" var="forgetPersonalSiteURL" />
 
-			<aui:button cssClass="btn-sm" disabled="<%= step != 2 %>" onClick='<%= renderResponse.getNamespace() + "confirmAction('" + forgetPersonalSiteURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-forget-the-users-personal-site") + "')" %>' value="delete-personal-site" />
+			<aui:button cssClass="btn-sm" disabled="<%= step != 2 %>" onClick='<%= renderResponse.getNamespace() + "confirmAction('viewUADSummaryFm', '" + forgetPersonalSiteURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-forget-the-users-personal-site") + "')" %>' value="delete-personal-site" />
 
 			<c:if test="<%= step > 2 %>">
 				<liferay-ui:icon
@@ -135,12 +132,9 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		</div>
 
 		<div class="sheet-text">
-			<portlet:actionURL name="/delete_remaining_uad" var="deleteURL">
-				<portlet:param name="redirect" value="<%= currentURLObj.toString() %>" />
-				<portlet:param name="p_u_i_d" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
-			</portlet:actionURL>
+			<portlet:actionURL name="/delete_remaining_uad" var="deleteURL" />
 
-			<aui:button cssClass="btn-sm" disabled="<%= step != 4 %>" onClick='<%= renderResponse.getNamespace() + "confirmAction('" + deleteURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-anonymize-the-users-personal-data") + "')" %>' value="anonymize-data" />
+			<aui:button cssClass="btn-sm" disabled="<%= step != 4 %>" onClick='<%= renderResponse.getNamespace() + "confirmAction('viewUADSummaryFm', '" + deleteURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-anonymize-the-users-personal-data") + "')" %>' value="anonymize-data" />
 
 			<c:if test="<%= step > 4 %>">
 				<liferay-ui:icon
@@ -157,13 +151,11 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		</div>
 
 		<div class="sheet-text">
-			<portlet:actionURL name="/delete_user" var="deleteUserURL">
-				<portlet:param name="p_u_i_d" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
-			</portlet:actionURL>
+			<portlet:actionURL name="/delete_user" var="deleteUserURL" />
 
-			<aui:button cssClass="btn-sm" disabled="<%= step != 5 %>" onClick='<%= renderResponse.getNamespace() + "confirmAction('" + deleteUserURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-user") + "')" %>' value="delete-user" />
+			<aui:button cssClass="btn-sm" disabled="<%= step != 5 %>" onClick='<%= renderResponse.getNamespace() + "confirmAction('viewUADSummaryFm', '" + deleteUserURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-user") + "')" %>' value="delete-user" />
 		</div>
 	</div>
-</div>
+</aui:form>
 
 <%@ include file="/action/confirm_action_js.jspf" %>

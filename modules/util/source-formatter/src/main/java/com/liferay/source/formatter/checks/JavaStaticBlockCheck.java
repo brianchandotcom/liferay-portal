@@ -145,7 +145,8 @@ public class JavaStaticBlockCheck extends BaseJavaTermCheck {
 					"[\\s\\S]*\\W" + javaTerm.getName() + "\\W[\\s\\S]*")) {
 
 				if ((javaTerm instanceof JavaClass) ||
-					(javaTerm instanceof JavaVariable) && !containsMethodCall) {
+					((javaTerm instanceof JavaVariable) &&
+					 !containsMethodCall)) {
 
 					return javaTerm;
 				}

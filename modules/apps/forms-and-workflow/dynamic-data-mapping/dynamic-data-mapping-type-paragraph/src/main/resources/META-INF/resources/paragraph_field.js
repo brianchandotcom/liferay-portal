@@ -6,6 +6,10 @@ AUI.add(
 		var ParagraphField = A.Component.create(
 			{
 				ATTRS: {
+					context: {
+						getter: '_getContext'
+					},
+
 					dataType: {
 						value: ''
 					},
@@ -64,6 +68,23 @@ AUI.add(
 						var instance = this;
 
 						instance.set('text', value || '');
+					},
+
+					_getContext: function(context) {
+						var instance = this;
+
+						if (!context) {
+							return {};
+						}
+						else if (context.text && Lang.isObject(context.text) && !Lang.isFunction(context.text)) {
+							return A.merge(
+								context,
+								{
+									text: window.DDMParagraph.render.Soy.toIncDom(context.text.content)
+								}
+							);
+						}
+						return context;
 					},
 
 					_renderErrorMessage: Lang.emptyFn

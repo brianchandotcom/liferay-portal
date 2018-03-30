@@ -115,7 +115,7 @@
 	</command>
 
 	<command name="editParagraphBody">
-		<execute function="Type" locator1="FormFields#PARAGRAPH_BODY_TEXT_FIELD" value1="${fieldValue}" />
+		<execute function="Type#clickAtType" locator1="FormFields#PARAGRAPH_BODY_TEXT_FIELD" value1="${fieldValue}" />
 	</command>
 
 	<command name="editPassword">

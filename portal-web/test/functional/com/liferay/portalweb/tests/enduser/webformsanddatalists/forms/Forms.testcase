@@ -1989,8 +1989,6 @@
 			<var name="fieldValue" value="5120" />
 		</execute>
 
-		<execute macro="SystemSettings#exitEditConfiguration" />
-
 		<execute macro="SystemSettings#resetConfiguration">
 			<var name="configurationName" value="Dynamic Data Mapping Service" />
 		</execute>
@@ -2072,8 +2070,6 @@
 				<var name="fieldName" value="${fieldName}" />
 			</execute>
 		</for>
-
-		<execute macro="SystemSettings#exitEditConfiguration" />
 
 		<execute macro="SystemSettings#resetConfiguration">
 			<var name="configurationName" value="JavaScript Loader" />

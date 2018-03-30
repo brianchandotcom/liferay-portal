@@ -111,11 +111,13 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 				<%= LanguageUtil.get(request, "create-date") + StringPool.COLON + dateFormat.format(backgroundTask.getCreateDate()) %>
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				cssClass="autofit-col-expand"
-			>
-				<%= LanguageUtil.get(request, "completion-date") + StringPool.COLON + dateFormat.format(backgroundTask.getCompletionDate()) %>
-			</liferay-ui:search-container-column-text>
+			<c:if test="<%= backgroundTask.isCompleted() %>">
+				<liferay-ui:search-container-column-text
+					cssClass="autofit-col-expand"
+				>
+					<%= LanguageUtil.get(request, "completion-date") + StringPool.COLON + dateFormat.format(backgroundTask.getCompletionDate()) %>
+				</liferay-ui:search-container-column-text>
+			</c:if>
 
 			<liferay-ui:search-container-column-jsp
 				cssClass="entry-action-column"

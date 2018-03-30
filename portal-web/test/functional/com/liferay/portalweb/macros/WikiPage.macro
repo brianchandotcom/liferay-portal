@@ -1209,9 +1209,9 @@
 		<while>
 			<condition function="IsTextNotEqual" locator1="WikiTable#ALL_PAGES_REVISION" value1="1.0 (Minor Edit)" />
 			<then>
-				<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-				<execute macro="PortletEntry#clickMoveToRecycleBin" />
+				<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+					<var name="menuItem" value="Move to the Recycle Bin" />
+				</execute>
 
 				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 			</then>

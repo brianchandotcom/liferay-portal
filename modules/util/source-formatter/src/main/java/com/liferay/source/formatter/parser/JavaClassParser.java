@@ -64,7 +64,7 @@ public class JavaClassParser {
 				anonymousClasses.add(
 					_parseJavaClass(
 						StringPool.BLANK, classContent,
-						JavaTerm.ACCESS_MODIFIER_PRIVATE, false));
+						JavaTerm.ACCESS_MODIFIER_PRIVATE, false, false));
 
 				break;
 			}
@@ -94,8 +94,15 @@ public class JavaClassParser {
 
 		String classContent = content.substring(x + 2);
 
+		boolean isAbstract = false;
+
+		if (matcher.group(2) != null) {
+			isAbstract = true;
+		}
+
 		JavaClass javaClass = _parseJavaClass(
-			className, classContent, JavaTerm.ACCESS_MODIFIER_PUBLIC, false);
+			className, classContent, JavaTerm.ACCESS_MODIFIER_PUBLIC,
+			isAbstract, false);
 
 		javaClass.setPackageName(JavaSourceUtil.getPackageName(content));
 
@@ -193,32 +200,11 @@ public class JavaClassParser {
 			return null;
 		}
 
+		boolean isAbstract = startLine.contains(" abstract ");
+		boolean isStatic = startLine.contains(" static ");
+
 		int x = startLine.indexOf(CharPool.EQUAL);
 		int y = startLine.indexOf(CharPool.OPEN_PARENTHESIS);
-
-		if (startLine.startsWith(accessModifier + " static ")) {
-			if (startLine.contains(" class ") || startLine.contains(" enum ")) {
-				return _parseJavaClass(
-					_getClassName(startLine), javaTermContent, accessModifier,
-					true);
-			}
-
-			if (((x > 0) && ((y == -1) || (y > x))) ||
-				(startLine.endsWith(StringPool.SEMICOLON) && (y == -1))) {
-
-				return new JavaVariable(
-					_getVariableName(startLine), javaTermContent,
-					accessModifier, true);
-			}
-
-			if (y != -1) {
-				return new JavaMethod(
-					_getConstructorOrMethodName(startLine, y), javaTermContent,
-					accessModifier, true);
-			}
-
-			return null;
-		}
 
 		if (startLine.contains(" @interface ") ||
 			startLine.contains(" class ") || startLine.contains(" enum ") ||
@@ -226,7 +212,7 @@ public class JavaClassParser {
 
 			return _parseJavaClass(
 				_getClassName(startLine), javaTermContent, accessModifier,
-				false);
+				isAbstract, isStatic);
 		}
 
 		if (((x > 0) && ((y == -1) || (y > x))) ||
@@ -234,24 +220,26 @@ public class JavaClassParser {
 
 			return new JavaVariable(
 				_getVariableName(startLine), javaTermContent, accessModifier,
-				false);
+				isAbstract, isStatic);
 		}
 
-		if (y != -1) {
-			int spaceCount = StringUtil.count(
-				startLine.substring(0, y), CharPool.SPACE);
+		if (y == -1) {
+			return null;
+		}
 
-			if (spaceCount == 1) {
-				return new JavaConstructor(
-					_getConstructorOrMethodName(startLine, y), javaTermContent,
-					accessModifier, false);
-			}
+		int spaceCount = StringUtil.count(
+			startLine.substring(0, y), CharPool.SPACE);
 
-			if (spaceCount > 1) {
-				return new JavaMethod(
-					_getConstructorOrMethodName(startLine, y), javaTermContent,
-					accessModifier, false);
-			}
+		if (isStatic || (spaceCount > 1)) {
+			return new JavaMethod(
+				_getConstructorOrMethodName(startLine, y), javaTermContent,
+				accessModifier, isAbstract, isStatic);
+		}
+
+		if (spaceCount == 1) {
+			return new JavaConstructor(
+				_getConstructorOrMethodName(startLine, y), javaTermContent,
+				accessModifier, isAbstract, isStatic);
 		}
 
 		return null;
@@ -338,11 +326,11 @@ public class JavaClassParser {
 
 	private static JavaClass _parseJavaClass(
 			String className, String classContent, String accessModifier,
-			boolean isStatic)
+			boolean isAbstract, boolean isStatic)
 		throws Exception {
 
 		JavaClass javaClass = new JavaClass(
-			className, classContent, accessModifier, isStatic);
+			className, classContent, accessModifier, isAbstract, isStatic);
 
 		String indent = SourceUtil.getIndent(classContent) + StringPool.TAB;
 

@@ -69,7 +69,7 @@ public class JavaModuleComponentCheck extends BaseJavaTermCheck {
 					"component.markdown");
 			}
 		}
-		else {
+		else if (!javaTerm.isAbstract()) {
 			JavaClass javaClass = (JavaClass)javaTerm;
 
 			for (JavaTerm childJavaTerm : javaClass.getChildJavaTerms()) {

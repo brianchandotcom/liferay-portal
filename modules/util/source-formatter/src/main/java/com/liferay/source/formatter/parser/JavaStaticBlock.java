@@ -20,7 +20,7 @@ package com.liferay.source.formatter.parser;
 public class JavaStaticBlock extends BaseJavaTerm {
 
 	public JavaStaticBlock(String content) {
-		super(null, content, null, true);
+		super(null, content, null, false, true);
 	}
 
 }

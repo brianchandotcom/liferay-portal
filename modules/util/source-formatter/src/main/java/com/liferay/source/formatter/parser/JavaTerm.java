@@ -42,6 +42,8 @@ public interface JavaTerm {
 
 	public boolean hasAnnotation(String annotation);
 
+	public boolean isAbstract();
+
 	public boolean isStatic();
 
 	public void setParentJavaClass(JavaClass javaClass);

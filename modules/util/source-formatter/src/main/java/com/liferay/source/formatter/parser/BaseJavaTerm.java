@@ -26,11 +26,13 @@ import java.util.regex.Pattern;
 public abstract class BaseJavaTerm implements JavaTerm {
 
 	public BaseJavaTerm(
-		String name, String content, String accessModifier, boolean isStatic) {
+		String name, String content, String accessModifier, boolean isAbstract,
+		boolean isStatic) {
 
 		_name = name;
 		_content = content;
 		_accessModifier = accessModifier;
+		_isAbstract = isAbstract;
 		_isStatic = isStatic;
 	}
 
@@ -72,6 +74,11 @@ public abstract class BaseJavaTerm implements JavaTerm {
 	}
 
 	@Override
+	public boolean isAbstract() {
+		return _isAbstract;
+	}
+
+	@Override
 	public boolean isStatic() {
 		return _isStatic;
 	}
@@ -83,6 +90,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 
 	private final String _accessModifier;
 	private final String _content;
+	private final boolean _isAbstract;
 	private final boolean _isStatic;
 	private final String _name;
 	private JavaClass _parentJavaClass;

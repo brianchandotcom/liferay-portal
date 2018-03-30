@@ -171,7 +171,6 @@
 			<property name="allowedClassNames" value="com.liferay.asset.display.contributor.AssetDisplayContributorTracker" />
 			<property name="allowedClassNames" value="com.liferay.blogs.configuration.definition.BlogsGroupServiceConfigurationBeanDeclaration" />
 			<property name="allowedClassNames" value="com.liferay.blogs.configuration.definition.BlogsGroupServiceConfigurationPidMapping" />
-			<property name="allowedClassNames" value="com.liferay.blogs.demo.data.creator.internal.BaseBlogsEntryDemoDataCreator" />
 			<property name="allowedClassNames" value="com.liferay.blogs.verify.BlogsServiceVerifyProcess" />
 			<property name="allowedClassNames" value="com.liferay.blogs.verify.VerifyBlogsTrackbacks" />
 			<property name="allowedClassNames" value="com.liferay.bookmarks.configuration.definition.BookmarksGroupServiceConfigurationBeanDeclaration" />
@@ -183,12 +182,9 @@
 			<property name="allowedClassNames" value="com.liferay.captcha.util.CaptchaUtil" />
 			<property name="allowedClassNames" value="com.liferay.document.library.definition.DLConfigurationBeanDeclaration" />
 			<property name="allowedClassNames" value="com.liferay.document.library.definition.DLFileEntryConfigurationBeanDeclaration" />
-			<property name="allowedClassNames" value="com.liferay.document.library.demo.data.creator.internal.BaseFolderDemoDataCreatorImpl" />
-			<property name="allowedClassNames" value="com.liferay.document.library.item.selector.web.internal.BaseDLItemSelectorView" />
 			<property name="allowedClassNames" value="com.liferay.dynamic.data.lists.exporter.DDLExporterFactory" />
 			<property name="allowedClassNames" value="com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker" />
 			<property name="allowedClassNames" value="com.liferay.dynamic.data.mapping.data.provider.web.internal.exportimport.data.handler.DDMDataProviderPortletDataHandler" />
-			<property name="allowedClassNames" value="com.liferay.dynamic.data.mapping.form.analytics.internal.model.listener.DDMFormBaseModelListener" />
 			<property name="allowedClassNames" value="com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry" />
 			<property name="allowedClassNames" value="com.liferay.exportimport.lifecycle.NotificationExportImportLifecycleListener" />
 			<property name="allowedClassNames" value="com.liferay.flags.configuration.FlagsGroupServiceConfigurationBeanDeclaration" />
@@ -210,14 +206,10 @@
 			<property name="allowedClassNames" value="com.liferay.journal.web.dynamic.data.mapping.util.JournalFilterStructuresDDMDisplay" />
 			<property name="allowedClassNames" value="com.liferay.journal.web.dynamic.data.mapping.util.JournalSelectStructureRestrictionsDDMDisplay" />
 			<property name="allowedClassNames" value="com.liferay.journal.web.dynamic.data.mapping.util.JournalSelectStructuresDDMDisplay" />
-			<property name="allowedClassNames" value="com.liferay.journal.web.internal.notifications.BaseJournalUserNotificationDefinition" />
-			<property name="allowedClassNames" value="com.liferay.knowledge.base.web.internal.portlet.BaseKBPortlet" />
 			<property name="allowedClassNames" value="com.liferay.mail.reader.configuration.MailGroupServiceConfigurationBeanDeclaration" />
 			<property name="allowedClassNames" value="com.liferay.map.util.MapProviderHelper" />
 			<property name="allowedClassNames" value="com.liferay.map.util.MapProviderTracker" />
 			<property name="allowedClassNames" value="com.liferay.mentions.configuration.definition.MentionsGroupServiceConfigurationBeanDeclaration" />
-			<property name="allowedClassNames" value="com.liferay.message.boards.demo.data.creator.internal.BaseMBCategoryDemoDataCreatorImpl" />
-			<property name="allowedClassNames" value="com.liferay.message.boards.demo.data.creator.internal.BaseMBMessageDemoDataCreator" />
 			<property name="allowedClassNames" value="com.liferay.message.boards.service.permission.MBDiscussionPermission" />
 			<property name="allowedClassNames" value="com.liferay.organizations.api.configuration.definition.OrganizationLinkConfigurationBeanDeclaration" />
 			<property name="allowedClassNames" value="com.liferay.osgi.util.test.TestInstance" />
@@ -225,46 +217,30 @@
 			<property name="allowedClassNames" value="com.liferay.portal.configuration.metatype.definitions.equinox.internal.EquinoxExtendedMetaTypeService" />
 			<property name="allowedClassNames" value="com.liferay.portal.monitoring.internal.statistics.jmx.PortletManager" />
 			<property name="allowedClassNames" value="com.liferay.portal.rules.engine.wiring.internal.messaging.RulesEngineMessagingConfigurator" />
-			<property name="allowedClassNames" value="com.liferay.portal.search.internal.buffer.BaseIndexerRequestBufferExecutor" />
-			<property name="allowedClassNames" value="com.liferay.portal.search.suggest.BaseGenericSpellCheckIndexWriter" />
-			<property name="allowedClassNames" value="com.liferay.portal.search.suggest.BaseSpellCheckIndexWriter" />
 			<property name="allowedClassNames" value="com.liferay.portal.search.web.facet.util.SearchFacetTracker" />
-			<property name="allowedClassNames" value="com.liferay.portal.workflow.kaleo.definition.internal.export.builder.BaseNodeBuilder" />
-			<property name="allowedClassNames" value="com.liferay.portal.workflow.kaleo.runtime.assignment.BaseTaskAssignmentSelector" />
-			<property name="allowedClassNames" value="com.liferay.portal.workflow.kaleo.runtime.node.BaseNodeExecutor" />
-			<property name="allowedClassNames" value="com.liferay.portal.workflow.kaleo.runtime.notification.BaseNotificationSender" />
-			<property name="allowedClassNames" value="com.liferay.portal.workflow.web.internal.portlet.action.BaseWorkflowDefinitionMVCActionCommand" />
 			<property name="allowedClassNames" value="com.liferay.product.navigation.control.menu.categories.SitesProductNavigationControlMenuCategory" />
 			<property name="allowedClassNames" value="com.liferay.product.navigation.control.menu.categories.ToolsProductNavigationControlMenuCategory" />
 			<property name="allowedClassNames" value="com.liferay.product.navigation.control.menu.categories.UserProductNavigationControlMenuCategory" />
 			<property name="allowedClassNames" value="com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuCategoryRegistry" />
 			<property name="allowedClassNames" value="com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuEntryRegistry" />
-			<property name="allowedClassNames" value="com.liferay.roles.admin.demo.data.creator.internal.BaseRoleDemoDataCreator" />
 			<property name="allowedClassNames" value="com.liferay.shopping.configuration.definition.ShoppingFileUploadsConfigurationBeanDeclaration" />
 			<property name="allowedClassNames" value="com.liferay.shopping.configuration.definition.ShoppingGroupServiceConfigurationBeanDeclaration" />
 			<property name="allowedClassNames" value="com.liferay.shopping.configuration.definition.ShoppingGroupServiceConfigurationPidMapping" />
-			<property name="allowedClassNames" value="com.liferay.social.networking.web.internal.social.BaseSocialNetworkingActivityInterpreter" />
 			<property name="allowedClassNames" value="com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry" />
 			<property name="allowedClassNames" value="com.liferay.site.util.GroupSearchProvider" />
 			<property name="allowedClassNames" value="com.liferay.site.util.GroupURLProvider" />
 			<property name="allowedClassNames" value="com.liferay.site.util.RecentGroupManager" />
 			<property name="allowedClassNames" value="com.liferay.social.activity.configuration.definition.SocialActivityGroupServiceConfigurationBeanDeclaration" />
 			<property name="allowedClassNames" value="com.liferay.social.privatemessaging.configuration.PrivateMessagingConfigurationBeanDeclaration" />
-			<property name="allowedClassNames" value="com.liferay.sync.internal.model.listener.SyncBaseModelListener" />
 			<property name="allowedClassNames" value="com.liferay.sync.oauth.helper.SyncOAuthHelperUtil" />
-			<property name="allowedClassNames" value="com.liferay.sync.web.internal.portlet.BaseSyncPortlet" />
-			<property name="allowedClassNames" value="com.liferay.user.associated.data.exporter.BaseUADEntityExporter" />
 			<property name="allowedClassNames" value="com.liferay.user.associated.data.util.UADAnonymizerHelper" />
 			<property name="allowedClassNames" value="com.liferay.user.associated.data.util.UADDynamicQueryHelper" />
-			<property name="allowedClassNames" value="com.liferay.user.associated.data.web.internal.portlet.action.BaseUADMVCActionCommand" />
 			<property name="allowedClassNames" value="com.liferay.users.admin.configuration.definition.UserFileUploadsConfigurationBeanDeclaration" />
 			<property name="allowedClassNames" value="com.liferay.users.admin.configuration.definition.UserFileUploadsConfigurationDDMFormDeclaration" />
 			<property name="allowedClassNames" value="com.liferay.users.admin.demo.data.creator.internal.BaseUserDemoDataCreator" />
 			<property name="allowedClassNames" value="com.liferay.users.admin.web.internal.servlet.taglib.ui.navigation.user.entry.BaseUserScreenNavigationEntry" />
 			<property name="allowedClassNames" value="com.liferay.wiki.configuration.definition.WikiGroupServiceConfigurationBeanDeclaration" />
 			<property name="allowedClassNames" value="com.liferay.wiki.configuration.definition.WikiGroupServiceConfigurationPidMapping" />
-			<property name="allowedClassNames" value="com.liferay.wiki.editor.configuration.internal.BaseWikiLinksCKEditorConfigContributor" />
-			<property name="allowedClassNames" value="com.liferay.wiki.editor.link.browse.web.internal.editor.configuration.BaseWikiContentAlloyEditorLinkBrowseConfigContributor" />
 			<property name="allowedClassNames" value="com.liferay.wsrp.configuration.definition.WSRPGroupServiceConfigurationBeanDeclaration" />
 			<property name="allowedClassNames" value="com.liferay.xstream.configurator.XStreamConfiguratorRegistryUtil" />
 			<property name="allowedClassNames" value="org.eclipse.core.runtime.FileLocator" />

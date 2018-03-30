@@ -25,9 +25,10 @@ import java.util.List;
 public class JavaClass extends BaseJavaTerm {
 
 	public JavaClass(
-		String name, String content, String accessModifier, boolean isStatic) {
+		String name, String content, String accessModifier, boolean isAbstract,
+		boolean isStatic) {
 
-		super(name, content, accessModifier, isStatic);
+		super(name, content, accessModifier, isAbstract, isStatic);
 	}
 
 	public void addChildJavaTerm(JavaTerm javaTerm) {

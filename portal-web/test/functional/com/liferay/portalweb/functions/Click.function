@@ -146,7 +146,16 @@
 	<command name="waitForMenuToggleJSClick">
 		<execute function="WaitForSPARefresh" />
 
+		<execute argument1="relative=top" selenium="selectFrame" />
+
 		<execute argument1="//script[contains(@src,'/o/frontend-js-web/liferay/menu_toggle.js')]" selenium="waitForElementPresent" />
+
+		<if>
+			<condition argument1="//iframe" selenium="isElementPresent" />
+			<then>
+				<execute argument1="//iframe" selenium="selectFrame" />
+			</then>
+		</if>
 
 		<execute argument1="3000" selenium="pause" />
 

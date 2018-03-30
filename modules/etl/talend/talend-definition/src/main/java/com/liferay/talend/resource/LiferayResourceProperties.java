@@ -26,7 +26,6 @@ import java.io.IOException;
 import java.util.List;
 
 import org.apache.avro.Schema;
-import org.apache.commons.lang3.StringUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -219,9 +218,6 @@ public class LiferayResourceProperties
 		String formName = form.getName();
 
 		if (formName.equals(Form.MAIN) || formName.equals(Form.REFERENCE)) {
-			boolean hideRelatedCheckbox = StringUtils.isEmpty(
-				resourceURL.getStringValue());
-
 			PropertiesUtils.setHidden(
 				form, webSiteURL, !useWebSiteRelatedResource.getValue());
 		}

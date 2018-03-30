@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
-import com.liferay.user.associated.data.entity.UADEntity;
 
 import java.util.List;
 
@@ -33,7 +32,7 @@ import org.junit.Test;
 /**
  * @author Noah Sherrill
  */
-public abstract class BaseUADEntityDisplayTestCase {
+public abstract class BaseUADEntityDisplayTestCase<T> {
 
 	@Before
 	public void setUp() throws Exception {
@@ -70,23 +69,23 @@ public abstract class BaseUADEntityDisplayTestCase {
 
 	protected abstract String getApplicationName();
 
-	protected abstract UADEntityAggregator getUADEntityAggregator();
+	protected abstract UADEntityAggregator<T> getUADEntityAggregator();
 
-	protected abstract UADEntityDisplay getUADEntityDisplay();
+	protected abstract UADEntityDisplay<T> getUADEntityDisplay();
 
 	protected abstract String getUADEntityTypeDescription();
 
-	private UADEntity _createUADEntity() throws Exception {
+	private T _createUADEntity() throws Exception {
 		addBaseModel(_user.getUserId());
 
-		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
+		List<T> uadEntities = _uadEntityAggregator.getEntities(
 			_user.getUserId());
 
 		return uadEntities.get(0);
 	}
 
-	private UADEntityAggregator _uadEntityAggregator;
-	private UADEntityDisplay _uadEntityDisplay;
+	private UADEntityAggregator<T> _uadEntityAggregator;
+	private UADEntityDisplay<T> _uadEntityDisplay;
 
 	@DeleteAfterTestRun
 	private User _user;

@@ -31,7 +31,7 @@ UADEntity uadEntity = (UADEntity)row.getObject();
 	triggerCssClass="component-action"
 >
 	<portlet:actionURL name="/auto_anonymize_uad_entity" var="autoAnonymizeURL">
-		<portlet:param name="uadEntityId" value="<%= uadEntity.getUADEntityId() %>" />
+		<portlet:param name="uadEntityId" value="<%= uadEntity.getEntityId() %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon
@@ -41,7 +41,7 @@ UADEntity uadEntity = (UADEntity)row.getObject();
 	/>
 
 	<portlet:actionURL name="/delete_uad_entity" var="deleteURL">
-		<portlet:param name="uadEntityId" value="<%= uadEntity.getUADEntityId() %>" />
+		<portlet:param name="uadEntityId" value="<%= uadEntity.getEntityId() %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon

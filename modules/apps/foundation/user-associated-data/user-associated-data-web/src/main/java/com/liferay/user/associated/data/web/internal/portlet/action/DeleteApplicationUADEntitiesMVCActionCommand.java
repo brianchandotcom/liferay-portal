@@ -52,12 +52,12 @@ public class DeleteApplicationUADEntitiesMVCActionCommand
 
 		User selectedUser = _portal.getSelectedUser(actionRequest);
 
-		String uadEntitySetName = ParamUtil.getString(
-			actionRequest, "uadEntitySetName");
+		String applicationName = ParamUtil.getString(
+			actionRequest, "applicationName");
 
 		List<UADEntityAnonymizer> uadEntityAnonymizers =
 			_uadApplicationSummaryHelper.getApplicationUADEntityAnonymizers(
-				uadEntitySetName);
+				applicationName);
 
 		for (UADEntityAnonymizer uadEntityAnonymizer : uadEntityAnonymizers) {
 			uadEntityAnonymizer.deleteAll(selectedUser.getUserId());

@@ -1004,6 +1004,8 @@ AUI.add(
 
 						A.one('.ddm-form-builder-buttons').removeClass('hide');
 
+						A.one('.lfr-ddm-plus-button').removeClass('hide');
+
 						instance.one('#showForm').addClass('active');
 					},
 
@@ -1021,6 +1023,10 @@ AUI.add(
 						}
 						else {
 							ruleBuilder.show();
+						}
+
+						if (!A.one('.form-builder-rule-builder-container')) {
+							A.one('.lfr-ddm-plus-button').addClass('hide');
 						}
 
 						A.one('.portlet-forms').addClass('liferay-ddm-form-rule-builder');

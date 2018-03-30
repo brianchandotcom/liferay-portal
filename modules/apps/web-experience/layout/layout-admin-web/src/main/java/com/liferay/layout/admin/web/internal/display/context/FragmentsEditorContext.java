@@ -21,6 +21,7 @@ import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.fragment.util.FragmentEntryRenderUtil;
+import com.liferay.layout.admin.web.internal.util.SoyContextFactoryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
@@ -68,7 +69,7 @@ public class FragmentsEditorContext {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		SoyContext soyContext = new SoyContext();
+		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
 		soyContext.put(
 			"addFragmentEntryLinkURL",
@@ -119,7 +120,7 @@ public class FragmentsEditorContext {
 		List<SoyContext> soyContexts = new ArrayList<>();
 
 		for (FragmentEntry fragmentEntry : fragmentEntries) {
-			SoyContext soyContext = new SoyContext();
+			SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
 			soyContext.put(
 				"fragmentEntryId", fragmentEntry.getFragmentEntryId());
@@ -162,7 +163,7 @@ public class FragmentsEditorContext {
 				continue;
 			}
 
-			SoyContext soyContext = new SoyContext();
+			SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
 			soyContext.put(
 				"fragmentCollectionId",
@@ -195,7 +196,7 @@ public class FragmentsEditorContext {
 				FragmentEntryServiceUtil.fetchFragmentEntry(
 					fragmentEntryLink.getFragmentEntryId());
 
-			SoyContext soyContext = new SoyContext();
+			SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
 			soyContext.putHTML(
 				"content",

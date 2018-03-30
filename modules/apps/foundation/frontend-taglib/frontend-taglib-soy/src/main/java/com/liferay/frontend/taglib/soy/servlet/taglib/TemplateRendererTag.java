@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.taglib.soy.servlet.taglib;
 
+import com.liferay.frontend.taglib.soy.internal.util.SoyContextFactoryUtil;
 import com.liferay.frontend.taglib.soy.internal.util.SoyJavaScriptRendererUtil;
 import com.liferay.frontend.taglib.soy.internal.util.SoyTemplateResourcesProviderUtil;
 import com.liferay.petra.string.StringPool;
@@ -158,7 +159,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 
 	protected Map<String, Object> getContext() {
 		if (_context == null) {
-			_context = new SoyContext();
+			_context = SoyContextFactoryUtil.createSoyContext();
 		}
 
 		return _context;

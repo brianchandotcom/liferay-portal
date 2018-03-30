@@ -17,7 +17,6 @@ package com.liferay.user.associated.data.web.internal.display.context;
 import com.liferay.background.task.kernel.util.comparator.BackgroundTaskComparatorFactoryUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -27,9 +26,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.user.associated.data.web.internal.export.background.task.UADExportBackgroundTaskExecutor;
-
-import java.util.List;
+import com.liferay.user.associated.data.web.internal.export.background.task.UADExportBackgroundTaskManagerUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -137,31 +134,32 @@ public class UADExportProcessDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		User selectedUser = PortalUtil.getSelectedUser(_request);
+
 		if (navigation.equals("failed") || navigation.equals("in-progress") ||
 			navigation.equals("successful")) {
 
 			int status = getBackgroundTaskStatus(navigation);
 
-			List<BackgroundTask> backgroundTasks =
-				BackgroundTaskManagerUtil.getBackgroundTasks(
-					UADExportBackgroundTaskExecutor.class.getName(), status,
-					searchContainer.getStart(), searchContainer.getEnd(),
-					orderByComparator);
+			searchContainer.setTotal(
+				UADExportBackgroundTaskManagerUtil.getBackgroundTasksCount(
+					themeDisplay.getScopeGroupId(), selectedUser.getUserId(),
+					status));
 
-			searchContainer.setTotal(backgroundTasks.size());
-
-			searchContainer.setResults(backgroundTasks);
+			searchContainer.setResults(
+				UADExportBackgroundTaskManagerUtil.getBackgroundTasks(
+					themeDisplay.getScopeGroupId(), selectedUser.getUserId(),
+					status, searchContainer.getStart(),
+					searchContainer.getEnd(), orderByComparator));
 		}
 		else {
 			searchContainer.setTotal(
-				BackgroundTaskManagerUtil.getBackgroundTasksCount(
-					themeDisplay.getScopeGroupId(),
-					UADExportBackgroundTaskExecutor.class.getName()));
+				UADExportBackgroundTaskManagerUtil.getBackgroundTasksCount(
+					themeDisplay.getScopeGroupId(), selectedUser.getUserId()));
 
 			searchContainer.setResults(
-				BackgroundTaskManagerUtil.getBackgroundTasks(
-					themeDisplay.getScopeGroupId(),
-					UADExportBackgroundTaskExecutor.class.getName(),
+				UADExportBackgroundTaskManagerUtil.getBackgroundTasks(
+					themeDisplay.getScopeGroupId(), selectedUser.getUserId(),
 					searchContainer.getStart(), searchContainer.getEnd(),
 					orderByComparator));
 		}

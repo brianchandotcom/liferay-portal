@@ -185,6 +185,9 @@ public class ModulesStructureTest {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
+					String absoluteDirPath =
+						ModulesStructureTestUtil.getAbsolutePath(dirPath);
+
 					if (Files.exists(dirPath.resolve("package.json"))) {
 						Path packageJSONPath = dirPath.resolve("package.json");
 
@@ -193,7 +196,9 @@ public class ModulesStructureTest {
 
 							_testThemeBuildScripts(dirPath);
 						}
-						else if (!dirName.contains("project-templates")) {
+						else if (!absoluteDirPath.contains(
+									"/project-templates/")) {
+
 							Path packageLockJSONPath = dirPath.resolve(
 								"package-lock.json");
 

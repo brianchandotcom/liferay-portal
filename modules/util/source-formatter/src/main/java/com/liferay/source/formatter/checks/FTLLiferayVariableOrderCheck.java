@@ -50,6 +50,7 @@ public class FTLLiferayVariableOrderCheck extends BaseFileCheck {
 
 					String replacement = StringUtil.replaceFirst(
 						match, previousVariable, variable);
+
 					replacement = StringUtil.replaceLast(
 						replacement, variable, previousVariable);
 

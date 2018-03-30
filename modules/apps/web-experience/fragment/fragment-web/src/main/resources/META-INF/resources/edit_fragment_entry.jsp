@@ -37,9 +37,7 @@ renderResponse.setTitle(title);
 			<div class="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-light">
 				<ul class="navbar-nav">
 					<li class="nav-item">
-						<portlet:renderURL var="mainURL" />
-
-						<aui:a cssClass="active nav-link" href="<%= mainURL %>" label="code" />
+						<aui:a cssClass="active nav-link" href="<%= currentURL %>" label="code" />
 					</li>
 				</ul>
 			</div>

@@ -1824,6 +1824,10 @@
 	<command name="EditBasicWebContentStructureAndTemplate" priority="4">
 		<property name="testray.component.names" value="Web Content Administration" />
 
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Global" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
 			<var name="panel" value="Site Administration" />
@@ -1853,8 +1857,6 @@
 		<execute macro="WebContentStructures#saveCP">
 			<var name="structureName" value="Basic Web Content Edit" />
 		</execute>
-
-		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
@@ -1888,7 +1890,7 @@
 			</execute>
 		</for>
 
-		<execute macro="PortletEntry#save" />
+		<execute macro="WebContentStructures#saveCP" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
@@ -3132,6 +3134,10 @@
 
 	<command name="ValidateDDMNavigation" priority="4">
 		<property name="testray.component.names" value="Web Content Administration" />
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Global" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />

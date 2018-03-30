@@ -130,6 +130,7 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 
 					String newCodeBlock = StringUtil.replaceFirst(
 						codeBlock, previousParameters, parameters);
+
 					newCodeBlock = StringUtil.replaceLast(
 						newCodeBlock, parameters, previousParameters);
 

@@ -85,6 +85,7 @@ public class JSONPropertyOrderCheck extends BaseFileCheck {
 
 						String replacement = StringUtil.replaceFirst(
 							match, previousProperty, property);
+
 						replacement = StringUtil.replaceLast(
 							replacement, property, previousProperty);
 

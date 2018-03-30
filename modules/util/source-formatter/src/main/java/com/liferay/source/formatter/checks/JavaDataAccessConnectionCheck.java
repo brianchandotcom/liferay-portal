@@ -23,6 +23,11 @@ import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 public class JavaDataAccessConnectionCheck extends BaseFileCheck {
 
 	@Override
+	public boolean isPortalCheck() {
+		return true;
+	}
+
+	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 

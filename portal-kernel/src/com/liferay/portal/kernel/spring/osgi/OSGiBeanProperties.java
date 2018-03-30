@@ -34,6 +34,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Queue;
 import java.util.Set;
+import java.util.function.Function;
 
 /**
  * Provides the OSGi service properties used when publishing Spring beans as
@@ -190,16 +191,36 @@ public @interface OSGiBeanProperties {
 		 * introspection. If the bean is not assignable to a specified service
 		 * type, a {@link ClassCastException} is thrown.
 		 *
-		 * @param  object the object (bean)
+		 * @deprecated As of 7.0.0, replaced by {@link
+		 *             #interfaces(Object, OSGiBeanProperties, String[])}
+		 * @param object the object (bean)
 		 * @return the service types
 		 */
+		@Deprecated
 		public static Set<Class<?>> interfaces(Object object) {
 			Class<?> clazz = object.getClass();
 
-			Set<Class<?>> interfaces = new LinkedHashSet<>();
-
 			OSGiBeanProperties osgiBeanProperties = clazz.getAnnotation(
 				OSGiBeanProperties.class);
+
+			return _interfaces(
+				object, osgiBeanProperties, StringPool.EMPTY_ARRAY,
+				Function.identity());
+		}
+
+		public static Set<String> interfaces(
+			Object object, OSGiBeanProperties osgiBeanProperties,
+			String[] ignoredInterfaces) {
+
+			return _interfaces(
+				object, osgiBeanProperties, ignoredInterfaces, Class::getName);
+		}
+
+		private static <T> Set<T> _interfaces(
+			Object object, OSGiBeanProperties osgiBeanProperties,
+			String[] ignoredInterfaces, Function<Class<?>, T> mappingFunction) {
+
+			Set<T> interfaces = new LinkedHashSet<>();
 
 			Class<?>[] serviceClasses = null;
 
@@ -210,13 +231,15 @@ public @interface OSGiBeanProperties {
 			if ((serviceClasses == null) || (serviceClasses.length == 0)) {
 				Queue<Class<?>> queue = new ArrayDeque<>();
 
-				queue.add(clazz);
+				queue.add(object.getClass());
 
 				while (!queue.isEmpty()) {
-					clazz = queue.remove();
+					Class<?> clazz = queue.remove();
 
 					for (Class<?> interfaceClass : clazz.getInterfaces()) {
-						interfaces.add(interfaceClass);
+						_optionallyCollectInterface(
+							interfaceClass, interfaces, ignoredInterfaces,
+							mappingFunction);
 
 						queue.add(interfaceClass);
 					}
@@ -225,7 +248,9 @@ public @interface OSGiBeanProperties {
 
 					if (clazz != null) {
 						if (clazz.isInterface()) {
-							interfaces.add(clazz);
+							_optionallyCollectInterface(
+								clazz, interfaces, ignoredInterfaces,
+								mappingFunction);
 						}
 
 						queue.add(clazz);
@@ -236,13 +261,38 @@ public @interface OSGiBeanProperties {
 				for (Class<?> serviceClazz : serviceClasses) {
 					serviceClazz.cast(object);
 
-					interfaces.add(serviceClazz);
+					_optionallyCollectInterface(
+						serviceClazz, interfaces, ignoredInterfaces,
+						mappingFunction);
 				}
 			}
 
-			interfaces.add(object.getClass());
+			_optionallyCollectInterface(
+				object.getClass(), interfaces, ignoredInterfaces,
+				mappingFunction);
 
 			return interfaces;
+		}
+
+		private static <T> void _optionallyCollectInterface(
+			Class<?> clazz, Set<T> interfaces, String[] ignoredInterfaces,
+			Function<Class<?>, T> mappingFunction) {
+
+			String interfaceClassName = clazz.getName();
+
+			for (String ignoredInterface : ignoredInterfaces) {
+				if (!ignoredInterface.startsWith(StringPool.EXCLAMATION) &&
+					(ignoredInterface.equals(interfaceClassName) ||
+					 (ignoredInterface.endsWith(StringPool.STAR) &&
+					  interfaceClassName.regionMatches(
+						  0, ignoredInterface, 0,
+						  ignoredInterface.length() - 1)))) {
+
+					return;
+				}
+			}
+
+			interfaces.add(mappingFunction.apply(clazz));
 		}
 
 	}

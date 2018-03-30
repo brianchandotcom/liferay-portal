@@ -27,11 +27,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.reflect.Array;
 
-import java.util.Arrays;
+import java.util.ArrayDeque;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Queue;
 import java.util.Set;
 
 /**
@@ -193,44 +194,53 @@ public @interface OSGiBeanProperties {
 		 * @return the service types
 		 */
 		public static Set<Class<?>> interfaces(Object object) {
-			Class<? extends Object> clazz = object.getClass();
+			Class<?> clazz = object.getClass();
+
+			Set<Class<?>> interfaces = new LinkedHashSet<>();
 
 			OSGiBeanProperties osgiBeanProperties = clazz.getAnnotation(
 				OSGiBeanProperties.class);
 
-			if (osgiBeanProperties == null) {
-				return _getInterfaceClasses(clazz, new HashSet<Class<?>>());
+			Class<?>[] serviceClasses = null;
+
+			if (osgiBeanProperties != null) {
+				serviceClasses = osgiBeanProperties.service();
 			}
 
-			Class<?>[] serviceClasses = osgiBeanProperties.service();
+			if ((serviceClasses == null) || (serviceClasses.length == 0)) {
+				Queue<Class<?>> queue = new ArrayDeque<>();
 
-			if (serviceClasses.length == 0) {
-				return _getInterfaceClasses(clazz, new HashSet<Class<?>>());
+				queue.add(clazz);
+
+				while (!queue.isEmpty()) {
+					clazz = queue.remove();
+
+					for (Class<?> interfaceClass : clazz.getInterfaces()) {
+						interfaces.add(interfaceClass);
+
+						queue.add(interfaceClass);
+					}
+
+					clazz = clazz.getSuperclass();
+
+					if (clazz != null) {
+						if (clazz.isInterface()) {
+							interfaces.add(clazz);
+						}
+
+						queue.add(clazz);
+					}
+				}
+			}
+			else {
+				for (Class<?> serviceClazz : serviceClasses) {
+					serviceClazz.cast(object);
+
+					interfaces.add(serviceClazz);
+				}
 			}
 
-			for (Class<?> serviceClazz : serviceClasses) {
-				serviceClazz.cast(object);
-			}
-
-			return new HashSet<>(Arrays.asList(osgiBeanProperties.service()));
-		}
-
-		private static Set<Class<?>> _getInterfaceClasses(
-			Class<?> clazz, Set<Class<?>> interfaceClasses) {
-
-			if (clazz.isInterface()) {
-				interfaceClasses.add(clazz);
-			}
-
-			for (Class<?> interfaceClass : clazz.getInterfaces()) {
-				_getInterfaceClasses(interfaceClass, interfaceClasses);
-			}
-
-			if ((clazz = clazz.getSuperclass()) != null) {
-				_getInterfaceClasses(clazz, interfaceClasses);
-			}
-
-			return interfaceClasses;
+			return interfaces;
 		}
 
 	}

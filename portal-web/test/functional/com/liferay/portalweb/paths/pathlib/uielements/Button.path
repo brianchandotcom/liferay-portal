@@ -104,11 +104,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_SUBCATEGORY</td>
-	<td>//span[contains(.,'Add Subcategory')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_SUBFOLDER</td>
 	<td>//a[contains(.,'Add Subfolder')]</td>
 	<td></td>

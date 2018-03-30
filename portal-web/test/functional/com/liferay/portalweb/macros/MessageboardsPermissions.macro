@@ -1,5 +1,7 @@
 <definition>
 	<command name="checkReplyToMessageForGuestPG">
+		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertClick" locator1="Button#PERMISSIONS" value1="Permissions" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />

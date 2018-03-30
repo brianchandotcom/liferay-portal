@@ -149,7 +149,9 @@
 
 		<execute macro="PortletEntry#publish" />
 
-		<execute function="Click" locator1="Icon#ANGLE_LEFT_BACK" />
+		<execute function="AssertClick" locator1="Breadcrumb#BREADCRUMB_ENTRY_LINK" value1="${breadcrumbName}">
+			<var name="key_breadcrumbName" value="${breadcrumbName}" />
+		</execute>
 
 		<execute macro="MessageboardsThread#viewMarkedAsQuestionPG">
 			<var name="threadSubject" value="${threadSubject}" />
@@ -411,7 +413,13 @@
 	</command>
 
 	<command name="editPG">
-		<execute macro="PortletEntry#clickEditFromEllipsis" />
+		<execute function="Click" locator1="MessageBoards#VERTICAL_ELLIPSIS">
+			<var name="key_threadSubject" value="${threadSubject}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
 
 		<if>
 			<isset var="threadSubjectEdit" />

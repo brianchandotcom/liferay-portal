@@ -117,7 +117,7 @@
 
 		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" value1="${categoryName}" />
 
-		<execute function="AssertClick" locator1="Button#ADD_SUBCATEGORY" value1="Add Subcategory" />
+		<execute function="AssertClick" locator1="Button#ADD_CATEGORY" value1="Add Category" />
 
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${subCategoryNullName}" />
@@ -137,7 +137,7 @@
 
 		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" value1="${categoryName}" />
 
-		<execute function="AssertClick" locator1="Button#ADD_SUBCATEGORY" value1="Add Subcategory" />
+		<execute function="AssertClick" locator1="Button#ADD_CATEGORY" value1="Add Category" />
 
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${subCategoryName}" />
@@ -159,7 +159,7 @@
 
 		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_LIST_SUBCATEGORY" value1="${subCategoryName}" />
 
-		<execute function="AssertClick" locator1="Button#ADD_SUBCATEGORY" value1="Add Subcategory" />
+		<execute function="AssertClick" locator1="Button#ADD_CATEGORY" value1="Add Category" />
 
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${subCategorySubCategoryName}" />

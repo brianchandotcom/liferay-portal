@@ -752,10 +752,8 @@
 			</else>
 		</if>
 
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Cancel Checkout">
-			<var name="key_menuItem" value="Cancel Checkout" />
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
+			<var name="menuItem" value="Cancel Checkout" />
 		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
@@ -803,10 +801,8 @@
 			</else>
 		</if>
 
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Checkin">
-			<var name="key_menuItem" value="Checkin" />
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
+			<var name="menuItem" value="Checkin" />
 		</execute>
 
 		<if>

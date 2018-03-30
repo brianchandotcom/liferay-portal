@@ -1,9 +1,7 @@
 <definition>
 	<command name="adaptAllImages">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Adapt All Images">
-			<var name="key_menuItem" value="Adapt All Images" />
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
+			<var name="menuItem" value="Adapt All Images" />
 		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />

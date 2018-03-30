@@ -391,10 +391,8 @@
 
 		<var name="key_reportType" value="${viewReportType}" />
 
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM">
-			<var name="key_menuItem" value="Update" />
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
+			<var name="menuItem" value="Update" />
 		</execute>
 
 		<execute function="Pause" locator1="1000" />

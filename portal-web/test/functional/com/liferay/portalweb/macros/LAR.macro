@@ -397,10 +397,8 @@
 	</command>
 
 	<command name="addExportTemplateCP">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Export Templates">
-			<var name="key_menuItem" value="Export Templates" />
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
+			<var name="menuItem" value="Export Templates" />
 		</execute>
 
 		<execute macro="LexiconEntry#gotoAdd" />
@@ -588,10 +586,8 @@
 	</command>
 
 	<command name="gotoExportTemplateCP">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Export Templates">
-			<var name="key_menuItem" value="Export Templates" />
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
+			<var name="menuItem" value="Export Templates" />
 		</execute>
 	</command>
 

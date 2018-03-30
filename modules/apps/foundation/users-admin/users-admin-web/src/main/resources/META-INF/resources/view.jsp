@@ -61,8 +61,13 @@ else {
 	LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
 	if (!usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS)) {
+		portletDisplay.setShowExportImportIcon(true);
+
 		userParams.put("noOrganizations", Boolean.TRUE);
 		userParams.put("usersOrgsCount", 0);
+	}
+	else {
+		portletDisplay.setShowExportImportIcon(false);
 	}
 
 	inactiveUsersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), null, WorkflowConstants.STATUS_INACTIVE, userParams);

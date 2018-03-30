@@ -3169,6 +3169,11 @@ execution when on the `7.0.x` branch.
 2.0.4.
 - [LPS-79282]: Update the [Liferay Gradle Plugins] dependency to version 3.10.0.
 
+## 5.3.57 - 2018-03-30
+
+### Changed
+- [LPS-69247]: Update the [Liferay Gradle Plugins] dependency to version 3.10.1.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -3247,6 +3252,7 @@ execution when on the `7.0.x` branch.
 [LPS-69013]: https://issues.liferay.com/browse/LPS-69013
 [LPS-69026]: https://issues.liferay.com/browse/LPS-69026
 [LPS-69223]: https://issues.liferay.com/browse/LPS-69223
+[LPS-69247]: https://issues.liferay.com/browse/LPS-69247
 [LPS-69271]: https://issues.liferay.com/browse/LPS-69271
 [LPS-69288]: https://issues.liferay.com/browse/LPS-69288
 [LPS-69445]: https://issues.liferay.com/browse/LPS-69445

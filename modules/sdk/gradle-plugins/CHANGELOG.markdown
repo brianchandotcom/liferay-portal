@@ -3929,6 +3929,12 @@ to version 2.3.115.
 - [LPS-79282]: Update the [Liferay Source Formatter] dependency to version
 1.0.587.
 
+## 3.10.1 - 2018-03-30
+
+### Fixed
+- [LPS-69247]: Pass lower case project properties to Bnd when executing the
+`buildWSDDJar` task.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -4017,6 +4023,7 @@ to version 2.3.115.
 [LPS-69026]: https://issues.liferay.com/browse/LPS-69026
 [LPS-69139]: https://issues.liferay.com/browse/LPS-69139
 [LPS-69223]: https://issues.liferay.com/browse/LPS-69223
+[LPS-69247]: https://issues.liferay.com/browse/LPS-69247
 [LPS-69248]: https://issues.liferay.com/browse/LPS-69248
 [LPS-69271]: https://issues.liferay.com/browse/LPS-69271
 [LPS-69445]: https://issues.liferay.com/browse/LPS-69445

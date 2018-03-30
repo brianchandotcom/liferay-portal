@@ -74,7 +74,7 @@ public class ModulesStructureTestUtil {
 		absolutePath = absolutePath.normalize();
 
 		return StringUtil.replace(
-			absolutePath.toString(), CharPool.BACK_SLASH, CharPool.SLASH);
+			absolutePath.toString(), File.separatorChar, CharPool.SLASH);
 	}
 
 	public static List<GradleDependency> getGradleDependencies(

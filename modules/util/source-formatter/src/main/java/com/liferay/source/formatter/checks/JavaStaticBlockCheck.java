@@ -126,9 +126,7 @@ public class JavaStaticBlockCheck extends BaseJavaTermCheck {
 
 		boolean javaMethodCall = false;
 
-		for (int i = childJavaTerms.size() - 1; i >= 0; i--) {
-			JavaTerm javaTerm = childJavaTerms.get(i);
-
+		for (JavaTerm javaTerm : childJavaTerms) {
 			if (javaTerm.isStatic() && (javaTerm instanceof JavaMethod) &&
 				staticBlockContent.matches(
 					"[\\s\\S]*\\s" + javaTerm.getName() + "\\([\\s\\S]*")) {

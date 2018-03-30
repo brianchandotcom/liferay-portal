@@ -397,6 +397,12 @@
 	}
 }
 
+.liferay-ddm-form-renderer-pagination-content {
+	a {
+		pointer-events: none;
+	}
+}
+
 .form-check-inline .custom-control-label {
 	line-height: 24px;
 }

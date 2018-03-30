@@ -60,6 +60,10 @@ public class ViewUADApplicationsSummaryMVCRenderCommand
 				_uadApplicationSummaryHelper.createSearchContainer(
 					renderRequest, renderResponse, selectedUser.getUserId()));
 
+			viewUADApplicationsSummaryDisplay.setTotalCount(
+				_uadApplicationSummaryHelper.getTotalReviewableUADEntitiesCount(
+					selectedUser.getUserId()));
+
 			renderRequest.setAttribute(
 				UADWebKeys.VIEW_UAD_APPLICATIONS_SUMMARY_DISPLAY,
 				viewUADApplicationsSummaryDisplay);

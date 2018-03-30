@@ -23,7 +23,6 @@ dependencies {
 	provided project(":apps:foundation:portal:portal-upgrade-api")
 	provided project(":apps:knowledge-base:knowledge-base-api")
 	provided project(":apps:knowledge-base:knowledge-base-markdown-converter-api")
-	provided project(":apps:static:osgi:osgi-util")
 	provided project(":apps:web-experience:export-import:export-import-api")
 	provided project(":apps:web-experience:rss:rss-api")
 	provided project(":core:petra:petra-function")

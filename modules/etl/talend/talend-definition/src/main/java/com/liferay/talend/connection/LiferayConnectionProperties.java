@@ -17,6 +17,7 @@ package com.liferay.talend.connection;
 import com.liferay.talend.LiferayBaseComponentDefinition;
 import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
 import com.liferay.talend.tliferayconnection.TLiferayConnectionDefinition;
+import com.liferay.talend.utils.PropertiesUtils;
 
 import java.util.EnumSet;
 
@@ -25,7 +26,6 @@ import org.slf4j.LoggerFactory;
 
 import org.talend.components.api.properties.ComponentPropertiesImpl;
 import org.talend.components.api.properties.ComponentReferenceProperties;
-import org.talend.daikon.SimpleNamedThing;
 import org.talend.daikon.properties.PresentationItem;
 import org.talend.daikon.properties.Properties;
 import org.talend.daikon.properties.ValidationResult;
@@ -129,14 +129,14 @@ public class LiferayConnectionProperties
 		String formName = form.getName();
 
 		if (formName.equals(Form.MAIN) || formName.equals(FORM_WIZARD)) {
-			_setHidden(form, endpoint, useOtherConnection);
-			_setHidden(form, userId, useOtherConnection);
-			_setHidden(form, password, useOtherConnection);
-			_setHidden(form, anonymousLogin, useOtherConnection);
+			PropertiesUtils.setHidden(form, endpoint, useOtherConnection);
+			PropertiesUtils.setHidden(form, userId, useOtherConnection);
+			PropertiesUtils.setHidden(form, password, useOtherConnection);
+			PropertiesUtils.setHidden(form, anonymousLogin, useOtherConnection);
 
 			if (!useOtherConnection && anonymousLogin.getValue()) {
-				_setHidden(form, userId, true);
-				_setHidden(form, password, true);
+				PropertiesUtils.setHidden(form, userId, true);
+				PropertiesUtils.setHidden(form, password, true);
 			}
 		}
 	}
@@ -197,6 +197,8 @@ public class LiferayConnectionProperties
 		referenceForm.addRow(referencedComponentWidget);
 
 		referenceForm.addRow(mainForm);
+
+		refreshLayout(referenceForm);
 
 		// Advanced form
 
@@ -282,14 +284,6 @@ public class LiferayConnectionProperties
 	protected SandboxedInstance getRuntimeSandboxedInstance() {
 		return LiferayBaseComponentDefinition.getSandboxedInstance(
 			LiferayBaseComponentDefinition.RUNTIME_SOURCE_OR_SINK_CLASS_NAME);
-	}
-
-	private void _setHidden(
-		Form form, SimpleNamedThing simpleNamedThing, boolean hidden) {
-
-		Widget widget = form.getWidget(simpleNamedThing.getName());
-
-		widget.setHidden(hidden);
 	}
 
 	private static final int _CONNECT_TIMEOUT = 30;

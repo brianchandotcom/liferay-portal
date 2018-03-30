@@ -24,6 +24,7 @@ import java.util.List;
 import org.apache.avro.Schema;
 
 import org.talend.components.api.component.runtime.SourceOrSink;
+import org.talend.daikon.NamedThing;
 import org.talend.daikon.properties.ValidationResult;
 
 /**
@@ -31,13 +32,20 @@ import org.talend.daikon.properties.ValidationResult;
  */
 public interface LiferaySourceOrSinkRuntime extends SourceOrSink {
 
+	public List<NamedThing> getAvailableWebSites() throws IOException;
+
 	public Schema getExpectedFormSchema(Operation operation) throws IOException;
 
 	public Schema getInputResourceCollectionSchema(String resourceURL)
 		throws IOException;
 
+	public List<NamedThing> getResourceList(String webSiteURL)
+		throws IOException;
+
 	public List<Operation> getResourceSupportedOperations(String resourceURL)
 		throws IOException;
+
+	public boolean hasWebSiteResource();
 
 	public ValidationResult validateConnection(
 		LiferayConnectionPropertiesProvider

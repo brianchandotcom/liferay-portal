@@ -15,7 +15,6 @@
 package com.liferay.talend.tliferayoutput;
 
 import com.liferay.talend.LiferayBaseComponentDefinition;
-import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayConnectionResourceBaseProperties;
 import com.liferay.talend.exception.ExceptionUtils;
 import com.liferay.talend.resource.LiferayResourceProperties;
@@ -113,7 +112,7 @@ public class TLiferayOutputProperties
 				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
 
 			liferaySourceOrSinkRuntime.initialize(
-				null, _getEffectiveConnectionProperties());
+				null, getEffectiveConnectionProperties());
 
 			setValidationResult(
 				liferaySourceOrSinkRuntime.validate(null),
@@ -274,7 +273,7 @@ public class TLiferayOutputProperties
 				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
 
 			liferaySourceOrSinkRuntime.initialize(
-				null, _getEffectiveConnectionProperties());
+				null, getEffectiveConnectionProperties());
 
 			setValidationResult(
 				liferaySourceOrSinkRuntime.validate(null),
@@ -381,43 +380,6 @@ public class TLiferayOutputProperties
 		}
 
 		return availableOperations;
-	}
-
-	private LiferayConnectionProperties _getEffectiveConnectionProperties() {
-		LiferayConnectionProperties liferayConnectionProperties =
-			getLiferayConnectionProperties();
-
-		if (liferayConnectionProperties == null) {
-			_log.error("LiferayConnectionProperties is null");
-		}
-
-		LiferayConnectionProperties referencedLiferayConnectionProperties =
-			liferayConnectionProperties.getReferencedConnectionProperties();
-
-		if (referencedLiferayConnectionProperties != null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Using a reference connection properties.");
-				_log.debug(
-					"User ID: " +
-						referencedLiferayConnectionProperties.userId.
-							getValue());
-				_log.debug(
-					"Endpoint: " +
-						referencedLiferayConnectionProperties.endpoint.
-							getValue());
-			}
-
-			return referencedLiferayConnectionProperties;
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"User ID: " + liferayConnectionProperties.userId.getValue());
-			_log.debug(
-				"Endpoint: " + liferayConnectionProperties.endpoint.getValue());
-		}
-
-		return liferayConnectionProperties;
 	}
 
 	private Schema _getOperationSchema(

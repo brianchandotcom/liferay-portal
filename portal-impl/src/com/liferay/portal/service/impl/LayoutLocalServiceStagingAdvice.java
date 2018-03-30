@@ -17,7 +17,6 @@ package com.liferay.portal.service.impl;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -48,9 +47,11 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portlet.exportimport.staging.ProxiedLayoutsThreadLocal;
 import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
 
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -63,9 +64,11 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import org.aopalliance.intercept.MethodInterceptor;
-import org.aopalliance.intercept.MethodInvocation;
-
+import org.springframework.aop.TargetSource;
+import org.springframework.aop.framework.AdvisedSupport;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.core.annotation.Order;
 
 /**
@@ -73,12 +76,30 @@ import org.springframework.core.annotation.Order;
  * @author Brian Wing Shun Chan
  */
 @Order(1)
-public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
+public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 
 	public LayoutLocalServiceStagingAdvice() {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Instantiating " + hashCode());
 		}
+	}
+
+	public void afterPropertiesSet() throws Exception {
+		AdvisedSupport advisedSupport = ServiceBeanAopProxy.getAdvisedSupport(
+			_beanFactory.getBean(LayoutLocalService.class.getName()));
+
+		TargetSource targetSource = advisedSupport.getTargetSource();
+
+		advisedSupport.setTarget(
+			ProxyUtil.newProxyInstance(
+				LayoutLocalServiceStagingAdvice.class.getClassLoader(),
+				new Class<?>[] {LayoutLocalService.class},
+				new LayoutLocalServiceStagingInvocationHandler(
+					targetSource.getTarget())));
+
+		layoutLocalServiceHelper =
+			(LayoutLocalServiceHelper)_beanFactory.getBean(
+				LayoutLocalServiceHelper.class.getName());
 	}
 
 	public void deleteLayout(
@@ -124,113 +145,146 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 	}
 
 	@Override
-	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
-		if (!StagingAdvicesThreadLocal.isEnabled()) {
-			return methodInvocation.proceed();
-		}
+	public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+		_beanFactory = beanFactory;
+	}
 
-		Method method = methodInvocation.getMethod();
+	private class LayoutLocalServiceStagingInvocationHandler
+		implements InvocationHandler {
 
-		String methodName = method.getName();
+		@Override
+		public Object invoke(Object proxy, Method method, Object[] arguments)
+			throws Throwable {
 
-		if (!_layoutLocalServiceStagingAdviceMethodNames.contains(methodName)) {
-			return wrapReturnValue(methodInvocation.proceed(), false);
-		}
-
-		Object returnValue = null;
-
-		Class<?>[] parameterTypes = method.getParameterTypes();
-
-		Object thisObject = methodInvocation.getThis();
-		Object[] arguments = methodInvocation.getArguments();
-
-		if (methodName.equals("createLayout")) {
-			return methodInvocation.proceed();
-		}
-		else if (methodName.equals("deleteLayout")) {
-			if (arguments.length == 3) {
-				deleteLayout(
-					(LayoutLocalService)thisObject, (Layout)arguments[0],
-					(Boolean)arguments[1], (ServiceContext)arguments[2]);
+			if (!StagingAdvicesThreadLocal.isEnabled()) {
+				return _invoke(method, arguments);
 			}
-			else if (arguments.length == 4) {
-				deleteLayout(
-					(LayoutLocalService)thisObject, (Long)arguments[0],
+
+			String methodName = method.getName();
+
+			if (!_layoutLocalServiceStagingAdviceMethodNames.contains(
+					methodName)) {
+
+				return wrapReturnValue(_invoke(method, arguments), false);
+			}
+
+			Object returnValue = null;
+
+			Class<?>[] parameterTypes = method.getParameterTypes();
+
+			if (methodName.equals("createLayout")) {
+				return _invoke(method, arguments);
+			}
+			else if (methodName.equals("deleteLayout")) {
+				if (arguments.length == 3) {
+					deleteLayout(
+						(LayoutLocalService)_targetObject, (Layout)arguments[0],
+						(Boolean)arguments[1], (ServiceContext)arguments[2]);
+				}
+				else if (arguments.length == 4) {
+					deleteLayout(
+						(LayoutLocalService)_targetObject, (Long)arguments[0],
+						(Boolean)arguments[1], (Long)arguments[2],
+						(ServiceContext)arguments[3]);
+				}
+				else {
+					return wrapReturnValue(_invoke(method, arguments), false);
+				}
+			}
+			else if (methodName.equals("getLayouts")) {
+				boolean showIncomplete = false;
+
+				if (arguments.length == 6) {
+					showIncomplete = (Boolean)arguments[3];
+				}
+				else if (arguments.length == 7) {
+					showIncomplete = (Boolean)arguments[3];
+				}
+				else if (Arrays.equals(parameterTypes, _GET_LAYOUTS_TYPES)) {
+					showIncomplete = true;
+				}
+
+				return wrapReturnValue(
+					_invoke(method, arguments), showIncomplete);
+			}
+			else if (methodName.equals("updateLayout") &&
+					 (arguments.length == 15)) {
+
+				Map<Locale, String> friendlyURLMap = null;
+
+				if (Arrays.equals(
+						parameterTypes, _UPDATE_LAYOUT_PARAMETER_TYPES)) {
+
+					friendlyURLMap = new HashMap<>();
+
+					friendlyURLMap.put(
+						LocaleUtil.getSiteDefault(), (String)arguments[11]);
+				}
+				else {
+					friendlyURLMap = (Map<Locale, String>)arguments[11];
+				}
+
+				returnValue = updateLayout(
+					(LayoutLocalService)_targetObject, (Long)arguments[0],
 					(Boolean)arguments[1], (Long)arguments[2],
-					(ServiceContext)arguments[3]);
+					(Long)arguments[3], (Map<Locale, String>)arguments[4],
+					(Map<Locale, String>)arguments[5],
+					(Map<Locale, String>)arguments[6],
+					(Map<Locale, String>)arguments[7],
+					(Map<Locale, String>)arguments[8], (String)arguments[9],
+					(Boolean)arguments[10], friendlyURLMap,
+					(Boolean)arguments[12], (byte[])arguments[13],
+					(ServiceContext)arguments[14]);
 			}
 			else {
-				return wrapReturnValue(methodInvocation.proceed(), false);
+				try {
+					Class<?> clazz = getClass();
+
+					parameterTypes = ArrayUtil.append(
+						new Class<?>[] {LayoutLocalService.class},
+						parameterTypes);
+
+					Method layoutLocalServiceStagingAdviceMethod =
+						clazz.getMethod(methodName, parameterTypes);
+
+					arguments = ArrayUtil.append(
+						new Object[] {_targetObject}, arguments);
+
+					returnValue = layoutLocalServiceStagingAdviceMethod.invoke(
+						this, arguments);
+				}
+				catch (InvocationTargetException ite) {
+					throw ite.getTargetException();
+				}
+				catch (NoSuchMethodException nsme) {
+					returnValue = _invoke(method, arguments);
+				}
 			}
+
+			returnValue = wrapReturnValue(returnValue, false);
+
+			return returnValue;
 		}
-		else if (methodName.equals("getLayouts")) {
-			boolean showIncomplete = false;
 
-			if (arguments.length == 6) {
-				showIncomplete = (Boolean)arguments[3];
-			}
-			else if (arguments.length == 7) {
-				showIncomplete = (Boolean)arguments[3];
-			}
-			else if (Arrays.equals(parameterTypes, _GET_LAYOUTS_TYPES)) {
-				showIncomplete = true;
-			}
+		private LayoutLocalServiceStagingInvocationHandler(
+			Object targetObject) {
 
-			return wrapReturnValue(methodInvocation.proceed(), showIncomplete);
+			_targetObject = targetObject;
 		}
-		else if (methodName.equals("updateLayout") &&
-				 (arguments.length == 15)) {
 
-			Map<Locale, String> friendlyURLMap = null;
+		private Object _invoke(Method method, Object[] arguments)
+			throws Throwable {
 
-			if (Arrays.equals(parameterTypes, _UPDATE_LAYOUT_PARAMETER_TYPES)) {
-				friendlyURLMap = new HashMap<>();
-
-				friendlyURLMap.put(
-					LocaleUtil.getSiteDefault(), (String)arguments[11]);
-			}
-			else {
-				friendlyURLMap = (Map<Locale, String>)arguments[11];
-			}
-
-			returnValue = updateLayout(
-				(LayoutLocalService)thisObject, (Long)arguments[0],
-				(Boolean)arguments[1], (Long)arguments[2], (Long)arguments[3],
-				(Map<Locale, String>)arguments[4],
-				(Map<Locale, String>)arguments[5],
-				(Map<Locale, String>)arguments[6],
-				(Map<Locale, String>)arguments[7],
-				(Map<Locale, String>)arguments[8], (String)arguments[9],
-				(Boolean)arguments[10], friendlyURLMap, (Boolean)arguments[12],
-				(byte[])arguments[13], (ServiceContext)arguments[14]);
-		}
-		else {
 			try {
-				Class<?> clazz = getClass();
-
-				parameterTypes = ArrayUtil.append(
-					new Class<?>[] {LayoutLocalService.class}, parameterTypes);
-
-				Method layoutLocalServiceStagingAdviceMethod = clazz.getMethod(
-					methodName, parameterTypes);
-
-				arguments = ArrayUtil.append(
-					new Object[] {thisObject}, arguments);
-
-				returnValue = layoutLocalServiceStagingAdviceMethod.invoke(
-					this, arguments);
+				return method.invoke(_targetObject, arguments);
 			}
 			catch (InvocationTargetException ite) {
-				throw ite.getTargetException();
-			}
-			catch (NoSuchMethodException nsme) {
-				returnValue = methodInvocation.proceed();
+				throw ite.getCause();
 			}
 		}
 
-		returnValue = wrapReturnValue(returnValue, false);
+		private final Object _targetObject;
 
-		return returnValue;
 	}
 
 	public Layout updateLayout(
@@ -673,7 +727,6 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 		return returnValue;
 	}
 
-	@BeanReference(type = LayoutLocalServiceHelper.class)
 	protected LayoutLocalServiceHelper layoutLocalServiceHelper;
 
 	private static final Class<?>[] _GET_LAYOUTS_TYPES =
@@ -699,5 +752,7 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 		_layoutLocalServiceStagingAdviceMethodNames.add("updateLookAndFeel");
 		_layoutLocalServiceStagingAdviceMethodNames.add("updateName");
 	}
+
+	private BeanFactory _beanFactory;
 
 }

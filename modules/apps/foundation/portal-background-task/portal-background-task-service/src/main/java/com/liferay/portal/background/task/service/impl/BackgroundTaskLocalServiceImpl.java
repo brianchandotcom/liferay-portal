@@ -598,15 +598,15 @@ public class BackgroundTaskLocalServiceImpl
 	public int getBackgroundTasksCount(
 		long[] groupIds, String[] taskExecutorClassNames) {
 
-		return backgroundTaskFinder.countByG_T_C(
-			groupIds, taskExecutorClassNames, null);
+		return backgroundTaskPersistence.countByG_T(
+			groupIds, taskExecutorClassNames);
 	}
 
 	@Override
 	public int getBackgroundTasksCount(
 		long[] groupIds, String[] taskExecutorClassNames, boolean completed) {
 
-		return backgroundTaskFinder.countByG_T_C(
+		return backgroundTaskPersistence.countByG_T_C(
 			groupIds, taskExecutorClassNames, completed);
 	}
 

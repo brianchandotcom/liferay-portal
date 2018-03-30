@@ -1,15 +1,6 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.portal.background.task.service.persistence.BackgroundTaskFinder.countByG_T_C">
-		<![CDATA[
-			SELECT
-				COUNT(*) AS COUNT_VALUE
-			FROM
-				BackgroundTask
-			[$WHERE_CONDITIONS$]
-		]]>
-	</sql>
 	<sql id="com.liferay.portal.background.task.service.persistence.BackgroundTaskFinder.findByG_T_C">
 		<![CDATA[
 			SELECT

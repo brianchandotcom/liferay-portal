@@ -75,12 +75,12 @@ public abstract class BaseUADEntityDisplayTestCase<T> {
 
 	protected abstract String getUADEntityTypeDescription();
 
-	private T _createUADEntity() throws Exception {
+	private T _createBaseModel() throws Exception {
 		addBaseModel(_user.getUserId());
 
-		List<T> uadEntities = _uadEntityAggregator.getAll(_user.getUserId());
+		List<T> baseModels = _uadEntityAggregator.getAll(_user.getUserId());
 
-		return uadEntities.get(0);
+		return baseModels.get(0);
 	}
 
 	private UADEntityAggregator<T> _uadEntityAggregator;

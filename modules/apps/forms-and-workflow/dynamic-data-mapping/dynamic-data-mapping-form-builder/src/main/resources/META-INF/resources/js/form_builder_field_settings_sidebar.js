@@ -318,7 +318,7 @@ AUI.add(
 							return A.Object.isEmpty(settingsFormFieldContextValue);
 						}
 						else if(Lang.isBoolean(settingsFormFieldContextValue)) {
-							return !settingsFormFieldContextValue;
+							return false;
 						}
 
 						return true;
@@ -373,7 +373,7 @@ AUI.add(
 
 										if (!(fieldName === 'type') && fieldName === previousFieldName) {
 
-											if (fieldLocalizable == previousFieldLocalizable) {
+											if ((fieldLocalizable == true) && (previousFieldLocalizable == true)) {
 												settingsFormFieldContext.localizedValue = previousSettingsFormFieldContext.localizedValue;
 											}
 

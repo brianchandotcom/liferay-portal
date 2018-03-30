@@ -132,6 +132,8 @@ public class JavaStaticBlockCheck extends BaseJavaTermCheck {
 					"[\\s\\S]*\\s" + javaTerm.getName() + "\\([\\s\\S]*")) {
 
 				containsMethodCall = true;
+
+				break;
 			}
 		}
 

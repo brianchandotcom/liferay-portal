@@ -93,6 +93,53 @@ xpack.security.sessionTimeout: 600000</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="configure-x-pack-security-app-server-truststore">
+		<sequential>
+			<if>
+				<os family="unix" />
+				<then>
+					<exec dir="${elasticsearch.dir}-1/bin/x-pack" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="./certutil cert --ca-cert ${elasticsearch.dir}-1/config/certs/ca/ca.crt --ca-key ${elasticsearch.dir}-1/config/certs/ca/ca.key --pass liferay --ip 127.0.0.1 --dns localhost --name localhost --out ${elasticsearch.dir}-1/config/certs/localhost.p12" />
+					</exec>
+
+					<exec dir="${elasticsearch.dir}-1/bin/x-pack" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="keytool -importkeystore -deststorepass liferay -destkeystore ${elasticsearch.dir}-1/config/certs/localhost.jks -srckeystore ${elasticsearch.dir}-1/config/certs/localhost.p12 -srcstoretype PKCS12 -srcstorepass liferay" />
+					</exec>
+				</then>
+				<elseif>
+					<os family="windows" />
+					<then>
+						<exec dir="${elasticsearch.dir}-1/bin/x-pack" executable="cmd">
+							<arg value="/c" />
+							<arg value="certutil cert --ca-cert ${elasticsearch.dir}-1/config/certs/ca/ca.crt --ca-key ${elasticsearch.dir}-1/config/certs/ca/ca.key --pass liferay --ip 127.0.0.1 --dns localhost --name localhost --out ${elasticsearch.dir}-1/config/certs/localhost.p12" />
+						</exec>
+
+						<exec dir="${elasticsearch.dir}-1/bin/x-pack" executable="cmd">
+							<arg value="/c" />
+							<arg value="keytool -importkeystore -deststorepass liferay -destkeystore ${elasticsearch.dir}-1/config/certs/localhost.jks -srckeystore ${elasticsearch.dir}-1/config/certs/localhost.p12 -srcstoretype PKCS12 -srcstorepass liferay" />
+						</exec>
+					</then>
+				</elseif>
+			</if>
+
+			<if>
+				<equals arg1="${app.server.type}" arg2="tomcat" />
+				<then>
+					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.bat">
+${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${elasticsearch.dir}-1/config/certs/localhost.jks -Djavax.net.ssl.trustStorePassword=liferay"</echo>
+
+					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
+${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${elasticsearch.dir}-1/config/certs/localhost.jks -Djavax.net.ssl.trustStorePassword=liferay"</echo>
+				</then>
+				<else>
+					<echo>Set setenv.bat and setenv.sh manually before attempting to connect with portal.</echo>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="generate-elasticsearch-x-pack-security-certificates">
 		<attribute default="liferay" name="certificate.password" />
 
@@ -608,6 +655,8 @@ xpack.security.sessionTimeout: 600000</echo>
 				<configure-elasticsearch-x-pack-security-osgi-bundle-properties />
 
 				<configure-elasticsearch-x-pack-monitoring-osgi-bundle-properties />
+
+				<configure-x-pack-security-app-server-truststore />
 
 				<antcall target="start-kibana" />
 			</then>

@@ -6576,6 +6576,15 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<propertycopy from="browser.firefox.bin.file[${browser.firefox.version}]" name="browser.firefox.bin.file" silent="true" />
 
 		<if>
+			<isset property="browser.chrome.bin.args" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					browser.chrome.bin.args=${browser.chrome.bin.args}
+				</echo>
+			</then>
+		</if>
+
+		<if>
 			<isset property="browser.firefox.bin.file" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">

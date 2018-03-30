@@ -24,7 +24,7 @@
 
 		<h2 class="sidebar-title"><%= uadEntityDisplay.getUADEntityTypeName() %></h2>
 
-		<h4 class="sidebar-subtitle"><%= viewUADEntitiesDisplay.getUADEntitySetName() %></h4>
+		<h4 class="sidebar-subtitle"><%= viewUADEntitiesDisplay.getApplicationName() %></h4>
 	</div>
 
 	<div class="sidebar-body">

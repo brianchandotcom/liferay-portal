@@ -30,11 +30,12 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
-import com.liferay.user.associated.data.entity.UADEntity;
 import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
+import com.liferay.user.associated.data.web.internal.display.UADEntity;
 import com.liferay.user.associated.data.web.internal.display.ViewUADEntitiesDisplay;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletException;
@@ -68,13 +69,10 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 		try {
 			User selectedUser = _portal.getSelectedUser(renderRequest);
 
-			String uadEntitySetName = ParamUtil.getString(
-				renderRequest, "uadEntitySetName");
+			String applicationName = ParamUtil.getString(
+				renderRequest, "applicationName");
 			String uadRegistryKey = ParamUtil.getString(
 				renderRequest, "uadRegistryKey");
-
-			UADEntityAggregator uadEntityAggregator =
-				_uadRegistry.getUADEntityAggregator(uadRegistryKey);
 
 			PortletRequest portletRequest =
 				(PortletRequest)renderRequest.getAttribute(
@@ -93,17 +91,17 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 
 			viewUADEntitiesDisplay.setNavigationItems(
 				_getNaviagationItems(
-					uadEntitySetName, uadRegistryKey, currentURL,
+					applicationName, uadRegistryKey, currentURL,
 					liferayPortletResponse));
 
 			viewUADEntitiesDisplay.setSearchContainer(
 				_getSearchContainer(
-					portletRequest, currentURL, uadEntityAggregator,
+					portletRequest, currentURL, uadRegistryKey,
 					selectedUser.getUserId()));
 
 			viewUADEntitiesDisplay.setUADEntityDisplay(
 				_uadRegistry.getUADEntityDisplay(uadRegistryKey));
-			viewUADEntitiesDisplay.setUADEntitySetName(uadEntitySetName);
+			viewUADEntitiesDisplay.setApplicationName(applicationName);
 			viewUADEntitiesDisplay.setUADRegistryKey(uadRegistryKey);
 
 			renderRequest.setAttribute(
@@ -117,7 +115,7 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	private List<NavigationItem> _getNaviagationItems(
-			String uadEntitySetName, String uadRegistryKey,
+			String applicationName, String uadRegistryKey,
 			PortletURL currentURL,
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortletException {
@@ -127,7 +125,7 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 		for (UADEntityDisplay uadEntityDisplay :
 				_uadRegistry.getUADEntityDisplays()) {
 
-			if (!uadEntitySetName.equals(
+			if (!applicationName.equals(
 					uadEntityDisplay.getApplicationName())) {
 
 				continue;
@@ -153,17 +151,30 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 
 	private SearchContainer<UADEntity> _getSearchContainer(
 		PortletRequest portletRequest, PortletURL currentURL,
-		UADEntityAggregator uadEntityAggregator, long selectedUserId) {
+		String uadRegistryKey, long selectedUserId) {
 
 		SearchContainer<UADEntity> searchContainer = new SearchContainer<>(
 			portletRequest, currentURL, null, null);
 
-		searchContainer.setResults(
-			uadEntityAggregator.getUADEntities(
-				selectedUserId, searchContainer.getStart(),
-				searchContainer.getEnd()));
+		UADEntityAggregator uadEntityAggregator =
+			_uadRegistry.getUADEntityAggregator(uadRegistryKey);
 
-		searchContainer.setTotal(uadEntityAggregator.count(selectedUserId));
+		List<Object> entities = uadEntityAggregator.getEntities(
+			selectedUserId, searchContainer.getStart(),
+			searchContainer.getEnd());
+
+		List<UADEntity> uadEntities = new ArrayList<>();
+
+		for (Object entity : entities) {
+			uadEntities.add(
+				new UADEntity(
+					entity, uadEntityAggregator.getPrimaryKeyObj(entity),
+					uadRegistryKey));
+		}
+
+		searchContainer.setResults(uadEntities);
+		searchContainer.setTotal(
+			(int)uadEntityAggregator.count(selectedUserId));
 
 		return searchContainer;
 	}

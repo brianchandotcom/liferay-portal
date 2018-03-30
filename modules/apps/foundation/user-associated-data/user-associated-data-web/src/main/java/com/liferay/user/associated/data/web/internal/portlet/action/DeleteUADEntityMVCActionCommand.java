@@ -48,7 +48,7 @@ public class DeleteUADEntityMVCActionCommand extends BaseUADMVCActionCommand {
 		UADEntityAnonymizer uadEntityAnonymizer =
 			uadRegistry.getUADEntityAnonymizer(uadRegistryKey);
 
-		uadEntityAnonymizer.delete(getUADEntity(actionRequest, uadRegistryKey));
+		uadEntityAnonymizer.delete(getEntity(actionRequest, uadRegistryKey));
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 

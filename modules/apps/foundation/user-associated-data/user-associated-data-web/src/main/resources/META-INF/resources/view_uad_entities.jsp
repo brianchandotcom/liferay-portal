@@ -50,52 +50,57 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 	</liferay-frontend:management-bar-buttons>
 </liferay-frontend:management-bar>
 
-<div class="closed container-fluid container-fluid-max-xl sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= true %>" id="/entity_type_sidebar" var="entityTypeSidebarURL" />
+<aui:form method="post" name="fm">
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="uadRegistryKey" type="hidden" value="<%= viewUADEntitiesDisplay.getUADRegistryKey() %>" />
 
-	<liferay-frontend:sidebar-panel
-		resourceURL="<%= entityTypeSidebarURL %>"
-		searchContainerId="UADEntities"
-	>
-		<%@ include file="/uad_entity_type_sidebar.jspf" %>
-	</liferay-frontend:sidebar-panel>
+	<div class="closed container-fluid container-fluid-max-xl sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= true %>" id="/entity_type_sidebar" var="entityTypeSidebarURL" />
 
-	<div class="sidenav-content">
-		<liferay-ui:search-container
-			emptyResultsMessage="no-entities-remain-of-this-type"
-			id="UADEntities"
-			searchContainer="<%= viewUADEntitiesDisplay.getSearchContainer() %>"
+		<liferay-frontend:sidebar-panel
+			resourceURL="<%= entityTypeSidebarURL %>"
+			searchContainerId="UADEntities"
 		>
-			<liferay-ui:search-container-row
-				className="com.liferay.user.associated.data.entity.UADEntity"
-				escapedModel="<%= true %>"
-				keyProperty="name"
-				modelVar="uadEntity"
+			<%@ include file="/uad_entity_type_sidebar.jspf" %>
+		</liferay-frontend:sidebar-panel>
+
+		<div class="sidenav-content">
+			<liferay-ui:search-container
+				emptyResultsMessage="no-entities-remain-of-this-type"
+				id="UADEntities"
+				searchContainer="<%= viewUADEntitiesDisplay.getSearchContainer() %>"
 			>
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand"
-					name="entity-id"
-					property="UADEntityId"
-				/>
+				<liferay-ui:search-container-row
+					className="com.liferay.user.associated.data.entity.UADEntity"
+					escapedModel="<%= true %>"
+					keyProperty="name"
+					modelVar="uadEntity"
+				>
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand"
+						name="entity-id"
+						property="UADEntityId"
+					/>
 
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand"
-					href="<%= uadEntityDisplay.getEditURL(uadEntity, liferayPortletRequest, liferayPortletResponse) %>"
-					name="edit-url"
-					value="<%= uadEntityDisplay.getEditURL(uadEntity, liferayPortletRequest, liferayPortletResponse) %>"
-				/>
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand"
+						href="<%= uadEntityDisplay.getEditURL(uadEntity, liferayPortletRequest, liferayPortletResponse) %>"
+						name="edit-url"
+						value="<%= uadEntityDisplay.getEditURL(uadEntity, liferayPortletRequest, liferayPortletResponse) %>"
+					/>
 
-				<liferay-ui:search-container-column-jsp
-					cssClass="entry-action-column"
-					path="/uad_entity_action.jsp"
-				/>
-			</liferay-ui:search-container-row>
+					<liferay-ui:search-container-column-jsp
+						cssClass="entry-action-column"
+						path="/uad_entity_action.jsp"
+					/>
+				</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator
-				markupView="lexicon"
-			/>
-		</liferay-ui:search-container>
+				<liferay-ui:search-iterator
+					markupView="lexicon"
+				/>
+			</liferay-ui:search-container>
+		</div>
 	</div>
-</div>
+</aui:form>
 
 <%@ include file="/action/confirm_action_js.jspf" %>

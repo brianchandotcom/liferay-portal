@@ -22,33 +22,31 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 UADEntity uadEntity = (UADEntity)row.getObject();
 %>
 
-<aui:form method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="uadEntityId" type="hidden" value="<%= uadEntity.getUADEntityId() %>" />
-	<aui:input name="uadRegistryKey" type="hidden" value="<%= uadEntity.getUADRegistryKey() %>" />
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+	triggerCssClass="component-action"
+>
+	<portlet:actionURL name="/auto_anonymize_uad_entity" var="autoAnonymizeURL">
+		<portlet:param name="uadEntityId" value="<%= uadEntity.getUADEntityId() %>" />
+	</portlet:actionURL>
 
-	<liferay-ui:icon-menu
-		direction="left-side"
-		icon="<%= StringPool.BLANK %>"
-		markupView="lexicon"
-		message="<%= StringPool.BLANK %>"
-		showWhenSingleIcon="<%= true %>"
-		triggerCssClass="component-action"
-	>
-		<portlet:actionURL name="/auto_anonymize_uad_entity" var="autoAnonymizeURL" />
+	<liferay-ui:icon
+		message="anonymize"
+		onClick='<%= renderResponse.getNamespace() + "confirmAction('" + autoAnonymizeURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-anonymize-this-entity") + "')" %>'
+		url="javascript:;"
+	/>
 
-		<liferay-ui:icon
-			message="anonymize"
-			onClick='<%= renderResponse.getNamespace() + "confirmAction('" + autoAnonymizeURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-anonymize-this-entity") + "')" %>'
-			url="javascript:;"
-		/>
+	<portlet:actionURL name="/delete_uad_entity" var="deleteURL">
+		<portlet:param name="uadEntityId" value="<%= uadEntity.getUADEntityId() %>" />
+	</portlet:actionURL>
 
-		<portlet:actionURL name="/delete_uad_entity" var="deleteURL" />
-
-		<liferay-ui:icon
-			message="delete"
-			onClick='<%= renderResponse.getNamespace() + "confirmAction('" + deleteURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this-entity") + "')" %>'
-			url="javascript:;"
-		/>
-	</liferay-ui:icon-menu>
-</aui:form>
+	<liferay-ui:icon
+		message="delete"
+		onClick='<%= renderResponse.getNamespace() + "confirmAction('" + deleteURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this-entity") + "')" %>'
+		url="javascript:;"
+	/>
+</liferay-ui:icon-menu>

@@ -48,8 +48,8 @@ proxyServletLogEnable="true"</echo>
 password="${osgi.config.elastic.user.password}"
 requiresAuthentication="true"
 sslCertificateAuthoritiesPaths="${elasticsearch.dir}-1/config/certs/ca/ca.crt"
-sslCertificatePath="${elasticsearch.dir}-1/config/certs/instance/instance.crt"
-sslKeyPath="${elasticsearch.dir}-1/config/certs/instance/instance.key"
+sslCertificatePath="${elasticsearch.dir}-1/config/certs/localhost/localhost.crt"
+sslKeyPath="${elasticsearch.dir}-1/config/certs/localhost/localhost.key"
 transportSSLEnabled="true"</echo>
 		</sequential>
 	</macrodef>
@@ -59,9 +59,9 @@ transportSSLEnabled="true"</echo>
 			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}xpack.security.http.ssl.enabled: true
 xpack.security.transport.ssl.enabled: true
 xpack.security.transport.ssl.verification_mode: certificate
-xpack.ssl.certificate: certs/instance/instance.crt
+xpack.ssl.certificate: certs/localhost/localhost.crt
 xpack.ssl.certificate_authorities: [ "certs/ca/ca.crt" ]
-xpack.ssl.key: certs/instance/instance.key</echo>
+xpack.ssl.key: certs/localhost/localhost.key</echo>
 		</sequential>
 	</macrodef>
 
@@ -78,9 +78,9 @@ server.basePath: "/o/portal-search-elasticsearch-xpack-monitoring/xpack-monitori
 			<echo append="true" file="${elastic.kibana.dir}/config/kibana.yml">${line.separator}elasticsearch.password: "${elastic.xpack.kibana.user.password}"
 elasticsearch.ssl.certificateAuthorities: [ "${elasticsearch.dir}-1/config/certs/ca/ca.crt" ]
 elasticsearch.username: "kibana"
-server.ssl.certificate: ${elasticsearch.dir}-1/config/certs/instance/instance.crt
+server.ssl.certificate: ${elasticsearch.dir}-1/config/certs/localhost/localhost.crt
 server.ssl.enabled: true
-server.ssl.key: ${elasticsearch.dir}-1/config/certs/instance/instance.key
+server.ssl.key: ${elasticsearch.dir}-1/config/certs/localhost/localhost.key
 xpack.security.encryptionKey: "xsomethingxatxleastx32xcharactersx"
 xpack.security.sessionTimeout: 600000</echo>
 
@@ -102,7 +102,7 @@ xpack.security.sessionTimeout: 600000</echo>
 				<then>
 					<exec dir="${elasticsearch.dir}/bin/x-pack" executable="/bin/bash">
 						<arg value="-c" />
-						<arg value="./certutil ca --pem --out elastic-stack-ca.zip" />
+						<arg value="./certutil ca --pem --ca-dn CN=localhost --out elastic-stack-ca.zip" />
 					</exec>
 				</then>
 				<elseif>
@@ -110,7 +110,7 @@ xpack.security.sessionTimeout: 600000</echo>
 					<then>
 						<exec dir="${elasticsearch.dir}/bin/x-pack" executable="cmd">
 							<arg value="/c" />
-							<arg value="certutil ca --pem --out elastic-stack-ca.zip" />
+							<arg value="certutil ca --pem --ca-dn CN=localhost --out elastic-stack-ca.zip" />
 						</exec>
 					</then>
 				</elseif>
@@ -126,7 +126,7 @@ xpack.security.sessionTimeout: 600000</echo>
 				<then>
 					<exec dir="${elasticsearch.dir}/bin/x-pack" executable="/bin/bash">
 						<arg value="-c" />
-						<arg value="./certutil cert --ca-cert ca/ca.crt --ca-key ca/ca.key --pem --ip 127.0.0.1 --dns localhost --out certificate-bundle.zip" />
+						<arg value="./certutil cert --ca-cert ca/ca.crt --ca-key ca/ca.key --pem --ip 127.0.0.1 --dns localhost --name localhost --out certificate-bundle.zip" />
 					</exec>
 				</then>
 				<elseif>
@@ -134,7 +134,7 @@ xpack.security.sessionTimeout: 600000</echo>
 					<then>
 						<exec dir="${elasticsearch.dir}/bin/x-pack" executable="cmd">
 							<arg value="/c" />
-							<arg value="certutil cert --ca-cert ca/ca.crt --ca-key ca/ca.key --pem --ip 127.0.0.1 --dns localhost --out certificate-bundle.zip" />
+							<arg value="certutil cert --ca-cert ca/ca.crt --ca-key ca/ca.key --pem --ip 127.0.0.1 --dns localhost --name localhost --out certificate-bundle.zip" />
 						</exec>
 					</then>
 				</elseif>
@@ -151,7 +151,7 @@ xpack.security.sessionTimeout: 600000</echo>
 			/>
 
 			<move
-				file="${elasticsearch.dir}/bin/x-pack/instance"
+				file="${elasticsearch.dir}/bin/x-pack/localhost"
 				todir="${elasticsearch.dir}/config/certs"
 			/>
 

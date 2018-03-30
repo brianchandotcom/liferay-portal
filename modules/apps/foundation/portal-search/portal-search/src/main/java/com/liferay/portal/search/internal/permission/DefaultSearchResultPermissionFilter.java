@@ -313,7 +313,7 @@ public class DefaultSearchResultPermissionFilter
 			while (true) {
 				int count = end - documents.size();
 
-				if ((offset > 0) || (amplifiedCount <= 0)) {
+				if ((offset > 0) || (amplifiedCount < count)) {
 					amplifiedCount = (int)Math.ceil(
 						count * amplificationFactor);
 				}

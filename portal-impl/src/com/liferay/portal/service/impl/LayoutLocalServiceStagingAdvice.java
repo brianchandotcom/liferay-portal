@@ -69,13 +69,11 @@ import org.springframework.aop.framework.AdvisedSupport;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
-import org.springframework.core.annotation.Order;
 
 /**
  * @author Raymond Augé
  * @author Brian Wing Shun Chan
  */
-@Order(1)
 public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 
 	public LayoutLocalServiceStagingAdvice() {

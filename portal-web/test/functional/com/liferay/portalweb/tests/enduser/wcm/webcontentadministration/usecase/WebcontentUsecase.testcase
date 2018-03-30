@@ -1038,8 +1038,9 @@
 			<var name="webContentTitle" value="Basic S.P.A.C.E. Banner" />
 		</execute>
 
-		<execute macro="WebContent#addLocale">
-			<var name="language" value="Japanese (Japan)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Title" />
+			<var name="locale" value="ja-JP" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
@@ -3244,8 +3245,9 @@
 			<var name="fieldValue" value="English (United States) Image Description" />
 		</execute>
 
-		<execute macro="WebContent#addLocale">
-			<var name="language" value="Spanish (Spain)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Title" />
+			<var name="locale" value="es-ES" />
 		</execute>
 
 		<execute macro="FormFields#editText">
@@ -3258,8 +3260,9 @@
 			<var name="fieldValue" value="Spanish (Spain) Image Description" />
 		</execute>
 
-		<execute macro="WebContent#selectLocale">
-			<var name="language" value="English (United States)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldname" value="Title" />
+			<var name="locale" value="en-US" />
 		</execute>
 
 		<execute macro="FormFields#viewTextValue">
@@ -3272,8 +3275,9 @@
 			<var name="fieldValue" value="English (United States) Image Description" />
 		</execute>
 
-		<execute macro="WebContent#selectLocale">
-			<var name="language" value="Spanish (Spain)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Title" />
+			<var name="locale" value="es-ES" />
 		</execute>
 
 		<execute macro="FormFields#viewTextValue">
@@ -3548,8 +3552,9 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContent#addLocale">
-			<var name="language" value="French (France)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Title" />
+			<var name="locale" value="fr-FR" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
@@ -3592,8 +3597,9 @@
 			<var name="webContentTitle" value="WC WebContent Titre" />
 		</execute>
 
-		<execute macro="WebContent#selectLocale">
-			<var name="language" value="français (France)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Title" />
+			<var name="locale" value="fr-FR" />
 		</execute>
 
 		<execute macro="WebContent#viewCP">

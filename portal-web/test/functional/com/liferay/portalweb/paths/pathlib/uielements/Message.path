@@ -145,7 +145,7 @@
 </tr>
 <tr>
 	<td>INFO_4</td>
-	<td>xpath=(//div[contains(@class,'alert-info') and contains(@class,'alert-warning')]/a)[1]</td>
+	<td>xpath=(//div[contains(@class,'alert-info')]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>

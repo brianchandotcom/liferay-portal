@@ -102,8 +102,9 @@
 			<var name="webContentTitle" value="WC Titulo" />
 		</execute>
 
-		<execute macro="WebContent#selectLocale">
-			<var name="language" value="español (España)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Titulo" />
+			<var name="locale" value="es-ES" />
 		</execute>
 
 		<execute macro="WebContent#viewCP">
@@ -133,8 +134,9 @@
 			<var name="webContentTitle" value="WC Titel" />
 		</execute>
 
-		<execute macro="WebContent#selectLocale">
-			<var name="language" value="Deutsch (Deutschland)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Titel" />
+			<var name="locale" value="nl-NL" />
 		</execute>
 
 		<execute macro="WebContent#viewCP">
@@ -164,8 +166,9 @@
 			<var name="webContentTitle" value="WC Otsikko" />
 		</execute>
 
-		<execute macro="WebContent#selectLocale">
-			<var name="language" value="suomi (Suomi)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Otsikko" />
+			<var name="locale" value="fi-FI" />
 		</execute>
 
 		<execute macro="WebContent#viewCP">
@@ -196,8 +199,9 @@
 			<var name="webContentTitle" value="WC Title" />
 		</execute>
 
-		<execute macro="WebContent#addLocale">
-			<var name="language" value="Spanish (Spain)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Title" />
+			<var name="locale" value="es-ES" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
@@ -233,8 +237,9 @@
 			<var name="webContentTitle" value="WC Titulo" />
 		</execute>
 
-		<execute macro="WebContent#selectLocale">
-			<var name="language" value="español (España)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Title" />
+			<var name="locale" value="es-ES" />
 		</execute>
 
 		<execute macro="WebContent#viewCP">

@@ -108,8 +108,9 @@
 			<var name="fieldValue" value="English (United States) Image Description" />
 		</execute>
 
-		<execute macro="WebContent#addLocale">
-			<var name="language" value="Spanish (Spain)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Title" />
+			<var name="locale" value="es-ES" />
 		</execute>
 
 		<execute macro="FormFields#editText">
@@ -122,8 +123,9 @@
 			<var name="fieldValue" value="Spanish (Spain) Image Description" />
 		</execute>
 
-		<execute macro="WebContent#addLocale">
-			<var name="language" value="Portuguese (Brazil)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Title" />
+			<var name="locale" value="pt-BR" />
 		</execute>
 
 		<execute macro="FormFields#editText">
@@ -136,8 +138,9 @@
 			<var name="fieldValue" value="Portuguese (Brazil) Image Description" />
 		</execute>
 
-		<execute macro="WebContent#selectLocale">
-			<var name="language" value="English (United States)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Title" />
+			<var name="locale" value="en-US" />
 		</execute>
 
 		<execute macro="FormFields#viewTextValue">
@@ -150,8 +153,9 @@
 			<var name="fieldValue" value="English (United States) Image Description" />
 		</execute>
 
-		<execute macro="WebContent#selectLocale">
-			<var name="language" value="Spanish (Spain)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Title" />
+			<var name="locale" value="es-ES" />
 		</execute>
 
 		<execute macro="FormFields#viewTextValue">
@@ -164,8 +168,9 @@
 			<var name="fieldValue" value="Spanish (Spain) Image Description" />
 		</execute>
 
-		<execute macro="WebContent#selectLocale">
-			<var name="language" value="Portuguese (Brazil)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Title" />
+			<var name="locale" value="pt-BR" />
 		</execute>
 
 		<execute macro="FormFields#viewTextValue">

@@ -192,18 +192,6 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
-	<command name="addLocale">
-		<execute function="Click" locator1="Translation#ADD" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${language}">
-			<var name="key_menuItem" value="${language}" />
-		</execute>
-
-		<execute macro="WebContent#selectLocale">
-			<var name="language" value="${language}" />
-		</execute>
-	</command>
-
 	<command name="addLocalizedPGViaWCD">
 		<execute macro="WebContentNavigator#gotoAddPGViaWCD">
 			<var name="structureName" value="${localizedBasicWebContent}" />
@@ -722,8 +710,9 @@
 			<var name="webContentTitle" value="WC Title" />
 		</execute>
 
-		<execute macro="WebContent#addLocale">
-			<var name="language" value="Spanish (Spain)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Title" />
+			<var name="locale" value="es-ES" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
@@ -731,8 +720,9 @@
 			<var name="webContentTitle" value="WC Titulo" />
 		</execute>
 
-		<execute macro="WebContent#addLocale">
-			<var name="language" value="German (Germany)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Title" />
+			<var name="locale" value="de-DE" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
@@ -740,8 +730,9 @@
 			<var name="webContentTitle" value="WC Titel" />
 		</execute>
 
-		<execute macro="WebContent#addLocale">
-			<var name="language" value="Finnish (Finland)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Title" />
+			<var name="locale" value="fi-FI" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
@@ -765,8 +756,6 @@
 		<execute macro="AssetPublisherPortlet#addAsset">
 			<var name="assetType" value="Basic Web Content" />
 		</execute>
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="${webContentContent}" />
@@ -1361,12 +1350,6 @@
 				</execute>
 			</else>
 		</if>
-	</command>
-
-	<command name="selectLocale">
-		<execute function="AssertClick" locator1="Translation#AVAILABLE_TRANSLATIONS_LINK" value1="${language}">
-			<var name="key_localizedLanguage" value="${language}" />
-		</execute>
 	</command>
 
 	<command name="selectTemplateCP">
@@ -2057,8 +2040,9 @@
 			<var name="fieldValue" value="${webContentTextBox}" />
 		</execute>
 
-		<execute macro="WebContent#selectLocale">
-			<var name="language" value="Spanish (Spain)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Title" />
+			<var name="locale" value="es-ES" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${localizedTitle}" />

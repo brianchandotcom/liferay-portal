@@ -790,7 +790,7 @@
 		<execute macro="Role#definePermissionCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_VIEW_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="View" />
-			<var name="roleName" value="Guest" />
+			<var name="roleTitle" value="Guest" />
 			<var name="siteNameScope" value="Liferay" />
 		</execute>
 
@@ -803,7 +803,7 @@
 		<execute macro="Role#definePermissionCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ARTICLE_VIEW_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="View" />
-			<var name="roleName" value="Guest" />
+			<var name="roleTitle" value="Guest" />
 			<var name="siteNameScope" value="Liferay" />
 		</execute>
 

@@ -534,8 +534,9 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContent#addLocale">
-			<var name="language" value="Chinese (China)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Title" />
+			<var name="locale" value="zh-CN" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
@@ -1047,8 +1048,9 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContent#addLocale">
-			<var name="language" value="Chinese (China)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Title" />
+			<var name="locale" value="zh-CN" />
 		</execute>
 
 		<execute macro="WebContent#addCP">

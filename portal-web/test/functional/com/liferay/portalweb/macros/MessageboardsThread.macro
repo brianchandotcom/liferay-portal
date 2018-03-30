@@ -896,9 +896,11 @@
 	</command>
 
 	<command name="restoreMBAttachmentCP">
-		<execute function="Click" locator1="MessageBoardsThread#MESSAGE_BODY_ATTACHMENT_1" />
+		<execute function="Click" locator1="MessageBoardsRemovedAttachments#REMOVED_ATTACHMENT_LINK" />
 
-		<execute function="AssertTextEquals" locator1="MessageBoardsRemovedAttachments#ATTACHMENT_TABLE_NAME" value1="${mbAttachmentFile}">
+		<execute macro="IFrame#selectModalFrame" />
+
+		<execute function="AssertElementPresent" locator1="MessageBoardsRemovedAttachments#ATTACHMENT_FILE_NAME">
 			<var name="key_mbAttachmentFile" value="${mbAttachmentFile}" />
 		</execute>
 
@@ -910,6 +912,10 @@
 
 		<execute macro="Alert#viewSuccessMessage" />
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="This message does not have file attachments in the Recycle Bin." />
+
+		<execute macro="IFrame#closeFrame" />
+
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="saveNewThreadAsDraft">

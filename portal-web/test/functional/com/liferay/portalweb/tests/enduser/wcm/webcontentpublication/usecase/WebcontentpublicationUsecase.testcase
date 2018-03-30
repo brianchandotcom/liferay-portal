@@ -457,8 +457,9 @@
 			<var name="webContentTitle" value="Web Content1 Title" />
 		</execute>
 
-		<execute macro="WebContent#addLocale">
-			<var name="language" value="German (Germany)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Title" />
+			<var name="locale" value="de-DE" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
@@ -466,8 +467,9 @@
 			<var name="webContentTitle" value="Netz Content1 Titel" />
 		</execute>
 
-		<execute macro="WebContent#addLocale">
-			<var name="language" value="French (France)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Title" />
+			<var name="locale" value="fr-FR" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
@@ -910,9 +912,10 @@
 			<var name="webContentTitle" value="Web Content1 Title" />
 		</execute>
 
-		<execute macro="WebContent#addLocale">
-			<var name="language" value="German (Germany)" />
-		</execute>
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Title" />
+			<var name="locale" value="de-DE" />
+		</execute>s
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentTitle" value="Netz Inhalt1 Titel" />
@@ -962,8 +965,9 @@
 			<var name="webContentTitle" value="Web Content2 Title" />
 		</execute>
 
-		<execute macro="WebContent#addLocale">
-			<var name="language" value="German (Germany)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Title" />
+			<var name="locale" value="de-DE" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
@@ -1014,8 +1018,9 @@
 			<var name="webContentTitle" value="Web Content3 Title" />
 		</execute>
 
-		<execute macro="WebContent#addLocale">
-			<var name="language" value="German (Germany)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Title" />
+			<var name="locale" value="de-DE" />
 		</execute>
 
 		<execute macro="WebContent#addCP">

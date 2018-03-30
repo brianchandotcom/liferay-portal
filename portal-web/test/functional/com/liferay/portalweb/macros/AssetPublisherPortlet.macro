@@ -1,14 +1,14 @@
 <definition>
 	<command name="addAsset">
-		<execute function="Click#clickNoWaitForVisible" locator1="Portlet#ICON_PLUS_SIGN">
-			<var name="key_portletName" value="Asset Publisher" />
+		<execute macro="Portlet#clickPortletPlusIconPG">
+			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${assetType}">
 			<var name="key_menuItem" value="${assetType}" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		<execute macro="IFrame#selectConfigurationFrame" />
 	</command>
 
 	<command name="assertSiteScopeSearch">

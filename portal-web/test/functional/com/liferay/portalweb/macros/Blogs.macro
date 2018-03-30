@@ -199,8 +199,6 @@
 			<var name="assetType" value="Blogs Entry" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
 		<execute macro="AlloyEditor#addTitleAndContent">
 			<var name="content" value="${entryContent}" />
 			<var name="title" value="${entryTitle}" />

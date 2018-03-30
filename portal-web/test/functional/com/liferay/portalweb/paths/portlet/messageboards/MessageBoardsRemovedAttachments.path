@@ -10,8 +10,13 @@
 <tbody>
 <!--ATTACHMENT_TABLE-->
 <tr>
-	<td>ATTACHMENT_TABLE_NAME</td>
-	<td>//tbody[@class='table-data']/tr[contains(.,'${key_mbAttachmentFile}')]/td</td>
+	<td>ATTACHMENT_FILE_NAME</td>
+	<td>//td[contains(@class,'lfr-file-name-column')]/a[contains(.,'${key_mbAttachmentFile}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMOVED_ATTACHMENT_LINK</td>
+	<td>//a[contains(@id,'view-removed-attachments-link')]</td>
 	<td></td>
 </tr>
 </tbody>

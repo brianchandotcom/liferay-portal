@@ -32,7 +32,8 @@ UADEntity uadEntity = (UADEntity)row.getObject();
 >
 	<portlet:actionURL name="/auto_anonymize_uad_entity" var="autoAnonymizeURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="uadEntityId" value="<%= uadEntity.getUADEntityId() %>" />
+		<portlet:param name="p_u_i_d" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
+		<portlet:param name="entityId" value="<%= String.valueOf(uadEntity.getEntityId()) %>" />
 		<portlet:param name="uadRegistryKey" value="<%= uadEntity.getUADRegistryKey() %>" />
 	</portlet:actionURL>
 
@@ -44,7 +45,8 @@ UADEntity uadEntity = (UADEntity)row.getObject();
 
 	<portlet:actionURL name="/delete_uad_entity" var="deleteURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="uadEntityId" value="<%= uadEntity.getUADEntityId() %>" />
+		<portlet:param name="p_u_i_d" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
+		<portlet:param name="entityId" value="<%= String.valueOf(uadEntity.getEntityId()) %>" />
 		<portlet:param name="uadRegistryKey" value="<%= uadEntity.getUADRegistryKey() %>" />
 	</portlet:actionURL>
 

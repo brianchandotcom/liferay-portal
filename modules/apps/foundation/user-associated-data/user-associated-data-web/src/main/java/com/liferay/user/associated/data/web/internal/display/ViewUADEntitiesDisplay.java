@@ -17,7 +17,6 @@ package com.liferay.user.associated.data.web.internal.display;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
-import com.liferay.user.associated.data.entity.UADEntity;
 
 import java.util.List;
 
@@ -25,6 +24,10 @@ import java.util.List;
  * @author Drew Brokke
  */
 public class ViewUADEntitiesDisplay {
+
+	public String getApplicationName() {
+		return _applicationName;
+	}
 
 	public List<NavigationItem> getNavigationItems() {
 		return _navigationItems;
@@ -38,12 +41,12 @@ public class ViewUADEntitiesDisplay {
 		return _uadEntityDisplay;
 	}
 
-	public String getUADEntitySetName() {
-		return _uadEntitySetName;
-	}
-
 	public String getUADRegistryKey() {
 		return _uadRegistryKey;
+	}
+
+	public void setApplicationName(String applicationName) {
+		_applicationName = applicationName;
 	}
 
 	public void setNavigationItems(List<NavigationItem> navigationItems) {
@@ -58,18 +61,14 @@ public class ViewUADEntitiesDisplay {
 		_uadEntityDisplay = uadEntityDisplay;
 	}
 
-	public void setUADEntitySetName(String uadEntitySetName) {
-		_uadEntitySetName = uadEntitySetName;
-	}
-
 	public void setUADRegistryKey(String uadRegistryKey) {
 		_uadRegistryKey = uadRegistryKey;
 	}
 
+	private String _applicationName;
 	private List<NavigationItem> _navigationItems;
 	private SearchContainer<UADEntity> _searchContainer;
 	private UADEntityDisplay _uadEntityDisplay;
-	private String _uadEntitySetName;
 	private String _uadRegistryKey;
 
 }

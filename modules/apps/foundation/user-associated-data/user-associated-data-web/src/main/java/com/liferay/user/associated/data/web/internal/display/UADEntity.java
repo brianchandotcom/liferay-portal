@@ -12,21 +12,35 @@
  * details.
  */
 
-package com.liferay.user.associated.data.aggregator;
+package com.liferay.user.associated.data.web.internal.display;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.user.associated.data.entity.UADEntity;
-
-import java.util.List;
+import java.io.Serializable;
 
 /**
  * @author William Newbury
  */
-public abstract class BaseUADEntityAggregator implements UADEntityAggregator {
+public class UADEntity<T> {
 
-	@Override
-	public List<UADEntity> getUADEntities(long userId) {
-		return getUADEntities(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	public UADEntity(T entity, Serializable entityId, String uadRegistryKey) {
+		_entity = entity;
+		_entityId = entityId;
+		_uadRegistryKey = uadRegistryKey;
 	}
+
+	public T getEntity() {
+		return _entity;
+	}
+
+	public Serializable getEntityId() {
+		return _entityId;
+	}
+
+	public String getUADRegistryKey() {
+		return _uadRegistryKey;
+	}
+
+	private final T _entity;
+	private final Serializable _entityId;
+	private final String _uadRegistryKey;
 
 }

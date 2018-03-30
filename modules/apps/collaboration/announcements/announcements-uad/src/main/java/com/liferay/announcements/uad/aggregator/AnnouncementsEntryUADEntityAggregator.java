@@ -17,14 +17,11 @@ package com.liferay.announcements.uad.aggregator;
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
-import com.liferay.announcements.uad.entity.AnnouncementsEntryUADEntity;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
-import com.liferay.user.associated.data.entity.UADEntity;
-import com.liferay.user.associated.data.util.UADDynamicQueryHelper;
 
-import java.util.ArrayList;
+import java.io.Serializable;
+
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -39,59 +36,41 @@ import org.osgi.service.component.annotations.Reference;
 	service = UADEntityAggregator.class
 )
 public class AnnouncementsEntryUADEntityAggregator
-	extends BaseAnnouncementsUADEntityAggregator {
+	extends BaseAnnouncementsUADEntityAggregator<AnnouncementsEntry> {
 
 	@Override
-	public int count(long userId) {
-		return (int)_announcementsEntryLocalService.dynamicQueryCount(
-			_getDynamicQuery(userId));
-	}
+	public AnnouncementsEntry getEntity(Serializable primKeyObj)
+		throws Exception {
 
-	@Override
-	public List<UADEntity> getUADEntities(long userId, int start, int end) {
-		List<AnnouncementsEntry> announcementsEntries =
-			_announcementsEntryLocalService.getUserEntries(userId, start, end);
-
-		List<UADEntity> uadEntities = new ArrayList<>(
-			announcementsEntries.size());
-
-		for (AnnouncementsEntry announcementsEntry : announcementsEntries) {
-			uadEntities.add(
-				_createAnnouncementsEntryUADEntity(announcementsEntry));
-		}
-
-		return uadEntities;
+		return _announcementsEntryLocalService.getAnnouncementsEntry(
+			Long.valueOf(primKeyObj.toString()));
 	}
 
 	@Override
-	public UADEntity getUADEntity(String uadEntityId) throws PortalException {
-		AnnouncementsEntry announcementsEntry =
-			_announcementsEntryLocalService.getAnnouncementsEntry(
-				Long.parseLong(uadEntityId));
-
-		return _createAnnouncementsEntryUADEntity(announcementsEntry);
+	protected long doCount(DynamicQuery dynamicQuery) {
+		return _announcementsEntryLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	private AnnouncementsEntryUADEntity _createAnnouncementsEntryUADEntity(
-		AnnouncementsEntry announcementsEntry) {
-
-		return new AnnouncementsEntryUADEntity(
-			announcementsEntry.getUserId(),
-			String.valueOf(announcementsEntry.getEntryId()),
-			announcementsEntry);
+	@Override
+	protected DynamicQuery doGetDynamicQuery() {
+		return _announcementsEntryLocalService.dynamicQuery();
 	}
 
-	private DynamicQuery _getDynamicQuery(long userId) {
-		return _uadDynamicQueryHelper.addDynamicQueryCriteria(
-			_announcementsEntryLocalService.dynamicQuery(),
-			AnnouncementsUADConstants.USER_ID_FIELD_NAMES_ANNOUNCEMENTS_ENTRY,
-			userId);
+	@Override
+	protected List<AnnouncementsEntry> doGetEntities(
+		DynamicQuery dynamicQuery, int start, int end) {
+
+		return _announcementsEntryLocalService.dynamicQuery(
+			dynamicQuery, start, end);
+	}
+
+	@Override
+	protected String[] doGetUserIdFieldNames() {
+		return AnnouncementsUADConstants.
+			USER_ID_FIELD_NAMES_ANNOUNCEMENTS_ENTRY;
 	}
 
 	@Reference
 	private AnnouncementsEntryLocalService _announcementsEntryLocalService;
-
-	@Reference
-	private UADDynamicQueryHelper _uadDynamicQueryHelper;
 
 }

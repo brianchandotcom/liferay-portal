@@ -67,7 +67,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 			searchContainer="<%= viewUADEntitiesDisplay.getSearchContainer() %>"
 		>
 			<liferay-ui:search-container-row
-				className="com.liferay.user.associated.data.entity.UADEntity"
+				className="com.liferay.user.associated.data.web.internal.display.UADEntity"
 				escapedModel="<%= true %>"
 				keyProperty="name"
 				modelVar="uadEntity"
@@ -75,14 +75,18 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand"
 					name="entity-id"
-					property="UADEntityId"
+					property="entityId"
 				/>
+
+				<%
+				String editURL = uadEntityDisplay.getEditURL(uadEntity.getEntity(), liferayPortletRequest, liferayPortletResponse);
+				%>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand"
-					href="<%= uadEntityDisplay.getEditURL(uadEntity, liferayPortletRequest, liferayPortletResponse) %>"
+					href="<%= editURL %>"
 					name="edit-url"
-					value="<%= uadEntityDisplay.getEditURL(uadEntity, liferayPortletRequest, liferayPortletResponse) %>"
+					value="<%= editURL %>"
 				/>
 
 				<liferay-ui:search-container-column-jsp

@@ -17,14 +17,12 @@ package com.liferay.announcements.uad.aggregator;
 import com.liferay.announcements.kernel.model.AnnouncementsFlag;
 import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
-import com.liferay.announcements.uad.entity.AnnouncementsFlagUADEntity;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
-import com.liferay.user.associated.data.entity.UADEntity;
-import com.liferay.user.associated.data.util.UADDynamicQueryHelper;
 
-import java.util.ArrayList;
+import java.io.Serializable;
+
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -39,54 +37,40 @@ import org.osgi.service.component.annotations.Reference;
 	service = UADEntityAggregator.class
 )
 public class AnnouncementsFlagUADEntityAggregator
-	extends BaseAnnouncementsUADEntityAggregator {
+	extends BaseAnnouncementsUADEntityAggregator<AnnouncementsFlag> {
 
 	@Override
-	public int count(long userId) {
-		return (int)_announcementsFlagLocalService.dynamicQueryCount(
-			_getDynamicQuery(userId));
+	public AnnouncementsFlag getEntity(Serializable entityId)
+		throws PortalException {
+
+		return _announcementsFlagLocalService.getAnnouncementsFlag(
+			Long.parseLong(entityId.toString()));
 	}
 
 	@Override
-	public List<UADEntity> getUADEntities(long userId, int start, int end) {
-		List<AnnouncementsFlag> announcementsFlags =
-			_announcementsFlagLocalService.dynamicQuery(
-				_getDynamicQuery(userId), start, end);
-
-		List<UADEntity> uadEntities = new ArrayList<>(
-			announcementsFlags.size());
-
-		for (AnnouncementsFlag announcementsFlag : announcementsFlags) {
-			uadEntities.add(
-				new AnnouncementsFlagUADEntity(
-					userId, String.valueOf(announcementsFlag.getFlagId()),
-					announcementsFlag));
-		}
-
-		return uadEntities;
+	protected long doCount(DynamicQuery dynamicQuery) {
+		return _announcementsFlagLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
 	@Override
-	public UADEntity getUADEntity(String uadEntityId) throws PortalException {
-		AnnouncementsFlag announcementsFlag =
-			_announcementsFlagLocalService.getAnnouncementsFlag(
-				Long.parseLong(uadEntityId));
-
-		return new AnnouncementsFlagUADEntity(
-			announcementsFlag.getUserId(), uadEntityId, announcementsFlag);
+	protected DynamicQuery doGetDynamicQuery() {
+		return _announcementsFlagLocalService.dynamicQuery();
 	}
 
-	private DynamicQuery _getDynamicQuery(long userId) {
-		return _uadDynamicQueryHelper.addDynamicQueryCriteria(
-			_announcementsFlagLocalService.dynamicQuery(),
-			AnnouncementsUADConstants.USER_ID_FIELD_NAMES_ANNOUNCEMENTS_FLAG,
-			userId);
+	@Override
+	protected List<AnnouncementsFlag> doGetEntities(
+		DynamicQuery dynamicQuery, int start, int end) {
+
+		return _announcementsFlagLocalService.dynamicQuery(
+			dynamicQuery, start, end);
+	}
+
+	@Override
+	protected String[] doGetUserIdFieldNames() {
+		return AnnouncementsUADConstants.USER_ID_FIELD_NAMES_ANNOUNCEMENTS_FLAG;
 	}
 
 	@Reference
 	private AnnouncementsFlagLocalService _announcementsFlagLocalService;
-
-	@Reference
-	private UADDynamicQueryHelper _uadDynamicQueryHelper;
 
 }

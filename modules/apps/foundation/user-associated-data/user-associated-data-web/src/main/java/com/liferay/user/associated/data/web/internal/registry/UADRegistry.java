@@ -19,7 +19,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
-import com.liferay.user.associated.data.entity.UADEntity;
 import com.liferay.user.associated.data.exporter.UADEntityExporter;
 
 import java.util.Collection;
@@ -41,10 +40,6 @@ public class UADRegistry {
 		return _uadEntityAggregatorServiceTrackerMap.getService(key);
 	}
 
-	public UADEntityAggregator getUADEntityAggregator(UADEntity uadEntity) {
-		return getUADEntityAggregator(uadEntity.getUADRegistryKey());
-	}
-
 	public Set<String> getUADEntityAggregatorKeySet() {
 		return _uadEntityAggregatorServiceTrackerMap.keySet();
 	}
@@ -57,10 +52,6 @@ public class UADRegistry {
 		return _uadEntityAnonymizerServiceTrackerMap.getService(key);
 	}
 
-	public UADEntityAnonymizer getUADEntityAnonymizer(UADEntity uadEntity) {
-		return getUADEntityAnonymizer(uadEntity.getUADRegistryKey());
-	}
-
 	public Set<String> getUADEntityAnonymizerKeySet() {
 		return _uadEntityAnonymizerServiceTrackerMap.keySet();
 	}
@@ -71,10 +62,6 @@ public class UADRegistry {
 
 	public UADEntityDisplay getUADEntityDisplay(String key) {
 		return _uadEntityDisplayServiceTrackerMap.getService(key);
-	}
-
-	public UADEntityDisplay getUADEntityDisplay(UADEntity uadEntity) {
-		return getUADEntityDisplay(uadEntity.getUADRegistryKey());
 	}
 
 	public Set<String> getUADEntityDisplayKeySet() {
@@ -91,10 +78,6 @@ public class UADRegistry {
 
 	public UADEntityExporter getUADEntityExporter(String key) {
 		return _uadEntityExporterServiceTrackerMap.getService(key);
-	}
-
-	public UADEntityExporter getUADEntityExporter(UADEntity uadEntity) {
-		return getUADEntityExporter(uadEntity.getUADRegistryKey());
 	}
 
 	public Set<String> getUADEntityExporterKeySet() {

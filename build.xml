@@ -909,6 +909,10 @@ message.
 				<globmapper from="bundles/*" to="*" />
 			</mapper>
 		</unzip>
+
+		<touch>
+			<fileset dir="${liferay.home}/work" />
+		</touch>
 	</target>
 
 	<target name="prepare-generated-files">

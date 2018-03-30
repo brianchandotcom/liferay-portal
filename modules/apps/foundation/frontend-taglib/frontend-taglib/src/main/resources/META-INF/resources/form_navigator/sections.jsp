@@ -17,7 +17,7 @@
 <%@ include file="/form_navigator/init.jsp" %>
 
 <%
-List<FormNavigatorEntry<Object>> formNavigatorEntries = (List<FormNavigatorEntry<Object>>)request.getAttribute("formNavigatorEntries");
+List<FormNavigatorEntry<Object>> formNavigatorEntries = (List<FormNavigatorEntry<Object>>)request.getAttribute(FormNavigatorKeys.FORM_NAVIGATOR_ENTRIES);
 %>
 
 <liferay-frontend:fieldset-group>
@@ -103,9 +103,9 @@ List<FormNavigatorEntry<Object>> formNavigatorEntries = (List<FormNavigatorEntry
 
 	<%
 	if (Validator.isNotNull(errorSection)) {
-		String currentTab = (String)request.getAttribute("currentTab");
+		String currentTab = (String)request.getAttribute(FormNavigatorKeys.CURRENT_TAB);
 
-		request.setAttribute("errorTab", currentTab);
+		request.setAttribute(FormNavigatorKeys.ERROR_TAB, currentTab);
 	%>
 
 		<aui:script sandbox="<%= true %>">

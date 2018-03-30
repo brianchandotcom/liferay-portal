@@ -75,6 +75,7 @@
 		}
 		else {
 			String keywords = displayTerms.getKeywords();
+
 			String number = Validator.isNumber(keywords) ? keywords : String.valueOf(0);
 
 			total = AuditEventManagerUtil.getAuditEventsCount(themeDisplay.getCompanyId(), Long.valueOf(number), keywords, null, null, keywords, keywords, keywords, keywords, keywords, keywords, Integer.valueOf(number), keywords, false);

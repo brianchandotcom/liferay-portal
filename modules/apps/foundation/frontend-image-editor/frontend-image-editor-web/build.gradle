@@ -8,7 +8,7 @@ dependencies {
 	provided project(":apps:collaboration:item-selector:item-selector-api")
 	provided project(":apps:collaboration:item-selector:item-selector-criteria-api")
 	provided project(":apps:foundation:frontend-image-editor:frontend-image-editor-api")
-	provided project(":apps:foundation:portal-portlet-bridge:portal-portlet-bridge-soy")
+	provided project(":apps:foundation:portal-portlet-bridge:portal-portlet-bridge-soy-api")
 	provided project(":apps:static:osgi:osgi-util")
 	provided project(":core:osgi-service-tracker-collections")
 	provided project(":core:petra:petra-string")

@@ -33,20 +33,12 @@ import java.util.List;
 public class UADExportBackgroundTaskManagerUtil {
 
 	public static BackgroundTask fetchLastBackgroundTask(
-		String name, long userId, int status) {
+		String name, long groupId, long userId, int status) {
 
-		DynamicQuery dynamicQuery =
-			BackgroundTaskLocalServiceUtil.dynamicQuery();
+		DynamicQuery dynamicQuery = _getDynamicQuery(groupId, userId);
 
 		dynamicQuery = dynamicQuery.add(
 			RestrictionsFactoryUtil.eq("name", name));
-
-		dynamicQuery = dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("userId", userId));
-
-		dynamicQuery = dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"taskExecutorClassName", _BACKGROUND_TASK_EXECUTOR_CLASS_NAME));
 
 		dynamicQuery = dynamicQuery.add(
 			RestrictionsFactoryUtil.eq("status", status));

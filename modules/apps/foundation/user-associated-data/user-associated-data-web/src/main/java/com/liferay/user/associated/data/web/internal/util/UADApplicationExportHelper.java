@@ -65,11 +65,11 @@ public class UADApplicationExportHelper {
 	}
 
 	public Date getApplicationLastExportDate(
-		String applicationName, long userId) {
+		String applicationName, long groupId, long userId) {
 
 		BackgroundTask backgroundTask =
 			UADExportBackgroundTaskManagerUtil.fetchLastBackgroundTask(
-				applicationName, userId,
+				applicationName, groupId, userId,
 				BackgroundTaskConstants.STATUS_SUCCESSFUL);
 
 		if (backgroundTask != null) {
@@ -116,7 +116,7 @@ public class UADApplicationExportHelper {
 	}
 
 	public UADApplicationExportDisplay getUADApplicationExportDisplay(
-		String applicationName, long userId) {
+		String applicationName, long groupId, long userId) {
 
 		List<UADEntityExporter> uadEntityExporters =
 			getApplicationUADEntityExporters(applicationName);
@@ -124,11 +124,11 @@ public class UADApplicationExportHelper {
 		return new UADApplicationExportDisplay(
 			applicationName, getApplicationDataCount(applicationName, userId),
 			ListUtil.isNotEmpty(uadEntityExporters),
-			getApplicationLastExportDate(applicationName, userId));
+			getApplicationLastExportDate(applicationName, groupId, userId));
 	}
 
 	public List<UADApplicationExportDisplay> getUADApplicationExportDisplays(
-		long userId) {
+		long groupId, long userId) {
 
 		List<String> applicationNames = getApplicationNames();
 
@@ -136,7 +136,7 @@ public class UADApplicationExportHelper {
 
 		return applicationNameStream.map(
 			applicationName ->
-				getUADApplicationExportDisplay(applicationName, userId)
+				getUADApplicationExportDisplay(applicationName, groupId, userId)
 		).collect(
 			Collectors.toList()
 		);

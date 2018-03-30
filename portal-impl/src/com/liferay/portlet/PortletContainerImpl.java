@@ -116,11 +116,32 @@ public class PortletContainerImpl implements PortletContainer {
 			Portlet portlet)
 		throws PortletContainerException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long previousScopeGroupId = 0;
+		long previousSiteGroupId = 0;
+
+		if (themeDisplay != null) {
+			previousScopeGroupId = themeDisplay.getScopeGroupId();
+			previousSiteGroupId = themeDisplay.getSiteGroupId();
+		}
+
 		try {
+			if (portlet != null) {
+				preparePortlet(request, portlet);
+			}
+
 			return _processAction(request, response, portlet);
 		}
 		catch (Exception e) {
 			throw new PortletContainerException(e);
+		}
+		finally {
+			if (themeDisplay != null) {
+				themeDisplay.setScopeGroupId(previousScopeGroupId);
+				themeDisplay.setSiteGroupId(previousSiteGroupId);
+			}
 		}
 	}
 
@@ -170,11 +191,34 @@ public class PortletContainerImpl implements PortletContainer {
 			Portlet portlet)
 		throws PortletContainerException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long previousScopeGroupId = 0;
+		long previousSiteGroupId = 0;
+
+		if (themeDisplay != null) {
+			previousScopeGroupId = themeDisplay.getScopeGroupId();
+			previousSiteGroupId = themeDisplay.getSiteGroupId();
+		}
+
 		try {
+			String portletId = ParamUtil.getString(request, "p_p_id");
+
+			if (portlet != null && portletId.equals(portlet.getPortletId())) {
+				preparePortlet(request, portlet);
+			}
+
 			_render(request, response, portlet);
 		}
 		catch (Exception e) {
 			throw new PortletContainerException(e);
+		}
+		finally {
+			if (themeDisplay != null) {
+				themeDisplay.setScopeGroupId(previousScopeGroupId);
+				themeDisplay.setSiteGroupId(previousSiteGroupId);
+			}
 		}
 	}
 
@@ -184,11 +228,32 @@ public class PortletContainerImpl implements PortletContainer {
 			Portlet portlet)
 		throws PortletContainerException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long previousScopeGroupId = 0;
+		long previousSiteGroupId = 0;
+
+		if (themeDisplay != null) {
+			previousScopeGroupId = themeDisplay.getScopeGroupId();
+			previousSiteGroupId = themeDisplay.getSiteGroupId();
+		}
+
 		try {
+			if (portlet != null) {
+				preparePortlet(request, portlet);
+			}
+
 			_serveResource(request, response, portlet);
 		}
 		catch (Exception e) {
 			throw new PortletContainerException(e);
+		}
+		finally {
+			if (themeDisplay != null) {
+				themeDisplay.setScopeGroupId(previousScopeGroupId);
+				themeDisplay.setSiteGroupId(previousSiteGroupId);
+			}
 		}
 	}
 

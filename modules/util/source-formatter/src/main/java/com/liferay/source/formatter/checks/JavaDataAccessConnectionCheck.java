@@ -28,10 +28,8 @@ public class JavaDataAccessConnectionCheck extends BaseFileCheck {
 
 		String packageName = JavaSourceUtil.getPackageName(content);
 
-		if (packageName.startsWith("com.liferay.portal.kernel.upgrade") ||
-			packageName.startsWith("com.liferay.portal.kernel.verify") ||
-			packageName.startsWith("com.liferay.portal.upgrade") ||
-			packageName.startsWith("com.liferay.portal.verify")) {
+		if (packageName.matches(".*\\.upgrade(\\.v[_0-9]+)?") ||
+			packageName.endsWith(".verify")) {
 
 			content = StringUtil.replace(
 				content, "DataAccess.getConnection",

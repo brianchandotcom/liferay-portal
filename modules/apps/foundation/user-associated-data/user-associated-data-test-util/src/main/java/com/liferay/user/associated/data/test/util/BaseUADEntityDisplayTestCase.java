@@ -78,8 +78,7 @@ public abstract class BaseUADEntityDisplayTestCase<T> {
 	private T _createUADEntity() throws Exception {
 		addBaseModel(_user.getUserId());
 
-		List<T> uadEntities = _uadEntityAggregator.getEntities(
-			_user.getUserId());
+		List<T> uadEntities = _uadEntityAggregator.getAll(_user.getUserId());
 
 		return uadEntities.get(0);
 	}

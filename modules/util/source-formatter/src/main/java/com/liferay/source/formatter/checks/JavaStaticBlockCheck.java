@@ -124,14 +124,14 @@ public class JavaStaticBlockCheck extends BaseJavaTermCheck {
 	private JavaTerm _getLastReferencedJavaTerm(
 		String staticBlockContent, List<JavaTerm> childJavaTerms) {
 
-		boolean javaMethodCall = false;
+		boolean containsMethodCall = false;
 
 		for (JavaTerm javaTerm : childJavaTerms) {
 			if (javaTerm.isStatic() && (javaTerm instanceof JavaMethod) &&
 				staticBlockContent.matches(
 					"[\\s\\S]*\\s" + javaTerm.getName() + "\\([\\s\\S]*")) {
 
-				javaMethodCall = true;
+				containsMethodCall = true;
 			}
 		}
 
@@ -145,7 +145,7 @@ public class JavaStaticBlockCheck extends BaseJavaTermCheck {
 					"[\\s\\S]*\\W" + javaTerm.getName() + "\\W[\\s\\S]*")) {
 
 				if ((javaTerm instanceof JavaClass) ||
-					(javaTerm instanceof JavaVariable) && !javaMethodCall) {
+					(javaTerm instanceof JavaVariable) && !containsMethodCall) {
 
 					return javaTerm;
 				}

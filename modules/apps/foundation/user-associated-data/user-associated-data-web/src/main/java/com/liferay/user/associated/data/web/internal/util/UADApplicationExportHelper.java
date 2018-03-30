@@ -87,7 +87,7 @@ public class UADApplicationExportHelper {
 			uadEntityAggregators.stream();
 
 		return uadEntityAggregatorStream.map(
-			UADEntityAggregator::getUADEntitySetName
+			UADEntityAggregator::getApplicationName
 		).distinct(
 		).sorted(
 		).collect(

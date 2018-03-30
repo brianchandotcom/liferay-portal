@@ -66,8 +66,8 @@ public class BookmarksEntryUADEntityExporterTest
 	public void testExport() throws Exception {
 		BookmarksEntry bookmarksEntry = addBookmarksEntry(_user.getUserId());
 
-		List<BookmarksEntry> bookmarksEntries =
-			_uadEntityAggregator.getEntities(_user.getUserId(), 0, 1);
+		List<BookmarksEntry> bookmarksEntries = _uadEntityAggregator.getRange(
+			_user.getUserId(), 0, 1);
 
 		BookmarksEntry bookmarksEntry1 = bookmarksEntries.get(0);
 

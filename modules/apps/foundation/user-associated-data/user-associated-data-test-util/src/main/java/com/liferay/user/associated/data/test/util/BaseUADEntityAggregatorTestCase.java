@@ -52,7 +52,7 @@ public abstract class BaseUADEntityAggregatorTestCase<T extends BaseModel> {
 
 		T baseModel = addBaseModel(_user.getUserId());
 
-		List<T> entities = _uadEntityAggregator.getEntities(_user.getUserId());
+		List<T> entities = _uadEntityAggregator.getAll(_user.getUserId());
 
 		Assert.assertEquals(entities.toString(), 1, entities.size());
 
@@ -69,7 +69,7 @@ public abstract class BaseUADEntityAggregatorTestCase<T extends BaseModel> {
 		T baseModel = whenHasStatusByUserIdField.addBaseModelWithStatusByUserId(
 			TestPropsValues.getUserId(), _user.getUserId());
 
-		List<T> entities = _uadEntityAggregator.getEntities(_user.getUserId());
+		List<T> entities = _uadEntityAggregator.getAll(_user.getUserId());
 
 		Assert.assertEquals(entities.toString(), 1, entities.size());
 

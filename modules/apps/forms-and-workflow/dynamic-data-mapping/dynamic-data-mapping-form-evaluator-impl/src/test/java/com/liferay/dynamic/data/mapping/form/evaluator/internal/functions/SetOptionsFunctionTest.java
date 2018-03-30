@@ -80,13 +80,13 @@ public class SetOptionsFunctionTest extends BaseDDMFormRuleFunctionTestCase {
 
 		KeyValuePair keyValuePair1 = keyValuePairs.get(0);
 
-		Assert.assertEquals("label a", keyValuePair1.getKey());
-		Assert.assertEquals("value a", keyValuePair1.getValue());
+		Assert.assertEquals("label a", keyValuePair1.getValue());
+		Assert.assertEquals("value a", keyValuePair1.getKey());
 
 		KeyValuePair keyValuePair2 = keyValuePairs.get(1);
 
-		Assert.assertEquals("label b", keyValuePair2.getKey());
-		Assert.assertEquals("value b", keyValuePair2.getValue());
+		Assert.assertEquals("label b", keyValuePair2.getValue());
+		Assert.assertEquals("value b", keyValuePair2.getKey());
 	}
 
 	@Test(expected = IllegalArgumentException.class)

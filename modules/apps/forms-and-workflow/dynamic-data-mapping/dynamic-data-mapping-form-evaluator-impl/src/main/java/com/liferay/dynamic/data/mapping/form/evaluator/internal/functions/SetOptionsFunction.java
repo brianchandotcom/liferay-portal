@@ -87,8 +87,8 @@ public class SetOptionsFunction extends BaseDDMFormRuleFunction {
 							i);
 
 						KeyValuePair keyValuePair = new KeyValuePair(
-							optionJSONObject.getString("label"),
-							optionJSONObject.getString("value"));
+							optionJSONObject.getString("value"),
+							optionJSONObject.getString("label"));
 
 						keyValuePairs.add(keyValuePair);
 					}

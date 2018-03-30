@@ -65,7 +65,7 @@ public class OSGiBeanPropertiesTest {
 			new C());
 
 		Assert.assertEquals(
-			interfaceClasses.toString(), 1, interfaceClasses.size());
+			interfaceClasses.toString(), 2, interfaceClasses.size());
 	}
 
 	@Test
@@ -81,7 +81,7 @@ public class OSGiBeanPropertiesTest {
 			new C());
 
 		Assert.assertEquals(
-			interfaceClasses.toString(), 1, interfaceClasses.size());
+			interfaceClasses.toString(), 2, interfaceClasses.size());
 	}
 
 	@Test
@@ -97,7 +97,7 @@ public class OSGiBeanPropertiesTest {
 			new C());
 
 		Assert.assertEquals(
-			interfaceClasses.toString(), 1, interfaceClasses.size());
+			interfaceClasses.toString(), 2, interfaceClasses.size());
 	}
 
 	@Test
@@ -110,7 +110,7 @@ public class OSGiBeanPropertiesTest {
 			new C());
 
 		Assert.assertEquals(
-			interfaceClasses.toString(), 1, interfaceClasses.size());
+			interfaceClasses.toString(), 2, interfaceClasses.size());
 	}
 
 	@Test
@@ -123,7 +123,7 @@ public class OSGiBeanPropertiesTest {
 			new C());
 
 		Assert.assertEquals(
-			interfaceClasses.toString(), 1, interfaceClasses.size());
+			interfaceClasses.toString(), 2, interfaceClasses.size());
 	}
 
 	@Test(expected = ClassCastException.class)
@@ -162,7 +162,7 @@ public class OSGiBeanPropertiesTest {
 			new C());
 
 		Assert.assertEquals(
-			interfaceClasses.toString(), 0, interfaceClasses.size());
+			interfaceClasses.toString(), 1, interfaceClasses.size());
 	}
 
 	@Test
@@ -178,7 +178,7 @@ public class OSGiBeanPropertiesTest {
 			new C());
 
 		Assert.assertEquals(
-			interfaceClasses.toString(), 1, interfaceClasses.size());
+			interfaceClasses.toString(), 2, interfaceClasses.size());
 	}
 
 	@Test
@@ -194,7 +194,7 @@ public class OSGiBeanPropertiesTest {
 			new C());
 
 		Assert.assertEquals(
-			interfaceClasses.toString(), 2, interfaceClasses.size());
+			interfaceClasses.toString(), 3, interfaceClasses.size());
 	}
 
 	@Test
@@ -207,7 +207,7 @@ public class OSGiBeanPropertiesTest {
 			new C());
 
 		Assert.assertEquals(
-			interfaceClasses.toString(), 1, interfaceClasses.size());
+			interfaceClasses.toString(), 2, interfaceClasses.size());
 	}
 
 	@Test
@@ -220,7 +220,7 @@ public class OSGiBeanPropertiesTest {
 			new C());
 
 		Assert.assertEquals(
-			interfaceClasses.toString(), 2, interfaceClasses.size());
+			interfaceClasses.toString(), 3, interfaceClasses.size());
 	}
 
 	@Test
@@ -232,7 +232,7 @@ public class OSGiBeanPropertiesTest {
 			new C());
 
 		Assert.assertEquals(
-			interfaceClasses.toString(), 0, interfaceClasses.size());
+			interfaceClasses.toString(), 1, interfaceClasses.size());
 	}
 
 	@Test
@@ -247,7 +247,7 @@ public class OSGiBeanPropertiesTest {
 			new C());
 
 		Assert.assertEquals(
-			interfaceClasses.toString(), 1, interfaceClasses.size());
+			interfaceClasses.toString(), 2, interfaceClasses.size());
 	}
 
 	@Test
@@ -262,7 +262,7 @@ public class OSGiBeanPropertiesTest {
 			new C());
 
 		Assert.assertEquals(
-			interfaceClasses.toString(), 2, interfaceClasses.size());
+			interfaceClasses.toString(), 3, interfaceClasses.size());
 	}
 
 	@Test
@@ -274,7 +274,7 @@ public class OSGiBeanPropertiesTest {
 			new C());
 
 		Assert.assertEquals(
-			interfaceClasses.toString(), 1, interfaceClasses.size());
+			interfaceClasses.toString(), 2, interfaceClasses.size());
 	}
 
 	@Test
@@ -286,7 +286,7 @@ public class OSGiBeanPropertiesTest {
 			new C());
 
 		Assert.assertEquals(
-			interfaceClasses.toString(), 2, interfaceClasses.size());
+			interfaceClasses.toString(), 3, interfaceClasses.size());
 	}
 
 	@Test

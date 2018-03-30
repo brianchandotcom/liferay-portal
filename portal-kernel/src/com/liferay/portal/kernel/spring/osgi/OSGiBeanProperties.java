@@ -240,6 +240,8 @@ public @interface OSGiBeanProperties {
 				}
 			}
 
+			interfaces.add(object.getClass());
+
 			return interfaces;
 		}
 

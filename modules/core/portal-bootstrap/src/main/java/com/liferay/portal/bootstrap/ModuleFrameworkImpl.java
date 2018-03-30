@@ -1202,8 +1202,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		Set<Class<?>> interfaces = OSGiBeanProperties.Service.interfaces(bean);
 
-		interfaces.add(bean.getClass());
-
 		List<String> names = new ArrayList<>(interfaces.size());
 
 		for (Class<?> interfaceClass : interfaces) {

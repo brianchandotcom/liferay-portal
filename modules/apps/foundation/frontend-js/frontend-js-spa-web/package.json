@@ -14,7 +14,7 @@
 		"metal": "^2.4.7",
 		"metal-dom": "^2.4.7",
 		"metal-uri": "^2.0.2",
-		"senna": "2.5.3"
+		"senna": "2.5.4"
 	},
 	"devDependencies": {
 		"check-source-formatting": "^2.0.6",

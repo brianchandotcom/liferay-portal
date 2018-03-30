@@ -12,21 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.template.soy.utils;
+package com.liferay.portal.template.soy.internal.util;
 
-import java.util.Map;
+import com.liferay.portal.template.soy.internal.SoyContextImpl;
+import com.liferay.portal.template.soy.utils.SoyContext;
+import com.liferay.portal.template.soy.utils.SoyContextFactory;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Bruno Basto
+ * @author Matthew Tambara
  */
-public interface SoyContext extends Map<String, Object> {
+@Component(immediate = true)
+public class SoyContextFactoryImpl implements SoyContextFactory {
 
-	public void clearInjectedData();
-
-	public void putHTML(String key, String value);
-
-	public void putInjectedData(String key, Object value);
-
-	public void removeInjectedData(String key);
+	@Override
+	public SoyContext createSoyContext() {
+		return new SoyContextImpl();
+	}
 
 }

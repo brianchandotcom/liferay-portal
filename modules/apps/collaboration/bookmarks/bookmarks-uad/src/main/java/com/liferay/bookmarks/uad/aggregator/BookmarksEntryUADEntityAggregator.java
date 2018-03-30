@@ -41,16 +41,14 @@ public class BookmarksEntryUADEntityAggregator
 	extends DynamicQueryUADEntityAggregator<BookmarksEntry> {
 
 	@Override
-	public String getApplicationName() {
-		return BookmarksUADConstants.APPLICATION_NAME;
+	public BookmarksEntry get(Serializable entityId) throws PortalException {
+		return _bookmarksEntryLocalService.getBookmarksEntry(
+			Long.valueOf(entityId.toString()));
 	}
 
 	@Override
-	public BookmarksEntry getEntity(Serializable entityId)
-		throws PortalException {
-
-		return _bookmarksEntryLocalService.getBookmarksEntry(
-			Long.valueOf(entityId.toString()));
+	public String getApplicationName() {
+		return BookmarksUADConstants.APPLICATION_NAME;
 	}
 
 	@Override
@@ -64,7 +62,7 @@ public class BookmarksEntryUADEntityAggregator
 	}
 
 	@Override
-	protected List<BookmarksEntry> doGetEntities(
+	protected List<BookmarksEntry> doGetRange(
 		DynamicQuery dynamicQuery, int start, int end) {
 
 		return _bookmarksEntryLocalService.dynamicQuery(

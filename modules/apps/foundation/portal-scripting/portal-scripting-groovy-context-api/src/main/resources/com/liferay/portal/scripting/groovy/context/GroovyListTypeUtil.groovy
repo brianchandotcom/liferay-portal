@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.scripting.executor.groovy;
+package com.liferay.portal.scripting.groovy.context;
 
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.service.ListTypeLocalServiceUtil;

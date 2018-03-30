@@ -37,7 +37,7 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 
 		String entityId = ParamUtil.getString(actionRequest, "entityId");
 
-		return uadEntityAggregator.getEntity(entityId);
+		return uadEntityAggregator.get(entityId);
 	}
 
 	@Reference

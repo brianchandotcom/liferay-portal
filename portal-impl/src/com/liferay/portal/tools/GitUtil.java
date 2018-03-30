@@ -39,75 +39,67 @@ import java.util.Set;
  */
 public class GitUtil {
 
+	public static String getCurrentBranchFileContent(
+			String gitWorkingBranchName, String fileName)
+		throws Exception {
+
+		return getFileContent(gitWorkingBranchName, fileName);
+	}
+
 	public static List<String> getCurrentBranchFileNames(
-			String baseDirName, String gitWorkingBranchName)
+			String baseDirName, String gitWorkingBranchName,
+			boolean includeDeletedFileNames)
 		throws Exception {
 
-		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
-			"git merge-base HEAD " + gitWorkingBranchName);
+		String commitId = getCurrentBranchCommitId(gitWorkingBranchName);
 
-		String mergeBaseCommitId = unsyncBufferedReader.readLine();
+		List<String> fileNames = getFileNames(baseDirName, commitId);
 
-		return getFileNames(baseDirName, mergeBaseCommitId);
-	}
-
-	public static List<String> getLatestAuthorFileNames(String baseDirName)
-		throws Exception {
-
-		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
-			"git log");
-
-		String line = null;
-
-		String firstDifferentAuthorCommitId = null;
-		String latestAuthor = null;
-
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (line.startsWith("commit ")) {
-				firstDifferentAuthorCommitId = line.substring(7);
-			}
-			else if (line.startsWith("Author: ")) {
-				if (latestAuthor == null) {
-					int x = line.lastIndexOf(CharPool.LESS_THAN);
-					int y = line.lastIndexOf(CharPool.GREATER_THAN);
-
-					latestAuthor = line.substring(x + 1, y);
-				}
-				else if (!line.endsWith("<" + latestAuthor + ">")) {
-					break;
-				}
-			}
+		if (includeDeletedFileNames) {
+			fileNames.addAll(getDeletedFileNames(baseDirName, commitId));
 		}
 
-		return getFileNames(baseDirName, firstDifferentAuthorCommitId);
+		return fileNames;
 	}
 
-	public static List<String> getLocalChangesFileNames(String baseDirName)
+	public static String getLatestAuthorFileContent(String fileName)
 		throws Exception {
 
-		List<String> localChangesFileNames = new ArrayList<>();
+		return getFileContent(getLatestAuthorCommitId(), fileName);
+	}
 
-		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
-			"git add . --dry-run");
+	public static List<String> getLatestAuthorFileNames(
+			String baseDirName, boolean includeDeletedFileNames)
+		throws Exception {
 
-		String line = null;
+		String commitId = getLatestAuthorCommitId();
 
-		int gitLevel = getGitLevel(baseDirName);
+		List<String> fileNames = getFileNames(baseDirName, commitId);
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (!line.startsWith("add '") ||
-				(StringUtil.count(line, CharPool.SLASH) < gitLevel)) {
-
-				continue;
-			}
-
-			String fileName = getFileName(
-				line.substring(5, line.length() - 1), gitLevel);
-
-			localChangesFileNames.add(fileName);
+		if (includeDeletedFileNames) {
+			fileNames.addAll(getDeletedFileNames(baseDirName, commitId));
 		}
 
-		return localChangesFileNames;
+		return fileNames;
+	}
+
+	public static String getLocalChangesFileContent(String fileName)
+		throws Exception {
+
+		return getFileContent("HEAD", fileName);
+	}
+
+	public static List<String> getLocalChangesFileNames(
+			String baseDirName, boolean includeDeletedFileNames)
+		throws Exception {
+
+		List<String> fileNames = getLocalChangesFileNames(baseDirName, "add");
+
+		if (includeDeletedFileNames) {
+			fileNames.addAll(getLocalChangesFileNames(baseDirName, "remove"));
+		}
+
+		return fileNames;
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -128,13 +120,13 @@ public class GitUtil {
 					arguments, "git.working.branch.name", "master");
 
 				fileNames = getCurrentBranchFileNames(
-					baseDirName, gitWorkingBranchName);
+					baseDirName, gitWorkingBranchName, false);
 			}
 			else if (type.equals("latest-author")) {
-				fileNames = getLatestAuthorFileNames(baseDirName);
+				fileNames = getLatestAuthorFileNames(baseDirName, false);
 			}
 			else if (type.equals("local-changes")) {
-				fileNames = getLocalChangesFileNames(baseDirName);
+				fileNames = getLocalChangesFileNames(baseDirName, false);
 			}
 			else {
 				throw new IllegalArgumentException();
@@ -151,6 +143,51 @@ public class GitUtil {
 		catch (Exception e) {
 			ArgumentsUtil.processMainException(arguments, e);
 		}
+	}
+
+	protected static String getCurrentBranchCommitId(
+			String gitWorkingBranchName)
+		throws Exception {
+
+		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
+			"git merge-base HEAD " + gitWorkingBranchName);
+
+		return unsyncBufferedReader.readLine();
+	}
+
+	protected static List<String> getDeletedFileNames(
+			String baseDirName, String commitId)
+		throws Exception {
+
+		List<String> fileNames = new ArrayList<>();
+
+		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
+			"git rev-parse HEAD");
+
+		String latestCommitId = unsyncBufferedReader.readLine();
+
+		unsyncBufferedReader = getGitCommandReader(
+			StringBundler.concat(
+				"git diff --diff-filter=RD --name-status ", commitId, " ",
+				latestCommitId));
+
+		String line = null;
+
+		int gitLevel = getGitLevel(baseDirName);
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			String[] array = line.split("\\s+");
+
+			if (array.length < 2) {
+				continue;
+			}
+
+			if (StringUtil.count(array[1], CharPool.SLASH) >= gitLevel) {
+				fileNames.add(getFileName(array[1], gitLevel));
+			}
+		}
+
+		return fileNames;
 	}
 
 	protected static Set<String> getDirNames(
@@ -180,6 +217,33 @@ public class GitUtil {
 		}
 
 		return dirNames;
+	}
+
+	protected static String getFileContent(String committish, String fileName)
+		throws Exception {
+
+		StringBundler sb = new StringBundler();
+
+		String gitCommand = StringBundler.concat(
+			"git show ", committish, ":", fileName);
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				getGitCommandReader(gitCommand)) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				sb.append(line);
+
+				sb.append("\n");
+			}
+		}
+
+		if (sb.length() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		return sb.toString();
 	}
 
 	protected static String getFileName(String fileName, int gitLevel) {
@@ -259,6 +323,66 @@ public class GitUtil {
 
 		throw new GitException(
 			"Unable to retrieve files because .git directory is missing.");
+	}
+
+	protected static String getLatestAuthorCommitId() throws Exception {
+		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
+			"git log");
+
+		String line = null;
+
+		String firstDifferentAuthorCommitId = null;
+		String latestAuthor = null;
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			if (line.startsWith("commit ")) {
+				firstDifferentAuthorCommitId = line.substring(7);
+			}
+			else if (line.startsWith("Author: ")) {
+				if (latestAuthor == null) {
+					int x = line.lastIndexOf(CharPool.LESS_THAN);
+					int y = line.lastIndexOf(CharPool.GREATER_THAN);
+
+					latestAuthor = line.substring(x + 1, y);
+				}
+				else if (!line.endsWith("<" + latestAuthor + ">")) {
+					break;
+				}
+			}
+		}
+
+		return firstDifferentAuthorCommitId;
+	}
+
+	protected static List<String> getLocalChangesFileNames(
+			String baseDirName, String command)
+		throws Exception {
+
+		List<String> localChangesFileNames = new ArrayList<>();
+
+		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
+			"git add . --dry-run");
+
+		String line = null;
+
+		int gitLevel = getGitLevel(baseDirName);
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			if (StringUtil.count(line, CharPool.SLASH) < gitLevel) {
+				continue;
+			}
+
+			if (Validator.isNull(command) || !line.startsWith(command + " '")) {
+				continue;
+			}
+
+			String fileName = line.substring(
+				command.length() + 2, line.length() - 1);
+
+			localChangesFileNames.add(getFileName(fileName, gitLevel));
+		}
+
+		return localChangesFileNames;
 	}
 
 	protected static File getRootDir(

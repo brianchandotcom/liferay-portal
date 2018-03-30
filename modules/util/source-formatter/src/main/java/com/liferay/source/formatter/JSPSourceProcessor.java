@@ -14,8 +14,12 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.GitUtil;
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
+import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.checkstyle.util.AlloyMVCCheckstyleLogger;
 import com.liferay.source.formatter.checkstyle.util.AlloyMVCCheckstyleUtil;
 import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
@@ -29,8 +33,11 @@ import java.nio.file.Files;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -56,9 +63,26 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		List<String> allJSPFileNames = getFileNames(
 			excludes, getIncludes(), true);
 
-		return JSPSourceUtil.addIncludedAndReferencedFileNames(
-			fileNames, new HashSet<String>(),
-			JSPSourceUtil.getContentsMap(allJSPFileNames));
+		Map<String, String> contentsMap = JSPSourceUtil.getContentsMap(
+			allJSPFileNames);
+
+		Map<String, String> deletedContentsMap = _getDeletedContentsMap(
+			excludes);
+
+		if (deletedContentsMap.isEmpty()) {
+			return JSPSourceUtil.addIncludedAndReferencedFileNames(
+				fileNames, new HashSet<String>(), contentsMap, false);
+		}
+
+		contentsMap.putAll(deletedContentsMap);
+		fileNames.addAll(deletedContentsMap.keySet());
+
+		fileNames = JSPSourceUtil.addIncludedAndReferencedFileNames(
+			fileNames, new HashSet<String>(), contentsMap, true);
+
+		fileNames.removeAll(deletedContentsMap.keySet());
+
+		return fileNames;
 	}
 
 	@Override
@@ -112,6 +136,65 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 			printError(fileName, sourceFormatterMessage.toString());
 		}
+	}
+
+	private Map<String, String> _getDeletedContentsMap(String[] excludes)
+		throws Exception {
+
+		List<String> fileNames = Collections.emptyList();
+
+		if (sourceFormatterArgs.isFormatCurrentBranch()) {
+			fileNames = GitUtil.getCurrentBranchFileNames(
+				sourceFormatterArgs.getBaseDirName(),
+				sourceFormatterArgs.getGitWorkingBranchName(), true);
+		}
+		else if (sourceFormatterArgs.isFormatLatestAuthor()) {
+			fileNames = GitUtil.getLatestAuthorFileNames(
+				sourceFormatterArgs.getBaseDirName(), true);
+		}
+		else if (sourceFormatterArgs.isFormatLocalChanges()) {
+			fileNames = GitUtil.getLocalChangesFileNames(
+				sourceFormatterArgs.getBaseDirName(), true);
+		}
+
+		if (fileNames.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		List<String> deletedFileNames = new ArrayList<>();
+
+		for (String fileName : fileNames) {
+			String absolutePath = SourceUtil.getAbsolutePath(fileName);
+
+			File file = new File(absolutePath);
+
+			if (!Files.exists(file.toPath())) {
+				deletedFileNames.add(fileName);
+			}
+		}
+
+		if (deletedFileNames.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<String, String> contentsMap = new HashMap<>();
+
+		List<String> filteredFileNames = SourceFormatterUtil.filterFileNames(
+			deletedFileNames, excludes, getIncludes(),
+			getSourceFormatterExcludes(), true);
+
+		for (String filteredFileName : filteredFileNames) {
+			String content = GitUtil.getCurrentBranchFileContent(
+				sourceFormatterArgs.getGitWorkingBranchName(),
+				filteredFileName);
+			String fileName = StringUtil.replace(
+				sourceFormatterArgs.getBaseDirName() + filteredFileName,
+				CharPool.BACK_SLASH, CharPool.SLASH);
+
+			contentsMap.put(fileName, content);
+		}
+
+		return contentsMap;
 	}
 
 	private void _processCheckstyle() throws Exception {

@@ -39,7 +39,7 @@ public class JSPSourceUtil {
 
 	public static List<String> addIncludedAndReferencedFileNames(
 		List<String> fileNames, Set<String> checkedFileNames,
-		Map<String, String> contentsMap) {
+		Map<String, String> contentsMap, boolean forceIncludeAllFiles) {
 
 		Set<String> includedAndReferencedFileNames = new HashSet<>();
 
@@ -52,7 +52,8 @@ public class JSPSourceUtil {
 				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
 			includedAndReferencedFileNames.addAll(
-				getJSPIncludeFileNames(fileName, fileNames, contentsMap));
+				getJSPIncludeFileNames(
+					fileName, fileNames, contentsMap, forceIncludeAllFiles));
 			includedAndReferencedFileNames.addAll(
 				getJSPReferenceFileNames(fileName, fileNames, contentsMap));
 		}
@@ -71,7 +72,7 @@ public class JSPSourceUtil {
 		}
 
 		return addIncludedAndReferencedFileNames(
-			fileNames, checkedFileNames, contentsMap);
+			fileNames, checkedFileNames, contentsMap, forceIncludeAllFiles);
 	}
 
 	public static String buildFullPathIncludeFileName(
@@ -161,7 +162,7 @@ public class JSPSourceUtil {
 
 	public static Set<String> getJSPIncludeFileNames(
 		String fileName, Collection<String> fileNames,
-		Map<String, String> contentsMap) {
+		Map<String, String> contentsMap, boolean forceIncludeAllFiles) {
 
 		Set<String> includeFileNames = new HashSet<>();
 
@@ -178,10 +179,12 @@ public class JSPSourceUtil {
 				break;
 			}
 
-			Matcher matcher = _javaCodeTagPattern.matcher(content);
+			if (!forceIncludeAllFiles) {
+				Matcher matcher = _javaCodeTagPattern.matcher(content);
 
-			if (matcher.find() && (matcher.start() == x)) {
-				continue;
+				if (matcher.find() && (matcher.start() == x)) {
+					continue;
+				}
 			}
 
 			x = content.indexOf(CharPool.QUOTE, x);
@@ -202,7 +205,7 @@ public class JSPSourceUtil {
 				includeFileName = StringPool.SLASH + includeFileName;
 			}
 
-			matcher = _jspIncludeFilePattern.matcher(includeFileName);
+			Matcher matcher = _jspIncludeFilePattern.matcher(includeFileName);
 
 			if (!matcher.find()) {
 				throw new RuntimeException(

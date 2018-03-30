@@ -322,7 +322,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 		if (!checkedForIncludesFileNames.contains(fileName)) {
 			includeFileNames.addAll(
 				JSPSourceUtil.getJSPIncludeFileNames(
-					fileName, includeFileNames, contentsMap));
+					fileName, includeFileNames, contentsMap, false));
 			includeFileNames.addAll(
 				JSPSourceUtil.getJSPReferenceFileNames(
 					fileName, includeFileNames, contentsMap));

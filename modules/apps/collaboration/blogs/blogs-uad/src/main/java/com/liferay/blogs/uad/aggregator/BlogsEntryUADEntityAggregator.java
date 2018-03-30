@@ -45,8 +45,7 @@ public class BlogsEntryUADEntityAggregator
 	}
 
 	@Override
-	public BlogsEntry getEntity(Serializable entityId)
-		throws PortalException {
+	public BlogsEntry get(Serializable entityId) throws PortalException {
 		return _blogsEntryLocalService.getBlogsEntry(Long.valueOf(
 				entityId.toString()));
 	}
@@ -62,8 +61,8 @@ public class BlogsEntryUADEntityAggregator
 	}
 
 	@Override
-	protected List<BlogsEntry> doGetEntities(DynamicQuery dynamicQuery,
-		int start, int end) {
+	protected List<BlogsEntry> doGetRange(DynamicQuery dynamicQuery, int start,
+		int end) {
 		return _blogsEntryLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 

@@ -56,13 +56,10 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 		List<File> modifiedFilesList = getModifiedFilesList();
 
 		for (File moduleDir : getModuleDirsList()) {
-			String modulePath = moduleDir.getCanonicalPath();
+			for (File modifiedFile : modifiedFilesList) {
+				if (JenkinsResultsParserUtil.isFileInDirectory(
+						moduleDir, modifiedFile)) {
 
-			for (File currentBranchFile : modifiedFilesList) {
-				String currentBranchFilePath =
-					currentBranchFile.getCanonicalPath();
-
-				if (currentBranchFilePath.startsWith(modulePath)) {
 					modifiedModuleDirsList.add(moduleDir);
 
 					break;

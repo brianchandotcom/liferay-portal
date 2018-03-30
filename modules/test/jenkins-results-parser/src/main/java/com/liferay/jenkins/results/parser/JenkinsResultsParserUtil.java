@@ -1000,6 +1000,30 @@ public class JenkinsResultsParserUtil {
 		return getSlaves(getBuildProperties(), jenkinsMasterPatternString);
 	}
 
+	public static boolean isFileInDirectory(File directory, File file) {
+		if (directory == null) {
+			throw new IllegalArgumentException("directory may not be null");
+		}
+
+		if (file == null) {
+			throw new IllegalArgumentException("file may not be null");
+		}
+
+		if (!directory.isDirectory()) {
+			throw new IllegalArgumentException(
+				directory.getName() + " is not a directory");
+		}
+
+		String directoryAbsolutePath = directory.getAbsolutePath();
+		String fileAbsolutePath = file.getAbsolutePath();
+
+		if (fileAbsolutePath.startsWith(directoryAbsolutePath)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static String merge(String... strings) {
 		StringBuilder sb = new StringBuilder();
 

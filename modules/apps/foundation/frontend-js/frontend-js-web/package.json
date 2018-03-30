@@ -16,7 +16,7 @@
 		}
 	},
 	"dependencies": {
-		"clay": "2.0.0-rc.9",
+		"clay": "2.0.0-rc.10",
 		"liferay-amd-loader": "3.1.1",
 		"metal": "^2.16.2",
 		"metal-anim": "^2.0.0",

@@ -19,12 +19,11 @@ class ManagementToolbar extends ClayManagementToolbar {
 
 		Liferay.componentReady(this.searchContainerId).then(
 			searchContainer => {
-				this._eventHandler = new EventHandler();
-				this._searchContainer = searchContainer;
-
-				this._eventHandler.add(
+				this._eventHandler = [
 					searchContainer.on('rowToggled', this._handleSearchContainerRowToggled, this)
-				);
+				];
+
+				this._searchContainer = searchContainer;
 			}
 		);
 	}
@@ -38,7 +37,11 @@ class ManagementToolbar extends ClayManagementToolbar {
 		super.disposed();
 
 		if (this._eventHandler) {
-			this._eventHandler.removeAllListeners();
+			this._eventHandler.forEach(
+				eventHandler => {
+					eventHandler.detach();
+				}
+			);
 		}
 	}
 

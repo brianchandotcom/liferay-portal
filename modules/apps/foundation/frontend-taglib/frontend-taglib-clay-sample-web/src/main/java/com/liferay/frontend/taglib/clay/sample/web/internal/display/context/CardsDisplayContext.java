@@ -15,11 +15,11 @@
 package com.liferay.frontend.taglib.clay.sample.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.portal.kernel.security.RandomUtil;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,7 +27,7 @@ import java.util.Map;
  */
 public class CardsDisplayContext {
 
-	public DropdownItemList getActionDropdownItems() {
+	public DropdownItemList getActionDropdownItemList() {
 		if (_actionDropdownItems != null) {
 			return _actionDropdownItems;
 		}
@@ -52,37 +52,39 @@ public class CardsDisplayContext {
 		return _actionDropdownItems;
 	}
 
-	public List<Object> getLabels() {
-		Map<String, Object> label1 = new HashMap<>();
+	public LabelItemList getLabelItemList() {
+		return new LabelItemList() {
+			{
+				LabelItem labelItem1 = new LabelItem();
 
-		label1.put("label", "Approved");
-		label1.put("style", "success");
+				labelItem1.setLabel("Approved");
+				labelItem1.setStyle("success");
 
-		String label2 = "Pending";
+				LabelItem labelItem2 = new LabelItem();
 
-		Map<String, Object> label3 = new HashMap<>();
+				labelItem2.setLabel("Pending");
 
-		label3.put("label", "Canceled");
-		label3.put("style", "danger");
+				LabelItem labelItem3 = new LabelItem();
 
-		List<Object> labels = new ArrayList<>();
+				labelItem3.setLabel("Canceled");
+				labelItem3.setStyle("danger");
 
-		int numItems = 1 + RandomUtil.nextInt(3);
+				int numItems = 1 + RandomUtil.nextInt(3);
 
-		if ((numItems == 0) || (numItems < 2)) {
-			labels.add(label1);
-		}
-		else if (numItems == 2) {
-			labels.add(label1);
-			labels.add(label2);
-		}
-		else if (numItems >= 3) {
-			labels.add(label1);
-			labels.add(label2);
-			labels.add(label3);
-		}
-
-		return labels;
+				if ((numItems == 0) || (numItems < 2)) {
+					add(labelItem1);
+				}
+				else if (numItems == 2) {
+					add(labelItem1);
+					add(labelItem2);
+				}
+				else if (numItems >= 3) {
+					add(labelItem1);
+					add(labelItem2);
+					add(labelItem3);
+				}
+			}
+		};
 	}
 
 	public Map<String, Object> getLabelStylesMap() {

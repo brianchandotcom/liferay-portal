@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import java.util.List;
 import java.util.Objects;
 
-import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -56,7 +55,7 @@ public class EditSiteTeamAssignmentsDisplayContext {
 		return portletURL;
 	}
 
-	public List<NavigationItem> getNavigationItems() throws PortletException {
+	public List<NavigationItem> getNavigationItems() {
 		return new NavigationItemList() {
 			{
 				add(

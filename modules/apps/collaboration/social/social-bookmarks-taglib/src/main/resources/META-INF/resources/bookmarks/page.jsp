@@ -35,7 +35,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 				style="secondary"
 				triggerCssClasses="btn-outline-borderless btn-sm"
 				items="<%=
-					new JSPNavigationItemList(pageContext) {
+					new JSPDropdownItemList(pageContext) {
 						{
 							for (int i = 0; i < types.length; i++) {
 								SocialBookmark socialBookmark = SocialBookmarksRegistryUtil.getSocialBookmark(types[i]);
@@ -43,9 +43,9 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 
 								if (socialBookmark != null) {
 									add(
-										navigationItem -> {
-											navigationItem.setHref("javascript:" + SocialBookmarksTagUtil.getClickJSCall(className, classPK, type, socialBookmark.getPostURL(title, url), url));
-											navigationItem.setLabel(socialBookmark.getName(request.getLocale()));
+										dropdownItem -> {
+											dropdownItem.setHref("javascript:" + SocialBookmarksTagUtil.getClickJSCall(className, classPK, type, socialBookmark.getPostURL(title, url), url));
+											dropdownItem.setLabel(socialBookmark.getName(request.getLocale()));
 										});
 								}
 							}
@@ -90,7 +90,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 					style="secondary"
 					triggerCssClasses="btn-outline-borderless btn-sm"
 					items="<%=
-						new JSPNavigationItemList(pageContext) {
+						new JSPDropdownItemList(pageContext) {
 							{
 								for (int i = maxInlineElements; i < types.length; i++) {
 									SocialBookmark socialBookmark = SocialBookmarksRegistryUtil.getSocialBookmark(types[i]);
@@ -98,9 +98,9 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 
 									if (socialBookmark != null) {
 										add(
-											navigationItem -> {
-												navigationItem.setHref("javascript:" + SocialBookmarksTagUtil.getClickJSCall(className, classPK, type, socialBookmark.getPostURL(title, url), url));
-												navigationItem.setLabel(socialBookmark.getName(request.getLocale()));
+											dropdownItem -> {
+												dropdownItem.setHref("javascript:" + SocialBookmarksTagUtil.getClickJSCall(className, classPK, type, socialBookmark.getPostURL(title, url), url));
+												dropdownItem.setLabel(socialBookmark.getName(request.getLocale()));
 											});
 									}
 								}

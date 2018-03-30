@@ -19,10 +19,10 @@
 <blockquote><p>A navigation bar, navbar, is an horizontal bar that provides several access points to different parts of a system.</p></blockquote>
 
 <clay:navigation-bar
-	items="<%= navigationBarsDisplayContext.getNavigationItems() %>"
+	items="<%= navigationBarsDisplayContext.getNavigationItemList() %>"
 />
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= navigationBarsDisplayContext.getNavigationItems() %>"
+	items="<%= navigationBarsDisplayContext.getNavigationItemList() %>"
 />

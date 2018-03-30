@@ -35,8 +35,8 @@ String tabs1Value = GetterUtil.getString(SessionClicks.get(request, namespace + 
 
 			<%
 			for (String categoryKey : categoryKeys) {
-				request.setAttribute("currentTab", categoryKey);
-				request.setAttribute("formNavigatorEntries", FormNavigatorEntryUtil.getFormNavigatorEntries(id, categoryKey, user, formModelBean));
+				request.setAttribute(FormNavigatorWebKeys.CURRENT_TAB, categoryKey);
+				request.setAttribute(FormNavigatorWebKeys.FORM_NAVIGATOR_ENTRIES, FormNavigatorEntryUtil.getFormNavigatorEntries(id, categoryKey, user, formModelBean));
 			%>
 
 				<liferay-ui:section>
@@ -46,7 +46,7 @@ String tabs1Value = GetterUtil.getString(SessionClicks.get(request, namespace + 
 			<%
 			}
 
-			String errorTab = (String)request.getAttribute("errorTab");
+			String errorTab = (String)request.getAttribute(FormNavigatorWebKeys.ERROR_TAB);
 
 			if (Validator.isNotNull(errorTab)) {
 				request.setAttribute(WebKeys.ERROR_SECTION, errorTab);
@@ -58,7 +58,7 @@ String tabs1Value = GetterUtil.getString(SessionClicks.get(request, namespace + 
 	<c:otherwise>
 
 		<%
-		request.setAttribute("formNavigatorEntries", FormNavigatorEntryUtil.getFormNavigatorEntries(id, user, formModelBean));
+		request.setAttribute(FormNavigatorWebKeys.FORM_NAVIGATOR_ENTRIES, FormNavigatorEntryUtil.getFormNavigatorEntries(id, user, formModelBean));
 		%>
 
 		<liferay-util:include page="/form_navigator/sections.jsp" servletContext="<%= application %>" />

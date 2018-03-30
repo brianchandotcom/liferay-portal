@@ -112,6 +112,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 			printError(fileName, sourceFormatterMessage.toString());
 		}
+
+		AlloyMVCCheckstyleUtil.cleanUpSuppressionsFiles(
+			getSourceFormatterSuppressionsFiles());
 	}
 
 	private void _processCheckstyle() throws Exception {

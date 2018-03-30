@@ -17,6 +17,8 @@ package com.liferay.source.formatter;
 import com.liferay.source.formatter.checks.configuration.SourceFormatterConfiguration;
 import com.liferay.source.formatter.checks.configuration.SourceFormatterSuppressions;
 
+import java.io.File;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -35,6 +37,8 @@ public interface SourceProcessor {
 	public List<String> getModifiedFileNames();
 
 	public Set<SourceFormatterMessage> getSourceFormatterMessages();
+
+	public List<File> getSourceFormatterSuppressionsFiles();
 
 	public List<SourceMismatchException> getSourceMismatchExceptions();
 
@@ -62,6 +66,9 @@ public interface SourceProcessor {
 
 	public void setSourceFormatterSuppressions(
 		SourceFormatterSuppressions sourceFormatterSuppressions);
+
+	public void setSourceFormatterSuppressionsFiles(
+		List<File> sourceFormatterSuppressionsFiles);
 
 	public void setSubrepository(boolean subrepository);
 

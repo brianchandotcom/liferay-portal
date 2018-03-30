@@ -14,7 +14,6 @@
 
 package com.liferay.portal.portlet.bridge.soy.internal;
 
-import com.liferay.osgi.util.service.OSGiServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
@@ -47,9 +46,9 @@ import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.portlet.bridge.soy.SoyPortletRegister;
+import com.liferay.portal.portlet.bridge.soy.internal.util.SoyTemplateResourcesProviderUtil;
 import com.liferay.portal.template.soy.constants.SoyTemplateConstants;
 import com.liferay.portal.template.soy.utils.SoyContext;
-import com.liferay.portal.template.soy.utils.SoyTemplateResourcesProvider;
 import com.liferay.portlet.ActionRequestImpl;
 import com.liferay.portlet.ActionResponseImpl;
 import com.liferay.portlet.PortletRequestImpl;
@@ -489,37 +488,27 @@ public class SoyPortlet extends MVCPortlet {
 			return _templateResources;
 		}
 
-		Bundle bundle = FrameworkUtil.getBundle(SoyPortlet.class);
+		List<TemplateResource> templateResources =
+			SoyTemplateResourcesProviderUtil.getBundleTemplateResources(
+				_bundle, templatePath);
 
-		_templateResources = OSGiServiceUtil.callService(
-			bundle.getBundleContext(), SoyTemplateResourcesProvider.class,
-			soyTemplateResourcesProvider -> {
-				List<TemplateResource> templateResources =
-					soyTemplateResourcesProvider.getBundleTemplateResources(
-						_bundle, templatePath);
+		MVCCommandCache mvcCommandCache = getRenderMVCCommandCache();
 
-				MVCCommandCache mvcCommandCache = getRenderMVCCommandCache();
+		for (String mvcCommandName : mvcCommandCache.getMVCCommandNames()) {
+			MVCCommand mvcCommand = _getMVCRenderCommand(mvcCommandName);
 
-				for (String mvcCommandName :
-						mvcCommandCache.getMVCCommandNames()) {
+			Bundle curBundle = FrameworkUtil.getBundle(mvcCommand.getClass());
 
-					MVCCommand mvcCommand = _getMVCRenderCommand(
-						mvcCommandName);
+			List<TemplateResource> mvcCommandTemplateResources =
+				SoyTemplateResourcesProviderUtil.getBundleTemplateResources(
+					curBundle, templatePath);
 
-					Bundle curBundle = FrameworkUtil.getBundle(
-						mvcCommand.getClass());
+			templateResources.addAll(mvcCommandTemplateResources);
+		}
 
-					List<TemplateResource> mvcCommandTemplateResources =
-						soyTemplateResourcesProvider.getBundleTemplateResources(
-							curBundle, templatePath);
+		_templateResources = templateResources;
 
-					templateResources.addAll(mvcCommandTemplateResources);
-				}
-
-				return templateResources;
-			});
-
-		return _templateResources;
+		return templateResources;
 	}
 
 	private boolean _isPjaxRequest(PortletRequest portletRequest) {

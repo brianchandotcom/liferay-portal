@@ -418,7 +418,7 @@ public class AssetBrowserDisplayContext {
 		}
 
 		if (getKeywords() != null) {
-			portletURL.setParameter("keywords", String.valueOf(getKeywords()));
+			portletURL.setParameter("keywords", getKeywords());
 		}
 
 		portletURL.setParameter("eventName", getEventName());

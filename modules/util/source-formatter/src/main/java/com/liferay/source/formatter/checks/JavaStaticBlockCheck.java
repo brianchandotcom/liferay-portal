@@ -140,18 +140,17 @@ public class JavaStaticBlockCheck extends BaseJavaTermCheck {
 		for (int i = childJavaTerms.size() - 1; i >= 0; i--) {
 			JavaTerm javaTerm = childJavaTerms.get(i);
 
-			if (javaTerm.isStatic() &&
-				((javaTerm instanceof JavaClass) ||
-				 (javaTerm instanceof JavaVariable)) &&
-				staticBlockContent.matches(
+			if (!javaTerm.isStatic() ||
+				!staticBlockContent.matches(
 					"[\\s\\S]*\\W" + javaTerm.getName() + "\\W[\\s\\S]*")) {
 
-				if ((javaTerm instanceof JavaClass) ||
-					((javaTerm instanceof JavaVariable) &&
-					 !containsMethodCall)) {
+				continue;
+			}
 
-					return javaTerm;
-				}
+			if ((javaTerm instanceof JavaClass) ||
+				((javaTerm instanceof JavaVariable) && !containsMethodCall)) {
+
+				return javaTerm;
 			}
 		}
 

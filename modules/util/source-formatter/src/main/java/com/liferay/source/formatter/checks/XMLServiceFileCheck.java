@@ -221,6 +221,10 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 			int index1 = _columnNames.indexOf(finderColumnName1);
 			int index2 = _columnNames.indexOf(finderColumnName2);
 
+			if ((index1 == -1) || (index2 == -1)) {
+				return 0;
+			}
+
 			return index1 - index2;
 		}
 

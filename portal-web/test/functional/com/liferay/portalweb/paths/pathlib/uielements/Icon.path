@@ -210,7 +210,7 @@
 </tr>
 <tr>
 	<td>SHARE</td>
-	<td>//div[contains(@class,'dropdown')]//a[@title='Share']</td>
+	<td>//button/*[name()='svg'][contains(@class,'lexicon-icon-share')]</td>
 	<td></td>
 </tr>
 <tr>

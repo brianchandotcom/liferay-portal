@@ -17,6 +17,9 @@ package com.liferay.layout.admin.web.internal.upgrade;
 import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.layout.admin.web.internal.upgrade.v_1_0_0.UpgradeLayout;
 import com.liferay.layout.admin.web.internal.upgrade.v_1_0_1.UpgradeLayoutType;
+import com.liferay.layout.admin.web.internal.upgrade.v_1_0_2.UpgradeLayoutSetTypeSettings;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -44,6 +47,16 @@ public class LayoutAdminWebUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.layout.admin.web", "1.0.0", "1.0.1",
 			new UpgradeLayoutType(_journalArticleResourceLocalService));
+
+		registry.register(
+			"com.liferay.layout.admin.web", "1.0.1", "1.0.2",
+			new UpgradeLayoutSetTypeSettings(
+				_groupLocalService, _layoutSetLocalService));
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -54,7 +67,16 @@ public class LayoutAdminWebUpgrade implements UpgradeStepRegistrator {
 			journalArticleResourceLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setLayoutSetLocalService(
+		LayoutSetLocalService layoutSetLocalService) {
+
+		_layoutSetLocalService = layoutSetLocalService;
+	}
+
+	private GroupLocalService _groupLocalService;
 	private JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
+	private LayoutSetLocalService _layoutSetLocalService;
 
 }

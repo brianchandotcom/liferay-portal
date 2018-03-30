@@ -126,6 +126,8 @@ processTestResources {
 }
 
 test {
+	dependsOn ":sdk:gradle-plugins-workspace:install"
+
 	dependsOn projectTemplateProjects.collect {
 		"${it.path}:install"
 	}

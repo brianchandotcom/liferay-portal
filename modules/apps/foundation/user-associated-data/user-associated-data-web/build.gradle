@@ -11,6 +11,7 @@ dependencies {
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib")
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib-clay")
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib-soy")
+	provided project(":apps:foundation:portal-background-task:portal-background-task-api")
 	provided project(":apps:foundation:user-associated-data:user-associated-data-api")
 	provided project(":apps:foundation:users-admin:users-admin-api")
 	provided project(":core:osgi-service-tracker-collections")

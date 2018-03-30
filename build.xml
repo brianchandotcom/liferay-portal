@@ -904,11 +904,23 @@ message.
 
 		<delete dir="${liferay.home}" />
 
-		<unzip dest="${liferay.home}" src="${project.dir}/tmp/${nightly.bundle.file}">
+		<unzip
+			dest="${liferay.home}"
+			src="${project.dir}/tmp/${nightly.bundle.file}"
+		>
 			<mapper>
-				<globmapper from="bundles/*" to="*" />
+				<globmapper
+					from="bundles/*"
+					to="*"
+				/>
 			</mapper>
 		</unzip>
+
+		<touch>
+			<fileset
+				dir="${liferay.home}/work"
+			/>
+		</touch>
 	</target>
 
 	<target name="prepare-generated-files">

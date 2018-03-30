@@ -275,7 +275,7 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 
 			String variableName = matcher.group(1);
 
-			Pattern pattern2 = Pattern.compile("\\W(" + variableName + ")\\.");
+			Pattern pattern2 = Pattern.compile("\\W(" + variableName + ")\\W");
 
 			Matcher matcher2 = pattern2.matcher(nextCommand);
 

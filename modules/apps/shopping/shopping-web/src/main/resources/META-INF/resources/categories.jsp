@@ -250,6 +250,7 @@ boolean showSearch = (categoriesAndItemsCount > 0);
 
 						while (enu.hasMoreElements()) {
 							String propsKey = (String)enu.nextElement();
+
 							String propsValue = props.getProperty(propsKey, StringPool.BLANK);
 
 							sb.append("<br />");

@@ -30,8 +30,8 @@ public class BundleSupportConstants {
 	public static final String DEFAULT_BUNDLE_FORMAT = "zip";
 
 	public static final String DEFAULT_BUNDLE_URL =
-		"https://cdn.lfrs.sl/releases.liferay.com/portal/7.0.4-ga5" +
-			"/liferay-ce-portal-tomcat-7.0-ga5-20171018150113838.zip";
+		"https://cdn.lfrs.sl/releases.liferay.com/portal/7.0.5-ga6" +
+			"/liferay-ce-portal-tomcat-7.0-ga6-20180320170724974.zip";
 
 	public static final URL DEFAULT_BUNDLE_URL_OBJECT;
 

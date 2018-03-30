@@ -50,6 +50,25 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="multi-line-replace">
+		<attribute name="file" />
+		<element name="replace-elements" />
+		<sequential>
+			<if>
+				<os family="windows" />
+				<then>
+					<fixcrlf eol="dos" file="@{file}" fixlast="false" />
+				</then>
+			</if>
+
+			<replace
+				file="@{file}"
+			>
+				<replace-elements />
+			</replace>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="update-jboss-java-opts">
 		<sequential>
 			<replace
@@ -1356,15 +1375,17 @@ this task.
 			</replacevalue>
 		</replace>
 
-		<replace
+		<multi-line-replace
 			file="${app.server.jboss.dir}/standalone/configuration/standalone.xml"
 		>
-			<replacetoken><![CDATA[<formatter>
+			<replace-elements>
+				<replacetoken><![CDATA[<formatter>
                     <named-formatter name="COLOR-PATTERN"]]></replacetoken>
-			<replacevalue><![CDATA[<filter-spec value="not(any(match(&quot;WFLYSRV0059&quot;),match(&quot;WFLYEE0007&quot;)))" />
+				<replacevalue><![CDATA[<filter-spec value="not(any(match(&quot;WFLYSRV0059&quot;),match(&quot;WFLYEE0007&quot;)))" />
                 <formatter>
                     <named-formatter name="COLOR-PATTERN"]]></replacevalue>
-		</replace>
+			</replace-elements>
+		</multi-line-replace>
 
 		<echo file="${app.server.jboss.bin.dir}/server.policy">
 			grant {
@@ -3205,19 +3226,21 @@ this task.
 			<replacevalue><![CDATA[<deployment-scanner deployment-timeout="360" ]]></replacevalue>
 		</replace>
 
-		<replace
+		<multi-line-replace
 			file="${app.server.wildfly.dir}/standalone/configuration/standalone.xml"
 		>
-			<replacetoken><![CDATA[">
+			<replace-elements>
+				<replacetoken><![CDATA[">
             <security-domains>]]></replacetoken>
-			<replacevalue><![CDATA[">
+				<replacevalue><![CDATA[">
             <security-domains>
 				<security-domain name="PortalRealm">
 					<authentication>
 						<login-module code="com.liferay.portal.security.jaas.PortalLoginModule" flag="required" />
 					</authentication>
 				</security-domain>]]></replacevalue>
-		</replace>
+			</replace-elements>
+		</multi-line-replace>
 
 		<replace
 			file="${app.server.wildfly.dir}/standalone/configuration/standalone.xml"
@@ -3232,15 +3255,17 @@ this task.
 			replace=""
 		/>
 
-		<replace
+		<multi-line-replace
 			file="${app.server.wildfly.dir}/standalone/configuration/standalone.xml"
 		>
-			<replacetoken><![CDATA[<formatter>
+			<replace-elements>
+				<replacetoken><![CDATA[<formatter>
                     <named-formatter name="COLOR-PATTERN"]]></replacetoken>
-			<replacevalue><![CDATA[<filter-spec value="not(any(match(&quot;WFLYSRV0059&quot;),match(&quot;WFLYEE0007&quot;)))" />
+				<replacevalue><![CDATA[<filter-spec value="not(any(match(&quot;WFLYSRV0059&quot;),match(&quot;WFLYEE0007&quot;)))" />
                 <formatter>
                     <named-formatter name="COLOR-PATTERN"]]></replacevalue>
-		</replace>
+			</replace-elements>
+		</multi-line-replace>
 
 		<echo file="${app.server.wildfly.bin.dir}/server.policy">
 			grant {

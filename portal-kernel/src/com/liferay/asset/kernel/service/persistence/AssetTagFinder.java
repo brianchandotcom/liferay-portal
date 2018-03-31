@@ -27,9 +27,6 @@ public interface AssetTagFinder {
 	public int countByG_C_N(long groupId, long classNameId,
 		java.lang.String name);
 
-	public java.util.List<com.liferay.asset.kernel.model.AssetTag> findByC_C(
-		long classNameId, long classPK);
-
 	public java.util.List<com.liferay.asset.kernel.model.AssetTag> findByG_C_N(
 		long groupId, long classNameId, java.lang.String name, int start,
 		int end,

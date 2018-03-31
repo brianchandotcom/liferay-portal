@@ -243,23 +243,6 @@
 				)
 		]]>
 	</sql>
-	<sql id="com.liferay.asset.kernel.service.persistence.AssetTagFinder.findByC_C">
-		<![CDATA[
-			SELECT
-				{AssetTag.*}
-			FROM
-				AssetEntry
-			INNER JOIN
-				AssetEntries_AssetTags ON
-	  				AssetEntries_AssetTags.entryId = AssetEntry.entryId
-			INNER JOIN
-				AssetTag ON
-	  				AssetTag.tagId = AssetEntries_AssetTags.tagId
-			WHERE
-				(AssetEntry.classNameId = ?) AND
-				(AssetEntry.classPK =  ?)
-		]]>
-	</sql>
 	<sql id="com.liferay.asset.kernel.service.persistence.AssetTagFinder.findByG_C_N">
 		<![CDATA[
 			SELECT

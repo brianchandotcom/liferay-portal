@@ -22,6 +22,8 @@
 			<package-name>com.google.common.*</package-name>
 			<package-name>com.sun.xml.ws.*</package-name>
 			<package-name>org.antlr.*</package-name>
+			<package-name>org.apache.commons.fileupload.*</package-name>
+			<package-name>org.apache.commons.io.*</package-name>
 			<package-name>org.apache.commons.lang.*</package-name>
 			<package-name>org.mozilla.*</package-name>
 			<package-name>org.objectweb.asm.*</package-name>

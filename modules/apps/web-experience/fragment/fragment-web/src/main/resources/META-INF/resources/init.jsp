@@ -21,6 +21,7 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
@@ -35,6 +36,7 @@ page import="com.liferay.fragment.exception.FragmentEntryContentException" %><%@
 page import="com.liferay.fragment.exception.RequiredFragmentEntryException" %><%@
 page import="com.liferay.fragment.model.FragmentCollection" %><%@
 page import="com.liferay.fragment.model.FragmentEntry" %><%@
+page import="com.liferay.fragment.util.FragmentEntryRenderUtil" %><%@
 page import="com.liferay.fragment.web.internal.constatns.ExportImportConstants" %><%@
 page import="com.liferay.fragment.web.internal.display.context.FragmentDisplayContext" %><%@
 page import="com.liferay.fragment.web.internal.security.permission.resource.FragmentCollectionPermission" %><%@

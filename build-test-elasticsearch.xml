@@ -48,8 +48,8 @@ proxyServletLogEnable="true"</echo>
 password="${osgi.config.elastic.user.password}"
 requiresAuthentication="true"
 sslCertificateAuthoritiesPaths="${elasticsearch.dir}-1/config/certs/ca/ca.crt"
-sslCertificatePath="${elasticsearch.dir}-1/config/certs/instance/instance.crt"
-sslKeyPath="${elasticsearch.dir}-1/config/certs/instance/instance.key"
+sslCertificatePath="${elasticsearch.dir}-1/config/certs/localhost/localhost.crt"
+sslKeyPath="${elasticsearch.dir}-1/config/certs/localhost/localhost.key"
 transportSSLEnabled="true"</echo>
 		</sequential>
 	</macrodef>
@@ -59,9 +59,9 @@ transportSSLEnabled="true"</echo>
 			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}xpack.security.http.ssl.enabled: true
 xpack.security.transport.ssl.enabled: true
 xpack.security.transport.ssl.verification_mode: certificate
-xpack.ssl.certificate: certs/instance/instance.crt
+xpack.ssl.certificate: certs/localhost/localhost.crt
 xpack.ssl.certificate_authorities: [ "certs/ca/ca.crt" ]
-xpack.ssl.key: certs/instance/instance.key</echo>
+xpack.ssl.key: certs/localhost/localhost.key</echo>
 		</sequential>
 	</macrodef>
 
@@ -78,9 +78,9 @@ server.basePath: "/o/portal-search-elasticsearch-xpack-monitoring/xpack-monitori
 			<echo append="true" file="${elastic.kibana.dir}/config/kibana.yml">${line.separator}elasticsearch.password: "${elastic.xpack.kibana.user.password}"
 elasticsearch.ssl.certificateAuthorities: [ "${elasticsearch.dir}-1/config/certs/ca/ca.crt" ]
 elasticsearch.username: "kibana"
-server.ssl.certificate: ${elasticsearch.dir}-1/config/certs/instance/instance.crt
+server.ssl.certificate: ${elasticsearch.dir}-1/config/certs/localhost/localhost.crt
 server.ssl.enabled: true
-server.ssl.key: ${elasticsearch.dir}-1/config/certs/instance/instance.key
+server.ssl.key: ${elasticsearch.dir}-1/config/certs/localhost/localhost.key
 xpack.security.encryptionKey: "xsomethingxatxleastx32xcharactersx"
 xpack.security.sessionTimeout: 600000</echo>
 
@@ -93,6 +93,53 @@ xpack.security.sessionTimeout: 600000</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="configure-x-pack-security-app-server-truststore">
+		<sequential>
+			<if>
+				<os family="unix" />
+				<then>
+					<exec dir="${elasticsearch.dir}-1/bin/x-pack" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="./certutil cert --ca-cert ${elasticsearch.dir}-1/config/certs/ca/ca.crt --ca-key ${elasticsearch.dir}-1/config/certs/ca/ca.key --pass liferay --ip 127.0.0.1 --dns localhost --name localhost --out ${elasticsearch.dir}-1/config/certs/localhost.p12" />
+					</exec>
+
+					<exec dir="${elasticsearch.dir}-1/bin/x-pack" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="keytool -importkeystore -deststorepass liferay -destkeystore ${elasticsearch.dir}-1/config/certs/localhost.jks -srckeystore ${elasticsearch.dir}-1/config/certs/localhost.p12 -srcstoretype PKCS12 -srcstorepass liferay" />
+					</exec>
+				</then>
+				<elseif>
+					<os family="windows" />
+					<then>
+						<exec dir="${elasticsearch.dir}-1/bin/x-pack" executable="cmd">
+							<arg value="/c" />
+							<arg value="certutil cert --ca-cert ${elasticsearch.dir}-1/config/certs/ca/ca.crt --ca-key ${elasticsearch.dir}-1/config/certs/ca/ca.key --pass liferay --ip 127.0.0.1 --dns localhost --name localhost --out ${elasticsearch.dir}-1/config/certs/localhost.p12" />
+						</exec>
+
+						<exec dir="${elasticsearch.dir}-1/bin/x-pack" executable="cmd">
+							<arg value="/c" />
+							<arg value="keytool -importkeystore -deststorepass liferay -destkeystore ${elasticsearch.dir}-1/config/certs/localhost.jks -srckeystore ${elasticsearch.dir}-1/config/certs/localhost.p12 -srcstoretype PKCS12 -srcstorepass liferay" />
+						</exec>
+					</then>
+				</elseif>
+			</if>
+
+			<if>
+				<equals arg1="${app.server.type}" arg2="tomcat" />
+				<then>
+					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.bat">
+${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${elasticsearch.dir}-1/config/certs/localhost.jks -Djavax.net.ssl.trustStorePassword=liferay"</echo>
+
+					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
+${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${elasticsearch.dir}-1/config/certs/localhost.jks -Djavax.net.ssl.trustStorePassword=liferay"</echo>
+				</then>
+				<else>
+					<echo>Set setenv.bat and setenv.sh manually before attempting to connect with portal.</echo>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="generate-elasticsearch-x-pack-security-certificates">
 		<attribute default="liferay" name="certificate.password" />
 
@@ -102,7 +149,7 @@ xpack.security.sessionTimeout: 600000</echo>
 				<then>
 					<exec dir="${elasticsearch.dir}/bin/x-pack" executable="/bin/bash">
 						<arg value="-c" />
-						<arg value="./certutil ca --pem --out elastic-stack-ca.zip" />
+						<arg value="./certutil ca --pem --ca-dn CN=localhost --out elastic-stack-ca.zip" />
 					</exec>
 				</then>
 				<elseif>
@@ -110,7 +157,7 @@ xpack.security.sessionTimeout: 600000</echo>
 					<then>
 						<exec dir="${elasticsearch.dir}/bin/x-pack" executable="cmd">
 							<arg value="/c" />
-							<arg value="certutil ca --pem --out elastic-stack-ca.zip" />
+							<arg value="certutil ca --pem --ca-dn CN=localhost --out elastic-stack-ca.zip" />
 						</exec>
 					</then>
 				</elseif>
@@ -126,7 +173,7 @@ xpack.security.sessionTimeout: 600000</echo>
 				<then>
 					<exec dir="${elasticsearch.dir}/bin/x-pack" executable="/bin/bash">
 						<arg value="-c" />
-						<arg value="./certutil cert --ca-cert ca/ca.crt --ca-key ca/ca.key --pem --ip 127.0.0.1 --dns localhost --out certificate-bundle.zip" />
+						<arg value="./certutil cert --ca-cert ca/ca.crt --ca-key ca/ca.key --pem --ip 127.0.0.1 --dns localhost --name localhost --out certificate-bundle.zip" />
 					</exec>
 				</then>
 				<elseif>
@@ -134,7 +181,7 @@ xpack.security.sessionTimeout: 600000</echo>
 					<then>
 						<exec dir="${elasticsearch.dir}/bin/x-pack" executable="cmd">
 							<arg value="/c" />
-							<arg value="certutil cert --ca-cert ca/ca.crt --ca-key ca/ca.key --pem --ip 127.0.0.1 --dns localhost --out certificate-bundle.zip" />
+							<arg value="certutil cert --ca-cert ca/ca.crt --ca-key ca/ca.key --pem --ip 127.0.0.1 --dns localhost --name localhost --out certificate-bundle.zip" />
 						</exec>
 					</then>
 				</elseif>
@@ -151,7 +198,7 @@ xpack.security.sessionTimeout: 600000</echo>
 			/>
 
 			<move
-				file="${elasticsearch.dir}/bin/x-pack/instance"
+				file="${elasticsearch.dir}/bin/x-pack/localhost"
 				todir="${elasticsearch.dir}/config/certs"
 			/>
 
@@ -523,6 +570,14 @@ xpack.security.sessionTimeout: 600000</echo>
 		<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}discovery.zen.minimum_master_nodes: ${elasticsearch.master-eligible.nodes.quorum}</echo>
 	</target>
 
+	<target name="deploy-elasticsearch6">
+		<gradle-execute dir="${project.dir}/modules/apps/portal-search-elasticsearch6/portal-search-elasticsearch6-api" task="deploy" />
+
+		<gradle-execute dir="${project.dir}/modules/apps/portal-search-elasticsearch6/portal-search-elasticsearch6-impl" task="deploy" />
+
+		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config">blacklistBundleSymbolicNames=["com.liferay.portal.search.elasticsearch,com.liferay.portal.search.elasticsearch.shield,com.liferay.portal.search.elasticsearch.shield.fragment,com.liferay.portal.search.elasticsearch.marvel.web"]</echo>
+	</target>
+
 	<target name="prepare-additional-elasticsearch-dirs">
 		<var name="elasticsearch.node.number" value="0" />
 
@@ -600,6 +655,8 @@ xpack.security.sessionTimeout: 600000</echo>
 				<configure-elasticsearch-x-pack-security-osgi-bundle-properties />
 
 				<configure-elasticsearch-x-pack-monitoring-osgi-bundle-properties />
+
+				<configure-x-pack-security-app-server-truststore />
 
 				<antcall target="start-kibana" />
 			</then>

@@ -46,4 +46,22 @@
 		message="<%= deleteLabel %>"
 		url="<%= deleteBackgroundTaskURL %>"
 	/>
+
+	<%
+	long exportImportConfigurationId = MapUtil.getLong(backgroundTask.getTaskContextMap(), "exportImportConfigurationId");
+
+	ExportImportConfiguration exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
+
+	Map<String, Serializable> settingsMap = exportImportConfiguration.getSettingsMap();
+
+	Map<String, String[]> parameterMap = (Map<String, String[]>)settingsMap.get("parameterMap");
+
+	String processCmd = MapUtil.getString(parameterMap, "cmd");
+	%>
+
+	<c:if test="<%= backgroundTask.isCompleted() && Validator.isNotNull(processCmd) %>">
+		<liferay-staging:process-summary-link
+			backgroundTaskId="<%= backgroundTask.getBackgroundTaskId() %>"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>

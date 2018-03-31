@@ -19,8 +19,12 @@ import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleCon
 import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_LAYOUT_LOCAL_SUCCEEDED;
 import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS;
 
+import com.liferay.exportimport.constants.ExportImportBackgroundTaskContextMapConstants;
 import com.liferay.exportimport.internal.background.task.display.LayoutStagingBackgroundTaskDisplay;
+import com.liferay.exportimport.kernel.lar.ExportImportHelper;
+import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.MissingReferences;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManagerUtil;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
@@ -38,18 +42,24 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LongWrapper;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.trash.service.TrashEntryLocalServiceUtil;
 
 import java.io.File;
 import java.io.Serializable;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -158,6 +168,58 @@ public class LayoutStagingBackgroundTaskExecutor
 				String.valueOf(
 					exportImportConfiguration.getExportImportConfigurationId()),
 				exportImportConfiguration);
+
+			FileEntry fileEntry = null;
+
+			try {
+				fileEntry = TempFileEntryUtil.addTempFileEntry(
+					sourceGroupId, userId, ExportImportHelper.TEMP_FOLDER_NAME,
+					file.getName(), file, MimeTypesUtil.getContentType(file));
+
+				ManifestSummary manifestSummary =
+					ExportImportHelperUtil.getManifestSummary(
+						userId, sourceGroupId, new HashMap<>(), fileEntry);
+
+				Map<String, Serializable> taskContextMap =
+					backgroundTask.getTaskContextMap();
+
+				HashMap<String, LongWrapper> modelAdditionCounters =
+					new HashMap<>(manifestSummary.getModelAdditionCounters());
+
+				taskContextMap.put(
+					ExportImportBackgroundTaskContextMapConstants.
+						MODEL_ADDITION_COUNTERS,
+					modelAdditionCounters);
+
+				HashMap<String, LongWrapper> modelDeletionCounters =
+					new HashMap<>(manifestSummary.getModelDeletionCounters());
+
+				taskContextMap.put(
+					ExportImportBackgroundTaskContextMapConstants.
+						MODEL_DELETION_COUNTERS,
+					modelDeletionCounters);
+
+				HashSet<String> manifestSummaryKeys = new HashSet<>(
+					manifestSummary.getManifestSummaryKeys());
+
+				taskContextMap.put(
+					ExportImportBackgroundTaskContextMapConstants.
+						MANIFEST_SUMMARY_KEYS,
+					manifestSummaryKeys);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Failed to process manifest for the process summary " +
+							"screen");
+				}
+			}
+			finally {
+				if (fileEntry != null) {
+					TempFileEntryUtil.deleteTempFileEntry(
+						fileEntry.getFileEntryId());
+				}
+			}
 		}
 		catch (Throwable t) {
 			ExportImportThreadLocal.setInitialLayoutStagingInProcess(false);

@@ -1,0 +1,117 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+ProcessSummaryDisplayContext processSummaryDisplayContext = new ProcessSummaryDisplayContext();
+
+boolean settingsMapPrivateLayout = MapUtil.getBoolean(exportImportConfigurationSettingsMap, "privateLayout");
+
+String publicPagesDescription = (settingsMapPrivateLayout) ? LanguageUtil.get(request, "private-pages") : LanguageUtil.get(request, "public-pages");
+
+long layoutSetBranchId = MapUtil.getLong(parameterMap, "layoutSetBranchId");
+
+LayoutSetBranch layoutSetBranch = null;
+
+long[] selectedLayoutIds = null;
+
+List<String> pageNames = new ArrayList<>();
+
+if (Validator.isNotNull(MapUtil.getString(parameterMap, "layoutSetBranchId"))) {
+	layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutSetBranchId);
+
+	selectedLayoutIds = GetterUtil.getLongValues(exportImportConfigurationSettingsMap.get("layoutIds"));
+
+	String layoutsJSONString = LayoutsTreeUtil.getLayoutsJSON(request, groupId, settingsMapPrivateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, selectedLayoutIds, false, "asd");
+
+	JSONObject layoutsJSONObject = JSONFactoryUtil.createJSONObject(layoutsJSONString);
+
+	JSONArray layoutsJSONArray = layoutsJSONObject.getJSONArray("layouts");
+
+	pageNames = processSummaryDisplayContext.getPageNames(layoutsJSONArray);
+}
+
+boolean deleteMissingLayouts = MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS);
+boolean layoutSetSettings = MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LAYOUT_SET_SETTINGS);
+boolean layoutSetPrototypeSettings = MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS);
+boolean logo = MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LOGO);
+boolean themeSettings = MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.THEME_REFERENCE);
+%>
+
+<div class="process-summary-section">
+	<div class="sheet-subtitle"><liferay-ui:message key="pages" /></div>
+
+	<div class="process-summary-subsection">
+		<label class="process-summary-label">
+			<liferay-ui:message key="pages-option" />:
+		</label>
+
+		<span><%= publicPagesDescription %></span>
+	</div>
+
+	<c:if test="<%= layoutSetBranch != null %>">
+		<div class="process-summary-subsection">
+			<label class="process-summary-label">
+				<liferay-ui:message key="site-pages-variation" />:
+			</label>
+
+			<span><%= HtmlUtil.escape(LanguageUtil.get(request, layoutSetBranch.getName())) %></span>
+		</div>
+	</c:if>
+
+	<c:if test="<%= pageNames.size() != 0 %>">
+		<div class="process-summary-subsection">
+			<div>
+				<label class="process-summary-label">
+					<liferay-ui:message key="pages-to-publish" />:
+				</label>
+			</div>
+
+			<c:forEach items="<%= pageNames %>" var="pageName">
+				<div>${pageName}</div>
+			</c:forEach>
+		</div>
+	</c:if>
+
+	<c:if test="<%= themeSettings || logo || layoutSetSettings || layoutSetPrototypeSettings || deleteMissingLayouts %>">
+		<div class="process-summary-subsection">
+			<div>
+				<label class="process-summary-label">
+					<liferay-ui:message key="look-and-feel" />:
+				</label>
+			</div>
+
+			<c:if test="<%= themeSettings %>">
+				<div>- <liferay-ui:message key="theme-settings" /></div>
+			</c:if>
+
+			<c:if test="<%= logo %>">
+				<div>- <liferay-ui:message key="logo" /></div>
+			</c:if>
+
+			<c:if test="<%= layoutSetSettings %>">
+				<div>- <liferay-ui:message key="site-pages-settings" /></div>
+			</c:if>
+
+			<c:if test="<%= layoutSetPrototypeSettings %>">
+				<div>- <liferay-ui:message key="site-template-settings" /></div>
+			</c:if>
+
+			<c:if test="<%= deleteMissingLayouts %>">
+				<div>- <liferay-ui:message key="delete-missing-layouts" /></div>
+			</c:if>
+		</div>
+	</c:if>
+</div>

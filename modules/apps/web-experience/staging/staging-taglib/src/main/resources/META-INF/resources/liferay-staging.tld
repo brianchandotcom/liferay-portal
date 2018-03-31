@@ -527,6 +527,19 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Renders a link to the process' summary. It should be used within a <![CDATA[<code>process-list-menu</code>]]>.</description>
+		<name>process-summary-link</name>
+		<tag-class>com.liferay.staging.taglib.servlet.taglib.ProcessSummaryLinkTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>The background tasks ID.</description>
+			<name>backgroundTaskId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>long</type>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Renders the process title information for a publishing process.</description>
 		<name>process-title</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.ProcessTitleTag</tag-class>

@@ -95,9 +95,10 @@ renderResponse.setTitle(title);
 	<div id="<portlet:namespace />fragmentEditor"></div>
 </aui:form>
 
-<portlet:actionURL name="/fragment/render_fragment_entry" var="renderFragmentEntryURL">
+<liferay-portlet:renderURL var="renderFragmentEntryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcRenderCommandName" value="/fragment/render_fragment_entry" />
 	<portlet:param name="fragmentEntryId" value="<%= String.valueOf(fragmentDisplayContext.getFragmentEntryId()) %>" />
-</portlet:actionURL>
+</liferay-portlet:renderURL>
 
 <aui:script require="fragment-web/js/FragmentEditor.es as FragmentEditor, metal-dom/src/all/dom as dom">
 	var cssInput = document.getElementById('<portlet:namespace />cssContent');

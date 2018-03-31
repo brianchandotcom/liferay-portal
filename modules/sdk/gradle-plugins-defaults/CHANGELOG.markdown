@@ -3158,6 +3158,22 @@ projects defined in the `testIntegrationCompile` configuration does not have a
 ### Changed
 - [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version 3.9.22.
 
+## 5.3.56 - 2018-03-30
+
+### Changed
+- [LPS-78741]: Configure the `npmInstall` task to run `npm ci` instead of
+`npm install` when on the master branch and not on Jenkins.
+- [LPS-78741]: Set the Node.js version to `6.6.0` and disable global Node.js
+execution when on the `7.0.x` branch.
+- [LPS-78741]: Update the [Liferay Gradle Plugins JSDoc] dependency to version
+2.0.4.
+- [LPS-79282]: Update the [Liferay Gradle Plugins] dependency to version 3.10.0.
+
+## 5.3.57 - 2018-03-30
+
+### Changed
+- [LPS-69247]: Update the [Liferay Gradle Plugins] dependency to version 3.10.1.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -3236,6 +3252,7 @@ projects defined in the `testIntegrationCompile` configuration does not have a
 [LPS-69013]: https://issues.liferay.com/browse/LPS-69013
 [LPS-69026]: https://issues.liferay.com/browse/LPS-69026
 [LPS-69223]: https://issues.liferay.com/browse/LPS-69223
+[LPS-69247]: https://issues.liferay.com/browse/LPS-69247
 [LPS-69271]: https://issues.liferay.com/browse/LPS-69271
 [LPS-69288]: https://issues.liferay.com/browse/LPS-69288
 [LPS-69445]: https://issues.liferay.com/browse/LPS-69445
@@ -3519,6 +3536,7 @@ projects defined in the `testIntegrationCompile` configuration does not have a
 [LPS-79191]: https://issues.liferay.com/browse/LPS-79191
 [LPS-79192]: https://issues.liferay.com/browse/LPS-79192
 [LPS-79226]: https://issues.liferay.com/browse/LPS-79226
+[LPS-79282]: https://issues.liferay.com/browse/LPS-79282
 [LPS-79286]: https://issues.liferay.com/browse/LPS-79286
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841

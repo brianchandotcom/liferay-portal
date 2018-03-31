@@ -114,7 +114,6 @@
 		<check name="JavaConfigurationAdminCheck" />
 		<check name="JavaConstructorParameterOrderCheck" />
 		<check name="JavaConstructorSuperCallCheck" />
-		<check name="JavaDataAccessConnectionCheck" />
 		<check name="JavaDeprecatedJavadocCheck" />
 		<check name="JavaDiamondOperatorCheck" />
 		<check name="JavaDeserializationSecurityCheck" />
@@ -320,6 +319,7 @@
 		</check>
 		<check name="JavaCleanUpMethodSuperCleanUpCheck" />
 		<check name="JavaCleanUpMethodVariablesCheck" />
+		<check name="JavaDataAccessConnectionCheck" />
 		<check name="JavaFinderCacheCheck" />
 		<check name="JavaFinderImplCustomSQLCheck" />
 		<check name="JavaLogClassNameCheck" />

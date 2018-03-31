@@ -199,21 +199,21 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			PortletConfigurationApplicationType.PortletConfiguration.CLASS_NAME,
 			PortletProvider.Action.VIEW);
 
-		configurationURL.setWindowState(LiferayWindowState.POP_UP);
-
 		configurationURL.setParameter("mvcPath", "/edit_configuration.jsp");
 		configurationURL.setParameter("settingsScope", "portletInstance");
-
-		String currentURL = _portal.getCurrentURL(request);
-		String portletPrimaryKey = PortletPermissionUtil.getPrimaryKey(
-			serviceContext.getPlid(), portletId);
-
-		configurationURL.setParameter("redirect", currentURL);
-		configurationURL.setParameter("returnToFullPageURL", currentURL);
+		configurationURL.setParameter(
+			"redirect", _portal.getCurrentURL(request));
+		configurationURL.setParameter(
+			"returnToFullPageURL", _portal.getCurrentURL(request));
 		configurationURL.setParameter(
 			"portletConfiguration", Boolean.TRUE.toString());
 		configurationURL.setParameter("portletResource", portletId);
-		configurationURL.setParameter("resourcePrimKey", portletPrimaryKey);
+		configurationURL.setParameter(
+			"resourcePrimKey",
+			PortletPermissionUtil.getPrimaryKey(
+				serviceContext.getPlid(), portletId));
+
+		configurationURL.setWindowState(LiferayWindowState.POP_UP);
 
 		StringBundler jsConfigurationURLSB = new StringBundler(11);
 
@@ -290,12 +290,12 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		Element portletNameElement = new Element("span");
 
+		portletNameElement.attr("class", "portlet-name-text");
+
 		String portletTitle = _portal.getPortletTitle(
 			portletName, LocaleThreadLocal.getThemeDisplayLocale());
 
 		portletNameElement.text(portletTitle);
-
-		portletNameElement.attr("class", "portlet-name-text");
 
 		portletTitleElement.appendChild(portletNameElement);
 

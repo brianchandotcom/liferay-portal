@@ -15,6 +15,7 @@
 package com.liferay.fragment.entry.processor.editable.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -112,6 +113,47 @@ public class FragmentEntryProcessorEditableTest {
 			bodyElement.html(),
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink));
+	}
+
+	@Test(expected = FragmentEntryContentException.class)
+	public void testFragmentEntryProcessorEditableWithDuplicateIds()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		FragmentCollection fragmentCollection =
+			FragmentCollectionServiceUtil.addFragmentCollection(
+				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
+				serviceContext);
+
+		FragmentEntryServiceUtil.addFragmentEntry(
+			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
+			"Fragment Entry", null,
+			_getFileAsString("fragment_entry_with_duplicate_editable_ids.html"),
+			null, WorkflowConstants.STATUS_APPROVED, serviceContext);
+	}
+
+	@Test(expected = FragmentEntryContentException.class)
+	public void testFragmentEntryProcessorEditableWithMissingAttributes()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		FragmentCollection fragmentCollection =
+			FragmentCollectionServiceUtil.addFragmentCollection(
+				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
+				serviceContext);
+
+		FragmentEntryServiceUtil.addFragmentEntry(
+			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
+			"Fragment Entry", null,
+			_getFileAsString(
+				"fragment_entry_with_missing_editable_attributes.html"),
+			null, WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	private String _getFileAsString(String fileName) throws IOException {

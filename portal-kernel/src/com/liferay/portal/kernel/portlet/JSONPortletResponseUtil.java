@@ -67,7 +67,7 @@ public class JSONPortletResponseUtil {
 			portletRequest);
 
 		if (BrowserSnifferUtil.isIe(request)) {
-			contentType = ContentTypes.TEXT_HTML;
+			contentType = ContentTypes.TEXT_PLAIN;
 		}
 
 		return contentType;

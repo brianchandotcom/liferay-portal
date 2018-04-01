@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.portlet;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.IOException;
@@ -68,10 +67,9 @@ public class JSONPortletResponseUtil {
 			portletRequest);
 
 		if (BrowserSnifferUtil.isIe(request)) {
-			double version = GetterUtil.getDouble(
-				BrowserSnifferUtil.getVersion(request));
+			String version = BrowserSnifferUtil.getVersion(request);
 
-			if (version < 11) {
+			if (!"11.0".equals(version)) {
 				contentType = ContentTypes.TEXT_HTML;
 			}
 		}

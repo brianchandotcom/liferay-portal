@@ -16,9 +16,11 @@ package com.liferay.dynamic.data.mapping.data.provider.web.internal.portlet.acti
 
 import com.liferay.dynamic.data.mapping.data.provider.web.internal.constants.DDMDataProviderPortletKeys;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -37,18 +39,41 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteDataProviderMVCActionCommand extends BaseMVCActionCommand {
+public class DeleteDataProviderMVCActionCommand
+	extends BaseTransactionalMVCActionCommand {
+
+	protected void doDeleteDataProviderInstance(long dataProviderInstanceId)
+		throws PortalException {
+
+		_ddmDataProviderInstanceService.deleteDataProviderInstance(
+			dataProviderInstanceId);
+	}
 
 	@Override
-	protected void doProcessAction(
+	protected void doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
+
+		long[] deleteDataProviderInstanceIds = null;
 
 		long dataProviderInstanceId = ParamUtil.getLong(
 			actionRequest, "dataProviderInstanceId");
 
-		_ddmDataProviderInstanceService.deleteDataProviderInstance(
-			dataProviderInstanceId);
+		if (dataProviderInstanceId > 0) {
+			deleteDataProviderInstanceIds = new long[] {dataProviderInstanceId};
+		}
+		else {
+			deleteDataProviderInstanceIds = StringUtil.split(
+				ParamUtil.getString(
+					actionRequest, "deleteDataProviderInstanceIds"),
+				0L);
+		}
+
+		for (long deleteDataProviderInstanceId :
+				deleteDataProviderInstanceIds) {
+
+			doDeleteDataProviderInstance(deleteDataProviderInstanceId);
+		}
 	}
 
 	@Reference

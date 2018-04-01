@@ -14,10 +14,13 @@
 
 package com.liferay.chat.internal.upgrade;
 
+import com.liferay.chat.internal.configuration.ChatGroupServiceConfiguration;
+import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jonathan Lee
@@ -30,6 +33,15 @@ public class ChatServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.chat.service", "0.0.1", "1.0.0",
 			new DummyUpgradeStep());
+
+		registry.register(
+			"com.liferay.chat.service", "1.0.0", "1.0.1",
+			_configurationUpgradeStepFactory.createUpgradeStep(
+				"com.liferay.chat.configuration.ChatGroupServiceConfiguration",
+				ChatGroupServiceConfiguration.class.getName()));
 	}
+
+	@Reference
+	private ConfigurationUpgradeStepFactory _configurationUpgradeStepFactory;
 
 }

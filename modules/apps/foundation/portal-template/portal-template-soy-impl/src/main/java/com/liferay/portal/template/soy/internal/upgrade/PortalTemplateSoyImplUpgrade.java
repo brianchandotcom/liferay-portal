@@ -12,34 +12,29 @@
  * details.
  */
 
-package com.liferay.twitter.internal.upgrade;
+package com.liferay.portal.template.soy.internal.upgrade;
 
 import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.template.soy.internal.configuration.SoyTemplateEngineConfiguration;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.twitter.internal.configuration.TwitterGroupServiceConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Adolfo Pérez
+ * @author Tom Wang
  */
 @Component(immediate = true, service = UpgradeStepRegistrator.class)
-public class TwitterServiceUpgrade implements UpgradeStepRegistrator {
+public class PortalTemplateSoyImplUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.twitter.service", "0.0.1", "1.0.0",
-			new DummyUpgradeStep());
-
-		registry.register(
-			"com.liferay.twitter.service", "1.0.0", "1.0.1",
+			"com.liferay.portal.template.soy.impl", "0.0.0", "1.0.0",
 			_configurationUpgradeStepFactory.createUpgradeStep(
-				"com.liferay.twitter.configuration." +
-					"TwitterGroupServiceConfiguration",
-				TwitterGroupServiceConfiguration.class.getName()));
+				"com.liferay.portal.template.soy.configuration." +
+					"SoyTemplateEngineConfiguration",
+				SoyTemplateEngineConfiguration.class.getName()));
 	}
 
 	@Reference

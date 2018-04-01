@@ -14,10 +14,13 @@
 
 package com.liferay.adaptive.media.web.internal.upgrade;
 
+import com.liferay.adaptive.media.web.internal.configuration.AMConfiguration;
+import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -30,6 +33,16 @@ public class AMWebUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.adaptive.media.web", "0.0.0", "1.0.0",
 			new DummyUpgradeStep());
+
+		registry.register(
+			"com.liferay.adaptive.media.web", "1.0.0", "1.0.1",
+			_configurationUpgradeStepFactory.createUpgradeStep(
+				"com.liferay.adaptive.media.internal.configuration." +
+					"AMConfiguration",
+				AMConfiguration.class.getName()));
 	}
+
+	@Reference
+	private ConfigurationUpgradeStepFactory _configurationUpgradeStepFactory;
 
 }

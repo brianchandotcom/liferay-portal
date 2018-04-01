@@ -56,39 +56,46 @@ public class ConfigurationUpgradeStepFactoryImpl
 					_persistenceManager.delete(oldPid);
 				}
 
-				File oldConfigFile = new File(
-					StringBundler.concat(
-						PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR, "/", oldPid,
-						".cfg"));
-
-				if (!oldConfigFile.exists()) {
-					return;
-				}
-
-				File newConfigFile = new File(
-					StringBundler.concat(
-						PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR, "/", newPid,
-						".cfg"));
-
-				if (newConfigFile.exists()) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							StringBundler.concat(
-								"Unable to rename ",
-								oldConfigFile.getAbsolutePath(), " to ",
-								newConfigFile.getAbsolutePath(),
-								" because the file already exists"));
-					}
-
-					return;
-				}
-
-				Files.move(oldConfigFile.toPath(), newConfigFile.toPath());
+				_renameConfigurationFile(oldPid, newPid, "cfg");
+				_renameConfigurationFile(oldPid, newPid, "config");
 			}
 			catch (IOException ioe) {
 				throw new UpgradeException(ioe);
 			}
 		};
+	}
+
+	private void _renameConfigurationFile(
+			String oldPid, String newPid, String extension)
+		throws IOException {
+
+		File oldConfigFile = new File(
+			StringBundler.concat(
+				PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR, "/", oldPid, ".",
+				extension));
+
+		if (!oldConfigFile.exists()) {
+			return;
+		}
+
+		File newConfigFile = new File(
+			StringBundler.concat(
+				PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR, "/", newPid, ".",
+				extension));
+
+		if (newConfigFile.exists()) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Unable to rename ", oldConfigFile.getAbsolutePath(),
+						" to ", newConfigFile.getAbsolutePath(),
+						" because the file already exists"));
+			}
+
+			return;
+		}
+
+		Files.move(oldConfigFile.toPath(), newConfigFile.toPath());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

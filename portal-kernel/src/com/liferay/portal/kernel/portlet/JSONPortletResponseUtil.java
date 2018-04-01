@@ -66,12 +66,9 @@ public class JSONPortletResponseUtil {
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
-		if (BrowserSnifferUtil.isIe(request)) {
-			String version = BrowserSnifferUtil.getVersion(request);
-
-			if (!"11.0".equals(version)) {
-				contentType = ContentTypes.TEXT_HTML;
-			}
+		if (BrowserSnifferUtil.isIe(request) &&
+			!BrowserSnifferUtil.getVersion(request).equals("11.0")) {
+			contentType = ContentTypes.TEXT_HTML;
 		}
 
 		return contentType;

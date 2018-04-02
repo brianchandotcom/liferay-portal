@@ -101,17 +101,17 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 					fragmentEntryLink.getOriginalFragmentEntryLinkId());
 
-			String defaultPreferences = StringPool.BLANK;
+			String portletPreferences = StringPool.BLANK;
 
 			if (originalFragmentEntryLink != null) {
-				defaultPreferences = _getPreferences(
+				portletPreferences = _getPreferences(
 					portletName, originalFragmentEntryLink);
 			}
 
 			String instanceId = String.valueOf(
 				fragmentEntryLink.getFragmentEntryLinkId());
 
-			runtimeTagElement.attr("defaultPreferences", defaultPreferences);
+			runtimeTagElement.attr("defaultPreferences", portletPreferences);
 			runtimeTagElement.attr("instanceId", instanceId);
 			runtimeTagElement.attr("persistSettings=false", true);
 			runtimeTagElement.attr("portletName", portletName);

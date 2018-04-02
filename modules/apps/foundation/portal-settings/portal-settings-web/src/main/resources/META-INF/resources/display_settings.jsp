@@ -71,10 +71,14 @@
 
 		// Left list
 
+		String [] currentLanguageIds = PrefsPropsUtil.getStringArray(company.getCompanyId(), PropsKeys.LOCALES, StringPool.COMMA, PropsValues.LOCALES_ENABLED);
+
+		Locale[] currentLocales = LocaleUtil.fromLanguageIds(currentLanguageIds);
+
 		List leftList = new ArrayList();
 
-		for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {
-			leftList.add(new KeyValuePair(LocaleUtil.toLanguageId(availableLocale), availableLocale.getDisplayName(locale)));
+		for (Locale currentLocale : currentLocales) {
+			leftList.add(new KeyValuePair(LanguageUtil.getLanguageId(currentLocale), currentLocale.getDisplayName(locale)));
 		}
 
 		// Right list

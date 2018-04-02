@@ -31,12 +31,6 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="gotoConfiguration">
-		<execute macro="LexiconEntry#gotoHeaderMenuItem">
-			<var name="menuItem" value="Configuration" />
-		</execute>
-	</command>
-
 	<command name="subscribeToNodeCP">
 		<var name="key_wikiNodeName" value="${wikiNodeName}" />
 

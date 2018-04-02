@@ -183,7 +183,9 @@
 			<var name="portlet" value="Wiki" />
 		</execute>
 
-		<execute macro="WikiPortlet#gotoConfiguration" />
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
+			<var name="menuItem" value="Configuration" />
+		</execute>
 
 		<execute macro="WikiPortlet#viewConfigurationTabs">
 			<var name="isNotPresent" value="SETUP_DISPLAY_SETTINGS" />

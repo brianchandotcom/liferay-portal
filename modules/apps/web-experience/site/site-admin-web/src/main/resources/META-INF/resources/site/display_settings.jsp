@@ -147,16 +147,10 @@ if (publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLayo
 
 		String groupLanguageIds = typeSettingsProperties.getProperty(PropsKeys.LOCALES);
 
-		String[] currentLanguageIds;
-
 		List leftList = new ArrayList();
 
 		if (groupLanguageIds != null) {
-			currentLanguageIds = StringUtil.split(groupLanguageIds);
-
-			Locale[] currentLocales = LocaleUtil.fromLanguageIds(currentLanguageIds);
-
-			for (Locale currentLocale : currentLocales) {
+			for (Locale currentLocale : LocaleUtil.fromLanguageIds(StringUtil.split(groupLanguageIds))) {
 				leftList.add(new KeyValuePair(LanguageUtil.getLanguageId(currentLocale), currentLocale.getDisplayName(locale)));
 			}
 		}

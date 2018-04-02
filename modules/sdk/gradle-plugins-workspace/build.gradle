@@ -41,7 +41,7 @@ copyRepo {
 }
 
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins", version: "3.10.1"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins", version: "3.10.2"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "2.2.1"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.target.platform", version: "1.0.0"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.theme.builder", version: "2.0.3"

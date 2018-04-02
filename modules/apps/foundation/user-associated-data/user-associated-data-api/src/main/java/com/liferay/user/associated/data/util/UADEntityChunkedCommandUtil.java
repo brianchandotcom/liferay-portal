@@ -25,7 +25,7 @@ public class UADEntityChunkedCommandUtil {
 
 	public static <T> void executeChunkedCommand(
 			long userId, UADEntityAggregator<T> uadEntityAggregator,
-			UnsafeConsumer<T, PortalException> uadEntityUnsafeConsumer)
+			UnsafeConsumer<T, PortalException> unsafeConsumer)
 		throws PortalException {
 
 		int count = (int)uadEntityAggregator.count(userId);
@@ -37,8 +37,8 @@ public class UADEntityChunkedCommandUtil {
 				end = count;
 			}
 
-			for (T entity : uadEntityAggregator.getRange(userId, start, end)) {
-				uadEntityUnsafeConsumer.accept(entity);
+			for (T t : uadEntityAggregator.getRange(userId, start, end)) {
+				unsafeConsumer.accept(t);
 			}
 
 			start = end;

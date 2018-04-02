@@ -1,5 +1,6 @@
 import Component from 'metal-component';
 import dom from 'metal-dom';
+import {EventHandler} from 'metal-events';
 import {Config} from 'metal-state';
 import {isFunction, isObject, object} from 'metal';
 import Soy from 'metal-soy';
@@ -23,6 +24,8 @@ class FragmentEntryLink extends Component {
 	 */
 
 	created() {
+		this.eventHandler_ = new EventHandler();
+
 		this._handleEditorChange = this._handleEditorChange.bind(this);
 
 		Liferay.on('beforeNavigate', () => this._destroyEditors());
@@ -34,6 +37,8 @@ class FragmentEntryLink extends Component {
 	 */
 
 	disposed() {
+		this.eventHandler_.removeAllListeners();
+
 		this._destroyEditors();
 	}
 
@@ -198,12 +203,14 @@ class FragmentEntryLink extends Component {
 	 */
 
 	_enableEditableImages(content) {
-		dom.delegate(
-			content,
-			'click',
-			'lfr-editable[type="image"]',
-			this._handleImageSelectorClick.bind(this)
-		)
+		this.eventHandler_.add(
+			dom.delegate(
+				content,
+				'click',
+				'lfr-editable[type="image"]',
+				this._handleImageSelectorClick.bind(this)
+			)
+		);
 	}
 
 	/**

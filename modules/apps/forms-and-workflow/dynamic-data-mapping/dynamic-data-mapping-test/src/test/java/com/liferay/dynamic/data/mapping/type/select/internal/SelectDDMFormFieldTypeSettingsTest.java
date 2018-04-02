@@ -118,7 +118,7 @@ public class SelectDDMFormFieldTypeSettingsTest
 
 		actions = ddmFormRule1.getActions();
 
-		Assert.assertEquals(actions.toString(), 9, actions.size());
+		Assert.assertEquals(actions.toString(), 10, actions.size());
 		Assert.assertTrue(
 			actions.toString(),
 			actions.contains(
@@ -157,6 +157,11 @@ public class SelectDDMFormFieldTypeSettingsTest
 			actions.contains(
 				"setVisible('options', equals(getValue('dataSourceType'), " +
 					"\"manual\"))"));
+		Assert.assertTrue(
+			actions.toString(),
+			actions.contains(
+				"setVisible('predefinedValue', " +
+					"equals(getValue('dataSourceType'), \"manual\"))"));
 		Assert.assertTrue(
 			actions.toString(),
 			actions.contains("setVisible('validation', false)"));

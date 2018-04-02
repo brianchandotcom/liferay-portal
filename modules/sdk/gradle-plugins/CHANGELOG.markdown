@@ -3935,6 +3935,11 @@ to version 2.3.115.
 - [LPS-69247]: Pass lower case project properties to Bnd when executing the
 `buildWSDDJar` task.
 
+## 3.10.2 - 2018-04-02
+
+### Changed
+- [LPS-74110]: Update the [Liferay Ant BND] dependency to version 2.0.49.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

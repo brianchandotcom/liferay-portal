@@ -53,8 +53,10 @@
 				</span>
 			</label>
 
-			{if $tip}
-				<span class="form-text">{$tip}</span>
+			{if $showLabel}
+				{if $tip}
+					<span class="form-text">{$tip}</span>
+				{/if}
 			{/if}
 		{else}
 			<div class="custom-control custom-checkbox">

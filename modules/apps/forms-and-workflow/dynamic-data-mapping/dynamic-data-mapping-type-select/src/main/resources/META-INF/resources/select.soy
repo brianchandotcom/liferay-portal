@@ -34,9 +34,7 @@
 
 	<div class="form-group{$visible ? '' : ' hide'}" data-fieldname="{$name}">
 		<div class="input-select-wrapper">
-			{if $showLabel}
-				{call .select_label data="all" /}
-			{/if}
+			{call .select_label data="all" /}
 
 			<div class="form-builder-select-field input-group-container">
 				{if not $readOnly and $displayValues}
@@ -176,10 +174,13 @@
 	{@param pathThemeImages: string}
 	{@param? label: string}
 	{@param? required: bool}
+	{@param? showLabel: bool}
 	{@param? tip: string}
 
 	<label for="{$name}">
-		{$label}{sp}
+		{if $showLabel}
+			{$label}{sp}
+		{/if}
 
 		{if $required}
 			<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">
@@ -188,8 +189,10 @@
 		{/if}
 	</label>
 
-	{if $tip}
-		<span class="form-text">{$tip}</span>
+	{if $showLabel}
+		{if $tip}
+			<span class="form-text">{$tip}</span>
+		{/if}
 	{/if}
 {/template}
 

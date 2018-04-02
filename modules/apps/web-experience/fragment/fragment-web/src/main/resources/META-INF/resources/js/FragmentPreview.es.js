@@ -100,7 +100,7 @@ class FragmentPreview extends Component {
 	 */
 
 	shouldUpdate(changes) {
-		return changes._currentPreviewSize || changes._previewContent;
+		return !!changes._currentPreviewSize;
 	}
 
 	/**
@@ -150,11 +150,14 @@ class FragmentPreview extends Component {
 					method: 'post'
 				}
 			).then(
-				response => response.json()
+				response => response.text()
 			).then(
 				response => {
 					this._loading = false;
-					this._previewContent = Soy.toIncDom(response.content);
+					this.refs.previewFrame.src = `
+						data:text/html;charset=utf-8,
+						${encodeURIComponent(response)}
+					`;
 				}
 			);
 		}
@@ -285,19 +288,6 @@ FragmentPreview.STATE = {
 	_loading: Config.bool()
 		.internal()
 		.value(false),
-
-	/**
-	 * Processed iframe content
-	 * @default ''
-	 * @instance
-	 * @memberOf FragmentPreview
-	 * @protected
-	 * @type {function}
-	 */
-
-	_previewContent: Config.func()
-		.internal()
-		.value(Soy.toIncDom('')),
 
 	/**
 	 * List of available sizes

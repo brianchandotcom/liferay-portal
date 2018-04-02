@@ -209,8 +209,6 @@
 			<var name="elementSetTitle" value="Element Set 1" />
 		</execute>
 
-		<execute macro="Form#closeSidebar" />
-
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Date" />
 		</execute>
@@ -329,6 +327,8 @@
 			<var name="buttonName" value="提交" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
 			<var name="panel" value="Site Administration" />
@@ -348,8 +348,6 @@
 		<execute macro="Form#gotoAddElementSet">
 			<var name="elementSetTitle" value="Element Set 1" />
 		</execute>
-
-		<execute macro="Form#closeSidebar" />
 
 		<execute macro="DDLRecord#addTranslation">
 			<var name="localizedLanguage" value="Chinese (China)" />

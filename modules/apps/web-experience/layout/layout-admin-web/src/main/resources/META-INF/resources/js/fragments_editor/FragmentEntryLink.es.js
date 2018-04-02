@@ -315,6 +315,25 @@ class FragmentEntryLink extends Component {
 	}
 
 	/**
+	 * Handle item selector image changes and propagate them with an
+	 * "editableChanged" event.
+	 * @param {String} editableId.
+	 * @param {String} value.
+	 * @private
+	 */
+
+	_handleImageEditorChange(editableId, value) {
+		this.emit(
+			'editableChanged',
+			{
+				editableId: editableId,
+				fragmentEntryLinkId: this.fragmentEntryLinkId,
+				value: value
+			}
+		);
+	}
+
+	/**
 	 * Handle fragment image selector click
 	 * @param {Event} event Click event.
 	 * @private
@@ -352,6 +371,8 @@ class FragmentEntryLink extends Component {
 									}
 
 									target.src = url;
+
+									instance._handleImageEditorChange(delegateTarget.id, url);
 								}
 							}
 						},

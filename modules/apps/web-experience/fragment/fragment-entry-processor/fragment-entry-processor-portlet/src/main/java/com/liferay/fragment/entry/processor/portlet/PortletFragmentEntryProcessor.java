@@ -104,8 +104,11 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			String portletPreferences = StringPool.BLANK;
 
 			if (originalFragmentEntryLink != null) {
+				String defaultPreferences = _getPreferences(
+					portletName, originalFragmentEntryLink, StringPool.BLANK);
+
 				portletPreferences = _getPreferences(
-					portletName, originalFragmentEntryLink);
+					portletName, fragmentEntryLink, defaultPreferences);
 			}
 
 			String instanceId = String.valueOf(
@@ -290,7 +293,8 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	private String _getPreferences(
-			String portletName, FragmentEntryLink fragmentEntryLink)
+			String portletName, FragmentEntryLink fragmentEntryLink,
+			String defaultPreferences)
 		throws PortalException {
 
 		String portletId = PortletIdCodec.encode(
@@ -306,7 +310,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 				group.getCompanyId(), 0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-				defaultPlid, portletId, StringPool.BLANK);
+				defaultPlid, portletId, defaultPreferences);
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}

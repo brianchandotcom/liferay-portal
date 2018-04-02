@@ -457,6 +457,11 @@
 			<var name="pageName" value="Test Page Name" />
 		</execute>
 
+		<execute macro="SitePages#gotoPageMenuItem">
+			<var name="menuItem" value="Configure" />
+			<var name="pageName" value="Test Page Name" />
+		</execute>
+
 		<execute macro="Navigator#gotoNavTab">
 			<var name="navTab" value="SEO" />
 		</execute>
@@ -465,7 +470,8 @@
 			<var name="categoryName" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
-		<execute macro="Page#saveAddPage" />
+
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -760,7 +766,11 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Page Name" />
-			<var name="privacy" value="Public" />
+		</execute>
+
+		<execute macro="SitePages#gotoPageMenuItem">
+			<var name="menuItem" value="Configure" />
+			<var name="pageName" value="Page Name" />
 		</execute>
 
 		<execute macro="Page#viewNoSelectCategory">

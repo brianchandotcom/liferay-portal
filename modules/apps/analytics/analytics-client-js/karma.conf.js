@@ -1,24 +1,53 @@
-const liferayKarmaConfig = require('liferay-karma-config');
+const path = require('path');
+const webpack = require('./webpack.test.config');
 
 module.exports = function(config) {
-	liferayKarmaConfig(config);
+	config.set({
+		browsers: ['ChromeHeadless'],
 
-	config.babelPreprocessor = {
-		options: {
-			presets: ['env'],
-			plugins: ['transform-object-rest-spread'],
+		coverageReporter: {
+			reporters: [{
+				type: 'lcov',
+				subdir: 'lcov',
+			}, {
+				type: 'text-summary',
+			}, ],
 		},
-	};
 
-	config.files = [
-		'build/analytics-all-min.js',
-		'node_modules/fetch-mock/es5/client-browserified.js',
-		'test/**/*.test.js',
-	];
+		customLaunchers: {
+			ChromeHeadless: {
+				base: 'Chrome',
+				flags: [
+					'--no-sandbox',
+					'--headless',
+					'--disable-gpu',
+					'--disable-translate',
+					'--disable-extensions',
+					'--remote-debugging-port=9222'
+				]
+			}
+		},
 
-	config.frameworks = ['mocha', 'chai', 'sinon'];
+		files: [
+			'node_modules/fetch-mock/es5/client-browserified.js',
+			'test.webpack.js'
+		],
 
-	config.preprocessors['test/**/*.js'] = ['babel'];
+		frameworks: ['chai', 'mocha', 'sinon'],
 
-	config.singleRun = true;
+		preprocessors: {
+			'test.webpack.js': ['webpack', 'sourcemap'],
+		},
+
+		reporters: ['progress', 'coverage-istanbul'],
+
+		coverageIstanbulReporter: {
+			dir: path.join(__dirname, 'test-coverage'),
+			reports: ['html', 'lcovonly', 'text-summary']
+		},
+
+		webpack: webpack,
+
+		singleRun: true
+	});
 };

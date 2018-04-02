@@ -4,7 +4,12 @@
  * @return {object} Either form id, name or action.
  */
 function getFormKey(form) {
-	return form.dataset.analyticsFormId || form.id || form.getAttribute('name') || form.action;
+	return (
+		form.dataset.analyticsFormId ||
+		form.id ||
+		form.getAttribute('name') ||
+		form.action
+	);
 }
 
 /**
@@ -14,8 +19,8 @@ function getFormKey(form) {
  */
 function getFieldPayload({form, name}) {
 	return {
+		fieldName: name,
 		formId: getFormKey(form),
-		fieldName: name
 	};
 }
 
@@ -34,7 +39,7 @@ function getFormPayload(form) {
  * @return {boolean} True if the form is trackable.
  */
 function isTrackableForm(form) {
-	return ('analytics' in form.dataset) && !!getFormKey(form);
+	return 'analytics' in form.dataset && !!getFormKey(form);
 }
 
 /**
@@ -43,34 +48,33 @@ function isTrackableForm(form) {
  * @param {object} The Analytics client instance
  */
 function trackFieldBlurred(analytics) {
-	document.addEventListener(
-		'blur',
-		({target}) => {
-			const {form} = target;
+	const onBlur = ({target}) => {
+		const {form} = target;
 
-			if (!form || !isTrackableForm(form)) return;
+		if (!form || !isTrackableForm(form)) return;
 
-			const payload = getFieldPayload(target);
+		const payload = getFieldPayload(target);
 
-			const blurMark = `${payload.formId}${payload.fieldName}blurred`;
-			performance.mark(blurMark);
+		const blurMark = `${payload.formId}${payload.fieldName}blurred`;
+		performance.mark(blurMark);
 
-			const focusMark = `${payload.formId}${payload.fieldName}focused`;
-			performance.measure('focusDuration', focusMark, blurMark);
+		const focusMark = `${payload.formId}${payload.fieldName}focused`;
+		performance.measure('focusDuration', focusMark, blurMark);
 
-			const perfData = performance.getEntriesByName('focusDuration').pop();
-			const focusDuration = perfData.duration;
+		const perfData = performance.getEntriesByName('focusDuration').pop();
+		const focusDuration = perfData.duration;
 
-			analytics.send(
-				'fieldBlurred',
-				'forms',
-				{...payload, focusDuration}
-			);
+		analytics.send('fieldBlurred', 'forms', {
+			...payload,
+			focusDuration,
+		});
 
-			performance.clearMarks('focusDuration');
-		},
-		true
-	);
+		performance.clearMarks('focusDuration');
+	};
+
+	document.addEventListener('blur', onBlur, true);
+
+	return () => document.removeEventListener('blur', onBlur, true);
 }
 
 /**
@@ -79,26 +83,22 @@ function trackFieldBlurred(analytics) {
  * @param {object} The Analytics client instance
  */
 function trackFieldFocused(analytics) {
-	document.addEventListener(
-		'focus',
-		({target}) => {
-			const {form} = target;
+	const onFocus = ({target}) => {
+		const {form} = target;
 
-			if (!form || !isTrackableForm(form)) return;
+		if (!form || !isTrackableForm(form)) return;
 
-			const payload = getFieldPayload(target);
+		const payload = getFieldPayload(target);
 
-			const focusMark = `${payload.formId}${payload.fieldName}focused`;
-			performance.mark(focusMark);
+		const focusMark = `${payload.formId}${payload.fieldName}focused`;
+		performance.mark(focusMark);
 
-			analytics.send(
-				'fieldFocused',
-				'forms',
-				payload
-			);
-		},
-		true
-	);
+		analytics.send('fieldFocused', 'forms', payload);
+	};
+
+	document.addEventListener('focus', onFocus, true);
+
+	return () => document.removeEventListener('focus', onFocus, true);
 }
 
 /**
@@ -107,19 +107,15 @@ function trackFieldFocused(analytics) {
  * @param {object} The Analytics client instance
  */
 function trackFormSubmitted(analytics) {
-	document.addEventListener(
-		'submit',
-		({target}) => {
-			if (!isTrackableForm(target)) return;
+	const onSubmit = ({target}) => {
+		if (!isTrackableForm(target)) return;
 
-			analytics.send(
-				'formSubmitted',
-				'forms',
-				getFormPayload(target)
-			);
-		},
-		true
-	);
+		analytics.send('formSubmitted', 'forms', getFormPayload(target));
+	};
+
+	document.addEventListener('submit', onSubmit, true);
+
+	return () => document.removeEventListener('submit', onSubmit, true);
 }
 
 /**
@@ -127,20 +123,33 @@ function trackFormSubmitted(analytics) {
  * @param {object} The Analytics client instance
  */
 function trackFormViewed(analytics) {
-	window.addEventListener('load', () => {
-		Array.prototype.slice.call(document.querySelectorAll('form'))
-		.filter(form => isTrackableForm(form))
-		.forEach((form) => {
-			analytics.send(
-				'formViewed',
-				'forms',
-				{
-					title: form.dataset.analyticsTitle,
-					...getFormPayload(form)
+	const onLoad = () => {
+		Array.prototype.slice
+			.call(document.querySelectorAll('form'))
+			.filter(form => isTrackableForm(form))
+			.forEach(form => {
+				let payload = getFormPayload(form);
+				const title = form.dataset.analyticsTitle;
+
+				if (title) {
+					payload = {title, ...payload};
 				}
-			);
-		});
-	});
+
+				analytics.send('formViewed', 'forms', payload);
+			});
+	};
+
+	if (
+		document.readyState === 'interactive' ||
+		document.readyState === 'complete' ||
+		document.readyState === 'loaded'
+	) {
+		onLoad();
+	} else {
+		document.addEventListener('DOMContentLoaded', () => onLoad());
+	}
+
+	return () => document.removeEventListener('DOMContentLoaded', onLoad);
 }
 
 /**
@@ -148,10 +157,17 @@ function trackFormViewed(analytics) {
  * @param {object} analytics The Analytics client
  */
 function forms(analytics) {
-	trackFieldBlurred(analytics);
-	trackFieldFocused(analytics);
-	trackFormSubmitted(analytics);
-	trackFormViewed(analytics);
+	const stopTrackingFieldBlurred = trackFieldBlurred(analytics);
+	const stopTrackingFieldFocused = trackFieldFocused(analytics);
+	const stopTrackingFormSubmitted = trackFormSubmitted(analytics);
+	const stopTrackingFormViewed = trackFormViewed(analytics);
+
+	return () => {
+		stopTrackingFieldBlurred();
+		stopTrackingFieldFocused();
+		stopTrackingFormSubmitted();
+		stopTrackingFormViewed();
+	};
 }
 
 export {forms};

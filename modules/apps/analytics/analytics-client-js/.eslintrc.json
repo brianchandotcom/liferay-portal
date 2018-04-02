@@ -1,0 +1,63 @@
+{
+	"env": {
+		"browser": true,
+		"es6": true,
+		"node": true
+	},
+	"extends": [
+		"liferay"
+	],
+	"globals": {
+	},
+	"parser": "babel-eslint",
+	"parserOptions": {
+		"ecmaFeatures": {
+			"allowImportExportEverywhere": true,
+			"experimentalObjectRestSpread": true
+		},
+		"ecmaVersion": 2017,
+		"sourceType": "module"
+	},
+	"plugins": [
+	],
+	"rules": {
+		"comma-dangle": 1,
+		"eol-last": [
+			2,
+			"never"
+		],
+		"indent": [2, "tab", { "SwitchCase": 1 }],
+		"max-len": 0,
+		"new-cap": [
+			2,
+			{
+				"capIsNew": false
+			}
+		],
+		"no-console": 0,
+		"no-undef": 2,
+		"no-unused-vars": [
+			2,
+			{
+				"args": "after-used",
+				"ignoreRestSiblings": false,
+				"vars": "all"
+			}
+		],
+		"object-shorthand": 2,
+		"prefer-const": 2,
+		"prefer-template": 2,
+		"quote-props": [2, "as-needed"],
+		"quotes": [2, "single", "avoid-escape"],
+		"require-jsdoc": 0,
+		"sort-keys": [
+			2,
+			"asc",
+			{
+				"caseSensitive": false
+			}
+		],
+		"sort-vars": 2,
+		"valid-jsdoc": 0
+	}
+}

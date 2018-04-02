@@ -38,14 +38,16 @@ class Analytics {
 		instance._sendData = client.send.bind(client, instance);
 
 		instance.config = config;
-		instance.identityEndpoint = `https://contacts-prod.liferay.com/${config.analyticsKey}/identity`;
+		instance.identityEndpoint = `https://contacts-prod.liferay.com/${
+			config.analyticsKey
+		}/identity`;
 		instance.events = storage.get(STORAGE_KEY_EVENTS) || [];
 		instance.isFlushInProgress = false;
 
 		// Initializes default plugins
 
-		defaultPlugins.forEach(
-			plugin => plugin(instance)
+		instance._pluginDisposers = defaultPlugins.map(plugin =>
+			plugin(instance)
 		);
 
 		// Starts flush loop
@@ -60,6 +62,19 @@ class Analytics {
 		);
 
 		return instance;
+	}
+
+	/**
+	 * Clears interval and calls plugins disposers if available
+	 */
+	disposeInternal() {
+		if (this.flushInterval) {
+			clearInterval(this.flushInterval);
+		}
+
+		instance._pluginDisposers
+			.filter(disposer => typeof disposer === 'function')
+			.forEach(disposer => disposer());
 	}
 
 	/**
@@ -85,9 +100,9 @@ class Analytics {
 		const eventDate = new Date().toISOString();
 
 		return {
-			eventId,
-			eventDate,
 			applicationId,
+			eventDate,
+			eventId,
 			properties,
 		};
 	}
@@ -98,9 +113,16 @@ class Analytics {
 	 * @return {object} Promise
 	 */
 	_timeout(timeout) {
-		return new Promise(
-			(resolve, reject) => setTimeout(reject, timeout)
-		);
+		return new Promise((resolve, reject) => setTimeout(reject, timeout));
+	}
+
+	/**
+	 * Returns a unique identifier for an event
+	 * @param {object} The event
+	 * @return {string} The generated id
+	 */
+	_getEventKey({applicationId, eventDate, eventId}) {
+		return `${applicationId}${eventDate}${eventId}`;
 	}
 
 	/**
@@ -114,8 +136,7 @@ class Analytics {
 
 		if (userId) {
 			return Promise.resolve(userId);
-		}
-		else {
+		} else {
 			const bodyData = {
 				...this.config.identity,
 				...fingerprint(),
@@ -153,17 +174,25 @@ class Analytics {
 		if (!this.isFlushInProgress && this.events.length) {
 			this.isFlushInProgress = true;
 
-			result = Promise.race(
-				[
-					this._getUserId().then(instance._sendData),
-					this._timeout(REQUEST_TIMEOUT)
-				]
-			)
-				.then(() => this.reset())
+			const eventKeys = this.events.map(event =>
+				this._getEventKey(event)
+			);
+
+			result = Promise.race([
+				this._getUserId().then(instance._sendData),
+				this._timeout(REQUEST_TIMEOUT),
+			])
+				.then(() => {
+					const events = this.events.filter(
+						event =>
+							eventKeys.indexOf(this._getEventKey(event)) > -1
+					);
+
+					this.reset(events);
+				})
 				.catch(console.error)
 				.then(() => (this.isFlushInProgress = false));
-		}
-		else {
+		} else {
 			result = Promise.resolve();
 		}
 
@@ -199,9 +228,21 @@ class Analytics {
 
 	/**
 	 * Resets the event queue
+	 * @param {Array} A list of events to be cleared from the queue. If not passed,
+	 * clears everything.
 	 */
-	reset() {
-		this.events.length = 0;
+	reset(events) {
+		if (events) {
+			this.events = this.events.filter(event => {
+				const eventKey = this._getEventKey(event);
+
+				return !events.find(evt => {
+					return this._getEventKey(evt) === eventKey;
+				});
+			});
+		} else {
+			this.events.length = 0;
+		}
 
 		this._persist(STORAGE_KEY_EVENTS, this.events);
 	}
@@ -233,9 +274,9 @@ class Analytics {
 		storage.remove(STORAGE_KEY_USER_ID);
 
 		instance.config.identity = {
-			userId,
 			identity,
-		}
+			userId,
+		};
 	}
 
 	/**
@@ -252,8 +293,26 @@ class Analytics {
 	 * );
 	 */
 	static create(config = {}) {
-		ENV.Analytics = new Analytics(config);
+		const instance = new Analytics(config);
+
+		ENV.Analytics = instance;
 		ENV.Analytics.create = Analytics.create;
+		ENV.Analytics.dispose = Analytics.dispose;
+
+		return instance;
+	}
+
+	/**
+	 * Disposes events and stops interval timer
+	 * @example
+	 * Analytics.dispose();
+	 */
+	static dispose() {
+		const instance = ENV.Analytics;
+
+		if (instance) {
+			instance.disposeInternal();
+		}
 	}
 }
 

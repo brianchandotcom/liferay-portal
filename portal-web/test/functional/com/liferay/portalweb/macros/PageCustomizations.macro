@@ -46,12 +46,6 @@
 		</if>
 	</command>
 
-	<command name="gotoViewMyCustomizedPage">
-		<execute macro="LexiconEntry#gotoHeaderMenuItem">
-			<var name="menuItem" value="View My Customized Page" />
-		</execute>
-	</command>
-
 	<command name="viewCustomizablePagePG">
 		<execute function="Click" locator1="Icon#PAGE_CUSTOMIZATION_ELLIPSIS" />
 

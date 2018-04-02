@@ -549,7 +549,9 @@
 			<var name="portletName" value="Message Boards" />
 		</execute>
 
-		<execute macro="PageCustomizations#gotoViewMyCustomizedPage" />
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
+			<var name="menuItem" value="View My Customized Page" />
+		</execute>
 
 		<execute macro="PageCustomizations#gotoCustomizedPageInfo" />
 

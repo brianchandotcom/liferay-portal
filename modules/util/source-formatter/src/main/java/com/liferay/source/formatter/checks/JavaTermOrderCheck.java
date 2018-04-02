@@ -16,7 +16,6 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.parser.JavaClass;
-import com.liferay.source.formatter.parser.JavaStaticBlock;
 import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.parser.comparator.JavaTermComparator;
 
@@ -86,7 +85,7 @@ public class JavaTermOrderCheck extends BaseJavaTermCheck {
 		JavaTerm previousJavaTerm = null;
 
 		for (JavaTerm javaTerm : childJavaTerms) {
-			if (javaTerm instanceof JavaStaticBlock) {
+			if (javaTerm.isJavaStaticBlock()) {
 				continue;
 			}
 

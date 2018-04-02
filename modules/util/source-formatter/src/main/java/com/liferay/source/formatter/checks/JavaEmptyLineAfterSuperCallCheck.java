@@ -16,7 +16,6 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.source.formatter.parser.JavaConstructor;
 import com.liferay.source.formatter.parser.JavaTerm;
 
 import java.util.regex.Matcher;
@@ -34,7 +33,7 @@ public class JavaEmptyLineAfterSuperCallCheck extends BaseJavaTermCheck {
 
 		Pattern pattern = null;
 
-		if (javaTerm instanceof JavaConstructor) {
+		if (javaTerm.isJavaConstructor()) {
 			pattern = _constructorSuperCallPattern;
 		}
 		else {

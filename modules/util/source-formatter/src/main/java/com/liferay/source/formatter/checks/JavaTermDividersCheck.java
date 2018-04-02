@@ -17,7 +17,6 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaTerm;
-import com.liferay.source.formatter.parser.JavaVariable;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -92,9 +91,7 @@ public class JavaTermDividersCheck extends BaseJavaTermCheck {
 			return classContent;
 		}
 
-		if (!(javaTerm instanceof JavaVariable) ||
-			!(previousJavaTerm instanceof JavaVariable)) {
-
+		if (!javaTerm.isJavaVariable() || !previousJavaTerm.isJavaVariable()) {
 			return _fixJavaTermDivider(classContent, javaTermContent, true);
 		}
 

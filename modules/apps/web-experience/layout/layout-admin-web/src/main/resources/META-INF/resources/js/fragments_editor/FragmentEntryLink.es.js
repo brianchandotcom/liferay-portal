@@ -363,6 +363,17 @@ FragmentEntryLink.STATE = {
 	fragmentEntryLinkId: Config.string().required(),
 
 	/**
+	 * Image selector url
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEntryLink
+	 * @review
+	 * @type {!string}
+	 */
+
+	imageSelectorURL: Config.string().required(),
+
+	/**
 	 * Fragment name
 	 * @default ''
 	 * @instance

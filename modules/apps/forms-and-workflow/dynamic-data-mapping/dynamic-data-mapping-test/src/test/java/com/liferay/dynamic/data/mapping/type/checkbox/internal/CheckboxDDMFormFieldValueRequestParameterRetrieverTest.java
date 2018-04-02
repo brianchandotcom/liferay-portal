@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.type.checkbox.internal;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 import org.junit.Assert;
 import org.junit.Test;

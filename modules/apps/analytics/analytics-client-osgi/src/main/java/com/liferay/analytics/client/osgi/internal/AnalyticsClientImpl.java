@@ -50,26 +50,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = AnalyticsClient.class)
 public class AnalyticsClientImpl implements AnalyticsClient {
 
-	@Activate
-	public void activate() {
-		Properties properties = new Properties();
-
-		properties.setProperty(
-			"hostName", _SYSTEM_PROPERTY_VALUE_ANALYTICS_GATEWAY_HOST);
-		properties.setProperty(
-			"hostPort", _SYSTEM_PROPERTY_VALUE_ANALYTICS_GATEWAY_PORT);
-		properties.setProperty(
-			"protocol", _SYSTEM_PROPERTY_VALUE_ANALYTICS_GATEWAY_PROTOCOL);
-
-		ComponentInstance componentInstance = _componentFactory.newInstance(
-			(Dictionary)properties);
-
-		componentInstance.getInstance();
-
-		_jsonWebServiceClient =
-			(JSONWebServiceClient)componentInstance.getInstance();
-	}
-
 	public String sendAnalytics(AnalyticsEventsMessage analyticsEventsMessage)
 		throws Exception {
 
@@ -99,6 +79,26 @@ public class AnalyticsClientImpl implements AnalyticsClient {
 		return _jsonWebServiceClient.doPostAsJSON(
 			_SYSTEM_PROPERTY_VALUE_ANALYTICS_GATEWAY_PATH,
 			jsonAnalyticsEventsMessage);
+	}
+
+	@Activate
+	protected void activate() {
+		Properties properties = new Properties();
+
+		properties.setProperty(
+			"hostName", _SYSTEM_PROPERTY_VALUE_ANALYTICS_GATEWAY_HOST);
+		properties.setProperty(
+			"hostPort", _SYSTEM_PROPERTY_VALUE_ANALYTICS_GATEWAY_PORT);
+		properties.setProperty(
+			"protocol", _SYSTEM_PROPERTY_VALUE_ANALYTICS_GATEWAY_PROTOCOL);
+
+		ComponentInstance componentInstance = _componentFactory.newInstance(
+			(Dictionary)properties);
+
+		componentInstance.getInstance();
+
+		_jsonWebServiceClient =
+			(JSONWebServiceClient)componentInstance.getInstance();
 	}
 
 	@Deactivate

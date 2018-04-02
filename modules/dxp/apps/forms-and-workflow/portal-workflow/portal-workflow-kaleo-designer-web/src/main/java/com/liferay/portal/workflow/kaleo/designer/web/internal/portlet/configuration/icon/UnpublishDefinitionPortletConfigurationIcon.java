@@ -26,10 +26,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
-import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerActionKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerWebKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDefinitionVersionPermission;
-import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDesignerPermission;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 
@@ -110,11 +108,7 @@ public class UnpublishDefinitionPortletConfigurationIcon
 
 			if (KaleoDefinitionVersionPermission.contains(
 					themeDisplay.getPermissionChecker(), kaleoDefinitionVersion,
-					ActionKeys.UPDATE) ||
-				KaleoDesignerPermission.contains(
-					themeDisplay.getPermissionChecker(),
-					themeDisplay.getCompanyGroupId(),
-					KaleoDesignerActionKeys.ADD_NEW_WORKFLOW)) {
+					ActionKeys.UPDATE)) {
 
 				return true;
 			}

@@ -71,11 +71,10 @@ import javax.servlet.http.HttpServletRequest;
 public class KaleoDesignerDisplayContext {
 
 	public KaleoDesignerDisplayContext(
-			RenderRequest renderRequest,
-			KaleoDefinitionVersionLocalService
-				kaleoDefinitionVersionLocalService,
-			ResourceBundleLoader resourceBundleLoader,
-			UserLocalService userLocalService)
+		RenderRequest renderRequest,
+		KaleoDefinitionVersionLocalService kaleoDefinitionVersionLocalService,
+		ResourceBundleLoader resourceBundleLoader,
+		UserLocalService userLocalService)
 		throws PortalException {
 
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
@@ -386,30 +385,26 @@ public class KaleoDesignerDisplayContext {
 	}
 
 	public boolean isPublishKaleoDefinitionVersionButtonVisible(
-		PermissionChecker permissionChecker) {
+		PermissionChecker permissionChecker,
+		KaleoDefinitionVersion kaleoDefinitionVersion) {
 
 		return isSaveKaleoDefinitionVersionButtonVisible(
-			permissionChecker, null);
+			permissionChecker, kaleoDefinitionVersion);
 	}
 
 	public boolean isSaveKaleoDefinitionVersionButtonVisible(
 		PermissionChecker permissionChecker,
 		KaleoDefinitionVersion kaleoDefinitionVersion) {
 
-		boolean hasAddNewWorkflowPermission = KaleoDesignerPermission.contains(
-			permissionChecker, _themeDisplay.getCompanyGroupId(),
-			KaleoDesignerActionKeys.ADD_NEW_WORKFLOW);
-
-		if (hasAddNewWorkflowPermission) {
-			return true;
-		}
-
 		if (kaleoDefinitionVersion != null) {
 			return KaleoDefinitionVersionPermission.contains(
 				permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE);
 		}
-
-		return false;
+		else {
+			return KaleoDesignerPermission.contains(
+				permissionChecker, _themeDisplay.getCompanyGroupId(),
+				KaleoDesignerActionKeys.ADD_NEW_WORKFLOW);
+		}
 	}
 
 	protected String getConfigureAssignementLink(HttpServletRequest request)

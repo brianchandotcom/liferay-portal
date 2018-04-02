@@ -247,7 +247,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 					<aui:fieldset-group markupView="lexicon">
 						<aui:fieldset>
 							<liferay-ui:input-localized
-								disabled="<%= !kaleoDesignerDisplayContext.isSaveKaleoDefinitionVersionButtonVisible(permissionChecker, kaleoDefinitionVersion) %>"
+								disabled="<%= (kaleoDefinitionVersion != null) && !KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE) %>"
 								name="title"
 								placeholder="untitled-workflow"
 								xml='<%= BeanPropertiesUtil.getString(kaleoDefinitionVersion, "title") %>'
@@ -388,7 +388,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 									['aui-base']
 								);
 
-								<c:if test="<%= kaleoDesignerDisplayContext.isPublishKaleoDefinitionVersionButtonVisible(permissionChecker) %>">
+								<c:if test="<%= kaleoDesignerDisplayContext.isPublishKaleoDefinitionVersionButtonVisible(permissionChecker, kaleoDefinitionVersion) %>">
 									Liferay.provide(
 										window,
 										'<portlet:namespace />publishKaleoDefinitionVersion',
@@ -813,7 +813,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 
 					<c:if test="<%= !isPreviewBeforeRestoreState %>">
 						<aui:button-row>
-							<c:if test="<%= kaleoDesignerDisplayContext.isPublishKaleoDefinitionVersionButtonVisible(permissionChecker) %>">
+							<c:if test="<%= kaleoDesignerDisplayContext.isPublishKaleoDefinitionVersionButtonVisible(permissionChecker, kaleoDefinitionVersion) %>">
 								<aui:button onClick='<%= renderResponse.getNamespace() + "publishKaleoDefinitionVersion();" %>' primary="<%= true %>" value="<%= kaleoDesignerDisplayContext.getPublishKaleoDefinitionVersionButtonLabel(kaleoDefinitionVersion) %>" />
 							</c:if>
 

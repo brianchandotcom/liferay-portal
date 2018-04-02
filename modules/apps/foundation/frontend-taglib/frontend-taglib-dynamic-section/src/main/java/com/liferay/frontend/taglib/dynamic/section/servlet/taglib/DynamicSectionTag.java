@@ -31,6 +31,10 @@ public class DynamicSectionTag extends BaseBodyTagSupport implements BodyTag {
 	@Override
 	public int doEndTag() throws JspException {
 		try {
+			if (!_hasServices) {
+				return EVAL_PAGE;
+			}
+
 			ServletRequest servletRequest = pageContext.getRequest();
 
 			String key = _generateKey(_name);
@@ -61,13 +65,20 @@ public class DynamicSectionTag extends BaseBodyTagSupport implements BodyTag {
 		}
 		finally {
 			_name = null;
+			_hasServices = false;
 			_useOriginalBody = false;
 		}
 	}
 
 	@Override
 	public int doStartTag() {
-		return EVAL_BODY_BUFFERED;
+		_hasServices = DynamicSectionUtil.hasServices(_name);
+
+		if (_hasServices) {
+			return EVAL_BODY_BUFFERED;
+		}
+
+		return EVAL_BODY_INCLUDE;
 	}
 
 	public void setName(String name) {
@@ -82,6 +93,7 @@ public class DynamicSectionTag extends BaseBodyTagSupport implements BodyTag {
 		return DynamicSectionTag.class.getName() + "#" + name;
 	}
 
+	private boolean _hasServices;
 	private String _name;
 	private boolean _useOriginalBody;
 

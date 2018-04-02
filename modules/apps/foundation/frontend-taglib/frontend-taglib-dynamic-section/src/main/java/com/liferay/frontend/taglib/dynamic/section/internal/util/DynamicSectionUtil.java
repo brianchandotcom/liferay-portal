@@ -37,6 +37,17 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true)
 public class DynamicSectionUtil {
 
+	public static boolean hasServices(String name) {
+		List<DynamicSection> dynamicSections = _serviceTrackerMap.getService(
+			name);
+
+		if ((dynamicSections == null) || dynamicSections.isEmpty()) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public static StringBundler modify(
 			String name, PageContext pageContext, StringBundler sb)
 		throws Exception {

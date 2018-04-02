@@ -116,12 +116,12 @@ public class JavaParameterAnnotationsCheck extends BaseJavaTermCheck {
 	private List<JavaParameter> _getJavaParameters(JavaTerm javaTerm) {
 		JavaSignature javaSignature = null;
 
-		if (javaTerm instanceof JavaConstructor) {
+		if (javaTerm.isJavaConstructor()) {
 			JavaConstructor javaConstructor = (JavaConstructor)javaTerm;
 
 			javaSignature = javaConstructor.getSignature();
 		}
-		else if (javaTerm instanceof JavaMethod) {
+		else if (javaTerm.isJavaMethod()) {
 			JavaMethod javaMethod = (JavaMethod)javaTerm;
 
 			javaSignature = javaMethod.getSignature();

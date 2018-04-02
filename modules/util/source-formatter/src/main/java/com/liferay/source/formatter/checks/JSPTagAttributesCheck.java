@@ -441,7 +441,7 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 			tagFileName, tagFileContent);
 
 		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
-			if (!(javaTerm instanceof JavaMethod)) {
+			if (!javaTerm.isJavaMethod()) {
 				continue;
 			}
 

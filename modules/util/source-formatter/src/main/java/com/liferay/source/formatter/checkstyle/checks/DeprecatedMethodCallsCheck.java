@@ -370,7 +370,7 @@ public class DeprecatedMethodCallsCheck extends BaseCheck {
 				SourceUtil.getAbsolutePath(file), content);
 
 			for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
-				if (javaTerm instanceof JavaMethod) {
+				if (javaTerm.isJavaMethod()) {
 					JavaMethod javaMethod = (JavaMethod)javaTerm;
 
 					javaMethods.add(javaMethod);

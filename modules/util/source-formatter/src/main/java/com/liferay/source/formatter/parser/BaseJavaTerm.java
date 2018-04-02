@@ -79,6 +79,51 @@ public abstract class BaseJavaTerm implements JavaTerm {
 	}
 
 	@Override
+	public boolean isJavaClass() {
+		if (this instanceof JavaClass) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isJavaConstructor() {
+		if (this instanceof JavaConstructor) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isJavaMethod() {
+		if (this instanceof JavaMethod) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isJavaStaticBlock() {
+		if (this instanceof JavaStaticBlock) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isJavaVariable() {
+		if (this instanceof JavaVariable) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isStatic() {
 		return _isStatic;
 	}

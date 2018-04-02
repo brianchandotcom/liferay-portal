@@ -19,9 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.parser.JavaClass;
-import com.liferay.source.formatter.parser.JavaMethod;
 import com.liferay.source.formatter.parser.JavaTerm;
-import com.liferay.source.formatter.parser.JavaVariable;
 
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -70,7 +68,7 @@ public class JavaCleanUpMethodVariablesCheck extends BaseJavaTermCheck {
 		String setterMethodName = "set" + variableName.substring(1);
 
 		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
-			if (!(javaTerm instanceof JavaMethod)) {
+			if (!javaTerm.isJavaMethod()) {
 				continue;
 			}
 
@@ -91,7 +89,7 @@ public class JavaCleanUpMethodVariablesCheck extends BaseJavaTermCheck {
 		String fileName, String cleanUpMethodContent, JavaClass javaClass) {
 
 		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
-			if (!(javaTerm instanceof JavaVariable)) {
+			if (!javaTerm.isJavaVariable()) {
 				continue;
 			}
 
@@ -181,7 +179,7 @@ public class JavaCleanUpMethodVariablesCheck extends BaseJavaTermCheck {
 
 	private String _getCleanUpMethodContent(JavaClass javaClass) {
 		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
-			if (!(javaTerm instanceof JavaMethod)) {
+			if (!javaTerm.isJavaMethod()) {
 				continue;
 			}
 

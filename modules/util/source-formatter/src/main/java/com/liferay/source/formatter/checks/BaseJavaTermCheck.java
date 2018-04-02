@@ -142,7 +142,7 @@ public abstract class BaseJavaTermCheck
 		}
 
 		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
-			if (javaTerm instanceof JavaClass) {
+			if (javaTerm.isJavaClass()) {
 				JavaClass childJavaClass = (JavaClass)javaTerm;
 
 				newJavaClassContent = _walkJavaClass(

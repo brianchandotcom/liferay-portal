@@ -4074,7 +4074,12 @@ public class PortalImpl implements Portal {
 		}
 
 		if (inetSocketAddress == null) {
-			return -1;
+			if (secure) {
+				return PropsValues.WEB_SERVER_HTTPS_PORT;
+			}
+			else {
+				return PropsValues.WEB_SERVER_HTTP_PORT;
+			}
 		}
 
 		return inetSocketAddress.getPort();

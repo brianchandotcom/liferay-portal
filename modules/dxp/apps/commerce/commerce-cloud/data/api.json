@@ -1,0 +1,9 @@
+[
+	{
+		"auth": {
+			"validator": "$auth != null"
+		},
+		"data": true,
+		"path": "/projects/*"
+	}
+]

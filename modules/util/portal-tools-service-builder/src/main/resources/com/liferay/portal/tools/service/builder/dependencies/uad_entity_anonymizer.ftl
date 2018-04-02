@@ -47,7 +47,7 @@ public class ${entity.name}UADEntityAnonymizer extends DynamicQueryUADEntityAnon
 
 	@Override
 	public void delete(${entity.name} ${entity.varName}) throws PortalException {
-		_${entity.varName}LocalService.deleteEntry(${entity.varName});
+		_${entity.varName}LocalService.${deleteUADEntityMethodName}(${entity.varName});
 	}
 
 	@Override

@@ -36,39 +36,34 @@ List<CPDefinition> cpDefinitions = cpCompareContentMiniDisplayContext.getCPDefin
 	entries="<%= cpDefinitions %>"
 >
 	<c:if test="<%= cpDefinitions.size() > 0 %>">
-		<liferay-util:buffer var="showCompareProductsIcon">
-			<liferay-ui:icon
-				cssClass="align-middle d-inline-block"
-				icon="angle-right"
-				markupView="lexicon"
-				message="show"
-			/>
-		</liferay-util:buffer>
-
-		<liferay-util:buffer var="hideCompareProductsIcon">
-			<liferay-ui:icon
-				cssClass="align-middle d-inline-block"
-				icon="angle-down"
-				markupView="lexicon"
-				message="hide"
-			/>
-		</liferay-util:buffer>
-
 		<div id="<portlet:namespace />compareProductsMiniContainer">
-			<div class="compare-products-mini-header mb-5 row">
-				<div class="col-md-12">
-					<div class="bg-light">
-						<h3 class="align-middle d-inline-block m-0 p-3"><liferay-ui:message arguments="<%= new Object[] {cpDefinitions.size(), cpCompareContentMiniDisplayContext.getProductsLimit()} %>" key="x-of-x-products-selected" translateArguments="<%= false %>" /></h3>
+			<div class="compare-products-mini-header">
+				<div class="autofit-float autofit-row autofit-row-center">
+					<div class="autofit-col autofit-col-expand">
+						<h3 class="component-title"><liferay-ui:message arguments="<%= new Object[] {cpDefinitions.size(), cpCompareContentMiniDisplayContext.getProductsLimit()} %>" key="x-of-x-products-selected" translateArguments="<%= false %>" /></h3>
+					</div>
+					<div class="autofit-col">
+						<a class="" href="<%= HtmlUtil.escape(cpCompareContentMiniDisplayContext.getClearCompareProductsURL()) %>"><liferay-ui:message key="clear-all" /></a>
+					</div>
+					<div class="autofit-col">
+						<a class="lfr-compare-products-mini-header" href="javascript:;">
+							<span class="expanded-text">
+								<liferay-ui:message key="hide" />
 
-						<div class="align-middle d-inline-block float-right p-3">
-							<a class="align-middle d-inline-block px-2 text-dark" href="<%= HtmlUtil.escape(cpCompareContentMiniDisplayContext.getClearCompareProductsURL()) %>"><liferay-ui:message key="clear-all" /></a>
+								<liferay-ui:icon
+									icon="angle-down"
+									markupView="lexicon"
+								/>
+							</span>
+							<span class="collapsed-text">
+								<liferay-ui:message key="show" />
 
-							<div class="align-middle d-inline-block lfr-compare-products-mini-header">
-								<p class="align-middle d-inline-block m-0 px-2"><liferay-ui:message key="hide" /></p>
-
-								<%= hideCompareProductsIcon %>
-							</div>
-						</div>
+								<liferay-ui:icon
+									icon="angle-right"
+									markupView="lexicon"
+								/>
+							</span>
+						</a>
 					</div>
 				</div>
 			</div>
@@ -147,23 +142,7 @@ List<CPDefinition> cpDefinitions = cpCompareContentMiniDisplayContext.getCPDefin
 					animated: true,
 					content: '#<portlet:namespace />compareProductsMiniContainer .lfr-compare-products-mini-content',
 					expanded: true,
-					header: '#<portlet:namespace />compareProductsMiniContainer .lfr-compare-products-mini-header',
-					on: {
-						animatingChange: function(event) {
-							var instance = this;
-
-							var header = instance.get('header');
-
-							var expanded = !instance.get('expanded');
-
-							if (expanded) {
-								header.html('<p class="align-middle d-inline-block m-0 px-2"><liferay-ui:message key="hide" /></p><%= UnicodeFormatter.toString(hideCompareProductsIcon) %>');
-							}
-							else {
-								header.html('<p class="align-middle d-inline-block m-0 px-2"><liferay-ui:message key="show" /></p><%= UnicodeFormatter.toString(showCompareProductsIcon) %>');
-							}
-						}
-					}
+					header: '#<portlet:namespace />compareProductsMiniContainer .lfr-compare-products-mini-header'
 				}
 			);
 		</aui:script>

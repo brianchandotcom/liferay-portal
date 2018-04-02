@@ -749,6 +749,10 @@ a[type="button"] {
 
 // Catalog Cards
 
+.card-section-expand {
+	flex-grow: 1;
+}
+
 .card-page {
 	.product-expand {
 		flex-grow: 1;
@@ -1228,5 +1232,89 @@ a[type="button"] {
 
 	.success-message {
 		@include clay-text-typography($commerce-checkout-success-messsage);
+	}
+}
+
+// Compare
+
+.commerce-compare-table {
+	.table {
+		max-width: none;
+		width: auto;
+	}
+
+	.card {
+		display: flex;
+		height: 375px;
+		margin-bottom: 0;
+		padding: 12px;
+		width: 250px;
+
+		.compare-remove-item {
+			align-self: flex-end;
+			margin-right: -0.5rem;
+			margin-top: -0.5rem;
+		}
+
+		.product-price-section {
+			line-height: 0.875rem;
+		}
+
+		.product-price {
+			font-size: 1.125rem;
+			font-weight: $font-weight-semi-bold;
+		}
+
+		.product-subactions {
+			font-size: 0.75rem;
+			text-align: right;
+		}
+	}
+
+	td, th {
+		border-bottom: $table-border-width solid $table-border-color;
+		border-top-width: 0;
+		vertical-align: middle;
+	}
+
+	.title-column {
+		min-width: 200px;
+	}
+
+	.product-table-row {
+		td, th {
+			border-bottom-width: 0;
+		}
+	}
+
+	.table-divider {
+		td, th {
+			background-color: transparent;
+			border-bottom-width: 0;
+		}
+
+		.table-title {
+			font-size: 0.9375rem;
+			font-weight: $font-weight-semi-bold;
+			margin-bottom: 2.5rem;
+			margin-top: 2.5rem;
+			position: relative;
+			text-transform: capitalize;
+
+			&:after {
+				background-color: #F1F2F5;
+				bottom: -0.75rem;
+				content: '';
+				display: block;
+				height: 0.25rem;
+				position: absolute;
+				width: 2rem;
+			}
+		}
+	}
+
+	.table-title {
+		font-size: 0.875rem;
+		font-weight: $font-weight-bold;
 	}
 }

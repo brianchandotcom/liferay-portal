@@ -40,9 +40,9 @@ List<CPOptionCategory> cpOptionCategories = cpCompareContentDisplayContext.getCP
 	entries="<%= cpDefinitions %>"
 >
 	<c:if test="<%= cpDefinitions.size() > 0 %>">
-		<div class="table-responsive">
+		<div class="commerce-compare-table">
 			<table class="table table-sm">
-				<tr>
+				<tr class="product-table-row">
 					<td></td>
 
 					<%
@@ -51,31 +51,59 @@ List<CPOptionCategory> cpOptionCategories = cpCompareContentDisplayContext.getCP
 
 						<td>
 							<div class="card">
-								<a href="<%= HtmlUtil.escape(cpCompareContentDisplayContext.getProductFriendlyURL(cpDefinition.getCPDefinitionId())) %>">
+								<div class="autofit-row">
+									<div class="autofit-col autofit-col-expand">
+										<liferay-ui:icon
+											cssClass="compare-remove-item link-monospaced"
+											icon="times"
+											markupView="lexicon"
+											url="<%= cpCompareContentDisplayContext.getDeleteCompareProductURL(cpDefinition.getCPDefinitionId()) %>"
+										/>
+									</div>
+								</div>
+
+								<a class="product-image-container" href="<%= HtmlUtil.escape(cpCompareContentDisplayContext.getProductFriendlyURL(cpDefinition.getCPDefinitionId())) %>">
 
 									<%
 									String img = cpDefinition.getDefaultImageThumbnailSrc(themeDisplay);
 									%>
 
 									<c:if test="<%= Validator.isNotNull(img) %>">
-										<img src="<%= img %>">
+										<img class="product-image" src="<%= img %>">
 									</c:if>
 								</a>
 
-								<div class="card-row card-row-padded card-row-valign-top">
-									<div class="card-col-content">
-										<a class="align-middle d-inline-block truncate-text" href="<%= HtmlUtil.escape(cpCompareContentDisplayContext.getProductFriendlyURL(cpDefinition.getCPDefinitionId())) %>">
+								<div class="card-section-expand">
+									<div class="card-subtitle">Brand</div>
+									<div class="card-title">
+										<a href="<%= HtmlUtil.escape(cpCompareContentDisplayContext.getProductFriendlyURL(cpDefinition.getCPDefinitionId())) %>">
 											<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>
 										</a>
+									</div>
+								</div>
 
-										<div class="align-middle d-inline-block px-3">
-											<liferay-ui:icon
-												icon="times"
-												markupView="lexicon"
-												message="remove"
-												url="<%= cpCompareContentDisplayContext.getDeleteCompareProductURL(cpDefinition.getCPDefinitionId()) %>"
-											/>
+								<div class="card-subtitle">SKU: 123456</div>
+								<div class="autofit-float autofit-row autofit-row-end product-price-section">
+									<div class="autofit-col autofit-col-expand">
+										<div class="card-subtitle">Item: #888888</div>
+									</div>
+									<div class="autofit-col">
+										<span class="product-price">$87.00 / ea</span>
+									</div>
+								</div>
+
+								<div class="product-footer">
+									<div class="autofit-row product-actions">
+										<div class="autofit-col autofit-col-expand">
+											<input class="form-control form-control-sm" type="number">
 										</div>
+										<div class="autofit-col">
+											<button class="btn btn-primary btn-sm" type="button">Add to Cart</button>
+										</div>
+									</div>
+
+									<div class="product-subactions">
+										<a href="#placeholder">Add to list +</a>
 									</div>
 								</div>
 							</div>
@@ -88,8 +116,8 @@ List<CPOptionCategory> cpOptionCategories = cpCompareContentDisplayContext.getCP
 				</tr>
 
 				<c:if test="<%= !cpDefinitionOptionRelTitles.isEmpty() %>">
-					<tr class="table-active">
-						<td colspan="<%= (cpDefinitions.size() + 1) %>"><h4><liferay-ui:message key="options" /></h4></td>
+					<tr class="table-divider">
+						<td colspan="<%= (cpDefinitions.size() + 1) %>"><h4 class="table-title"><liferay-ui:message key="options" /></h4></td>
 					</tr>
 
 					<%
@@ -97,7 +125,7 @@ List<CPOptionCategory> cpOptionCategories = cpCompareContentDisplayContext.getCP
 					%>
 
 						<tr>
-							<td><%= HtmlUtil.escape(cpDefinitionOptionRelTitle) %></td>
+							<td class="title-column"><div class="table-title"><%= HtmlUtil.escape(cpDefinitionOptionRelTitle) %></div></td>
 
 								<%
 								for (CPDefinition cpDefinition : cpDefinitions) {
@@ -117,8 +145,8 @@ List<CPOptionCategory> cpOptionCategories = cpCompareContentDisplayContext.getCP
 
 				</c:if>
 
-				<tr class="table-active">
-					<td colspan="<%= (cpDefinitions.size() + 1) %>"><h4><liferay-ui:message key="dimensions" /></h4></td>
+				<tr class="table-divider">
+					<td colspan="<%= (cpDefinitions.size() + 1) %>"><h4 class="table-title"><liferay-ui:message key="dimensions" /></h4></td>
 				</tr>
 
 				<%
@@ -130,7 +158,7 @@ List<CPOptionCategory> cpOptionCategories = cpCompareContentDisplayContext.getCP
 				%>
 
 				<tr>
-					<td><%= LanguageUtil.get(request, "depth").concat(StringPool.SPACE).concat(HtmlUtil.escape(dimensionCPMeasurementUnitName)) %></td>
+					<td class="title-column"><div class="table-title"><%= LanguageUtil.get(request, "depth").concat(StringPool.SPACE).concat(HtmlUtil.escape(dimensionCPMeasurementUnitName)) %></div></td>
 
 					<%
 					for (CPDefinition cpDefinition : cpDefinitions) {
@@ -144,7 +172,7 @@ List<CPOptionCategory> cpOptionCategories = cpCompareContentDisplayContext.getCP
 
 				</tr>
 				<tr>
-					<td><%= LanguageUtil.get(request, "height").concat(StringPool.SPACE).concat(HtmlUtil.escape(dimensionCPMeasurementUnitName)) %></td>
+					<td class="title-column"><div class="table-title"><%= LanguageUtil.get(request, "height").concat(StringPool.SPACE).concat(HtmlUtil.escape(dimensionCPMeasurementUnitName)) %></div></td>
 
 					<%
 					for (CPDefinition cpDefinition : cpDefinitions) {
@@ -159,8 +187,8 @@ List<CPOptionCategory> cpOptionCategories = cpCompareContentDisplayContext.getCP
 				</tr>
 
 				<c:if test="<%= !cpSpecificationOptions.isEmpty() %>">
-					<tr class="table-active">
-						<td colspan="<%= (cpDefinitions.size() + 1) %>"><h4><liferay-ui:message key="specifications" /></h4></td>
+					<tr class="table-divider">
+						<td colspan="<%= (cpDefinitions.size() + 1) %>"><h4 class="table-title"><liferay-ui:message key="specifications" /></h4></td>
 					</tr>
 
 					<%
@@ -168,7 +196,7 @@ List<CPOptionCategory> cpOptionCategories = cpCompareContentDisplayContext.getCP
 					%>
 
 						<tr>
-							<td><%= HtmlUtil.escape(cpSpecificationOption.getTitle(languageId)) %></td>
+							<td class="title-column"><div class="table-title"><%= HtmlUtil.escape(cpSpecificationOption.getTitle(languageId)) %></div></td>
 
 							<%
 							for (CPDefinition cpDefinition : cpDefinitions) {
@@ -193,8 +221,8 @@ List<CPOptionCategory> cpOptionCategories = cpCompareContentDisplayContext.getCP
 				%>
 
 					<c:if test="<%= cpCompareContentDisplayContext.hasCategorizedCPDefinitionSpecificationOptionValues(cpOptionCategory.getCPOptionCategoryId()) %>">
-						<tr class="table-active">
-							<td colspan="<%= (cpDefinitions.size() + 1) %>"><h4><%= HtmlUtil.escape(cpOptionCategory.getTitle(languageId)) %></h4></td>
+						<tr class="table-divider">
+							<td colspan="<%= (cpDefinitions.size() + 1) %>"><h4 class="table-title"><%= HtmlUtil.escape(cpOptionCategory.getTitle(languageId)) %></h4></td>
 						</tr>
 
 						<%
@@ -205,7 +233,7 @@ List<CPOptionCategory> cpOptionCategories = cpCompareContentDisplayContext.getCP
 						%>
 
 							<tr>
-								<td><%= HtmlUtil.escape(cpSpecificationOption.getTitle(languageId)) %></td>
+								<td class="title-column"><div class="table-title"><%= HtmlUtil.escape(cpSpecificationOption.getTitle(languageId)) %></div></td>
 
 								<%
 								for (CPDefinition cpDefinition : cpDefinitions) {

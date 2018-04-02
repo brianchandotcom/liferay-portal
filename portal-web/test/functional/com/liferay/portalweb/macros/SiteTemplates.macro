@@ -55,23 +55,18 @@
 	</command>
 
 	<command name="addSitePageViaSiteTemplateCP">
-		<var name="key_siteTemplateName" value="${siteTemplateName}" />
-
-		<execute function="Click" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS" value1="${siteTemplateName}" />
-
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Manage">
-			<var name="key_menuItem" value="Manage" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Manage" />
+			<var name="rowEntry" value="${siteTemplateName}" />
 		</execute>
 
-		<execute macro="ProductMenuHelper#openProductMenu" />
-
-		<execute macro="ProductMenuHelper#expandCategory">
+		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute macro="SitePages#_addPage">
+		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 	</command>

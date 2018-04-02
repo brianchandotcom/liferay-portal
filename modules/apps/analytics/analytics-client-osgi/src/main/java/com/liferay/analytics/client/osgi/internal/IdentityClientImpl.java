@@ -15,26 +15,35 @@
 package com.liferay.analytics.client.osgi.internal;
 
 import com.liferay.analytics.client.IdentityClient;
+import com.liferay.analytics.client.osgi.internal.configuration.IdentifyClientConfiguration;
 import com.liferay.analytics.data.binding.JSONObjectMapper;
 import com.liferay.analytics.model.IdentityContextMessage;
 import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.Dictionary;
+import java.util.Map;
 import java.util.Properties;
 
 import org.osgi.service.component.ComponentFactory;
 import org.osgi.service.component.ComponentInstance;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
  */
-@Component(immediate = true, service = IdentityClient.class)
+@Component(
+	configurationPid = "com.liferay.analytics.client.osgi.internal.configuration.IdentifyClientConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
+	service = IdentityClient.class
+)
 public class IdentityClientImpl implements IdentityClient {
 
 	@Override
@@ -46,40 +55,46 @@ public class IdentityClientImpl implements IdentityClient {
 
 		String identityPath = String.format(
 			"/%s%s", identityContextMessage.getAnalyticsKey(),
-			_SYSTEM_PROPERTY_VALUE_IDENTITY_GATEWAY_PATH);
+			_identifyClientConfiguration.identifyGatewayPath());
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				String.format(
 					"Sending identity request %s to destination %s//%s:%s%s",
 					jsonIdentityContextMessage,
-					_SYSTEM_PROPERTY_VALUE_IDENTITY_GATEWAY_PROTOCOL,
-					_SYSTEM_PROPERTY_VALUE_IDENTITY_GATEWAY_HOST,
-					_SYSTEM_PROPERTY_VALUE_IDENTITY_GATEWAY_PORT,
+					_identifyClientConfiguration.identifyGatewayProtocol(),
+					_identifyClientConfiguration.identifyGatewayHost(),
+					_identifyClientConfiguration.identifyGatewayPort(),
 					identityPath));
 		}
-
-		_jsonWebServiceClient.setHostName(
-			_SYSTEM_PROPERTY_VALUE_IDENTITY_GATEWAY_HOST);
-		_jsonWebServiceClient.setHostPort(
-			Integer.parseInt(_SYSTEM_PROPERTY_VALUE_IDENTITY_GATEWAY_PORT));
-		_jsonWebServiceClient.setProtocol(
-			_SYSTEM_PROPERTY_VALUE_IDENTITY_GATEWAY_PROTOCOL);
 
 		return _jsonWebServiceClient.doPostAsJSON(
 			identityPath, jsonIdentityContextMessage);
 	}
 
 	@Activate
-	protected void activate() {
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_identifyClientConfiguration = ConfigurableUtil.createConfigurable(
+			IdentifyClientConfiguration.class, properties);
+
+		initializeJSONWebServiceClient();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_jsonWebServiceClient.destroy();
+	}
+
+	protected void initializeJSONWebServiceClient() {
 		Properties properties = new Properties();
 
 		properties.setProperty(
-			"hostName", _SYSTEM_PROPERTY_VALUE_IDENTITY_GATEWAY_HOST);
+			"hostName", _identifyClientConfiguration.identifyGatewayHost());
 		properties.setProperty(
-			"hostPort", _SYSTEM_PROPERTY_VALUE_IDENTITY_GATEWAY_PORT);
+			"hostPort", _identifyClientConfiguration.identifyGatewayPort());
 		properties.setProperty(
-			"protocol", _SYSTEM_PROPERTY_VALUE_IDENTITY_GATEWAY_PROTOCOL);
+			"protocol", _identifyClientConfiguration.identifyGatewayProtocol());
 
 		ComponentInstance componentInstance = _componentFactory.newInstance(
 			(Dictionary)properties);
@@ -88,11 +103,6 @@ public class IdentityClientImpl implements IdentityClient {
 
 		_jsonWebServiceClient =
 			(JSONWebServiceClient)componentInstance.getInstance();
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_jsonWebServiceClient.destroy();
 	}
 
 	@Reference(
@@ -112,24 +122,11 @@ public class IdentityClientImpl implements IdentityClient {
 		_jsonObjectMapper = jsonObjectMapper;
 	}
 
-	private static final String _SYSTEM_PROPERTY_VALUE_IDENTITY_GATEWAY_HOST =
-		System.getProperty(
-			"identity.gateway.host", "contacts-prod.liferay.com");
-
-	private static final String _SYSTEM_PROPERTY_VALUE_IDENTITY_GATEWAY_PATH =
-		System.getProperty("identity.gateway.path", "/identity");
-
-	private static final String _SYSTEM_PROPERTY_VALUE_IDENTITY_GATEWAY_PORT =
-		System.getProperty("identity.gateway.port", "443");
-
-	private static final String
-		_SYSTEM_PROPERTY_VALUE_IDENTITY_GATEWAY_PROTOCOL = System.getProperty(
-			"identity.gateway.protocol", "https");
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		IdentityClientImpl.class);
 
 	private ComponentFactory _componentFactory;
+	private volatile IdentifyClientConfiguration _identifyClientConfiguration;
 	private JSONObjectMapper<IdentityContextMessage> _jsonObjectMapper;
 	private JSONWebServiceClient _jsonWebServiceClient;
 

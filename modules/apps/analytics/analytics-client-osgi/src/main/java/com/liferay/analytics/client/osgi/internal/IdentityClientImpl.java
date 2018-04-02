@@ -28,6 +28,7 @@ import org.osgi.service.component.ComponentFactory;
 import org.osgi.service.component.ComponentInstance;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -35,26 +36,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = IdentityClient.class)
 public class IdentityClientImpl implements IdentityClient {
-
-	@Activate
-	public void activate() {
-		Properties properties = new Properties();
-
-		properties.setProperty(
-			"hostName", _SYSTEM_PROPERTY_VALUE_IDENTITY_GATEWAY_HOST);
-		properties.setProperty(
-			"hostPort", _SYSTEM_PROPERTY_VALUE_IDENTITY_GATEWAY_PORT);
-		properties.setProperty(
-			"protocol", _SYSTEM_PROPERTY_VALUE_IDENTITY_GATEWAY_PROTOCOL);
-
-		ComponentInstance componentInstance = _componentFactory.newInstance(
-			(Dictionary)properties);
-
-		componentInstance.getInstance();
-
-		_jsonWebServiceClient =
-			(JSONWebServiceClient)componentInstance.getInstance();
-	}
 
 	@Override
 	public String getUserId(IdentityContextMessage identityContextMessage)
@@ -87,6 +68,31 @@ public class IdentityClientImpl implements IdentityClient {
 
 		return _jsonWebServiceClient.doPostAsJSON(
 			identityPath, jsonIdentityContextMessage);
+	}
+
+	@Activate
+	protected void activate() {
+		Properties properties = new Properties();
+
+		properties.setProperty(
+			"hostName", _SYSTEM_PROPERTY_VALUE_IDENTITY_GATEWAY_HOST);
+		properties.setProperty(
+			"hostPort", _SYSTEM_PROPERTY_VALUE_IDENTITY_GATEWAY_PORT);
+		properties.setProperty(
+			"protocol", _SYSTEM_PROPERTY_VALUE_IDENTITY_GATEWAY_PROTOCOL);
+
+		ComponentInstance componentInstance = _componentFactory.newInstance(
+			(Dictionary)properties);
+
+		componentInstance.getInstance();
+
+		_jsonWebServiceClient =
+			(JSONWebServiceClient)componentInstance.getInstance();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_jsonWebServiceClient.destroy();
 	}
 
 	@Reference(

@@ -45,9 +45,9 @@ public class BlogsEntryUADEntityAggregator
 	}
 
 	@Override
-	public BlogsEntry get(Serializable entityId) throws PortalException {
+	public BlogsEntry get(Serializable primKeyObj) throws PortalException {
 		return _blogsEntryLocalService.getBlogsEntry(Long.valueOf(
-				entityId.toString()));
+				primKeyObj.toString()));
 	}
 
 	@Override

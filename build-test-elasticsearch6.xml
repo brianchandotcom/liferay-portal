@@ -3,54 +3,9 @@
 <project basedir="." name="portal-test-elasticsearch" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
-	<macrodef name="configure-elasticsearch-osgi-bundle-properties">
-		<sequential>
-			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration.config">${line.separator}operationMode=&quot;REMOTE&quot;</echo>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="configure-elasticsearch-properties">
 		<sequential>
 			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}cluster.name: LiferayElasticsearchCluster</echo>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="configure-elasticsearch-x-pack-monitoring-osgi-bundle-properties">
-		<sequential>
-			<propertyregex
-				defaultValue="${elastic.xpack.kibana.user.password}"
-				input="${elastic.xpack.kibana.user.password}"
-				override="true"
-				property="osgi.config.kibana.user.password"
-				regexp="="
-				replace="\\\\="
-			/>
-
-			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.xpack.monitoring.web.internal.configuration.XPackMonitoringConfiguration.config">kibanaPassword="${osgi.config.kibana.user.password}"
-kibanaURL="https://localhost:5601"
-kibanaUserName="kibana"
-proxyServletLogEnable="true"</echo>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="configure-elasticsearch-x-pack-security-osgi-bundle-properties">
-		<sequential>
-			<propertyregex
-				defaultValue="${elastic.xpack.elastic.user.password}"
-				input="${elastic.xpack.elastic.user.password}"
-				override="true"
-				property="osgi.config.elastic.user.password"
-				regexp="="
-				replace="\\\\="
-			/>
-
-			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.xpack.security.internal.configuration.XPackSecurityConfiguration.config">certificateFormat="PEM"
-password="${osgi.config.elastic.user.password}"
-requiresAuthentication="true"
-sslCertificateAuthoritiesPaths="${elasticsearch.dir}-1/config/certs/ca/ca.crt"
-sslCertificatePath="${elasticsearch.dir}-1/config/certs/localhost/localhost.crt"
-sslKeyPath="${elasticsearch.dir}-1/config/certs/localhost/localhost.key"
-transportSSLEnabled="true"</echo>
 		</sequential>
 	</macrodef>
 
@@ -93,7 +48,52 @@ xpack.security.sessionTimeout: 600000</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="configure-x-pack-security-app-server-truststore">
+	<macrodef name="configure-portal-elasticsearch-osgi-properties">
+		<sequential>
+			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration.config">${line.separator}operationMode=&quot;REMOTE&quot;</echo>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="configure-portal-x-pack-monitoring-osgi-properties">
+		<sequential>
+			<propertyregex
+				defaultValue="${elastic.xpack.kibana.user.password}"
+				input="${elastic.xpack.kibana.user.password}"
+				override="true"
+				property="osgi.config.kibana.user.password"
+				regexp="="
+				replace="\\\\="
+			/>
+
+			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.xpack.monitoring.web.internal.configuration.XPackMonitoringConfiguration.config">kibanaPassword="${osgi.config.kibana.user.password}"
+kibanaURL="https://localhost:5601"
+kibanaUserName="kibana"
+proxyServletLogEnable="true"</echo>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="configure-portal-x-pack-security-osgi-properties">
+		<sequential>
+			<propertyregex
+				defaultValue="${elastic.xpack.elastic.user.password}"
+				input="${elastic.xpack.elastic.user.password}"
+				override="true"
+				property="osgi.config.elastic.user.password"
+				regexp="="
+				replace="\\\\="
+			/>
+
+			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.xpack.security.internal.configuration.XPackSecurityConfiguration.config">certificateFormat="PEM"
+password="${osgi.config.elastic.user.password}"
+requiresAuthentication="true"
+sslCertificateAuthoritiesPaths="${elasticsearch.dir}-1/config/certs/ca/ca.crt"
+sslCertificatePath="${elasticsearch.dir}-1/config/certs/localhost/localhost.crt"
+sslKeyPath="${elasticsearch.dir}-1/config/certs/localhost/localhost.key"
+transportSSLEnabled="true"</echo>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="configure-portal-x-pack-security-truststore">
 		<sequential>
 			<if>
 				<os family="unix" />
@@ -140,7 +140,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		</sequential>
 	</macrodef>
 
-	<macrodef name="generate-elasticsearch-x-pack-security-certificates">
+	<macrodef name="generate-x-pack-security-certificates">
 		<attribute default="liferay" name="certificate.password" />
 
 		<sequential>
@@ -367,7 +367,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		</sequential>
 	</macrodef>
 
-	<macrodef name="set-elasticsearch-x-pack-user-passwords">
+	<macrodef name="set-x-pack-user-passwords">
 		<sequential>
 			<if>
 				<os family="unix" />
@@ -620,13 +620,13 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 
 				<property name="xpack.certificate.password" value="liferay" />
 
-				<generate-elasticsearch-x-pack-security-certificates certificate.password="${xpack.certificate.password}" />
+				<generate-x-pack-security-certificates certificate.password="${xpack.certificate.password}" />
 
 				<configure-elasticsearch-x-pack-security-properties />
 			</then>
 		</if>
 
-		<configure-elasticsearch-osgi-bundle-properties />
+		<configure-portal-elasticsearch-osgi-properties />
 
 		<get-testcase-property property.name="remote.elasticsearch.cluster.size" />
 
@@ -650,13 +650,13 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			<then>
 				<sleep seconds="30" />
 
-				<set-elasticsearch-x-pack-user-passwords />
+				<set-x-pack-user-passwords />
 
-				<configure-elasticsearch-x-pack-security-osgi-bundle-properties />
+				<configure-portal-x-pack-security-osgi-properties />
 
-				<configure-elasticsearch-x-pack-monitoring-osgi-bundle-properties />
+				<configure-portal-x-pack-monitoring-osgi-properties />
 
-				<configure-x-pack-security-app-server-truststore />
+				<configure-portal-x-pack-security-truststore />
 
 				<antcall target="start-kibana" />
 			</then>
@@ -818,6 +818,15 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 
 			<print-file file.name="${elasticsearch.dir}-${elasticsearch.node.number}/logs/LiferayElasticsearchCluster.log" />
 		</antelope:repeat>
+
+		<if>
+			<equals arg1="${elastic.xpack.enabled}" arg2="true" />
+			<then>
+				<print-file file.name="${elastic.kibana.dir}/bin/kibana.log" />
+
+				<antcall target="stop-kibana" />
+			</then>
+		</if>
 	</target>
 
 	<target name="stop-kibana">

@@ -162,7 +162,6 @@
 
 		<check name="JavaModuleComponentCheck">
 			<property name="allowedClassNames" value="com.liferay.adaptive.media.content.transformer.ContentTransformerHandler" />
-			<property name="allowedClassNames" value="com.liferay.adaptive.media.document.library.internal.repository.registry.BaseOverridingRepositoryDefiner" />
 			<property name="allowedClassNames" value="com.liferay.adaptive.media.image.optimizer.AMImageOptimizerUtil" />
 			<property name="allowedClassNames" value="com.liferay.application.list.PanelAppRegistry" />
 			<property name="allowedClassNames" value="com.liferay.application.list.PanelCategoryRegistry" />
@@ -237,8 +236,6 @@
 			<property name="allowedClassNames" value="com.liferay.user.associated.data.util.UADDynamicQueryHelper" />
 			<property name="allowedClassNames" value="com.liferay.users.admin.configuration.definition.UserFileUploadsConfigurationBeanDeclaration" />
 			<property name="allowedClassNames" value="com.liferay.users.admin.configuration.definition.UserFileUploadsConfigurationDDMFormDeclaration" />
-			<property name="allowedClassNames" value="com.liferay.users.admin.demo.data.creator.internal.BaseUserDemoDataCreator" />
-			<property name="allowedClassNames" value="com.liferay.users.admin.web.internal.servlet.taglib.ui.navigation.user.entry.BaseUserScreenNavigationEntry" />
 			<property name="allowedClassNames" value="com.liferay.wiki.configuration.definition.WikiGroupServiceConfigurationBeanDeclaration" />
 			<property name="allowedClassNames" value="com.liferay.wiki.configuration.definition.WikiGroupServiceConfigurationPidMapping" />
 			<property name="allowedClassNames" value="com.liferay.wsrp.configuration.definition.WSRPGroupServiceConfigurationBeanDeclaration" />

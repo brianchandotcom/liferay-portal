@@ -1304,8 +1304,8 @@
 			<var name="configurationScope" value="Virtual Instance Scope" />
 		</execute>
 
-		<execute macro="SystemSettings#enableSetting">
-			<var name="checkboxSetting" value="WEB_CONTENT_ARTICLE_VIEW_PERMISSIONS_CHECK_ENABLED" />
+		<execute macro="FormFields#enableCheckbox">
+			<var name="fieldName" value="articleViewPermissionsCheckEnabled" />
 		</execute>
 
 		<execute macro="SystemSettings#saveConfiguration" />

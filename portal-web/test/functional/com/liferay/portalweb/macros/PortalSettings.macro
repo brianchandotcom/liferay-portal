@@ -217,7 +217,9 @@
 	<command name="disableLDAPCP">
 		<execute macro="PortalSettingsNavigator#gotoLDAP" />
 
-		<execute function="Uncheck" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_ENABLED_CHECKBOX" />
+		<execute macro="FormFields#disableCheckbox">
+			<var name="fieldName" value="ldap--enabled" />
+		</execute>
 
 		<execute macro="PortletEntry#save" />
 
@@ -436,7 +438,9 @@
 	<command name="enableImportLDAPCP">
 		<execute macro="PortalSettingsNavigator#gotoLDAP" />
 
-		<execute function="Check" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_IMPORT_ENABLED_CHECKBOX" />
+		<execute macro="FormFields#enableCheckbox">
+			<var name="fieldName" value="ldapImportEnabled" />
+		</execute>
 
 		<execute macro="PortletEntry#save" />
 
@@ -448,6 +452,10 @@
 	</command>
 
 	<command name="enableLDAPSetting">
+		<execute macro="FormFields#enableCheckbox">
+			<var name="fieldName" value="ldap--enabled" />
+		</execute>
+
 		<execute function="Check" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_${enableCheckboxKey}_CHECKBOX" />
 
 		<execute macro="PortletEntry#save" />

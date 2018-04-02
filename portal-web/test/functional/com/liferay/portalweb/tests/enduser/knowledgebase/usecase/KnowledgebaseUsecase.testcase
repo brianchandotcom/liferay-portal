@@ -1424,7 +1424,11 @@
 			<var name="configurationScope" value="Site Scope" />
 		</execute>
 
-		<execute macro="KBArticle#enableSourceURL" />
+		<execute macro="FormFields#enableCheckbox">
+			<var name="fieldName" value="sourceURLEnabled" />
+		</execute>
+
+		<execute macro="SystemSettings#saveConfiguration" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -1555,7 +1559,11 @@
 			<var name="configurationScope" value="Site Scope" />
 		</execute>
 
-		<execute macro="KBArticle#enableSourceURL" />
+		<execute macro="FormFields#enableCheckbox">
+			<var name="fieldName" value="sourceURLEnabled" />
+		</execute>
+
+		<execute macro="SystemSettings#saveConfiguration" />
 
 		<execute macro="Navigator#openURL" />
 

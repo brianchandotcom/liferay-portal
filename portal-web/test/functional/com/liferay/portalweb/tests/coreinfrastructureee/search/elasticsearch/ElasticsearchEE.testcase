@@ -280,11 +280,10 @@
 		</execute>
 	</command>
 
-	<command name="ElasticsearchRemoteWithMarvelAndAndShieldSmokeTest" priority="5">
-		<!-- <property name="elastic.kibana.enabled" value="true" />
-		<property name="elastic.shield.enabled" value="true" /> -->
+	<command name="XPackSmokeTest" priority="5">
+		<property name="elastic.xpack.enabled" value="true" />
 		<property name="remote.elasticsearch.enabled" value="true" />
-		<property name="test.name.skip.portal.instance" value="ElasticsearchEE#ElasticsearchRemoteWithMarvelAndKibanaAndShieldSmokeTest" />
+		<property name="test.name.skip.portal.instance" value="ElasticsearchEE#XPackSmokeTest" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Navigation" />
@@ -293,67 +292,33 @@
 		</execute>
 
 		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Marvel Page" />
+			<var name="pageName" value="X-Pack Monitoring Page" />
+			<var name="sitePageType" value="Layout" />
+		</execute>
+
+		<execute macro="SitePages#configurePage">
+			<var name="columnName" value="1 Column" />
+			<var name="pageName" value="X-Pack Monitoring Page" />
+			<var name="privacy" value="Public" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Marvel Page" />
+			<var name="pageName" value="X-Pack Monitoring Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Marvel" />
+			<var name="portletName" value="X-Pack Monitoring" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Marvel Page" />
-		</execute>
-
-		<execute macro="Marvel#viewPG" />
+		<execute macro="XPackMonitoring#viewPG" />
 
 		<execute macro="User#logoutPG" />
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Marvel Page" />
+			<var name="pageName" value="X-Pack Monitoring Page" />
 		</execute>
 
-		<execute macro="Marvel#viewAsGuestPG" />
-	</command>
-
-	<command name="ElasticsearchRemoteWithMarvelAndKibanaSmokeTest" priority="5">
-		<!-- <property name="elastic.kibana.enabled" value="true" /> -->
-		<property name="remote.elasticsearch.enabled" value="true" />
-		<property name="test.name.skip.portal.instance" value="ElasticsearchEE#ElasticsearchRemoteWithMarvelAndKibanaSmokeTest" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Navigation" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Marvel Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Marvel Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Marvel" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Marvel Page" />
-		</execute>
-
-		<execute macro="Marvel#viewPG" />
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Marvel Page" />
-		</execute>
-
-		<execute macro="Marvel#viewAsGuestPG" />
+		<execute macro="XPackMonitoring#viewAsGuestPG" />
 	</command>
 </definition>

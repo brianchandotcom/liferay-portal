@@ -585,12 +585,6 @@
 		</execute>
 	</command>
 
-	<command name="gotoExportTemplateCP">
-		<execute macro="LexiconEntry#gotoHeaderMenuItem">
-			<var name="menuItem" value="Export Templates" />
-		</execute>
-	</command>
-
 	<command name="importPortlet">
 		<execute macro="LAR#_gotoExportImport" />
 

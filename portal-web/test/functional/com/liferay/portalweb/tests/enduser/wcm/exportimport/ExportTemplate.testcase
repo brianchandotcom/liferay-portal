@@ -77,7 +77,9 @@
 			<var name="portlet" value="Export" />
 		</execute>
 
-		<execute macro="LAR#gotoExportTemplateCP" />
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
+			<var name="menuItem" value="Export Templates" />
+		</execute>
 
 		<execute macro="LAR#viewExportTemplateCP">
 			<var name="exportTemplateDescription" value="Export Template Description" />
@@ -128,7 +130,9 @@
 			<var name="portlet" value="Export" />
 		</execute>
 
-		<execute macro="LAR#gotoExportTemplateCP" />
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
+			<var name="menuItem" value="Export Templates" />
+		</execute>
 
 		<execute macro="LAR#searchTemplate">
 			<var name="exportTemplateDescription" value="Export Template Description" />

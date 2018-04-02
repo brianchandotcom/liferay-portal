@@ -33,8 +33,8 @@ public class ${entity.name}UADEntityAggregator extends DynamicQueryUADEntityAggr
 	}
 
 	@Override
-	public ${entity.name} get(Serializable entityId) throws PortalException {
-		return _${entity.varName}LocalService.get${entity.name}(Long.valueOf(entityId.toString()));
+	public ${entity.name} get(Serializable primKeyObj) throws PortalException {
+		return _${entity.varName}LocalService.get${entity.name}(Long.valueOf(primKeyObj.toString()));
 	}
 
 	@Override

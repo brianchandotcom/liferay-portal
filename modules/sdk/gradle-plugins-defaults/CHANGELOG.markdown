@@ -3223,6 +3223,12 @@ version 1.2.2.
 ### Added
 - [LPS-75049]: Add support for `compileOnly` configuration.
 
+## 5.3.63 - 2017-04-04
+
+### Changed
+- [LPS-75049]: Add `compileOnly` dependencies to the test integration compile
+classpath.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public

@@ -40,9 +40,11 @@ public class AnnouncementsFlagUADEntityAggregator
 	extends BaseAnnouncementsUADEntityAggregator<AnnouncementsFlag> {
 
 	@Override
-	public AnnouncementsFlag get(Serializable entityId) throws PortalException {
+	public AnnouncementsFlag get(Serializable primKeyObj)
+		throws PortalException {
+
 		return _announcementsFlagLocalService.getAnnouncementsFlag(
-			Long.parseLong(entityId.toString()));
+			Long.parseLong(primKeyObj.toString()));
 	}
 
 	@Override

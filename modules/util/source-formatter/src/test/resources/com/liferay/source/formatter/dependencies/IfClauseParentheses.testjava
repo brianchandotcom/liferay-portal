@@ -55,6 +55,10 @@ public class IfClauseParentheses {
 		if ((s != null) && s.contains("test")) {
 			return;
 		}
+
+		if ((s != null) && s.contains("hello") || s.contains("world")) {
+			return;
+		}
 	}
 
 }

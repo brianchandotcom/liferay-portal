@@ -61,7 +61,7 @@
 		</execute>
 	</command>
 
-	<command name="AssertSystemSettingsPropogateToModule" priority="5">
+	<command ignore="true" name="AssertSystemSettingsPropogateToModule" priority="3">
 		<property name="test.name.skip.portal.instance" value="Elasticsearch#AssertSystemSettingsPropogateToModule" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -72,7 +72,7 @@
 
 		<execute macro="SystemSettings#gotoConfiguration">
 			<var name="configurationCategory" value="Search" />
-			<var name="configurationName" value="Elasticsearch" />
+			<var name="configurationName" value="Elasticsearch 6" />
 			<var name="configurationScope" value="System Scope" />
 		</execute>
 

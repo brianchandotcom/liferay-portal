@@ -228,12 +228,6 @@
 		</execute>
 	</command>
 
-	<command name="gotoViewSource">
-		<execute macro="LexiconEntry#gotoHeaderMenuItem">
-			<var name="menuItem" value="View Source" />
-		</execute>
-	</command>
-
 	<command name="gotoViewStatus">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 

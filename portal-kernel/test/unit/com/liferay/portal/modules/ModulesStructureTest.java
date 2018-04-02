@@ -544,7 +544,7 @@ public class ModulesStructureTest {
 				curGradleDependency.getModuleVersion());
 
 			if (((curConfigurationPos == configurationPos) && (value < 0)) ||
-				(curConfigurationPos < configurationPos) && (value <= 0)) {
+				((curConfigurationPos < configurationPos) && (value <= 0))) {
 
 				return curGradleDependency;
 			}

@@ -54,7 +54,7 @@ public class WikiVisualizationHelper {
 			mvcRenderCommandName.equals("/wiki/view_page_details") ||
 			mvcRenderCommandName.equals("/wiki/view_page_incoming_links") ||
 			mvcRenderCommandName.equals("/wiki/view_page_outgoing_links") ||
-			(wikiPage != null) && frontPageName.equals(wikiPage.getTitle())) {
+			((wikiPage != null) && frontPageName.equals(wikiPage.getTitle()))) {
 
 			return true;
 		}

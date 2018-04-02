@@ -109,6 +109,29 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 	private void _checkMissingParentheses(
 		String ifClause, String fileName, int lineCount) {
 
+		int x = -1;
+
+		while (true) {
+			int y = ifClause.indexOf("||", x + 1);
+			int z = ifClause.indexOf("&&", x + 1);
+
+			if ((y == -1) || (z == -1)) {
+				break;
+			}
+
+			String s = ifClause.substring(Math.min(y, z), Math.max(y, z));
+
+			if (getLevel(s) == 0) {
+				addMessage(
+					fileName, "Missing parentheses in if-statement",
+					"if_statement_parentheses.markdown", lineCount);
+
+				return;
+			}
+
+			x = Math.min(y, z);
+		}
+
 		outerLoop:
 		while (true) {
 			Matcher matcher = _methodCallPattern.matcher(ifClause);
@@ -117,7 +140,7 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 				break;
 			}
 
-			int x = matcher.start() + 1;
+			x = matcher.start() + 1;
 
 			while (true) {
 				x = ifClause.indexOf(StringPool.CLOSE_PARENTHESIS, x + 1);

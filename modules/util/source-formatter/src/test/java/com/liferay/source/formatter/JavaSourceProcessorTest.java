@@ -120,9 +120,10 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Missing parentheses in if-statement",
 				"Unnecessary parentheses around expression.",
 				"Redundant parentheses in if-statement",
-				"Unnecessary parentheses around expression."
+				"Unnecessary parentheses around expression.",
+				"Missing parentheses in if-statement"
 			},
-			new Integer[] {25, 29, 33, 39, 43, 43, 47, 51});
+			new Integer[] {25, 29, 33, 39, 43, 43, 47, 51, 59});
 	}
 
 	@Test

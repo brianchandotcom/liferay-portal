@@ -21,12 +21,6 @@
 		</if>
 	</command>
 
-	<command name="gotoDataProviders">
-		<execute macro="LexiconEntry#gotoHeaderMenuItem">
-			<var name="menuItem" value="Data Providers" />
-		</execute>
-	</command>
-
 	<command name="gotoDeleteField">
 		<execute macro="FormsAdminNavigator#gotoEditField">
 			<var name="fieldName" value="${fieldName}" />

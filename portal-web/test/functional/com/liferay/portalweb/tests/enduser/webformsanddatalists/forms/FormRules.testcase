@@ -50,7 +50,9 @@
 			<var name="portlet" value="Forms" />
 		</execute>
 
-		<execute macro="FormsAdminNavigator#gotoDataProviders" />
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
+			<var name="menuItem" value="Data Providers" />
+		</execute>
 
 		<execute macro="FormsAdminNavigator#gotoAddDataProvider" />
 

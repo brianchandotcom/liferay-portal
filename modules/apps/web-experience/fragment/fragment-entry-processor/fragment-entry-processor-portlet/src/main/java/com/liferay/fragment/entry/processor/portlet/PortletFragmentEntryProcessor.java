@@ -104,26 +104,8 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			String defaultPreferences = StringPool.BLANK;
 
 			if (originalFragmentEntryLink != null) {
-				String portletId = PortletIdCodec.encode(
-					PortletIdCodec.decodePortletName(portletName),
-					PortletIdCodec.decodeUserId(portletName),
-					String.valueOf(
-						originalFragmentEntryLink.getFragmentEntryLinkId()));
-
-				Group group = _groupLocalService.getGroup(
-					originalFragmentEntryLink.getGroupId());
-
-				long defaultPlid = _portal.getControlPanelPlid(
-					group.getCompanyId());
-
-				PortletPreferences portletPreferences =
-					PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-						group.getCompanyId(), 0,
-						PortletKeys.PREFS_OWNER_TYPE_LAYOUT, defaultPlid,
-						portletId, StringPool.BLANK);
-
-				defaultPreferences = PortletPreferencesFactoryUtil.toXML(
-					portletPreferences);
+				defaultPreferences = _getPreferences(
+					portletName, originalFragmentEntryLink);
 			}
 
 			String instanceId = String.valueOf(
@@ -305,6 +287,28 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			_getPortletMenuElement(portletName, instanceId));
 
 		return portletTopperElement;
+	}
+
+	private String _getPreferences(
+			String portletName, FragmentEntryLink fragmentEntryLink)
+		throws PortalException {
+
+		String portletId = PortletIdCodec.encode(
+			PortletIdCodec.decodePortletName(portletName),
+			PortletIdCodec.decodeUserId(portletName),
+			String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()));
+
+		Group group = _groupLocalService.getGroup(
+			fragmentEntryLink.getGroupId());
+
+		long defaultPlid = _portal.getControlPanelPlid(group.getCompanyId());
+
+		PortletPreferences portletPreferences =
+			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+				group.getCompanyId(), 0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+				defaultPlid, portletId, StringPool.BLANK);
+
+		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}
 
 	@Reference

@@ -27,6 +27,10 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 		String fileName, String absolutePath, String content) {
 
 		content = StringUtil.replace(
+			content, "com.liferay.portal.kernel.util.StringPool",
+			"com.liferay.petra.string.StringPool");
+
+		content = StringUtil.replace(
 			content,
 			new String[] {
 				"com.liferay.portal.PortalException",

@@ -312,7 +312,7 @@ public class NavigationMenuTag extends IncludeTag {
 					siteNavigationMenuItem.getType());
 
 			NavItem navItem = new SiteNavigationMenuNavItem(
-				request, themeDisplay.getLayout(),
+				request, themeDisplay, themeDisplay.getLayout(),
 				siteNavigationMenuItemType.getTitle(
 					siteNavigationMenuItem, themeDisplay.getLocale()),
 				siteNavigationMenuItemType.getURL(

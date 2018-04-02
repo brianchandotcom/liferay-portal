@@ -16,6 +16,7 @@ package com.liferay.site.navigation.taglib.internal.util;
 
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.NavItem;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.HashMap;
@@ -29,10 +30,10 @@ import javax.servlet.http.HttpServletRequest;
 public class SiteNavigationMenuNavItem extends NavItem {
 
 	public SiteNavigationMenuNavItem(
-		HttpServletRequest request, Layout layout, String label, String url,
-		List<NavItem> children) {
+		HttpServletRequest request, ThemeDisplay themeDisplay, Layout layout,
+		String label, String url, List<NavItem> children) {
 
-		super(request, layout, new HashMap<String, Object>());
+		super(request, themeDisplay, layout, new HashMap<String, Object>());
 
 		_label = label;
 		_url = url;

@@ -210,7 +210,9 @@
 
 		<execute macro="Notifications#gotoNotifications" />
 
-		<execute macro="Notifications#markAllAsRead" />
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
+			<var name="menuItem" value="Mark All Notifications as Read" />
+		</execute>
 
 		<execute macro="Notifications#viewNoNotifications">
 			<var name="activePanel" value="Notifications" />

@@ -73,7 +73,8 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 
 			char previousChar = ifClause.charAt(x - 1);
 
-			if ((previousChar != CharPool.OPEN_PARENTHESIS) &&
+			if ((previousChar != CharPool.EXCLAMATION) &&
+				(previousChar != CharPool.OPEN_PARENTHESIS) &&
 				(previousChar != CharPool.SPACE)) {
 
 				continue;

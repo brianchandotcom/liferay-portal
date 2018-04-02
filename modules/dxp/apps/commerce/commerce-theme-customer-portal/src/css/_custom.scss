@@ -662,20 +662,22 @@ a[type="button"] {
 
 	// Catalog Facets
 
-	.collapse-icon-closed {
-		color: $primary;
-		font-size: 0.5rem;
-		transform: rotate(90deg) translateX(-50%);
-	}
+	.search-facet {
+		.collapse-icon-closed {
+			color: $primary;
+			font-size: 0.5rem;
+			transform: rotate(90deg) translateX(-50%);
+		}
 
-	.collapse-icon-open {
-		color: $primary;
-		font-size: 0.5rem;
-		transform: rotate(180deg) translateY(50%);
-	}
+		.collapse-icon-open {
+			color: $primary;
+			font-size: 0.5rem;
+			transform: rotate(180deg) translateY(50%);
+		}
 
-	.collapse-icon {
-		text-decoration: none;
+		.collapse-icon {
+			text-decoration: none;
+		}
 	}
 
 	.portlet-category-facet {
@@ -1316,5 +1318,99 @@ a[type="button"] {
 	.table-title {
 		font-size: 0.875rem;
 		font-weight: $font-weight-bold;
+	}
+}
+
+// Compare Mini
+
+.portlet-commerce-product-compare-content-mini {
+	bottom: 0;
+	left: 14px;
+	position: fixed;
+	right: 14px;
+	z-index: $zindex-fixed;
+
+	@include media-breakpoint-up(md) {
+		left: 10%;
+		right: 10%;
+	}
+
+	.portlet {
+		margin-bottom: 22px;
+	}
+}
+
+.compare-products-mini-header {
+	background-color: #F1F2F5;
+	border: 1px solid #CCC;
+
+	@include border-top-radius($border-radius);
+}
+
+.lfr-compare-products-mini-header {
+	color: #272833;
+	display: block;
+	padding-bottom: 0.5rem;
+	padding-left: 1rem;
+	padding-top: 0.5rem;
+
+	&:hover {
+		color: #272833;
+		text-decoration: none;
+	}
+}
+
+.toggler-header-collapsed .collapse-icon-closed {
+	display: block;
+}
+
+.toggler-header-collapsed .collapse-icon-open {
+	display: none;
+}
+
+.lfr-compare-products-mini-content {
+	.card-page {
+		background-color: #FFF;
+		border-color: #CCC;
+		border-style: solid;
+		border-width: 0 1px;
+		flex-wrap: nowrap;
+		margin-left: 0;
+		margin-right: 0;
+		overflow: auto;
+		padding-bottom: 1rem;
+		padding-top: 1rem;
+	}
+
+	.card-page-item {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		padding-left: $grid-gutter-width / 2;
+		padding-right: $grid-gutter-width / 2;
+		width: 200px;
+	}
+
+	.card-page-item-shrink {
+		width: auto;
+	}
+
+	.card {
+		margin-bottom: 0;
+		width: 75px;
+
+		.sticker-top-right {
+			right: 0;
+			top: 0;
+			z-index: 1;
+		}
+	}
+
+	.compare-link {
+		margin-left: 0.5rem;
+	}
+
+	.compare-add-more {
+		margin-right: auto;
 	}
 }

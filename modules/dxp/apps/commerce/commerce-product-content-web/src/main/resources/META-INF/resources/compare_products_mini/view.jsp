@@ -37,102 +37,91 @@ List<CPDefinition> cpDefinitions = cpCompareContentMiniDisplayContext.getCPDefin
 >
 	<c:if test="<%= cpDefinitions.size() > 0 %>">
 		<div id="<portlet:namespace />compareProductsMiniContainer">
+
+
 			<div class="compare-products-mini-header">
-				<div class="autofit-float autofit-row autofit-row-center">
-					<div class="autofit-col autofit-col-expand">
-						<h3 class="component-title"><liferay-ui:message arguments="<%= new Object[] {cpDefinitions.size(), cpCompareContentMiniDisplayContext.getProductsLimit()} %>" key="x-of-x-products-selected" translateArguments="<%= false %>" /></h3>
-					</div>
-					<div class="autofit-col">
-						<a class="" href="<%= HtmlUtil.escape(cpCompareContentMiniDisplayContext.getClearCompareProductsURL()) %>"><liferay-ui:message key="clear-all" /></a>
-					</div>
-					<div class="autofit-col">
-						<a class="lfr-compare-products-mini-header" href="javascript:;">
-							<span class="expanded-text">
-								<liferay-ui:message key="hide" />
+				<a class="collapse-icon lfr-compare-products-mini-header" href="javascript:;">
+					<span class="component-title"><liferay-ui:message arguments="<%= new Object[] {cpDefinitions.size(), cpCompareContentMiniDisplayContext.getProductsLimit()} %>" key="x-of-x-products-selected" translateArguments="<%= false %>" /></span>
 
-								<liferay-ui:icon
-									icon="angle-down"
-									markupView="lexicon"
-								/>
-							</span>
-							<span class="collapsed-text">
-								<liferay-ui:message key="show" />
-
-								<liferay-ui:icon
-									icon="angle-right"
-									markupView="lexicon"
-								/>
-							</span>
-						</a>
-					</div>
-				</div>
+					<span class="collapse-icon-open">
+						<liferay-ui:icon
+							icon="angle-down"
+							markupView="lexicon"
+						/>
+					</span>
+					<span class="collapse-icon-closed">
+						<liferay-ui:icon
+							icon="angle-up"
+							markupView="lexicon"
+						/>
+					</span>
+				</a>
 			</div>
 
-			<div class="lfr-compare-products-mini-content row">
+			<div class="lfr-compare-products-mini-content">
 
-				<%
-				for (CPDefinition cpDefinition : cpDefinitions) {
-				%>
+				<ul class="card-page">
+					<%
+					for (CPDefinition cpDefinition : cpDefinitions) {
+					%>
 
-					<div class="col-md-2">
-						<div class="card">
-							<div class="float-right">
-								<liferay-ui:icon
-									icon="times"
-									markupView="lexicon"
-									message="remove"
-									url="<%= cpCompareContentMiniDisplayContext.getDeleteCompareProductURL(cpDefinition.getCPDefinitionId()) %>"
-								/>
-							</div>
+						<li class="card-page-item">
+							<div class="autofit-row autofit-row-end">
+								<div class="autofit-col">
+									<div class="card">
+										<div class="sticker sticker-top-right">
+											<liferay-ui:icon
+												icon="times"
+												markupView="lexicon"
+												message="remove"
+												url="<%= cpCompareContentMiniDisplayContext.getDeleteCompareProductURL(cpDefinition.getCPDefinitionId()) %>"
+											/>
+										</div>
 
-							<a class="aspect-ratio" href="<%= HtmlUtil.escape(cpCompareContentMiniDisplayContext.getProductFriendlyURL(cpDefinition.getCPDefinitionId())) %>">
+										<a class="aspect-ratio" href="<%= HtmlUtil.escape(cpCompareContentMiniDisplayContext.getProductFriendlyURL(cpDefinition.getCPDefinitionId())) %>">
 
-								<%
-								String img = cpDefinition.getDefaultImageThumbnailSrc(themeDisplay);
-								%>
+											<%
+											String img = cpDefinition.getDefaultImageThumbnailSrc(themeDisplay);
+											%>
 
-								<c:if test="<%= Validator.isNotNull(img) %>">
-									<img class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= img %>">
-								</c:if>
-							</a>
-
-							<div class="card-row card-row-padded card-row-valign-top">
-								<div class="card-col-content text-nowrap">
-									<a class="align-middle truncate-text" href="<%= HtmlUtil.escape(cpCompareContentMiniDisplayContext.getProductFriendlyURL(cpDefinition.getCPDefinitionId())) %>">
+											<c:if test="<%= Validator.isNotNull(img) %>">
+												<img class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= img %>">
+											</c:if>
+										</a>
+									</div>
+								</div>
+								<div class="autofit-col autofit-col-expand">
+									<a class="compare-link" href="<%= HtmlUtil.escape(cpCompareContentMiniDisplayContext.getProductFriendlyURL(cpDefinition.getCPDefinitionId())) %>">
 										<%= cpDefinition.getTitle(languageId) %>
 									</a>
 								</div>
-							</div>
-						</div>
-					</div>
+						</li>
 
-				<%
-				}
-				%>
+					<%
+					}
+					%>
 
-				<c:if test="<%= (cpDefinitions.size() < cpCompareContentMiniDisplayContext.getProductsLimit()) %>">
-					<div class="col-md-2">
-						<div class="card">
-							<div class="aspect-ratio border">
+					<c:if test="<%= (cpDefinitions.size() < cpCompareContentMiniDisplayContext.getProductsLimit()) %>">
+						<li class="card-page-item card-page-item-shrink compare-add-more">
+							<button class="btn btn-secondary btn-lg btn-monospaced">
 								<liferay-ui:icon
-									cssClass="aspect-ratio-item-center-middle aspect-ratio-item-fluid"
 									icon="plus"
 									localizeMessage="<%= true %>"
 									markupView="lexicon"
 									message="add-more-products-to-compare-list"
 								/>
-							</div>
-						</div>
-					</div>
-				</c:if>
+							</button>
+						</li>
+					</c:if>
 
-				<div class="col-md-2">
-					<div class="card">
-						<div class="aspect-ratio">
-							<aui:button cssClass="aspect-ratio-item-center-middle aspect-ratio-item-fluid" href="<%= HtmlUtil.escape(cpCompareContentMiniDisplayContext.getCompareProductsURL()) %>" value="compare" />
-						</div>
-					</div>
-				</div>
+					<li class="card-page-item card-page-item-shrink">
+						<a class="btn btn-link" href="<%= HtmlUtil.escape(cpCompareContentMiniDisplayContext.getClearCompareProductsURL()) %>"><liferay-ui:message key="clear-all" /></a>
+					</li>
+
+					<li class="card-page-item card-page-item-shrink">
+						<aui:button cssClass="btn-primary" href="<%= HtmlUtil.escape(cpCompareContentMiniDisplayContext.getCompareProductsURL()) %>" value="compare" />
+					</li>
+				</ul>
 			</div>
 		</div>
 

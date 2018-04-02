@@ -67,7 +67,7 @@ public class MirrorsGetTask extends Task {
 	}
 
 	public void setSrc(String src) {
-		Matcher matcher = _pattern.matcher(src);
+		Matcher matcher = _srcPattern.matcher(src);
 
 		if (!matcher.find()) {
 			throw new RuntimeException("Invalid src attribute: " + src);
@@ -77,7 +77,7 @@ public class MirrorsGetTask extends Task {
 		_path = matcher.group(1);
 
 		if (_path.startsWith("mirrors/")) {
-			_path = _path.replace("mirrors/", _HOSTNAME);
+			_path = _path.replace("mirrors/", getMirrorsHostname());
 		}
 
 		while (_path.endsWith("/")) {
@@ -126,12 +126,16 @@ public class MirrorsGetTask extends Task {
 	}
 
 	protected void doExecute() throws IOException {
-		if (_tryLocalNetwork && _path.startsWith(_HOSTNAME)) {
+		Matcher matcher = _mirrorsHostNamePattern.matcher(_path);
+
+		if (_tryLocalNetwork && matcher.find()) {
+			String hostname = matcher.group();
+
 			System.out.println(
 				"The src attribute has an unnecessary reference to " +
-					_HOSTNAME);
+					hostname);
 
-			_path = _path.substring(_HOSTNAME.length());
+			_path = _path.substring(hostname.length());
 
 			while (_path.startsWith("/")) {
 				_path = _path.substring(1);
@@ -167,7 +171,7 @@ public class MirrorsGetTask extends Task {
 				sb = new StringBuilder();
 
 				sb.append("http://");
-				sb.append(_HOSTNAME);
+				sb.append(getMirrorsHostname());
 				sb.append("/");
 				sb.append(_path);
 				sb.append("/");
@@ -271,6 +275,18 @@ public class MirrorsGetTask extends Task {
 			throw new IOException(
 				targetFile.getAbsolutePath() + " is an invalid zip file.");
 		}
+	}
+
+	protected String getMirrorsHostname() {
+		if (_mirrorsHostname != null) {
+			return _mirrorsHostname;
+		}
+
+		Project project = getProject();
+
+		_mirrorsHostname = project.getProperty("mirrors.hostname");
+
+		return _mirrorsHostname;
 	}
 
 	protected String getPlatformIndependentPath(String path) {
@@ -487,15 +503,16 @@ public class MirrorsGetTask extends Task {
 		}
 	}
 
-	private static final String _HOSTNAME = "mirrors.lax.liferay.com";
-
-	private static final Pattern _pattern = Pattern.compile(
+	private static final Pattern _mirrorsHostNamePattern = Pattern.compile(
+		"^mirrors\\.[^\\.]+\\.liferay.com/");
+	private static final Pattern _srcPattern = Pattern.compile(
 		"https?://(.+/)(.+)");
 
 	private File _dest;
 	private String _fileName;
 	private boolean _force;
 	private boolean _ignoreErrors;
+	private String _mirrorsHostname;
 	private String _path;
 	private boolean _skipChecksum;
 	private boolean _tryLocalNetwork = true;

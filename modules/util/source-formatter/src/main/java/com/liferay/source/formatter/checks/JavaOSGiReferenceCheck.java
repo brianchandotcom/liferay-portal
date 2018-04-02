@@ -24,8 +24,6 @@ import com.liferay.source.formatter.BNDSettings;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
-import com.liferay.source.formatter.parser.JavaConstructor;
-import com.liferay.source.formatter.parser.JavaMethod;
 import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.util.FileUtil;
 
@@ -181,8 +179,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 
 		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
 			if (!javaTerm.isStatic() &&
-				(javaTerm instanceof JavaConstructor ||
-				 javaTerm instanceof JavaMethod) &&
+				(javaTerm.isJavaConstructor() || javaTerm.isJavaMethod()) &&
 				!javaTerm.hasAnnotation("Reference")) {
 
 				String javaTermContent = javaTerm.getContent();

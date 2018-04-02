@@ -21,7 +21,6 @@ import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
 import com.liferay.source.formatter.parser.JavaTerm;
-import com.liferay.source.formatter.parser.JavaVariable;
 import com.liferay.source.formatter.util.FileUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -241,7 +240,7 @@ public class PersistenceCallCheck extends BaseCheck {
 		}
 
 		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
-			if (!(javaTerm instanceof JavaVariable)) {
+			if (!javaTerm.isJavaVariable()) {
 				continue;
 			}
 

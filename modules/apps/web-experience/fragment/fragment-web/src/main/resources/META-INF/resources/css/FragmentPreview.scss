@@ -1,10 +1,12 @@
 @import "mixins";
+@import "variables";
 
 .fragment-preview {
-	border: solid 4px #EEE;
+	background-color: $editorBackgroundColor;
+	border: solid $editorBorderColor $editorBorderWidth;
 	box-sizing: border-box;
-	height: 40vh;
-	min-height: 20ch;
+	height: $editorHeight;
+	min-height: $editorMinHeight;
 	position: relative;
 	width: 100%;
 
@@ -15,58 +17,53 @@
 		width: 50%;
 	}
 
-	&__frame {
-		background-color: white;
+	&__wrapper {
+		background-color: $editorBackgroundColor;
 		border: none;
-		border-top: solid thin #DDD;
-		height: calc(100% - 2em);
+		height: calc(100% - #{$toolbarHeight} - #{$toolbarBorderWidth});
 		left: 0;
-		margin-top: calc(2em - 1px);
-		overflow: auto;
 		position: absolute;
-		top: 0;
+		top: calc(#{$toolbarHeight} + #{$toolbarBorderWidth});
 		width: 100%;
 
 		&--resized {
-			border-top: none;
 			box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 			left: 50%;
-			margin-top: 0;
+			margin-top: calc((#{$toolbarHeight} + #{$toolbarBorderWidth}) / 2);
 			top: 50%;
 			transform: translateX(-50%) translateY(-50%);
-
-			transition:
-				width ease 0.2s,
-				height ease 0.3s
-			;
+			transition: height ease 0.3s, width ease 0.2s;
 		}
 
 		&--loading {
 			overflow: hidden;
 		}
-
-		&__loading-indicator {
-			background-color: rgba(255, 255, 255, 0.9);
-			height: 100%;
-			left: 0;
-			position: absolute;
-			top: 0;
-			width: 100%;
-			z-index: 1;
-		}
 	}
 
-	&__syntax {
-		color: #AAA;
+	&__loading-indicator {
+		background-color: rgba(255, 255, 255, 0.9);
+		height: 100%;
+		left: 0;
 		position: absolute;
-		right: 0;
-		text-transform: uppercase;
 		top: 0;
+		width: 100%;
 		z-index: 1;
 	}
 
+	&__content {
+		border: none;
+		height: 100%;
+		width: 100%;
+	}
+
 	&__toolbar {
+		background-color: $toolbarBackgroundColor;
+		border-bottom: solid $toolbarBorderWidth $toolbarBorderColor;
+		box-sizing: border-box;
+		height: $toolbarHeight;
+		justify-content: center;
 		margin: 0 auto;
+		width: 100%;
 
 		.btn {
 			background-color: transparent;

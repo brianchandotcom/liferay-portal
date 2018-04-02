@@ -3929,7 +3929,13 @@ to version 2.3.115.
 - [LPS-79282]: Update the [Liferay Source Formatter] dependency to version
 1.0.587.
 
-## 3.10.1 - 2018-03-30
+## 3.10.1 - 2018-03-31
+
+### Changed
+- [LPS-79248]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.116.
+- [LPS-79248]: Update the [Liferay Source Formatter] dependency to version
+1.0.588.
 
 ### Fixed
 - [LPS-69247]: Pass lower case project properties to Bnd when executing the
@@ -4271,6 +4277,7 @@ to version 2.3.115.
 [LPS-79191]: https://issues.liferay.com/browse/LPS-79191
 [LPS-79192]: https://issues.liferay.com/browse/LPS-79192
 [LPS-79226]: https://issues.liferay.com/browse/LPS-79226
+[LPS-79248]: https://issues.liferay.com/browse/LPS-79248
 [LPS-79282]: https://issues.liferay.com/browse/LPS-79282
 [LPS-79286]: https://issues.liferay.com/browse/LPS-79286
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

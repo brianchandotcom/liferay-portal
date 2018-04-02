@@ -3169,7 +3169,7 @@ execution when on the `7.0.x` branch.
 2.0.4.
 - [LPS-79282]: Update the [Liferay Gradle Plugins] dependency to version 3.10.0.
 
-## 5.3.57 - 2018-03-30
+## 5.3.57 - 2018-03-31
 
 ### Changed
 - [LPS-69247]: Update the [Liferay Gradle Plugins] dependency to version 3.10.1.

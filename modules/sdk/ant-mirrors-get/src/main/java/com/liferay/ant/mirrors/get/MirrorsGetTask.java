@@ -183,6 +183,8 @@ public class MirrorsGetTask extends Task {
 					downloadFile(sourceURL, localCacheFile);
 				}
 				catch (IOException ioe) {
+					ioe.printStackTrace();
+
 					sb = new StringBuilder();
 
 					sb.append("http://");
@@ -238,12 +240,13 @@ public class MirrorsGetTask extends Task {
 			size = toFile(sourceURL, targetFile);
 		}
 		catch (IOException ioe) {
+			targetFile.delete();
+
 			if (!_ignoreErrors) {
 				throw ioe;
 			}
-			else {
-				ioe.printStackTrace();
-			}
+
+			ioe.printStackTrace();
 		}
 
 		if (_verbose) {

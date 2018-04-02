@@ -80,7 +80,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a button row <code>&lt;div&gt;</code> tag to wrap button components and offer additional styling.</description>
+		<description>Creates a button row <![CDATA[<code>&lt;div&gt;</code>]]> tag to wrap button components and offer additional styling.</description>
 		<name>button-row</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ButtonRowTag</tag-class>
 		<body-content>JSP</body-content>
@@ -255,7 +255,7 @@
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.EditFormTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>Where to send the form data when the form is submitted.</description>
+			<description>The location to send the form data when the form is submitted.</description>
 			<name>action</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -267,7 +267,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether to escape the XML of the form's action URL. The default value is <code>true</code>.</description>
+			<description>Whether to escape the XML of the form's action URL. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>escapeXml</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -280,26 +280,26 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>Whether to align the form's labels. The default value is <code>false</code>.</description>
+			<description>Whether to align the form's labels. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>inlineLabels</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The method to send the form data. The default value is <code>post</code>. Possible values are <code>get</code> and <code>post</code>.</description>
+			<description>The method to send the form data. The default value is <![CDATA[<code>post</code>]]>. Possible values are <![CDATA[<code>get</code>]]> and <![CDATA[<code>post</code>]]>.</description>
 			<name>method</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A name for the form that is also used for the ID of the component instance. The default value is <code>fm</code>.</description>
+			<description>A name for the form that is also used for the component instance's ID. The default value is <![CDATA[<code>fm</code>]]>.</description>
 			<name>name</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A function to be called on submitting the form.</description>
+			<description>A function to be called when submitting the form.</description>
 			<name>onSubmit</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -311,14 +311,14 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether to use the default portlet namespace, to avoid name conflicts. The default value is <code>true</code>.</description>
+			<description>Whether to use the default portlet namespace to avoid name conflicts. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>useNamespace</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>Whether to validate fields when they lose focus. The default value is <code>true</code>.</description>
+			<description>Whether to validate fields when they lose focus. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>validateOnBlur</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -397,7 +397,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a <code>&lt;div&gt;</code> tag to group related form elements and offer additional styling.</description>
+		<description>Creates a <![CDATA[<code>&lt;div&gt;</code>]]> tag to group related form elements and offer additional styling.</description>
 		<name>fieldset</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.FieldsetTag</tag-class>
 		<body-content>JSP</body-content>
@@ -427,7 +427,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Text to display as a help tooltip on mouse over of the component's help icon.</description>
+			<description>Text to display as a help tooltip when mousing over the component's help icon.</description>
 			<name>helpMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -445,7 +445,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Sets whether to translate the label's text into the user's language. The default value is <code>true</code>.</description>
+			<description>Whether to translate the label's text into the user's language. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>localizeLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -454,7 +454,7 @@
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>
-		<description>Creates a <code>&lt;div&gt;</code> tag to group fieldset elements and offer additional styling.</description>
+		<description>Creates a <![CDATA[<code>&lt;div&gt;</code>]]> tag to group fieldset elements and offer additional styling.</description>
 		<name>fieldset-group</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.FieldsetGroupTag</tag-class>
 		<body-content>JSP</body-content>

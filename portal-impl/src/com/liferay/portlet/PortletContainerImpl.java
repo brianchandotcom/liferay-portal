@@ -129,7 +129,7 @@ public class PortletContainerImpl implements PortletContainer {
 
 		try {
 			if (portlet != null) {
-				preparePortlet(request, portlet);
+				_processGroupId(request, portlet);
 			}
 
 			return _processAction(request, response, portlet);
@@ -206,7 +206,7 @@ public class PortletContainerImpl implements PortletContainer {
 			String portletId = ParamUtil.getString(request, "p_p_id");
 
 			if (portlet != null && portletId.equals(portlet.getPortletId())) {
-				preparePortlet(request, portlet);
+				_processGroupId(request, portlet);
 			}
 
 			_render(request, response, portlet);
@@ -241,7 +241,7 @@ public class PortletContainerImpl implements PortletContainer {
 
 		try {
 			if (portlet != null) {
-				preparePortlet(request, portlet);
+				_processGroupId(request, portlet);
 			}
 
 			_serveResource(request, response, portlet);
@@ -332,22 +332,6 @@ public class PortletContainerImpl implements PortletContainer {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		long scopeGroupId = PortalUtil.getScopeGroupId(
-			request, portlet.getPortletId());
-
-		themeDisplay.setScopeGroupId(scopeGroupId);
-
-		long siteGroupId = 0;
-
-		if (layout.isTypeControlPanel()) {
-			siteGroupId = PortalUtil.getSiteGroupId(scopeGroupId);
-		}
-		else {
-			siteGroupId = PortalUtil.getSiteGroupId(layout.getGroupId());
-		}
-
-		themeDisplay.setSiteGroupId(siteGroupId);
 
 		if (user != null) {
 			HttpSession session = request.getSession();
@@ -621,6 +605,31 @@ public class PortletContainerImpl implements PortletContainer {
 		finally {
 			eventRequestImpl.cleanUp();
 		}
+	}
+
+	private void _processGroupId(HttpServletRequest request, Portlet portlet)
+		throws Exception {
+
+		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long scopeGroupId = PortalUtil.getScopeGroupId(
+			request, portlet.getPortletId());
+
+		themeDisplay.setScopeGroupId(scopeGroupId);
+
+		long siteGroupId = 0;
+
+		if (layout.isTypeControlPanel()) {
+			siteGroupId = PortalUtil.getSiteGroupId(scopeGroupId);
+		}
+		else {
+			siteGroupId = PortalUtil.getSiteGroupId(layout.getGroupId());
+		}
+
+		themeDisplay.setSiteGroupId(siteGroupId);
 	}
 
 	private void _processPublicRenderParameters(

@@ -18,9 +18,9 @@ import aQute.bnd.version.Version;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.ReleaseConstants;
-import com.liferay.portal.kernel.upgrade.CoreUpgradeProcessRegistry;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.upgrade.util.CoreUpgradeProcessRegistry;
 import com.liferay.portal.upgrade.v7_1.UpgradeProcessRegistry;
 
 import java.sql.Connection;

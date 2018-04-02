@@ -29,13 +29,13 @@ public interface UADEntityDisplay<T> {
 	public String[] getDisplayFieldNames();
 
 	public String getEditURL(
-			T entity, LiferayPortletRequest liferayPortletRequest,
+			T t, LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception;
 
 	public String getKey();
 
-	public Map<String, Object> getNonanonymizableFieldValues(T entity);
+	public Map<String, Object> getNonanonymizableFieldValues(T t);
 
 	public String getUADEntityTypeDescription();
 

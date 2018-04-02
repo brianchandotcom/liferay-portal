@@ -28,7 +28,7 @@ public interface UADEntityExporter<T> {
 
 	public long count(long userId) throws PortalException;
 
-	public byte[] export(T entity) throws PortalException;
+	public byte[] export(T t) throws PortalException;
 
 	public File exportAll(long userId) throws PortalException;
 

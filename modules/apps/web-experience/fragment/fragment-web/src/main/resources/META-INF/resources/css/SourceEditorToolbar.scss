@@ -1,5 +1,11 @@
+@import "variables";
+
 .source-editor-toolbar {
-	border-bottom: solid thin #DDD;
+	background-color: $toolbarBackgroundColor;
+	border-bottom: solid $toolbarBorderWidth $toolbarBorderColor;
+	box-sizing: border-box;
+	height: $toolbarHeight;
+	min-height: $toolbarHeight;
 
 	.empty-toolbar {
 		opacity: 0.5;
@@ -7,7 +13,16 @@
 	}
 
 	.toggle-icon {
+		height: 100%;
 		opacity: 1;
+
+		& > .btn-sm {
+			height: 100%;
+
+			& > .inline-item {
+				height: 100%;
+			}
+		}
 
 		&.hidden {
 			opacity: 0.5;

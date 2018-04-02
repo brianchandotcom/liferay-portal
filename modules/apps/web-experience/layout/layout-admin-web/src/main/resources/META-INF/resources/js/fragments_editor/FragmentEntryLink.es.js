@@ -1,4 +1,5 @@
 import Component from 'metal-component';
+import dom from 'metal-dom';
 import {Config} from 'metal-state';
 import {isFunction, isObject, object} from 'metal';
 import Soy from 'metal-soy';
@@ -63,6 +64,7 @@ class FragmentEntryLink extends Component {
 			this._destroyEditors();
 			this._executeFragmentScripts(this.refs.content);
 			this._enableEditableFields(this.refs.content);
+			this._enableEditableImages(this.refs.content);
 		}
 	}
 
@@ -189,6 +191,22 @@ class FragmentEntryLink extends Component {
 	}
 
 	/**
+	 * Allow edition of images
+	 * @param {!HTMLElement} content
+	 * @private
+	 * @review
+	 */
+
+	_enableEditableImages(content) {
+		dom.delegate(
+			content,
+			'click',
+			'lfr-editable[type="image"]',
+			this._handleImageSelectorClick.bind(this)
+		)
+	}
+
+	/**
 	 * After each render, script tags need to be reapended to the DOM
 	 * in order to trigger an execution (content changes do not trigger it).
 	 * @param {!HTMLElement} content
@@ -285,6 +303,57 @@ class FragmentEntryLink extends Component {
 			'remove',
 			{
 				fragmentEntryLinkId: this.fragmentEntryLinkId
+			}
+		);
+	}
+
+	/**
+	 * Handle fragment image selector click
+	 * @param {Event} event Click event.
+	 * @private
+	 */
+
+	_handleImageSelectorClick(event) {
+		const instance = this;
+
+		const delegateTarget = event.delegateTarget;
+
+		const target = event.target;
+
+		AUI().use(
+			'liferay-item-selector-dialog',
+			A => {
+				const itemSelectorDialog = new A.LiferayItemSelectorDialog(
+					{
+						eventName: this.portletNamespace + 'selectImage',
+						on: {
+							selectedItemChange: function(event) {
+								const selectedItem = event.newVal;
+
+								if (selectedItem) {
+									const returnType = selectedItem.returnType;
+
+									var url = '';
+
+									if (returnType === 'URL') {
+										url = selectedItem.value;
+									}
+									else if (returnType === 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType') {
+										const value = JSON.parse(selectedItem.value);
+
+										url = value.url;
+									}
+
+									target.src = url;
+								}
+							}
+						},
+						title: Liferay.Language.get('select'),
+						url: this.imageSelectorURL
+					}
+				);
+
+				itemSelectorDialog.open();
 			}
 		);
 	}

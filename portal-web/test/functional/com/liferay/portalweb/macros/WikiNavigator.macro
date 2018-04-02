@@ -1,10 +1,4 @@
 <definition>
-	<command name="gotoAddChildPageViaCP">
-		<execute macro="LexiconEntry#gotoHeaderMenuItem">
-			<var name="menuItem" value="Add Child Page" />
-		</execute>
-	</command>
-
 	<command name="gotoAddPageViaPG">
 		<execute macro="Portlet#clickPortletPlusIconPG">
 			<var name="portletName" value="Wiki" />

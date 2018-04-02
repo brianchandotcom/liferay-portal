@@ -28,16 +28,16 @@
 		</if>
 	</tear-down>
 
-	<command name="ElasticsearchClusterSmokeTest" priority="5">
+	<command ignore="true" name="EmbeddedClusterSmokeTest" priority="3">
 		<description message="This test asserts Elasticsearch clustering to add/remove replicas as nodes are added/removed from the portal cluster. Also, we want to maintain no loss in search functionality as replicas are being added or removed." />
 
 		<property name="app.server.bundles.size" value="1" />
 		<property name="cluster.enabled" value="true" />
-		<property name="test.name.skip.portal.instance" value="ElasticsearchEE#ElasticsearchClusterSmokeTest" />
+		<property name="test.name.skip.portal.instance" value="ElasticsearchEE#EmbeddedClusterSmokeTest" />
 
 		<!-- Verify the total number of Elasticsearch replicas is two as there are two nodes/bundles running -->
 
-		<!-- LRQA-28998 -->
+		<!-- LPS-67744 -->
 
 		<!--<execute macro="Elasticsearch#viewClusterStatusViaClusterHealthAPI">
 			<var name="numberOfNodes" value="2" />
@@ -120,7 +120,7 @@
 
 		<!-- Verify the total number of Elasticsearch replicas has decreased to one -->
 
-		<!-- LRQA-28998 -->
+		<!-- LPS-67744 -->
 
 		<!-- <execute macro="Elasticsearch#viewReplicaRemovedInConsole" /> -->
 
@@ -163,11 +163,11 @@
 		</execute>
 	</command>
 
-	<command name="ElasticsearchRemotePortalClusterSmokeTest" priority="5">
+	<command name="PortalClusterSmokeTest" priority="5">
 		<property name="app.server.bundles.size" value="1" />
 		<property name="cluster.enabled" value="true" />
 		<property name="remote.elasticsearch.enabled" value="true" />
-		<property name="test.name.skip.portal.instance" value="ElasticsearchEE#ElasticsearchRemotePortalClusterSmokeTest" />
+		<property name="test.name.skip.portal.instance" value="ElasticsearchEE#PortalClusterSmokeTest" />
 
 		<execute macro="Elasticsearch#viewClusterStatusViaClusterHealthAPI">
 			<var name="numberOfNodes" value="1" />

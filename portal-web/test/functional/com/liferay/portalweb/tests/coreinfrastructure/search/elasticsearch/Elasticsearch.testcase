@@ -27,21 +27,7 @@
 		</if>
 	</tear-down>
 
-	<command name="AssertConfigFileValuesPropogateToModule" priority="5">
-		<property name="osgi.module.configuration.file.names" value="com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration.config" />
-		<property name="osgi.module.configurations" value="clusterName=&quot;LiferayElasticsearchCluster1&quot;" />
-		<property name="portal.acceptance" value="true" />
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="http://localhost:9200" />
-		</execute>
-
-		<execute macro="Elasticsearch#viewClusterStatus">
-			<var name="clusterStatus" value="&quot;cluster_name&quot; : &quot;LiferayElasticsearchCluster1&quot;" />
-		</execute>
-	</command>
-
-	<command name="AssertIndexOnStartupViaRemote" priority="5">
+	<command name="AssertRemoteIndexOnStartup" priority="5">
 		<description message="This test asserts that index on startup works consistently on remote Elasticsearch." />
 
 		<property name="portal.acceptance" value="true" />
@@ -160,6 +146,20 @@
 		<execute macro="SearchPortlet#viewSearchResultsPG">
 			<var name="searchAssetTitle" value="Apple" />
 			<var name="searchAssetType" value="Message Boards Message" />
+		</execute>
+	</command>
+
+	<command name="OSGiConfigSmokeTest" priority="5">
+		<property name="osgi.module.configuration.file.names" value="com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration.config" />
+		<property name="osgi.module.configurations" value="clusterName=&quot;LiferayElasticsearchCluster1&quot;" />
+		<property name="portal.acceptance" value="true" />
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://localhost:9200" />
+		</execute>
+
+		<execute macro="Elasticsearch#viewClusterStatus">
+			<var name="clusterStatus" value="&quot;cluster_name&quot; : &quot;LiferayElasticsearchCluster1&quot;" />
 		</execute>
 	</command>
 </definition>

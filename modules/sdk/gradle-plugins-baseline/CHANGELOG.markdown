@@ -74,7 +74,7 @@ project property `baseline.jar.report.only.dirty.packages`.
 ### Changed
 - [LPS-77350]: Update the [Liferay Ant BND] dependency to version 2.0.43.
 
-## 1.2.2 - *(Unreleased)*
+## 1.2.2 - 2018-04-02
 
 ### Changed
 - [LPS-74110]: Update the [Liferay Ant BND] dependency to version 2.0.49.

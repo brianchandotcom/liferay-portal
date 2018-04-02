@@ -2292,6 +2292,30 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test app.server.type="tomcat" database.type="sybase" test.portal.log.assert="true" />
 	</target>
 
+	<target name="functional-smoke-tomcat90-db2105-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="db2" test.portal.log.assert="true" />
+	</target>
+
+	<target name="functional-smoke-tomcat90-mariadb100-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="mariadb" test.portal.log.assert="true" />
+	</target>
+
+	<target name="functional-smoke-tomcat90-mysql56-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="mysql" test.portal.log.assert="true" />
+	</target>
+
+	<target name="functional-smoke-tomcat90-oracle121-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="oracle" test.portal.log.assert="true" />
+	</target>
+
+	<target name="functional-smoke-tomcat90-postgresql94-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="postgresql" test.portal.log.assert="true" />
+	</target>
+
+	<target name="functional-smoke-tomcat90-sybase160-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="sybase" test.portal.log.assert="true" />
+	</target>
+
 	<target name="functional-smoke-weblogic121-mysql56-jdk8">
 		<run-functional-test app.server.type="weblogic" database.type="mysql" test.portal.log.assert="true" />
 	</target>
@@ -2340,6 +2364,38 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test app.server.type="tomcat" database.type="sybase" />
 	</target>
 
+	<target name="functional-tomcat90-db2105-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="db2" />
+	</target>
+
+	<target name="functional-tomcat90-hypersonic20-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="hypersonic" />
+	</target>
+
+	<target name="functional-tomcat90-mariadb100-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="mariadb" />
+	</target>
+
+	<target name="functional-tomcat90-mysql56-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="mysql" />
+	</target>
+
+	<target name="functional-tomcat90-mysql56-jdk8-quarantine">
+		<antcall target="functional-tomcat90-mysql56-jdk8" />
+	</target>
+
+	<target name="functional-tomcat90-oracle121-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="oracle" />
+	</target>
+
+	<target name="functional-tomcat90-postgresql94-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="postgresql" />
+	</target>
+
+	<target name="functional-tomcat90-sybase160-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="sybase" />
+	</target>
+
 	<target name="functional-upgrade-jboss70-mysql56-jdk8">
 		<run-functional-test app.server.type="jboss" database.type="mysql" />
 	</target>
@@ -2369,6 +2425,30 @@ app.server.type=@{app.server.type}]]></echo>
 	</target>
 
 	<target name="functional-upgrade-tomcat80-sybase160-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="sybase" />
+	</target>
+
+	<target name="functional-upgrade-tomcat90-mariadb100-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="mariadb" />
+	</target>
+
+	<target name="functional-upgrade-tomcat90-mysql56-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="mysql" />
+	</target>
+
+	<target name="functional-upgrade-tomcat90-oracle121-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="oracle" />
+	</target>
+
+	<target name="functional-upgrade-tomcat90-postgresql94-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="postgresql" />
+	</target>
+
+	<target name="functional-upgrade-tomcat90-postgresql94-jdk8-quarantine">
+		<antcall target="functional-upgrade-tomcat90-postgresql94-jdk8" />
+	</target>
+
+	<target name="functional-upgrade-tomcat90-sybase160-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="sybase" />
 	</target>
 
@@ -2572,6 +2652,10 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test app.server.type="tomcat" database.type="mysql" />
 	</target>
 
+	<target name="modules-functional-tomcat90-mysql56-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="mysql" />
+	</target>
+
 	<target name="modules-integration-db2105-jdk8">
 		<run-modules-integration-test database.type="db2" />
 	</target>
@@ -2732,6 +2816,10 @@ ${output.content}</echo>
 	</target>
 
 	<target name="plugins-functional-tomcat80-mysql56-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="mysql" />
+	</target>
+
+	<target name="plugins-functional-tomcat90-mysql56-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" />
 	</target>
 
@@ -3399,6 +3487,10 @@ information. Make sure to commit in all build services results.
 	</target>
 
 	<target name="subrepository-functional-tomcat80-mysql56-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="mysql" />
+	</target>
+
+	<target name="subrepository-functional-tomcat90-mysql56-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" />
 	</target>
 

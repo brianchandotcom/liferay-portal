@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.kernel.upgrade;
+package com.liferay.portal.upgrade.util;
 
 import aQute.bnd.version.Version;
+
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.util.TreeMap;
 

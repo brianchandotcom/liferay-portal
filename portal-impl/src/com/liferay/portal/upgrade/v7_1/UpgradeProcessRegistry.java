@@ -16,8 +16,8 @@ package com.liferay.portal.upgrade.v7_1;
 
 import aQute.bnd.version.Version;
 
-import com.liferay.portal.kernel.upgrade.CoreUpgradeProcessRegistry;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.upgrade.util.CoreUpgradeProcessRegistry;
 
 import java.util.TreeMap;
 

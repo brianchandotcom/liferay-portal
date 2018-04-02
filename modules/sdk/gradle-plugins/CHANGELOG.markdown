@@ -3969,6 +3969,7 @@ to version 2.3.119.
 ## 3.10.5 - 2018-04-03
 
 ### Changed
+- [LPS-74110]: Suppress Bnd warning about deprecated annotations.
 - [LPS-74110]: Update the [Liferay Ant BND] dependency to version 2.0.50.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin

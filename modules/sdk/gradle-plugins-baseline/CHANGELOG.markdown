@@ -74,10 +74,10 @@ project property `baseline.jar.report.only.dirty.packages`.
 ### Changed
 - [LPS-77350]: Update the [Liferay Ant BND] dependency to version 2.0.43.
 
-## 1.2.2 - *(Unreleased)*
+## 1.2.2 - 2018-04-03
 
 ### Changed
-- [LPS-74110]: Update the [Liferay Ant BND] dependency to version 2.0.49.
+- [LPS-74110]: Update the [Liferay Ant BND] dependency to version 2.0.50.
 
 [Bnd Builder Gradle Plugin]: https://github.com/bndtools/bnd/tree/master/biz.aQute.bnd.gradle
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

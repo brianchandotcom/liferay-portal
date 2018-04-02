@@ -64,7 +64,7 @@
 		</div>
 
 		<div class="container-fluid-1280 contextual-sidebar-content">
-			<div class="fragments-editor__fragment-entry-links">
+			<div class="fragments-editor__fragment-entry-links" ref="fragmentEntryLinks">
 				{if $fragmentEntryLinks and (length($fragmentEntryLinks) > 0)}
 					{foreach $fragmentEntryLink in $fragmentEntryLinks}
 						<div data-position="{index($fragmentEntryLink)}" key="{$fragmentEntryLink.fragmentEntryLinkId}">

@@ -20,13 +20,9 @@ import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.parser.JavaClass;
-import com.liferay.source.formatter.parser.JavaConstructor;
-import com.liferay.source.formatter.parser.JavaMethod;
 import com.liferay.source.formatter.parser.JavaParameter;
 import com.liferay.source.formatter.parser.JavaSignature;
-import com.liferay.source.formatter.parser.JavaStaticBlock;
 import com.liferay.source.formatter.parser.JavaTerm;
-import com.liferay.source.formatter.parser.JavaVariable;
 
 import java.util.Comparator;
 import java.util.List;
@@ -58,7 +54,7 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 		String name1 = javaTerm1.getName();
 		String name2 = javaTerm2.getName();
 
-		if (javaTerm1 instanceof JavaVariable) {
+		if (javaTerm1.isJavaVariable()) {
 			if (StringUtil.isUpperCase(name1) &&
 				!StringUtil.isLowerCase(name1) &&
 				!StringUtil.isUpperCase(name2)) {
@@ -267,7 +263,7 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 	}
 
 	private int _getType(JavaTerm javaTerm) {
-		if (javaTerm instanceof JavaStaticBlock) {
+		if (javaTerm.isJavaStaticBlock()) {
 			return -1;
 		}
 
@@ -275,32 +271,32 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 
 		if (accessModifier.equals(JavaTerm.ACCESS_MODIFIER_PUBLIC)) {
 			if (javaTerm.isStatic()) {
-				if (javaTerm instanceof JavaVariable) {
+				if (javaTerm.isJavaVariable()) {
 					return 1;
 				}
 
-				if (javaTerm instanceof JavaMethod) {
+				if (javaTerm.isJavaMethod()) {
 					return 2;
 				}
 
-				if (javaTerm instanceof JavaClass) {
+				if (javaTerm.isJavaClass()) {
 					return 6;
 				}
 			}
 			else {
-				if (javaTerm instanceof JavaConstructor) {
+				if (javaTerm.isJavaConstructor()) {
 					return 3;
 				}
 
-				if (javaTerm instanceof JavaMethod) {
+				if (javaTerm.isJavaMethod()) {
 					return 4;
 				}
 
-				if (javaTerm instanceof JavaVariable) {
+				if (javaTerm.isJavaVariable()) {
 					return 5;
 				}
 
-				if (javaTerm instanceof JavaClass) {
+				if (javaTerm.isJavaClass()) {
 					return 7;
 				}
 			}
@@ -308,32 +304,32 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 
 		if (accessModifier.equals(JavaTerm.ACCESS_MODIFIER_PROTECTED)) {
 			if (javaTerm.isStatic()) {
-				if (javaTerm instanceof JavaMethod) {
+				if (javaTerm.isJavaMethod()) {
 					return 8;
 				}
 
-				if (javaTerm instanceof JavaVariable) {
+				if (javaTerm.isJavaVariable()) {
 					return 11;
 				}
 
-				if (javaTerm instanceof JavaClass) {
+				if (javaTerm.isJavaClass()) {
 					return 13;
 				}
 			}
 			else {
-				if (javaTerm instanceof JavaConstructor) {
+				if (javaTerm.isJavaConstructor()) {
 					return 9;
 				}
 
-				if (javaTerm instanceof JavaMethod) {
+				if (javaTerm.isJavaMethod()) {
 					return 10;
 				}
 
-				if (javaTerm instanceof JavaVariable) {
+				if (javaTerm.isJavaVariable()) {
 					return 12;
 				}
 
-				if (javaTerm instanceof JavaClass) {
+				if (javaTerm.isJavaClass()) {
 					return 14;
 				}
 			}
@@ -341,32 +337,32 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 
 		if (accessModifier.equals(JavaTerm.ACCESS_MODIFIER_PRIVATE)) {
 			if (javaTerm.isStatic()) {
-				if (javaTerm instanceof JavaMethod) {
+				if (javaTerm.isJavaMethod()) {
 					return 15;
 				}
 
-				if (javaTerm instanceof JavaVariable) {
+				if (javaTerm.isJavaVariable()) {
 					return 18;
 				}
 
-				if (javaTerm instanceof JavaClass) {
+				if (javaTerm.isJavaClass()) {
 					return 20;
 				}
 			}
 			else {
-				if (javaTerm instanceof JavaConstructor) {
+				if (javaTerm.isJavaConstructor()) {
 					return 16;
 				}
 
-				if (javaTerm instanceof JavaMethod) {
+				if (javaTerm.isJavaMethod()) {
 					return 17;
 				}
 
-				if (javaTerm instanceof JavaVariable) {
+				if (javaTerm.isJavaVariable()) {
 					return 19;
 				}
 
-				if (javaTerm instanceof JavaClass) {
+				if (javaTerm.isJavaClass()) {
 					return 21;
 				}
 			}

@@ -26,11 +26,11 @@ import java.util.List;
 @ProviderType
 public interface UADEntityAnonymizer<T> {
 
-	public void autoAnonymize(T entity, long userId) throws PortalException;
+	public void autoAnonymize(T t, long userId) throws PortalException;
 
 	public void autoAnonymizeAll(long userId) throws PortalException;
 
-	public void delete(T entity) throws PortalException;
+	public void delete(T t) throws PortalException;
 
 	public void deleteAll(long userId) throws PortalException;
 

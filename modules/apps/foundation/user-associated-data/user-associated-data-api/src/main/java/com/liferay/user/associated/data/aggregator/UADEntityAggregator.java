@@ -34,7 +34,7 @@ public interface UADEntityAggregator<T> {
 
 	public String getApplicationName();
 
-	public Serializable getPrimaryKeyObj(T entity);
+	public Serializable getPrimaryKeyObj(T t);
 
 	public List<T> getRange(long userId, int start, int end);
 

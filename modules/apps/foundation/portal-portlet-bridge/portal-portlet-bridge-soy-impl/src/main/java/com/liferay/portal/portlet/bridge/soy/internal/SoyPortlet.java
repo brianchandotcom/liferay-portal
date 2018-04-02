@@ -113,7 +113,13 @@ public class SoyPortlet extends MVCPortlet {
 		propagateRequestParameters = GetterUtil.getBoolean(
 			getInitParameter("propagate-request-parameters"), true);
 
-		_bundle = FrameworkUtil.getBundle(getClass());
+		Class<?> clazz = getClass();
+
+		if (_soyPortletRegister != null) {
+			clazz = _soyPortletRegister.getClass();
+		}
+
+		_bundle = FrameworkUtil.getBundle(clazz);
 		_portletConfig = portletConfig;
 
 		try {

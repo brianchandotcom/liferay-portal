@@ -455,7 +455,6 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Test Page Name" />
-			<var name="privacy" value="Public" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavTab">

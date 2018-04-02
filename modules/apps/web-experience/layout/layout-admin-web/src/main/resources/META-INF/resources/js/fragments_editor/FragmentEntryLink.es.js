@@ -116,7 +116,7 @@ class FragmentEntryLink extends Component {
 
 	_enableEditableFields(content) {
 		this._editors = [].slice
-			.call(content.querySelectorAll('lfr-editable'))
+			.call(content.querySelectorAll('lfr-editable[type="text"]'))
 			.map(
 				editableElement => {
 					const editableId = editableElement.id;

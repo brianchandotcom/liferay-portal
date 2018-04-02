@@ -20,8 +20,8 @@
 		<check name="BNDBundleInformationCheck" />
 		<check name="BNDDirectoryNameCheck" />
 		<check name="BNDExportsCheck">
-			<property name="allowedExportPackageDirNames" value="dynamic-data-mapping-form-evaluator" />
-			<property name="allowedExportPackageDirNames" value="dynamic-data-mapping-service" />
+			<property name="allowedExportPackageDirNames" value="modules/apps/forms-and-workflow/dynamic-data-mapping/dynamic-data-mapping-form-evaluator" />
+			<property name="allowedExportPackageDirNames" value="modules/apps/forms-and-workflow/dynamic-data-mapping/dynamic-data-mapping-service" />
 			<property name="allowedExportPackageDirNames" value="modules/apps/foundation/alloy/alloy-mvc" />
 			<property name="allowedExportPackageDirNames" value="modules/apps/foundation/petra/petra-content" />
 			<property name="allowedExportPackageDirNames" value="modules/apps/foundation/petra/petra-doulos" />

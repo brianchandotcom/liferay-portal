@@ -241,44 +241,6 @@
 			<property name="allowedClassNames" value="com.liferay.wsrp.configuration.definition.WSRPGroupServiceConfigurationBeanDeclaration" />
 			<property name="allowedClassNames" value="com.liferay.xstream.configurator.XStreamConfiguratorRegistryUtil" />
 			<property name="allowedClassNames" value="org.eclipse.core.runtime.FileLocator" />
-
-			<!-- 7.0.x Only -->
-
-			<property name="allowedClassNames" value="com.liferay.blogs.item.selector.internal.handler.BlogsItemSelectorCriterionHandler" />
-			<property name="allowedClassNames" value="com.liferay.bookmarks.trash.BookmarksEntryTrashHandler" />
-			<property name="allowedClassNames" value="com.liferay.bookmarks.trash.BookmarksFolderTrashHandler" />
-			<property name="allowedClassNames" value="com.liferay.bookmarks.verify.BookmarksServiceVerifyProcess" />
-			<property name="allowedClassNames" value="com.liferay.comment.internal.jsonws.CommentManagerJSONWS" />
-			<property name="allowedClassNames" value="com.liferay.contacts.web.internal.social.ContactsCenterRequestInterpreter" />
-			<property name="allowedClassNames" value="com.liferay.exportimport.web.trash.ExportImportConfigurationTrashHandler" />
-			<property name="allowedClassNames" value="com.liferay.item.selector.criteria.internal.audio.handler.AudioItemSelectorCriterionHandler" />
-			<property name="allowedClassNames" value="com.liferay.item.selector.criteria.internal.file.handler.FileItemSelectorCriterionHandler" />
-			<property name="allowedClassNames" value="com.liferay.item.selector.criteria.internal.image.handler.ImageItemSelectorCriterionHandler" />
-			<property name="allowedClassNames" value="com.liferay.item.selector.criteria.internal.upload.handler.UploadItemSelectorCriterionHandler" />
-			<property name="allowedClassNames" value="com.liferay.item.selector.criteria.internal.url.handler.URLItemSelectorCriterionHandler" />
-			<property name="allowedClassNames" value="com.liferay.item.selector.criteria.internal.video.handler.VideoItemSelectorCriterionHandler" />
-			<property name="allowedClassNames" value="com.liferay.knowledge.base.item.selector.internal.handler.KBAttachmentItemSelectorCriterionHandler" />
-			<property name="allowedClassNames" value="com.liferay.layout.item.selector.internal.handler.LayoutItemSelectorCriterionHandler" />
-			<property name="allowedClassNames" value="com.liferay.polls.service.permission.PollsQuestionPermissionChecker" />
-			<property name="allowedClassNames" value="com.liferay.polls.service.permission.PollsQuestionPermissionUpdateHandler" />
-			<property name="allowedClassNames" value="com.liferay.polls.service.permission.PollsResourcePermissionChecker" />
-			<property name="allowedClassNames" value="com.liferay.portal.mobile.device.recognition.internal.rule.group.DefaultActionHandlerManagerImpl" />
-			<property name="allowedClassNames" value="com.liferay.portal.mobile.device.recognition.internal.rule.group.DefaultRuleGroupProcessorImpl" />
-			<property name="allowedClassNames" value="com.liferay.portal.scripting.internal.ScriptingImpl" />
-			<property name="allowedClassNames" value="com.liferay.portal.security.audit.internal.AuditMessageFactoryImpl" />
-			<property name="allowedClassNames" value="com.liferay.portlet.configuration.icon.locator.internal.LegacyConfigurationIconLocator" />
-			<property name="allowedClassNames" value="com.liferay.portlet.configuration.icon.locator.internal.MVCCommandPortletConfigurationIconLocator" />
-			<property name="allowedClassNames" value="com.liferay.portlet.configuration.icon.locator.internal.MVCPortletConfigurationIconLocator" />
-			<property name="allowedClassNames" value="com.liferay.portlet.configuration.icon.locator.internal.StrutsPortletConfigurationIconLocator" />
-			<property name="allowedClassNames" value="com.liferay.portlet.configuration.toolbar.contributor.locator.internal.MVCCommandPortletToolbarContributorLocator" />
-			<property name="allowedClassNames" value="com.liferay.portlet.configuration.toolbar.contributor.locator.internal.MVCPortletToolbarContributorLocator" />
-			<property name="allowedClassNames" value="com.liferay.portlet.configuration.toolbar.contributor.locator.internal.StrutsPortletToolbarContributorLocator" />
-			<property name="allowedClassNames" value="com.liferay.site.internal.application.list.LatentGroupProvider" />
-			<property name="allowedClassNames" value="com.liferay.site.item.selector.internal.handler.SiteItemSelectorCriterionHandler" />
-			<property name="allowedClassNames" value="com.liferay.wiki.internal.item.selector.handler.WikiAttachmentItemSelectorCriterionHandler" />
-			<property name="allowedClassNames" value="com.liferay.wiki.trash.WikiNodeTrashHandler" />
-			<property name="allowedClassNames" value="com.liferay.wiki.trash.WikiPageTrashHandler" />
-			<property name="allowedClassNames" value="com.liferay.wiki.verify.WikiServiceVerifyProcess" />
 		</check>
 		<check name="JavaModuleExtendedObjectClassDefinitionCheck" />
 		<check name="JavaModuleIllegalImportsCheck">

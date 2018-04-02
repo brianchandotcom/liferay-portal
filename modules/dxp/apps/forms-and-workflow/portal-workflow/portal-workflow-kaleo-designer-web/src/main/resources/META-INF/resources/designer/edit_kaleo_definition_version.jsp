@@ -826,9 +826,9 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 					<aui:input name="name" type="hidden" value="<%= PortalUUIDUtil.generate() %>" />
 					<aui:input name="content" type="hidden" value="<%= kaleoDefinition.getContent() %>" />
+					<aui:input name="duplicatedDefinitionName" type="hidden" value="<%= kaleoDefinition.getName() %>" />
 					<aui:input name="duplicatedDefinitionTitle" type="hidden" value="<%= kaleoDefinition.getTitle(LanguageUtil.getLanguageId(request)) %>" />
 					<aui:input name="defaultDuplicationTitle" type="hidden" value="<%= duplicateTitle %>" />
-					<aui:input name="duplicatedDefinitionName" type="hidden" value="<%= kaleoDefinition.getName() %>" />
 
 					<aui:fieldset>
 						<aui:col>

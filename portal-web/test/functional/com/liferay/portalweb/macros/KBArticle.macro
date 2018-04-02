@@ -866,12 +866,6 @@
 		</for>
 	</command>
 
-	<command name="enableSourceURL">
-		<execute function="Check" locator1="Checkbox#SOURCE_URL_ENABLED" />
-
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-	</command>
-
 	<command name="goBackCP">
 		<execute function="AssertClick" locator1="Icon#BACK" value1="Back" />
 	</command>

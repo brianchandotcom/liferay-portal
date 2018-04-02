@@ -847,10 +847,6 @@
 		<execute function="AssertTextEquals" locator1="PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_SENDER_ADDRESS_FIELD" value1="test@liferay.com" />
 	</command>
 
-	<command name="viewEnabledLDAPSetting">
-		<execute function="AssertChecked" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_${enableCheckboxKey}_CHECKBOX" />
-	</command>
-
 	<command name="viewReservedCredentialsScreenNamesCP">
 		<execute macro="Panel#expandPanel">
 			<var name="panel" value="Users" />

@@ -9,16 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>ENABLED_CHECKBOX</td>
-	<td>//input[contains(@id,'SystemSettingsPortlet') and contains(@name,'enabled')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>IMPORT_ENABLED_CHECKBOX</td>
-	<td>//input[contains(@id,'SystemSettingsPortlet') and contains(@name,'importEnabled')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SCOPED_CONFIGURATION_NAME</td>
 	<td>//a[contains(.,'${key_configurationScope}')]/following-sibling::div//a[contains(@class,'nav-link') and normalize-space(./text())='${key_configurationName}']</td>
 	<td></td>
@@ -31,22 +21,6 @@
 <tr>
 	<td>SECURITY_CREDENTIAL_HIDDEN_IMAGE</td>
 	<td>portal/screenshots/foundation/ldap_server_security_credential.png</td>
-	<td></td>
-</tr>
-<!--WEB_CONTENT-->
-<tr>
-	<td>SERVER_ENABLED</td>
-	<td>//input[contains(@id,'serverEnabled')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SHOW_INACTIVE_REQUEST_MESSAGE</td>
-	<td>//input[contains(@id,'show.inactive.request.message')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WEB_CONTENT_ARTICLE_VIEW_PERMISSIONS_CHECK_ENABLED</td>
-	<td>//label[contains(@for,'articleViewPermissionsCheckEnabled')]/input</td>
 	<td></td>
 </tr>
 </tbody>

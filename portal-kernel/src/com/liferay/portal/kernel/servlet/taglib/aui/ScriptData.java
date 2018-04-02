@@ -123,7 +123,7 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 
 		boolean modified = true;
 
-		if ((CharPool.LOWER_CASE_A <= c) && (c <= CharPool.LOWER_CASE_Z) ||
+		if (((CharPool.LOWER_CASE_A <= c) && (c <= CharPool.LOWER_CASE_Z)) ||
 			(c == CharPool.UNDERLINE)) {
 
 			sb.append(c);
@@ -152,8 +152,8 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 					sb.append(c);
 				}
 			}
-			else if ((CharPool.UPPER_CASE_A <= c) &&
-					 (c <= CharPool.UPPER_CASE_Z) ||
+			else if (((CharPool.UPPER_CASE_A <= c) &&
+					  (c <= CharPool.UPPER_CASE_Z)) ||
 					 ((CharPool.NUMBER_0 <= c) && (c <= CharPool.NUMBER_9)) ||
 					 (c == CharPool.UNDERLINE)) {
 

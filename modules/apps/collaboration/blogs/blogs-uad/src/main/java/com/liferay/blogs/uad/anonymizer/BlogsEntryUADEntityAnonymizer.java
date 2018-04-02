@@ -60,7 +60,7 @@ public class BlogsEntryUADEntityAnonymizer
 
 	@Override
 	public void delete(BlogsEntry blogsEntry) throws PortalException {
-		_blogsEntryLocalService.deleteEntry(blogsEntry);
+		_blogsEntryLocalService.deleteBlogsEntry(blogsEntry);
 	}
 
 	@Override

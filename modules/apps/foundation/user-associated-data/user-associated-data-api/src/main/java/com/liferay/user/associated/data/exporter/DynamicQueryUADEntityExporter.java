@@ -47,8 +47,8 @@ public abstract class DynamicQueryUADEntityExporter<T extends BaseModel>
 	}
 
 	@Override
-	public byte[] export(T entity) throws PortalException {
-		String xml = entity.toXmlString();
+	public byte[] export(T baseModel) throws PortalException {
+		String xml = baseModel.toXmlString();
 
 		xml = formatXML(xml);
 
@@ -69,17 +69,18 @@ public abstract class DynamicQueryUADEntityExporter<T extends BaseModel>
 			new AtomicReference<>();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			(ActionableDynamicQuery.PerformActionMethod<T>)entity -> {
-				byte[] data = export(entity);
+			(ActionableDynamicQuery.PerformActionMethod<T>)baseModel -> {
+				byte[] data = export(baseModel);
 
 				try {
 					zipWriterAtomicReference.compareAndSet(
-						null, getZipWriter(userId, entity.getModelClassName()));
+						null,
+						getZipWriter(userId, baseModel.getModelClassName()));
 
 					ZipWriter zipWriter = zipWriterAtomicReference.get();
 
 					zipWriter.addEntry(
-						entity.getPrimaryKeyObj() + ".xml", data);
+						baseModel.getPrimaryKeyObj() + ".xml", data);
 				}
 				catch (IOException ioe) {
 					throw new PortalException(ioe);

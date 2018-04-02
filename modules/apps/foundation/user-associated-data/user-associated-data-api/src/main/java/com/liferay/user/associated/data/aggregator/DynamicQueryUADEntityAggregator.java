@@ -40,8 +40,8 @@ public abstract class DynamicQueryUADEntityAggregator<T extends BaseModel>
 	}
 
 	@Override
-	public Serializable getPrimaryKeyObj(T entity) {
-		return entity.getPrimaryKeyObj();
+	public Serializable getPrimaryKeyObj(T baseModel) {
+		return baseModel.getPrimaryKeyObj();
 	}
 
 	@Override

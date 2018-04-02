@@ -145,10 +145,25 @@ if (publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLayo
 
 		// Left list
 
+		String groupLanguageIds = typeSettingsProperties.getProperty(PropsKeys.LOCALES);
+
+		String[] currentLanguageIds;
+
 		List leftList = new ArrayList();
 
-		for (Locale siteAvailableLocale : siteAvailableLocales) {
-			leftList.add(new KeyValuePair(LocaleUtil.toLanguageId(siteAvailableLocale), siteAvailableLocale.getDisplayName(locale)));
+		if (groupLanguageIds != null) {
+			currentLanguageIds = StringUtil.split(groupLanguageIds);
+
+			Locale[] currentLocales = LocaleUtil.fromLanguageIds(currentLanguageIds);
+
+			for (Locale currentLocale : currentLocales) {
+				leftList.add(new KeyValuePair(LanguageUtil.getLanguageId(currentLocale), currentLocale.getDisplayName(locale)));
+			}
+		}
+		else {
+			for (Locale siteAvailableLocale : siteAvailableLocales) {
+				leftList.add(new KeyValuePair(LocaleUtil.toLanguageId(siteAvailableLocale), siteAvailableLocale.getDisplayName(locale)));
+			}
 		}
 
 		// Right list

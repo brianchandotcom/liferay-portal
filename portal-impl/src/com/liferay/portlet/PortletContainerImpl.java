@@ -151,11 +151,34 @@ public class PortletContainerImpl implements PortletContainer {
 			Portlet portlet, Layout layout, Event event)
 		throws PortletContainerException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long previousScopeGroupId = 0;
+		long previousSiteGroupId = 0;
+
+		if (themeDisplay != null) {
+			previousScopeGroupId = themeDisplay.getScopeGroupId();
+			previousSiteGroupId = themeDisplay.getSiteGroupId();
+		}
+
 		try {
+			String portletId = ParamUtil.getString(request, "p_p_id");
+
+			if (portlet != null && portletId.equals(portlet.getPortletId())) {
+				_processGroupId(request, portlet);
+			}
+
 			return _processEvent(request, response, portlet, layout, event);
 		}
 		catch (Exception e) {
 			throw new PortletContainerException(e);
+		}
+		finally {
+			if (themeDisplay != null) {
+				themeDisplay.setScopeGroupId(previousScopeGroupId);
+				themeDisplay.setSiteGroupId(previousSiteGroupId);
+			}
 		}
 	}
 

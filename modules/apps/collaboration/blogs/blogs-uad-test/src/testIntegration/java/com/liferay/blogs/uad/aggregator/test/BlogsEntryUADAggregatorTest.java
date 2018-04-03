@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.uad.display.test;
+package com.liferay.blogs.uad.aggregator.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
@@ -27,8 +27,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import com.liferay.user.associated.data.aggregator.UADAggregator;
-import com.liferay.user.associated.data.display.UADEntityDisplay;
-import com.liferay.user.associated.data.test.util.BaseUADEntityDisplayTestCase;
+import com.liferay.user.associated.data.test.util.BaseUADAggregatorTestCase;
+import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -43,10 +43,22 @@ import java.util.List;
  * @generated
  */
 @RunWith(Arquillian.class)
-public class BlogsEntryUADEntityDisplayTest extends BaseUADEntityDisplayTestCase {
+public class BlogsEntryUADAggregatorTest extends BaseUADAggregatorTestCase
+	implements WhenHasStatusByUserIdField {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
+
+	@Override
+	public BaseModel<?> addBaseModelWithStatusByUserId(long userId,
+		long statusByUserId) throws Exception {
+		BlogsEntry blogsEntry = _blogsEntryUADEntityTestHelper.addBlogsEntryWithStatusByUserId(userId,
+				statusByUserId);
+
+		_blogsEntries.add(blogsEntry);
+
+		return blogsEntry;
+	}
 
 	@Override
 	protected BaseModel<?> addBaseModel(long userId) throws Exception {
@@ -58,23 +70,8 @@ public class BlogsEntryUADEntityDisplayTest extends BaseUADEntityDisplayTestCase
 	}
 
 	@Override
-	protected String getApplicationName() {
-		return BlogsUADConstants.APPLICATION_NAME;
-	}
-
-	@Override
 	protected UADAggregator getUADAggregator() {
 		return _uadAggregator;
-	}
-
-	@Override
-	protected UADEntityDisplay getUADEntityDisplay() {
-		return _uadEntityDisplay;
-	}
-
-	@Override
-	protected String getTypeDescription() {
-		return "A blog post";
 	}
 
 	@DeleteAfterTestRun
@@ -84,7 +81,4 @@ public class BlogsEntryUADEntityDisplayTest extends BaseUADEntityDisplayTestCase
 	@Inject(filter = "model.class.name=" +
 	BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY)
 	private UADAggregator _uadAggregator;
-	@Inject(filter = "model.class.name=" +
-	BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY)
-	private UADEntityDisplay _uadEntityDisplay;
 }

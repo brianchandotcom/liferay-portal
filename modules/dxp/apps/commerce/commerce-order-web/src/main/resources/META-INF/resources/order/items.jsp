@@ -122,31 +122,6 @@ PortletURL portletURL = commerceOrderEditDisplayContext.getCommerceOrderItemsPor
 </div>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace/>editCommerceOrderItem',
-		function(arg, uri) {
-			var title = '<liferay-ui:message key="edit" />' + ' ' + arg;
-
-			Liferay.Util.openWindow(
-				{
-					dialog: {
-						centered: true,
-						destroyOnClose: true,
-						height: 400,
-						modal: true,
-						width: 500
-					},
-					dialogIframe: {
-						bodyCssClass: 'dialog-with-footer'
-					},
-					id: 'editOrderItemDialog',
-					title: title,
-					uri: uri
-				}
-			);
-		}
-	);
 
 	Liferay.provide(
 		window,

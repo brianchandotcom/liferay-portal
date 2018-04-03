@@ -30,26 +30,18 @@ CommerceOrderItem commerceOrderItem = (CommerceOrderItem)row.getObject();
 	</liferay-portlet:renderURL>
 
 	<%
-	StringBundler sb = new StringBundler(13);
+	Map<String, Object> data = new HashMap<>();
 
-	sb.append("javascript:");
-	sb.append(renderResponse.getNamespace());
-	sb.append("editCommerceOrderItem");
-	sb.append(StringPool.OPEN_PARENTHESIS);
-	sb.append(StringPool.APOSTROPHE);
-	sb.append(HtmlUtil.escapeJS(commerceOrderItem.getTitle(locale)));
-	sb.append(StringPool.APOSTROPHE);
-	sb.append(StringPool.COMMA_AND_SPACE);
-	sb.append(StringPool.APOSTROPHE);
-	sb.append(HtmlUtil.escapeJS(editURL));
-	sb.append(StringPool.APOSTROPHE);
-	sb.append(StringPool.CLOSE_PARENTHESIS);
-	sb.append(StringPool.SEMICOLON);
+	data.put("destroyOnHide", true);
+	data.put("id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editOrderItemDialog");
+	data.put("title", HtmlUtil.escape(commerceOrderItem.getTitle(locale)));
 	%>
 
 	<liferay-ui:icon
+		data="<%= data %>"
+		useDialog="<%= true %>"
 		message="edit"
-		url="<%= sb.toString() %>"
+		url="<%= editURL %>"
 	/>
 
 	<portlet:actionURL name="editCommerceOrderItem" var="deleteURL">

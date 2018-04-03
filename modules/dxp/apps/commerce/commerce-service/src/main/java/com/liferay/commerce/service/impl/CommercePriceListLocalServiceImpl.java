@@ -268,6 +268,8 @@ public class CommercePriceListLocalServiceImpl
 		List<Document> documents = hits.toList();
 
 		if (documents.isEmpty()) {
+			portalCache.put(String.valueOf(userId) + "_calculated", true);
+
 			return Optional.empty();
 		}
 

@@ -327,9 +327,21 @@ public class TopLevelBuild extends BaseBuild {
 		return validationBuild.getGitHubMessageElement();
 	}
 
+	public boolean hasPullRequestObject() {
+		if (_pullRequestObject == null) {
+			return false;
+		}
+
+		return true;
+	}
+
 	@Override
 	public void setCompareToUpstream(boolean compareToUpstream) {
 		_compareToUpstream = compareToUpstream;
+	}
+
+	public void setPullRequestObject(String pullRequestURL) {
+		_pullRequestObject = new PullRequest(pullRequestURL);
 	}
 
 	@Override
@@ -1330,5 +1342,6 @@ public class TopLevelBuild extends BaseBuild {
 	private boolean _compareToUpstream = true;
 	private long _lastDownstreamBuildsListingTimestamp = -1L;
 	private long _updateDuration;
+	private PullRequest _pullRequestObject;
 
 }

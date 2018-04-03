@@ -32,7 +32,7 @@ public class BuildFactory {
 		}
 
 		if (url.contains("-source-format")) {
-			return new SourceFormatBuild(url);
+			return new SourceFormatBuild(url, (TopLevelBuild)parentBuild);
 		}
 
 		if (url.contains("-source")) {

@@ -14,57 +14,77 @@
 
 package com.liferay.message.boards.uad.test;
 
+import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBCategoryLocalService;
+import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import org.junit.Assume;
+import java.io.Serializable;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
-
-import java.util.List;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @Component(immediate = true, service = MBMessageUADEntityTestHelper.class)
 public class MBMessageUADEntityTestHelper {
-	/**
-	 * Implement addMBMessage() to enable some UAD tests.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid MBMessages with a specified user ID in order to execute correctly. Implement addMBMessage() such that it creates a valid MBMessage with the specified user ID value and returns it in order to enable the UAD tests that depend on it.
-	 * </p>
-	 *
-	 */
+
 	public MBMessage addMBMessage(long userId) throws Exception {
-		Assume.assumeTrue(false);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId());
 
-		return null;
+		MBCategory mbCategory = _mbCategoryLocalService.addCategory(
+			userId, 0L, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
+
+		return _mbMessageLocalService.addMessage(
+			userId, RandomTestUtil.randomString(), TestPropsValues.getGroupId(),
+			mbCategory.getCategoryId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 	}
 
-	/**
-	 * Implement addMBMessageWithStatusByUserId() to enable some UAD tests.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid MBMessages with specified user ID and status by user ID in order to execute correctly. Implement addMBMessageWithStatusByUserId() such that it creates a valid MBMessage with the specified user ID and status by user ID values and returns it in order to enable the UAD tests that depend on it.
-	 * </p>
-	 *
-	 */
-	public MBMessage addMBMessageWithStatusByUserId(long userId,
-		long statusByUserId) throws Exception {
-		Assume.assumeTrue(false);
+	public MBMessage addMBMessageWithStatusByUserId(
+			long userId, long statusByUserId)
+		throws Exception {
 
-		return null;
+		MBMessage mbMessage = addMBMessage(userId);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId());
+
+		Map<String, Serializable> workflowContext = new HashMap<>();
+
+		workflowContext.put(WorkflowConstants.CONTEXT_URL, "http://localhost");
+
+		return _mbMessageLocalService.updateStatus(
+			statusByUserId, mbMessage.getMessageId(),
+			WorkflowConstants.STATUS_APPROVED, serviceContext, workflowContext);
 	}
 
-	/**
-	 * Implement cleanUpDependencies(List<MBMessage> mbMessages) if tests require additional tear down logic.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid MBMessages with specified user ID and status by user ID in order to execute correctly. Implement cleanUpDependencies(List<MBMessage> mbMessages) such that any additional objects created during the construction of mbMessages are safely removed.
-	 * </p>
-	 *
-	 */
 	public void cleanUpDependencies(List<MBMessage> mbMessages)
 		throws Exception {
+
+		for (MBMessage mbMessage : mbMessages) {
+			_mbCategoryLocalService.deleteCategory(mbMessage.getCategoryId());
+		}
 	}
+
+	@Reference
+	private MBCategoryLocalService _mbCategoryLocalService;
+
+	@Reference
+	private MBMessageLocalService _mbMessageLocalService;
+
 }

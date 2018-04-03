@@ -14,57 +14,70 @@
 
 package com.liferay.message.boards.uad.test;
 
+import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
-
-import org.junit.Assume;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.message.boards.service.MBCategoryLocalService;
+import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.message.boards.service.MBThreadLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @Component(immediate = true, service = MBThreadUADEntityTestHelper.class)
 public class MBThreadUADEntityTestHelper {
-	/**
-	 * Implement addMBThread() to enable some UAD tests.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid MBThreads with a specified user ID in order to execute correctly. Implement addMBThread() such that it creates a valid MBThread with the specified user ID value and returns it in order to enable the UAD tests that depend on it.
-	 * </p>
-	 *
-	 */
+
 	public MBThread addMBThread(long userId) throws Exception {
-		Assume.assumeTrue(false);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId());
 
-		return null;
+		MBCategory mbCategory = _mbCategoryLocalService.addCategory(
+			userId, 0L, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
+
+		MBMessage mbMessage = _mbMessageLocalService.addMessage(
+			userId, RandomTestUtil.randomString(), TestPropsValues.getGroupId(),
+			mbCategory.getCategoryId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
+
+		return _mbThreadLocalService.getMBThread(mbMessage.getThreadId());
 	}
 
-	/**
-	 * Implement addMBThreadWithStatusByUserId() to enable some UAD tests.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid MBThreads with specified user ID and status by user ID in order to execute correctly. Implement addMBThreadWithStatusByUserId() such that it creates a valid MBThread with the specified user ID and status by user ID values and returns it in order to enable the UAD tests that depend on it.
-	 * </p>
-	 *
-	 */
-	public MBThread addMBThreadWithStatusByUserId(long userId,
-		long statusByUserId) throws Exception {
-		Assume.assumeTrue(false);
-
-		return null;
-	}
-
-	/**
-	 * Implement cleanUpDependencies(List<MBThread> mbThreads) if tests require additional tear down logic.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid MBThreads with specified user ID and status by user ID in order to execute correctly. Implement cleanUpDependencies(List<MBThread> mbThreads) such that any additional objects created during the construction of mbThreads are safely removed.
-	 * </p>
-	 *
-	 */
-	public void cleanUpDependencies(List<MBThread> mbThreads)
+	public MBThread addMBThreadWithStatusByUserId(
+			long userId, long statusByUserId)
 		throws Exception {
+
+		MBThread mbThread = addMBThread(userId);
+
+		return _mbThreadLocalService.updateStatus(
+			statusByUserId, mbThread.getThreadId(),
+			WorkflowConstants.STATUS_APPROVED);
 	}
+
+	public void cleanUpDependencies(List<MBThread> mbThreads) throws Exception {
+		for (MBThread mbThread : mbThreads) {
+			_mbCategoryLocalService.deleteCategory(mbThread.getCategoryId());
+		}
+	}
+
+	@Reference
+	private MBCategoryLocalService _mbCategoryLocalService;
+
+	@Reference
+	private MBMessageLocalService _mbMessageLocalService;
+
+	@Reference
+	private MBThreadLocalService _mbThreadLocalService;
+
 }

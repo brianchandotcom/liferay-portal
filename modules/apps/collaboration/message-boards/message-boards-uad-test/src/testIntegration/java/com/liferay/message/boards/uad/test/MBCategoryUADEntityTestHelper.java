@@ -15,56 +15,50 @@
 package com.liferay.message.boards.uad.test;
 
 import com.liferay.message.boards.model.MBCategory;
-
-import org.junit.Assume;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.message.boards.service.MBCategoryLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @Component(immediate = true, service = MBCategoryUADEntityTestHelper.class)
 public class MBCategoryUADEntityTestHelper {
-	/**
-	 * Implement addMBCategory() to enable some UAD tests.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid MBCategories with a specified user ID in order to execute correctly. Implement addMBCategory() such that it creates a valid MBCategory with the specified user ID value and returns it in order to enable the UAD tests that depend on it.
-	 * </p>
-	 *
-	 */
+
 	public MBCategory addMBCategory(long userId) throws Exception {
-		Assume.assumeTrue(false);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId());
 
-		return null;
+		return _mbCategoryLocalService.addCategory(
+			userId, 0L, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 	}
 
-	/**
-	 * Implement addMBCategoryWithStatusByUserId() to enable some UAD tests.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid MBCategories with specified user ID and status by user ID in order to execute correctly. Implement addMBCategoryWithStatusByUserId() such that it creates a valid MBCategory with the specified user ID and status by user ID values and returns it in order to enable the UAD tests that depend on it.
-	 * </p>
-	 *
-	 */
-	public MBCategory addMBCategoryWithStatusByUserId(long userId,
-		long statusByUserId) throws Exception {
-		Assume.assumeTrue(false);
+	public MBCategory addMBCategoryWithStatusByUserId(
+			long userId, long statusByUserId)
+		throws Exception {
 
-		return null;
+		MBCategory mbCategory = addMBCategory(userId);
+
+		return _mbCategoryLocalService.updateStatus(
+			statusByUserId, mbCategory.getCategoryId(),
+			WorkflowConstants.STATUS_APPROVED);
 	}
 
-	/**
-	 * Implement cleanUpDependencies(List<MBCategory> mbCategories) if tests require additional tear down logic.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid MBCategories with specified user ID and status by user ID in order to execute correctly. Implement cleanUpDependencies(List<MBCategory> mbCategories) such that any additional objects created during the construction of mbCategories are safely removed.
-	 * </p>
-	 *
-	 */
 	public void cleanUpDependencies(List<MBCategory> mbCategories)
 		throws Exception {
 	}
+
+	@Reference
+	private MBCategoryLocalService _mbCategoryLocalService;
+
 }

@@ -134,6 +134,11 @@ public class TopLevelBuild extends BaseBuild {
 		return getTempMap(tempMapName);
 	}
 
+	@Override
+	public String getBaseRepositoryName() {
+		return _pullRequestObject.getRepositoryName();
+	}
+
 	public String getCompanionBranchName() {
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 

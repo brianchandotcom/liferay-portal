@@ -24,10 +24,10 @@
 		</fileSet>
 	</fileSets>
 	<requiredProperties>
+		<requiredProperty key="author">
+		</requiredProperty>
 		<requiredProperty key="buildType">
 			<defaultValue>maven</defaultValue>
-		</requiredProperty>
-		<requiredProperty key="author">
 		</requiredProperty>
 		<requiredProperty key="className">
 		</requiredProperty>

@@ -406,4 +406,7 @@ public interface OAuth2ApplicationPersistence extends BasePersistence<OAuth2Appl
 	* @return the number of o auth2 applications
 	*/
 	public int countAll();
+
+	@Override
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

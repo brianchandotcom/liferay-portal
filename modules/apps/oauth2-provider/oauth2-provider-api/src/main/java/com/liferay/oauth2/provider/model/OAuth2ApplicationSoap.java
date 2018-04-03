@@ -40,6 +40,7 @@ public class OAuth2ApplicationSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setOAuth2ApplicationScopeAliasesId(model.getOAuth2ApplicationScopeAliasesId());
 		soapModel.setAllowedGrantTypes(model.getAllowedGrantTypes());
 		soapModel.setClientId(model.getClientId());
 		soapModel.setClientProfile(model.getClientProfile());
@@ -51,7 +52,6 @@ public class OAuth2ApplicationSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setPrivacyPolicyURL(model.getPrivacyPolicyURL());
 		soapModel.setRedirectURIs(model.getRedirectURIs());
-		soapModel.setScopeAliases(model.getScopeAliases());
 
 		return soapModel;
 	}
@@ -155,6 +155,15 @@ public class OAuth2ApplicationSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public long getOAuth2ApplicationScopeAliasesId() {
+		return _oAuth2ApplicationScopeAliasesId;
+	}
+
+	public void setOAuth2ApplicationScopeAliasesId(
+		long oAuth2ApplicationScopeAliasesId) {
+		_oAuth2ApplicationScopeAliasesId = oAuth2ApplicationScopeAliasesId;
+	}
+
 	public String getAllowedGrantTypes() {
 		return _allowedGrantTypes;
 	}
@@ -243,20 +252,13 @@ public class OAuth2ApplicationSoap implements Serializable {
 		_redirectURIs = redirectURIs;
 	}
 
-	public String getScopeAliases() {
-		return _scopeAliases;
-	}
-
-	public void setScopeAliases(String scopeAliases) {
-		_scopeAliases = scopeAliases;
-	}
-
 	private long _oAuth2ApplicationId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private long _oAuth2ApplicationScopeAliasesId;
 	private String _allowedGrantTypes;
 	private String _clientId;
 	private int _clientProfile;
@@ -268,5 +270,4 @@ public class OAuth2ApplicationSoap implements Serializable {
 	private String _name;
 	private String _privacyPolicyURL;
 	private String _redirectURIs;
-	private String _scopeAliases;
 }

@@ -19,9 +19,9 @@
 <%
 AssetEntry assetEntry = (AssetEntry)request.getAttribute("view.jsp-assetEntry");
 
-BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
+BlogsEntry blogsEntry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 %>
 
 <aui:script require="blogs-analytics@1.0.0/js/track_blogs_entry.es as trackBlogsEntry">
-	trackBlogsEntry.default('<%= entry.getEntryId() %>', '<portlet:namespace /><%= assetEntry.getEntryId() %>');
+	trackBlogsEntry.default('<%= blogsEntry.getEntryId() %>', '<portlet:namespace /><%= assetEntry.getEntryId() %>');
 </aui:script>

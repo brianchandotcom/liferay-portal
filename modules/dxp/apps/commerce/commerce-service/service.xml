@@ -1205,5 +1205,7 @@
 		<exception>CommerceWarehouseCommerceRegionId</exception>
 		<exception>CommerceWarehouseName</exception>
 		<exception>DuplicateCommercePriceEntry</exception>
+		<exception>GuestCartItemMaxAllowed</exception>
+		<exception>GuestCartMaxAllowed</exception>
 	</exceptions>
 </service-builder>

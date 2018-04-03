@@ -61,6 +61,11 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	/**
 	 * Adds a web content article with additional parameters.
 	 *
+	 * <p>
+	 * All scheduling parameters(displayDate, expireDate and reviewDate) use
+	 * current user's timezone.
+	 * </p>
+	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  folderId the primary key of the web content article folder
 	 * @param  classNameId the primary key of the DDMStructure class if the web
@@ -173,6 +178,11 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	/**
 	 * Adds a web content article with additional parameters.
 	 *
+	 * <p>
+	 * All scheduling parameters(displayDate, expireDate and reviewDate) use
+	 * current user's timezone.
+	 * </p>
+	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  folderId the primary key of the web content article folder
 	 * @param  classNameId the primary key of the DDMStructure class if the web
@@ -282,6 +292,11 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 	/**
 	 * Adds a web content article without any images.
+	 *
+	 * <p>
+	 * All scheduling parameters(displayDate, expireDate and reviewDate) use
+	 * current user's timezone.
+	 * </p>
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  folderId the primary key of the web content article folder
@@ -2222,6 +2237,11 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	/**
 	 * Updates the web content article with additional parameters.
 	 *
+	 * <p>
+	 * All scheduling parameters(displayDate, expireDate and reviewDate) use
+	 * current user's timezone.
+	 * </p>
+	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  folderId the primary key of the web content article folder
 	 * @param  articleId the primary key of the web content article
@@ -2333,6 +2353,11 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 	/**
 	 * Updates the web content article with additional parameters.
+	 *
+	 * <p>
+	 * All scheduling parameters(displayDate, expireDate and reviewDate) use
+	 * current user's timezone.
+	 * </p>
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  folderId the primary key of the web content article folder

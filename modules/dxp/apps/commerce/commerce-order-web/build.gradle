@@ -3,9 +3,11 @@ targetCompatibility = "1.8"
 
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.application.list.api", version: "2.0.0"
-	provided group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.3.0-20171013.044758-4"
+	provided group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.3.0-20180131.001308-11"
 	provided group: "com.liferay", name: "com.liferay.frontend.taglib.clay", version: "1.0.0-20180131.001441-5"
 	provided group: "com.liferay", name: "com.liferay.frontend.taglib.soy", version: "1.0.0"
+	provided group: "com.liferay", name: "com.liferay.item.selector.api", version: "2.3.0"
+	provided group: "com.liferay", name: "com.liferay.item.selector.criteria.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.function", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
@@ -22,6 +24,7 @@ dependencies {
 	provided project(":private:apps:commerce:commerce-currency-api")
 	provided project(":private:apps:commerce:commerce-organization-api")
 	provided project(":private:apps:commerce:commerce-product-api")
+	provided project(":private:apps:commerce:commerce-product-item-selector-api")
 	provided project(":private:apps:commerce:commerce-product-service")
 	provided project(":private:apps:commerce:commerce-service")
 }

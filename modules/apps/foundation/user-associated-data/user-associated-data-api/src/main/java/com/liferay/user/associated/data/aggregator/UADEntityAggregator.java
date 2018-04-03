@@ -28,13 +28,13 @@ public interface UADEntityAggregator<T> {
 
 	public long count(long userId);
 
-	public T get(Serializable primKeyObj) throws Exception;
+	public T get(Serializable primaryKey) throws Exception;
 
 	public List<T> getAll(long userId);
 
 	public String getApplicationName();
 
-	public Serializable getPrimaryKeyObj(T t);
+	public Serializable getPrimaryKey(T t);
 
 	public List<T> getRange(long userId, int start, int end);
 

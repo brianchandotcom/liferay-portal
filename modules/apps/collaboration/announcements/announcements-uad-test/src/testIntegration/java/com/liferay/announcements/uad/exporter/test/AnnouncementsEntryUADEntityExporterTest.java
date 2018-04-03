@@ -70,7 +70,7 @@ public class AnnouncementsEntryUADEntityExporterTest
 			_user.getUserId());
 
 		List<AnnouncementsEntry> announcementsEntries =
-			_uadEntityAggregator.getEntities(_user.getUserId(), 0, 1);
+			_uadEntityAggregator.getRange(_user.getUserId(), 0, 1);
 
 		AnnouncementsEntry announcementsEntry1 = announcementsEntries.get(0);
 

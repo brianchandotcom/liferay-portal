@@ -61,13 +61,28 @@
 	</command>
 
 	<command name="selectLanguagePG">
+		<var name="portletName" value="${portletName}" />
+
 		<if>
-			<condition function="IsTextNotEqual" locator1="Language#DROPDOWN_LANGUAGE" value1="${locale}" />
+			<contains string="${portletName}" substring="{portletName}" />
 			<then>
-				<execute function="Click" locator1="Language#DROPDOWN" />
+				<var name="portletName" value="LanguagePortlet" />
+			</then>
+		</if>
+
+		<if>
+			<condition function="IsTextNotEqual" locator1="Language#DROPDOWN_LANGUAGE" value1="${locale}">
+				<var name="key_portletName" value="${portletName}" />
+			</condition>
+
+			<then>
+				<execute function="Click" locator1="Language#DROPDOWN">
+					<var name="key_portletName" value="${portletName}" />
+				</execute>
 
 				<execute function="AssertClick" locator1="Language#LANGUAGE" value1="${locale}">
 					<var name="key_locale" value="${locale}" />
+					<var name="key_portletName" value="${portletName}" />
 				</execute>
 			</then>
 		</if>

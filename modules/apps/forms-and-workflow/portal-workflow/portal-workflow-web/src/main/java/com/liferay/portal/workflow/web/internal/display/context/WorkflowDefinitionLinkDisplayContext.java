@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.SessionClicks;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
@@ -120,9 +119,7 @@ public class WorkflowDefinitionLinkDisplayContext {
 					_workflowDefinitionLinkRequestHelper.getCompanyId(),
 					defaultWorkflowDefinitionLink.getWorkflowDefinitionName());
 
-			return StringBundler.concat(
-				defaultWorkflowDefinition.getTitle(), " (",
-				String.valueOf(defaultWorkflowDefinition.getVersion()), ")");
+			return defaultWorkflowDefinition.getTitle();
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {

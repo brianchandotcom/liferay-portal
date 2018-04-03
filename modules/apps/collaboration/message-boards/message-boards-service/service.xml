@@ -47,7 +47,7 @@
 		<reference entity="SystemEvent" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity human-name="message boards category" local-service="true" name="MBCategory" remote-service="true" trash-enabled="true" uuid="true">
+	<entity human-name="message boards category" local-service="true" name="MBCategory" remote-service="true" trash-enabled="true" uad-entity-type-description="A message board category" uuid="true">
 
 		<!-- PK fields -->
 
@@ -61,15 +61,15 @@
 
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
-		<column name="userName" type="String" />
+		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
 		<!-- Other fields -->
 
 		<column name="parentCategoryId" parent-container-model="true" type="long" />
-		<column name="name" type="String" />
-		<column name="description" type="String" />
+		<column name="name" type="String" uad-nonanonymizable="true" />
+		<column name="description" type="String" uad-nonanonymizable="true" />
 		<column name="displayStyle" type="String" />
 		<column name="threadCount" type="int" />
 		<column name="messageCount" type="int" />
@@ -77,7 +77,7 @@
 		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
-		<column name="statusByUserName" type="String" />
+		<column name="statusByUserName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="statusDate" type="Date" />
 
 		<!-- Order -->
@@ -242,7 +242,7 @@
 
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity human-name="message-boards message" local-service="true" name="MBMessage" remote-service="true" trash-enabled="true" uuid="true">
+	<entity human-name="message-boards message" local-service="true" name="MBMessage" remote-service="true" trash-enabled="true" uad-entity-type-description="A message board message" uuid="true">
 
 		<!-- PK fields -->
 
@@ -256,7 +256,7 @@
 
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
-		<column name="userName" type="String" />
+		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
@@ -268,8 +268,8 @@
 		<column name="threadId" type="long" />
 		<column filter-primary="true" name="rootMessageId" type="long" />
 		<column name="parentMessageId" type="long" />
-		<column name="subject" type="String" />
-		<column name="body" type="String" />
+		<column name="subject" type="String" uad-nonanonymizable="true" />
+		<column name="body" type="String" uad-nonanonymizable="true" />
 		<column name="format" type="String" />
 		<column name="anonymous" type="boolean" />
 		<column name="priority" type="double" />
@@ -278,7 +278,7 @@
 		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
-		<column name="statusByUserName" type="String" />
+		<column name="statusByUserName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="statusDate" type="Date" />
 
 		<!-- Order -->
@@ -481,7 +481,7 @@
 
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
-		<column name="userName" type="String" />
+		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
@@ -499,7 +499,7 @@
 		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
-		<column name="statusByUserName" type="String" />
+		<column name="statusByUserName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="statusDate" type="Date" />
 
 		<!-- Order -->

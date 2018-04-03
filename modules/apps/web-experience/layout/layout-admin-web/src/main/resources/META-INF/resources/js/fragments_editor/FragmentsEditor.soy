@@ -100,8 +100,8 @@
 
 			{call liferay.frontend.ContextualSidebar.render}
 				{param body kind="html"}
-					{if $_sidebarSelectedTab == 'fragments'}
-						{call com.liferay.layout.admin.web.SidebarFragmentCollections.render}
+					{if $_sidebarSelectedTab == 'available'}
+						{call com.liferay.layout.admin.web.SidebarAvailableFragments.render}
 							{param events: ['collectionEntryClick': $_handleFragmentCollectionEntryClick] /}
 							{param fragmentCollections: $fragmentCollections /}
 							{param spritemap: $spritemap /}

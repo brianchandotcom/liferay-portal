@@ -5,7 +5,7 @@ import {Config} from 'metal-state';
 
 import './dialogs/SelectMappingTypeDialog.es';
 import './sidebar/SidebarAddedFragments.es';
-import './sidebar/SidebarFragmentCollections.es';
+import './sidebar/SidebarAvailableFragments.es';
 import './sidebar/SidebarMapping.es';
 import FragmentEntryLink from './FragmentEntryLink.es';
 import templates from './FragmentsEditor.soy';
@@ -782,7 +782,7 @@ FragmentsEditor.STATE = {
 	_sidebarSelectedTab: Config
 		.string()
 		.internal()
-		.value('fragments')
+		.value('available')
 };
 
 Soy.register(FragmentsEditor, templates);

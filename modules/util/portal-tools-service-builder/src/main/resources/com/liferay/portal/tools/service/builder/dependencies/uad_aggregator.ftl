@@ -6,8 +6,8 @@ import ${packagePath}.uad.constants.${portletShortName}UADConstants;
 
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.user.associated.data.aggregator.DynamicQueryUADEntityAggregator;
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
+import com.liferay.user.associated.data.aggregator.DynamicQueryUADAggregator;
+import com.liferay.user.associated.data.aggregator.UADAggregator;
 
 import java.io.Serializable;
 
@@ -23,9 +23,9 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {"model.class.name=" + ${portletShortName}UADConstants.CLASS_NAME_${entity.constantName}},
-	service = UADEntityAggregator.class
+	service = UADAggregator.class
 )
-public class ${entity.name}UADEntityAggregator extends DynamicQueryUADEntityAggregator<${entity.name}> {
+public class ${entity.name}UADAggregator extends DynamicQueryUADAggregator<${entity.name}> {
 
 	@Override
 	public String getApplicationName() {

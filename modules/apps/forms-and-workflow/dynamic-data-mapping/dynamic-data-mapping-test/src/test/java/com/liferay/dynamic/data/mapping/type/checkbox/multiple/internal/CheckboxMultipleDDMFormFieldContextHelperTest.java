@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.type.checkbox.multiple.internal;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
+import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
@@ -75,7 +76,11 @@ public class CheckboxMultipleDDMFormFieldContextHelperTest {
 				new CheckboxMultipleDDMFormFieldContextHelper(
 					new JSONFactoryImpl(), ddmFormFieldOptions, locale);
 
-		return checkboxMultipleDDMFormFieldContextHelper.getOptions();
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			new DDMFormFieldRenderingContext();
+
+		return checkboxMultipleDDMFormFieldContextHelper.getOptions(
+			ddmFormFieldRenderingContext);
 	}
 
 }

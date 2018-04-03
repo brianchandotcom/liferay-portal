@@ -14,21 +14,27 @@
 
 package com.liferay.message.boards.uad.display;
 
+import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.model.MBMessage;
-
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
- * @author Brian Wing Shun Chan
+ * @author William Newbury
  */
 @Component(immediate = true, service = MBMessageUADEntityDisplayHelper.class)
 public class MBMessageUADEntityDisplayHelper {
+
 	/**
 	 * Returns an ordered string array of the fields' names to be displayed.
 	 * Each field name corresponds to a table column based on the order they are
@@ -37,31 +43,41 @@ public class MBMessageUADEntityDisplayHelper {
 	 * @return the array of field names to display
 	 */
 	public String[] getDisplayFieldNames() {
-		return new String[] { "subject", "body" };
+		return new String[] {"subject", "body"};
 	}
 
-	/**
-	 * Implement getMBMessageEditURL() to enable editing MBMessages from the GDPR UI.
-	 *
-	 * <p>
-	 * Editing MBMessages in the GDPR UI depends on generating valid edit URLs. Implement getMBMessageEditURL() such that it returns a valid edit URL for the specified MBMessage.
-	 * </p>
-	 *
-	 */
-	public String getMBMessageEditURL(MBMessage mbMessage,
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
-		return "";
+	public String getMBMessageEditURL(
+			MBMessage mbMessage, LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws Exception {
+
+		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
+			portal.getControlPanelPlid(liferayPortletRequest),
+			MBPortletKeys.MESSAGE_BOARDS, PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_message");
+		portletURL.setParameter(
+			"redirect", portal.getCurrentURL(liferayPortletRequest));
+		portletURL.setParameter(
+			"messageId", String.valueOf(mbMessage.getMessageId()));
+
+		return portletURL.toString();
 	}
 
 	public Map<String, Object> getUADEntityNonanonymizableFieldValues(
 		MBMessage mbMessage) {
-		Map<String, Object> uadEntityNonanonymizableFieldValues = new HashMap<String, Object>();
 
-		uadEntityNonanonymizableFieldValues.put("subject",
-			mbMessage.getSubject());
+		Map<String, Object> uadEntityNonanonymizableFieldValues =
+			new HashMap<>();
+
 		uadEntityNonanonymizableFieldValues.put("body", mbMessage.getBody());
+		uadEntityNonanonymizableFieldValues.put(
+			"subject", mbMessage.getSubject());
 
 		return uadEntityNonanonymizableFieldValues;
 	}
+
+	@Reference
+	protected Portal portal;
+
 }

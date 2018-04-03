@@ -14,21 +14,27 @@
 
 package com.liferay.message.boards.uad.display;
 
+import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.model.MBCategory;
-
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
- * @author Brian Wing Shun Chan
+ * @author William Newbury
  */
 @Component(immediate = true, service = MBCategoryUADEntityDisplayHelper.class)
 public class MBCategoryUADEntityDisplayHelper {
+
 	/**
 	 * Returns an ordered string array of the fields' names to be displayed.
 	 * Each field name corresponds to a table column based on the order they are
@@ -37,31 +43,41 @@ public class MBCategoryUADEntityDisplayHelper {
 	 * @return the array of field names to display
 	 */
 	public String[] getDisplayFieldNames() {
-		return new String[] { "name", "description" };
+		return new String[] {"name", "description"};
 	}
 
-	/**
-	 * Implement getMBCategoryEditURL() to enable editing MBCategories from the GDPR UI.
-	 *
-	 * <p>
-	 * Editing MBCategories in the GDPR UI depends on generating valid edit URLs. Implement getMBCategoryEditURL() such that it returns a valid edit URL for the specified MBCategory.
-	 * </p>
-	 *
-	 */
-	public String getMBCategoryEditURL(MBCategory mbCategory,
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
-		return "";
+	public String getMBCategoryEditURL(
+			MBCategory mbCategory, LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws Exception {
+
+		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
+			portal.getControlPanelPlid(liferayPortletRequest),
+			MBPortletKeys.MESSAGE_BOARDS, PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_category");
+		portletURL.setParameter(
+			"redirect", portal.getCurrentURL(liferayPortletRequest));
+		portletURL.setParameter(
+			"mbCategoryId", String.valueOf(mbCategory.getCategoryId()));
+
+		return portletURL.toString();
 	}
 
 	public Map<String, Object> getUADEntityNonanonymizableFieldValues(
 		MBCategory mbCategory) {
-		Map<String, Object> uadEntityNonanonymizableFieldValues = new HashMap<String, Object>();
 
+		Map<String, Object> uadEntityNonanonymizableFieldValues =
+			new HashMap<>();
+
+		uadEntityNonanonymizableFieldValues.put(
+			"description", mbCategory.getDescription());
 		uadEntityNonanonymizableFieldValues.put("name", mbCategory.getName());
-		uadEntityNonanonymizableFieldValues.put("description",
-			mbCategory.getDescription());
 
 		return uadEntityNonanonymizableFieldValues;
 	}
+
+	@Reference
+	protected Portal portal;
+
 }

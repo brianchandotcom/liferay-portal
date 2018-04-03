@@ -46,7 +46,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			</div>
 
 			<div class="autofit-col">
-				<div><a class="btn btn-outline-light" href="#placeholder">Edit Cart</a></div>
+				<div><a class="btn btn-outline-light" href="<%= commerceCartContentMiniDisplayContext.getCommerceCartPortletURL()%>"><liferay-ui:message key="edit-cart" /></a></div>
 			</div>
 		</li>
 	</ul>

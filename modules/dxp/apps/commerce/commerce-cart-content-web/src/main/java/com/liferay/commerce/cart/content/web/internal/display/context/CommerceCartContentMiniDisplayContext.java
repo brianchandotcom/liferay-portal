@@ -21,11 +21,13 @@ import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommercePriceCalculationLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import javax.portlet.PortletURL;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -62,6 +64,13 @@ public class CommerceCartContentMiniDisplayContext
 		_commerceCartContentMiniPortletInstanceConfiguration =
 			portletDisplay.getPortletInstanceConfiguration(
 				CommerceCartContentMiniPortletInstanceConfiguration.class);
+	}
+
+	public String getCommerceCartPortletURL() throws PortalException{
+		PortletURL portletURL = commerceOrderHelper.getCommerceCartPortletURL(
+			commerceCartContentRequestHelper.getRequest());
+
+		return portletURL.toString();
 	}
 
 	public String getDisplayStyle() {

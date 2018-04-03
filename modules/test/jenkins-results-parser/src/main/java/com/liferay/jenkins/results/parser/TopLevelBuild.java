@@ -1346,7 +1346,7 @@ public class TopLevelBuild extends BaseBuild {
 
 	private boolean _compareToUpstream = true;
 	private long _lastDownstreamBuildsListingTimestamp = -1L;
-	private long _updateDuration;
 	private PullRequest _pullRequestObject;
+	private long _updateDuration;
 
 }

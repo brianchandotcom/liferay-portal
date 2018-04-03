@@ -21,6 +21,7 @@ import java.util.Dictionary;
 
 import javax.portlet.Portlet;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceReference;
@@ -50,7 +51,12 @@ public class SoyPortletRegisterTracker {
 					public ServiceRegistration<Portlet> addingService(
 						ServiceReference<SoyPortletRegister> serviceReference) {
 
-						return bundleContext.registerService(
+						Bundle bundle = serviceReference.getBundle();
+
+						BundleContext originBundleContext =
+							bundle.getBundleContext();
+
+						return originBundleContext.registerService(
 							Portlet.class,
 							new SoyPortlet(
 								bundleContext.getService(serviceReference)),
@@ -73,7 +79,12 @@ public class SoyPortletRegisterTracker {
 
 						serviceRegistration.unregister();
 
-						bundleContext.ungetService(serviceReference);
+						Bundle bundle = serviceReference.getBundle();
+
+						BundleContext originBundleContext =
+							bundle.getBundleContext();
+
+						originBundleContext.ungetService(serviceReference);
 					}
 
 				});

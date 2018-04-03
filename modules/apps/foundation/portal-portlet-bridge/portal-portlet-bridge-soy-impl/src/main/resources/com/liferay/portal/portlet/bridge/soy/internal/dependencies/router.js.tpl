@@ -1,4 +1,4 @@
-window.portletRouter = new portalPortletBridgeSoyRouterSoyPortletRouter.default(
+window.portletRouter = new portalPortletBridgeSoyImplRouterSoyPortletRouter.default(
 	{
 		context: $CONTEXT,
 		element: '#$ELEMENT_ID',

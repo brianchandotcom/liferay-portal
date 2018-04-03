@@ -152,11 +152,12 @@ public class CheckstyleUtil {
 			String checkName = getCheckName(checkConfiguration.getName());
 
 			List<String> attributeNames = SourceFormatterUtil.getAttributeNames(
-				checkName, propertiesMap);
+				CheckType.CHECKSTYLE, checkName, propertiesMap);
 
 			for (String attributeName : attributeNames) {
 				String value = SourceFormatterUtil.getPropertyValue(
-					attributeName, checkName, propertiesMap);
+					attributeName, CheckType.CHECKSTYLE, checkName,
+					propertiesMap);
 
 				if (Validator.isNotNull(value)) {
 					DefaultConfiguration defaultChildConfiguration =

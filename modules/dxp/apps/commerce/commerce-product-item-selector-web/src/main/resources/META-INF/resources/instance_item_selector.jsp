@@ -93,22 +93,10 @@ PortletURL portletURL = cpInstanceItemSelectorViewDisplayContext.getPortletURL()
 				property="sku"
 			/>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="author"
-				property="userName"
-			/>
-
 			<liferay-ui:search-container-column-status
 				cssClass="table-cell-content"
 				name="status"
 				status="<%= cpInstance.getStatus() %>"
-			/>
-
-			<liferay-ui:search-container-column-date
-				cssClass="table-cell-content"
-				name="display-date"
-				property="displayDate"
 			/>
 		</liferay-ui:search-container-row>
 

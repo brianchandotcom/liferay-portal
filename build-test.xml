@@ -2407,14 +2407,12 @@ ${tomcat-gc-log}
 							sb.append(",");
 						}
 
-
 						for (String testClass : autoBalanceTestClassNames) {
 							if (!testClassGroup.contains(testClass)) {
 								sb.append(testClass);
 								sb.append(",");
 							}
 						}
-
 
 						if (!testClassGroup.isEmpty() || autoBalanceTestClassNames.length > 0) {
 							sb.setLength(sb.length() - 1);

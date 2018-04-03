@@ -113,184 +113,190 @@ public class OAuth2ScopeGrantUtil {
 	}
 
 	/**
-	* Returns all the o auth2 scope grants where oAuth2AccessTokenId = &#63;.
+	* Returns all the o auth2 scope grants where oAuth2ApplicationScopeAliasesId = &#63;.
 	*
-	* @param oAuth2AccessTokenId the o auth2 access token ID
+	* @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	* @return the matching o auth2 scope grants
 	*/
-	public static List<OAuth2ScopeGrant> findByOAuth2AccessTokenId(
-		long oAuth2AccessTokenId) {
-		return getPersistence().findByOAuth2AccessTokenId(oAuth2AccessTokenId);
+	public static List<OAuth2ScopeGrant> findByOAuth2ApplicationScopeAliasesId(
+		long oAuth2ApplicationScopeAliasesId) {
+		return getPersistence()
+				   .findByOAuth2ApplicationScopeAliasesId(oAuth2ApplicationScopeAliasesId);
 	}
 
 	/**
-	* Returns a range of all the o auth2 scope grants where oAuth2AccessTokenId = &#63;.
+	* Returns a range of all the o auth2 scope grants where oAuth2ApplicationScopeAliasesId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OAuth2ScopeGrantModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param oAuth2AccessTokenId the o auth2 access token ID
+	* @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	* @param start the lower bound of the range of o auth2 scope grants
 	* @param end the upper bound of the range of o auth2 scope grants (not inclusive)
 	* @return the range of matching o auth2 scope grants
 	*/
-	public static List<OAuth2ScopeGrant> findByOAuth2AccessTokenId(
-		long oAuth2AccessTokenId, int start, int end) {
+	public static List<OAuth2ScopeGrant> findByOAuth2ApplicationScopeAliasesId(
+		long oAuth2ApplicationScopeAliasesId, int start, int end) {
 		return getPersistence()
-				   .findByOAuth2AccessTokenId(oAuth2AccessTokenId, start, end);
+				   .findByOAuth2ApplicationScopeAliasesId(oAuth2ApplicationScopeAliasesId,
+			start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the o auth2 scope grants where oAuth2AccessTokenId = &#63;.
+	* Returns an ordered range of all the o auth2 scope grants where oAuth2ApplicationScopeAliasesId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OAuth2ScopeGrantModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param oAuth2AccessTokenId the o auth2 access token ID
+	* @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	* @param start the lower bound of the range of o auth2 scope grants
 	* @param end the upper bound of the range of o auth2 scope grants (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching o auth2 scope grants
 	*/
-	public static List<OAuth2ScopeGrant> findByOAuth2AccessTokenId(
-		long oAuth2AccessTokenId, int start, int end,
+	public static List<OAuth2ScopeGrant> findByOAuth2ApplicationScopeAliasesId(
+		long oAuth2ApplicationScopeAliasesId, int start, int end,
 		OrderByComparator<OAuth2ScopeGrant> orderByComparator) {
 		return getPersistence()
-				   .findByOAuth2AccessTokenId(oAuth2AccessTokenId, start, end,
-			orderByComparator);
+				   .findByOAuth2ApplicationScopeAliasesId(oAuth2ApplicationScopeAliasesId,
+			start, end, orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the o auth2 scope grants where oAuth2AccessTokenId = &#63;.
+	* Returns an ordered range of all the o auth2 scope grants where oAuth2ApplicationScopeAliasesId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OAuth2ScopeGrantModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param oAuth2AccessTokenId the o auth2 access token ID
+	* @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	* @param start the lower bound of the range of o auth2 scope grants
 	* @param end the upper bound of the range of o auth2 scope grants (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching o auth2 scope grants
 	*/
-	public static List<OAuth2ScopeGrant> findByOAuth2AccessTokenId(
-		long oAuth2AccessTokenId, int start, int end,
+	public static List<OAuth2ScopeGrant> findByOAuth2ApplicationScopeAliasesId(
+		long oAuth2ApplicationScopeAliasesId, int start, int end,
 		OrderByComparator<OAuth2ScopeGrant> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .findByOAuth2AccessTokenId(oAuth2AccessTokenId, start, end,
-			orderByComparator, retrieveFromCache);
+				   .findByOAuth2ApplicationScopeAliasesId(oAuth2ApplicationScopeAliasesId,
+			start, end, orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	* Returns the first o auth2 scope grant in the ordered set where oAuth2AccessTokenId = &#63;.
+	* Returns the first o auth2 scope grant in the ordered set where oAuth2ApplicationScopeAliasesId = &#63;.
 	*
-	* @param oAuth2AccessTokenId the o auth2 access token ID
+	* @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching o auth2 scope grant
 	* @throws NoSuchOAuth2ScopeGrantException if a matching o auth2 scope grant could not be found
 	*/
-	public static OAuth2ScopeGrant findByOAuth2AccessTokenId_First(
-		long oAuth2AccessTokenId,
+	public static OAuth2ScopeGrant findByOAuth2ApplicationScopeAliasesId_First(
+		long oAuth2ApplicationScopeAliasesId,
 		OrderByComparator<OAuth2ScopeGrant> orderByComparator)
 		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2ScopeGrantException {
 		return getPersistence()
-				   .findByOAuth2AccessTokenId_First(oAuth2AccessTokenId,
+				   .findByOAuth2ApplicationScopeAliasesId_First(oAuth2ApplicationScopeAliasesId,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the first o auth2 scope grant in the ordered set where oAuth2AccessTokenId = &#63;.
+	* Returns the first o auth2 scope grant in the ordered set where oAuth2ApplicationScopeAliasesId = &#63;.
 	*
-	* @param oAuth2AccessTokenId the o auth2 access token ID
+	* @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching o auth2 scope grant, or <code>null</code> if a matching o auth2 scope grant could not be found
 	*/
-	public static OAuth2ScopeGrant fetchByOAuth2AccessTokenId_First(
-		long oAuth2AccessTokenId,
+	public static OAuth2ScopeGrant fetchByOAuth2ApplicationScopeAliasesId_First(
+		long oAuth2ApplicationScopeAliasesId,
 		OrderByComparator<OAuth2ScopeGrant> orderByComparator) {
 		return getPersistence()
-				   .fetchByOAuth2AccessTokenId_First(oAuth2AccessTokenId,
+				   .fetchByOAuth2ApplicationScopeAliasesId_First(oAuth2ApplicationScopeAliasesId,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the last o auth2 scope grant in the ordered set where oAuth2AccessTokenId = &#63;.
+	* Returns the last o auth2 scope grant in the ordered set where oAuth2ApplicationScopeAliasesId = &#63;.
 	*
-	* @param oAuth2AccessTokenId the o auth2 access token ID
+	* @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching o auth2 scope grant
 	* @throws NoSuchOAuth2ScopeGrantException if a matching o auth2 scope grant could not be found
 	*/
-	public static OAuth2ScopeGrant findByOAuth2AccessTokenId_Last(
-		long oAuth2AccessTokenId,
+	public static OAuth2ScopeGrant findByOAuth2ApplicationScopeAliasesId_Last(
+		long oAuth2ApplicationScopeAliasesId,
 		OrderByComparator<OAuth2ScopeGrant> orderByComparator)
 		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2ScopeGrantException {
 		return getPersistence()
-				   .findByOAuth2AccessTokenId_Last(oAuth2AccessTokenId,
+				   .findByOAuth2ApplicationScopeAliasesId_Last(oAuth2ApplicationScopeAliasesId,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the last o auth2 scope grant in the ordered set where oAuth2AccessTokenId = &#63;.
+	* Returns the last o auth2 scope grant in the ordered set where oAuth2ApplicationScopeAliasesId = &#63;.
 	*
-	* @param oAuth2AccessTokenId the o auth2 access token ID
+	* @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching o auth2 scope grant, or <code>null</code> if a matching o auth2 scope grant could not be found
 	*/
-	public static OAuth2ScopeGrant fetchByOAuth2AccessTokenId_Last(
-		long oAuth2AccessTokenId,
+	public static OAuth2ScopeGrant fetchByOAuth2ApplicationScopeAliasesId_Last(
+		long oAuth2ApplicationScopeAliasesId,
 		OrderByComparator<OAuth2ScopeGrant> orderByComparator) {
 		return getPersistence()
-				   .fetchByOAuth2AccessTokenId_Last(oAuth2AccessTokenId,
+				   .fetchByOAuth2ApplicationScopeAliasesId_Last(oAuth2ApplicationScopeAliasesId,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the o auth2 scope grants before and after the current o auth2 scope grant in the ordered set where oAuth2AccessTokenId = &#63;.
+	* Returns the o auth2 scope grants before and after the current o auth2 scope grant in the ordered set where oAuth2ApplicationScopeAliasesId = &#63;.
 	*
 	* @param oAuth2ScopeGrantId the primary key of the current o auth2 scope grant
-	* @param oAuth2AccessTokenId the o auth2 access token ID
+	* @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next o auth2 scope grant
 	* @throws NoSuchOAuth2ScopeGrantException if a o auth2 scope grant with the primary key could not be found
 	*/
-	public static OAuth2ScopeGrant[] findByOAuth2AccessTokenId_PrevAndNext(
-		long oAuth2ScopeGrantId, long oAuth2AccessTokenId,
+	public static OAuth2ScopeGrant[] findByOAuth2ApplicationScopeAliasesId_PrevAndNext(
+		long oAuth2ScopeGrantId, long oAuth2ApplicationScopeAliasesId,
 		OrderByComparator<OAuth2ScopeGrant> orderByComparator)
 		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2ScopeGrantException {
 		return getPersistence()
-				   .findByOAuth2AccessTokenId_PrevAndNext(oAuth2ScopeGrantId,
-			oAuth2AccessTokenId, orderByComparator);
+				   .findByOAuth2ApplicationScopeAliasesId_PrevAndNext(oAuth2ScopeGrantId,
+			oAuth2ApplicationScopeAliasesId, orderByComparator);
 	}
 
 	/**
-	* Removes all the o auth2 scope grants where oAuth2AccessTokenId = &#63; from the database.
+	* Removes all the o auth2 scope grants where oAuth2ApplicationScopeAliasesId = &#63; from the database.
 	*
-	* @param oAuth2AccessTokenId the o auth2 access token ID
+	* @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	*/
-	public static void removeByOAuth2AccessTokenId(long oAuth2AccessTokenId) {
-		getPersistence().removeByOAuth2AccessTokenId(oAuth2AccessTokenId);
+	public static void removeByOAuth2ApplicationScopeAliasesId(
+		long oAuth2ApplicationScopeAliasesId) {
+		getPersistence()
+			.removeByOAuth2ApplicationScopeAliasesId(oAuth2ApplicationScopeAliasesId);
 	}
 
 	/**
-	* Returns the number of o auth2 scope grants where oAuth2AccessTokenId = &#63;.
+	* Returns the number of o auth2 scope grants where oAuth2ApplicationScopeAliasesId = &#63;.
 	*
-	* @param oAuth2AccessTokenId the o auth2 access token ID
+	* @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	* @return the number of matching o auth2 scope grants
 	*/
-	public static int countByOAuth2AccessTokenId(long oAuth2AccessTokenId) {
-		return getPersistence().countByOAuth2AccessTokenId(oAuth2AccessTokenId);
+	public static int countByOAuth2ApplicationScopeAliasesId(
+		long oAuth2ApplicationScopeAliasesId) {
+		return getPersistence()
+				   .countByOAuth2ApplicationScopeAliasesId(oAuth2ApplicationScopeAliasesId);
 	}
 
 	/**
-	* Returns the o auth2 scope grant where companyId = &#63; and oAuth2AccessTokenId = &#63; and applicationName = &#63; and bundleSymbolicName = &#63; and scope = &#63; or throws a {@link NoSuchOAuth2ScopeGrantException} if it could not be found.
+	* Returns the o auth2 scope grant where companyId = &#63; and oAuth2ApplicationScopeAliasesId = &#63; and applicationName = &#63; and bundleSymbolicName = &#63; and scope = &#63; or throws a {@link NoSuchOAuth2ScopeGrantException} if it could not be found.
 	*
 	* @param companyId the company ID
-	* @param oAuth2AccessTokenId the o auth2 access token ID
+	* @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	* @param applicationName the application name
 	* @param bundleSymbolicName the bundle symbolic name
 	* @param scope the scope
@@ -298,37 +304,38 @@ public class OAuth2ScopeGrantUtil {
 	* @throws NoSuchOAuth2ScopeGrantException if a matching o auth2 scope grant could not be found
 	*/
 	public static OAuth2ScopeGrant findByC_O_A_B_S(long companyId,
-		long oAuth2AccessTokenId, java.lang.String applicationName,
+		long oAuth2ApplicationScopeAliasesId, java.lang.String applicationName,
 		java.lang.String bundleSymbolicName, java.lang.String scope)
 		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2ScopeGrantException {
 		return getPersistence()
-				   .findByC_O_A_B_S(companyId, oAuth2AccessTokenId,
+				   .findByC_O_A_B_S(companyId, oAuth2ApplicationScopeAliasesId,
 			applicationName, bundleSymbolicName, scope);
 	}
 
 	/**
-	* Returns the o auth2 scope grant where companyId = &#63; and oAuth2AccessTokenId = &#63; and applicationName = &#63; and bundleSymbolicName = &#63; and scope = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the o auth2 scope grant where companyId = &#63; and oAuth2ApplicationScopeAliasesId = &#63; and applicationName = &#63; and bundleSymbolicName = &#63; and scope = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param companyId the company ID
-	* @param oAuth2AccessTokenId the o auth2 access token ID
+	* @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	* @param applicationName the application name
 	* @param bundleSymbolicName the bundle symbolic name
 	* @param scope the scope
 	* @return the matching o auth2 scope grant, or <code>null</code> if a matching o auth2 scope grant could not be found
 	*/
 	public static OAuth2ScopeGrant fetchByC_O_A_B_S(long companyId,
-		long oAuth2AccessTokenId, java.lang.String applicationName,
+		long oAuth2ApplicationScopeAliasesId, java.lang.String applicationName,
 		java.lang.String bundleSymbolicName, java.lang.String scope) {
 		return getPersistence()
-				   .fetchByC_O_A_B_S(companyId, oAuth2AccessTokenId,
-			applicationName, bundleSymbolicName, scope);
+				   .fetchByC_O_A_B_S(companyId,
+			oAuth2ApplicationScopeAliasesId, applicationName,
+			bundleSymbolicName, scope);
 	}
 
 	/**
-	* Returns the o auth2 scope grant where companyId = &#63; and oAuth2AccessTokenId = &#63; and applicationName = &#63; and bundleSymbolicName = &#63; and scope = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the o auth2 scope grant where companyId = &#63; and oAuth2ApplicationScopeAliasesId = &#63; and applicationName = &#63; and bundleSymbolicName = &#63; and scope = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param companyId the company ID
-	* @param oAuth2AccessTokenId the o auth2 access token ID
+	* @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	* @param applicationName the application name
 	* @param bundleSymbolicName the bundle symbolic name
 	* @param scope the scope
@@ -336,49 +343,52 @@ public class OAuth2ScopeGrantUtil {
 	* @return the matching o auth2 scope grant, or <code>null</code> if a matching o auth2 scope grant could not be found
 	*/
 	public static OAuth2ScopeGrant fetchByC_O_A_B_S(long companyId,
-		long oAuth2AccessTokenId, java.lang.String applicationName,
+		long oAuth2ApplicationScopeAliasesId, java.lang.String applicationName,
 		java.lang.String bundleSymbolicName, java.lang.String scope,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .fetchByC_O_A_B_S(companyId, oAuth2AccessTokenId,
-			applicationName, bundleSymbolicName, scope, retrieveFromCache);
+				   .fetchByC_O_A_B_S(companyId,
+			oAuth2ApplicationScopeAliasesId, applicationName,
+			bundleSymbolicName, scope, retrieveFromCache);
 	}
 
 	/**
-	* Removes the o auth2 scope grant where companyId = &#63; and oAuth2AccessTokenId = &#63; and applicationName = &#63; and bundleSymbolicName = &#63; and scope = &#63; from the database.
+	* Removes the o auth2 scope grant where companyId = &#63; and oAuth2ApplicationScopeAliasesId = &#63; and applicationName = &#63; and bundleSymbolicName = &#63; and scope = &#63; from the database.
 	*
 	* @param companyId the company ID
-	* @param oAuth2AccessTokenId the o auth2 access token ID
+	* @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	* @param applicationName the application name
 	* @param bundleSymbolicName the bundle symbolic name
 	* @param scope the scope
 	* @return the o auth2 scope grant that was removed
 	*/
 	public static OAuth2ScopeGrant removeByC_O_A_B_S(long companyId,
-		long oAuth2AccessTokenId, java.lang.String applicationName,
+		long oAuth2ApplicationScopeAliasesId, java.lang.String applicationName,
 		java.lang.String bundleSymbolicName, java.lang.String scope)
 		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2ScopeGrantException {
 		return getPersistence()
-				   .removeByC_O_A_B_S(companyId, oAuth2AccessTokenId,
-			applicationName, bundleSymbolicName, scope);
+				   .removeByC_O_A_B_S(companyId,
+			oAuth2ApplicationScopeAliasesId, applicationName,
+			bundleSymbolicName, scope);
 	}
 
 	/**
-	* Returns the number of o auth2 scope grants where companyId = &#63; and oAuth2AccessTokenId = &#63; and applicationName = &#63; and bundleSymbolicName = &#63; and scope = &#63;.
+	* Returns the number of o auth2 scope grants where companyId = &#63; and oAuth2ApplicationScopeAliasesId = &#63; and applicationName = &#63; and bundleSymbolicName = &#63; and scope = &#63;.
 	*
 	* @param companyId the company ID
-	* @param oAuth2AccessTokenId the o auth2 access token ID
+	* @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	* @param applicationName the application name
 	* @param bundleSymbolicName the bundle symbolic name
 	* @param scope the scope
 	* @return the number of matching o auth2 scope grants
 	*/
 	public static int countByC_O_A_B_S(long companyId,
-		long oAuth2AccessTokenId, java.lang.String applicationName,
+		long oAuth2ApplicationScopeAliasesId, java.lang.String applicationName,
 		java.lang.String bundleSymbolicName, java.lang.String scope) {
 		return getPersistence()
-				   .countByC_O_A_B_S(companyId, oAuth2AccessTokenId,
-			applicationName, bundleSymbolicName, scope);
+				   .countByC_O_A_B_S(companyId,
+			oAuth2ApplicationScopeAliasesId, applicationName,
+			bundleSymbolicName, scope);
 	}
 
 	/**
@@ -527,6 +537,220 @@ public class OAuth2ScopeGrantUtil {
 	*/
 	public static int countAll() {
 		return getPersistence().countAll();
+	}
+
+	/**
+	* Returns the primaryKeys of o auth2 authorizations associated with the o auth2 scope grant.
+	*
+	* @param pk the primary key of the o auth2 scope grant
+	* @return long[] of the primaryKeys of o auth2 authorizations associated with the o auth2 scope grant
+	*/
+	public static long[] getOAuth2AuthorizationPrimaryKeys(long pk) {
+		return getPersistence().getOAuth2AuthorizationPrimaryKeys(pk);
+	}
+
+	/**
+	* Returns all the o auth2 authorizations associated with the o auth2 scope grant.
+	*
+	* @param pk the primary key of the o auth2 scope grant
+	* @return the o auth2 authorizations associated with the o auth2 scope grant
+	*/
+	public static List<com.liferay.oauth2.provider.model.OAuth2Authorization> getOAuth2Authorizations(
+		long pk) {
+		return getPersistence().getOAuth2Authorizations(pk);
+	}
+
+	/**
+	* Returns a range of all the o auth2 authorizations associated with the o auth2 scope grant.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OAuth2ScopeGrantModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param pk the primary key of the o auth2 scope grant
+	* @param start the lower bound of the range of o auth2 scope grants
+	* @param end the upper bound of the range of o auth2 scope grants (not inclusive)
+	* @return the range of o auth2 authorizations associated with the o auth2 scope grant
+	*/
+	public static List<com.liferay.oauth2.provider.model.OAuth2Authorization> getOAuth2Authorizations(
+		long pk, int start, int end) {
+		return getPersistence().getOAuth2Authorizations(pk, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the o auth2 authorizations associated with the o auth2 scope grant.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OAuth2ScopeGrantModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param pk the primary key of the o auth2 scope grant
+	* @param start the lower bound of the range of o auth2 scope grants
+	* @param end the upper bound of the range of o auth2 scope grants (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of o auth2 authorizations associated with the o auth2 scope grant
+	*/
+	public static List<com.liferay.oauth2.provider.model.OAuth2Authorization> getOAuth2Authorizations(
+		long pk, int start, int end,
+		OrderByComparator<com.liferay.oauth2.provider.model.OAuth2Authorization> orderByComparator) {
+		return getPersistence()
+				   .getOAuth2Authorizations(pk, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of o auth2 authorizations associated with the o auth2 scope grant.
+	*
+	* @param pk the primary key of the o auth2 scope grant
+	* @return the number of o auth2 authorizations associated with the o auth2 scope grant
+	*/
+	public static int getOAuth2AuthorizationsSize(long pk) {
+		return getPersistence().getOAuth2AuthorizationsSize(pk);
+	}
+
+	/**
+	* Returns <code>true</code> if the o auth2 authorization is associated with the o auth2 scope grant.
+	*
+	* @param pk the primary key of the o auth2 scope grant
+	* @param oAuth2AuthorizationPK the primary key of the o auth2 authorization
+	* @return <code>true</code> if the o auth2 authorization is associated with the o auth2 scope grant; <code>false</code> otherwise
+	*/
+	public static boolean containsOAuth2Authorization(long pk,
+		long oAuth2AuthorizationPK) {
+		return getPersistence()
+				   .containsOAuth2Authorization(pk, oAuth2AuthorizationPK);
+	}
+
+	/**
+	* Returns <code>true</code> if the o auth2 scope grant has any o auth2 authorizations associated with it.
+	*
+	* @param pk the primary key of the o auth2 scope grant to check for associations with o auth2 authorizations
+	* @return <code>true</code> if the o auth2 scope grant has any o auth2 authorizations associated with it; <code>false</code> otherwise
+	*/
+	public static boolean containsOAuth2Authorizations(long pk) {
+		return getPersistence().containsOAuth2Authorizations(pk);
+	}
+
+	/**
+	* Adds an association between the o auth2 scope grant and the o auth2 authorization. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the o auth2 scope grant
+	* @param oAuth2AuthorizationPK the primary key of the o auth2 authorization
+	*/
+	public static void addOAuth2Authorization(long pk,
+		long oAuth2AuthorizationPK) {
+		getPersistence().addOAuth2Authorization(pk, oAuth2AuthorizationPK);
+	}
+
+	/**
+	* Adds an association between the o auth2 scope grant and the o auth2 authorization. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the o auth2 scope grant
+	* @param oAuth2Authorization the o auth2 authorization
+	*/
+	public static void addOAuth2Authorization(long pk,
+		com.liferay.oauth2.provider.model.OAuth2Authorization oAuth2Authorization) {
+		getPersistence().addOAuth2Authorization(pk, oAuth2Authorization);
+	}
+
+	/**
+	* Adds an association between the o auth2 scope grant and the o auth2 authorizations. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the o auth2 scope grant
+	* @param oAuth2AuthorizationPKs the primary keys of the o auth2 authorizations
+	*/
+	public static void addOAuth2Authorizations(long pk,
+		long[] oAuth2AuthorizationPKs) {
+		getPersistence().addOAuth2Authorizations(pk, oAuth2AuthorizationPKs);
+	}
+
+	/**
+	* Adds an association between the o auth2 scope grant and the o auth2 authorizations. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the o auth2 scope grant
+	* @param oAuth2Authorizations the o auth2 authorizations
+	*/
+	public static void addOAuth2Authorizations(long pk,
+		List<com.liferay.oauth2.provider.model.OAuth2Authorization> oAuth2Authorizations) {
+		getPersistence().addOAuth2Authorizations(pk, oAuth2Authorizations);
+	}
+
+	/**
+	* Clears all associations between the o auth2 scope grant and its o auth2 authorizations. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the o auth2 scope grant to clear the associated o auth2 authorizations from
+	*/
+	public static void clearOAuth2Authorizations(long pk) {
+		getPersistence().clearOAuth2Authorizations(pk);
+	}
+
+	/**
+	* Removes the association between the o auth2 scope grant and the o auth2 authorization. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the o auth2 scope grant
+	* @param oAuth2AuthorizationPK the primary key of the o auth2 authorization
+	*/
+	public static void removeOAuth2Authorization(long pk,
+		long oAuth2AuthorizationPK) {
+		getPersistence().removeOAuth2Authorization(pk, oAuth2AuthorizationPK);
+	}
+
+	/**
+	* Removes the association between the o auth2 scope grant and the o auth2 authorization. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the o auth2 scope grant
+	* @param oAuth2Authorization the o auth2 authorization
+	*/
+	public static void removeOAuth2Authorization(long pk,
+		com.liferay.oauth2.provider.model.OAuth2Authorization oAuth2Authorization) {
+		getPersistence().removeOAuth2Authorization(pk, oAuth2Authorization);
+	}
+
+	/**
+	* Removes the association between the o auth2 scope grant and the o auth2 authorizations. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the o auth2 scope grant
+	* @param oAuth2AuthorizationPKs the primary keys of the o auth2 authorizations
+	*/
+	public static void removeOAuth2Authorizations(long pk,
+		long[] oAuth2AuthorizationPKs) {
+		getPersistence().removeOAuth2Authorizations(pk, oAuth2AuthorizationPKs);
+	}
+
+	/**
+	* Removes the association between the o auth2 scope grant and the o auth2 authorizations. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the o auth2 scope grant
+	* @param oAuth2Authorizations the o auth2 authorizations
+	*/
+	public static void removeOAuth2Authorizations(long pk,
+		List<com.liferay.oauth2.provider.model.OAuth2Authorization> oAuth2Authorizations) {
+		getPersistence().removeOAuth2Authorizations(pk, oAuth2Authorizations);
+	}
+
+	/**
+	* Sets the o auth2 authorizations associated with the o auth2 scope grant, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the o auth2 scope grant
+	* @param oAuth2AuthorizationPKs the primary keys of the o auth2 authorizations to be associated with the o auth2 scope grant
+	*/
+	public static void setOAuth2Authorizations(long pk,
+		long[] oAuth2AuthorizationPKs) {
+		getPersistence().setOAuth2Authorizations(pk, oAuth2AuthorizationPKs);
+	}
+
+	/**
+	* Sets the o auth2 authorizations associated with the o auth2 scope grant, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the o auth2 scope grant
+	* @param oAuth2Authorizations the o auth2 authorizations to be associated with the o auth2 scope grant
+	*/
+	public static void setOAuth2Authorizations(long pk,
+		List<com.liferay.oauth2.provider.model.OAuth2Authorization> oAuth2Authorizations) {
+		getPersistence().setOAuth2Authorizations(pk, oAuth2Authorizations);
+	}
+
+	public static java.util.Set<java.lang.String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
 	}
 
 	public static OAuth2ScopeGrantPersistence getPersistence() {

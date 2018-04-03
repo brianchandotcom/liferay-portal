@@ -93,18 +93,19 @@ public interface OAuth2ScopeGrantModel extends BaseModel<OAuth2ScopeGrant>,
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the o auth2 access token ID of this o auth2 scope grant.
+	 * Returns the o auth2 application scope aliases ID of this o auth2 scope grant.
 	 *
-	 * @return the o auth2 access token ID of this o auth2 scope grant
+	 * @return the o auth2 application scope aliases ID of this o auth2 scope grant
 	 */
-	public long getOAuth2AccessTokenId();
+	public long getOAuth2ApplicationScopeAliasesId();
 
 	/**
-	 * Sets the o auth2 access token ID of this o auth2 scope grant.
+	 * Sets the o auth2 application scope aliases ID of this o auth2 scope grant.
 	 *
-	 * @param oAuth2AccessTokenId the o auth2 access token ID of this o auth2 scope grant
+	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID of this o auth2 scope grant
 	 */
-	public void setOAuth2AccessTokenId(long oAuth2AccessTokenId);
+	public void setOAuth2ApplicationScopeAliasesId(
+		long oAuth2ApplicationScopeAliasesId);
 
 	/**
 	 * Returns the application name of this o auth2 scope grant.

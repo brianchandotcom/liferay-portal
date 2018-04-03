@@ -14,10 +14,11 @@
 
 package com.liferay.oauth2.provider.service.base;
 
+import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationService;
-import com.liferay.oauth2.provider.service.persistence.OAuth2AccessTokenPersistence;
 import com.liferay.oauth2.provider.service.persistence.OAuth2ApplicationPersistence;
-import com.liferay.oauth2.provider.service.persistence.OAuth2RefreshTokenPersistence;
+import com.liferay.oauth2.provider.service.persistence.OAuth2AuthorizationPersistence;
+import com.liferay.oauth2.provider.service.persistence.OAuth2ScopeGrantPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
-import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -92,6 +92,25 @@ public abstract class OAuth2AuthorizationServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the o auth2 authorization persistence.
+	 *
+	 * @return the o auth2 authorization persistence
+	 */
+	public OAuth2AuthorizationPersistence getOAuth2AuthorizationPersistence() {
+		return oAuth2AuthorizationPersistence;
+	}
+
+	/**
+	 * Sets the o auth2 authorization persistence.
+	 *
+	 * @param oAuth2AuthorizationPersistence the o auth2 authorization persistence
+	 */
+	public void setOAuth2AuthorizationPersistence(
+		OAuth2AuthorizationPersistence oAuth2AuthorizationPersistence) {
+		this.oAuth2AuthorizationPersistence = oAuth2AuthorizationPersistence;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -108,63 +127,6 @@ public abstract class OAuth2AuthorizationServiceBaseImpl extends BaseServiceImpl
 	public void setCounterLocalService(
 		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
-	}
-
-	/**
-	 * Returns the o auth2 access token local service.
-	 *
-	 * @return the o auth2 access token local service
-	 */
-	public com.liferay.oauth2.provider.service.OAuth2AccessTokenLocalService getOAuth2AccessTokenLocalService() {
-		return oAuth2AccessTokenLocalService;
-	}
-
-	/**
-	 * Sets the o auth2 access token local service.
-	 *
-	 * @param oAuth2AccessTokenLocalService the o auth2 access token local service
-	 */
-	public void setOAuth2AccessTokenLocalService(
-		com.liferay.oauth2.provider.service.OAuth2AccessTokenLocalService oAuth2AccessTokenLocalService) {
-		this.oAuth2AccessTokenLocalService = oAuth2AccessTokenLocalService;
-	}
-
-	/**
-	 * Returns the o auth2 access token remote service.
-	 *
-	 * @return the o auth2 access token remote service
-	 */
-	public com.liferay.oauth2.provider.service.OAuth2AccessTokenService getOAuth2AccessTokenService() {
-		return oAuth2AccessTokenService;
-	}
-
-	/**
-	 * Sets the o auth2 access token remote service.
-	 *
-	 * @param oAuth2AccessTokenService the o auth2 access token remote service
-	 */
-	public void setOAuth2AccessTokenService(
-		com.liferay.oauth2.provider.service.OAuth2AccessTokenService oAuth2AccessTokenService) {
-		this.oAuth2AccessTokenService = oAuth2AccessTokenService;
-	}
-
-	/**
-	 * Returns the o auth2 access token persistence.
-	 *
-	 * @return the o auth2 access token persistence
-	 */
-	public OAuth2AccessTokenPersistence getOAuth2AccessTokenPersistence() {
-		return oAuth2AccessTokenPersistence;
-	}
-
-	/**
-	 * Sets the o auth2 access token persistence.
-	 *
-	 * @param oAuth2AccessTokenPersistence the o auth2 access token persistence
-	 */
-	public void setOAuth2AccessTokenPersistence(
-		OAuth2AccessTokenPersistence oAuth2AccessTokenPersistence) {
-		this.oAuth2AccessTokenPersistence = oAuth2AccessTokenPersistence;
 	}
 
 	/**
@@ -225,60 +187,41 @@ public abstract class OAuth2AuthorizationServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the o auth2 refresh token local service.
+	 * Returns the o auth2 scope grant local service.
 	 *
-	 * @return the o auth2 refresh token local service
+	 * @return the o auth2 scope grant local service
 	 */
-	public com.liferay.oauth2.provider.service.OAuth2RefreshTokenLocalService getOAuth2RefreshTokenLocalService() {
-		return oAuth2RefreshTokenLocalService;
+	public com.liferay.oauth2.provider.service.OAuth2ScopeGrantLocalService getOAuth2ScopeGrantLocalService() {
+		return oAuth2ScopeGrantLocalService;
 	}
 
 	/**
-	 * Sets the o auth2 refresh token local service.
+	 * Sets the o auth2 scope grant local service.
 	 *
-	 * @param oAuth2RefreshTokenLocalService the o auth2 refresh token local service
+	 * @param oAuth2ScopeGrantLocalService the o auth2 scope grant local service
 	 */
-	public void setOAuth2RefreshTokenLocalService(
-		com.liferay.oauth2.provider.service.OAuth2RefreshTokenLocalService oAuth2RefreshTokenLocalService) {
-		this.oAuth2RefreshTokenLocalService = oAuth2RefreshTokenLocalService;
+	public void setOAuth2ScopeGrantLocalService(
+		com.liferay.oauth2.provider.service.OAuth2ScopeGrantLocalService oAuth2ScopeGrantLocalService) {
+		this.oAuth2ScopeGrantLocalService = oAuth2ScopeGrantLocalService;
 	}
 
 	/**
-	 * Returns the o auth2 refresh token remote service.
+	 * Returns the o auth2 scope grant persistence.
 	 *
-	 * @return the o auth2 refresh token remote service
+	 * @return the o auth2 scope grant persistence
 	 */
-	public com.liferay.oauth2.provider.service.OAuth2RefreshTokenService getOAuth2RefreshTokenService() {
-		return oAuth2RefreshTokenService;
+	public OAuth2ScopeGrantPersistence getOAuth2ScopeGrantPersistence() {
+		return oAuth2ScopeGrantPersistence;
 	}
 
 	/**
-	 * Sets the o auth2 refresh token remote service.
+	 * Sets the o auth2 scope grant persistence.
 	 *
-	 * @param oAuth2RefreshTokenService the o auth2 refresh token remote service
+	 * @param oAuth2ScopeGrantPersistence the o auth2 scope grant persistence
 	 */
-	public void setOAuth2RefreshTokenService(
-		com.liferay.oauth2.provider.service.OAuth2RefreshTokenService oAuth2RefreshTokenService) {
-		this.oAuth2RefreshTokenService = oAuth2RefreshTokenService;
-	}
-
-	/**
-	 * Returns the o auth2 refresh token persistence.
-	 *
-	 * @return the o auth2 refresh token persistence
-	 */
-	public OAuth2RefreshTokenPersistence getOAuth2RefreshTokenPersistence() {
-		return oAuth2RefreshTokenPersistence;
-	}
-
-	/**
-	 * Sets the o auth2 refresh token persistence.
-	 *
-	 * @param oAuth2RefreshTokenPersistence the o auth2 refresh token persistence
-	 */
-	public void setOAuth2RefreshTokenPersistence(
-		OAuth2RefreshTokenPersistence oAuth2RefreshTokenPersistence) {
-		this.oAuth2RefreshTokenPersistence = oAuth2RefreshTokenPersistence;
+	public void setOAuth2ScopeGrantPersistence(
+		OAuth2ScopeGrantPersistence oAuth2ScopeGrantPersistence) {
+		this.oAuth2ScopeGrantPersistence = oAuth2ScopeGrantPersistence;
 	}
 
 	public void afterPropertiesSet() {
@@ -297,6 +240,14 @@ public abstract class OAuth2AuthorizationServiceBaseImpl extends BaseServiceImpl
 		return OAuth2AuthorizationService.class.getName();
 	}
 
+	protected Class<?> getModelClass() {
+		return OAuth2Authorization.class;
+	}
+
+	protected String getModelClassName() {
+		return OAuth2Authorization.class.getName();
+	}
+
 	/**
 	 * Performs a SQL query.
 	 *
@@ -304,7 +255,7 @@ public abstract class OAuth2AuthorizationServiceBaseImpl extends BaseServiceImpl
 	 */
 	protected void runSQL(String sql) {
 		try {
-			DataSource dataSource = InfrastructureUtil.getDataSource();
+			DataSource dataSource = oAuth2AuthorizationPersistence.getDataSource();
 
 			DB db = DBManagerUtil.getDB();
 
@@ -325,24 +276,18 @@ public abstract class OAuth2AuthorizationServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService oAuth2AuthorizationLocalService;
 	@BeanReference(type = OAuth2AuthorizationService.class)
 	protected OAuth2AuthorizationService oAuth2AuthorizationService;
+	@BeanReference(type = OAuth2AuthorizationPersistence.class)
+	protected OAuth2AuthorizationPersistence oAuth2AuthorizationPersistence;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.oauth2.provider.service.OAuth2AccessTokenLocalService.class)
-	protected com.liferay.oauth2.provider.service.OAuth2AccessTokenLocalService oAuth2AccessTokenLocalService;
-	@BeanReference(type = com.liferay.oauth2.provider.service.OAuth2AccessTokenService.class)
-	protected com.liferay.oauth2.provider.service.OAuth2AccessTokenService oAuth2AccessTokenService;
-	@BeanReference(type = OAuth2AccessTokenPersistence.class)
-	protected OAuth2AccessTokenPersistence oAuth2AccessTokenPersistence;
 	@BeanReference(type = com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService.class)
 	protected com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService oAuth2ApplicationLocalService;
 	@BeanReference(type = com.liferay.oauth2.provider.service.OAuth2ApplicationService.class)
 	protected com.liferay.oauth2.provider.service.OAuth2ApplicationService oAuth2ApplicationService;
 	@BeanReference(type = OAuth2ApplicationPersistence.class)
 	protected OAuth2ApplicationPersistence oAuth2ApplicationPersistence;
-	@BeanReference(type = com.liferay.oauth2.provider.service.OAuth2RefreshTokenLocalService.class)
-	protected com.liferay.oauth2.provider.service.OAuth2RefreshTokenLocalService oAuth2RefreshTokenLocalService;
-	@BeanReference(type = com.liferay.oauth2.provider.service.OAuth2RefreshTokenService.class)
-	protected com.liferay.oauth2.provider.service.OAuth2RefreshTokenService oAuth2RefreshTokenService;
-	@BeanReference(type = OAuth2RefreshTokenPersistence.class)
-	protected OAuth2RefreshTokenPersistence oAuth2RefreshTokenPersistence;
+	@BeanReference(type = com.liferay.oauth2.provider.service.OAuth2ScopeGrantLocalService.class)
+	protected com.liferay.oauth2.provider.service.OAuth2ScopeGrantLocalService oAuth2ScopeGrantLocalService;
+	@BeanReference(type = OAuth2ScopeGrantPersistence.class)
+	protected OAuth2ScopeGrantPersistence oAuth2ScopeGrantPersistence;
 }

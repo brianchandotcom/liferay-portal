@@ -41,9 +41,9 @@ public class BookmarksEntryUADEntityAggregator
 	extends DynamicQueryUADEntityAggregator<BookmarksEntry> {
 
 	@Override
-	public BookmarksEntry get(Serializable primKeyObj) throws PortalException {
+	public BookmarksEntry get(Serializable primaryKey) throws PortalException {
 		return _bookmarksEntryLocalService.getBookmarksEntry(
-			Long.valueOf(primKeyObj.toString()));
+			Long.valueOf(primaryKey.toString()));
 	}
 
 	@Override

@@ -86,7 +86,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_CONDITION_VALUE_TEXT_FIELD</td>
-	<td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//div[contains(@class,'condition-type-value')]//input[@type='text']</td>
+	<td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//div[contains(@class,'condition-type-value')]//div[not(contains(@class,'hide')) and contains(@class,'liferay-ddm-form-field')]//input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>

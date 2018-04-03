@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowException;
@@ -95,15 +94,13 @@ public class WorkflowDefinitionsDataProvider implements DDMDataProvider {
 					locale, "version-x", workflowDefinition.getVersion(),
 					false);
 
-				String label = StringBundler.concat(
-					workflowDefinition.getTitle(languageId), " (", version,
-					")");
-
 				String value =
 					workflowDefinition.getName() + StringPool.AT +
 						workflowDefinition.getVersion();
 
-				data.add(new KeyValuePair(value, label));
+				data.add(
+					new KeyValuePair(
+						value, workflowDefinition.getTitle(languageId)));
 			}
 		}
 		catch (WorkflowException we) {

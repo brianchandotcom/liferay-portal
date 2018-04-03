@@ -655,11 +655,11 @@
 	<command name="viewAuthenticationLDAPCP">
 		<execute macro="PortalSettingsNavigator#gotoLDAP" />
 
-		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_ENABLED_CHECKBOX" />
-		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_REQUIRED_CHECKBOX" />
-		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_IMPORT_ENABLED_CHECKBOX" />
-		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_EXPORT_ENABLED_CHECKBOX" />
-		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_USE_LDAP_PASSWORD_POLICY_CHECKBOX" />
+		<for list="ldap--enabled,ldap--required,ldapImportEnabled,ldapExportEnabled,ldap--passwordPolicyEnabled" param="fieldName">
+			<execute function="AssertElementPresent" locator1="FormFields#CHECKBOX">
+				<var name="key_fieldName" value="${fieldName}" />
+			</execute>
+		</for>
 
 		<execute function="AssertClick" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_ADD_BUTTON" value1="Add" />
 

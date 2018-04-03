@@ -16,6 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
+<liferay-util:dynamic-include key="com.liferay.blogs.web#/blogs/asset/full_content.jsp#pre" />
+
 <%
 BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 
@@ -69,3 +71,5 @@ Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(),
 		</liferay-expando:custom-attributes-available>
 	</div>
 </div>
+
+<liferay-util:dynamic-include key="com.liferay.blogs.web#/blogs/asset/full_content.jsp#post" />

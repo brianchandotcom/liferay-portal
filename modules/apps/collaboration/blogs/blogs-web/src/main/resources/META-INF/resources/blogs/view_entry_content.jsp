@@ -104,7 +104,7 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 				</div>
 			</div>
 
-			<div class="widget-content">
+			<div class="widget-content" id="<portlet:namespace /><%= entry.getEntryId() %>">
 
 				<%
 				String coverImageURL = entry.getCoverImageURL(themeDisplay);

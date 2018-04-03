@@ -16,7 +16,7 @@ package com.liferay.user.associated.data.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
+import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
 import javax.portlet.ActionRequest;
@@ -32,12 +32,12 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, String uadRegistryKey)
 		throws Exception {
 
-		UADEntityAggregator uadEntityAggregator =
-			uadRegistry.getUADEntityAggregator(uadRegistryKey);
+		UADAggregator uadAggregator = uadRegistry.getUADAggregator(
+			uadRegistryKey);
 
 		String primaryKey = ParamUtil.getString(actionRequest, "primaryKey");
 
-		return uadEntityAggregator.get(primaryKey);
+		return uadAggregator.get(primaryKey);
 	}
 
 	@Reference

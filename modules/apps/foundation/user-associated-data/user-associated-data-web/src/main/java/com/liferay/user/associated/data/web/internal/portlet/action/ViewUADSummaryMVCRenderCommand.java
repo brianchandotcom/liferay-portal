@@ -17,7 +17,7 @@ package liferay.user.associated.data.web.internal.portlet.action;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
+import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
@@ -85,13 +85,13 @@ public class ViewUADSummaryMVCRenderCommand implements MVCRenderCommand {
 			return 3;
 		}
 
-		Collection<UADEntityAggregator> uadEntityAggregators =
-			_uadRegistry.getUADEntityAggregators();
+		Collection<UADAggregator> uadAggregators =
+			_uadRegistry.getUADAggregators();
 
 		int selectedUserEntityCount = 0;
 
-		for (UADEntityAggregator uadEntityAggregator : uadEntityAggregators) {
-			selectedUserEntityCount += uadEntityAggregator.count(
+		for (UADAggregator uadAggregator : uadAggregators) {
+			selectedUserEntityCount += uadAggregator.count(
 				selectedUser.getUserId());
 		}
 

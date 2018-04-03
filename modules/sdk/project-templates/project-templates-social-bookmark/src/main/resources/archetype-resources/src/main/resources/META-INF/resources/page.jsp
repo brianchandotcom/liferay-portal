@@ -26,6 +26,7 @@ String url = GetterUtil.getString((String)request.getAttribute("liferay-social-b
 	buttonStyle="secondary"
 	elementClasses="btn-outline-borderless btn-sm lfr-portal-tooltip"
 	href="<%= socialBookmark.getPostURL(title, url) %>"
-	icon="paste"
+	icon="example"
+	spritemap="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/icons.svg")%>"
 	title="<%= socialBookmark.getName(locale) %>"
 />

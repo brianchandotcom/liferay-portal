@@ -1797,9 +1797,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		bundleDefaultInstructions.put(
 			Constants.DONOTCOPY,
 			"(" + LiferayOSGiExtension.DONOTCOPY_DEFAULT + "|.touch)");
-		bundleDefaultInstructions.put(
-			Constants.FIXUPMESSAGES + ".deprecated",
-			"annotations are deprecated");
 		bundleDefaultInstructions.put(Constants.SOURCES, "false");
 
 		if (publishing) {

@@ -17,4 +17,5 @@ Liferay-Portal-Version: ${release.info.version}
 
 -donotcopy: (\.touch)
 -dsannotations: *
+-fixupmessages.deprecated=annotations are deprecated
 -sources: false

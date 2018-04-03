@@ -43,9 +43,17 @@
 	<property file="${project.dir}/sql/sql.${env.HOSTNAME}.properties" />
 	<property file="${project.dir}/sql/sql.properties" />
 
+	<path id="ant.bnd.classpath">
+		<fileset
+			dir="${project.dir}/lib/development"
+			includes="biz.aQute.bnd.jar,com.liferay.ant.bnd.jar"
+		/>
+	</path>
+
 	<path id="lib.classpath">
 		<fileset
 			dir="${project.dir}/lib/development"
+			excludes="biz.aQute.bnd.jar,com.liferay.ant.bnd.jar"
 			includes="*.jar"
 		/>
 		<fileset
@@ -91,7 +99,7 @@
 	</path>
 
 	<taskdef
-		classpathref="lib.classpath"
+		classpathref="ant.bnd.classpath"
 		resource="aQute/bnd/ant/taskdef.properties"
 	/>
 	<taskdef

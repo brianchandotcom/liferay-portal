@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.organization.order.web.internal.portlet.action;
 
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHelper;
-import com.liferay.commerce.organization.order.web.internal.constants.CommerceOrganizationOrderPortletKeys;
 import com.liferay.commerce.organization.service.CommerceOrganizationLocalService;
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.commerce.service.CommerceOrderService;
@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CommerceOrganizationOrderPortletKeys.COMMERCE_ORGANIZATION_ORDER,
+		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_ORGANIZATION_ORDER,
 		"mvc.command.name=editCommerceOrder"
 	},
 	service = MVCActionCommand.class

@@ -15,9 +15,14 @@
 package com.liferay.commerce.constants;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 public class CommercePortletKeys {
+
+	public static final String COMMERCE_ORGANIZATION_ORDER =
+		"com_liferay_commerce_organization_order_web_internal_portlet_" +
+			"CommerceOrganizationOrderPortlet";
 
 	public static final String COMMERCE_ADDRESS_CONTENT =
 		"com_liferay_commerce_address_content_web_internal_portlet_" +

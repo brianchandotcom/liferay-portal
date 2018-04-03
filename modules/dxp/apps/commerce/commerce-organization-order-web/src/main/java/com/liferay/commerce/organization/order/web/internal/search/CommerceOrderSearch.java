@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.organization.order.web.internal.search;
 
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.organization.order.web.internal.constants.CommerceOrganizationOrderPortletKeys;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -92,21 +92,21 @@ public class CommerceOrderSearch extends SearchContainer<CommerceOrder> {
 				Validator.isNotNull(orderByType)) {
 
 				preferences.setValue(
-					CommerceOrganizationOrderPortletKeys.
+					CommercePortletKeys.
 						COMMERCE_ORGANIZATION_ORDER,
 					"commerce-orders-order-by-col", orderByCol);
 				preferences.setValue(
-					CommerceOrganizationOrderPortletKeys.
+					CommercePortletKeys.
 						COMMERCE_ORGANIZATION_ORDER,
 					"commerce-orders-order-by-type", orderByType);
 			}
 			else {
 				orderByCol = preferences.getValue(
-					CommerceOrganizationOrderPortletKeys.
+					CommercePortletKeys.
 						COMMERCE_ORGANIZATION_ORDER,
 					"commerce-orders-order-by-col", "create-date");
 				orderByType = preferences.getValue(
-					CommerceOrganizationOrderPortletKeys.
+					CommercePortletKeys.
 						COMMERCE_ORGANIZATION_ORDER,
 					"commerce-orders-order-by-type", "desc");
 			}

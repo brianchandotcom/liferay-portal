@@ -86,8 +86,14 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	*
 	* <p>
 	* The web content articles hold HTML content wrapped in XML. The XML lets
-	* you specify the article's default locale and available locales. Here is a
-	* content example:
+	* you specify the article's default locale and available locales.
+	* </p>
+	* <p>
+	* All scheduling parameters(displayDate, expireDate and reviewDate) use
+	* current user's timezone.
+	* </p>
+	* <p>
+	* Here is a content example:
 	* </p>
 	*
 	* <p>
@@ -201,8 +207,14 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	*
 	* <p>
 	* The web content articles hold HTML content wrapped in XML. The XML lets
-	* you specify the article's default locale and available locales. Here is a
-	* content example:
+	* you specify the article's default locale and available locales.
+	* </p>
+	* <p>
+	* All scheduling parameters(displayDate, expireDate and reviewDate) use
+	* current user's timezone.
+	* </p>
+	* <p>
+	* Here is a content example:
 	* </p>
 	*
 	* <p>
@@ -3144,6 +3156,11 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	/**
 	* Updates the web content article with additional parameters.
 	*
+	* <p>
+	* All scheduling parameters(displayDate, expireDate and reviewDate) use
+	* current user's timezone.
+	* </p>
+	*
 	* @param userId the primary key of the user updating the web content
 	article
 	* @param groupId the primary key of the web content article's group
@@ -3282,6 +3299,11 @@ public interface JournalArticleLocalService extends BaseLocalService,
 
 	/**
 	* Updates the web content article with additional parameters.
+	*
+	* <p>
+	* All scheduling parameters(displayDate, expireDate and reviewDate) use
+	* current user's timezone.
+	* </p>
 	*
 	* @param userId the primary key of the user updating the web content
 	article

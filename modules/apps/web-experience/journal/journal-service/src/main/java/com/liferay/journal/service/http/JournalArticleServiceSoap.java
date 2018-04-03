@@ -73,6 +73,11 @@ public class JournalArticleServiceSoap {
 	/**
 	* Adds a web content article without any images.
 	*
+	* <p>
+	* All scheduling parameters(displayDate, expireDate and reviewDate) use
+	* current user's timezone.
+	* </p>
+	*
 	* @param groupId the primary key of the web content article's group
 	* @param folderId the primary key of the web content article folder
 	* @param classNameId the primary key of the DDMStructure class if the web

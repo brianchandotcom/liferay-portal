@@ -16,7 +16,7 @@ package com.liferay.user.associated.data.util;
 
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
+import com.liferay.user.associated.data.aggregator.UADAggregator;
 
 /**
  * @author Noah Sherrill
@@ -24,11 +24,11 @@ import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 public class UADEntityChunkedCommandUtil {
 
 	public static <T> void executeChunkedCommand(
-			long userId, UADEntityAggregator<T> uadEntityAggregator,
+			long userId, UADAggregator<T> uadAggregator,
 			UnsafeConsumer<T, PortalException> unsafeConsumer)
 		throws PortalException {
 
-		int count = (int)uadEntityAggregator.count(userId);
+		int count = (int)uadAggregator.count(userId);
 		int end = _CHUNK_SIZE;
 		int start = 0;
 
@@ -37,7 +37,7 @@ public class UADEntityChunkedCommandUtil {
 				end = count;
 			}
 
-			for (T t : uadEntityAggregator.getRange(userId, start, end)) {
+			for (T t : uadAggregator.getRange(userId, start, end)) {
 				unsafeConsumer.accept(t);
 			}
 

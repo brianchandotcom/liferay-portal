@@ -26,8 +26,8 @@ import java.util.List;
 /**
  * @author Drew Brokke
  */
-public abstract class DynamicQueryUADEntityAggregator<T extends BaseModel>
-	implements UADEntityAggregator<T> {
+public abstract class DynamicQueryUADAggregator<T extends BaseModel>
+	implements UADAggregator<T> {
 
 	@Override
 	public long count(long userId) {

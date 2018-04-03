@@ -71,10 +71,11 @@ import javax.servlet.http.HttpServletRequest;
 public class KaleoDesignerDisplayContext {
 
 	public KaleoDesignerDisplayContext(
-		RenderRequest renderRequest,
-		KaleoDefinitionVersionLocalService kaleoDefinitionVersionLocalService,
-		ResourceBundleLoader resourceBundleLoader,
-		UserLocalService userLocalService)
+			RenderRequest renderRequest,
+			KaleoDefinitionVersionLocalService
+				kaleoDefinitionVersionLocalService,
+			ResourceBundleLoader resourceBundleLoader,
+			UserLocalService userLocalService)
 		throws PortalException {
 
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(

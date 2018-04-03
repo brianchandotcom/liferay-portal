@@ -3314,7 +3314,7 @@ AUI.add(
 						var fieldValues = AArray.invoke(instance.get('fields'), 'toJSON');
 
 						return {
-							availableLanguageIds: instance.get('availableLocales'),
+							availableLanguageIds: instance.get('availableLanguageIds'),
 							defaultLanguageId: themeDisplay.getLanguageId(),
 							fieldValues: fieldValues
 						};

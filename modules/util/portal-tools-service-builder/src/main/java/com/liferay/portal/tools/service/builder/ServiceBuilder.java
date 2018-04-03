@@ -5888,7 +5888,7 @@ public class ServiceBuilder {
 		boolean resourceActionModel = _resourceActionModels.contains(
 			_apiPackagePath + ".model." + entityName);
 		String uadTypeDescription = GetterUtil.getString(
-			entityElement.attributeValue("uad-entity-type-description"));
+			entityElement.attributeValue("uad-type-description"));
 
 		Entity entity = new Entity(
 			_packagePath, _apiPackagePath, _portletShortName, entityName,

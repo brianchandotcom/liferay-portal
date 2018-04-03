@@ -61,12 +61,12 @@ public class EntryUADEntityDisplay implements UADEntityDisplay<Entry> {
 	}
 
 	@Override
-	public String getUADEntityTypeDescription() {
+	public String getTypeDescription() {
 		return "";
 	}
 
 	@Override
-	public String getUADEntityTypeName() {
+	public String getTypeName() {
 		return "Entry";
 	}
 

@@ -238,6 +238,15 @@ class FragmentsEditor extends Component {
 
 							this._dirty = false;
 
+							if (!this.sidebarTabs.find(tab => tab.id === 'added')) {
+								this.sidebarTabs.push(
+									{
+										id: 'added',
+										label: Liferay.Language.get('added')
+									}
+								);
+							}
+
 							this._focusFragmentEntryLink(
 								response.fragmentEntryLinkId
 							);
@@ -323,6 +332,13 @@ class FragmentsEditor extends Component {
 				...this.fragmentEntryLinks.slice(0, index),
 				...this.fragmentEntryLinks.slice(index + 1)
 			];
+
+			if (this.fragmentEntryLinks.length === 0) {
+				this._sidebarSelectedTab = 'available';
+				this.sidebarTabs = this.sidebarTabs.filter(
+					tab => tab.id !== 'added'
+				);
+			}
 
 			this._deleteFragmentEntryLink(data.fragmentEntryLinkId);
 		}

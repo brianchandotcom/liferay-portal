@@ -304,7 +304,6 @@ public class FragmentsEditorContext {
 		List<SoyContext> soyContexts = new ArrayList<>();
 
 		soyContexts.add(_getSidebarTab("available"));
-		soyContexts.add(_getSidebarTab("added"));
 
 		if (_showMapping) {
 			soyContexts.add(_getSidebarTab("mapping"));

@@ -70,14 +70,18 @@ request.setAttribute("edit_layout_set_prototype.jsp-redirect", currentURL);
 
 <portlet:actionURL name="updateLayoutSetPrototype" var="updateLayoutSetPrototypeURL" />
 
-<aui:form action="<%= updateLayoutSetPrototypeURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<liferay-frontend:edit-form
+	action="<%= updateLayoutSetPrototypeURL %>"
+	method="post"
+	name="fm"
+>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="layoutSetPrototypeId" type="hidden" value="<%= layoutSetPrototypeId %>" />
 
 	<aui:model-context bean="<%= layoutSetPrototype %>" model="<%= LayoutSetPrototype.class %>" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
+	<liferay-frontend:fieldset-group>
+		<liferay-frontend:fieldset>
 			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" placeholder="name" />
 
 			<aui:input name="description" placeholder="description" />
@@ -114,17 +118,17 @@ request.setAttribute("edit_layout_set_prototype.jsp-redirect", currentURL);
 
 				</aui:select>
 			</c:if>
-		</aui:fieldset>
-	</aui:fieldset-group>
+		</liferay-frontend:fieldset>
+	</liferay-frontend:fieldset-group>
 
-	<aui:button-row>
+	<liferay-frontend:button-row>
 		<aui:button type="submit" />
 
 		<c:if test="<%= layoutSetPrototype.isNew() %>">
 			<aui:button href="<%= redirect %>" type="cancel" />
 		</c:if>
-	</aui:button-row>
-</aui:form>
+	</liferay-frontend:button-row>
+</liferay-frontend:edit-form>
 
 <%
 if (!layoutSetPrototype.isNew()) {

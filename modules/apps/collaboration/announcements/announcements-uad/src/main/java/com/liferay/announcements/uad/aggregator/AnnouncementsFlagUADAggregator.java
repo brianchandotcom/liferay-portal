@@ -19,7 +19,7 @@ import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
+import com.liferay.user.associated.data.aggregator.UADAggregator;
 
 import java.io.Serializable;
 
@@ -34,10 +34,10 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {"model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_FLAG},
-	service = UADEntityAggregator.class
+	service = UADAggregator.class
 )
-public class AnnouncementsFlagUADEntityAggregator
-	extends BaseAnnouncementsUADEntityAggregator<AnnouncementsFlag> {
+public class AnnouncementsFlagUADAggregator
+	extends BaseAnnouncementsUADAggregator<AnnouncementsFlag> {
 
 	@Override
 	public AnnouncementsFlag get(Serializable primaryKey)

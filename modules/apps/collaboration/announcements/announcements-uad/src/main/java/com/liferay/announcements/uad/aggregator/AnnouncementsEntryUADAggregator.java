@@ -18,7 +18,7 @@ import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
+import com.liferay.user.associated.data.aggregator.UADAggregator;
 
 import java.io.Serializable;
 
@@ -33,10 +33,10 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {"model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_ENTRY},
-	service = UADEntityAggregator.class
+	service = UADAggregator.class
 )
-public class AnnouncementsEntryUADEntityAggregator
-	extends BaseAnnouncementsUADEntityAggregator<AnnouncementsEntry> {
+public class AnnouncementsEntryUADAggregator
+	extends BaseAnnouncementsUADAggregator<AnnouncementsEntry> {
 
 	@Override
 	public AnnouncementsEntry get(Serializable primaryKey) throws Exception {

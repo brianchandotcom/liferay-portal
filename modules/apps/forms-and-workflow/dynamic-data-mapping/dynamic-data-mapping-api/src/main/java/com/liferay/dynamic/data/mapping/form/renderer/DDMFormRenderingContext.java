@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.renderer;
 
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -80,6 +81,10 @@ public class DDMFormRenderingContext {
 		return _showSubmitButton;
 	}
 
+	public boolean isViewMode() {
+		return MapUtil.getBoolean(_properties, "viewMode");
+	}
+
 	public void setContainerId(String containerId) {
 		_containerId = containerId;
 	}
@@ -126,6 +131,10 @@ public class DDMFormRenderingContext {
 
 	public void setSubmitLabel(String submitLabel) {
 		_submitLabel = submitLabel;
+	}
+
+	public void setViewMode(boolean viewMode) {
+		_properties.put("viewMode", viewMode);
 	}
 
 	private String _containerId;

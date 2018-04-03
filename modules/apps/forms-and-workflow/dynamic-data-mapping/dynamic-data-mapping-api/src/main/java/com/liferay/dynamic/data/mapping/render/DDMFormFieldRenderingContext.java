@@ -102,6 +102,10 @@ public class DDMFormFieldRenderingContext {
 		return _showEmptyFieldLabel;
 	}
 
+	public boolean isViewMode() {
+		return MapUtil.getBoolean(_properties, "viewMode");
+	}
+
 	public boolean isVisible() {
 		return MapUtil.getBoolean(_properties, "visible");
 	}
@@ -186,6 +190,10 @@ public class DDMFormFieldRenderingContext {
 
 	public void setValue(String value) {
 		_properties.put("value", value);
+	}
+
+	public void setViewMode(boolean viewMode) {
+		_properties.put("viewMode", viewMode);
 	}
 
 	public void setVisible(boolean visible) {

@@ -12,25 +12,22 @@
  * details.
  */
 
-package com.liferay.contacts.uad.anonymizer.test;
+package com.liferay.contacts.uad.aggregator.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
 import com.liferay.contacts.model.Entry;
-import com.liferay.contacts.service.EntryLocalService;
 import com.liferay.contacts.uad.constants.ContactsUADConstants;
 import com.liferay.contacts.uad.test.EntryUADEntityTestHelper;
 
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import com.liferay.user.associated.data.aggregator.UADAggregator;
-import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
-import com.liferay.user.associated.data.test.util.BaseUADEntityAnonymizerTestCase;
+import com.liferay.user.associated.data.test.util.BaseUADAggregatorTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -45,25 +42,16 @@ import java.util.List;
  * @generated
  */
 @RunWith(Arquillian.class)
-public class EntryUADEntityAnonymizerTest
-	extends BaseUADEntityAnonymizerTestCase {
+public class EntryUADAggregatorTest extends BaseUADAggregatorTestCase {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
 
 	@Override
 	protected BaseModel<?> addBaseModel(long userId) throws Exception {
-		return addBaseModel(userId, true);
-	}
-
-	@Override
-	protected BaseModel<?> addBaseModel(long userId, boolean deleteAfterTestRun)
-		throws Exception {
 		Entry entry = _entryUADEntityTestHelper.addEntry(userId);
 
-		if (deleteAfterTestRun) {
-			_entries.add(entry);
-		}
+		_entries.add(entry);
 
 		return entry;
 	}
@@ -73,45 +61,11 @@ public class EntryUADEntityAnonymizerTest
 		return _uadAggregator;
 	}
 
-	@Override
-	protected UADEntityAnonymizer getUADEntityAnonymizer() {
-		return _uadEntityAnonymizer;
-	}
-
-	@Override
-	protected boolean isBaseModelAutoAnonymized(long baseModelPK, User user)
-		throws Exception {
-		Entry entry = _entryLocalService.getEntry(baseModelPK);
-
-		String userName = entry.getUserName();
-
-		if ((entry.getUserId() != user.getUserId()) &&
-				!userName.equals(user.getFullName())) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	protected boolean isBaseModelDeleted(long baseModelPK) {
-		if (_entryLocalService.fetchEntry(baseModelPK) == null) {
-			return true;
-		}
-
-		return false;
-	}
-
 	@DeleteAfterTestRun
 	private final List<Entry> _entries = new ArrayList<Entry>();
-	@Inject
-	private EntryLocalService _entryLocalService;
 	@Inject
 	private EntryUADEntityTestHelper _entryUADEntityTestHelper;
 	@Inject(filter = "model.class.name=" +
 	ContactsUADConstants.CLASS_NAME_ENTRY)
 	private UADAggregator _uadAggregator;
-	@Inject(filter = "model.class.name=" +
-	ContactsUADConstants.CLASS_NAME_ENTRY)
-	private UADEntityAnonymizer _uadEntityAnonymizer;
 }

@@ -20,6 +20,7 @@
 page import="com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry" %><%@
 page import="com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntryUtil" %><%@
 page import="com.liferay.portal.kernel.util.SessionClicks" %><%@
+page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.TextFormatter" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.taglib.util.PortalIncludeUtil" %>

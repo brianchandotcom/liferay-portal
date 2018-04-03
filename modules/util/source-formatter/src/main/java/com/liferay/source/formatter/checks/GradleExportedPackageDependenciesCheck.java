@@ -60,10 +60,6 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (isSubrepository() || isReadOnly(absolutePath)) {
-			return content;
-		}
-
 		if (!absolutePath.contains("/modules/apps/")) {
 			return content;
 		}

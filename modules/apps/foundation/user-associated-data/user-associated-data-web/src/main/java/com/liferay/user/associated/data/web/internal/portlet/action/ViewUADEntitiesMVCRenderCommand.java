@@ -168,8 +168,7 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 		for (Object entity : entities) {
 			uadEntities.add(
 				new UADEntity(
-					entity, uadEntityAggregator.getPrimaryKey(entity),
-					uadRegistryKey));
+					entity, uadEntityAggregator.getPrimaryKey(entity)));
 		}
 
 		searchContainer.setResults(uadEntities);

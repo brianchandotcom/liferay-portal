@@ -442,7 +442,9 @@
 
 		<execute macro="PortalSettingsNavigator#gotoLDAP" />
 
-		<execute function="AssertChecked" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_IMPORT_ENABLED_CHECKBOX" />
+		<execute macro="FormFields#viewCheckboxChecked">
+			<var name="fieldName" value="ldapImportEnabled" />
+		</execute>
 	</command>
 
 	<command name="enableLDAPSetting">

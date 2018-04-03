@@ -128,6 +128,13 @@ public class CommerceCartContentDisplayContext {
 	}
 
 	public String getCommerceOrderSubtotal() throws PortalException {
+		CommerceOrder commerceOrder = getCommerceOrder();
+
+		if (commerceOrder == null) {
+			return _commercePriceCalculationLocalService.formatPrice(
+				commerceCartContentRequestHelper.getScopeGroupId(), 0);
+		}
+
 		return _commercePriceCalculationLocalService.getFormattedOrderSubtotal(
 			getCommerceOrder());
 	}
@@ -199,14 +206,20 @@ public class CommerceCartContentDisplayContext {
 
 		_searchContainer.setEmptyResultsMessage("no-items-were-found");
 
+		long commerceOrderId = getCommerceOrderId();
+
+		if (commerceOrderId == 0) {
+			return _searchContainer;
+		}
+
 		int total = _commerceOrderItemService.getCommerceOrderItemsCount(
-			getCommerceOrderId());
+			commerceOrderId);
 
 		_searchContainer.setTotal(total);
 
 		List<CommerceOrderItem> results =
 			_commerceOrderItemService.getCommerceOrderItems(
-				getCommerceOrderId(), _searchContainer.getStart(),
+				commerceOrderId, _searchContainer.getStart(),
 				_searchContainer.getEnd());
 
 		_searchContainer.setResults(results);
@@ -215,6 +228,10 @@ public class CommerceCartContentDisplayContext {
 	}
 
 	public boolean isValidCommerceOrder() throws PortalException {
+		if (_commerceOrder == null) {
+			return false;
+		}
+
 		List<CommerceOrderItem> commerceOrderItems =
 			_commerceOrder.getCommerceOrderItems();
 

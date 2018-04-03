@@ -128,6 +128,10 @@ public class CommercePriceCalculationLocalServiceImpl
 	public double getOrderSubtotal(CommerceOrder commerceOrder)
 		throws PortalException {
 
+		if (commerceOrder == null) {
+			return 0;
+		}
+
 		double orderSubtotal = 0;
 
 		List<CommerceOrderItem> commerceOrderItems =

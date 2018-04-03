@@ -33,6 +33,9 @@ import javax.servlet.http.HttpServletRequest;
 @ProviderType
 public interface CommerceOrderHelper {
 
+	public CommerceOrder addCommerceOrder(HttpServletRequest httpServletRequest)
+		throws PortalException;
+
 	public PortletURL getCommerceCartPortletURL(
 			HttpServletRequest httpServletRequest)
 		throws PortalException;

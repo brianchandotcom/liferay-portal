@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -61,6 +60,35 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class CommerceOrderHelperImpl implements CommerceOrderHelper {
+
+	@Override
+	public CommerceOrder addCommerceOrder(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		CommerceOrder commerceOrder = null;
+
+		Organization organization =
+			_commerceOrganizationHelper.getCurrentOrganization(
+				httpServletRequest);
+
+		if (organization != null) {
+			commerceOrder = _commerceOrderService.addOrganizationCommerceOrder(
+				organization.getGroupId(), themeDisplay.getSiteGroupId(),
+				organization.getOrganizationId(), 0, null);
+		}
+		else {
+			commerceOrder = _commerceOrderService.addUserCommerceOrder(
+				themeDisplay.getScopeGroupId(), themeDisplay.getUserId());
+		}
+
+		setCurrentCommerceOrder(httpServletRequest, commerceOrder);
+
+		return commerceOrder;
+	}
 
 	@Override
 	public PortletURL getCommerceCartPortletURL(
@@ -277,22 +305,6 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 				groupId, CommerceOrderConstants.ORDER_STATUS_OPEN);
 		}
 
-		Organization accountOrganization =
-			_commerceOrganizationLocalService.getAccountOrganization(
-				organization.getOrganizationId());
-
-		if ((commerceOrder == null) || !commerceOrder.isOpen()) {
-			commerceOrder = _commerceOrderService.addOrganizationCommerceOrder(
-				groupId, themeDisplay.getSiteGroupId(),
-				accountOrganization.getOrganizationId(), 0, null);
-		}
-
-		_commerceOrderUuidThreadLocal.set(commerceOrder);
-
-		if (!Objects.equals(uuid, commerceOrder.getUuid())) {
-			setCurrentCommerceOrder(httpServletRequest, commerceOrder);
-		}
-
 		return commerceOrder;
 	}
 
@@ -357,13 +369,6 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 
 				return commerceOrder;
 			}
-		}
-
-		commerceOrder = _commerceOrderService.addUserCommerceOrder(
-			themeDisplay.getScopeGroupId(), user.getUserId());
-
-		if (!themeDisplay.isSignedIn()) {
-			_setGuestCommerceOrder(themeDisplay, commerceOrder);
 		}
 
 		return commerceOrder;

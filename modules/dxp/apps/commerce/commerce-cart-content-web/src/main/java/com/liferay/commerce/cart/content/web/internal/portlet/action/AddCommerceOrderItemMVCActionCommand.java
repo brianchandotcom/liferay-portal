@@ -86,6 +86,11 @@ public class AddCommerceOrderItemMVCActionCommand extends BaseMVCActionCommand {
 				_commerceOrderHelper.getCurrentCommerceOrder(
 					httpServletRequest);
 
+			if (commerceOrder == null) {
+				commerceOrder = _commerceOrderHelper.addCommerceOrder(
+					httpServletRequest);
+			}
+
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				CommerceOrderItem.class.getName(), httpServletRequest);
 

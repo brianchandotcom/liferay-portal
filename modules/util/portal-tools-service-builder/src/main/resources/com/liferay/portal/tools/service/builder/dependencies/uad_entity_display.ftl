@@ -46,12 +46,12 @@ public class ${entity.name}UADEntityDisplay implements UADEntityDisplay<${entity
 	}
 
 	@Override
-	public String getUADEntityTypeDescription() {
-		return "${entity.UADEntityTypeDescription}";
+	public String getTypeDescription() {
+		return "${entity.UADTypeDescription}";
 	}
 
 	@Override
-	public String getUADEntityTypeName() {
+	public String getTypeName() {
 		return "${entity.name}";
 	}
 

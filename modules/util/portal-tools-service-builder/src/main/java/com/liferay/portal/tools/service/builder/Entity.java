@@ -115,7 +115,7 @@ public class Entity implements Comparable<Entity> {
 		List<EntityFinder> entityFinders, List<Entity> referenceEntities,
 		List<String> unresolvedReferenceEntityNames,
 		List<String> txRequiredMethodNames, boolean resourceActionModel,
-		String uadEntityTypeDescription) {
+		String uadTypeDescription) {
 
 		_packagePath = packagePath;
 		_apiPackagePath = apiPackagePath;
@@ -145,7 +145,7 @@ public class Entity implements Comparable<Entity> {
 		_unresolvedReferenceEntityNames = unresolvedReferenceEntityNames;
 		_txRequiredMethodNames = txRequiredMethodNames;
 		_resourceActionModel = resourceActionModel;
-		_uadEntityTypeDescription = uadEntityTypeDescription;
+		_uadTypeDescription = uadTypeDescription;
 
 		_humanName = GetterUtil.getString(
 			humanName, ServiceBuilder.toHumanName(name));
@@ -619,10 +619,6 @@ public class Entity implements Comparable<Entity> {
 		return uadAnonymizableEntityColumnsMap;
 	}
 
-	public String getUADEntityTypeDescription() {
-		return _uadEntityTypeDescription;
-	}
-
 	public List<EntityColumn> getUADNonanonymizableEntityColumns() {
 		List<EntityColumn> uadNonanonymizableEntityColumns = new ArrayList<>();
 
@@ -633,6 +629,10 @@ public class Entity implements Comparable<Entity> {
 		}
 
 		return uadNonanonymizableEntityColumns;
+	}
+
+	public String getUADTypeDescription() {
+		return _uadTypeDescription;
 	}
 
 	public List<String> getUADUserIdColumnNames() {
@@ -1177,7 +1177,7 @@ public class Entity implements Comparable<Entity> {
 	private final boolean _trashEnabled;
 	private final String _txManager;
 	private final List<String> _txRequiredMethodNames;
-	private final String _uadEntityTypeDescription;
+	private final String _uadTypeDescription;
 	private List<String> _unresolvedReferenceEntityNames;
 	private final boolean _uuid;
 	private final boolean _uuidAccessor;

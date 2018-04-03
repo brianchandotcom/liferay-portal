@@ -35,9 +35,9 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 		UADEntityAggregator uadEntityAggregator =
 			uadRegistry.getUADEntityAggregator(uadRegistryKey);
 
-		String entityId = ParamUtil.getString(actionRequest, "entityId");
+		String primaryKey = ParamUtil.getString(actionRequest, "primaryKey");
 
-		return uadEntityAggregator.get(entityId);
+		return uadEntityAggregator.get(primaryKey);
 	}
 
 	@Reference

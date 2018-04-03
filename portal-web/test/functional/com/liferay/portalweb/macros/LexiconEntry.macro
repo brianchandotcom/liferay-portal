@@ -95,20 +95,30 @@
 		</execute>
 	</command>
 
-	<command name="gotoHeaderMenuItem">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+	<command name="gotoEntryMenuItemNoWait">
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
+			<var name="key_rowEntry" value="${rowEntry}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${menuItem}">
 			<var name="key_menuItem" value="${menuItem}" />
 		</execute>
 	</command>
 
-	<command name="gotoHeaderMenuItemNoError">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+	<command name="gotoEntryMenuItemNoWaitNoError">
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
+			<var name="key_rowEntry" value="${rowEntry}" />
+		</execute>
 
 		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="${menuItem}">
 			<var name="key_menuItem" value="${menuItem}" />
 		</execute>
+	</command>
+
+	<command name="selectEntry">
+		<execute function="Check" locator1="ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX">
+			<var name="key_rowEntry" value="${rowEntry}" />
+		</execute>"key_menuItem" value="${menuItem}" />
 	</command>
 
 	<command name="selectEntry">

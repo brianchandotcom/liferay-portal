@@ -1,4 +1,7 @@
-<%--
+<%@ page
+		import="com.liferay.commerce.order.web.security.permission.resource.CommerceOrderPermission" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %><%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -223,6 +226,8 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 	</div>
 </aui:form>
 
+<liferay-portlet:actionURL name="editCommerceOrderItem" var="editCommerceOrderItemURL" />
+
 <liferay-ui:search-container
 	cssClass="order-details-table"
 	searchContainer="<%= commerceOrganizationOrderDisplayContext.getCommerceOrderItemsSearchContainer() %>"
@@ -242,9 +247,40 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 			value="<%= HtmlUtil.escape(commerceOrderItem.getTitle(locale)) %>"
 		/>
 
-		<liferay-ui:search-container-column-text
-			property="quantity"
-		/>
+		<c:choose>
+			<c:when test="<%= commerceOrder.isOpen() &&  CommerceOrderPermission.contains(permissionChecker, commerceOrder, ActionKeys.UPDATE )%>">
+				<liferay-ui:search-container-column-text
+					name="quantity"
+					cssClass="order-item-quantity"
+				>
+					<aui:form action="<%= editCommerceOrderItemURL %>" method="post" name='<%= commerceOrderItem.getCommerceOrderItemId() + "fm" %>'>
+						<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+						<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+						<aui:input name="commerceOrderItemId" type="hidden" value="<%= commerceOrderItem.getCommerceOrderItemId() %>" />
+
+						<aui:model-context bean="<%= commerceOrderItem %>" model="<%= CommerceOrderItem.class %>" />
+
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-item input-group-prepend">
+									<liferay-commerce:quantity-input name="quantity" CPDefinitionId="<%= commerceOrderItem.getCPDefinitionId() %>" value="<%= commerceOrderItem.getQuantity() %>" useSelect="<%= false %>" />
+								</div>
+								<div class="input-group-append input-group-item input-group-item-shrink">
+									<clay:button type="submit"  label='<%= LanguageUtil.get(resourceBundle, "update")%>' style="secondary" />
+								</div>
+							</div>
+						</div>
+					</aui:form>
+
+				</liferay-ui:search-container-column-text>
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:search-container-column-text
+					property="quantity"
+				/>
+
+			</c:otherwise>
+		</c:choose>
 
 		<liferay-ui:search-container-column-text
 			name="price"

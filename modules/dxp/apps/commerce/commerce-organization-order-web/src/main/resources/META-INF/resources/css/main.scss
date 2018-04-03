@@ -1,4 +1,15 @@
 .portlet-commerce-organization-order {
+
+	.order-item-quantity{
+		.form-group{
+			margin: 0;
+		}
+
+		label{
+			display: none;
+		}
+	}
+
 	.notes-icon .no-notes {
 		opacity: 0.5;
 	}

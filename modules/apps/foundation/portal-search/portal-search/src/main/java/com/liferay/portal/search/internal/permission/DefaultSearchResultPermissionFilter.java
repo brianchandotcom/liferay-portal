@@ -311,7 +311,7 @@ public class DefaultSearchResultPermissionFilter
 			long startTime = 0;
 
 			while (true) {
-				int count = end - documents.size();
+				int count = end - filteredDocsCount;
 
 				if ((offset > 0) || (amplifiedCount < count)) {
 					amplifiedCount = (int)Math.ceil(
@@ -363,7 +363,7 @@ public class DefaultSearchResultPermissionFilter
 				offset = amplifiedEnd;
 
 				amplificationFactor = _getAmplificationFactor(
-					documents.size(), offset);
+					filteredDocsCount, offset);
 			}
 		}
 

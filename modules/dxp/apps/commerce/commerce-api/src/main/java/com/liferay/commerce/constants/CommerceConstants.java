@@ -17,8 +17,12 @@ package com.liferay.commerce.constants;
 /**
  * @author Andrea Di Giorgi
  * @author Alessio Antonio Rendina
+ * @author Marco Leo
  */
 public class CommerceConstants {
+
+	public static final String ORDER_SERVICE_NAME =
+		"com.liferay.commerce.order";
 
 	public static final String PAYMENT_SERVLET_PATH = "commerce-payment";
 

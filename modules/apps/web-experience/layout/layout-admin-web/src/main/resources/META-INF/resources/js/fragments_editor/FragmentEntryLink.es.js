@@ -24,7 +24,7 @@ class FragmentEntryLink extends Component {
 	 */
 
 	created() {
-		this.eventHandler_ = new EventHandler();
+		this._eventHandler = new EventHandler();
 
 		this._handleEditorChange = this._handleEditorChange.bind(this);
 
@@ -37,7 +37,7 @@ class FragmentEntryLink extends Component {
 	 */
 
 	disposed() {
-		this.eventHandler_.removeAllListeners();
+		this._eventHandler.removeAllListeners();
 
 		this._destroyEditors();
 	}
@@ -203,7 +203,7 @@ class FragmentEntryLink extends Component {
 	 */
 
 	_enableEditableImages(content) {
-		this.eventHandler_.add(
+		this._eventHandler.add(
 			dom.delegate(
 				content,
 				'click',
@@ -526,7 +526,20 @@ FragmentEntryLink.STATE = {
 
 	_editors: Config.arrayOf(Config.object())
 		.internal()
-		.value([])
+		.value([]),
+
+	/**
+	 * Event handler for managing listeners
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEntryLink
+	 * @private
+	 * @review
+	 * @type {EventHandler}
+	 */
+
+	_eventHandler: Config.object()
+		.internal()
 };
 
 Soy.register(FragmentEntryLink, templates);

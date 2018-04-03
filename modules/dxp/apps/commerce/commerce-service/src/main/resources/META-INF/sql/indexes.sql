@@ -36,6 +36,7 @@ create index IX_12131FC1 on CommerceOrder (billingAddressId);
 create index IX_64C8D153 on CommerceOrder (groupId, orderUserId);
 create index IX_67E0AF05 on CommerceOrder (groupId, userId, orderStatus);
 create index IX_4B11FAD8 on CommerceOrder (shippingAddressId);
+create index IX_EFAA753 on CommerceOrder (userId);
 create index IX_5AF685CD on CommerceOrder (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_58101B8F on CommerceOrder (uuid_[$COLUMN_LENGTH:75$], groupId);
 

@@ -69,13 +69,13 @@ portletURL.setParameter("displayStyle", displayStyle);
 							cssClass="table-cell-content"
 							href="<%= rowURL %>"
 							name="name"
-							value="<%= HtmlUtil.escape(structure.getName(locale)) %>"
+							value="<%= HtmlUtil.extractText(structure.getName(locale)) %>"
 						/>
 
 						<liferay-ui:search-container-column-text
 							cssClass="table-cell-content"
 							name="description"
-							value="<%= HtmlUtil.escape(structure.getDescription(locale)) %>"
+							value="<%= HtmlUtil.extractText(structure.getDescription(locale)) %>"
 						/>
 
 						<liferay-ui:search-container-column-date

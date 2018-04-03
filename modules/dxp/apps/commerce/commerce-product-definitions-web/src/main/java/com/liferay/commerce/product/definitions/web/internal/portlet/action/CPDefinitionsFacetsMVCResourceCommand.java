@@ -20,7 +20,6 @@ import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.search.CPDefinitionIndexer;
 import com.liferay.commerce.product.search.FacetImpl;
-import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.commerce.product.type.CPType;
@@ -239,9 +238,6 @@ public class CPDefinitionsFacetsMVCResourceCommand
 
 	@Reference
 	private CPDefinitionHelper _cpDefinitionHelper;
-
-	@Reference
-	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;
 
 	@Reference
 	private CPDefinitionOptionValueRelService

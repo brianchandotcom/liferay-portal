@@ -62,12 +62,12 @@ public class BlogsEntryUADEntityDisplay implements UADEntityDisplay<BlogsEntry> 
 	}
 
 	@Override
-	public String getUADEntityTypeDescription() {
+	public String getTypeDescription() {
 		return "A blog post";
 	}
 
 	@Override
-	public String getUADEntityTypeName() {
+	public String getTypeName() {
 		return "BlogsEntry";
 	}
 

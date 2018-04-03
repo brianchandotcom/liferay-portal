@@ -87,6 +87,19 @@
 					</div>
 				</li>
 			</ul>
+		{ifempty}
+			<div class="alert alert-primary" role="alert">
+				<span class="alert-indicator">
+					<svg class="lexicon-icon">
+						<use xlink:href="{$spritemap}#info-circle"></use>
+					</svg>
+				</span>
+
+				<strong class="lead">
+					{msg desc=""}info{/msg}:
+				</strong>
+				{msg desc=""}you-dont-have-any-fragment-please-contact-your-administrator{/msg}
+			</div>
 		{/foreach}
 	</div>
 {/template}

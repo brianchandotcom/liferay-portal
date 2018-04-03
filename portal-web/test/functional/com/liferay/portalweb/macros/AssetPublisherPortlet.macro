@@ -701,7 +701,7 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
+		<execute macro="LexiconEntry#gotoEntryMenuItemNoWait">
 			<var name="menuItem" value="Apply" />
 			<var name="rowEntry" value="${configurationName}" />
 		</execute>

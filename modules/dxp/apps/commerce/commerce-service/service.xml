@@ -272,6 +272,9 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
+		<finder name="UserId" return-type="Collection">
+			<finder-column name="userId" />
+		</finder>
 		<finder name="BillingAddressId" return-type="Collection">
 			<finder-column name="billingAddressId" />
 		</finder>

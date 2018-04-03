@@ -60,23 +60,6 @@
 	},
 	{
 		"hidden": true,
-		"layoutTemplateId": "2_columns_iii",
-		"name": "Cart",
-		"portlets": [
-			{
-				"layoutColumnId": "column-1",
-				"layoutColumnPos": "0",
-				"portletName": "com_liferay_commerce_cart_content_web_internal_portlet_CommerceCartContentPortlet"
-			},
-			{
-				"layoutColumnId": "column-2",
-				"layoutColumnPos": "0",
-				"portletName": "com_liferay_commerce_cart_content_web_internal_portlet_CommerceCartContentTotalPortlet"
-			}
-		]
-	},
-	{
-		"hidden": true,
 		"layoutTemplateId": "1_column",
 		"name": "Checkout",
 		"portlets": [

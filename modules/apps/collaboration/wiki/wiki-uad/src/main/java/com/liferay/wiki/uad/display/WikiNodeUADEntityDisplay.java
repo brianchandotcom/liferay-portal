@@ -17,12 +17,10 @@ package com.liferay.wiki.uad.display;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
-import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
-import com.liferay.user.associated.data.entity.UADEntity;
 
+import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.uad.constants.WikiUADConstants;
-import com.liferay.wiki.uad.entity.WikiNodeUADEntity;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -35,9 +33,9 @@ import java.util.Map;
  */
 @Component(immediate = true, property =  {
 	"model.class.name=" + WikiUADConstants.CLASS_NAME_WIKI_NODE}, service = UADEntityDisplay.class)
-public class WikiNodeUADEntityDisplay implements UADEntityDisplay {
+public class WikiNodeUADEntityDisplay implements UADEntityDisplay<WikiNode> {
 	public String getApplicationName() {
-		return WikiUADConstants.UAD_ENTITY_SET_NAME;
+		return WikiUADConstants.APPLICATION_NAME;
 	}
 
 	public String[] getDisplayFieldNames() {
@@ -45,13 +43,11 @@ public class WikiNodeUADEntityDisplay implements UADEntityDisplay {
 	}
 
 	@Override
-	public String getEditURL(UADEntity uadEntity,
+	public String getEditURL(WikiNode wikiNode,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
-		WikiNodeUADEntity wikiNodeUADEntity = (WikiNodeUADEntity)uadEntity;
-
-		return _wikiNodeUADEntityDisplayHelper.getWikiNodeEditURL(wikiNodeUADEntity.getWikiNode(),
+		return _wikiNodeUADEntityDisplayHelper.getWikiNodeEditURL(wikiNode,
 			liferayPortletRequest, liferayPortletResponse);
 	}
 
@@ -60,11 +56,8 @@ public class WikiNodeUADEntityDisplay implements UADEntityDisplay {
 	}
 
 	@Override
-	public Map<String, Object> getUADEntityNonanonymizableFieldValues(
-		UADEntity uadEntity) {
-		WikiNodeUADEntity wikiNodeUADEntity = (WikiNodeUADEntity)uadEntity;
-
-		return _wikiNodeUADEntityDisplayHelper.getUADEntityNonanonymizableFieldValues(wikiNodeUADEntity.getWikiNode());
+	public Map<String, Object> getNonanonymizableFieldValues(WikiNode wikiNode) {
+		return _wikiNodeUADEntityDisplayHelper.getUADEntityNonanonymizableFieldValues(wikiNode);
 	}
 
 	@Override
@@ -79,7 +72,4 @@ public class WikiNodeUADEntityDisplay implements UADEntityDisplay {
 
 	@Reference
 	private WikiNodeUADEntityDisplayHelper _wikiNodeUADEntityDisplayHelper;
-	@Reference(target = "(model.class.name=" +
-	WikiUADConstants.CLASS_NAME_WIKI_NODE + ")")
-	private UADEntityAnonymizer _uadEntityAnonymizer;
 }

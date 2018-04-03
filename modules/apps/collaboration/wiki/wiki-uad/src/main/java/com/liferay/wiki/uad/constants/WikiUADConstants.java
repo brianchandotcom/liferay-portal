@@ -19,9 +19,9 @@ package com.liferay.wiki.uad.constants;
  * @generated
  */
 public class WikiUADConstants {
+	public static final String APPLICATION_NAME = "Wiki";
 	public static final String CLASS_NAME_WIKI_NODE = "com.liferay.wiki.model.WikiNode";
 	public static final String CLASS_NAME_WIKI_PAGE = "com.liferay.wiki.model.WikiPage";
-	public static final String UAD_ENTITY_SET_NAME = "Wiki";
 	public static final String[] USER_ID_FIELD_NAMES_WIKI_NODE = {
 			"userId", "statusByUserId"
 		};

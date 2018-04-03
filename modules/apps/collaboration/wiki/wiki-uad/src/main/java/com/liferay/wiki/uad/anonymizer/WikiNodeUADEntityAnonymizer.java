@@ -18,18 +18,13 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
-import com.liferay.user.associated.data.anonymizer.BaseUADEntityAnonymizer;
+import com.liferay.user.associated.data.anonymizer.DynamicQueryUADEntityAnonymizer;
 import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
-import com.liferay.user.associated.data.entity.UADEntity;
-import com.liferay.user.associated.data.exception.UADEntityException;
 import com.liferay.user.associated.data.util.UADAnonymizerHelper;
-import com.liferay.user.associated.data.util.UADDynamicQueryHelper;
 
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.uad.constants.WikiUADConstants;
-import com.liferay.wiki.uad.entity.WikiNodeUADEntity;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,60 +38,9 @@ import java.util.List;
  */
 @Component(immediate = true, property =  {
 	"model.class.name=" + WikiUADConstants.CLASS_NAME_WIKI_NODE}, service = UADEntityAnonymizer.class)
-public class WikiNodeUADEntityAnonymizer extends BaseUADEntityAnonymizer {
+public class WikiNodeUADEntityAnonymizer extends DynamicQueryUADEntityAnonymizer<WikiNode> {
 	@Override
-	public void autoAnonymize(UADEntity uadEntity) throws PortalException {
-		WikiNode wikiNode = _getWikiNode(uadEntity);
-
-		_autoAnonymize(wikiNode, uadEntity.getUserId());
-	}
-
-	@Override
-	public void autoAnonymizeAll(final long userId) throws PortalException {
-		ActionableDynamicQuery actionableDynamicQuery = _getActionableDynamicQuery(userId);
-
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<WikiNode>() {
-				@Override
-				public void performAction(WikiNode wikiNode)
-					throws PortalException {
-					_autoAnonymize(wikiNode, userId);
-				}
-			});
-
-		actionableDynamicQuery.performActions();
-	}
-
-	@Override
-	public void delete(UADEntity uadEntity) throws PortalException {
-		_wikiNodeLocalService.deleteNode(_getWikiNode(uadEntity));
-	}
-
-	@Override
-	public void deleteAll(long userId) throws PortalException {
-		ActionableDynamicQuery actionableDynamicQuery = _getActionableDynamicQuery(userId);
-
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<WikiNode>() {
-				@Override
-				public void performAction(WikiNode wikiNode)
-					throws PortalException {
-					_wikiNodeLocalService.deleteNode(wikiNode);
-				}
-			});
-
-		actionableDynamicQuery.performActions();
-	}
-
-	@Override
-	protected UADEntityAggregator getUADEntityAggregator() {
-		return _uadEntityAggregator;
-	}
-
-	@Override
-	public List<String> getUADEntityNonanonymizableFieldNames() {
-		return Arrays.asList("name", "description");
-	}
-
-	private void _autoAnonymize(WikiNode wikiNode, long userId)
+	public void autoAnonymize(WikiNode wikiNode, long userId)
 		throws PortalException {
 		User anonymousUser = _uadAnonymizerHelper.getAnonymousUser();
 
@@ -113,33 +57,28 @@ public class WikiNodeUADEntityAnonymizer extends BaseUADEntityAnonymizer {
 		_wikiNodeLocalService.updateWikiNode(wikiNode);
 	}
 
-	private ActionableDynamicQuery _getActionableDynamicQuery(long userId) {
-		return _uadDynamicQueryHelper.addActionableDynamicQueryCriteria(_wikiNodeLocalService.getActionableDynamicQuery(),
-			WikiUADConstants.USER_ID_FIELD_NAMES_WIKI_NODE, userId);
+	@Override
+	public void delete(WikiNode wikiNode) throws PortalException {
+		_wikiNodeLocalService.deleteNode(wikiNode);
 	}
 
-	private WikiNode _getWikiNode(UADEntity uadEntity)
-		throws PortalException {
-		_validate(uadEntity);
-
-		WikiNodeUADEntity wikiNodeUADEntity = (WikiNodeUADEntity)uadEntity;
-
-		return wikiNodeUADEntity.getWikiNode();
+	@Override
+	public List<String> getNonanonymizableFieldNames() {
+		return Arrays.asList("name", "description");
 	}
 
-	private void _validate(UADEntity uadEntity) throws PortalException {
-		if (!(uadEntity instanceof WikiNodeUADEntity)) {
-			throw new UADEntityException();
-		}
+	@Override
+	protected ActionableDynamicQuery doGetActionableDynamicQuery() {
+		return _wikiNodeLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	protected String[] doGetUserIdFieldNames() {
+		return WikiUADConstants.USER_ID_FIELD_NAMES_WIKI_NODE;
 	}
 
 	@Reference
 	private WikiNodeLocalService _wikiNodeLocalService;
 	@Reference
 	private UADAnonymizerHelper _uadAnonymizerHelper;
-	@Reference
-	private UADDynamicQueryHelper _uadDynamicQueryHelper;
-	@Reference(target = "(model.class.name=" +
-	WikiUADConstants.CLASS_NAME_WIKI_NODE + ")")
-	private UADEntityAggregator _uadEntityAggregator;
 }

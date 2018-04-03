@@ -60,7 +60,7 @@ public class WikiNodeUADEntityDisplayTest extends BaseUADEntityDisplayTestCase {
 
 	@Override
 	protected String getApplicationName() {
-		return WikiUADConstants.UAD_ENTITY_SET_NAME;
+		return WikiUADConstants.APPLICATION_NAME;
 	}
 
 	@Override

@@ -14,7 +14,6 @@
 
 package com.liferay.source.formatter.checks.configuration;
 
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
@@ -56,11 +55,6 @@ public class ConfigurationLoader {
 				SourceCheckConfiguration sourceCheckConfiguration =
 					new SourceCheckConfiguration(
 						checkElement.attributeValue("name"));
-
-				boolean enabled = GetterUtil.getBoolean(
-					checkElement.attributeValue("enabled"), true);
-
-				sourceCheckConfiguration.setEnabled(enabled);
 
 				for (Element propertyElement :
 						(List<Element>)checkElement.elements("property")) {

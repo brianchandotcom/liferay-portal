@@ -279,7 +279,9 @@ public class SourceChecksUtil {
 				}
 			}
 
-			sourceChecks.add(sourceCheck);
+			if (sourceCheck.isEnabled()) {
+				sourceChecks.add(sourceCheck);
+			}
 		}
 
 		return sourceChecks;

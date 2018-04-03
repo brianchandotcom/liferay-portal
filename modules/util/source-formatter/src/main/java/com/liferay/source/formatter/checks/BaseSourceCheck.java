@@ -69,6 +69,11 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	@Override
+	public boolean isEnabled() {
+		return _enabled;
+	}
+
+	@Override
 	public boolean isModulesCheck() {
 		return false;
 	}
@@ -85,6 +90,11 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	@Override
 	public void setBaseDirName(String baseDirName) {
 		_baseDirName = baseDirName;
+	}
+
+	@Override
+	public void setEnabled(boolean enabled) {
+		_enabled = enabled;
 	}
 
 	@Override
@@ -695,6 +705,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		"/modules/private/apps/", "/modules/test/poshi-runner/");
 
 	private String _baseDirName;
+	private boolean _enabled = true;
 	private int _maxLineLength;
 	private List<String> _pluginsInsideModulesDirectoryNames;
 	private boolean _portalSource;

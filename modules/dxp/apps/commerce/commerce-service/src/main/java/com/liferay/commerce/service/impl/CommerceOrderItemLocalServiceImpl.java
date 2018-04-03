@@ -14,7 +14,9 @@
 
 package com.liferay.commerce.service.impl;
 
+import com.liferay.commerce.configuration.CommerceOrderConfiguration;
 import com.liferay.commerce.exception.CommerceOrderValidatorException;
+import com.liferay.commerce.exception.GuestCartItemMaxAllowedException;
 import com.liferay.commerce.internal.search.CommerceOrderItemIndexer;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -80,7 +82,7 @@ public class CommerceOrderItemLocalServiceImpl
 		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
 			cpInstance.getCPDefinitionId());
 
-		validate(cpDefinition, cpInstance, quantity);
+		validate(commerceOrder, cpDefinition, cpInstance, quantity);
 
 		if (price == null) {
 			price = commercePriceCalculationLocalService.getFinalPrice(
@@ -287,6 +289,7 @@ public class CommerceOrderItemLocalServiceImpl
 		int newQuantity = quantity - commerceOrderItem.getQuantity();
 
 		validate(
+			commerceOrderItem.getCommerceOrder(),
 			commerceOrderItem.getCPDefinition(),
 			commerceOrderItem.getCPInstance(), newQuantity);
 
@@ -385,8 +388,20 @@ public class CommerceOrderItemLocalServiceImpl
 	}
 
 	protected void validate(
-			CPDefinition cpDefinition, CPInstance cpInstance, int quantity)
+			CommerceOrder commerceOrder, CPDefinition cpDefinition,
+			CPInstance cpInstance, int quantity)
 		throws PortalException {
+
+		if (commerceOrder.getUserId() == 0) {
+			int count = commerceOrderItemPersistence.countByCommerceOrderId(
+				commerceOrder.getCommerceOrderId());
+
+			if (count >=
+					_commerceOrderConfiguration.guestCartItemMaxAllowed()) {
+
+				throw new GuestCartItemMaxAllowedException();
+			}
+		}
 
 		if (cpInstance.getCPDefinitionId() !=
 				cpDefinition.getCPDefinitionId()) {
@@ -408,6 +423,9 @@ public class CommerceOrderItemLocalServiceImpl
 
 	private static final String[] _SELECTED_FIELD_NAMES =
 		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID};
+
+	@ServiceReference(type = CommerceOrderConfiguration.class)
+	private CommerceOrderConfiguration _commerceOrderConfiguration;
 
 	@ServiceReference(type = CommerceOrderValidatorRegistry.class)
 	private CommerceOrderValidatorRegistry _commerceOrderValidatorRegistry;

@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.service.impl;
 
+import com.liferay.commerce.configuration.CommerceOrderConfiguration;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
@@ -24,6 +25,7 @@ import com.liferay.commerce.exception.CommerceOrderShippingAddressException;
 import com.liferay.commerce.exception.CommerceOrderShippingMethodException;
 import com.liferay.commerce.exception.CommerceOrderStatusException;
 import com.liferay.commerce.exception.CommercePaymentEngineException;
+import com.liferay.commerce.exception.GuestCartMaxAllowedException;
 import com.liferay.commerce.exception.NoSuchPaymentMethodException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
@@ -891,6 +893,12 @@ public class CommerceOrderLocalServiceImpl
 
 		User user = userLocalService.getUser(userId);
 
+		if (user.isDefaultUser()) {
+			userId = 0;
+		}
+
+		validateGuestOrders();
+
 		if (commerceCurrencyId <= 0) {
 			CommerceCurrency commerceCurrency =
 				_commerceCurrencyLocalService.fetchPrimaryCommerceCurrency(
@@ -909,7 +917,7 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setUuid(serviceContext.getUuid());
 		commerceOrder.setGroupId(scopeGroupId);
 		commerceOrder.setCompanyId(user.getCompanyId());
-		commerceOrder.setUserId(user.getUserId());
+		commerceOrder.setUserId(userId);
 		commerceOrder.setUserName(user.getFullName());
 		commerceOrder.setSiteGroupId(siteGroupId);
 		commerceOrder.setOrderOrganizationId(orderOrganizationId);
@@ -1168,6 +1176,14 @@ public class CommerceOrderLocalServiceImpl
 		}
 	}
 
+	protected void validateGuestOrders() throws PortalException {
+		int count = commerceOrderPersistence.countByUserId(0);
+
+		if (count >= _commerceOrderConfiguration.guestCartMaxAllowed()) {
+			throw new GuestCartMaxAllowedException();
+		}
+	}
+
 	protected void validateOrderStatus(long commerceOrderId, int orderStatus)
 		throws PortalException {
 
@@ -1208,6 +1224,9 @@ public class CommerceOrderLocalServiceImpl
 
 	@ServiceReference(type = CommerceCurrencyLocalService.class)
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
+
+	@ServiceReference(type = CommerceOrderConfiguration.class)
+	private CommerceOrderConfiguration _commerceOrderConfiguration;
 
 	@ServiceReference(type = CommerceOrganizationLocalService.class)
 	private CommerceOrganizationLocalService _commerceOrganizationLocalService;

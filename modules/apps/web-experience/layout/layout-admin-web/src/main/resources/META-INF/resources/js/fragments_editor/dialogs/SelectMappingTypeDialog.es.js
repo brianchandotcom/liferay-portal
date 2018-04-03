@@ -20,6 +20,14 @@ class SelectMappingTypeDialog extends Component {
 		if (this.visible && !this._mappingTypes) {
 			this._loadMappingTypes();
 		}
+
+		if (
+			this._mappingTypes &&
+			this._mappingTypes.length === 1 &&
+			!this._selectedMappingTypeId
+		) {
+			this._handleMappingTypeSelectChange();
+		}
 	}
 
 	/**

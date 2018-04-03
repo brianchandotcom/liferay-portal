@@ -38,7 +38,10 @@
 							id="selectMappingType"
 							ref="selectMappingType"
 						>
-							<option disabled value="-">-</option>
+							{if length($_mappingTypes) != 1}
+								<option disabled value="-">-</option>
+							{/if}
+
 							{foreach $mappingType in $_mappingTypes}
 								<option value="{$mappingType.id}">{$mappingType.label}</option>
 							{/foreach}

@@ -1,11 +1,19 @@
 <#assign
 	orderItemsQuantity = commerceOrderHelper.getCommerceOrderItemsQuantity(request)
 	cartUrl = commerceOrderHelper.getCommerceCartPortletURL(request)
+	currentOrder = commerceOrderHelper.getCurrentCommerceOrder(request)
 	currentOrganization = (commerceOrganizationHelper.getCurrentOrganization(request))!""
 	demo_mode = getterUtil.getBoolean(themeDisplay.getThemeSetting("demo-mode"))
 	wishListItemsCount = commerceWishListHelper.getCurrentCommerceWishListItemsCount(request, themeDisplay.getResponse())
 	wishlistUrl = commerceWishListHelper.getCommerceWishListPortletURL(request)
+	orderNumber = ""
 />
+
+<#if currentOrder??>
+	<#assign
+		orderNumber =  currentOrder.getCommerceOrderId()
+	/>
+</#if>
 
 <#macro commerce_category_navigation_menu default_preferences = "">
 	<@liferay_portlet["runtime"]

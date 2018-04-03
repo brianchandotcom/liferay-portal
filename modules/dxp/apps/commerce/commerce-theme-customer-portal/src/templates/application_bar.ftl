@@ -39,7 +39,7 @@
 					<span id="b2b-mini-cart-items-count" class="sticker sticker-light sticker-sm rounded-circle sticker-outside sticker-top-right">
 						${orderItemsQuantity}
 					</span>
-				</span><span class="inline-item-after navbar-breakpoint-down-d-none"><span class="text-truncate-inline"><span class="text-truncate">12345-67</span></span></span>
+				</span><span class="inline-item-after navbar-breakpoint-down-d-none"><span class="text-truncate-inline"><span class="text-truncate">${orderNumber}</span></span></span>
 				<span class="inline-item inline-item-after navbar-breakpoint-down-d-none"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-down" focusable="false"><use xlink:href="${images_folder}/lexicon/icons.svg#angle-down" /></svg></span>
 			</a>
 

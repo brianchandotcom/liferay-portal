@@ -35,7 +35,11 @@ renderResponse.setTitle(assetTagsDisplayContext.getAssetTitle());
 	<portlet:param name="mvcPath" value="/edit_tag.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= editTagURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<liferay-frontend:edit-form
+	action="<%= editTagURL %>"
+	method="post"
+	name="fm"
+>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<liferay-ui:error exception="<%= AssetTagException.class %>">
@@ -53,17 +57,17 @@ renderResponse.setTitle(assetTagsDisplayContext.getAssetTitle());
 
 	<aui:model-context bean="<%= assetTagsDisplayContext.getTag() %>" model="<%= AssetTag.class %>" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
+	<liferay-frontend:fieldset-group>
+		<liferay-frontend:fieldset>
 			<aui:input name="tagId" type="hidden" value="<%= assetTagsDisplayContext.getTagId() %>" />
 
 			<aui:input autoFocus="<%= true %>" cssClass="tag-name" name="name" placeholder="name" />
-		</aui:fieldset>
-	</aui:fieldset-group>
+		</liferay-frontend:fieldset>
+	</liferay-frontend:fieldset-group>
 
-	<aui:button-row>
+	<liferay-frontend:button-row>
 		<aui:button type="submit" />
 
 		<aui:button href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+	</liferay-frontend:button-row>
+</liferay-frontend:edit-form>

@@ -163,7 +163,17 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 
 	@Override
 	public void setCurrentCommerceOrder(
-		HttpServletRequest httpServletRequest, CommerceOrder commerceOrder) {
+			HttpServletRequest httpServletRequest, CommerceOrder commerceOrder)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (!themeDisplay.isSignedIn()) {
+			_setGuestCommerceOrder(themeDisplay, commerceOrder);
+			return;
+		}
 
 		httpServletRequest = _portal.getOriginalServletRequest(
 			httpServletRequest);

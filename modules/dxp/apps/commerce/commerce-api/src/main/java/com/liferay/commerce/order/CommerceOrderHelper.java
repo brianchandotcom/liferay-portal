@@ -54,6 +54,7 @@ public interface CommerceOrderHelper {
 		throws PortalException;
 
 	public void setCurrentCommerceOrder(
-		HttpServletRequest httpServletRequest, CommerceOrder commerceOrder);
+			HttpServletRequest httpServletRequest, CommerceOrder commerceOrder)
+		throws PortalException;
 
 }

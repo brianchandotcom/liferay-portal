@@ -2,7 +2,7 @@
 	<command name="viewBookmarkIcons">
 		<for list="${socialBookmarks}" param="socialBookmark">
 			<execute function="AssertElementPresent" locator1="SocialBookmarks#SOCIAL_BOOKMARK_ICON">
-				<var method="StringUtiL#toLowerCase('${socialBookmark}')" name="${key_socialBookmark}" />
+				<var method="StringUtil#toLowerCase('${socialBookmark}')" name="key_socialBookmark" />
 			</execute>
 		</for>
 	</command>

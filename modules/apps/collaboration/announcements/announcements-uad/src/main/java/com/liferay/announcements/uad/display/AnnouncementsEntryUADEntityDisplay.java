@@ -68,11 +68,11 @@ public class AnnouncementsEntryUADEntityDisplay
 			getUADEntityNonanonymizableFieldValues(announcementsEntry);
 	}
 
-	public String getUADEntityTypeDescription() {
+	public String getTypeDescription() {
 		return "Announcements posted by the user";
 	}
 
-	public String getUADEntityTypeName() {
+	public String getTypeName() {
 		return "AnnouncementsEntry";
 	}
 

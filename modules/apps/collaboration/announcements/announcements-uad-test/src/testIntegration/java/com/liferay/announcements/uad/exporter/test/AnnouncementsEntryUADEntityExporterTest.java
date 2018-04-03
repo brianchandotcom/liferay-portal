@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
+import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.exporter.UADEntityExporter;
 
 import java.io.ByteArrayInputStream;
@@ -69,8 +69,8 @@ public class AnnouncementsEntryUADEntityExporterTest
 		AnnouncementsEntry announcementsEntry = addAnnouncementsEntry(
 			_user.getUserId());
 
-		List<AnnouncementsEntry> announcementsEntries =
-			_uadEntityAggregator.getRange(_user.getUserId(), 0, 1);
+		List<AnnouncementsEntry> announcementsEntries = _uadAggregator.getRange(
+			_user.getUserId(), 0, 1);
 
 		AnnouncementsEntry announcementsEntry1 = announcementsEntries.get(0);
 
@@ -109,7 +109,7 @@ public class AnnouncementsEntryUADEntityExporterTest
 	@Inject(
 		filter = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_ENTRY
 	)
-	private UADEntityAggregator _uadEntityAggregator;
+	private UADAggregator _uadAggregator;
 
 	@Inject(
 		filter = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_ENTRY

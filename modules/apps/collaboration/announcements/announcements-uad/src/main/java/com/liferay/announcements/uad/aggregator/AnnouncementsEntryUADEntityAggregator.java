@@ -39,11 +39,9 @@ public class AnnouncementsEntryUADEntityAggregator
 	extends BaseAnnouncementsUADEntityAggregator<AnnouncementsEntry> {
 
 	@Override
-	public AnnouncementsEntry getEntity(Serializable primKeyObj)
-		throws Exception {
-
+	public AnnouncementsEntry get(Serializable primaryKey) throws Exception {
 		return _announcementsEntryLocalService.getAnnouncementsEntry(
-			Long.valueOf(primKeyObj.toString()));
+			Long.valueOf(primaryKey.toString()));
 	}
 
 	@Override
@@ -57,7 +55,7 @@ public class AnnouncementsEntryUADEntityAggregator
 	}
 
 	@Override
-	protected List<AnnouncementsEntry> doGetEntities(
+	protected List<AnnouncementsEntry> doGetRange(
 		DynamicQuery dynamicQuery, int start, int end) {
 
 		return _announcementsEntryLocalService.dynamicQuery(

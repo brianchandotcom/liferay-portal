@@ -21,26 +21,20 @@ import java.io.Serializable;
  */
 public class UADEntity<T> {
 
-	public UADEntity(T entity, Serializable entityId, String uadRegistryKey) {
+	public UADEntity(T entity, Serializable primaryKey) {
 		_entity = entity;
-		_entityId = entityId;
-		_uadRegistryKey = uadRegistryKey;
+		_primaryKey = primaryKey;
 	}
 
 	public T getEntity() {
 		return _entity;
 	}
 
-	public Serializable getEntityId() {
-		return _entityId;
-	}
-
-	public String getUADRegistryKey() {
-		return _uadRegistryKey;
+	public Serializable getPrimaryKey() {
+		return _primaryKey;
 	}
 
 	private final T _entity;
-	private final Serializable _entityId;
-	private final String _uadRegistryKey;
+	private final Serializable _primaryKey;
 
 }

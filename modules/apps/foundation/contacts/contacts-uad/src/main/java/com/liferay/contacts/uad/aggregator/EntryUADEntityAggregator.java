@@ -44,8 +44,8 @@ public class EntryUADEntityAggregator extends DynamicQueryUADEntityAggregator<En
 	}
 
 	@Override
-	public Entry getEntity(Serializable entityId) throws PortalException {
-		return _entryLocalService.getEntry(Long.valueOf(entityId.toString()));
+	public Entry get(Serializable primaryKey) throws PortalException {
+		return _entryLocalService.getEntry(Long.valueOf(primaryKey.toString()));
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class EntryUADEntityAggregator extends DynamicQueryUADEntityAggregator<En
 	}
 
 	@Override
-	protected List<Entry> doGetEntities(DynamicQuery dynamicQuery, int start,
+	protected List<Entry> doGetRange(DynamicQuery dynamicQuery, int start,
 		int end) {
 		return _entryLocalService.dynamicQuery(dynamicQuery, start, end);
 	}

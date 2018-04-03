@@ -35,25 +35,25 @@ public abstract class DynamicQueryUADEntityAggregator<T extends BaseModel>
 	}
 
 	@Override
-	public List<T> getEntities(long userId) {
-		return getEntities(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	public List<T> getAll(long userId) {
+		return getRange(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	@Override
-	public List<T> getEntities(long userId, int start, int end) {
-		return doGetEntities(_getDynamicQuery(userId), start, end);
+	public Serializable getPrimaryKey(T baseModel) {
+		return baseModel.getPrimaryKeyObj();
 	}
 
 	@Override
-	public Serializable getPrimaryKeyObj(T entity) {
-		return entity.getPrimaryKeyObj();
+	public List<T> getRange(long userId, int start, int end) {
+		return doGetRange(_getDynamicQuery(userId), start, end);
 	}
 
 	protected abstract long doCount(DynamicQuery dynamicQuery);
 
 	protected abstract DynamicQuery doGetDynamicQuery();
 
-	protected abstract List<T> doGetEntities(
+	protected abstract List<T> doGetRange(
 		DynamicQuery dynamicQuery, int start, int end);
 
 	protected abstract String[] doGetUserIdFieldNames();

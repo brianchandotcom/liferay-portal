@@ -40,11 +40,11 @@ public class AnnouncementsFlagUADEntityAggregator
 	extends BaseAnnouncementsUADEntityAggregator<AnnouncementsFlag> {
 
 	@Override
-	public AnnouncementsFlag getEntity(Serializable entityId)
+	public AnnouncementsFlag get(Serializable primaryKey)
 		throws PortalException {
 
 		return _announcementsFlagLocalService.getAnnouncementsFlag(
-			Long.parseLong(entityId.toString()));
+			Long.parseLong(primaryKey.toString()));
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class AnnouncementsFlagUADEntityAggregator
 	}
 
 	@Override
-	protected List<AnnouncementsFlag> doGetEntities(
+	protected List<AnnouncementsFlag> doGetRange(
 		DynamicQuery dynamicQuery, int start, int end) {
 
 		return _announcementsFlagLocalService.dynamicQuery(

@@ -31,7 +31,7 @@ public abstract class DynamicQueryUADEntityAnonymizer<T extends BaseModel>
 			_getActionableDynamicQuery(userId);
 
 		actionableDynamicQuery.setPerformActionMethod(
-			(T entity) -> autoAnonymize(entity, userId));
+			(T baseModel) -> autoAnonymize(baseModel, userId));
 
 		actionableDynamicQuery.performActions();
 	}
@@ -42,7 +42,7 @@ public abstract class DynamicQueryUADEntityAnonymizer<T extends BaseModel>
 			_getActionableDynamicQuery(userId);
 
 		actionableDynamicQuery.setPerformActionMethod(
-			(T entity) -> delete(entity));
+			(T baseModel) -> delete(baseModel));
 
 		actionableDynamicQuery.performActions();
 	}

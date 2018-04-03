@@ -33,8 +33,8 @@ public class ${entity.name}UADEntityAggregator extends DynamicQueryUADEntityAggr
 	}
 
 	@Override
-	public ${entity.name} getEntity(Serializable entityId) throws PortalException {
-		return _${entity.varName}LocalService.get${entity.name}(Long.valueOf(entityId.toString()));
+	public ${entity.name} get(Serializable primaryKey) throws PortalException {
+		return _${entity.varName}LocalService.get${entity.name}(Long.valueOf(primaryKey.toString()));
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class ${entity.name}UADEntityAggregator extends DynamicQueryUADEntityAggr
 	}
 
 	@Override
-	protected List<${entity.name}> doGetEntities(DynamicQuery dynamicQuery, int start, int end) {
+	protected List<${entity.name}> doGetRange(DynamicQuery dynamicQuery, int start, int end) {
 		return _${entity.varName}LocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 

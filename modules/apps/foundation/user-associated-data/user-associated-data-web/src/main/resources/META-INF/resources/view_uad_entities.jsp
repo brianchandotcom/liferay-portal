@@ -80,7 +80,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-expand"
 						name="entity-id"
-						property="entityId"
+						property="primaryKey"
 					/>
 
 					<%

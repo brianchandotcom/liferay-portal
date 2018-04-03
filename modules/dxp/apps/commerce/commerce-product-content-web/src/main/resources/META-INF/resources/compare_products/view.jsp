@@ -87,6 +87,7 @@ List<CPOptionCategory> cpOptionCategories = cpCompareContentDisplayContext.getCP
 									<div class="autofit-col autofit-col-expand">
 										<div class="card-subtitle">Item: #888888</div>
 									</div>
+
 									<div class="autofit-col">
 										<span class="product-price">$87.00 / ea</span>
 									</div>
@@ -97,6 +98,7 @@ List<CPOptionCategory> cpOptionCategories = cpCompareContentDisplayContext.getCP
 										<div class="autofit-col autofit-col-expand">
 											<input class="form-control form-control-sm" type="number">
 										</div>
+
 										<div class="autofit-col">
 											<button class="btn btn-primary btn-sm" type="button">Add to Cart</button>
 										</div>

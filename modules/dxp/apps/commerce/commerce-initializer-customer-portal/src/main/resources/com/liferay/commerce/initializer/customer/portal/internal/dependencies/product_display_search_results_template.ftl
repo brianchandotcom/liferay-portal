@@ -44,13 +44,16 @@
 					<div class="product-image-container">
 						<img class="product-image" src="${image}">
 					</div>
+
 					<div class="product-description product-expand">
 						<div class="card-subtitle">
 							Brand
 						</div>
+
 						<div class="card-title">
 							<a href="${friendlyURL}">${title}</a>
 						</div>
+
 						<p class="card-subtitle product-sku">
 							SKU:
 
@@ -60,10 +63,12 @@
 								${sku}
 							</#if>
 						</p>
+
 						<div class="autofit-float autofit-row autofit-row-center">
 							<div class="autofit-col autofit-col-expand">
 								<div>Model #${modelNumber}</div>
 							</div>
+
 							<div class="autofit-col">
 								<div class="product-price">
 									<#if isIgnoreSKUCombinations>

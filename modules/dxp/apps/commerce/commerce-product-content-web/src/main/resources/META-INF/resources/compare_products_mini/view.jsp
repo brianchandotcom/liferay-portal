@@ -37,8 +37,6 @@ List<CPDefinition> cpDefinitions = cpCompareContentMiniDisplayContext.getCPDefin
 >
 	<c:if test="<%= cpDefinitions.size() > 0 %>">
 		<div id="<portlet:namespace />compareProductsMiniContainer">
-
-
 			<div class="compare-products-mini-header">
 				<a class="collapse-icon lfr-compare-products-mini-header" href="javascript:;">
 					<span class="component-title"><liferay-ui:message arguments="<%= new Object[] {cpDefinitions.size(), cpCompareContentMiniDisplayContext.getProductsLimit()} %>" key="x-of-x-products-selected" translateArguments="<%= false %>" /></span>
@@ -59,8 +57,8 @@ List<CPDefinition> cpDefinitions = cpCompareContentMiniDisplayContext.getCPDefin
 			</div>
 
 			<div class="lfr-compare-products-mini-content">
-
 				<ul class="card-page">
+
 					<%
 					for (CPDefinition cpDefinition : cpDefinitions) {
 					%>
@@ -90,6 +88,7 @@ List<CPDefinition> cpDefinitions = cpCompareContentMiniDisplayContext.getCPDefin
 										</a>
 									</div>
 								</div>
+
 								<div class="autofit-col autofit-col-expand">
 									<a class="compare-link" href="<%= HtmlUtil.escape(cpCompareContentMiniDisplayContext.getProductFriendlyURL(cpDefinition.getCPDefinitionId())) %>">
 										<%= cpDefinition.getTitle(languageId) %>
@@ -117,7 +116,6 @@ List<CPDefinition> cpDefinitions = cpCompareContentMiniDisplayContext.getCPDefin
 					<li class="card-page-item card-page-item-shrink">
 						<a class="btn btn-link" href="<%= HtmlUtil.escape(cpCompareContentMiniDisplayContext.getClearCompareProductsURL()) %>"><liferay-ui:message key="clear-all" /></a>
 					</li>
-
 					<li class="card-page-item card-page-item-shrink">
 						<aui:button cssClass="btn-primary" href="<%= HtmlUtil.escape(cpCompareContentMiniDisplayContext.getCompareProductsURL()) %>" value="compare" />
 					</li>

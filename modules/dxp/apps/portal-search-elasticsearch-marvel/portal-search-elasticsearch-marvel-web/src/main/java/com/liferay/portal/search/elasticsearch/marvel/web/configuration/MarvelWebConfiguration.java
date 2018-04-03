@@ -44,7 +44,7 @@ public interface MarvelWebConfiguration {
 
 	@Meta.AD(
 		deflt = "liferay", description = "shield-password-help",
-		name = "shield-password", required = false
+		name = "shield-password", required = false, type = Meta.Type.Password
 	)
 	public String shieldPassword();
 

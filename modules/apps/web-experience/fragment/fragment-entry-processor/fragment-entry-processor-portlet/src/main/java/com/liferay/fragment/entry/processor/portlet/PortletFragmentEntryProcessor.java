@@ -79,12 +79,12 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		for (Element element : document.select("*")) {
 			String tagName = element.tagName();
 
-			if (!StringUtil.startsWith(tagName, "lfr-app-")) {
+			if (!StringUtil.startsWith(tagName, "lfr-widget-")) {
 				continue;
 			}
 
 			String alias = StringUtil.replace(
-				tagName, "lfr-app-", StringPool.BLANK);
+				tagName, "lfr-widget-", StringPool.BLANK);
 
 			String portletName = _portletRegistry.getPortletName(alias);
 
@@ -159,12 +159,12 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		for (Element element : document.select("*")) {
 			String htmlTagName = element.tagName();
 
-			if (!StringUtil.startsWith(htmlTagName, "lfr-app-")) {
+			if (!StringUtil.startsWith(htmlTagName, "lfr-widget-")) {
 				continue;
 			}
 
 			String alias = StringUtil.replace(
-				htmlTagName, "lfr-app-", StringPool.BLANK);
+				htmlTagName, "lfr-widget-", StringPool.BLANK);
 
 			if (Validator.isNull(_portletRegistry.getPortletName(alias))) {
 				throw new FragmentEntryContentException(

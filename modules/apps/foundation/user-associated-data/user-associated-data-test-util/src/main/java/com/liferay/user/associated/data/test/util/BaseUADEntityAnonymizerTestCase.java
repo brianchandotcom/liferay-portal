@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
+import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
 
 import java.util.List;
@@ -36,7 +36,7 @@ public abstract class BaseUADEntityAnonymizerTestCase<T extends BaseModel> {
 
 	@Before
 	public void setUp() throws Exception {
-		_uadEntityAggregator = getUADEntityAggregator();
+		_uadAggregator = getUADAggregator();
 		_uadEntityAnonymizer = getUADEntityAnonymizer();
 		_user = UserTestUtil.addUser();
 	}
@@ -102,7 +102,7 @@ public abstract class BaseUADEntityAnonymizerTestCase<T extends BaseModel> {
 	public void testDelete() throws Exception {
 		BaseModel baseModel = addBaseModel(_user.getUserId(), false);
 
-		List<T> baseModels = _uadEntityAggregator.getAll(_user.getUserId());
+		List<T> baseModels = _uadAggregator.getAll(_user.getUserId());
 
 		_uadEntityAnonymizer.delete(baseModels.get(0));
 
@@ -141,7 +141,7 @@ public abstract class BaseUADEntityAnonymizerTestCase<T extends BaseModel> {
 		return (long)baseModel.getPrimaryKeyObj();
 	}
 
-	protected abstract UADEntityAggregator<T> getUADEntityAggregator();
+	protected abstract UADAggregator<T> getUADAggregator();
 
 	protected abstract UADEntityAnonymizer<T> getUADEntityAnonymizer();
 
@@ -152,7 +152,7 @@ public abstract class BaseUADEntityAnonymizerTestCase<T extends BaseModel> {
 	protected abstract boolean isBaseModelDeleted(long baseModelPK);
 
 	private void _testAutoAnonymize(BaseModel baseModel) throws Exception {
-		List<T> baseModels = _uadEntityAggregator.getAll(_user.getUserId());
+		List<T> baseModels = _uadAggregator.getAll(_user.getUserId());
 
 		_uadEntityAnonymizer.autoAnonymize(
 			baseModels.get(0), _user.getUserId());
@@ -162,7 +162,7 @@ public abstract class BaseUADEntityAnonymizerTestCase<T extends BaseModel> {
 		Assert.assertTrue(isBaseModelAutoAnonymized(baseModelPK, _user));
 	}
 
-	private UADEntityAggregator<T> _uadEntityAggregator;
+	private UADAggregator<T> _uadAggregator;
 	private UADEntityAnonymizer<T> _uadEntityAnonymizer;
 
 	@DeleteAfterTestRun

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
+import com.liferay.user.associated.data.aggregator.UADAggregator;
 
 import java.util.List;
 
@@ -31,11 +31,11 @@ import org.junit.Test;
 /**
  * @author Noah Sherrill
  */
-public abstract class BaseUADEntityAggregatorTestCase<T extends BaseModel> {
+public abstract class BaseUADAggregatorTestCase<T extends BaseModel> {
 
 	@Before
 	public void setUp() throws Exception {
-		_uadEntityAggregator = getUADEntityAggregator();
+		_uadAggregator = getUADAggregator();
 		_user = UserTestUtil.addUser();
 	}
 
@@ -43,7 +43,7 @@ public abstract class BaseUADEntityAggregatorTestCase<T extends BaseModel> {
 	public void testCount() throws Exception {
 		addBaseModel(_user.getUserId());
 
-		Assert.assertEquals(1, _uadEntityAggregator.count(_user.getUserId()));
+		Assert.assertEquals(1, _uadAggregator.count(_user.getUserId()));
 	}
 
 	@Test
@@ -52,7 +52,7 @@ public abstract class BaseUADEntityAggregatorTestCase<T extends BaseModel> {
 
 		T baseModel = addBaseModel(_user.getUserId());
 
-		List<T> baseModels = _uadEntityAggregator.getAll(_user.getUserId());
+		List<T> baseModels = _uadAggregator.getAll(_user.getUserId());
 
 		Assert.assertEquals(baseModels.toString(), 1, baseModels.size());
 
@@ -69,7 +69,7 @@ public abstract class BaseUADEntityAggregatorTestCase<T extends BaseModel> {
 		T baseModel = whenHasStatusByUserIdField.addBaseModelWithStatusByUserId(
 			TestPropsValues.getUserId(), _user.getUserId());
 
-		List<T> baseModels = _uadEntityAggregator.getAll(_user.getUserId());
+		List<T> baseModels = _uadAggregator.getAll(_user.getUserId());
 
 		Assert.assertEquals(baseModels.toString(), 1, baseModels.size());
 
@@ -78,14 +78,14 @@ public abstract class BaseUADEntityAggregatorTestCase<T extends BaseModel> {
 
 	@Test
 	public void testGetAllWithNoBaseModel() throws Exception {
-		Assert.assertEquals(0, _uadEntityAggregator.count(_user.getUserId()));
+		Assert.assertEquals(0, _uadAggregator.count(_user.getUserId()));
 	}
 
 	protected abstract T addBaseModel(long userId) throws Exception;
 
-	protected abstract UADEntityAggregator<T> getUADEntityAggregator();
+	protected abstract UADAggregator<T> getUADAggregator();
 
-	private UADEntityAggregator<T> _uadEntityAggregator;
+	private UADAggregator<T> _uadAggregator;
 
 	@DeleteAfterTestRun
 	private User _user;

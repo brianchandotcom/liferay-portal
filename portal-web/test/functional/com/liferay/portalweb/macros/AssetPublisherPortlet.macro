@@ -607,7 +607,7 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute macro="LexiconEntry#gotoEntryMenuItemNoError">
+		<execute macro="LexiconEntry#gotoEntryMenuItemNoWaitNoError">
 			<var name="menuItem" value="Delete" />
 			<var name="rowEntry" value="${configurationName}" />
 		</execute>

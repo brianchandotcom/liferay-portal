@@ -26,7 +26,7 @@ String tabs1Value = GetterUtil.getString(SessionClicks.get(request, namespace + 
 <c:choose>
 	<c:when test="<%= categoryKeys.length > 1 %>">
 		<liferay-ui:tabs
-			names="<%= ArrayUtil.toString(categoryKeys, StringPool.COMMA) %>"
+			names="<%= StringUtil.merge(categoryKeys, StringPool.COMMA) %>"
 			param="<%= tabs1Param %>"
 			refresh="<%= false %>"
 			type="tabs nav-tabs-default"

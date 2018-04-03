@@ -165,7 +165,7 @@ public class PortletContainerImpl implements PortletContainer {
 		try {
 			String portletId = ParamUtil.getString(request, "p_p_id");
 
-			if (portlet != null && portletId.equals(portlet.getPortletId())) {
+			if ((portlet != null) && portletId.equals(portlet.getPortletId())) {
 				_processGroupId(request, portlet);
 			}
 
@@ -228,7 +228,7 @@ public class PortletContainerImpl implements PortletContainer {
 		try {
 			String portletId = ParamUtil.getString(request, "p_p_id");
 
-			if (portlet != null && portletId.equals(portlet.getPortletId())) {
+			if ((portlet != null) && portletId.equals(portlet.getPortletId())) {
 				_processGroupId(request, portlet);
 			}
 

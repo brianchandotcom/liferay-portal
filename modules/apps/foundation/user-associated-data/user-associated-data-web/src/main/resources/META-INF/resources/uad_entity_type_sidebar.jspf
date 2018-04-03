@@ -22,7 +22,7 @@
 			</li>
 		</ul>
 
-		<h2 class="sidebar-title"><%= uadEntityDisplay.getUADEntityTypeName() %></h2>
+		<h2 class="sidebar-title"><%= uadEntityDisplay.getTypeName() %></h2>
 
 		<h4 class="sidebar-subtitle"><%= viewUADEntitiesDisplay.getApplicationName() %></h4>
 	</div>
@@ -30,7 +30,7 @@
 	<div class="sidebar-body">
 		<dl class="sidebar-dl sidebar-section">
 			<dt class="sidebar-dt">Description</dt>
-			<dd class="sidebar-dd"><%= uadEntityDisplay.getUADEntityTypeDescription() %></dd>
+			<dd class="sidebar-dd"><%= uadEntityDisplay.getTypeDescription() %></dd>
 			<dt class="sidebar-dt">Count</dt>
 			<dd class="sidebar-dd"><%= uadEntitySearchContainer.getTotal() %></dd>
 		</dl>

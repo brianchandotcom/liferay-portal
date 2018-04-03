@@ -73,7 +73,7 @@ public class EntryUADEntityDisplayTest extends BaseUADEntityDisplayTestCase {
 	}
 
 	@Override
-	protected String getUADEntityTypeDescription() {
+	protected String getTypeDescription() {
 		return "";
 	}
 

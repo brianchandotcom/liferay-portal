@@ -62,6 +62,11 @@ public class BookmarksEntryUADEntityDisplayTest
 	}
 
 	@Override
+	protected String getTypeDescription() {
+		return "A link to another page or website";
+	}
+
+	@Override
 	protected UADEntityAggregator getUADEntityAggregator() {
 		return _uadEntityAggregator;
 	}
@@ -69,11 +74,6 @@ public class BookmarksEntryUADEntityDisplayTest
 	@Override
 	protected UADEntityDisplay getUADEntityDisplay() {
 		return _uadEntityDisplay;
-	}
-
-	@Override
-	protected String getUADEntityTypeDescription() {
-		return "A link to another page or website";
 	}
 
 	@DeleteAfterTestRun

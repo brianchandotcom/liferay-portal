@@ -57,8 +57,8 @@ public class ${entity.name}UADEntityDisplayTest extends BaseUADEntityDisplayTest
 	}
 
 	@Override
-	protected String getUADEntityTypeDescription() {
-		return "${entity.UADEntityTypeDescription}";
+	protected String getTypeDescription() {
+		return "${entity.UADTypeDescription}";
 	}
 
 	@DeleteAfterTestRun

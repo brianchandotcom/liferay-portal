@@ -63,6 +63,11 @@ public class AnnouncementsEntryUADEntityDisplayTest
 	}
 
 	@Override
+	protected String getTypeDescription() {
+		return "Announcements posted by the user";
+	}
+
+	@Override
 	protected UADEntityAggregator getUADEntityAggregator() {
 		return _uadEntityAggregator;
 	}
@@ -70,11 +75,6 @@ public class AnnouncementsEntryUADEntityDisplayTest
 	@Override
 	protected UADEntityDisplay getUADEntityDisplay() {
 		return _uadEntityDisplay;
-	}
-
-	@Override
-	protected String getUADEntityTypeDescription() {
-		return "Announcements posted by the user";
 	}
 
 	@DeleteAfterTestRun

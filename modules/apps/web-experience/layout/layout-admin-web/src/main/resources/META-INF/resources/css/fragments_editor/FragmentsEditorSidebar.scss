@@ -1,11 +1,15 @@
 .fragments-editor-sidebar {
 	margin-top: 1px;
 
+	button.component-action {
+		cursor: pointer;
+	}
+
 	.sidebar-body {
 		padding-top: 0;
 	}
 
-	.sidebar-header > .sidebar-section {
+	.sidebar-body > .sidebar-section:first-child {
 		border-bottom: solid thin #CDCED9;
 	}
 }

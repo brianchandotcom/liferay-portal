@@ -100,6 +100,22 @@
 
 			{call liferay.frontend.ContextualSidebar.render}
 				{param body kind="html"}
+					<div class="sidebar-section">
+						<nav class="navbar navbar-expand-md navbar-underline">
+							<ul class="navbar-nav">
+								{foreach $sidebarTab in $sidebarTabs}
+									{call .sidebarTab}
+										{param active: $sidebarTab.id == $_sidebarSelectedTab /}
+										{param id: $sidebarTab.id /}
+										{param key: $sidebarTab.id /}
+										{param handleTabClick: $_handleSidebarTabClick /}
+										{param label: $sidebarTab.label /}
+									{/call}
+								{/foreach}
+							</ul>
+						</nav>
+					</div>
+
 					{if $_sidebarSelectedTab == 'available'}
 						{call com.liferay.layout.admin.web.SidebarAvailableFragments.render}
 							{param events: ['collectionEntryClick': $_handleFragmentCollectionEntryClick] /}
@@ -128,20 +144,26 @@
 				]/}
 
 				{param header kind="html"}
-					<div class="sidebar-section">
-						<nav class="navbar navbar-expand-md navbar-underline">
-							<ul class="navbar-nav">
-								{foreach $sidebarTab in $sidebarTabs}
-									{call .sidebarTab}
-										{param active: $sidebarTab.id == $_sidebarSelectedTab /}
-										{param id: $sidebarTab.id /}
-										{param key: $sidebarTab.id /}
-										{param handleTabClick: $_handleSidebarTabClick /}
-										{param label: $sidebarTab.label /}
-									{/call}
-								{/foreach}
-							</ul>
-						</nav>
+					<div class="autofit-row sidebar-section">
+						<div class="autofit-col autofit-col-expand">
+							<h4 class="component-title">
+								<span class="text-truncate-inline">
+									Fragments
+								</span>
+							</h4>
+						</div>
+
+						<div class="autofit-col">
+							<button
+								class="component-action"
+								data-onclick="{$_handleToggleContextualSidebarButtonClick}"
+								type="button"
+							>
+								<svg class="icon-monospaced lexicon-icon">
+									<use xlink:href="{$spritemap}#times"></use>
+								</svg>
+							</button>
+						</div>
 					</div>
 				{/param}
 

@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.test.util;
 
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
@@ -100,12 +101,91 @@ public class DDMFormTestUtil {
 		String name, String label, String type, String dataType,
 		boolean localizable, boolean repeatable, boolean required) {
 
+		return createDDMFormField(
+			name, label, type, dataType, localizable, repeatable, required,
+			null, null, null, null, null);
+	}
+
+	public static DDMFormField createDDMFormField(
+		String name, String label, String type, String dataType,
+		boolean localizable, boolean repeatable, boolean required, String tip) {
+
+		return createDDMFormField(
+			name, label, type, dataType, localizable, repeatable, required, tip,
+			null, null, null, null);
+	}
+
+	public static DDMFormField createDDMFormField(
+		String name, String label, String type, String dataType,
+		boolean localizable, boolean repeatable, boolean required, String tip,
+		String option) {
+
+		return createDDMFormField(
+			name, label, type, dataType, localizable, repeatable, required, tip,
+			null, null, null, option);
+	}
+
+	public static DDMFormField createDDMFormField(
+		String name, String label, String type, String dataType,
+		boolean localizable, boolean repeatable, boolean required, String tip,
+		String predefinedValue, String option) {
+
+		return createDDMFormField(
+			name, label, type, dataType, localizable, repeatable, required, tip,
+			predefinedValue, null, null, option);
+	}
+
+	public static DDMFormField createDDMFormField(
+		String name, String label, String type, String dataType,
+		boolean localizable, boolean repeatable, boolean required, String tip,
+		String predefinedValue, String placeHolder, String toolTip,
+		String option) {
+
 		DDMFormField ddmFormField = new DDMFormField(name, type);
 
 		ddmFormField.setDataType(dataType);
 		ddmFormField.setLocalizable(localizable);
 		ddmFormField.setRepeatable(repeatable);
 		ddmFormField.setRequired(required);
+
+		if (tip != null) {
+			LocalizedValue tipLocalizedValue =
+				DDMFormValuesTestUtil.createLocalizedValue(tip, LocaleUtil.US);
+
+			ddmFormField.setTip(tipLocalizedValue);
+		}
+
+		if (predefinedValue != null) {
+			LocalizedValue predefinedValueLocalizedValue =
+				DDMFormValuesTestUtil.createLocalizedValue(
+					predefinedValue, LocaleUtil.US);
+
+			ddmFormField.setPredefinedValue(predefinedValueLocalizedValue);
+		}
+
+		if (placeHolder != null) {
+			LocalizedValue placeHolderLocalizedValue =
+				DDMFormValuesTestUtil.createLocalizedValue(
+					placeHolder, LocaleUtil.US);
+
+			ddmFormField.setProperty("placeholder", placeHolderLocalizedValue);
+		}
+
+		if (toolTip != null) {
+			LocalizedValue toolTipLocalizedValue =
+				DDMFormValuesTestUtil.createLocalizedValue(
+					toolTip, LocaleUtil.US);
+
+			ddmFormField.setProperty("tooltip", toolTipLocalizedValue);
+		}
+
+		if (option != null) {
+			DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+
+			ddmFormFieldOptions.addOptionLabel(option, LocaleUtil.US, option);
+
+			ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+		}
 
 		LocalizedValue localizedValue = ddmFormField.getLabel();
 
@@ -114,8 +194,37 @@ public class DDMFormTestUtil {
 		return ddmFormField;
 	}
 
+	public static DDMFormField createGridDDMFormField(
+		String name, String label, String type, String dataType,
+		boolean localizable, boolean repeatable, boolean required, String tip,
+		String option) {
+
+		DDMFormField ddmFormField = createDDMFormField(
+			name, label, type, dataType, localizable, repeatable, required, tip,
+			null, null, null, option);
+
+		DDMFormFieldOptions ddmFormFieldOptions =
+			ddmFormField.getDDMFormFieldOptions();
+
+		ddmFormField.setProperty("columns", ddmFormFieldOptions);
+
+		ddmFormField.setProperty("rows", ddmFormFieldOptions);
+
+		return ddmFormField;
+	}
+
 	public static DDMFormField createLocalizableTextDDMFormField(String name) {
 		return createTextDDMFormField(name, true, false, false);
+	}
+
+	public static DDMFormField createNumericDDMFormField(
+		String name, String label, String type, String dataType,
+		boolean localizable, boolean repeatable, boolean required, String tip,
+		String placeHolder, String toolTip) {
+
+		return createDDMFormField(
+			name, label, type, dataType, localizable, repeatable, required, tip,
+			null, placeHolder, toolTip, null);
 	}
 
 	public static DDMFormField createSeparatorDDMFormField(

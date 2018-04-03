@@ -19,8 +19,8 @@ import com.liferay.bookmarks.service.BookmarksEntryLocalService;
 import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.user.associated.data.aggregator.DynamicQueryUADEntityAggregator;
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
+import com.liferay.user.associated.data.aggregator.DynamicQueryUADAggregator;
+import com.liferay.user.associated.data.aggregator.UADAggregator;
 
 import java.io.Serializable;
 
@@ -35,10 +35,10 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {"model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY},
-	service = UADEntityAggregator.class
+	service = UADAggregator.class
 )
-public class BookmarksEntryUADEntityAggregator
-	extends DynamicQueryUADEntityAggregator<BookmarksEntry> {
+public class BookmarksEntryUADAggregator
+	extends DynamicQueryUADAggregator<BookmarksEntry> {
 
 	@Override
 	public BookmarksEntry get(Serializable primaryKey) throws PortalException {

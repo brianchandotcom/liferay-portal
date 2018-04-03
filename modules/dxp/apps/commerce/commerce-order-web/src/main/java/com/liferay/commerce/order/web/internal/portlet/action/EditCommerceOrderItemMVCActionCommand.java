@@ -15,9 +15,15 @@
 package com.liferay.commerce.order.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.service.CommerceOrderItemService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -42,6 +48,28 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditCommerceOrderItemMVCActionCommand
 	extends BaseMVCActionCommand {
+
+	protected void addCommerceOrderItems(ActionRequest actionRequest)
+		throws Exception {
+
+		long commerceOrderId = ParamUtil.getLong(
+			actionRequest, "commerceOrderId");
+
+		long[] cpInstanceIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "cpInstanceIds"), 0L);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CommerceOrderItem.class.getName(), actionRequest);
+
+		for (long cpInstanceId : cpInstanceIds) {
+			CPInstance cpInstance = _cpInstanceService.getCPInstance(
+				cpInstanceId);
+
+			_commerceOrderItemService.addCommerceOrderItem(
+				commerceOrderId, cpInstanceId, 1, 0, cpInstance.getDDMContent(),
+				cpInstance.getPrice(), serviceContext);
+		}
+	}
 
 	protected void deleteCommerceOrderItems(ActionRequest actionRequest)
 		throws Exception {
@@ -74,12 +102,37 @@ public class EditCommerceOrderItemMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		if (cmd.equals(Constants.DELETE)) {
+		if (cmd.equals(Constants.ADD)) {
+			addCommerceOrderItems(actionRequest);
+		}
+		else if (cmd.equals(Constants.UPDATE)) {
+			updateCommerceOrderItem(actionRequest);
+		}
+		else if (cmd.equals(Constants.DELETE)) {
 			deleteCommerceOrderItems(actionRequest);
 		}
 	}
 
+	protected void updateCommerceOrderItem(ActionRequest actionRequest)
+		throws PortalException {
+
+		long commerceOrderItemId = ParamUtil.getLong(
+			actionRequest, "commerceOrderItemId");
+
+		CommerceOrderItem commerceOrderItem =
+			_commerceOrderItemService.getCommerceOrderItem(commerceOrderItemId);
+
+		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
+		double price = ParamUtil.getDouble(actionRequest, "price");
+
+		_commerceOrderItemService.updateCommerceOrderItem(
+			commerceOrderItemId, quantity, commerceOrderItem.getJson(), price);
+	}
+
 	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;
+
+	@Reference
+	private CPInstanceService _cpInstanceService;
 
 }

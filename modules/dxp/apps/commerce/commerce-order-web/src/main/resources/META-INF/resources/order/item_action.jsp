@@ -23,15 +23,33 @@ CommerceOrderItem commerceOrderItem = (CommerceOrderItem)row.getObject();
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-	<portlet:renderURL var="editURL">
+	<liferay-portlet:renderURL var="editURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 		<portlet:param name="mvcRenderCommandName" value="editCommerceOrderItem" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="commerceOrderItemId" value="<%= String.valueOf(commerceOrderItem.getCommerceOrderItemId()) %>" />
-	</portlet:renderURL>
+	</liferay-portlet:renderURL>
+
+	<%
+	StringBundler sb = new StringBundler(13);
+
+	sb.append("javascript:");
+	sb.append(renderResponse.getNamespace());
+	sb.append("editCommerceOrderItem");
+	sb.append(StringPool.OPEN_PARENTHESIS);
+	sb.append(StringPool.APOSTROPHE);
+	sb.append(HtmlUtil.escapeJS(commerceOrderItem.getTitle(locale)));
+	sb.append(StringPool.APOSTROPHE);
+	sb.append(StringPool.COMMA_AND_SPACE);
+	sb.append(StringPool.APOSTROPHE);
+	sb.append(HtmlUtil.escapeJS(editURL));
+	sb.append(StringPool.APOSTROPHE);
+	sb.append(StringPool.CLOSE_PARENTHESIS);
+	sb.append(StringPool.SEMICOLON);
+	%>
 
 	<liferay-ui:icon
 		message="edit"
-		url="<%= editURL %>"
+		url="<%= sb.toString() %>"
 	/>
 
 	<portlet:actionURL name="editCommerceOrderItem" var="deleteURL">

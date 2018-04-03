@@ -48,6 +48,21 @@ PortletURL portletURL = commerceOrderEditDisplayContext.getCommerceOrderItemsPor
 		</li>
 	</liferay-frontend:management-bar-filters>
 
+	<liferay-frontend:management-bar-buttons>
+		<portlet:actionURL name="editCommerceOrderItem" var="addCommerceOrderItemURL" />
+
+		<aui:form action="<%= addCommerceOrderItemURL %>" cssClass="hide" name="addCommerceOrderItemFm">
+			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
+			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+			<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrderEditDisplayContext.getCommerceOrderId() %>" />
+			<aui:input name="cpInstanceIds" type="hidden" value="" />
+		</aui:form>
+
+		<liferay-frontend:add-menu inline="<%= true %>">
+			<liferay-frontend:add-menu-item id="addCommerceOrderItem" title='<%= LanguageUtil.get(request, "add-item") %>' url="javascript:;" />
+		</liferay-frontend:add-menu>
+	</liferay-frontend:management-bar-buttons>
+
 	<liferay-frontend:management-bar-action-buttons>
 		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceOrderItems();" %>' icon="times" label="delete" />
 	</liferay-frontend:management-bar-action-buttons>
@@ -107,6 +122,54 @@ PortletURL portletURL = commerceOrderEditDisplayContext.getCommerceOrderItemsPor
 </div>
 
 <aui:script>
+	Liferay.provide(
+		window,
+		'<portlet:namespace/>editCommerceOrderItem',
+		function(arg, uri) {
+			var title = '<liferay-ui:message key="edit" />' + ' ' + arg;
+
+			Liferay.Util.openWindow(
+				{
+					dialog: {
+						centered: true,
+						destroyOnClose: true,
+						height: 400,
+						modal: true,
+						width: 500
+					},
+					dialogIframe: {
+						bodyCssClass: 'dialog-with-footer'
+					},
+					id: 'editOrderItemDialog',
+					title: title,
+					uri: uri
+				}
+			);
+		}
+	);
+
+	Liferay.provide(
+		window,
+		'refreshPortlet',
+		function() {
+			var curPortlet = '#p_p_id<portlet:namespace/>';
+
+			Liferay.Portlet.refresh(curPortlet);
+		},
+		['aui-dialog','aui-dialog-iframe']
+	);
+
+	Liferay.provide(
+		window,
+		'closePopup',
+		function(dialogId) {
+			var dialog = Liferay.Util.Window.getById(dialogId);
+
+			dialog.destroy();
+		},
+		['liferay-util-window']
+	);
+
 	function <portlet:namespace />deleteCommerceOrderItems() {
 		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-order-items" />')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
@@ -118,4 +181,36 @@ PortletURL portletURL = commerceOrderEditDisplayContext.getCommerceOrderItemsPor
 			submitForm(form, '<portlet:actionURL name="editCommerceOrderItem" />');
 		}
 	}
+</aui:script>
+
+<aui:script use="liferay-item-selector-dialog">
+	$('#<portlet:namespace />addCommerceOrderItem').on(
+		'click',
+		function(event) {
+			event.preventDefault();
+
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+				{
+					eventName: 'productInstancesSelectItem',
+					on: {
+						selectedItemChange: function(event) {
+							var selectedItems = event.newVal;
+
+							if (selectedItems) {
+								$('#<portlet:namespace />cpInstanceIds').val(selectedItems);
+
+								var addCommerceOrderItemFm = $('#<portlet:namespace />addCommerceOrderItemFm');
+
+								submitForm(addCommerceOrderItemFm);
+							}
+						}
+					},
+					title: '<liferay-ui:message arguments="<%= commerceOrderEditDisplayContext.getCommerceOrderId() %>" key="add-new-item-to-order-x" />',
+					url: '<%= commerceOrderEditDisplayContext.getItemSelectorUrl() %>'
+				}
+			);
+
+			itemSelectorDialog.open();
+		}
+	);
 </aui:script>

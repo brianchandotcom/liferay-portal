@@ -64,10 +64,6 @@ public class JavaAPISignatureCheck extends BaseJavaTermCheck {
 		String fileName, String absolutePath, JavaTerm javaTerm,
 		String fileContent) {
 
-		if (isSubrepository() || isReadOnly(absolutePath)) {
-			return javaTerm.getContent();
-		}
-
 		if (javaTerm.hasAnnotation("Override")) {
 			return javaTerm.getContent();
 		}

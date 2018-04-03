@@ -252,7 +252,7 @@
 
 		<execute macro="KaleoDesigner#addConnectorViaViewTab">
 			<var name="connectorName" value="Join2" />
-			<var name="nodeType" value="state" />
+			<var name="nodeType" value="state2" />
 			<var name="nodeTypeDestination" value="join-xor" />
 		</execute>
 
@@ -936,7 +936,7 @@
 		<execute macro="KaleoDesigner#addConnectorViaViewTab">
 			<var name="connectorName" value="Reverse" />
 			<var name="nodeType" value="task" />
-			<var name="nodeTypeDestination" value="start" />
+			<var name="nodeTypeDestination" value="start2" />
 		</execute>
 
 		<execute macro="Workflow#publishInvalidWorkflowDefinition">

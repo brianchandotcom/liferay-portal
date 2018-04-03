@@ -39,9 +39,9 @@ public class AnnouncementsEntryUADEntityAggregator
 	extends BaseAnnouncementsUADEntityAggregator<AnnouncementsEntry> {
 
 	@Override
-	public AnnouncementsEntry get(Serializable primKeyObj) throws Exception {
+	public AnnouncementsEntry get(Serializable primaryKey) throws Exception {
 		return _announcementsEntryLocalService.getAnnouncementsEntry(
-			Long.valueOf(primKeyObj.toString()));
+			Long.valueOf(primaryKey.toString()));
 	}
 
 	@Override

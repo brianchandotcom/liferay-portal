@@ -63,8 +63,9 @@ public class CommerceCartContentDisplayContext {
 		CPDefinitionHelper cpDefinitionHelper,
 		CPInstanceHelper cpInstanceHelper) {
 
-		_httpServletResponse = httpServletResponse;
 		this.commerceOrderHelper = commerceOrderHelper;
+
+		_httpServletResponse = httpServletResponse;
 		_commerceOrderItemService = commerceOrderItemService;
 		_commerceOrderValidatorRegistry = commerceOrderValidatorRegistry;
 		_commercePriceCalculationLocalService =
@@ -237,9 +238,9 @@ public class CommerceCartContentDisplayContext {
 
 	protected final CommerceCartContentRequestHelper
 		commerceCartContentRequestHelper;
+	protected final CommerceOrderHelper commerceOrderHelper;
 	protected final CPDefinitionHelper cpDefinitionHelper;
 	protected final CPInstanceHelper cpInstanceHelper;
-	protected final CommerceOrderHelper commerceOrderHelper;
 
 	private CommerceOrder _commerceOrder;
 	private final CommerceOrderItemService _commerceOrderItemService;

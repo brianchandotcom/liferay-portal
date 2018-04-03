@@ -1,7 +1,4 @@
-<%@ page
-		import="com.liferay.commerce.order.web.security.permission.resource.CommerceOrderPermission" %>
-<%@ page import="java.util.Map" %>
-<%@ page import="java.util.HashMap" %><%--
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -248,7 +245,7 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 		/>
 
 		<c:choose>
-			<c:when test="<%= commerceOrder.isOpen() &&  CommerceOrderPermission.contains(permissionChecker, commerceOrder, ActionKeys.UPDATE )%>">
+			<c:when test="<%= commerceOrder.isOpen() && CommerceOrderPermission.contains(permissionChecker, commerceOrder, ActionKeys.UPDATE) %>">
 				<liferay-ui:search-container-column-text
 					name="quantity"
 					cssClass="order-item-quantity"
@@ -265,20 +262,19 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 								<div class="input-group-item input-group-prepend">
 									<liferay-commerce:quantity-input name="quantity" CPDefinitionId="<%= commerceOrderItem.getCPDefinitionId() %>" value="<%= commerceOrderItem.getQuantity() %>" useSelect="<%= false %>" />
 								</div>
+
 								<div class="input-group-append input-group-item input-group-item-shrink">
-									<clay:button type="submit"  label='<%= LanguageUtil.get(resourceBundle, "update")%>' style="secondary" />
+									<clay:button type="submit" label='<%= LanguageUtil.get(resourceBundle, "update") %>' style="secondary" />
 								</div>
 							</div>
 						</div>
 					</aui:form>
-
 				</liferay-ui:search-container-column-text>
 			</c:when>
 			<c:otherwise>
 				<liferay-ui:search-container-column-text
 					property="quantity"
 				/>
-
 			</c:otherwise>
 		</c:choose>
 

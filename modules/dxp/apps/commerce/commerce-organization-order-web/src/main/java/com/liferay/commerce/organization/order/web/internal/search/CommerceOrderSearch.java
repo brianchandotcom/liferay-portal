@@ -92,22 +92,18 @@ public class CommerceOrderSearch extends SearchContainer<CommerceOrder> {
 				Validator.isNotNull(orderByType)) {
 
 				preferences.setValue(
-					CommercePortletKeys.
-						COMMERCE_ORGANIZATION_ORDER,
+					CommercePortletKeys.COMMERCE_ORGANIZATION_ORDER,
 					"commerce-orders-order-by-col", orderByCol);
 				preferences.setValue(
-					CommercePortletKeys.
-						COMMERCE_ORGANIZATION_ORDER,
+					CommercePortletKeys.COMMERCE_ORGANIZATION_ORDER,
 					"commerce-orders-order-by-type", orderByType);
 			}
 			else {
 				orderByCol = preferences.getValue(
-					CommercePortletKeys.
-						COMMERCE_ORGANIZATION_ORDER,
+					CommercePortletKeys.COMMERCE_ORGANIZATION_ORDER,
 					"commerce-orders-order-by-col", "create-date");
 				orderByType = preferences.getValue(
-					CommercePortletKeys.
-						COMMERCE_ORGANIZATION_ORDER,
+					CommercePortletKeys.COMMERCE_ORGANIZATION_ORDER,
 					"commerce-orders-order-by-type", "desc");
 			}
 

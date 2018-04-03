@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletURL;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -66,7 +67,7 @@ public class CommerceCartContentMiniDisplayContext
 				CommerceCartContentMiniPortletInstanceConfiguration.class);
 	}
 
-	public String getCommerceCartPortletURL() throws PortalException{
+	public String getCommerceCartPortletURL() throws PortalException {
 		PortletURL portletURL = commerceOrderHelper.getCommerceCartPortletURL(
 			commerceCartContentRequestHelper.getRequest());
 

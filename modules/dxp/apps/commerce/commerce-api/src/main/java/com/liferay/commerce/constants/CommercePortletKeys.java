@@ -20,10 +20,6 @@ package com.liferay.commerce.constants;
  */
 public class CommercePortletKeys {
 
-	public static final String COMMERCE_ORGANIZATION_ORDER =
-		"com_liferay_commerce_organization_order_web_internal_portlet_" +
-			"CommerceOrganizationOrderPortlet";
-
 	public static final String COMMERCE_ADDRESS_CONTENT =
 		"com_liferay_commerce_address_content_web_internal_portlet_" +
 			"CommerceAddressContentPortlet";
@@ -50,6 +46,10 @@ public class CommercePortletKeys {
 	public static final String COMMERCE_ORDER_CONTENT =
 		"com_liferay_commerce_order_content_web_internal_portlet_" +
 			"CommerceOrderContentPortlet";
+
+	public static final String COMMERCE_ORGANIZATION_ORDER =
+		"com_liferay_commerce_organization_order_web_internal_portlet_" +
+			"CommerceOrganizationOrderPortlet";
 
 	public static final String COMMERCE_PRICE_LIST =
 		"com_liferay_commerce_price_list_web_internal_portlet_" +

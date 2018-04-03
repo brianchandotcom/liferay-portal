@@ -25,10 +25,8 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
-taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %><%@
-taglib uri="http://liferay.com/tld/soy" prefix="soy" %>
+taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.commerce.model.CommerceOrderItem" %>
 <%@ page import="com.liferay.commerce.constants.CommerceOrderActionKeys" %><%@
 page import="com.liferay.commerce.exception.CommerceOrderNoteContentException" %><%@
 page import="com.liferay.commerce.exception.NoSuchOrderException" %><%@
@@ -37,7 +35,9 @@ page import="com.liferay.commerce.model.CommerceAddress" %><%@
 page import="com.liferay.commerce.model.CommerceCountry" %><%@
 page import="com.liferay.commerce.model.CommerceOrder" %><%@
 page import="com.liferay.commerce.model.CommerceOrderConstants" %><%@
+page import="com.liferay.commerce.model.CommerceOrderItem" %><%@
 page import="com.liferay.commerce.model.CommerceOrderNote" %><%@
+page import="com.liferay.commerce.order.web.security.permission.resource.CommerceOrderPermission" %><%@
 page import="com.liferay.commerce.organization.order.web.internal.display.context.CommerceOrganizationOrderDisplayContext" %><%@
 page import="com.liferay.commerce.organization.order.web.internal.search.CommerceOrderDisplayTerms" %><%@
 page import="com.liferay.frontend.taglib.servlet.taglib.util.AddMenuKeys" %><%@

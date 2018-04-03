@@ -50,7 +50,6 @@ import javax.portlet.PortletURL;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
@@ -73,7 +72,7 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 		long plid = _portal.getPlidFromPortletId(
 			groupId, CommercePortletKeys.COMMERCE_ORGANIZATION_ORDER);
 
-		if(plid > 0){
+		if (plid > 0) {
 			PortletURL portletURL = _getPortletURL(
 				httpServletRequest,
 				CommercePortletKeys.COMMERCE_ORGANIZATION_ORDER);
@@ -81,8 +80,7 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 			CommerceOrder commerceOrder = getCurrentCommerceOrder(
 				httpServletRequest);
 
-			if(commerceOrder != null) {
-
+			if (commerceOrder != null) {
 				portletURL.setParameter(
 					"mvcRenderCommandName", "editCommerceOrder");
 				portletURL.setParameter(

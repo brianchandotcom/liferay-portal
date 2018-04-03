@@ -65,7 +65,7 @@ renderResponse.setTitle(commerceOrderItem.getTitle(locale));
 					on: {
 						success: function() {
 							Liferay.Util.getOpener().refreshPortlet();
-							Liferay.Util.getOpener().closePopup('editOrderItemDialog');
+							Liferay.Util.getOpener().closePopup('<portlet:namespace/>editOrderItemDialog');
 						}
 					}
 				}
@@ -76,7 +76,7 @@ renderResponse.setTitle(commerceOrderItem.getTitle(locale));
 	A.one('#<portlet:namespace/>cancelButton').on(
 		'click',
 		function(event) {
-			Liferay.Util.getOpener().closePopup('editOrderItemDialog');
+			Liferay.Util.getOpener().closePopup('<portlet:namespace/>editOrderItemDialog');
 		}
 	);
 </aui:script>

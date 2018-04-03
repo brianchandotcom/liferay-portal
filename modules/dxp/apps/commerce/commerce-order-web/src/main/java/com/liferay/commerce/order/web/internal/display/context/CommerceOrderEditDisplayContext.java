@@ -25,10 +25,14 @@ import com.liferay.commerce.order.web.internal.search.CommerceOrderItemSearch;
 import com.liferay.commerce.order.web.internal.search.CommerceOrderItemSearchTerms;
 import com.liferay.commerce.order.web.internal.servlet.taglib.ui.CommerceOrderScreenNavigationConstants;
 import com.liferay.commerce.price.CommercePriceFormatter;
+import com.liferay.commerce.product.item.selector.criterion.CPInstanceItemSelectorCriterion;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommercePaymentMethodService;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -36,6 +40,8 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
@@ -66,7 +72,7 @@ public class CommerceOrderEditDisplayContext {
 			CommerceOrderNoteService commerceOrderNoteService,
 			CommercePaymentMethodService commercePaymentMethodService,
 			CommercePriceFormatter commercePriceFormatter,
-			RenderRequest renderRequest)
+			ItemSelector itemSelector, RenderRequest renderRequest)
 		throws PortalException {
 
 		_commerceOrderService = commerceOrderService;
@@ -74,6 +80,7 @@ public class CommerceOrderEditDisplayContext {
 		_commerceOrderNoteService = commerceOrderNoteService;
 		_commercePaymentMethodService = commercePaymentMethodService;
 		_commercePriceFormatter = commercePriceFormatter;
+		_itemSelector = itemSelector;
 
 		long commerceOrderId = ParamUtil.getLong(
 			renderRequest, "commerceOrderId");
@@ -246,6 +253,25 @@ public class CommerceOrderEditDisplayContext {
 			_commerceOrderRequestHelper.getScopeGroupId());
 	}
 
+	public String getItemSelectorUrl() {
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(
+				_commerceOrderRequestHelper.getRequest());
+
+		CPInstanceItemSelectorCriterion cpInstanceItemSelectorCriterion =
+			new CPInstanceItemSelectorCriterion();
+
+		cpInstanceItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			Collections.<ItemSelectorReturnType>singletonList(
+				new UUIDItemSelectorReturnType()));
+
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+			requestBackedPortletURLFactory, "productInstancesSelectItem",
+			cpInstanceItemSelectorCriterion);
+
+		return itemSelectorURL.toString();
+	}
+
 	private final CommerceCurrency _commerceCurrency;
 	private final CommerceOrder _commerceOrder;
 	private final Format _commerceOrderDateFormatDateTime;
@@ -256,5 +282,6 @@ public class CommerceOrderEditDisplayContext {
 	private final CommercePaymentMethodService _commercePaymentMethodService;
 	private final CommercePriceFormatter _commercePriceFormatter;
 	private SearchContainer<CommerceOrderItem> _itemSearchContainer;
+	private final ItemSelector _itemSelector;
 
 }

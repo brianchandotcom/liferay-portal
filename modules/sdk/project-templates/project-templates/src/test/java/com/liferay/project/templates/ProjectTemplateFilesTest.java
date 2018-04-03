@@ -366,6 +366,10 @@ public class ProjectTemplateFilesTest {
 			buildGradlePath + " contains \"latest.release\". Please use a " +
 				"tokenized version from /modules/build.gradle",
 			buildGradle.contains("latest.release"));
+
+		Assert.assertFalse(
+			buildGradlePath + " contains \"mavenLocal()\". Please remove it.",
+			buildGradle.contains("mavenLocal()"));
 	}
 
 	private void _testGitIgnore(

@@ -53,16 +53,7 @@ public class SourceCheckConfiguration {
 		return _name;
 	}
 
-	public boolean isEnabled() {
-		return _enabled;
-	}
-
-	public void setEnabled(boolean enabled) {
-		_enabled = enabled;
-	}
-
 	private final Map<String, List<String>> _attributesMap = new HashMap<>();
-	private boolean _enabled;
 	private final String _name;
 
 }

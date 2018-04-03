@@ -2,6 +2,7 @@
 
 <suppressions>
 	<source-check>
+		<suppress checks="JavaDeprecatedKernelClassesCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/JavaDeprecatedKernelClassesCheck\.java" />
 		<suppress checks="JavaHibernateSQLCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/JavaHibernateSQLCheck\.java" />
 		<suppress checks="JavaIllegalImportsCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/JavaIllegalImportsCheck\.java" />
 		<suppress checks="JavaInterfaceCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/JavaInterfaceCheck\.java" />

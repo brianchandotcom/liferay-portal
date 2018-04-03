@@ -26,12 +26,6 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (!isSubrepository() && !isReadOnly(absolutePath)) {
-			content = StringUtil.replace(
-				content, "com.liferay.portal.kernel.util.StringPool",
-				"com.liferay.petra.string.StringPool");
-		}
-
 		content = StringUtil.replace(
 			content,
 			new String[] {

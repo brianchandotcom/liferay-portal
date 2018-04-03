@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.order.web.internal.security.permission.resource;
+package com.liferay.commerce.order.web.security.permission.resource;
 
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.portal.kernel.exception.PortalException;

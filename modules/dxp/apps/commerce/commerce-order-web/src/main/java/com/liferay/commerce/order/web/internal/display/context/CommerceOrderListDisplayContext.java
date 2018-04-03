@@ -22,7 +22,7 @@ import com.liferay.commerce.order.web.internal.display.context.util.CommerceOrde
 import com.liferay.commerce.order.web.internal.search.CommerceOrderDisplayTerms;
 import com.liferay.commerce.order.web.internal.search.CommerceOrderSearch;
 import com.liferay.commerce.order.web.internal.search.facet.NegatableMultiValueFacet;
-import com.liferay.commerce.order.web.internal.security.permission.resource.CommerceOrderPermission;
+import com.liferay.commerce.order.web.security.permission.resource.CommerceOrderPermission;
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.commerce.price.CommercePriceFormatter;
 import com.liferay.commerce.search.facet.NegatableSimpleFacet;

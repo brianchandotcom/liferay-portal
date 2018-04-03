@@ -15,7 +15,7 @@
 package com.liferay.commerce.order.web.internal.search;
 
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.order.web.internal.security.permission.resource.CommerceOrderPermission;
+import com.liferay.commerce.order.web.security.permission.resource.CommerceOrderPermission;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

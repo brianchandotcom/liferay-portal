@@ -1,3 +1,4 @@
 Bundle-Name: Liferay Commerce Order Web
 Bundle-SymbolicName: com.liferay.commerce.order.web
 Bundle-Version: 1.0.0
+Export-Package: com.liferay.commerce.order.web.security.permission.resource

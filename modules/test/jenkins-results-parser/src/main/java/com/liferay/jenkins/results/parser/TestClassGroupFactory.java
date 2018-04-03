@@ -29,7 +29,20 @@ public class TestClassGroupFactory {
 		String batchName, GitWorkingDirectory gitWorkingDirectory,
 		String testSuiteName) {
 
-		return new BatchTestClassGroup(
+		if (batchName.startsWith("modules-integration-") ||
+			batchName.startsWith("modules-unit-")) {
+
+			return new ModulesJUnitBatchTestClassGroup(
+				batchName, gitWorkingDirectory, testSuiteName);
+		}
+		else if (batchName.startsWith("integration-") ||
+				 batchName.startsWith("unit-")) {
+
+			return new JUnitBatchTestClassGroup(
+				batchName, gitWorkingDirectory, testSuiteName);
+		}
+
+		return new DefaultBatchTestClassGroup(
 			batchName, gitWorkingDirectory, testSuiteName);
 	}
 

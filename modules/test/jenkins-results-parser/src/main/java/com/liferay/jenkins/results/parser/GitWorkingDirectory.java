@@ -673,33 +673,6 @@ public class GitWorkingDirectory {
 		return getBranch("HEAD", null);
 	}
 
-	public List<File> getCurrentBranchFiles() {
-		List<File> currentBranchFiles = new ArrayList<>();
-
-		Branch currentBranch = getCurrentBranch();
-
-		ExecutionResult executionResult = executeBashCommands(
-			JenkinsResultsParserUtil.combine(
-				"git diff --diff-filter=AM --name-only ",
-				_getMergeBaseCommitSHA(
-					currentBranch, getBranch(_upstreamBranchName, null)),
-				" ", currentBranch.getSHA()));
-
-		if (executionResult.getExitValue() != 0) {
-			throw new RuntimeException(
-				"Unable to get current branch files\n" +
-					executionResult.getStandardError());
-		}
-
-		String gitDiffOutput = executionResult.getStandardOut();
-
-		for (String line : gitDiffOutput.split("\n")) {
-			currentBranchFiles.add(new File(_workingDirectory, line));
-		}
-
-		return currentBranchFiles;
-	}
-
 	public String getGitConfigProperty(String gitConfigPropertyName) {
 		ExecutionResult executionResult = executeBashCommands(
 			"git config " + gitConfigPropertyName);
@@ -781,6 +754,33 @@ public class GitWorkingDirectory {
 		return JenkinsResultsParserUtil.combine(
 			"https://github.com/", getGitHubUserName(branchRemote), "/",
 			getRepositoryName(), "/tree/", branchName, "/", relativePath);
+	}
+
+	public List<File> getModifiedFilesList() {
+		List<File> currentBranchFiles = new ArrayList<>();
+
+		Branch currentBranch = getCurrentBranch();
+
+		ExecutionResult executionResult = executeBashCommands(
+			JenkinsResultsParserUtil.combine(
+				"git diff --diff-filter=AM --name-only ",
+				_getMergeBaseCommitSHA(
+					currentBranch, getBranch(_upstreamBranchName, null)),
+				" ", currentBranch.getSHA()));
+
+		if (executionResult.getExitValue() != 0) {
+			throw new RuntimeException(
+				"Unable to get current branch files\n" +
+					executionResult.getStandardError());
+		}
+
+		String gitDiffOutput = executionResult.getStandardOut();
+
+		for (String line : gitDiffOutput.split("\n")) {
+			currentBranchFiles.add(new File(_workingDirectory, line));
+		}
+
+		return currentBranchFiles;
 	}
 
 	public Remote getRemote(String name) {

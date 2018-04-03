@@ -41,6 +41,9 @@ public class LayoutConstants {
 
 	public static final String TYPE_EMBEDDED = "embedded";
 
+	public static final String TYPE_FULL_PAGE_APPLICATION =
+		"full_page_application";
+
 	public static final String TYPE_LINK_TO_LAYOUT = "link_to_layout";
 
 	public static final String TYPE_PANEL = "panel";

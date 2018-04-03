@@ -21,6 +21,7 @@ import com.liferay.expando.kernel.exception.ValueDataException;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.layouts.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -7572,7 +7573,42 @@ public class PortalImpl implements Portal {
 				if (getScopeGroupId(layout, portletId) == scopeGroupId) {
 					plid = layout.getPlid();
 
-					break;
+					return plid;
+				}
+			}
+		}
+
+		List<Layout> layouts_full = LayoutLocalServiceUtil.getLayouts(
+				groupId, privateLayout,
+				LayoutConstants.TYPE_FULL_PAGE_APPLICATION);
+
+		for (Layout layout : layouts_full) {
+			LayoutType layoutType = (LayoutType)layout.getLayoutType();
+
+			if (portletId.equals(layout.getTypeSettingsProperty(
+					LayoutTypePortletConstants.
+						FULL_PAGE_APPLICATION_PORTLET))) {
+
+				if (getScopeGroupId(layout, portletId) == scopeGroupId) {
+					plid = layout.getPlid();
+
+					return plid;
+				}
+			}
+		}
+
+		List<Layout> layouts_panel = LayoutLocalServiceUtil.getLayouts(
+			groupId, privateLayout, LayoutConstants.TYPE_PANEL);
+
+		for (Layout layout : layouts_panel) {
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)layout.getLayoutType();
+
+			if (layoutTypePortlet.hasPortletId(portletId, true)) {
+				if (getScopeGroupId(layout, portletId) == scopeGroupId) {
+					plid = layout.getPlid();
+
+					return plid;
 				}
 			}
 		}

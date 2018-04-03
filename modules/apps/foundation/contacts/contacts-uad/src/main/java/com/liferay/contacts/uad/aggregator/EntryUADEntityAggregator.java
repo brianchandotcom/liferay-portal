@@ -44,8 +44,8 @@ public class EntryUADEntityAggregator extends DynamicQueryUADEntityAggregator<En
 	}
 
 	@Override
-	public Entry get(Serializable primKeyObj) throws PortalException {
-		return _entryLocalService.getEntry(Long.valueOf(primKeyObj.toString()));
+	public Entry get(Serializable primaryKey) throws PortalException {
+		return _entryLocalService.getEntry(Long.valueOf(primaryKey.toString()));
 	}
 
 	@Override

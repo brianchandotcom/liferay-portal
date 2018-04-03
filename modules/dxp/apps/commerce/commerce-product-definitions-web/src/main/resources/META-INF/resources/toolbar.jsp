@@ -91,9 +91,7 @@ CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayC
 <div id="<portlet:namespace />DefinitionToolbarFilter">
 </div>
 
-<liferay-portlet:resourceURL id="cpDefinitionsFacets" var="cpDefinitionsFacetsURL">
-
-</liferay-portlet:resourceURL>
+<liferay-portlet:resourceURL id="cpDefinitionsFacets" var="cpDefinitionsFacetsURL" />
 
 <aui:script require="commerce-product-definitions-web/DefinitionToolbarFilter.es">
 	var definitionToolbarFilter = new commerceProductDefinitionsWebDefinitionToolbarFilterEs.default(

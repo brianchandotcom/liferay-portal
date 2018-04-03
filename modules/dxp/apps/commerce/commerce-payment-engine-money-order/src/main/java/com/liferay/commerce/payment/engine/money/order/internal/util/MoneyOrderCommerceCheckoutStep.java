@@ -79,7 +79,7 @@ public class MoneyOrderCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 		else {
 			CommerceOrder commerceOrder =
 				_commerceOrderHelper.getCurrentCommerceOrder(
-					httpServletRequest, httpServletResponse);
+					httpServletRequest);
 
 			commercePaymentMethodId =
 				commerceOrder.getCommercePaymentMethodId();

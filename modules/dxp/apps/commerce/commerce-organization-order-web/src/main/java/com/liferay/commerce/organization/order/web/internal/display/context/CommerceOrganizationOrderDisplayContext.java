@@ -146,8 +146,7 @@ public class CommerceOrganizationOrderDisplayContext {
 				themeDisplay.getTimeZone());
 
 		_currentCommerceOrder = _commerceOrderHelper.getCurrentCommerceOrder(
-			_commerceOrganizationOrderRequestHelper.getRequest(),
-			_commerceOrganizationOrderRequestHelper.getResponse());
+			_commerceOrganizationOrderRequestHelper.getRequest());
 		_organization = commerceOrganizationHelper.getCurrentOrganization(
 			_commerceOrganizationOrderRequestHelper.getRequest());
 

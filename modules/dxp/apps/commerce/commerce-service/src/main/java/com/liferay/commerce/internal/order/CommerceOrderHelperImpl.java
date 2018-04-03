@@ -83,12 +83,11 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 
 	@Override
 	public int getCommerceOrderItemsQuantity(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		CommerceOrder commerceOrder = getCurrentCommerceOrder(
-			httpServletRequest, httpServletResponse);
+			httpServletRequest);
 
 		if (commerceOrder == null) {
 			return 0;
@@ -100,8 +99,7 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 
 	@Override
 	public CommerceOrder getCurrentCommerceOrder(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay =

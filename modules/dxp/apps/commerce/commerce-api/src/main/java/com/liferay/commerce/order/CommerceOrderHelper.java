@@ -43,13 +43,11 @@ public interface CommerceOrderHelper {
 		throws PortalException;
 
 	public int getCommerceOrderItemsQuantity(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
+			HttpServletRequest httpServletRequest)
 		throws PortalException;
 
 	public CommerceOrder getCurrentCommerceOrder(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
+			HttpServletRequest httpServletRequest)
 		throws PortalException;
 
 	public List<ObjectValuePair<Long, String>> getWorkflowTransitions(

@@ -105,8 +105,7 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 		}
 
 		return _commerceOrderHelper.getCurrentCommerceOrder(
-			_portal.getHttpServletRequest(renderRequest),
-			_portal.getHttpServletResponse(renderResponse));
+			_portal.getHttpServletRequest(renderRequest));
 	}
 
 	@Reference

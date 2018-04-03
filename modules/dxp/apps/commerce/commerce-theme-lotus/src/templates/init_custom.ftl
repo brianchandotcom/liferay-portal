@@ -1,7 +1,7 @@
 <#assign
 	accountPageFriendlyUrl = getterUtil.getString(themeDisplay.getThemeSetting("account-page-friendly-url"))
 	accountUrl = "${site_default_url}" + accountPageFriendlyUrl
-	orderItemsQuantity = commerceOrderHelper.getCommerceOrderItemsQuantity(request, themeDisplay.getResponse())
+	orderItemsQuantity = commerceOrderHelper.getCommerceOrderItemsQuantity(request)
 	cartUrl = commerceOrderHelper.getCommerceCartPortletURL(request)
 	demo_mode = getterUtil.getBoolean(themeDisplay.getThemeSetting("demo-mode"))
 	show_cart_icon = getterUtil.getBoolean(themeDisplay.getThemeSetting("show-cart-icon"))

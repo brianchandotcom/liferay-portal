@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -115,7 +116,8 @@ public class CheckboxMultipleDDMFormFieldTemplateContextContributor
 						ddmFormField, ddmFormFieldRenderingContext),
 					ddmFormFieldRenderingContext.getLocale());
 
-		return checkboxMultipleDDMFormFieldContextHelper.getOptions();
+		return checkboxMultipleDDMFormFieldContextHelper.getOptions(
+			ddmFormFieldRenderingContext);
 	}
 
 	protected String getPredefinedValue(
@@ -128,8 +130,14 @@ public class CheckboxMultipleDDMFormFieldTemplateContextContributor
 			return null;
 		}
 
-		return predefinedValue.getString(
+		String predefinedValueString = predefinedValue.getString(
 			ddmFormFieldRenderingContext.getLocale());
+
+		if (ddmFormFieldRenderingContext.isViewMode()) {
+			predefinedValueString = HtmlUtil.extractText(predefinedValueString);
+		}
+
+		return predefinedValueString;
 	}
 
 	protected List<String> getValue(String valueString) {

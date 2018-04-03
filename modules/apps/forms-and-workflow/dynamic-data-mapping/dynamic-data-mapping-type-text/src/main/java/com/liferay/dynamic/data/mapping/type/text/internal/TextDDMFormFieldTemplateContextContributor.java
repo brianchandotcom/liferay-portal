@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -69,6 +70,12 @@ public class TextDDMFormFieldTemplateContextContributor
 		if (predefinedValue != null) {
 			parameters.put("predefinedValue", predefinedValue);
 		}
+		
+		String value = getValue(ddmFormFieldRenderingContext);	
+	
+		if (value != null) {	
+			parameters.put("value", value);	
+		}	
 
 		parameters.put(
 			"tooltip", getTooltip(ddmFormField, ddmFormFieldRenderingContext));
@@ -97,10 +104,14 @@ public class TextDDMFormFieldTemplateContextContributor
 			LocalizedValue optionLabel = ddmFormFieldOptions.getOptionLabels(
 				optionValue);
 
-			optionMap.put(
-				"label",
-				optionLabel.getString(
-					ddmFormFieldRenderingContext.getLocale()));
+			String optionLabelString = optionLabel.getString(
+				ddmFormFieldRenderingContext.getLocale());
+
+			if (ddmFormFieldRenderingContext.isViewMode()) {
+				optionLabelString = HtmlUtil.extractText(optionLabelString);
+			}
+
+			optionMap.put("label", optionLabelString);
 
 			optionMap.put("value", optionValue);
 
@@ -118,7 +129,8 @@ public class TextDDMFormFieldTemplateContextContributor
 			"placeholder");
 
 		return getValueString(
-			placeholder, ddmFormFieldRenderingContext.getLocale());
+			placeholder, ddmFormFieldRenderingContext.getLocale(),
+			ddmFormFieldRenderingContext);
 	}
 
 	protected String getPredefinedValue(
@@ -131,8 +143,14 @@ public class TextDDMFormFieldTemplateContextContributor
 			return null;
 		}
 
-		return predefinedValue.getString(
+		String predefinedValueString = predefinedValue.getString(
 			ddmFormFieldRenderingContext.getLocale());
+
+		if (ddmFormFieldRenderingContext.isViewMode()) {
+			predefinedValueString = HtmlUtil.extractText(predefinedValueString);
+		}
+
+		return predefinedValueString;
 	}
 
 	protected String getTooltip(
@@ -143,15 +161,38 @@ public class TextDDMFormFieldTemplateContextContributor
 			"tooltip");
 
 		return getValueString(
-			tooltip, ddmFormFieldRenderingContext.getLocale());
+			tooltip, ddmFormFieldRenderingContext.getLocale(),
+			ddmFormFieldRenderingContext);
 	}
 
-	protected String getValueString(Value value, Locale locale) {
+	protected String getValueString(
+		Value value, Locale locale,
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
+
 		if (value != null) {
-			return value.getString(locale);
+			String valueString = value.getString(locale);
+
+			if (ddmFormFieldRenderingContext.isViewMode()) {
+				valueString = HtmlUtil.extractText(valueString);
+			}
+
+			return valueString;
 		}
 
 		return StringPool.BLANK;
+	}
+	
+	protected String getValue(	
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {	
+	
+		String value = (String)ddmFormFieldRenderingContext.getProperty(	
+			"value");	
+	
+		if (ddmFormFieldRenderingContext.isViewMode()) {	
+			value = HtmlUtil.extractText(value);	
+		}	
+	
+		return value;	
 	}
 
 	protected boolean isAutocompleteEnabled(DDMFormField ddmFormField) {

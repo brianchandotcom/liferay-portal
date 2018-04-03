@@ -205,7 +205,7 @@ PortletURL portletURL = commerceOrderEditDisplayContext.getCommerceOrderItemsPor
 							}
 						}
 					},
-					title: '<liferay-ui:message arguments="<%= commerceOrderEditDisplayContext.getCommerceOrderId() %>" key="add-new-item-to-order-x" />',
+					title: '<liferay-ui:message arguments="<%= commerceOrderEditDisplayContext.getCommerceOrderId() %>" key="add-new-product-to-order-x" />',
 					url: '<%= commerceOrderEditDisplayContext.getItemSelectorUrl() %>'
 				}
 			);

@@ -6,26 +6,13 @@
 	<command name="viewClusterStatusViaClusterHealthAPI">
 		<description message="Elasticsearch provides a Cluster Health API (http://localhost:9200/_cluster/health?pretty=true) to easily view the current status of the cluster." />
 
-		<var name="numberOfNodesCounter" value="${numberOfNodes}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://localhost:9200/_cluster/health?level=indices&amp;pretty" />
+		</execute>
 
-		<while>
-			<not>
-				<equals arg1="${numberOfNodesCounter}" arg2="0" />
-			</not>
-			<then>
-				<var method="MathUtil#difference('${numberOfNodesCounter}', '1')" name="numberOfNodesCounter" />
-
-				<execute macro="Navigator#openSpecificURL">
-					<var name="url" value="http://localhost:9200/_cluster/health?level=indices&amp;pretty" />
-				</execute>
-
-				<execute function="AssertLocation" value1="http://localhost:9200/_cluster/health?level=indices&amp;pretty" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="//body" value1="&quot;cluster_name&quot; : &quot;LiferayElasticsearchCluster&quot;" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="//body" value1="&quot;timed_out&quot; : false" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="//body" value1="&quot;number_of_nodes&quot; : ${numberOfNodes}" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="//body" value1="&quot;number_of_data_nodes&quot; : ${numberOfNodes}" />
-			</then>
-		</while>
+		<execute function="AssertTextEquals#assertPartialText" locator1="//body" value1="&quot;cluster_name&quot; : &quot;LiferayElasticsearchCluster&quot;" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="//body" value1="&quot;number_of_nodes&quot; : ${numberOfNodes}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="//body" value1="&quot;number_of_data_nodes&quot; : ${numberOfNodes}" />
 	</command>
 
 	<command name="viewReplicaAddedInConsole">

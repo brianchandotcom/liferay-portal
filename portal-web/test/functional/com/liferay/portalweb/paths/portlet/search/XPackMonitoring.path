@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>XPackMonitoring</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">XPackMonitoring</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>CLUSTER_NAME</td>
+	<td>//a[@data-test-subj='clusterName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MONITORING_CLUSTER_OVERVIEW</td>
+	<td>//monitoring-cluster-overview[@cluster='cluster']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

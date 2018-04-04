@@ -20,5 +20,5 @@ copyLibClasses {
 }
 
 dependencies {
-	provided group: "com.github.fge", name: "json-schema-validator", version: "2.2.3"
+	compileOnly group: "com.github.fge", name: "json-schema-validator", version: "2.2.3"
 }

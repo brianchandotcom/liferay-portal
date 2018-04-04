@@ -6,8 +6,8 @@ copyLibs {
 }
 
 dependencies {
-	provided project(":apps:collaboration:upload:upload-api")
-	provided project(":core:petra:petra-function")
+	compileOnly project(":apps:collaboration:upload:upload-api")
+	compileOnly project(":core:petra:petra-function")
 
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

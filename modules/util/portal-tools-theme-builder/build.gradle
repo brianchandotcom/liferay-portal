@@ -44,10 +44,10 @@ dependencies {
 	parentThemes project(":apps:foundation:frontend-theme:frontend-theme-styled")
 	parentThemes project(":apps:foundation:frontend-theme:frontend-theme-unstyled")
 
-	provided group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.7"
-	provided group: "org.apache.maven", name: "maven-artifact", version: "3.2.5"
-	provided group: "org.apache.maven", name: "maven-core", version: "3.2.5"
-	provided group: "org.apache.maven", name: "maven-plugin-api", version: "3.2.5"
+	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.7"
+	compileOnly group: "org.apache.maven", name: "maven-artifact", version: "3.2.5"
+	compileOnly group: "org.apache.maven", name: "maven-core", version: "3.2.5"
+	compileOnly group: "org.apache.maven", name: "maven-plugin-api", version: "3.2.5"
 
 	testCompile group: "com.googlecode.json-simple", name: "json-simple", version: "1.1"
 	testCompile group: "org.apache.ant", name: "ant-testutil", version: "1.9.7"

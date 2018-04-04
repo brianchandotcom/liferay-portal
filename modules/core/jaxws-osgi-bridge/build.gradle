@@ -1,5 +1,5 @@
 dependencies {
-	provided project(":core:registry-api")
+	compileOnly project(":core:registry-api")
 }
 
 liferay {

@@ -5,7 +5,7 @@ clean {
 }
 
 dependencies {
-	provided group: "org.apache.ant", name: "ant", version: "1.9.4"
+	compileOnly group: "org.apache.ant", name: "ant", version: "1.9.4"
 }
 
 liferay {

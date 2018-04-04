@@ -1,6 +1,6 @@
 dependencies {
-	provided group: "com.liferay", name: "org.eclipse.osgi", version: "3.10.200-20150904.172142-1-LIFERAY-CACHED"
-	provided group: "org.slf4j", name: "slf4j-api", version: "1.7.2"
+	compileOnly group: "com.liferay", name: "org.eclipse.osgi", version: "3.10.200-20150904.172142-1-LIFERAY-CACHED"
+	compileOnly group: "org.slf4j", name: "slf4j-api", version: "1.7.2"
 }
 
 liferay {

@@ -31,11 +31,11 @@ dependencies {
 	compile project(":apps:web-experience:journal:journal-api")
 	compile project(":apps:web-experience:journal:journal-service")
 
-	provided group: "com.liferay", name: "org.freemarker", version: "2.3.23.LIFERAY-PATCHED-4"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	provided project(":core:petra:petra-reflect")
-	provided project(":core:petra:petra-string")
+	compileOnly group: "com.liferay", name: "org.freemarker", version: "2.3.23.LIFERAY-PATCHED-4"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly project(":core:petra:petra-reflect")
+	compileOnly project(":core:petra:petra-string")
 
 	testCompile classifier: "jdk6debug", group: "org.hsqldb", name: "hsqldb", version: "2.3.3"
 	testCompile group: "com.liferay", name: "com.ibm.icu4j", version: "54.1.1.LIFERAY-PATCHED-2"

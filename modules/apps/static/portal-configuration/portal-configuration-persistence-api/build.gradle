@@ -2,6 +2,6 @@ sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
 dependencies {
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	provided group: "org.apache.felix", name: "org.apache.felix.configadmin", version: "1.8.8"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "org.apache.felix", name: "org.apache.felix.configadmin", version: "1.8.8"
 }

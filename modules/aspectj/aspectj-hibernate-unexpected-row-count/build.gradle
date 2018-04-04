@@ -26,7 +26,7 @@ dependencies {
 	compile group: "org.aspectj", name: "aspectjrt", version: "1.8.9"
 	compile group: "org.aspectj", name: "aspectjweaver", version: "1.8.9"
 
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	provided group: "org.hibernate", name: "hibernate-core", version: "3.6.10.Final"
-	provided project(":core:petra:petra-reflect")
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "org.hibernate", name: "hibernate-core", version: "3.6.10.Final"
+	compileOnly project(":core:petra:petra-reflect")
 }

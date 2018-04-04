@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>FORM_PAGE</td>
-	<td>//ul[contains(@class,'multi-step-progress-bar')]//li/div[contains(.,'${key_formPageName}')]</td>
+	<td>//ol[contains(@class,'multi-step-nav')]//li/div[contains(.,'${key_formPageName}')]</td>
 	<td></td>
 </tr>
 <tr>

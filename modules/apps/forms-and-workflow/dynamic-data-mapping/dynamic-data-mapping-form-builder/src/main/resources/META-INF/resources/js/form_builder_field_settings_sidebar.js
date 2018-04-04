@@ -317,7 +317,7 @@ AUI.add(
 						else if (Lang.isObject(settingsFormFieldContextValue)) {
 							return A.Object.isEmpty(settingsFormFieldContextValue);
 						}
-						else if(Lang.isBoolean(settingsFormFieldContextValue)) {
+						else if (Lang.isBoolean(settingsFormFieldContextValue)) {
 							return false;
 						}
 

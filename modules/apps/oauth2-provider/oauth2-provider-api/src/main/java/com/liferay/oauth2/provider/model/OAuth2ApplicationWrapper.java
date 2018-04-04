@@ -213,6 +213,11 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 		return _oAuth2Application.getAllowedGrantTypes();
 	}
 
+	@Override
+	public java.util.List<com.liferay.oauth2.provider.constants.GrantType> getAllowedGrantTypesList() {
+		return _oAuth2Application.getAllowedGrantTypesList();
+	}
+
 	/**
 	* Returns the client ID of this o auth2 application.
 	*
@@ -286,6 +291,11 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	@Override
 	public java.lang.String getFeatures() {
 		return _oAuth2Application.getFeatures();
+	}
+
+	@Override
+	public java.util.List<java.lang.String> getFeaturesList() {
+		return _oAuth2Application.getFeaturesList();
 	}
 
 	/**
@@ -383,6 +393,11 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 		return _oAuth2Application.getRedirectURIs();
 	}
 
+	@Override
+	public java.util.List<java.lang.String> getRedirectURIsList() {
+		return _oAuth2Application.getRedirectURIsList();
+	}
+
 	/**
 	* Returns the user ID of this o auth2 application.
 	*
@@ -446,6 +461,12 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	@Override
 	public void setAllowedGrantTypes(java.lang.String allowedGrantTypes) {
 		_oAuth2Application.setAllowedGrantTypes(allowedGrantTypes);
+	}
+
+	@Override
+	public void setAllowedGrantTypesList(
+		java.util.List<com.liferay.oauth2.provider.constants.GrantType> allowedGrantTypesList) {
+		_oAuth2Application.setAllowedGrantTypesList(allowedGrantTypesList);
 	}
 
 	@Override
@@ -537,6 +558,11 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	@Override
 	public void setFeatures(java.lang.String features) {
 		_oAuth2Application.setFeatures(features);
+	}
+
+	@Override
+	public void setFeaturesList(java.util.List<java.lang.String> featuresList) {
+		_oAuth2Application.setFeaturesList(featuresList);
 	}
 
 	/**
@@ -638,6 +664,12 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	@Override
 	public void setRedirectURIs(java.lang.String redirectURIs) {
 		_oAuth2Application.setRedirectURIs(redirectURIs);
+	}
+
+	@Override
+	public void setRedirectURIsList(
+		java.util.List<java.lang.String> redirectURIsList) {
+		_oAuth2Application.setRedirectURIsList(redirectURIsList);
 	}
 
 	/**

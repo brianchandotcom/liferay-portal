@@ -1379,6 +1379,12 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="resizeViaEventBlock">
+		<execute function="MouseOver#mouseOverNotVisible" locator1="DragAndDrop#CALENDAR_EVENT" />
+
+		<execute function="SikuliDragAndDrop" locator1="Calendar#SCHEDULER_VIEW_DAY_RESIZER_ICON" value1="0,100" />
+	</command>
+
 	<command name="saveEventUserInvite">
 		<execute function="AssertElementPresent" locator1="CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_HEADER" />
 		<execute function="AssertTextEquals" locator1="CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_BODY" value1="Invited users will be notified." />

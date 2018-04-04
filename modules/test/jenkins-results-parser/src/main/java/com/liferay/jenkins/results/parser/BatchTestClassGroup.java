@@ -110,7 +110,9 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 				String testSuiteNameMatcher = matcher.group("testSuiteName");
 
-				if (testSuiteName != testSuiteNameMatcher) {
+				if ((testSuiteName != null) &&
+					!testSuiteName.equals(testSuiteNameMatcher)) {
+
 					continue;
 				}
 

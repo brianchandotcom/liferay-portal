@@ -25,7 +25,7 @@ describe(
 		beforeEach(
 			() => {
 				searchContainerCallbacks = {};
-				searchContainerHandle = {removeListener: jest.fn()};
+				searchContainerHandle = {detach: jest.fn()};
 
 				searchContainer = {
 					fire: jest.fn(

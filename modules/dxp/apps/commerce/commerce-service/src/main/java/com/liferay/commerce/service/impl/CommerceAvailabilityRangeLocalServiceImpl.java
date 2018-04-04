@@ -66,8 +66,17 @@ public class CommerceAvailabilityRangeLocalServiceImpl
 	public CommerceAvailabilityRange deleteCommerceAvailabilityRange(
 		CommerceAvailabilityRange commerceAvailabilityRange) {
 
-		return commerceAvailabilityRangePersistence.remove(
-			commerceAvailabilityRange);
+		// Commerce availability range
+
+		commerceAvailabilityRangePersistence.remove(commerceAvailabilityRange);
+
+		// Commerce product definition availability range
+
+		cpDefinitionAvailabilityRangeLocalService.
+			deleteCPDefinitionAvailabilityRanges(
+				commerceAvailabilityRange.getCommerceAvailabilityRangeId());
+
+		return commerceAvailabilityRange;
 	}
 
 	@Override

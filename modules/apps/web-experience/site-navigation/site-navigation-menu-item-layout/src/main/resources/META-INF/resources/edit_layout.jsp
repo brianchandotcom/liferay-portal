@@ -99,6 +99,7 @@ if (selLayout != null) {
 								privateLayout.val(selectedItem.privateLayout);
 
 								layoutNameInput.html(selectedItem.name);
+								layoutNameInput.trigger('change');
 
 								layoutItemRemove.removeClass('hide');
 							}

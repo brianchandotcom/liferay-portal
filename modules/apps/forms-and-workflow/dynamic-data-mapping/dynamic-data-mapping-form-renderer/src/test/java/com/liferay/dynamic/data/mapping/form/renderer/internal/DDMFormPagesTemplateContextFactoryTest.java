@@ -17,7 +17,9 @@ package com.liferay.dynamic.data.mapping.form.renderer.internal;
 import com.liferay.dynamic.data.mapping.expression.internal.DDMExpressionFactoryImpl;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.DDMFormEvaluatorImpl;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.internal.DDMFormFieldOptionsFactoryImpl;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
@@ -26,19 +28,31 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
+import com.liferay.dynamic.data.mapping.type.checkbox.multiple.internal.CheckboxMultipleDDMFormFieldTemplateContextContributor;
+import com.liferay.dynamic.data.mapping.type.grid.internal.GridDDMFormFieldTemplateContextContributor;
+import com.liferay.dynamic.data.mapping.type.numeric.internal.NumericDDMFormFieldTemplateContextContributor;
+import com.liferay.dynamic.data.mapping.type.radio.internal.RadioDDMFormFieldTemplateContextContributor;
+import com.liferay.dynamic.data.mapping.type.select.internal.SelectDDMFormFieldTemplateContextContributor;
+import com.liferay.dynamic.data.mapping.type.text.internal.TextDDMFormFieldTemplateContextContributor;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.HtmlImpl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,6 +89,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
+		setUpHtmlUtil();
 		setUpLanguageUtil();
 		setUpResourceBundleLoaderUtil();
 		setUpDDMFormTemplateContextFactoryUtil();
@@ -531,6 +546,12 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		);
 	}
 
+	protected void setUpHtmlUtil() {
+		HtmlUtil htmlUtil = new HtmlUtil();
+
+		htmlUtil.setHtml(new HtmlImpl());
+	}
+
 	protected void setUpLanguageUtil() {
 		Language language = mock(Language.class);
 
@@ -566,6 +587,8 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		);
 	}
 
+	private static final String _HTML_WRAPPER = "<a>%s</a>";
+
 	private static final Locale _LOCALE = LocaleUtil.US;
 
 	private static final String _PORTLET_NAMESPACE = StringUtil.randomString();
@@ -573,6 +596,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 	@Mock
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 
+	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
 	private HttpServletRequest _request;
 
 }

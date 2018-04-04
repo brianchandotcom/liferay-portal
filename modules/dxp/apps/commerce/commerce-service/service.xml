@@ -1123,11 +1123,11 @@
 
 		<!-- Finder methods -->
 
-		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
-		</finder>
 		<finder name="CPDefinitionId" return-type="CPDefinitionAvailabilityRange" unique="true">
 			<finder-column name="CPDefinitionId" />
+		</finder>
+		<finder name="CommerceAvailabilityRangeId" return-type="Collection">
+			<finder-column name="commerceAvailabilityRangeId" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="CPDefinitionInventory" remote-service="true" uuid="true">

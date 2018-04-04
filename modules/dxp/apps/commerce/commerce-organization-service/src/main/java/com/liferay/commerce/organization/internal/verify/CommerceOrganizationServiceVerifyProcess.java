@@ -50,17 +50,17 @@ public class CommerceOrganizationServiceVerifyProcess extends VerifyProcess {
 					_getConfigurationFilter());
 
 			for (Configuration configuration : configurations) {
-				Dictionary<String, Object> props =
+				Dictionary<String, Object> properties =
 					configuration.getProperties();
 
-				String name = (String)props.get("name");
+				String name = (String)properties.get("name");
 
 				if (name.equals(OrganizationConstants.TYPE_ORGANIZATION)) {
-					props.put(
+					properties.put(
 						"childrenTypes",
 						new String[] {"account", "organization"});
 
-					configuration.update(props);
+					configuration.update(properties);
 				}
 			}
 		}

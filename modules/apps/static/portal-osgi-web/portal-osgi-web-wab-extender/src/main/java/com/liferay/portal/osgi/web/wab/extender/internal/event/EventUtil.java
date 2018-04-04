@@ -137,7 +137,7 @@ public class EventUtil
 				sb.append("\" has the same Web-ContextPath as the following ");
 				sb.append("bundles: ");
 				sb.append(collidedBundleNames);
-				sb.append(". This can lead to unexpected behavior when the");
+				sb.append(". This can lead to unexpected behavior when the ");
 				sb.append("bundles are deployed to the same layout");
 
 				_log.error(sb.toString());

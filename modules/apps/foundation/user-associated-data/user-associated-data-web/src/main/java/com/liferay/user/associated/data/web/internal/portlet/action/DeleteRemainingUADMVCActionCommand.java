@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
+import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
@@ -51,11 +51,11 @@ public class DeleteRemainingUADMVCActionCommand extends BaseMVCActionCommand {
 
 		User selectedUser = _portal.getSelectedUser(actionRequest);
 
-		Collection<UADEntityAnonymizer> uadEntityAnonymizers =
-			_uadRegistry.getUADEntityAnonymizers();
+		Collection<UADAnonymizer> uadAnonymizers =
+			_uadRegistry.getUADAnonymizers();
 
-		for (UADEntityAnonymizer uadEntityAnonymizer : uadEntityAnonymizers) {
-			uadEntityAnonymizer.autoAnonymizeAll(selectedUser.getUserId());
+		for (UADAnonymizer uadAnonymizer : uadAnonymizers) {
+			uadAnonymizer.autoAnonymizeAll(selectedUser.getUserId());
 		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");

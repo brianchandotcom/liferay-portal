@@ -36,6 +36,7 @@ import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -43,7 +44,6 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -108,25 +108,27 @@ public class CPTypeDisplayContext {
 	}
 
 	public String getAvailabilityLabel() throws Exception {
-		String availability = (String)getCPContentContributorValue(
+		JSONObject availability = (JSONObject)getCPContentContributorValue(
 			CPContentContributorConstants.AVAILABILITY_NAME);
 
-		if (Validator.isNull(availability)) {
+		if (availability == null) {
 			return StringPool.BLANK;
 		}
 
-		return availability;
+		return availability.getString(
+			CPContentContributorConstants.AVAILABILITY_NAME);
 	}
 
 	public String getAvailabilityRangeLabel() throws Exception {
-		String availabilityRange = (String)getCPContentContributorValue(
+		JSONObject availabilityRange = (JSONObject)getCPContentContributorValue(
 			CPContentContributorConstants.AVAILABILITY_RANGE_NAME);
 
-		if (Validator.isNull(availabilityRange)) {
+		if (availabilityRange == null) {
 			return StringPool.BLANK;
 		}
 
-		return availabilityRange;
+		return availabilityRange.getString(
+			CPContentContributorConstants.AVAILABILITY_RANGE_NAME);
 	}
 
 	public List<CPDefinitionSpecificationOptionValue>
@@ -283,14 +285,15 @@ public class CPTypeDisplayContext {
 	}
 
 	public String getStockQuantityLabel() throws Exception {
-		String stockQuantity = (String)getCPContentContributorValue(
+		JSONObject stockQuantity = (JSONObject)getCPContentContributorValue(
 			CPContentContributorConstants.STOCK_QUANTITY_NAME);
 
-		if (Validator.isNull(stockQuantity)) {
+		if (stockQuantity == null) {
 			return StringPool.BLANK;
 		}
 
-		return stockQuantity;
+		return stockQuantity.getString(
+			CPContentContributorConstants.STOCK_QUANTITY_NAME);
 	}
 
 	public ResourceURL getViewAttachmentURL() {

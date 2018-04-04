@@ -3315,7 +3315,7 @@ AUI.add(
 
 						return {
 							availableLanguageIds: instance.get('availableLanguageIds'),
-							defaultLanguageId: themeDisplay.getLanguageId(),
+							defaultLanguageId: themeDisplay.getDefaultLanguageId(),
 							fieldValues: fieldValues
 						};
 					},

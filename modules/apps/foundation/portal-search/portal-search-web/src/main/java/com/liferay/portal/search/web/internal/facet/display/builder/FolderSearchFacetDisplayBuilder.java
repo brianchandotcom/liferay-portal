@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.web.internal.facet.display.context.FolderSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.FolderSearchFacetTermDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.FolderTitleLookup;
@@ -47,7 +48,10 @@ public class FolderSearchFacetDisplayBuilder {
 		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
 			new FolderSearchFacetDisplayContext();
 
-		folderSearchFacetDisplayContext.setNothingSelected(isNothingSelected());
+		boolean nothingSelected = isNothingSelected();
+
+		folderSearchFacetDisplayContext.setNothingSelected(nothingSelected);
+
 		folderSearchFacetDisplayContext.setParameterName(_parameterName);
 		folderSearchFacetDisplayContext.setParameterValue(
 			getFirstParameterValueString());
@@ -250,11 +254,11 @@ public class FolderSearchFacetDisplayBuilder {
 		List<TermCollector> termCollectors,
 		List<FolderSearchFacetTermDisplayContext> termDisplayContexts) {
 
-		if (isNothingSelected() && termCollectors.isEmpty()) {
+		if (isNothingSelected() && ListUtil.isEmpty(termCollectors)) {
 			return true;
 		}
 
-		if (termDisplayContexts.isEmpty()) {
+		if (ListUtil.isEmpty(termDisplayContexts)) {
 			return true;
 		}
 

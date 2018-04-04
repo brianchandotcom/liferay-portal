@@ -82,7 +82,9 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	 */
 
 	/**
-	* Adds a web content article with additional parameters.
+	* Adds a web content article with additional parameters. All scheduling
+	* parameters (display date, expiration date, and review date) use the
+	* current user's timezone.
 	*
 	* <p>
 	* The web content articles hold HTML content wrapped in XML. The XML lets
@@ -197,7 +199,9 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Adds a web content article with additional parameters.
+	* Adds a web content article with additional parameters. All scheduling
+	* parameters (display date, expiration date, and review date) use the
+	* current user's timezone.
 	*
 	* <p>
 	* The web content articles hold HTML content wrapped in XML. The XML lets
@@ -3142,7 +3146,9 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		long ddmStructureId) throws PortalException;
 
 	/**
-	* Updates the web content article with additional parameters.
+	* Updates the web content article with additional parameters. All
+	* scheduling parameters (display date, expiration date, and review date)
+	* use the current user's timezone.
 	*
 	* @param userId the primary key of the user updating the web content
 	article
@@ -3281,7 +3287,9 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Updates the web content article with additional parameters.
+	* Updates the web content article with additional parameters. All
+	* scheduling parameters (display date, expiration date, and review date)
+	* use the current user's timezone.
 	*
 	* @param userId the primary key of the user updating the web content
 	article

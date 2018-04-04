@@ -71,7 +71,9 @@ import java.util.Map;
 @ProviderType
 public class JournalArticleServiceSoap {
 	/**
-	* Adds a web content article without any images.
+	* Adds a web content article without any images. All scheduling parameters
+	* (display date, expiration date, and review date) use the current user's
+	* timezone.
 	*
 	* @param groupId the primary key of the web content article's group
 	* @param folderId the primary key of the web content article folder

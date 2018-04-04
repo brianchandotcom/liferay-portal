@@ -1186,6 +1186,18 @@ public class CPDefinitionLocalServiceImpl
 				userId, cpDefinition.getCPDefinitionId(),
 				WorkflowConstants.STATUS_APPROVED, serviceContext,
 				new HashMap<String, Serializable>());
+
+			if (cpDefinition.isApproved()) {
+				long classNameId = classNameLocalService.getClassNameId(
+					cpDefinition.getModelClassName());
+
+				cpAttachmentFileEntryLocalService.
+					checkCPAttachmentFileEntriesByDisplayDate(
+						classNameId, cpDefinition.getCPDefinitionId());
+
+				cpInstanceLocalService.checkCPInstancesByDisplayDate(
+					cpDefinition.getCPDefinitionId());
+			}
 		}
 	}
 

@@ -75,7 +75,7 @@ public class WikiNodeUADEntityDisplayTest extends BaseUADEntityDisplayTestCase {
 
 	@Override
 	protected String getTypeDescription() {
-		return "";
+		return "A wiki node";
 	}
 
 	@After

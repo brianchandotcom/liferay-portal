@@ -62,7 +62,7 @@ public class WikiNodeUADEntityDisplay implements UADEntityDisplay<WikiNode> {
 
 	@Override
 	public String getTypeDescription() {
-		return "";
+		return "A wiki node";
 	}
 
 	@Override

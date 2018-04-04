@@ -62,7 +62,7 @@ public class WikiPageUADEntityDisplay implements UADEntityDisplay<WikiPage> {
 
 	@Override
 	public String getTypeDescription() {
-		return "";
+		return "A wiki page";
 	}
 
 	@Override

@@ -14,21 +14,20 @@
 
 package com.liferay.announcements.uad.anonymizer.test;
 
-import com.liferay.announcements.kernel.model.AnnouncementsEntry;
-import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService;
+import com.liferay.announcements.kernel.model.AnnouncementsFlag;
+import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
-import com.liferay.announcements.uad.test.AnnouncementsEntryUADEntityTestHelper;
+import com.liferay.announcements.uad.test.AnnouncementsFlagUADEntityTestHelper;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.aggregator.UADAggregator;
-import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
-import com.liferay.user.associated.data.test.util.BaseUADEntityAnonymizerTestCase;
+import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
+import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,8 +40,8 @@ import org.junit.runner.RunWith;
  * @author Noah Sherrill
  */
 @RunWith(Arquillian.class)
-public class AnnouncementsEntryUADEntityAnonymizerTest
-	extends BaseUADEntityAnonymizerTestCase {
+public class AnnouncementsFlagUADAnonymizerTest
+	extends BaseUADAnonymizerTestCase {
 
 	@ClassRule
 	@Rule
@@ -58,15 +57,14 @@ public class AnnouncementsEntryUADEntityAnonymizerTest
 	protected BaseModel<?> addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
 
-		AnnouncementsEntry announcementsEntry =
-			_announcementsEntryUADEntityTestHelper.addAnnouncementsEntry(
-				userId);
+		AnnouncementsFlag announcementsFlag =
+			_announcementsFlagUADEntityTestHelper.addAnnouncementsFlag(userId);
 
 		if (deleteAfterTestRun) {
-			_announcementsEntries.add(announcementsEntry);
+			_announcementsFlags.add(announcementsFlag);
 		}
 
-		return announcementsEntry;
+		return announcementsFlag;
 	}
 
 	@Override
@@ -75,21 +73,18 @@ public class AnnouncementsEntryUADEntityAnonymizerTest
 	}
 
 	@Override
-	protected UADEntityAnonymizer getUADEntityAnonymizer() {
-		return _uadEntityAnonymizer;
+	protected UADAnonymizer getUADAnonymizer() {
+		return _uadAnonymizer;
 	}
 
 	@Override
 	protected boolean isBaseModelAutoAnonymized(long baseModelPK, User user)
 		throws Exception {
 
-		AnnouncementsEntry announcementsEntry =
-			_announcementsEntryLocalService.getEntry(baseModelPK);
+		AnnouncementsFlag announcementsFlag =
+			_announcementsFlagLocalService.getAnnouncementsFlag(baseModelPK);
 
-		if ((user.getUserId() != announcementsEntry.getUserId()) &&
-			!StringUtil.equals(
-				user.getFullName(), announcementsEntry.getUserName())) {
-
+		if (user.getUserId() != announcementsFlag.getUserId()) {
 			return true;
 		}
 
@@ -98,7 +93,7 @@ public class AnnouncementsEntryUADEntityAnonymizerTest
 
 	@Override
 	protected boolean isBaseModelDeleted(long baseModelPK) {
-		if (_announcementsEntryLocalService.fetchAnnouncementsEntry(
+		if (_announcementsFlagLocalService.fetchAnnouncementsFlag(
 				baseModelPK) == null) {
 
 			return true;
@@ -107,25 +102,25 @@ public class AnnouncementsEntryUADEntityAnonymizerTest
 		return false;
 	}
 
+	@Inject
+	private AnnouncementsFlagLocalService _announcementsFlagLocalService;
+
 	@DeleteAfterTestRun
-	private final List<AnnouncementsEntry> _announcementsEntries =
+	private final List<AnnouncementsFlag> _announcementsFlags =
 		new ArrayList<>();
 
 	@Inject
-	private AnnouncementsEntryLocalService _announcementsEntryLocalService;
-
-	@Inject
-	private AnnouncementsEntryUADEntityTestHelper
-		_announcementsEntryUADEntityTestHelper;
+	private AnnouncementsFlagUADEntityTestHelper
+		_announcementsFlagUADEntityTestHelper;
 
 	@Inject(
-		filter = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_ENTRY
+		filter = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_FLAG
 	)
 	private UADAggregator _uadAggregator;
 
 	@Inject(
-		filter = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_ENTRY
+		filter = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_FLAG
 	)
-	private UADEntityAnonymizer _uadEntityAnonymizer;
+	private UADAnonymizer _uadAnonymizer;
 
 }

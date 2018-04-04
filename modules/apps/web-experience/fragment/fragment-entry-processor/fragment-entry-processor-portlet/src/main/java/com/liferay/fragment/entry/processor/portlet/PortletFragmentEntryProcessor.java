@@ -248,7 +248,6 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		Element buttonElement = new Element("button");
 
 		buttonElement.attr("class", "btn btn-primary btn-sm");
-		buttonElement.attr("url", "javascript:;");
 
 		try {
 			buttonElement.attr("onClick", _getConfigurationURL(portletId));
@@ -257,12 +256,13 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			throw new PortalException(e);
 		}
 
+		buttonElement.attr("url", "javascript:;");
+
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		HttpServletRequest request = serviceContext.getRequest();
-
-		buttonElement.text(LanguageUtil.get(request, "configure"));
+		buttonElement.text(
+			LanguageUtil.get(serviceContext.getRequest(), "configure"));
 
 		menuElement.appendChild(buttonElement);
 

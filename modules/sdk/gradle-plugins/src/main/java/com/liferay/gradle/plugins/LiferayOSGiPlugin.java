@@ -51,6 +51,7 @@ import com.liferay.gradle.plugins.soy.SoyPlugin;
 import com.liferay.gradle.plugins.soy.SoyTranslationPlugin;
 import com.liferay.gradle.plugins.soy.tasks.BuildSoyTask;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
+import com.liferay.gradle.plugins.tasks.ExecuteBndTask;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationPlugin;
 import com.liferay.gradle.plugins.tld.formatter.TLDFormatterPlugin;
 import com.liferay.gradle.plugins.tlddoc.builder.TLDDocBuilderPlugin;
@@ -135,6 +136,9 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	public static final String COMPILE_INCLUDE_CONFIGURATION_NAME =
 		"compileInclude";
 
+	public static final String JAR_COMPILE_INCLUDE_FRAGMENT_TASK_NAME =
+		"jarCompileIncludeFragment";
+
 	public static final String PLUGIN_NAME = "liferayOSGi";
 
 	@Override
@@ -157,6 +161,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			_addConfigurationCompileInclude(project);
 
 		_addTaskAutoUpdateXml(project);
+		_addTaskJarCompileIncludeFragment(project, compileIncludeConfiguration);
 		_addTasksBuildWSDDJar(project, liferayExtension);
 
 		_configureArchivesBaseName(project);
@@ -644,6 +649,92 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		_addDeployedFile(liferayExtension, jar, true);
 
 		return jar;
+	}
+
+	private ExecuteBndTask _addTaskJarCompileIncludeFragment(
+		final Project project, Configuration compileIncludeConfiguration) {
+
+		ExecuteBndTask executeBndTask = GradleUtil.addTask(
+			project, JAR_COMPILE_INCLUDE_FRAGMENT_TASK_NAME,
+			ExecuteBndTask.class);
+
+		executeBndTask.property(
+			Constants.BUNDLE_NAME,
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return _getBundleInstruction(
+						project, Constants.BUNDLE_NAME) + " Libs";
+				}
+
+			});
+
+		executeBndTask.property(
+			Constants.BUNDLE_SYMBOLICNAME,
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return _getBundleInstruction(
+						project, Constants.BUNDLE_SYMBOLICNAME) + ".libs";
+				}
+
+			});
+
+		executeBndTask.property(Constants.BUNDLE_VERSION, "1.0.0");
+
+		executeBndTask.property(
+			Constants.FRAGMENT_HOST,
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return _getBundleInstruction(
+						project, Constants.BUNDLE_SYMBOLICNAME);
+				}
+
+			});
+
+		executeBndTask.property(
+			Constants.INCLUDERESOURCE,
+			new IncludeResourceCompileIncludeInstruction(
+				compileIncludeConfiguration,
+				new Callable<Boolean>() {
+
+					@Override
+					public Boolean call() throws Exception {
+						return Boolean.FALSE;
+					}
+
+				}));
+
+		SourceSet sourceSet = GradleUtil.getSourceSet(
+			project, SourceSet.MAIN_SOURCE_SET_NAME);
+
+		executeBndTask.setClasspath(sourceSet.getCompileClasspath());
+
+		executeBndTask.setDescription(
+			"Generates an OSGi fragment containing all dependencies of " +
+				COMPILE_INCLUDE_CONFIGURATION_NAME + ".");
+		executeBndTask.setGroup(BasePlugin.BUILD_GROUP);
+
+		executeBndTask.setOutputFile(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
+						project.getBuildDir(),
+						project.getName() + "-libs." + Jar.DEFAULT_EXTENSION);
+				}
+
+			});
+
+		executeBndTask.setResourceDirs(project.files());
+		executeBndTask.setSourceDirs(project.files());
+
+		return executeBndTask;
 	}
 
 	private void _addTasksBuildWSDDJar(

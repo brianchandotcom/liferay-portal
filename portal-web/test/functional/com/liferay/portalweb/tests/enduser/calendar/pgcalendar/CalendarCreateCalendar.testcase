@@ -149,6 +149,64 @@
 		</execute>
 	</command>
 
+	<command name="ResizeAddedEventsViaEventBlock" priority="4">
+		<description message="This is a use case for LPS-45062." />
+
+		<execute macro="CalendarNavigator#gotoView">
+			<var name="viewType" value="Day" />
+		</execute>
+
+		<execute macro="CalendarEvent#addViaDayView">
+			<var name="eventBlock" value="true" />
+			<var name="eventTitle" value="Calendar Event Title1" />
+		</execute>
+
+		<execute macro="Alert#viewSuccessMessage" />
+
+		<execute macro="CalendarNavigator#gotoView">
+			<var name="viewType" value="Day" />
+		</execute>
+
+		<execute macro="CalendarEvent#resizeViaEventBlock" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoPreviousDay" />
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="Calendar Event Title2" />
+		</execute>
+
+		<execute macro="CalendarEvent#setTimes">
+			<var name="endDateTime" value="03:00 PM" />
+			<var name="startDateTime" value="12:00 PM" />
+		</execute>
+
+		<execute macro="CalendarEvent#publish" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoView">
+			<var name="viewType" value="Day" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoPreviousDay" />
+
+		<execute function="ScrollWebElementIntoView" locator1="DragAndDrop#CALENDAR_EVENT" />
+
+		<execute macro="CalendarEvent#resizeViaEventBlock" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
 	<command name="ViewUserCanAddSiteCalendarsWithCalendarPermissions" priority="3">
 		<description message="This is a use case for LPS-56229." />
 

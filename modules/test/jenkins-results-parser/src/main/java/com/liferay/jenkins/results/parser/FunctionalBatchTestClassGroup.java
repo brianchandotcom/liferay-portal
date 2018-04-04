@@ -36,7 +36,7 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 
 		super(batchName, gitWorkingDirectory, testSuiteName);
 
-		_setRelevantTestbatchRunpropertyQuery();
+		_setRelevantTestBatchRunPropertyQuery();
 	}
 
 	private String _getDefaultTestBatchRunPropertyQuery() {
@@ -66,7 +66,7 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		return getFirstPropertyValue(portalTestProperties, propertyNames);
 	}
 
-	private void _setRelevantTestbatchRunpropertyQuery() {
+	private void _setRelevantTestBatchRunPropertyQuery() {
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
 			(PortalGitWorkingDirectory)gitWorkingDirectory;
 

@@ -154,6 +154,8 @@ public class JavaSignatureStylingCheck extends BaseJavaTermCheck {
 			}
 		}
 
+		throwsPos = newSignature.indexOf("\tthrows ");
+
 		if (throwsPos != -1) {
 			String throwsExceptions = newSignature.substring(throwsPos + 1);
 

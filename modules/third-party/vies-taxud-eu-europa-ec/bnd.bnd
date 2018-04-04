@@ -1,0 +1,8 @@
+Bundle-SymbolicName: vies.taxud.eu.europa.ec
+Bundle-Version: 1.0.0
+Export-Package:\
+	checkVat.services.vies.taxud.eu.europa.ec,\
+	\
+	types.checkVat.services.vies.taxud.eu.europa.ec,\
+	types.checkVat.services.vies.taxud.eu.europa.ec.holders
+-includeresource: @lib/checkVatService-ws.jar

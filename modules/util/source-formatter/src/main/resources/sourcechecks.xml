@@ -108,6 +108,9 @@
 		<check name="JavaIndexableCheck" />
 		<check name="JavaInterfaceCheck" />
 		<check name="JavaIOExceptionCheck" />
+		<check name="JavaJSPDynamicIncludeCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="JavaLineBreakCheck" />
 		<check name="JavaLocalSensitiveComparisonCheck" />
 		<check name="JavaLongLinesCheck" />

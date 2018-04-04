@@ -795,6 +795,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			runtimeConfiguration.getName());
 
 		copy.rename(renameDependencyClosure);
+
 		copy.setEnabled(false);
 
 		Task classesTask = GradleUtil.getTask(

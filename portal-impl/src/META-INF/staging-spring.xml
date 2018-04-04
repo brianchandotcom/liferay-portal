@@ -4,17 +4,12 @@
 	default-destroy-method="destroy"
 	default-init-method="afterPropertiesSet"
 	xmlns="http://www.springframework.org/schema/beans"
-	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
 	<bean class="com.liferay.portal.model.adapter.builder.StagedGroupModelAdapterBuilder" id="com.liferay.portal.model.adapter.builder.StagedGroupModelAdapterBuilder" />
 	<bean class="com.liferay.portal.model.adapter.builder.StagedThemeModelAdapterBuilder" id="com.liferay.portal.model.adapter.builder.StagedThemeModelAdapterBuilder" />
 	<bean class="com.liferay.portal.service.impl.LayoutLocalServiceStagingAdvice" id="com.liferay.portal.service.impl.LayoutLocalServiceStagingAdvice" />
 	<bean class="com.liferay.portal.service.impl.LayoutSetLocalServiceStagingAdvice" id="com.liferay.portal.service.impl.LayoutSetLocalServiceStagingAdvice" />
 	<bean class="com.liferay.portlet.asset.model.adapter.builder.StagedAssetLinkModelAdapterBuilder" id="com.liferay.portlet.asset.model.adapter.builder.StagedAssetLinkModelAdapterBuilder" />
-	<aop:config proxy-target-class="false">
-		<aop:advisor advice-ref="com.liferay.portal.service.impl.LayoutLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.kernel.service.LayoutLocalService)" />
-		<aop:advisor advice-ref="com.liferay.portal.service.impl.LayoutSetLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.kernel.service.LayoutSetLocalService)" />
-	</aop:config>
 </beans>

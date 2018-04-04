@@ -57,6 +57,8 @@ public class AssetDisplayContributorFieldsMVCActionCommand
 
 		String className = ParamUtil.getString(actionRequest, "className");
 
+		long classTypeId = ParamUtil.getLong(actionRequest, "classTypeId");
+
 		AssetDisplayContributor assetDisplayContributor =
 			_assetDisplayContributorTracker.getAssetDisplayContributor(
 				className);
@@ -73,7 +75,7 @@ public class AssetDisplayContributorFieldsMVCActionCommand
 
 		for (AssetDisplayField assetDisplayField :
 				assetDisplayContributor.getAssetEntryFields(
-					themeDisplay.getLocale())) {
+					classTypeId, themeDisplay.getLocale())) {
 
 			jsonArray.put(assetDisplayField.toJSONObject());
 		}

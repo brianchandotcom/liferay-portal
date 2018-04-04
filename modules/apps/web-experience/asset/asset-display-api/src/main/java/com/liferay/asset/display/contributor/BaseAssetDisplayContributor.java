@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.model.ClassTypeField;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -37,19 +39,44 @@ public abstract class BaseAssetDisplayContributor<T>
 	implements AssetDisplayContributor {
 
 	@Override
-	public Set<AssetDisplayField> getAssetEntryFields(Locale locale) {
-		Set<AssetDisplayField> assetDisplayFields = new LinkedHashSet<>();
+	public Set<AssetDisplayField> getAssetEntryFields(
+			long classTypeId, Locale locale)
+		throws PortalException {
 
-		String[] assetEntryModelFields = getAssetEntryModelFields();
+		Set<AssetDisplayField> assetDisplayFields = new LinkedHashSet<>();
 
 		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
 			locale);
+
+		// Default fields for asset entry
+
+		for (String assetEntryModelField : _DEFAULT_ASSET_ENTRY_MODEL_FIELDS) {
+			assetDisplayFields.add(
+				new AssetDisplayField(
+					assetEntryModelField,
+					LanguageUtil.get(resourceBundle, assetEntryModelField)));
+		}
+
+		// Fields for the specific asset type
+
+		String[] assetEntryModelFields = getAssetEntryModelFields();
 
 		for (String assetEntryModelField : assetEntryModelFields) {
 			assetDisplayFields.add(
 				new AssetDisplayField(
 					assetEntryModelField,
 					LanguageUtil.get(resourceBundle, assetEntryModelField)));
+		}
+
+		// Fields for the class type
+
+		List<ClassTypeField> classTypeFields = getClassTypeFields(
+			classTypeId, locale);
+
+		for (ClassTypeField classTypeField : classTypeFields) {
+			assetDisplayFields.add(
+				new AssetDisplayField(
+					classTypeField.getName(), classTypeField.getLabel()));
 		}
 
 		return assetDisplayFields;
@@ -111,5 +138,10 @@ public abstract class BaseAssetDisplayContributor<T>
 
 		return parameterMap;
 	}
+
+	private static final String[] _DEFAULT_ASSET_ENTRY_MODEL_FIELDS = {
+		"categoryIds", "description", "publishDate", "summary", "tagNames",
+		"title"
+	};
 
 }

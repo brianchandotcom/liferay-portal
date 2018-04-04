@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassType;
+import com.liferay.asset.kernel.model.ClassTypeField;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -33,9 +34,35 @@ import java.util.Set;
  */
 public interface AssetDisplayContributor {
 
-	public Set<AssetDisplayField> getAssetEntryFields(Locale locale);
+	public Set<AssetDisplayField> getAssetEntryFields(
+			long classTypeId, Locale locale)
+		throws PortalException;
 
 	public String getClassName();
+
+	public default List<ClassTypeField> getClassTypeFields(
+			long classTypeId, Locale locale)
+		throws PortalException {
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				getClassName());
+
+		if (assetRendererFactory == null) {
+			return Collections.emptyList();
+		}
+
+		ClassTypeReader classTypeReader =
+			assetRendererFactory.getClassTypeReader();
+
+		ClassType classType = classTypeReader.getClassType(classTypeId, locale);
+
+		if (classType == null) {
+			return Collections.emptyList();
+		}
+
+		return classType.getClassTypeFields();
+	}
 
 	public default List<ClassType> getClassTypes(long groupId, Locale locale)
 		throws PortalException {

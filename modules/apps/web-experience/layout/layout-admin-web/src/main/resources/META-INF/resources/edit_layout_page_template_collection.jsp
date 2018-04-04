@@ -32,7 +32,10 @@ renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateCo
 	<portlet:param name="tabs1" value="page-templates" />
 </portlet:actionURL>
 
-<aui:form action="<%= editLayoutPageTemplateCollectionURL %>" cssClass="container-fluid-1280" name="fm">
+<liferay-frontend:edit-form
+	action="<%= editLayoutPageTemplateCollectionURL %>"
+	name="fm"
+>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="layoutPageTemplateCollectionId" type="hidden" value="<%= layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionId() %>" />
 
@@ -41,17 +44,17 @@ renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateCo
 
 	<aui:model-context bean="<%= layoutPageTemplateDisplayContext.getLayoutPageTemplateCollection() %>" model="<%= LayoutPageTemplateCollection.class %>" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
+	<liferay-frontend:fieldset-group>
+		<liferay-frontend:fieldset>
 			<aui:input autoFocus="<%= true %>" label="name" name="name" placeholder="name" />
 
 			<aui:input name="description" placeholder="description" />
-		</aui:fieldset>
-	</aui:fieldset-group>
+		</liferay-frontend:fieldset>
+	</liferay-frontend:fieldset-group>
 
-	<aui:button-row>
+	<liferay-frontend:button-row>
 		<aui:button type="submit" />
 
 		<aui:button href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+	</liferay-frontend:button-row>
+</liferay-frontend:edit-form>

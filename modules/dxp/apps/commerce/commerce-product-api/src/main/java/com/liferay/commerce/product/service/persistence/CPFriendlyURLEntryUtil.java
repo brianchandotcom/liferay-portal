@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.product.model.CPFriendlyURLEntry;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -1544,6 +1545,17 @@ public class CPFriendlyURLEntryUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CPFriendlyURLEntryPersistence, CPFriendlyURLEntryPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(CPFriendlyURLEntryPersistence.class);
+	private static ServiceTracker<CPFriendlyURLEntryPersistence, CPFriendlyURLEntryPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CPFriendlyURLEntryPersistence.class);
+
+		ServiceTracker<CPFriendlyURLEntryPersistence, CPFriendlyURLEntryPersistence> serviceTracker =
+			new ServiceTracker<CPFriendlyURLEntryPersistence, CPFriendlyURLEntryPersistence>(bundle.getBundleContext(),
+				CPFriendlyURLEntryPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

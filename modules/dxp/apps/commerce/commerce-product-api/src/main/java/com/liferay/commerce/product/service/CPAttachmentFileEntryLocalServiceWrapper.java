@@ -71,6 +71,14 @@ public class CPAttachmentFileEntryLocalServiceWrapper
 		_cpAttachmentFileEntryLocalService.checkCPAttachmentFileEntries();
 	}
 
+	@Override
+	public void checkCPAttachmentFileEntriesByDisplayDate(long classNameId,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_cpAttachmentFileEntryLocalService.checkCPAttachmentFileEntriesByDisplayDate(classNameId,
+			classPK);
+	}
+
 	/**
 	* Creates a new cp attachment file entry with the primary key. Does not add the cp attachment file entry to the database.
 	*

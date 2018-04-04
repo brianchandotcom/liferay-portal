@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -870,6 +871,223 @@ public class CPAttachmentFileEntryUtil {
 	}
 
 	/**
+	* Returns all the cp attachment file entries where classNameId = &#63; and classPK = &#63; and displayDate &lt; &#63; and status = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param displayDate the display date
+	* @param status the status
+	* @return the matching cp attachment file entries
+	*/
+	public static List<CPAttachmentFileEntry> findByC_C_LtD_S(
+		long classNameId, long classPK, Date displayDate, int status) {
+		return getPersistence()
+				   .findByC_C_LtD_S(classNameId, classPK, displayDate, status);
+	}
+
+	/**
+	* Returns a range of all the cp attachment file entries where classNameId = &#63; and classPK = &#63; and displayDate &lt; &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPAttachmentFileEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param displayDate the display date
+	* @param status the status
+	* @param start the lower bound of the range of cp attachment file entries
+	* @param end the upper bound of the range of cp attachment file entries (not inclusive)
+	* @return the range of matching cp attachment file entries
+	*/
+	public static List<CPAttachmentFileEntry> findByC_C_LtD_S(
+		long classNameId, long classPK, Date displayDate, int status,
+		int start, int end) {
+		return getPersistence()
+				   .findByC_C_LtD_S(classNameId, classPK, displayDate, status,
+			start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the cp attachment file entries where classNameId = &#63; and classPK = &#63; and displayDate &lt; &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPAttachmentFileEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param displayDate the display date
+	* @param status the status
+	* @param start the lower bound of the range of cp attachment file entries
+	* @param end the upper bound of the range of cp attachment file entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching cp attachment file entries
+	*/
+	public static List<CPAttachmentFileEntry> findByC_C_LtD_S(
+		long classNameId, long classPK, Date displayDate, int status,
+		int start, int end,
+		OrderByComparator<CPAttachmentFileEntry> orderByComparator) {
+		return getPersistence()
+				   .findByC_C_LtD_S(classNameId, classPK, displayDate, status,
+			start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the cp attachment file entries where classNameId = &#63; and classPK = &#63; and displayDate &lt; &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPAttachmentFileEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param displayDate the display date
+	* @param status the status
+	* @param start the lower bound of the range of cp attachment file entries
+	* @param end the upper bound of the range of cp attachment file entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching cp attachment file entries
+	*/
+	public static List<CPAttachmentFileEntry> findByC_C_LtD_S(
+		long classNameId, long classPK, Date displayDate, int status,
+		int start, int end,
+		OrderByComparator<CPAttachmentFileEntry> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByC_C_LtD_S(classNameId, classPK, displayDate, status,
+			start, end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first cp attachment file entry in the ordered set where classNameId = &#63; and classPK = &#63; and displayDate &lt; &#63; and status = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp attachment file entry
+	* @throws NoSuchCPAttachmentFileEntryException if a matching cp attachment file entry could not be found
+	*/
+	public static CPAttachmentFileEntry findByC_C_LtD_S_First(
+		long classNameId, long classPK, Date displayDate, int status,
+		OrderByComparator<CPAttachmentFileEntry> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPAttachmentFileEntryException {
+		return getPersistence()
+				   .findByC_C_LtD_S_First(classNameId, classPK, displayDate,
+			status, orderByComparator);
+	}
+
+	/**
+	* Returns the first cp attachment file entry in the ordered set where classNameId = &#63; and classPK = &#63; and displayDate &lt; &#63; and status = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp attachment file entry, or <code>null</code> if a matching cp attachment file entry could not be found
+	*/
+	public static CPAttachmentFileEntry fetchByC_C_LtD_S_First(
+		long classNameId, long classPK, Date displayDate, int status,
+		OrderByComparator<CPAttachmentFileEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_C_LtD_S_First(classNameId, classPK, displayDate,
+			status, orderByComparator);
+	}
+
+	/**
+	* Returns the last cp attachment file entry in the ordered set where classNameId = &#63; and classPK = &#63; and displayDate &lt; &#63; and status = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp attachment file entry
+	* @throws NoSuchCPAttachmentFileEntryException if a matching cp attachment file entry could not be found
+	*/
+	public static CPAttachmentFileEntry findByC_C_LtD_S_Last(long classNameId,
+		long classPK, Date displayDate, int status,
+		OrderByComparator<CPAttachmentFileEntry> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPAttachmentFileEntryException {
+		return getPersistence()
+				   .findByC_C_LtD_S_Last(classNameId, classPK, displayDate,
+			status, orderByComparator);
+	}
+
+	/**
+	* Returns the last cp attachment file entry in the ordered set where classNameId = &#63; and classPK = &#63; and displayDate &lt; &#63; and status = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp attachment file entry, or <code>null</code> if a matching cp attachment file entry could not be found
+	*/
+	public static CPAttachmentFileEntry fetchByC_C_LtD_S_Last(
+		long classNameId, long classPK, Date displayDate, int status,
+		OrderByComparator<CPAttachmentFileEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_C_LtD_S_Last(classNameId, classPK, displayDate,
+			status, orderByComparator);
+	}
+
+	/**
+	* Returns the cp attachment file entries before and after the current cp attachment file entry in the ordered set where classNameId = &#63; and classPK = &#63; and displayDate &lt; &#63; and status = &#63;.
+	*
+	* @param CPAttachmentFileEntryId the primary key of the current cp attachment file entry
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next cp attachment file entry
+	* @throws NoSuchCPAttachmentFileEntryException if a cp attachment file entry with the primary key could not be found
+	*/
+	public static CPAttachmentFileEntry[] findByC_C_LtD_S_PrevAndNext(
+		long CPAttachmentFileEntryId, long classNameId, long classPK,
+		Date displayDate, int status,
+		OrderByComparator<CPAttachmentFileEntry> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPAttachmentFileEntryException {
+		return getPersistence()
+				   .findByC_C_LtD_S_PrevAndNext(CPAttachmentFileEntryId,
+			classNameId, classPK, displayDate, status, orderByComparator);
+	}
+
+	/**
+	* Removes all the cp attachment file entries where classNameId = &#63; and classPK = &#63; and displayDate &lt; &#63; and status = &#63; from the database.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param displayDate the display date
+	* @param status the status
+	*/
+	public static void removeByC_C_LtD_S(long classNameId, long classPK,
+		Date displayDate, int status) {
+		getPersistence()
+			.removeByC_C_LtD_S(classNameId, classPK, displayDate, status);
+	}
+
+	/**
+	* Returns the number of cp attachment file entries where classNameId = &#63; and classPK = &#63; and displayDate &lt; &#63; and status = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param displayDate the display date
+	* @param status the status
+	* @return the number of matching cp attachment file entries
+	*/
+	public static int countByC_C_LtD_S(long classNameId, long classPK,
+		Date displayDate, int status) {
+		return getPersistence()
+				   .countByC_C_LtD_S(classNameId, classPK, displayDate, status);
+	}
+
+	/**
 	* Returns all the cp attachment file entries where classNameId = &#63; and classPK = &#63; and type = &#63; and status = &#63;.
 	*
 	* @param classNameId the class name ID
@@ -1453,6 +1671,17 @@ public class CPAttachmentFileEntryUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CPAttachmentFileEntryPersistence, CPAttachmentFileEntryPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(CPAttachmentFileEntryPersistence.class);
+	private static ServiceTracker<CPAttachmentFileEntryPersistence, CPAttachmentFileEntryPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CPAttachmentFileEntryPersistence.class);
+
+		ServiceTracker<CPAttachmentFileEntryPersistence, CPAttachmentFileEntryPersistence> serviceTracker =
+			new ServiceTracker<CPAttachmentFileEntryPersistence, CPAttachmentFileEntryPersistence>(bundle.getBundleContext(),
+				CPAttachmentFileEntryPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

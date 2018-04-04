@@ -117,10 +117,11 @@ public class CPDefinitionAvailabilityRangeModelImpl extends BaseModelImpl<CPDefi
 				"value.object.column.bitmask.enabled.com.liferay.commerce.model.CPDefinitionAvailabilityRange"),
 			true);
 	public static final long CPDEFINITIONID_COLUMN_BITMASK = 1L;
-	public static final long COMPANYID_COLUMN_BITMASK = 2L;
-	public static final long GROUPID_COLUMN_BITMASK = 4L;
-	public static final long UUID_COLUMN_BITMASK = 8L;
-	public static final long CPDEFINITIONAVAILABILITYRANGEID_COLUMN_BITMASK = 16L;
+	public static final long COMMERCEAVAILABILITYRANGEID_COLUMN_BITMASK = 2L;
+	public static final long COMPANYID_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
+	public static final long UUID_COLUMN_BITMASK = 16L;
+	public static final long CPDEFINITIONAVAILABILITYRANGEID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -487,7 +488,19 @@ public class CPDefinitionAvailabilityRangeModelImpl extends BaseModelImpl<CPDefi
 
 	@Override
 	public void setCommerceAvailabilityRangeId(long commerceAvailabilityRangeId) {
+		_columnBitmask |= COMMERCEAVAILABILITYRANGEID_COLUMN_BITMASK;
+
+		if (!_setOriginalCommerceAvailabilityRangeId) {
+			_setOriginalCommerceAvailabilityRangeId = true;
+
+			_originalCommerceAvailabilityRangeId = _commerceAvailabilityRangeId;
+		}
+
 		_commerceAvailabilityRangeId = commerceAvailabilityRangeId;
+	}
+
+	public long getOriginalCommerceAvailabilityRangeId() {
+		return _originalCommerceAvailabilityRangeId;
 	}
 
 	@JSON
@@ -628,6 +641,10 @@ public class CPDefinitionAvailabilityRangeModelImpl extends BaseModelImpl<CPDefi
 		cpDefinitionAvailabilityRangeModelImpl._originalCPDefinitionId = cpDefinitionAvailabilityRangeModelImpl._CPDefinitionId;
 
 		cpDefinitionAvailabilityRangeModelImpl._setOriginalCPDefinitionId = false;
+
+		cpDefinitionAvailabilityRangeModelImpl._originalCommerceAvailabilityRangeId = cpDefinitionAvailabilityRangeModelImpl._commerceAvailabilityRangeId;
+
+		cpDefinitionAvailabilityRangeModelImpl._setOriginalCommerceAvailabilityRangeId = false;
 
 		cpDefinitionAvailabilityRangeModelImpl._columnBitmask = 0;
 	}
@@ -806,6 +823,8 @@ public class CPDefinitionAvailabilityRangeModelImpl extends BaseModelImpl<CPDefi
 	private long _originalCPDefinitionId;
 	private boolean _setOriginalCPDefinitionId;
 	private long _commerceAvailabilityRangeId;
+	private long _originalCommerceAvailabilityRangeId;
+	private boolean _setOriginalCommerceAvailabilityRangeId;
 	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private CPDefinitionAvailabilityRange _escapedModel;

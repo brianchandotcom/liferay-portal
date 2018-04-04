@@ -16,7 +16,8 @@ package com.liferay.commerce.product.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -377,6 +378,17 @@ public class CPOptionValueLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CPOptionValueLocalService, CPOptionValueLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(CPOptionValueLocalService.class);
+	private static ServiceTracker<CPOptionValueLocalService, CPOptionValueLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CPOptionValueLocalService.class);
+
+		ServiceTracker<CPOptionValueLocalService, CPOptionValueLocalService> serviceTracker =
+			new ServiceTracker<CPOptionValueLocalService, CPOptionValueLocalService>(bundle.getBundleContext(),
+				CPOptionValueLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

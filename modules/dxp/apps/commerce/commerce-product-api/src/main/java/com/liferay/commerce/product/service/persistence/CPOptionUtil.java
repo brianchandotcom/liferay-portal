@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.product.model.CPOption;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -941,6 +942,16 @@ public class CPOptionUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CPOptionPersistence, CPOptionPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(CPOptionPersistence.class);
+	private static ServiceTracker<CPOptionPersistence, CPOptionPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CPOptionPersistence.class);
+
+		ServiceTracker<CPOptionPersistence, CPOptionPersistence> serviceTracker = new ServiceTracker<CPOptionPersistence, CPOptionPersistence>(bundle.getBundleContext(),
+				CPOptionPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

@@ -16,7 +16,8 @@ package com.liferay.commerce.product.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -74,6 +75,13 @@ public class CPAttachmentFileEntryLocalServiceUtil {
 	public static void checkCPAttachmentFileEntries()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().checkCPAttachmentFileEntries();
+	}
+
+	public static void checkCPAttachmentFileEntriesByDisplayDate(
+		long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.checkCPAttachmentFileEntriesByDisplayDate(classNameId, classPK);
 	}
 
 	/**
@@ -412,6 +420,17 @@ public class CPAttachmentFileEntryLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CPAttachmentFileEntryLocalService, CPAttachmentFileEntryLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(CPAttachmentFileEntryLocalService.class);
+	private static ServiceTracker<CPAttachmentFileEntryLocalService, CPAttachmentFileEntryLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CPAttachmentFileEntryLocalService.class);
+
+		ServiceTracker<CPAttachmentFileEntryLocalService, CPAttachmentFileEntryLocalService> serviceTracker =
+			new ServiceTracker<CPAttachmentFileEntryLocalService, CPAttachmentFileEntryLocalService>(bundle.getBundleContext(),
+				CPAttachmentFileEntryLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

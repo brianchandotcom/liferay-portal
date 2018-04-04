@@ -1512,520 +1512,6 @@ public class CPDefinitionAvailabilityRangePersistenceImpl
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "cpDefinitionAvailabilityRange.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(cpDefinitionAvailabilityRange.uuid IS NULL OR cpDefinitionAvailabilityRange.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "cpDefinitionAvailabilityRange.companyId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID = new FinderPath(CPDefinitionAvailabilityRangeModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionAvailabilityRangeModelImpl.FINDER_CACHE_ENABLED,
-			CPDefinitionAvailabilityRangeImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID =
-		new FinderPath(CPDefinitionAvailabilityRangeModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionAvailabilityRangeModelImpl.FINDER_CACHE_ENABLED,
-			CPDefinitionAvailabilityRangeImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] { Long.class.getName() },
-			CPDefinitionAvailabilityRangeModelImpl.GROUPID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(CPDefinitionAvailabilityRangeModelImpl.ENTITY_CACHE_ENABLED,
-			CPDefinitionAvailabilityRangeModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByGroupId", new String[] { Long.class.getName() });
-
-	/**
-	 * Returns all the cp definition availability ranges where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching cp definition availability ranges
-	 */
-	@Override
-	public List<CPDefinitionAvailabilityRange> findByGroupId(long groupId) {
-		return findByGroupId(groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cp definition availability ranges where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionAvailabilityRangeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of cp definition availability ranges
-	 * @param end the upper bound of the range of cp definition availability ranges (not inclusive)
-	 * @return the range of matching cp definition availability ranges
-	 */
-	@Override
-	public List<CPDefinitionAvailabilityRange> findByGroupId(long groupId,
-		int start, int end) {
-		return findByGroupId(groupId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp definition availability ranges where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionAvailabilityRangeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of cp definition availability ranges
-	 * @param end the upper bound of the range of cp definition availability ranges (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp definition availability ranges
-	 */
-	@Override
-	public List<CPDefinitionAvailabilityRange> findByGroupId(long groupId,
-		int start, int end,
-		OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator) {
-		return findByGroupId(groupId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp definition availability ranges where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionAvailabilityRangeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of cp definition availability ranges
-	 * @param end the upper bound of the range of cp definition availability ranges (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching cp definition availability ranges
-	 */
-	@Override
-	public List<CPDefinitionAvailabilityRange> findByGroupId(long groupId,
-		int start, int end,
-		OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator,
-		boolean retrieveFromCache) {
-		boolean pagination = true;
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID;
-			finderArgs = new Object[] { groupId };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID;
-			finderArgs = new Object[] { groupId, start, end, orderByComparator };
-		}
-
-		List<CPDefinitionAvailabilityRange> list = null;
-
-		if (retrieveFromCache) {
-			list = (List<CPDefinitionAvailabilityRange>)finderCache.getResult(finderPath,
-					finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CPDefinitionAvailabilityRange cpDefinitionAvailabilityRange : list) {
-					if ((groupId != cpDefinitionAvailabilityRange.getGroupId())) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				query = new StringBundler(3);
-			}
-
-			query.append(_SQL_SELECT_CPDEFINITIONAVAILABILITYRANGE_WHERE);
-
-			query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(CPDefinitionAvailabilityRangeModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				if (!pagination) {
-					list = (List<CPDefinitionAvailabilityRange>)QueryUtil.list(q,
-							getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<CPDefinitionAvailabilityRange>)QueryUtil.list(q,
-							getDialect(), start, end);
-				}
-
-				cacheResult(list);
-
-				finderCache.putResult(finderPath, finderArgs, list);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first cp definition availability range in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching cp definition availability range
-	 * @throws NoSuchCPDefinitionAvailabilityRangeException if a matching cp definition availability range could not be found
-	 */
-	@Override
-	public CPDefinitionAvailabilityRange findByGroupId_First(long groupId,
-		OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator)
-		throws NoSuchCPDefinitionAvailabilityRangeException {
-		CPDefinitionAvailabilityRange cpDefinitionAvailabilityRange = fetchByGroupId_First(groupId,
-				orderByComparator);
-
-		if (cpDefinitionAvailabilityRange != null) {
-			return cpDefinitionAvailabilityRange;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("groupId=");
-		msg.append(groupId);
-
-		msg.append("}");
-
-		throw new NoSuchCPDefinitionAvailabilityRangeException(msg.toString());
-	}
-
-	/**
-	 * Returns the first cp definition availability range in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching cp definition availability range, or <code>null</code> if a matching cp definition availability range could not be found
-	 */
-	@Override
-	public CPDefinitionAvailabilityRange fetchByGroupId_First(long groupId,
-		OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator) {
-		List<CPDefinitionAvailabilityRange> list = findByGroupId(groupId, 0, 1,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp definition availability range in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition availability range
-	 * @throws NoSuchCPDefinitionAvailabilityRangeException if a matching cp definition availability range could not be found
-	 */
-	@Override
-	public CPDefinitionAvailabilityRange findByGroupId_Last(long groupId,
-		OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator)
-		throws NoSuchCPDefinitionAvailabilityRangeException {
-		CPDefinitionAvailabilityRange cpDefinitionAvailabilityRange = fetchByGroupId_Last(groupId,
-				orderByComparator);
-
-		if (cpDefinitionAvailabilityRange != null) {
-			return cpDefinitionAvailabilityRange;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("groupId=");
-		msg.append(groupId);
-
-		msg.append("}");
-
-		throw new NoSuchCPDefinitionAvailabilityRangeException(msg.toString());
-	}
-
-	/**
-	 * Returns the last cp definition availability range in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition availability range, or <code>null</code> if a matching cp definition availability range could not be found
-	 */
-	@Override
-	public CPDefinitionAvailabilityRange fetchByGroupId_Last(long groupId,
-		OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator) {
-		int count = countByGroupId(groupId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinitionAvailabilityRange> list = findByGroupId(groupId,
-				count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the cp definition availability ranges before and after the current cp definition availability range in the ordered set where groupId = &#63;.
-	 *
-	 * @param CPDefinitionAvailabilityRangeId the primary key of the current cp definition availability range
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp definition availability range
-	 * @throws NoSuchCPDefinitionAvailabilityRangeException if a cp definition availability range with the primary key could not be found
-	 */
-	@Override
-	public CPDefinitionAvailabilityRange[] findByGroupId_PrevAndNext(
-		long CPDefinitionAvailabilityRangeId, long groupId,
-		OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator)
-		throws NoSuchCPDefinitionAvailabilityRangeException {
-		CPDefinitionAvailabilityRange cpDefinitionAvailabilityRange = findByPrimaryKey(CPDefinitionAvailabilityRangeId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CPDefinitionAvailabilityRange[] array = new CPDefinitionAvailabilityRangeImpl[3];
-
-			array[0] = getByGroupId_PrevAndNext(session,
-					cpDefinitionAvailabilityRange, groupId, orderByComparator,
-					true);
-
-			array[1] = cpDefinitionAvailabilityRange;
-
-			array[2] = getByGroupId_PrevAndNext(session,
-					cpDefinitionAvailabilityRange, groupId, orderByComparator,
-					false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected CPDefinitionAvailabilityRange getByGroupId_PrevAndNext(
-		Session session,
-		CPDefinitionAvailabilityRange cpDefinitionAvailabilityRange,
-		long groupId,
-		OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator,
-		boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
-					(orderByComparator.getOrderByFields().length * 3));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_CPDEFINITIONAVAILABILITYRANGE_WHERE);
-
-		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			query.append(CPDefinitionAvailabilityRangeModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(groupId);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(cpDefinitionAvailabilityRange);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<CPDefinitionAvailabilityRange> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the cp definition availability ranges where groupId = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 */
-	@Override
-	public void removeByGroupId(long groupId) {
-		for (CPDefinitionAvailabilityRange cpDefinitionAvailabilityRange : findByGroupId(
-				groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-			remove(cpDefinitionAvailabilityRange);
-		}
-	}
-
-	/**
-	 * Returns the number of cp definition availability ranges where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the number of matching cp definition availability ranges
-	 */
-	@Override
-	public int countByGroupId(long groupId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_GROUPID;
-
-		Object[] finderArgs = new Object[] { groupId };
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(2);
-
-			query.append(_SQL_COUNT_CPDEFINITIONAVAILABILITYRANGE_WHERE);
-
-			query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				count = (Long)q.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "cpDefinitionAvailabilityRange.groupId = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_CPDEFINITIONID = new FinderPath(CPDefinitionAvailabilityRangeModelImpl.ENTITY_CACHE_ENABLED,
 			CPDefinitionAvailabilityRangeModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionAvailabilityRangeImpl.class, FINDER_CLASS_NAME_ENTITY,
@@ -2233,6 +1719,541 @@ public class CPDefinitionAvailabilityRangePersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_CPDEFINITIONID_CPDEFINITIONID_2 = "cpDefinitionAvailabilityRange.CPDefinitionId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_COMMERCEAVAILABILITYRANGEID =
+		new FinderPath(CPDefinitionAvailabilityRangeModelImpl.ENTITY_CACHE_ENABLED,
+			CPDefinitionAvailabilityRangeModelImpl.FINDER_CACHE_ENABLED,
+			CPDefinitionAvailabilityRangeImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByCommerceAvailabilityRangeId",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMMERCEAVAILABILITYRANGEID =
+		new FinderPath(CPDefinitionAvailabilityRangeModelImpl.ENTITY_CACHE_ENABLED,
+			CPDefinitionAvailabilityRangeModelImpl.FINDER_CACHE_ENABLED,
+			CPDefinitionAvailabilityRangeImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByCommerceAvailabilityRangeId",
+			new String[] { Long.class.getName() },
+			CPDefinitionAvailabilityRangeModelImpl.COMMERCEAVAILABILITYRANGEID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_COMMERCEAVAILABILITYRANGEID =
+		new FinderPath(CPDefinitionAvailabilityRangeModelImpl.ENTITY_CACHE_ENABLED,
+			CPDefinitionAvailabilityRangeModelImpl.FINDER_CACHE_ENABLED,
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCommerceAvailabilityRangeId",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the cp definition availability ranges where commerceAvailabilityRangeId = &#63;.
+	 *
+	 * @param commerceAvailabilityRangeId the commerce availability range ID
+	 * @return the matching cp definition availability ranges
+	 */
+	@Override
+	public List<CPDefinitionAvailabilityRange> findByCommerceAvailabilityRangeId(
+		long commerceAvailabilityRangeId) {
+		return findByCommerceAvailabilityRangeId(commerceAvailabilityRangeId,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the cp definition availability ranges where commerceAvailabilityRangeId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionAvailabilityRangeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param commerceAvailabilityRangeId the commerce availability range ID
+	 * @param start the lower bound of the range of cp definition availability ranges
+	 * @param end the upper bound of the range of cp definition availability ranges (not inclusive)
+	 * @return the range of matching cp definition availability ranges
+	 */
+	@Override
+	public List<CPDefinitionAvailabilityRange> findByCommerceAvailabilityRangeId(
+		long commerceAvailabilityRangeId, int start, int end) {
+		return findByCommerceAvailabilityRangeId(commerceAvailabilityRangeId,
+			start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp definition availability ranges where commerceAvailabilityRangeId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionAvailabilityRangeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param commerceAvailabilityRangeId the commerce availability range ID
+	 * @param start the lower bound of the range of cp definition availability ranges
+	 * @param end the upper bound of the range of cp definition availability ranges (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp definition availability ranges
+	 */
+	@Override
+	public List<CPDefinitionAvailabilityRange> findByCommerceAvailabilityRangeId(
+		long commerceAvailabilityRangeId, int start, int end,
+		OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator) {
+		return findByCommerceAvailabilityRangeId(commerceAvailabilityRangeId,
+			start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp definition availability ranges where commerceAvailabilityRangeId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionAvailabilityRangeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param commerceAvailabilityRangeId the commerce availability range ID
+	 * @param start the lower bound of the range of cp definition availability ranges
+	 * @param end the upper bound of the range of cp definition availability ranges (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching cp definition availability ranges
+	 */
+	@Override
+	public List<CPDefinitionAvailabilityRange> findByCommerceAvailabilityRangeId(
+		long commerceAvailabilityRangeId, int start, int end,
+		OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMMERCEAVAILABILITYRANGEID;
+			finderArgs = new Object[] { commerceAvailabilityRangeId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_COMMERCEAVAILABILITYRANGEID;
+			finderArgs = new Object[] {
+					commerceAvailabilityRangeId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<CPDefinitionAvailabilityRange> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<CPDefinitionAvailabilityRange>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CPDefinitionAvailabilityRange cpDefinitionAvailabilityRange : list) {
+					if ((commerceAvailabilityRangeId != cpDefinitionAvailabilityRange.getCommerceAvailabilityRangeId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_CPDEFINITIONAVAILABILITYRANGE_WHERE);
+
+			query.append(_FINDER_COLUMN_COMMERCEAVAILABILITYRANGEID_COMMERCEAVAILABILITYRANGEID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CPDefinitionAvailabilityRangeModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(commerceAvailabilityRangeId);
+
+				if (!pagination) {
+					list = (List<CPDefinitionAvailabilityRange>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<CPDefinitionAvailabilityRange>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first cp definition availability range in the ordered set where commerceAvailabilityRangeId = &#63;.
+	 *
+	 * @param commerceAvailabilityRangeId the commerce availability range ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp definition availability range
+	 * @throws NoSuchCPDefinitionAvailabilityRangeException if a matching cp definition availability range could not be found
+	 */
+	@Override
+	public CPDefinitionAvailabilityRange findByCommerceAvailabilityRangeId_First(
+		long commerceAvailabilityRangeId,
+		OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator)
+		throws NoSuchCPDefinitionAvailabilityRangeException {
+		CPDefinitionAvailabilityRange cpDefinitionAvailabilityRange = fetchByCommerceAvailabilityRangeId_First(commerceAvailabilityRangeId,
+				orderByComparator);
+
+		if (cpDefinitionAvailabilityRange != null) {
+			return cpDefinitionAvailabilityRange;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("commerceAvailabilityRangeId=");
+		msg.append(commerceAvailabilityRangeId);
+
+		msg.append("}");
+
+		throw new NoSuchCPDefinitionAvailabilityRangeException(msg.toString());
+	}
+
+	/**
+	 * Returns the first cp definition availability range in the ordered set where commerceAvailabilityRangeId = &#63;.
+	 *
+	 * @param commerceAvailabilityRangeId the commerce availability range ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp definition availability range, or <code>null</code> if a matching cp definition availability range could not be found
+	 */
+	@Override
+	public CPDefinitionAvailabilityRange fetchByCommerceAvailabilityRangeId_First(
+		long commerceAvailabilityRangeId,
+		OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator) {
+		List<CPDefinitionAvailabilityRange> list = findByCommerceAvailabilityRangeId(commerceAvailabilityRangeId,
+				0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last cp definition availability range in the ordered set where commerceAvailabilityRangeId = &#63;.
+	 *
+	 * @param commerceAvailabilityRangeId the commerce availability range ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp definition availability range
+	 * @throws NoSuchCPDefinitionAvailabilityRangeException if a matching cp definition availability range could not be found
+	 */
+	@Override
+	public CPDefinitionAvailabilityRange findByCommerceAvailabilityRangeId_Last(
+		long commerceAvailabilityRangeId,
+		OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator)
+		throws NoSuchCPDefinitionAvailabilityRangeException {
+		CPDefinitionAvailabilityRange cpDefinitionAvailabilityRange = fetchByCommerceAvailabilityRangeId_Last(commerceAvailabilityRangeId,
+				orderByComparator);
+
+		if (cpDefinitionAvailabilityRange != null) {
+			return cpDefinitionAvailabilityRange;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("commerceAvailabilityRangeId=");
+		msg.append(commerceAvailabilityRangeId);
+
+		msg.append("}");
+
+		throw new NoSuchCPDefinitionAvailabilityRangeException(msg.toString());
+	}
+
+	/**
+	 * Returns the last cp definition availability range in the ordered set where commerceAvailabilityRangeId = &#63;.
+	 *
+	 * @param commerceAvailabilityRangeId the commerce availability range ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp definition availability range, or <code>null</code> if a matching cp definition availability range could not be found
+	 */
+	@Override
+	public CPDefinitionAvailabilityRange fetchByCommerceAvailabilityRangeId_Last(
+		long commerceAvailabilityRangeId,
+		OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator) {
+		int count = countByCommerceAvailabilityRangeId(commerceAvailabilityRangeId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CPDefinitionAvailabilityRange> list = findByCommerceAvailabilityRangeId(commerceAvailabilityRangeId,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the cp definition availability ranges before and after the current cp definition availability range in the ordered set where commerceAvailabilityRangeId = &#63;.
+	 *
+	 * @param CPDefinitionAvailabilityRangeId the primary key of the current cp definition availability range
+	 * @param commerceAvailabilityRangeId the commerce availability range ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next cp definition availability range
+	 * @throws NoSuchCPDefinitionAvailabilityRangeException if a cp definition availability range with the primary key could not be found
+	 */
+	@Override
+	public CPDefinitionAvailabilityRange[] findByCommerceAvailabilityRangeId_PrevAndNext(
+		long CPDefinitionAvailabilityRangeId, long commerceAvailabilityRangeId,
+		OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator)
+		throws NoSuchCPDefinitionAvailabilityRangeException {
+		CPDefinitionAvailabilityRange cpDefinitionAvailabilityRange = findByPrimaryKey(CPDefinitionAvailabilityRangeId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CPDefinitionAvailabilityRange[] array = new CPDefinitionAvailabilityRangeImpl[3];
+
+			array[0] = getByCommerceAvailabilityRangeId_PrevAndNext(session,
+					cpDefinitionAvailabilityRange, commerceAvailabilityRangeId,
+					orderByComparator, true);
+
+			array[1] = cpDefinitionAvailabilityRange;
+
+			array[2] = getByCommerceAvailabilityRangeId_PrevAndNext(session,
+					cpDefinitionAvailabilityRange, commerceAvailabilityRangeId,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CPDefinitionAvailabilityRange getByCommerceAvailabilityRangeId_PrevAndNext(
+		Session session,
+		CPDefinitionAvailabilityRange cpDefinitionAvailabilityRange,
+		long commerceAvailabilityRangeId,
+		OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_CPDEFINITIONAVAILABILITYRANGE_WHERE);
+
+		query.append(_FINDER_COLUMN_COMMERCEAVAILABILITYRANGEID_COMMERCEAVAILABILITYRANGEID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CPDefinitionAvailabilityRangeModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(commerceAvailabilityRangeId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(cpDefinitionAvailabilityRange);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CPDefinitionAvailabilityRange> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the cp definition availability ranges where commerceAvailabilityRangeId = &#63; from the database.
+	 *
+	 * @param commerceAvailabilityRangeId the commerce availability range ID
+	 */
+	@Override
+	public void removeByCommerceAvailabilityRangeId(
+		long commerceAvailabilityRangeId) {
+		for (CPDefinitionAvailabilityRange cpDefinitionAvailabilityRange : findByCommerceAvailabilityRangeId(
+				commerceAvailabilityRangeId, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(cpDefinitionAvailabilityRange);
+		}
+	}
+
+	/**
+	 * Returns the number of cp definition availability ranges where commerceAvailabilityRangeId = &#63;.
+	 *
+	 * @param commerceAvailabilityRangeId the commerce availability range ID
+	 * @return the number of matching cp definition availability ranges
+	 */
+	@Override
+	public int countByCommerceAvailabilityRangeId(
+		long commerceAvailabilityRangeId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_COMMERCEAVAILABILITYRANGEID;
+
+		Object[] finderArgs = new Object[] { commerceAvailabilityRangeId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_CPDEFINITIONAVAILABILITYRANGE_WHERE);
+
+			query.append(_FINDER_COLUMN_COMMERCEAVAILABILITYRANGEID_COMMERCEAVAILABILITYRANGEID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(commerceAvailabilityRangeId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_COMMERCEAVAILABILITYRANGEID_COMMERCEAVAILABILITYRANGEID_2 =
+		"cpDefinitionAvailabilityRange.commerceAvailabilityRangeId = ?";
 
 	public CPDefinitionAvailabilityRangePersistenceImpl() {
 		setModelClass(CPDefinitionAvailabilityRange.class);
@@ -2620,11 +2641,12 @@ public class CPDefinitionAvailabilityRangePersistenceImpl
 				args);
 
 			args = new Object[] {
-					cpDefinitionAvailabilityRangeModelImpl.getGroupId()
+					cpDefinitionAvailabilityRangeModelImpl.getCommerceAvailabilityRangeId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_COMMERCEAVAILABILITYRANGEID,
+				args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMMERCEAVAILABILITYRANGEID,
 				args);
 
 			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
@@ -2674,21 +2696,23 @@ public class CPDefinitionAvailabilityRangePersistenceImpl
 			}
 
 			if ((cpDefinitionAvailabilityRangeModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMMERCEAVAILABILITYRANGEID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						cpDefinitionAvailabilityRangeModelImpl.getOriginalGroupId()
+						cpDefinitionAvailabilityRangeModelImpl.getOriginalCommerceAvailabilityRangeId()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMMERCEAVAILABILITYRANGEID,
+					args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMMERCEAVAILABILITYRANGEID,
 					args);
 
 				args = new Object[] {
-						cpDefinitionAvailabilityRangeModelImpl.getGroupId()
+						cpDefinitionAvailabilityRangeModelImpl.getCommerceAvailabilityRangeId()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMMERCEAVAILABILITYRANGEID,
+					args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMMERCEAVAILABILITYRANGEID,
 					args);
 			}
 		}

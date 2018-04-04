@@ -344,6 +344,14 @@ public class CPInstancePersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_LtD_S() throws Exception {
+		_persistence.countByC_LtD_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextDate(), RandomTestUtil.nextInt());
+
+		_persistence.countByC_LtD_S(0L, RandomTestUtil.nextDate(), 0);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CPInstance newCPInstance = addCPInstance();
 

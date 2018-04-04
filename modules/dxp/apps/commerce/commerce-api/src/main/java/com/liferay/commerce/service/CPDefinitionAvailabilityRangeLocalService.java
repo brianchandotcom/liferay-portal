@@ -108,7 +108,11 @@ public interface CPDefinitionAvailabilityRangeLocalService
 	public CPDefinitionAvailabilityRange deleteCPDefinitionAvailabilityRange(
 		long CPDefinitionAvailabilityRangeId) throws PortalException;
 
-	public void deleteCPDefinitionAvailabilityRanges(long groupId);
+	public void deleteCPDefinitionAvailabilityRanges(
+		long commerceAvailabilityRangeId) throws PortalException;
+
+	public void deleteCPDefinitionAvailabilityRangesByCPDefinitionId(
+		long cpDefinitionId) throws PortalException;
 
 	/**
 	* @throws PortalException

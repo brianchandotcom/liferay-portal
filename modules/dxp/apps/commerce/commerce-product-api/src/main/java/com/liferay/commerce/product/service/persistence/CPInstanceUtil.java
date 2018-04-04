@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.product.model.CPInstance;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -1912,6 +1913,207 @@ public class CPInstanceUtil {
 	}
 
 	/**
+	* Returns all the cp instances where CPDefinitionId = &#63; and displayDate &lt; &#63; and status = &#63;.
+	*
+	* @param CPDefinitionId the cp definition ID
+	* @param displayDate the display date
+	* @param status the status
+	* @return the matching cp instances
+	*/
+	public static List<CPInstance> findByC_LtD_S(long CPDefinitionId,
+		Date displayDate, int status) {
+		return getPersistence()
+				   .findByC_LtD_S(CPDefinitionId, displayDate, status);
+	}
+
+	/**
+	* Returns a range of all the cp instances where CPDefinitionId = &#63; and displayDate &lt; &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param CPDefinitionId the cp definition ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param start the lower bound of the range of cp instances
+	* @param end the upper bound of the range of cp instances (not inclusive)
+	* @return the range of matching cp instances
+	*/
+	public static List<CPInstance> findByC_LtD_S(long CPDefinitionId,
+		Date displayDate, int status, int start, int end) {
+		return getPersistence()
+				   .findByC_LtD_S(CPDefinitionId, displayDate, status, start,
+			end);
+	}
+
+	/**
+	* Returns an ordered range of all the cp instances where CPDefinitionId = &#63; and displayDate &lt; &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param CPDefinitionId the cp definition ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param start the lower bound of the range of cp instances
+	* @param end the upper bound of the range of cp instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching cp instances
+	*/
+	public static List<CPInstance> findByC_LtD_S(long CPDefinitionId,
+		Date displayDate, int status, int start, int end,
+		OrderByComparator<CPInstance> orderByComparator) {
+		return getPersistence()
+				   .findByC_LtD_S(CPDefinitionId, displayDate, status, start,
+			end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the cp instances where CPDefinitionId = &#63; and displayDate &lt; &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param CPDefinitionId the cp definition ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param start the lower bound of the range of cp instances
+	* @param end the upper bound of the range of cp instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching cp instances
+	*/
+	public static List<CPInstance> findByC_LtD_S(long CPDefinitionId,
+		Date displayDate, int status, int start, int end,
+		OrderByComparator<CPInstance> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByC_LtD_S(CPDefinitionId, displayDate, status, start,
+			end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first cp instance in the ordered set where CPDefinitionId = &#63; and displayDate &lt; &#63; and status = &#63;.
+	*
+	* @param CPDefinitionId the cp definition ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp instance
+	* @throws NoSuchCPInstanceException if a matching cp instance could not be found
+	*/
+	public static CPInstance findByC_LtD_S_First(long CPDefinitionId,
+		Date displayDate, int status,
+		OrderByComparator<CPInstance> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPInstanceException {
+		return getPersistence()
+				   .findByC_LtD_S_First(CPDefinitionId, displayDate, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first cp instance in the ordered set where CPDefinitionId = &#63; and displayDate &lt; &#63; and status = &#63;.
+	*
+	* @param CPDefinitionId the cp definition ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp instance, or <code>null</code> if a matching cp instance could not be found
+	*/
+	public static CPInstance fetchByC_LtD_S_First(long CPDefinitionId,
+		Date displayDate, int status,
+		OrderByComparator<CPInstance> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_LtD_S_First(CPDefinitionId, displayDate, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last cp instance in the ordered set where CPDefinitionId = &#63; and displayDate &lt; &#63; and status = &#63;.
+	*
+	* @param CPDefinitionId the cp definition ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp instance
+	* @throws NoSuchCPInstanceException if a matching cp instance could not be found
+	*/
+	public static CPInstance findByC_LtD_S_Last(long CPDefinitionId,
+		Date displayDate, int status,
+		OrderByComparator<CPInstance> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPInstanceException {
+		return getPersistence()
+				   .findByC_LtD_S_Last(CPDefinitionId, displayDate, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last cp instance in the ordered set where CPDefinitionId = &#63; and displayDate &lt; &#63; and status = &#63;.
+	*
+	* @param CPDefinitionId the cp definition ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
+	*/
+	public static CPInstance fetchByC_LtD_S_Last(long CPDefinitionId,
+		Date displayDate, int status,
+		OrderByComparator<CPInstance> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_LtD_S_Last(CPDefinitionId, displayDate, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the cp instances before and after the current cp instance in the ordered set where CPDefinitionId = &#63; and displayDate &lt; &#63; and status = &#63;.
+	*
+	* @param CPInstanceId the primary key of the current cp instance
+	* @param CPDefinitionId the cp definition ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next cp instance
+	* @throws NoSuchCPInstanceException if a cp instance with the primary key could not be found
+	*/
+	public static CPInstance[] findByC_LtD_S_PrevAndNext(long CPInstanceId,
+		long CPDefinitionId, Date displayDate, int status,
+		OrderByComparator<CPInstance> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPInstanceException {
+		return getPersistence()
+				   .findByC_LtD_S_PrevAndNext(CPInstanceId, CPDefinitionId,
+			displayDate, status, orderByComparator);
+	}
+
+	/**
+	* Removes all the cp instances where CPDefinitionId = &#63; and displayDate &lt; &#63; and status = &#63; from the database.
+	*
+	* @param CPDefinitionId the cp definition ID
+	* @param displayDate the display date
+	* @param status the status
+	*/
+	public static void removeByC_LtD_S(long CPDefinitionId, Date displayDate,
+		int status) {
+		getPersistence().removeByC_LtD_S(CPDefinitionId, displayDate, status);
+	}
+
+	/**
+	* Returns the number of cp instances where CPDefinitionId = &#63; and displayDate &lt; &#63; and status = &#63;.
+	*
+	* @param CPDefinitionId the cp definition ID
+	* @param displayDate the display date
+	* @param status the status
+	* @return the number of matching cp instances
+	*/
+	public static int countByC_LtD_S(long CPDefinitionId, Date displayDate,
+		int status) {
+		return getPersistence()
+				   .countByC_LtD_S(CPDefinitionId, displayDate, status);
+	}
+
+	/**
 	* Caches the cp instance in the entity cache if it is enabled.
 	*
 	* @param cpInstance the cp instance
@@ -2067,6 +2269,17 @@ public class CPInstanceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CPInstancePersistence, CPInstancePersistence> _serviceTracker =
-		ServiceTrackerFactory.open(CPInstancePersistence.class);
+	private static ServiceTracker<CPInstancePersistence, CPInstancePersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CPInstancePersistence.class);
+
+		ServiceTracker<CPInstancePersistence, CPInstancePersistence> serviceTracker =
+			new ServiceTracker<CPInstancePersistence, CPInstancePersistence>(bundle.getBundleContext(),
+				CPInstancePersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

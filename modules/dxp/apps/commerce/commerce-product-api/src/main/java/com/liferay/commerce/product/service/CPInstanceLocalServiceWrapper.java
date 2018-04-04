@@ -98,6 +98,12 @@ public class CPInstanceLocalServiceWrapper implements CPInstanceLocalService,
 		_cpInstanceLocalService.checkCPInstances();
 	}
 
+	@Override
+	public void checkCPInstancesByDisplayDate(long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_cpInstanceLocalService.checkCPInstancesByDisplayDate(cpDefinitionId);
+	}
+
 	/**
 	* Creates a new cp instance with the primary key. Does not add the cp instance to the database.
 	*

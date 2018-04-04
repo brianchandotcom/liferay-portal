@@ -1,4 +1,5 @@
 create unique index IX_726123B7 on CPDefinitionAvailabilityRange (CPDefinitionId);
+create index IX_BDFAD50A on CPDefinitionAvailabilityRange (commerceAvailabilityRangeId);
 create index IX_9032BB82 on CPDefinitionAvailabilityRange (groupId);
 create index IX_58536E1C on CPDefinitionAvailabilityRange (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_64D8CB9E on CPDefinitionAvailabilityRange (uuid_[$COLUMN_LENGTH:75$], groupId);

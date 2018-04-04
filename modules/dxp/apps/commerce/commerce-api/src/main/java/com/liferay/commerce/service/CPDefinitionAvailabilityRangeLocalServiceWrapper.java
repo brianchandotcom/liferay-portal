@@ -85,8 +85,17 @@ public class CPDefinitionAvailabilityRangeLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCPDefinitionAvailabilityRanges(long groupId) {
-		_cpDefinitionAvailabilityRangeLocalService.deleteCPDefinitionAvailabilityRanges(groupId);
+	public void deleteCPDefinitionAvailabilityRanges(
+		long commerceAvailabilityRangeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_cpDefinitionAvailabilityRangeLocalService.deleteCPDefinitionAvailabilityRanges(commerceAvailabilityRangeId);
+	}
+
+	@Override
+	public void deleteCPDefinitionAvailabilityRangesByCPDefinitionId(
+		long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_cpDefinitionAvailabilityRangeLocalService.deleteCPDefinitionAvailabilityRangesByCPDefinitionId(cpDefinitionId);
 	}
 
 	/**

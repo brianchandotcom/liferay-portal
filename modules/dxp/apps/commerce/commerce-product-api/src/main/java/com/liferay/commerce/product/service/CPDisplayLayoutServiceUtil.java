@@ -16,7 +16,8 @@ package com.liferay.commerce.product.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -55,6 +56,17 @@ public class CPDisplayLayoutServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CPDisplayLayoutService, CPDisplayLayoutService> _serviceTracker =
-		ServiceTrackerFactory.open(CPDisplayLayoutService.class);
+	private static ServiceTracker<CPDisplayLayoutService, CPDisplayLayoutService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CPDisplayLayoutService.class);
+
+		ServiceTracker<CPDisplayLayoutService, CPDisplayLayoutService> serviceTracker =
+			new ServiceTracker<CPDisplayLayoutService, CPDisplayLayoutService>(bundle.getBundleContext(),
+				CPDisplayLayoutService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

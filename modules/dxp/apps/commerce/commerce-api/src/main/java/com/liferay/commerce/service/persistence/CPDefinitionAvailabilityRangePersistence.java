@@ -380,139 +380,6 @@ public interface CPDefinitionAvailabilityRangePersistence
 	public int countByUuid_C(java.lang.String uuid, long companyId);
 
 	/**
-	* Returns all the cp definition availability ranges where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @return the matching cp definition availability ranges
-	*/
-	public java.util.List<CPDefinitionAvailabilityRange> findByGroupId(
-		long groupId);
-
-	/**
-	* Returns a range of all the cp definition availability ranges where groupId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionAvailabilityRangeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param start the lower bound of the range of cp definition availability ranges
-	* @param end the upper bound of the range of cp definition availability ranges (not inclusive)
-	* @return the range of matching cp definition availability ranges
-	*/
-	public java.util.List<CPDefinitionAvailabilityRange> findByGroupId(
-		long groupId, int start, int end);
-
-	/**
-	* Returns an ordered range of all the cp definition availability ranges where groupId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionAvailabilityRangeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param start the lower bound of the range of cp definition availability ranges
-	* @param end the upper bound of the range of cp definition availability ranges (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching cp definition availability ranges
-	*/
-	public java.util.List<CPDefinitionAvailabilityRange> findByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator);
-
-	/**
-	* Returns an ordered range of all the cp definition availability ranges where groupId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionAvailabilityRangeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param start the lower bound of the range of cp definition availability ranges
-	* @param end the upper bound of the range of cp definition availability ranges (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching cp definition availability ranges
-	*/
-	public java.util.List<CPDefinitionAvailabilityRange> findByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator,
-		boolean retrieveFromCache);
-
-	/**
-	* Returns the first cp definition availability range in the ordered set where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching cp definition availability range
-	* @throws NoSuchCPDefinitionAvailabilityRangeException if a matching cp definition availability range could not be found
-	*/
-	public CPDefinitionAvailabilityRange findByGroupId_First(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator)
-		throws NoSuchCPDefinitionAvailabilityRangeException;
-
-	/**
-	* Returns the first cp definition availability range in the ordered set where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching cp definition availability range, or <code>null</code> if a matching cp definition availability range could not be found
-	*/
-	public CPDefinitionAvailabilityRange fetchByGroupId_First(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator);
-
-	/**
-	* Returns the last cp definition availability range in the ordered set where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching cp definition availability range
-	* @throws NoSuchCPDefinitionAvailabilityRangeException if a matching cp definition availability range could not be found
-	*/
-	public CPDefinitionAvailabilityRange findByGroupId_Last(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator)
-		throws NoSuchCPDefinitionAvailabilityRangeException;
-
-	/**
-	* Returns the last cp definition availability range in the ordered set where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching cp definition availability range, or <code>null</code> if a matching cp definition availability range could not be found
-	*/
-	public CPDefinitionAvailabilityRange fetchByGroupId_Last(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator);
-
-	/**
-	* Returns the cp definition availability ranges before and after the current cp definition availability range in the ordered set where groupId = &#63;.
-	*
-	* @param CPDefinitionAvailabilityRangeId the primary key of the current cp definition availability range
-	* @param groupId the group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next cp definition availability range
-	* @throws NoSuchCPDefinitionAvailabilityRangeException if a cp definition availability range with the primary key could not be found
-	*/
-	public CPDefinitionAvailabilityRange[] findByGroupId_PrevAndNext(
-		long CPDefinitionAvailabilityRangeId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator)
-		throws NoSuchCPDefinitionAvailabilityRangeException;
-
-	/**
-	* Removes all the cp definition availability ranges where groupId = &#63; from the database.
-	*
-	* @param groupId the group ID
-	*/
-	public void removeByGroupId(long groupId);
-
-	/**
-	* Returns the number of cp definition availability ranges where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @return the number of matching cp definition availability ranges
-	*/
-	public int countByGroupId(long groupId);
-
-	/**
 	* Returns the cp definition availability range where CPDefinitionId = &#63; or throws a {@link NoSuchCPDefinitionAvailabilityRangeException} if it could not be found.
 	*
 	* @param CPDefinitionId the cp definition ID
@@ -559,6 +426,145 @@ public interface CPDefinitionAvailabilityRangePersistence
 	* @return the number of matching cp definition availability ranges
 	*/
 	public int countByCPDefinitionId(long CPDefinitionId);
+
+	/**
+	* Returns all the cp definition availability ranges where commerceAvailabilityRangeId = &#63;.
+	*
+	* @param commerceAvailabilityRangeId the commerce availability range ID
+	* @return the matching cp definition availability ranges
+	*/
+	public java.util.List<CPDefinitionAvailabilityRange> findByCommerceAvailabilityRangeId(
+		long commerceAvailabilityRangeId);
+
+	/**
+	* Returns a range of all the cp definition availability ranges where commerceAvailabilityRangeId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionAvailabilityRangeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param commerceAvailabilityRangeId the commerce availability range ID
+	* @param start the lower bound of the range of cp definition availability ranges
+	* @param end the upper bound of the range of cp definition availability ranges (not inclusive)
+	* @return the range of matching cp definition availability ranges
+	*/
+	public java.util.List<CPDefinitionAvailabilityRange> findByCommerceAvailabilityRangeId(
+		long commerceAvailabilityRangeId, int start, int end);
+
+	/**
+	* Returns an ordered range of all the cp definition availability ranges where commerceAvailabilityRangeId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionAvailabilityRangeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param commerceAvailabilityRangeId the commerce availability range ID
+	* @param start the lower bound of the range of cp definition availability ranges
+	* @param end the upper bound of the range of cp definition availability ranges (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching cp definition availability ranges
+	*/
+	public java.util.List<CPDefinitionAvailabilityRange> findByCommerceAvailabilityRangeId(
+		long commerceAvailabilityRangeId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the cp definition availability ranges where commerceAvailabilityRangeId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionAvailabilityRangeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param commerceAvailabilityRangeId the commerce availability range ID
+	* @param start the lower bound of the range of cp definition availability ranges
+	* @param end the upper bound of the range of cp definition availability ranges (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching cp definition availability ranges
+	*/
+	public java.util.List<CPDefinitionAvailabilityRange> findByCommerceAvailabilityRangeId(
+		long commerceAvailabilityRangeId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first cp definition availability range in the ordered set where commerceAvailabilityRangeId = &#63;.
+	*
+	* @param commerceAvailabilityRangeId the commerce availability range ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp definition availability range
+	* @throws NoSuchCPDefinitionAvailabilityRangeException if a matching cp definition availability range could not be found
+	*/
+	public CPDefinitionAvailabilityRange findByCommerceAvailabilityRangeId_First(
+		long commerceAvailabilityRangeId,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator)
+		throws NoSuchCPDefinitionAvailabilityRangeException;
+
+	/**
+	* Returns the first cp definition availability range in the ordered set where commerceAvailabilityRangeId = &#63;.
+	*
+	* @param commerceAvailabilityRangeId the commerce availability range ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp definition availability range, or <code>null</code> if a matching cp definition availability range could not be found
+	*/
+	public CPDefinitionAvailabilityRange fetchByCommerceAvailabilityRangeId_First(
+		long commerceAvailabilityRangeId,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator);
+
+	/**
+	* Returns the last cp definition availability range in the ordered set where commerceAvailabilityRangeId = &#63;.
+	*
+	* @param commerceAvailabilityRangeId the commerce availability range ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp definition availability range
+	* @throws NoSuchCPDefinitionAvailabilityRangeException if a matching cp definition availability range could not be found
+	*/
+	public CPDefinitionAvailabilityRange findByCommerceAvailabilityRangeId_Last(
+		long commerceAvailabilityRangeId,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator)
+		throws NoSuchCPDefinitionAvailabilityRangeException;
+
+	/**
+	* Returns the last cp definition availability range in the ordered set where commerceAvailabilityRangeId = &#63;.
+	*
+	* @param commerceAvailabilityRangeId the commerce availability range ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp definition availability range, or <code>null</code> if a matching cp definition availability range could not be found
+	*/
+	public CPDefinitionAvailabilityRange fetchByCommerceAvailabilityRangeId_Last(
+		long commerceAvailabilityRangeId,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator);
+
+	/**
+	* Returns the cp definition availability ranges before and after the current cp definition availability range in the ordered set where commerceAvailabilityRangeId = &#63;.
+	*
+	* @param CPDefinitionAvailabilityRangeId the primary key of the current cp definition availability range
+	* @param commerceAvailabilityRangeId the commerce availability range ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next cp definition availability range
+	* @throws NoSuchCPDefinitionAvailabilityRangeException if a cp definition availability range with the primary key could not be found
+	*/
+	public CPDefinitionAvailabilityRange[] findByCommerceAvailabilityRangeId_PrevAndNext(
+		long CPDefinitionAvailabilityRangeId, long commerceAvailabilityRangeId,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionAvailabilityRange> orderByComparator)
+		throws NoSuchCPDefinitionAvailabilityRangeException;
+
+	/**
+	* Removes all the cp definition availability ranges where commerceAvailabilityRangeId = &#63; from the database.
+	*
+	* @param commerceAvailabilityRangeId the commerce availability range ID
+	*/
+	public void removeByCommerceAvailabilityRangeId(
+		long commerceAvailabilityRangeId);
+
+	/**
+	* Returns the number of cp definition availability ranges where commerceAvailabilityRangeId = &#63;.
+	*
+	* @param commerceAvailabilityRangeId the commerce availability range ID
+	* @return the number of matching cp definition availability ranges
+	*/
+	public int countByCommerceAvailabilityRangeId(
+		long commerceAvailabilityRangeId);
 
 	/**
 	* Caches the cp definition availability range in the entity cache if it is enabled.

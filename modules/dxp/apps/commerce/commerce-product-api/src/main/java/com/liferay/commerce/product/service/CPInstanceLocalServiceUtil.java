@@ -16,7 +16,8 @@ package com.liferay.commerce.product.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -102,6 +103,11 @@ public class CPInstanceLocalServiceUtil {
 	public static void checkCPInstances()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().checkCPInstances();
+	}
+
+	public static void checkCPInstancesByDisplayDate(long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().checkCPInstancesByDisplayDate(cpDefinitionId);
 	}
 
 	/**
@@ -519,6 +525,17 @@ public class CPInstanceLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CPInstanceLocalService, CPInstanceLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(CPInstanceLocalService.class);
+	private static ServiceTracker<CPInstanceLocalService, CPInstanceLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CPInstanceLocalService.class);
+
+		ServiceTracker<CPInstanceLocalService, CPInstanceLocalService> serviceTracker =
+			new ServiceTracker<CPInstanceLocalService, CPInstanceLocalService>(bundle.getBundleContext(),
+				CPInstanceLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

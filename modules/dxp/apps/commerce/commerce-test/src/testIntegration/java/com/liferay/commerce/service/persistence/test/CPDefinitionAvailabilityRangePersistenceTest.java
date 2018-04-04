@@ -207,17 +207,18 @@ public class CPDefinitionAvailabilityRangePersistenceTest {
 	}
 
 	@Test
-	public void testCountByGroupId() throws Exception {
-		_persistence.countByGroupId(RandomTestUtil.nextLong());
-
-		_persistence.countByGroupId(0L);
-	}
-
-	@Test
 	public void testCountByCPDefinitionId() throws Exception {
 		_persistence.countByCPDefinitionId(RandomTestUtil.nextLong());
 
 		_persistence.countByCPDefinitionId(0L);
+	}
+
+	@Test
+	public void testCountByCommerceAvailabilityRangeId()
+		throws Exception {
+		_persistence.countByCommerceAvailabilityRangeId(RandomTestUtil.nextLong());
+
+		_persistence.countByCommerceAvailabilityRangeId(0L);
 	}
 
 	@Test

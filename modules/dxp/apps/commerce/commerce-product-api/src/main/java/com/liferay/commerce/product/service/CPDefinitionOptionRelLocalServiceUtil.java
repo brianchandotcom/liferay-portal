@@ -16,7 +16,8 @@ package com.liferay.commerce.product.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -425,6 +426,17 @@ public class CPDefinitionOptionRelLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CPDefinitionOptionRelLocalService, CPDefinitionOptionRelLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(CPDefinitionOptionRelLocalService.class);
+	private static ServiceTracker<CPDefinitionOptionRelLocalService, CPDefinitionOptionRelLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CPDefinitionOptionRelLocalService.class);
+
+		ServiceTracker<CPDefinitionOptionRelLocalService, CPDefinitionOptionRelLocalService> serviceTracker =
+			new ServiceTracker<CPDefinitionOptionRelLocalService, CPDefinitionOptionRelLocalService>(bundle.getBundleContext(),
+				CPDefinitionOptionRelLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

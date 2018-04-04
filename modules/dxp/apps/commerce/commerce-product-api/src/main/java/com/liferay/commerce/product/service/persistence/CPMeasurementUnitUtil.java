@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -1254,6 +1255,17 @@ public class CPMeasurementUnitUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CPMeasurementUnitPersistence, CPMeasurementUnitPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(CPMeasurementUnitPersistence.class);
+	private static ServiceTracker<CPMeasurementUnitPersistence, CPMeasurementUnitPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CPMeasurementUnitPersistence.class);
+
+		ServiceTracker<CPMeasurementUnitPersistence, CPMeasurementUnitPersistence> serviceTracker =
+			new ServiceTracker<CPMeasurementUnitPersistence, CPMeasurementUnitPersistence>(bundle.getBundleContext(),
+				CPMeasurementUnitPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

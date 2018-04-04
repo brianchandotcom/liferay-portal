@@ -93,6 +93,9 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 
 	public void checkCPAttachmentFileEntries() throws PortalException;
 
+	public void checkCPAttachmentFileEntriesByDisplayDate(long classNameId,
+		long classPK) throws PortalException;
+
 	/**
 	* Creates a new cp attachment file entry with the primary key. Does not add the cp attachment file entry to the database.
 	*

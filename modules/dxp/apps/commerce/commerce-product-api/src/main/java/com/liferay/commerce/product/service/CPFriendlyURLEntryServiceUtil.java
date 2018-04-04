@@ -16,7 +16,8 @@ package com.liferay.commerce.product.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -55,6 +56,17 @@ public class CPFriendlyURLEntryServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CPFriendlyURLEntryService, CPFriendlyURLEntryService> _serviceTracker =
-		ServiceTrackerFactory.open(CPFriendlyURLEntryService.class);
+	private static ServiceTracker<CPFriendlyURLEntryService, CPFriendlyURLEntryService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CPFriendlyURLEntryService.class);
+
+		ServiceTracker<CPFriendlyURLEntryService, CPFriendlyURLEntryService> serviceTracker =
+			new ServiceTracker<CPFriendlyURLEntryService, CPFriendlyURLEntryService>(bundle.getBundleContext(),
+				CPFriendlyURLEntryService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

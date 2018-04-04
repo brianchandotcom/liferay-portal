@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.product.model.CPDefinitionLocalization;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -514,6 +515,17 @@ public class CPDefinitionLocalizationUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CPDefinitionLocalizationPersistence, CPDefinitionLocalizationPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(CPDefinitionLocalizationPersistence.class);
+	private static ServiceTracker<CPDefinitionLocalizationPersistence, CPDefinitionLocalizationPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CPDefinitionLocalizationPersistence.class);
+
+		ServiceTracker<CPDefinitionLocalizationPersistence, CPDefinitionLocalizationPersistence> serviceTracker =
+			new ServiceTracker<CPDefinitionLocalizationPersistence, CPDefinitionLocalizationPersistence>(bundle.getBundleContext(),
+				CPDefinitionLocalizationPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

@@ -106,6 +106,9 @@ public interface CPInstanceLocalService extends BaseLocalService,
 
 	public void checkCPInstances() throws PortalException;
 
+	public void checkCPInstancesByDisplayDate(long cpDefinitionId)
+		throws PortalException;
+
 	/**
 	* Creates a new cp instance with the primary key. Does not add the cp instance to the database.
 	*

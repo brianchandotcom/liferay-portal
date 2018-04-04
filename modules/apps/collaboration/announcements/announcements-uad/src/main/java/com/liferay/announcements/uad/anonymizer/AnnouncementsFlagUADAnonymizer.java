@@ -14,17 +14,16 @@
 
 package com.liferay.announcements.uad.anonymizer;
 
-import com.liferay.announcements.kernel.model.AnnouncementsEntry;
-import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService;
+import com.liferay.announcements.kernel.model.AnnouncementsFlag;
+import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.user.associated.data.anonymizer.DynamicQueryUADEntityAnonymizer;
-import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
+import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
+import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.util.UADAnonymizerHelper;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -35,50 +34,44 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_ENTRY,
-	service = UADEntityAnonymizer.class
+	property = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_FLAG,
+	service = UADAnonymizer.class
 )
-public class AnnouncementsEntryUADEntityAnonymizer
-	extends DynamicQueryUADEntityAnonymizer<AnnouncementsEntry> {
+public class AnnouncementsFlagUADAnonymizer
+	extends DynamicQueryUADAnonymizer<AnnouncementsFlag> {
 
 	@Override
-	public void autoAnonymize(
-			AnnouncementsEntry announcementsEntry, long userId)
+	public void autoAnonymize(AnnouncementsFlag announcementsFlag, long userId)
 		throws PortalException {
 
-		User anonymousUser = _uadAnonymizerHelper.getAnonymousUser();
+		announcementsFlag.setUserId(_uadAnonymizerHelper.getAnonymousUserId());
 
-		announcementsEntry.setUserId(anonymousUser.getUserId());
-		announcementsEntry.setUserName(anonymousUser.getFullName());
-
-		_announcementsEntryLocalService.updateAnnouncementsEntry(
-			announcementsEntry);
+		_announcementsFlagLocalService.updateAnnouncementsFlag(
+			announcementsFlag);
 	}
 
 	@Override
-	public void delete(AnnouncementsEntry announcementsEntry) {
-		_announcementsEntryLocalService.deleteAnnouncementsEntry(
-			announcementsEntry);
+	public void delete(AnnouncementsFlag announcementsFlag) {
+		_announcementsFlagLocalService.deleteFlag(announcementsFlag);
 	}
 
 	@Override
 	public List<String> getNonanonymizableFieldNames() {
-		return Arrays.asList("content", "title");
+		return Collections.emptyList();
 	}
 
 	@Override
 	protected ActionableDynamicQuery doGetActionableDynamicQuery() {
-		return _announcementsEntryLocalService.getActionableDynamicQuery();
+		return _announcementsFlagLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	protected String[] doGetUserIdFieldNames() {
-		return AnnouncementsUADConstants.
-			USER_ID_FIELD_NAMES_ANNOUNCEMENTS_ENTRY;
+		return AnnouncementsUADConstants.USER_ID_FIELD_NAMES_ANNOUNCEMENTS_FLAG;
 	}
 
 	@Reference
-	private AnnouncementsEntryLocalService _announcementsEntryLocalService;
+	private AnnouncementsFlagLocalService _announcementsFlagLocalService;
 
 	@Reference
 	private UADAnonymizerHelper _uadAnonymizerHelper;

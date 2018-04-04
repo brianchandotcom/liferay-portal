@@ -34,7 +34,11 @@ renderResponse.setTitle(LanguageUtil.get(request, "web-content"));
 	<portlet:param name="mvcPath" value="/copy_article.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= copyArticleURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<liferay-frontend:edit-form
+	action="<%= copyArticleURL %>"
+	method="post"
+	name="fm"
+>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="oldArticleId" type="hidden" value="<%= oldArticleId %>" />
@@ -43,8 +47,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "web-content"));
 	<liferay-ui:error exception="<%= ArticleIdException.class %>" message="please-enter-a-valid-id" />
 	<liferay-ui:error exception="<%= DuplicateArticleIdException.class %>" message="please-enter-a-unique-id" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
+	<liferay-frontend:fieldset-group>
+		<liferay-frontend:fieldset>
 			<aui:input name="id" type="resource" value="<%= oldArticleId %>" />
 
 			<c:choose>
@@ -58,12 +62,12 @@ renderResponse.setTitle(LanguageUtil.get(request, "web-content"));
 					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" bean="<%= null %>" cssClass="lfr-input-text-container" field="articleId" fieldParam="newArticleId" label="" model="<%= JournalArticle.class %>" name="newArticleId" value="<%= newArticleId %>" />
 				</c:otherwise>
 			</c:choose>
-		</aui:fieldset>
-	</aui:fieldset-group>
+		</liferay-frontend:fieldset>
+	</liferay-frontend:fieldset-group>
 
-	<aui:button-row>
+	<liferay-frontend:button-row>
 		<aui:button type="submit" value="copy" />
 
 		<aui:button href="<%= redirect %>" value="cancel" />
-	</aui:button-row>
-</aui:form>
+	</liferay-frontend:button-row>
+</liferay-frontend:edit-form>

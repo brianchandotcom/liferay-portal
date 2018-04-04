@@ -3570,7 +3570,9 @@ public class PortalImpl implements Portal {
 
 		String contextPath = getPathContext();
 
-		String requestURI = request.getRequestURI();
+		HttpServletRequest originalRequest = getOriginalServletRequest(request);
+
+		String requestURI = originalRequest.getRequestURI();
 
 		if (Validator.isNotNull(contextPath) &&
 			requestURI.contains(contextPath)) {

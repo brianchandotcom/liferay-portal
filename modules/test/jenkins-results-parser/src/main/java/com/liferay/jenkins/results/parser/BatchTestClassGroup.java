@@ -17,6 +17,7 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Matcher;
@@ -59,6 +60,26 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			new File(
 				this.gitWorkingDirectory.getWorkingDirectory(),
 				"test.properties"));
+	}
+
+	protected String getFirstPropertyValue(
+		Properties properties, List<String> propertyNames) {
+
+		for (String propertyName : propertyNames) {
+			if (propertyName == null) {
+				continue;
+			}
+
+			if (properties.containsKey(propertyName)) {
+				String propertyValue = properties.getProperty(propertyName);
+
+				if ((propertyValue != null) && !propertyValue.isEmpty()) {
+					return propertyValue;
+				}
+			}
+		}
+
+		return null;
 	}
 
 	protected String getWildcardPropertyName(

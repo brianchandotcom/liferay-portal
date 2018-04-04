@@ -1,7 +1,7 @@
-<definition component-name="portal-test-plugins">
+<definition component-name="portal-blade-template">
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Test Plugins" />
+	<property name="testray.main.component.name" value="Blade Template" />
 
 	<set-up>
 		<execute macro="TestCase#setUpPortalInstance" />
@@ -23,8 +23,9 @@
 		<execute macro="Page#tearDownCP" />
 	</tear-down>
 
-	<command name="DeployAngularTemplate" priority="4">
+	<command name="AngularTemplateSmoke" priority="4">
 		<property name="blade.templates" value="angular" />
+		<property name="test.name.skip.portal.instance" value="BladeNPMTemplates#AngularTemplateSmoke" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Templates Page" />
@@ -40,8 +41,9 @@
 		</execute>
 	</command>
 
-	<command name="DeployBillboardjsTemplate" priority="4">
+	<command name="BillboardjsTemplateSmoke" priority="4">
 		<property name="blade.templates" value="billboardjs" />
+		<property name="test.name.skip.portal.instance" value="BladeNPMTemplates#BillboardjsTemplateSmoke" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Templates Page" />
@@ -51,11 +53,17 @@
 			<var name="portletName" value="com.npm.billboardjs Portlet" />
 		</execute>
 
+		<execute macro="Portlet#viewPG">
+			<var name="portletBody" value="data1data2" />
+			<var name="portletName" value="com.npm.billboardjs Portlet" />
+		</execute>
+
 		<execute function="AssertElementPresent" locator1="BladeNPMTemplates#BILLBOARDJS_BODY" />
 	</command>
 
-	<command name="DeployIsomorphicTemplate" priority="4">
+	<command name="IsomorphicTemplateSmoke" priority="4">
 		<property name="blade.templates" value="isomorphic" />
+		<property name="test.name.skip.portal.instance" value="BladeNPMTemplates#IsomorphicTemplateSmoke" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Templates Page" />
@@ -71,8 +79,9 @@
 		</execute>
 	</command>
 
-	<command name="DeployJQueryTemplate" priority="4">
+	<command name="JQueryTemplateSmoke" priority="4">
 		<property name="blade.templates" value="jquery" />
+		<property name="test.name.skip.portal.instance" value="BladeNPMTemplates#JQueryTemplateSmoke" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Templates Page" />
@@ -88,8 +97,9 @@
 		</execute>
 	</command>
 
-	<command name="DeployMetaljsTemplate" priority="4">
+	<command name="MetaljsTemplateSmoke" priority="4">
 		<property name="blade.templates" value="metaljs" />
+		<property name="test.name.skip.portal.instance" value="BladeNPMTemplates#MetaljsTemplateSmoke" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Templates Page" />
@@ -105,8 +115,9 @@
 		</execute>
 	</command>
 
-	<command name="DeployReactTemplate" priority="4">
+	<command name="ReactTemplateSmoke" priority="4">
 		<property name="blade.templates" value="react" />
+		<property name="test.name.skip.portal.instance" value="BladeNPMTemplates#ReactTemplateSmoke" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Templates Page" />
@@ -122,8 +133,9 @@
 		</execute>
 	</command>
 
-	<command name="DeploySimpleTemplate" priority="4">
+	<command name="SimpleTemplateSmoke" priority="4">
 		<property name="blade.templates" value="simple" />
+		<property name="test.name.skip.portal.instance" value="BladeNPMTemplates#SimpleTemplateSmoke" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Templates Page" />
@@ -139,8 +151,9 @@
 		</execute>
 	</command>
 
-	<command name="DeployVuejsTemplate" priority="4">
+	<command name="VuejsTemplateSmoke" priority="4">
 		<property name="blade.templates" value="vuejs" />
+		<property name="test.name.skip.portal.instance" value="BladeNPMTemplates#VuejsTemplateSmoke" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Templates Page" />

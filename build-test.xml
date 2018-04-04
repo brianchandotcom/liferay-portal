@@ -4833,63 +4833,50 @@ go]]></replacevalue>
 	</target>
 
 	<target name="deploy-blade-templates">
-		<get-testcase-property property.name="blade.templates" />
-
 		<if>
-			<isset property="blade.templates" />
+			<equals arg1="${blade.templates}" arg2="simple" />
 			<then>
 				<if>
-					<not>
-						<equals arg1="${blade.templates}" arg2="simple" />
-					</not>
+					<available file="${project.dir}/modules/sdk/project-templates/project-templates-npm-portlet/com.npm.simple" type="dir" />
 					<then>
-						<if>
-							<available file="${project.dir}/modules/sdk/project-templates/project-templates-npm-${blade.templates}-portlet/com.npm.${blade.templates}" type="dir" />
-							<then>
-								<delete dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-${blade.templates}-portlet/com.npm.${blade.templates}" />
-							</then>
-						</if>
-
-						<execute dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-${blade.templates}-portlet">
-							mvn archetype:generate --batch-mode -DarchetypeArtifactId=com.liferay.project.templates.npm.${blade.templates}.portlet -DarchetypeGroupId=com.liferay -DarchetypeVersion=1.0.4 -Dauthor=liferay -DgroupId=com.test -DartifactId=com.npm.${blade.templates} -Dversion=1.0.0 -DclassName=Foo -Dpackage=com.test -DprojectType=standalone -DbuildType=maven -DliferayVersion=7.1 -DinteractiveMode=false
-						</execute>
-
-						<execute dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-${blade.templates}-portlet/com.npm.${blade.templates}">
-							mvn package
-						</execute>
-
-						<copy
-							file="${project.dir}/modules/sdk/project-templates/project-templates-npm-${blade.templates}-portlet/com.npm.${blade.templates}/target/com.npm.${blade.templates}-1.0.0.jar"
-							todir="${liferay.home}/deploy"
-						/>
+						<delete dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-portlet/com.npm.simple" />
 					</then>
 				</if>
 
-				<if>
-					<equals arg1="${blade.templates}" arg2="simple" />
-					<then>
-						<if>
-							<available file="${project.dir}/modules/sdk/project-templates/project-templates-npm-portlet/com.npm.simple" type="dir" />
-							<then>
-								<delete dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-portlet/com.npm.simple" />
-							</then>
-						</if>
+				<execute dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-portlet">
+					mvn archetype:generate --batch-mode -DarchetypeArtifactId=com.liferay.project.templates.npm.portlet -DarchetypeGroupId=com.liferay -DarchetypeVersion=1.0.4 -DartifactId=com.npm.simple -Dauthor=liferay -DbuildType=maven -DclassName=Foo -DgroupId=com.test -DinteractiveMode=false -DliferayVersion=7.1 -Dpackage=com.test -DprojectType=standalone -Dversion=1.0.0
+				</execute>
 
-						<execute dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-portlet">
-							mvn archetype:generate --batch-mode -DarchetypeArtifactId=com.liferay.project.templates.npm.portlet -DarchetypeGroupId=com.liferay -DarchetypeVersion=1.0.4 -Dauthor=liferay -DgroupId=com.test -DartifactId=com.npm.simple -Dversion=1.0.0 -DclassName=Foo -Dpackage=com.test -DprojectType=standalone -DbuildType=maven -DliferayVersion=7.1 -DinteractiveMode=false
-						</execute>
+				<execute dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-portlet/com.npm.simple">
+					mvn package
+				</execute>
 
-						<execute dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-portlet/com.npm.simple">
-							mvn package
-						</execute>
-
-						<copy
-							file="${project.dir}/modules/sdk/project-templates/project-templates-npm-portlet/com.npm.simple/target/com.npm.simple-1.0.0.jar"
-							todir="${liferay.home}/deploy"
-						/>
-					</then>
-				</if>
+				<copy
+					file="${project.dir}/modules/sdk/project-templates/project-templates-npm-portlet/com.npm.simple/target/com.npm.simple-1.0.0.jar"
+					todir="${liferay.home}/deploy"
+				/>
 			</then>
+			<else>
+				<if>
+					<available file="${project.dir}/modules/sdk/project-templates/project-templates-npm-${blade.templates}-portlet/com.npm.${blade.templates}" type="dir" />
+					<then>
+						<delete dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-${blade.templates}-portlet/com.npm.${blade.templates}" />
+					</then>
+				</if>
+
+				<execute dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-${blade.templates}-portlet">
+					mvn archetype:generate --batch-mode -DarchetypeArtifactId=com.liferay.project.templates.npm.${blade.templates}.portlet -DarchetypeGroupId=com.liferay -DarchetypeVersion=1.0.4 -DartifactId=com.npm.${blade.templates} -Dauthor=liferay -DbuildType=maven -DclassName=Foo -DgroupId=com.test -DinteractiveMode=false -DliferayVersion=7.1 -Dpackage=com.test -DprojectType=standalone -Dversion=1.0.0
+				</execute>
+
+				<execute dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-${blade.templates}-portlet/com.npm.${blade.templates}">
+					mvn package
+				</execute>
+
+				<copy
+					file="${project.dir}/modules/sdk/project-templates/project-templates-npm-${blade.templates}-portlet/com.npm.${blade.templates}/target/com.npm.${blade.templates}-1.0.0.jar"
+					todir="${liferay.home}/deploy"
+				/>
+			</else>
 		</if>
 	</target>
 

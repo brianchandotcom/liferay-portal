@@ -150,6 +150,44 @@ public class CPAttachmentFileEntryLocalServiceImpl
 	}
 
 	@Override
+	public void checkCPAttachmentFileEntriesByDisplayDate(
+			long classNameId, long classPK)
+		throws PortalException {
+
+		List<CPAttachmentFileEntry> cpAttachmentFileEntries = null;
+
+		if (classPK > 0) {
+			cpAttachmentFileEntries =
+				cpAttachmentFileEntryPersistence.findByC_C_LtD_S(
+					classNameId, classPK, new Date(),
+					WorkflowConstants.STATUS_SCHEDULED);
+		}
+		else {
+			cpAttachmentFileEntries =
+				cpAttachmentFileEntryPersistence.findByLtD_S(
+					new Date(), WorkflowConstants.STATUS_SCHEDULED);
+		}
+
+		for (CPAttachmentFileEntry cpAttachmentFileEntry :
+				cpAttachmentFileEntries) {
+
+			long userId = PortalUtil.getValidUserId(
+				cpAttachmentFileEntry.getCompanyId(),
+				cpAttachmentFileEntry.getUserId());
+
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setCommand(Constants.UPDATE);
+			serviceContext.setScopeGroupId(cpAttachmentFileEntry.getGroupId());
+
+			cpAttachmentFileEntryLocalService.updateStatus(
+				userId, cpAttachmentFileEntry.getCPAttachmentFileEntryId(),
+				WorkflowConstants.STATUS_APPROVED, serviceContext,
+				new HashMap<String, Serializable>());
+		}
+	}
+
+	@Override
 	public void deleteCPAttachmentFileEntries(String className, long classPK)
 		throws PortalException {
 
@@ -396,27 +434,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 	protected void checkCPAttachmentFileEntriesByDisplayDate()
 		throws PortalException {
 
-		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
-			cpAttachmentFileEntryPersistence.findByLtD_S(
-				new Date(), WorkflowConstants.STATUS_SCHEDULED);
-
-		for (CPAttachmentFileEntry cpAttachmentFileEntry :
-				cpAttachmentFileEntries) {
-
-			long userId = PortalUtil.getValidUserId(
-				cpAttachmentFileEntry.getCompanyId(),
-				cpAttachmentFileEntry.getUserId());
-
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setCommand(Constants.UPDATE);
-			serviceContext.setScopeGroupId(cpAttachmentFileEntry.getGroupId());
-
-			cpAttachmentFileEntryLocalService.updateStatus(
-				userId, cpAttachmentFileEntry.getCPAttachmentFileEntryId(),
-				WorkflowConstants.STATUS_APPROVED, serviceContext,
-				new HashMap<String, Serializable>());
-		}
+		checkCPAttachmentFileEntriesByDisplayDate(0, 0);
 	}
 
 	protected void checkCPAttachmentFileEntriesByExpirationDate()

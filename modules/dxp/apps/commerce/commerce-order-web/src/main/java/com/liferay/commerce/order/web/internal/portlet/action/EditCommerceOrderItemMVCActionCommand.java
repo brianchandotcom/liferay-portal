@@ -15,6 +15,7 @@
 package com.liferay.commerce.order.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
@@ -122,11 +123,20 @@ public class EditCommerceOrderItemMVCActionCommand
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemService.getCommerceOrderItem(commerceOrderItemId);
 
+		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
+
 		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
 		double price = ParamUtil.getDouble(actionRequest, "price");
 
-		_commerceOrderItemService.updateCommerceOrderItem(
-			commerceOrderItemId, quantity, commerceOrderItem.getJson(), price);
+		if (commerceOrder.isOpen()) {
+			_commerceOrderItemService.updateCommerceOrderItem(
+				commerceOrderItemId, quantity);
+		}
+		else {
+			_commerceOrderItemService.updateCommerceOrderItem(
+				commerceOrderItemId, quantity, commerceOrderItem.getJson(),
+				price);
+		}
 	}
 
 	@Reference

@@ -37,7 +37,9 @@ renderResponse.setTitle(commerceOrderItem.getTitle(locale));
 
 		<aui:input name="quantity" />
 
-		<aui:input name="price" suffix="<%= commerceCurrency.getCode() %>" />
+		<c:if test="<%= !commerceOrder.isOpen() %>">
+			<aui:input name="price" suffix="<%= commerceCurrency.getCode() %>" />
+		</c:if>
 	</div>
 
 	<aui:button-row>

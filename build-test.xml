@@ -1515,6 +1515,8 @@ logExceptionsOnly=B&quot;false&quot;</echo>
 
 	<macrodef name="prepare-gecko-driver">
 		<sequential>
+			<stop-gecko-driver />
+
 			<if>
 				<os family="mac" />
 				<then>
@@ -3894,6 +3896,24 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="stop-gecko-driver">
+		<sequential>
+			<if>
+				<os family="unix" />
+				<then>
+					<execute failonerror="false">
+						killall geckodriver
+					</execute>
+				</then>
+				<else>
+					<execute failonerror="false">
+						taskkill.exe /F /IM geckodriver.exe
+					</execute>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="stop-ie-driver">
 		<sequential>
 			<exec executable="taskkill.exe">
@@ -4488,6 +4508,13 @@ go]]></replacevalue>
 			<equals arg1="${browser.type}" arg2="edge" />
 			<then>
 				<stop-edge-driver />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${browser.type}" arg2="firefox" />
+			<then>
+				<stop-gecko-driver />
 			</then>
 		</if>
 

@@ -29,7 +29,10 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 	<portlet:param name="mvcRenderCommandName" value="/fragment/edit_fragment_collection" />
 </portlet:actionURL>
 
-<aui:form action="<%= editFragmentCollectionURL %>" cssClass="container-fluid-1280" name="fm">
+<liferay-frontend:edit-form
+	action="<%= editFragmentCollectionURL %>"
+	name="fm"
+>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="fragmentCollectionId" type="hidden" value="<%= fragmentDisplayContext.getFragmentCollectionId() %>" />
 
@@ -38,17 +41,17 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 
 	<aui:model-context bean="<%= fragmentDisplayContext.getFragmentCollection() %>" model="<%= FragmentCollection.class %>" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
+	<liferay-frontend:fieldset-group>
+		<liferay-frontend:fieldset>
 			<aui:input autoFocus="<%= true %>" label="name" name="name" placeholder="name" />
 
 			<aui:input name="description" placeholder="description" />
-		</aui:fieldset>
-	</aui:fieldset-group>
+		</liferay-frontend:fieldset>
+	</liferay-frontend:fieldset-group>
 
-	<aui:button-row>
+	<liferay-frontend:button-row>
 		<aui:button type="submit" />
 
 		<aui:button href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+	</liferay-frontend:button-row>
+</liferay-frontend:edit-form>

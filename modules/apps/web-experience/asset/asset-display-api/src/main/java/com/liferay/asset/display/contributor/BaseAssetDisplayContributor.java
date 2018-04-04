@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.model.ClassTypeField;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -37,7 +39,10 @@ public abstract class BaseAssetDisplayContributor<T>
 	implements AssetDisplayContributor {
 
 	@Override
-	public Set<AssetDisplayField> getAssetEntryFields(Locale locale) {
+	public Set<AssetDisplayField> getAssetEntryFields(
+			long classTypeId, Locale locale)
+		throws PortalException {
+
 		Set<AssetDisplayField> assetDisplayFields = new LinkedHashSet<>();
 
 		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
@@ -61,6 +66,17 @@ public abstract class BaseAssetDisplayContributor<T>
 				new AssetDisplayField(
 					assetEntryModelField,
 					LanguageUtil.get(resourceBundle, assetEntryModelField)));
+		}
+
+		// Fields for the class type
+
+		List<ClassTypeField> classTypeFields = getClassTypeFields(
+			classTypeId, locale);
+
+		for (ClassTypeField classTypeField : classTypeFields) {
+			assetDisplayFields.add(
+				new AssetDisplayField(
+					classTypeField.getName(), classTypeField.getLabel()));
 		}
 
 		return assetDisplayFields;

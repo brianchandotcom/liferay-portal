@@ -34,7 +34,9 @@ import java.util.Set;
  */
 public interface AssetDisplayContributor {
 
-	public Set<AssetDisplayField> getAssetEntryFields(Locale locale);
+	public Set<AssetDisplayField> getAssetEntryFields(
+			long classTypeId, Locale locale)
+		throws PortalException;
 
 	public String getClassName();
 

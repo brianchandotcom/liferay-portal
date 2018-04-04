@@ -178,7 +178,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
 			createDDMFormPagesTemplateContextFactory(
-				ddmForm, ddmFormLayout, ddmFormValues, false, false);
+				ddmForm, ddmFormLayout, ddmFormValues, false, false, false);
 
 		List<Object> pagesTemplateContext =
 			ddmFormPagesTemplateContextFactory.create();
@@ -244,7 +244,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
 			createDDMFormPagesTemplateContextFactory(
-				ddmForm, ddmFormLayout, null, false, true);
+				ddmForm, ddmFormLayout, null, false, true, false);
 
 		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
 
@@ -337,7 +337,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
 			createDDMFormPagesTemplateContextFactory(
-				ddmForm, ddmFormLayout, null, false, false);
+				ddmForm, ddmFormLayout, null, false, false, false);
 
 		List<Object> pagesTemplateContext =
 			ddmFormPagesTemplateContextFactory.create();
@@ -411,7 +411,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
 			createDDMFormPagesTemplateContextFactory(
-				ddmForm, ddmFormLayout, null, false, true);
+				ddmForm, ddmFormLayout, null, false, true, false);
 
 		List<Object> pagesTemplateContext =
 			ddmFormPagesTemplateContextFactory.create();
@@ -525,7 +525,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 			createDDMFormPagesTemplateContextFactory(
 				DDMForm ddmForm, DDMFormLayout ddmFormLayout,
 				DDMFormValues ddmFormValues, boolean ddmFormReadOnly,
-				boolean showRequiredFieldsWarning)
+				boolean showRequiredFieldsWarning, boolean viewMode)
 		throws Exception {
 
 		DDMFormRenderingContext ddmFormRenderingContext =
@@ -538,6 +538,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		ddmFormRenderingContext.setReadOnly(ddmFormReadOnly);
 		ddmFormRenderingContext.setShowRequiredFieldsWarning(
 			showRequiredFieldsWarning);
+		ddmFormRenderingContext.setViewMode(viewMode);
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
 			new DDMFormPagesTemplateContextFactory(

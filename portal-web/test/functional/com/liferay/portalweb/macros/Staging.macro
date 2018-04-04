@@ -40,7 +40,7 @@
 			<then>
 				<execute function="Check#checkHiddenToggleSwitch" locator1="SiteSettingsStaging#CONTENT_SELECT_ALL_CHECKBOX" />
 
-				<execute function="Check#checkHiddenToggleSwitch" locator1="SiteSettingsStaging#CONTENT_SELECT_ALL_CHECKBOX" />
+				<execute function="Uncheck#uncheckHiddenToggleSwitch" locator1="SiteSettingsStaging#CONTENT_SELECT_ALL_CHECKBOX" />
 			</then>
 			<elseif>
 				<isset var="contentName" />

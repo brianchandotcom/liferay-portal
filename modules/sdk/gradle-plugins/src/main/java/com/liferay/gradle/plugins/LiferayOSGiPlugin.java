@@ -86,6 +86,7 @@ import org.dm.gradle.plugins.bundle.BundleUtils;
 import org.dm.gradle.plugins.bundle.JarBuilder;
 
 import org.gradle.api.Action;
+import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -783,41 +784,24 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		Map<String, Object> bundleInstructions = _getBundleInstructions(
 			project);
 
+		IncludeResourceCompileIncludeInstruction
+			includeResourceCompileIncludeInstruction =
+				new IncludeResourceCompileIncludeInstruction(
+					compileIncludeConfiguration,
+					new Callable<Boolean>() {
+
+						@Override
+						public Boolean call() throws Exception {
+							return
+								liferayOSGiExtension.isExpandCompileInclude();
+						}
+
+					});
+
 		bundleInstructions.put(
 			Constants.INCLUDERESOURCE + "." +
 				compileIncludeConfiguration.getName(),
-			new Object() {
-
-				@Override
-				public String toString() {
-					boolean expandCompileInclude =
-						liferayOSGiExtension.isExpandCompileInclude();
-
-					StringBuilder sb = new StringBuilder();
-
-					for (File file : compileIncludeConfiguration) {
-						if (sb.length() > 0) {
-							sb.append(',');
-						}
-
-						if (expandCompileInclude) {
-							sb.append('@');
-						}
-						else {
-							sb.append("lib/=");
-						}
-
-						sb.append(file.getAbsolutePath());
-
-						if (!expandCompileInclude) {
-							sb.append(";lib:=true");
-						}
-					}
-
-					return sb.toString();
-				}
-
-			});
+			includeResourceCompileIncludeInstruction);
 
 		Map<String, String> bundleDefaultInstructions =
 			liferayOSGiExtension.getBundleDefaultInstructions();
@@ -1125,6 +1109,55 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 	private static final Logger _logger = Logging.getLogger(
 		LiferayOSGiPlugin.class);
+
+	private static class IncludeResourceCompileIncludeInstruction {
+
+		public IncludeResourceCompileIncludeInstruction(
+			Iterable<File> files, Callable<Boolean> expandCallable) {
+
+			_files = files;
+			_expandCallable = expandCallable;
+		}
+
+		@Override
+		public String toString() {
+			boolean expand = false;
+
+			try {
+				expand = _expandCallable.call();
+			}
+			catch (Exception e) {
+				throw new GradleException("Unable to get instruction", e);
+			}
+
+			StringBuilder sb = new StringBuilder();
+
+			for (File file : _files) {
+				if (sb.length() > 0) {
+					sb.append(',');
+				}
+
+				if (expand) {
+					sb.append('@');
+				}
+				else {
+					sb.append("lib/=");
+				}
+
+				sb.append(file.getAbsolutePath());
+
+				if (!expand) {
+					sb.append(";lib:=true");
+				}
+			}
+
+			return sb.toString();
+		}
+
+		private final Callable<Boolean> _expandCallable;
+		private final Iterable<File> _files;
+
+	}
 
 	private static class LiferayJarBuilder extends JarBuilder {
 

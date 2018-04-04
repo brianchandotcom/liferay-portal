@@ -814,9 +814,11 @@
 			<var name="key_menuItem" value="${menuItem}" />
 		</execute>
 
-		<execute function="Check" locator1="SitePages#LIST_GROUP_ITEM_CHECKBOX">
+		<execute function="Click#waitForMenuToggleJSClick" locator1="SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON">
 			<var name="key_pageName" value="${page}" />
 		</execute>
+
+		<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
 
 		<execute function="ClickNoError" locator1="Icon#DELETE" />
 
@@ -828,7 +830,7 @@
 				<condition function="IsVisible" locator1="Message#ERROR" />
 			</and>
 			<then>
-				<execute function="AssertTextEquals" locator1="Message#ERROR_3" value1="This page cannot be deleted and cannot have child pages because it is associated to a site template." />
+				<execute function="AssertTextEquals" locator1="Message#ERROR_4" value1="This page cannot be deleted and cannot have child pages because it is associated to a site template." />
 			</then>
 		</if>
 	</command>

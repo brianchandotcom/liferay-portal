@@ -135,7 +135,7 @@ if (ddlDisplayContext.isAdminPortlet()) {
 						}
 					%>
 
-						<aui:option label='<%= HtmlUtil.escape(workflowDefinition.getTitle(languageId)) + " (" + LanguageUtil.format(locale, "version-x", workflowDefinition.getVersion(), false) + ")" %>' selected="<%= selected %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />
+						<aui:option label="<%= HtmlUtil.escape(workflowDefinition.getTitle(languageId)) %>" selected="<%= selected %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />
 
 					<%
 					}

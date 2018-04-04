@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.product.service.impl;
 
-import com.liferay.commerce.product.exception.CPDefinitionIgnoreSKUCombinationsException;
 import com.liferay.commerce.product.exception.CPInstanceDDMContentException;
 import com.liferay.commerce.product.exception.CPInstanceDisplayDateException;
 import com.liferay.commerce.product.exception.CPInstanceExpirationDateException;
@@ -118,8 +117,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
-		validate(0, cpDefinitionId, ddmContent, serviceContext);
-
 		// Commerce product instance
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -140,6 +137,14 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 				expirationDateHour, expirationDateMinute, user.getTimeZone(),
 				CPInstanceExpirationDateException.class);
 		}
+
+		int status = WorkflowConstants.STATUS_APPROVED;
+
+		if ((displayDate != null) && now.before(displayDate)) {
+			status = WorkflowConstants.STATUS_SCHEDULED;
+		}
+
+		validate(0, cpDefinitionId, ddmContent, status, serviceContext);
 
 		long cpInstanceId = counterLocalService.increment();
 
@@ -294,6 +299,44 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	public void checkCPInstances() throws PortalException {
 		checkCPInstancesByDisplayDate();
 		checkCPInstancesByExpirationDate();
+	}
+
+	@Override
+	public void checkCPInstancesByDisplayDate(long cpDefinitionId)
+		throws PortalException {
+
+		List<CPInstance> cpInstances = null;
+
+		if (cpDefinitionId > 0) {
+			cpInstances = cpInstancePersistence.findByC_LtD_S(
+				cpDefinitionId, new Date(), WorkflowConstants.STATUS_SCHEDULED);
+		}
+		else {
+			cpInstances = cpInstancePersistence.findByLtD_S(
+				new Date(), WorkflowConstants.STATUS_SCHEDULED);
+		}
+
+		for (CPInstance cpInstance : cpInstances) {
+			long userId = PortalUtil.getValidUserId(
+				cpInstance.getCompanyId(), cpInstance.getUserId());
+
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setCommand(Constants.UPDATE);
+			serviceContext.setScopeGroupId(cpInstance.getGroupId());
+			serviceContext.setUserId(userId);
+			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+			cpInstanceLocalService.updateStatus(
+				userId, cpInstance.getCPInstanceId(),
+				WorkflowConstants.STATUS_APPROVED, serviceContext,
+				new HashMap<String, Serializable>());
+
+			validate(
+				cpInstance.getCPInstanceId(), cpInstance.getCPDefinitionId(),
+				cpInstance.getDDMContent(), cpInstance.getStatus(),
+				serviceContext);
+		}
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -542,7 +585,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		validate(
 			cpInstanceId, cpInstance.getCPDefinitionId(),
-			cpInstance.getDDMContent(), serviceContext);
+			cpInstance.getDDMContent(), cpInstance.getStatus(), serviceContext);
 
 		Date displayDate = null;
 		Date expirationDate = null;
@@ -809,23 +852,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	}
 
 	protected void checkCPInstancesByDisplayDate() throws PortalException {
-		List<CPInstance> cpInstances = cpInstancePersistence.findByLtD_S(
-			new Date(), WorkflowConstants.STATUS_SCHEDULED);
-
-		for (CPInstance cpInstance : cpInstances) {
-			long userId = PortalUtil.getValidUserId(
-				cpInstance.getCompanyId(), cpInstance.getUserId());
-
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setCommand(Constants.UPDATE);
-			serviceContext.setScopeGroupId(cpInstance.getGroupId());
-
-			cpInstanceLocalService.updateStatus(
-				userId, cpInstance.getCPInstanceId(),
-				WorkflowConstants.STATUS_APPROVED, serviceContext,
-				new HashMap<String, Serializable>());
-		}
+		checkCPInstancesByDisplayDate(0);
 	}
 
 	protected void checkCPInstancesByExpirationDate() throws PortalException {
@@ -912,7 +939,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 	protected void validate(
 			long cpInstanceId, long cpDefinitionId, String ddmContent,
-			ServiceContext serviceContext)
+			int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		int workflowAction = serviceContext.getWorkflowAction();
@@ -927,10 +954,16 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 				for (CPInstance cpInstance : cpInstances) {
 					if (cpInstance.getCPInstanceId() == cpInstanceId) {
-						return;
+						continue;
 					}
 
-					throw new CPDefinitionIgnoreSKUCombinationsException();
+					if (status == WorkflowConstants.STATUS_APPROVED) {
+						updateStatus(
+							serviceContext.getUserId(),
+							cpInstance.getCPInstanceId(),
+							WorkflowConstants.STATUS_EXPIRED, serviceContext,
+							new HashMap<String, Serializable>());
+					}
 				}
 			}
 			else {
@@ -947,10 +980,15 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 					}
 
 					if ((cpInstanceId <= 0) &&
+						(status == WorkflowConstants.STATUS_APPROVED) &&
 						DDMFormValuesUtil.equals(
 							ddmContent, cpInstance.getDDMContent())) {
 
-						throw new CPInstanceDDMContentException();
+						updateStatus(
+							serviceContext.getUserId(),
+							cpInstance.getCPInstanceId(),
+							WorkflowConstants.STATUS_EXPIRED, serviceContext,
+							new HashMap<String, Serializable>());
 					}
 				}
 

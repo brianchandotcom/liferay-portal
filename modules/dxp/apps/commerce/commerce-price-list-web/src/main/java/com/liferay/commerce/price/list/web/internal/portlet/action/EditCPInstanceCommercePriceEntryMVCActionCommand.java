@@ -122,6 +122,10 @@ public class EditCPInstanceCommercePriceEntryMVCActionCommand
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteCommercePriceEntries(actionRequest);
 			}
+			else if (cmd.equals(Constants.UPDATE)) {
+				updateCommercePriceEntry(actionRequest);
+			}
+
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchCPInstanceException ||
@@ -148,6 +152,25 @@ public class EditCPInstanceCommercePriceEntryMVCActionCommand
 				throw e;
 			}
 		}
+	}
+
+	protected CommercePriceEntry updateCommercePriceEntry(
+			ActionRequest actionRequest)
+		throws Exception {
+
+		long commercePriceEntryId = ParamUtil.getLong(
+			actionRequest, "commercePriceEntryId");
+
+		double price = ParamUtil.getDouble(actionRequest, "price");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CommercePriceEntry.class.getName(), actionRequest);
+
+		CommercePriceEntry commercePriceEntry =
+			_commercePriceEntryService.updateCommercePriceEntry(
+				commercePriceEntryId, price, serviceContext);
+
+		return commercePriceEntry;
 	}
 
 	@Reference

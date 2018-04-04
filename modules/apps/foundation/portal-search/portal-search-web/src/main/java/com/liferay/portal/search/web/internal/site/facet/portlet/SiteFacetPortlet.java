@@ -103,6 +103,11 @@ public class SiteFacetPortlet
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, siteFacetPortletDisplayContext);
 
+		if (siteFacetPortletDisplayContext.isRenderNothing()) {
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
+		}
+
 		super.render(renderRequest, renderResponse);
 	}
 

@@ -111,6 +111,11 @@ public class TypeFacetPortlet
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			assetEntriesSearchFacetDisplayContext);
 
+		if (assetEntriesSearchFacetDisplayContext.isRenderNothing()) {
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
+		}
+
 		super.render(renderRequest, renderResponse);
 	}
 

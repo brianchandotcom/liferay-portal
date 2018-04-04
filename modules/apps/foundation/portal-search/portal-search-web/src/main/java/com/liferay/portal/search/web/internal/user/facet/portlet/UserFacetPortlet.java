@@ -99,6 +99,11 @@ public class UserFacetPortlet
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, userSearchFacetDisplayContext);
 
+		if (userSearchFacetDisplayContext.isRenderNothing()) {
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
+		}
+
 		super.render(renderRequest, renderResponse);
 	}
 

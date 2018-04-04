@@ -63,4 +63,4 @@ else if (collapsible) {
 	</c:if>
 
 	<div aria-labelledby="<%= id %>Header" class="<%= !collapsed ? "in" : StringPool.BLANK %> <%= collapsible ? "panel-collapse collapse" : StringPool.BLANK %> <%= column ? "row" : StringPool.BLANK %>" id="<%= id %>Content" role="presentation">
-		<div class="panel-body">
+		<div class="<%= collapsible ? "panel-body" : StringPool.BLANK %>">

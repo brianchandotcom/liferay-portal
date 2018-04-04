@@ -37,8 +37,8 @@ public interface UADEntityDisplay<T> {
 
 	public Map<String, Object> getNonanonymizableFieldValues(T t);
 
-	public String getUADEntityTypeDescription();
+	public String getTypeDescription();
 
-	public String getUADEntityTypeName();
+	public String getTypeName();
 
 }

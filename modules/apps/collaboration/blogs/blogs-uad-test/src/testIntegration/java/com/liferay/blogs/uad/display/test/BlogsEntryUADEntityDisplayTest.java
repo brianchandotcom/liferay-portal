@@ -73,7 +73,7 @@ public class BlogsEntryUADEntityDisplayTest extends BaseUADEntityDisplayTestCase
 	}
 
 	@Override
-	protected String getUADEntityTypeDescription() {
+	protected String getTypeDescription() {
 		return "A blog post";
 	}
 

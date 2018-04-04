@@ -3,7 +3,7 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.blogs">
 	<namespace>Blogs</namespace>
-	<entity local-service="true" name="BlogsEntry" remote-service="true" trash-enabled="true" uad-entity-type-description="A blog post" uuid="true">
+	<entity local-service="true" name="BlogsEntry" remote-service="true" trash-enabled="true" uad-type-description="A blog post" uuid="true">
 
 		<!-- PK fields -->
 

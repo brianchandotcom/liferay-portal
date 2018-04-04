@@ -141,8 +141,7 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 					navigationItem.setHref(
 						tabPortletURL, "uadRegistryKey",
 						uadEntityDisplay.getKey());
-					navigationItem.setLabel(
-						uadEntityDisplay.getUADEntityTypeName());
+					navigationItem.setLabel(uadEntityDisplay.getTypeName());
 				});
 		}
 

@@ -66,11 +66,11 @@ public class BookmarksEntryUADEntityDisplay
 			getNonanonymizableFieldValues(bookmarksEntry);
 	}
 
-	public String getUADEntityTypeDescription() {
+	public String getTypeDescription() {
 		return "A link to another page or website";
 	}
 
-	public String getUADEntityTypeName() {
+	public String getTypeName() {
 		return "BookmarksEntry";
 	}
 

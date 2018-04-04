@@ -736,7 +736,15 @@
 	</command>
 
 	<command name="addViaDayView">
-		<execute macro="CalendarScheduler#gotoAddViaDayView" />
+		<if>
+			<isset var="eventBlock" />
+			<then>
+				<execute macro="CalendarScheduler#addViaDayViewDragAndDrop" />
+			</then>
+			<else>
+				<execute macro="CalendarScheduler#gotoAddViaDayView" />
+			</else>
+		</if>
 
 		<execute macro="CalendarScheduler#editTitle">
 			<var name="eventTitle" value="${eventTitle}" />

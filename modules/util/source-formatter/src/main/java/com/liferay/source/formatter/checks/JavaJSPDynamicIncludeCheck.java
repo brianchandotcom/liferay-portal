@@ -49,28 +49,30 @@ public class JavaJSPDynamicIncludeCheck extends BaseJavaTermCheck {
 			String fileContent)
 		throws Exception {
 
-		if (!absolutePath.endsWith("DynamicInclude.java")) {
+		String className = javaTerm.getName();
+
+		if (!className.endsWith("DynamicInclude")) {
 			return javaTerm.getContent();
 		}
 
-		Matcher matcher = _classNamePattern.matcher(fileContent);
+		JavaClass javaClass = (JavaClass)javaTerm;
 
-		if (matcher.matches()) {
-			String name = matcher.group(1);
+		List<String> extendedClassNames = javaClass.getExtendedClassNames();
 
-			if (!name.endsWith("JSPDynamicInclude")) {
-				String message = StringBundler.concat(
-					"Class '", name, "' should end with 'JSPDynamicInclude'");
+		if (extendedClassNames.contains("BaseJSPDynamicInclude") &&
+			!className.endsWith("JSPDynamicInclude")) {
 
-				addMessage(fileName, message);
-			}
+			addMessage(
+				fileName,
+				"Class '" + className +
+					"' should end with 'JSPDynamicInclude'");
 		}
 
-		if (!absolutePath.endsWith("JSPDynamicInclude.java")) {
+		if (!className.endsWith("JSPDynamicInclude")) {
 			return javaTerm.getContent();
 		}
 
-		String jspPath = _getJspPath((JavaClass)javaTerm);
+		String jspPath = _getJspPath(javaClass);
 
 		if (jspPath == null) {
 			return javaTerm.getContent();
@@ -135,9 +137,7 @@ public class JavaJSPDynamicIncludeCheck extends BaseJavaTermCheck {
 	}
 
 	private String _getJspPath(JavaClass javaClass) {
-		List<JavaTerm> childJavaTerms = javaClass.getChildJavaTerms();
-
-		for (JavaTerm childJavaTerm : childJavaTerms) {
+		for (JavaTerm childJavaTerm : javaClass.getChildJavaTerms()) {
 			if (!childJavaTerm.isJavaMethod()) {
 				continue;
 			}
@@ -172,9 +172,6 @@ public class JavaJSPDynamicIncludeCheck extends BaseJavaTermCheck {
 		return null;
 	}
 
-	private final Pattern _classNamePattern = Pattern.compile(
-		".*\\s+class\\s+(\\S+)\\s+extends\\s+BaseJSPDynamicInclude\\s+\\{.*",
-		Pattern.DOTALL);
 	private final Pattern _jspPathPattern = Pattern.compile(
 		".*\\s+return\\s+\"(\\S+)\";.*", Pattern.DOTALL);
 

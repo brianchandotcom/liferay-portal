@@ -14,35 +14,21 @@
 
 package com.liferay.configuration.admin.web.internal.display;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 /**
  * @author Jorge Ferrer
  */
-public class ConfigurationScopeDisplay {
+public interface ConfigurationEntry {
 
-	public ConfigurationScopeDisplay(String scope) {
-		_scope = scope;
-	}
+	public String getCategory();
 
-	public void add(ConfigurationEntry configurationEntry) {
-		_configurationEntries.add(configurationEntry);
-	}
+	public String getEditURL(
+		RenderRequest renderRequest, RenderResponse renderResponse);
 
-	public List<ConfigurationEntry> getConfigurationEntries() {
-		return _configurationEntries;
-	}
+	public String getName();
 
-	public String getScope() {
-		return _scope;
-	}
-
-	public boolean isEmpty() {
-		return _configurationEntries.isEmpty();
-	}
-
-	private List<ConfigurationEntry> _configurationEntries = new ArrayList<>();
-	private final String _scope;
+	public String getScope();
 
 }

@@ -20,6 +20,7 @@ import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.organization.order.web.internal.display.context.CommerceOrganizationOrderDisplayContext;
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.price.CommercePriceFormatter;
+import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
@@ -103,8 +104,8 @@ public class CommerceOrganizationOrderPortlet extends MVCPortlet {
 						_commerceOrganizationHelper,
 						_commercePriceCalculationLocalService,
 						_commercePriceFormatter,
-						_commerceShippingEngineRegistry, _jsonFactory,
-						_modelResourcePermission, renderRequest);
+						_commerceShippingEngineRegistry, _cpInstanceHelper,
+						_jsonFactory, _modelResourcePermission, renderRequest);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -147,6 +148,9 @@ public class CommerceOrganizationOrderPortlet extends MVCPortlet {
 
 	@Reference
 	private CommerceShippingEngineRegistry _commerceShippingEngineRegistry;
+
+	@Reference
+	private CPInstanceHelper _cpInstanceHelper;
 
 	@Reference
 	private JSONFactory _jsonFactory;

@@ -20,8 +20,8 @@ import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.user.associated.data.anonymizer.DynamicQueryUADEntityAnonymizer;
-import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
+import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
+import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.util.UADAnonymizerHelper;
 
 import java.util.Arrays;
@@ -36,10 +36,10 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = "model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY,
-	service = UADEntityAnonymizer.class
+	service = UADAnonymizer.class
 )
-public class BookmarksEntryUADEntityAnonymizer
-	extends DynamicQueryUADEntityAnonymizer<BookmarksEntry> {
+public class BookmarksEntryUADAnonymizer
+	extends DynamicQueryUADAnonymizer<BookmarksEntry> {
 
 	@Override
 	public void autoAnonymize(BookmarksEntry bookmarksEntry, long userId)

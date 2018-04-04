@@ -116,8 +116,8 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<c:if test="<%= workflowDefinition != null %>">
-		<div class="lfr-portal-workflow-sidenav">
-			<div class="sidebar sidebar-light">
+		<div class="lfr-portal-workflow-sidenav sidenav-menu-slider">
+			<div class="sidebar sidebar-light sidenav-menu">
 				<div class="sidebar-header">
 					<aui:icon cssClass="icon-monospaced sidenav-close text-default visible-xs-inline-block" image="times" markupView="lexicon" url="javascript:;" />
 

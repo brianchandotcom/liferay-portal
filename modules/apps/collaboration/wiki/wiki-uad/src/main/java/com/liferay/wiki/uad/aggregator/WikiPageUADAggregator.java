@@ -17,8 +17,8 @@ package com.liferay.wiki.uad.aggregator;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import com.liferay.user.associated.data.aggregator.DynamicQueryUADEntityAggregator;
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
+import com.liferay.user.associated.data.aggregator.DynamicQueryUADAggregator;
+import com.liferay.user.associated.data.aggregator.UADAggregator;
 
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalService;
@@ -36,8 +36,8 @@ import java.util.List;
  * @generated
  */
 @Component(immediate = true, property =  {
-	"model.class.name=" + WikiUADConstants.CLASS_NAME_WIKI_PAGE}, service = UADEntityAggregator.class)
-public class WikiPageUADEntityAggregator extends DynamicQueryUADEntityAggregator<WikiPage> {
+	"model.class.name=" + WikiUADConstants.CLASS_NAME_WIKI_PAGE}, service = UADAggregator.class)
+public class WikiPageUADAggregator extends DynamicQueryUADAggregator<WikiPage> {
 	@Override
 	public String getApplicationName() {
 		return WikiUADConstants.APPLICATION_NAME;

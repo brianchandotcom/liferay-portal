@@ -158,6 +158,23 @@ public class CommerceOrderItemServiceImpl
 
 	@Override
 	public CommerceOrderItem updateCommerceOrderItem(
+			long commerceOrderItemId, int quantity)
+		throws PortalException {
+
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemLocalService.getCommerceOrderItem(
+				commerceOrderItemId);
+
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderItem.getCommerceOrderId(),
+			ActionKeys.UPDATE);
+
+		return commerceOrderItemLocalService.updateCommerceOrderItem(
+			commerceOrderItemId, quantity);
+	}
+
+	@Override
+	public CommerceOrderItem updateCommerceOrderItem(
 			long commerceOrderItemId, int quantity, String json, double price)
 		throws PortalException {
 

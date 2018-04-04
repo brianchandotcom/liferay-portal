@@ -277,6 +277,22 @@ public class CommerceOrderItemLocalServiceImpl
 		return searchCommerceOrderItems(searchContext);
 	}
 
+	@Override
+	public CommerceOrderItem updateCommerceOrderItem(
+			long commerceOrderItemId, int quantity)
+		throws PortalException {
+
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
+
+		CPInstance cpInstance = commerceOrderItem.getCPInstance();
+
+		double price = cpInstance.getPrice() * quantity;
+
+		return updateCommerceOrderItem(
+			commerceOrderItemId, quantity, commerceOrderItem.getJson(), price);
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrderItem updateCommerceOrderItem(

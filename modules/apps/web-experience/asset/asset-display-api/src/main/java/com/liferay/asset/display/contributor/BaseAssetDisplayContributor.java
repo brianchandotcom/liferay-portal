@@ -40,10 +40,21 @@ public abstract class BaseAssetDisplayContributor<T>
 	public Set<AssetDisplayField> getAssetEntryFields(Locale locale) {
 		Set<AssetDisplayField> assetDisplayFields = new LinkedHashSet<>();
 
-		String[] assetEntryModelFields = getAssetEntryModelFields();
-
 		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
 			locale);
+
+		// Default fields for asset entry
+
+		for (String assetEntryModelField : _DEFAULT_ASSET_ENTRY_MODEL_FIELDS) {
+			assetDisplayFields.add(
+				new AssetDisplayField(
+					assetEntryModelField,
+					LanguageUtil.get(resourceBundle, assetEntryModelField)));
+		}
+
+		// Fields for the specific asset type
+
+		String[] assetEntryModelFields = getAssetEntryModelFields();
 
 		for (String assetEntryModelField : assetEntryModelFields) {
 			assetDisplayFields.add(
@@ -111,5 +122,10 @@ public abstract class BaseAssetDisplayContributor<T>
 
 		return parameterMap;
 	}
+
+	private static final String[] _DEFAULT_ASSET_ENTRY_MODEL_FIELDS = {
+		"categoryIds", "description", "publishDate", "summary", "tagNames",
+		"title"
+	};
 
 }

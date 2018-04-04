@@ -3196,6 +3196,13 @@ execution when on the `7.0.x` branch.
 - [LPS-74110]: Update the [Liferay Gradle Plugins Baseline] dependency to
 version 1.2.2.
 
+## 5.3.62 - 2018-04-04
+
+### Changed
+- [LPS-78741]: Update the [Liferay Gradle Plugins JSDoc] dependency to version
+2.0.5.
+- [LPS-79282]: Update the [Liferay Gradle Plugins] dependency to version 3.10.6.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public

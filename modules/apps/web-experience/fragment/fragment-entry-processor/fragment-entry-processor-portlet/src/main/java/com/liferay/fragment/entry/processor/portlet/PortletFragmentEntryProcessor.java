@@ -245,20 +245,26 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		menuElement.attr("id", "portlet-topper-toolbar_" + portletId);
 		menuElement.attr("type", "toolbar");
 
-		Element iconElement = new Element("@liferay_ui.icon");
+		Element buttonElement = new Element("button");
 
-		iconElement.attr("icon", "cog");
-		iconElement.attr("markupView", "lexicon");
-		iconElement.attr("url", "javascript:;");
+		buttonElement.attr("class", "btn btn-primary btn-sm");
+		buttonElement.attr("url", "javascript:;");
 
 		try {
-			iconElement.attr("onClick", _getConfigurationURL(portletId));
+			buttonElement.attr("onClick", _getConfigurationURL(portletId));
 		}
 		catch (Exception e) {
 			throw new PortalException(e);
 		}
 
-		menuElement.appendChild(iconElement);
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		HttpServletRequest request = serviceContext.getRequest();
+
+		buttonElement.text(LanguageUtil.get(request, "configure"));
+
+		menuElement.appendChild(buttonElement);
 
 		return menuElement;
 	}

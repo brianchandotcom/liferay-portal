@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -41,7 +40,6 @@ import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -49,7 +47,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.service.impl.GroupLocalServiceImpl;
 import com.liferay.portal.util.PortalInstances;
-import com.liferay.portal.util.RobotsUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -68,29 +65,9 @@ public class VerifyGroup extends VerifyProcess {
 		verifyCompanyGroups();
 		verifyNullFriendlyURLGroups();
 		verifyOrganizationNames();
-		verifyRobots();
 		verifySites();
 		verifyStagedGroups();
 		verifyTree();
-	}
-
-	protected String getRobots(LayoutSet layoutSet) {
-		if (layoutSet == null) {
-			return RobotsUtil.getDefaultRobots(null);
-		}
-
-		String virtualHostname = StringPool.BLANK;
-
-		try {
-			virtualHostname = layoutSet.getVirtualHostname();
-		}
-		catch (Exception e) {
-		}
-
-		return GetterUtil.get(
-			layoutSet.getSettingsProperty(
-				layoutSet.isPrivateLayout() + "-robots.txt"),
-			RobotsUtil.getDefaultRobots(virtualHostname));
 	}
 
 	protected void verifyCompanyGroups() throws Exception {
@@ -211,31 +188,6 @@ public class VerifyGroup extends VerifyProcess {
 				}
 
 				ps2.executeBatch();
-			}
-		}
-	}
-
-	protected void verifyRobots() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			List<Group> groups = GroupLocalServiceUtil.getLiveGroups();
-
-			for (Group group : groups) {
-				LayoutSet privateLayoutSet = group.getPrivateLayoutSet();
-				LayoutSet publicLayoutSet = group.getPublicLayoutSet();
-
-				String privateLayoutSetRobots = getRobots(privateLayoutSet);
-				String publicLayoutSetRobots = getRobots(publicLayoutSet);
-
-				UnicodeProperties typeSettingsProperties =
-					group.getTypeSettingsProperties();
-
-				typeSettingsProperties.setProperty(
-					"true-robots.txt", privateLayoutSetRobots);
-				typeSettingsProperties.setProperty(
-					"false-robots.txt", publicLayoutSetRobots);
-
-				GroupLocalServiceUtil.updateGroup(
-					group.getGroupId(), typeSettingsProperties.toString());
 			}
 		}
 	}

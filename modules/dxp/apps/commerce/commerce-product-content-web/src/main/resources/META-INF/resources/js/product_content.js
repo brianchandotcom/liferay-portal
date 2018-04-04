@@ -241,7 +241,7 @@ AUI.add(
 						var skus = productContent.all('[data-text-cp-instance-sku]');
 						var prices = productContent.all('[data-text-cp-instance-price]');
 						var availabilities = productContent.all('[data-text-cp-instance-availability]');
-						var availabilityRanges = productContent.all('[data-text-cp-instance-availability-ranges]');
+						var availabilityRanges = productContent.all('[data-text-cp-instance-availability-range]');
 						var stockQuantities = productContent.all('[data-text-cp-instance-stock-quantity]');
 						var gtins = productContent.all('[data-text-cp-instance-gtin]');
 						var manufacturerPartNumbers = productContent.all('[data-text-cp-instance-manufacturer-part-number]');

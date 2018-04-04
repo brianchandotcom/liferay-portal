@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.web.internal.facet.display.context.FolderSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.FolderSearchFacetTermDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.FolderTitleLookup;
@@ -36,20 +37,21 @@ import java.util.stream.Stream;
 public class FolderSearchFacetDisplayBuilder {
 
 	public FolderSearchFacetDisplayContext build() {
-		boolean nothingSelected = isNothingSelected();
-
 		List<TermCollector> termCollectors = getTermsCollectors();
 
-		boolean renderNothing = false;
+		List<FolderSearchFacetTermDisplayContext> termDisplayContexts =
+			buildTermDisplayContexts();
 
-		if (nothingSelected && termCollectors.isEmpty()) {
-			renderNothing = true;
-		}
+		boolean renderNothing = isRenderNothing(
+			termCollectors, termDisplayContexts);
 
 		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
 			new FolderSearchFacetDisplayContext();
 
+		boolean nothingSelected = isNothingSelected();
+
 		folderSearchFacetDisplayContext.setNothingSelected(nothingSelected);
+
 		folderSearchFacetDisplayContext.setParameterName(_parameterName);
 		folderSearchFacetDisplayContext.setParameterValue(
 			getFirstParameterValueString());
@@ -57,7 +59,7 @@ public class FolderSearchFacetDisplayBuilder {
 			getParameterValueStrings());
 		folderSearchFacetDisplayContext.setRenderNothing(renderNothing);
 		folderSearchFacetDisplayContext.setTermDisplayContexts(
-			buildTermDisplayContexts());
+			termDisplayContexts);
 
 		return folderSearchFacetDisplayContext;
 	}
@@ -242,6 +244,21 @@ public class FolderSearchFacetDisplayBuilder {
 
 	protected boolean isNothingSelected() {
 		if (_selectedFolderIds.isEmpty()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isRenderNothing(
+		List<TermCollector> termCollectors,
+		List<FolderSearchFacetTermDisplayContext> termDisplayContexts) {
+
+		if (isNothingSelected() && ListUtil.isEmpty(termCollectors)) {
+			return true;
+		}
+
+		if (ListUtil.isEmpty(termDisplayContexts)) {
 			return true;
 		}
 

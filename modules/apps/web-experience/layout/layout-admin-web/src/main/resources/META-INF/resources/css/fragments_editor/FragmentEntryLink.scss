@@ -29,10 +29,10 @@
 }
 
 .fragment-entry-link-control {
-	background-color: #F0F5FF;
+	background-color: #FFF4EC;
 	border-radius: 4px 4px 0 0;
 	bottom: 100%;
-	box-shadow: 0 0 0 1px #6FA0FF;
+	box-shadow: 0 0 0 1px #FF8F39;
 	left: 0;
 	opacity: 0;
 	padding: 0.5em 1em;
@@ -51,12 +51,17 @@
 .fragment-entry-link-wrapper:focus,
 .fragment-entry-link-wrapper:focus-within,
 .fragment-entry-link-wrapper:hover {
-	box-shadow: 0 0 0 1px #6FA0FF;
+	box-shadow: 0 0 0 1px #FF8F39;
 
 	& .fragment-entry-link-control {
+		color: #B95000;
 		opacity: 1;
 		pointer-events: all;
 		transform: translateY(0);
 		transition: transform ease 0.2s, opacity ease 0.3s;
+
+		svg {
+			fill: #B95000;
+		}
 	}
 }

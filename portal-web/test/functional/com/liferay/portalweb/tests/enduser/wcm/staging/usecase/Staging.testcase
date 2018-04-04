@@ -1238,7 +1238,7 @@
 		</execute>
 
 		<execute macro="Workflow#configureWorkflowViaFolderInfo">
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
 
 		<execute macro="Navigator#openSiteURL">

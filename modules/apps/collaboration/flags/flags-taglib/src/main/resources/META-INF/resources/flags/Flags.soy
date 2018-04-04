@@ -85,12 +85,12 @@
 	<span {$wrapperAttributes}>
 		{let $icon kind="html"}
 			<svg class="lexicon-icon">
-				<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#flag-full"></use>
+				<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#flag-empty"></use>
 			</svg>
 		{/let}
 
 		{if $enabled}
-			<button aria-label="{$message}" class="btn btn-link" data-onclick="_handleFlagButtonClick" type="button">
+			<button aria-label="{$message}" class="btn btn-outline-borderless btn-outline-secondary" data-onclick="_handleFlagButtonClick" type="button">
 				{$icon}
 			</button>
 		{else}

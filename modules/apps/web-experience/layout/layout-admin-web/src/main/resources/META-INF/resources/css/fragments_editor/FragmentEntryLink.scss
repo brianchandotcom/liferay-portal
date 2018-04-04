@@ -1,67 +1,100 @@
 @import "bourbon";
 @import "mixins";
 
+$borderRadius: 3px;
+$borderWidth: 1px;
+$focusedBorderWidth: 2px;
+$fragmentControlBackgroundColor: #FFF4EC;
+$fragmentControlColor: #B95000;
+$portletBorderColor: #89A7E0;
+$portletColor: #0B5FFF;
+$wrapperBorderColor: #FF8F39;
+
 .fragment-entry-link-wrapper {
-	box-shadow: 0 0 0 1px rgba(0, 0, 0, 0);
+	box-shadow: 0 0 0 $borderWidth fade_out($wrapperBorderColor, 1);
 	position: relative;
 	transition: box-shadow ease 0.3s;
 
 	.portlet {
+		> .portlet-topper {
+			background-color: rgba(255, 255, 255, 0.95);
+			border: $borderWidth solid $portletBorderColor;
+			border-radius: $borderRadius;
+			height: 100%;
+			min-height: 54px;
+			opacity: 0;
+			padding: 10px 20px 10px 10px;
+			pointer-events: none;
+			z-index: 1;
+
+			@include transform(translateY(0));
+		}
+
 		@include sm {
 			&:hover, &.focus {
 				> .portlet-topper {
-					background-color: rgba(255, 255, 255, 0.95);
-					border: 1px solid #89A7E0;
-					border-radius: 3px;
-					height: 100%;
-					min-height: 54px;
-					padding: 10px 20px 10px 10px;
-					z-index: 1;
+					opacity: 1;
+					pointer-events: all;
 
 					@include transform(translateY(0));
 				}
 			}
 		}
+
 		.portlet-title-default {
-			color: #0B5FFF;
+			color: $portletColor;
 		}
 	}
-}
 
-.fragment-entry-link-control {
-	background-color: #FFF4EC;
-	border-radius: 4px 4px 0 0;
-	bottom: 100%;
-	box-shadow: 0 0 0 1px #FF8F39;
-	left: 0;
-	opacity: 0;
-	padding: 0.5em 1em;
-	pointer-events: none;
-	position: absolute;
-	transform: translateY(100%);
-	transition: transform ease 0.6s, opacity ease 0.2s;
-	width: 100%;
-	z-index: 1;
+	.fragment-entry-link-control {
+		background-color: $fragmentControlBackgroundColor;
+		border-radius: $borderRadius $borderRadius 0 0;
+		bottom: 100%;
+		box-shadow: 0 0 0 $borderWidth $wrapperBorderColor;
+		color: $fragmentControlColor;
+		left: 0;
+		opacity: 0;
+		padding: 0.5em 1em;
+		pointer-events: none;
+		position: absolute;
+		transform: translateY(100%);
+		transition: box-shadow ease 0.3s, transform ease 0.6s, opacity ease 0.2s;
+		width: 100%;
+		z-index: 1;
 
-	&__fragment-name {
-		text-align: left;
+		&__fragment-name {
+			text-align: left;
+		}
+
+		.lexicon-icon {
+			fill: $fragmentControlColor;
+		}
+
+		.tbar-item {
+			margin: 0 0.5em;
+		}
 	}
 }
 
 .fragment-entry-link-wrapper:focus,
 .fragment-entry-link-wrapper:focus-within,
 .fragment-entry-link-wrapper:hover {
-	box-shadow: 0 0 0 1px #FF8F39;
+	box-shadow: 0 0 0 $borderWidth $wrapperBorderColor;
 
-	& .fragment-entry-link-control {
-		color: #B95000;
+	.fragment-entry-link-control {
 		opacity: 1;
 		pointer-events: all;
 		transform: translateY(0);
-		transition: transform ease 0.2s, opacity ease 0.3s;
+		transition: box-shadow ease 0.3s, transform ease 0.2s, opacity ease 0.3s;
+	}
+}
 
-		svg {
-			fill: #B95000;
-		}
+.fragment-entry-link-wrapper:focus,
+.fragment-entry-link-wrapper:focus-within {
+	box-shadow: 0 0 0 $focusedBorderWidth $wrapperBorderColor;
+	outline: none;
+
+	.fragment-entry-link-control {
+		box-shadow: 0 0 0 $focusedBorderWidth $wrapperBorderColor;
 	}
 }

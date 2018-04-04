@@ -53,8 +53,21 @@ public class CPDefinitionAvailabilityRangeLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCPDefinitionAvailabilityRanges(long groupId) {
-		cpDefinitionAvailabilityRangePersistence.removeByGroupId(groupId);
+	public void deleteCPDefinitionAvailabilityRanges(
+			long commerceAvailabilityRangeId)
+		throws PortalException {
+
+		cpDefinitionAvailabilityRangePersistence.
+			removeByCommerceAvailabilityRangeId(commerceAvailabilityRangeId);
+	}
+
+	@Override
+	public void deleteCPDefinitionAvailabilityRangesByCPDefinitionId(
+			long cpDefinitionId)
+		throws PortalException {
+
+		cpDefinitionAvailabilityRangePersistence.removeByCPDefinitionId(
+			cpDefinitionId);
 	}
 
 	@Override
@@ -90,7 +103,11 @@ public class CPDefinitionAvailabilityRangeLocalServiceImpl
 			fetchCPDefinitionAvailabilityRangeByCPDefinitionId(cpDefinitionId);
 
 		if (cpDefinitionAvailabilityRange != null) {
-			return cpDefinitionAvailabilityRange;
+			cpDefinitionAvailabilityRange.setCommerceAvailabilityRangeId(
+				commerceAvailabilityRangeId);
+
+			return cpDefinitionAvailabilityRangePersistence.update(
+				cpDefinitionAvailabilityRange);
 		}
 
 		return addCPDefinitionAvailabilityRange(

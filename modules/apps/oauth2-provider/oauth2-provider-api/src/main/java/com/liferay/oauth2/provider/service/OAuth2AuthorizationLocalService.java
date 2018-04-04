@@ -16,7 +16,9 @@ package com.liferay.oauth2.provider.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.oauth2.provider.exception.NoSuchOAuth2AuthorizationException;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
+import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -36,6 +38,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -60,6 +64,13 @@ public interface OAuth2AuthorizationLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuth2AuthorizationLocalServiceUtil} to access the o auth2 authorization local service. Add custom service methods to {@link com.liferay.oauth2.provider.service.impl.OAuth2AuthorizationLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public OAuth2Authorization addOAuth2Authorization(long companyId,
+		long userId, java.lang.String userName, long oAuth2ApplicationId,
+		long oAuth2ApplicationScopeAliasesId,
+		java.lang.String accessTokenContent, Date accessTokenCreateDate,
+		Date accessTokenExpirationDate, java.lang.String remoteIPInfo,
+		java.lang.String refreshTokenContent, Date refreshTokenCreateDate,
+		Date refreshTokenExpirationDate);
 
 	/**
 	* Adds the o auth2 authorization to the database. Also notifies the appropriate model listeners.
@@ -199,6 +210,14 @@ public interface OAuth2AuthorizationLocalService extends BaseLocalService,
 		long oAuth2AuthorizationId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuth2Authorization fetchOAuth2AuthorizationByAccessTokenContent(
+		java.lang.String accessTokenContent);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuth2Authorization fetchOAuth2AuthorizationByRefreshTokenContent(
+		java.lang.String refreshTokenContent);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -215,6 +234,16 @@ public interface OAuth2AuthorizationLocalService extends BaseLocalService,
 	public OAuth2Authorization getOAuth2Authorization(
 		long oAuth2AuthorizationId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuth2Authorization getOAuth2AuthorizationByAccessTokenContent(
+		java.lang.String accessTokenContent)
+		throws NoSuchOAuth2AuthorizationException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuth2Authorization getOAuth2AuthorizationByRefreshTokenContent(
+		java.lang.String refreshTokenContent)
+		throws NoSuchOAuth2AuthorizationException;
+
 	/**
 	* Returns a range of all the o auth2 authorizations.
 	*
@@ -229,6 +258,11 @@ public interface OAuth2AuthorizationLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<OAuth2Authorization> getOAuth2Authorizations(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<OAuth2Authorization> getOAuth2Authorizations(
+		long applicationId, int start, int end,
+		OrderByComparator<OAuth2Authorization> orderByComparator);
+
 	/**
 	* Returns the number of o auth2 authorizations.
 	*
@@ -236,6 +270,9 @@ public interface OAuth2AuthorizationLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getOAuth2AuthorizationsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getOAuth2AuthorizationsCount(long applicationId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<OAuth2Authorization> getOAuth2ScopeGrantOAuth2Authorizations(
@@ -263,6 +300,10 @@ public interface OAuth2AuthorizationLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long[] getOAuth2ScopeGrantPrimaryKeys(long oAuth2AuthorizationId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Collection<OAuth2ScopeGrant> getOAuth2ScopeGrants(
+		long oAuth2AuthorizationId);
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -274,6 +315,14 @@ public interface OAuth2AuthorizationLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<OAuth2Authorization> getUserOAuth2Authorizations(long userId,
+		int start, int end,
+		OrderByComparator<OAuth2Authorization> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserOAuth2AuthorizationsCount(long userId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasOAuth2ScopeGrantOAuth2Authorization(

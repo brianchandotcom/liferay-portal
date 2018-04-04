@@ -60,6 +60,10 @@ public interface OAuth2ApplicationScopeAliasesLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuth2ApplicationScopeAliasesLocalServiceUtil} to access the o auth2 application scope aliases local service. Add custom service methods to {@link com.liferay.oauth2.provider.service.impl.OAuth2ApplicationScopeAliasesLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public OAuth2ApplicationScopeAliases addOAuth2ApplicationScopeAliases(
+		long companyId, long userId, java.lang.String userName,
+		long oAuth2ApplicationId, List<java.lang.String> scopeAliasesList)
+		throws PortalException;
 
 	/**
 	* Adds the o auth2 application scope aliases to the database. Also notifies the appropriate model listeners.
@@ -172,6 +176,10 @@ public interface OAuth2ApplicationScopeAliasesLocalService
 		long oAuth2ApplicationScopeAliasesId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuth2ApplicationScopeAliases fetchOAuth2ApplicationScopeAliases(
+		long oAuth2ApplicationId, List<java.lang.String> scopeAliasesList);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -202,6 +210,11 @@ public interface OAuth2ApplicationScopeAliasesLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<OAuth2ApplicationScopeAliases> getOAuth2ApplicationScopeAliaseses(
 		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<OAuth2ApplicationScopeAliases> getOAuth2ApplicationScopeAliaseses(
+		long oAuth2ApplicationId, int start, int end,
+		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator);
 
 	/**
 	* Returns the number of o auth2 application scope aliaseses.

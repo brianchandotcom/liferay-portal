@@ -155,11 +155,9 @@ class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 			}
 
 			_computedValues.put(name, soyValue);
-
-			return soyValue;
 		}
 
-		return NullData.INSTANCE;
+		return soyValue;
 	}
 
 	@Override

@@ -75,7 +75,7 @@ public class FolderSearchFacetDisplayBuilderTest {
 	}
 
 	@Test
-	public void testEmptySearchResultsWithNullTermCollector() {
+	public void testEmptySearchResultsWithUnmatchedTermCollector() {
 		Mockito.when(
 			_facetCollector.getTermCollectors()
 		).thenReturn(

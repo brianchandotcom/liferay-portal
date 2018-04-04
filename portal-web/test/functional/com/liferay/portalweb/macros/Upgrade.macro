@@ -17,10 +17,6 @@
 		</for>
 
 		<execute function="AssertConsoleTextNotPresent" value1="DB2 SQL Error:" />
-		<execute function="AssertConsoleTextNotPresent" value1="SQLCODE=" />
-		<execute function="AssertConsoleTextNotPresent" value1="SQLSTATE=" />
-		<execute function="AssertConsoleTextNotPresent" value1="SQLERRMC=" />
-		<execute function="AssertConsoleTextNotPresent" value1="DRIVER=4.8.87" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
@@ -54,10 +50,6 @@
 		</execute>
 
 		<execute function="AssertConsoleTextNotPresent" value1="DB2 SQL Error:" />
-		<execute function="AssertConsoleTextNotPresent" value1="SQLCODE=" />
-		<execute function="AssertConsoleTextNotPresent" value1="SQLSTATE=" />
-		<execute function="AssertConsoleTextNotPresent" value1="SQLERRMC=" />
-		<execute function="AssertConsoleTextNotPresent" value1="DRIVER=4.8.87" />
 	</command>
 
 	<command name="addForm">

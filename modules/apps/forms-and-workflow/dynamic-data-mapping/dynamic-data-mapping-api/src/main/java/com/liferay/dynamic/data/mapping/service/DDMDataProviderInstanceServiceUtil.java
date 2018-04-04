@@ -84,6 +84,17 @@ public class DDMDataProviderInstanceServiceUtil {
 		return getService().getDataProviderInstanceByUuid(uuid);
 	}
 
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> getDataProviderInstances(
+		long companyId, long[] groupIds, int start, int end) {
+		return getService()
+				   .getDataProviderInstances(companyId, groupIds, start, end);
+	}
+
+	public static int getDataProviderInstancesCount(long companyId,
+		long[] groupIds) {
+		return getService().getDataProviderInstancesCount(companyId, groupIds);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

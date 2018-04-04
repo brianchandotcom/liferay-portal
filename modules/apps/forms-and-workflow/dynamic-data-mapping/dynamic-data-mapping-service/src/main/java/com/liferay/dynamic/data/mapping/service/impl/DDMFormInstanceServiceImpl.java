@@ -92,8 +92,16 @@ public class DDMFormInstanceServiceImpl extends DDMFormInstanceServiceBaseImpl {
 	}
 
 	@Override
-	public List<DDMFormInstance> getFormInstances(long[] groupIds) {
-		return ddmFormInstancePersistence.findByGroupId(groupIds);
+	public List<DDMFormInstance> getFormInstances(
+		long companyId, long groupId, int start, int end) {
+
+		return ddmFormInstanceFinder.filterFindByC_G(
+			companyId, groupId, start, end);
+	}
+
+	@Override
+	public int getFormInstancesCount(long companyId, long groupId) {
+		return ddmFormInstanceFinder.filterCountByC_G(companyId, groupId);
 	}
 
 	@Override

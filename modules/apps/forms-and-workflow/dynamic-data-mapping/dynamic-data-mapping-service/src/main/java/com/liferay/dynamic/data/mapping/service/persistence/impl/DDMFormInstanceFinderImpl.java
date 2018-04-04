@@ -67,6 +67,11 @@ public class DDMFormInstanceFinderImpl
 	}
 
 	@Override
+	public int filterCountByC_G(long companyId, long groupId) {
+		return filterCountByKeywords(companyId, groupId, null);
+	}
+
+	@Override
 	public int filterCountByC_G_N_D(
 		long companyId, long groupId, String[] names, String[] descriptions,
 		boolean andOperator) {
@@ -95,6 +100,13 @@ public class DDMFormInstanceFinderImpl
 		return filterFindByC_G_N_D(
 			companyId, groupId, names, descriptions, andOperator, start, end,
 			orderByComparator);
+	}
+
+	@Override
+	public List<DDMFormInstance> filterFindByC_G(
+		long companyId, long groupId, int start, int end) {
+
+		return filterFindByKeywords(companyId, groupId, null, start, end, null);
 	}
 
 	@Override

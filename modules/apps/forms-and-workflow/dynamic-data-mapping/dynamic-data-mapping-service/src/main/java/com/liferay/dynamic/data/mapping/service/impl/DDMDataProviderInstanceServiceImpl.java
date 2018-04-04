@@ -130,6 +130,20 @@ public class DDMDataProviderInstanceServiceImpl
 	}
 
 	@Override
+	public List<DDMDataProviderInstance> getDataProviderInstances(
+		long companyId, long[] groupIds, int start, int end) {
+
+		return ddmDataProviderInstanceFinder.filterByC_G(
+			companyId, groupIds, start, end);
+	}
+
+	@Override
+	public int getDataProviderInstancesCount(long companyId, long[] groupIds) {
+		return ddmDataProviderInstanceFinder.filterCountByC_G(
+			companyId, groupIds);
+	}
+
+	@Override
 	public List<DDMDataProviderInstance> search(
 		long companyId, long[] groupIds, String keywords, int start, int end,
 		OrderByComparator<DDMDataProviderInstance> orderByComparator) {

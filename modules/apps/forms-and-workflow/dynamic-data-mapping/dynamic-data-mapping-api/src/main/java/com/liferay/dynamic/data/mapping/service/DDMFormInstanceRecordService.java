@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
@@ -70,6 +71,16 @@ public interface DDMFormInstanceRecordService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMFormInstanceRecord> getFormInstanceRecords(
 		long ddmFormInstanceId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDMFormInstanceRecord> getFormInstanceRecords(
+		long ddmFormInstanceId, int status, int start, int end,
+		OrderByComparator<DDMFormInstanceRecord> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFormInstanceRecordsCount(long ddmFormInstanceId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

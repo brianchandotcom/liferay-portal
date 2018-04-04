@@ -20,6 +20,6 @@
 BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 %>
 
-<aui:script require="blogs-analytics@1.0.0/js/track_blogs_entry.es as trackBlogsEntry">
+<aui:script require="blogs-analytics@1.0.0/js/track-blogs-entry.es as trackBlogsEntry">
 	trackBlogsEntry.default('<%= entry.getEntryId() %>', '<portlet:namespace /><%= entry.getEntryId() %>');
 </aui:script>

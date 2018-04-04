@@ -115,12 +115,7 @@ CommerceOrganizationOrderDisplayContext commerceOrganizationOrderDisplayContext 
 			</liferay-ui:search-container>
 		</aui:form>
 
-		<div class="hide" id="<portlet:namespace />transitionComments">
-			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-			<aui:input name="<%= Constants.CMD %>" type="hidden" value="transition" />
-
-			<aui:input cols="55" name="comment" placeholder="comment" rows="1" type="textarea" />
-		</div>
+		<%@ include file="/transition.jspf" %>
 
 		<aui:script>
 			Liferay.provide(

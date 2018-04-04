@@ -25,6 +25,8 @@ public class ConfigurationAdminWebKeys {
 	public static final String CONFIGURATION_CATEGORY_SECTION_DISPLAYS =
 		"CONFIGURATION_CATEGORY_SECTION_DISPLAYS";
 
+	public static final String CONFIGURATION_ENTRY = "CONFIGURATION_ENTRY";
+
 	public static final String CONFIGURATION_MODEL = "CONFIGURATION_MODEL";
 
 	public static final String CONFIGURATION_MODEL_FORM_HTML =

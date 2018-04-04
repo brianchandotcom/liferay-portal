@@ -29,6 +29,7 @@ import com.liferay.commerce.organization.order.web.internal.search.CommerceOrder
 import com.liferay.commerce.organization.order.web.internal.search.CommerceOrderSearch;
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.price.CommercePriceFormatter;
+import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.search.facet.NegatableSimpleFacet;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderItemService;
@@ -78,20 +79,18 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
+import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
 import java.text.Format;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.function.Function;
-
-import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Andrea Di Giorgi
@@ -110,7 +109,7 @@ public class CommerceOrganizationOrderDisplayContext {
 				commercePriceCalculationLocalService,
 			CommercePriceFormatter commercePriceFormatter,
 			CommerceShippingEngineRegistry commerceShippingEngineRegistry,
-			JSONFactory jsonFactory,
+			CPInstanceHelper cpInstanceHelper, JSONFactory jsonFactory,
 			ModelResourcePermission<CommerceOrder> modelResourcePermission,
 			RenderRequest renderRequest)
 		throws PortalException {
@@ -125,6 +124,7 @@ public class CommerceOrganizationOrderDisplayContext {
 			commercePriceCalculationLocalService;
 		_commercePriceFormatter = commercePriceFormatter;
 		_commerceShippingEngineRegistry = commerceShippingEngineRegistry;
+		_cpInstanceHelper = cpInstanceHelper;
 		_jsonFactory = jsonFactory;
 		_modelResourcePermission = modelResourcePermission;
 
@@ -443,6 +443,12 @@ public class CommerceOrganizationOrderDisplayContext {
 
 		return _commercePriceFormatter.format(
 			commerceOrder.getSiteGroupId(), value);
+	}
+
+	public List<KeyValuePair> getKeyValuePairs(String json, Locale locale)
+		throws PortalException {
+
+		return _cpInstanceHelper.getKeyValuePairs(json, locale);
 	}
 
 	public List<NavigationItem> getNavigationItems() {
@@ -852,6 +858,7 @@ public class CommerceOrganizationOrderDisplayContext {
 	private final CommercePriceFormatter _commercePriceFormatter;
 	private final CommerceShippingEngineRegistry
 		_commerceShippingEngineRegistry;
+	private final CPInstanceHelper _cpInstanceHelper;
 	private final CommerceOrder _currentCommerceOrder;
 	private final JSONFactory _jsonFactory;
 	private final String _keywords;

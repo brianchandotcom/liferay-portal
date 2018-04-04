@@ -277,6 +277,13 @@ gradle.taskGraph.useFilter {
 			return false
 		}
 	}
+	else if (task.name == "deploy") {
+		String deployOnlyProfile = System.properties["deploy.only.profile"]
+
+		if (deployOnlyProfile && !FileUtil.exists(task.project, ".lfrbuild-${deployOnlyProfile}")) {
+			return false
+		}
+	}
 	else if (task.name == "test") {
 		if (!_hasTestClasses(task.project, "src/test/java")) {
 			return false

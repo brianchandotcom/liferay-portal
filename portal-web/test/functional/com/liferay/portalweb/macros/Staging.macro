@@ -468,7 +468,7 @@
 	<command name="deleteSitePagesVariationPG">
 		<execute macro="Staging#navigateToSitePageVariation" />
 
-		<execute macro="LexiconEntry#gotoEntryMenuItemNoError">
+		<execute macro="LexiconEntry#gotoEntryMenuItemNoWaitNoError">
 			<var name="menuItem" value="Delete" />
 			<var name="rowEntry" value="${sitePagesVariationName}" />
 		</execute>
@@ -609,7 +609,7 @@
 
 		<execute macro="Staging#navigateToSitePageVariation" />
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
+		<execute macro="LexiconEntry#gotoEntryMenuItemNoWait">
 			<var name="menuItem" value="Merge" />
 			<var name="rowEntry" value="${sitePagesVariationName}" />
 		</execute>

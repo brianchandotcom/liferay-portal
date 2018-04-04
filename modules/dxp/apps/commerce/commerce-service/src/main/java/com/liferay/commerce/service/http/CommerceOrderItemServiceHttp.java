@@ -353,13 +353,46 @@ public class CommerceOrderItemServiceHttp {
 	}
 
 	public static com.liferay.commerce.model.CommerceOrderItem updateCommerceOrderItem(
+		HttpPrincipal httpPrincipal, long commerceOrderItemId, int quantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceOrderItemServiceUtil.class,
+					"updateCommerceOrderItem",
+					_updateCommerceOrderItemParameterTypes9);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceOrderItemId, quantity);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.model.CommerceOrderItem)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderItem updateCommerceOrderItem(
 		HttpPrincipal httpPrincipal, long commerceOrderItemId, int quantity,
 		java.lang.String json, double price)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrderItemServiceUtil.class,
 					"updateCommerceOrderItem",
-					_updateCommerceOrderItemParameterTypes9);
+					_updateCommerceOrderItemParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceOrderItemId, quantity, json, price);
@@ -419,6 +452,9 @@ public class CommerceOrderItemServiceHttp {
 			com.liferay.portal.kernel.search.Sort.class
 		};
 	private static final Class<?>[] _updateCommerceOrderItemParameterTypes9 = new Class[] {
+			long.class, int.class
+		};
+	private static final Class<?>[] _updateCommerceOrderItemParameterTypes10 = new Class[] {
 			long.class, int.class, java.lang.String.class, double.class
 		};
 }

@@ -365,6 +365,14 @@ public class CommerceOrderItemLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceOrderItem updateCommerceOrderItem(
+		long commerceOrderItemId, int quantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderItemLocalService.updateCommerceOrderItem(commerceOrderItemId,
+			quantity);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrderItem updateCommerceOrderItem(
 		long commerceOrderItemId, int quantity, java.lang.String json,
 		double price)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -634,6 +634,24 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		return ddmFormEvaluator;
 	}
 
+	protected Map<String, Object> getField1Column1Row1(List<Object> pages) {
+		Map<String, Object> page1 = (Map<String, Object>)pages.get(0);
+
+		List<Object> rows = (List<Object>)page1.get("rows");
+
+		Map<String, Object> row1 = (Map<String, Object>)rows.get(0);
+
+		List<Object> columnsRow1 = (List<Object>)row1.get("columns");
+
+		Map<String, Object> column1Row1 = (Map<String, Object>)columnsRow1.get(
+			0);
+
+		List<Object> fieldsColumn1Row1 = (List<Object>)column1Row1.get(
+			"fields");
+
+		return (Map<String, Object>)fieldsColumn1Row1.get(0);
+	}
+
 	protected void mockDDMFormFieldTypeServicesTracker(
 		String type,
 		DDMFormFieldTemplateContextContributor

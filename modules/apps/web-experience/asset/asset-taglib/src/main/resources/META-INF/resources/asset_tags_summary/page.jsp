@@ -47,7 +47,7 @@ if (assetTagNames.length == 0) {
 					portletURL.setParameter(paramName, assetTagNames[i]);
 				%>
 
-					<a class="badge badge-default badge-sm" href="<%= HtmlUtil.escape(portletURL.toString()) %>"><%= assetTagNames[i] %></a>
+					<a class="label label-lg label-secondary" href="<%= HtmlUtil.escape(portletURL.toString()) %>"><%= assetTagNames[i] %></a>
 
 				<%
 				}
@@ -60,7 +60,7 @@ if (assetTagNames.length == 0) {
 				for (int i = 0; i < assetTagNames.length; i++) {
 				%>
 
-					<span class="badge badge-default badge-sm"><%= assetTagNames[i] %></span>
+					<span class="label label-lg label-secondary"><%= assetTagNames[i] %></span>
 
 				<%
 				}

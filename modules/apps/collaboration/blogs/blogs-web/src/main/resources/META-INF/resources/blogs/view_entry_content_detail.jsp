@@ -218,6 +218,19 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 					</div>
 				</div>
 
+				<liferay-asset:asset-tags-available
+					className="<%= BlogsEntry.class.getName() %>"
+					classPK="<%= entry.getEntryId() %>"
+				>
+					<div class="entry-tags">
+						<liferay-asset:asset-tags-summary
+							className="<%= BlogsEntry.class.getName() %>"
+							classPK="<%= entry.getEntryId() %>"
+							portletURL="<%= renderResponse.createRenderURL() %>"
+						/>
+					</div>
+				</liferay-asset:asset-tags-available>
+
 				<c:if test="<%= blogsPortletInstanceConfiguration.enableRelatedAssets() %>">
 					<div class="entry-links">
 						<liferay-asset:asset-links
@@ -240,19 +253,6 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 						/>
 					</div>
 				</liferay-asset:asset-categories-available>
-
-				<liferay-asset:asset-tags-available
-					className="<%= BlogsEntry.class.getName() %>"
-					classPK="<%= entry.getEntryId() %>"
-				>
-					<div class="entry-tags">
-						<liferay-asset:asset-tags-summary
-							className="<%= BlogsEntry.class.getName() %>"
-							classPK="<%= entry.getEntryId() %>"
-							portletURL="<%= renderResponse.createRenderURL() %>"
-						/>
-					</div>
-				</liferay-asset:asset-tags-available>
 			</div>
 		</div>
 	</c:when>

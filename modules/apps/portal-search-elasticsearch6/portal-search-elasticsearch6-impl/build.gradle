@@ -61,11 +61,6 @@ dependencies {
 	compileInclude group: "org.locationtech.spatial4j", name: "spatial4j", version: "0.6"
 	compileInclude group: "org.yaml", name: "snakeyaml", version: "1.17"
 
-	elasticsearchPlugins ext: "zip", group: "com.liferay", name: "org.elasticsearch.plugin.analysis.icu", version: elasticsearchVersion
-	elasticsearchPlugins ext: "zip", group: "com.liferay", name: "org.elasticsearch.plugin.analysis.kuromoji", version: elasticsearchVersion
-	elasticsearchPlugins ext: "zip", group: "com.liferay", name: "org.elasticsearch.plugin.analysis.smartcn", version: elasticsearchVersion
-	elasticsearchPlugins ext: "zip", group: "com.liferay", name: "org.elasticsearch.plugin.analysis.stempel", version: elasticsearchVersion
-
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.ibm.icu", name: "icu4j", version: "54.1.1"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
@@ -77,6 +72,11 @@ dependencies {
 	compileOnly project(":apps:portal-search-elasticsearch6:portal-search-elasticsearch6-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":core:petra:petra-string")
+
+	elasticsearchPlugins ext: "zip", group: "com.liferay", name: "org.elasticsearch.plugin.analysis.icu", version: elasticsearchVersion
+	elasticsearchPlugins ext: "zip", group: "com.liferay", name: "org.elasticsearch.plugin.analysis.kuromoji", version: elasticsearchVersion
+	elasticsearchPlugins ext: "zip", group: "com.liferay", name: "org.elasticsearch.plugin.analysis.smartcn", version: elasticsearchVersion
+	elasticsearchPlugins ext: "zip", group: "com.liferay", name: "org.elasticsearch.plugin.analysis.stempel", version: elasticsearchVersion
 
 	testCompile group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 	testCompile group: "easyconf", name: "easyconf", version: "0.9.5"

@@ -45,11 +45,6 @@ dependencies {
 	compileInclude group: "org.ow2.asm", name: "asm-debug-all", version: "5.0.4"
 	compileInclude group: "org.yaml", name: "snakeyaml", version: "1.15"
 
-	elasticsearchPlugins ext: "zip", group: "org.elasticsearch.plugin", name: "analysis-icu", version: elasticsearchVersion
-	elasticsearchPlugins ext: "zip", group: "org.elasticsearch.plugin", name: "analysis-kuromoji", version: elasticsearchVersion
-	elasticsearchPlugins ext: "zip", group: "org.elasticsearch.plugin", name: "analysis-smartcn", version: elasticsearchVersion
-	elasticsearchPlugins ext: "zip", group: "org.elasticsearch.plugin", name: "analysis-stempel", version: elasticsearchVersion
-
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.ibm.icu", name: "icu4j", version: "54.1.1"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
@@ -61,6 +56,11 @@ dependencies {
 	compileOnly project(":apps:foundation:portal-search:portal-search-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":core:petra:petra-string")
+
+	elasticsearchPlugins ext: "zip", group: "org.elasticsearch.plugin", name: "analysis-icu", version: elasticsearchVersion
+	elasticsearchPlugins ext: "zip", group: "org.elasticsearch.plugin", name: "analysis-kuromoji", version: elasticsearchVersion
+	elasticsearchPlugins ext: "zip", group: "org.elasticsearch.plugin", name: "analysis-smartcn", version: elasticsearchVersion
+	elasticsearchPlugins ext: "zip", group: "org.elasticsearch.plugin", name: "analysis-stempel", version: elasticsearchVersion
 
 	testCompile group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 	testCompile group: "easyconf", name: "easyconf", version: "0.9.5"

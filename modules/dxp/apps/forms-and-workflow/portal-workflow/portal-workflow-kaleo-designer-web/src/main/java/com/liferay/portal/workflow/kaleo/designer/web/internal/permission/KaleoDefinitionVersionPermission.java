@@ -86,16 +86,16 @@ public class KaleoDefinitionVersionPermission
 
 		if (contains(
 				permissionChecker, kaleoDefinitionVersion,
-				ActionKeys.VIEW) ||
+				ActionKeys.DELETE) ||
+			contains(
+				permissionChecker, kaleoDefinitionVersion,
+				ActionKeys.PERMISSIONS) ||
 			contains(
 				permissionChecker, kaleoDefinitionVersion,
 				ActionKeys.UPDATE) ||
 			contains(
 				permissionChecker, kaleoDefinitionVersion,
-				ActionKeys.DELETE) ||
-			contains(
-				permissionChecker, kaleoDefinitionVersion,
-				ActionKeys.PERMISSIONS) ||
+				ActionKeys.VIEW) ||
 			KaleoDesignerPermission.contains(
 				permissionChecker, companyGroupId, ActionKeys.VIEW)) {
 

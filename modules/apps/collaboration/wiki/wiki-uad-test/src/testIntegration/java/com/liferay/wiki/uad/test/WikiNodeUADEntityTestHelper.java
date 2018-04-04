@@ -12,18 +12,16 @@
  * details.
  */
 
-package com.liferay.blogs.uad.test;
+package com.liferay.wiki.uad.test;
 
-import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.wiki.model.WikiNode;
+import com.liferay.wiki.service.WikiNodeLocalService;
 
-import java.util.Calendar;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -32,45 +30,40 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author William Newbury
  */
-@Component(immediate = true, service = BlogsEntryUADEntityTestHelper.class)
-public class BlogsEntryUADEntityTestHelper {
+@Component(immediate = true, service = WikiNodeUADEntityTestHelper.class)
+public class WikiNodeUADEntityTestHelper {
 
-	public BlogsEntry addBlogsEntry(long userId) throws Exception {
-		Calendar calendar = CalendarFactoryUtil.getCalendar();
-
-		calendar.add(Calendar.DATE, 1);
-
+	public WikiNode addWikiNode(long userId) throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId());
 
-		return _blogsEntryLocalService.addEntry(
+		return _wikiNodeLocalService.addNode(
 			userId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), calendar.getTime(), serviceContext);
+			RandomTestUtil.randomString(), serviceContext);
 	}
 
-	public BlogsEntry addBlogsEntryWithStatusByUserId(
+	public WikiNode addWikiNodeWithStatusByUserId(
 			long userId, long statusByUserId)
 		throws Exception {
 
-		BlogsEntry blogsEntry = addBlogsEntry(userId);
+		WikiNode wikiNode = addWikiNode(userId);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId());
 
-		_blogsEntryLocalService.updateStatus(
-			statusByUserId, blogsEntry.getEntryId(),
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+		_wikiNodeLocalService.updateStatus(
+			statusByUserId, wikiNode, WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
 
-		return blogsEntry;
+		return wikiNode;
 	}
 
-	public void cleanUpDependencies(List<BlogsEntry> blogsEntries)
-		throws Exception {
+	public void cleanUpDependencies(List<WikiNode> wikiNodes) throws Exception {
 	}
 
 	@Reference
-	private BlogsEntryLocalService _blogsEntryLocalService;
+	private WikiNodeLocalService _wikiNodeLocalService;
 
 }

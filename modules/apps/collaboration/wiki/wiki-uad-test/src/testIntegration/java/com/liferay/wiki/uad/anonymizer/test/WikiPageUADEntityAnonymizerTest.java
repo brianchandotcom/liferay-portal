@@ -12,14 +12,9 @@
  * details.
  */
 
-package com.liferay.blogs.uad.anonymizer.test;
+package com.liferay.wiki.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
-import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.service.BlogsEntryLocalService;
-import com.liferay.blogs.uad.constants.BlogsUADConstants;
-import com.liferay.blogs.uad.test.BlogsEntryUADEntityTestHelper;
 
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
@@ -32,6 +27,11 @@ import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADEntityAnonymizerTestCase;
 import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
+
+import com.liferay.wiki.model.WikiPage;
+import com.liferay.wiki.service.WikiPageLocalService;
+import com.liferay.wiki.uad.constants.WikiUADConstants;
+import com.liferay.wiki.uad.test.WikiPageUADEntityTestHelper;
 
 import org.junit.After;
 import org.junit.ClassRule;
@@ -47,7 +47,7 @@ import java.util.List;
  * @generated
  */
 @RunWith(Arquillian.class)
-public class BlogsEntryUADEntityAnonymizerTest
+public class WikiPageUADEntityAnonymizerTest
 	extends BaseUADEntityAnonymizerTestCase
 	implements WhenHasStatusByUserIdField {
 	@ClassRule
@@ -57,12 +57,12 @@ public class BlogsEntryUADEntityAnonymizerTest
 	@Override
 	public BaseModel<?> addBaseModelWithStatusByUserId(long userId,
 		long statusByUserId) throws Exception {
-		BlogsEntry blogsEntry = _blogsEntryUADEntityTestHelper.addBlogsEntryWithStatusByUserId(userId,
+		WikiPage wikiPage = _wikiPageUADEntityTestHelper.addWikiPageWithStatusByUserId(userId,
 				statusByUserId);
 
-		_blogsEntries.add(blogsEntry);
+		_wikiPages.add(wikiPage);
 
-		return blogsEntry;
+		return wikiPage;
 	}
 
 	@Override
@@ -73,13 +73,13 @@ public class BlogsEntryUADEntityAnonymizerTest
 	@Override
 	protected BaseModel<?> addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
-		BlogsEntry blogsEntry = _blogsEntryUADEntityTestHelper.addBlogsEntry(userId);
+		WikiPage wikiPage = _wikiPageUADEntityTestHelper.addWikiPage(userId);
 
 		if (deleteAfterTestRun) {
-			_blogsEntries.add(blogsEntry);
+			_wikiPages.add(wikiPage);
 		}
 
-		return blogsEntry;
+		return wikiPage;
 	}
 
 	@Override
@@ -95,14 +95,14 @@ public class BlogsEntryUADEntityAnonymizerTest
 	@Override
 	protected boolean isBaseModelAutoAnonymized(long baseModelPK, User user)
 		throws Exception {
-		BlogsEntry blogsEntry = _blogsEntryLocalService.getBlogsEntry(baseModelPK);
+		WikiPage wikiPage = _wikiPageLocalService.getWikiPage(baseModelPK);
 
-		String userName = blogsEntry.getUserName();
-		String statusByUserName = blogsEntry.getStatusByUserName();
+		String userName = wikiPage.getUserName();
+		String statusByUserName = wikiPage.getStatusByUserName();
 
-		if ((blogsEntry.getUserId() != user.getUserId()) &&
+		if ((wikiPage.getUserId() != user.getUserId()) &&
 				!userName.equals(user.getFullName()) &&
-				(blogsEntry.getStatusByUserId() != user.getUserId()) &&
+				(wikiPage.getStatusByUserId() != user.getUserId()) &&
 				!statusByUserName.equals(user.getFullName())) {
 			return true;
 		}
@@ -112,7 +112,7 @@ public class BlogsEntryUADEntityAnonymizerTest
 
 	@Override
 	protected boolean isBaseModelDeleted(long baseModelPK) {
-		if (_blogsEntryLocalService.fetchBlogsEntry(baseModelPK) == null) {
+		if (_wikiPageLocalService.fetchWikiPage(baseModelPK) == null) {
 			return true;
 		}
 
@@ -121,19 +121,19 @@ public class BlogsEntryUADEntityAnonymizerTest
 
 	@After
 	public void tearDown() throws Exception {
-		_blogsEntryUADEntityTestHelper.cleanUpDependencies(_blogsEntries);
+		_wikiPageUADEntityTestHelper.cleanUpDependencies(_wikiPages);
 	}
 
 	@DeleteAfterTestRun
-	private final List<BlogsEntry> _blogsEntries = new ArrayList<BlogsEntry>();
+	private final List<WikiPage> _wikiPages = new ArrayList<WikiPage>();
 	@Inject
-	private BlogsEntryLocalService _blogsEntryLocalService;
+	private WikiPageLocalService _wikiPageLocalService;
 	@Inject
-	private BlogsEntryUADEntityTestHelper _blogsEntryUADEntityTestHelper;
+	private WikiPageUADEntityTestHelper _wikiPageUADEntityTestHelper;
 	@Inject(filter = "model.class.name=" +
-	BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY)
+	WikiUADConstants.CLASS_NAME_WIKI_PAGE)
 	private UADAggregator _uadAggregator;
 	@Inject(filter = "model.class.name=" +
-	BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY)
+	WikiUADConstants.CLASS_NAME_WIKI_PAGE)
 	private UADEntityAnonymizer _uadEntityAnonymizer;
 }

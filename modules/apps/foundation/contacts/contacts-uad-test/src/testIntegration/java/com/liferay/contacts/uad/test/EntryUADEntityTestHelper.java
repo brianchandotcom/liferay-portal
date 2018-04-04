@@ -18,6 +18,8 @@ import com.liferay.contacts.model.Entry;
 import com.liferay.contacts.service.EntryLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -32,6 +34,9 @@ public class EntryUADEntityTestHelper {
 			userId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString() + "@liferay.com",
 			RandomTestUtil.randomString());
+	}
+
+	public void cleanUpDependencies(List<Entry> entries) throws Exception {
 	}
 
 	@Reference

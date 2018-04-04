@@ -12,13 +12,9 @@
  * details.
  */
 
-package com.liferay.blogs.uad.display.test;
+package com.liferay.wiki.uad.display.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
-import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.uad.constants.BlogsUADConstants;
-import com.liferay.blogs.uad.test.BlogsEntryUADEntityTestHelper;
 
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -29,6 +25,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
 import com.liferay.user.associated.data.test.util.BaseUADEntityDisplayTestCase;
+
+import com.liferay.wiki.model.WikiPage;
+import com.liferay.wiki.uad.constants.WikiUADConstants;
+import com.liferay.wiki.uad.test.WikiPageUADEntityTestHelper;
 
 import org.junit.After;
 import org.junit.ClassRule;
@@ -44,23 +44,23 @@ import java.util.List;
  * @generated
  */
 @RunWith(Arquillian.class)
-public class BlogsEntryUADEntityDisplayTest extends BaseUADEntityDisplayTestCase {
+public class WikiPageUADEntityDisplayTest extends BaseUADEntityDisplayTestCase {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
 
 	@Override
 	protected BaseModel<?> addBaseModel(long userId) throws Exception {
-		BlogsEntry blogsEntry = _blogsEntryUADEntityTestHelper.addBlogsEntry(userId);
+		WikiPage wikiPage = _wikiPageUADEntityTestHelper.addWikiPage(userId);
 
-		_blogsEntries.add(blogsEntry);
+		_wikiPages.add(wikiPage);
 
-		return blogsEntry;
+		return wikiPage;
 	}
 
 	@Override
 	protected String getApplicationName() {
-		return BlogsUADConstants.APPLICATION_NAME;
+		return WikiUADConstants.APPLICATION_NAME;
 	}
 
 	@Override
@@ -75,22 +75,22 @@ public class BlogsEntryUADEntityDisplayTest extends BaseUADEntityDisplayTestCase
 
 	@Override
 	protected String getTypeDescription() {
-		return "A blog post";
+		return "A wiki page";
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		_blogsEntryUADEntityTestHelper.cleanUpDependencies(_blogsEntries);
+		_wikiPageUADEntityTestHelper.cleanUpDependencies(_wikiPages);
 	}
 
 	@DeleteAfterTestRun
-	private final List<BlogsEntry> _blogsEntries = new ArrayList<BlogsEntry>();
+	private final List<WikiPage> _wikiPages = new ArrayList<WikiPage>();
 	@Inject
-	private BlogsEntryUADEntityTestHelper _blogsEntryUADEntityTestHelper;
+	private WikiPageUADEntityTestHelper _wikiPageUADEntityTestHelper;
 	@Inject(filter = "model.class.name=" +
-	BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY)
+	WikiUADConstants.CLASS_NAME_WIKI_PAGE)
 	private UADAggregator _uadAggregator;
 	@Inject(filter = "model.class.name=" +
-	BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY)
+	WikiUADConstants.CLASS_NAME_WIKI_PAGE)
 	private UADEntityDisplay _uadEntityDisplay;
 }

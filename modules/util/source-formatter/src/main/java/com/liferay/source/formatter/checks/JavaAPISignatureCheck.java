@@ -18,10 +18,15 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 import com.liferay.source.formatter.parser.JavaParameter;
 import com.liferay.source.formatter.parser.JavaSignature;
 import com.liferay.source.formatter.parser.JavaTerm;
+import com.liferay.source.formatter.util.FileUtil;
+import com.liferay.source.formatter.util.SourceFormatterUtil;
+
+import java.io.File;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,15 +39,17 @@ public class JavaAPISignatureCheck extends BaseJavaTermCheck {
 
 	@Override
 	public void init() throws Exception {
-		String content = getPortalContent(
-			"source-formatter-api-signature-check-exceptions.txt");
-
-		_apiSignatureExceptions = StringUtil.splitLines(content);
+		_apiSignatureExceptions = _getAPISignatureExceptions();
 	}
 
 	@Override
 	public boolean isPortalCheck() {
 		return true;
+	}
+
+	@Override
+	public void setAllFileNames(List<String> allFileNames) {
+		_allFileNames = allFileNames;
 	}
 
 	public void setIllegalAPIParameterTypes(String illegalAPIParameterTypes) {
@@ -127,6 +134,41 @@ public class JavaAPISignatureCheck extends BaseJavaTermCheck {
 		return new String[] {JAVA_METHOD};
 	}
 
+	private String[] _getAPISignatureExceptions() throws Exception {
+		String[] apiSignatureExceptions = new String[0];
+
+		String fileName = "source-formatter-api-signature-check-exceptions.txt";
+
+		List<String> exceptionFileNames = SourceFormatterUtil.filterFileNames(
+			_allFileNames, new String[0], new String[] {"**/" + fileName},
+			getSourceFormatterExcludes(), true);
+
+		for (String exceptionFileName : exceptionFileNames) {
+			exceptionFileName = StringUtil.replace(
+				exceptionFileName, CharPool.BACK_SLASH, CharPool.SLASH);
+
+			File file = new File(exceptionFileName);
+
+			apiSignatureExceptions = ArrayUtil.append(
+				apiSignatureExceptions,
+				StringUtil.splitLines(FileUtil.read(file)));
+		}
+
+		for (int i = 0; i < ToolsUtil.PORTAL_MAX_DIR_LEVEL; i++) {
+			File file = new File(getBaseDirName() + fileName);
+
+			if (file.exists()) {
+				apiSignatureExceptions = ArrayUtil.append(
+					apiSignatureExceptions,
+					StringUtil.splitLines(FileUtil.read(file)));
+			}
+
+			fileName = "../" + fileName;
+		}
+
+		return apiSignatureExceptions;
+	}
+
 	private boolean _isException(
 		String packageName, String className, String methodName,
 		JavaSignature javaSignature) {
@@ -190,6 +232,7 @@ public class JavaAPISignatureCheck extends BaseJavaTermCheck {
 	private static final String[] _SERVICE_PACKAGE_NAME_WHITELIST =
 		{".*\\.service(\\..*)?", ".*\\.test(\\..*)?"};
 
+	private List<String> _allFileNames;
 	private String[] _apiSignatureExceptions;
 	private final List<String> _illegalAPIParameterTypes = new ArrayList<>();
 	private final List<String> _illegalAPIServiceParameterTypes =

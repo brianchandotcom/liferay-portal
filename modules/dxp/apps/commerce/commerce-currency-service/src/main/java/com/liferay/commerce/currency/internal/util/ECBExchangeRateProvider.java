@@ -14,8 +14,10 @@
 
 package com.liferay.commerce.currency.internal.util;
 
+import com.liferay.commerce.currency.internal.configuration.ECBExchangeRateProviderConfiguration;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.util.ExchangeRateProvider;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -28,7 +30,9 @@ import com.liferay.portal.kernel.xml.SAXReader;
 import java.io.IOException;
 
 import java.util.List;
+import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -119,7 +123,18 @@ public class ECBExchangeRateProvider implements ExchangeRateProvider {
 		return Math.round((rateToSecondary / rateToPrimary) * 10000D) / 10000D;
 	}
 
-	private static final String _ECB_URL =
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		ECBExchangeRateProviderConfiguration
+			ecbExchangeRateProviderConfiguration =
+				ConfigurableUtil.createConfigurable(
+					ECBExchangeRateProviderConfiguration.class, properties);
+
+		_ECB_URL =
+			ecbExchangeRateProviderConfiguration.europeanCentralBankURL();
+	}
+
+	private String _ECB_URL =
 		"http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml";
 
 	@Reference

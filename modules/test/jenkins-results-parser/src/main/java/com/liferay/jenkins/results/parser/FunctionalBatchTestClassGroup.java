@@ -17,6 +17,7 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -36,6 +37,33 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		super(batchName, gitWorkingDirectory, testSuiteName);
 
 		_setRelevantTestbatchRunpropertyQuery();
+	}
+
+	private String _getDefaultTestBatchRunPropertyQuery() {
+		List<String> propertyNames = new ArrayList<>();
+
+		if (testSuiteName != null) {
+			propertyNames.add(
+				getWildcardPropertyName(
+					portalTestProperties, "test.batch.run.property.query",
+					testSuiteName));
+
+			propertyNames.add(
+				JenkinsResultsParserUtil.combine(
+					"test.batch.run.property.query[", testSuiteName, "]"));
+		}
+
+		propertyNames.add(
+			getWildcardPropertyName(
+				portalTestProperties, "test.batch.run.property.query"));
+
+		propertyNames.add(
+			JenkinsResultsParserUtil.combine(
+				"test.batch.run.property.query[", batchName, "]"));
+
+		propertyNames.add("test.batch.run.property.query");
+
+		return getFirstPropertyValue(portalTestProperties, propertyNames);
 	}
 
 	private void _setRelevantTestbatchRunpropertyQuery() {
@@ -86,6 +114,11 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 							" OR (", testBatchRunProperty, ")");
 				}
 			}
+		}
+
+		if (_relevantTestBatchRunPropertyQuery == null) {
+			_relevantTestBatchRunPropertyQuery =
+				_getDefaultTestBatchRunPropertyQuery();
 		}
 	}
 

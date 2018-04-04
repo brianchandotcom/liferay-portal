@@ -10,8 +10,8 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
-import com.liferay.user.associated.data.test.util.BaseUADEntityAggregatorTestCase;
+import com.liferay.user.associated.data.aggregator.UADAggregator;
+import com.liferay.user.associated.data.test.util.BaseUADAggregatorTestCase;
 
 <#if entity.hasEntityColumn("statusByUserId")>
 	import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
@@ -29,7 +29,7 @@ import org.junit.runner.RunWith;
  * @generated
  */
 @RunWith(Arquillian.class)
-public class ${entity.name}UADEntityAggregatorTest extends BaseUADEntityAggregatorTestCase <#if entity.hasEntityColumn("statusByUserId")>implements WhenHasStatusByUserIdField </#if>{
+public class ${entity.name}UADAggregatorTest extends BaseUADAggregatorTestCase <#if entity.hasEntityColumn("statusByUserId")>implements WhenHasStatusByUserIdField </#if>{
 
 	@ClassRule
 	@Rule
@@ -56,8 +56,8 @@ public class ${entity.name}UADEntityAggregatorTest extends BaseUADEntityAggregat
 	}
 
 	@Override
-	protected UADEntityAggregator getUADEntityAggregator() {
-		return _uadEntityAggregator;
+	protected UADAggregator getUADAggregator() {
+		return _uadAggregator;
 	}
 
 	@DeleteAfterTestRun
@@ -69,6 +69,6 @@ public class ${entity.name}UADEntityAggregatorTest extends BaseUADEntityAggregat
 	@Inject(
 		filter = "model.class.name=" + ${portletShortName}UADConstants.CLASS_NAME_${entity.constantName}
 	)
-	private UADEntityAggregator _uadEntityAggregator;
+	private UADAggregator _uadAggregator;
 
 }

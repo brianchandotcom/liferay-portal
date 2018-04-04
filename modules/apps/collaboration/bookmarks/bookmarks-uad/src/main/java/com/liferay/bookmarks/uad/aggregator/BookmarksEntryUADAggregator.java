@@ -12,13 +12,15 @@
  * details.
  */
 
-package com.liferay.announcements.uad.aggregator;
+package com.liferay.bookmarks.uad.aggregator;
 
-import com.liferay.announcements.kernel.model.AnnouncementsEntry;
-import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService;
-import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
+import com.liferay.bookmarks.model.BookmarksEntry;
+import com.liferay.bookmarks.service.BookmarksEntryLocalService;
+import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.user.associated.data.aggregator.DynamicQueryUADAggregator;
+import com.liferay.user.associated.data.aggregator.UADAggregator;
 
 import java.io.Serializable;
 
@@ -32,43 +34,47 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_ENTRY},
-	service = UADEntityAggregator.class
+	property = {"model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY},
+	service = UADAggregator.class
 )
-public class AnnouncementsEntryUADEntityAggregator
-	extends BaseAnnouncementsUADEntityAggregator<AnnouncementsEntry> {
+public class BookmarksEntryUADAggregator
+	extends DynamicQueryUADAggregator<BookmarksEntry> {
 
 	@Override
-	public AnnouncementsEntry get(Serializable primaryKey) throws Exception {
-		return _announcementsEntryLocalService.getAnnouncementsEntry(
+	public BookmarksEntry get(Serializable primaryKey) throws PortalException {
+		return _bookmarksEntryLocalService.getBookmarksEntry(
 			Long.valueOf(primaryKey.toString()));
 	}
 
 	@Override
+	public String getApplicationName() {
+		return BookmarksUADConstants.APPLICATION_NAME;
+	}
+
+	@Override
 	protected long doCount(DynamicQuery dynamicQuery) {
-		return _announcementsEntryLocalService.dynamicQueryCount(dynamicQuery);
+		return _bookmarksEntryLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
 	@Override
 	protected DynamicQuery doGetDynamicQuery() {
-		return _announcementsEntryLocalService.dynamicQuery();
+		return _bookmarksEntryLocalService.dynamicQuery();
 	}
 
 	@Override
-	protected List<AnnouncementsEntry> doGetRange(
+	protected List<BookmarksEntry> doGetRange(
 		DynamicQuery dynamicQuery, int start, int end) {
 
-		return _announcementsEntryLocalService.dynamicQuery(
+		return _bookmarksEntryLocalService.dynamicQuery(
 			dynamicQuery, start, end);
 	}
 
 	@Override
 	protected String[] doGetUserIdFieldNames() {
-		return AnnouncementsUADConstants.
-			USER_ID_FIELD_NAMES_ANNOUNCEMENTS_ENTRY;
+		return BookmarksUADConstants.USER_ID_FIELD_NAMES_BOOKMARKS_ENTRY;
 	}
 
 	@Reference
-	private AnnouncementsEntryLocalService _announcementsEntryLocalService;
+	private BookmarksEntryLocalService _bookmarksEntryLocalService;
 
 }

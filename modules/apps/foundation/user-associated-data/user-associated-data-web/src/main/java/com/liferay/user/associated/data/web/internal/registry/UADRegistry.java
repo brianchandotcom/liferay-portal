@@ -16,7 +16,7 @@ package com.liferay.user.associated.data.web.internal.registry;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
+import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
 import com.liferay.user.associated.data.exporter.UADEntityExporter;
@@ -36,16 +36,16 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(immediate = true, service = UADRegistry.class)
 public class UADRegistry {
 
-	public UADEntityAggregator getUADEntityAggregator(String key) {
-		return _uadEntityAggregatorServiceTrackerMap.getService(key);
+	public UADAggregator getUADAggregator(String key) {
+		return _uadAggregatorServiceTrackerMap.getService(key);
 	}
 
-	public Set<String> getUADEntityAggregatorKeySet() {
-		return _uadEntityAggregatorServiceTrackerMap.keySet();
+	public Set<String> getUADAggregatorKeySet() {
+		return _uadAggregatorServiceTrackerMap.keySet();
 	}
 
-	public Collection<UADEntityAggregator> getUADEntityAggregators() {
-		return _uadEntityAggregatorServiceTrackerMap.values();
+	public Collection<UADAggregator> getUADAggregators() {
+		return _uadAggregatorServiceTrackerMap.values();
 	}
 
 	public UADEntityAnonymizer getUADEntityAnonymizer(String key) {
@@ -90,9 +90,9 @@ public class UADRegistry {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_uadEntityAggregatorServiceTrackerMap =
+		_uadAggregatorServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, UADEntityAggregator.class, "model.class.name");
+				bundleContext, UADAggregator.class, "model.class.name");
 		_uadEntityAnonymizerServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, UADEntityAnonymizer.class, "model.class.name");
@@ -106,14 +106,14 @@ public class UADRegistry {
 
 	@Deactivate
 	protected void deactivate() {
-		_uadEntityAggregatorServiceTrackerMap.close();
+		_uadAggregatorServiceTrackerMap.close();
 		_uadEntityAnonymizerServiceTrackerMap.close();
 		_uadEntityDisplayServiceTrackerMap.close();
 		_uadEntityExporterServiceTrackerMap.close();
 	}
 
-	private ServiceTrackerMap<String, UADEntityAggregator>
-		_uadEntityAggregatorServiceTrackerMap;
+	private ServiceTrackerMap<String, UADAggregator>
+		_uadAggregatorServiceTrackerMap;
 	private ServiceTrackerMap<String, UADEntityAnonymizer>
 		_uadEntityAnonymizerServiceTrackerMap;
 	private ServiceTrackerMap<String, UADEntityDisplay>

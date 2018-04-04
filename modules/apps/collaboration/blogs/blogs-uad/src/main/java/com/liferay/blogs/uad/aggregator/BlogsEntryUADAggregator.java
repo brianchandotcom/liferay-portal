@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.contacts.uad.aggregator;
+package com.liferay.blogs.uad.aggregator;
 
-import com.liferay.contacts.model.Entry;
-import com.liferay.contacts.service.EntryLocalService;
-import com.liferay.contacts.uad.constants.ContactsUADConstants;
+import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.service.BlogsEntryLocalService;
+import com.liferay.blogs.uad.constants.BlogsUADConstants;
 
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import com.liferay.user.associated.data.aggregator.DynamicQueryUADEntityAggregator;
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
+import com.liferay.user.associated.data.aggregator.DynamicQueryUADAggregator;
+import com.liferay.user.associated.data.aggregator.UADAggregator;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,39 +36,40 @@ import java.util.List;
  * @generated
  */
 @Component(immediate = true, property =  {
-	"model.class.name=" + ContactsUADConstants.CLASS_NAME_ENTRY}, service = UADEntityAggregator.class)
-public class EntryUADEntityAggregator extends DynamicQueryUADEntityAggregator<Entry> {
+	"model.class.name=" + BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY}, service = UADAggregator.class)
+public class BlogsEntryUADAggregator extends DynamicQueryUADAggregator<BlogsEntry> {
 	@Override
 	public String getApplicationName() {
-		return ContactsUADConstants.APPLICATION_NAME;
+		return BlogsUADConstants.APPLICATION_NAME;
 	}
 
 	@Override
-	public Entry get(Serializable primaryKey) throws PortalException {
-		return _entryLocalService.getEntry(Long.valueOf(primaryKey.toString()));
+	public BlogsEntry get(Serializable primaryKey) throws PortalException {
+		return _blogsEntryLocalService.getBlogsEntry(Long.valueOf(
+				primaryKey.toString()));
 	}
 
 	@Override
 	protected long doCount(DynamicQuery dynamicQuery) {
-		return _entryLocalService.dynamicQueryCount(dynamicQuery);
+		return _blogsEntryLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
 	@Override
 	protected DynamicQuery doGetDynamicQuery() {
-		return _entryLocalService.dynamicQuery();
+		return _blogsEntryLocalService.dynamicQuery();
 	}
 
 	@Override
-	protected List<Entry> doGetRange(DynamicQuery dynamicQuery, int start,
+	protected List<BlogsEntry> doGetRange(DynamicQuery dynamicQuery, int start,
 		int end) {
-		return _entryLocalService.dynamicQuery(dynamicQuery, start, end);
+		return _blogsEntryLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
 	@Override
 	protected String[] doGetUserIdFieldNames() {
-		return ContactsUADConstants.USER_ID_FIELD_NAMES_ENTRY;
+		return BlogsUADConstants.USER_ID_FIELD_NAMES_BLOGS_ENTRY;
 	}
 
 	@Reference
-	private EntryLocalService _entryLocalService;
+	private BlogsEntryLocalService _blogsEntryLocalService;
 }

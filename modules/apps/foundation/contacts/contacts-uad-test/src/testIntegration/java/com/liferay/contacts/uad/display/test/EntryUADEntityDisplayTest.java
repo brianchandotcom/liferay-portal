@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
+import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
 import com.liferay.user.associated.data.test.util.BaseUADEntityDisplayTestCase;
 
@@ -63,8 +63,8 @@ public class EntryUADEntityDisplayTest extends BaseUADEntityDisplayTestCase {
 	}
 
 	@Override
-	protected UADEntityAggregator getUADEntityAggregator() {
-		return _uadEntityAggregator;
+	protected UADAggregator getUADAggregator() {
+		return _uadAggregator;
 	}
 
 	@Override
@@ -83,7 +83,7 @@ public class EntryUADEntityDisplayTest extends BaseUADEntityDisplayTestCase {
 	private EntryUADEntityTestHelper _entryUADEntityTestHelper;
 	@Inject(filter = "model.class.name=" +
 	ContactsUADConstants.CLASS_NAME_ENTRY)
-	private UADEntityAggregator _uadEntityAggregator;
+	private UADAggregator _uadAggregator;
 	@Inject(filter = "model.class.name=" +
 	ContactsUADConstants.CLASS_NAME_ENTRY)
 	private UADEntityDisplay _uadEntityDisplay;

@@ -14,17 +14,17 @@
 
 package com.liferay.announcements.uad.aggregator.test;
 
-import com.liferay.announcements.kernel.model.AnnouncementsFlag;
+import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
-import com.liferay.announcements.uad.test.AnnouncementsFlagUADEntityTestHelper;
+import com.liferay.announcements.uad.test.AnnouncementsEntryUADEntityTestHelper;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
-import com.liferay.user.associated.data.test.util.BaseUADEntityAggregatorTestCase;
+import com.liferay.user.associated.data.aggregator.UADAggregator;
+import com.liferay.user.associated.data.test.util.BaseUADAggregatorTestCase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +37,8 @@ import org.junit.runner.RunWith;
  * @author Noah Sherrill
  */
 @RunWith(Arquillian.class)
-public class AnnouncementsFlagUADEntityAggregatorTest
-	extends BaseUADEntityAggregatorTestCase {
+public class AnnouncementsEntryUADAggregatorTest
+	extends BaseUADAggregatorTestCase {
 
 	@ClassRule
 	@Rule
@@ -47,30 +47,31 @@ public class AnnouncementsFlagUADEntityAggregatorTest
 
 	@Override
 	protected BaseModel<?> addBaseModel(long userId) throws Exception {
-		AnnouncementsFlag announcementsFlag =
-			_announcementsFlagUADEntityTestHelper.addAnnouncementsFlag(userId);
+		AnnouncementsEntry announcementsEntry =
+			_announcementsEntryUADEntityTestHelper.addAnnouncementsEntry(
+				userId);
 
-		_announcementsFlags.add(announcementsFlag);
+		_announcementsEntries.add(announcementsEntry);
 
-		return announcementsFlag;
+		return announcementsEntry;
 	}
 
 	@Override
-	protected UADEntityAggregator getUADEntityAggregator() {
-		return _uadEntityAggregator;
+	protected UADAggregator getUADAggregator() {
+		return _uadAggregator;
 	}
 
 	@DeleteAfterTestRun
-	private final List<AnnouncementsFlag> _announcementsFlags =
+	private final List<AnnouncementsEntry> _announcementsEntries =
 		new ArrayList<>();
 
 	@Inject
-	private AnnouncementsFlagUADEntityTestHelper
-		_announcementsFlagUADEntityTestHelper;
+	private AnnouncementsEntryUADEntityTestHelper
+		_announcementsEntryUADEntityTestHelper;
 
 	@Inject(
-		filter = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_FLAG
+		filter = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_ENTRY
 	)
-	private UADEntityAggregator _uadEntityAggregator;
+	private UADAggregator _uadAggregator;
 
 }

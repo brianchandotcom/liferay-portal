@@ -24,7 +24,7 @@ import java.util.List;
  * @author William Newbury
  */
 @ProviderType
-public interface UADEntityAggregator<T> {
+public interface UADAggregator<T> {
 
 	public long count(long userId);
 

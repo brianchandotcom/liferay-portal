@@ -26,8 +26,8 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
-import com.liferay.user.associated.data.test.util.BaseUADEntityAggregatorTestCase;
+import com.liferay.user.associated.data.aggregator.UADAggregator;
+import com.liferay.user.associated.data.test.util.BaseUADAggregatorTestCase;
 import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 
 import org.junit.ClassRule;
@@ -43,8 +43,7 @@ import java.util.List;
  * @generated
  */
 @RunWith(Arquillian.class)
-public class BlogsEntryUADEntityAggregatorTest
-	extends BaseUADEntityAggregatorTestCase
+public class BlogsEntryUADAggregatorTest extends BaseUADAggregatorTestCase
 	implements WhenHasStatusByUserIdField {
 	@ClassRule
 	@Rule
@@ -71,8 +70,8 @@ public class BlogsEntryUADEntityAggregatorTest
 	}
 
 	@Override
-	protected UADEntityAggregator getUADEntityAggregator() {
-		return _uadEntityAggregator;
+	protected UADAggregator getUADAggregator() {
+		return _uadAggregator;
 	}
 
 	@DeleteAfterTestRun
@@ -81,5 +80,5 @@ public class BlogsEntryUADEntityAggregatorTest
 	private BlogsEntryUADEntityTestHelper _blogsEntryUADEntityTestHelper;
 	@Inject(filter = "model.class.name=" +
 	BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY)
-	private UADEntityAggregator _uadEntityAggregator;
+	private UADAggregator _uadAggregator;
 }

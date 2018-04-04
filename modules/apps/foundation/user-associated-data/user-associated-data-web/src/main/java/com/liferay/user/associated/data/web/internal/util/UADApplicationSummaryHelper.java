@@ -170,9 +170,9 @@ public class UADApplicationSummaryHelper {
 		return uadEntityDisplayStream.map(
 			uadEntityDisplay -> uadEntityDisplay.getKey()
 		).map(
-			key -> _uadRegistry.getUADEntityAggregator(key)
+			key -> _uadRegistry.getUADAggregator(key)
 		).mapToInt(
-			uadEntityAggregator -> (int)uadEntityAggregator.count(userId)
+			uadAggregator -> (int)uadAggregator.count(userId)
 		).sum();
 	}
 

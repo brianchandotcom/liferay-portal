@@ -26,8 +26,8 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
-import com.liferay.user.associated.data.test.util.BaseUADEntityAggregatorTestCase;
+import com.liferay.user.associated.data.aggregator.UADAggregator;
+import com.liferay.user.associated.data.test.util.BaseUADAggregatorTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -42,8 +42,7 @@ import java.util.List;
  * @generated
  */
 @RunWith(Arquillian.class)
-public class EntryUADEntityAggregatorTest
-	extends BaseUADEntityAggregatorTestCase {
+public class EntryUADAggregatorTest extends BaseUADAggregatorTestCase {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
@@ -58,8 +57,8 @@ public class EntryUADEntityAggregatorTest
 	}
 
 	@Override
-	protected UADEntityAggregator getUADEntityAggregator() {
-		return _uadEntityAggregator;
+	protected UADAggregator getUADAggregator() {
+		return _uadAggregator;
 	}
 
 	@DeleteAfterTestRun
@@ -68,5 +67,5 @@ public class EntryUADEntityAggregatorTest
 	private EntryUADEntityTestHelper _entryUADEntityTestHelper;
 	@Inject(filter = "model.class.name=" +
 	ContactsUADConstants.CLASS_NAME_ENTRY)
-	private UADEntityAggregator _uadEntityAggregator;
+	private UADAggregator _uadAggregator;
 }

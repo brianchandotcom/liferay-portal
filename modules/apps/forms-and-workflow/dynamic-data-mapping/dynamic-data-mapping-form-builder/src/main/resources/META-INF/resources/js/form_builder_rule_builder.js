@@ -23,6 +23,10 @@ AUI.add(
 						value: []
 					},
 
+					ruleDraft: {
+						value: {}
+					},
+
 					rules: {
 						setter: '_setRules',
 						value: []
@@ -76,6 +80,7 @@ AUI.add(
 
 						instance.on('rulesChange', A.bind(instance._onRulesChange, instance));
 						instance.on('*:saveRule', A.bind(instance._handleSaveRule, instance));
+						instance.on('*:saveRuleDraft', A.bind(instance._handleSaveRuleDraft, instance));
 						instance.on('*:cancelRule', A.bind(instance._handleCancelRule, instance));
 
 						instance._eventHandlers = [
@@ -213,10 +218,31 @@ AUI.add(
 						return pages;
 					},
 
+					isRuleDraftEmpty: function(ruleDraft) {
+						var instance = this;
+
+						var ruleDraftIsEmpty = [];
+						var ruleDraftKeys = A.Object.keys(ruleDraft);
+						var ruleDraftValues = A.Object.values(ruleDraft);
+
+						if (!(ruleDraftKeys.length === 0)) {
+							ruleDraftIsEmpty = ruleDraftValues.filter(
+								function(ruleDraftValue) {
+									if ((typeof (ruleDraftValue) !== 'string') && ruleDraftValue.length > 0) {
+										return ruleDraftValue;
+									}
+								}
+							);
+						}
+						return ruleDraftIsEmpty.length == 0;
+					},
+
 					renderRule: function(rule) {
 						var instance = this;
 
 						var formBuilder = instance.get('formBuilder');
+
+						var ruleDraft = instance.get('ruleDraft');
 
 						if (!instance._ruleClasses) {
 							instance._ruleClasses = new Liferay.DDM.FormBuilderRenderRule(
@@ -236,7 +262,12 @@ AUI.add(
 						instance._ruleClasses.set('fields', instance.getFields());
 						instance._ruleClasses.set('pages', instance.getPages());
 
-						instance._ruleClasses.render(rule);
+						if (!instance.isRuleDraftEmpty(ruleDraft)) {
+							instance._ruleClasses.render(ruleDraft);
+						}
+						else {
+							instance._ruleClasses.render(rule);
+						}
 					},
 
 					show: function() {
@@ -431,6 +462,8 @@ AUI.add(
 					_handleCancelRule: function() {
 						var instance = this;
 
+						instance.set('ruleDraft', {});
+
 						instance.syncUI();
 
 						instance._showAddRuleButton();
@@ -453,11 +486,15 @@ AUI.add(
 
 						var ruleId = target.getData('card-id');
 
+						var rule = instance.get('rules')[ruleId];
+
 						instance._currentRuleId = ruleId;
 
-						instance.renderRule(instance.get('rules')[ruleId]);
-
 						instance._hideAddRuleButton();
+
+						instance.set('ruleDraft', rule);
+
+						instance.renderRule(rule);
 					},
 
 					_handleSaveRule: function(event) {
@@ -478,11 +515,31 @@ AUI.add(
 							rules.push(rule);
 						}
 
+						var ruleDraft = {
+							actions: {},
+							condition: {},
+							'logical-operator': ''
+						};
+
+						instance.set('ruleDraft', ruleDraft);
+
 						instance.syncUI();
 
 						instance._currentRuleId = null;
 
 						instance._showAddRuleButton();
+					},
+
+					_handleSaveRuleDraft: function(event) {
+						var instance = this;
+
+						var rule = {
+							actions: event.actions,
+							conditions: event.conditions,
+							'logical-operator': event['logical-operator']
+						};
+
+						instance.set('ruleDraft', rule);
 					},
 
 					_hideAddRuleButton: function() {

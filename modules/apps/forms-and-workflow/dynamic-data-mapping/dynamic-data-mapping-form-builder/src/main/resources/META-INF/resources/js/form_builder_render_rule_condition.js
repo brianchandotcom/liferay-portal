@@ -427,6 +427,10 @@ AUI.add(
 				return operandTypeValue === 'double' || operandTypeValue === 'integer' || operandTypeValue === 'string';
 			},
 
+			_isEmpty: function(operator) {
+				return operator === '';
+			},
+
 			_isFieldList: function(field) {
 				var instance = this;
 
@@ -482,7 +486,7 @@ AUI.add(
 
 				var value = [];
 
-				if (condition) {
+				if (condition && condition.operands[0].value) {
 					value = [condition.operands[0].value];
 				}
 
@@ -512,7 +516,7 @@ AUI.add(
 
 				var value = [];
 
-				if (condition) {
+				if (condition && !instance._isEmpty(condition.operator)) {
 					value = [condition.operator];
 				}
 
@@ -573,8 +577,10 @@ AUI.add(
 
 				var visible = instance._getSecondOperandTypeValue(index) === 'field';
 
-				if (condition && instance._isBinaryCondition(index) && visible) {
-					value = [condition.operands[1].value];
+				if (condition && (condition.operands.length > 1) && instance._isBinaryCondition(index) && visible) {
+					if (!instance._isEmpty(condition.operands[1].value)) {
+						value = [condition.operands[1].value];
+					}
 				}
 
 				var field = instance.createSelectField(
@@ -603,7 +609,9 @@ AUI.add(
 
 				if (condition && instance._isBinaryCondition(index) && visible) {
 					options = instance._getFieldOptions(instance._getFirstOperandValue(index));
-					value = [condition.operands[1].value];
+					if (!instance._isEmpty(condition.operands[1].value)) {
+						value = [condition.operands[1].value];
+					}
 				}
 
 				var field = instance.createSelectField(
@@ -626,7 +634,7 @@ AUI.add(
 
 				var value = [];
 
-				if (condition && instance._isBinaryCondition(index)) {
+				if (condition && instance._isBinaryCondition(index) && condition.operands[1]) {
 					value = [condition.operands[1].type];
 				}
 
@@ -767,7 +775,7 @@ AUI.add(
 
 						var options = instance._getFieldOptions(instance._getFirstOperandValue(index));
 
-						if (options.length > 0 && instance._getFieldType(instance._getFirstOperandValue(index)) !== 'text') {
+						if ((options.length > 0) && instance._getFieldType(instance._getFirstOperandValue(index)) !== 'text') {
 							secondOperandOptions.set('options', options);
 							secondOperandOptions.set('visible', true);
 

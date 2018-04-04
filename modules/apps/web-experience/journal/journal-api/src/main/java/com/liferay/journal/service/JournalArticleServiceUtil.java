@@ -44,12 +44,9 @@ public class JournalArticleServiceUtil {
 	 */
 
 	/**
-	* Adds a web content article with additional parameters.
-	*
-	* <p>
-	* All scheduling parameters(displayDate, expireDate and reviewDate) use
+	* Adds a web content article with additional parameters. All scheduling
+	* parameters (display date, expiration date, and review date) use the
 	* current user's timezone.
-	* </p>
 	*
 	* @param groupId the primary key of the web content article's group
 	* @param folderId the primary key of the web content article folder
@@ -158,12 +155,9 @@ public class JournalArticleServiceUtil {
 	}
 
 	/**
-	* Adds a web content article with additional parameters.
-	*
-	* <p>
-	* All scheduling parameters(displayDate, expireDate and reviewDate) use
+	* Adds a web content article with additional parameters. All scheduling
+	* parameters (display date, expiration date, and review date) use the
 	* current user's timezone.
-	* </p>
 	*
 	* @param groupId the primary key of the web content article's group
 	* @param folderId the primary key of the web content article folder
@@ -269,12 +263,9 @@ public class JournalArticleServiceUtil {
 	}
 
 	/**
-	* Adds a web content article without any images.
-	*
-	* <p>
-	* All scheduling parameters(displayDate, expireDate and reviewDate) use
-	* current user's timezone.
-	* </p>
+	* Adds a web content article without any images. All scheduling parameters
+	* (display date, expiration date, and review date) use the current user's
+	* timezone.
 	*
 	* @param groupId the primary key of the web content article's group
 	* @param folderId the primary key of the web content article folder
@@ -1896,12 +1887,9 @@ public class JournalArticleServiceUtil {
 	}
 
 	/**
-	* Updates the web content article with additional parameters.
-	*
-	* <p>
-	* All scheduling parameters(displayDate, expireDate and reviewDate) use
-	* current user's timezone.
-	* </p>
+	* Updates the web content article with additional parameters. All
+	* scheduling parameters (display date, expiration date, and review date)
+	* use the current user's timezone.
 	*
 	* @param groupId the primary key of the web content article's group
 	* @param folderId the primary key of the web content article folder
@@ -2009,12 +1997,9 @@ public class JournalArticleServiceUtil {
 	}
 
 	/**
-	* Updates the web content article with additional parameters.
-	*
-	* <p>
-	* All scheduling parameters(displayDate, expireDate and reviewDate) use
-	* current user's timezone.
-	* </p>
+	* Updates the web content article with additional parameters. All
+	* scheduling parameters (display date, expiration date, and review date)
+	* use the current user's timezone.
 	*
 	* @param groupId the primary key of the web content article's group
 	* @param folderId the primary key of the web content article folder
@@ -2138,8 +2123,7 @@ public class JournalArticleServiceUtil {
 	*     &lt;/static-content&gt;
 	* &lt;/root&gt;
 	* </code>
-	* </pre>
-	* </p>
+	* </pre></p>
 	*
 	* @param groupId the primary key of the web content article's group
 	* @param folderId the primary key of the web content article folder

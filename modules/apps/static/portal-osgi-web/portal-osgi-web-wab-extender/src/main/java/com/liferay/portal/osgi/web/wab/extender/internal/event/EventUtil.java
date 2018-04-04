@@ -103,7 +103,7 @@ public class EventUtil
 		if (collision) {
 			List<Long> collidedBundleIds = new ArrayList<>();
 
-			String collidedBundleNames = bundle.toString();
+			List<String> collidedBundleNames = new ArrayList<>();
 
 			BundleContext bundleContext = bundle.getBundleContext();
 
@@ -120,7 +120,8 @@ public class EventUtil
 					curContextPath.equals(contextPath)) {
 
 					collidedBundleIds.add(curBundle.getBundleId());
-					collidedBundleNames += "," + curBundle.toString();
+
+					collidedBundleNames.add(curBundle.getSymbolicName());
 				}
 			}
 
@@ -129,11 +130,17 @@ public class EventUtil
 
 				properties.put("collision.bundles", collidedBundleIds);
 
-				_log.error(
-					"Bundles " + collidedBundleNames +
-						" have the same Web-ContextPath. This can lead to " +
-							"unexpected behavior when the bundles are " +
-								"deployed to the same layout");
+				StringBuilder sb = new StringBuilder(7);
+
+				sb.append("Newly added bundle: \"");
+				sb.append(bundle.getSymbolicName());
+				sb.append("\" has the same Web-ContextPath as the following ");
+				sb.append("bundles: ");
+				sb.append(collidedBundleNames);
+				sb.append(". This can lead to unexpected behavior when the");
+				sb.append("bundles are deployed to the same layout");
+
+				_log.error(sb.toString());
 			}
 		}
 

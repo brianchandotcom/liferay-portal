@@ -54,29 +54,14 @@ public class LayoutAdminWebUpgrade implements UpgradeStepRegistrator {
 				_groupLocalService, _layoutSetLocalService));
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalArticleResourceLocalService(
-		JournalArticleResourceLocalService journalArticleResourceLocalService) {
-
-		_journalArticleResourceLocalService =
-			journalArticleResourceLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutSetLocalService(
-		LayoutSetLocalService layoutSetLocalService) {
-
-		_layoutSetLocalService = layoutSetLocalService;
-	}
-
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
+
+	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;
 
 }

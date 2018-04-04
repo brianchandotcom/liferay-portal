@@ -42,6 +42,22 @@ public class OAuth2AuthorizationLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.oauth2.provider.service.impl.OAuth2AuthorizationLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.oauth2.provider.model.OAuth2Authorization addOAuth2Authorization(
+		long companyId, long userId, java.lang.String userName,
+		long oAuth2ApplicationId, long oAuth2ApplicationScopeAliasesId,
+		java.lang.String accessTokenContent,
+		java.util.Date accessTokenCreateDate,
+		java.util.Date accessTokenExpirationDate,
+		java.lang.String remoteIPInfo, java.lang.String refreshTokenContent,
+		java.util.Date refreshTokenCreateDate,
+		java.util.Date refreshTokenExpirationDate) {
+		return getService()
+				   .addOAuth2Authorization(companyId, userId, userName,
+			oAuth2ApplicationId, oAuth2ApplicationScopeAliasesId,
+			accessTokenContent, accessTokenCreateDate,
+			accessTokenExpirationDate, remoteIPInfo, refreshTokenContent,
+			refreshTokenCreateDate, refreshTokenExpirationDate);
+	}
 
 	/**
 	* Adds the o auth2 authorization to the database. Also notifies the appropriate model listeners.
@@ -247,6 +263,18 @@ public class OAuth2AuthorizationLocalServiceUtil {
 		return getService().fetchOAuth2Authorization(oAuth2AuthorizationId);
 	}
 
+	public static com.liferay.oauth2.provider.model.OAuth2Authorization fetchOAuth2AuthorizationByAccessTokenContent(
+		java.lang.String accessTokenContent) {
+		return getService()
+				   .fetchOAuth2AuthorizationByAccessTokenContent(accessTokenContent);
+	}
+
+	public static com.liferay.oauth2.provider.model.OAuth2Authorization fetchOAuth2AuthorizationByRefreshTokenContent(
+		java.lang.String refreshTokenContent) {
+		return getService()
+				   .fetchOAuth2AuthorizationByRefreshTokenContent(refreshTokenContent);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -268,6 +296,20 @@ public class OAuth2AuthorizationLocalServiceUtil {
 		return getService().getOAuth2Authorization(oAuth2AuthorizationId);
 	}
 
+	public static com.liferay.oauth2.provider.model.OAuth2Authorization getOAuth2AuthorizationByAccessTokenContent(
+		java.lang.String accessTokenContent)
+		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2AuthorizationException {
+		return getService()
+				   .getOAuth2AuthorizationByAccessTokenContent(accessTokenContent);
+	}
+
+	public static com.liferay.oauth2.provider.model.OAuth2Authorization getOAuth2AuthorizationByRefreshTokenContent(
+		java.lang.String refreshTokenContent)
+		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2AuthorizationException {
+		return getService()
+				   .getOAuth2AuthorizationByRefreshTokenContent(refreshTokenContent);
+	}
+
 	/**
 	* Returns a range of all the o auth2 authorizations.
 	*
@@ -284,6 +326,14 @@ public class OAuth2AuthorizationLocalServiceUtil {
 		return getService().getOAuth2Authorizations(start, end);
 	}
 
+	public static java.util.List<com.liferay.oauth2.provider.model.OAuth2Authorization> getOAuth2Authorizations(
+		long applicationId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.oauth2.provider.model.OAuth2Authorization> orderByComparator) {
+		return getService()
+				   .getOAuth2Authorizations(applicationId, start, end,
+			orderByComparator);
+	}
+
 	/**
 	* Returns the number of o auth2 authorizations.
 	*
@@ -291,6 +341,10 @@ public class OAuth2AuthorizationLocalServiceUtil {
 	*/
 	public static int getOAuth2AuthorizationsCount() {
 		return getService().getOAuth2AuthorizationsCount();
+	}
+
+	public static int getOAuth2AuthorizationsCount(long applicationId) {
+		return getService().getOAuth2AuthorizationsCount(applicationId);
 	}
 
 	public static java.util.List<com.liferay.oauth2.provider.model.OAuth2Authorization> getOAuth2ScopeGrantOAuth2Authorizations(
@@ -331,6 +385,11 @@ public class OAuth2AuthorizationLocalServiceUtil {
 		return getService().getOAuth2ScopeGrantPrimaryKeys(oAuth2AuthorizationId);
 	}
 
+	public static java.util.Collection<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> getOAuth2ScopeGrants(
+		long oAuth2AuthorizationId) {
+		return getService().getOAuth2ScopeGrants(oAuth2AuthorizationId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -344,6 +403,18 @@ public class OAuth2AuthorizationLocalServiceUtil {
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static java.util.List<com.liferay.oauth2.provider.model.OAuth2Authorization> getUserOAuth2Authorizations(
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.oauth2.provider.model.OAuth2Authorization> orderByComparator) {
+		return getService()
+				   .getUserOAuth2Authorizations(userId, start, end,
+			orderByComparator);
+	}
+
+	public static int getUserOAuth2AuthorizationsCount(long userId) {
+		return getService().getUserOAuth2AuthorizationsCount(userId);
 	}
 
 	public static boolean hasOAuth2ScopeGrantOAuth2Authorization(

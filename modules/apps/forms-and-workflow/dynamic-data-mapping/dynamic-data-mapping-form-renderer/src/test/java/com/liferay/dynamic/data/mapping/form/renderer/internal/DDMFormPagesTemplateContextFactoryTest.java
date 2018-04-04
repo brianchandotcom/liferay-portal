@@ -145,17 +145,40 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		ddmFormLayout.addDDMFormLayoutPage(ddmFormLayoutPage2);
 
-		DDMFormLayoutPage ddmFormLayoutPage3 = createDDMFormLayoutPage(
-			"Page 3", "Page 3 Description");
+	@Test
+	public void testDisablePages() throws Exception {
 
-		ddmFormLayoutRow = new DDMFormLayoutRow();
+		// Dynamic data mapping form
 
-		ddmFormLayoutRow.setDDMFormLayoutColumns(
-			createDDMFormLayoutColumns("Field3"));
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
-		ddmFormLayoutPage3.addDDMFormLayoutRow(ddmFormLayoutRow);
+		ddmForm.addDDMFormRule(
+			new DDMFormRule("TRUE", Arrays.asList("jumpPage(0, 2)")));
 
-		ddmFormLayout.addDDMFormLayoutPage(ddmFormLayoutPage3);
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createDDMFormField(
+				"Field1", "Field1", "text", "string", false, false, true));
+
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createDDMFormField(
+				"Field2", "Field2", "text", "string", false, false, false));
+
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createDDMFormField(
+				"Field3", "Field3", "text", "string", false, false, false));
+
+		// Dynamic data mapping form layout
+
+		DDMFormLayout ddmFormLayout = new DDMFormLayout();
+
+		ddmFormLayout = createDDMFormLayoutPage(
+			ddmFormLayout, "Page 1", "Page 1 Description", "Field1");
+
+		ddmFormLayout = createDDMFormLayoutPage(
+			ddmFormLayout, "Page 2", "Page 2 Description", "Field2");
+
+		ddmFormLayout = createDDMFormLayoutPage(
+			ddmFormLayout, "Page 3", "Page 3 Description", "Field3");
 
 		// Dynamic data mapping form values
 
@@ -309,29 +332,11 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		DDMFormLayout ddmFormLayout = new DDMFormLayout();
 
-		DDMFormLayoutPage ddmFormLayoutPage1 = createDDMFormLayoutPage(
-			"Page 1", "Page 1 Description");
+		ddmFormLayout = createDDMFormLayoutPage(
+			ddmFormLayout, "Page 1", "Page 1 Description", "Field1", "Field2");
 
-		DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
-
-		ddmFormLayoutRow.setDDMFormLayoutColumns(
-			createDDMFormLayoutColumns("Field1", "Field2"));
-
-		ddmFormLayoutPage1.addDDMFormLayoutRow(ddmFormLayoutRow);
-
-		ddmFormLayout.addDDMFormLayoutPage(ddmFormLayoutPage1);
-
-		DDMFormLayoutPage ddmFormLayoutPage2 = createDDMFormLayoutPage(
-			"Page 2", "Page 2 Description");
-
-		ddmFormLayoutRow = new DDMFormLayoutRow();
-
-		ddmFormLayoutRow.setDDMFormLayoutColumns(
-			createDDMFormLayoutColumns("Field3"));
-
-		ddmFormLayoutPage2.addDDMFormLayoutRow(ddmFormLayoutRow);
-
-		ddmFormLayout.addDDMFormLayoutPage(ddmFormLayoutPage2);
+		ddmFormLayout = createDDMFormLayoutPage(
+			ddmFormLayout, "Page 2", "Page 2 Description", "Field3");
 
 		// Template context
 
@@ -383,29 +388,11 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		DDMFormLayout ddmFormLayout = new DDMFormLayout();
 
-		DDMFormLayoutPage ddmFormLayoutPage1 = createDDMFormLayoutPage(
-			"Page 1", "Page 1 Description");
+		ddmFormLayout = createDDMFormLayoutPage(
+			ddmFormLayout, "Page 1", "Page 1 Description", "Field1", "Field2");
 
-		DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
-
-		ddmFormLayoutRow.setDDMFormLayoutColumns(
-			createDDMFormLayoutColumns("Field1", "Field2"));
-
-		ddmFormLayoutPage1.addDDMFormLayoutRow(ddmFormLayoutRow);
-
-		ddmFormLayout.addDDMFormLayoutPage(ddmFormLayoutPage1);
-
-		DDMFormLayoutPage ddmFormLayoutPage2 = createDDMFormLayoutPage(
-			"Page 2", "Page 2 Description");
-
-		ddmFormLayoutRow = new DDMFormLayoutRow();
-
-		ddmFormLayoutRow.setDDMFormLayoutColumns(
-			createDDMFormLayoutColumns("Field3"));
-
-		ddmFormLayoutPage2.addDDMFormLayoutRow(ddmFormLayoutRow);
-
-		ddmFormLayout.addDDMFormLayoutPage(ddmFormLayoutPage2);
+		ddmFormLayout = createDDMFormLayoutPage(
+			ddmFormLayout, "Page 2", "Page 2 Description", "Field3");
 
 		// Template context
 

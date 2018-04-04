@@ -441,6 +441,24 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 			expectedSize, MapUtil.getInteger(columnTemplateContex, "size"));
 	}
 
+	protected CheckboxMultipleDDMFormFieldTemplateContextContributor
+			createCheckboxMultipleDMFormFieldTemplateContextContributor()
+		throws Exception {
+
+		CheckboxMultipleDDMFormFieldTemplateContextContributor
+			checkboxMultipleDDMFormFieldTemplateContextContributor =
+				new CheckboxMultipleDDMFormFieldTemplateContextContributor();
+
+		field(
+			CheckboxMultipleDDMFormFieldTemplateContextContributor.class,
+			"jsonFactory"
+		).set(
+			checkboxMultipleDDMFormFieldTemplateContextContributor, _jsonFactory
+		);
+
+		return checkboxMultipleDDMFormFieldTemplateContextContributor;
+	}
+
 	protected DDMFormLayoutColumn createDDMFormLayoutColumn(
 		String ddmFormFieldName, int size) {
 
@@ -514,6 +532,90 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		return ddmFormPagesTemplateContextFactory;
 	}
 
+	protected GridDDMFormFieldTemplateContextContributor
+		createGridDDMFormFieldTemplateContextContributor() throws Exception {
+
+		GridDDMFormFieldTemplateContextContributor
+			gridDDMFormFieldTemplateContextContributor =
+				new GridDDMFormFieldTemplateContextContributor();
+
+		field(
+			GridDDMFormFieldTemplateContextContributor.class, "jsonFactory"
+		).set(
+			gridDDMFormFieldTemplateContextContributor, _jsonFactory
+		);
+
+		return gridDDMFormFieldTemplateContextContributor;
+	}
+
+	protected NumericDDMFormFieldTemplateContextContributor
+		createNumericDDMFormFieldTemplateContextContributor() throws Exception {
+
+		NumericDDMFormFieldTemplateContextContributor
+			numericDDMFormFieldTemplateContextContributor =
+				new NumericDDMFormFieldTemplateContextContributor();
+
+		return numericDDMFormFieldTemplateContextContributor;
+	}
+
+	protected RadioDDMFormFieldTemplateContextContributor
+	createRadioDDMFormFieldTemplateContextContributor() throws Exception {
+
+		RadioDDMFormFieldTemplateContextContributor
+			radioDDMFormFieldTemplateContextContributor =
+				new RadioDDMFormFieldTemplateContextContributor();
+
+		field(
+			RadioDDMFormFieldTemplateContextContributor.class, "jsonFactory"
+		).set(
+			radioDDMFormFieldTemplateContextContributor, _jsonFactory
+		);
+
+		return radioDDMFormFieldTemplateContextContributor;
+	}
+
+	protected SelectDDMFormFieldTemplateContextContributor
+		createSelectDDMFormFieldTemplateContextContributor() throws Exception {
+
+		SelectDDMFormFieldTemplateContextContributor
+			selectDDMFormFieldTemplateContextContributor =
+				new SelectDDMFormFieldTemplateContextContributor();
+
+		field(
+			SelectDDMFormFieldTemplateContextContributor.class,
+			"ddmFormFieldOptionsFactory"
+		).set(
+			selectDDMFormFieldTemplateContextContributor,
+			new DDMFormFieldOptionsFactoryImpl()
+		);
+
+		field(
+			SelectDDMFormFieldTemplateContextContributor.class, "jsonFactory"
+		).set(
+			selectDDMFormFieldTemplateContextContributor, _jsonFactory
+		);
+
+		return selectDDMFormFieldTemplateContextContributor;
+	}
+
+	protected TextDDMFormFieldTemplateContextContributor
+		createTextDDMFormFieldTemplateContextContributor() throws Exception {
+
+		TextDDMFormFieldTemplateContextContributor
+			textDDMFormFieldTemplateContextContributor =
+				new TextDDMFormFieldTemplateContextContributor();
+
+		field(
+			TextDDMFormFieldTemplateContextContributor.class,
+			"ddmFormFieldOptionsFactory"
+		).set(
+			textDDMFormFieldTemplateContextContributor,
+			new DDMFormFieldOptionsFactoryImpl()
+		);
+
+		return textDDMFormFieldTemplateContextContributor;
+	}
+
 	protected DDMFormEvaluator getDDMFormEvaluator() throws Exception {
 		DDMFormEvaluator ddmFormEvaluator = new DDMFormEvaluatorImpl();
 
@@ -530,6 +632,19 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		);
 
 		return ddmFormEvaluator;
+	}
+
+	protected void mockDDMFormFieldTypeServicesTracker(
+		String type,
+		DDMFormFieldTemplateContextContributor
+			ddmFormFieldTemplateContextContributor) {
+
+		Mockito.when(
+			_ddmFormFieldTypeServicesTracker.
+				getDDMFormFieldTemplateContextContributor(Matchers.eq(type))
+		).thenReturn(
+			ddmFormFieldTemplateContextContributor
+		);
 	}
 
 	protected void setUpDDMFormTemplateContextFactoryUtil() {

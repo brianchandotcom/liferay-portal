@@ -2397,6 +2397,19 @@
 			<var name="fieldName" value="Text" />
 		</execute>
 
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLRecord#editCP">
+			<var name="ddlListName" value="List Name" />
+			<var name="ddlRecordFieldData" value="Text Spanish" />
+		</execute>
+
 		<execute macro="DDLRecord#editTranslation">
 			<var name="localizedLanguage" value="English (United States)" />
 		</execute>

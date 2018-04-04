@@ -74,33 +74,25 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 		</div>
 
 		<div class="autofit-col">
-			<liferay-ui:icon
-				icon="plus"
-				iconCssClass="inline-item inline-item-after"
-				label="<%= true %>"
-				linkCssClass="link-outline link-outline-borderless link-outline-secondary lfr-icon-item-reverse"
-				markupView="lexicon"
-				message="import-items"
-				method="get"
-				url="#placeholder"
-			/>
+
+			<%
+			request.setAttribute("order_transition.jsp-commerceOrder", commerceOrder);
+			%>
+
+			<liferay-util:include page="/order_transition.jsp" servletContext="<%= application %>" />
 		</div>
 
 		<div class="autofit-col">
 			<liferay-ui:icon-menu direction="right" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>" triggerCssClass="component-action">
-				<liferay-ui:icon
-					message="Placeholder 1"
-					url="#placeholder"
-				/>
+				<portlet:actionURL name="editCommerceOrderItem" var="deleteURL">
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESET %>" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrder.getCommerceOrderId()) %>" />
+				</portlet:actionURL>
 
-				<liferay-ui:icon
-					message="Placeholder 2"
-					url="#placeholder"
-				/>
-
-				<liferay-ui:icon
-					message="Placeholder 3"
-					url="#placeholder"
+				<liferay-ui:icon-delete
+					message="delete-all"
+					url="<%= deleteURL %>"
 				/>
 			</liferay-ui:icon-menu>
 		</div>
@@ -231,7 +223,6 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 >
 	<liferay-ui:search-container-row
 		className="com.liferay.commerce.model.CommerceOrderItem"
-		escapedModel="<%= true %>"
 		keyProperty="commerceOrderItemId"
 		modelVar="commerceOrderItem"
 	>
@@ -242,6 +233,21 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 		<liferay-ui:search-container-column-text
 			name="title"
 			value="<%= HtmlUtil.escape(commerceOrderItem.getTitle(locale)) %>"
+		/>
+
+		<%
+		List<KeyValuePair> keyValuePairs = commerceOrganizationOrderDisplayContext.getKeyValuePairs(commerceOrderItem.getJson(), locale);
+
+		StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
+
+		for (KeyValuePair keyValuePair : keyValuePairs) {
+			stringJoiner.add(keyValuePair.getValue());
+		}
+		%>
+
+		<liferay-ui:search-container-column-text
+			name="description"
+			value="<%= HtmlUtil.escape(stringJoiner.toString()) %>"
 		/>
 
 		<c:choose>
@@ -282,10 +288,28 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 			name="price"
 			value="<%= commerceOrganizationOrderDisplayContext.getCommerceOrderItemPrice(commerceOrderItem) %>"
 		/>
+
+		<liferay-ui:search-container-column-text>
+			<portlet:actionURL name="editCommerceOrderItem" var="deleteURL">
+				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="commerceOrderItemId" value="<%= String.valueOf(commerceOrderItem.getCommerceOrderItemId()) %>" />
+			</portlet:actionURL>
+
+			<liferay-ui:icon
+				icon="times"
+				markupView="lexicon"
+				url="<%= deleteURL %>"
+			/>
+		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>
+
+<portlet:actionURL name="editCommerceOrder" var="editCommerceOrderURL" />
+
+<%@ include file="/transition.jspf" %>
 
 <aui:script>
 	function <portlet:namespace />reorderCommerceOrder() {
@@ -293,4 +317,80 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 
 		submitForm(document.<portlet:namespace />fm);
 	}
+</aui:script>
+
+<aui:script use="liferay-util-window">
+	var orderTransition = A.one('#<portlet:namespace />orderTransition');
+	var transitionComments = A.one('#<portlet:namespace />transitionComments');
+
+	orderTransition.delegate(
+		'click',
+		function(event) {
+			var link = event.currentTarget;
+
+			var workflowTaskId = parseInt(link.getData('workflowTaskId'), 10);
+
+			var form = A.one('#<portlet:namespace />transitionFm');
+
+			A.one('#<portlet:namespace />commerceOrderId').val(link.getData('commerceOrderId'));
+			A.one('#<portlet:namespace />workflowTaskId').val(workflowTaskId);
+			A.one('#<portlet:namespace />transitionName').val(link.getData('transitionName'))
+
+			if (workflowTaskId <= 0) {
+				submitForm(form);
+
+				return;
+			}
+
+			transitionComments.show();
+
+			var dialog = Liferay.Util.Window.getWindow(
+				{
+					dialog: {
+						bodyContent: form,
+						destroyOnHide: true,
+						height: 400,
+						resizable: false,
+						toolbars: {
+							footer: [
+								{
+									cssClass: 'btn-primary mr-2',
+									label: '<liferay-ui:message key="done" />',
+									on: {
+										click: function() {
+											submitForm(form);
+										}
+									}
+								},
+								{
+									cssClass: 'btn-cancel',
+									label: '<liferay-ui:message key="cancel" />',
+									on: {
+										click: function() {
+											dialog.hide();
+										}
+									}
+								}
+							],
+							header: [
+								{
+									cssClass: 'close',
+									discardDefaultButtonCssClasses: true,
+									labelHTML: '<span aria-hidden="true">&times;</span>',
+									on: {
+										click: function(event) {
+											dialog.hide();
+										}
+									}
+								}
+							]
+						},
+						width: 720
+					},
+					title: link.text()
+				}
+			);
+		},
+		'.transition-link'
+	);
 </aui:script>

@@ -188,6 +188,8 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		else if (transitionName.equals("submit")) {
 			submitCommerceOrder(commerceOrderId);
 		}
+
+		hideDefaultSuccessMessage(actionRequest);
 	}
 
 	protected void executeWorkflowTransition(

@@ -62,7 +62,8 @@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 <%@ page import="java.text.Format" %>
 
 <%@ page import="java.util.Date" %><%@
-page import="java.util.List" %>
+page import="java.util.List" %><%@
+page import="java.util.StringJoiner" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

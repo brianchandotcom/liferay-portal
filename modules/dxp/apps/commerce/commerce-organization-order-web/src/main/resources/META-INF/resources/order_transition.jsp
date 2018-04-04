@@ -19,46 +19,52 @@
 <%
 CommerceOrganizationOrderDisplayContext commerceOrganizationOrderDisplayContext = (CommerceOrganizationOrderDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+CommerceOrder commerceOrder = (CommerceOrder)request.getAttribute("order_transition.jsp-commerceOrder");
 
-CommerceOrder commerceOrder = (CommerceOrder)row.getObject();
+if (commerceOrder == null) {
+	ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+
+	commerceOrder = (CommerceOrder)row.getObject();
+}
 
 List<ObjectValuePair<Long, String>> transitionOVPs = commerceOrganizationOrderDisplayContext.getCommerceOrderTransitionOVPs(commerceOrder);
 %>
 
 <c:if test="<%= !transitionOVPs.isEmpty() %>">
-	<c:if test="<%= transitionOVPs.size() > 1 %>">
-		<div class="btn-group btn-group-sm dropdown" role="group">
-	</c:if>
+	<div id="<portlet:namespace />orderTransition">
+		<c:if test="<%= transitionOVPs.size() > 1 %>">
+			<div class="btn-group btn-group-sm dropdown" role="group">
+		</c:if>
 
-	<%
-	ObjectValuePair<Long, String> firstTransitionOVP = transitionOVPs.get(0);
-	%>
+		<%
+		ObjectValuePair<Long, String> firstTransitionOVP = transitionOVPs.get(0);
+		%>
 
-	<button class="btn btn-secondary btn-sm transition-link" data-commerceOrderId="<%= commerceOrder.getCommerceOrderId() %>" data-transitionName="<%= firstTransitionOVP.getValue() %>" data-workflowTaskId="<%= firstTransitionOVP.getKey() %>" type="button">
-		<%= commerceOrganizationOrderDisplayContext.getCommerceOrderTransitionMessage(firstTransitionOVP.getValue()) %>
-	</button>
-
-	<c:if test="<%= transitionOVPs.size() > 1 %>">
-		<button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary dropdown-toggle" data-toggle="dropdown" type="button">
-			<clay:icon symbol="caret-bottom" />
+		<button class="btn btn-secondary btn-sm transition-link" data-commerceOrderId="<%= commerceOrder.getCommerceOrderId() %>" data-transitionName="<%= firstTransitionOVP.getValue() %>" data-workflowTaskId="<%= firstTransitionOVP.getKey() %>" type="button">
+			<%= commerceOrganizationOrderDisplayContext.getCommerceOrderTransitionMessage(firstTransitionOVP.getValue()) %>
 		</button>
 
-		<div class="dropdown-menu dropdown-menu-right">
+		<c:if test="<%= transitionOVPs.size() > 1 %>">
+			<button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary dropdown-toggle" data-toggle="dropdown" type="button">
+				<clay:icon symbol="caret-bottom" />
+			</button>
 
-			<%
-			for (int i = 1; i < transitionOVPs.size(); i++) {
-				ObjectValuePair<Long, String> transitionOVP = transitionOVPs.get(i);
+			<div class="dropdown-menu dropdown-menu-right">
 
-				String transitionName = transitionOVP.getValue();
-			%>
+				<%
+				for (int i = 1; i < transitionOVPs.size(); i++) {
+					ObjectValuePair<Long, String> transitionOVP = transitionOVPs.get(i);
 
-				<a class="dropdown-item transition-link" data-commerceOrderId="<%= commerceOrder.getCommerceOrderId() %>" data-transitionName="<%= transitionName %>" data-workflowTaskId="<%= firstTransitionOVP.getKey() %>" href="javascript:;"><%= commerceOrganizationOrderDisplayContext.getCommerceOrderTransitionMessage(transitionName) %></a>
+					String transitionName = transitionOVP.getValue();
+				%>
 
-			<%
-			}
-			%>
+					<a class="dropdown-item transition-link" data-commerceOrderId="<%= commerceOrder.getCommerceOrderId() %>" data-transitionName="<%= transitionName %>" data-workflowTaskId="<%= firstTransitionOVP.getKey() %>" href="javascript:;"><%= commerceOrganizationOrderDisplayContext.getCommerceOrderTransitionMessage(transitionName) %></a>
 
-		</div>
-	</c:if>
+				<%
+				}
+				%>
+
+			</div>
+		</c:if>
+	</div>
 </c:if>

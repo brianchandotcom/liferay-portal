@@ -1,14 +1,29 @@
+@import "bourbon";
+@import "mixins";
+
 .fragment-entry-link-wrapper {
 	box-shadow: 0 0 0 1px rgba(0, 0, 0, 0);
 	position: relative;
 	transition: box-shadow ease 0.3s;
 
-	.portlet > .portlet-topper {
-		margin-top: 25px;
-		z-index: 1;
+	.portlet {
+		@include sm {
+			&:hover, &.focus {
+				> .portlet-topper {
+					background-color: rgba(255, 255, 255, 0.95);
+					border: 1px solid #89A7E0;
+					border-radius: 3px;
+					height: 100%;
+					min-height: 54px;
+					padding: 10px 20px 10px 10px;
+					z-index: 1;
 
-		.portlet-topper-toolbar {
-			margin-right: 2px;
+					@include transform(translateY(0));
+				}
+			}
+		}
+		.portlet-title-default {
+			color: #0B5FFF;
 		}
 	}
 }

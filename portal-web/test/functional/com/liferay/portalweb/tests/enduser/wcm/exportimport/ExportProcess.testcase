@@ -32,8 +32,9 @@
 
 		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
 
-		<execute macro="LAR#deleteCurrentAndPreviousProcess">
-			<var name="larFileName" value="CustomExport" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Clear" />
+			<var name="rowEntry" value="CustomExport" />
 		</execute>
 	</command>
 
@@ -52,8 +53,9 @@
 
 		<execute macro="LAR#exportSuccess" />
 
-		<execute macro="LAR#deleteCurrentAndPreviousProcess">
-			<var name="larFileName" value="DMExport" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Clear" />
+			<var name="rowEntry" value="DMExport" />
 		</execute>
 	</command>
 

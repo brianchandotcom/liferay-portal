@@ -5,10 +5,6 @@
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Folder">
 			<var name="key_menuItem" value="Folder" />
 		</execute>
-	</command>
-
-	<command name="addCP">
-		<execute macro="KBFolder#_gotoAddFolder" />
 
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${kbFolderName}" />

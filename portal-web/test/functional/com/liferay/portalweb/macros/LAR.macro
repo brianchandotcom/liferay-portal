@@ -456,16 +456,6 @@
 		</execute>
 	</command>
 
-	<command name="deleteCurrentAndPreviousProcess">
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
-			<var name="key_rowEntry" value="${larFileName}" />
-		</execute>
-
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM">
-			<var name="key_menuItem" value="Clear" />
-		</execute>
-	</command>
-
 	<command name="downloadLar">
 		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 
@@ -650,13 +640,6 @@
 		<var name="key_filterValue" value="Completion Date" />
 
 		<execute function="AssertClick" locator1="Dropdown#FILTER_ORDER_VALUES" value1="Completion Date" />
-	</command>
-
-	<command name="relaunchExport">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Relaunch" />
-			<var name="rowEntry" value="${larFileName}" />
-		</execute>
 	</command>
 
 	<command name="saveExportTemplateCP">

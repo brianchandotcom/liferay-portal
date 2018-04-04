@@ -58,8 +58,8 @@
 	</command>
 
 	<command name="viewCPViaAddTemplate">
-		<execute macro="KBArticle#_gotoAddArticleViaTemplate">
-			<var name="kbTemplateTitle" value="${kbTemplateTitle}" />
+		<execute macro="LexiconEntry#gotoAddMenuItem">
+			<var name="menuItem" value="${kbTemplateTitle}" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="AlloyEditor#EDITOR" value1="${kbTemplateTitle}">

@@ -1188,8 +1188,9 @@
 			<var name="formName" value="Test Form" />
 		</execute>
 
-		<execute macro="FormsAdminNavigator#gotoEdit">
-			<var name="formName" value="Copy of Test Form" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="Copy of Test Form" />
 		</execute>
 
 		<execute macro="FormsAdminNavigator#gotoRules" />

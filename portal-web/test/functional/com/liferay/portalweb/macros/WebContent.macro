@@ -1079,13 +1079,6 @@
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
 
-	<command name="gotoViewSpecificVersionHistoryCP">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="View History" />
-			<var name="rowEntry" value="${webContentTitle}" />
-		</execute>
-	</command>
-
 	<command name="moveArticlesToFolderCP">
 		<for list="${webContentArticlesList}" param="webContentTitle">
 			<execute function="Check" locator1="WC#ENTRY_DESCRIPTIVE_CHECKBOX">

@@ -3183,7 +3183,9 @@
 			<var name="ddlDataDefinitionName" value="Contacts" />
 		</execute>
 
-		<execute macro="DDLNavigator#gotoAddDisplayTemplate" />
+		<execute macro="LexiconEntry#gotoAddMenuItem">
+			<var name="menuItem" value="Add Display Template" />
+		</execute>
 
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />

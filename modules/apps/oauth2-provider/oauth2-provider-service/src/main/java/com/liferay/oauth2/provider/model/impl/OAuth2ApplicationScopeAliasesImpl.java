@@ -16,25 +16,31 @@ package com.liferay.oauth2.provider.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.util.Arrays;
+import java.util.List;
+
 /**
- * The extended model implementation for the OAuth2ApplicationScopeAliases service. Represents a row in the &quot;OAuth2ApplicationScopeAliases&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases} interface.
- * </p>
- *
  * @author Brian Wing Shun Chan
  */
 @ProviderType
 public class OAuth2ApplicationScopeAliasesImpl
 	extends OAuth2ApplicationScopeAliasesBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a o auth2 application scope aliases model instance should use the {@link com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases} interface instead.
-	 */
-	public OAuth2ApplicationScopeAliasesImpl() {
+	@Override
+	public List<String> getScopeAliasesList() {
+		return Arrays.asList(
+			StringUtil.split(getScopeAliases(), StringPool.SPACE));
+	}
+
+	@Override
+	public void setScopeAliasesList(List<String> scopeAliasesList) {
+		String scopeAliases = StringUtil.merge(
+			scopeAliasesList, StringPool.SPACE);
+
+		setScopeAliases(scopeAliases);
 	}
 
 }

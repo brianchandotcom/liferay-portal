@@ -34,6 +34,16 @@ public class OAuth2ApplicationScopeAliasesLocalServiceWrapper
 		_oAuth2ApplicationScopeAliasesLocalService = oAuth2ApplicationScopeAliasesLocalService;
 	}
 
+	@Override
+	public com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases addOAuth2ApplicationScopeAliases(
+		long companyId, long userId, java.lang.String userName,
+		long oAuth2ApplicationId,
+		java.util.List<java.lang.String> scopeAliasesList)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _oAuth2ApplicationScopeAliasesLocalService.addOAuth2ApplicationScopeAliases(companyId,
+			userId, userName, oAuth2ApplicationId, scopeAliasesList);
+	}
+
 	/**
 	* Adds the o auth2 application scope aliases to the database. Also notifies the appropriate model listeners.
 	*
@@ -187,6 +197,14 @@ public class OAuth2ApplicationScopeAliasesLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases fetchOAuth2ApplicationScopeAliases(
+		long oAuth2ApplicationId,
+		java.util.List<java.lang.String> scopeAliasesList) {
+		return _oAuth2ApplicationScopeAliasesLocalService.fetchOAuth2ApplicationScopeAliases(oAuth2ApplicationId,
+			scopeAliasesList);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _oAuth2ApplicationScopeAliasesLocalService.getActionableDynamicQuery();
 	}
@@ -226,6 +244,14 @@ public class OAuth2ApplicationScopeAliasesLocalServiceWrapper
 		int start, int end) {
 		return _oAuth2ApplicationScopeAliasesLocalService.getOAuth2ApplicationScopeAliaseses(start,
 			end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases> getOAuth2ApplicationScopeAliaseses(
+		long oAuth2ApplicationId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases> orderByComparator) {
+		return _oAuth2ApplicationScopeAliasesLocalService.getOAuth2ApplicationScopeAliaseses(oAuth2ApplicationId,
+			start, end, orderByComparator);
 	}
 
 	/**

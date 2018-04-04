@@ -25,10 +25,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	category = "foundation", scope = ExtendedObjectClassDefinition.Scope.SYSTEM
 )
 @Meta.OCD(
-	id = "com.liferay.oauth2.provider.configuration.OAuth2Configuration",
-	localization = "content/Language", name = "oauth2-configuration-name"
+	id = "com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration",
+	localization = "content/Language",
+	name = "oauth2-provider-configuration-name"
 )
-public interface OAuth2Configuration {
+public interface OAuth2ProviderConfiguration {
 
 	@Meta.AD(
 		deflt = "true",

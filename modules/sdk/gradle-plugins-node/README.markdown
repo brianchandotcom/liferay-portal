@@ -210,7 +210,7 @@ Property Name | Type | Default Value | Description
 `nodeModulesCacheNativeSync` | `boolean` | `true` | Whether to use `rsync` (on Linux/macOS) or `robocopy` (on Windows) to cache and restore the `node_modules` directory. If `nodeModulesCacheDir` is not set, this property has no effect.
 `nodeModulesDigestFile` | `File` | `null`. | <p>If this property is set, the content of the project's `package-lock.json` (or `npm-shrinkwrap.json`, or `package.json` if absent) is checked with the digest from the `node_modules` directory. If the digests match, do nothing. If the digests don't match, the `node_modules` directory is deleted before running `npm install`.</p><p>This feature is not available if the `com.liferay.cache` plugin is applied or if the property `nodeModulesCacheDir` is set.</p>
 `removeShrinkwrappedUrls` | `boolean` | `true` if the [registry](#registry) property has a value, `false` otherwise. | Whether to temporarily remove all the hard-coded URLs in the `from` and `resolved` fields of the `npm-shinkwrap.json` file before invoking `npm install`. This way, it is possible to force NPM to download all dependencies from a custom registry declared in the [`registry`](#registry) property.
-`useNpmCI` | `boolean` | `false` | Whether to run `npm ci` instead of `npm install`.
+`useNpmCI` | `boolean` | `false` | Whether to run `npm ci` instead of `npm install`. If the `package-lock.json` file does not exist, this property has no effect.
 
 The properties of type `File` support any type that can be resolved by [`project.file`](https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:file(java.css.Object)).
 

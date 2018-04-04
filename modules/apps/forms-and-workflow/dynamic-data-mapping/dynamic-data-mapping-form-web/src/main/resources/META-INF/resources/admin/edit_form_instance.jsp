@@ -157,8 +157,8 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 				portletNamespace: '<portlet:namespace />',
 				publishFormInstanceURL: '<%= publishFormInstanceURL.toString() %>',
 				restrictedFormURL: '<%= ddmFormAdminDisplayContext.getRestrictedFormURL() %>',
-				showPagination: true,
-				sharedFormURL: '<%= ddmFormAdminDisplayContext.getSharedFormURL() %>'
+				sharedFormURL: '<%= ddmFormAdminDisplayContext.getSharedFormURL() %>',
+				showPagination: true
 			};
 
 			var initHandler = Liferay.after(
@@ -204,16 +204,16 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 					'formPortlet',
 					new Liferay.DDM.FormPortlet(
 						{
+							defaultLanguageId: '<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
+							editForm: form,
+							editingLanguageId: '<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
+							formBuilder: Liferay.component('<portlet:namespace />formBuilder'),
+							formInstanceId: <%= formInstanceId %>,
 							localizedDescription: <%= ddmFormAdminDisplayContext.getFormLocalizedDescription() %>,
 							localizedName: <%= ddmFormAdminDisplayContext.getFormLocalizedName() %>,
-							defaultLanguageId: '<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
-							editingLanguageId: '<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
-							editForm: form,
-							formBuilder: Liferay.component('<portlet:namespace />formBuilder'),
 							namespace: '<portlet:namespace />',
 							published: !!<%= ddmFormAdminDisplayContext.isFormPublished() %>,
 							publishFormInstanceURL: '<%= publishFormInstanceURL.toString() %>',
-							formInstanceId: <%= formInstanceId %>,
 							ruleBuilder: Liferay.component('<portlet:namespace />ruleBuilder'),
 							translationManager: Liferay.component('<portlet:namespace />translationManager')
 						}

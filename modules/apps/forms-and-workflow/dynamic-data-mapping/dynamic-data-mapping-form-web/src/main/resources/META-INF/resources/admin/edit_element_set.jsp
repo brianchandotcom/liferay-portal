@@ -160,7 +160,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 									}
 								);
 							},
-							['liferay-ddm-form-portlet','liferay-ddm-soy-template-util'].concat(systemFieldModules)
+							['liferay-ddm-form-portlet', 'liferay-ddm-soy-template-util'].concat(systemFieldModules)
 						);
 
 						<portlet:namespace />init();
@@ -173,12 +173,12 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 					'formPortlet',
 					new Liferay.DDM.FormPortlet(
 						{
+							defaultLanguageId: '<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
+							editForm: form,
+							editingLanguageId: '<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
+							formBuilder: Liferay.component('<portlet:namespace />formBuilder'),
 							localizedDescription: <%= ddmFormAdminDisplayContext.getFormLocalizedDescription() %>,
 							localizedName: <%= ddmFormAdminDisplayContext.getFormLocalizedName() %>,
-							defaultLanguageId: '<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
-							editingLanguageId: '<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
-							editForm: form,
-							formBuilder: Liferay.component('<portlet:namespace />formBuilder'),
 							namespace: '<portlet:namespace />',
 							translationManager: Liferay.component('<portlet:namespace />translationManager'),
 							view: 'fieldSets'

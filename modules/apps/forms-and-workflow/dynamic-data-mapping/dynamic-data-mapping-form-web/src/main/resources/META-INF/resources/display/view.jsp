@@ -185,15 +185,21 @@ Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
 							}
 
 							function <portlet:namespace />fireFormView() {
-								Liferay.fire('ddmFormView', {
-									formId: <%= formInstanceId %>,
-									title: '<%= HtmlUtil.escape(formInstance.getName(displayLocale)) %>'
-								});
+								Liferay.fire(
+									'ddmFormView',
+									{
+										formId: <%= formInstanceId %>,
+										title: '<%= HtmlUtil.escape(formInstance.getName(displayLocale)) %>'
+									}
+								);
 
-								Liferay.fire("ddmFormPageShow", {
-									formId: <%= formInstanceId %>,
-									page: 1
-								});
+								Liferay.fire(
+									'ddmFormPageShow',
+									{
+										formId: <%= formInstanceId %>,
+										page: 1
+									}
+								);
 							}
 
 							<portlet:namespace />form = Liferay.component('<%= ddmFormDisplayContext.getContainerId() %>DDMForm');

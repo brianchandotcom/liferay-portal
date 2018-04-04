@@ -3196,7 +3196,7 @@ execution when on the `7.0.x` branch.
 - [LPS-74110]: Update the [Liferay Gradle Plugins Baseline] dependency to
 version 1.2.2.
 
-## 5.3.62 - 2018-04-04
+## 5.3.63 - 2018-04-04
 
 ### Changed
 - [LPS-78741]: Update the [Liferay Gradle Plugins JSDoc] dependency to version

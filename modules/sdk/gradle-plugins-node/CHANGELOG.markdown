@@ -229,6 +229,12 @@ directory's digest, do not run `npm install`.
 - [LPS-78741]: If the `nodeModulesDigestFile` matches the `node_modules`
 directory's digest, do not run `npm ci`.
 
+## 4.3.3 - 2018-04-04
+
+### Fixed
+- [LPS-78741]: Fix execution of task `npmPackageLock` when the property
+`useNpmCI` of task `npmInstall` is set to `true`.
+
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573

@@ -24,7 +24,10 @@ JournalMoveEntriesDisplayContext journalMovesEntriesDisplayContext = new Journal
 	<portlet:param name="mvcPath" value="/move_entries.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= moveArticleURL %>" cssClass="container-fluid-1280" name="fm">
+<liferay-frontend:edit-form
+	action="<%= moveArticleURL %>"
+	name="fm"
+>
 	<aui:input name="redirect" type="hidden" value="<%= journalMovesEntriesDisplayContext.getRedirect() %>" />
 	<aui:input name="newFolderId" type="hidden" value="<%= journalMovesEntriesDisplayContext.getNewFolderId() %>" />
 
@@ -32,8 +35,8 @@ JournalMoveEntriesDisplayContext journalMovesEntriesDisplayContext = new Journal
 	<liferay-ui:error exception="<%= InvalidDDMStructureException.class %>" message="the-folder-you-selected-does-not-allow-this-type-of-structure.-please-select-a-different-folder" />
 	<liferay-ui:error exception="<%= NoSuchFolderException.class %>" message="please-enter-a-valid-folder" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
+	<liferay-frontend:fieldset-group>
+		<liferay-frontend:fieldset>
 
 			<%
 			List<JournalFolder> validMoveFolders = journalMovesEntriesDisplayContext.getValidMoveFolders();
@@ -152,15 +155,15 @@ JournalMoveEntriesDisplayContext journalMovesEntriesDisplayContext = new Journal
 			<aui:input label="new-folder" name="folderName" title="new-folder" type="resource" value="<%= journalMovesEntriesDisplayContext.getNewFolderName() %>" />
 
 			<aui:button name="selectFolderButton" value="select" />
-		</aui:fieldset>
-	</aui:fieldset-group>
+		</liferay-frontend:fieldset>
+	</liferay-frontend:fieldset-group>
 
-	<aui:button-row>
+	<liferay-frontend:button-row>
 		<aui:button type="submit" value="move" />
 
 		<aui:button href="<%= journalMovesEntriesDisplayContext.getRedirect() %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+	</liferay-frontend:button-row>
+</liferay-frontend:edit-form>
 
 <aui:script use="liferay-item-selector-dialog">
 	AUI.$('#<portlet:namespace />selectFolderButton').on(

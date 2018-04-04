@@ -2162,7 +2162,8 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 	*     &lt;/static-content&gt;
 	* &lt;/root&gt;
 	* </code>
-	* </pre></p>
+	* </pre>
+	* </p>
 	*
 	* @param groupId the primary key of the web content article's group
 	* @param folderId the primary key of the web content article folder

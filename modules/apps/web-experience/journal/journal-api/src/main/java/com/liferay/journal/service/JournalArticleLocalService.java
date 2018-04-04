@@ -102,7 +102,8 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	*     &lt;/static-content&gt;
 	* &lt;/root&gt;
 	* </code>
-	* </pre></p>
+	* </pre>
+	* </p>
 	*
 	* @param userId the primary key of the web content article's creator/owner
 	* @param groupId the primary key of the web content article's group
@@ -218,7 +219,8 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	*     &lt;/static-content&gt;
 	* &lt;/root&gt;
 	* </code>
-	* </pre></p>
+	* </pre>
+	* </p>
 	*
 	* @param userId the primary key of the web content article's creator/owner
 	* @param groupId the primary key of the web content article's group
@@ -2245,7 +2247,8 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* <code>
 	* /(Folder's folderId)/(Subfolder's folderId)/(article's articleId)
 	* </code>
-	* </pre></p>
+	* </pre>
+	* </p>
 	*
 	* @param companyId the primary key of the web content article's company
 	*/

@@ -52,13 +52,10 @@ public class RobotsUtil {
 			return getDefaultRobots(null);
 		}
 
-		String defaultRobots = getDefaultRobots(
-			PortalUtil.getVirtualHostname(layoutSet));
-
 		return GetterUtil.get(
 			layoutSet.getSettingsProperty(
 				layoutSet.isPrivateLayout() + "-robots.txt"),
-			defaultRobots);
+			getDefaultRobots(PortalUtil.getVirtualHostname(layoutSet)));
 	}
 
 }

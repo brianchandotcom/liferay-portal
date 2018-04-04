@@ -38,10 +38,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.filter.ActionFilter;
 import javax.portlet.filter.EventFilter;
 import javax.portlet.filter.FilterConfig;
@@ -93,9 +95,16 @@ public class InvokerFilterContainerImpl
 			PortletFilter portletFilter = PortletFilterFactory.create(
 				portletFilterModel, portletContext);
 
+			Map<String, Object> filterProperties = new HashMap<>();
+
+			filterProperties.putAll(properties);
+
+			filterProperties.put(
+				"filter.lifecycles", portletFilterModel.getLifecycles());
+
 			ServiceRegistration<PortletFilter> serviceRegistration =
 				registry.registerService(
-					PortletFilter.class, portletFilter, properties);
+					PortletFilter.class, portletFilter, filterProperties);
 
 			ServiceRegistrationTuple serviceRegistrationTuple =
 				new ServiceRegistrationTuple(
@@ -304,19 +313,34 @@ public class InvokerFilterContainerImpl
 				}
 			}
 
-			if (portletFilter instanceof ActionFilter) {
+			Set<String> declaredLifecycles =
+				(Set<String>)serviceReference.getProperty("filter.lifecycles");
+
+			if (_isFilterLifecycle(
+					PortletRequest.ACTION_PHASE, ActionFilter.class,
+					portletFilter, declaredLifecycles)) {
+
 				_actionFilters.add((ActionFilter)portletFilter);
 			}
 
-			if (portletFilter instanceof EventFilter) {
+			if (_isFilterLifecycle(
+					PortletRequest.EVENT_PHASE, EventFilter.class,
+					portletFilter, declaredLifecycles)) {
+
 				_eventFilters.add((EventFilter)portletFilter);
 			}
 
-			if (portletFilter instanceof RenderFilter) {
+			if (_isFilterLifecycle(
+					PortletRequest.RENDER_PHASE, RenderFilter.class,
+					portletFilter, declaredLifecycles)) {
+
 				_renderFilters.add((RenderFilter)portletFilter);
 			}
 
-			if (portletFilter instanceof ResourceFilter) {
+			if (_isFilterLifecycle(
+					PortletRequest.RESOURCE_PHASE, ResourceFilter.class,
+					portletFilter, declaredLifecycles)) {
+
 				_resourceFilters.add((ResourceFilter)portletFilter);
 			}
 
@@ -351,6 +375,24 @@ public class InvokerFilterContainerImpl
 			}
 
 			portletFilter.destroy();
+		}
+
+		private boolean _isFilterLifecycle(
+			String lifecycle, Class<?> filterInterface,
+			PortletFilter portletFilter, Set<String> declaredLifecycles) {
+
+			if ((declaredLifecycles != null) && !declaredLifecycles.isEmpty()) {
+				if (declaredLifecycles.contains(lifecycle) &&
+					filterInterface.isInstance(portletFilter)) {
+
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+
+			return filterInterface.isInstance(portletFilter);
 		}
 
 		private final PortletContext _portletContext;

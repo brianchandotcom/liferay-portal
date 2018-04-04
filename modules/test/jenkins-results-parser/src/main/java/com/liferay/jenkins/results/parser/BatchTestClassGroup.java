@@ -19,6 +19,8 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Michael Hashimoto
@@ -59,11 +61,53 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 				"test.properties"));
 	}
 
+	protected String getWildcardPropertyName(
+		Properties properties, String propertyName) {
+
+		return getWildcardPropertyName(properties, propertyName, null);
+	}
+
+	protected String getWildcardPropertyName(
+		Properties properties, String propertyName, String testSuiteName) {
+
+		for (String wildcardPropertyName : properties.stringPropertyNames()) {
+			if (!wildcardPropertyName.startsWith(propertyName)) {
+				continue;
+			}
+
+			Matcher matcher = _propertyNamePattern.matcher(
+				wildcardPropertyName);
+
+			if (matcher.find()) {
+				String batchNameMatcher = matcher.group("batchName");
+
+				batchNameMatcher = batchNameMatcher.replace("*", ".+");
+
+				if (!batchName.matches(batchNameMatcher)) {
+					continue;
+				}
+
+				String testSuiteNameMatcher = matcher.group("testSuiteName");
+
+				if (testSuiteName != testSuiteNameMatcher) {
+					continue;
+				}
+
+				return wildcardPropertyName;
+			}
+		}
+
+		return null;
+	}
+
 	protected final Map<Integer, AxisTestClassGroup> axisTestClassGroups =
 		new HashMap<>();
 	protected final String batchName;
 	protected final GitWorkingDirectory gitWorkingDirectory;
 	protected final Properties portalTestProperties;
 	protected final String testSuiteName;
+
+	private final Pattern _propertyNamePattern = Pattern.compile(
+		"[^\\]]+\\[(?<batchName>[^\\]]+)\\](\\[(?<testSuiteName>[^\\]]+)\\])?");
 
 }

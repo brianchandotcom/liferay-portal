@@ -42,6 +42,15 @@ public class OAuth2ApplicationScopeAliasesLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.oauth2.provider.service.impl.OAuth2ApplicationScopeAliasesLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases addOAuth2ApplicationScopeAliases(
+		long companyId, long userId, java.lang.String userName,
+		long oAuth2ApplicationId,
+		java.util.List<java.lang.String> scopeAliasesList)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addOAuth2ApplicationScopeAliases(companyId, userId,
+			userName, oAuth2ApplicationId, scopeAliasesList);
+	}
 
 	/**
 	* Adds the o auth2 application scope aliases to the database. Also notifies the appropriate model listeners.
@@ -186,6 +195,14 @@ public class OAuth2ApplicationScopeAliasesLocalServiceUtil {
 				   .fetchOAuth2ApplicationScopeAliases(oAuth2ApplicationScopeAliasesId);
 	}
 
+	public static com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases fetchOAuth2ApplicationScopeAliases(
+		long oAuth2ApplicationId,
+		java.util.List<java.lang.String> scopeAliasesList) {
+		return getService()
+				   .fetchOAuth2ApplicationScopeAliases(oAuth2ApplicationId,
+			scopeAliasesList);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -222,6 +239,14 @@ public class OAuth2ApplicationScopeAliasesLocalServiceUtil {
 	public static java.util.List<com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases> getOAuth2ApplicationScopeAliaseses(
 		int start, int end) {
 		return getService().getOAuth2ApplicationScopeAliaseses(start, end);
+	}
+
+	public static java.util.List<com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases> getOAuth2ApplicationScopeAliaseses(
+		long oAuth2ApplicationId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases> orderByComparator) {
+		return getService()
+				   .getOAuth2ApplicationScopeAliaseses(oAuth2ApplicationId,
+			start, end, orderByComparator);
 	}
 
 	/**

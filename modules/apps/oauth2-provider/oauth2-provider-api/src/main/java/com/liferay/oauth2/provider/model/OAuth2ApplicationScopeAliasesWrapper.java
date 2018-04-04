@@ -199,6 +199,11 @@ public class OAuth2ApplicationScopeAliasesWrapper
 		return _oAuth2ApplicationScopeAliases.getScopeAliases();
 	}
 
+	@Override
+	public java.util.List<java.lang.String> getScopeAliasesList() {
+		return _oAuth2ApplicationScopeAliases.getScopeAliasesList();
+	}
+
 	/**
 	* Returns the user ID of this o auth2 application scope aliases.
 	*
@@ -344,6 +349,12 @@ public class OAuth2ApplicationScopeAliasesWrapper
 	@Override
 	public void setScopeAliases(java.lang.String scopeAliases) {
 		_oAuth2ApplicationScopeAliases.setScopeAliases(scopeAliases);
+	}
+
+	@Override
+	public void setScopeAliasesList(
+		java.util.List<java.lang.String> scopeAliasesList) {
+		_oAuth2ApplicationScopeAliases.setScopeAliasesList(scopeAliasesList);
 	}
 
 	/**

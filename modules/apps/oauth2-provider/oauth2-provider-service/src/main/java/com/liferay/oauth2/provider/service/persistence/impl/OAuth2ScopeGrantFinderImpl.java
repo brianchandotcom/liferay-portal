@@ -37,7 +37,7 @@ public class OAuth2ScopeGrantFinderImpl
 		OAuth2ScopeGrantFinder.class.getName() + ".findByC_A_B_A";
 
 	@Override
-	public Collection<OAuth2ScopeGrant> findByC_A_A_B(
+	public Collection<OAuth2ScopeGrant> findByC_A_B_A(
 		long companyId, String applicationName, String bundleSymbolicName,
 		String accessTokenContent) {
 

@@ -100,6 +100,17 @@ public class OAuth2ScopeGrantLocalServiceUtil {
 		return getService().createOAuth2ScopeGrant(oAuth2ScopeGrantId);
 	}
 
+	public static com.liferay.oauth2.provider.model.OAuth2ScopeGrant createOAuth2ScopeGrant(
+		long companyId, long oAuth2ApplicationScopeAliasesId,
+		java.lang.String applicationName, java.lang.String bundleSymbolicName,
+		java.lang.String scope)
+		throws com.liferay.oauth2.provider.exception.DuplicateOAuth2ScopeGrantException {
+		return getService()
+				   .createOAuth2ScopeGrant(companyId,
+			oAuth2ApplicationScopeAliasesId, applicationName,
+			bundleSymbolicName, scope);
+	}
+
 	public static void deleteOAuth2AuthorizationOAuth2ScopeGrant(
 		long oAuth2AuthorizationId, long oAuth2ScopeGrantId) {
 		getService()
@@ -321,6 +332,22 @@ public class OAuth2ScopeGrantLocalServiceUtil {
 		return getService().getOAuth2ScopeGrants(start, end);
 	}
 
+	public static java.util.Collection<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> getOAuth2ScopeGrants(
+		long oAuth2ApplicationScopeAliasesId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> orderByComparator) {
+		return getService()
+				   .getOAuth2ScopeGrants(oAuth2ApplicationScopeAliasesId,
+			start, end, orderByComparator);
+	}
+
+	public static java.util.Collection<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> getOAuth2ScopeGrants(
+		long companyId, java.lang.String applicationName,
+		java.lang.String bundleSymbolicName, java.lang.String accessTokenContent) {
+		return getService()
+				   .getOAuth2ScopeGrants(companyId, applicationName,
+			bundleSymbolicName, accessTokenContent);
+	}
+
 	/**
 	* Returns the number of o auth2 scope grants.
 	*
@@ -343,6 +370,15 @@ public class OAuth2ScopeGrantLocalServiceUtil {
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static java.util.Collection<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> grantScopesToAuthorization(
+		long oAuth2AuthorizationId,
+		java.util.Collection<com.liferay.oauth2.provider.scope.liferay.LiferayOAuth2Scope> liferayOAuth2Scopes)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .grantScopesToAuthorization(oAuth2AuthorizationId,
+			liferayOAuth2Scopes);
 	}
 
 	public static boolean hasOAuth2AuthorizationOAuth2ScopeGrant(

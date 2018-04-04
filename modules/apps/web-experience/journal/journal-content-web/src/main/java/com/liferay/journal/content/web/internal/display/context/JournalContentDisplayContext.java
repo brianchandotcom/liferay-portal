@@ -24,7 +24,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.constants.JournalWebKeys;
@@ -51,6 +50,7 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.servlet.taglib.ui.AssetAddonEntry;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -96,7 +96,9 @@ public class JournalContentDisplayContext {
 
 	public static JournalContentDisplayContext create(
 			PortletRequest portletRequest, PortletResponse portletResponse,
-			PortletDisplay portletDisplay, long ddmStructureClassNameId)
+			PortletDisplay portletDisplay, long ddmStructureClassNameId,
+			ModelResourcePermission<DDMTemplate>
+				ddmTemplateModelResourcePermission)
 		throws PortalException {
 
 		JournalContentDisplayContext journalContentDisplayContext =
@@ -112,7 +114,7 @@ public class JournalContentDisplayContext {
 			journalContentDisplayContext = new JournalContentDisplayContext(
 				portletRequest, portletResponse,
 				journalContentPortletInstanceConfiguration,
-				ddmStructureClassNameId);
+				ddmStructureClassNameId, ddmTemplateModelResourcePermission);
 
 			portletRequest.setAttribute(
 				JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT,
@@ -897,10 +899,10 @@ public class JournalContentDisplayContext {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		try {
-			_showEditTemplateIcon = DDMTemplatePermission.contains(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), ddmTemplate,
-				portletDisplay.getId(), ActionKeys.UPDATE);
+			_showEditTemplateIcon =
+				_ddmTemplateModelResourcePermission.contains(
+					themeDisplay.getPermissionChecker(), ddmTemplate,
+					ActionKeys.UPDATE);
 		}
 		catch (PortalException pe) {
 			_log.error(
@@ -945,7 +947,9 @@ public class JournalContentDisplayContext {
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			JournalContentPortletInstanceConfiguration
 				journalContentPortletInstanceConfiguration,
-			long ddmStructureClassNameId)
+			long ddmStructureClassNameId,
+			ModelResourcePermission<DDMTemplate>
+				ddmTemplateModelResourcePermission)
 		throws PortalException {
 
 		_portletRequest = portletRequest;
@@ -953,6 +957,8 @@ public class JournalContentDisplayContext {
 		_journalContentPortletInstanceConfiguration =
 			journalContentPortletInstanceConfiguration;
 		_ddmStructureClassNameId = ddmStructureClassNameId;
+		_ddmTemplateModelResourcePermission =
+			ddmTemplateModelResourcePermission;
 
 		if (Validator.isNull(getPortletResource()) && !isShowArticle()) {
 			portletRequest.setAttribute(
@@ -1037,6 +1043,8 @@ public class JournalContentDisplayContext {
 	private final long _ddmStructureClassNameId;
 	private DDMTemplate _ddmTemplate;
 	private String _ddmTemplateKey;
+	private final ModelResourcePermission<DDMTemplate>
+		_ddmTemplateModelResourcePermission;
 	private List<DDMTemplate> _ddmTemplates;
 	private DDMTemplate _defaultDDMTemplate;
 	private Boolean _enableViewCountIncrement;

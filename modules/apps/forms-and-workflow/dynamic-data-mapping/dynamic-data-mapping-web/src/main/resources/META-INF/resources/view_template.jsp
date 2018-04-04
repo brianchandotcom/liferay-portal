@@ -128,7 +128,7 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 				<%
 				String rowHREF = StringPool.BLANK;
 
-				if (DDMTemplatePermission.contains(permissionChecker, scopeGroupId, template, refererPortletName, ActionKeys.UPDATE)) {
+				if (DDMTemplatePermission.contains(permissionChecker, template, ActionKeys.UPDATE)) {
 					PortletURL rowURL = renderResponse.createRenderURL();
 
 					rowURL.setParameter("mvcPath", "/edit_template.jsp");

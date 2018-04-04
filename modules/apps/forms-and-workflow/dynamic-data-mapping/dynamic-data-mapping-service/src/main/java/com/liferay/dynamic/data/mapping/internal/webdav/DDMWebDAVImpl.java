@@ -26,7 +26,7 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMXML;
-import com.liferay.dynamic.data.mapping.webdav.DDMWebDav;
+import com.liferay.dynamic.data.mapping.webdav.DDMWebDAV;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Juan Fernández
  */
 @Component(immediate = true)
-public class DDMWebDavImpl implements DDMWebDav {
+public class DDMWebDAVImpl implements DDMWebDAV {
 
 	@Override
 	public int addResource(WebDAVRequest webDavRequest, long classNameId)
@@ -392,7 +392,7 @@ public class DDMWebDavImpl implements DDMWebDav {
 		_ddmXML = ddmXML;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(DDMWebDavImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(DDMWebDAVImpl.class);
 
 	private DDM _ddm;
 	private DDMFormXSDDeserializer _ddmFormXSDDeserializer;

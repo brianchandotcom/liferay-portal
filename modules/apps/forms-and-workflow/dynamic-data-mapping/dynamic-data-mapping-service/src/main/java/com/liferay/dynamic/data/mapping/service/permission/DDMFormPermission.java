@@ -26,12 +26,14 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
+ *  @deprecated As of 3.0.0, with no direct replacement
  */
 @Component(
 	immediate = true,
 	property = {"resource.name=" + DDMConstants.RESOURCE_NAME},
 	service = ResourcePermissionChecker.class
 )
+@Deprecated
 public class DDMFormPermission extends BaseResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME = DDMConstants.RESOURCE_NAME;

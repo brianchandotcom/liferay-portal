@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.form.web.configuration.DDMFormWebConfigu
 import com.liferay.dynamic.data.mapping.form.web.internal.instance.lifecycle.AddDefaultSharedFormLayoutPortalInstanceLifecycleListener;
 import com.liferay.dynamic.data.mapping.form.web.internal.search.FieldSetSearch;
 import com.liferay.dynamic.data.mapping.form.web.internal.search.FieldSetSearchTerms;
+import com.liferay.dynamic.data.mapping.form.web.internal.security.permission.resource.DDMFormPermission;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -29,7 +30,6 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalServic
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
-import com.liferay.dynamic.data.mapping.service.permission.DDMFormPermission;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;

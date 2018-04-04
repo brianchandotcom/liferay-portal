@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.content.web.internal.constants.JournalContentWebKeys;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -93,7 +95,8 @@ public class JournalContentConfigurationAction
 			JournalContentDisplayContext journalContentDisplayContext =
 				JournalContentDisplayContext.create(
 					portletRequest, portletResponse,
-					themeDisplay.getPortletDisplay(), _CLASS_NAME_ID);
+					themeDisplay.getPortletDisplay(), _CLASS_NAME_ID,
+					_ddmTemplateModelResourcePermission);
 
 			request.setAttribute(
 				JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT,
@@ -182,6 +185,12 @@ public class JournalContentConfigurationAction
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMTemplate)"
+	)
+	private ModelResourcePermission<DDMTemplate>
+		_ddmTemplateModelResourcePermission;
 
 	@Reference
 	private JournalContent _journalContent;

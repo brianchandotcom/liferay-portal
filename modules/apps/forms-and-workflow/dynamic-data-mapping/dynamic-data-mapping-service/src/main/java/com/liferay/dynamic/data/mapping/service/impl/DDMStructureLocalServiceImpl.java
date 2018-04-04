@@ -38,8 +38,8 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
+import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
 import com.liferay.dynamic.data.mapping.service.base.DDMStructureLocalServiceBaseImpl;
-import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMXML;
@@ -383,7 +383,7 @@ public class DDMStructureLocalServiceImpl
 		throws PortalException {
 
 		String resourceName =
-			DDMStructurePermission.getStructureModelResourceName(
+			ddmPermissionSupport.getStructureModelResourceName(
 				structure.getClassName());
 
 		resourceLocalService.addResources(
@@ -404,7 +404,7 @@ public class DDMStructureLocalServiceImpl
 		throws PortalException {
 
 		String resourceName =
-			DDMStructurePermission.getStructureModelResourceName(
+			ddmPermissionSupport.getStructureModelResourceName(
 				structure.getClassName());
 
 		resourceLocalService.addModelResources(
@@ -529,7 +529,7 @@ public class DDMStructureLocalServiceImpl
 		// Resources
 
 		String resourceName =
-			DDMStructurePermission.getStructureModelResourceName(
+			ddmPermissionSupport.getStructureModelResourceName(
 				structure.getClassName());
 
 		resourceLocalService.deleteResource(
@@ -2007,6 +2007,9 @@ public class DDMStructureLocalServiceImpl
 
 	@ServiceReference(type = DDMFormXSDDeserializer.class)
 	protected DDMFormXSDDeserializer ddmFormXSDDeserializer;
+
+	@ServiceReference(type = DDMPermissionSupport.class)
+	protected DDMPermissionSupport ddmPermissionSupport;
 
 	@ServiceReference(type = DDMXML.class)
 	protected DDMXML ddmXML;

@@ -25,6 +25,7 @@ import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.dynamic.data.lists.util.DDL;
 import com.liferay.dynamic.data.lists.web.configuration.DDLWebConfiguration;
 import com.liferay.dynamic.data.lists.web.internal.display.context.DDLDisplayContext;
+import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
@@ -42,14 +43,12 @@ import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
-
 import java.util.Map;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Activate;
@@ -108,7 +107,8 @@ public class DDLDisplayPortlet extends MVCPortlet {
 
 			DDLDisplayContext ddlDisplayContext = new DDLDisplayContext(
 				request, _ddl, _ddlRecordSetLocalService, _ddlWebConfiguration,
-				_ddmDisplayRegistry, _ddmTemplateLocalService, _storageEngine);
+				_ddmDisplayRegistry, _ddmPermissionSupport,
+				_ddmTemplateLocalService, _storageEngine);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, ddlDisplayContext);
@@ -151,6 +151,13 @@ public class DDLDisplayPortlet extends MVCPortlet {
 	@Reference(unbind = "-")
 	public void setDDMDisplayRegistry(DDMDisplayRegistry ddmDisplayRegistry) {
 		_ddmDisplayRegistry = ddmDisplayRegistry;
+	}
+
+	@Reference(unbind = "-")
+	public void setDDMPermissionSupport(
+		DDMPermissionSupport ddmPermissionSupport) {
+
+		_ddmPermissionSupport = ddmPermissionSupport;
 	}
 
 	@Reference(unbind = "-")
@@ -251,6 +258,7 @@ public class DDLDisplayPortlet extends MVCPortlet {
 	private DDLRecordSetService _ddlRecordSetService;
 	private volatile DDLWebConfiguration _ddlWebConfiguration;
 	private DDMDisplayRegistry _ddmDisplayRegistry;
+	private DDMPermissionSupport _ddmPermissionSupport;
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Reference

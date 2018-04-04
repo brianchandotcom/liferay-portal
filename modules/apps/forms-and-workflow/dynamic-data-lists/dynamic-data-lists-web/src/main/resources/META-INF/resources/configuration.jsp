@@ -170,7 +170,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 									}
 
 									for (DDMTemplate template : templates) {
-										if (!DDMTemplatePermission.contains(permissionChecker, scopeGroupId, template.getTemplateId(), PortletKeys.PORTLET_DISPLAY_TEMPLATE, ActionKeys.VIEW)) {
+										if (!DDMTemplatePermission.contains(permissionChecker, template.getTemplateId(), ActionKeys.VIEW)) {
 											continue;
 										}
 
@@ -202,7 +202,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 									}
 
 									for (DDMTemplate template : templates) {
-										if (!DDMTemplatePermission.contains(permissionChecker, scopeGroupId, template.getTemplateId(), PortletKeys.PORTLET_DISPLAY_TEMPLATE, ActionKeys.VIEW)) {
+										if (!DDMTemplatePermission.contains(permissionChecker, template.getTemplateId(), ActionKeys.VIEW)) {
 											continue;
 										}
 

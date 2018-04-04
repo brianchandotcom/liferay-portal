@@ -25,6 +25,8 @@ import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormWebKe
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.util.DDMFormAdminRequestHelper;
 import com.liferay.dynamic.data.mapping.form.web.internal.instance.lifecycle.AddDefaultSharedFormLayoutPortalInstanceLifecycleListener;
 import com.liferay.dynamic.data.mapping.form.web.internal.search.FormInstanceSearch;
+import com.liferay.dynamic.data.mapping.form.web.internal.security.permission.resource.DDMFormInstancePermission;
+import com.liferay.dynamic.data.mapping.form.web.internal.security.permission.resource.DDMFormPermission;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -37,8 +39,6 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalServic
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
-import com.liferay.dynamic.data.mapping.service.permission.DDMFormInstancePermission;
-import com.liferay.dynamic.data.mapping.service.permission.DDMFormPermission;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.dynamic.data.mapping.util.comparator.DDMFormInstanceCreateDateComparator;

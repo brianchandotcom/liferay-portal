@@ -20,6 +20,8 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
 import com.liferay.dynamic.data.mapping.data.provider.web.internal.constants.DDMDataProviderPortletKeys;
 import com.liferay.dynamic.data.mapping.data.provider.web.internal.display.context.util.DDMDataProviderRequestHelper;
 import com.liferay.dynamic.data.mapping.data.provider.web.internal.search.DDMDataProviderSearch;
+import com.liferay.dynamic.data.mapping.data.provider.web.internal.security.permission.resource.DDMDataProviderInstancePermission;
+import com.liferay.dynamic.data.mapping.data.provider.web.internal.security.permission.resource.DDMFormPermission;
 import com.liferay.dynamic.data.mapping.data.provider.web.internal.util.DDMDataProviderPortletUtil;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
@@ -29,8 +31,6 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
-import com.liferay.dynamic.data.mapping.service.permission.DDMDataProviderInstancePermission;
-import com.liferay.dynamic.data.mapping.service.permission.DDMFormPermission;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
@@ -282,7 +282,7 @@ public class DDMDataProviderDisplayContext {
 			_ddmDataProviderRequestHelper.getThemeDisplay());
 	}
 
-	public boolean isShowAddDataProviderButton() {
+	public boolean isShowAddDataProviderButton() throws PortalException {
 		return DDMFormPermission.contains(
 			_ddmDataProviderRequestHelper.getPermissionChecker(),
 			_ddmDataProviderRequestHelper.getScopeGroupId(),
@@ -290,7 +290,8 @@ public class DDMDataProviderDisplayContext {
 	}
 
 	public boolean isShowDeleteDataProviderIcon(
-		DDMDataProviderInstance dataProviderInstance) {
+			DDMDataProviderInstance dataProviderInstance)
+		throws PortalException {
 
 		return DDMDataProviderInstancePermission.contains(
 			_ddmDataProviderRequestHelper.getPermissionChecker(),
@@ -298,7 +299,7 @@ public class DDMDataProviderDisplayContext {
 	}
 
 	public boolean isShowEditDataProviderIcon(
-		DDMDataProviderInstance dataProviderInstance) {
+		DDMDataProviderInstance dataProviderInstance) throws PortalException {
 
 		return DDMDataProviderInstancePermission.contains(
 			_ddmDataProviderRequestHelper.getPermissionChecker(),
@@ -306,7 +307,7 @@ public class DDMDataProviderDisplayContext {
 	}
 
 	public boolean isShowPermissionsIcon(
-		DDMDataProviderInstance dataProviderInstance) {
+		DDMDataProviderInstance dataProviderInstance) throws PortalException {
 
 		return DDMDataProviderInstancePermission.contains(
 			_ddmDataProviderRequestHelper.getPermissionChecker(),

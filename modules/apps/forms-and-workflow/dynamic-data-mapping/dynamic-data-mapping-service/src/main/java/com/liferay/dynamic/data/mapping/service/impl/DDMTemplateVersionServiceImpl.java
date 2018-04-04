@@ -14,11 +14,13 @@
 
 package com.liferay.dynamic.data.mapping.service.impl;
 
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
 import com.liferay.dynamic.data.mapping.service.base.DDMTemplateVersionServiceBaseImpl;
-import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -33,7 +35,7 @@ public class DDMTemplateVersionServiceImpl
 	public DDMTemplateVersion getLatestTemplateVersion(long templateId)
 		throws PortalException {
 
-		DDMTemplatePermission.check(
+		_ddmTemplateModelResourcePermission.check(
 			getPermissionChecker(), templateId, ActionKeys.VIEW);
 
 		return ddmTemplateVersionLocalService.getLatestTemplateVersion(
@@ -48,7 +50,7 @@ public class DDMTemplateVersionServiceImpl
 			ddmTemplateVersionLocalService.getTemplateVersion(
 				templateVersionId);
 
-		DDMTemplatePermission.check(
+		_ddmTemplateModelResourcePermission.check(
 			getPermissionChecker(), templateVersion.getTemplateId(),
 			ActionKeys.VIEW);
 
@@ -61,7 +63,7 @@ public class DDMTemplateVersionServiceImpl
 			OrderByComparator<DDMTemplateVersion> orderByComparator)
 		throws PortalException {
 
-		DDMTemplatePermission.check(
+		_ddmTemplateModelResourcePermission.check(
 			getPermissionChecker(), templateId, ActionKeys.VIEW);
 
 		return ddmTemplateVersionLocalService.getTemplateVersions(
@@ -72,11 +74,17 @@ public class DDMTemplateVersionServiceImpl
 	public int getTemplateVersionsCount(long templateId)
 		throws PortalException {
 
-		DDMTemplatePermission.check(
+		_ddmTemplateModelResourcePermission.check(
 			getPermissionChecker(), templateId, ActionKeys.VIEW);
 
 		return ddmTemplateVersionLocalService.getTemplateVersionsCount(
 			templateId);
 	}
+
+	private static volatile ModelResourcePermission<DDMTemplate>
+		_ddmTemplateModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				DDMTemplateVersionServiceImpl.class,
+				"_ddmTemplateModelResourcePermission", DDMTemplate.class);
 
 }

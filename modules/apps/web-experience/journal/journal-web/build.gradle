@@ -17,7 +17,6 @@ dependencies {
 	provided project(":apps:collaboration:subscription:subscription-api")
 	provided project(":apps:collaboration:upload:upload-api")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
-	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-service")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-taglib")
 	provided project(":apps:foundation:expando:expando-taglib")
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib")

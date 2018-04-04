@@ -15,6 +15,7 @@
 package com.liferay.journal.content.web.internal.portlet;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.content.web.internal.constants.JournalContentWebKeys;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -172,7 +174,8 @@ public class JournalContentPortlet extends MVCPortlet {
 			JournalContentDisplayContext journalContentDisplayContext =
 				JournalContentDisplayContext.create(
 					renderRequest, renderResponse,
-					themeDisplay.getPortletDisplay(), _CLASS_NAME_ID);
+					themeDisplay.getPortletDisplay(), _CLASS_NAME_ID,
+					_ddmTemplateModelResourcePermission);
 
 			renderRequest.setAttribute(
 				JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT,
@@ -238,7 +241,8 @@ public class JournalContentPortlet extends MVCPortlet {
 				JournalContentDisplayContext journalContentDisplayContext =
 					JournalContentDisplayContext.create(
 						resourceRequest, resourceResponse,
-						themeDisplay.getPortletDisplay(), _CLASS_NAME_ID);
+						themeDisplay.getPortletDisplay(), _CLASS_NAME_ID,
+						_ddmTemplateModelResourcePermission);
 
 				resourceRequest.setAttribute(
 					JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT,
@@ -259,6 +263,12 @@ public class JournalContentPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalContentPortlet.class);
+
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMTemplate)"
+	)
+	private ModelResourcePermission<DDMTemplate>
+		_ddmTemplateModelResourcePermission;
 
 	@Reference
 	private ExportArticleHelper _exportArticleHelper;

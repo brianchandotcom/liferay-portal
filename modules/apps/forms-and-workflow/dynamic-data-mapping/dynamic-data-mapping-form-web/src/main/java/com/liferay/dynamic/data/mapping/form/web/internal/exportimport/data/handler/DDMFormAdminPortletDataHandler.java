@@ -14,12 +14,12 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.exportimport.data.handler;
 
+import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.permission.DDMFormPermission;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
@@ -105,8 +105,7 @@ public class DDMFormAdminPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		portletDataContext.addPortletPermissions(
-			DDMFormPermission.RESOURCE_NAME);
+		portletDataContext.addPortletPermissions(DDMConstants.RESOURCE_NAME);
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
@@ -135,8 +134,7 @@ public class DDMFormAdminPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
-		portletDataContext.importPortletPermissions(
-			DDMFormPermission.RESOURCE_NAME);
+		portletDataContext.importPortletPermissions(DDMConstants.RESOURCE_NAME);
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "forms")) {
 			Element formInstancesElement =

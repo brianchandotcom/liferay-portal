@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.mapping.service.persistence.impl;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateImpl;
-import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission;
+import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateFinder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Iterator;
 import java.util.List;
@@ -711,7 +712,7 @@ public class DDMTemplateFinderImpl
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
 					sql,
-					DDMTemplatePermission.getTemplateModelResourceName(
+					_ddmPermissionSupport.getTemplateModelResourceName(
 						structureClassNameId),
 					"DDMTemplate.templateId", groupIds);
 			}
@@ -780,7 +781,7 @@ public class DDMTemplateFinderImpl
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
 					sql,
-					DDMTemplatePermission.getTemplateModelResourceName(
+					_ddmPermissionSupport.getTemplateModelResourceName(
 						resourceClassNameId),
 					"DDMTemplate.templateId", groupIds);
 			}
@@ -873,7 +874,7 @@ public class DDMTemplateFinderImpl
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
 					sql,
-					DDMTemplatePermission.getTemplateModelResourceName(
+					_ddmPermissionSupport.getTemplateModelResourceName(
 						structureClassNameId),
 					"DDMTemplate.templateId", groupIds);
 			}
@@ -939,7 +940,7 @@ public class DDMTemplateFinderImpl
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
 					sql,
-					DDMTemplatePermission.getTemplateModelResourceName(
+					_ddmPermissionSupport.getTemplateModelResourceName(
 						resourceClassNameId),
 					"DDMTemplate.templateId", groupIds);
 			}
@@ -1079,5 +1080,8 @@ public class DDMTemplateFinderImpl
 
 		return sb.toString();
 	}
+
+	@ServiceReference(type = DDMPermissionSupport.class)
+	private DDMPermissionSupport _ddmPermissionSupport;
 
 }

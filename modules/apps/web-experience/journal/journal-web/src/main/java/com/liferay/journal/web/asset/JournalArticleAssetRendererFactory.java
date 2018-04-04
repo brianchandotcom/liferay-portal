@@ -21,7 +21,6 @@ import com.liferay.asset.kernel.model.BaseDDMStructureClassTypeReader;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.constants.JournalPortletKeys;
@@ -234,7 +233,7 @@ public class JournalArticleAssetRendererFactory
 			return false;
 		}
 
-		if (!DDMStructurePermission.contains(
+		if (!_ddmStructureModelResourcePermission.contains(
 				permissionChecker, classTypeId, ActionKeys.VIEW)) {
 
 			return false;
@@ -322,6 +321,13 @@ public class JournalArticleAssetRendererFactory
 	}
 
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure)"
+	)
+	private ModelResourcePermission<DDMStructure>
+		_ddmStructureModelResourcePermission;
+
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
 	private JournalArticleLocalService _journalArticleLocalService;
 

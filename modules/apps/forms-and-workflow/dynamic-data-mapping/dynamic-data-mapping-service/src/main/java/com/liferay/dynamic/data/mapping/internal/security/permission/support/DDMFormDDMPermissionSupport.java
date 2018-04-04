@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.service.permission;
+package com.liferay.dynamic.data.mapping.internal.security.permission.support;
 
+import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.util.DDMStructurePermissionSupport;
 
 import org.osgi.service.component.annotations.Component;
@@ -32,7 +33,7 @@ public class DDMFormDDMPermissionSupport
 
 	@Override
 	public String getResourceName() {
-		return DDMFormPermission.RESOURCE_NAME;
+		return DDMConstants.RESOURCE_NAME;
 	}
 
 }

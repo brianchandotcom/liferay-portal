@@ -26,6 +26,7 @@ import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.dynamic.data.lists.util.DDL;
 import com.liferay.dynamic.data.lists.web.configuration.DDLWebConfiguration;
 import com.liferay.dynamic.data.lists.web.internal.display.context.DDLDisplayContext;
+import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
@@ -123,7 +124,8 @@ public class DDLPortlet extends MVCPortlet {
 
 			DDLDisplayContext ddlDisplayContext = new DDLDisplayContext(
 				request, _ddl, _ddlRecordSetLocalService, _ddlWebConfiguration,
-				_ddmDisplayRegistry, _ddmTemplateLocalService, _storageEngine);
+				_ddmDisplayRegistry, _ddmPermissionSupport,
+				_ddmTemplateLocalService, _storageEngine);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, ddlDisplayContext);
@@ -171,6 +173,13 @@ public class DDLPortlet extends MVCPortlet {
 	@Reference(unbind = "-")
 	public void setDDMDisplayRegistry(DDMDisplayRegistry ddmDisplayRegistry) {
 		_ddmDisplayRegistry = ddmDisplayRegistry;
+	}
+
+	@Reference(unbind = "-")
+	public void setDDMPermissionSupport(
+		DDMPermissionSupport ddmPermissionSupport) {
+
+		_ddmPermissionSupport = ddmPermissionSupport;
 	}
 
 	@Reference(unbind = "-")
@@ -274,6 +283,7 @@ public class DDLPortlet extends MVCPortlet {
 	private DDLRecordSetService _ddlRecordSetService;
 	private volatile DDLWebConfiguration _ddlWebConfiguration;
 	private DDMDisplayRegistry _ddmDisplayRegistry;
+	private DDMPermissionSupport _ddmPermissionSupport;
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Reference

@@ -28,8 +28,8 @@ import com.liferay.dynamic.data.mapping.exception.TemplateSmallImageSizeExceptio
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
+import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
 import com.liferay.dynamic.data.mapping.service.base.DDMTemplateLocalServiceBaseImpl;
-import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission;
 import com.liferay.dynamic.data.mapping.util.DDMXML;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.XMLUtil;
@@ -280,9 +280,8 @@ public class DDMTemplateLocalServiceImpl
 			boolean addGuestPermissions)
 		throws PortalException {
 
-		String resourceName =
-			DDMTemplatePermission.getTemplateModelResourceName(
-				template.getResourceClassName());
+		String resourceName = ddmPermissionSupport.getTemplateModelResourceName(
+			template.getResourceClassName());
 
 		resourceLocalService.addResources(
 			template.getCompanyId(), template.getGroupId(),
@@ -302,9 +301,8 @@ public class DDMTemplateLocalServiceImpl
 			DDMTemplate template, ModelPermissions modelPermissions)
 		throws PortalException {
 
-		String resourceName =
-			DDMTemplatePermission.getTemplateModelResourceName(
-				template.getResourceClassName());
+		String resourceName = ddmPermissionSupport.getTemplateModelResourceName(
+			template.getResourceClassName());
 
 		resourceLocalService.addModelResources(
 			template.getCompanyId(), template.getGroupId(),
@@ -420,9 +418,8 @@ public class DDMTemplateLocalServiceImpl
 
 		// Resources
 
-		String resourceName =
-			DDMTemplatePermission.getTemplateModelResourceName(
-				template.getResourceClassName());
+		String resourceName = ddmPermissionSupport.getTemplateModelResourceName(
+			template.getResourceClassName());
 
 		resourceLocalService.deleteResource(
 			template.getCompanyId(), resourceName,
@@ -1712,6 +1709,9 @@ public class DDMTemplateLocalServiceImpl
 
 	@ServiceReference(type = ConfigurationProvider.class)
 	protected ConfigurationProvider configurationProvider;
+
+	@ServiceReference(type = DDMPermissionSupport.class)
+	protected DDMPermissionSupport ddmPermissionSupport;
 
 	@ServiceReference(type = DDMXML.class)
 	protected DDMXML ddmXML;

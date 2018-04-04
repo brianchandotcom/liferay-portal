@@ -15,14 +15,17 @@
 package com.liferay.dynamic.data.mapping.service.impl;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
 import com.liferay.dynamic.data.mapping.service.base.DDMTemplateServiceBaseImpl;
-import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.File;
 
@@ -75,7 +78,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			String language, String script, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMTemplatePermission.checkAddTemplatePermission(
+		_ddmPermissionSupport.checkAddTemplatePermission(
 			getPermissionChecker(), groupId, classNameId, resourceClassNameId);
 
 		return ddmTemplateLocalService.addTemplate(
@@ -126,7 +129,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			File smallImageFile, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMTemplatePermission.checkAddTemplatePermission(
+		_ddmPermissionSupport.checkAddTemplatePermission(
 			getPermissionChecker(), groupId, classNameId, resourceClassNameId);
 
 		return ddmTemplateLocalService.addTemplate(
@@ -160,7 +163,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		DDMTemplate template = ddmTemplatePersistence.findByPrimaryKey(
 			templateId);
 
-		DDMTemplatePermission.checkAddTemplatePermission(
+		_ddmPermissionSupport.checkAddTemplatePermission(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			template.getClassNameId(), template.getResourceClassName());
 
@@ -176,7 +179,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		DDMTemplate template = ddmTemplatePersistence.findByPrimaryKey(
 			templateId);
 
-		DDMTemplatePermission.checkAddTemplatePermission(
+		_ddmPermissionSupport.checkAddTemplatePermission(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			template.getClassNameId(), template.getResourceClassName());
 
@@ -209,7 +212,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			long newClassPK, String type, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMTemplatePermission.checkAddTemplatePermission(
+		_ddmPermissionSupport.checkAddTemplatePermission(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			classNameId, resourceClassNameId);
 
@@ -225,7 +228,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 */
 	@Override
 	public void deleteTemplate(long templateId) throws PortalException {
-		DDMTemplatePermission.check(
+		_ddmTemplateModelResourcePermission.check(
 			getPermissionChecker(), templateId, ActionKeys.DELETE);
 
 		ddmTemplateLocalService.deleteTemplate(templateId);
@@ -250,7 +253,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			groupId, classNameId, templateKey);
 
 		if (ddmTemplate != null) {
-			DDMTemplatePermission.check(
+			_ddmTemplateModelResourcePermission.check(
 				getPermissionChecker(), ddmTemplate, ActionKeys.VIEW);
 		}
 
@@ -265,7 +268,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 */
 	@Override
 	public DDMTemplate getTemplate(long templateId) throws PortalException {
-		DDMTemplatePermission.check(
+		_ddmTemplateModelResourcePermission.check(
 			getPermissionChecker(), templateId, ActionKeys.VIEW);
 
 		return ddmTemplatePersistence.findByPrimaryKey(templateId);
@@ -288,7 +291,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		DDMTemplate ddmTemplate = ddmTemplateLocalService.getTemplate(
 			groupId, classNameId, templateKey);
 
-		DDMTemplatePermission.check(
+		_ddmTemplateModelResourcePermission.check(
 			getPermissionChecker(), ddmTemplate, ActionKeys.VIEW);
 
 		return ddmTemplate;
@@ -324,7 +327,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		DDMTemplate ddmTemplate = ddmTemplateLocalService.getTemplate(
 			groupId, classNameId, templateKey, includeAncestorTemplates);
 
-		DDMTemplatePermission.check(
+		_ddmTemplateModelResourcePermission.check(
 			getPermissionChecker(), ddmTemplate, ActionKeys.VIEW);
 
 		return ddmTemplate;
@@ -490,7 +493,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			long templateId, String version, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMTemplatePermission.check(
+		_ddmTemplateModelResourcePermission.check(
 			getPermissionChecker(), templateId, ActionKeys.UPDATE);
 
 		ddmTemplateLocalService.revertTemplate(
@@ -879,7 +882,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMTemplatePermission.check(
+		_ddmTemplateModelResourcePermission.check(
 			getPermissionChecker(), templateId, ActionKeys.UPDATE);
 
 		return ddmTemplateLocalService.updateTemplate(
@@ -916,7 +919,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMTemplatePermission.check(
+		_ddmTemplateModelResourcePermission.check(
 			getPermissionChecker(), templateId, ActionKeys.UPDATE);
 
 		return ddmTemplateLocalService.updateTemplate(
@@ -932,5 +935,14 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			companyId, groupIds, classNameId, classPK, resourceClassNameId,
 			type, mode, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
+
+	private static volatile ModelResourcePermission<DDMTemplate>
+		_ddmTemplateModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				DDMTemplateServiceImpl.class,
+				"_ddmTemplateModelResourcePermission", DDMTemplate.class);
+
+	@ServiceReference(type = DDMPermissionSupport.class)
+	private DDMPermissionSupport _ddmPermissionSupport;
 
 }

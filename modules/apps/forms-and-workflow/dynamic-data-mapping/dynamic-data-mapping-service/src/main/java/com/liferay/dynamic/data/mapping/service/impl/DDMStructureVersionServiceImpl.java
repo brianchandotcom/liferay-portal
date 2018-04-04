@@ -14,11 +14,13 @@
 
 package com.liferay.dynamic.data.mapping.service.impl;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.base.DDMStructureVersionServiceBaseImpl;
-import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -33,7 +35,7 @@ public class DDMStructureVersionServiceImpl
 	public DDMStructureVersion getLatestStructureVersion(long structureId)
 		throws PortalException {
 
-		DDMStructurePermission.check(
+		_ddmStructureModelResourcePermission.check(
 			getPermissionChecker(), structureId, ActionKeys.VIEW);
 
 		return ddmStructureVersionLocalService.getLatestStructureVersion(
@@ -48,7 +50,7 @@ public class DDMStructureVersionServiceImpl
 			ddmStructureVersionLocalService.getStructureVersion(
 				structureVersionId);
 
-		DDMStructurePermission.check(
+		_ddmStructureModelResourcePermission.check(
 			getPermissionChecker(), structureVersion.getStructureId(),
 			ActionKeys.VIEW);
 
@@ -61,7 +63,7 @@ public class DDMStructureVersionServiceImpl
 			OrderByComparator<DDMStructureVersion> orderByComparator)
 		throws PortalException {
 
-		DDMStructurePermission.check(
+		_ddmStructureModelResourcePermission.check(
 			getPermissionChecker(), structureId, ActionKeys.VIEW);
 
 		return ddmStructureVersionLocalService.getStructureVersions(
@@ -72,11 +74,17 @@ public class DDMStructureVersionServiceImpl
 	public int getStructureVersionsCount(long structureId)
 		throws PortalException {
 
-		DDMStructurePermission.check(
+		_ddmStructureModelResourcePermission.check(
 			getPermissionChecker(), structureId, ActionKeys.VIEW);
 
 		return ddmStructureVersionLocalService.getStructureVersionsCount(
 			structureId);
 	}
+
+	private static volatile ModelResourcePermission<DDMStructure>
+		_ddmStructureModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				DDMStructureVersionServiceImpl.class,
+				"_ddmStructureModelResourcePermission", DDMStructure.class);
 
 }

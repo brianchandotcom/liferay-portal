@@ -51,7 +51,7 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 
 	<%
 	for (com.liferay.dynamic.data.mapping.model.DDMTemplate curDDMTemplate : DDMTemplateLocalServiceUtil.getTemplates(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), classNameId, 0L)) {
-		if (!DDMTemplatePermission.contains(permissionChecker, scopeGroupId, curDDMTemplate.getTemplateId(), PortletKeys.PORTLET_DISPLAY_TEMPLATE, ActionKeys.VIEW) || !DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY.equals(curDDMTemplate.getType())) {
+		if (!DDMTemplatePermission.contains(permissionChecker, curDDMTemplate.getTemplateId(), ActionKeys.VIEW) || !DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY.equals(curDDMTemplate.getType())) {
 			continue;
 		}
 

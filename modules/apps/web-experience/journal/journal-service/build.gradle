@@ -22,7 +22,6 @@ dependencies {
 	provided project(":apps:collaboration:subscription:subscription-api")
 	provided project(":apps:collaboration:upload:upload-api")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
-	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-service")
 	provided project(":apps:foundation:friendly-url:friendly-url-api")
 	provided project(":apps:foundation:mobile-device-rules:mobile-device-rules-api")
 	provided project(":apps:foundation:petra:petra-xml")

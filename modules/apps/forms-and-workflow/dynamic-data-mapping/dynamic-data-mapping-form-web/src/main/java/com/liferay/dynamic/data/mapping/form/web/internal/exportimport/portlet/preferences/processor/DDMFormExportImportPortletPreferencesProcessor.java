@@ -14,10 +14,10 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.exportimport.portlet.preferences.processor;
 
+import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
-import com.liferay.dynamic.data.mapping.service.permission.DDMFormPermission;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
@@ -70,7 +70,7 @@ public class DDMFormExportImportPortletPreferencesProcessor
 
 		try {
 			portletDataContext.addPortletPermissions(
-				DDMFormPermission.RESOURCE_NAME);
+				DDMConstants.RESOURCE_NAME);
 		}
 		catch (PortalException pe) {
 			throw new PortletDataException(
@@ -111,7 +111,7 @@ public class DDMFormExportImportPortletPreferencesProcessor
 
 		try {
 			portletDataContext.importPortletPermissions(
-				DDMFormPermission.RESOURCE_NAME);
+				DDMConstants.RESOURCE_NAME);
 		}
 		catch (PortalException pe) {
 			throw new PortletDataException(

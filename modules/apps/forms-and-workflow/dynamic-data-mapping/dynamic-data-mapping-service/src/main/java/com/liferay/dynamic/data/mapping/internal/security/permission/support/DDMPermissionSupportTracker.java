@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.service.permission;
+package com.liferay.dynamic.data.mapping.internal.security.permission.support;
 
 import com.liferay.dynamic.data.mapping.util.DDMStructurePermissionSupport;
 import com.liferay.dynamic.data.mapping.util.DDMTemplatePermissionSupport;

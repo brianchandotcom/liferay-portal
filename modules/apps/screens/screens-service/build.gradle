@@ -15,7 +15,6 @@ dependencies {
 	provided project(":apps:collaboration:blogs:blogs-api")
 	provided project(":apps:forms-and-workflow:dynamic-data-lists:dynamic-data-lists-api")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
-	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-service")
 	provided project(":apps:foundation:portal:portal-spring-extender-api")
 	provided project(":apps:foundation:portal:portal-upgrade-api")
 	provided project(":apps:screens:screens-api")

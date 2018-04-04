@@ -7,8 +7,8 @@ import ${packagePath}.uad.constants.${portletShortName}UADConstants;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.user.associated.data.anonymizer.DynamicQueryUADEntityAnonymizer;
-import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
+import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
+import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.util.UADAnonymizerHelper;
 
 import java.util.Arrays;
@@ -24,9 +24,9 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {"model.class.name=" + ${portletShortName}UADConstants.CLASS_NAME_${entity.constantName}},
-	service = UADEntityAnonymizer.class
+	service = UADAnonymizer.class
 )
-public class ${entity.name}UADEntityAnonymizer extends DynamicQueryUADEntityAnonymizer<${entity.name}> {
+public class ${entity.name}UADAnonymizer extends DynamicQueryUADAnonymizer<${entity.name}> {
 
 	@Override
 	public void autoAnonymize(${entity.name} ${entity.varName}, long userId) throws PortalException {

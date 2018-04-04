@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -148,27 +147,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		propertyNames.add("test.batch.axis.max.size");
 
-		return _getFirstPropertyValue(portalTestProperties, propertyNames);
-	}
-
-	private String _getFirstPropertyValue(
-		Properties properties, List<String> propertyNames) {
-
-		for (String propertyName : propertyNames) {
-			if (propertyName == null) {
-				continue;
-			}
-
-			if (properties.containsKey(propertyName)) {
-				String propertyValue = properties.getProperty(propertyName);
-
-				if ((propertyValue != null) && !propertyValue.isEmpty()) {
-					return propertyValue;
-				}
-			}
-		}
-
-		return null;
+		return getFirstPropertyValue(portalTestProperties, propertyNames);
 	}
 
 	private String _getTestClassNamesExcludesPropertyValue() {
@@ -202,7 +181,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		propertyNames.add("test.class.names.excludes");
 
-		return _getFirstPropertyValue(portalTestProperties, propertyNames);
+		return getFirstPropertyValue(portalTestProperties, propertyNames);
 	}
 
 	private String _getTestClassNamesIncludesPropertyValue() {
@@ -236,7 +215,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		propertyNames.add("test.class.names.includes");
 
-		return _getFirstPropertyValue(portalTestProperties, propertyNames);
+		return getFirstPropertyValue(portalTestProperties, propertyNames);
 	}
 
 	private List<PathMatcher> _getTestClassNamesPathMatchers(
@@ -438,7 +417,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		propertyNames.add("test.relevant.changes");
 
-		String propertyValue = _getFirstPropertyValue(
+		String propertyValue = getFirstPropertyValue(
 			portalTestProperties, propertyNames);
 
 		if (propertyValue != null) {

@@ -61,12 +61,12 @@ public class WikiPageUADEntityDisplay implements UADEntityDisplay<WikiPage> {
 	}
 
 	@Override
-	public String getUADEntityTypeDescription() {
-		return "A wiki page";
+	public String getTypeDescription() {
+		return "";
 	}
 
 	@Override
-	public String getUADEntityTypeName() {
+	public String getTypeName() {
 		return "WikiPage";
 	}
 

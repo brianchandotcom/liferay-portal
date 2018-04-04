@@ -22,13 +22,13 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
-import com.liferay.user.associated.data.test.util.BaseUADEntityAggregatorTestCase;
+import com.liferay.user.associated.data.aggregator.UADAggregator;
+import com.liferay.user.associated.data.test.util.BaseUADAggregatorTestCase;
 import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 
-import com.liferay.wiki.model.WikiPage;
+import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.uad.constants.WikiUADConstants;
-import com.liferay.wiki.uad.test.WikiPageUADEntityTestHelper;
+import com.liferay.wiki.uad.test.WikiNodeUADEntityTestHelper;
 
 import org.junit.After;
 import org.junit.ClassRule;
@@ -44,8 +44,7 @@ import java.util.List;
  * @generated
  */
 @RunWith(Arquillian.class)
-public class WikiPageUADEntityAggregatorTest
-	extends BaseUADEntityAggregatorTestCase
+public class WikiNodeUADAggregatorTest extends BaseUADAggregatorTestCase
 	implements WhenHasStatusByUserIdField {
 	@ClassRule
 	@Rule
@@ -54,38 +53,38 @@ public class WikiPageUADEntityAggregatorTest
 	@Override
 	public BaseModel<?> addBaseModelWithStatusByUserId(long userId,
 		long statusByUserId) throws Exception {
-		WikiPage wikiPage = _wikiPageUADEntityTestHelper.addWikiPageWithStatusByUserId(userId,
+		WikiNode wikiNode = _wikiNodeUADEntityTestHelper.addWikiNodeWithStatusByUserId(userId,
 				statusByUserId);
 
-		_wikiPages.add(wikiPage);
+		_wikiNodes.add(wikiNode);
 
-		return wikiPage;
+		return wikiNode;
 	}
 
 	@Override
 	protected BaseModel<?> addBaseModel(long userId) throws Exception {
-		WikiPage wikiPage = _wikiPageUADEntityTestHelper.addWikiPage(userId);
+		WikiNode wikiNode = _wikiNodeUADEntityTestHelper.addWikiNode(userId);
 
-		_wikiPages.add(wikiPage);
+		_wikiNodes.add(wikiNode);
 
-		return wikiPage;
+		return wikiNode;
 	}
 
 	@Override
-	protected UADEntityAggregator getUADEntityAggregator() {
-		return _uadEntityAggregator;
+	protected UADAggregator getUADAggregator() {
+		return _uadAggregator;
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		_wikiPageUADEntityTestHelper.cleanUpDependencies(_wikiPages);
+		_wikiNodeUADEntityTestHelper.cleanUpDependencies(_wikiNodes);
 	}
 
 	@DeleteAfterTestRun
-	private final List<WikiPage> _wikiPages = new ArrayList<WikiPage>();
+	private final List<WikiNode> _wikiNodes = new ArrayList<WikiNode>();
 	@Inject
-	private WikiPageUADEntityTestHelper _wikiPageUADEntityTestHelper;
+	private WikiNodeUADEntityTestHelper _wikiNodeUADEntityTestHelper;
 	@Inject(filter = "model.class.name=" +
-	WikiUADConstants.CLASS_NAME_WIKI_PAGE)
-	private UADEntityAggregator _uadEntityAggregator;
+	WikiUADConstants.CLASS_NAME_WIKI_NODE)
+	private UADAggregator _uadAggregator;
 }

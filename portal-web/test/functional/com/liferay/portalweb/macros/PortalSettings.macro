@@ -74,7 +74,7 @@
 			<elseif>
 				<equals arg1="${enableAcrossSite}" arg2="false" />
 				<then>
-					<execute function="Uncheck#clickAt" locator1="PortalSettingsContentSharing#CONTENT_SHARING_CHECKBOX" />
+					<execute function="Uncheck" locator1="PortalSettingsContentSharing#CONTENT_SHARING_CHECKBOX" />
 
 					<execute macro="PortletEntry#save" />
 

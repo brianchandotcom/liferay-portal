@@ -482,6 +482,25 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		return ddmFormLayoutColumns;
 	}
 
+	protected DDMFormLayout createDDMFormLayoutPage(
+		DDMFormLayout ddmFormLayout, String pageTitle, String pageDescription,
+		String... ddmFormFieldName) {
+
+		DDMFormLayoutPage ddmFormLayoutPage = createDDMFormLayoutPage(
+			pageTitle, pageDescription);
+
+		DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
+
+		ddmFormLayoutRow.setDDMFormLayoutColumns(
+			createDDMFormLayoutColumns(ddmFormFieldName));
+
+		ddmFormLayoutPage.addDDMFormLayoutRow(ddmFormLayoutRow);
+
+		ddmFormLayout.addDDMFormLayoutPage(ddmFormLayoutPage);
+
+		return ddmFormLayout;
+	}
+
 	protected DDMFormLayoutPage createDDMFormLayoutPage(
 		String titleString, String descriptionString) {
 

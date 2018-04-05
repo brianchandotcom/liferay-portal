@@ -334,7 +334,7 @@ class FragmentsEditor extends Component {
 			];
 
 			if (this.fragmentEntryLinks.length === 0) {
-				this._sidebarSelectedTab = 'available';
+				this._sidebarSelectedTab = FragmentsEditor.DEFAULT_TAB_ID;
 				this.sidebarTabs = this.sidebarTabs.filter(
 					tab => tab.id !== 'added'
 				);
@@ -460,6 +460,15 @@ class FragmentsEditor extends Component {
 		}
 	}
 }
+
+/**
+ * Default selected tab
+ * @review
+ * @static
+ * @type {!string}
+ */
+
+FragmentsEditor.DEFAULT_TAB_ID = 'available';
 
 /**
  * State definition.
@@ -798,7 +807,7 @@ FragmentsEditor.STATE = {
 	_sidebarSelectedTab: Config
 		.string()
 		.internal()
-		.value('available')
+		.value(FragmentsEditor.DEFAULT_TAB_ID)
 };
 
 Soy.register(FragmentsEditor, templates);

@@ -29,17 +29,21 @@ import com.liferay.portal.kernel.xml.SAXReader;
 
 import java.io.IOException;
 
+import java.net.URL;
+
 import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
  */
 @Component(
+	configurationPid = "com.liferay.commerce.currency.internal.configuration.ECBExchangeRateProviderConfiguration",
 	immediate = true,
 	property = "commerce.exchange.provider.key=european-central-bank",
 	service = ExchangeRateProvider.class
@@ -64,7 +68,7 @@ public class ECBExchangeRateProvider implements ExchangeRateProvider {
 
 		while (Validator.isNull(xml)) {
 			try {
-				xml = _http.URLtoString(_ECB_URL);
+				xml = _http.URLtoString(_getURL());
 			}
 			catch (IOException ioe) {
 				if (i++ >= 10) {
@@ -124,6 +128,7 @@ public class ECBExchangeRateProvider implements ExchangeRateProvider {
 	}
 
 	@Activate
+	@Modified
 	protected void activate(Map<String, Object> properties) {
 		ECBExchangeRateProviderConfiguration
 			ecbExchangeRateProviderConfiguration =
@@ -132,6 +137,19 @@ public class ECBExchangeRateProvider implements ExchangeRateProvider {
 
 		_ECB_URL =
 			ecbExchangeRateProviderConfiguration.europeanCentralBankURL();
+	}
+
+	private URL _getURL() throws Exception {
+		if (_ECB_URL.startsWith("http")) {
+			return new URL(_ECB_URL);
+		}
+		else {
+			Class<?> clazz = getClass();
+
+			ClassLoader classLoader = clazz.getClassLoader();
+
+			return classLoader.getResource(_ECB_URL);
+		}
 	}
 
 	private String _ECB_URL =

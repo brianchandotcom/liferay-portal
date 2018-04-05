@@ -24,10 +24,9 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.blog.apio.architect.identifier.BlogPostingIdentifier;
 import com.liferay.blog.apio.internal.architect.form.BlogPostingForm;
-import com.liferay.blogs.kernel.exception.NoSuchEntryException;
-import com.liferay.blogs.kernel.model.BlogsEntry;
-import com.liferay.blogs.kernel.model.BlogsEntryModel;
-import com.liferay.blogs.kernel.service.BlogsEntryService;
+import com.liferay.blogs.exception.NoSuchEntryException;
+import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.apio.architect.context.auth.MockPermissions;
 import com.liferay.portal.apio.architect.context.identifier.ClassNameClassPK;
@@ -98,8 +97,7 @@ public class BlogPostingNestedCollectionResource
 		).identifier(
 			BlogsEntry::getEntryId
 		).addBidirectionalModel(
-			"webSite", "blogs", WebSiteIdentifier.class,
-			BlogsEntryModel::getGroupId
+			"webSite", "blogs", WebSiteIdentifier.class, BlogsEntry::getGroupId
 		).addDate(
 			"createDate", BlogsEntry::getCreateDate
 		).addDate(

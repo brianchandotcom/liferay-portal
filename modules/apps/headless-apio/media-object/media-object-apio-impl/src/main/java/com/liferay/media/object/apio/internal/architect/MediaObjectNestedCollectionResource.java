@@ -21,7 +21,7 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
-import com.liferay.blogs.kernel.exception.NoSuchEntryException;
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryModel;
 import com.liferay.document.library.kernel.model.DLFolder;
@@ -130,7 +130,7 @@ public class MediaObjectNestedCollectionResource
 		try {
 			return _dlFileEntryService.getFileEntry(dlFileEntryId);
 		}
-		catch (NoSuchEntryException | PrincipalException e) {
+		catch (NoSuchFileEntryException | PrincipalException e) {
 			throw new NotFoundException(
 				"Unable to get file " + dlFileEntryId, e);
 		}

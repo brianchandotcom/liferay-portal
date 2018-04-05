@@ -156,61 +156,36 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 		return moduleDirsList;
 	}
 
-	private boolean _isNPMTestModuleDir(File moduleDir) throws IOException {
-		final List<Path> npmTestMarkers = new ArrayList<>();
+	private boolean _isNPMTestModuleDir(File moduleDir) {
+		List<File> packageJSONFiles = JenkinsResultsParserUtil.findFiles(
+			moduleDir, "package\\.json");
 
-		Files.walkFileTree(
-			moduleDir.toPath(),
-			new SimpleFileVisitor<Path>() {
+		for (File packageJSONFile : packageJSONFiles) {
+			JSONObject jsonObject = null;
 
-				@Override
-				public FileVisitResult visitFile(
-						Path filePath, BasicFileAttributes attrs)
-					throws IOException {
+			try {
+				jsonObject = JenkinsResultsParserUtil.createJSONObject(
+					JenkinsResultsParserUtil.read(packageJSONFile));
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException(
+					"Unable to read file " + packageJSONFile.getPath(), ioe);
+			}
 
-					if (_isNPMTestMarker(filePath)) {
-						npmTestMarkers.add(filePath);
+			if (!jsonObject.has("scripts")) {
+				continue;
+			}
 
-						return FileVisitResult.TERMINATE;
-					}
+			JSONObject scriptsJSONObject = jsonObject.getJSONObject("scripts");
 
-					return FileVisitResult.CONTINUE;
-				}
+			if (!scriptsJSONObject.has("test")) {
+				continue;
+			}
 
-				private boolean _isNPMTestMarker(Path path) {
-					File file = path.toFile();
+			return true;
+		}
 
-					String fileName = file.getName();
-
-					if (!fileName.equals("package.json")) {
-						return false;
-					}
-
-					try {
-						JSONObject jsonObject = new JSONObject(
-							new String(Files.readAllBytes(path)));
-
-						if (!jsonObject.has("scripts")) {
-							return false;
-						}
-
-						JSONObject scriptsJSONObject = jsonObject.getJSONObject(
-							"scripts");
-
-						if (!scriptsJSONObject.has("test")) {
-							return false;
-						}
-
-						return true;
-					}
-					catch (IOException ioe) {
-						throw new RuntimeException(ioe);
-					}
-				}
-
-			});
-
-		return !npmTestMarkers.isEmpty();
+		return false;
 	}
 
 	private static class Module {

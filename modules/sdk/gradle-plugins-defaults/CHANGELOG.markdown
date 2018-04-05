@@ -3192,9 +3192,9 @@ execution when on the `7.0.x` branch.
 ## 5.3.61 - 2018-04-03
 
 ### Changed
-- [LPS-74110]: Update the [Liferay Gradle Plugins] dependency to version 3.10.5.
 - [LPS-74110]: Update the [Liferay Gradle Plugins Baseline] dependency to
 version 1.2.2.
+- [LPS-75010]: Update the [Liferay Gradle Plugins] dependency to version 3.10.5.
 
 ## 5.3.63 - 2018-04-04
 

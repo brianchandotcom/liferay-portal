@@ -2,9 +2,9 @@ sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
 dependencies {
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
-	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
-	provided project(":apps:adaptive-media:adaptive-media-content-transformer-api")
-	provided project(":core:osgi-service-tracker-collections")
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
+	compileOnly group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compileOnly project(":apps:adaptive-media:adaptive-media-content-transformer-api")
+	compileOnly project(":core:osgi-service-tracker-collections")
 }

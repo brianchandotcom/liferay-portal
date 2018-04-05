@@ -98,13 +98,13 @@ lockDependencyVersion {
 
 		if (dependencyName.startsWith("com.liferay.portal.") || dependencyName.startsWith("com.liferay.util.")) {
 			dependencyGroup = "com.liferay.portal"
-			dependencyPattern = ~/provided\s+group:\s*"${dependencyGroup}",\s*name:\s*"${dependencyName}",\s*version:\s*"default"/
+			dependencyPattern = ~/(compileOnly|provided)\s+group:\s*"${dependencyGroup}",\s*name:\s*"${dependencyName}",\s*version:\s*"default"/
 		}
 		else {
-			dependencyPattern = ~/provided project\(".+:${dependencyProjectName}"\)/
+			dependencyPattern = ~/(compileOnly|provided) project\(".+:${dependencyProjectName}"\)/
 		}
 
-		String dependencyReplacement = "provided group: \"${dependencyGroup}\", name: \"${dependencyName}\", version: \"${dependencyVersion}\""
+		String dependencyReplacement = "$1 group: \"${dependencyGroup}\", name: \"${dependencyName}\", version: \"${dependencyVersion}\""
 
 		boolean commitChanges = false
 

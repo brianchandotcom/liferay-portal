@@ -3196,6 +3196,17 @@ execution when on the `7.0.x` branch.
 - [LPS-74110]: Update the [Liferay Gradle Plugins Baseline] dependency to
 version 1.2.2.
 
+## 5.3.62 - 2018-04-04
+
+### Added
+- [LPS-75049]: Add support for `compileOnly` configuration.
+
+## 5.3.63 - 2017-04-04
+
+### Changed
+- [LPS-75049]: Add `compileOnly` dependencies to the test integration compile
+classpath.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -3458,6 +3469,7 @@ version 1.2.2.
 [LPS-75010]: https://issues.liferay.com/browse/LPS-75010
 [LPS-75039]: https://issues.liferay.com/browse/LPS-75039
 [LPS-75047]: https://issues.liferay.com/browse/LPS-75047
+[LPS-75049]: https://issues.liferay.com/browse/LPS-75049
 [LPS-75096]: https://issues.liferay.com/browse/LPS-75096
 [LPS-75100]: https://issues.liferay.com/browse/LPS-75100
 [LPS-75175]: https://issues.liferay.com/browse/LPS-75175

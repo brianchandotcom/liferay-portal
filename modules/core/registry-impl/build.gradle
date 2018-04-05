@@ -2,13 +2,13 @@ sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
 dependencies {
-	provided group: "com.liferay", name: "org.eclipse.osgi", version: "3.10.200-20150904.172142-1-LIFERAY-CACHED"
-	provided project(":core:osgi-service-tracker-collections")
-	provided project(":core:registry-api")
+	compileOnly group: "com.liferay", name: "org.eclipse.osgi", version: "3.10.200-20150904.172142-1-LIFERAY-CACHED"
+	compileOnly project(":core:osgi-service-tracker-collections")
+	compileOnly project(":core:registry-api")
 }
 
 deployDependencies {
-	from configurations.provided
+	from configurations.compileOnly
 	include "org.eclipse.osgi-*.jar"
 }
 

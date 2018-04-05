@@ -2,7 +2,7 @@ sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
 dependencies {
-	provided project(":core:petra:petra-memory")
+	compileOnly project(":core:petra:petra-memory")
 
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testCompile project(":core:petra:petra-lang")

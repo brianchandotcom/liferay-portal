@@ -3,7 +3,7 @@ import com.liferay.gradle.util.copy.RenameDependencyClosure
 task deployTestLibs(type: Copy)
 
 configurations {
-	provided {
+	compileOnly {
 		transitive = false
 	}
 
@@ -13,24 +13,24 @@ configurations {
 }
 
 dependencies {
-	provided group: "com.liferay", name: "javax.servlet.jsp.jstl", version: "1.2.3.LIFERAY-PATCHED-2"
-	provided group: "com.liferay", name: "org.apache.felix.bundlerepository", version: "2.0.2.LIFERAY-PATCHED-1"
-	provided group: "com.liferay", name: "org.apache.felix.configadmin", version: "1.8.8.LIFERAY-PATCHED-1"
-	provided group: "com.liferay", name: "org.apache.felix.fileinstall", version: "3.5.4.LIFERAY-PATCHED-2"
-	provided group: "com.liferay", name: "org.eclipse.equinox.console", version: "1.1.100-20150308.220103-2-LIFERAY-CACHED"
-	provided group: "com.liferay", name: "org.eclipse.equinox.metatype", version: "1.4.200-20150831.175616-1-LIFERAY-CACHED"
-	provided group: "com.liferay", name: "org.osgi.service.http", version: "3.5.0-20150611.165350-3.LIFERAY-PATCHED-2"
-	provided group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", version: "2.3.2-b01"
-	provided group: "javax.servlet.jsp.jstl", name: "javax.servlet.jsp.jstl-api", version: "1.2.1"
-	provided group: "org.apache.felix", name: "org.apache.felix.dependencymanager", version: "3.2.0"
-	provided group: "org.apache.felix", name: "org.apache.felix.dependencymanager.shell", version: "3.2.0"
-	provided group: "org.apache.felix", name: "org.apache.felix.eventadmin", version: "1.4.6"
-	provided group: "org.apache.felix", name: "org.apache.felix.gogo.command", version: "0.12.0"
-	provided group: "org.apache.felix", name: "org.apache.felix.gogo.runtime", version: "0.10.0"
-	provided group: "org.apache.felix", name: "org.apache.felix.gogo.shell", version: "0.10.0"
-	provided group: "org.apache.felix", name: "org.apache.felix.scr", version: "2.0.6"
-	provided group: "org.glassfish", name: "javax.el", version: "3.0.1-b05"
-	provided group: "org.osgi", name: "org.osgi.service.metatype", version: "1.3.0"
+	compileOnly group: "com.liferay", name: "javax.servlet.jsp.jstl", version: "1.2.3.LIFERAY-PATCHED-2"
+	compileOnly group: "com.liferay", name: "org.apache.felix.bundlerepository", version: "2.0.2.LIFERAY-PATCHED-1"
+	compileOnly group: "com.liferay", name: "org.apache.felix.configadmin", version: "1.8.8.LIFERAY-PATCHED-1"
+	compileOnly group: "com.liferay", name: "org.apache.felix.fileinstall", version: "3.5.4.LIFERAY-PATCHED-2"
+	compileOnly group: "com.liferay", name: "org.eclipse.equinox.console", version: "1.1.100-20150308.220103-2-LIFERAY-CACHED"
+	compileOnly group: "com.liferay", name: "org.eclipse.equinox.metatype", version: "1.4.200-20150831.175616-1-LIFERAY-CACHED"
+	compileOnly group: "com.liferay", name: "org.osgi.service.http", version: "3.5.0-20150611.165350-3.LIFERAY-PATCHED-2"
+	compileOnly group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", version: "2.3.2-b01"
+	compileOnly group: "javax.servlet.jsp.jstl", name: "javax.servlet.jsp.jstl-api", version: "1.2.1"
+	compileOnly group: "org.apache.felix", name: "org.apache.felix.dependencymanager", version: "3.2.0"
+	compileOnly group: "org.apache.felix", name: "org.apache.felix.dependencymanager.shell", version: "3.2.0"
+	compileOnly group: "org.apache.felix", name: "org.apache.felix.eventadmin", version: "1.4.6"
+	compileOnly group: "org.apache.felix", name: "org.apache.felix.gogo.command", version: "0.12.0"
+	compileOnly group: "org.apache.felix", name: "org.apache.felix.gogo.runtime", version: "0.10.0"
+	compileOnly group: "org.apache.felix", name: "org.apache.felix.gogo.shell", version: "0.10.0"
+	compileOnly group: "org.apache.felix", name: "org.apache.felix.scr", version: "2.0.6"
+	compileOnly group: "org.glassfish", name: "javax.el", version: "3.0.1-b05"
+	compileOnly group: "org.osgi", name: "org.osgi.service.metatype", version: "1.3.0"
 
 	testLibs group: "org.apache.aries", name: "org.apache.aries.util", version: "1.0.0"
 	testLibs group: "org.apache.aries.jmx", name: "org.apache.aries.jmx.api", version: "1.1.1"
@@ -45,7 +45,7 @@ deploy {
 }
 
 deployDependencies {
-	from configurations.provided
+	from configurations.compileOnly
 	rename(/javax.el-(.+)\.jar/, "javax.el" + renameSuffix)
 }
 

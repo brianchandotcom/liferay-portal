@@ -3,5 +3,5 @@ baselineConfiguration {
 }
 
 dependencies {
-	provided project(":core:petra:petra-string")
+	compileOnly project(":core:petra:petra-string")
 }

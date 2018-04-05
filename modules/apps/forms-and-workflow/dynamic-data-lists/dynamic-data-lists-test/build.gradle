@@ -6,7 +6,7 @@ copyLibs {
 }
 
 dependencies {
-	provided group: "org.apache.poi", name: "poi", version: "3.15"
+	compileOnly group: "org.apache.poi", name: "poi", version: "3.15"
 
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testCompile project(":apps:forms-and-workflow:dynamic-data-lists:dynamic-data-lists-api")

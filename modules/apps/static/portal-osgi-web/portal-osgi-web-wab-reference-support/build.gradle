@@ -1,8 +1,8 @@
 dependencies {
-	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	provided group: "org.eclipse.tycho", name: "org.eclipse.osgi", version: "3.10.101.v20150820-1432"
-	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
-	provided project(":apps:static:portal-osgi-web:portal-osgi-web-wab-generator-api")
-	provided project(":core:petra:petra-string")
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "org.eclipse.tycho", name: "org.eclipse.osgi", version: "3.10.101.v20150820-1432"
+	compileOnly group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compileOnly project(":apps:static:portal-osgi-web:portal-osgi-web-wab-generator-api")
+	compileOnly project(":core:petra:petra-string")
 }

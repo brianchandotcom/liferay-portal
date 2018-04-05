@@ -1,3 +1,5 @@
+apply plugin: "nebula.optional-base"
+
 dependencies {
 	testIntegrationCompile group: "axis", name: "axis", optional, version: "1.4"
 	testIntegrationCompile group: "com.liferay.arquillian", name: "com.liferay.arquillian.arquillian-container-liferay", version: "1.0.4"

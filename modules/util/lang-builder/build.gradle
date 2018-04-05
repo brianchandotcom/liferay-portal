@@ -15,13 +15,13 @@ dependencies {
 	compile group: "io.github.firemaples", name: "microsoft-translator-java-api", version: "0.8.3"
 	compile group: "log4j", name: "log4j", version: "1.2.17"
 
-	provided group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.petra.nio", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.6.0"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	provided group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.4"
-	provided group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.nio", version: "1.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.6.0"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.4"
+	compileOnly group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
 }
 
 formatSource {

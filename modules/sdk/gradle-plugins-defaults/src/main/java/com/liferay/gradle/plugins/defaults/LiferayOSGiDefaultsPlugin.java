@@ -123,7 +123,6 @@ import java.util.regex.Pattern;
 import javax.xml.bind.DatatypeConverter;
 import javax.xml.parsers.DocumentBuilder;
 
-import nebula.plugin.extraconfigurations.OptionalBasePlugin;
 import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
 
 import org.gradle.StartParameter;
@@ -782,14 +781,21 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		copy.eachFile(new ExcludeExistingFileAction(libDir));
 
-		Configuration configuration = GradleUtil.getConfiguration(
+		Configuration compileOnlyConfiguration = GradleUtil.getConfiguration(
+			project, JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME);
+		Configuration runtimeConfiguration = GradleUtil.getConfiguration(
 			project, JavaPlugin.RUNTIME_CONFIGURATION_NAME);
 
-		copy.from(configuration);
+		copy.from(compileOnlyConfiguration, runtimeConfiguration);
 
 		copy.into(libDir);
-		copy.rename(
-			new RenameDependencyClosure(project, configuration.getName()));
+
+		Closure<String> renameDependencyClosure = new RenameDependencyClosure(
+			project, compileOnlyConfiguration.getName(),
+			runtimeConfiguration.getName());
+
+		copy.rename(renameDependencyClosure);
+
 		copy.setEnabled(false);
 
 		Task classesTask = GradleUtil.getTask(
@@ -1300,15 +1306,20 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						return content;
 					}
 
-					String configuration =
-						ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME() +
-							" ";
+					StringBuilder sb = new StringBuilder();
+
+					sb.append('(');
+					sb.append(JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME);
+					sb.append('|');
+					sb.append(
+						ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME());
+					sb.append(") ");
+					sb.append(Pattern.quote(_getProjectDependency(project)));
 
 					return content.replaceAll(
-						Pattern.quote(
-							configuration + _getProjectDependency(project)),
-						Matcher.quoteReplacement(
-							configuration +
+						sb.toString(),
+						"$1 " +
+							Matcher.quoteReplacement(
 								_getModuleDependency(project, true)));
 				}
 
@@ -1439,7 +1450,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, IdeaPlugin.class);
 		GradleUtil.applyPlugin(project, JSDocPlugin.class);
 		GradleUtil.applyPlugin(project, MavenPlugin.class);
-		GradleUtil.applyPlugin(project, OptionalBasePlugin.class);
 		GradleUtil.applyPlugin(project, PmdPlugin.class);
 		GradleUtil.applyPlugin(project, ProvidedBasePlugin.class);
 
@@ -2554,10 +2564,13 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_configureSourceSetClassesDir(
 			project, sourceSet, "test-classes/integration");
 
+		Configuration compileOnlyConfiguration = GradleUtil.getConfiguration(
+			project, JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME);
+
 		sourceSet.setCompileClasspath(
 			FileUtil.join(
-				portalConfiguration, sourceSet.getCompileClasspath(),
-				portalTestConfiguration));
+				portalConfiguration, compileOnlyConfiguration,
+				sourceSet.getCompileClasspath(), portalTestConfiguration));
 
 		sourceSet.setRuntimeClasspath(
 			FileUtil.join(

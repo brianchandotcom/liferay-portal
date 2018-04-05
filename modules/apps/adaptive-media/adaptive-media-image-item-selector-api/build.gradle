@@ -2,5 +2,5 @@ sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
 dependencies {
-	provided project(":apps:collaboration:item-selector:item-selector-api")
+	compileOnly project(":apps:collaboration:item-selector:item-selector-api")
 }

@@ -2,15 +2,15 @@ sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
 dependencies {
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.test", version: "default"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.test.integration", version: "default"
-	provided group: "junit", name: "junit", version: "4.12"
-	provided group: "org.mockito", name: "mockito-core", version: "1.10.8"
-	provided project(":apps:foundation:portal-search:portal-search")
-	provided project(":apps:foundation:portal-search:portal-search-api")
-	provided project(":core:petra:petra-string")
-	provided project(":core:registry-api")
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.test", version: "default"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.test.integration", version: "default"
+	compileOnly group: "junit", name: "junit", version: "4.12"
+	compileOnly group: "org.mockito", name: "mockito-core", version: "1.10.8"
+	compileOnly project(":apps:foundation:portal-search:portal-search")
+	compileOnly project(":apps:foundation:portal-search:portal-search-api")
+	compileOnly project(":core:petra:petra-string")
+	compileOnly project(":core:registry-api")
 }
 
 liferay {

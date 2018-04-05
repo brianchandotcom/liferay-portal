@@ -22,12 +22,12 @@ dependencies {
 
 	compileInclude group: "com.beust", name: "jcommander", version: "1.48"
 
-	mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: "3.3.9"
+	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.7"
+	compileOnly group: "org.apache.maven", name: "maven-artifact", version: "3.2.5"
+	compileOnly group: "org.apache.maven", name: "maven-core", version: "3.2.5"
+	compileOnly group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
 
-	provided group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.7"
-	provided group: "org.apache.maven", name: "maven-artifact", version: "3.2.5"
-	provided group: "org.apache.maven", name: "maven-core", version: "3.2.5"
-	provided group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
+	mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: "3.3.9"
 
 	testCompile group: "org.apache.ant", name: "ant-testutil", version: "1.9.7"
 	testCompile project(":test:maven-executor")

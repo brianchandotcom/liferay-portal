@@ -3,9 +3,9 @@ configurations {
 }
 
 dependencies {
-	mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: "3.3.9"
+	compileOnly group: "junit", name: "junit", version: "4.12"
 
-	provided group: "junit", name: "junit", version: "4.12"
+	mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: "3.3.9"
 }
 
 test {

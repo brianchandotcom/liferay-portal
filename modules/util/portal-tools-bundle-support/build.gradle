@@ -24,14 +24,14 @@ dependencies {
 	compileInclude group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.2"
 	compileInclude group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.4"
 
-	mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: "3.3.9"
+	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.7"
+	compileOnly group: "org.apache.maven", name: "maven-core", transitive: false, version: "3.2.5"
+	compileOnly group: "org.apache.maven", name: "maven-model", transitive: false, version: "3.2.5"
+	compileOnly group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.2.5"
+	compileOnly group: "org.apache.maven", name: "maven-settings", transitive: false, version: "3.2.5"
+	compileOnly group: "org.apache.maven.plugin-tools", name: "maven-plugin-annotations", transitive: false, version: "3.5"
 
-	provided group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.7"
-	provided group: "org.apache.maven", name: "maven-core", transitive: false, version: "3.2.5"
-	provided group: "org.apache.maven", name: "maven-model", transitive: false, version: "3.2.5"
-	provided group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.2.5"
-	provided group: "org.apache.maven", name: "maven-settings", transitive: false, version: "3.2.5"
-	provided group: "org.apache.maven.plugin-tools", name: "maven-plugin-annotations", transitive: false, version: "3.5"
+	mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: "3.3.9"
 
 	testCompile group: "com.sun.net.httpserver", name: "http", version: "20070405"
 	testCompile group: "org.apache.ant", name: "ant-testutil", version: "1.9.7"

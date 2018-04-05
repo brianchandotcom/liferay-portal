@@ -14,6 +14,8 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.HashMap;
 
 import javax.portlet.PortletURL;
@@ -42,7 +44,10 @@ public class NavigationItem extends HashMap<String, Object> {
 				String parameterName = String.valueOf(parameters[i]);
 				String parameterValue = String.valueOf(parameters[i + 1]);
 
-				portletURL.setParameter(parameterName, parameterValue);
+				portletURL.setParameter(
+					parameterName,
+					Validator.isNotNull(
+						parameterValue) ? parameterValue : null);
 			}
 		}
 

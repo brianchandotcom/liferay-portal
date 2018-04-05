@@ -68,7 +68,7 @@ FolderSearchFacetDisplayContext folderSearchFacetDisplayContext = (FolderSearchF
 							<%
 							int i = 0;
 
-							for (FolderSearchFacetTermDisplayContext folderSearchFacetTermDisplayContext : folderSearchFacetDisplayContext.getTermDisplayContexts()) {
+							for (FolderSearchFacetTermDisplayContext folderSearchFacetTermDisplayContext : folderSearchFacetDisplayContext.getFolderSearchFacetTermDisplayContexts()) {
 								i++;
 							%>
 

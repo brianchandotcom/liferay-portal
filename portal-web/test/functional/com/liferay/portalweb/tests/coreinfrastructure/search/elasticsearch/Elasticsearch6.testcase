@@ -48,7 +48,7 @@
 	</command>
 
 	<command ignore="true" name="AssertSystemSettingsPropogateToModule" priority="3">
-		<property name="test.name.skip.portal.instance" value="Elasticsearch#AssertSystemSettingsPropogateToModule" />
+		<property name="test.name.skip.portal.instance" value="Elasticsearch6#AssertSystemSettingsPropogateToModule" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
@@ -83,7 +83,7 @@
 	<command name="ElasticsearchRemoteClusterSmokeTest" priority="5">
 		<property name="remote.elasticsearch.cluster.size" value="2" />
 		<property name="remote.elasticsearch.enabled" value="true" />
-		<property name="test.name.skip.portal.instance" value="ElasticsearchEE#ElasticsearchRemoteClusterSmokeTest" />
+		<property name="test.name.skip.portal.instance" value="Elasticsearch6#ElasticsearchRemoteClusterSmokeTest" />
 
 		<execute macro="Elasticsearch#viewClusterStatusViaClusterHealthAPI">
 			<var name="numberOfNodes" value="2" />

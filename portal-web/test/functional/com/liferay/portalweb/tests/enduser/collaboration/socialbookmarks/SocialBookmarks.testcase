@@ -84,16 +84,12 @@
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
 
-		<execute macro="KBArticle#configureKBSocialBookmarkSites">
-			<var name="enableSocialBookmarkSites" value="AddThis,Delicious,Digg,Evernote,LinkedIn,Newsvine,Reddit,Slashdot,StumbleUpon,Tuenti" />
-		</execute>
-
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
 		<execute macro="SocialBookmarks#viewBookmarkMenuItems">
-			<var name="socialBookmarks" value="Twitter,Facebook,Google+,LinkedIn,Delicious,Digg,Evernote,Newsvine,Reddit,Slashdot,StumbleUpon,Tuenti" />
+			<var name="socialBookmarks" value="Twitter,Facebook,LinkedIn,Google+,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot,StumbleUpon" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -106,7 +102,7 @@
 		</execute>
 
 		<execute macro="KBArticle#configureKBSocialBookmarkSites">
-			<var name="disableSocialBookmarkSites" value="Twitter,Newsvine,Reddit,Slashdot,StumbleUpon,Tuenti" />
+			<var name="disableSocialBookmarkSites" value="Twitter,Reddit,Slashdot,StumbleUpon" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -118,7 +114,7 @@
 		</execute>
 
 		<execute macro="SocialBookmarks#viewBookmarksNotPresent">
-			<var name="socialBookmarks" value="Twitter,Newsvine,Reddit,Slashdot,StumbleUpon,Tuenti" />
+			<var name="socialBookmarks" value="Twitter,Reddit,Slashdot,StumbleUpon" />
 		</execute>
 	</command>
 
@@ -162,10 +158,6 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="Blogs#enableSocialBookmarkSites">
-			<var name="enableSocialBookmarkSites" value="AddThis,Delicious,Digg,Evernote,LinkedIn,Newsvine,Reddit,Slashdot,StumbleUpon,Tuenti" />
-		</execute>
-
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
@@ -176,26 +168,22 @@
 		</execute>
 
 		<execute macro="SocialBookmarks#viewBookmarkMenuItems">
-			<var name="socialBookmarks" value="Twitter,Facebook,Google+,LinkedIn,Delicious,Digg,Evernote,Newsvine,Reddit,Slashdot,StumbleUpon,Tuenti" />
+			<var name="socialBookmarks" value="Google+,Delicious,Digg,Evernote,Reddit,Slashdot,StumbleUpon" />
 		</execute>
 
 		<execute macro="Blogs#disableSocialBookmarkSites">
-			<var name="disableSocialBookmarkSites" value="Twitter,Facebook,AddThis,Delicious,Digg,Evernote,LinkedIn,Newsvine,Reddit,Slashdot,StumbleUpon,Tuenti" />
+			<var name="disableSocialBookmarkSites" value="AddThis,Delicious,Digg,Evernote,Reddit,Slashdot,StumbleUpon" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
-		<execute macro="SocialBookmarks#viewBookmarksNotPresent">
-			<var name="socialBookmarks" value="Twitter,Facebook,AddThis,Delicious,Digg,Evernote,LinkedIn,Newsvine,Reddit,Slashdot,StumbleUpon,Tuenti" />
-		</execute>
+		<execute macro="SocialBookmarks#viewShareIconNotPresent" />
 	</command>
 
 	<command name="ViewKBArticleWithAllSocialBookmarkSites" priority="3">
 		<property name="osgi.app.includes" value="social-bookmarks, knowledge-base" />
-
-		<var name="socialBookmarkSites" value="AddThis,Delicious,Digg,Evernote,LinkedIn,Newsvine,Reddit,Slashdot,StumbleUpon,Tuenti" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Navigation" />
@@ -245,16 +233,12 @@
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
 
-		<execute macro="KBArticle#configureKBSocialBookmarkSites">
-			<var name="enableSocialBookmarkSites" value="${socialBookmarkSites}" />
-		</execute>
-
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
 		<execute macro="SocialBookmarks#viewBookmarkMenuItems">
-			<var name="socialBookmarks" value="Twitter,Facebook,Google+,AddThis,LinkedIn,Delicious,Digg,Evernote,Newsvine,Reddit,Slashdot,StumbleUpon,Tuenti" />
+			<var name="socialBookmarks" value="Twitter,Facebook,LinkedIn,Google+,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot,StumbleUpon" />
 		</execute>
 	</command>
 </definition>

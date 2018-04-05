@@ -822,7 +822,13 @@
 
 		<execute function="UploadCommonFile#uploadCommonFileHiddenNoMouseOver" locator1="WorkflowUpload#FILE_UPLOAD" value1="${workflowDefinitionFile}" />
 
-		<execute function="Pause" locator1="2000" />
+		<execute function="AssertVisible" locator1="Message#SUCCESS" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS_3" value1="Definition imported successfully." />
+
+		<execute macro="Alert#_closeMessage">
+			<var name="messageType" value="SUCCESS" />
+		</execute>
 
 		<execute macro="PortletEntry#publish" />
 

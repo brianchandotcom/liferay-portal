@@ -26,7 +26,11 @@ zipsString = StringUtil.merge(zips, StringPool.NEW_LINE);
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
-<aui:form action="<%= configurationActionURL %>" cssClass="container-fluid-1280" method="post">
+<liferay-frontend:edit-form
+	action="<%= configurationActionURL %>"
+	cssClass="container-fluid-1280"
+	method="post"
+>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
 	<liferay-ui:error exception="<%= ValidatorException.class %>">
@@ -52,8 +56,8 @@ zipsString = StringUtil.merge(zips, StringPool.NEW_LINE);
 
 	</liferay-ui:error>
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
+	<liferay-frontend:fieldset-group>
+		<liferay-frontend:fieldset>
 			<aui:input label="openweathermap-api-key" name="preferences--apiKey--" type="text" value="<%= apiKey %>" />
 
 			<aui:input label="enter-one-city-or-zip-code-per-line" name="preferences--zips--" type="textarea" value="<%= zipsString %>" wrapperCssClass="lfr-textarea-container" />
@@ -62,10 +66,10 @@ zipsString = StringUtil.merge(zips, StringPool.NEW_LINE);
 				<aui:option label="fahrenheit" selected="<%= fahrenheit %>" value="1" />
 				<aui:option label="celsius" selected="<%= !fahrenheit %>" value="0" />
 			</aui:select>
-		</aui:fieldset>
-	</aui:fieldset-group>
+		</liferay-frontend:fieldset>
+	</liferay-frontend:fieldset-group>
 
-	<aui:button-row>
+	<liferay-frontend:button-row>
 		<aui:button type="submit" />
-	</aui:button-row>
-</aui:form>
+	</liferay-frontend:button-row>
+</liferay-frontend:edit-form>

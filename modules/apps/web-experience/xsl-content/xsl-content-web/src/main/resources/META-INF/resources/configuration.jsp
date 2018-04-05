@@ -20,37 +20,37 @@
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
+<liferay-frontend:edit-form
+	action="<%= configurationActionURL %>"
+	method="post"
+	name="fm"
+>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<div class="portlet-configuration-body-content">
-		<div class="container-fluid-1280">
-			<liferay-ui:error key="xmlUrl" message="please-enter-a-valid-xml-url" />
-			<liferay-ui:error key="xslUrl" message="please-enter-a-valid-xsl-url" />
-			<liferay-ui:error key="transformation" message="an-error-occurred-while-processing-your-xml-and-xsl" />
+	<liferay-ui:error key="xmlUrl" message="please-enter-a-valid-xml-url" />
+	<liferay-ui:error key="xslUrl" message="please-enter-a-valid-xsl-url" />
+	<liferay-ui:error key="transformation" message="an-error-occurred-while-processing-your-xml-and-xsl" />
 
-			<%
-			String validUrlPrefixes = xslContentConfiguration.validUrlPrefixes();
-			%>
+	<%
+	String validUrlPrefixes = xslContentConfiguration.validUrlPrefixes();
+	%>
 
-			<c:if test="<%= Validator.isNotNull(validUrlPrefixes) %>">
-				<div class="alert alert-info">
-					<liferay-ui:message arguments="<%= validUrlPrefixes %>" key="urls-must-begin-with-one-of-the-following" />
-				</div>
-			</c:if>
-
-			<aui:fieldset-group markupView="lexicon">
-				<aui:fieldset>
-					<aui:input cssClass="lfr-input-text-container" name="preferences--xmlUrl--" type="text" value="<%= xslContentPortletInstanceConfiguration.xmlUrl() %>" />
-
-					<aui:input cssClass="lfr-input-text-container" name="preferences--xslUrl--" type="text" value="<%= xslContentPortletInstanceConfiguration.xslUrl() %>" />
-				</aui:fieldset>
-			</aui:fieldset-group>
+	<c:if test="<%= Validator.isNotNull(validUrlPrefixes) %>">
+		<div class="alert alert-info">
+			<liferay-ui:message arguments="<%= validUrlPrefixes %>" key="urls-must-begin-with-one-of-the-following" />
 		</div>
-	</div>
+	</c:if>
 
-	<aui:button-row>
+	<liferay-frontend:fieldset-group>
+		<liferay-frontend:fieldset>
+			<aui:input cssClass="lfr-input-text-container" name="preferences--xmlUrl--" type="text" value="<%= xslContentPortletInstanceConfiguration.xmlUrl() %>" />
+
+			<aui:input cssClass="lfr-input-text-container" name="preferences--xslUrl--" type="text" value="<%= xslContentPortletInstanceConfiguration.xslUrl() %>" />
+		</liferay-frontend:fieldset>
+	</liferay-frontend:fieldset-group>
+
+	<liferay-frontend:button-row>
 		<aui:button type="submit" />
-	</aui:button-row>
-</aui:form>
+	</liferay-frontend:button-row>
+</liferay-frontend:edit-form>

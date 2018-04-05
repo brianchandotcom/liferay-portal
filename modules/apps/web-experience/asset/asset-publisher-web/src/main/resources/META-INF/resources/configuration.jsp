@@ -26,7 +26,12 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" varImpl="configurationRenderURL" />
 
-<aui:form action="<%= configurationActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit="event.preventDefault();">
+<liferay-frontend:edit-form
+	action="<%= configurationActionURL %>"
+	method="post"
+	name="fm"
+	onSubmit="event.preventDefault();"
+>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL.toString() %>" />
 	<aui:input name="groupId" type="hidden" />
@@ -41,20 +46,15 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 	request.setAttribute("configuration.jsp-redirect", redirect);
 	%>
 
-	<div class="portlet-configuration-body-content">
-		<div class="container-fluid-1280">
-			<liferay-ui:form-navigator
-				id="<%= AssetPublisherConstants.FORM_NAVIGATOR_ID_CONFIGURATION %>"
-				markupView="lexicon"
-				showButtons="<%= false %>"
-			/>
-		</div>
-	</div>
+	<liferay-frontend:form-navigator
+		id="<%= AssetPublisherConstants.FORM_NAVIGATOR_ID_CONFIGURATION %>"
+		showButtons="<%= false %>"
+	/>
 
-	<aui:button-row>
+	<liferay-frontend:button-row>
 		<aui:button onClick='<%= renderResponse.getNamespace() + "saveSelectBoxes();" %>' type="submit" />
-	</aui:button-row>
-</aui:form>
+	</liferay-frontend:button-row>
+</liferay-frontend:edit-form>
 
 <aui:script>
 	function <portlet:namespace />saveSelectBoxes() {

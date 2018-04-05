@@ -20,51 +20,52 @@
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
+<liferay-frontend:edit-form
+	action="<%= configurationActionURL %>"
+	method="post"
+	name="fm"
+	onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'
+>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<div class="portlet-configuration-body-content">
-		<div class="container-fluid-1280">
-			<aui:fieldset-group markupView="lexicon">
-				<aui:fieldset>
-					<div class="display-template">
-						<liferay-ddm:template-selector
-							className="<%= AssetCategory.class.getName() %>"
-							displayStyle="<%= assetCategoriesNavigationPortletInstanceConfiguration.displayStyle() %>"
-							displayStyleGroupId="<%= assetCategoriesNavigationDisplayContext.getDisplayStyleGroupId() %>"
-							refreshURL="<%= configurationRenderURL %>"
-							showEmptyOption="<%= true %>"
-						/>
-					</div>
+	<liferay-frontend:fieldset-group>
+		<liferay-frontend:fieldset>
+			<div class="display-template">
+				<liferay-ddm:template-selector
+					className="<%= AssetCategory.class.getName() %>"
+					displayStyle="<%= assetCategoriesNavigationPortletInstanceConfiguration.displayStyle() %>"
+					displayStyleGroupId="<%= assetCategoriesNavigationDisplayContext.getDisplayStyleGroupId() %>"
+					refreshURL="<%= configurationRenderURL %>"
+					showEmptyOption="<%= true %>"
+				/>
+			</div>
 
-					<aui:select label="vocabularies" name="preferences--allAssetVocabularies--">
-						<aui:option label="all" selected="<%= assetCategoriesNavigationPortletInstanceConfiguration.allAssetVocabularies() %>" value="<%= true %>" />
-						<aui:option label="filter[action]" selected="<%= !assetCategoriesNavigationPortletInstanceConfiguration.allAssetVocabularies() %>" value="<%= false %>" />
-					</aui:select>
+			<aui:select label="vocabularies" name="preferences--allAssetVocabularies--">
+				<aui:option label="all" selected="<%= assetCategoriesNavigationPortletInstanceConfiguration.allAssetVocabularies() %>" value="<%= true %>" />
+				<aui:option label="filter[action]" selected="<%= !assetCategoriesNavigationPortletInstanceConfiguration.allAssetVocabularies() %>" value="<%= false %>" />
+			</aui:select>
 
-					<aui:input name="preferences--assetVocabularyIds--" type="hidden" />
+			<aui:input name="preferences--assetVocabularyIds--" type="hidden" />
 
-					<div class="<%= assetCategoriesNavigationPortletInstanceConfiguration.allAssetVocabularies() ? "hide" : "" %>" id="<portlet:namespace />assetVocabulariesBoxes">
-						<liferay-ui:input-move-boxes
-							leftBoxName="currentAssetVocabularyIds"
-							leftList="<%= assetCategoriesNavigationDisplayContext.getCurrentVocabularyNames() %>"
-							leftReorder="<%= Boolean.TRUE.toString() %>"
-							leftTitle="current"
-							rightBoxName="availableAssetVocabularyIds"
-							rightList="<%= assetCategoriesNavigationDisplayContext.getAvailableVocabularyNames() %>"
-							rightTitle="available"
-						/>
-					</div>
-				</aui:fieldset>
-			</aui:fieldset-group>
-		</div>
-	</div>
+			<div class="<%= assetCategoriesNavigationPortletInstanceConfiguration.allAssetVocabularies() ? "hide" : "" %>" id="<portlet:namespace />assetVocabulariesBoxes">
+				<liferay-ui:input-move-boxes
+					leftBoxName="currentAssetVocabularyIds"
+					leftList="<%= assetCategoriesNavigationDisplayContext.getCurrentVocabularyNames() %>"
+					leftReorder="<%= Boolean.TRUE.toString() %>"
+					leftTitle="current"
+					rightBoxName="availableAssetVocabularyIds"
+					rightList="<%= assetCategoriesNavigationDisplayContext.getAvailableVocabularyNames() %>"
+					rightTitle="available"
+				/>
+			</div>
+		</liferay-frontend:fieldset>
+	</liferay-frontend:fieldset-group>
 
-	<aui:button-row>
+	<liferay-frontend:button-row>
 		<aui:button type="submit" />
-	</aui:button-row>
-</aui:form>
+	</liferay-frontend:button-row>
+</liferay-frontend:edit-form>
 
 <aui:script>
 	function <portlet:namespace />saveConfiguration() {

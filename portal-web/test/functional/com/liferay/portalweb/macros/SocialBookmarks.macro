@@ -40,4 +40,8 @@
 			<var name="socialBookmarks" value="Twitter,Facebook,LinkedIn,Google+,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot,StumbleUpon" />
 		</execute>
 	</command>
+
+	<command name="viewShareIconNotPresent">
+		<execute function="AssertElementNotPresent" locator1="Icon#SHARE" />
+	</command>
 </definition>

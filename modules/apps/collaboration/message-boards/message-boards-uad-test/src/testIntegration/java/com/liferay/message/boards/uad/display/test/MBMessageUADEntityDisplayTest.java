@@ -75,7 +75,7 @@ public class MBMessageUADEntityDisplayTest extends BaseUADEntityDisplayTestCase 
 
 	@Override
 	protected String getUADEntityTypeDescription() {
-		return "";
+		return "A message board message";
 	}
 
 	@After

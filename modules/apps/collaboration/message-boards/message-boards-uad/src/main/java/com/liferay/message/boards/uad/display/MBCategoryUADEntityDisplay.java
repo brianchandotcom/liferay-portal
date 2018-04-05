@@ -63,7 +63,7 @@ public class MBCategoryUADEntityDisplay implements UADEntityDisplay<MBCategory> 
 
 	@Override
 	public String getUADEntityTypeDescription() {
-		return "";
+		return "A message board category";
 	}
 
 	@Override

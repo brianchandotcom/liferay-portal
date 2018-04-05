@@ -63,7 +63,7 @@ public class MBMessageUADEntityDisplay implements UADEntityDisplay<MBMessage> {
 
 	@Override
 	public String getUADEntityTypeDescription() {
-		return "";
+		return "A message board message";
 	}
 
 	@Override

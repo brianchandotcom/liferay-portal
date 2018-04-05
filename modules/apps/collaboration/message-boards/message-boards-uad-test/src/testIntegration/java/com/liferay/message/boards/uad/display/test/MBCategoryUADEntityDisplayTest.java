@@ -75,7 +75,7 @@ public class MBCategoryUADEntityDisplayTest extends BaseUADEntityDisplayTestCase
 
 	@Override
 	protected String getUADEntityTypeDescription() {
-		return "";
+		return "A message board category";
 	}
 
 	@After

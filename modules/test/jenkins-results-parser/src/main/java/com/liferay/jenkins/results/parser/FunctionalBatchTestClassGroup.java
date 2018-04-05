@@ -67,51 +67,55 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	private void _setRelevantTestBatchRunPropertyQuery() {
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			(PortalGitWorkingDirectory)gitWorkingDirectory;
+		if (testRelevantChanges) {
+			PortalGitWorkingDirectory portalGitWorkingDirectory =
+				(PortalGitWorkingDirectory)gitWorkingDirectory;
 
-		List<File> modifiedModuleDirs = null;
+			List<File> modifiedModuleDirs = null;
 
-		try {
-			modifiedModuleDirs =
-				portalGitWorkingDirectory.getModifiedModuleDirsList();
-		}
-		catch (IOException ioe) {
-			File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
+			try {
+				modifiedModuleDirs =
+					portalGitWorkingDirectory.getModifiedModuleDirsList();
+			}
+			catch (IOException ioe) {
+				File workingDirectory =
+					gitWorkingDirectory.getWorkingDirectory();
 
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to get module directories in ",
-					workingDirectory.getPath()),
-				ioe);
-		}
-
-		for (File modifiedModuleDir : modifiedModuleDirs) {
-			File modifiedModuleTestProperties = new File(
-				modifiedModuleDir, "test.properties");
-
-			if (!modifiedModuleTestProperties.exists()) {
-				continue;
+				throw new RuntimeException(
+					JenkinsResultsParserUtil.combine(
+						"Unable to get module directories in ",
+						workingDirectory.getPath()),
+					ioe);
 			}
 
-			Properties testProperties = JenkinsResultsParserUtil.getProperties(
-				modifiedModuleTestProperties);
+			for (File modifiedModuleDir : modifiedModuleDirs) {
+				File modifiedModuleTestProperties = new File(
+					modifiedModuleDir, "test.properties");
 
-			String testBatchRunProperty = testProperties.getProperty(
-				JenkinsResultsParserUtil.combine(
-					"test.batch.run.property.query[", batchName, "][",
-					testSuiteName, "]"));
-
-			if (testBatchRunProperty != null) {
-				if (_relevantTestBatchRunPropertyQuery == null) {
-					_relevantTestBatchRunPropertyQuery =
-						JenkinsResultsParserUtil.combine(
-							"(", testBatchRunProperty, ")");
+				if (!modifiedModuleTestProperties.exists()) {
+					continue;
 				}
-				else {
-					_relevantTestBatchRunPropertyQuery +=
-						JenkinsResultsParserUtil.combine(
-							" OR (", testBatchRunProperty, ")");
+
+				Properties testProperties =
+					JenkinsResultsParserUtil.getProperties(
+						modifiedModuleTestProperties);
+
+				String testBatchRunProperty = testProperties.getProperty(
+					JenkinsResultsParserUtil.combine(
+						"test.batch.run.property.query[", batchName, "][",
+						testSuiteName, "]"));
+
+				if (testBatchRunProperty != null) {
+					if (_relevantTestBatchRunPropertyQuery == null) {
+						_relevantTestBatchRunPropertyQuery =
+							JenkinsResultsParserUtil.combine(
+								"(", testBatchRunProperty, ")");
+					}
+					else {
+						_relevantTestBatchRunPropertyQuery +=
+							JenkinsResultsParserUtil.combine(
+								" OR (", testBatchRunProperty, ")");
+					}
 				}
 			}
 		}

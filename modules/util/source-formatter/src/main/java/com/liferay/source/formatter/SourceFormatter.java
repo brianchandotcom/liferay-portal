@@ -32,6 +32,7 @@ import com.liferay.source.formatter.checks.configuration.SourceFormatterConfigur
 import com.liferay.source.formatter.checks.configuration.SourceFormatterSuppressions;
 import com.liferay.source.formatter.checks.configuration.SuppressionsLoader;
 import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.checkstyle.util.AlloyMVCCheckstyleUtil;
 import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.DebugUtil;
 import com.liferay.source.formatter.util.FileUtil;
@@ -315,6 +316,9 @@ public class SourceFormatter {
 		while (!executorService.isTerminated()) {
 			Thread.sleep(20);
 		}
+
+		AlloyMVCCheckstyleUtil.cleanUpSuppressionsFiles(
+			_sourceFormatterSuppressionsFiles);
 
 		if (_sourceFormatterArgs.isShowDebugInformation()) {
 			DebugUtil.printSourceFormatterInformation();

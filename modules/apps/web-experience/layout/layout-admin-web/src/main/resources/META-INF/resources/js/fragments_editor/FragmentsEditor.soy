@@ -17,7 +17,6 @@
 	]>}
 	{@param imageSelectorURL: string}
 	{@param portletNamespace: string}
-	{@param sidebarTabs: list<[id:string, label:string]>}
 	{@param spritemap: string}
 	{@param? _contextualSidebarVisible: bool}
 	{@param? _dirty: bool}
@@ -34,6 +33,7 @@
 	{@param? _lastSaveDate: string}
 	{@param? _selectMappingTypeDialogVisible: bool}
 	{@param? _sidebarSelectedTab: string}
+	{@param? _sidebarTabs: list<[id:string, label:string]>}
 	{@param? fragmentEntryLinks: list<[
 		content: html|null,
 		editableValues: ?,
@@ -103,15 +103,17 @@
 					<div class="sidebar-section">
 						<nav class="navbar navbar-expand-md navbar-underline">
 							<ul class="navbar-nav">
-								{foreach $sidebarTab in $sidebarTabs}
-									{call .sidebarTab}
-										{param active: $sidebarTab.id == $_sidebarSelectedTab /}
-										{param id: $sidebarTab.id /}
-										{param key: $sidebarTab.id /}
-										{param handleTabClick: $_handleSidebarTabClick /}
-										{param label: $sidebarTab.label /}
-									{/call}
-								{/foreach}
+								{if $_sidebarTabs}
+									{foreach $sidebarTab in $_sidebarTabs}
+										{call .sidebarTab}
+											{param active: $sidebarTab.id == $_sidebarSelectedTab /}
+											{param id: $sidebarTab.id /}
+											{param key: $sidebarTab.id /}
+											{param handleTabClick: $_handleSidebarTabClick /}
+											{param label: $sidebarTab.label /}
+										{/call}
+									{/foreach}
+								{/if}
 							</ul>
 						</nav>
 					</div>

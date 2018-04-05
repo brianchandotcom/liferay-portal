@@ -11,11 +11,36 @@ import FragmentEntryLink from './FragmentEntryLink.es';
 import templates from './FragmentsEditor.soy';
 
 /**
+ * Tab that will show fragmentEntryLinks added to the editor
+ * @review
+ * @type {!{
+ *   id: !string,
+ *   label: !string
+ * }}
+ */
+
+const ADDED_FRAGMENTS_TAB = {
+	id: 'added',
+	label: Liferay.Language.get('added')
+};
+
+/**
  * FragmentsEditor
  * @review
  */
 
 class FragmentsEditor extends Component {
+
+	/**
+	 * @inheritDoc
+	 * @review
+	 */
+
+	created() {
+		this._sidebarTabs = this.fragmentEntryLinks.length > 0 ?
+			[...this.sidebarTabs, ADDED_FRAGMENTS_TAB] :
+			[...this.sidebarTabs];
+	}
 
 	/**
 	 * Sends message to delete a single fragment entry link to the server and,
@@ -238,14 +263,10 @@ class FragmentsEditor extends Component {
 
 							this._dirty = false;
 
-							if (!this.sidebarTabs.find(tab => tab.id === 'added')) {
-								this.sidebarTabs.push(
-									{
-										id: 'added',
-										label: Liferay.Language.get('added')
-									}
-								);
-							}
+							this._sidebarTabs = [
+								...this.sidebarTabs,
+								ADDED_FRAGMENTS_TAB
+							];
 
 							this._focusFragmentEntryLink(
 								response.fragmentEntryLinkId
@@ -335,9 +356,7 @@ class FragmentsEditor extends Component {
 
 			if (this.fragmentEntryLinks.length === 0) {
 				this._sidebarSelectedTab = FragmentsEditor.DEFAULT_TAB_ID;
-				this.sidebarTabs = this.sidebarTabs.filter(
-					tab => tab.id !== 'added'
-				);
+				this._sidebarTabs = [...this.sidebarTabs];
 			}
 
 			this._deleteFragmentEntryLink(data.fragmentEntryLinkId);
@@ -807,7 +826,29 @@ FragmentsEditor.STATE = {
 	_sidebarSelectedTab: Config
 		.string()
 		.internal()
-		.value(FragmentsEditor.DEFAULT_TAB_ID)
+		.value(FragmentsEditor.DEFAULT_TAB_ID),
+
+	/**
+	 * Internal copy of the selected tabs that will be mutated.
+	 * @default []
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @private
+	 * @review
+	 * @type {Array<{
+	 * 	 id: string,
+	 * 	 label: string
+	 * }>}
+	 */
+
+	_sidebarTabs: Config.arrayOf(
+		Config.shapeOf(
+			{
+				id: Config.string().required(),
+				label: Config.string().required()
+			}
+		)
+	).value([])
 };
 
 Soy.register(FragmentsEditor, templates);

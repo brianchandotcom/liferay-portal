@@ -14,25 +14,37 @@
 
 package com.liferay.forms.apio.internal.architect.resource;
 
+import com.liferay.apio.architect.language.Language;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 import com.liferay.forms.apio.architect.identifier.FormInstanceIdentifier;
 import com.liferay.forms.apio.architect.identifier.FormInstanceRecordIdentifier;
+import com.liferay.forms.apio.internal.architect.FormInstanceRecordServiceContext;
+import com.liferay.forms.apio.internal.architect.form.FormInstanceRecordForm;
 import com.liferay.forms.apio.internal.architect.helper.FormInstanceRecordResourceHelper;
+import com.liferay.portal.apio.architect.context.auth.MockPermissions;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.util.List;
+
+import javax.ws.rs.BadRequestException;
+import javax.ws.rs.InternalServerErrorException;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import javax.ws.rs.InternalServerErrorException;
-import java.util.List;
 
 /**
  * Provides the information necessary to expose FormInstanceRecord resources
@@ -51,6 +63,10 @@ public class FormInstanceRecordCollectionResource
 
 		return builder.addGetter(
 			this::_getPageItems
+		).addCreator(
+			this::_addFormInstanceRecord, Language.class,
+			FormInstanceRecordServiceContext.class,
+			MockPermissions::validPermission, FormInstanceRecordForm::buildForm
 		).build();
 	}
 
@@ -65,6 +81,10 @@ public class FormInstanceRecordCollectionResource
 
 		return builder.addGetter(
 			this::_getFormInstanceRecord
+		).addUpdater(
+			this::_updateFormInstanceRecord, Language.class,
+			FormInstanceRecordServiceContext.class,
+			MockPermissions::validPermission, FormInstanceRecordForm::buildForm
 		).build();
 	}
 
@@ -105,6 +125,41 @@ public class FormInstanceRecordCollectionResource
 		).build();
 	}
 
+	private DDMFormInstanceRecord _addFormInstanceRecord(
+		Long formInstanceId, FormInstanceRecordForm formInstanceRecordForm,
+		Language language,
+		FormInstanceRecordServiceContext formInstanceRecordServiceContext) {
+
+		try {
+			DDMFormInstance ddmFormInstance =
+				_ddmFormInstanceService.getFormInstance(formInstanceId);
+
+			DDMStructure ddmStructure = ddmFormInstance.getStructure();
+
+			DDMFormValues ddmFormValues =
+				FormInstanceRecordResourceHelper.getDDMFormValues(
+					formInstanceRecordForm.getFieldValues(),
+					ddmStructure.getDDMForm(), language.getPreferredLocale());
+
+			ServiceContext serviceContext =
+				formInstanceRecordServiceContext.getServiceContext();
+
+			_setServiceContextAttributes(
+				serviceContext, formInstanceRecordForm.isDraft());
+
+			return _ddmFormInstanceRecordService.addFormInstanceRecord(
+				ddmFormInstance.getGroupId(),
+				ddmFormInstance.getFormInstanceId(), ddmFormValues,
+				formInstanceRecordServiceContext.getServiceContext());
+		}
+		catch (DDMFormValuesValidationException ddmfvve) {
+			throw new BadRequestException(ddmfvve.getMessage(), ddmfvve);
+		}
+		catch (PortalException pe) {
+			throw new InternalServerErrorException(pe.getMessage(), pe);
+		}
+	}
+
 	private DDMFormInstanceRecord _getFormInstanceRecord(
 		Long formInstanceRecordId) {
 
@@ -132,6 +187,57 @@ public class FormInstanceRecordCollectionResource
 					formInstanceId);
 
 			return new PageItems<>(ddmFormInstances, count);
+		}
+		catch (PortalException pe) {
+			throw new InternalServerErrorException(pe.getMessage(), pe);
+		}
+	}
+
+	private void _setServiceContextAttributes(
+		ServiceContext serviceContext, boolean draft) {
+
+		if (draft) {
+			serviceContext.setAttribute(
+				"status", WorkflowConstants.STATUS_DRAFT);
+			serviceContext.setAttribute("validateDDMFormValues", Boolean.FALSE);
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+		}
+		else {
+			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+		}
+	}
+
+	private DDMFormInstanceRecord _updateFormInstanceRecord(
+		Long formInstanceRecordId,
+		FormInstanceRecordForm formInstanceRecordForm, Language language,
+		FormInstanceRecordServiceContext formInstanceRecordServiceContext) {
+
+		try {
+			DDMFormInstanceRecord ddmFormInstanceRecord =
+				_getFormInstanceRecord(formInstanceRecordId);
+
+			DDMFormInstance ddmFormInstance =
+				ddmFormInstanceRecord.getFormInstance();
+
+			DDMStructure ddmStructure = ddmFormInstance.getStructure();
+
+			DDMFormValues ddmFormValues =
+				FormInstanceRecordResourceHelper.getDDMFormValues(
+					formInstanceRecordForm.getFieldValues(),
+					ddmStructure.getDDMForm(), language.getPreferredLocale());
+
+			ServiceContext serviceContext =
+				formInstanceRecordServiceContext.getServiceContext();
+
+			_setServiceContextAttributes(
+				serviceContext, formInstanceRecordForm.isDraft());
+
+			return _ddmFormInstanceRecordService.updateFormInstanceRecord(
+				formInstanceRecordId, false, ddmFormValues, serviceContext);
+		}
+		catch (DDMFormValuesValidationException ddmfvve) {
+			throw new BadRequestException(ddmfvve.getMessage(), ddmfvve);
 		}
 		catch (PortalException pe) {
 			throw new InternalServerErrorException(pe.getMessage(), pe);

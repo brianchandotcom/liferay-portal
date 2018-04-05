@@ -1295,6 +1295,12 @@ war.path=${app.server.weblogic.portal.dir}/</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-blacklist-configuration">
+		<sequential>
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config">blacklistBundleSymbolicNames=[&quot;com.liferay.portal.mobile.device.detection.fiftyonedegrees.api&quot;,&quot;com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise&quot;,&quot;com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise.test.data&quot;,&quot;com.liferay.portal.mobile.device.detection.fiftyonedegrees&quot;]</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-captcha-configuration">
 		<sequential>
 			<echo file="${liferay.home}/osgi/configs/com.liferay.captcha.configuration.CaptchaConfiguration.config">createAccountCaptchaEnabled=&quot;false&quot;
@@ -5181,6 +5187,7 @@ go]]></replacevalue>
 					<then>
 						<move
 							file="${liferay.home}/osgi/configs/${osgi.module.configuration.file.names.index}"
+							overwrite="true"
 							tofile="${liferay.home}/osgi/configs/@{file.names}"
 						/>
 
@@ -5193,6 +5200,18 @@ go]]></replacevalue>
 						/>
 					</then>
 				</if>
+			</sequential>
+		</for>
+
+		<pathconvert property="osgi.configs">
+			<path>
+				<fileset dir="${liferay.home}/osgi/configs" />
+			</path>
+		</pathconvert>
+
+		<for delimiter=":" list="${osgi.configs}" param="osgi.config">
+			<sequential>
+				<print-file file.name="@{osgi.config}" />
 			</sequential>
 		</for>
 	</target>
@@ -6045,6 +6064,8 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 
 	<target name="prepare-osgi-module-configurations">
 		<get-testcase-property property.name="osgi.module.configurations" />
+
+		<prepare-blacklist-configuration />
 
 		<if>
 			<not>

@@ -1,0 +1,9 @@
+dependencies {
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile project(":apps:collaboration:wiki:wiki-api")
+	testIntegrationCompile project(":apps:collaboration:wiki:wiki-uad")
+	testIntegrationCompile project(":apps:foundation:user-associated-data:user-associated-data-api")
+	testIntegrationCompile project(":apps:foundation:user-associated-data:user-associated-data-test-util")
+	testIntegrationCompile project(":core:petra:petra-string")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+}

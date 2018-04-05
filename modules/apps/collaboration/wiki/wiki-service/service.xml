@@ -3,7 +3,7 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.wiki">
 	<namespace>Wiki</namespace>
-	<entity local-service="true" name="WikiNode" remote-service="true" trash-enabled="true" uuid="true">
+	<entity local-service="true" name="WikiNode" remote-service="true" trash-enabled="true" uad-entity-type-description="A wiki node" uuid="true">
 
 		<!-- PK fields -->
 
@@ -17,19 +17,19 @@
 
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
-		<column name="userName" type="String" />
+		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
 		<!-- Other fields -->
 
-		<column name="name" type="String" />
-		<column name="description" type="String" />
+		<column name="name" type="String" uad-nonanonymizable="true" />
+		<column name="description" type="String" uad-nonanonymizable="true" />
 		<column name="lastPostDate" type="Date" />
 		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
-		<column name="statusByUserName" type="String" />
+		<column name="statusByUserName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="statusDate" type="Date" />
 
 		<!-- Order -->
@@ -69,7 +69,7 @@
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
 		<reference entity="WikiPage" package-path="com.liferay.wiki" />
 	</entity>
-	<entity local-service="true" name="WikiPage" remote-service="true" trash-enabled="true" uuid="true">
+	<entity local-service="true" name="WikiPage" remote-service="true" trash-enabled="true" uad-entity-type-description="A wiki page" uuid="true">
 
 		<!-- PK fields -->
 
@@ -87,18 +87,18 @@
 
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
-		<column name="userName" type="String" />
+		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
 		<!-- Other fields -->
 
 		<column name="nodeId" type="long" />
-		<column name="title" type="String" />
+		<column name="title" type="String" uad-nonanonymizable="true" />
 		<column name="version" type="double" />
 		<column name="minorEdit" type="boolean" />
-		<column name="content" type="String" />
-		<column name="summary" type="String" />
+		<column name="content" type="String" uad-nonanonymizable="true" />
+		<column name="summary" type="String" uad-nonanonymizable="true" />
 		<column name="format" type="String" />
 		<column name="head" type="boolean" />
 		<column name="parentTitle" type="String" />
@@ -106,7 +106,7 @@
 		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
-		<column name="statusByUserName" type="String" />
+		<column name="statusByUserName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="statusDate" type="Date" />
 
 		<!-- Order -->

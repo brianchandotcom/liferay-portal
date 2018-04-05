@@ -12,13 +12,9 @@
  * details.
  */
 
-package com.liferay.blogs.uad.display.test;
+package com.liferay.wiki.uad.aggregator.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
-import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.uad.constants.BlogsUADConstants;
-import com.liferay.blogs.uad.test.BlogsEntryUADEntityTestHelper;
 
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -27,8 +23,12 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import com.liferay.user.associated.data.aggregator.UADAggregator;
-import com.liferay.user.associated.data.display.UADEntityDisplay;
-import com.liferay.user.associated.data.test.util.BaseUADEntityDisplayTestCase;
+import com.liferay.user.associated.data.test.util.BaseUADAggregatorTestCase;
+import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
+
+import com.liferay.wiki.model.WikiNode;
+import com.liferay.wiki.uad.constants.WikiUADConstants;
+import com.liferay.wiki.uad.test.WikiNodeUADEntityTestHelper;
 
 import org.junit.After;
 import org.junit.ClassRule;
@@ -44,23 +44,30 @@ import java.util.List;
  * @generated
  */
 @RunWith(Arquillian.class)
-public class BlogsEntryUADEntityDisplayTest extends BaseUADEntityDisplayTestCase {
+public class WikiNodeUADAggregatorTest extends BaseUADAggregatorTestCase
+	implements WhenHasStatusByUserIdField {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
 
 	@Override
-	protected BaseModel<?> addBaseModel(long userId) throws Exception {
-		BlogsEntry blogsEntry = _blogsEntryUADEntityTestHelper.addBlogsEntry(userId);
+	public BaseModel<?> addBaseModelWithStatusByUserId(long userId,
+		long statusByUserId) throws Exception {
+		WikiNode wikiNode = _wikiNodeUADEntityTestHelper.addWikiNodeWithStatusByUserId(userId,
+				statusByUserId);
 
-		_blogsEntries.add(blogsEntry);
+		_wikiNodes.add(wikiNode);
 
-		return blogsEntry;
+		return wikiNode;
 	}
 
 	@Override
-	protected String getApplicationName() {
-		return BlogsUADConstants.APPLICATION_NAME;
+	protected BaseModel<?> addBaseModel(long userId) throws Exception {
+		WikiNode wikiNode = _wikiNodeUADEntityTestHelper.addWikiNode(userId);
+
+		_wikiNodes.add(wikiNode);
+
+		return wikiNode;
 	}
 
 	@Override
@@ -68,29 +75,16 @@ public class BlogsEntryUADEntityDisplayTest extends BaseUADEntityDisplayTestCase
 		return _uadAggregator;
 	}
 
-	@Override
-	protected UADEntityDisplay getUADEntityDisplay() {
-		return _uadEntityDisplay;
-	}
-
-	@Override
-	protected String getTypeDescription() {
-		return "A blog post";
-	}
-
 	@After
 	public void tearDown() throws Exception {
-		_blogsEntryUADEntityTestHelper.cleanUpDependencies(_blogsEntries);
+		_wikiNodeUADEntityTestHelper.cleanUpDependencies(_wikiNodes);
 	}
 
 	@DeleteAfterTestRun
-	private final List<BlogsEntry> _blogsEntries = new ArrayList<BlogsEntry>();
+	private final List<WikiNode> _wikiNodes = new ArrayList<WikiNode>();
 	@Inject
-	private BlogsEntryUADEntityTestHelper _blogsEntryUADEntityTestHelper;
+	private WikiNodeUADEntityTestHelper _wikiNodeUADEntityTestHelper;
 	@Inject(filter = "model.class.name=" +
-	BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY)
+	WikiUADConstants.CLASS_NAME_WIKI_NODE)
 	private UADAggregator _uadAggregator;
-	@Inject(filter = "model.class.name=" +
-	BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY)
-	private UADEntityDisplay _uadEntityDisplay;
 }

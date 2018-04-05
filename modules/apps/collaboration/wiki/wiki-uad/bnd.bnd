@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Wiki UAD
+Bundle-SymbolicName: com.liferay.wiki.uad
+Bundle-Version: 1.0.0
+-dsannotations-options: inherit

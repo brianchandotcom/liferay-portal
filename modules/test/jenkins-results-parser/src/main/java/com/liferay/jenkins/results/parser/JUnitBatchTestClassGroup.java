@@ -49,7 +49,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		_setTestClassNamesExcludesRelativeGlobs();
 		_setTestClassNamesIncludesRelativeGlobs();
 
-		_setTestClassFiles();
+		setTestClassFiles();
 
 		_setAxisTestClassGroups();
 	}
@@ -270,7 +270,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		}
 	}
 
-	private void _setTestClassFiles() {
+	protected void setTestClassFiles() {
 		File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
 
 		try {
@@ -324,12 +324,12 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 					private boolean _pathExcluded(Path path) {
 						return _pathMatches(
-							path, _testClassNamesExcludesPathMatchers);
+							path, testClassNamesExcludesPathMatchers);
 					}
 
 					private boolean _pathIncluded(Path path) {
 						return _pathMatches(
-							path, _testClassNamesIncludesPathMatchers);
+							path, testClassNamesIncludesPathMatchers);
 					}
 
 					private boolean _pathMatches(
@@ -375,7 +375,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 					testClassNamesExcludesRelativeGlobs);
 		}
 
-		_testClassNamesExcludesPathMatchers.addAll(
+		testClassNamesExcludesPathMatchers.addAll(
 			_getTestClassNamesPathMatchers(
 				testClassNamesExcludesRelativeGlobs));
 	}
@@ -399,7 +399,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 					testClassNamesIncludesRelativeGlobs);
 		}
 
-		_testClassNamesIncludesPathMatchers.addAll(
+		testClassNamesIncludesPathMatchers.addAll(
 			_getTestClassNamesPathMatchers(
 				testClassNamesIncludesRelativeGlobs));
 	}
@@ -408,9 +408,9 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 	private final Pattern _packagePathPattern = Pattern.compile(
 		".*/(?<packagePath>com/.*)");
-	private final List<PathMatcher> _testClassNamesExcludesPathMatchers =
+	protected final List<PathMatcher> testClassNamesExcludesPathMatchers =
 		new ArrayList<>();
-	private final List<PathMatcher> _testClassNamesIncludesPathMatchers =
+	protected final List<PathMatcher> testClassNamesIncludesPathMatchers =
 		new ArrayList<>();
 
 }

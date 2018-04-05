@@ -23,6 +23,7 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.forms.apio.architect.identifier.FormInstanceIdentifier;
+import com.liferay.forms.apio.architect.identifier.StructureIdentifier;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
@@ -101,6 +102,9 @@ public class FormInstanceCollectionResource
 			"versionUserName", DDMFormInstance::getVersionUserName
 		).addString(
 			"version", DDMFormInstance::getVersion
+		).addLinkedModel(
+			"structure", StructureIdentifier.class,
+			DDMFormInstance::getStructureId
 		).build();
 	}
 

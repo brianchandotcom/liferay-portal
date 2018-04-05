@@ -85,7 +85,7 @@ dlSearchContainer.setOrderByCol(orderByCol);
 dlSearchContainer.setOrderByComparator(orderByComparator);
 dlSearchContainer.setOrderByType(orderByType);
 
-List results = null;
+List results = new ArrayList();
 int total = 0;
 
 if (fileEntryTypeId >= 0) {
@@ -124,11 +124,7 @@ if (fileEntryTypeId >= 0) {
 
 	dlSearchContainer.setTotal(total);
 
-	Document[] docs = hits.getDocs();
-
-	results = new ArrayList(docs.length);
-
-	for (Document doc : docs) {
+	for (Document doc : hits.getDocs()) {
 		long fileEntryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
 
 		FileEntry fileEntry = null;

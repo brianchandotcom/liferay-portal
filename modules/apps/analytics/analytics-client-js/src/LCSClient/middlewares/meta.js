@@ -17,6 +17,7 @@ function getAttribute(selector, attribute) {
  */
 function meta(request) {
 	request.context = {
+		canonicalUrl: getAttribute('link[rel=canonical]', 'href'),
 		contentLanguageId: getAttribute('html', 'lang'),
 		description: getAttribute('meta[name="description"]', 'content'),
 		keywords: getAttribute('meta[name="keywords"]', 'content'),

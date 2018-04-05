@@ -85,6 +85,7 @@ describe('Analytics MiddleWare Integration', () => {
 				.then(
 					() => {
 						expect(body.context).to.include.all.keys(
+							'canonicalUrl',
 							'contentLanguageId',
 							'description',
 							'keywords',

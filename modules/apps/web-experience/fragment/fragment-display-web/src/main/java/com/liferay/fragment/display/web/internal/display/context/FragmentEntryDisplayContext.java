@@ -15,6 +15,7 @@
 package com.liferay.fragment.display.web.internal.display.context;
 
 import com.liferay.fragment.display.web.internal.constants.FragmentEntryDisplayWebKeys;
+import com.liferay.fragment.display.web.internal.util.SoyContextFactoryUtil;
 import com.liferay.fragment.item.selector.criterion.FragmentItemSelectorCriterion;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -143,7 +144,7 @@ public class FragmentEntryDisplayContext {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		SoyContext soyContext = new SoyContext();
+		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
 		PortletURL editFragmentEntryLinkURL = _renderResponse.createActionURL();
 
@@ -210,7 +211,7 @@ public class FragmentEntryDisplayContext {
 	private SoyContext _getSoyContextFragmentEntryLink()
 		throws PortalException {
 
-		SoyContext soyContext = new SoyContext();
+		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
 		FragmentEntryLink fragmentEntryLink = getFragmentEntryLink();
 

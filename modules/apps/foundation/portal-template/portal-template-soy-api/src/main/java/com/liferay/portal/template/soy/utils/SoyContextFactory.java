@@ -14,19 +14,11 @@
 
 package com.liferay.portal.template.soy.utils;
 
-import java.util.Map;
-
 /**
- * @author Bruno Basto
+ * @author Matthew Tambara
  */
-public interface SoyContext extends Map<String, Object> {
+public interface SoyContextFactory {
 
-	public void clearInjectedData();
-
-	public void putHTML(String key, String value);
-
-	public void putInjectedData(String key, Object value);
-
-	public void removeInjectedData(String key);
+	public SoyContext createSoyContext();
 
 }

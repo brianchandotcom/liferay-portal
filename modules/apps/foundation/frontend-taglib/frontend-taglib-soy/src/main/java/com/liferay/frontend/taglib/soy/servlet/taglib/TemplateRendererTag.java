@@ -14,8 +14,9 @@
 
 package com.liferay.frontend.taglib.soy.servlet.taglib;
 
+import com.liferay.frontend.taglib.soy.internal.util.SoyContextFactoryUtil;
 import com.liferay.frontend.taglib.soy.internal.util.SoyJavaScriptRendererUtil;
-import com.liferay.osgi.util.service.OSGiServiceUtil;
+import com.liferay.frontend.taglib.soy.internal.util.SoyTemplateResourcesProviderUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.template.soy.utils.SoyContext;
-import com.liferay.portal.template.soy.utils.SoyTemplateResourcesProvider;
 import com.liferay.taglib.aui.ScriptTag;
 import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
 
@@ -40,9 +40,6 @@ import java.util.Set;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Bruno Basto
@@ -162,7 +159,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 
 	protected Map<String, Object> getContext() {
 		if (_context == null) {
-			_context = new SoyContext();
+			_context = SoyContextFactoryUtil.createSoyContext();
 		}
 
 		return _context;
@@ -244,11 +241,8 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 
 	private List<TemplateResource> _getTemplateResources() {
 		if (_templateResources == null) {
-			Bundle bundle = FrameworkUtil.getBundle(TemplateRendererTag.class);
-
-			_templateResources = OSGiServiceUtil.callService(
-				bundle.getBundleContext(), SoyTemplateResourcesProvider.class,
-				SoyTemplateResourcesProvider::getAllTemplateResources);
+			_templateResources =
+				SoyTemplateResourcesProviderUtil.getAllTemplateResources();
 		}
 
 		return _templateResources;

@@ -23,7 +23,6 @@ dependencies {
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib-soy")
 	provided project(":apps:foundation:petra:petra-content")
 	provided project(":apps:foundation:portal:portal-upgrade-api")
-	provided project(":apps:static:osgi:osgi-util")
 	provided project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	provided project(":apps:web-experience:asset:asset-api")
 	provided project(":apps:web-experience:asset:asset-publisher-api")

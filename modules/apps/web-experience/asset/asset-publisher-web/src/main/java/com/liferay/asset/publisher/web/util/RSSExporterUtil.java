@@ -12,21 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.template.soy.utils;
+package com.liferay.asset.publisher.web.util;
 
-import java.util.Map;
+import com.liferay.rss.export.RSSExporter;
+import com.liferay.rss.model.SyndFeed;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Bruno Basto
+ * @author Matthew Tambara
  */
-public interface SoyContext extends Map<String, Object> {
+@Component(immediate = true)
+public class RSSExporterUtil {
 
-	public void clearInjectedData();
+	public static String export(SyndFeed syndFeed) {
+		return _rssExporter.export(syndFeed);
+	}
 
-	public void putHTML(String key, String value);
+	@Reference(unbind = "-")
+	protected void setRSSExporter(RSSExporter rssExporter) {
+		_rssExporter = rssExporter;
+	}
 
-	public void putInjectedData(String key, Object value);
-
-	public void removeInjectedData(String key);
+	private static RSSExporter _rssExporter;
 
 }

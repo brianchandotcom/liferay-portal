@@ -90,7 +90,7 @@ public class TCKJunitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 							return new File(packagePath);
 						}
 
-						return new File(filePath.replaceAll("[^/]+.war", ""));
+						return new File(filePath.replaceAll("[^/]+\\.war", ""));
 					}
 
 					private boolean _pathExcluded(Path path) {
@@ -116,7 +116,7 @@ public class TCKJunitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 					}
 
 					private final Pattern _packagePathPattern = Pattern.compile(
-						".*/(?<packagePath>com/.*)/.*.war");
+						".*/(?<packagePath>com/.*)/.*\\.war");
 
 				});
 		}

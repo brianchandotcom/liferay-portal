@@ -25,9 +25,8 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderModel;
 import com.liferay.document.library.kernel.service.DLFolderService;
-import com.liferay.folder.apio.architect.identifier.DLFolderIdentifier;
+import com.liferay.folder.apio.architect.identifier.FolderIdentifier;
 import com.liferay.folder.apio.internal.architect.form.FolderForm;
-import com.liferay.portal.apio.architect.context.auth.MockPermissions;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -52,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class FolderNestedCollectionResource
 	implements
-		NestedCollectionResource<DLFolder, Long, DLFolderIdentifier,
+		NestedCollectionResource<DLFolder, Long, FolderIdentifier,
 			Long, WebSiteIdentifier> {
 
 	@Override

@@ -25,7 +25,6 @@ import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.person.apio.internal.architect.form.PersonCreatorForm;
 import com.liferay.person.apio.internal.architect.form.PersonUpdaterForm;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.apio.architect.context.auth.MockPermissions;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;

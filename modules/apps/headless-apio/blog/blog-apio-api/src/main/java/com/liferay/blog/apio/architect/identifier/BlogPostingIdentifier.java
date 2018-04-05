@@ -12,15 +12,16 @@
  * details.
  */
 
-package com.liferay.folder.apio.architect.identifier;
+package com.liferay.blog.apio.architect.identifier;
 
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Holds information about a {@code DLFolder} identifier.
+ * Holds information about a {@code BlogPosting} identifier. It's identified by
+ * the internal {@code BlogsEntry#getEntryId()}.
  *
  * @author Javier Gamarra
  * @review
  */
-public interface DLFolderIdentifier extends Identifier<Long> {
+public interface BlogPostingIdentifier extends Identifier<Long> {
 }

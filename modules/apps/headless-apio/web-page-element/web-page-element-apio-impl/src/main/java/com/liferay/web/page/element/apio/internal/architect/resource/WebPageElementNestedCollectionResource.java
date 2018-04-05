@@ -30,7 +30,7 @@ import com.liferay.portal.apio.architect.context.auth.MockPermissions;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
-import com.liferay.web.page.element.apio.architect.identifier.JournalArticleId;
+import com.liferay.web.page.element.apio.architect.identifier.WebPageElementIdentifier;
 import com.liferay.web.page.element.apio.internal.architect.form.WebPageElementCreatorForm;
 import com.liferay.web.page.element.apio.internal.architect.form.WebPageElementUpdaterForm;
 
@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
 public class WebPageElementNestedCollectionResource
 	implements
 		NestedCollectionResource<JournalArticle, Long,
-			JournalArticleId, Long, WebSiteIdentifier> {
+			WebPageElementIdentifier, Long, WebSiteIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<JournalArticle, Long> collectionRoutes(

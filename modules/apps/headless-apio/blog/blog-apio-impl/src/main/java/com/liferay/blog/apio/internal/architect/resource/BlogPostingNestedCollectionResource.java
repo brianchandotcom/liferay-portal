@@ -22,7 +22,7 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
-import com.liferay.blog.apio.architect.identifier.BlogsEntryIdentifier;
+import com.liferay.blog.apio.architect.identifier.BlogPostingIdentifier;
 import com.liferay.blog.apio.internal.architect.form.BlogPostingForm;
 import com.liferay.blogs.kernel.exception.NoSuchEntryException;
 import com.liferay.blogs.kernel.model.BlogsEntry;
@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class BlogPostingNestedCollectionResource
-	implements NestedCollectionResource<BlogsEntry, Long, BlogsEntryIdentifier,
+	implements NestedCollectionResource<BlogsEntry, Long, BlogPostingIdentifier,
 		Long, WebSiteIdentifier> {
 
 	@Override

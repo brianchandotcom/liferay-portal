@@ -16,9 +16,13 @@ package com.liferay.aggregate.rating.apio.architect.identifier;
 
 import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.portal.apio.architect.context.identifier.ClassNameClassPK;
+import com.liferay.portal.kernel.model.ClassedModel;
 
 /**
- * Holds information about a {@code AggregateRating} identifier.
+ * Holds information about an {@code AggregateRating} identifier. It's
+ * identified by a {@link ClassNameClassPK} instance, that can be created either
+ * through {@link ClassNameClassPK#create(ClassedModel)} or {@link
+ * ClassNameClassPK#create(String, long)}.
  *
  * @author Javier Gamarra
  * @review

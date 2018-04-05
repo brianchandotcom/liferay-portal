@@ -120,7 +120,7 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 	<aui:form action="<%= currentURL %>" method="get" name="fm">
 		<div class="user-notifications">
 			<liferay-ui:search-container
-				rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
+				rowChecker="<%= new UserNotificationEventRowChecker(renderResponse) %>"
 				searchContainer="<%= notificationsSearchContainer %>"
 			>
 				<liferay-ui:search-container-row

@@ -12,15 +12,16 @@
  * details.
  */
 
-package com.liferay.media.object.apio.architect.identifier;
+package com.liferay.folder.apio.architect.identifier;
 
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Holds information about a {@code DLFileEntry} identifier.
+ * Holds information about a {@code Folder} identifier. It's identified by the
+ * internal {@code Folder#getFolderId()}.
  *
  * @author Javier Gamarra
  * @review
  */
-public interface DLFileEntryIdentifier extends Identifier<Long> {
+public interface FolderIdentifier extends Identifier<Long> {
 }

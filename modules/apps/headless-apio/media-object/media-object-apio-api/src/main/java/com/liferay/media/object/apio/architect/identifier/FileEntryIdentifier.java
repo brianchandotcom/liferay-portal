@@ -12,15 +12,16 @@
  * details.
  */
 
-package com.liferay.blog.apio.architect.identifier;
+package com.liferay.media.object.apio.architect.identifier;
 
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Holds information about a {@code BlogsEntry} identifier.
+ * Holds information about a {@code FileEntry} identifier. It's identified by
+ * the internal {@code FileEntry#getFileEntryId()}.
  *
  * @author Javier Gamarra
  * @review
  */
-public interface BlogsEntryIdentifier extends Identifier<Long> {
+public interface FileEntryIdentifier extends Identifier<Long> {
 }

@@ -20,3 +20,21 @@ dependencies {
 	provided project(":private:apps:commerce:commerce-admin-api")
 	provided project(":private:apps:commerce:commerce-currency-api")
 }
+
+if (System.getenv("JENKINS_HOME")) {
+	task deployConfigs(type: Copy)
+
+	deploy {
+		finalizedBy deployConfigs
+	}
+
+	deployConfigs {
+		ext {
+			autoClean = false
+		}
+
+		from "configs"
+		into new File(liferay.liferayHome, "osgi/configs")
+	}
+
+}

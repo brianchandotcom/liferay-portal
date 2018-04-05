@@ -9,17 +9,39 @@
 	<groupId>${groupId}</groupId>
 	<artifactId>${artifactId}</artifactId>
 	<version>${version}</version>
+#if (${liferayVersion} == "7.1")
+	<repositories>
+		<repository>
+			<id>nexus</id>
+			<name>nexus</name>
+			<url>https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+#end
 	<properties>
 		<node.modules.dir>${project.basedir}/node_modules</node.modules.dir>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
+#if (${liferayVersion} == "7.0")
 		<dependency>
 			<groupId>com.liferay</groupId>
 			<artifactId>com.liferay.portal.portlet.bridge.soy</artifactId>
 			<version>3.1.0</version>
 			<scope>provided</scope>
 		</dependency>
+#end
+#if (${liferayVersion} == "7.1")
+		<dependency>
+			<groupId>com.liferay</groupId>
+			<artifactId>com.liferay.portal.portlet.bridge.soy.api</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+#end
 		<dependency>
 			<groupId>com.liferay.portal</groupId>
 			<artifactId>com.liferay.portal.kernel</artifactId>

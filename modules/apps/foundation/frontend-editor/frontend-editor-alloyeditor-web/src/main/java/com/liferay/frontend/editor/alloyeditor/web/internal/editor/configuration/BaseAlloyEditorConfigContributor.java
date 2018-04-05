@@ -15,6 +15,12 @@
 package com.liferay.frontend.editor.alloyeditor.web.internal.editor.configuration;
 
 import com.liferay.frontend.editor.alloyeditor.web.internal.constants.AlloyEditorConstants;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
+import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
+import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -22,7 +28,13 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+
+import javax.portlet.PortletURL;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -81,6 +93,46 @@ public class BaseAlloyEditorConfigContributor
 						AlloyEditorConstants.ATTRIBUTE_NAMESPACE + ":name"));
 
 		jsonObject.put("srcNode", name);
+
+		populateFileBrowserURL(
+			jsonObject, requestBackedPortletURLFactory,
+			name + "selectDocument");
 	}
+
+	protected void populateFileBrowserURL(
+		JSONObject jsonObject,
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
+		String eventName) {
+
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			new ArrayList<>();
+
+		desiredItemSelectorReturnTypes.add(new URLItemSelectorReturnType());
+
+		ItemSelectorCriterion fileItemSelectorCriterion =
+			new FileItemSelectorCriterion();
+
+		fileItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			desiredItemSelectorReturnTypes);
+
+		LayoutItemSelectorCriterion layoutItemSelectorCriterion =
+			new LayoutItemSelectorCriterion();
+
+		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			desiredItemSelectorReturnTypes);
+
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+			requestBackedPortletURLFactory, eventName,
+			fileItemSelectorCriterion, layoutItemSelectorCriterion);
+
+		jsonObject.put("documentBrowseLinkUrl", itemSelectorURL.toString());
+	}
+
+	@Reference(unbind = "-")
+	protected void setItemSelector(ItemSelector itemSelector) {
+		_itemSelector = itemSelector;
+	}
+
+	private ItemSelector _itemSelector;
 
 }

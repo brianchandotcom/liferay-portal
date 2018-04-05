@@ -5160,6 +5160,7 @@ go]]></replacevalue>
 					<then>
 						<move
 							file="${liferay.home}/osgi/configs/${osgi.module.configuration.file.names.index}"
+							overwrite="true"
 							tofile="${liferay.home}/osgi/configs/@{file.names}"
 						/>
 

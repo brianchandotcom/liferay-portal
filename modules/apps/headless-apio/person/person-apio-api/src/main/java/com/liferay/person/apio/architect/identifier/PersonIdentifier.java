@@ -17,7 +17,8 @@ package com.liferay.person.apio.architect.identifier;
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Holds information about a {@code Person} identifier.
+ * Holds information about a {@code Person} identifier. It's identified by the
+ * internal {@code User#getUserId()}.
  *
  * @author Alejandro Hernández
  * @review

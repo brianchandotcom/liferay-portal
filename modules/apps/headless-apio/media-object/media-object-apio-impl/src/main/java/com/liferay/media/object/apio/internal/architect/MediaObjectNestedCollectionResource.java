@@ -27,10 +27,9 @@ import com.liferay.document.library.kernel.model.DLFileEntryModel;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLFileEntryService;
 import com.liferay.document.library.kernel.service.DLFolderService;
-import com.liferay.folder.apio.architect.identifier.DLFolderIdentifier;
-import com.liferay.media.object.apio.architect.identifier.DLFileEntryIdentifier;
+import com.liferay.folder.apio.architect.identifier.FolderIdentifier;
+import com.liferay.media.object.apio.architect.identifier.FileEntryIdentifier;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
-import com.liferay.portal.apio.architect.context.auth.MockPermissions;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 
@@ -54,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class MediaObjectNestedCollectionResource
 	implements NestedCollectionResource<DLFileEntry, Long,
-		DLFileEntryIdentifier, Long, DLFolderIdentifier> {
+		FileEntryIdentifier, Long, FolderIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<DLFileEntry, Long> collectionRoutes(
@@ -90,7 +89,7 @@ public class MediaObjectNestedCollectionResource
 		).identifier(
 			DLFileEntry::getFileEntryId
 		).addBidirectionalModel(
-			"folder", "mediaObjects", DLFolderIdentifier.class,
+			"folder", "mediaObjects", FolderIdentifier.class,
 			DLFileEntryModel::getFolderId
 		).addBinary(
 			"contentStream",

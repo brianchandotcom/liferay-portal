@@ -67,68 +67,71 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	private void _setRelevantTestBatchRunPropertyQuery() {
-		if (testRelevantChanges) {
-			PortalGitWorkingDirectory portalGitWorkingDirectory =
-				(PortalGitWorkingDirectory)gitWorkingDirectory;
-
-			List<File> modifiedModuleDirsList = null;
-
-			try {
-				modifiedModuleDirsList =
-					portalGitWorkingDirectory.getModifiedModuleDirsList();
-			}
-			catch (IOException ioe) {
-				File workingDirectory =
-					gitWorkingDirectory.getWorkingDirectory();
-
-				throw new RuntimeException(
-					JenkinsResultsParserUtil.combine(
-						"Unable to get module directories in ",
-						workingDirectory.getPath()),
-					ioe);
-			}
-
-			StringBuilder sb = new StringBuilder();
-
-			for (File modifiedModuleDir : modifiedModuleDirsList) {
-				File modifiedModuleTestProperties = new File(
-					modifiedModuleDir, "test.properties");
-
-				if (!modifiedModuleTestProperties.exists()) {
-					continue;
-				}
-
-				Properties testProperties =
-					JenkinsResultsParserUtil.getProperties(
-						modifiedModuleTestProperties);
-
-				String testBatchRunPropertyQuery = testProperties.getProperty(
-					JenkinsResultsParserUtil.combine(
-						"test.batch.run.property.query[", batchName, "][",
-						testSuiteName, "]"));
-
-				if (testBatchRunPropertyQuery != null) {
-					if (sb.length() > 0) {
-						sb.append(" OR (");
-					}
-					else {
-						sb.append("(");
-					}
-
-					sb.append(testBatchRunPropertyQuery);
-					sb.append(")");
-				}
-			}
-
-			if (sb.length() > 0) {
-				_relevantTestBatchRunPropertyQuery = sb.toString();
-			}
-		}
-
-		if (_relevantTestBatchRunPropertyQuery == null) {
+		if (!testRelevantChanges) {
 			_relevantTestBatchRunPropertyQuery =
 				_getDefaultTestBatchRunPropertyQuery();
+
+			return;
 		}
+
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			(PortalGitWorkingDirectory)gitWorkingDirectory;
+
+		List<File> modifiedModuleDirsList = null;
+
+		try {
+			modifiedModuleDirsList =
+				portalGitWorkingDirectory.getModifiedModuleDirsList();
+		}
+		catch (IOException ioe) {
+			File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
+
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to get module directories in ",
+					workingDirectory.getPath()),
+				ioe);
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		for (File modifiedModuleDir : modifiedModuleDirsList) {
+			File modifiedModuleTestProperties = new File(
+				modifiedModuleDir, "test.properties");
+
+			if (!modifiedModuleTestProperties.exists()) {
+				continue;
+			}
+
+			Properties testProperties = JenkinsResultsParserUtil.getProperties(
+				modifiedModuleTestProperties);
+
+			String testBatchRunPropertyQuery = testProperties.getProperty(
+				JenkinsResultsParserUtil.combine(
+					"test.batch.run.property.query[", batchName, "][",
+					testSuiteName, "]"));
+
+			if (testBatchRunPropertyQuery != null) {
+				if (sb.length() > 0) {
+					sb.append(" OR (");
+				}
+				else {
+					sb.append("(");
+				}
+
+				sb.append(testBatchRunPropertyQuery);
+				sb.append(")");
+			}
+		}
+
+		if (sb.length() == 0) {
+			_relevantTestBatchRunPropertyQuery =
+				_getDefaultTestBatchRunPropertyQuery();
+
+			return;
+		}
+
+		_relevantTestBatchRunPropertyQuery = sb.toString();
 	}
 
 	private String _relevantTestBatchRunPropertyQuery;

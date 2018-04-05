@@ -58,12 +58,12 @@ public class LiferayConnectionWizardDefinition
 	@Override
 	public String getImagePath(DefinitionImageType definitionImageType) {
 		if (definitionImageType == DefinitionImageType.TREE_ICON_16X16) {
-			return "liferay_icon_16x16.png";
+			return "LiferayWizard_icon_16x16.png";
 		}
 		else if (definitionImageType ==
 					DefinitionImageType.WIZARD_BANNER_75X66) {
 
-			return "liferay_banner_66x66.png";
+			return "LiferayWizard_banner_75x66.png";
 		}
 		else {
 			return null;

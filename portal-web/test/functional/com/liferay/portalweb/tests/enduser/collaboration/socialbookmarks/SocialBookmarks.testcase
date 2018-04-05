@@ -102,7 +102,7 @@
 		</execute>
 
 		<execute macro="KBArticle#configureKBSocialBookmarkSites">
-			<var name="disableSocialBookmarkSites" value="Twitter,Newsvine,Reddit,Slashdot,StumbleUpon,Tuenti" />
+			<var name="disableSocialBookmarkSites" value="Twitter,Reddit,Slashdot,StumbleUpon" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -114,7 +114,7 @@
 		</execute>
 
 		<execute macro="SocialBookmarks#viewBookmarksNotPresent">
-			<var name="socialBookmarks" value="Twitter,Newsvine,Reddit,Slashdot,StumbleUpon,Tuenti" />
+			<var name="socialBookmarks" value="Twitter,Reddit,Slashdot,StumbleUpon" />
 		</execute>
 	</command>
 
@@ -168,11 +168,11 @@
 		</execute>
 
 		<execute macro="SocialBookmarks#viewBookmarkMenuItems">
-			<var name="socialBookmarks" value="Twitter,Facebook,Google+,LinkedIn,Delicious,Digg,Evernote,Newsvine,Reddit,Slashdot,StumbleUpon,Tuenti" />
+			<var name="socialBookmarks" value="Google+,Delicious,Digg,Evernote,Reddit,Slashdot,StumbleUpon" />
 		</execute>
 
 		<execute macro="Blogs#disableSocialBookmarkSites">
-			<var name="disableSocialBookmarkSites" value="Twitter,Facebook,AddThis,Delicious,Digg,Evernote,LinkedIn,Newsvine,Reddit,Slashdot,StumbleUpon,Tuenti" />
+			<var name="disableSocialBookmarkSites" value="AddThis,Delicious,Digg,Evernote,Reddit,Slashdot,StumbleUpon" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -186,8 +186,6 @@
 
 	<command name="ViewKBArticleWithAllSocialBookmarkSites" priority="3">
 		<property name="osgi.app.includes" value="social-bookmarks, knowledge-base" />
-
-		<var name="socialBookmarkSites" value="AddThis,Delicious,Digg,Evernote,LinkedIn,Newsvine,Reddit,Slashdot,StumbleUpon,Tuenti" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Navigation" />

@@ -17,24 +17,17 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
+DLSelectRestrictedFileEntryTypesDisplayContext selectRestrictedFileEntryTypesDisplayContext = new DLSelectRestrictedFileEntryTypesDisplayContext(renderRequest, renderResponse, request);
+
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectFileEntryType");
 %>
 
 <liferay-util:include page="/document_library/file_entry_type_toolbar.jsp" servletContext="<%= application %>" />
 
-<liferay-portlet:renderURL varImpl="portletURL">
-	<portlet:param name="mvcPath" value="/document_library/select_restricted_file_entry_type.jsp" />
-	<portlet:param name="includeBasicFileEntryType" value="<%= Boolean.TRUE.toString() %>" />
-</liferay-portlet:renderURL>
-
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="selectFileEntryTypeFm">
+<aui:form action="<%= selectRestrictedFileEntryTypesDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="post" name="selectFileEntryTypeFm">
 	<liferay-ui:search-container
-		searchContainer='<%= new SearchContainer(renderRequest, new DisplayTerms(request), new DisplayTerms(request), SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, LanguageUtil.get(request, "there-are-no-results")) %>'
+		searchContainer="<%= selectRestrictedFileEntryTypesDisplayContext.getSearchContainer() %>"
 	>
-		<liferay-ui:search-container-results>
-			<%@ include file="/document_library/file_entry_type_search_results.jspf" %>
-		</liferay-ui:search-container-results>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.document.library.kernel.model.DLFileEntryType"
 			keyProperty="fileEntryTypeId"

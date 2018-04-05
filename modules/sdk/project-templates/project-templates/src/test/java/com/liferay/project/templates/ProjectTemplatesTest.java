@@ -2259,6 +2259,9 @@ public class ProjectTemplatesTest {
 			projectTemplatesArgs, archetyperDestinationDir);
 
 		File archetyperProjectDir = new File(archetyperDestinationDir, name);
+		
+
+		FileUtil.deleteFiles(archetyperDestinationDir.toPath(), "build.gradle");
 
 		DirectoryComparator directoryComparator = new DirectoryComparator(
 			projectDir, archetyperProjectDir);

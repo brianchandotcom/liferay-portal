@@ -25,7 +25,7 @@ DLFileEntryTypeDisplayContext dlFileEntryTypeDisplayContext = new DLFileEntryTyp
 <clay:management-toolbar
 	creationMenu="<%= dlFileEntryTypeDisplayContext.getCreationURL() %>"
 	namespace="<%= renderResponse.getNamespace() %>"
-	searchActionURL="<%= dlFileEntryTypeDisplayContext.getSearchURL() %>"
+	searchActionURL="<%= String.valueOf(dlFileEntryTypeDisplayContext.getSearchURL()) %>"
 	searchFormName="fm"
 	selectable="<%= false %>"
 	totalItems="<%= dlFileEntryTypeDisplayContext.getTotal() %>"

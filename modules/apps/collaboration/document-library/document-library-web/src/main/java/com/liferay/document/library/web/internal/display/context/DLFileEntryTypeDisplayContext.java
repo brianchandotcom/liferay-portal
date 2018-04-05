@@ -75,15 +75,10 @@ public class DLFileEntryTypeDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/document_library/view_file_entry_types");
-
 		SearchContainer searchContainer = new SearchContainer(
 			_renderRequest, new DisplayTerms(_request),
 			new DisplayTerms(_request), SearchContainer.DEFAULT_CUR_PARAM,
-			SearchContainer.DEFAULT_DELTA, portletURL, null,
+			SearchContainer.DEFAULT_DELTA, getSearchURL(), null,
 			LanguageUtil.get(_request, "there-are-no-results"));
 
 		DisplayTerms searchTerms = searchContainer.getSearchTerms();
@@ -113,13 +108,13 @@ public class DLFileEntryTypeDisplayContext {
 		return _searchContainer;
 	}
 
-	public String getSearchURL() {
+	public PortletURL getSearchURL() {
 		PortletURL searchURL = _renderResponse.createRenderURL();
 
 		searchURL.setParameter(
 			"mvcRenderCommandName", "/document_library/view_file_entry_types");
 
-		return searchURL.toString();
+		return searchURL;
 	}
 
 	public int getTotal() throws PortalException {

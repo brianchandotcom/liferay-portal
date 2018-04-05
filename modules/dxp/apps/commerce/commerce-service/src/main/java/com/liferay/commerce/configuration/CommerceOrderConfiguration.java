@@ -25,9 +25,15 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.commerce.configuration.CommerceOrderConfiguration",
 	localization = "content/Language",
-	name = "commerce-order-group-service-configuration-name"
+	name = "commerce-order-configuration-name"
 )
 public interface CommerceOrderConfiguration {
+
+	@Meta.AD(deflt = "15", name = "order-check-interval", required = false)
+	public int checkInterval();
+
+	@Meta.AD(deflt = "43200", name = "order-delete-interval", required = false)
+	public int deleteInterval();
 
 	@Meta.AD(
 		deflt = "10000", name = "commerce-order-guest-cart-max-allowed",

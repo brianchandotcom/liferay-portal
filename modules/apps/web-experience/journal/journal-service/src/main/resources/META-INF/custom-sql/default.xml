@@ -373,11 +373,11 @@
 	<sql id="com.liferay.journal.service.persistence.JournalFolderFinder.findA_ByG_U_F">
 		<![CDATA[
 			SELECT
-				DISTINCT JournalArticle.folderId AS modelFolderId, JournalArticle.articleId as articleId, JournalArticle.version AS version, 0 AS modelFolder, JournalArticle.displayDate as displayDate, JournalArticle.modifiedDate as modifiedDate
+				JournalArticle.folderId AS modelFolderId, JournalArticle.articleId as articleId, JournalArticle.version AS version, 0 AS modelFolder, JournalArticle.displayDate as displayDate, JournalArticle.modifiedDate as modifiedDate
 			FROM
 				(
 					SELECT
-						JournalArticle.resourcePrimKey AS resourcePrimKey, MAX(JournalArticle.version) AS version
+						JournalArticle.articleId AS articleId, JournalArticle.groupId AS groupId, MAX(JournalArticle.version) AS version
 					FROM
 						JournalArticle
 					WHERE
@@ -386,11 +386,12 @@
 						([$OWNER_USER_ID$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] ([$STATUS$]))
 						[$ARTICLE_FOLDER_ID$]
 					GROUP BY
-						JournalArticle.resourcePrimKey, JournalArticle.folderId, JournalArticle.articleId
+						JournalArticle.folderId, JournalArticle.articleId, JournalArticle.groupId
 				) TEMP_TABLE
 			INNER JOIN
 				JournalArticle ON
-					(TEMP_TABLE.resourcePrimKey = JournalArticle.resourcePrimKey) AND
+					(TEMP_TABLE.articleId = JournalArticle.articleId) AND
+					(TEMP_TABLE.groupId = JournalArticle.groupId) AND
 					(TEMP_TABLE.version = JournalArticle.version)
 		]]>
 	</sql>

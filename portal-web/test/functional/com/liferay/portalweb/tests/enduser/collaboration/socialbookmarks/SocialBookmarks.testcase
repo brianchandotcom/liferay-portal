@@ -179,9 +179,7 @@
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
-		<execute macro="SocialBookmarks#viewBookmarksNotPresent">
-			<var name="socialBookmarks" value="Twitter,Facebook,AddThis,Delicious,Digg,Evernote,LinkedIn,Newsvine,Reddit,Slashdot,StumbleUpon,Tuenti" />
-		</execute>
+		<execute macro="SocialBookmarks#viewShareIconNotPresent" />
 	</command>
 
 	<command name="ViewKBArticleWithAllSocialBookmarkSites" priority="3">

@@ -30,6 +30,7 @@ page import="com.liferay.configuration.admin.web.internal.constants.Configuratio
 page import="com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryDisplay" %><%@
 page import="com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryMenuDisplay" %><%@
 page import="com.liferay.configuration.admin.web.internal.display.ConfigurationCategorySectionDisplay" %><%@
+page import="com.liferay.configuration.admin.web.internal.display.ConfigurationEntry" %><%@
 page import="com.liferay.configuration.admin.web.internal.display.ConfigurationScopeDisplay" %><%@
 page import="com.liferay.configuration.admin.web.internal.model.ConfigurationModel" %><%@
 page import="com.liferay.configuration.admin.web.internal.util.ConfigurationModelIterator" %><%@

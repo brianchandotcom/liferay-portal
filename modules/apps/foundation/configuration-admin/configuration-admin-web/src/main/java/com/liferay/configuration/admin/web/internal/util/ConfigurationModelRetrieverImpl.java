@@ -18,6 +18,8 @@ import com.liferay.configuration.admin.category.ConfigurationCategory;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryDisplay;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryMenuDisplay;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationCategorySectionDisplay;
+import com.liferay.configuration.admin.web.internal.display.ConfigurationEntry;
+import com.liferay.configuration.admin.web.internal.display.ConfigurationModelConfigurationEntry;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -28,6 +30,7 @@ import com.liferay.portal.configuration.metatype.definitions.ExtendedMetaTypeSer
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -126,7 +129,7 @@ public class ConfigurationModelRetrieverImpl
 
 		return new ConfigurationCategoryMenuDisplay(
 			configurationCategoryDisplay,
-			getConfigurationModels(configurationCategory, languageId));
+			getConfigurationEntries(configurationCategory, languageId));
 	}
 
 	@Override
@@ -188,6 +191,29 @@ public class ConfigurationModelRetrieverImpl
 	}
 
 	@Override
+	public Set<ConfigurationEntry> getConfigurationEntries(
+		String configurationCategory, String languageId) {
+
+		Set<ConfigurationModel> configurationModels = getConfigurationModels(
+			configurationCategory, languageId);
+
+		Set<ConfigurationEntry> configurationEntries = new TreeSet(
+			getConfigurationEntryComparator());
+
+		Locale locale = LocaleUtil.fromLanguageId(languageId);
+
+		for (ConfigurationModel configurationModel : configurationModels) {
+			ConfigurationEntry configurationEntry =
+				new ConfigurationModelConfigurationEntry(
+					configurationModel, locale, _resourceBundleLoaderProvider);
+
+			configurationEntries.add(configurationEntry);
+		}
+
+		return configurationEntries;
+	}
+
+	@Override
 	public Map<String, ConfigurationModel> getConfigurationModels() {
 		return getConfigurationModels((String)null);
 	}
@@ -226,7 +252,6 @@ public class ConfigurationModelRetrieverImpl
 		return configurationModels;
 	}
 
-	@Override
 	public Set<ConfigurationModel> getConfigurationModels(
 		String configurationCategory, String languageId) {
 
@@ -362,6 +387,10 @@ public class ConfigurationModelRetrieverImpl
 		return configurationCategories;
 	}
 
+	protected Comparator<ConfigurationEntry> getConfigurationEntryComparator() {
+		return new ConfigurationEntryComparator();
+	}
+
 	protected ConfigurationModel getConfigurationModel(
 		Bundle bundle, String pid, boolean factory, String locale) {
 
@@ -470,6 +499,9 @@ public class ConfigurationModelRetrieverImpl
 	@Reference
 	private ExtendedMetaTypeService _extendedMetaTypeService;
 
+	@Reference
+	private ResourceBundleLoaderProvider _resourceBundleLoaderProvider;
+
 	private static class ConfigurationCategorySectionDisplayComparator
 		implements Comparator<ConfigurationCategorySectionDisplay> {
 
@@ -519,6 +551,22 @@ public class ConfigurationModelRetrieverImpl
 					"content-management", "social", "commerce", "platform",
 					"security"
 				});
+
+	}
+
+	private static class ConfigurationEntryComparator
+		implements Comparator<ConfigurationEntry> {
+
+		@Override
+		public int compare(
+			ConfigurationEntry configurationEntry1,
+			ConfigurationEntry configurationEntry2) {
+
+			String name1 = configurationEntry1.getName();
+			String name2 = configurationEntry2.getName();
+
+			return name1.compareTo(name2);
+		}
 
 	}
 

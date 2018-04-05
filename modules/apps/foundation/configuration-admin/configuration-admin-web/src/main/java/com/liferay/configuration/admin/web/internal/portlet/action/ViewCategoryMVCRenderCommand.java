@@ -16,7 +16,7 @@ package com.liferay.configuration.admin.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryMenuDisplay;
-import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
+import com.liferay.configuration.admin.web.internal.display.ConfigurationEntry;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
@@ -68,38 +68,26 @@ public class ViewCategoryMVCRenderCommand implements MVCRenderCommand {
 					getConfigurationCategoryMenuDisplay(
 						configurationCategory, themeDisplay.getLanguageId());
 
-			PortletURL redirectURL = renderResponse.createRenderURL();
-
-			PortletURL backURL = renderResponse.createRenderURL();
-
-			redirectURL.setParameter("redirect", backURL.toString());
+			String redirectURL = null;
 
 			if (!configurationCategoryMenuDisplay.isEmpty()) {
-				ConfigurationModel configurationModel =
+				ConfigurationEntry configurationEntry =
 					configurationCategoryMenuDisplay.
-						getFirstConfigurationModel();
+						getFirstConfigurationEntry();
 
-				if (configurationModel.isFactory() &&
-					!configurationModel.isCompanyFactory()) {
+				redirectURL = configurationEntry.getEditURL(
+					renderRequest, renderResponse);
+			}
+			else {
+				PortletURL portletURL = renderResponse.createRenderURL();
 
-					redirectURL.setParameter(
-						"mvcRenderCommandName", "/view_factory_instances");
-					redirectURL.setParameter(
-						"factoryPid", configurationModel.getFactoryPid());
-				}
-				else {
-					redirectURL.setParameter(
-						"mvcRenderCommandName", "/edit_configuration");
-					redirectURL.setParameter(
-						"factoryPid", configurationModel.getFactoryPid());
-					redirectURL.setParameter("pid", configurationModel.getID());
-				}
+				redirectURL = portletURL.toString();
 			}
 
 			HttpServletResponse response = _portal.getHttpServletResponse(
 				renderResponse);
 
-			response.sendRedirect(redirectURL.toString());
+			response.sendRedirect(redirectURL);
 		}
 		catch (IOException ioe) {
 			throw new PortletException(ioe);

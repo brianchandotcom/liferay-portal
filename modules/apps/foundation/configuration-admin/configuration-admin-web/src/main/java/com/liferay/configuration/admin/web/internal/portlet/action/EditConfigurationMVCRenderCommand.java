@@ -17,6 +17,8 @@ package com.liferay.configuration.admin.web.internal.portlet.action;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.configuration.admin.web.internal.constants.ConfigurationAdminWebKeys;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryMenuDisplay;
+import com.liferay.configuration.admin.web.internal.display.ConfigurationEntry;
+import com.liferay.configuration.admin.web.internal.display.ConfigurationModelConfigurationEntry;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
 import com.liferay.configuration.admin.web.internal.util.DDMFormRendererHelper;
@@ -26,6 +28,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -109,6 +112,15 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 				ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY_MENU_DISPLAY,
 				configurationCategoryMenuDisplay);
 
+			ConfigurationEntry configurationEntry =
+				new ConfigurationModelConfigurationEntry(
+					configurationModel, _portal.getLocale(renderRequest),
+					_resourceBundleLoaderProvider);
+
+			renderRequest.setAttribute(
+				ConfigurationAdminWebKeys.CONFIGURATION_ENTRY,
+				configurationEntry);
+
 			renderRequest.setAttribute(
 				ConfigurationAdminWebKeys.CONFIGURATION_MODEL,
 				configurationModel);
@@ -159,6 +171,9 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private DDMFormRenderer _ddmFormRenderer;
+
+	@Reference
+	private Portal _portal;
 
 	private final Map<String, MVCRenderCommand> _renderCommands =
 		new HashMap<>();

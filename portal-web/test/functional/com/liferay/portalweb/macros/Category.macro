@@ -144,7 +144,9 @@
 
 		<execute macro="Button#clickSave" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_FIELD_REQUIRED" value1="This field is required." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please enter a valid name." />
+
+		<execute macro="Alert#viewRequestFailedToComplete" />
 	</command>
 
 	<command name="deleteByIconCP">

@@ -238,7 +238,9 @@
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_FIELD_REQUIRED" value1="This field is required." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please enter a valid title." />
+
+		<execute macro="Alert#viewRequestFailedToComplete" />
 
 		<if>
 			<isset var="webContentContent" />

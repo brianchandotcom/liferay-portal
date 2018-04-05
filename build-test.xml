@@ -5175,6 +5175,20 @@ go]]></replacevalue>
 				</if>
 			</sequential>
 		</for>
+
+		<pathconvert property="osgi.configs">
+			<path>
+				<fileset
+					dir="${liferay.home}/osgi/configs"
+				/>
+			</path>
+		</pathconvert>
+
+		<for delimiter=":" list="${osgi.configs}" param="osgi.config">
+			<sequential>
+				<print-file file.name="@{osgi.config}" />
+			</sequential>
+		</for>
 	</target>
 
 	<target name="deploy-osgi-modules">

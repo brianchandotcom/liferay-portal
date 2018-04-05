@@ -22,6 +22,10 @@ List<RSSFeed> rssFeeds = rssDisplayContext.getRSSFeeds();
 Map<String, Object> contextObjects = new HashMap<String, Object>();
 
 contextObjects.put("rssDisplayContext", rssDisplayContext);
+
+if (rssFeeds.isEmpty()) {
+	renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
+}
 %>
 
 <c:choose>

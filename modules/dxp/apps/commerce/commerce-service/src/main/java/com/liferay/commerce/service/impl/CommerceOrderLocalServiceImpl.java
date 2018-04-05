@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -380,6 +381,11 @@ public class CommerceOrderLocalServiceImpl
 		for (CommerceOrder commerceOrder : commerceOrders) {
 			commerceOrderLocalService.deleteCommerceOrder(commerceOrder);
 		}
+	}
+
+	@Override
+	public void deleteCommerceOrders(long userId, Date date, int status) {
+		commerceOrderPersistence.removeByU_LtC_O(userId, date, status);
 	}
 
 	@Override
@@ -1177,7 +1183,8 @@ public class CommerceOrderLocalServiceImpl
 	}
 
 	protected void validateGuestOrders() throws PortalException {
-		int count = commerceOrderPersistence.countByUserId(0);
+		int count = commerceOrderPersistence.countByUserId(
+			UserConstants.USER_ID_DEFAULT);
 
 		if (count >= _commerceOrderConfiguration.guestCartMaxAllowed()) {
 			throw new GuestCartMaxAllowedException();

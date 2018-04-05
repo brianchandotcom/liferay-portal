@@ -33,7 +33,9 @@ List<FormNavigatorEntry<Object>> formNavigatorEntries = (List<FormNavigatorEntry
 	<!-- Begin fragment <%= sectionId %> -->
 
 	<liferay-frontend:fieldset
+		collapsible="<%= formNavigatorEntries.size() > 1 %>"
 		id="<%= _getSectionId(formNavigatorEntry.getKey()) %>"
+		label="<%= (formNavigatorEntries.size() > 1) ? formNavigatorEntry.getLabel(locale) : StringPool.BLANK %>"
 	>
 
 		<%

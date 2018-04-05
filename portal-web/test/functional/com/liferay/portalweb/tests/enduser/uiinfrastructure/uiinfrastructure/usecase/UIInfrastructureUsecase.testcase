@@ -224,7 +224,7 @@
 		<execute macro="Button#clickPublish" />
 
 		<execute macro="Alert#viewSuccessMessageText">
-			<var name="sucessMessage" value="Your request completed successfully." />
+			<var name="successMessage" value="Your request completed successfully." />
 		</execute>
 	</command>
 </definition>

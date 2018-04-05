@@ -1,0 +1,20 @@
+<html>
+<head>
+<title>BladeNPMTemplates</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">BladeNPMTemplates</td></tr>
+</thead>
+<tbody>
+<!--BLADE-NPM-TEMPLATES-->
+<tr>
+	<td>BILLBOARDJS_BODY</td>
+	<td>//div[contains(@id,'Foo') and contains(@class,'bb')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

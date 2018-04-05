@@ -4859,6 +4859,54 @@ go]]></replacevalue>
 		<delete dir="/tmp/sprite" />
 	</target>
 
+	<target name="deploy-blade-templates">
+		<if>
+			<equals arg1="${blade.templates}" arg2="simple" />
+			<then>
+				<if>
+					<available file="${project.dir}/modules/sdk/project-templates/project-templates-npm-portlet/com.npm.simple" type="dir" />
+					<then>
+						<delete dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-portlet/com.npm.simple" />
+					</then>
+				</if>
+
+				<execute dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-portlet">
+					mvn archetype:generate --batch-mode -DarchetypeArtifactId=com.liferay.project.templates.npm.portlet -DarchetypeGroupId=com.liferay -DarchetypeVersion=1.0.4 -DartifactId=com.npm.simple -Dauthor=liferay -DbuildType=maven -DclassName=Foo -DgroupId=com.test -DinteractiveMode=false -DliferayVersion=7.1 -Dpackage=com.test -DprojectType=standalone -Dversion=1.0.0
+				</execute>
+
+				<execute dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-portlet/com.npm.simple">
+					mvn package
+				</execute>
+
+				<copy
+					file="${project.dir}/modules/sdk/project-templates/project-templates-npm-portlet/com.npm.simple/target/com.npm.simple-1.0.0.jar"
+					todir="${liferay.home}/deploy"
+				/>
+			</then>
+			<else>
+				<if>
+					<available file="${project.dir}/modules/sdk/project-templates/project-templates-npm-${blade.templates}-portlet/com.npm.${blade.templates}" type="dir" />
+					<then>
+						<delete dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-${blade.templates}-portlet/com.npm.${blade.templates}" />
+					</then>
+				</if>
+
+				<execute dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-${blade.templates}-portlet">
+					mvn archetype:generate --batch-mode -DarchetypeArtifactId=com.liferay.project.templates.npm.${blade.templates}.portlet -DarchetypeGroupId=com.liferay -DarchetypeVersion=1.0.4 -DartifactId=com.npm.${blade.templates} -Dauthor=liferay -DbuildType=maven -DclassName=Foo -DgroupId=com.test -DinteractiveMode=false -DliferayVersion=7.1 -Dpackage=com.test -DprojectType=standalone -Dversion=1.0.0
+				</execute>
+
+				<execute dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-${blade.templates}-portlet/com.npm.${blade.templates}">
+					mvn package
+				</execute>
+
+				<copy
+					file="${project.dir}/modules/sdk/project-templates/project-templates-npm-${blade.templates}-portlet/com.npm.${blade.templates}/target/com.npm.${blade.templates}-1.0.0.jar"
+					todir="${liferay.home}/deploy"
+				/>
+			</else>
+		</if>
+	</target>
+
 	<target name="deploy-dependency-jars">
 		<get-testcase-property property.name="liferay.training.dependency.jars" />
 
@@ -9408,6 +9456,15 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</or>
 			<then>
 				<ant antfile="build-test-apacheds.xml" target="start-apacheds" />
+			</then>
+		</if>
+
+		<get-testcase-property property.name="blade.templates" />
+
+		<if>
+			<isset property="blade.templates" />
+			<then>
+				<antcall target="deploy-blade-templates" />
 			</then>
 		</if>
 

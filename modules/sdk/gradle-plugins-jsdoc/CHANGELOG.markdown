@@ -50,7 +50,7 @@ the same application.
 - [LPS-78741]: Update the [Liferay Gradle Plugins Node] dependency to version
 4.3.2.
 
-## 2.0.5 - 2018-03-30
+## 2.0.5 - 2018-04-05
 
 ### Changed
 - [LPS-78741]: Update the [Liferay Gradle Plugins Node] dependency to version

@@ -157,34 +157,60 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 	}
 
 	private boolean _isNPMTestModuleDir(File moduleDir) throws IOException {
-		for (File file : moduleDir.listFiles()) {
-			if (file.isDirectory()) {
-				continue;
-			}
+		final List<Path> npmTestMarkers = new ArrayList<>();
 
-			String fileName = file.getName();
+		Files.walkFileTree(
+			moduleDir.toPath(),
+			new SimpleFileVisitor<Path>() {
 
-			if (!fileName.equals("package.json")) {
-				continue;
-			}
+					@Override
+					public FileVisitResult visitFile(
+							Path filePath, BasicFileAttributes attrs)
+						throws IOException {
 
-			JSONObject jsonObject = new JSONObject(
-				new String(Files.readAllBytes(file.toPath())));
+						if (_isNPMTestMarker(filePath)) {
+							npmTestMarkers.add(filePath);
 
-			if (!jsonObject.has("scripts")) {
-				continue;
-			}
+							return FileVisitResult.TERMINATE;
+						}
 
-			JSONObject scriptsJSONObject = jsonObject.getJSONObject("scripts");
+						return FileVisitResult.CONTINUE;
+					}
 
-			if (!scriptsJSONObject.has("test")) {
-				continue;
-			}
+					private boolean _isNPMTestMarker(Path path) {
+						File file = path.toFile();
 
-			return true;
-		}
+						String fileName = file.getName();
 
-		return false;
+						if (!fileName.equals("package.json")) {
+							return false;
+						}
+
+						try {
+							JSONObject jsonObject = new JSONObject(
+								new String(Files.readAllBytes(path)));
+
+							if (!jsonObject.has("scripts")) {
+								return false;
+							}
+
+							JSONObject scriptsJSONObject =
+								jsonObject.getJSONObject("scripts");
+
+							if (!scriptsJSONObject.has("test")) {
+								return false;
+							}
+
+							return true;
+						}
+						catch (IOException ioe) {
+							throw new RuntimeException(ioe);
+						}
+					}
+
+			});
+
+		return !npmTestMarkers.isEmpty();
 	}
 
 	private static class Module {

@@ -33,6 +33,10 @@ public class DLSelectRestrictedFileEntryTypesDisplayContext
 		super(renderRequest, renderResponse, request);
 	}
 
+	public String getFormActionURL() {
+		return getSearchActionURL();
+	}
+
 	@Override
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = renderResponse.createRenderURL();

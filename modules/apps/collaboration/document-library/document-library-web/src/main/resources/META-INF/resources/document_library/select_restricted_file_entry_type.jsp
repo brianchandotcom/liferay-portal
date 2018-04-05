@@ -24,7 +24,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 
 <liferay-util:include page="/document_library/file_entry_type_toolbar.jsp" servletContext="<%= application %>" />
 
-<aui:form action="<%= selectRestrictedFileEntryTypesDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="post" name="selectFileEntryTypeFm">
+<aui:form action="<%= selectRestrictedFileEntryTypesDisplayContext.getFormActionURL() %>" cssClass="container-fluid-1280" method="post" name="selectFileEntryTypeFm">
 	<liferay-ui:search-container
 		searchContainer="<%= selectRestrictedFileEntryTypesDisplayContext.getSearchContainer() %>"
 	>

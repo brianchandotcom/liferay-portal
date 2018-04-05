@@ -46,6 +46,10 @@ public class DLViewFileEntryTypesDisplayContext {
 		this.request = request;
 	}
 
+	public String getClearResultsURL() {
+		return getSearchActionURL();
+	}
+
 	public String getCreationURL() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -67,13 +71,8 @@ public class DLViewFileEntryTypesDisplayContext {
 		return null;
 	}
 
-	public PortletURL getPortletURL() {
-		PortletURL portletURL = renderResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/document_library/view_file_entry_types");
-
-		return portletURL;
+	public String getSearchActionURL() {
+		return String.valueOf(getPortletURL());
 	}
 
 	public SearchContainer getSearchContainer() throws PortalException {
@@ -117,10 +116,19 @@ public class DLViewFileEntryTypesDisplayContext {
 		return this.searchContainer;
 	}
 
-	public int getTotal() throws PortalException {
+	public int getTotalItems() throws PortalException {
 		SearchContainer searchContainer = getSearchContainer();
 
 		return searchContainer.getTotal();
+	}
+
+	protected PortletURL getPortletURL() {
+		PortletURL portletURL = renderResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/document_library/view_file_entry_types");
+
+		return portletURL;
 	}
 
 	protected final RenderRequest renderRequest;

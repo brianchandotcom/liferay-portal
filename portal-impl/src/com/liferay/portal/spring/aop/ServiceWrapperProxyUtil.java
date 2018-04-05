@@ -26,56 +26,11 @@ import java.lang.reflect.Field;
 
 import org.springframework.aop.TargetSource;
 import org.springframework.aop.framework.AdvisedSupport;
-import org.springframework.aop.target.SingletonTargetSource;
 
 /**
  * @author Shuyang Zhou
  */
 public class ServiceWrapperProxyUtil {
-
-	public static Closeable createProxy(
-			Object springServiceProxy, Class<?> serviceWrapperClass)
-		throws Exception {
-
-		if (!ProxyUtil.isProxyClass(springServiceProxy.getClass())) {
-			throw new IllegalArgumentException(
-				springServiceProxy + " is not a Spring service proxy");
-		}
-
-		final AdvisedSupport advisedSupport =
-			ServiceBeanAopProxy.getAdvisedSupport(springServiceProxy);
-
-		final TargetSource targetSource = advisedSupport.getTargetSource();
-
-		final Object previousService = targetSource.getTarget();
-
-		Constructor<?>[] constructors =
-			serviceWrapperClass.getDeclaredConstructors();
-
-		Constructor<?> constructor = constructors[0];
-
-		constructor.setAccessible(true);
-
-		advisedSupport.setTargetSource(
-			new SingletonTargetSource(
-				constructor.newInstance(previousService)));
-
-		return new Closeable() {
-
-			@Override
-			public void close() throws IOException {
-				advisedSupport.setTargetSource(targetSource);
-
-				try {
-					targetSource.releaseTarget(previousService);
-				}
-				catch (Exception e) {
-					throw new IOException(e);
-				}
-			}
-
-		};
-	}
 
 	public static Closeable injectFieldProxy(
 			Object springServiceProxy, String fieldName, Class<?> wrapperClass)

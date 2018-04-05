@@ -25,11 +25,11 @@ import org.dom4j.Element;
 public class SourceFormatBuild extends TopLevelBuild {
 
 	@Override
-	public void getBuildFailureElements(Element detailsElement) {
+	public Element[] getBuildFailureElements() {
 		Element failureMessageElement = getFailureMessageElement();
 
 		if (failureMessageElement != null) {
-			Dom4JUtil.addToElement(detailsElement, getFailureMessageElement());
+			return {failureMessageElement};
 		}
 	}
 
@@ -41,9 +41,12 @@ public class SourceFormatBuild extends TopLevelBuild {
 		super(url, topLevelBuild);
 	}
 
-	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =
-		{
-			new SourceFormatFailureMessageGenerator()
+	@Override
+	protected FailureMessageGenerator[] getFailureMessageGenerators() {
+		return new FailureMessageGenerator[] {
+			new SourceFormatFailureMessageGenerator(),
+			new GenericFailureMessageGenerator()
 		};
+	}
 
 }

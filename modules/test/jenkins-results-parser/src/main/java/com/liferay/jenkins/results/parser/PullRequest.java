@@ -92,7 +92,7 @@ public class PullRequest {
 	}
 
 	public String getNumber() {
-		return Integer.toString(_number);
+		return String.valueOf(_number);
 	}
 
 	public String getOwnerUsername() {

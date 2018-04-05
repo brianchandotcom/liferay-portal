@@ -136,7 +136,7 @@ public class TopLevelBuild extends BaseBuild {
 
 	@Override
 	public String getBaseRepositoryName() {
-		return _pullRequestObject.getRepositoryName();
+		return _pullRequest.getRepositoryName();
 	}
 
 	public String getCompanionBranchName() {
@@ -231,6 +231,10 @@ public class TopLevelBuild extends BaseBuild {
 			"https://", jenkinsMaster.getName(), ".liferay.com/",
 			"userContent/jobs/", getJobName(), "/builds/",
 			Integer.toString(getBuildNumber()), "/jenkins-report.html");
+	}
+
+	public PullRequest getPullRequest() {
+		return _pullRequest;
 	}
 
 	@Override
@@ -332,21 +336,9 @@ public class TopLevelBuild extends BaseBuild {
 		return validationBuild.getGitHubMessageElement();
 	}
 
-	public boolean hasPullRequestObject() {
-		if (_pullRequestObject == null) {
-			return false;
-		}
-
-		return true;
-	}
-
 	@Override
 	public void setCompareToUpstream(boolean compareToUpstream) {
 		_compareToUpstream = compareToUpstream;
-	}
-
-	public void setPullRequestObject(String pullRequestURL) {
-		_pullRequestObject = new PullRequest(pullRequestURL);
 	}
 
 	@Override
@@ -535,7 +527,7 @@ public class TopLevelBuild extends BaseBuild {
 		return baseBranchDetailsElement;
 	}
 
-	protected void getBuildFailureElements(Element detailsElement) {
+	protected Element[] getBuildFailureElements() {
 		Map<Build, Element> downstreamBuildFailureMessages =
 			getDownstreamBuildMessages("ABORTED", "FAILURE", "UNSTABLE");
 
@@ -578,7 +570,9 @@ public class TopLevelBuild extends BaseBuild {
 			}
 		}
 
-		Dom4JUtil.addToElement(detailsElement, Dom4JUtil.getNewElement("hr"));
+		List<Element> failuresToAppend = new ArrayList<>();
+
+		failuresToAppend.add(Dom4JUtil.getNewElement("hr"));
 
 		if (failureElements.isEmpty() && upstreamJobFailureElements.isEmpty()) {
 			failureElements.add(0, super.getGitHubMessageElement());
@@ -587,19 +581,14 @@ public class TopLevelBuild extends BaseBuild {
 		if (failureElements.isEmpty() &&
 			!upstreamJobFailureElements.isEmpty()) {
 
-			Dom4JUtil.addToElement(
-				detailsElement,
+			failuresToAppend.add(
 				Dom4JUtil.getNewElement(
 					"h4", null, "This pull contains no unique failures."));
 		}
 		else {
-			Dom4JUtil.addToElement(
-				detailsElement,
+			failuresToAppend.add(
 				Dom4JUtil.getNewElement(
 					"h4", null, "Failures unique to this pull:"));
-
-			Dom4JUtil.getOrderedListElement(
-				failureElements, detailsElement, maxFailureCount);
 		}
 
 		String acceptanceUpstreamJobURL = getAcceptanceUpstreamURL();
@@ -628,9 +617,7 @@ public class TopLevelBuild extends BaseBuild {
 				upstreamJobFailureElements, upstreamJobFailureElement,
 				remainingFailureCount);
 
-			Dom4JUtil.addToElement(
-				detailsElement, Dom4JUtil.getNewElement("hr"),
-				upstreamJobFailureElement);
+			failuresToAppend.add(Dom4J)
 		}
 
 		if (jobName.contains("pullrequest") &&
@@ -1295,7 +1282,9 @@ public class TopLevelBuild extends BaseBuild {
 		Dom4JUtil.addToElement(detailsElement, getMoreDetailsElement());
 
 		if (!result.equals("SUCCESS")) {
-			getBuildFailureElements(detailsElement);
+			Dom4JUtil.addToElement(
+				detailsElement,
+				getBuildFailureElements();
 		}
 
 		return rootElement;
@@ -1346,7 +1335,7 @@ public class TopLevelBuild extends BaseBuild {
 
 	private boolean _compareToUpstream = true;
 	private long _lastDownstreamBuildsListingTimestamp = -1L;
-	private PullRequest _pullRequestObject;
+	private PullRequest _pullRequest;
 	private long _updateDuration;
 
 }

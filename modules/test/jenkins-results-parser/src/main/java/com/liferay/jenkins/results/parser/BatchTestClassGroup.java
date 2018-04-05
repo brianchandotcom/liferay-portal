@@ -103,18 +103,16 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 				wildcardPropertyName);
 
 			if (matcher.find()) {
-				String batchNameMatcher = matcher.group("batchName");
+				String batchNameRegex = matcher.group("batchName");
 
-				batchNameMatcher = batchNameMatcher.replace("*", ".+");
+				batchNameRegex = batchNameRegex.replace("*", ".+");
 
-				if (!batchName.matches(batchNameMatcher)) {
+				if (!batchName.matches(batchNameRegex)) {
 					continue;
 				}
 
-				String testSuiteNameMatcher = matcher.group("testSuiteName");
-
 				if ((testSuiteName != null) &&
-					!testSuiteName.equals(testSuiteNameMatcher)) {
+					!testSuiteName.equals(matcher.group("testSuiteName"))) {
 
 					continue;
 				}

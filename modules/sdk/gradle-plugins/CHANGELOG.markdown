@@ -3971,8 +3971,40 @@ to version 2.3.119.
 ### Changed
 - [LPS-74110]: Suppress Bnd warning about deprecated annotations.
 - [LPS-74110]: Update the [Liferay Ant BND] dependency to version 2.0.50.
+- [LPS-75010]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.120.
+- [LPS-75010]: Update the [Liferay Source Formatter] dependency to version
+1.0.592.
+
+## 3.10.6 - 2018-04-04
+
+### Changed
+- [LPS-79360]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.121.
+- [LPS-79360]: Update the [Liferay Source Formatter] dependency to version
+1.0.593.
 
 ## 3.10.7 - 2018-04-04
+
+### Changed
+- [LPS-74544]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.122.
+- [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
+1.0.594.
+
+## 3.10.8 - 2018-04-04
+
+### Changed
+- [LPS-79365]: Update the [Liferay Gradle Plugins Service Builder] dependency to
+version 2.1.4.
+- [LPS-79365]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.187.
+
+## 3.10.9 - 2018-04-05
+
+### Added
+- [LPS-74171]: Add support for different app server configurations based on the
+portal version.
 
 ### Changed
 - [LPS-78741]: Update the [Liferay Gradle Plugins Gulp] dependency to version
@@ -3981,6 +4013,10 @@ to version 2.3.119.
 dependency to version 2.1.30.
 - [LPS-78741]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
 version 2.4.9.
+- [LPS-79365]: Update the [Liferay Gradle Plugins Service Builder] dependency to
+version 2.1.5.
+- [LPS-79365]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.188.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
@@ -4321,4 +4357,6 @@ version 2.4.9.
 [LPS-79248]: https://issues.liferay.com/browse/LPS-79248
 [LPS-79282]: https://issues.liferay.com/browse/LPS-79282
 [LPS-79286]: https://issues.liferay.com/browse/LPS-79286
+[LPS-79360]: https://issues.liferay.com/browse/LPS-79360
+[LPS-79365]: https://issues.liferay.com/browse/LPS-79365
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

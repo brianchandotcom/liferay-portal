@@ -229,7 +229,7 @@ directory's digest, do not run `npm install`.
 - [LPS-78741]: If the `nodeModulesDigestFile` matches the `node_modules`
 directory's digest, do not run `npm ci`.
 
-## 4.3.3 - 2018-04-04
+## 4.3.3 - 2018-04-05
 
 ### Fixed
 - [LPS-78741]: Fix execution of task `npmPackageLock` when the property

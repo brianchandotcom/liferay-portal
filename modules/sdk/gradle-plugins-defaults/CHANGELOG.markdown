@@ -3192,16 +3192,34 @@ execution when on the `7.0.x` branch.
 ## 5.3.61 - 2018-04-03
 
 ### Changed
-- [LPS-74110]: Update the [Liferay Gradle Plugins] dependency to version 3.10.5.
 - [LPS-74110]: Update the [Liferay Gradle Plugins Baseline] dependency to
 version 1.2.2.
+- [LPS-75010]: Update the [Liferay Gradle Plugins] dependency to version 3.10.5.
+
+## 5.3.62 - 2018-04-04
+
+### Changed
+- [LPS-79360]: Update the [Liferay Gradle Plugins] dependency to version 3.10.6.
 
 ## 5.3.63 - 2018-04-04
 
 ### Changed
 - [LPS-78741]: Update the [Liferay Gradle Plugins JSDoc] dependency to version
 2.0.5.
-- [LPS-79282]: Update the [Liferay Gradle Plugins] dependency to version 3.10.6.
+- [LPS-79282]: Update the [Liferay Gradle Plugins] dependency to version 3.10.7.
+
+## 5.3.64 - 2018-04-04
+
+### Changed
+- [LPS-79365]: Update the [Liferay Gradle Plugins] dependency to version 3.10.8.
+
+## 5.3.65 - 2018-04-05
+
+### Changed
+- [LPS-75049]: Add support for `compileOnly` configuration.
+- [LPS-75049]: Add `compileOnly` dependencies to the test integration compile
+classpath.
+- [LPS-79365]: Update the [Liferay Gradle Plugins] dependency to version 3.10.9.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -3425,6 +3443,7 @@ version 1.2.2.
 [LPS-74139]: https://issues.liferay.com/browse/LPS-74139
 [LPS-74143]: https://issues.liferay.com/browse/LPS-74143
 [LPS-74155]: https://issues.liferay.com/browse/LPS-74155
+[LPS-74171]: https://issues.liferay.com/browse/LPS-74171
 [LPS-74207]: https://issues.liferay.com/browse/LPS-74207
 [LPS-74210]: https://issues.liferay.com/browse/LPS-74210
 [LPS-74222]: https://issues.liferay.com/browse/LPS-74222
@@ -3465,6 +3484,7 @@ version 1.2.2.
 [LPS-75010]: https://issues.liferay.com/browse/LPS-75010
 [LPS-75039]: https://issues.liferay.com/browse/LPS-75039
 [LPS-75047]: https://issues.liferay.com/browse/LPS-75047
+[LPS-75049]: https://issues.liferay.com/browse/LPS-75049
 [LPS-75096]: https://issues.liferay.com/browse/LPS-75096
 [LPS-75100]: https://issues.liferay.com/browse/LPS-75100
 [LPS-75175]: https://issues.liferay.com/browse/LPS-75175
@@ -3567,6 +3587,8 @@ version 1.2.2.
 [LPS-79226]: https://issues.liferay.com/browse/LPS-79226
 [LPS-79282]: https://issues.liferay.com/browse/LPS-79282
 [LPS-79286]: https://issues.liferay.com/browse/LPS-79286
+[LPS-79360]: https://issues.liferay.com/browse/LPS-79360
+[LPS-79365]: https://issues.liferay.com/browse/LPS-79365
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

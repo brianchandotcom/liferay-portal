@@ -184,6 +184,11 @@ Gradle plugin to the root project, if the `target.platform.version` property in
 ### Changed
 - [LPS-78911]: Update the [Liferay Gradle Plugins] dependency to version 3.9.11.
 
+## 1.9.1 - 2018-03-30
+
+### Changed
+- [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version 3.9.22.
+
 [Gradle Download Task]: https://github.com/michel-kraemer/gradle-download-task/
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Portal Tools Bundle Support]: https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-bundle-support
@@ -217,6 +222,7 @@ Gradle plugin to the root project, if the `target.platform.version` property in
 [LPS-73913]: https://issues.liferay.com/browse/LPS-73913
 [LPS-73967]: https://issues.liferay.com/browse/LPS-73967
 [LPS-74124]: https://issues.liferay.com/browse/LPS-74124
+[LPS-74544]: https://issues.liferay.com/browse/LPS-74544
 [LPS-74818]: https://issues.liferay.com/browse/LPS-74818
 [LPS-75323]: https://issues.liferay.com/browse/LPS-75323
 [LPS-75479]: https://issues.liferay.com/browse/LPS-75479

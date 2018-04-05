@@ -340,7 +340,7 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 		String utilTaglibSrcDirName = _getUtilTaglibSrcDirName();
 
 		outerLoop:
-		for (String tldFileName : _getTLDFileNames()) {
+		for (String tldFileName : tldFileNames) {
 			tldFileName = StringUtil.replace(
 				tldFileName, CharPool.BACK_SLASH, CharPool.SLASH);
 

@@ -37,7 +37,7 @@
 		</execute>
 
 		<execute macro="SocialBookmarks#viewBookmarkMenuItems">
-			<var name="socialBookmarks" value="Google+,AddThis,Delicious,Digg,Evernote,Newsvine,Reddit,Slashdot,StumbleUpon,Tuenti" />
+			<var name="socialBookmarks" value="Twitter,Facebook,LinkedIn,Google+,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot,StumbleUpon" />
 		</execute>
 	</command>
 </definition>

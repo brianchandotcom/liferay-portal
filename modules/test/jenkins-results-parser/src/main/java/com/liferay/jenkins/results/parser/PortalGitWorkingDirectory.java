@@ -72,6 +72,18 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 		return modifiedModuleDirsList;
 	}
 
+	public List<File> getModifiedNPMTestModuleDirsList() throws IOException {
+		List<File> modifiedModuleDirsList = new ArrayList<>();
+
+		for (File modifiedModuleDir : getModifiedModuleDirsList()) {
+			if (_isNPMTestModuleDir(modifiedModuleDir)) {
+				modifiedModuleDirsList.add(modifiedModuleDir);
+			}
+		}
+
+		return modifiedModuleDirsList;
+	}
+
 	public List<File> getModuleDirsList() throws IOException {
 		final File modulesDir = new File(getWorkingDirectory(), "modules");
 
@@ -142,18 +154,6 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 		Collections.sort(moduleDirsList);
 
 		return moduleDirsList;
-	}
-
-	public List<File> getModifiedNPMTestModuleDirsList() throws IOException {
-		List<File> modifiedModuleDirsList = new ArrayList<>();
-
-		for (File modifiedModuleDir : getModifiedModuleDirsList()) {
-			if (_isNPMTestModuleDir(modifiedModuleDir)) {
-				modifiedModuleDirsList.add(modifiedModuleDir);
-			}
-		}
-
-		return modifiedModuleDirsList;
 	}
 
 	private boolean _isNPMTestModuleDir(File moduleDir) throws IOException {

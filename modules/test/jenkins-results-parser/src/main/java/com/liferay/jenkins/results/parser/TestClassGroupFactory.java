@@ -29,10 +29,8 @@ public class TestClassGroupFactory {
 		String batchName, GitWorkingDirectory gitWorkingDirectory,
 		String testSuiteName) {
 
-		if (batchName.startsWith("modules-integration-") ||
-			batchName.startsWith("modules-unit-")) {
-
-			return new ModulesJUnitBatchTestClassGroup(
+		if (batchName.startsWith("functional-")) {
+			return new FunctionalBatchTestClassGroup(
 				batchName, gitWorkingDirectory, testSuiteName);
 		}
 		else if (batchName.startsWith("integration-") ||
@@ -41,8 +39,14 @@ public class TestClassGroupFactory {
 			return new JUnitBatchTestClassGroup(
 				batchName, gitWorkingDirectory, testSuiteName);
 		}
-		else if (batchName.startsWith("functional-")) {
-			return new FunctionalBatchTestClassGroup(
+		else if (batchName.startsWith("modules-integration-") ||
+				 batchName.startsWith("modules-unit-")) {
+
+			return new ModulesJUnitBatchTestClassGroup(
+				batchName, gitWorkingDirectory, testSuiteName);
+		}
+		else if (batchName.startsWith("portal-frontend-js-")) {
+			return new NPMTestBatchTestClassGroup(
 				batchName, gitWorkingDirectory, testSuiteName);
 		}
 

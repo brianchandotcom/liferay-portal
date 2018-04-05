@@ -38,7 +38,7 @@ public interface CommercePriceListConfiguration {
 	)
 	public boolean changeableDefaultLanguage();
 
-	@Meta.AD(deflt = "15", name = "check-internal", required = false)
+	@Meta.AD(deflt = "15", name = "check-interval", required = false)
 	public int checkInterval();
 
 	@Meta.AD(

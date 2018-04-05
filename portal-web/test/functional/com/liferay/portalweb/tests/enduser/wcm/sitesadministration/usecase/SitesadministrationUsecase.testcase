@@ -275,12 +275,8 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoAddMenuItem">
-			<var name="menuItem" value="Blank Site" />
-		</execute>
-
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="Site Name" />
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="PortletEntry#inputLocalizedName">

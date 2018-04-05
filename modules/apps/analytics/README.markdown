@@ -5,9 +5,9 @@
 Dependencies:
 
 ```
-provided group: "com.liferay", name: "com.liferay.analytics.api", version: "1.0.0-20171122.215509-1"
-provided group: "com.liferay", name: "com.liferay.analytics.client.impl", version: "1.0.0-20171122.215523-1"
-provided group: "com.liferay", name: "com.liferay.analytics.data.binding.impl", version: "1.0.0-20171122.215542-1"
+compileOnly group: "com.liferay", name: "com.liferay.analytics.api", version: "1.0.0-20171122.215509-1"
+compileOnly group: "com.liferay", name: "com.liferay.analytics.client.impl", version: "1.0.0-20171122.215523-1"
+compileOnly group: "com.liferay", name: "com.liferay.analytics.data.binding.impl", version: "1.0.0-20171122.215542-1"
 ```
 
 Usage example:
@@ -65,9 +65,9 @@ public void sendAnalytics(String analyticsKey) throws Exception {
 Dependencies:
 
 ```
-provided group: "com.liferay", name: "com.liferay.analytics.api", version: "1.0.0-20171122.215509-1"
-provided group: "com.liferay", name: "com.liferay.analytics.client.osgi", version: "1.0.0-20171122.215533-1"
-provided group: "com.liferay", name: "com.liferay.analytics.data.binding.impl", version: "1.0.0-20171122.215542-1"
+compileOnly group: "com.liferay", name: "com.liferay.analytics.api", version: "1.0.0-20171122.215509-1"
+compileOnly group: "com.liferay", name: "com.liferay.analytics.client.osgi", version: "1.0.0-20171122.215533-1"
+compileOnly group: "com.liferay", name: "com.liferay.analytics.data.binding.impl", version: "1.0.0-20171122.215542-1"
 ```
 
 Usage example:

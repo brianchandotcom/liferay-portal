@@ -23,6 +23,12 @@ import java.util.List;
  */
 public class FolderSearchFacetDisplayContext implements Serializable {
 
+	public List<FolderSearchFacetTermDisplayContext>
+		getFolderSearchFacetTermDisplayContexts() {
+
+		return _folderSearchFacetTermDisplayContexts;
+	}
+
 	public String getParameterName() {
 		return _parameterName;
 	}
@@ -35,16 +41,20 @@ public class FolderSearchFacetDisplayContext implements Serializable {
 		return _parameterValues;
 	}
 
-	public List<FolderSearchFacetTermDisplayContext> getTermDisplayContexts() {
-		return _folderSearchFacetTermDisplayContexts;
-	}
-
 	public boolean isNothingSelected() {
 		return _nothingSelected;
 	}
 
 	public boolean isRenderNothing() {
 		return _renderNothing;
+	}
+
+	public void setFolderSearchFacetTermDisplayContexts(
+		List<FolderSearchFacetTermDisplayContext>
+			folderSearchFacetTermDisplayContexts) {
+
+		_folderSearchFacetTermDisplayContexts =
+			folderSearchFacetTermDisplayContexts;
 	}
 
 	public void setNothingSelected(boolean nothingSelected) {
@@ -65,12 +75,6 @@ public class FolderSearchFacetDisplayContext implements Serializable {
 
 	public void setRenderNothing(boolean renderNothing) {
 		_renderNothing = renderNothing;
-	}
-
-	public void setTermDisplayContexts(
-		List<FolderSearchFacetTermDisplayContext> termDisplayContexts) {
-
-		_folderSearchFacetTermDisplayContexts = termDisplayContexts;
 	}
 
 	private List<FolderSearchFacetTermDisplayContext>

@@ -88,6 +88,8 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 					ioe);
 			}
 
+			StringBuilder sb = new StringBuilder();
+
 			for (File modifiedModuleDir : modifiedModuleDirsList) {
 				File modifiedModuleTestProperties = new File(
 					modifiedModuleDir, "test.properties");
@@ -106,17 +108,20 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 						testSuiteName, "]"));
 
 				if (testBatchRunPropertyQuery != null) {
-					if (_relevantTestBatchRunPropertyQuery == null) {
-						_relevantTestBatchRunPropertyQuery =
-							JenkinsResultsParserUtil.combine(
-								"(", testBatchRunPropertyQuery, ")");
+					if (sb.length() > 0) {
+						sb.append(" OR (");
 					}
 					else {
-						_relevantTestBatchRunPropertyQuery +=
-							JenkinsResultsParserUtil.combine(
-								" OR (", testBatchRunPropertyQuery, ")");
+						sb.append("(");
 					}
+
+					sb.append(testBatchRunPropertyQuery);
+					sb.append(")");
 				}
+			}
+
+			if (sb.length() > 0) {
+				_relevantTestBatchRunPropertyQuery = sb.toString();
 			}
 		}
 

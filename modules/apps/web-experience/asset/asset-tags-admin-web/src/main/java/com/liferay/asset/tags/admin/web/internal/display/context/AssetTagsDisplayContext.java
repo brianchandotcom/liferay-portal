@@ -19,7 +19,10 @@ import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagServiceUtil;
 import com.liferay.asset.tags.constants.AssetTagsAdminPortletKeys;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -27,6 +30,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -35,6 +39,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -45,7 +50,10 @@ import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -66,6 +74,34 @@ public class AssetTagsDisplayContext {
 		_request = request;
 	}
 
+	public DropdownItemList getActionItemsDropdownItemList() {
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							"javascript:" + _renderResponse.getNamespace() +
+								"mergeTags();");
+						dropdownItem.setIcon("change");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "merge"));
+						dropdownItem.setQuickAction(true);
+					});
+
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							"javascript:" + _renderResponse.getNamespace() +
+								"deleteTags();");
+						dropdownItem.setIcon("trash");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "delete"));
+						dropdownItem.setQuickAction(true);
+					});
+			}
+		};
+	}
+
 	public String getAssetTitle() {
 		AssetTag tag = getTag();
 
@@ -74,6 +110,15 @@ public class AssetTagsDisplayContext {
 		}
 
 		return tag.getName();
+	}
+
+	public String getClearResultsURL() throws PortletException {
+		PortletURL clearResultsURL = PortletURLUtil.clone(
+			getPortletURL(), _renderResponse);
+
+		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+
+		return clearResultsURL.toString();
 	}
 
 	public String getDisplayStyle() {
@@ -89,6 +134,32 @@ public class AssetTagsDisplayContext {
 			"list");
 
 		return _displayStyle;
+	}
+
+	public String getEditTagURL() {
+		if (!isShowAddButton()) {
+			return null;
+		}
+
+		PortletURL editTagURL = _renderResponse.createRenderURL();
+
+		editTagURL.setParameter("mvcPath", "/edit_tag.jsp");
+
+		return editTagURL.toString();
+	}
+
+	public DropdownItemList getFilterItemsDropdownItemList() {
+		return new DropdownItemList() {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItemList(
+							_getOrderByDropdownItemList());
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "order-by"));
+					});
+			}
+		};
 	}
 
 	public long getFullTagsCount(AssetTag tag) {
@@ -141,22 +212,22 @@ public class AssetTagsDisplayContext {
 		return _mergeTagNames;
 	}
 
-	public List<NavigationItem> getNavigationItems() {
-		List<NavigationItem> navigationItems = new ArrayList<>();
+	public NavigationItemList getNavigationItems() {
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
 
-		NavigationItem entriesNavigationItem = new NavigationItem();
+						PortletURL mainURL = _renderResponse.createRenderURL();
 
-		entriesNavigationItem.setActive(true);
+						navigationItem.setHref(mainURL.toString());
 
-		PortletURL mainURL = _renderResponse.createRenderURL();
-
-		entriesNavigationItem.setHref(mainURL.toString());
-
-		entriesNavigationItem.setLabel(LanguageUtil.get(_request, "tags"));
-
-		navigationItems.add(entriesNavigationItem);
-
-		return navigationItems;
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "tags"));
+					});
+			}
+		};
 	}
 
 	public String getOrderByCol() {
@@ -177,6 +248,37 @@ public class AssetTagsDisplayContext {
 		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
 
 		return _orderByType;
+	}
+
+	public PortletURL getPortletURL() {
+		PortletURL portletURL = _renderResponse.createRenderURL();
+
+		portletURL.setParameter("keywords", getKeywords());
+		portletURL.setParameter("orderByCol", getOrderByCol());
+		portletURL.setParameter("orderByType", getOrderByType());
+
+		return portletURL;
+	}
+
+	public String getSearchTagURL() throws PortletException {
+		PortletURL searchTagURL = PortletURLUtil.clone(
+			getPortletURL(), _renderResponse);
+
+		searchTagURL.setParameter("keywords", StringPool.BLANK);
+
+		return searchTagURL.toString();
+	}
+
+	public String getSortingURL() throws PortletException {
+		PortletURL sortingURL = PortletURLUtil.clone(
+			getPortletURL(), _renderResponse);
+
+		String orderByType = getOrderByType();
+
+		sortingURL.setParameter(
+			"orderByType", orderByType.equals("asc") ? "desc" : "asc");
+
+		return sortingURL.toString();
 	}
 
 	public AssetTag getTag() {
@@ -301,14 +403,55 @@ public class AssetTagsDisplayContext {
 		return _tagsSearchContainer;
 	}
 
-	public boolean isDisabledTagsManagementBar() throws PortalException {
+	public int getTotal() throws PortalException {
 		SearchContainer tagsSearchContainer = getTagsSearchContainer();
 
-		if (tagsSearchContainer.getTotal() <= 0) {
-			return true;
-		}
+		return tagsSearchContainer.getTotal();
+	}
 
-		return false;
+	public ViewTypeItemList getViewTypeItemList() throws Exception {
+		return new ViewTypeItemList() {
+			{
+				addCardViewTypeItem(
+					viewTypeItem -> {
+						viewTypeItem.setActive(
+							Objects.equals(getDisplayStyle(), "icon"));
+						viewTypeItem.setHref(
+							_renderResponse.createActionURL(),
+							ActionRequest.ACTION_NAME, "changeDisplayStyle",
+							"redirect", PortalUtil.getCurrentURL(_request),
+							"displayStyle", "icon");
+						viewTypeItem.setLabel(
+							LanguageUtil.get(_request, "cards"));
+					});
+
+				addListViewTypeItem(
+					viewTypeItem -> {
+						viewTypeItem.setActive(
+							Objects.equals(getDisplayStyle(), "descriptive"));
+						viewTypeItem.setHref(
+							_renderResponse.createActionURL(),
+							ActionRequest.ACTION_NAME, "changeDisplayStyle",
+							"redirect", PortalUtil.getCurrentURL(_request),
+							"displayStyle", "descriptive");
+						viewTypeItem.setLabel(
+							LanguageUtil.get(_request, "list"));
+					});
+
+				addTableViewTypeItem(
+					viewTypeItem -> {
+						viewTypeItem.setActive(
+							Objects.equals(getDisplayStyle(), "list"));
+						viewTypeItem.setHref(
+							_renderResponse.createActionURL(),
+							ActionRequest.ACTION_NAME, "changeDisplayStyle",
+							"redirect", PortalUtil.getCurrentURL(_request),
+							"displayStyle", "list");
+						viewTypeItem.setLabel(
+							LanguageUtil.get(_request, "table"));
+					});
+			}
+		};
 	}
 
 	public boolean isShowAddButton() {
@@ -327,7 +470,7 @@ public class AssetTagsDisplayContext {
 		return false;
 	}
 
-	public boolean isShowTagsSearch() throws PortalException {
+	public boolean isShowSearch() throws PortalException {
 		if (Validator.isNotNull(getKeywords())) {
 			return true;
 		}
@@ -339,6 +482,31 @@ public class AssetTagsDisplayContext {
 		}
 
 		return false;
+	}
+
+	private DropdownItemList _getOrderByDropdownItemList() {
+		return new DropdownItemList() {
+			{
+				add(
+					SafeConsumer.ignore(
+						dropdownItem -> {
+							dropdownItem.setHref(
+								PortletURLUtil.clone(getPortletURL(), _renderResponse),
+								"orderByCol", "name");
+							dropdownItem.setLabel(
+								LanguageUtil.get(_request, "name"));
+						}));
+				add(
+					SafeConsumer.ignore(
+						dropdownItem -> {
+							dropdownItem.setHref(
+								PortletURLUtil.clone(getPortletURL(), _renderResponse),
+								"orderByCol", "usages");
+							dropdownItem.setLabel(
+								LanguageUtil.get(_request, "usages"));
+						}));
+			}
+		};
 	}
 
 	private String _displayStyle;

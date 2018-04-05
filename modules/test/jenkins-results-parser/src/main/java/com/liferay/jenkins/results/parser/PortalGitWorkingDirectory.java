@@ -29,6 +29,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  * @author Peter Yoo
@@ -140,6 +142,49 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 		Collections.sort(moduleDirsList);
 
 		return moduleDirsList;
+	}
+
+	public List<File> getModifiedNPMTestModuleDirsList() throws IOException {
+		List<File> modifiedModuleDirsList = new ArrayList<>();
+
+		for (File modifiedModuleDir : getModifiedModuleDirsList()) {
+			if (_isNPMTestModuleDir(modifiedModuleDir)) {
+				modifiedModuleDirsList.add(modifiedModuleDir);
+			}
+		}
+
+		return modifiedModuleDirsList;
+	}
+
+	private boolean _isNPMTestModuleDir(File moduleDir) throws IOException {
+		for (File file : moduleDir.listFiles()) {
+			if (file.isDirectory()) {
+				continue;
+			}
+
+			String fileName = file.getName();
+
+			if (!fileName.equals("package.json")) {
+				continue;
+			}
+
+			JSONObject jsonObject = new JSONObject(
+				new String(Files.readAllBytes(file.toPath())));
+
+			if (!jsonObject.has("scripts")) {
+				continue;
+			}
+
+			JSONObject scriptsJSONObject = jsonObject.getJSONObject("scripts");
+
+			if (!scriptsJSONObject.has("test")) {
+				continue;
+			}
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static class Module {

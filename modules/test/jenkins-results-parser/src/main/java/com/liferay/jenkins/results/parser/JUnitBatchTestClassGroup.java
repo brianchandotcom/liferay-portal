@@ -46,8 +46,6 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		super(batchName, gitWorkingDirectory, testSuiteName);
 
-		_setTestRelevantChanges();
-
 		_setTestClassNamesExcludesRelativeGlobs();
 		_setTestClassNamesIncludesRelativeGlobs();
 
@@ -371,7 +369,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		List<String> testClassNamesExcludesRelativeGlobs = Arrays.asList(
 			testClassNamesExcludesPropertyValue.split(","));
 
-		if (_testRelevantChanges) {
+		if (testRelevantChanges) {
 			testClassNamesExcludesRelativeGlobs =
 				getRelevantTestClassNamesRelativeGlobs(
 					testClassNamesExcludesRelativeGlobs);
@@ -395,7 +393,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		List<String> testClassNamesIncludesRelativeGlobs = Arrays.asList(
 			testClassNamesIncludesPropertyValue.split(","));
 
-		if (_testRelevantChanges) {
+		if (testRelevantChanges) {
 			testClassNamesIncludesRelativeGlobs =
 				getRelevantTestClassNamesRelativeGlobs(
 					testClassNamesIncludesRelativeGlobs);
@@ -406,32 +404,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				testClassNamesIncludesRelativeGlobs));
 	}
 
-	private void _setTestRelevantChanges() {
-		List<String> propertyNames = new ArrayList<>();
-
-		if (testSuiteName != null) {
-			propertyNames.add(
-				JenkinsResultsParserUtil.combine(
-					"test.relevant.changes[", testSuiteName, "]"));
-		}
-
-		propertyNames.add("test.relevant.changes");
-
-		String propertyValue = getFirstPropertyValue(
-			portalTestProperties, propertyNames);
-
-		if (propertyValue != null) {
-			_testRelevantChanges = Boolean.parseBoolean(propertyValue);
-
-			return;
-		}
-
-		_testRelevantChanges = _DEFAULT_TEST_RELEVANT_CHANGES;
-	}
-
 	private static final int _DEFAULT_AXIS_MAX_SIZE = 5000;
-
-	private static final boolean _DEFAULT_TEST_RELEVANT_CHANGES = false;
 
 	private final Pattern _packagePathPattern = Pattern.compile(
 		".*/(?<packagePath>com/.*)");
@@ -439,6 +412,5 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		new ArrayList<>();
 	private final List<PathMatcher> _testClassNamesIncludesPathMatchers =
 		new ArrayList<>();
-	private boolean _testRelevantChanges;
 
 }

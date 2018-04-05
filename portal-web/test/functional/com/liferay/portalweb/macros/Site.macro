@@ -999,8 +999,8 @@
 	<command name="viewCannotAdd">
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Blank Site">
-			<var name="key_menuItem" value="Blank Site" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Blank Site" />
 		</execute>
 
 		<execute macro="PortletEntry#inputName">

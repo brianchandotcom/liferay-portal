@@ -24,8 +24,8 @@
 
 			set JAVA_OPTS=
 
-			call tcruntime-ctl stop
-			call tcruntime-ctl uninstall
+			call ${app.server.tcserver.script.dir}/tcserver stop liferay
+			call ${app.server.tcserver.script.dir}/tcserver uninstall liferay
 
 			set JAVA_OPTS=%JAVA_OPTS_TEMP%
 
@@ -33,7 +33,7 @@
 		</echo>
 
 		<echo file="${app.server.tcserver.bin.dir}/shutdown.sh">
-			./tcruntime-ctl.sh stop
+			${app.server.tcserver.script.dir}/./tcserver.sh stop liferay
 		</echo>
 
 		<echo file="${app.server.tcserver.bin.dir}/startup.bat">
@@ -43,8 +43,8 @@
 
 			set JAVA_OPTS=
 
-			call tcruntime-ctl install
-			call tcruntime-ctl run
+			call ${app.server.tcserver.script.dir}/tcserver install liferay
+			call ${app.server.tcserver.script.dir}/tcserver run liferay
 
 			set JAVA_OPTS=%JAVA_OPTS_TEMP%
 
@@ -52,7 +52,7 @@
 		</echo>
 
 		<echo file="${app.server.tcserver.bin.dir}/startup.sh">
-			./tcruntime-ctl.sh run
+			${app.server.tcserver.script.dir}/./tcserver.sh run liferay
 		</echo>
 
 		<chmod

@@ -1958,7 +1958,6 @@
 
 		<execute function="AssertTextEquals" locator1="Button#ADD_CATEGORY" value1="Add Category" />
 		<execute function="AssertTextEquals" locator1="Button#NEW_THREAD" value1="New Thread" />
-		<execute function="AssertTextEquals" locator1="Button#PERMISSIONS" value1="Permissions" />
 
 		<execute macro="User#logoutPG" />
 

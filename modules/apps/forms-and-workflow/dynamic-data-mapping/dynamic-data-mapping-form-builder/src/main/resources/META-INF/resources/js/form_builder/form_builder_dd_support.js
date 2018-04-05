@@ -377,9 +377,9 @@ AUI.add(
 			_adjustEmptyForm: function(activeLayout) {
 				var instance = this;
 
-				if (activeLayout.get('rows').length == 1 && instance._verifyEmptyForm(activeLayout.get('rows')[0]) && !A.one('#lfr-initial-col-message')) {
-					var columnNode = activeLayout.get('rows')[0].get('cols')[0].get('node');
+				if ((activeLayout.get('rows').length == 1) && instance._verifyEmptyForm(activeLayout.get('rows')[0]) && !A.one('#lfr-initial-col-message')) {
 					var columnMessageNode = A.Node.create('<div/>');
+					var columnNode = activeLayout.get('rows')[0].get('cols')[0].get('node');
 
 					columnMessageNode.text(Liferay.Language.get('drag-from-sidebar-and-drop-here'));
 					columnMessageNode.setAttribute('id', 'lfr-initial-col-message');
@@ -664,15 +664,22 @@ AUI.add(
 
 				instance._removeDropTarget(fieldColumnEnd, sortable);
 
-				var field = fieldColumnEnd.one('.' + CSS_FIELD).getData('field-instance');
+				var fieldsNode = fieldColumnEnd.all('.' + CSS_FIELD);
 
-				if (positionRowEnd != positionRowStart || (positionRowEnd == positionRowStart && positionColumnEnd != positionColumnStart)) {
-					layoutRows[positionRowStart].get('cols')[positionColumnStart].get('value').removeField(field);
-					layoutRows[positionRowEnd].get('cols')[positionColumnEnd].get('value').addField(field);
+				if ((positionRowEnd != positionRowStart) || ((positionRowEnd == positionRowStart) && (positionColumnEnd != positionColumnStart))) {
 
-					columnEnd.get('node').one('.layout-col-content').empty();
-					columnEnd.get('node').one('.layout-col-content').append(columnEnd.get('value').get('content'));
-					field.render();
+					fieldsNode.each(
+						function(fieldNode, index) {
+							var field = fieldsNode.item(fieldsNode.size() - (index + 1)).getData('field-instance');
+
+							layoutRows[positionRowStart].get('cols')[positionColumnStart].get('value').removeField(field);
+							layoutRows[positionRowEnd].get('cols')[positionColumnEnd].get('value').addField(field);
+
+							columnEnd.get('node').one('.layout-col-content').empty();
+							columnEnd.get('node').one('.layout-col-content').append(columnEnd.get('value').get('content'));
+							field.render();
+						}
+					);
 				}
 
 				instance._clearStack();

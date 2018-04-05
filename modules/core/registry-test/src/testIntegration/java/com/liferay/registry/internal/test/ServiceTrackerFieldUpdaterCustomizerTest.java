@@ -50,11 +50,15 @@ public class ServiceTrackerFieldUpdaterCustomizerTest {
 	public void setUp() throws BundleException {
 		_bundle.start();
 
+		_registry = RegistryUtil.getRegistry();
+
 		RegistryUtil.setRegistry(new RegistryImpl(_bundleContext));
 	}
 
 	@After
 	public void tearDown() throws BundleException {
+		RegistryUtil.setRegistry(_registry);
+
 		_bundle.stop();
 	}
 
@@ -152,6 +156,8 @@ public class ServiceTrackerFieldUpdaterCustomizerTest {
 
 	@ArquillianResource
 	private BundleContext _bundleContext;
+
+	private Registry _registry;
 
 	private static class NonStaticTestServiceUsage implements TestServiceUsage {
 

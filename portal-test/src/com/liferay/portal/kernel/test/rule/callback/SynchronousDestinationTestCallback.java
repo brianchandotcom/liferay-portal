@@ -219,7 +219,7 @@ public class SynchronousDestinationTestCallback
 
 				schedulerDestination.unregister(schedulerMessageListener);
 
-				_schedulerMessageListeners.add(schedulerMessageListener);
+				_schedulerMessageListeners.add(invokerMessageListener);
 			}
 
 			CountDownLatch startCountDownLatch = new CountDownLatch(
@@ -303,8 +303,12 @@ public class SynchronousDestinationTestCallback
 				return;
 			}
 
-			for (MessageListener messageListener : _schedulerMessageListeners) {
-				destination.register(messageListener);
+			for (InvokerMessageListener invokerMessageListener :
+					_schedulerMessageListeners) {
+
+				destination.register(
+					invokerMessageListener.getMessageListener(),
+					invokerMessageListener.getClassLoader());
 			}
 		}
 
@@ -329,7 +333,7 @@ public class SynchronousDestinationTestCallback
 		private final List<Destination> _asyncServiceDestinations =
 			new ArrayList<>();
 		private boolean _forceSync;
-		private final List<MessageListener> _schedulerMessageListeners =
+		private final List<InvokerMessageListener> _schedulerMessageListeners =
 			new ArrayList<>();
 		private Sync _sync;
 

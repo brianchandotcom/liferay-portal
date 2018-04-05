@@ -1,4 +1,4 @@
 dependencies {
-	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.2.0"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.2.0"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 }

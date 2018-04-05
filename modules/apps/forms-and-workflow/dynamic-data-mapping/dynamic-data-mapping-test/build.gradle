@@ -11,8 +11,8 @@ copyLibs {
 }
 
 dependencies {
-	provided group: "org.json", name: "json", version: "20090211"
-	provided group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
+	compileOnly group: "org.json", name: "json", version: "20090211"
+	compileOnly group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
 
 	testCompile group: "com.google.template", name: "soy", version: "2015-04-10"
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"

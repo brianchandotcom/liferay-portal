@@ -3,10 +3,10 @@ copyLibs {
 }
 
 dependencies {
-	provided group: "org.hsqldb", name: "hsqldb", version: "2.3.3"
-	provided project(":test:external-data-source-test")
-	provided project(":test:external-data-source-test-api")
-	provided project(":test:external-data-source-test-service")
+	compileOnly group: "org.hsqldb", name: "hsqldb", version: "2.3.3"
+	compileOnly project(":test:external-data-source-test")
+	compileOnly project(":test:external-data-source-test-api")
+	compileOnly project(":test:external-data-source-test-service")
 
 	testIntegrationCompile group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"

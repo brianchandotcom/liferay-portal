@@ -3,7 +3,7 @@ copyLibs {
 }
 
 dependencies {
-	provided project(":apps:static:portal-lpkg-deployer:portal-lpkg-deployer-api")
+	compileOnly project(":apps:static:portal-lpkg-deployer:portal-lpkg-deployer-api")
 
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

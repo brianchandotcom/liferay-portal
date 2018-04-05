@@ -16,24 +16,24 @@ configurations {
 }
 
 dependencies {
-	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	provided group: "com.liferay", name: "org.hibernate.core", version: "3.6.10.LIFERAY-PATCHED-3"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	provided group: "org.apache.felix", name: "org.apache.felix.dependencymanager", version: "3.2.0"
-	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
-	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
-	provided group: "org.springframework", name: "spring-aop", version: "4.1.9.RELEASE"
-	provided group: "org.springframework", name: "spring-beans", version: "4.1.9.RELEASE"
-	provided group: "org.springframework", name: "spring-context", version: "4.1.9.RELEASE"
-	provided group: "org.springframework", name: "spring-core", version: "4.1.9.RELEASE"
-	provided group: "org.springframework", name: "spring-orm", version: "4.1.9.RELEASE"
-	provided group: "org.springframework", name: "spring-tx", version: "4.1.9.RELEASE"
-	provided project(":apps:foundation:portal:portal-upgrade-api")
-	provided project(":apps:static:portal-configuration:portal-configuration-metatype-api")
-	provided project(":core:osgi-felix-util")
-	provided project(":core:petra:petra-reflect")
-	provided project(":core:petra:petra-string")
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	compileOnly group: "com.liferay", name: "org.hibernate.core", version: "3.6.10.LIFERAY-PATCHED-3"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "org.apache.felix", name: "org.apache.felix.dependencymanager", version: "3.2.0"
+	compileOnly group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
+	compileOnly group: "org.springframework", name: "spring-aop", version: "4.1.9.RELEASE"
+	compileOnly group: "org.springframework", name: "spring-beans", version: "4.1.9.RELEASE"
+	compileOnly group: "org.springframework", name: "spring-context", version: "4.1.9.RELEASE"
+	compileOnly group: "org.springframework", name: "spring-core", version: "4.1.9.RELEASE"
+	compileOnly group: "org.springframework", name: "spring-orm", version: "4.1.9.RELEASE"
+	compileOnly group: "org.springframework", name: "spring-tx", version: "4.1.9.RELEASE"
+	compileOnly project(":apps:foundation:portal:portal-upgrade-api")
+	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
+	compileOnly project(":core:osgi-felix-util")
+	compileOnly project(":core:petra:petra-reflect")
+	compileOnly project(":core:petra:petra-string")
 
 	springExtenderApi project(":apps:foundation:portal:portal-spring-extender-api")
 

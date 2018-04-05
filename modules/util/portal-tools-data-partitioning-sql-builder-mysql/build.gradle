@@ -1,3 +1,3 @@
 dependencies {
-	provided project(":util:portal-tools-data-partitioning-sql-builder")
+	compileOnly project(":util:portal-tools-data-partitioning-sql-builder")
 }

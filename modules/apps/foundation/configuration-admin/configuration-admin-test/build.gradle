@@ -6,8 +6,8 @@ copyLibs {
 }
 
 dependencies {
-	provided project(":apps:foundation:configuration-admin:configuration-admin-api")
-	provided project(":apps:foundation:configuration-admin:configuration-admin-web")
+	compileOnly project(":apps:foundation:configuration-admin:configuration-admin-api")
+	compileOnly project(":apps:foundation:configuration-admin:configuration-admin-web")
 
 	testIntegrationCompile project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

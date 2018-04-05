@@ -1,6 +1,6 @@
 dependencies {
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	provided group: "net.sf.ehcache", name: "ehcache", version: "2.8.3"
-	provided project(":apps:foundation:portal-cache:portal-cache-api")
-	provided project(":apps:foundation:portal-cache:portal-cache-ehcache-provider")
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "net.sf.ehcache", name: "ehcache", version: "2.8.3"
+	compileOnly project(":apps:foundation:portal-cache:portal-cache-api")
+	compileOnly project(":apps:foundation:portal-cache:portal-cache-ehcache-provider")
 }

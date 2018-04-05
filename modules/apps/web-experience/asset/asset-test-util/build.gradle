@@ -1,12 +1,12 @@
 dependencies {
-	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.test", version: "default"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.test.integration", version: "default"
-	provided group: "commons-lang", name: "commons-lang", version: "2.6"
-	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
-	provided project(":apps:web-experience:asset:asset-api")
-	provided project(":core:registry-api")
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.test", version: "default"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.test.integration", version: "default"
+	compileOnly group: "commons-lang", name: "commons-lang", version: "2.6"
+	compileOnly group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+	compileOnly project(":apps:web-experience:asset:asset-api")
+	compileOnly project(":core:registry-api")
 }
 
 liferay {

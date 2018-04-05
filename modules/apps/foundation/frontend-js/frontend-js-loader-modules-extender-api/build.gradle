@@ -1,4 +1,4 @@
 dependencies {
-	provided group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
-	provided project(":core:petra:petra-string")
+	compileOnly group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
+	compileOnly project(":core:petra:petra-string")
 }

@@ -6,8 +6,8 @@ copyLibs {
 }
 
 dependencies {
-	provided project(":apps:collaboration:bookmarks:bookmarks-test")
-	provided project(":apps:web-experience:journal:journal-test")
+	compileOnly project(":apps:collaboration:bookmarks:bookmarks-test")
+	compileOnly project(":apps:web-experience:journal:journal-test")
 
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:collaboration:bookmarks:bookmarks-api")

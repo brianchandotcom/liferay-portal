@@ -16,6 +16,7 @@ package com.liferay.portal.spring.aop;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.lang.annotation.Annotation;
@@ -29,10 +30,7 @@ import java.util.List;
 
 import org.aopalliance.intercept.MethodInterceptor;
 
-import org.springframework.aop.TargetSource;
-import org.springframework.aop.framework.AdvisedSupport;
 import org.springframework.aop.framework.AopProxy;
-import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.util.ClassUtils;
 
 /**
@@ -133,25 +131,21 @@ public class ServiceBeanAopProxy
 
 	@Override
 	public Object getProxy(ClassLoader classLoader) {
-		Class<?>[] proxiedInterfaces = AopProxyUtils.completeProxiedInterfaces(
-			_advisedSupport);
-
 		InvocationHandler invocationHandler = _pacl.getInvocationHandler(
 			this, _advisedSupport);
 
 		return ProxyUtil.newProxyInstance(
-			classLoader, proxiedInterfaces, invocationHandler);
+			classLoader, _advisedSupport.getProxiedInterfaces(),
+			invocationHandler);
 	}
 
 	@Override
 	public Object invoke(Object proxy, Method method, Object[] arguments)
 		throws Throwable {
 
-		TargetSource targetSource = _advisedSupport.getTargetSource();
-
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
 			new ServiceBeanMethodInvocation(
-				targetSource.getTarget(), method, arguments);
+				_advisedSupport.getTarget(), method, arguments);
 
 		_setMethodInterceptors(serviceBeanMethodInvocation);
 

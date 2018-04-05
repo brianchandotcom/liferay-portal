@@ -111,8 +111,8 @@ public class ServiceBeanAutoProxyCreator
 					throws AopConfigException {
 
 					return new ServiceBeanAopProxy(
-						advisedSupport, _methodInterceptor,
-						_serviceBeanAopCacheManager);
+						new AdvisedSupportAdapter(advisedSupport),
+						_methodInterceptor, _serviceBeanAopCacheManager);
 				}
 
 			});

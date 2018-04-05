@@ -19,6 +19,8 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.wish.list.exception.GuestWishListItemMaxAllowedException;
+import com.liferay.commerce.wish.list.internal.configuration.CommerceWishListConfiguration;
 import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.commerce.wish.list.model.CommerceWishListItem;
 import com.liferay.commerce.wish.list.service.base.CommerceWishListItemLocalServiceBaseImpl;
@@ -47,7 +49,7 @@ public class CommerceWishListItemLocalServiceImpl
 				commerceWishListId);
 		User user = userLocalService.getUser(serviceContext.getUserId());
 
-		validate(cpDefinitionId, cpInstanceId);
+		validate(commerceWishList, cpDefinitionId, cpInstanceId);
 
 		long commerceWishListItemId = counterLocalService.increment();
 
@@ -102,8 +104,23 @@ public class CommerceWishListItemLocalServiceImpl
 			commerceWishListId);
 	}
 
-	protected void validate(long cpDefinitionId, long cpInstanceId)
+	protected void validate(
+			CommerceWishList commerceWishList, long cpDefinitionId,
+			long cpInstanceId)
 		throws PortalException {
+
+		if (commerceWishList.getUserId() == 0) {
+			int count =
+				commerceWishListItemPersistence.countByCommerceWishListId(
+					commerceWishList.getCommerceWishListId());
+
+			if (count >=
+					_commerceWishListConfiguration.
+						guestWishListItemMaxAllowed()) {
+
+				throw new GuestWishListItemMaxAllowedException();
+			}
+		}
 
 		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
 			cpDefinitionId);
@@ -122,6 +139,9 @@ public class CommerceWishListItemLocalServiceImpl
 			}
 		}
 	}
+
+	@ServiceReference(type = CommerceWishListConfiguration.class)
+	private CommerceWishListConfiguration _commerceWishListConfiguration;
 
 	@ServiceReference(type = CPDefinitionLocalService.class)
 	private CPDefinitionLocalService _cpDefinitionLocalService;

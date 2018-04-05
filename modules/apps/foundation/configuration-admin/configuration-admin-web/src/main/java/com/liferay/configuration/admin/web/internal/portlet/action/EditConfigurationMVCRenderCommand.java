@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -114,7 +114,7 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 
 			ConfigurationEntry configurationEntry =
 				new ConfigurationModelConfigurationEntry(
-					configurationModel, PortalUtil.getLocale(renderRequest),
+					configurationModel, _portal.getLocale(renderRequest),
 					_resourceBundleLoaderProvider);
 
 			renderRequest.setAttribute(
@@ -171,6 +171,9 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private DDMFormRenderer _ddmFormRenderer;
+
+	@Reference
+	private Portal _portal;
 
 	private final Map<String, MVCRenderCommand> _renderCommands =
 		new HashMap<>();

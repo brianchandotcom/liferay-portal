@@ -15,22 +15,58 @@
 package com.liferay.forms.apio.internal.architect.helper;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import com.liferay.apio.architect.language.Language;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.forms.apio.internal.architect.FormFieldValue;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import javax.ws.rs.ServerErrorException;
+import java.lang.reflect.Type;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+
+import javax.ws.rs.ServerErrorException;
 
 /**
  * @author Paulo Cruz
  */
 public class FormInstanceRecordResourceHelper {
+
+	public static DDMFormValues getDDMFormValues(
+		String fieldValues, DDMForm ddmForm, Locale locale) {
+
+		Gson gson = new Gson();
+
+		Type listType = new FormFieldValueListToken().getType();
+
+		List<FormFieldValue> formFieldValues = gson.fromJson(
+			fieldValues, listType);
+
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
+
+		for (FormFieldValue formFieldValue : formFieldValues) {
+			DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+			ddmFormFieldValue.setInstanceId(formFieldValue.getInstanceId());
+			ddmFormFieldValue.setName(formFieldValue.getName());
+
+			LocalizedValue localizedValue = new LocalizedValue();
+
+			localizedValue.addString(locale, formFieldValue.getValue());
+			ddmFormFieldValue.setValue(localizedValue);
+			ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+		}
+
+		return ddmFormValues;
+	}
 
 	public static String getFieldValuesJSON(
 		DDMFormInstanceRecord ddmFormInstanceRecord, Language language) {
@@ -63,6 +99,10 @@ public class FormInstanceRecordResourceHelper {
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);
 		}
+	}
+
+	private static class FormFieldValueListToken
+		extends TypeToken<ArrayList<FormFieldValue>> {
 	}
 
 }

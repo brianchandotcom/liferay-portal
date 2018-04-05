@@ -17,28 +17,29 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-DLFileEntryTypeDisplayContext dlFileEntryTypeDisplayContext = new DLFileEntryTypeDisplayContext(renderRequest, renderResponse, request);
+DLViewFileEntryTypesDisplayContext
+	dlViewFileEntryTypesDisplayContext = new DLViewFileEntryTypesDisplayContext(renderRequest, renderResponse, request);
 
-String searchURL = String.valueOf(dlFileEntryTypeDisplayContext.getSearchURL());
+String searchURL = String.valueOf(dlViewFileEntryTypesDisplayContext.getSearchURL());
 %>
 
 <liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />
 
 <clay:management-toolbar
 	clearResultsURL="<%= searchURL %>"
-	creationMenu="<%= dlFileEntryTypeDisplayContext.getCreationURL() %>"
+	creationMenu="<%= dlViewFileEntryTypesDisplayContext.getCreationURL() %>"
 	namespace="<%= renderResponse.getNamespace() %>"
 	searchActionURL="<%= searchURL %>"
 	searchFormName="fm"
 	selectable="<%= false %>"
-	totalItems="<%= dlFileEntryTypeDisplayContext.getTotal() %>"
+	totalItems="<%= dlViewFileEntryTypesDisplayContext.getTotal() %>"
 />
 
 <div class="container-fluid-1280 main-content-body">
 	<liferay-ui:error exception="<%= RequiredFileEntryTypeException.class %>" message="cannot-delete-a-document-type-that-is-presently-used-by-one-or-more-documents" />
 
 	<liferay-ui:search-container
-		searchContainer="<%= dlFileEntryTypeDisplayContext.getSearchContainer() %>"
+		searchContainer="<%= dlViewFileEntryTypesDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.document.library.kernel.model.DLFileEntryType"

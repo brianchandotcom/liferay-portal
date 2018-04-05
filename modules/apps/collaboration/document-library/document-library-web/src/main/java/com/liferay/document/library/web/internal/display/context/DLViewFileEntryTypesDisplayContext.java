@@ -35,9 +35,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Carlos Lancha
  */
-public class DLFileEntryTypeDisplayContext {
+public class DLViewFileEntryTypesDisplayContext {
 
-	public DLFileEntryTypeDisplayContext(
+	public DLViewFileEntryTypesDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse,
 		HttpServletRequest request) {
 

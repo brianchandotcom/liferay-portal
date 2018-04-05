@@ -23,6 +23,10 @@
 		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Install" />
 	</command>
 
+	<command name="clickModalSubmit">
+		<execute function="Click" locator1="Button#MODAL_CONTENT_SUBMIT" />
+	</command>
+
 	<command name="clickNext">
 		<execute function="AssertClick" locator1="Button#NEXT" value1="Next" />
 	</command>

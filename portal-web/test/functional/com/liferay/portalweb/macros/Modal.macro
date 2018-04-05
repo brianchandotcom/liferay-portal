@@ -1,6 +1,6 @@
 <definition>
 	<command name="submit">
-		<execute function="Click" locator1="Button#MODAL_CONTENT_SUBMIT" />
+		<execute macro="Button#clickModalSubmit" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>

@@ -90,7 +90,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB" value1="Source (Kaleo XML)" />
+		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB" value1="Source" />
 
 		<execute function="Pause" locator1="1000" />
 
@@ -178,7 +178,7 @@
 </workflow-definition>
 ]]>
 		</var>
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB" value1="Source (Kaleo XML)" />
+		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB" value1="Source" />
 
 		<execute function="Pause" locator1="1000" />
 
@@ -485,7 +485,7 @@
 	</command>
 
 	<command name="editSourceXML">
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB" value1="Source (Kaleo XML)" />
+		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB" value1="Source" />
 
 		<var name="key_line" value="${line}" />
 
@@ -497,7 +497,7 @@
 	</command>
 
 	<command name="eraseDefinitionViaSourceXML">
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB" value1="Source (Kaleo XML)" />
+		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB" value1="Source" />
 
 		<execute function="Pause" locator1="1000" />
 
@@ -774,7 +774,7 @@
 	</command>
 
 	<command name="viewSourceXMLTab">
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB" value1="Source (Kaleo XML)" />
+		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB" value1="Source" />
 
 		<execute function="Pause" locator1="1000" />
 	</command>

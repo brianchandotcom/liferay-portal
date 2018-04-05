@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>SOURCE_KALEO_XML_TAB</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Source (Kaleo XML)')]</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Source')]</td>
 	<td></td>
 </tr>
 <tr>

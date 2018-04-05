@@ -75,7 +75,7 @@
 	<command name="viewSuccessMessageText">
 		<execute function="AssertVisible" locator1="Message#SUCCESS" />
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="${sucessMessage}" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="${successMessage}" />
 	</command>
 
 	<command name="waitForSuccessMessageHide">

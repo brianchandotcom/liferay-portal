@@ -120,6 +120,10 @@
 			height: 22px;
 			position: relative;
 		}
+
+		.key-value-input {
+			width: 140px;
+		}
 	}
 
 	.liferay-ddm-form-field-options {
@@ -147,6 +151,10 @@
 
 		.drag-placeholder {
 			opacity: 0.5;
+		}
+
+		.key-value-input {
+			width: 158px;
 		}
 
 		.last-option:not(:first-of-type) {

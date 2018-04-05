@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Portal Scripting Groovy Context API
+Bundle-SymbolicName: com.liferay.portal.scripting.groovy.context.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.scripting.groovy.context
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Scripting Executor

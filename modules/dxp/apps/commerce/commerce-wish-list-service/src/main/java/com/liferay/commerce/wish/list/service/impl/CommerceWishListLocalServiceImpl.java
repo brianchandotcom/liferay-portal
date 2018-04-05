@@ -16,6 +16,8 @@ package com.liferay.commerce.wish.list.service.impl;
 
 import com.liferay.commerce.product.util.DDMFormValuesHelper;
 import com.liferay.commerce.wish.list.exception.CommerceWishListNameException;
+import com.liferay.commerce.wish.list.exception.GuestWishListMaxAllowedException;
+import com.liferay.commerce.wish.list.internal.configuration.CommerceWishListConfiguration;
 import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.commerce.wish.list.model.CommerceWishListItem;
 import com.liferay.commerce.wish.list.service.base.CommerceWishListLocalServiceBaseImpl;
@@ -23,12 +25,14 @@ import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -44,6 +48,10 @@ public class CommerceWishListLocalServiceImpl
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
+
+		if (user.isDefaultUser()) {
+			validateGuestWishLists();
+		}
 
 		validate(0, groupId, user.getUserId(), name, defaultWishList);
 
@@ -90,6 +98,11 @@ public class CommerceWishListLocalServiceImpl
 
 		return commerceWishListLocalService.deleteCommerceWishList(
 			commerceWishList);
+	}
+
+	@Override
+	public void deleteCommerceWishLists(long userId, Date date) {
+		commerceWishListPersistence.removeByU_LtC(userId, date);
 	}
 
 	@Override
@@ -311,7 +324,19 @@ public class CommerceWishListLocalServiceImpl
 		}
 	}
 
+	protected void validateGuestWishLists() throws PortalException {
+		int count = commerceWishListPersistence.countByUserId(
+			UserConstants.USER_ID_DEFAULT);
+
+		if (count >= _commerceWishListConfiguration.guestWishListMaxAllowed()) {
+			throw new GuestWishListMaxAllowedException();
+		}
+	}
+
 	private static final String _DEFAULT_NAME = "default";
+
+	@ServiceReference(type = CommerceWishListConfiguration.class)
+	private CommerceWishListConfiguration _commerceWishListConfiguration;
 
 	@ServiceReference(type = DDMFormValuesHelper.class)
 	private DDMFormValuesHelper _ddmFormValuesHelper;

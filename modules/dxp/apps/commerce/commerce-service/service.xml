@@ -290,6 +290,11 @@
 			<finder-column name="userId" />
 			<finder-column name="orderStatus" />
 		</finder>
+		<finder name="U_LtC_O" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column comparator="&lt;" name="createDate" />
+			<finder-column name="orderStatus" />
+		</finder>
 
 		<!-- References -->
 

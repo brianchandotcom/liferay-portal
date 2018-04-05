@@ -45,6 +45,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="userId" />
 		</finder>
+		<finder name="U_LtC" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column comparator="&lt;" name="createDate" />
+		</finder>
 		<finder name="G_U_D" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="userId" />
@@ -96,5 +100,7 @@
 	</entity>
 	<exceptions>
 		<exception>CommerceWishListName</exception>
+		<exception>GuestWishListItemMaxAllowed</exception>
+		<exception>GuestWishListMaxAllowed</exception>
 	</exceptions>
 </service-builder>

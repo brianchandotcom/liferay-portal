@@ -49,6 +49,10 @@ public class TestClassGroupFactory {
 			return new NPMTestBatchTestClassGroup(
 				batchName, gitWorkingDirectory, testSuiteName);
 		}
+		else if (batchName.startsWith("tck-")) {
+			return new TCKJunitBatchTestClassGroup(
+				batchName, gitWorkingDirectory, testSuiteName);
+		}
 
 		return new DefaultBatchTestClassGroup(
 			batchName, gitWorkingDirectory, testSuiteName);

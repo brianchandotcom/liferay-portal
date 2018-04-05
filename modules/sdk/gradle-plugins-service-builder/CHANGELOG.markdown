@@ -310,6 +310,12 @@ tasks that extend `BuildServiceTask`.
 - [LPS-78023]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 1.0.183.
 
+## 2.1.1 - 2018-03-27
+
+### Changed
+- [LPS-78477]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.184.
+
 [Liferay Portal Tools Service Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-service-builder
 [LPS-53392]: https://issues.liferay.com/browse/LPS-53392
 [LPS-58672]: https://issues.liferay.com/browse/LPS-58672
@@ -346,3 +352,4 @@ version 1.0.183.
 [LPS-76018]: https://issues.liferay.com/browse/LPS-76018
 [LPS-76626]: https://issues.liferay.com/browse/LPS-76626
 [LPS-78023]: https://issues.liferay.com/browse/LPS-78023
+[LPS-78477]: https://issues.liferay.com/browse/LPS-78477

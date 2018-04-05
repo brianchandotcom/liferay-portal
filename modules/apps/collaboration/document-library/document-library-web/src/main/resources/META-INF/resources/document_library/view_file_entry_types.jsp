@@ -18,20 +18,18 @@
 
 <%
 DLViewFileEntryTypesDisplayContext dlViewFileEntryTypesDisplayContext = new DLViewFileEntryTypesDisplayContext(renderRequest, renderResponse, request);
-
-String portletURL = String.valueOf(dlViewFileEntryTypesDisplayContext.getPortletURL());
 %>
 
 <liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />
 
 <clay:management-toolbar
-	clearResultsURL="<%= portletURL %>"
+	clearResultsURL="<%= dlViewFileEntryTypesDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= dlViewFileEntryTypesDisplayContext.getCreationURL() %>"
 	namespace="<%= renderResponse.getNamespace() %>"
-	searchActionURL="<%= portletURL %>"
+	searchActionURL="<%= dlViewFileEntryTypesDisplayContext.getSearchActionURL() %>"
 	searchFormName="fm"
 	selectable="<%= false %>"
-	totalItems="<%= dlViewFileEntryTypesDisplayContext.getTotal() %>"
+	totalItems="<%= dlViewFileEntryTypesDisplayContext.getTotalItems() %>"
 />
 
 <div class="container-fluid-1280 main-content-body">

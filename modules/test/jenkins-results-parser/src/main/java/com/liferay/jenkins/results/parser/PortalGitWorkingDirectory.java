@@ -163,50 +163,50 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 			moduleDir.toPath(),
 			new SimpleFileVisitor<Path>() {
 
-					@Override
-					public FileVisitResult visitFile(
-							Path filePath, BasicFileAttributes attrs)
-						throws IOException {
+				@Override
+				public FileVisitResult visitFile(
+						Path filePath, BasicFileAttributes attrs)
+					throws IOException {
 
-						if (_isNPMTestMarker(filePath)) {
-							npmTestMarkers.add(filePath);
+					if (_isNPMTestMarker(filePath)) {
+						npmTestMarkers.add(filePath);
 
-							return FileVisitResult.TERMINATE;
-						}
-
-						return FileVisitResult.CONTINUE;
+						return FileVisitResult.TERMINATE;
 					}
 
-					private boolean _isNPMTestMarker(Path path) {
-						File file = path.toFile();
+					return FileVisitResult.CONTINUE;
+				}
 
-						String fileName = file.getName();
+				private boolean _isNPMTestMarker(Path path) {
+					File file = path.toFile();
 
-						if (!fileName.equals("package.json")) {
+					String fileName = file.getName();
+
+					if (!fileName.equals("package.json")) {
+						return false;
+					}
+
+					try {
+						JSONObject jsonObject = new JSONObject(
+							new String(Files.readAllBytes(path)));
+
+						if (!jsonObject.has("scripts")) {
 							return false;
 						}
 
-						try {
-							JSONObject jsonObject = new JSONObject(
-								new String(Files.readAllBytes(path)));
+						JSONObject scriptsJSONObject = jsonObject.getJSONObject(
+							"scripts");
 
-							if (!jsonObject.has("scripts")) {
-								return false;
-							}
-
-							JSONObject scriptsJSONObject =
-								jsonObject.getJSONObject("scripts");
-
-							if (!scriptsJSONObject.has("test")) {
-								return false;
-							}
-
-							return true;
+						if (!scriptsJSONObject.has("test")) {
+							return false;
 						}
-						catch (IOException ioe) {
-							throw new RuntimeException(ioe);
-						}
+
+						return true;
 					}
+					catch (IOException ioe) {
+						throw new RuntimeException(ioe);
+					}
+				}
 
 			});
 

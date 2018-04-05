@@ -526,8 +526,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		Assert.assertEquals("tip", radioField.get("tip"));
 		Assert.assertEquals("option", optionLabelFieldValue);
 		Assert.assertEquals(
-			"predefinedValue",
-			radioField.get("predefinedValue").toString());
+			"predefinedValue", radioField.get("predefinedValue").toString());
 	}
 
 	@Test
@@ -923,7 +922,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 	}
 
 	protected RadioDDMFormFieldTemplateContextContributor
-	createRadioDDMFormFieldTemplateContextContributor() throws Exception {
+		createRadioDDMFormFieldTemplateContextContributor() throws Exception {
 
 		RadioDDMFormFieldTemplateContextContributor
 			radioDDMFormFieldTemplateContextContributor =

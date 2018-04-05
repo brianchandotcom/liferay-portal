@@ -26,7 +26,7 @@ import java.util.Properties;
  */
 public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 
-	public String getRelevantFunctionalTestQuery() {
+	public String getRelevantTestBatchRunPropertyQuery() {
 		return _relevantTestBatchRunPropertyQuery;
 	}
 
@@ -71,10 +71,10 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 			PortalGitWorkingDirectory portalGitWorkingDirectory =
 				(PortalGitWorkingDirectory)gitWorkingDirectory;
 
-			List<File> modifiedModuleDirs = null;
+			List<File> modifiedModuleDirsList = null;
 
 			try {
-				modifiedModuleDirs =
+				modifiedModuleDirsList =
 					portalGitWorkingDirectory.getModifiedModuleDirsList();
 			}
 			catch (IOException ioe) {
@@ -88,7 +88,7 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 					ioe);
 			}
 
-			for (File modifiedModuleDir : modifiedModuleDirs) {
+			for (File modifiedModuleDir : modifiedModuleDirsList) {
 				File modifiedModuleTestProperties = new File(
 					modifiedModuleDir, "test.properties");
 
@@ -100,21 +100,21 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 					JenkinsResultsParserUtil.getProperties(
 						modifiedModuleTestProperties);
 
-				String testBatchRunProperty = testProperties.getProperty(
+				String testBatchRunPropertyQuery = testProperties.getProperty(
 					JenkinsResultsParserUtil.combine(
 						"test.batch.run.property.query[", batchName, "][",
 						testSuiteName, "]"));
 
-				if (testBatchRunProperty != null) {
+				if (testBatchRunPropertyQuery != null) {
 					if (_relevantTestBatchRunPropertyQuery == null) {
 						_relevantTestBatchRunPropertyQuery =
 							JenkinsResultsParserUtil.combine(
-								"(", testBatchRunProperty, ")");
+								"(", testBatchRunPropertyQuery, ")");
 					}
 					else {
 						_relevantTestBatchRunPropertyQuery +=
 							JenkinsResultsParserUtil.combine(
-								" OR (", testBatchRunProperty, ")");
+								" OR (", testBatchRunPropertyQuery, ")");
 					}
 				}
 			}

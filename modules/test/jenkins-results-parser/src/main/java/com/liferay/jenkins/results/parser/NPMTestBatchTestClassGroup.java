@@ -25,19 +25,18 @@ import java.util.List;
 public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 
 	@Override
-	public int getAxisCount() {
-		return axisTestClassGroups.size();
-	}
-
-	@Override
 	public AxisTestClassGroup getAxisTestClassGroup(int axisId) {
-		AxisTestClassGroup axisTestClassGroup = axisTestClassGroups.get(0);
-
-		if (axisTestClassGroup != null) {
-			return axisTestClassGroups.get(0);
+		if (axisId != 0) {
+			throw new IllegalArgumentException("axisId is not 0");
 		}
 
-		return new AxisTestClassGroup(this, 0);
+		AxisTestClassGroup axisTestClassGroup = axisTestClassGroups.get(axisId);
+
+		if (axisTestClassGroup != null) {
+			return axisTestClassGroups.get(axisId);
+		}
+
+		return new AxisTestClassGroup(this, axisId);
 	}
 
 	protected NPMTestBatchTestClassGroup(

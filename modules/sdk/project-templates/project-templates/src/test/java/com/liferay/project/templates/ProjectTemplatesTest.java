@@ -1266,12 +1266,12 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateSoyPortletCustomClass71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"soy-portlet", "foo", "--class-name",
-			"MySoyPortletSoyPortletRegister", "--liferayVersion", "7.1");
+			"MySPR", "--liferayVersion", "7.1");
 
 		_testContains(
 			gradleProjectDir,
-			"src/main/java/foo/portlet/MySoyPortletSoyPortletRegister.java",
-			"public class MySoyPortletSoyPortletRegister implements " +
+			"src/main/java/foo/portlet/MySPRSoyPortletRegister.java",
+			"public class MySPRSoyPortletRegister implements " +
 				"SoyPortletRegister {");
 	}
 

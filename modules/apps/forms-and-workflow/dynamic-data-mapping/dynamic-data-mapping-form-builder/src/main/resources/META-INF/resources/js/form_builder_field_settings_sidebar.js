@@ -243,7 +243,7 @@ AUI.add(
 
 						instance._showLoading();
 
-						instance._disableHeader();
+						instance._disableSidebarHeader();
 
 						A.one('#field-type-menu-content').html(instance._getFieldTypeMenuLayout(fieldType));
 					},
@@ -268,7 +268,7 @@ AUI.add(
 
 						instance._removeLoading();
 
-						instance._enableHeader();
+						instance._enableSidebarHeader();
 
 						settingsForm.render();
 
@@ -296,7 +296,7 @@ AUI.add(
 						return toolbar;
 					},
 
-					_disableHeader: function() {
+					_disableSidebarHeader: function() {
 						var instance = this;
 
 						var contentBox = instance.get('contentBox');
@@ -304,7 +304,7 @@ AUI.add(
 						contentBox.all('.sidebar .sidebar-header .dropdown .dropdown-toggle.nav-link').addClass('disabled');
 					},
 
-					_enableHeader: function() {
+					_enableSidebarHeader: function() {
 						var instance = this;
 
 						var contentBox = instance.get('contentBox');
@@ -392,7 +392,7 @@ AUI.add(
 										var previousFieldLocalizable = previousSettingsFormFieldContext.localizable;
 										var previousFieldName = previousSettingsFormFieldContext.fieldName;
 
-										if (!(fieldName === 'type') && fieldName === previousFieldName) {
+										if (!(fieldName === 'type') && (fieldName === previousFieldName)) {
 											if (fieldLocalizable && previousFieldLocalizable) {
 												settingsFormFieldContext.localizedValue = previousSettingsFormFieldContext.localizedValue;
 											}

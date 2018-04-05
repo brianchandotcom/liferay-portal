@@ -16,6 +16,8 @@ package com.liferay.oauth2.provider.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.oauth2.provider.constants.GrantType;
+import com.liferay.oauth2.provider.exception.NoSuchOAuth2ApplicationException;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -29,11 +31,13 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.List;
@@ -60,6 +64,16 @@ public interface OAuth2ApplicationLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuth2ApplicationLocalServiceUtil} to access the o auth2 application local service. Add custom service methods to {@link com.liferay.oauth2.provider.service.impl.OAuth2ApplicationLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public OAuth2Application addOAuth2Application(long companyId, long userId,
+		java.lang.String userName, List<GrantType> allowedGrantTypesList,
+		java.lang.String clientId, int clientProfile,
+		java.lang.String clientSecret, java.lang.String description,
+		List<java.lang.String> featuresList, java.lang.String homePageURL,
+		long iconFileEntryId, java.lang.String name,
+		java.lang.String privacyPolicyURL,
+		List<java.lang.String> redirectURIsList,
+		List<java.lang.String> scopeAliasesList, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Adds the o auth2 application to the database. Also notifies the appropriate model listeners.
@@ -170,6 +184,10 @@ public interface OAuth2ApplicationLocalService extends BaseLocalService,
 	public OAuth2Application fetchOAuth2Application(long oAuth2ApplicationId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuth2Application fetchOAuth2Application(long companyId,
+		java.lang.String clientId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -185,6 +203,10 @@ public interface OAuth2ApplicationLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuth2Application getOAuth2Application(long oAuth2ApplicationId)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuth2Application getOAuth2Application(long companyId,
+		java.lang.String clientId) throws NoSuchOAuth2ApplicationException;
 
 	/**
 	* Returns a range of all the o auth2 applications.
@@ -220,6 +242,19 @@ public interface OAuth2ApplicationLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public OAuth2Application updateIcon(long oAuth2ApplicationId,
+		InputStream inputStream) throws PortalException;
+
+	public OAuth2Application updateOAuth2Application(long oAuth2ApplicationId,
+		List<GrantType> allowedGrantTypesList, java.lang.String clientId,
+		int clientProfile, java.lang.String clientSecret,
+		java.lang.String description, List<java.lang.String> featuresList,
+		java.lang.String homePageURL, long iconFileEntryId,
+		java.lang.String name, java.lang.String privacyPolicyURL,
+		List<java.lang.String> redirectURIsList,
+		long auth2ApplicationScopeAliasesId, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Updates the o auth2 application in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -229,4 +264,8 @@ public interface OAuth2ApplicationLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public OAuth2Application updateOAuth2Application(
 		OAuth2Application oAuth2Application);
+
+	public OAuth2Application updateScopeAliases(long userId,
+		java.lang.String userName, long oAuth2ApplicationId,
+		List<java.lang.String> scopeAliasesList) throws PortalException;
 }

@@ -53,7 +53,7 @@ public class TCKJunitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 				new SimpleFileVisitor<Path>() {
 
 					@Override
-					public FileVisitResult preVisitDirectory(
+					public FileVisitResult visitFile(
 							Path filePath, BasicFileAttributes attrs)
 						throws IOException {
 
@@ -61,17 +61,7 @@ public class TCKJunitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 							return FileVisitResult.SKIP_SUBTREE;
 						}
 
-						return FileVisitResult.CONTINUE;
-					}
-
-					@Override
-					public FileVisitResult visitFile(
-							Path filePath, BasicFileAttributes attrs)
-						throws IOException {
-
-						if (_pathIncluded(filePath) &&
-							!_pathExcluded(filePath)) {
-
+						if (_pathIncluded(filePath)) {
 							testClassFiles.add(
 								_getPackagePathClassFile(filePath));
 						}

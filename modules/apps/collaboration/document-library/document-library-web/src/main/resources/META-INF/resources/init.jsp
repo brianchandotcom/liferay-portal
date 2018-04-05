@@ -97,6 +97,7 @@ page import="com.liferay.document.library.web.internal.constants.DLWebKeys" %><%
 page import="com.liferay.document.library.web.internal.dao.search.DLResultRowSplitter" %><%@
 page import="com.liferay.document.library.web.internal.dao.search.IGResultRowSplitter" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLDisplayContextProvider" %><%@
+page import="com.liferay.document.library.web.internal.display.context.DLFileEntryTypeDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.IGDisplayContextProvider" %><%@
 page import="com.liferay.document.library.web.internal.display.context.logic.DLPortletInstanceSettingsHelper" %><%@
 page import="com.liferay.document.library.web.internal.display.context.logic.DLVisualizationHelper" %><%@

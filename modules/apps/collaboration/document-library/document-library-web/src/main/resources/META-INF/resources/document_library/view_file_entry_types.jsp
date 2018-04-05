@@ -1,5 +1,4 @@
-<%@ page
-	import="com.liferay.document.library.web.internal.display.context.DLFileEntryTypeDisplayContext" %><%--
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -25,10 +24,10 @@ DLFileEntryTypeDisplayContext dlFileEntryTypeDisplayContext = new DLFileEntryTyp
 
 <clay:management-toolbar
 	creationMenu="<%= dlFileEntryTypeDisplayContext.getCreationURL() %>"
-	selectable="<%= false %>"
+	namespace="<%= renderResponse.getNamespace() %>"
 	searchActionURL="<%= dlFileEntryTypeDisplayContext.getSearchURL() %>"
 	searchFormName="fm"
-	namespace="<%= renderResponse.getNamespace() %>"
+	selectable="<%= false %>"
 	totalItems="<%= dlFileEntryTypeDisplayContext.getTotal() %>"
 />
 
@@ -36,9 +35,8 @@ DLFileEntryTypeDisplayContext dlFileEntryTypeDisplayContext = new DLFileEntryTyp
 	<liferay-ui:error exception="<%= RequiredFileEntryTypeException.class %>" message="cannot-delete-a-document-type-that-is-presently-used-by-one-or-more-documents" />
 
 	<liferay-ui:search-container
-		searchContainer='<%= dlFileEntryTypeDisplayContext.getSearchContainer() %>'
+		searchContainer="<%= dlFileEntryTypeDisplayContext.getSearchContainer() %>"
 	>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.document.library.kernel.model.DLFileEntryType"
 			escapedModel="<%= true %>"

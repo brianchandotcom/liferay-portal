@@ -88,6 +88,4 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 		}
 	}
 
-	private static final int _DEFAULT_AXIS_COUNT = 1;
-
 }

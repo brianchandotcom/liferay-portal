@@ -85,8 +85,7 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 
 				@Override
 				public FileVisitResult postVisitDirectory(
-						Path filePath, IOException exc)
-					throws IOException {
+						Path filePath, IOException exc) {
 
 					if (_module == null) {
 						return FileVisitResult.CONTINUE;
@@ -111,8 +110,7 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 
 				@Override
 				public FileVisitResult preVisitDirectory(
-						Path filePath, BasicFileAttributes attrs)
-					throws IOException {
+						Path filePath, BasicFileAttributes attrs) {
 
 					Module currentModule = Module.getModule(filePath);
 

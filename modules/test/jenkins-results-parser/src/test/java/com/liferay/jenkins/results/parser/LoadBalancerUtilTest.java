@@ -41,7 +41,7 @@ public class LoadBalancerUtilTest
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() {
 		Properties properties = getTestProperties();
 
 		deleteFile(properties.getProperty("jenkins.shared.dir"));

@@ -44,14 +44,12 @@ public class BuildTest extends Test {
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() {
 		JenkinsResultsParserUtil.setBuildProperties((Hashtable<?, ?>)null);
 	}
 
 	@Override
-	protected void downloadSample(TestSample testSample, URL url)
-		throws Exception {
-
+	protected void downloadSample(TestSample testSample, URL url) {
 		Build build = BuildFactory.newBuild(
 			JenkinsResultsParserUtil.getLocalURL(url.toExternalForm()), null);
 

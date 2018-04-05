@@ -1322,7 +1322,7 @@ public class GitWorkingDirectory {
 
 				break;
 			}
-			catch (InterruptedException | IOException | TimeoutException e) {
+			catch (IOException | TimeoutException e) {
 				if (retries == maxRetries) {
 					throw new RuntimeException(
 						"Unable to execute bash commands: " +

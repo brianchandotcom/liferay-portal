@@ -124,8 +124,7 @@ public class MergeCentralSubrepositoryUtil {
 
 	private static GitWorkingDirectory.Branch _createMergeBranch(
 			GitWorkingDirectory centralGitWorkingDirectory,
-			String mergeBranchName, GitWorkingDirectory.Branch topLevelBranch)
-		throws IOException {
+			String mergeBranchName, GitWorkingDirectory.Branch topLevelBranch) {
 
 		centralGitWorkingDirectory.reset("--hard");
 
@@ -344,8 +343,7 @@ public class MergeCentralSubrepositoryUtil {
 
 	private static void _pushMergeBranchToRemote(
 			GitWorkingDirectory centralGitWorkingDirectory,
-			GitWorkingDirectory.Branch mergeBranch, String receiverUserName)
-		throws IOException {
+			GitWorkingDirectory.Branch mergeBranch, String receiverUserName) {
 
 		String centralRepositoryName =
 			centralGitWorkingDirectory.getRepositoryName();

@@ -48,6 +48,11 @@ public class TestClassGroupFactory {
 				batchName, gitWorkingDirectory, testSuiteName);
 		}
 
+		if (batchName.startsWith("plugins-compile-")) {
+			return new PluginsBatchTestClassGroup(
+				batchName, gitWorkingDirectory, testSuiteName);
+		}
+
 		if (batchName.startsWith("portal-frontend-js-")) {
 			return new NPMTestBatchTestClassGroup(
 				batchName, gitWorkingDirectory, testSuiteName);

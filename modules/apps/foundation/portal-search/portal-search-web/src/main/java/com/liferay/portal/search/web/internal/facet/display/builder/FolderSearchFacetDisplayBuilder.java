@@ -39,11 +39,12 @@ public class FolderSearchFacetDisplayBuilder {
 	public FolderSearchFacetDisplayContext build() {
 		List<TermCollector> termCollectors = getTermsCollectors();
 
-		List<FolderSearchFacetTermDisplayContext> termDisplayContexts =
-			buildTermDisplayContexts();
+		List<FolderSearchFacetTermDisplayContext>
+			folderSearchFacetTermDisplayContexts =
+				buildFolderSearchFacetTermDisplayContexts();
 
 		boolean renderNothing = isRenderNothing(
-			termCollectors, termDisplayContexts);
+			termCollectors, folderSearchFacetTermDisplayContexts);
 
 		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
 			new FolderSearchFacetDisplayContext();
@@ -58,8 +59,8 @@ public class FolderSearchFacetDisplayBuilder {
 		folderSearchFacetDisplayContext.setParameterValues(
 			getParameterValueStrings());
 		folderSearchFacetDisplayContext.setRenderNothing(renderNothing);
-		folderSearchFacetDisplayContext.setTermDisplayContexts(
-			termDisplayContexts);
+		folderSearchFacetDisplayContext.setFolderSearchFacetTermDisplayContexts(
+			folderSearchFacetTermDisplayContexts);
 
 		return folderSearchFacetDisplayContext;
 	}
@@ -105,39 +106,8 @@ public class FolderSearchFacetDisplayBuilder {
 		_selectedFolderIds = folderIdsStream.collect(Collectors.toList());
 	}
 
-	protected FolderSearchFacetTermDisplayContext buildTermDisplayContext(
-		long folderId, String displayName, int frequency, boolean selected) {
-
-		FolderSearchFacetTermDisplayContext
-			folderSearchFacetTermDisplayContext =
-				new FolderSearchFacetTermDisplayContext();
-
-		folderSearchFacetTermDisplayContext.setDisplayName(displayName);
-		folderSearchFacetTermDisplayContext.setFolderId(folderId);
-		folderSearchFacetTermDisplayContext.setFrequency(frequency);
-		folderSearchFacetTermDisplayContext.setFrequencyVisible(
-			_frequenciesVisible);
-		folderSearchFacetTermDisplayContext.setSelected(selected);
-
-		return folderSearchFacetTermDisplayContext;
-	}
-
-	protected FolderSearchFacetTermDisplayContext buildTermDisplayContext(
-		TermCollector termCollector) {
-
-		long folderId = GetterUtil.getLong(termCollector.getTerm());
-
-		if (folderId == 0) {
-			return null;
-		}
-
-		return buildTermDisplayContext(
-			folderId, getDisplayName(folderId), termCollector.getFrequency(),
-			isSelected(folderId));
-	}
-
 	protected List<FolderSearchFacetTermDisplayContext>
-		buildTermDisplayContexts() {
+		buildFolderSearchFacetTermDisplayContexts() {
 
 		List<TermCollector> termCollectors = getTermsCollectors();
 
@@ -173,6 +143,37 @@ public class FolderSearchFacetDisplayBuilder {
 		}
 
 		return folderSearchFacetTermDisplayContexts;
+	}
+
+	protected FolderSearchFacetTermDisplayContext buildTermDisplayContext(
+		long folderId, String displayName, int frequency, boolean selected) {
+
+		FolderSearchFacetTermDisplayContext
+			folderSearchFacetTermDisplayContext =
+				new FolderSearchFacetTermDisplayContext();
+
+		folderSearchFacetTermDisplayContext.setDisplayName(displayName);
+		folderSearchFacetTermDisplayContext.setFolderId(folderId);
+		folderSearchFacetTermDisplayContext.setFrequency(frequency);
+		folderSearchFacetTermDisplayContext.setFrequencyVisible(
+			_frequenciesVisible);
+		folderSearchFacetTermDisplayContext.setSelected(selected);
+
+		return folderSearchFacetTermDisplayContext;
+	}
+
+	protected FolderSearchFacetTermDisplayContext buildTermDisplayContext(
+		TermCollector termCollector) {
+
+		long folderId = GetterUtil.getLong(termCollector.getTerm());
+
+		if (folderId == 0) {
+			return null;
+		}
+
+		return buildTermDisplayContext(
+			folderId, getDisplayName(folderId), termCollector.getFrequency(),
+			isSelected(folderId));
 	}
 
 	protected String getDisplayName(long folderId) {

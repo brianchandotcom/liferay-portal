@@ -15,6 +15,7 @@
 package com.liferay.portal.spring.aop;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -23,9 +24,6 @@ import java.io.IOException;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-
-import org.springframework.aop.TargetSource;
-import org.springframework.aop.framework.AdvisedSupport;
 
 /**
  * @author Shuyang Zhou
@@ -44,9 +42,7 @@ public class ServiceWrapperProxyUtil {
 		AdvisedSupport advisedSupport = ServiceBeanAopProxy.getAdvisedSupport(
 			springServiceProxy);
 
-		TargetSource targetSource = advisedSupport.getTargetSource();
-
-		final Object targetService = targetSource.getTarget();
+		final Object targetService = advisedSupport.getTarget();
 
 		Class<?> clazz = targetService.getClass();
 

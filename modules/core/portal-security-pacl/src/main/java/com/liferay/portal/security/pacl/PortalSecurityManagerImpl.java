@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalMessageBusPermis
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalServicePermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalSocketPermission;
+import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
 import com.liferay.portal.kernel.url.URLContainer;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
@@ -127,7 +128,6 @@ import org.eclipse.osgi.internal.permadmin.EquinoxSecurityManager;
 
 import org.osgi.framework.BundleReference;
 
-import org.springframework.aop.framework.AdvisedSupport;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 

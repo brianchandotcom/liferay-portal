@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameServiceUtil;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -81,9 +82,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.springframework.aop.TargetSource;
-import org.springframework.aop.framework.AdvisedSupport;
-
 /**
  * @author Juan Fernández
  * @author Roberto Díaz
@@ -101,9 +99,7 @@ public class JournalArticleServiceTest {
 		AdvisedSupport advisedSupport = ServiceBeanAopProxy.getAdvisedSupport(
 			_journalArticleLocalService);
 
-		TargetSource targetSource = advisedSupport.getTargetSource();
-
-		_journalArticleLocalServiceImplInstance = targetSource.getTarget();
+		_journalArticleLocalServiceImplInstance = advisedSupport.getTarget();
 	}
 
 	@Before

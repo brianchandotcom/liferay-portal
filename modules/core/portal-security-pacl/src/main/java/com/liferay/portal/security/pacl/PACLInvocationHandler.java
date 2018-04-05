@@ -15,6 +15,7 @@
 package com.liferay.portal.security.pacl;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalServicePermission;
+import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
 import com.liferay.portal.spring.aop.AdvisedSupportProxy;
 
 import java.lang.reflect.InvocationHandler;
@@ -24,8 +25,6 @@ import java.lang.reflect.Method;
 import java.security.AccessController;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
-
-import org.springframework.aop.framework.AdvisedSupport;
 
 /**
  * @author Brian Wing Shun Chan

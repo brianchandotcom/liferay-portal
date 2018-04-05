@@ -30,8 +30,16 @@ if (rssFeeds.isEmpty()) {
 
 <c:choose>
 	<c:when test="<%= rssFeeds.isEmpty() %>">
-		<div class="alert alert-info portlet-configuration">
-			<liferay-ui:message key="please-configure-this-portlet-and-select-at-least-one-valid-rss-feed" />
+		<div class="alert alert-info text-center">
+			<div>
+				<liferay-ui:message key="this-application-is-not-visible-to-users-yet" />
+			</div>
+
+			<c:if test="<%= rssDisplayContext.isShowConfigurationLink() %>">
+				<div>
+					<aui:a href="javascript:;" onClick="<%= portletDisplay.getURLConfigurationJS() %>"><liferay-ui:message key="select-at-least-one-valid-rss-feed-to-make-it-visible" /></aui:a>
+				</div>
+			</c:if>
 		</div>
 	</c:when>
 	<c:otherwise>

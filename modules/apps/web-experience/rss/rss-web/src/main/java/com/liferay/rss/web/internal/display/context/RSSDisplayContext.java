@@ -15,7 +15,10 @@
 package com.liferay.rss.web.internal.display.context;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -95,6 +98,17 @@ public class RSSDisplayContext {
 		getRSSPortletInstanceConfiguration() {
 
 		return _rssPortletInstanceConfiguration;
+	}
+
+	public boolean isShowConfigurationLink() throws PortalException {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		return PortletPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
+			portletDisplay.getId(), ActionKeys.CONFIGURATION);
 	}
 
 	private long _displayStyleGroupId;

@@ -1,0 +1,15 @@
+apply plugin: "com.liferay.base.plugin"
+
+task runGradleTest
+
+runGradleTest {
+	doLast {
+		File dir = file("../../../bundle")
+
+		assert liferay.appServerParentDir == dir
+		assert liferay.appServerType == "tomcat"
+		assert liferay.deployDir == new File(dir, "deploy")
+		assert liferay.jmxRemotePort == 8099
+		assert liferay.liferayHome == dir
+	}
+}

@@ -24,6 +24,7 @@ import java.io.File;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import org.gradle.api.NamedDomainObjectContainer;
 import org.gradle.api.Project;
@@ -35,11 +36,55 @@ import org.gradle.api.tasks.bundling.AbstractArchiveTask;
  */
 public class LiferayExtension {
 
-	public LiferayExtension(Project project) {
+	public LiferayExtension(final Project project) {
 		this.project = project;
+
+		_appServerParentDir = new Callable<File>() {
+
+			@Override
+			public File call() throws Exception {
+				File dir = GradleUtil.getProperty(
+					project, "app.server.parent.dir", (File)null);
+
+				if (dir == null) {
+					Project rootProject = project.getRootProject();
+
+					dir = rootProject.file("../bundles");
+				}
+
+				return dir;
+			}
+
+		};
+
+		_appServerType = new Callable<String>() {
+
+			@Override
+			public String call() throws Exception {
+				return GradleUtil.getProperty(
+					project, "app.server.type", "tomcat");
+			}
+
+		};
 
 		_appServers = project.container(
 			AppServer.class, new AppServerFactory(project));
+
+		_deployDir = new Callable<File>() {
+
+			@Override
+			public File call() throws Exception {
+				File dir = GradleUtil.getProperty(
+					project, "auto.deploy.dir", (File)null);
+
+				if (dir == null) {
+					dir = new File(getAppServerParentDir(), "deploy");
+				}
+
+				return dir;
+			}
+
+		};
 
 		_deployedFileNameClosure = new Closure<String>(project) {
 
@@ -56,6 +101,25 @@ public class LiferayExtension {
 				fileName += "." + abstractArchiveTask.getExtension();
 
 				return fileName;
+			}
+
+		};
+
+		_jmxRemotePort = new Callable<Integer>() {
+
+			@Override
+			public Integer call() throws Exception {
+				return GradleUtil.getProperty(project, "jmx.remote.port", 8099);
+			}
+
+		};
+
+		_liferayHome = new Callable<File>() {
+
+			@Override
+			public File call() throws Exception {
+				return GradleUtil.getProperty(
+					project, "liferay.home", getAppServerParentDir());
 			}
 
 		};
@@ -114,7 +178,7 @@ public class LiferayExtension {
 	}
 
 	public String getAppServerType() {
-		return _appServerType;
+		return GradleUtil.toString(_appServerType);
 	}
 
 	public String getDefaultVersion(
@@ -207,7 +271,7 @@ public class LiferayExtension {
 
 	private Object _appServerParentDir;
 	private final NamedDomainObjectContainer<AppServer> _appServers;
-	private String _appServerType;
+	private Object _appServerType;
 	private final Map<String, Object> _defaultVersions = new HashMap<>();
 	private Object _deployDir;
 	private Closure<String> _deployedFileNameClosure;

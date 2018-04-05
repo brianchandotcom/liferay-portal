@@ -20,6 +20,8 @@ import com.liferay.gradle.plugins.internal.LangBuilderDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.util.FileUtil;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
+import com.liferay.gradle.plugins.util.PortalTools;
+import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
@@ -138,10 +140,20 @@ public class LiferayBasePlugin implements Plugin<Project> {
 		LiferayExtension liferayExtension = GradleUtil.addExtension(
 			project, LiferayPlugin.PLUGIN_NAME, LiferayExtension.class);
 
-		GradleUtil.applyScript(
-			project,
-			"com/liferay/gradle/plugins/dependencies/config-liferay.gradle",
-			project);
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("com/liferay/gradle/plugins/dependencies/config-liferay");
+
+		String portalVersion = PortalTools.getPortalVersion(project);
+
+		if (Validator.isNotNull(portalVersion)) {
+			sb.append('-');
+			sb.append(portalVersion);
+		}
+
+		sb.append(".gradle");
+
+		GradleUtil.applyScript(project, sb.toString(), project);
 
 		return liferayExtension;
 	}

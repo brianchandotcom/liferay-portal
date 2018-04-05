@@ -33,23 +33,27 @@ public class TestClassGroupFactory {
 			return new FunctionalBatchTestClassGroup(
 				batchName, gitWorkingDirectory, testSuiteName);
 		}
-		else if (batchName.startsWith("integration-") ||
-				 batchName.startsWith("unit-")) {
+
+		if (batchName.startsWith("integration-") ||
+			batchName.startsWith("unit-")) {
 
 			return new JUnitBatchTestClassGroup(
 				batchName, gitWorkingDirectory, testSuiteName);
 		}
-		else if (batchName.startsWith("modules-integration-") ||
-				 batchName.startsWith("modules-unit-")) {
+
+		if (batchName.startsWith("modules-integration-") ||
+			batchName.startsWith("modules-unit-")) {
 
 			return new ModulesJUnitBatchTestClassGroup(
 				batchName, gitWorkingDirectory, testSuiteName);
 		}
-		else if (batchName.startsWith("portal-frontend-js-")) {
+
+		if (batchName.startsWith("portal-frontend-js-")) {
 			return new NPMTestBatchTestClassGroup(
 				batchName, gitWorkingDirectory, testSuiteName);
 		}
-		else if (batchName.startsWith("tck-")) {
+
+		if (batchName.startsWith("tck-")) {
 			return new TCKJunitBatchTestClassGroup(
 				batchName, gitWorkingDirectory, testSuiteName);
 		}

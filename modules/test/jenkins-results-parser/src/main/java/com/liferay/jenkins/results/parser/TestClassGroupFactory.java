@@ -41,6 +41,10 @@ public class TestClassGroupFactory {
 			return new JUnitBatchTestClassGroup(
 				batchName, gitWorkingDirectory, testSuiteName);
 		}
+		else if (batchName.startsWith("functional-")) {
+			return new FunctionalBatchTestClassGroup(
+				batchName, gitWorkingDirectory, testSuiteName);
+		}
 
 		return new DefaultBatchTestClassGroup(
 			batchName, gitWorkingDirectory, testSuiteName);

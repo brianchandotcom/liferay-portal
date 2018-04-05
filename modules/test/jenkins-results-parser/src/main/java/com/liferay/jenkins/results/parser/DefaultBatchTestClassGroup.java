@@ -29,6 +29,10 @@ public class DefaultBatchTestClassGroup extends BatchTestClassGroup {
 		String testSuiteName) {
 
 		super(batchName, gitWorkingDirectory, testSuiteName);
+
+		for (int i = 0; i < _DEFAULT_AXIS_COUNT; i++) {
+			axisTestClassGroups.put(i, new AxisTestClassGroup(this, i));
+		}
 	}
 
 	private static final int _DEFAULT_AXIS_COUNT = 1;

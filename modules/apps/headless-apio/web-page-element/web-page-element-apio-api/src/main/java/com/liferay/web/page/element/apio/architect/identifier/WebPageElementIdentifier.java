@@ -17,10 +17,11 @@ package com.liferay.web.page.element.apio.architect.identifier;
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Holds information about a {@code JournalArticle} identifier.
+ * Holds information about a {@code WebPageElement} identifier. It's identified
+ * by the internal {@code JournalArticle#getArticleId()}.
  *
  * @author Alejandro Hernández
  * @review
  */
-public interface JournalArticleId extends Identifier<Long> {
+public interface WebPageElementIdentifier extends Identifier<Long> {
 }

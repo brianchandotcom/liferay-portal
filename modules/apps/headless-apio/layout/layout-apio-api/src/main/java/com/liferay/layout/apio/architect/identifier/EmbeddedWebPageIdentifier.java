@@ -17,6 +17,9 @@ package com.liferay.layout.apio.architect.identifier;
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
+ * Holds information about an {@code EmbeddedWebPage} identifier. It's
+ * identified by the internal {@code Layout#getPlid()}.
+ *
  * @author Pavel Savinov
  */
 public interface EmbeddedWebPageIdentifier extends Identifier<Long> {

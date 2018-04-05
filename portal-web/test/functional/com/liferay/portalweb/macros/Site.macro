@@ -1007,7 +1007,7 @@
 			<var name="name" value="${siteName}" />
 		</execute>
 
-		<execute function="Click" locator1="Button#SAVE" value1="Save" />
+		<execute function="Click" locator1="Button#MODAL_CONTENT_SUBMIT" />
 
 		<if>
 			<equals arg1="${siteNameInvalid}" arg2="Duplicate" />

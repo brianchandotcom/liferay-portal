@@ -234,7 +234,7 @@ public class AlloyEditorConfigContributor
 	protected JSONObject getToolbarsStylesSelectionsLinkJSONObject() {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("buttons", toJSONArray("['linkEdit']"));
+		jsonObject.put("buttons", toJSONArray("['linkEditBrowse']"));
 		jsonObject.put("name", "link");
 		jsonObject.put("test", "AlloyEditor.SelectionTest.link");
 
@@ -272,7 +272,7 @@ public class AlloyEditorConfigContributor
 		jsonArray.put("underline");
 		jsonArray.put("ol");
 		jsonArray.put("ul");
-		jsonArray.put("link");
+		jsonArray.put("linkBrowse");
 		jsonArray.put("twitter");
 
 		jsonObject.put("buttons", jsonArray);

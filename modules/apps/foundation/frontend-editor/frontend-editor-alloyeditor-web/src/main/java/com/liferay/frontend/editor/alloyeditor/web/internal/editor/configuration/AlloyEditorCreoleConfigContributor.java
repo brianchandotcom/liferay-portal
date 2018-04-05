@@ -83,7 +83,7 @@ public class AlloyEditorCreoleConfigContributor
 		linkEditJSONObject.put("appendProtocol", false);
 		linkEditJSONObject.put("showTargetSelector", false);
 
-		buttonCfgJSONObject.put("linkEdit", linkEditJSONObject);
+		buttonCfgJSONObject.put("linkEditBrowse", linkEditJSONObject);
 
 		jsonObject.put("buttonCfg", buttonCfgJSONObject);
 
@@ -279,7 +279,7 @@ public class AlloyEditorCreoleConfigContributor
 
 		linkEditJSONObject.put("cfg", cfgJSONObject);
 
-		linkEditJSONObject.put("name", "linkEdit");
+		linkEditJSONObject.put("name", "linkEditBrowse");
 
 		linkButtonsJSONArray.put(linkEditJSONObject);
 
@@ -320,7 +320,7 @@ public class AlloyEditorCreoleConfigContributor
 		jsonArray.put("italic");
 		jsonArray.put("ul");
 		jsonArray.put("ol");
-		jsonArray.put("link");
+		jsonArray.put("linkBrowse");
 		jsonArray.put("removeFormat");
 
 		jsonObject.put("buttons", jsonArray);

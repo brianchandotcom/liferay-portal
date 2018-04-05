@@ -73,7 +73,7 @@ const LinkBrowse = React.createClass({
 			this.props = this.mergeButtonCfgProps();
 
 			return (
-				<AlloyEditor.ButtonLinkEditBrowse {...this.props} />
+				<AlloyEditor.LinkEditBrowse {...this.props} />
 			);
 		}
 		else {

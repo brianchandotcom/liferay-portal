@@ -3,7 +3,7 @@ copyLibs {
 }
 
 dependencies {
-	provided project(":apps:web-experience:journal:journal-test")
+	compileOnly project(":apps:web-experience:journal:journal-test")
 
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")

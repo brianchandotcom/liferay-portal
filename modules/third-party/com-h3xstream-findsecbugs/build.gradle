@@ -5,8 +5,8 @@ apply plugin: "com.liferay.patcher"
 task patch(type: PatchTask)
 
 dependencies {
-	provided group: "com.google.code.findbugs", name: "findbugs", version: "3.0.1"
-	provided group: "com.h3xstream.findsecbugs", name: "findsecbugs-plugin", version: "1.7.1"
+	compileOnly group: "com.google.code.findbugs", name: "findbugs", version: "3.0.1"
+	compileOnly group: "com.h3xstream.findsecbugs", name: "findsecbugs-plugin", version: "1.7.1"
 }
 
 patch {

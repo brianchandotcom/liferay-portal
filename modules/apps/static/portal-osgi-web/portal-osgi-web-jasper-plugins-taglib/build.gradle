@@ -5,7 +5,7 @@ clean {
 }
 
 dependencies {
-	provided group: "com.liferay", name: "javax.servlet.jsp", version: "2.3.3-b02.LIFERAY-PATCHED-7"
+	compileOnly group: "com.liferay", name: "javax.servlet.jsp", version: "2.3.3-b02.LIFERAY-PATCHED-7"
 }
 
 deploy {

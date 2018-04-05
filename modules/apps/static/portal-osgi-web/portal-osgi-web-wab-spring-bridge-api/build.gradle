@@ -1,6 +1,6 @@
 dependencies {
-	provided group: "com.liferay", name: "org.eclipse.osgi", version: "3.10.200-20150904.172142-1-LIFERAY-CACHED"
-	provided group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
-	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
-	provided project(":core:osgi-service-tracker-collections")
+	compileOnly group: "com.liferay", name: "org.eclipse.osgi", version: "3.10.200-20150904.172142-1-LIFERAY-CACHED"
+	compileOnly group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
+	compileOnly project(":core:osgi-service-tracker-collections")
 }

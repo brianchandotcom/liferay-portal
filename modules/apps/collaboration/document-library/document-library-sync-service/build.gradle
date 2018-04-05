@@ -7,11 +7,11 @@ buildService {
 }
 
 dependencies {
-	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	provided project(":apps:collaboration:document-library:document-library-sync-api")
-	provided project(":apps:foundation:petra:petra-model-adapter")
-	provided project(":apps:foundation:portal:portal-spring-extender-api")
-	provided project(":apps:foundation:portal:portal-upgrade-api")
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly project(":apps:collaboration:document-library:document-library-sync-api")
+	compileOnly project(":apps:foundation:petra:petra-model-adapter")
+	compileOnly project(":apps:foundation:portal:portal-spring-extender-api")
+	compileOnly project(":apps:foundation:portal:portal-upgrade-api")
 }

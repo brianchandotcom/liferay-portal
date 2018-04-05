@@ -1,4 +1,4 @@
 dependencies {
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	provided project(":apps:adaptive-media:adaptive-media-image-api")
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly project(":apps:adaptive-media:adaptive-media-image-api")
 }

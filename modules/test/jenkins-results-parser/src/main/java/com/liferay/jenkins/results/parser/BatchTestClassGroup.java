@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.google.common.collect.Lists;
+
 import java.io.File;
 
 import java.util.ArrayList;
@@ -126,6 +128,38 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return null;
 	}
 
+	protected void setAxisTestClassGroups() {
+		int testClassFileCount = testClassFiles.size();
+
+		if (testClassFileCount == 0) {
+			return;
+		}
+
+		int axisMaxSize = _getAxisMaxSize();
+
+		int axisCount = (int)Math.ceil(
+			(double)testClassFileCount / axisMaxSize);
+
+		int axisSize = (int)Math.ceil((double)testClassFileCount / axisCount);
+
+		int id = 0;
+
+		for (List<File> axisTestClassFiles :
+				Lists.partition(testClassFiles, axisSize)) {
+
+			AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(
+				this, id);
+
+			axisTestClassGroups.put(id, axisTestClassGroup);
+
+			for (File axisTestClassFile : axisTestClassFiles) {
+				axisTestClassGroup.addTestClassFile(axisTestClassFile);
+			}
+
+			id++;
+		}
+	}
+
 	protected final Map<Integer, AxisTestClassGroup> axisTestClassGroups =
 		new HashMap<>();
 	protected final String batchName;
@@ -133,6 +167,48 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	protected final Properties portalTestProperties;
 	protected boolean testRelevantChanges;
 	protected final String testSuiteName;
+
+	private int _getAxisMaxSize() {
+		String axisMaxSize = _getAxisMaxSizePropertyValue();
+
+		if (axisMaxSize != null) {
+			return Integer.parseInt(axisMaxSize);
+		}
+
+		return _DEFAULT_AXIS_MAX_SIZE;
+	}
+
+	private String _getAxisMaxSizePropertyValue() {
+		List<String> propertyNames = new ArrayList<>();
+
+		if (testSuiteName != null) {
+			propertyNames.add(
+				JenkinsResultsParserUtil.combine(
+					"test.batch.axis.max.size[", batchName, "][", testSuiteName,
+					"]"));
+
+			propertyNames.add(
+				getWildcardPropertyName(
+					portalTestProperties, "test.batch.axis.max.size",
+					testSuiteName));
+
+			propertyNames.add(
+				JenkinsResultsParserUtil.combine(
+					"test.batch.axis.max.size[", testSuiteName, "]"));
+		}
+
+		propertyNames.add(
+			JenkinsResultsParserUtil.combine(
+				"test.batch.axis.max.size[", batchName, "]"));
+
+		propertyNames.add(
+			getWildcardPropertyName(
+				portalTestProperties, "test.batch.axis.max.size"));
+
+		propertyNames.add("test.batch.axis.max.size");
+
+		return getFirstPropertyValue(portalTestProperties, propertyNames);
+	}
 
 	private void _setTestRelevantChanges() {
 		List<String> propertyNames = new ArrayList<>();
@@ -156,6 +232,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 		testRelevantChanges = _DEFAULT_TEST_RELEVANT_CHANGES;
 	}
+
+	private static final int _DEFAULT_AXIS_MAX_SIZE = 5000;
 
 	private static final boolean _DEFAULT_TEST_RELEVANT_CHANGES = false;
 

@@ -14,8 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import com.google.common.collect.Lists;
-
 import java.io.File;
 import java.io.IOException;
 
@@ -51,7 +49,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		setTestClassFiles();
 
-		_setAxisTestClassGroups();
+		setAxisTestClassGroups();
 	}
 
 	protected List<String> getRelevantTestClassNamesRelativeGlobs(
@@ -197,48 +195,6 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 	protected final List<PathMatcher> testClassNamesIncludesPathMatchers =
 		new ArrayList<>();
 
-	private int _getAxisMaxSize() {
-		String axisMaxSize = _getAxisMaxSizePropertyValue();
-
-		if (axisMaxSize != null) {
-			return Integer.parseInt(axisMaxSize);
-		}
-
-		return _DEFAULT_AXIS_MAX_SIZE;
-	}
-
-	private String _getAxisMaxSizePropertyValue() {
-		List<String> propertyNames = new ArrayList<>();
-
-		if (testSuiteName != null) {
-			propertyNames.add(
-				JenkinsResultsParserUtil.combine(
-					"test.batch.axis.max.size[", batchName, "][", testSuiteName,
-					"]"));
-
-			propertyNames.add(
-				getWildcardPropertyName(
-					portalTestProperties, "test.batch.axis.max.size",
-					testSuiteName));
-
-			propertyNames.add(
-				JenkinsResultsParserUtil.combine(
-					"test.batch.axis.max.size[", testSuiteName, "]"));
-		}
-
-		propertyNames.add(
-			JenkinsResultsParserUtil.combine(
-				"test.batch.axis.max.size[", batchName, "]"));
-
-		propertyNames.add(
-			getWildcardPropertyName(
-				portalTestProperties, "test.batch.axis.max.size"));
-
-		propertyNames.add("test.batch.axis.max.size");
-
-		return getFirstPropertyValue(portalTestProperties, propertyNames);
-	}
-
 	private String _getTestClassNamesExcludesPropertyValue() {
 		List<String> propertyNames = new ArrayList<>();
 
@@ -329,38 +285,6 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		return pathMatchers;
 	}
 
-	private void _setAxisTestClassGroups() {
-		int testClassFileCount = testClassFiles.size();
-
-		if (testClassFileCount == 0) {
-			return;
-		}
-
-		int axisMaxSize = _getAxisMaxSize();
-
-		int axisCount = (int)Math.ceil(
-			(double)testClassFileCount / axisMaxSize);
-
-		int axisSize = (int)Math.ceil((double)testClassFileCount / axisCount);
-
-		int id = 0;
-
-		for (List<File> axisTestClassFiles :
-				Lists.partition(testClassFiles, axisSize)) {
-
-			AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(
-				this, id);
-
-			axisTestClassGroups.put(id, axisTestClassGroup);
-
-			for (File axisTestClassFile : axisTestClassFiles) {
-				axisTestClassGroup.addTestClassFile(axisTestClassFile);
-			}
-
-			id++;
-		}
-	}
-
 	private void _setTestClassNamesExcludesRelativeGlobs() {
 		String testClassNamesExcludesPropertyValue =
 			_getTestClassNamesExcludesPropertyValue();
@@ -408,8 +332,6 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			_getTestClassNamesPathMatchers(
 				testClassNamesIncludesRelativeGlobs));
 	}
-
-	private static final int _DEFAULT_AXIS_MAX_SIZE = 5000;
 
 	private final Pattern _packagePathPattern = Pattern.compile(
 		".*/(?<packagePath>com/.*)");

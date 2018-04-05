@@ -3991,12 +3991,6 @@ to version 2.3.121.
 to version 2.3.122.
 - [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
 1.0.594.
-- [LPS-78741]: Update the [Liferay Gradle Plugins Gulp] dependency to version
-2.0.29.
-- [LPS-78741]: Update the [Liferay Gradle Plugins JS Module Config Generator]
-dependency to version 2.1.30.
-- [LPS-78741]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
-version 2.4.9.
 
 ## 3.10.8 - 2018-04-04
 
@@ -4008,17 +4002,21 @@ version 1.0.187.
 
 ## 3.10.9 - 2018-04-05
 
+### Added
+- [LPS-74171]: Add support for different app server configurations based on the
+portal version.
+
 ### Changed
+- [LPS-78741]: Update the [Liferay Gradle Plugins Gulp] dependency to version
+2.0.29.
+- [LPS-78741]: Update the [Liferay Gradle Plugins JS Module Config Generator]
+dependency to version 2.1.30.
+- [LPS-78741]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
+version 2.4.9.
 - [LPS-79365]: Update the [Liferay Gradle Plugins Service Builder] dependency to
 version 2.1.5.
 - [LPS-79365]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 1.0.188.
-
-## 3.10.9 - 2018-04-05
-
-### Added
-- [LPS-74171]: Add support for different app server configurations based on the
-portal version.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs

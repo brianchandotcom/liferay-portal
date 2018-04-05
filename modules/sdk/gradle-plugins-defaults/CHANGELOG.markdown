@@ -3216,23 +3216,10 @@ version 1.2.2.
 ## 5.3.65 - 2018-04-05
 
 ### Changed
-- [LPS-79365]: Update the [Liferay Gradle Plugins] dependency to version 3.10.9.
-
-## 5.3.62 - 2018-04-04
-
-### Added
 - [LPS-75049]: Add support for `compileOnly` configuration.
-
-## 5.3.63 - 2017-04-04
-
-### Changed
 - [LPS-75049]: Add `compileOnly` dependencies to the test integration compile
 classpath.
-
-## 5.3.65 - 2018-04-05
-
-### Changed
-- [LPS-74171]: Update the [Liferay Gradle Plugins] dependency to version 3.10.9.
+- [LPS-79365]: Update the [Liferay Gradle Plugins] dependency to version 3.10.9.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report

@@ -59,7 +59,6 @@ AUI.add(
 							KeyValueField.superclass.getTemplateContext.apply(instance, arguments),
 							{
 								key: key,
-								keyInputSize: instance._getKeyInputSize(key),
 								strings: instance.get('strings')
 							}
 						);
@@ -218,8 +217,6 @@ AUI.add(
 						if (document.activeElement !== keyInput.getDOM()) {
 							keyInput.val(key);
 						}
-
-						keyInput.attr('size', instance._getKeyInputSize(key));
 					},
 
 					_updateInputValue: function(inputNode, newValue) {

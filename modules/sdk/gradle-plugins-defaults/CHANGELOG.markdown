@@ -3196,6 +3196,11 @@ execution when on the `7.0.x` branch.
 version 1.2.2.
 - [LPS-75010]: Update the [Liferay Gradle Plugins] dependency to version 3.10.5.
 
+## 5.3.62 - 2018-04-04
+
+### Changed
+- [LPS-79360]: Update the [Liferay Gradle Plugins] dependency to version 3.10.6.
+
 ## 5.3.63 - 2018-04-04
 
 ### Changed
@@ -3567,6 +3572,7 @@ version 1.2.2.
 [LPS-79226]: https://issues.liferay.com/browse/LPS-79226
 [LPS-79282]: https://issues.liferay.com/browse/LPS-79282
 [LPS-79286]: https://issues.liferay.com/browse/LPS-79286
+[LPS-79360]: https://issues.liferay.com/browse/LPS-79360
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

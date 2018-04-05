@@ -18,14 +18,17 @@
 
 <%
 DLFileEntryTypeDisplayContext dlFileEntryTypeDisplayContext = new DLFileEntryTypeDisplayContext(renderRequest, renderResponse, request);
+
+String searchURL = String.valueOf(dlFileEntryTypeDisplayContext.getSearchURL());
 %>
 
 <liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />
 
 <clay:management-toolbar
+	clearResultsURL="<%= searchURL %>"
 	creationMenu="<%= dlFileEntryTypeDisplayContext.getCreationURL() %>"
 	namespace="<%= renderResponse.getNamespace() %>"
-	searchActionURL="<%= String.valueOf(dlFileEntryTypeDisplayContext.getSearchURL()) %>"
+	searchActionURL="<%= searchURL %>"
 	searchFormName="fm"
 	selectable="<%= false %>"
 	totalItems="<%= dlFileEntryTypeDisplayContext.getTotal() %>"

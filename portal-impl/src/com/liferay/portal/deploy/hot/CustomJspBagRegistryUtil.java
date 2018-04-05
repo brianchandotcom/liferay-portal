@@ -324,8 +324,8 @@ public class CustomJspBagRegistryUtil {
 					verifyCustomJsps(contextId, customJspBag);
 				}
 				catch (DuplicateCustomJspException dcje) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(dcje.getMessage(), dcje);
+					if (_log.isWarnEnabled()) {
+						_log.warn(dcje.getMessage(), dcje);
 					}
 
 					registry.ungetService(serviceReference);
@@ -341,8 +341,8 @@ public class CustomJspBagRegistryUtil {
 				initCustomJspBag(contextId, contextName, customJspBag);
 			}
 			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(e.getMessage(), e);
+				if (_log.isWarnEnabled()) {
+					_log.warn(e.getMessage(), e);
 				}
 
 				registry.ungetService(serviceReference);

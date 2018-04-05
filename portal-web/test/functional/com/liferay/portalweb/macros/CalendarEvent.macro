@@ -329,10 +329,6 @@
 			<var name="eventType" value="${eventType}" />
 		</execute>
 
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Comments" />
-		</execute>
-
 		<if>
 			<isset var="eventCommentList" />
 			<then>

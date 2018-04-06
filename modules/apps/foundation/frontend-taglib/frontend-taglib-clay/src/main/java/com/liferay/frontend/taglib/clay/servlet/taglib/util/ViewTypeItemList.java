@@ -52,7 +52,7 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 		add(viewTypeItem);
 	}
 
-	public void addCardViewTypeItem(Consumer<ViewTypeItem> consumer) {
+	public ViewTypeItem addCardViewTypeItem() {
 		ViewTypeItem viewTypeItem = new ViewTypeItem(_request);
 
 		if (Validator.isNotNull(_selectedType)) {
@@ -66,12 +66,16 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 		viewTypeItem.setIcon("cards2");
 		viewTypeItem.setLabel("cards");
 
-		consumer.accept(viewTypeItem);
-
 		add(viewTypeItem);
+
+		return viewTypeItem;
 	}
 
-	public void addListViewTypeItem(Consumer<ViewTypeItem> consumer) {
+	public void addCardViewTypeItem(Consumer<ViewTypeItem> consumer) {
+		consumer.accept(addCardViewTypeItem());
+	}
+
+	public ViewTypeItem addListViewTypeItem() {
 		ViewTypeItem viewTypeItem = new ViewTypeItem(_request);
 
 		if (Validator.isNotNull(_selectedType)) {
@@ -85,12 +89,16 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 		viewTypeItem.setIcon("list");
 		viewTypeItem.setLabel("list");
 
-		consumer.accept(viewTypeItem);
-
 		add(viewTypeItem);
+
+		return viewTypeItem;
 	}
 
-	public void addTableViewTypeItem(Consumer<ViewTypeItem> consumer) {
+	public void addListViewTypeItem(Consumer<ViewTypeItem> consumer) {
+		consumer.accept(addListViewTypeItem());
+	}
+
+	public ViewTypeItem addTableViewTypeItem() {
 		ViewTypeItem viewTypeItem = new ViewTypeItem(_request);
 
 		if (Validator.isNotNull(_selectedType)) {
@@ -105,9 +113,13 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 		viewTypeItem.setIcon("table");
 		viewTypeItem.setLabel("table");
 
-		consumer.accept(viewTypeItem);
-
 		add(viewTypeItem);
+
+		return viewTypeItem;
+	}
+
+	public void addTableViewTypeItem(Consumer<ViewTypeItem> consumer) {
+		consumer.accept(addTableViewTypeItem());
 	}
 
 	private final PortletURL _portletURL;

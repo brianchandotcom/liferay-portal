@@ -35,26 +35,12 @@ else {
 }
 
 String searchContainerId = "publishLayoutProcesses";
-
-PortletURL portletURL = renderResponse.createRenderURL();
 %>
 
-<aui:nav-bar markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-
-		<%
-		portletURL.setParameter("tabs1", StagingProcessesWebKeys.PROCESSES_TAB);
-		%>
-
-		<aui:nav-item href="<%= portletURL.toString() %>" label="processes" selected="<%= tabs1.equals(StagingProcessesWebKeys.PROCESSES_TAB) %>" />
-
-		<%
-		portletURL.setParameter("tabs1", StagingProcessesWebKeys.SCHEDULED_TAB);
-		%>
-
-		<aui:nav-item href="<%= portletURL.toString() %>" label="scheduled" selected="<%= tabs1.equals(StagingProcessesWebKeys.SCHEDULED_TAB) %>" />
-	</aui:nav>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= stagingProcessesWebDisplayContext.getJSPNavigationItemList() %>"
+/>
 
 <c:choose>
 	<c:when test="<%= tabs1.equals(StagingProcessesWebKeys.PROCESSES_TAB) %>">

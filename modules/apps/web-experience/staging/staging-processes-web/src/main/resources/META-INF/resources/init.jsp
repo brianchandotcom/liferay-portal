@@ -90,6 +90,7 @@ page import="com.liferay.staging.constants.StagingConfigurationPortletKeys" %><%
 page import="com.liferay.staging.constants.StagingProcessesPortletKeys" %><%@
 page import="com.liferay.staging.constants.StagingProcessesWebKeys" %><%@
 page import="com.liferay.staging.processes.web.internal.dao.search.PublishResultRowSplitter" %><%@
+page import="com.liferay.staging.processes.web.internal.display.context.StagingProcessesWebDisplayContext" %><%@
 page import="com.liferay.staging.processes.web.internal.search.PublishConfigurationDisplayTerms" %><%@
 page import="com.liferay.staging.processes.web.internal.search.PublishConfigurationSearchTerms" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
@@ -125,6 +126,8 @@ PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPre
 Calendar calendar = CalendarFactoryUtil.getCalendar(timeZone, locale);
 
 int timeZoneOffset = timeZone.getOffset(calendar.getTimeInMillis());
+
+StagingProcessesWebDisplayContext stagingProcessesWebDisplayContext = new StagingProcessesWebDisplayContext(renderResponse, request, pageContext);
 %>
 
 <%@ include file="/init-ext.jsp" %>

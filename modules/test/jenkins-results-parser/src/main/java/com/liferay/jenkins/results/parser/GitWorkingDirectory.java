@@ -415,50 +415,49 @@ public class GitWorkingDirectory {
 
 			return;
 		}
-		else {
-			Remote remote = remoteBranch.getRemote();
 
-			String remoteURL = remote.getRemoteURL();
+		Remote remote = remoteBranch.getRemote();
 
-			if (remoteURL.contains("github-dev.liferay.com")) {
-				executeBashCommands("rm -f ~/.ssh/known_hosts");
-			}
+		String remoteURL = remote.getRemoteURL();
 
-			if (remoteURL.contains("github.com:liferay/")) {
-				remoteURL = remoteURL.replace(
-					"github.com:liferay/", "github-dev.liferay.com:liferay/");
+		if (remoteURL.contains("github-dev.liferay.com")) {
+			executeBashCommands("rm -f ~/.ssh/known_hosts");
+		}
 
-				Remote gitHubDevRemote = null;
+		if (remoteURL.contains("github.com:liferay/")) {
+			remoteURL = remoteURL.replace(
+				"github.com:liferay/", "github-dev.liferay.com:liferay/");
 
-				try {
-					gitHubDevRemote = addRemote(
-						true, "github-dev-remote", remoteURL);
+			Remote gitHubDevRemote = null;
 
-					Branch localGitRemoteBranch = getBranch(
-						remoteBranch.getName(), gitHubDevRemote);
+			try {
+				gitHubDevRemote = addRemote(
+					true, "github-dev-remote", remoteURL);
 
-					if (localGitRemoteBranch != null) {
-						fetch(localBranch, noTags, localGitRemoteBranch);
+				Branch localGitRemoteBranch = getBranch(
+					remoteBranch.getName(), gitHubDevRemote);
 
-						String upstreamBranchSHA = remoteBranch.getSHA();
+				if (localGitRemoteBranch != null) {
+					fetch(localBranch, noTags, localGitRemoteBranch);
 
-						if (localSHAExists(upstreamBranchSHA)) {
-							if (!upstreamBranchSHA.equals(
-									localGitRemoteBranch.getSHA())) {
+					String upstreamBranchSHA = remoteBranch.getSHA();
 
-								createLocalBranch(
-									localBranch.getName(), true,
-									remoteBranch.getSHA());
-							}
+					if (localSHAExists(upstreamBranchSHA)) {
+						if (!upstreamBranchSHA.equals(
+								localGitRemoteBranch.getSHA())) {
 
-							return;
+							createLocalBranch(
+								localBranch.getName(), true,
+								remoteBranch.getSHA());
 						}
+
+						return;
 					}
 				}
-				finally {
-					if (gitHubDevRemote != null) {
-						removeRemote(gitHubDevRemote);
-					}
+			}
+			finally {
+				if (gitHubDevRemote != null) {
+					removeRemote(gitHubDevRemote);
 				}
 			}
 		}
@@ -471,15 +470,13 @@ public class GitWorkingDirectory {
 			sb.append(" --no-tags ");
 		}
 
-		Remote remote = remoteBranch.getRemote();
-
-		sb.append(remote.getName());
-
 		String remoteBranchName = remoteBranch.getName();
+
+		sb.append(remoteBranchName);
 
 		if ((remoteBranchName != null) && !remoteBranchName.isEmpty()) {
 			sb.append(" ");
-			sb.append(remoteBranch.getName());
+			sb.append(remoteBranchName);
 
 			if (localBranch != null) {
 				sb.append(":");
@@ -1329,10 +1326,9 @@ public class GitWorkingDirectory {
 							Arrays.toString(commands),
 						e);
 				}
-				else {
-					System.out.println("Fetch attempt failed retrying... ");
-					e.printStackTrace();
-				}
+
+				System.out.println("Fetch attempt failed retrying... ");
+				e.printStackTrace();
 			}
 		}
 

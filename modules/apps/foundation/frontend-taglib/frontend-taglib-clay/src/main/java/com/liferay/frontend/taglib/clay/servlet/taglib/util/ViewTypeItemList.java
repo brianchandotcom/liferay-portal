@@ -14,50 +14,116 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.function.Consumer;
+
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Carlos Lancha
  */
 public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 
+	public ViewTypeItemList() {
+		_request = null;
+		_portletURL = null;
+		_selectedType = null;
+	}
+
+	public ViewTypeItemList(
+		HttpServletRequest request, PortletURL portletURL,
+		String selectedType) {
+
+		_request = request;
+		_portletURL = portletURL;
+		_selectedType = selectedType;
+	}
+
 	public void add(Consumer<ViewTypeItem> consumer) {
-		ViewTypeItem viewTypeItem = new ViewTypeItem();
+		ViewTypeItem viewTypeItem = new ViewTypeItem(_request);
 
 		consumer.accept(viewTypeItem);
 
 		add(viewTypeItem);
+	}
+
+	public ViewTypeItem addCardViewTypeItem() {
+		ViewTypeItem viewTypeItem = new ViewTypeItem(_request);
+
+		if (Validator.isNotNull(_selectedType)) {
+			viewTypeItem.setActive(Objects.equals(_selectedType, "icon"));
+		}
+
+		if (Validator.isNotNull(_portletURL)) {
+			viewTypeItem.setHref(_portletURL, "displayStyle", "icon");
+		}
+
+		viewTypeItem.setIcon("cards2");
+		viewTypeItem.setLabel("cards");
+
+		add(viewTypeItem);
+
+		return viewTypeItem;
 	}
 
 	public void addCardViewTypeItem(Consumer<ViewTypeItem> consumer) {
-		ViewTypeItem viewTypeItem = new ViewTypeItem();
+		consumer.accept(addCardViewTypeItem());
+	}
 
-		viewTypeItem.setIcon("cards2");
+	public ViewTypeItem addListViewTypeItem() {
+		ViewTypeItem viewTypeItem = new ViewTypeItem(_request);
 
-		consumer.accept(viewTypeItem);
+		if (Validator.isNotNull(_selectedType)) {
+			viewTypeItem.setActive(Objects.equals(_selectedType, "list"));
+		}
+
+		if (Validator.isNotNull(_portletURL)) {
+			viewTypeItem.setHref(_portletURL, "displayStyle", "list");
+		}
+
+		viewTypeItem.setIcon("list");
+		viewTypeItem.setLabel("list");
 
 		add(viewTypeItem);
+
+		return viewTypeItem;
 	}
 
 	public void addListViewTypeItem(Consumer<ViewTypeItem> consumer) {
-		ViewTypeItem viewTypeItem = new ViewTypeItem();
+		consumer.accept(addListViewTypeItem());
+	}
 
-		viewTypeItem.setIcon("list");
+	public ViewTypeItem addTableViewTypeItem() {
+		ViewTypeItem viewTypeItem = new ViewTypeItem(_request);
 
-		consumer.accept(viewTypeItem);
+		if (Validator.isNotNull(_selectedType)) {
+			viewTypeItem.setActive(
+				Objects.equals(_selectedType, "descriptive"));
+		}
+
+		if (Validator.isNotNull(_portletURL)) {
+			viewTypeItem.setHref(_portletURL, "displayStyle", "descriptive");
+		}
+
+		viewTypeItem.setIcon("table");
+		viewTypeItem.setLabel("table");
 
 		add(viewTypeItem);
+
+		return viewTypeItem;
 	}
 
 	public void addTableViewTypeItem(Consumer<ViewTypeItem> consumer) {
-		ViewTypeItem viewTypeItem = new ViewTypeItem();
-
-		viewTypeItem.setIcon("table");
-
-		consumer.accept(viewTypeItem);
-
-		add(viewTypeItem);
+		consumer.accept(addTableViewTypeItem());
 	}
+
+	private final PortletURL _portletURL;
+	private final HttpServletRequest _request;
+	private final String _selectedType;
 
 }

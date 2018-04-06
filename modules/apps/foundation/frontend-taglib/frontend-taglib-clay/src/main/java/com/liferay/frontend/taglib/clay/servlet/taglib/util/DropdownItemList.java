@@ -17,13 +17,23 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Brian Wing Shun Chan
  */
 public class DropdownItemList extends ArrayList<DropdownItem> {
 
+	public DropdownItemList() {
+		_request = null;
+	}
+
+	public DropdownItemList(HttpServletRequest request) {
+		_request = request;
+	}
+
 	public void add(Consumer<DropdownItem> consumer) {
-		DropdownItem dropdownItem = new DropdownItem();
+		DropdownItem dropdownItem = new DropdownItem(_request);
 
 		consumer.accept(dropdownItem);
 
@@ -31,7 +41,8 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 	}
 
 	public void addCheckbox(Consumer<DropdownCheckboxItem> consumer) {
-		DropdownCheckboxItem dropdownCheckboxItem = new DropdownCheckboxItem();
+		DropdownCheckboxItem dropdownCheckboxItem = new DropdownCheckboxItem(
+			_request);
 
 		consumer.accept(dropdownCheckboxItem);
 
@@ -39,7 +50,7 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 	}
 
 	public void addGroup(Consumer<DropdownGroupItem> consumer) {
-		DropdownGroupItem dropdownGroupItem = new DropdownGroupItem();
+		DropdownGroupItem dropdownGroupItem = new DropdownGroupItem(_request);
 
 		consumer.accept(dropdownGroupItem);
 
@@ -47,7 +58,7 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 	}
 
 	public void addRadio(Consumer<DropdownRadioItem> consumer) {
-		DropdownRadioItem dropdownRadioItem = new DropdownRadioItem();
+		DropdownRadioItem dropdownRadioItem = new DropdownRadioItem(_request);
 
 		consumer.accept(dropdownRadioItem);
 
@@ -56,11 +67,13 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 
 	public void addRadioGroup(Consumer<DropdownRadioGroupItem> consumer) {
 		DropdownRadioGroupItem dropdownRadioGroupItem =
-			new DropdownRadioGroupItem();
+			new DropdownRadioGroupItem(_request);
 
 		consumer.accept(dropdownRadioGroupItem);
 
 		add(dropdownRadioGroupItem);
 	}
+
+	private final HttpServletRequest _request;
 
 }

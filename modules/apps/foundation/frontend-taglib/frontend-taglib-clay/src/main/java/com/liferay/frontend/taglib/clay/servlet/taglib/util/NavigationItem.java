@@ -44,10 +44,12 @@ public class NavigationItem extends HashMap<String, Object> {
 				String parameterName = String.valueOf(parameters[i]);
 				String parameterValue = String.valueOf(parameters[i + 1]);
 
-				portletURL.setParameter(
-					parameterName,
-					Validator.isNotNull(
-						parameterValue) ? parameterValue : null);
+				if (Validator.isNotNull(parameterValue)) {
+					portletURL.setParameter(parameterName, parameterValue);
+				}
+				else {
+					portletURL.setParameter(parameterName, (String)null);
+				}
 			}
 		}
 

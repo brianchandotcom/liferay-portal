@@ -18,10 +18,10 @@ import com.google.common.io.CharStreams;
 import com.google.template.soy.SoyFileSet;
 import com.google.template.soy.SoyFileSet.Builder;
 import com.google.template.soy.data.SanitizedContent;
-import com.google.template.soy.data.SoyRecord;
 import com.google.template.soy.msgs.SoyMsgBundle;
 import com.google.template.soy.tofu.SoyTofu;
 import com.google.template.soy.tofu.SoyTofu.Renderer;
+
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -42,9 +42,11 @@ import com.liferay.portal.template.soy.constants.SoyTemplateConstants;
 
 import java.io.Reader;
 import java.io.Writer;
+
 import java.security.AccessController;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;

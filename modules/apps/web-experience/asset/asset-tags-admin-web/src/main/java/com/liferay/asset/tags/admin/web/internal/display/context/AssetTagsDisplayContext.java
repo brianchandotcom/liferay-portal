@@ -214,11 +214,8 @@ public class AssetTagsDisplayContext {
 				add(
 					navigationItem -> {
 						navigationItem.setActive(true);
-
-						PortletURL mainURL = _renderResponse.createRenderURL();
-
-						navigationItem.setHref(mainURL.toString());
-
+						navigationItem.setHref(
+							_renderResponse.createRenderURL());
 						navigationItem.setLabel("tags");
 					});
 			}

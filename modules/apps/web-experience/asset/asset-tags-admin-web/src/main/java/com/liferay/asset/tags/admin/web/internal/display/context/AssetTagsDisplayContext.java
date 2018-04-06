@@ -401,9 +401,9 @@ public class AssetTagsDisplayContext {
 
 		return new ViewTypeItemList(_request, portletURL, getDisplayStyle()) {
 			{
-				addCardViewTypeItem(viewTypeItem -> {});
-				addListViewTypeItem(viewTypeItem -> {});
-				addTableViewTypeItem(viewTypeItem -> {});
+				addCardViewTypeItem();
+				addListViewTypeItem();
+				addTableViewTypeItem();
 			}
 		};
 	}

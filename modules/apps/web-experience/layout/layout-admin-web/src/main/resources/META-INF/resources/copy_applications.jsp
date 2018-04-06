@@ -29,15 +29,18 @@ renderResponse.setTitle(LanguageUtil.get(request, "copy-applications"));
 
 <portlet:actionURL name="/layout/copy_applications" var="copyApplicationsURL" />
 
-<aui:form action="<%= copyApplicationsURL %>" cssClass="container-fluid-1280" name="fm">
+<liferay-frontend:edit-form
+	action="<%= copyApplicationsURL %>"
+	name="fm"
+>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= layoutsAdminDisplayContext.getSelGroupId() %>" />
 	<aui:input name="selPlid" type="hidden" value="<%= layoutsAdminDisplayContext.getSelPlid() %>" />
 	<aui:input name="privateLayout" type="hidden" value="<%= layoutsAdminDisplayContext.isPrivateLayout() %>" />
 	<aui:input name="layoutId" type="hidden" value="<%= layoutsAdminDisplayContext.getLayoutId() %>" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
+	<liferay-frontend:fieldset-group>
+		<liferay-frontend:fieldset>
 			<c:if test="<%= selLayout != null %>">
 				<div class="alert alert-info">
 					<liferay-ui:message arguments="<%= HtmlUtil.escape(selLayout.getName(locale)) %>" key="the-applications-in-page-x-will-be-replaced-with-the-ones-in-the-page-you-select-below" translateArguments="<%= false %>" />
@@ -63,12 +66,12 @@ renderResponse.setTitle(LanguageUtil.get(request, "copy-applications"));
 				%>
 
 			</aui:select>
-		</aui:fieldset>
-	</aui:fieldset-group>
+		</liferay-frontend:fieldset>
+	</liferay-frontend:fieldset-group>
 
-	<aui:button-row>
+	<liferay-frontend:button-row>
 		<aui:button type="submit" value="save" />
 
 		<aui:button href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+	</liferay-frontend:button-row>
+</liferay-frontend:edit-form>

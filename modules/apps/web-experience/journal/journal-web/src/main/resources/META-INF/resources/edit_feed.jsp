@@ -111,7 +111,13 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 	<portlet:param name="mvcPath" value="/edit_feed.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= editFeedURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFeed();" %>'>
+<liferay-frontend:edit-form
+	action="<%= editFeedURL %>"
+	enctype="multipart/form-data"
+	method="post"
+	name="fm"
+	onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFeed();" %>'
+>
 	<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
@@ -128,8 +134,8 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 
 	<aui:model-context bean="<%= feed %>" model="<%= JournalFeed.class %>" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
+	<liferay-frontend:fieldset-group>
+		<liferay-frontend:fieldset>
 			<c:choose>
 				<c:when test="<%= feed == null %>">
 					<c:choose>
@@ -162,17 +168,25 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 
 				<aui:a href="<%= feedURL.toString() %>" label="preview" target="_blank" />
 			</c:if>
-		</aui:fieldset>
+		</liferay-frontend:fieldset>
 
 		<c:if test="<%= feed == null %>">
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+			<liferay-frontend:fieldset
+				collapsed="<%= true %>"
+				collapsible="<%= true %>"
+				label="permissions"
+			>
 				<liferay-ui:input-permissions
 					modelName="<%= JournalFeed.class.getName() %>"
 				/>
-			</aui:fieldset>
+			</liferay-frontend:fieldset>
 		</c:if>
 
-		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="web-content-contraints">
+		<liferay-frontend:fieldset
+			collapsed="<%= true %>"
+			collapsible="<%= true %>"
+			label="web-content-contraints"
+		>
 			<div class="form-group">
 				<aui:input name="ddmStructureKey" required="<%= true %>" type="hidden" value="<%= ddmStructureKey %>" />
 
@@ -203,9 +217,13 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 					</aui:select>
 				</c:otherwise>
 			</c:choose>
-		</aui:fieldset>
+		</liferay-frontend:fieldset>
 
-		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="presentation-settings">
+		<liferay-frontend:fieldset
+			collapsed="<%= true %>"
+			collapsible="<%= true %>"
+			label="presentation-settings"
+		>
 			<aui:select label="feed-item-content" name="contentFieldSelector">
 				<aui:option label="<%= JournalFeedConstants.WEB_CONTENT_DESCRIPTION %>" selected="<%= contentField.equals(JournalFeedConstants.WEB_CONTENT_DESCRIPTION) %>" />
 
@@ -291,10 +309,10 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 				<aui:option label="ascending" value="asc" />
 				<aui:option label="descending" value="desc" />
 			</aui:select>
-		</aui:fieldset>
-	</aui:fieldset-group>
+		</liferay-frontend:fieldset>
+	</liferay-frontend:fieldset-group>
 
-	<aui:button-row>
+	<liferay-frontend:button-row>
 
 		<%
 		boolean hasSavePermission = false;
@@ -312,8 +330,8 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 		</c:if>
 
 		<aui:button href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+	</liferay-frontend:button-row>
+</liferay-frontend:edit-form>
 
 <aui:script>
 	function <portlet:namespace />openStructureSelector() {

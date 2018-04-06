@@ -49,28 +49,32 @@ renderResponse.setTitle(layoutPrototype.isNew() ? LanguageUtil.get(request, "new
 
 <portlet:actionURL name="editLayoutPrototype" var="editLayoutPrototypeURL" />
 
-<aui:form action="<%= editLayoutPrototypeURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<liferay-frontend:edit-form
+	action="<%= editLayoutPrototypeURL %>"
+	method="post"
+	name="fm"
+>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="layoutPrototypeId" type="hidden" value="<%= layoutPrototypeId %>" />
 
 	<aui:model-context bean="<%= layoutPrototype %>" model="<%= LayoutPrototype.class %>" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
+	<liferay-frontend:fieldset-group>
+		<liferay-frontend:fieldset>
 			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" placeholder="name" />
 
 			<aui:input name="description" placeholder="description" />
 
 			<aui:input name="active" type="toggle-switch" value="<%= layoutPrototype.isActive() %>" />
-		</aui:fieldset>
-	</aui:fieldset-group>
+		</liferay-frontend:fieldset>
+	</liferay-frontend:fieldset-group>
 
-	<aui:button-row>
+	<liferay-frontend:button-row>
 		<aui:button type="submit" />
 
 		<aui:button href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+	</liferay-frontend:button-row>
+</liferay-frontend:edit-form>
 
 <%
 if (!layoutPrototype.isNew()) {

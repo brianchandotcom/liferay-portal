@@ -18,6 +18,10 @@
 
 <%
 FragmentEntryLink fragmentEntryLink = fragmentEntryDisplayContext.getFragmentEntryLink();
+
+if (fragmentEntryLink == null) {
+	renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
+}
 %>
 
 <c:choose>

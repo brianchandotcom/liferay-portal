@@ -4026,6 +4026,12 @@ to version 2.3.123.
 - [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
 1.0.595.
 
+## 3.10.11 - 2018-04-06
+
+### Changed
+- [LPS-74171]: Update the default value of the
+`liferay.appServers.tomcat.version` property to `9.0.6`.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

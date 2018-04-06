@@ -16,6 +16,7 @@ package com.liferay.user.associated.data.web.internal.portlet.action;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -213,6 +214,8 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 		}
 
 		searchContainer.setResults(uadEntities);
+		searchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(liferayPortletResponse));
 		searchContainer.setTotal((int)uadAggregator.count(selectedUserId));
 
 		return searchContainer;

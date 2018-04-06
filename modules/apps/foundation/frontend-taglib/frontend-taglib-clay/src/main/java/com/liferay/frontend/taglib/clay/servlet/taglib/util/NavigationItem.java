@@ -14,14 +14,27 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.HashMap;
 
 import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Chema Balsas
  */
 public class NavigationItem extends HashMap<String, Object> {
+
+	public NavigationItem() {
+		_request = null;
+	}
+
+	public NavigationItem(HttpServletRequest request) {
+		_request = request;
+	}
 
 	public void setActive(boolean active) {
 		put("active", active);
@@ -42,7 +55,12 @@ public class NavigationItem extends HashMap<String, Object> {
 				String parameterName = String.valueOf(parameters[i]);
 				String parameterValue = String.valueOf(parameters[i + 1]);
 
-				portletURL.setParameter(parameterName, parameterValue);
+				if (Validator.isNotNull(parameterValue)) {
+					portletURL.setParameter(parameterName, parameterValue);
+				}
+				else {
+					portletURL.setParameter(parameterName, (String)null);
+				}
 			}
 		}
 
@@ -54,7 +72,13 @@ public class NavigationItem extends HashMap<String, Object> {
 	}
 
 	public void setLabel(String label) {
+		if (Validator.isNotNull(_request)) {
+			label = LanguageUtil.get(_request, label);
+		}
+
 		put("label", label);
 	}
+
+	private final HttpServletRequest _request;
 
 }

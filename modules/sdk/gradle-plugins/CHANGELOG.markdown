@@ -4026,6 +4026,12 @@ to version 2.3.123.
 - [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
 1.0.595.
 
+## 3.10.11 - 2018-04-06
+
+### Added
+- [LPS-79450]: Filter out `.git`, `.gradle`, `build`, `node_modules`, and `tmp`
+in the project directory for Eclipse.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -4367,4 +4373,5 @@ to version 2.3.123.
 [LPS-79286]: https://issues.liferay.com/browse/LPS-79286
 [LPS-79360]: https://issues.liferay.com/browse/LPS-79360
 [LPS-79365]: https://issues.liferay.com/browse/LPS-79365
+[LPS-79450]: https://issues.liferay.com/browse/LPS-79450
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

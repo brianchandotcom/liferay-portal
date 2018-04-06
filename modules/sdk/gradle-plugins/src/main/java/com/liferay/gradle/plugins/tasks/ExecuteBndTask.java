@@ -109,7 +109,7 @@ public class ExecuteBndTask extends DefaultTask {
 
 			logger.lifecycle(
 				"Building the {} file took {} seconds.", outputFile.getName(),
-				((clockStart - clockStop) / 1000));
+				(clockStart - clockStop) / 1000);
 		}
 	}
 

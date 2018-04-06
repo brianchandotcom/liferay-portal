@@ -175,23 +175,12 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 		appendable.append('}');
 	}
 
-	private String _decapitalize(String string) {
-		if ((string == null) || string.isEmpty()) {
-			return string;
-		}
-
-		return StringUtil.lowerCaseFirstLetter(string);
-	}
-
 	private Object _propertyName(String methodName) {
-		if (methodName.startsWith("get")) {
-			methodName = methodName.replaceFirst("^get", "");
-		}
-		else if (methodName.startsWith("is")) {
-			methodName = methodName.replaceFirst("^is", "");
+		if (methodName.startsWith("get") || methodName.startsWith("is")) {
+			methodName = methodName.replaceFirst("^(?:get|is)", "");
 		}
 
-		return _decapitalize(methodName);
+		return StringUtil.lowerCaseFirstLetter(methodName);
 	}
 
 	private SoyValue _toSoyValue(Object object) {

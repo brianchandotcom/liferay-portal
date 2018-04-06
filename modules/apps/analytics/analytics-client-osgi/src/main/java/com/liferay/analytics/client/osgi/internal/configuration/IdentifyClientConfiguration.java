@@ -31,20 +31,20 @@ public interface IdentifyClientConfiguration {
 
 	@Meta.AD(
 		deflt = "contacts-prod.liferay.com", name = "identify-gateway-host",
-		required = true
+		required = false
 	)
 	public String identifyGatewayHost();
 
 	@Meta.AD(
-		deflt = "/identity", name = "identify-gateway-path", required = true
+		deflt = "/identity", name = "identify-gateway-path", required = false
 	)
 	public String identifyGatewayPath();
 
-	@Meta.AD(deflt = "443", name = "identify-gateway-port", required = true)
+	@Meta.AD(deflt = "443", name = "identify-gateway-port", required = false)
 	public String identifyGatewayPort();
 
 	@Meta.AD(
-		deflt = "https", name = "identify-gateway-protocol", required = true
+		deflt = "https", name = "identify-gateway-protocol", required = false
 	)
 	public String identifyGatewayProtocol();
 

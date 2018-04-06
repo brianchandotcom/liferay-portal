@@ -44,7 +44,6 @@ import org.osgi.service.component.ComponentFactory;
 import org.osgi.service.component.ComponentInstance;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
@@ -54,8 +53,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.analytics.client.osgi.internal.configuration.AnalyticsClientConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
-	service = AnalyticsClient.class
+	immediate = true, service = AnalyticsClient.class
 )
 public class AnalyticsClientImpl implements AnalyticsClient {
 

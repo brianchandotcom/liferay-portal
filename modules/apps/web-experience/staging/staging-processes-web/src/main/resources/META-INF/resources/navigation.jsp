@@ -52,8 +52,6 @@ String searchContainerId = "publishLayoutProcesses";
 			<liferay-util:param name="orderByType" value="<%= orderByType %>" />
 			<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
 		</liferay-util:include>
-
-		<liferay-util:include page="/add_button.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:when test="<%= tabs1.equals(StagingProcessesWebKeys.SCHEDULED_TAB) %>">
 		<liferay-util:include page="/scheduled_list/view.jsp" servletContext="<%= application %>" />

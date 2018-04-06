@@ -29,38 +29,41 @@ List<ExportImportConfiguration> exportImportConfigurations = ExportImportConfigu
 %>
 
 <c:if test="<%= GroupPermissionUtil.contains(permissionChecker, stagingGroupId, ActionKeys.PUBLISH_STAGING) %>">
-	<liferay-frontend:add-menu>
+	<liferay-frontend:add-menu
+		inline="<%= true %>"
+	>
 
 		<%
 		for (ExportImportConfiguration exportImportConfiguration : exportImportConfigurations) {
-		%>
+			PortletURL addNewProcessURL = liferayPortletResponse.createRenderURL();
 
-			<portlet:renderURL var="addNewProcessURL">
-				<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
-				<portlet:param name="<%= Constants.CMD %>" value="<%= (localPublishing) ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
-				<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
-			</portlet:renderURL>
+			addNewProcessURL.setParameter("mvcRenderCommandName", "publishLayouts");
+			addNewProcessURL.setParameter(Constants.CMD, (localPublishing) ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE);
+			addNewProcessURL.setParameter("exportImportConfigurationId", String.valueOf(exportImportConfiguration.getExportImportConfigurationId()));
+			addNewProcessURL.setParameter("groupId", String.valueOf(stagingGroupId));
+		%>
 
 			<liferay-frontend:add-menu-item
 				title="<%= exportImportConfiguration.getName() %>"
-				url="<%= addNewProcessURL %>"
+				url="<%= addNewProcessURL.toString() %>"
 			/>
 
 		<%
 		}
 		%>
 
-		<portlet:renderURL var="addNewCustomProcessURL">
-			<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= (localPublishing) ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
-			<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
-		</portlet:renderURL>
+		<%
+		PortletURL addNewCustomProcessURL = liferayPortletResponse.createRenderURL();
+
+		addNewCustomProcessURL.setParameter("mvcRenderCommandName", "publishLayouts");
+		addNewCustomProcessURL.setParameter(Constants.CMD, (localPublishing) ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE);
+		addNewCustomProcessURL.setParameter("groupId", String.valueOf(stagingGroupId));
+		addNewCustomProcessURL.setParameter("privateLayout", Boolean.FALSE.toString());
+		%>
 
 		<liferay-frontend:add-menu-item
 			title='<%= LanguageUtil.get(request, "custom-publication") %>'
-			url="<%= addNewCustomProcessURL %>"
+			url="<%= addNewCustomProcessURL.toString() %>"
 		/>
 	</liferay-frontend:add-menu>
 </c:if>

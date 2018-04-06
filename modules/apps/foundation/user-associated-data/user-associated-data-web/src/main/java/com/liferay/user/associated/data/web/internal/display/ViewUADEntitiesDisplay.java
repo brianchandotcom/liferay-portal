@@ -16,6 +16,7 @@ package com.liferay.user.associated.data.web.internal.display;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.user.associated.data.display.UADEntityDisplay;
 
 import java.util.List;
 
@@ -40,6 +41,10 @@ public class ViewUADEntitiesDisplay {
 		return _typeName;
 	}
 
+	public UADEntityDisplay getUADEntityDisplay() {
+		return _uadEntityDisplay;
+	}
+
 	public String getUADRegistryKey() {
 		return _uadRegistryKey;
 	}
@@ -60,6 +65,10 @@ public class ViewUADEntitiesDisplay {
 		_typeName = typeName;
 	}
 
+	public void setUADEntityDisplay(UADEntityDisplay uadEntityDisplay) {
+		_uadEntityDisplay = uadEntityDisplay;
+	}
+
 	public void setUADRegistryKey(String uadRegistryKey) {
 		_uadRegistryKey = uadRegistryKey;
 	}
@@ -68,6 +77,7 @@ public class ViewUADEntitiesDisplay {
 	private List<NavigationItem> _navigationItems;
 	private SearchContainer<UADEntity> _searchContainer;
 	private String _typeName;
+	private UADEntityDisplay _uadEntityDisplay;
 	private String _uadRegistryKey;
 
 }

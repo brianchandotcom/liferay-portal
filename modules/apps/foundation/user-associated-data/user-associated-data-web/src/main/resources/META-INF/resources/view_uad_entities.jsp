@@ -19,6 +19,7 @@
 <%
 ViewUADEntitiesDisplay viewUADEntitiesDisplay = (ViewUADEntitiesDisplay)request.getAttribute(UADWebKeys.VIEW_UAD_ENTITIES_DISPLAY);
 
+UADEntityDisplay uadEntityDisplay = viewUADEntitiesDisplay.getUADEntityDisplay();
 SearchContainer uadEntitySearchContainer = viewUADEntitiesDisplay.getSearchContainer();
 
 portletDisplay.setShowBackIcon(true);

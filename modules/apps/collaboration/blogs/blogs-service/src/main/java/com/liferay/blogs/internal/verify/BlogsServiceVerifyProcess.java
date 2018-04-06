@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"verify.process.name=com.liferay.blogs.service"},
+	property = "verify.process.name=com.liferay.blogs.service",
 	service = VerifyProcess.class
 )
 public class BlogsServiceVerifyProcess extends VerifyProcess {

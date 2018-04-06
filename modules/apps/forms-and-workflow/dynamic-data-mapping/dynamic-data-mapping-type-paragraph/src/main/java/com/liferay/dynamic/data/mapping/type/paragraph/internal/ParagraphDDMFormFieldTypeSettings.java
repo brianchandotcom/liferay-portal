@@ -81,7 +81,7 @@ public interface ParagraphDDMFormFieldTypeSettings
 	public String dataType();
 
 	@DDMFormField(
-		label = "%title", properties = {"placeholder=%enter-a-title"},
+		label = "%title", properties = "placeholder=%enter-a-title",
 		type = "key_value"
 	)
 	@Override
@@ -89,7 +89,7 @@ public interface ParagraphDDMFormFieldTypeSettings
 
 	@DDMFormField(
 		dataType = "string", label = "%body-text",
-		properties = {"placeholder=%enter-body-text"}, type = "editor"
+		properties = "placeholder=%enter-body-text", type = "editor"
 	)
 	public String text();
 

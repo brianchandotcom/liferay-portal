@@ -89,7 +89,7 @@ public class MVCCPortalCacheTest {
 		mvccPortalCache.put(key, value, 10);
 	}
 
-	@AdviseWith(adviceClasses = {TestPortalCacheAdvice.class})
+	@AdviseWith(adviceClasses = TestPortalCacheAdvice.class)
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testMVCCCacheWithAdvice() throws Exception {

@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_SECTION},
+	property = "javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_SECTION,
 	service = ConfigurationAction.class
 )
 public class SectionConfigurationAction extends DefaultConfigurationAction {

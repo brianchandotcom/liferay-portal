@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + PollsPortletKeys.POLLS_DISPLAY},
+	property = "javax.portlet.name=" + PollsPortletKeys.POLLS_DISPLAY,
 	service = ConfigurationAction.class
 )
 public class PollsConfigurationAction extends DefaultConfigurationAction {

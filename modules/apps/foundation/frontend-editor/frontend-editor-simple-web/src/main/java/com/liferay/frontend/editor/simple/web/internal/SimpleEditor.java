@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Roberto Díaz
  */
 @Component(
-	property = {"name=simple"}, service = {Editor.class, EditorRenderer.class}
+	property = "name=simple", service = {Editor.class, EditorRenderer.class}
 )
 public class SimpleEditor implements Editor, EditorRenderer {
 

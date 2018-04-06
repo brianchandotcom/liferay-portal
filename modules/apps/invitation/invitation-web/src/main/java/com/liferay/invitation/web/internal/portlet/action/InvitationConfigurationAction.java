@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + InvitationPortletKeys.INVITATION},
+	property = "javax.portlet.name=" + InvitationPortletKeys.INVITATION,
 	service = ConfigurationAction.class
 )
 public class InvitationConfigurationAction extends DefaultConfigurationAction {

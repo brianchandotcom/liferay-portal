@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.users.admin.configuration.UserFileUploadsConfiguration",
-	property = {"form.navigator.entry.order:Integer=30"},
+	property = "form.navigator.entry.order:Integer=30",
 	service = FormNavigatorEntry.class
 )
 public class OrganizationDetailsFormNavigatorEntry

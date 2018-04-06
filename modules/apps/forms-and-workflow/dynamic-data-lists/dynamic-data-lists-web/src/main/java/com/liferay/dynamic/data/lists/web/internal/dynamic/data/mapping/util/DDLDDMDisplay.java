@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Garcia
  */
 @Component(
-	property = {"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS},
+	property = "javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS,
 	service = DDMDisplay.class
 )
 public class DDLDDMDisplay extends BaseDDMDisplay {

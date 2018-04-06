@@ -36,8 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true, property = {"node.type=FORK"},
-	service = NodeExecutor.class
+	immediate = true, property = "node.type=FORK", service = NodeExecutor.class
 )
 public class ForkNodeExecutor extends BaseNodeExecutor {
 

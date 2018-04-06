@@ -24,8 +24,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true, property = {"node.type=JOIN"},
-	service = NodeExporter.class
+	immediate = true, property = "node.type=JOIN", service = NodeExporter.class
 )
 public class JoinNodeExporter extends BaseNodeExporter implements NodeExporter {
 

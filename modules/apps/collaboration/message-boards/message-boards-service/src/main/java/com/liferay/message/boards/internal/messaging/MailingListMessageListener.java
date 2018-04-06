@@ -62,9 +62,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"destination.name=" + DestinationNames.MESSAGE_BOARDS_MAILING_LIST
-	},
+	property = "destination.name=" + DestinationNames.MESSAGE_BOARDS_MAILING_LIST,
 	service = MessageListener.class
 )
 public class MailingListMessageListener extends BaseMessageListener {

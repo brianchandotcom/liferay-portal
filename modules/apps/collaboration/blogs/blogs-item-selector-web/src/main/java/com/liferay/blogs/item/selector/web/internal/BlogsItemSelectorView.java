@@ -53,9 +53,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Roberto Díaz
  */
 @Component(
-	property = {
-		"item.selector.view.key=" + BlogsItemSelectorViewConstants.ITEM_SELECTOR_VIEW_KEY
-	}
+	property = "item.selector.view.key=" + BlogsItemSelectorViewConstants.ITEM_SELECTOR_VIEW_KEY
 )
 public class BlogsItemSelectorView
 	implements ItemSelectorView<BlogsItemSelectorCriterion> {

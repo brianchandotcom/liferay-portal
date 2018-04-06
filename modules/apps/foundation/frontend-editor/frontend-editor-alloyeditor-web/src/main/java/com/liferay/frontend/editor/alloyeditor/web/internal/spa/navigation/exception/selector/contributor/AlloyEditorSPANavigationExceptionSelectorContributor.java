@@ -21,9 +21,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javascript.single.page.application.navigation.exception.selector=:not([data-cke-saved-href])"
-	},
+	property = "javascript.single.page.application.navigation.exception.selector=:not([data-cke-saved-href])",
 	service = Object.class
 )
 public class AlloyEditorSPANavigationExceptionSelectorContributor {

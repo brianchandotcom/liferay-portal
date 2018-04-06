@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Sergio González
  */
-@Component(property = {"editor.name=alloyeditor_bbcode"})
+@Component(property = "editor.name=alloyeditor_bbcode")
 public class AlloyEditorBBCodeOptionsContributor
 	implements EditorOptionsContributor {
 

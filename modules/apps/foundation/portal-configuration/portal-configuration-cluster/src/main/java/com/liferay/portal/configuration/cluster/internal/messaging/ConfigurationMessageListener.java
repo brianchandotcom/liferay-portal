@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"destination.name=" + ConfigurationClusterDestinationNames.CONFIGURATION},
+	property = "destination.name=" + ConfigurationClusterDestinationNames.CONFIGURATION,
 	service = MessageListener.class
 )
 public class ConfigurationMessageListener extends BaseMessageListener {

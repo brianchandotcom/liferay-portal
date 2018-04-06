@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Daniel Kocsis
  */
 @Component(
-	property = {"model.class.name=com.liferay.dynamic.data.mapping.storage.DDMFormValues"},
+	property = "model.class.name=com.liferay.dynamic.data.mapping.storage.DDMFormValues",
 	service = {
 		DDMFormValuesExportImportContentProcessor.class,
 		ExportImportContentProcessor.class

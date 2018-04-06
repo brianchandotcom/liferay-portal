@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY},
+	property = "javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY,
 	service = ConfigurationAction.class
 )
 public class WikiDisplayConfigurationAction

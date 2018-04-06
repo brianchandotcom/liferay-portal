@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"layout.type=" + DDMFormPortletLayoutTypeConstants.LAYOUT_TYPE},
+	property = "layout.type=" + DDMFormPortletLayoutTypeConstants.LAYOUT_TYPE,
 	service = LayoutTypeController.class
 )
 public class DDMFormPortletLayoutTypeController

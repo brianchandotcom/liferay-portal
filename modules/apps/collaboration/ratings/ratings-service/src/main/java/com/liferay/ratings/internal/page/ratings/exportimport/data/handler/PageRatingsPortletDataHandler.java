@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	property = {"javax.portlet.name=" + PageRatingsPortletKeys.PAGE_RATINGS},
+	property = "javax.portlet.name=" + PageRatingsPortletKeys.PAGE_RATINGS,
 	service = PortletDataHandler.class
 )
 public class PageRatingsPortletDataHandler extends BasePortletDataHandler {

@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance"},
+	property = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance",
 	service = EditPortletProvider.class
 )
 public class DDMDataProviderEditPortletProvider

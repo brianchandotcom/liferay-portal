@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + SearchAdminPortletKeys.SEARCH_ADMIN},
+	property = "javax.portlet.name=" + SearchAdminPortletKeys.SEARCH_ADMIN,
 	service = ControlPanelEntry.class
 )
 public class SearchAdminControlPanelEntry extends OmniadminControlPanelEntry {

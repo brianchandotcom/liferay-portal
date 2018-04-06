@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Hernández
  */
 @Component(
-	property = {"source=lorem-ipsum"}, service = BlogsEntryDemoDataCreator.class
+	property = "source=lorem-ipsum", service = BlogsEntryDemoDataCreator.class
 )
 public class LoremIpsumBlogsEntryDemoDataCreatorImpl
 	extends BaseBlogsEntryDemoDataCreator {

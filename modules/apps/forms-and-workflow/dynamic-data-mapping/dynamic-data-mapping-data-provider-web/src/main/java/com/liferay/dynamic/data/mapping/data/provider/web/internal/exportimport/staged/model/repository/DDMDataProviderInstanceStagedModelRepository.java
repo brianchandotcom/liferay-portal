@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance"},
+	property = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance",
 	service = StagedModelRepository.class
 )
 public class DDMDataProviderInstanceStagedModelRepository

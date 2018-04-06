@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true, property = {"recipient.type=ADDRESS"},
+	immediate = true, property = "recipient.type=ADDRESS",
 	service = NotificationRecipientBuilder.class
 )
 public class AddressNotificationRecipientBuilder

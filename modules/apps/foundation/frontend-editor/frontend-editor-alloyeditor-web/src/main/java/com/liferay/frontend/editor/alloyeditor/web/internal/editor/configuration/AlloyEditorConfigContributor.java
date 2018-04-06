@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Roberto Díaz
  */
 @Component(
-	property = {"editor.name=alloyeditor"},
+	property = "editor.name=alloyeditor",
 	service = EditorConfigContributor.class
 )
 public class AlloyEditorConfigContributor

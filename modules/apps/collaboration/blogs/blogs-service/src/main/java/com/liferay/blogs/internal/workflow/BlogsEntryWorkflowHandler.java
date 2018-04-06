@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge Ferrer
  */
 @Component(
-	property = {"model.class.name=com.liferay.blogs.model.BlogsEntry"},
+	property = "model.class.name=com.liferay.blogs.model.BlogsEntry",
 	service = WorkflowHandler.class
 )
 public class BlogsEntryWorkflowHandler extends BaseWorkflowHandler<BlogsEntry> {

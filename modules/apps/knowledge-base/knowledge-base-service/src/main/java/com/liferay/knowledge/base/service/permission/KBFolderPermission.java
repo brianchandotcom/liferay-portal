@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @deprecated As of 1.3.0, with no direct replacement
  */
 @Component(
-	property = {"model.class.name=com.liferay.knowledge.base.model.KBFolder"},
+	property = "model.class.name=com.liferay.knowledge.base.model.KBFolder",
 	service = BaseModelPermissionChecker.class
 )
 @Deprecated

@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = {"destination.name=" + DestinationNames.SCHEDULER_ENGINE},
+	property = "destination.name=" + DestinationNames.SCHEDULER_ENGINE,
 	service = ProxyMessageListener.class
 )
 public class QuartzSchedulerProxyMessageListener extends ProxyMessageListener {

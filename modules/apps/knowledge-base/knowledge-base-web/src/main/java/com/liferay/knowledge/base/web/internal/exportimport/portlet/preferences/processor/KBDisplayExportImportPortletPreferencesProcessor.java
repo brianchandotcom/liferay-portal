@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_DISPLAY},
+	property = "javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_DISPLAY,
 	service = ExportImportPortletPreferencesProcessor.class
 )
 public class KBDisplayExportImportPortletPreferencesProcessor

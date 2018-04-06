@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Stian Sigvartsen
  */
 @Component(
-	immediate = true, property = {"path=/portal/google_login"},
+	immediate = true, property = "path=/portal/google_login",
 	service = StrutsAction.class
 )
 public class GoogleLoginAction extends BaseStrutsAction {

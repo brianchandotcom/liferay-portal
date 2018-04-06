@@ -31,8 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Tomas Polesovsky
  */
 @Component(
-	immediate = true,
-	property = {"portal.settings.authentication.tabs.name=cas"},
+	immediate = true, property = "portal.settings.authentication.tabs.name=cas",
 	service = DynamicInclude.class
 )
 public class PortalSettingsCASAuthenticationJSPDynamicInclude

@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + RolesAdminPortletKeys.ROLES_ADMIN},
+	property = "javax.portlet.name=" + RolesAdminPortletKeys.ROLES_ADMIN,
 	service = CustomAttributesDisplay.class
 )
 public class RoleCustomAttributesDisplay extends BaseCustomAttributesDisplay {

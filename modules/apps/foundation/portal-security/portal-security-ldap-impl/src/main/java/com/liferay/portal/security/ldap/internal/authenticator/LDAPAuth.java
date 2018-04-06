@@ -71,7 +71,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Josef Sustacek
  */
 @Component(
-	immediate = true, property = {"key=auth.pipeline.pre"},
+	immediate = true, property = "key=auth.pipeline.pre",
 	service = Authenticator.class
 )
 public class LDAPAuth implements Authenticator {

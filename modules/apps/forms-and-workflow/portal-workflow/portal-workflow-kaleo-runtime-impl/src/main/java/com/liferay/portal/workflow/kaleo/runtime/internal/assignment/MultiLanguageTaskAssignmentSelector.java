@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true, property = {"assignee.class.name=SCRIPT"},
+	immediate = true, property = "assignee.class.name=SCRIPT",
 	service = TaskAssignmentSelector.class
 )
 public class MultiLanguageTaskAssignmentSelector

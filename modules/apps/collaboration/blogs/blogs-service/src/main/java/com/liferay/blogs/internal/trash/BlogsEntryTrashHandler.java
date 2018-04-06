@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Zsolt Berentey
  */
 @Component(
-	property = {"model.class.name=com.liferay.blogs.model.BlogsEntry"},
+	property = "model.class.name=com.liferay.blogs.model.BlogsEntry",
 	service = TrashHandler.class
 )
 public class BlogsEntryTrashHandler extends BaseTrashHandler {

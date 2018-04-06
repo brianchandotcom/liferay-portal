@@ -104,7 +104,7 @@ public interface DDLRecordSetSettings {
 
 	@DDMFormField(
 		label = "%redirect-url-on-success",
-		properties = {"placeholder=%enter-a-valid-url"},
+		properties = "placeholder=%enter-a-valid-url",
 		validationErrorMessage = "%please-enter-a-valid-url",
 		validationExpression = "isURL(redirectURL)"
 	)
@@ -112,21 +112,21 @@ public interface DDLRecordSetSettings {
 
 	@DDMFormField(
 		label = "%require-user-authentication", predefinedValue = "false",
-		properties = {"showAsSwitcher=true"}
+		properties = "showAsSwitcher=true"
 	)
 	public default boolean requireAuthentication() {
 		return false;
 	}
 
 	@DDMFormField(
-		label = "%require-captcha", properties = {"showAsSwitcher=true"},
+		label = "%require-captcha", properties = "showAsSwitcher=true",
 		type = "checkbox"
 	)
 	public boolean requireCaptcha();
 
 	@DDMFormField(
 		label = "%send-an-email-notification-for-each-entry",
-		properties = {"showAsSwitcher=true"}, type = "checkbox"
+		properties = "showAsSwitcher=true", type = "checkbox"
 	)
 	public boolean sendEmailNotification();
 

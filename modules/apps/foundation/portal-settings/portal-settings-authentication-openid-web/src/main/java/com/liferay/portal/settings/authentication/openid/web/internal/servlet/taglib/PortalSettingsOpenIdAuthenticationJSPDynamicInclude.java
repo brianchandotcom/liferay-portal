@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"portal.settings.authentication.tabs.name=openid"},
+	property = "portal.settings.authentication.tabs.name=openid",
 	service = DynamicInclude.class
 )
 public class PortalSettingsOpenIdAuthenticationJSPDynamicInclude

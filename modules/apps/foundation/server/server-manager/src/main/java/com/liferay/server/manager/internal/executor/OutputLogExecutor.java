@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"server.manager.executor.path=/server/log/output"},
+	property = "server.manager.executor.path=/server/log/output",
 	service = Executor.class
 )
 public class OutputLogExecutor extends BaseExecutor {

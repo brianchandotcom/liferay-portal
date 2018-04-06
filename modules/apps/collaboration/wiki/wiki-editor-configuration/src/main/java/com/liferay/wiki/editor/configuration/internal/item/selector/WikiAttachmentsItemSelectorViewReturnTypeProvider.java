@@ -29,9 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Roberto Díaz
  */
 @Component(
-	property = {
-		"item.selector.view.key=" + WikiItemSelectorViewConstants.ITEM_SELECTOR_VIEW_KEY
-	}
+	property = "item.selector.view.key=" + WikiItemSelectorViewConstants.ITEM_SELECTOR_VIEW_KEY
 )
 public class WikiAttachmentsItemSelectorViewReturnTypeProvider
 	implements ItemSelectorViewReturnTypeProvider {

@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Sergio González
  */
 @Component(
-	property = {"source=liferay"}, service = RootMBCategoryDemoDataCreator.class
+	property = "source=liferay", service = RootMBCategoryDemoDataCreator.class
 )
 public class LiferayRootMBCategoryDemoDataCreatorImpl
 	extends BaseMBCategoryDemoDataCreatorImpl

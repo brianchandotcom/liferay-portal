@@ -66,7 +66,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.security.auto.login.basic.auth.header.module.configuration.BasicAuthHeaderAutoLoginConfiguration",
-	immediate = true, property = {"type=basic.auth.header"},
+	immediate = true, property = "type=basic.auth.header",
 	service = AutoLogin.class
 )
 public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {

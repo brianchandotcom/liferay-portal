@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Igor Spasic
  */
 @Component(
-	property = {"model.class.name=com.liferay.portal.kernel.repository.model.FileEntry"},
+	property = "model.class.name=com.liferay.portal.kernel.repository.model.FileEntry",
 	service = AtomCollectionAdapter.class
 )
 public class FileEntryAtomCollectionAdapter

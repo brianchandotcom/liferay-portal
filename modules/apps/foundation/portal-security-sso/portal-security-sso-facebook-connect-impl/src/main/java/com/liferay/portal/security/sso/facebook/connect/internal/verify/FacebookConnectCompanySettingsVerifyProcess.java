@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"verify.process.name=com.liferay.portal.security.sso.facebook.connect"},
+	property = "verify.process.name=com.liferay.portal.security.sso.facebook.connect",
 	service = VerifyProcess.class
 )
 public class FacebookConnectCompanySettingsVerifyProcess

@@ -24,8 +24,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Peter Fellwock
  */
 @Component(
-	immediate = true,
-	property = {"javax.portlet.name=" + FlashPortletKeys.FLASH},
+	immediate = true, property = "javax.portlet.name=" + FlashPortletKeys.FLASH,
 	service = ConfigurationAction.class
 )
 public class FlashConfigurationAction extends DefaultConfigurationAction {

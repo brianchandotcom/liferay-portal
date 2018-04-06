@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Philip Jones
  */
 @Component(
-	immediate = true, property = {"form.navigator.entry.order:Integer=30"},
+	immediate = true, property = "form.navigator.entry.order:Integer=30",
 	service = FormNavigatorEntry.class
 )
 public class CompanySettingsEmailNotificationsFormNavigatorEntry

@@ -37,8 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true, property = {"node.type=STATE"},
-	service = NodeExecutor.class
+	immediate = true, property = "node.type=STATE", service = NodeExecutor.class
 )
 public class StateNodeExecutor extends BaseNodeExecutor {
 

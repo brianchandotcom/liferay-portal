@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Roberto Díaz
  */
 @Component(
-	property = {"model.class.name=com.liferay.bookmarks.model.BookmarksEntry"}
+	property = "model.class.name=com.liferay.bookmarks.model.BookmarksEntry"
 )
 public class BookmarksPortletRatingsDefinition
 	implements PortletRatingsDefinition {

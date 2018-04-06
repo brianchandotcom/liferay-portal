@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + CalendarPortletKeys.CALENDAR},
+	property = "javax.portlet.name=" + CalendarPortletKeys.CALENDAR,
 	service = CustomAttributesDisplay.class
 )
 public class CalendarCustomAttributesDisplay

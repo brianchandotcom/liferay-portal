@@ -55,8 +55,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	immediate = true,
-	property = {"server.manager.executor.path=/plugins/plugin"},
+	immediate = true, property = "server.manager.executor.path=/plugins/plugin",
 	service = Executor.class
 )
 public class PluginExecutor extends BaseExecutor {

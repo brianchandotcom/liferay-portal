@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=com.liferay.knowledge.base.model.KBArticle"},
+	property = "model.class.name=com.liferay.knowledge.base.model.KBArticle",
 	service = KBArticleSelector.class
 )
 public class KBArticleKBArticleSelector implements KBArticleSelector {

@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Julio Camarero
  */
 @Component(
-	property = {"model.class.name=com.liferay.wiki.model.WikiPage"},
+	property = "model.class.name=com.liferay.wiki.model.WikiPage",
 	service = WorkflowHandler.class
 )
 public class WikiPageWorkflowHandler extends BaseWorkflowHandler<WikiPage> {

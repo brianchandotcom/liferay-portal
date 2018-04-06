@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + AMPortletKeys.ADAPTIVE_MEDIA},
+	property = "javax.portlet.name=" + AMPortletKeys.ADAPTIVE_MEDIA,
 	service = ControlPanelEntry.class
 )
 public class AMControlPanelEntry extends OmniadminControlPanelEntry {

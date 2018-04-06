@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"indexer.class.name=com.liferay.portal.test.SampleModel"},
+	property = "indexer.class.name=com.liferay.portal.test.SampleModel",
 	service = IndexerPostProcessor.class
 )
 public class TestSampleModelIndexerPostProcessor

@@ -65,7 +65,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Roberto Díaz
  */
 @Component(
-	property = {"model.class.name=com.liferay.wiki.model.WikiPage"},
+	property = "model.class.name=com.liferay.wiki.model.WikiPage",
 	service = TrashHandler.class
 )
 public class WikiPageTrashHandler extends BaseWikiTrashHandler {

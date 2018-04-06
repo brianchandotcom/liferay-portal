@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Pei-Jung Lan
  */
 @Component(
-	property = {"screen.navigation.entry.order:Integer=40"},
+	property = "screen.navigation.entry.order:Integer=40",
 	service = ScreenNavigationEntry.class
 )
 public class UserRolesScreenNavigationEntry

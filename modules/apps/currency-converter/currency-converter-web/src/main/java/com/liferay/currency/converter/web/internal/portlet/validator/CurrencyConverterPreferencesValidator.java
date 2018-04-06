@@ -32,9 +32,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + CurrencyConverterPortletKeys.CURRENCY_CONVERTER
-	}
+	property = "javax.portlet.name=" + CurrencyConverterPortletKeys.CURRENCY_CONVERTER
 )
 public class CurrencyConverterPreferencesValidator
 	implements PreferencesValidator {

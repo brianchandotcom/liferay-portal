@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	immediate = true, property = {"service.ranking:Integer=100"},
+	immediate = true, property = "service.ranking:Integer=100",
 	service = {AMImageEntryProcessor.class, DLProcessor.class}
 )
 public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {

@@ -42,9 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"dynamic.data.mapping.form.builder.context.deserializer.type=formLayout"
-	},
+	property = "dynamic.data.mapping.form.builder.context.deserializer.type=formLayout",
 	service = DDMFormContextDeserializer.class
 )
 public class DDMFormContextToDDMFormLayout

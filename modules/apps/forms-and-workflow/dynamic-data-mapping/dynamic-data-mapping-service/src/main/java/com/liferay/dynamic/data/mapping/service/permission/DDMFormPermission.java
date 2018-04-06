@@ -28,8 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Leonardo Barros
  */
 @Component(
-	immediate = true,
-	property = {"resource.name=" + DDMConstants.RESOURCE_NAME},
+	immediate = true, property = "resource.name=" + DDMConstants.RESOURCE_NAME,
 	service = ResourcePermissionChecker.class
 )
 public class DDMFormPermission extends BaseResourcePermissionChecker {

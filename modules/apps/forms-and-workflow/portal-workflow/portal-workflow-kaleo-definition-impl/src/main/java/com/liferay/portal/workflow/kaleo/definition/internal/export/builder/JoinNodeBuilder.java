@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true, property = {"node.type=JOIN"}, service = NodeBuilder.class
+	immediate = true, property = "node.type=JOIN", service = NodeBuilder.class
 )
 public class JoinNodeBuilder
 	extends BaseNodeBuilder<Join> implements NodeBuilder {

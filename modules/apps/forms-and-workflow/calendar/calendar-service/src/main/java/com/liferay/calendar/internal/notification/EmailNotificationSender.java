@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Lundgren
  */
 @Component(
-	immediate = true, property = {"notification.type=email"},
+	immediate = true, property = "notification.type=email",
 	service = NotificationSender.class
 )
 public class EmailNotificationSender implements NotificationSender {

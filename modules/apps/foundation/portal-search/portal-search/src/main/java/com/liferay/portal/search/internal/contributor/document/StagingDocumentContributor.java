@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true, property = {"service.ranking=-10000"},
+	immediate = true, property = "service.ranking=-10000",
 	service = DocumentContributor.class
 )
 public class StagingDocumentContributor implements DocumentContributor {

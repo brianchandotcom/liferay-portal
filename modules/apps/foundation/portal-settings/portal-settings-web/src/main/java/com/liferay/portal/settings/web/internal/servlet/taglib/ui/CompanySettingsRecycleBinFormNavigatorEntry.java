@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Philip Jones
  */
 @Component(
-	immediate = true, property = {"form.navigator.entry.order:Integer=10"},
+	immediate = true, property = "form.navigator.entry.order:Integer=10",
 	service = FormNavigatorEntry.class
 )
 public class CompanySettingsRecycleBinFormNavigatorEntry

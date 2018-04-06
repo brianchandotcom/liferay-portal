@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"server.manager.executor.path=/server/freemarker"},
+	property = "server.manager.executor.path=/server/freemarker",
 	service = Executor.class
 )
 public class FreeMarkerExecutor extends BaseExecutor {

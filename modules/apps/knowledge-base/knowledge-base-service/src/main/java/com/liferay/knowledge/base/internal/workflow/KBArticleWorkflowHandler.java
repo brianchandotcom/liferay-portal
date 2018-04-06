@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Shin
  */
 @Component(
-	property = {"model.class.name=com.liferay.knowledge.base.model.KBArticle"},
+	property = "model.class.name=com.liferay.knowledge.base.model.KBArticle",
 	service = WorkflowHandler.class
 )
 public class KBArticleWorkflowHandler extends BaseWorkflowHandler<KBArticle> {

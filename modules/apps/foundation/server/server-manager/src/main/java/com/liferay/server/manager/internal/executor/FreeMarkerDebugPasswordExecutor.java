@@ -28,9 +28,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"server.manager.executor.path=/server/freemarker/debug-password"
-	},
+	property = "server.manager.executor.path=/server/freemarker/debug-password",
 	service = Executor.class
 )
 public class FreeMarkerDebugPasswordExecutor extends BaseExecutor {

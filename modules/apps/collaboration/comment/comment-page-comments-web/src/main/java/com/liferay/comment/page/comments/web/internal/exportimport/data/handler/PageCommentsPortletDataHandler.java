@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + PageCommentsPortletKeys.PAGE_COMMENTS},
+	property = "javax.portlet.name=" + PageCommentsPortletKeys.PAGE_COMMENTS,
 	service = PortletDataHandler.class
 )
 public class PageCommentsPortletDataHandler extends BasePortletDataHandler {

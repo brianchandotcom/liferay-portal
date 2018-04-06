@@ -83,7 +83,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 public interface CheckboxMultipleDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 
-	@DDMFormField(label = "%inline", properties = {"showAsSwitcher=true"})
+	@DDMFormField(label = "%inline", properties = "showAsSwitcher=true")
 	public boolean inline();
 
 	@DDMFormField(
@@ -104,7 +104,7 @@ public interface CheckboxMultipleDDMFormFieldTypeSettings
 
 	@DDMFormField(
 		dataType = "boolean", label = "%show-as-a-switcher",
-		properties = {"showAsSwitcher=true"}, type = "checkbox"
+		properties = "showAsSwitcher=true", type = "checkbox"
 	)
 	public boolean showAsSwitcher();
 

@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Drew Brokke
  */
 @Component(
-	property = {"screen.navigation.entry.order:Integer=50"},
+	property = "screen.navigation.entry.order:Integer=50",
 	service = ScreenNavigationEntry.class
 )
 public class UserProfileAndDashboardScreenNavigationEntry

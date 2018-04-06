@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  */
 @Component(
-	property = {"editor.name=alloyeditor_creole"},
+	property = "editor.name=alloyeditor_creole",
 	service = EditorConfigContributor.class
 )
 public class AlloyEditorCreoleConfigContributor

@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Zsolt Berentey
  */
 @Component(
-	property = {"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS},
+	property = "javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS,
 	service = SocialActivityInterpreter.class
 )
 public class MBThreadActivityInterpreter extends BaseSocialActivityInterpreter {

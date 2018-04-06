@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Ambrin Chaudhary
  */
 @Component(
-	property = {"editor.name=ckeditor_bbcode"},
+	property = "editor.name=ckeditor_bbcode",
 	service = EditorConfigContributor.class
 )
 public class CKEditorBBCodeConfigContributor

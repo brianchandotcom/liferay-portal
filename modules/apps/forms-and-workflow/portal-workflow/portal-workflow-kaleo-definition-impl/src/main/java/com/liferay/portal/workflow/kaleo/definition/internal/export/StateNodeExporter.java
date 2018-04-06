@@ -25,8 +25,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true, property = {"node.type=STATE"},
-	service = NodeExporter.class
+	immediate = true, property = "node.type=STATE", service = NodeExporter.class
 )
 public class StateNodeExporter
 	extends BaseNodeExporter implements NodeExporter {

@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + MentionsPortletKeys.MENTIONS},
+	property = "javax.portlet.name=" + MentionsPortletKeys.MENTIONS,
 	service = UserNotificationDefinition.class
 )
 public class MentionsUserNotificationDefinition

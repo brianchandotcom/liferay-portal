@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	property = {"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS},
+	property = "javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS,
 	service = PortletDataHandler.class
 )
 public class DDLPortletDataHandler extends BasePortletDataHandler {

@@ -50,9 +50,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + UserGroupsAdminPortletKeys.USER_GROUPS_ADMIN
-	},
+	property = "javax.portlet.name=" + UserGroupsAdminPortletKeys.USER_GROUPS_ADMIN,
 	service = Indexer.class
 )
 public class UserGroupIndexer extends BaseIndexer<UserGroup> {

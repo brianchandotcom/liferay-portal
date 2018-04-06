@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Modified;
  * @author Carlos Sierra Andrés
  */
 @Component(
-	immediate = true, property = {"service.ranking:Integer=0"},
+	immediate = true, property = "service.ranking:Integer=0",
 	service = JavaScriptMinifier.class
 )
 public class YahooJavaScriptMinifier implements JavaScriptMinifier {

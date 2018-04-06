@@ -59,9 +59,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Zsolt Berentey
  */
 @Component(
-	property = {
-		"model.class.name=com.liferay.document.library.kernel.model.DLFolder"
-	},
+	property = "model.class.name=com.liferay.document.library.kernel.model.DLFolder",
 	service = TrashHandler.class
 )
 public class DLFolderTrashHandler extends DLBaseTrashHandler {

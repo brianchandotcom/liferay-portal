@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Roberto Díaz
  */
 @Component(
-	immediate = true, property = {"service.ranking:Integer=100"},
+	immediate = true, property = "service.ranking:Integer=100",
 	service = {
 		FileEntryAMImageFileEntryItemSelectorReturnTypeResolver.class,
 		ItemSelectorReturnTypeResolver.class

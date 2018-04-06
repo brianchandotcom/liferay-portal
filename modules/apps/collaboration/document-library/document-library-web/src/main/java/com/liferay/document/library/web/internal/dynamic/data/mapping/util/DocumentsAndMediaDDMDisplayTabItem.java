@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	property = {"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY},
+	property = "javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY,
 	service =
 		{DDMDisplayTabItem.class, DocumentsAndMediaDDMDisplayTabItem.class}
 )

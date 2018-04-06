@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.adaptive.media.image.internal.configuration.AMImageConfiguration",
-	immediate = true, property = {"mime.type=image/gif"},
+	immediate = true, property = "mime.type=image/gif",
 	service = {AMGIFImageScaler.class, AMImageScaler.class}
 )
 public class AMGIFImageScaler implements AMImageScaler {

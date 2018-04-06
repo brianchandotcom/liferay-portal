@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Roberto Díaz
  */
 @Component(
-	property = {"name=ckeditor_creole"},
+	property = "name=ckeditor_creole",
 	service = {Editor.class, EditorRenderer.class}
 )
 public class CKEditorCreoleEditor implements Editor, EditorRenderer {

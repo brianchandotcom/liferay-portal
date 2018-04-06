@@ -25,9 +25,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"store.type=com.liferay.portal.store.file.system.FileSystemStore"
-	},
+	property = "store.type=com.liferay.portal.store.file.system.FileSystemStore",
 	service = StoreWrapper.class
 )
 public class IgnoreDuplicatesFileSystemStoreWrapper implements StoreWrapper {

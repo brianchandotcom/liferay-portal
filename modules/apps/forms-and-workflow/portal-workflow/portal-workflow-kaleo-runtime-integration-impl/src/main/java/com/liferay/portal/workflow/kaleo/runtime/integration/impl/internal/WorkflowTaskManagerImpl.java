@@ -75,7 +75,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcellus Tavares
  */
 @Component(
-	immediate = true, property = {"proxy.bean=false"},
+	immediate = true, property = "proxy.bean=false",
 	service = WorkflowTaskManager.class
 )
 public class WorkflowTaskManagerImpl implements WorkflowTaskManager {

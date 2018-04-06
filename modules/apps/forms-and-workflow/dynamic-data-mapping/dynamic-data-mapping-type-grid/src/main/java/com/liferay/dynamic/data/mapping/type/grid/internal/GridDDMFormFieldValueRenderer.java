@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pedro Queiroz
  */
-@Component(immediate = true, property = {"ddm.form.field.type.name=grid"})
+@Component(immediate = true, property = "ddm.form.field.type.name=grid")
 public class GridDDMFormFieldValueRenderer
 	implements DDMFormFieldValueRenderer {
 

@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	property = {"model.class.name=com.liferay.polls.model.PollsQuestion"},
+	property = "model.class.name=com.liferay.polls.model.PollsQuestion",
 	service = PermissionUpdateHandler.class
 )
 public class PollsQuestionPermissionUpdateHandler

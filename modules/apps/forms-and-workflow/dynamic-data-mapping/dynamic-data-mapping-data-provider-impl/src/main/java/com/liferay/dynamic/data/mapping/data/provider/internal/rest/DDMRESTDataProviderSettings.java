@@ -126,8 +126,7 @@ public interface DDMRESTDataProviderSettings
 	public String password();
 
 	@DDMFormField(
-		label = "%url",
-		properties = {"placeholder=%enter-the-rest-service-url"},
+		label = "%url", properties = "placeholder=%enter-the-rest-service-url",
 		required = true
 	)
 	public String url();

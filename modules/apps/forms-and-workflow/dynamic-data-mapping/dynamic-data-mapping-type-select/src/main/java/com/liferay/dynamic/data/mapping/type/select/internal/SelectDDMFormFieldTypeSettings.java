@@ -31,9 +31,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 @DDMForm(
 	rules = {
 		@DDMFormRule(
-			actions = {
-				"call('getDataProviderInstanceOutputParameters', concat('dataProviderInstanceId=', getValue('ddmDataProviderInstanceId')), 'ddmDataProviderInstanceOutput=outputParameterNames')"
-			},
+			actions = "call('getDataProviderInstanceOutputParameters', concat('dataProviderInstanceId=', getValue('ddmDataProviderInstanceId')), 'ddmDataProviderInstanceOutput=outputParameterNames')",
 			condition = "not(equals(getValue('ddmDataProviderInstanceId'), ''))"
 		),
 		@DDMFormRule(
@@ -116,22 +114,19 @@ public interface SelectDDMFormFieldTypeSettings
 
 	@DDMFormField(
 		label = "%choose-an-output-parameter",
-		properties = {
-			"tooltip=%choose-an-output-parameter-for-a-data-provider-previously-created"
-		},
+		properties = "tooltip=%choose-an-output-parameter-for-a-data-provider-previously-created",
 		type = "select"
 	)
 	public String ddmDataProviderInstanceOutput();
 
 	@DDMFormField(
-		label = "%allow-multiple-selections",
-		properties = {"showAsSwitcher=true"}
+		label = "%allow-multiple-selections", properties = "showAsSwitcher=true"
 	)
 	public boolean multiple();
 
 	@DDMFormField(
 		dataType = "ddm-options", label = "%options",
-		properties = {"showLabel=false"}, type = "options"
+		properties = "showLabel=false", type = "options"
 	)
 	public DDMFormFieldOptions options();
 

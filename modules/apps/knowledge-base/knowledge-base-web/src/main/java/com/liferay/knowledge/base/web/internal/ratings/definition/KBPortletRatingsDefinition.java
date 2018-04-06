@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Roberto Díaz
  */
 @Component(
-	property = {"model.class.name=com.liferay.knowledge.base.model.KBArticle"}
+	property = "model.class.name=com.liferay.knowledge.base.model.KBArticle"
 )
 public class KBPortletRatingsDefinition implements PortletRatingsDefinition {
 

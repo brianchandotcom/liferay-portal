@@ -24,9 +24,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"bundle.symbolic.name=com.liferay.document.library.file.version.discussion.web"
-	},
+	property = "bundle.symbolic.name=com.liferay.document.library.file.version.discussion.web",
 	service = ResourceBundleLoader.class
 )
 public class FileVersionDiscussionResourceBundleLoader

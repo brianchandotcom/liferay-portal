@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pei-Jung Lan
  */
 @Component(
-	property = {"form.navigator.entry.order:Integer=80"},
+	property = "form.navigator.entry.order:Integer=80",
 	service = FormNavigatorEntry.class
 )
 public class LayoutMobileDeviceRulesFormNavigatorEntry

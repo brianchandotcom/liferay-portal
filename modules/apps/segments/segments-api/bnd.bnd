@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Segments API
+Bundle-SymbolicName: com.liferay.segments.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.segments.model,\
+	com.liferay.segments.service
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:

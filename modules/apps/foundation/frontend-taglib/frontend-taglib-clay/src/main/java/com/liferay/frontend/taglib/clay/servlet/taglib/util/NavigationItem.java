@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
@@ -71,6 +72,10 @@ public class NavigationItem extends HashMap<String, Object> {
 	}
 
 	public void setLabel(String label) {
+		if (Validator.isNotNull(_request)) {
+			label = LanguageUtil.get(_request, label);
+		}
+
 		put("label", label);
 	}
 

@@ -12,7 +12,7 @@
 	<path id="web-lib.classpath">
 		<fileset
 			dir="${project.dir}/lib/development"
-			includes="catalina.jar,jasper.jar,tomcat-api.jar,tomcat-coyote.jar"
+			includes="catalina.jar,jasper.jar,tomcat-api.jar,tomcat-coyote.jar,tomcat-util.jar"
 		/>
 		<fileset
 			dir="${project.dir}/lib/portal"

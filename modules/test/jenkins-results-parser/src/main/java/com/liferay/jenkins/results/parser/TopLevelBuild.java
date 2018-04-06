@@ -362,7 +362,7 @@ public class TopLevelBuild extends BaseBuild {
 	protected TopLevelBuild(String url, TopLevelBuild topLevelBuild) {
 		super(url, topLevelBuild);
 
-		_pullRequest = new PullRequest(_getPullRequestString());
+		_pullRequest = new PullRequest(_getPullRequestURLString());
 	}
 
 	@Override
@@ -1328,7 +1328,7 @@ public class TopLevelBuild extends BaseBuild {
 	protected static final Pattern gitRepositoryTempMapNamePattern =
 		Pattern.compile("git\\.(?<repositoryType>.*)\\.properties");
 
-	private String _getPullRequestString() {
+	private String _getPullRequestURLString() {
 		JSONObject buildJSONObject = getBuildJSONObject();
 
 		JSONArray actionsJSONArray = buildJSONObject.getJSONArray("actions");

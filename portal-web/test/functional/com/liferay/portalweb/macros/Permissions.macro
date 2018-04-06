@@ -200,13 +200,6 @@
 	</command>
 
 	<command name="setUpOrgRoleLoginUserPG">
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />
 			<var name="panel" value="Control Panel" />
@@ -275,13 +268,6 @@
 			<var name="roleTitle" value="" />
 		</execute>
 
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />
 			<var name="panel" value="Control Panel" />
@@ -343,13 +329,6 @@
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />
 			<var name="panel" value="Control Panel" />
@@ -378,18 +357,6 @@
 			<var name="category" value="Users" />
 			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userBirthday" value="${userBirthday}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userEmailAddressVariation" value="${userEmailAddressVariation}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userGender" value="${userGender}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userMiddleName" value="${userMiddleName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-			<var name="userScreenNameVariation" value="${userScreenNameVariation}" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -472,13 +439,6 @@
 			<var name="roleTitle" value="" />
 		</execute>
 
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />
 			<var name="panel" value="Control Panel" />
@@ -546,18 +506,6 @@
 			<var name="category" value="Users" />
 			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userBirthday" value="${userBirthday}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userEmailAddressVariation" value="${userEmailAddressVariation}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userGender" value="${userGender}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userMiddleName" value="${userMiddleName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-			<var name="userScreenNameVariation" value="${userScreenNameVariation}" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -661,18 +609,6 @@
 			<var name="category" value="Users" />
 			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userBirthday" value="${userBirthday}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userEmailAddressVariation" value="${userEmailAddressVariation}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userGender" value="${userGender}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userMiddleName" value="${userMiddleName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-			<var name="userScreenNameVariation" value="${userScreenNameVariation}" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">

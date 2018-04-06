@@ -68,11 +68,11 @@
 		</execute>
 
 		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userMiddleName" value="usermn" />
-			<var name="userScreenName" value="usersn" />
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userMiddleName" value="usermn1" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -83,7 +83,7 @@
 
 		<execute macro="User#editUserSiteCP">
 			<var name="siteName" value="${siteName}" />
-			<var name="userScreenName" value="usersn" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -92,23 +92,10 @@
 
 		<execute macro="User#advancedSearchViaSiteMembersDirectoryPG">
 			<var name="searchField" value="First Name" />
-			<var name="searchTerm" value="userfn" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Site Members Directory Page" />
-		</execute>
-
-		<execute macro="User#advancedSearchViaSiteMembersDirectoryPG">
-			<var name="searchField" value="First Name" />
-			<var name="searchNoResults" value="true" />
 			<var name="searchTerm" value="userfn1" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -116,24 +103,24 @@
 		</execute>
 
 		<execute macro="User#advancedSearchViaSiteMembersDirectoryPG">
-			<var name="searchField" value="Middle Name" />
-			<var name="searchTerm" value="usermn" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Site Members Directory Page" />
-		</execute>
-
-		<execute macro="User#advancedSearchViaSiteMembersDirectoryPG">
-			<var name="searchField" value="Middle Name" />
+			<var name="searchField" value="First Name" />
 			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="userfn2" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Site Members Directory Page" />
+		</execute>
+
+		<execute macro="User#advancedSearchViaSiteMembersDirectoryPG">
+			<var name="searchField" value="Middle Name" />
 			<var name="searchTerm" value="usermn1" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -141,24 +128,24 @@
 		</execute>
 
 		<execute macro="User#advancedSearchViaSiteMembersDirectoryPG">
-			<var name="searchField" value="Last Name" />
-			<var name="searchTerm" value="userln" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Site Members Directory Page" />
-		</execute>
-
-		<execute macro="User#advancedSearchViaSiteMembersDirectoryPG">
-			<var name="searchField" value="Last Name" />
+			<var name="searchField" value="Middle Name" />
 			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="usermn2" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Site Members Directory Page" />
+		</execute>
+
+		<execute macro="User#advancedSearchViaSiteMembersDirectoryPG">
+			<var name="searchField" value="Last Name" />
 			<var name="searchTerm" value="userln1" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -166,24 +153,37 @@
 		</execute>
 
 		<execute macro="User#advancedSearchViaSiteMembersDirectoryPG">
-			<var name="searchField" value="Screen Name" />
-			<var name="searchTerm" value="usersn" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Site Members Directory Page" />
-		</execute>
-
-		<execute macro="User#advancedSearchViaSiteMembersDirectoryPG">
-			<var name="searchField" value="Screen Name" />
+			<var name="searchField" value="Last Name" />
 			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="userln2" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Site Members Directory Page" />
+		</execute>
+
+		<execute macro="User#advancedSearchViaSiteMembersDirectoryPG">
+			<var name="searchField" value="Screen Name" />
 			<var name="searchTerm" value="usersn1" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Site Members Directory Page" />
+		</execute>
+
+		<execute macro="User#advancedSearchViaSiteMembersDirectoryPG">
+			<var name="searchField" value="Screen Name" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="usersn2" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -192,10 +192,10 @@
 
 		<execute macro="User#advancedSearchViaSiteMembersDirectoryPG">
 			<var name="searchField" value="Email Address" />
-			<var name="searchTerm" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
+			<var name="searchTerm" value="userea1@liferay.com" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -205,10 +205,10 @@
 		<execute macro="User#advancedSearchViaSiteMembersDirectoryPG">
 			<var name="searchField" value="Email Address" />
 			<var name="searchNoResults" value="true" />
-			<var name="searchTerm" value="userea@liferay.com1" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
+			<var name="searchTerm" value="userea1@liferay.com1" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 	</command>
 </definition>

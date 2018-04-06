@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	immediate = true, property = {"mime.type=*"},
+	immediate = true, property = "mime.type=*",
 	service = {AMDefaultImageScaler.class, AMImageScaler.class}
 )
 public class AMDefaultImageScaler implements AMImageScaler {

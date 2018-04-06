@@ -28,9 +28,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Sergio González
  */
 @Component(
-	property = {
-		"item.selector.view.key=" + BlogsItemSelectorViewConstants.ITEM_SELECTOR_VIEW_KEY
-	},
+	property = "item.selector.view.key=" + BlogsItemSelectorViewConstants.ITEM_SELECTOR_VIEW_KEY,
 	service = ItemSelectorViewReturnTypeProvider.class
 )
 public class AMBlogsItemSelectorViewReturnTypeProvider

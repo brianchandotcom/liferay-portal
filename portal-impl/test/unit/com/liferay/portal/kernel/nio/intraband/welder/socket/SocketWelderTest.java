@@ -73,7 +73,7 @@ public class SocketWelderTest {
 			Boolean.toString(false));
 	}
 
-	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
+	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testConfiguration() {
 		Assert.assertEquals(8192, SocketWelder.Configuration.bufferSize);
@@ -85,7 +85,7 @@ public class SocketWelderTest {
 		Assert.assertFalse(SocketWelder.Configuration.tcpNoDelay);
 	}
 
-	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
+	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testConstructor() throws Exception {
 		SocketWelder socketWelder = new SocketWelder();
@@ -112,7 +112,7 @@ public class SocketWelderTest {
 			socketWelder.soTimeout, serverSocket.getSoTimeout());
 	}
 
-	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
+	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testWeldSolingerOff() throws Exception {
 		PropsUtilAdvice.setProps(
@@ -121,7 +121,7 @@ public class SocketWelderTest {
 		testWeldSolingerOn();
 	}
 
-	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
+	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testWeldSolingerOn() throws Exception {
 		final SocketWelder serverSocketWelder = new SocketWelder();

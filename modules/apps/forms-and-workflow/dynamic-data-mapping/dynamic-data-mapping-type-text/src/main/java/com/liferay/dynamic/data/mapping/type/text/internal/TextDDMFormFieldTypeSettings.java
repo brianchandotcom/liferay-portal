@@ -32,9 +32,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 @DDMForm(
 	rules = {
 		@DDMFormRule(
-			actions = {
-				"call('getDataProviderInstanceOutputParameters', concat('dataProviderInstanceId=', getValue('ddmDataProviderInstanceId')), 'ddmDataProviderInstanceOutput=outputParameterNames')"
-			},
+			actions = "call('getDataProviderInstanceOutputParameters', concat('dataProviderInstanceId=', getValue('ddmDataProviderInstanceId')), 'ddmDataProviderInstanceOutput=outputParameterNames')",
 			condition = "not(equals(getValue('ddmDataProviderInstanceId'), ''))"
 		),
 		@DDMFormRule(
@@ -93,14 +91,14 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 public interface TextDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 
-	@DDMFormField(label = "%autocomplete", properties = {"showAsSwitcher=true"})
+	@DDMFormField(label = "%autocomplete", properties = "showAsSwitcher=true")
 	public boolean autocomplete();
 
 	@DDMFormField(
 		label = "%create-list",
 		optionLabels = {"%manually", "%from-data-provider"},
 		optionValues = {"manual", "data-provider"},
-		properties = {"showLabel=false"}, type = "radio"
+		properties = "showLabel=false", type = "radio"
 	)
 	public String dataSourceType();
 
@@ -116,9 +114,7 @@ public interface TextDDMFormFieldTypeSettings
 
 	@DDMFormField(
 		label = "%choose-an-output-parameter",
-		properties = {
-			"tooltip=%choose-an-output-parameter-for-a-data-provider-previously-created"
-		},
+		properties = "tooltip=%choose-an-output-parameter-for-a-data-provider-previously-created",
 		type = "select"
 	)
 	public String ddmDataProviderInstanceOutput();
@@ -127,7 +123,7 @@ public interface TextDDMFormFieldTypeSettings
 		label = "%my-text-field-has",
 		optionLabels = {"%a-single-line", "%multiple-lines"},
 		optionValues = {"singleline", "multiline"},
-		predefinedValue = "singleline", properties = {"inline=true"},
+		predefinedValue = "singleline", properties = "inline=true",
 		type = "radio"
 	)
 	public String displayStyle();

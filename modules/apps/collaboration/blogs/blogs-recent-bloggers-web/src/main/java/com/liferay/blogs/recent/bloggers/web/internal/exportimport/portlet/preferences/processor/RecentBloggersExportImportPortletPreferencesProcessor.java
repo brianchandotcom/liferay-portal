@@ -45,9 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + RecentBloggersPortletKeys.RECENT_BLOGGERS
-	},
+	property = "javax.portlet.name=" + RecentBloggersPortletKeys.RECENT_BLOGGERS,
 	service = ExportImportPortletPreferencesProcessor.class
 )
 public class RecentBloggersExportImportPortletPreferencesProcessor

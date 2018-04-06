@@ -56,7 +56,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"verify.process.name=com.liferay.portal.security.ldap"},
+	property = "verify.process.name=com.liferay.portal.security.ldap",
 	service = VerifyProcess.class
 )
 public class LDAPPropertiesVerifyProcess extends VerifyProcess {

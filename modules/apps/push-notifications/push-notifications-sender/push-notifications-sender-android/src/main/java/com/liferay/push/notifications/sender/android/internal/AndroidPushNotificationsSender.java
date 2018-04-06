@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	configurationPid = "com.liferay.push.notifications.sender.android.internal.configuration.AndroidPushNotificationsSenderConfiguration",
 	immediate = true,
-	property = {"platform=" + AndroidPushNotificationsSender.PLATFORM}
+	property = "platform=" + AndroidPushNotificationsSender.PLATFORM
 )
 public class AndroidPushNotificationsSender implements PushNotificationsSender {
 

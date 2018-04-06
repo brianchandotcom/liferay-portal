@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + IFramePortletKeys.IFRAME},
+	property = "javax.portlet.name=" + IFramePortletKeys.IFRAME,
 	service = ConfigurationAction.class
 )
 public class IFrameConfigurationAction extends DefaultConfigurationAction {

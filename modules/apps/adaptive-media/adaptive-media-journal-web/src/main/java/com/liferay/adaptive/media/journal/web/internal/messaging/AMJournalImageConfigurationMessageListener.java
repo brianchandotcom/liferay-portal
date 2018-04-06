@@ -28,10 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"destination.name=" +
-			AMImageDestinationNames.ADAPTIVE_MEDIA_IMAGE_CONFIGURATION
-	},
+	property = "destination.name=" + AMImageDestinationNames.ADAPTIVE_MEDIA_IMAGE_CONFIGURATION,
 	service = MessageListener.class
 )
 public class AMJournalImageConfigurationMessageListener

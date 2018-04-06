@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"layout.type=" + ContentLayoutTypeControllerConstants.LAYOUT_TYPE_CONTENT},
+	property = "layout.type=" + ContentLayoutTypeControllerConstants.LAYOUT_TYPE_CONTENT,
 	service = LayoutTypeAccessPolicy.class
 )
 public class ContentLayoutTypeAccessPolicy

@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = {"com.liferay.portal.workflow.kaleo.runtime.action.executor.language=drl"},
+	property = "com.liferay.portal.workflow.kaleo.runtime.action.executor.language=drl",
 	service = ActionExecutor.class
 )
 public class DRLActionExecutor implements ActionExecutor {

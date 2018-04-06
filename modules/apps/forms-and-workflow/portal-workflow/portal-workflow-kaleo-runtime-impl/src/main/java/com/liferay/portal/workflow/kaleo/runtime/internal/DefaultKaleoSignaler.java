@@ -39,7 +39,7 @@ import java.util.List;
  */
 @Transactional(
 	isolation = Isolation.PORTAL, propagation = Propagation.SUPPORTS,
-	rollbackFor = {Exception.class}
+	rollbackFor = Exception.class
 )
 public class DefaultKaleoSignaler
 	extends BaseKaleoBean implements KaleoSignaler {
@@ -63,7 +63,7 @@ public class DefaultKaleoSignaler
 	@Override
 	@Transactional(
 		isolation = Isolation.PORTAL, propagation = Propagation.REQUIRED,
-		rollbackFor = {Exception.class}
+		rollbackFor = Exception.class
 	)
 	public void signalExecute(
 			KaleoNode currentKaleoNode, ExecutionContext executionContext)

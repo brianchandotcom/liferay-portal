@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  */
 @Component(
-	immediate = true, property = {"adaptive.media.key=document-library"},
+	immediate = true, property = "adaptive.media.key=document-library",
 	service = AMImageOptimizer.class
 )
 public class DLAMImageOptimizer implements AMImageOptimizer {

@@ -58,7 +58,7 @@ public class MailboxUtilTest {
 		new AggregateTestRule(
 			AspectJNewEnvTestRule.INSTANCE, CodeCoverageAssertor.INSTANCE);
 
-	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
+	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testConstructor() {
 		new MailboxUtil();
@@ -161,7 +161,7 @@ public class MailboxUtilTest {
 		Assert.assertFalse(reaperThread.isAlive());
 	}
 
-	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
+	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testReceiveMailWithReaperThreadDisabled() {
 		PropsUtilAdvice.setProps(
@@ -185,7 +185,7 @@ public class MailboxUtilTest {
 		Assert.assertSame(byteBuffer1, MailboxUtil.receiveMail(receipt1));
 	}
 
-	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
+	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testReceiveMailWithReaperThreadEnabled() {
 		PropsUtilAdvice.setProps(
@@ -209,7 +209,7 @@ public class MailboxUtilTest {
 		Assert.assertSame(byteBuffer1, MailboxUtil.receiveMail(receipt1));
 	}
 
-	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
+	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testSendMailFail() {
 		MockIntraband mockIntraband = new MockIntraband();
@@ -230,7 +230,7 @@ public class MailboxUtilTest {
 		}
 	}
 
-	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
+	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testSendMailSuccess() throws MailboxException {
 		final long receipt = 100;

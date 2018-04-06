@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"layout.type=" + LayoutConstants.TYPE_LINK_TO_LAYOUT},
+	property = "layout.type=" + LayoutConstants.TYPE_LINK_TO_LAYOUT,
 	service = LayoutTypeAccessPolicy.class
 )
 public class LinkToPageLayoutTypeAccessPolicy

@@ -40,8 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Shin
  */
 @Component(
-	property = {"key=servlet.service.events.pre"},
-	service = LifecycleAction.class
+	property = "key=servlet.service.events.pre", service = LifecycleAction.class
 )
 public class KBServicePreAction extends Action {
 

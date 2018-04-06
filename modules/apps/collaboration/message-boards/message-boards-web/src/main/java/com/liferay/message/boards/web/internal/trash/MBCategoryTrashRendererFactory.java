@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=com.liferay.message.boards.model.MBCategory"},
+	property = "model.class.name=com.liferay.message.boards.model.MBCategory",
 	service = TrashRendererFactory.class
 )
 public class MBCategoryTrashRendererFactory implements TrashRendererFactory {

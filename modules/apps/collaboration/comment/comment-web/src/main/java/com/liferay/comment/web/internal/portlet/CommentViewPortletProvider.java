@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=com.liferay.portal.kernel.comment.Comment"},
+	property = "model.class.name=com.liferay.portal.kernel.comment.Comment",
 	service = ViewPortletProvider.class
 )
 public class CommentViewPortletProvider

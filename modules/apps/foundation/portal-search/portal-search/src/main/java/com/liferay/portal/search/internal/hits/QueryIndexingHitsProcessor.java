@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Josef Sustacek
  */
 @Component(
-	immediate = true, property = {"sort.order=2"}, service = HitsProcessor.class
+	immediate = true, property = "sort.order=2", service = HitsProcessor.class
 )
 public class QueryIndexingHitsProcessor implements HitsProcessor {
 

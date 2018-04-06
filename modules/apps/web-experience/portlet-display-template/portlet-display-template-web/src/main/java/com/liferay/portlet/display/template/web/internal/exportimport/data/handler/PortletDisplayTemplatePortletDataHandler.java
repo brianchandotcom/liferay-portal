@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Juan Fernández
  */
 @Component(
-	property = {"javax.portlet.name=" + PortletKeys.PORTLET_DISPLAY_TEMPLATE},
+	property = "javax.portlet.name=" + PortletKeys.PORTLET_DISPLAY_TEMPLATE,
 	service = PortletDataHandler.class
 )
 public class PortletDisplayTemplatePortletDataHandler

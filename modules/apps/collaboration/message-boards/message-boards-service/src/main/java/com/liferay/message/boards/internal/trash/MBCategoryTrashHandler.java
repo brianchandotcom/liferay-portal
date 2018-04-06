@@ -56,7 +56,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Garcia
  */
 @Component(
-	property = {"model.class.name=com.liferay.message.boards.model.MBCategory"},
+	property = "model.class.name=com.liferay.message.boards.model.MBCategory",
 	service = TrashHandler.class
 )
 public class MBCategoryTrashHandler extends BaseTrashHandler {

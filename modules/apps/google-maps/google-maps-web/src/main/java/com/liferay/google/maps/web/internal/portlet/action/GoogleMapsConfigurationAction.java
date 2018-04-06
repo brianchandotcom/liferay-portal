@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + GoogleMapsPortletKeys.GOOGLE_MAPS},
+	property = "javax.portlet.name=" + GoogleMapsPortletKeys.GOOGLE_MAPS,
 	service = ConfigurationAction.class
 )
 public class GoogleMapsConfigurationAction extends DefaultConfigurationAction {

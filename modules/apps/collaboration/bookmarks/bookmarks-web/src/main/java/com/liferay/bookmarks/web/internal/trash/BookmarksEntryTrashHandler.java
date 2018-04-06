@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Zsolt Berentey
  */
 @Component(
-	property = {"model.class.name=com.liferay.bookmarks.model.BookmarksEntry"},
+	property = "model.class.name=com.liferay.bookmarks.model.BookmarksEntry",
 	service = TrashHandler.class
 )
 public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {

@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true, property = {"recipient.type=USER"},
+	immediate = true, property = "recipient.type=USER",
 	service = NotificationRecipientBuilder.class
 )
 public class UserNotificationRecipientBuilder

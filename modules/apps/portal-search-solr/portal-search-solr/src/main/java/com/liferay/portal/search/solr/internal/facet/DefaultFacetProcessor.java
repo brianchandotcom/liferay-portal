@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, property = {"class.name=DEFAULT"})
+@Component(immediate = true, property = "class.name=DEFAULT")
 public class DefaultFacetProcessor implements FacetProcessor<SolrQuery> {
 
 	@Override

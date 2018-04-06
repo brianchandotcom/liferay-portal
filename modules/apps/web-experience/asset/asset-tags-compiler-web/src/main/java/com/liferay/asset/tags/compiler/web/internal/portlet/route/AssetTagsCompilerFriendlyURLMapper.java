@@ -35,9 +35,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Shuyang Zhou
  */
 @Component(
-	property = {
-		"javax.portlet.name=" + AssetTagsCompilerPortletKeys.ASSET_TAGS_COMPILER
-	},
+	property = "javax.portlet.name=" + AssetTagsCompilerPortletKeys.ASSET_TAGS_COMPILER,
 	service = FriendlyURLMapper.class
 )
 public class AssetTagsCompilerFriendlyURLMapper extends BaseFriendlyURLMapper {

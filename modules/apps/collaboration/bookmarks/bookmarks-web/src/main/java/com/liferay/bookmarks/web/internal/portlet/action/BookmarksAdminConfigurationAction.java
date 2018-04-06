@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS_ADMIN},
+	property = "javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS_ADMIN,
 	service = ConfigurationAction.class
 )
 public class BookmarksAdminConfigurationAction

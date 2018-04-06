@@ -45,8 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mika Koivisto
  */
 @Component(
-	immediate = true,
-	property = {"lang.type=" + TemplateConstants.LANG_TYPE_FTL},
+	immediate = true, property = "lang.type=" + TemplateConstants.LANG_TYPE_FTL,
 	service = TemplateResourceParser.class
 )
 public class FreeMarkerServletResourceParser extends URLResourceParser {

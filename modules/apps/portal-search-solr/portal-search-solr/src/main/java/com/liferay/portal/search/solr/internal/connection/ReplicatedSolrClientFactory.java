@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true, property = {"type=REPLICATED"},
+	immediate = true, property = "type=REPLICATED",
 	service = SolrClientFactory.class
 )
 public class ReplicatedSolrClientFactory implements SolrClientFactory {

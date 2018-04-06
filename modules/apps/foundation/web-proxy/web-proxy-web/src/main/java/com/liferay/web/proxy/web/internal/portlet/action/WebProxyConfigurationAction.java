@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + WebProxyPortletKeys.WEB_PROXY},
+	property = "javax.portlet.name=" + WebProxyPortletKeys.WEB_PROXY,
 	service = ConfigurationAction.class
 )
 public class WebProxyConfigurationAction extends DefaultConfigurationAction {

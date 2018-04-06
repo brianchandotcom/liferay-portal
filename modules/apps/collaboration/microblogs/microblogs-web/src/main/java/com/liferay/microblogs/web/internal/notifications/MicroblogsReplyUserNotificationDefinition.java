@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + MicroblogsPortletKeys.MICROBLOGS},
+	property = "javax.portlet.name=" + MicroblogsPortletKeys.MICROBLOGS,
 	service = UserNotificationDefinition.class
 )
 public class MicroblogsReplyUserNotificationDefinition

@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"org.osgi.http.websocket.endpoint.path=/o/websocket/test"},
+	property = "org.osgi.http.websocket.endpoint.path=/o/websocket/test",
 	service = Endpoint.class
 )
 public class SimpleWebSocketEndpoint extends Endpoint {

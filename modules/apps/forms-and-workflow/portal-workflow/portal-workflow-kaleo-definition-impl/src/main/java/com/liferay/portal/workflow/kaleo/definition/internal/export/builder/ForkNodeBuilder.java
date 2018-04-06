@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true, property = {"node.type=FORK"}, service = NodeBuilder.class
+	immediate = true, property = "node.type=FORK", service = NodeBuilder.class
 )
 public class ForkNodeBuilder
 	extends BaseNodeBuilder<Fork> implements NodeBuilder {

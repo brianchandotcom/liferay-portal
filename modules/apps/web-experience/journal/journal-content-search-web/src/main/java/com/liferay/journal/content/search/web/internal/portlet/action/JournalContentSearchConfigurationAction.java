@@ -29,9 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + JournalContentSearchPortletKeys.JOURNAL_CONTENT_SEARCH
-	},
+	property = "javax.portlet.name=" + JournalContentSearchPortletKeys.JOURNAL_CONTENT_SEARCH,
 	service = ConfigurationAction.class
 )
 public class JournalContentSearchConfigurationAction

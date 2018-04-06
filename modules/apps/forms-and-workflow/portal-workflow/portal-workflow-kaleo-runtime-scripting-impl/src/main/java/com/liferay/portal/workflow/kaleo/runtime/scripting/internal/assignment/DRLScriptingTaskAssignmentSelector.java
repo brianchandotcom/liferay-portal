@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	enabled = false, immediate = true, property = {"scripting.language=drl"},
+	enabled = false, immediate = true, property = "scripting.language=drl",
 	service = TaskAssignmentSelector.class
 )
 public class DRLScriptingTaskAssignmentSelector

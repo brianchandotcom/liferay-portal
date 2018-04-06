@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"layout.type=" + LayoutConstants.TYPE_CONTROL_PANEL},
+	property = "layout.type=" + LayoutConstants.TYPE_CONTROL_PANEL,
 	service = LayoutTypeAccessPolicy.class
 )
 public class ControlPanelLayoutTypeAccessPolicy

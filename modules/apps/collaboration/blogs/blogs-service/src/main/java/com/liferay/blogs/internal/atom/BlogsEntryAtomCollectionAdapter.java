@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Igor Spasic
  */
 @Component(
-	property = {"model.class.name=com.liferay.blogs.model.BlogsEntry"},
+	property = "model.class.name=com.liferay.blogs.model.BlogsEntry",
 	service = AtomCollectionAdapter.class
 )
 public class BlogsEntryAtomCollectionAdapter

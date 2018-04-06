@@ -37,10 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" +
-			ConfigurationAdminPortletKeys.SYSTEM_SETTINGS
-	},
+	property = "javax.portlet.name=" + ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
 	service = PortletConfigurationIcon.class
 )
 public class ExportAllConfigurationIcon extends BasePortletConfigurationIcon {

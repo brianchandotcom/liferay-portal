@@ -77,7 +77,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"related.entry.indexer.class.name=com.liferay.message.boards.model.MBMessage"},
+	property = "related.entry.indexer.class.name=com.liferay.message.boards.model.MBMessage",
 	service = {Indexer.class, RelatedEntryIndexer.class}
 )
 public class MBMessageIndexer

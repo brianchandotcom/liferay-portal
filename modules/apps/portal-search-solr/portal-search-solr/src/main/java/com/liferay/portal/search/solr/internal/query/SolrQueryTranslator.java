@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Miguel Angelo Caldas Gallindo
  */
 @Component(
-	immediate = true, property = {"search.engine.impl=Solr"},
+	immediate = true, property = "search.engine.impl=Solr",
 	service = {LuceneQueryConverter.class, QueryTranslator.class}
 )
 public class SolrQueryTranslator

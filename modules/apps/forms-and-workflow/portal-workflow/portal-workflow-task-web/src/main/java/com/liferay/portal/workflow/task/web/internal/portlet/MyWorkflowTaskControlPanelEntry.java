@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + PortletKeys.MY_WORKFLOW_TASK},
+	property = "javax.portlet.name=" + PortletKeys.MY_WORKFLOW_TASK,
 	service = ControlPanelEntry.class
 )
 public class MyWorkflowTaskControlPanelEntry

@@ -37,7 +37,7 @@ import java.util.regex.Pattern;
  * @author Shuyang Zhou
  */
 @DoPrivileged
-@OSGiBeanProperties(property = {"service.ranking:Integer=100"})
+@OSGiBeanProperties(property = "service.ranking:Integer=100")
 public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 
 	@Override

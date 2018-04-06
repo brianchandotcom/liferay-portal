@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true, property = {"search.engine.impl=Elasticsearch"},
+	immediate = true, property = "search.engine.impl=Elasticsearch",
 	service = SpellCheckIndexWriter.class
 )
 public class ElasticsearchSpellCheckIndexWriter

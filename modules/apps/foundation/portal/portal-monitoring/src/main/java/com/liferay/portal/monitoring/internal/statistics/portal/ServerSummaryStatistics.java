@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = {"name=portalSummaryStatistics"},
+	property = "name=portalSummaryStatistics",
 	service = ServerSummaryStatistics.class
 )
 public class ServerSummaryStatistics implements SummaryStatistics {

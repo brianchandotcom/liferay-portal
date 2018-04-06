@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"portal.settings.authentication.tabs.name=facebook"},
+	property = "portal.settings.authentication.tabs.name=facebook",
 	service = DynamicInclude.class
 )
 public class PortalSettingsFacebookConnectAuthenticationJSPDynamicInclude

@@ -119,7 +119,7 @@ public class SPIRegistryImplTest {
 		Assert.assertTrue(_excludedPortletIds.isEmpty());
 	}
 
-	@AdviseWith(adviceClasses = {PortletLocalServiceUtilAdvice.class})
+	@AdviseWith(adviceClasses = PortletLocalServiceUtilAdvice.class)
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testRegistration() throws RemoteException {

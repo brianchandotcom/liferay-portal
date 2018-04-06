@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + SearchBarPortletKeys.SEARCH_BAR},
+	property = "javax.portlet.name=" + SearchBarPortletKeys.SEARCH_BAR,
 	service = ConfigurationAction.class
 )
 public class SearchBarConfigurationAction extends DefaultConfigurationAction {

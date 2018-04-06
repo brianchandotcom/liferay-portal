@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Hai Yu
  */
 @Component(
-	property = {"javax.portlet.name=" + ContactsPortletKeys.CONTACTS_CENTER},
+	property = "javax.portlet.name=" + ContactsPortletKeys.CONTACTS_CENTER,
 	service = SocialActivityInterpreter.class
 )
 public class ContactsCenterActivityInterpreter

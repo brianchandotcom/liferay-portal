@@ -25,9 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + PushNotificationsPortletKeys.PUSH_NOTIFICATIONS
-	},
+	property = "javax.portlet.name=" + PushNotificationsPortletKeys.PUSH_NOTIFICATIONS,
 	service = ControlPanelEntry.class
 )
 public class PushNotificationsControlPanelEntry

@@ -66,7 +66,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(
 	immediate = true,
-	property = {"destination.name=" + DestinationNames.HOT_DEPLOY},
+	property = "destination.name=" + DestinationNames.HOT_DEPLOY,
 	service = MessageListener.class
 )
 public class ResourcesImporterHotDeployMessageListener

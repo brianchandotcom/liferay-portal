@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"server.manager.executor.path=/server/freemarker/debug-port"},
+	property = "server.manager.executor.path=/server/freemarker/debug-port",
 	service = Executor.class
 )
 public class FreeMarkerDebugPortExecutor extends DebugPortExecutor {

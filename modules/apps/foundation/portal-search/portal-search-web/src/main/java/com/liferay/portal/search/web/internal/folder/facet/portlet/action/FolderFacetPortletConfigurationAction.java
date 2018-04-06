@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + FolderFacetPortletKeys.FOLDER_FACET},
+	property = "javax.portlet.name=" + FolderFacetPortletKeys.FOLDER_FACET,
 	service = ConfigurationAction.class
 )
 public class FolderFacetPortletConfigurationAction

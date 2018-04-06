@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	property = {"form.navigator.entry.order:Integer=50"},
+	property = "form.navigator.entry.order:Integer=50",
 	service = FormNavigatorEntry.class
 )
 public class JournalScheduleFormNavigatorEntry

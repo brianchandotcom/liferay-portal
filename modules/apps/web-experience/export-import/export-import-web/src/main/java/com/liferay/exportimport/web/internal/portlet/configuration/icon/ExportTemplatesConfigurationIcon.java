@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + ExportImportPortletKeys.EXPORT},
+	property = "javax.portlet.name=" + ExportImportPortletKeys.EXPORT,
 	service = PortletConfigurationIcon.class
 )
 public class ExportTemplatesConfigurationIcon

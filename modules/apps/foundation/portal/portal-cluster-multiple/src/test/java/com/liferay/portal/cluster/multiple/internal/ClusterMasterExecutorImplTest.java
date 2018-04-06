@@ -408,7 +408,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 				isMasterTokenAcquiredNotified());
 	}
 
-	@AdviseWith(adviceClasses = {ClusterExecutorAdvice.class})
+	@AdviseWith(adviceClasses = ClusterExecutorAdvice.class)
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testGetMasterClusterNodeIdRetry() throws Exception {
@@ -577,7 +577,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 		Assert.assertFalse(clusterMasterExecutorImpl.isMaster());
 	}
 
-	@AdviseWith(adviceClasses = {SPIUtilAdvice.class})
+	@AdviseWith(adviceClasses = SPIUtilAdvice.class)
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testMisc() {

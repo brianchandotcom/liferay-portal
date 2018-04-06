@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"destination.name=" + KaleoRuntimeDestinationNames.KALEO_GRAPH_WALKER},
+	property = "destination.name=" + KaleoRuntimeDestinationNames.KALEO_GRAPH_WALKER,
 	service = MessageListener.class
 )
 public class PathElementMessageListener extends BaseMessageListener {

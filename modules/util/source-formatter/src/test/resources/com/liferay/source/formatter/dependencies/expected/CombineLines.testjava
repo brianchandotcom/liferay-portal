@@ -44,9 +44,7 @@ public class CombineLines extends SuperClass {
 
 	@DDMFormField(
 		label = "%field-with-a-long-name-so-it-will-surpass-the-max-number-of-characters-for-a-single-line",
-		properties = {
-			"tooltip=%tooltip-with-a-long-name-so-it-will-surpass-the-max-number-of-characters-for-a-single-line"
-		}
+		properties = "tooltip=%tooltip-with-a-long-name-so-it-will-surpass-the-max-number-of-characters-for-a-single-line"
 	)
 	public List<String> getList() {
 		return new ArrayList<>();

@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Zsolt Berentey
  */
 @Component(
-	property = {"javax.portlet.name=" + SocialNetworkingPortletKeys.WALL},
+	property = "javax.portlet.name=" + SocialNetworkingPortletKeys.WALL,
 	service = SocialActivityInterpreter.class
 )
 public class WallActivityInterpreter extends BaseSocialActivityInterpreter {

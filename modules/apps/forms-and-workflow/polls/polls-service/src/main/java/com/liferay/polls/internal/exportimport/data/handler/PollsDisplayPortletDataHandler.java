@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + PollsPortletKeys.POLLS_DISPLAY},
+	property = "javax.portlet.name=" + PollsPortletKeys.POLLS_DISPLAY,
 	service = PortletDataHandler.class
 )
 public class PollsDisplayPortletDataHandler extends BasePortletDataHandler {

@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + NotificationsPortletKeys.NOTIFICATIONS},
+	property = "javax.portlet.name=" + NotificationsPortletKeys.NOTIFICATIONS,
 	service = PollerProcessor.class
 )
 public class NotificationsPollerProcessor extends BasePollerProcessor {

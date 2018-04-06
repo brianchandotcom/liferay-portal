@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"verify.process.name=com.liferay.mobile.device.rules.service"},
+	property = "verify.process.name=com.liferay.mobile.device.rules.service",
 	service = VerifyProcess.class
 )
 public class MDRServiceVerifyProcess extends VerifyProcess {

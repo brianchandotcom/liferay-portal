@@ -28,9 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	property = {
-		"model.class.name=com.liferay.message.boards.model.MBDiscussion"
-	},
+	property = "model.class.name=com.liferay.message.boards.model.MBDiscussion",
 	service = PermissionUpdateHandler.class
 )
 public class MBDiscussionPermissionUpdateHandler

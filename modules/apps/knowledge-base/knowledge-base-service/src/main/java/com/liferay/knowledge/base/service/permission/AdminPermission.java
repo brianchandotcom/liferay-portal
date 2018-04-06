@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @deprecated As of 1.3.0, with no direct replacement
  */
 @Component(
-	property = {"resource.name=" + KBConstants.RESOURCE_NAME_ADMIN},
+	property = "resource.name=" + KBConstants.RESOURCE_NAME_ADMIN,
 	service = ResourcePermissionChecker.class
 )
 @Deprecated

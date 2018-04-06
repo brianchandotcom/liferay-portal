@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ambrín Chaudhary
  */
 @Component(
-	property = {"editor.name=alloyeditor_bbcode"},
+	property = "editor.name=alloyeditor_bbcode",
 	service = EditorConfigContributor.class
 )
 public class AlloyEditorBBCodeConfigContributor

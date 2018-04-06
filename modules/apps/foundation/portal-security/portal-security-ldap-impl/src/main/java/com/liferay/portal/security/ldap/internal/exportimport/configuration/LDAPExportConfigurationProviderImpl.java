@@ -27,9 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"factoryPid=com.liferay.portal.security.ldap.exportimport.configuration.LDAPExportConfiguration"
-	},
+	property = "factoryPid=com.liferay.portal.security.ldap.exportimport.configuration.LDAPExportConfiguration",
 	service = ConfigurationProvider.class
 )
 public class LDAPExportConfigurationProviderImpl

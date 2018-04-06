@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + DummyFolderPortletKeys.DUMMY_FOLDER},
+	property = "javax.portlet.name=" + DummyFolderPortletKeys.DUMMY_FOLDER,
 	service = PortletDataHandler.class
 )
 public class DummyFolderPortletDataHandler extends BasePortletDataHandler {

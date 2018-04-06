@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=com.liferay.message.boards.model.MBMessage"},
+	property = "model.class.name=com.liferay.message.boards.model.MBMessage",
 	service = BaseModelPermissionChecker.class
 )
 @Deprecated

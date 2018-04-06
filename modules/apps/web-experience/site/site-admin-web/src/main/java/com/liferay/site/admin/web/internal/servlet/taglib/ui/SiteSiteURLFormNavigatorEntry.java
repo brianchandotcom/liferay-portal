@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  */
 @Component(
-	property = {"form.navigator.entry.order:Integer=30"},
+	property = "form.navigator.entry.order:Integer=30",
 	service = FormNavigatorEntry.class
 )
 public class SiteSiteURLFormNavigatorEntry extends BaseSiteFormNavigatorEntry {

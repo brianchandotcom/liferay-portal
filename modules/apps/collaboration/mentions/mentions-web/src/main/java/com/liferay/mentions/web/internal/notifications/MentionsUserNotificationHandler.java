@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + MentionsPortletKeys.MENTIONS},
+	property = "javax.portlet.name=" + MentionsPortletKeys.MENTIONS,
 	service = UserNotificationHandler.class
 )
 public class MentionsUserNotificationHandler

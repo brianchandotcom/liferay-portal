@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"server.manager.executor.path=/server/log/error"},
+	property = "server.manager.executor.path=/server/log/error",
 	service = Executor.class
 )
 public class ErrorLogExecutor extends OutputLogExecutor {

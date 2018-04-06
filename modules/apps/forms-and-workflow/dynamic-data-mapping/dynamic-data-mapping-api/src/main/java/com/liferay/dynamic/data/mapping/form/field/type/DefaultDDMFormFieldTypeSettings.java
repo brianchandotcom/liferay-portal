@@ -105,17 +105,15 @@ public interface DefaultDDMFormFieldTypeSettings
 	@DDMFormField(label = "%read-only", visibilityExpression = "FALSE")
 	public boolean readOnly();
 
-	@DDMFormField(label = "%repeatable", properties = {"showAsSwitcher=true"})
+	@DDMFormField(label = "%repeatable", properties = "showAsSwitcher=true")
 	public boolean repeatable();
 
-	@DDMFormField(
-		label = "%required-field", properties = {"showAsSwitcher=true"}
-	)
+	@DDMFormField(label = "%required-field", properties = "showAsSwitcher=true")
 	public boolean required();
 
 	@DDMFormField(
 		label = "%show-label", predefinedValue = "true",
-		properties = {"showAsSwitcher=true"}
+		properties = "showAsSwitcher=true"
 	)
 	public boolean showLabel();
 

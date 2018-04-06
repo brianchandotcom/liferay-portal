@@ -274,7 +274,7 @@ public class PortalResiliencyActionTest {
 		Assert.assertSame(_portlet, _mockPortletContainer.portlet);
 	}
 
-	@AdviseWith(adviceClasses = {LifecycleAdvice.class})
+	@AdviseWith(adviceClasses = LifecycleAdvice.class)
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testUnknownPhase() throws Exception {

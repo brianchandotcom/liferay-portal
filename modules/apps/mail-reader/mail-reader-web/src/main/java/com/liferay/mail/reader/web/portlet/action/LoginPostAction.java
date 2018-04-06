@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Fellwock
  */
 @Component(
-	enabled = false, immediate = true, property = {"key=login.events.post"},
+	enabled = false, immediate = true, property = "key=login.events.post",
 	service = LifecycleAction.class
 )
 public class LoginPostAction extends Action {

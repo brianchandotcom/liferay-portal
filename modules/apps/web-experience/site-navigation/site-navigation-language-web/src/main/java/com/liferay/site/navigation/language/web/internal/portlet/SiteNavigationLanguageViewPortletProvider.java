@@ -34,9 +34,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"model.class.name=com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry"
-	},
+	property = "model.class.name=com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry",
 	service = ViewPortletProvider.class
 )
 public class SiteNavigationLanguageViewPortletProvider

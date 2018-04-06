@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + YouTubePortletKeys.YOUTUBE},
+	property = "javax.portlet.name=" + YouTubePortletKeys.YOUTUBE,
 	service = ConfigurationAction.class
 )
 public class YouTubeConfigurationAction extends DefaultConfigurationAction {

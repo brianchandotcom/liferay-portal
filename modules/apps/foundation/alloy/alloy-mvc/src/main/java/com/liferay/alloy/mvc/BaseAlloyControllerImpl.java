@@ -323,7 +323,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 	@SuppressWarnings("unused")
 	@Transactional(
 		isolation = Isolation.PORTAL, propagation = Propagation.REQUIRES_NEW,
-		rollbackFor = {Exception.class}
+		rollbackFor = Exception.class
 	)
 	public void invoke(Method method) throws Exception {
 		method.invoke(this);
@@ -1094,7 +1094,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 	@SuppressWarnings("unused")
 	@Transactional(
 		isolation = Isolation.PORTAL, propagation = Propagation.REQUIRES_NEW,
-		rollbackFor = {Exception.class}
+		rollbackFor = Exception.class
 	)
 	protected String processDataRequest(ActionRequest actionRequest)
 		throws Exception {

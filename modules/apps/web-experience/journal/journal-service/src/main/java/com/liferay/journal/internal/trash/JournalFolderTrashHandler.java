@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	property = {"model.class.name=com.liferay.journal.model.JournalFolder"},
+	property = "model.class.name=com.liferay.journal.model.JournalFolder",
 	service = TrashHandler.class
 )
 public class JournalFolderTrashHandler extends JournalBaseTrashHandler {

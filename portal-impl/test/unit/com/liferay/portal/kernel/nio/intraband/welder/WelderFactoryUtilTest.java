@@ -135,7 +135,7 @@ public class WelderFactoryUtilTest {
 			SocketWelder.class, WelderFactoryUtil.getWelderClass());
 	}
 
-	@AdviseWith(adviceClasses = {OSDetectorAdvice.class})
+	@AdviseWith(adviceClasses = OSDetectorAdvice.class)
 	@Test
 	public void testGetWelderClassOnWindows() {
 		OSDetectorAdvice._windows = true;

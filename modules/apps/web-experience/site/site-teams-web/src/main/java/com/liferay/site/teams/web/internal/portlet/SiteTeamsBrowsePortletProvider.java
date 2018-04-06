@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=com.liferay.portal.kernel.model.Team"},
+	property = "model.class.name=com.liferay.portal.kernel.model.Team",
 	service = BrowsePortletProvider.class
 )
 public class SiteTeamsBrowsePortletProvider

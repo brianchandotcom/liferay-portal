@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  */
 @Component(
-	property = {"source=lorem-ipsum"}, service = MBThreadDemoDataCreator.class
+	property = "source=lorem-ipsum", service = MBThreadDemoDataCreator.class
 )
 public class LoremIpsumMBThreadDemoDataCreatorImpl
 	implements MBThreadDemoDataCreator {

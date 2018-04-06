@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"scripting.language=" + GroovyExecutor.LANGUAGE},
+	property = "scripting.language=" + GroovyExecutor.LANGUAGE,
 	service = ScriptingExecutor.class
 )
 public class GroovyExecutor extends BaseScriptingExecutor {

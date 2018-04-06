@@ -81,7 +81,7 @@ public interface RadioDDMFormFieldTypeSettings
 
 	@DDMFormField(
 		label = "%inline", predefinedValue = "true",
-		properties = {"showAsSwitcher=true"}
+		properties = "showAsSwitcher=true"
 	)
 	public boolean inline();
 

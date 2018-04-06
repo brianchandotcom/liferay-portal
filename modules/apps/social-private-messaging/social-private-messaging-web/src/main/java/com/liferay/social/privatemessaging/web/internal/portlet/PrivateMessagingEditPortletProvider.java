@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=com.liferay.social.privatemessaging.model.UserThread"},
+	property = "model.class.name=com.liferay.social.privatemessaging.model.UserThread",
 	service = {EditPortletProvider.class, ViewPortletProvider.class}
 )
 public class PrivateMessagingEditPortletProvider

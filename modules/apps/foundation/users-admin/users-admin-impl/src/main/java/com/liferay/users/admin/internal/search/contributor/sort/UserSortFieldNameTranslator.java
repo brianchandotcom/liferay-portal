@@ -24,10 +24,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		ContributorConstants.ENTRY_CLASS_NAME_PROPERTY_KEY +
-			"=com.liferay.portal.kernel.model.User"
-	},
+	property = ContributorConstants.ENTRY_CLASS_NAME_PROPERTY_KEY + "=com.liferay.portal.kernel.model.User",
 	service = SortFieldNameTranslator.class
 )
 public class UserSortFieldNameTranslator implements SortFieldNameTranslator {

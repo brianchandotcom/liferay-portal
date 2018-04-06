@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Pavel Savinov
  */
 @Component(
-	immediate = true, property = {"type=image"},
+	immediate = true, property = "type=image",
 	service = EditableElementParser.class
 )
 public class ImageEditableElementParser implements EditableElementParser {

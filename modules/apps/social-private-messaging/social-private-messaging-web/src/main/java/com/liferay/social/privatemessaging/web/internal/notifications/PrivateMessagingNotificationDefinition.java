@@ -27,9 +27,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + PrivateMessagingPortletKeys.PRIVATE_MESSAGING
-	},
+	property = "javax.portlet.name=" + PrivateMessagingPortletKeys.PRIVATE_MESSAGING,
 	service = UserNotificationDefinition.class
 )
 public class PrivateMessagingNotificationDefinition

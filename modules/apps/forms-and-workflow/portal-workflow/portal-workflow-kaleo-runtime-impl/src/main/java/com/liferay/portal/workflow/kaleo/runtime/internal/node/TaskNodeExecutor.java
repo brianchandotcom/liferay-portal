@@ -56,8 +56,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true, property = {"node.type=TASK"},
-	service = NodeExecutor.class
+	immediate = true, property = "node.type=TASK", service = NodeExecutor.class
 )
 public class TaskNodeExecutor extends BaseNodeExecutor {
 

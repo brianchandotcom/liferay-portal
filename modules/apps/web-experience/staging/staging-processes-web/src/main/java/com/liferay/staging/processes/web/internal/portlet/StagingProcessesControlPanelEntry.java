@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + StagingProcessesPortletKeys.STAGING_PROCESSES},
+	property = "javax.portlet.name=" + StagingProcessesPortletKeys.STAGING_PROCESSES,
 	service = ControlPanelEntry.class
 )
 public class StagingProcessesControlPanelEntry extends BaseControlPanelEntry {

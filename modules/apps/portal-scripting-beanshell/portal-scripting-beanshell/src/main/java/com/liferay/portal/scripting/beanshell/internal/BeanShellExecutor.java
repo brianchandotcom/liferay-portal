@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"scripting.language=" + BeanShellExecutor.LANGUAGE},
+	property = "scripting.language=" + BeanShellExecutor.LANGUAGE,
 	service = ScriptingExecutor.class
 )
 public class BeanShellExecutor extends BaseScriptingExecutor {

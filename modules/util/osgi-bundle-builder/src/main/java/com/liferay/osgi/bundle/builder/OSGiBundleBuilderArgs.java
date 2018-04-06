@@ -149,7 +149,7 @@ public class OSGiBundleBuilderArgs {
 
 	@Parameter(
 		description = "The directory or JAR file that contains the processed resources.",
-		names = {"--resources-dir"}
+		names = "--resources-dir"
 	)
 	private File _resourcesDir;
 

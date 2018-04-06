@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Pavel Savinov
  */
 @Component(
-	property = {"javax.portlet.name=" + AssetDisplayTemplatePortletKeys.ASSET_DISPLAY_TEMPLATE},
+	property = "javax.portlet.name=" + AssetDisplayTemplatePortletKeys.ASSET_DISPLAY_TEMPLATE,
 	service = DDMDisplay.class
 )
 public class AssetDisplayTemplateDDMDisplay extends BaseDDMDisplay {

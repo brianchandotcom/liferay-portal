@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + MicroblogsPortletKeys.MICROBLOGS},
+	property = "javax.portlet.name=" + MicroblogsPortletKeys.MICROBLOGS,
 	service = SocialActivityInterpreter.class
 )
 public class MicroblogsActivityInterpreter

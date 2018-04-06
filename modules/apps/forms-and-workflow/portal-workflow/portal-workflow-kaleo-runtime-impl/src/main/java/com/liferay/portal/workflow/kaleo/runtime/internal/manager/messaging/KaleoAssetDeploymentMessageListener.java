@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"destination.name=" + KaleoRuntimeDestinationNames.WORKFLOW_DEFINITION_LINK},
+	property = "destination.name=" + KaleoRuntimeDestinationNames.WORKFLOW_DEFINITION_LINK,
 	service = MessageListener.class
 )
 public class KaleoAssetDeploymentMessageListener extends BaseMessageListener {

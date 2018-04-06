@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"resource.name=" + DDMFormPermission.RESOURCE_NAME},
+	property = "resource.name=" + DDMFormPermission.RESOURCE_NAME,
 	service = ResourcePermissionChecker.class
 )
 @Deprecated

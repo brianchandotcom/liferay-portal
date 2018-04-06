@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true, property = {"node.type=JOIN_XOR"},
+	immediate = true, property = "node.type=JOIN_XOR",
 	service = NodeExecutor.class
 )
 public class JoinXorNodeExecutor extends BaseNodeExecutor {

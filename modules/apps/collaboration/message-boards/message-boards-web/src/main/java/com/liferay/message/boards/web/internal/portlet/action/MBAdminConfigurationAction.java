@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN},
+	property = "javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN,
 	service = ConfigurationAction.class
 )
 public class MBAdminConfigurationAction

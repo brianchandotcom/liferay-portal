@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Fellwock
  */
 @Component(
-	property = {"javax.portlet.name=" + WSRPPortletKeys.WSRP_CONSUMER},
+	property = "javax.portlet.name=" + WSRPPortletKeys.WSRP_CONSUMER,
 	service = FriendlyURLMapper.class
 )
 public class ConsumerFriendlyURLMapper extends BaseFriendlyURLMapper {

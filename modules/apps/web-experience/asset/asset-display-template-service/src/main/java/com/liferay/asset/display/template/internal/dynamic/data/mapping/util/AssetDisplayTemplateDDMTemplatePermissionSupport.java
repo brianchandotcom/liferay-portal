@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=com.liferay.asset.display.template.model.AssetDisplayTemplate"}
+	property = "model.class.name=com.liferay.asset.display.template.model.AssetDisplayTemplate"
 )
 public class AssetDisplayTemplateDDMTemplatePermissionSupport
 	implements DDMTemplatePermissionSupport {

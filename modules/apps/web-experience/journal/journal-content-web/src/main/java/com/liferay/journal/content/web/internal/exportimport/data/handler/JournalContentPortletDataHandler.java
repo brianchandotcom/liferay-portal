@@ -60,9 +60,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + JournalContentPortletKeys.JOURNAL_CONTENT
-	},
+	property = "javax.portlet.name=" + JournalContentPortletKeys.JOURNAL_CONTENT,
 	service = PortletDataHandler.class
 )
 public class JournalContentPortletDataHandler extends BasePortletDataHandler {

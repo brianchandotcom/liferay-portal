@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {Constants.SERVICE_RANKING + "=" + Integer.MIN_VALUE},
+	property = Constants.SERVICE_RANKING + "=" + Integer.MIN_VALUE,
 	service = QueryPreFilterContributor.class
 )
 public class FacetQueryPostFilterContributor

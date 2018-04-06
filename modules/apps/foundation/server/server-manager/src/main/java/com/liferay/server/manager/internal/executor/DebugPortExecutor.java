@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"server.manager.executor.path=/server/debug-port"},
+	property = "server.manager.executor.path=/server/debug-port",
 	service = Executor.class
 )
 public class DebugPortExecutor extends BaseExecutor {

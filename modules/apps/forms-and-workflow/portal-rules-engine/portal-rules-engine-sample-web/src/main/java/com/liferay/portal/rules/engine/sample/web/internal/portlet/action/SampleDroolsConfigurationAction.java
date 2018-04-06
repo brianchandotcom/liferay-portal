@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + SampleDroolsPortletKeys.SAMPLE_DROOLS},
+	property = "javax.portlet.name=" + SampleDroolsPortletKeys.SAMPLE_DROOLS,
 	service = ConfigurationAction.class
 )
 public class SampleDroolsConfigurationAction

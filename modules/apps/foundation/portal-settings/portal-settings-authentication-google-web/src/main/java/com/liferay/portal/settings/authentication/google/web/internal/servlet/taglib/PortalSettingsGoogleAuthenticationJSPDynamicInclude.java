@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"portal.settings.authentication.tabs.name=google"},
+	property = "portal.settings.authentication.tabs.name=google",
 	service = DynamicInclude.class
 )
 public class PortalSettingsGoogleAuthenticationJSPDynamicInclude

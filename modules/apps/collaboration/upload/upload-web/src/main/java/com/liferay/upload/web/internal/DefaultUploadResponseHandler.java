@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.document.library.configuration.DLConfiguration",
-	property = {"upload.response.handler.system.default=true"}
+	property = "upload.response.handler.system.default=true"
 )
 public class DefaultUploadResponseHandler implements UploadResponseHandler {
 

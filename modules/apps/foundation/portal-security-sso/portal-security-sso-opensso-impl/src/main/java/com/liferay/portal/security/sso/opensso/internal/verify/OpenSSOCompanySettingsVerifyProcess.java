@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"verify.process.name=com.liferay.portal.security.sso.opensso"},
+	property = "verify.process.name=com.liferay.portal.security.sso.opensso",
 	service = VerifyProcess.class
 )
 public class OpenSSOCompanySettingsVerifyProcess

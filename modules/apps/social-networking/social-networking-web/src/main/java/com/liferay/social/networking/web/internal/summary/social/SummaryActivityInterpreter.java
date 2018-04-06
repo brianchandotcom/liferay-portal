@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Adolfo Pérez
  */
 @Component(
-	property = {"javax.portlet.name=" + SocialNetworkingPortletKeys.SUMMARY},
+	property = "javax.portlet.name=" + SocialNetworkingPortletKeys.SUMMARY,
 	service = SocialActivityInterpreter.class
 )
 public class SummaryActivityInterpreter

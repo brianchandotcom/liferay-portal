@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + TwitterPortletKeys.TWITTER},
+	property = "javax.portlet.name=" + TwitterPortletKeys.TWITTER,
 	service = SocialActivityInterpreter.class
 )
 public class TwitterActivityInterpreter extends BaseSocialActivityInterpreter {

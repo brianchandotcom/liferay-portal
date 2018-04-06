@@ -49,9 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alexander Chow
  */
 @Component(
-	property = {
-		"model.class.name=com.liferay.document.library.kernel.model.DLFileEntry"
-	},
+	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
 	service = WorkflowHandler.class
 )
 public class DLFileEntryWorkflowHandler

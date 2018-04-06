@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Modified;
 @Component(
 	configurationPid = "com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration",
 	immediate = true,
-	property = {"model.class.name=" + SearchBarPortletKeys.SEARCH_BAR},
+	property = "model.class.name=" + SearchBarPortletKeys.SEARCH_BAR,
 	service = ViewPortletProvider.class
 )
 public class SearchBarViewPortletProvider

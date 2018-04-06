@@ -28,9 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	property = {
-		"model.class.name=com.liferay.dynamic.data.lists.model.DDLRecord"
-	},
+	property = "model.class.name=com.liferay.dynamic.data.lists.model.DDLRecord",
 	service = PermissionUpdateHandler.class
 )
 public class DDLRecordPermissionUpdateHandler

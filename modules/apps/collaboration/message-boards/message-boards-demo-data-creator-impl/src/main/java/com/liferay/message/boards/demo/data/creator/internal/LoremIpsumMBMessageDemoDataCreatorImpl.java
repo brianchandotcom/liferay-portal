@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  */
 @Component(
-	property = {"source=lorem-ipsum"}, service = MBMessageDemoDataCreator.class
+	property = "source=lorem-ipsum", service = MBMessageDemoDataCreator.class
 )
 public class LoremIpsumMBMessageDemoDataCreatorImpl
 	extends BaseMBMessageDemoDataCreator {

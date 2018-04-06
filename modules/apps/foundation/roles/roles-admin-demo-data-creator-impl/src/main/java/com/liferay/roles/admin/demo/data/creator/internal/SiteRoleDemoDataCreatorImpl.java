@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Pei-Jung Lan
  */
-@Component(property = {"role.type=site"}, service = RoleDemoDataCreator.class)
+@Component(property = "role.type=site", service = RoleDemoDataCreator.class)
 public class SiteRoleDemoDataCreatorImpl
 	extends BaseRoleDemoDataCreator implements RoleDemoDataCreator {
 

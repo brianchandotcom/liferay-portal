@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Raymond Augé
  */
 @Component(
-	property = {"javax.portlet.name=" + DLPortletKeys.MEDIA_GALLERY_DISPLAY},
+	property = "javax.portlet.name=" + DLPortletKeys.MEDIA_GALLERY_DISPLAY,
 	service = PortletDataHandler.class
 )
 public class IGDisplayPortletDataHandler extends BasePortletDataHandler {

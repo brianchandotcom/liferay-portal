@@ -25,9 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"model.class.name=com.liferay.mobile.device.rules.model.MDRRule"
-	},
+	property = "model.class.name=com.liferay.mobile.device.rules.model.MDRRule",
 	service = EditPortletProvider.class
 )
 public class MDREditPortletProvider

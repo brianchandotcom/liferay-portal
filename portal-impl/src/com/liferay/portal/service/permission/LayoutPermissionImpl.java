@@ -58,7 +58,7 @@ import java.util.Objects;
  * @author Raymond Augé
  */
 @OSGiBeanProperties(
-	property = {"model.class.name=com.liferay.portal.kernel.model.Layout"}
+	property = "model.class.name=com.liferay.portal.kernel.model.Layout"
 )
 public class LayoutPermissionImpl
 	implements BaseModelPermissionChecker, LayoutPermission {

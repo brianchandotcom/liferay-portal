@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=com.liferay.document.library.kernel.model.DLFileEntry"},
+	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
 	service = ExpandoValueDeleteHandler.class
 )
 public class DLFileEntryExpandoValueDeleteHandler

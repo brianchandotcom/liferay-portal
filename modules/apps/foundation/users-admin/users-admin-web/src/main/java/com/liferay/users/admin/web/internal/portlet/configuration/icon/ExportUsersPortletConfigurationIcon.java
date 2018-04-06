@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN},
+	property = "javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN,
 	service = PortletConfigurationIcon.class
 )
 public class ExportUsersPortletConfigurationIcon

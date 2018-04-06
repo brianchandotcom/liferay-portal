@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true, property = {"type=text"},
+	immediate = true, property = "type=text",
 	service = EditableElementParser.class
 )
 public class TextEditableElementParser implements EditableElementParser {

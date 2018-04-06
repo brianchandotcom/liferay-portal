@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + WeatherPortletKeys.WEATHER}
+	property = "javax.portlet.name=" + WeatherPortletKeys.WEATHER
 )
 public class WeatherPreferencesValidator implements PreferencesValidator {
 

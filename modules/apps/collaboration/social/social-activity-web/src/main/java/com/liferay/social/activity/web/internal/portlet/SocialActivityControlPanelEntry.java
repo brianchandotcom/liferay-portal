@@ -28,9 +28,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + SocialActivityPortletKeys.SOCIAL_ACTIVITY
-	},
+	property = "javax.portlet.name=" + SocialActivityPortletKeys.SOCIAL_ACTIVITY,
 	service = ControlPanelEntry.class
 )
 public class SocialActivityControlPanelEntry extends BaseControlPanelEntry {

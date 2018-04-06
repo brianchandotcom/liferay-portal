@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + TypeFacetPortletKeys.TYPE_FACET},
+	property = "javax.portlet.name=" + TypeFacetPortletKeys.TYPE_FACET,
 	service = ConfigurationAction.class
 )
 public class TypeFacetConfigurationAction extends DefaultConfigurationAction {

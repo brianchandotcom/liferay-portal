@@ -279,7 +279,7 @@ public class DDMFormFactoryTest {
 				actions = {"action1", "action2"}, condition = "condition1"
 			),
 			@com.liferay.dynamic.data.mapping.annotations.DDMFormRule(
-				actions = {"action1"}
+				actions = "action1"
 			)
 		}
 	)

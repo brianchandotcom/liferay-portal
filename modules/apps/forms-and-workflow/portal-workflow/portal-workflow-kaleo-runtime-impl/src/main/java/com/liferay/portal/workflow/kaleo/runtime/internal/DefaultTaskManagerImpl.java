@@ -60,7 +60,7 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 @Transactional(
 	isolation = Isolation.PORTAL, propagation = Propagation.REQUIRED,
-	rollbackFor = {Exception.class}
+	rollbackFor = Exception.class
 )
 public class DefaultTaskManagerImpl
 	extends BaseKaleoBean implements TaskManager {

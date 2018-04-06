@@ -61,7 +61,7 @@ import org.osgi.service.metatype.ObjectClassDefinition;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true, property = {"index.on.startup=false"},
+	immediate = true, property = "index.on.startup=false",
 	service = {ConfigurationModelIndexer.class, Indexer.class}
 )
 public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {

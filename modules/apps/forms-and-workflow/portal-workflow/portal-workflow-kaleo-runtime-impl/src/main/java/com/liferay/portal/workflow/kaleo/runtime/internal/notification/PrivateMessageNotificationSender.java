@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true, property = {"notification.type=private-message"},
+	immediate = true, property = "notification.type=private-message",
 	service = NotificationSender.class
 )
 public class PrivateMessageNotificationSender

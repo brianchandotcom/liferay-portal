@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = {"verify.process.name=com.liferay.portal.scheduler.internal.verify"},
+	property = "verify.process.name=com.liferay.portal.scheduler.internal.verify",
 	service = VerifyProcess.class
 )
 public class SchedulerHelperPropertiesVerifyProcess extends VerifyProcess {

@@ -23,7 +23,7 @@ import org.hibernate.jmx.StatisticsService;
 /**
  * @author Shuyang Zhou
  */
-@OSGiBeanProperties(property = {"jmx.objectname=Hibernate:name=statistics"})
+@OSGiBeanProperties(property = "jmx.objectname=Hibernate:name=statistics")
 public class HibernateStatisticsService extends StatisticsService {
 
 	public HibernateStatisticsService() {

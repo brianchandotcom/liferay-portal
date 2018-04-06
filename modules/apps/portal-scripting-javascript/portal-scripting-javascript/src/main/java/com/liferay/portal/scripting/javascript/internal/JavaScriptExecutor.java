@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	immediate = true,
-	property = {"scripting.language=" + JavaScriptExecutor.LANGUAGE},
+	property = "scripting.language=" + JavaScriptExecutor.LANGUAGE,
 	service = ScriptingExecutor.class
 )
 public class JavaScriptExecutor extends BaseScriptingExecutor {

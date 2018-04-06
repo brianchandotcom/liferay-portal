@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Sergio González
  */
 @Component(
-	property = {"source=creative-commons"},
+	property = "source=creative-commons",
 	service = BlogsEntryDemoDataCreator.class
 )
 public class CreativeCommonsBlogsEntryDemoDataCreatorImpl

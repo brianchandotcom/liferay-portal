@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Roberto Díaz
  */
 @Component(
-	property = {"name=tinymce_simple"},
+	property = "name=tinymce_simple",
 	service = {Editor.class, EditorRenderer.class}
 )
 public class TinyMCESimpleEditor implements Editor, EditorRenderer {

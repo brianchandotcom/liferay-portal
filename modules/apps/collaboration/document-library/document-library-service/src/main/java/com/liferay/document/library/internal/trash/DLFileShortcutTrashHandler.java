@@ -54,9 +54,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Zsolt Berentey
  */
 @Component(
-	property = {
-		"model.class.name=com.liferay.document.library.kernel.model.DLFileShortcut"
-	},
+	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileShortcut",
 	service = TrashHandler.class
 )
 public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {

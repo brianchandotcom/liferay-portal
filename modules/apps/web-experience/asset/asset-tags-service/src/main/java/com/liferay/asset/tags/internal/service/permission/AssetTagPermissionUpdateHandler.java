@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	property = {"model.class.name=com.liferay.asset.kernel.model.AssetTag"},
+	property = "model.class.name=com.liferay.asset.kernel.model.AssetTag",
 	service = PermissionUpdateHandler.class
 )
 public class AssetTagPermissionUpdateHandler

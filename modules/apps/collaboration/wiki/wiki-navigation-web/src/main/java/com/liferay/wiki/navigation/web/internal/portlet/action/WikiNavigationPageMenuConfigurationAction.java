@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + WikiNavigationPortletKeys.PAGE_MENU},
+	property = "javax.portlet.name=" + WikiNavigationPortletKeys.PAGE_MENU,
 	service = ConfigurationAction.class
 )
 public class WikiNavigationPageMenuConfigurationAction

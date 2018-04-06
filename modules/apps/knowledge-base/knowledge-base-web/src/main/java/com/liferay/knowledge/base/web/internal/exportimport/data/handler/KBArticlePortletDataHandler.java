@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Tamas Molnar
  */
 @Component(
-	property = {"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_ARTICLE},
+	property = "javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_ARTICLE,
 	service = PortletDataHandler.class
 )
 public class KBArticlePortletDataHandler extends BasePortletDataHandler {

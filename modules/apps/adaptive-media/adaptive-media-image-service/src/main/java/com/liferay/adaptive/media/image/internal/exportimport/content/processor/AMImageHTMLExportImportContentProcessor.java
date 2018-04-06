@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  * @author Alejandro Tardín
  */
-@Component(property = {"adaptive.media.format=html"})
+@Component(property = "adaptive.media.format=html")
 public class AMImageHTMLExportImportContentProcessor
 	implements ExportImportContentProcessor<String> {
 

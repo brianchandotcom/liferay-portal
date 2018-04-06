@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"layout.type=" + DDMFormPortletLayoutTypeConstants.LAYOUT_TYPE},
+	property = "layout.type=" + DDMFormPortletLayoutTypeConstants.LAYOUT_TYPE,
 	service = LayoutTypeAccessPolicy.class
 )
 public class DDMFormPortletLayoutTypeAccessPolicy

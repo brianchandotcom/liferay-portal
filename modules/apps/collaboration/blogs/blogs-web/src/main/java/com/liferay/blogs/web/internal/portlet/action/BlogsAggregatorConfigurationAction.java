@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + BlogsPortletKeys.BLOGS_AGGREGATOR},
+	property = "javax.portlet.name=" + BlogsPortletKeys.BLOGS_AGGREGATOR,
 	service = ConfigurationAction.class
 )
 public class BlogsAggregatorConfigurationAction

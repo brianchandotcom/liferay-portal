@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author David Gonzalez
  */
 @Component(
-	property = {"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN},
+	property = "javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN,
 	service = PortletDataHandler.class
 )
 public class UsersAdminPortletDataHandler extends BasePortletDataHandler {

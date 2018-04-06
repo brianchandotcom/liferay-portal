@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=com.liferay.document.library.kernel.model.DLFileShortcut"},
+	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileShortcut",
 	service = TrashRendererFactory.class
 )
 public class DLFileShortcutTrashRendererFactory

@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true, property = {"recipient.type=SCRIPT"},
+	immediate = true, property = "recipient.type=SCRIPT",
 	service = NotificationRecipientBuilder.class
 )
 public class ScriptNotificationRecipientBuilder

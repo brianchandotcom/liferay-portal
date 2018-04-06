@@ -534,8 +534,8 @@ public class TopLevelBuild extends BaseBuild {
 		Map<Build, Element> downstreamBuildFailureMessages =
 			getDownstreamBuildMessages("ABORTED", "FAILURE", "UNSTABLE");
 
-		List<Element> failureElements = new ArrayList<>();
-		List<Element> upstreamJobFailureElements = new ArrayList<>();
+		List<Element> allCurrentBuildFailureElements = new ArrayList<>();
+		List<Element> upstreamBuildFailureElements = new ArrayList<>();
 
 		int maxFailureCount = 5;
 
@@ -550,18 +550,18 @@ public class TopLevelBuild extends BaseBuild {
 				if (UpstreamFailureUtil.isBuildFailingInUpstreamJob(
 						failedDownstreamBuild)) {
 
-					upstreamJobFailureElements.add(failureElement);
+					upstreamBuildFailureElements.add(failureElement);
 
 					continue;
 				}
 
 				if (isHighPriorityBuildFailureElement(failureElement)) {
-					failureElements.add(0, failureElement);
+					allCurrentBuildFailureElements.add(0, failureElement);
 
 					continue;
 				}
 
-				failureElements.add(failureElement);
+				allCurrentBuildFailureElements.add(failureElement);
 			}
 
 			Element upstreamJobFailureElement =
@@ -569,39 +569,42 @@ public class TopLevelBuild extends BaseBuild {
 					getGitHubMessageUpstreamJobFailureElement();
 
 			if (upstreamJobFailureElement != null) {
-				upstreamJobFailureElements.add(upstreamJobFailureElement);
+				upstreamBuildFailureElements.add(upstreamJobFailureElement);
 			}
 		}
 
-		List<Element> githubMessageFailureElements = new ArrayList<>();
+		List<Element> buildFailureElements = new ArrayList<>();
 
-		githubMessageFailureElements.add(Dom4JUtil.getNewElement("hr"));
+		buildFailureElements.add(Dom4JUtil.getNewElement("hr"));
 
-		if (failureElements.isEmpty() && upstreamJobFailureElements.isEmpty()) {
-			failureElements.add(0, super.getGitHubMessageElement());
+		if (allCurrentBuildFailureElements.isEmpty() &&
+			upstreamBuildFailureElements.isEmpty()) {
+
+			allCurrentBuildFailureElements.add(
+				0, super.getGitHubMessageElement());
 		}
 
-		if (failureElements.isEmpty() &&
-			!upstreamJobFailureElements.isEmpty()) {
+		if (allCurrentBuildFailureElements.isEmpty() &&
+			!upstreamBuildFailureElements.isEmpty()) {
 
-			githubMessageFailureElements.add(
+			buildFailureElements.add(
 				Dom4JUtil.getNewElement(
 					"h4", null, "This pull contains no unique failures."));
 		}
 		else {
-			githubMessageFailureElements.add(
+			buildFailureElements.add(
 				Dom4JUtil.getNewElement(
 					"h4", null, "Failures unique to this pull:"));
 
-			githubMessageFailureElements.add(
+			buildFailureElements.add(
 				Dom4JUtil.getOrderedListElement(
-					failureElements, maxFailureCount));
+					allCurrentBuildFailureElements, maxFailureCount));
 		}
 
 		String acceptanceUpstreamJobURL = getAcceptanceUpstreamURL();
 
-		if ((failureElements.size() < maxFailureCount) &&
-			!upstreamJobFailureElements.isEmpty()) {
+		if ((allCurrentBuildFailureElements.size() < maxFailureCount) &&
+			!upstreamBuildFailureElements.isEmpty()) {
 
 			Element acceptanceUpstreamJobLinkElement =
 				Dom4JUtil.getNewAnchorElement(
@@ -618,19 +621,19 @@ public class TopLevelBuild extends BaseBuild {
 						":")));
 
 			int remainingFailureCount =
-				maxFailureCount - failureElements.size();
+				maxFailureCount - allCurrentBuildFailureElements.size();
 
 			Dom4JUtil.getOrderedListElement(
-				upstreamJobFailureElements, upstreamJobFailureElement,
+				upstreamBuildFailureElements, upstreamJobFailureElement,
 				remainingFailureCount);
 
-			githubMessageFailureElements.add(Dom4JUtil.getNewElement("hr"));
+			buildFailureElements.add(Dom4JUtil.getNewElement("hr"));
 
-			githubMessageFailureElements.add(upstreamJobFailureElement);
+			buildFailureElements.add(upstreamJobFailureElement);
 		}
 
 		if (jobName.contains("pullrequest") &&
-			upstreamJobFailureElements.isEmpty() &&
+			upstreamBuildFailureElements.isEmpty() &&
 			(acceptanceUpstreamJobURL != null)) {
 
 			Element upstreamResultElement = Dom4JUtil.getNewElement("h4");
@@ -640,10 +643,10 @@ public class TopLevelBuild extends BaseBuild {
 				Dom4JUtil.getNewAnchorElement(
 					acceptanceUpstreamJobURL, "here"));
 
-			githubMessageFailureElements.add(upstreamResultElement);
+			buildFailureElements.add(upstreamResultElement);
 		}
 
-		return githubMessageFailureElements.toArray(new Element[0]);
+		return buildFailureElements.toArray(new Element[0]);
 	}
 
 	protected Element getCompanionBranchDetailsElement() {

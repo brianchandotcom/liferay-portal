@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.lpkg.StaticLPKGResolver;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -152,9 +151,7 @@ public class LPKGBundleTrackerCustomizer
 
 		String symbolicName = bundle.getSymbolicName();
 
-		if (ArrayUtil.contains(
-				_STATIC_LPKG_SYMBOLIC_BUNDLE_NAMES, symbolicName, false)) {
-
+		if (_staticLPKGBundleSymbolicNames.contains(symbolicName)) {
 			return Collections.emptyList();
 		}
 
@@ -739,14 +736,13 @@ public class LPKGBundleTrackerCustomizer
 
 	private static final String _MARKER_FILE = ".lfr-outdated";
 
-	private static final String[] _STATIC_LPKG_SYMBOLIC_BUNDLE_NAMES =
-		StaticLPKGResolver.getStaticLPKGBundleSymbolicNames();
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		LPKGBundleTrackerCustomizer.class);
 
 	private static final Pattern _pattern = Pattern.compile(
 		"/(.*?)(-\\d+\\.\\d+\\.\\d+)(\\..+)?(\\.[jw]ar)");
+	private static final List<String> _staticLPKGBundleSymbolicNames =
+		StaticLPKGResolver.getStaticLPKGBundleSymbolicNames();
 
 	private final BundleContext _bundleContext;
 	private final Set<String> _outdatedRemoteAppIds = new HashSet<>();

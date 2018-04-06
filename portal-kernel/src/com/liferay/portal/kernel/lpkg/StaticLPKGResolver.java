@@ -14,31 +14,34 @@
 
 package com.liferay.portal.kernel.lpkg;
 
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Shuyang Zhou
  */
 public class StaticLPKGResolver {
 
-	public static String[] getStaticLPKGBundleSymbolicNames() {
-		return _STATIC_LPKG_BUNDLE_SYMBOLIC_NAMES;
+	public static List<String> getStaticLPKGBundleSymbolicNames() {
+		return _staticLPKGBundleSymbolicNames;
 	}
 
-	public static String[] getStaticLPKGFileNames() {
-		return _STATIC_LPKG_FILE_NAMES;
+	public static List<String> getStaticLPKGFileNames() {
+		return _staticLPKGFileNames;
 	}
 
-	private static final String[] _STATIC_LPKG_BUNDLE_SYMBOLIC_NAMES;
-
-	private static final String[] _STATIC_LPKG_FILE_NAMES;
+	private static final List<String> _staticLPKGBundleSymbolicNames;
+	private static final List<String> _staticLPKGFileNames;
 
 	static {
 		String staticLPKGBundleSymbolicNames = System.getProperty(
 			"static.lpkg.bundle.symbolic.names");
 
-		String[] staticLPKGBundleSymbolicNameArray =
-			staticLPKGBundleSymbolicNames.split(",");
+		List<String> staticLPKGBundleSymbolicNameList = StringUtil.split(
+			staticLPKGBundleSymbolicNames);
 
 		String name = ReleaseInfo.getName();
 
@@ -48,31 +51,34 @@ public class StaticLPKGResolver {
 			lpkgSymbolicNamePrefix = "Liferay CE ";
 		}
 
-		for (int i = 0; i < staticLPKGBundleSymbolicNameArray.length; i++) {
-			staticLPKGBundleSymbolicNameArray[i] =
+		for (int i = 0; i < staticLPKGBundleSymbolicNameList.size(); i++) {
+			staticLPKGBundleSymbolicNameList.set(
+				i,
 				lpkgSymbolicNamePrefix.concat(
-					staticLPKGBundleSymbolicNameArray[i]);
+					staticLPKGBundleSymbolicNameList.get(i)));
 		}
 
-		_STATIC_LPKG_BUNDLE_SYMBOLIC_NAMES = staticLPKGBundleSymbolicNameArray;
+		_staticLPKGBundleSymbolicNames = staticLPKGBundleSymbolicNameList;
 
 		String staticLPKGFileNames = System.getProperty(
 			"static.lpkg.file.names");
 
-		String[] staticLPKGFileNameArray =
-			new String[staticLPKGBundleSymbolicNameArray.length];
+		List<String> staticLPKGFileNameList = new ArrayList<>(
+			staticLPKGBundleSymbolicNameList.size());
 
 		if (staticLPKGFileNames == null) {
-			for (int i = 0; i < staticLPKGFileNameArray.length; i++) {
-				staticLPKGFileNameArray[i] =
-					staticLPKGBundleSymbolicNameArray[i].concat(".lpkg");
+			for (String staticLPKGBundleSymbolicName :
+					staticLPKGBundleSymbolicNameList) {
+
+				staticLPKGFileNameList.add(
+					staticLPKGBundleSymbolicName.concat(".lpkg"));
 			}
 		}
 		else {
-			staticLPKGFileNameArray = staticLPKGFileNames.split(",");
+			staticLPKGFileNameList = StringUtil.split(staticLPKGFileNames);
 		}
 
-		_STATIC_LPKG_FILE_NAMES = staticLPKGFileNameArray;
+		_staticLPKGFileNames = staticLPKGFileNameList;
 	}
 
 }

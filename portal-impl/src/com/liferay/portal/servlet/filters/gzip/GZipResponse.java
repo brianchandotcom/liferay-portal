@@ -116,9 +116,9 @@ public class GZipResponse extends HttpServletResponseWrapper {
 	}
 
 	public void setContentLengthLong(long contentLengthLong) {
-		int contentLength = Math.toIntExact(contentLengthLong);
-
-		setContentLength(contentLength);
+		if (contentLengthLong == 0) {
+			super.setContentLengthLong(0);
+		}
 	}
 
 	@Override

@@ -36,7 +36,11 @@ public class GenericServletResponse extends HttpServletResponseWrapper {
 	}
 
 	public int getContentLength() {
-		return _contentLength;
+		if (_contentLength > Integer.MAX_VALUE) {
+			return -1;
+		}
+
+		return (int)_contentLength;
 	}
 
 	public long getContentLengthLong() {
@@ -71,9 +75,9 @@ public class GenericServletResponse extends HttpServletResponseWrapper {
 	}
 
 	public void setContentLengthLong(long length) {
-		int contentLength = Math.toIntExact(length);
+		super.setContentLengthLong(length);
 
-		setContentLength(contentLength);
+		_contentLength = length;
 	}
 
 	@Override
@@ -83,7 +87,7 @@ public class GenericServletResponse extends HttpServletResponseWrapper {
 		_contentType = type;
 	}
 
-	private int _contentLength;
+	private long _contentLength;
 	private String _contentType;
 	private final UnsyncByteArrayOutputStream _ubaos;
 

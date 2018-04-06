@@ -14,16 +14,40 @@
 
 package com.liferay.user.associated.data.web.internal.display;
 
+import com.liferay.portal.kernel.util.KeyValuePair;
+
 import java.io.Serializable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author William Newbury
  */
 public class UADEntity<T> {
 
-	public UADEntity(T entity, Serializable primaryKey) {
+	public UADEntity(T entity, Serializable primaryKey, String editURL) {
 		_entity = entity;
 		_primaryKey = primaryKey;
+		_editURL = editURL;
+	}
+
+	public void addColumnEntry(String key, Object value) {
+		_columnEntries.add(new KeyValuePair(key, String.valueOf(value)));
+	}
+
+	public List<KeyValuePair> getColumnEntries() {
+		if (_columnEntries.isEmpty()) {
+			_columnEntries.add(
+				new KeyValuePair("primaryKey", String.valueOf(_primaryKey)));
+			_columnEntries.add(new KeyValuePair("editURL", _editURL));
+		}
+
+		return _columnEntries;
+	}
+
+	public String getEditURL() {
+		return _editURL;
 	}
 
 	public T getEntity() {
@@ -34,6 +58,8 @@ public class UADEntity<T> {
 		return _primaryKey;
 	}
 
+	private final List<KeyValuePair> _columnEntries = new ArrayList<>();
+	private final String _editURL;
 	private final T _entity;
 	private final Serializable _primaryKey;
 

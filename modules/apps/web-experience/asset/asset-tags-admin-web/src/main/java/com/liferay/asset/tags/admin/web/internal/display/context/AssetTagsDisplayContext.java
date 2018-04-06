@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagServiceUtil;
 import com.liferay.asset.tags.constants.AssetTagsAdminPortletKeys;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
@@ -117,6 +118,20 @@ public class AssetTagsDisplayContext {
 		return clearResultsURL.toString();
 	}
 
+	public CreationMenu getCreationMenu() {
+		return new CreationMenu(_request) {
+			{
+				addPrimaryDropdownItem(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							_renderResponse.createRenderURL(), "mvcPath",
+							"/edit_tag.jsp");
+						dropdownItem.setLabel(_getLabel("add-tag"));
+					});
+			}
+		};
+	}
+
 	public String getDisplayStyle() {
 		if (Validator.isNotNull(_displayStyle)) {
 			return _displayStyle;
@@ -130,18 +145,6 @@ public class AssetTagsDisplayContext {
 			"list");
 
 		return _displayStyle;
-	}
-
-	public String getEditTagURL() {
-		if (!isShowAddButton()) {
-			return null;
-		}
-
-		PortletURL editTagURL = _renderResponse.createRenderURL();
-
-		editTagURL.setParameter("mvcPath", "/edit_tag.jsp");
-
-		return editTagURL.toString();
 	}
 
 	public DropdownItemList getFilterItemsDropdownItemList() {

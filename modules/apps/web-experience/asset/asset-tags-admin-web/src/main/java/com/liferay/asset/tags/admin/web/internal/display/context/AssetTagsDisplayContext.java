@@ -243,7 +243,7 @@ public class AssetTagsDisplayContext {
 		return _orderByType;
 	}
 
-	public String getSearchTagURL() {
+	public String getSearchActionURL() {
 		PortletURL searchTagURL = _renderResponse.createRenderURL();
 
 		searchTagURL.setParameter("orderByCol", getOrderByCol());
@@ -386,7 +386,7 @@ public class AssetTagsDisplayContext {
 		return _tagsSearchContainer;
 	}
 
-	public int getTotal() throws PortalException {
+	public int getTotalItems() throws PortalException {
 		SearchContainer tagsSearchContainer = getTagsSearchContainer();
 
 		return tagsSearchContainer.getTotal();

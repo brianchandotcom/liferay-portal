@@ -34,6 +34,61 @@ class PortletBase extends Component {
 	}
 
 	/**
+	 * Performs an HTTP POST request to the given url with the given body.
+	 * @param {!string} url Where to send the post request
+	 * @param {!Object|!FormData} body Request body
+	 * @return {Promise}
+	 * @review
+	 */
+
+	fetch(url, body) {
+		const requestBody = this.getRequestBody_(body);
+
+		return fetch(
+			url,
+			{
+				body: requestBody,
+				credentials: 'include',
+				method: 'POST'
+			}
+		);
+	}
+
+	/**
+	 * Transform the given body into a valid FormData element.
+	 * @param {!FormData|!HTMLFormElement|!Object} body Original data
+	 * @return {FormData} Transformed FormData
+	 * @review
+	 */
+
+	getRequestBody_(body) {
+		let requestBody;
+
+		if (body instanceof FormData) {
+			requestBody = body;
+		}
+		else if (body instanceof HTMLFormElement) {
+			requestBody = new FormData(body);
+		}
+		else if (typeof body === 'object') {
+			requestBody = new FormData();
+
+			Object
+				.entries(this.ns(body))
+				.forEach(
+					([key, value]) => {
+						requestBody.append(key, value);
+					}
+				);
+		}
+		else {
+			requestBody = body;
+		}
+
+		return requestBody;
+	}
+
+	/**
 	 * Namespaces the list of selectors appending the portlet namespace to the
 	 * selectors of type id. Selectors of other types remain unaltered.
 	 * @param {string} namespace The portlet's namespace

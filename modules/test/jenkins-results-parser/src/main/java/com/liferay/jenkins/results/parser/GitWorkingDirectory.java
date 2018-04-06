@@ -470,9 +470,9 @@ public class GitWorkingDirectory {
 			sb.append(" --no-tags ");
 		}
 
-		String remoteBranchName = remoteBranch.getName();
+		sb.append(remote.getName());
 
-		sb.append(remoteBranchName);
+		String remoteBranchName = remoteBranch.getName();
 
 		if ((remoteBranchName != null) && !remoteBranchName.isEmpty()) {
 			sb.append(" ");

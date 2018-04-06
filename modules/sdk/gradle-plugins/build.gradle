@@ -10,6 +10,9 @@ task copyBundle(type: Copy)
 task copyGradleTestDependencies(type: Copy)
 task downloadBundle(type: Download)
 
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 String bundleUrl = "https://cdn.lfrs.sl/releases.liferay.com/portal/7.0.5-ga6/liferay-ce-portal-tomcat-7.0-ga6-20180320170724974.zip"
 
 if (System.properties["http.proxyHost"] == "squid.lax.liferay.com") {
@@ -35,6 +38,7 @@ copyGradleTestDependencies {
 
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.ant.bnd", version: "2.0.50"
+	compile group: "com.liferay", name: "com.liferay.gogo.shell.client", version: "1.0.0"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.alloy.taglib", version: "2.0.0"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.css.builder", version: "2.2.0"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.db.support", version: "1.0.3"

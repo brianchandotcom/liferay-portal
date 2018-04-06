@@ -235,7 +235,7 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static Process executeBashCommands(
-			boolean exitOnFirstFail, File basedir, long timeout,
+			boolean exitOnFirstFail, File baseDir, long timeout,
 			String... commands)
 		throws IOException, TimeoutException {
 
@@ -270,7 +270,7 @@ public class JenkinsResultsParserUtil {
 
 		ProcessBuilder processBuilder = new ProcessBuilder(bashCommands);
 
-		processBuilder.directory(basedir.getAbsoluteFile());
+		processBuilder.directory(baseDir.getAbsoluteFile());
 
 		Process process = new BufferedProcess(1000000, processBuilder.start());
 
@@ -423,10 +423,10 @@ public class JenkinsResultsParserUtil {
 		return sb.toString();
 	}
 
-	public static List<File> findFiles(File basedir, String regex) {
+	public static List<File> findFiles(File baseDir, String regex) {
 		List<File> files = new ArrayList<>();
 
-		for (File file : basedir.listFiles()) {
+		for (File file : baseDir.listFiles()) {
 			String fileName = file.getName();
 
 			if (file.isDirectory()) {

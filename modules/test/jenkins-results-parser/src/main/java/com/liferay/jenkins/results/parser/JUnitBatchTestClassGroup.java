@@ -49,7 +49,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		_setTestClassNamesExcludesRelativeGlobs();
 		_setTestClassNamesIncludesRelativeGlobs();
 
-		_setTestClassFiles();
+		setTestClassFiles();
 
 		_setAxisTestClassGroups();
 	}
@@ -105,6 +105,97 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		return relevantTestClassNameRelativeGlobs;
 	}
+
+	protected void setTestClassFiles() {
+		File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
+
+		try {
+			Files.walkFileTree(
+				workingDirectory.toPath(),
+				new SimpleFileVisitor<Path>() {
+
+					@Override
+					public FileVisitResult preVisitDirectory(
+							Path filePath, BasicFileAttributes attrs)
+						throws IOException {
+
+						if (_pathExcluded(filePath)) {
+							return FileVisitResult.SKIP_SUBTREE;
+						}
+
+						return FileVisitResult.CONTINUE;
+					}
+
+					@Override
+					public FileVisitResult visitFile(
+							Path filePath, BasicFileAttributes attrs)
+						throws IOException {
+
+						if (_pathIncluded(filePath) &&
+							!_pathExcluded(filePath)) {
+
+							testClassFiles.add(
+								_getPackagePathClassFile(filePath));
+						}
+
+						return FileVisitResult.CONTINUE;
+					}
+
+					private File _getPackagePathClassFile(Path path) {
+						String filePath = path.toString();
+
+						Matcher matcher = _packagePathPattern.matcher(filePath);
+
+						if (matcher.find()) {
+							String packagePath = matcher.group("packagePath");
+
+							packagePath = packagePath.replace(
+								".java", ".class");
+
+							return new File(packagePath);
+						}
+
+						return new File(filePath.replace(".java", ".class"));
+					}
+
+					private boolean _pathExcluded(Path path) {
+						return _pathMatches(
+							path, testClassNamesExcludesPathMatchers);
+					}
+
+					private boolean _pathIncluded(Path path) {
+						return _pathMatches(
+							path, testClassNamesIncludesPathMatchers);
+					}
+
+					private boolean _pathMatches(
+						Path path, List<PathMatcher> pathMatchers) {
+
+						for (PathMatcher pathMatcher : pathMatchers) {
+							if (pathMatcher.matches(path)) {
+								return true;
+							}
+						}
+
+						return false;
+					}
+
+				});
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to search for test file names in " +
+					workingDirectory.getPath(),
+				ioe);
+		}
+
+		Collections.sort(testClassFiles);
+	}
+
+	protected final List<PathMatcher> testClassNamesExcludesPathMatchers =
+		new ArrayList<>();
+	protected final List<PathMatcher> testClassNamesIncludesPathMatchers =
+		new ArrayList<>();
 
 	private int _getAxisMaxSize() {
 		String axisMaxSize = _getAxisMaxSizePropertyValue();
@@ -270,92 +361,6 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		}
 	}
 
-	private void _setTestClassFiles() {
-		File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
-
-		try {
-			Files.walkFileTree(
-				workingDirectory.toPath(),
-				new SimpleFileVisitor<Path>() {
-
-					@Override
-					public FileVisitResult preVisitDirectory(
-							Path filePath, BasicFileAttributes attrs)
-						throws IOException {
-
-						if (_pathExcluded(filePath)) {
-							return FileVisitResult.SKIP_SUBTREE;
-						}
-
-						return FileVisitResult.CONTINUE;
-					}
-
-					@Override
-					public FileVisitResult visitFile(
-							Path filePath, BasicFileAttributes attrs)
-						throws IOException {
-
-						if (_pathIncluded(filePath) &&
-							!_pathExcluded(filePath)) {
-
-							testClassFiles.add(
-								_getPackagePathClassFile(filePath));
-						}
-
-						return FileVisitResult.CONTINUE;
-					}
-
-					private File _getPackagePathClassFile(Path path) {
-						String filePath = path.toString();
-
-						Matcher matcher = _packagePathPattern.matcher(filePath);
-
-						if (matcher.find()) {
-							String packagePath = matcher.group("packagePath");
-
-							packagePath = packagePath.replace(
-								".java", ".class");
-
-							return new File(packagePath);
-						}
-
-						return new File(filePath.replace(".java", ".class"));
-					}
-
-					private boolean _pathExcluded(Path path) {
-						return _pathMatches(
-							path, _testClassNamesExcludesPathMatchers);
-					}
-
-					private boolean _pathIncluded(Path path) {
-						return _pathMatches(
-							path, _testClassNamesIncludesPathMatchers);
-					}
-
-					private boolean _pathMatches(
-						Path path, List<PathMatcher> pathMatchers) {
-
-						for (PathMatcher pathMatcher : pathMatchers) {
-							if (pathMatcher.matches(path)) {
-								return true;
-							}
-						}
-
-						return false;
-					}
-
-				});
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(
-				"Unable to search for test file names in " +
-					workingDirectory.getPath(),
-				ioe);
-		}
-
-		Collections.sort(testClassFiles);
-	}
-
 	private void _setTestClassNamesExcludesRelativeGlobs() {
 		String testClassNamesExcludesPropertyValue =
 			_getTestClassNamesExcludesPropertyValue();
@@ -375,7 +380,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 					testClassNamesExcludesRelativeGlobs);
 		}
 
-		_testClassNamesExcludesPathMatchers.addAll(
+		testClassNamesExcludesPathMatchers.addAll(
 			_getTestClassNamesPathMatchers(
 				testClassNamesExcludesRelativeGlobs));
 	}
@@ -399,7 +404,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 					testClassNamesIncludesRelativeGlobs);
 		}
 
-		_testClassNamesIncludesPathMatchers.addAll(
+		testClassNamesIncludesPathMatchers.addAll(
 			_getTestClassNamesPathMatchers(
 				testClassNamesIncludesRelativeGlobs));
 	}
@@ -408,9 +413,5 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 	private final Pattern _packagePathPattern = Pattern.compile(
 		".*/(?<packagePath>com/.*)");
-	private final List<PathMatcher> _testClassNamesExcludesPathMatchers =
-		new ArrayList<>();
-	private final List<PathMatcher> _testClassNamesIncludesPathMatchers =
-		new ArrayList<>();
 
 }

@@ -107,67 +107,15 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 	public SoyValueProvider getFieldProvider(String name) {
 		SoyValueProvider soyValueProvider = _computedValues.get(name);
 
-		if (soyValueProvider == null) {
-			Object object = _map.get(name);
-
-			if (object == null) {
-				soyValueProvider = NullData.INSTANCE;
-			}
-			else if (object instanceof SoyData) {
-				soyValueProvider = (SoyData)object;
-			}
-			else if (object instanceof String) {
-				soyValueProvider = StringData.forValue((String)object);
-			}
-			else if (object instanceof Boolean) {
-				soyValueProvider = BooleanData.forValue((Boolean)object);
-			}
-			else if (object instanceof Integer) {
-				soyValueProvider = IntegerData.forValue((Integer)object);
-			}
-			else if (object instanceof Long) {
-				soyValueProvider = IntegerData.forValue((Long)object);
-			}
-			else if (object instanceof Map<?, ?>) {
-				@SuppressWarnings("unchecked")
-				Map<String, ?> map = (Map<String, ?>)object;
-
-				SoyMapData soyMapData = new SoyMapData();
-
-				Set<? extends Entry<String, ?>> entrySet = map.entrySet();
-
-				entrySet.forEach(
-					entry -> soyMapData.put(
-						entry.getKey(),
-						_populateCollectionData(entry.getValue())));
-
-				soyValueProvider = soyMapData;
-			}
-			else if (object instanceof Iterable<?>) {
-				SoyListData soyListData = new SoyListData();
-
-				Iterable<?> iterable = (Iterable<?>)object;
-
-				iterable.forEach(
-					entry -> soyListData.add(_populateCollectionData(entry)));
-
-				soyValueProvider = soyListData;
-			}
-			else if (object instanceof Double) {
-				soyValueProvider = FloatData.forValue((Double)object);
-			}
-			else if (object instanceof Float) {
-				soyValueProvider = FloatData.forValue((Float)object);
-			}
-			else {
-
-				// TODO Futures?
-
-				soyValueProvider = _populateCollectionData(object);
-			}
-
-			_computedValues.put(name, soyValueProvider);
+		if (soyValueProvider != null) {
+			return soyValueProvider;
 		}
+
+		Object object = _map.get(name);
+
+		soyValueProvider = _populateCollectionData(object);
+
+		_computedValues.put(name, soyValueProvider);
 
 		return soyValueProvider;
 	}

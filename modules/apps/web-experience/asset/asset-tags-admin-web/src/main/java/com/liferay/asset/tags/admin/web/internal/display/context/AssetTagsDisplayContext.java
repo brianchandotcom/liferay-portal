@@ -21,7 +21,6 @@ import com.liferay.asset.kernel.service.AssetTagServiceUtil;
 import com.liferay.asset.tags.constants.AssetTagsAdminPortletKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -30,7 +29,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -53,7 +51,6 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
-import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -112,9 +109,8 @@ public class AssetTagsDisplayContext {
 		return tag.getName();
 	}
 
-	public String getClearResultsURL() throws PortletException {
-		PortletURL clearResultsURL = PortletURLUtil.clone(
-			getPortletURL(), _renderResponse);
+	public String getClearResultsURL() {
+		PortletURL clearResultsURL = getPortletURL();
 
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
 
@@ -260,18 +256,16 @@ public class AssetTagsDisplayContext {
 		return portletURL;
 	}
 
-	public String getSearchTagURL() throws PortletException {
-		PortletURL searchTagURL = PortletURLUtil.clone(
-			getPortletURL(), _renderResponse);
+	public String getSearchTagURL() {
+		PortletURL searchTagURL = getPortletURL();
 
 		searchTagURL.setParameter("keywords", StringPool.BLANK);
 
 		return searchTagURL.toString();
 	}
 
-	public String getSortingURL() throws PortletException {
-		PortletURL sortingURL = PortletURLUtil.clone(
-			getPortletURL(), _renderResponse);
+	public String getSortingURL() {
+		PortletURL sortingURL = getPortletURL();
 
 		String orderByType = getOrderByType();
 
@@ -488,23 +482,19 @@ public class AssetTagsDisplayContext {
 		return new DropdownItemList() {
 			{
 				add(
-					SafeConsumer.ignore(
-						dropdownItem -> {
-							dropdownItem.setHref(
-								PortletURLUtil.clone(getPortletURL(), _renderResponse),
-								"orderByCol", "name");
-							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "name"));
-						}));
+					dropdownItem -> {
+						dropdownItem.setHref(
+							getPortletURL(), "orderByCol", "name");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "name"));
+					});
 				add(
-					SafeConsumer.ignore(
-						dropdownItem -> {
-							dropdownItem.setHref(
-								PortletURLUtil.clone(getPortletURL(), _renderResponse),
-								"orderByCol", "usages");
-							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "usages"));
-						}));
+					dropdownItem -> {
+						dropdownItem.setHref(
+							getPortletURL(), "orderByCol", "usages");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "usages"));
+					});
 			}
 		};
 	}

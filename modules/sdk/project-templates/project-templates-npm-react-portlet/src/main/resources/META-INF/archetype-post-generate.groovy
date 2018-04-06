@@ -14,6 +14,7 @@
 
 import java.nio.file.Paths
 import java.nio.file.Files
+import groovy.io.FileType
 
 def moduleDir = Paths.get(request.getOutputDirectory(), request.getArtifactId())
 
@@ -21,4 +22,16 @@ def gradleFile = moduleDir.resolve('build.gradle')
 
 if (Files.exists(gradleFile)) {
 	Files.delete(gradleFile)
+}
+
+def className = request.getProperties().get("className")
+def liferayVersion = request.getProperties().get("liferayVersion")
+
+if (!liferayVersion.equals("7.1")) {
+
+	moduleDir.toFile().eachFileRecurse (FileType.FILES) { file ->
+		if (file.getName().equals(className + 'WebKeys.java')) {
+			file.delete()
+		}
+	}
 }

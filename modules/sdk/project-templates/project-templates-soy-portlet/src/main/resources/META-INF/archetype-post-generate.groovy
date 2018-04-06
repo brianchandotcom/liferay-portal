@@ -24,8 +24,8 @@ if (Files.exists(gradleFile)) {
 	Files.delete(gradleFile)
 }
 
-String className = request.getProperties().get("className")
-String liferayVersion = request.getProperties().get("liferayVersion")
+def className = request.getProperties().get("className")
+def liferayVersion = request.getProperties().get("liferayVersion")
 
 if (liferayVersion.equals("7.1")) {
 	moduleDir.toFile().eachFileRecurse (FileType.FILES) { file ->

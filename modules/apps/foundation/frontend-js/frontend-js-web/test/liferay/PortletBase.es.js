@@ -82,12 +82,20 @@ describe(
 		describe(
 			'PortletBase.fetch',
 			() => {
+				let globalFetch;
 				let sampleBody;
 				const sampleUrl = 'http://sampleurl.com';
 
 				beforeEach(
 					() => {
+						globalFetch = global.fetch;
 						portletBase.ns = (obj) => obj;
+					}
+				);
+
+				afterEach(
+					() => {
+						global.fetch = globalFetch;
 					}
 				);
 

@@ -109,9 +109,10 @@ public class AssetTagsDisplayContext {
 	}
 
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
+		PortletURL clearResultsURL = _renderResponse.createRenderURL();
 
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+		clearResultsURL.setParameter("orderByCol", getOrderByCol());
+		clearResultsURL.setParameter("orderByType", getOrderByType());
 
 		return clearResultsURL.toString();
 	}
@@ -242,31 +243,23 @@ public class AssetTagsDisplayContext {
 		return _orderByType;
 	}
 
-	public PortletURL getPortletURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("keywords", getKeywords());
-		portletURL.setParameter("orderByCol", getOrderByCol());
-		portletURL.setParameter("orderByType", getOrderByType());
-
-		return portletURL;
-	}
-
 	public String getSearchTagURL() {
-		PortletURL searchTagURL = getPortletURL();
+		PortletURL searchTagURL = _renderResponse.createRenderURL();
 
-		searchTagURL.setParameter("keywords", StringPool.BLANK);
+		searchTagURL.setParameter("orderByCol", getOrderByCol());
+		searchTagURL.setParameter("orderByType", getOrderByType());
 
 		return searchTagURL.toString();
 	}
 
 	public String getSortingURL() {
-		PortletURL sortingURL = getPortletURL();
+		PortletURL sortingURL = _renderResponse.createRenderURL();
 
-		String orderByType = getOrderByType();
-
+		sortingURL.setParameter("keywords", getKeywords());
+		sortingURL.setParameter("orderByCol", getOrderByCol());
 		sortingURL.setParameter(
-			"orderByType", orderByType.equals("asc") ? "desc" : "asc");
+			"orderByType",
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
 
 		return sortingURL.toString();
 	}
@@ -477,13 +470,17 @@ public class AssetTagsDisplayContext {
 				add(
 					dropdownItem -> {
 						dropdownItem.setHref(
-							getPortletURL(), "orderByCol", "name");
+							_renderResponse.createRenderURL(), "keywords",
+							getKeywords(), "orderByCol", "name", "orderByType",
+							getOrderByType());
 						dropdownItem.setLabel("name");
 					});
 				add(
 					dropdownItem -> {
 						dropdownItem.setHref(
-							getPortletURL(), "orderByCol", "usages");
+							_renderResponse.createRenderURL(), "keywords",
+							getKeywords(), "orderByCol", "usages",
+							"orderByType", getOrderByType());
 						dropdownItem.setLabel("usages");
 					});
 			}

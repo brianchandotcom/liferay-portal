@@ -40,6 +40,18 @@ import org.gradle.api.logging.Logging;
  */
 public class FileUtil extends com.liferay.gradle.util.FileUtil {
 
+	public static String getExtension(File file) {
+		String name = file.getName();
+
+		int pos = name.indexOf('.');
+
+		if (pos != -1) {
+			name = name.substring(pos);
+		}
+
+		return name.toLowerCase();
+	}
+
 	public static FileTree getJarsFileTree(
 		Project project, File dir, String... excludes) {
 

@@ -14,33 +14,33 @@
 
 package com.liferay.gradle.plugins.tasks;
 
+import aQute.bnd.osgi.Constants;
+
 import com.liferay.gogo.shell.client.GogoShellClient;
+import com.liferay.gradle.plugins.internal.util.FileUtil;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URI;
 
-import java.nio.file.Files;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Optional;
 import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.gradle.StartParameter;
 import org.gradle.api.Action;
@@ -50,38 +50,109 @@ import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
+import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFiles;
+import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.incremental.IncrementalTaskInputs;
 import org.gradle.api.tasks.incremental.InputFileDetails;
+import org.gradle.util.GUtil;
 
 /**
  * @author Gregory Amerson
+ * @author Andrea Di Giorgi
  */
 public class WatchTask extends DefaultTask {
+
+	public WatchTask() {
+		classLoaderFileExtensions(".class", ".jsp", ".jspf");
+		ignoredManifestKeys(Constants.BND_LASTMODIFIED);
+	}
+
+	public WatchTask classLoaderFileExtensions(
+		Iterable<String> classLoaderFileExtensions) {
+
+		GUtil.addToCollection(
+			_classLoaderFileExtensions, classLoaderFileExtensions);
+
+		return this;
+	}
+
+	public WatchTask classLoaderFileExtensions(
+		String... classLoaderFileExtensions) {
+
+		return classLoaderFileExtensions(
+			Arrays.asList(classLoaderFileExtensions));
+	}
 
 	@InputDirectory
 	public File getBundleDir() {
 		return GradleUtil.toFile(getProject(), _bundleDir);
 	}
 
+	@Input
+	public Set<String> getClassLoaderFileExtensions() {
+		return _classLoaderFileExtensions;
+	}
+
 	@InputFiles
-	@org.gradle.api.tasks.Optional
+	@Optional
 	public FileCollection getFragments() {
-		return _fragments;
+		return _fragmentsFileCollection;
+	}
+
+	@Input
+	public Set<String> getIgnoredManifestKeys() {
+		return _ignoredManifestKeys;
+	}
+
+	public WatchTask ignoredManifestKeys(Iterable<String> ignoredManifestKeys) {
+		GUtil.addToCollection(_ignoredManifestKeys, ignoredManifestKeys);
+
+		return this;
+	}
+
+	public WatchTask ignoredManifestKeys(String... ignoredManifestKeys) {
+		return ignoredManifestKeys(Arrays.asList(ignoredManifestKeys));
 	}
 
 	public void setBundleDir(Object bundleDir) {
 		_bundleDir = bundleDir;
 	}
 
-	public void setFragments(FileCollection fragments) {
-		_fragments = fragments;
+	public void setClassLoaderFileExtensions(
+		Iterable<String> classLoaderFileExtensions) {
+
+		_classLoaderFileExtensions.clear();
+
+		classLoaderFileExtensions(classLoaderFileExtensions);
+	}
+
+	public void setClassLoaderFileExtensions(
+		String... classLoaderFileExtensions) {
+
+		setClassLoaderFileExtensions(Arrays.asList(classLoaderFileExtensions));
+	}
+
+	public void setFragments(FileCollection fragmentsFileCollection) {
+		_fragmentsFileCollection = fragmentsFileCollection;
+	}
+
+	public void setIgnoredManifestKeys(Iterable<String> ignoredManifestKeys) {
+		_ignoredManifestKeys.clear();
+
+		ignoredManifestKeys(ignoredManifestKeys);
+	}
+
+	public void setIgnoredManifestKeys(String... ignoredManifestKeys) {
+		setIgnoredManifestKeys(Arrays.asList(ignoredManifestKeys));
 	}
 
 	@TaskAction
-	public void watch(IncrementalTaskInputs inputs) throws IOException {
+	public void watch(IncrementalTaskInputs incrementalTaskInputs)
+		throws IOException {
+
 		Project project = getProject();
 
 		Gradle gradle = project.getGradle();
@@ -94,132 +165,82 @@ public class WatchTask extends DefaultTask {
 					"| --continuous)");
 		}
 
+		File bundleDir = getBundleDir();
 		Logger logger = getLogger();
 
-		Long installedBundleId = _installedBundleIds.get(getBundleDir());
+		Long bundleId = _installedBundleIds.get(bundleDir);
 
-		if ((installedBundleId == null) || (installedBundleId < 1)) {
-			_fullInstall();
+		if ((bundleId == null) || (bundleId < 1) ||
+			!incrementalTaskInputs.isIncremental()) {
+
+			_installBundleFully();
+
+			return;
 		}
-		else if (inputs.isIncremental()) {
-			List<File> modifiedFiles = _getModifiedFiles(inputs);
 
+		List<File> modifiedFiles = _getModifiedFiles(incrementalTaskInputs);
+
+		if (_isClassLoaderFileChanged(modifiedFiles) ||
+			_isManifestChanged(modifiedFiles)) {
+
+			_refreshBundle(bundleId);
+
+			return;
+		}
+
+		if (logger.isQuietEnabled()) {
 			if (modifiedFiles.isEmpty()) {
 				logger.quiet("No files changed. Skipping bundle refresh.");
-			}
-			else if (_manifestChanged(modifiedFiles)) {
-				_refresh();
-			}
-			else if (_filesChangedByExtension(
-						modifiedFiles, _classloaderFileExtensions)) {
-
-				_refresh();
 			}
 			else {
 				logger.quiet(
 					"Only resources changed. Skipping bundle refresh.");
 			}
 		}
-		else {
-			_fullInstall();
+	}
+
+	private static <K, V> Map<K, V> _getDifferences(
+		Map<? extends K, ? extends V> leftMap,
+		Map<? extends K, ? extends V> rightMap) {
+
+		Map<K, V> differences = new HashMap<>();
+
+		differences.putAll(leftMap);
+		differences.putAll(rightMap);
+
+		Set<Entry<K, V>> entrySet = differences.entrySet();
+
+		if (leftMap.size() <= rightMap.size()) {
+			entrySet.removeAll(leftMap.entrySet());
 		}
+		else {
+			entrySet.removeAll(rightMap.entrySet());
+		}
+
+		return differences;
 	}
 
-	private static String _getExtension(File file) {
-		String name = file.getName();
-
-		int index = name.indexOf('.');
-
-		String extension = (index > 0) ? name.substring(index) : name;
-
-		return extension.toLowerCase();
-	}
-
-	private static <K, V> Map<K, V> _mapDifference(
-		Map<? extends K, ? extends V> left,
-		Map<? extends K, ? extends V> right) {
-
-		Map<K, V> difference = new HashMap<>();
-
-		difference.putAll(left);
-		difference.putAll(right);
-
-		Set<Entry<K, V>> entrySet = difference.entrySet();
-
-		entrySet.removeAll(
-			left.size() <= right.size() ? left.entrySet() : right.entrySet());
-
-		return difference;
-	}
-
-	private static String _send(GogoShellClient gogoShellClient, String command)
+	private static String _sendGogoShellCommand(
+			GogoShellClient gogoShellClient, String command)
 		throws IOException {
 
 		String response = gogoShellClient.send(command);
 
 		if (response.startsWith(command)) {
-			String substring = response.substring(command.length());
+			response = response.substring(command.length());
 
-			return substring.trim();
+			response = response.trim();
 		}
-		else {
-			return response;
-		}
+
+		return response;
 	}
 
-	private boolean _filesChangedByExtension(
-		Collection<File> files, Collection<String> extensions) {
+	private List<File> _getModifiedFiles(
+		IncrementalTaskInputs incrementalTaskInputs) {
 
-		Stream<File> fileStream = files.stream();
+		final List<File> modifiedFiles = new ArrayList<>();
 
-		Map<String, List<File>> filesByExtension = fileStream.collect(
-			Collectors.groupingBy(WatchTask::_getExtension));
-
-		Set<String> extensionKeys = filesByExtension.keySet();
-
-		Stream<String> extensionKeysStream = extensionKeys.stream();
-
-		return extensionKeysStream.filter(
-			extension -> extensions.contains(extension)
-		).findAny(
-		).isPresent();
-	}
-
-	private void _fullInstall() throws IOException {
-		try (GogoShellClient gogoShellClient = new GogoShellClient()) {
-			File manifestFile = new File(
-				getBundleDir(), "META-INF/MANIFEST.MF");
-
-			try (InputStream inputStream =
-					Files.newInputStream(manifestFile.toPath())) {
-
-				Manifest manifest = new Manifest(inputStream);
-
-				long installedBundleId = _install(
-					getBundleDir(), gogoShellClient);
-
-				_installedAttributes.put(
-					getBundleDir(), manifest.getMainAttributes());
-
-				_installedBundleIds.put(getBundleDir(), installedBundleId);
-
-				FileCollection fileCollection = getFragments();
-
-				Set<File> fragments = fileCollection.getFiles();
-
-				for (File fragment : fragments) {
-					_install(fragment, gogoShellClient, false);
-				}
-
-				_refresh();
-			}
-		}
-	}
-
-	private List<File> _getModifiedFiles(IncrementalTaskInputs inputs) {
-		List<File> modifiedFiles = new ArrayList<>();
-
-		inputs.outOfDate(
+		incrementalTaskInputs.outOfDate(
 			new Action<InputFileDetails>() {
 
 				@Override
@@ -233,7 +254,7 @@ public class WatchTask extends DefaultTask {
 
 			});
 
-		inputs.removed(
+		incrementalTaskInputs.removed(
 			new Action<InputFileDetails>() {
 
 				@Override
@@ -248,13 +269,7 @@ public class WatchTask extends DefaultTask {
 		return modifiedFiles;
 	}
 
-	private long _install(File file, GogoShellClient gogoShellClient)
-		throws IOException {
-
-		return _install(file, gogoShellClient, true);
-	}
-
-	private long _install(
+	private long _installBundle(
 			File file, GogoShellClient gogoShellClient, boolean start)
 		throws IOException {
 
@@ -266,19 +281,22 @@ public class WatchTask extends DefaultTask {
 
 		String url = "reference:" + uri.toASCIIString();
 
-		String response = _send(gogoShellClient, "install " + url);
+		String response = _sendGogoShellCommand(
+			gogoShellClient, "install " + url);
 
 		if (start) {
 			Matcher matcher = _installResponsePattern.matcher(response);
 
 			if (matcher.matches()) {
-				logger.quiet("Installed bundle at dir: " + file);
+				if (logger.isQuietEnabled()) {
+					logger.quiet("Installed bundle at {}", file);
+				}
 
 				String bundleIdString = matcher.group(1);
 
 				bundleId = Long.parseLong(bundleIdString);
 
-				_start(bundleId, gogoShellClient);
+				_startBundle(bundleId, gogoShellClient);
 			}
 			else {
 				logger.error("Unable to install bundle: {}", response);
@@ -288,89 +306,136 @@ public class WatchTask extends DefaultTask {
 		return bundleId;
 	}
 
-	private boolean _manifestChanged(List<File> modifiedFiles)
-		throws IOException {
+	private void _installBundleFully() throws IOException {
+		File bundleDir = getBundleDir();
 
-		Stream<File> stream = modifiedFiles.stream();
-
-		Optional<File> modifiedManifestFile = stream.filter(
-			file -> {
-				String absolutePath = file.getAbsolutePath();
-
-				return absolutePath.endsWith("META-INF/MANIFEST.MF");
-			}
-		).findFirst(
-		).map(
-			manifestFile -> {
-				try (InputStream inputStream =
-						Files.newInputStream(manifestFile.toPath())) {
-
-					Manifest manifest = new Manifest(inputStream);
-
-					Attributes attributes = manifest.getMainAttributes();
-
-					Map<Object, Object> difference = _mapDifference(
-						attributes, _installedAttributes.get(getBundleDir()));
-
-					Set<Entry<Object, Object>> entrySet = difference.entrySet();
-
-					entrySet.removeIf(
-						entry -> {
-							Object key = entry.getKey();
-
-							return _ignoredManifestKeys.contains(
-								key.toString());
-						});
-
-					if (difference.isEmpty()) {
-						return null;
-					}
-
-					getLogger().quiet(
-						"Detected differences in manifest: " + difference);
-				}
-				catch (IOException ioe) {
-				}
-
-				return manifestFile;
-			}
-		);
-
-		return modifiedManifestFile.isPresent();
-	}
-
-	private void _refresh() throws IOException {
 		try (GogoShellClient gogoShellClient = new GogoShellClient()) {
-			Long installedBundleId = _installedBundleIds.get(getBundleDir());
+			long bundleId = _installBundle(bundleDir, gogoShellClient, true);
 
-			_send(
-				gogoShellClient,
-				String.format("refresh %s", installedBundleId));
+			_installedBundleIds.put(bundleDir, bundleId);
 
-			getLogger().quiet("Refreshed {}", installedBundleId);
+			File manifestFile = new File(bundleDir, "META-INF/MANIFEST.MF");
+
+			try (InputStream inputStream = new FileInputStream(manifestFile)) {
+				Manifest manifest = new Manifest(inputStream);
+
+				_installedAttributes.put(
+					bundleDir, manifest.getMainAttributes());
+			}
+
+			FileCollection fileCollection = getFragments();
+
+			Set<File> files = fileCollection.getFiles();
+
+			for (File file : files) {
+				_installBundle(file, gogoShellClient, false);
+			}
+
+			_refreshBundle(bundleId, gogoShellClient);
 		}
 	}
 
-	private String _start(long bundleId, GogoShellClient gogoShellClient)
+	private boolean _isClassLoaderFileChanged(List<File> modifiedFiles) {
+		for (File file : modifiedFiles) {
+			String extension = FileUtil.getExtension(file);
+
+			if (_classLoaderFileExtensions.contains(extension)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _isManifestChanged(List<File> modifiedFiles)
+		throws IOException {
+
+		File manifestFile = null;
+
+		for (File file : modifiedFiles) {
+			String absolutePath = FileUtil.getAbsolutePath(file);
+
+			if (absolutePath.endsWith("/META-INF/MANIFEST.MF")) {
+				manifestFile = file;
+
+				break;
+			}
+		}
+
+		if (manifestFile == null) {
+			return false;
+		}
+
+		Map<Object, Object> differences = null;
+
+		try (InputStream inputStream = new FileInputStream(manifestFile)) {
+			Manifest manifest = new Manifest(inputStream);
+
+			Attributes attributes = manifest.getMainAttributes();
+
+			differences = _getDifferences(
+				attributes, _installedAttributes.get(getBundleDir()));
+		}
+
+		Set<Map.Entry<Object, Object>> entrySet = differences.entrySet();
+
+		Iterator<Map.Entry<Object, Object>> iterator = entrySet.iterator();
+
+		while (iterator.hasNext()) {
+			Map.Entry<Object, Object> entry = iterator.next();
+
+			if (_ignoredManifestKeys.contains(entry.getKey())) {
+				iterator.remove();
+			}
+		}
+
+		if (differences.isEmpty()) {
+			return false;
+		}
+
+		Logger logger = getLogger();
+
+		if (logger.isQuietEnabled()) {
+			logger.quiet("Detected differences in manifest: {}", differences);
+		}
+
+		return true;
+	}
+
+	private void _refreshBundle(long bundleId) throws IOException {
+		try (GogoShellClient gogoShellClient = new GogoShellClient()) {
+			_refreshBundle(bundleId, gogoShellClient);
+		}
+	}
+
+	private void _refreshBundle(long bundleId, GogoShellClient gogoShellClient)
 		throws IOException {
 
 		Logger logger = getLogger();
-		String response = _send(gogoShellClient, "start " + bundleId);
 
-		if (Validator.isNotNull(response)) {
-			logger.error("Start error: {}", response);
-		}
-		else {
-			logger.quiet("Started " + bundleId);
-		}
+		_sendGogoShellCommand(gogoShellClient, "refresh " + bundleId);
 
-		return response;
+		if (logger.isQuietEnabled()) {
+			logger.quiet("Refreshed bundle {}", bundleId);
+		}
 	}
 
-	private static final List<String> _classloaderFileExtensions =
-		Arrays.asList(".class", ".jsp", ".jspf");
-	private static final List<String> _ignoredManifestKeys = Arrays.asList(
-		"Bnd-LastModified");
+	private void _startBundle(long bundleId, GogoShellClient gogoShellClient)
+		throws IOException {
+
+		Logger logger = getLogger();
+
+		String response = _sendGogoShellCommand(
+			gogoShellClient, "start " + bundleId);
+
+		if (Validator.isNotNull(response)) {
+			logger.error("Unable to start bundle {}: {}", bundleId, response);
+		}
+		else if (logger.isQuietEnabled()) {
+			logger.quiet("Bundle {} succesfully started", bundleId);
+		}
+	}
+
 	private static final Map<File, Attributes> _installedAttributes =
 		new HashMap<>();
 	private static final Map<File, Long> _installedBundleIds = new HashMap<>();
@@ -378,6 +443,9 @@ public class WatchTask extends DefaultTask {
 		".*Bundle ID: (.*$).*", Pattern.DOTALL | Pattern.MULTILINE);
 
 	private Object _bundleDir;
-	private FileCollection _fragments;
+	private final Set<String> _classLoaderFileExtensions =
+		new LinkedHashSet<>();
+	private FileCollection _fragmentsFileCollection;
+	private final Set<String> _ignoredManifestKeys = new LinkedHashSet<>();
 
 }

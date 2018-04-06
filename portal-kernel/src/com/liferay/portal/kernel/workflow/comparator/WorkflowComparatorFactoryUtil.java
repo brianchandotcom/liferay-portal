@@ -155,6 +155,20 @@ public class WorkflowComparatorFactoryUtil {
 			ascending);
 	}
 
+	public static OrderByComparator<WorkflowTask>
+		getTaskModifiedDateComparator() {
+
+		return getWorkflowComparatorFactory().getTaskModifiedDateComparator(
+			false);
+	}
+
+	public static OrderByComparator<WorkflowTask> getTaskModifiedDateComparator(
+		boolean ascending) {
+
+		return getWorkflowComparatorFactory().getTaskModifiedDateComparator(
+			ascending);
+	}
+
 	public static OrderByComparator<WorkflowTask> getTaskNameComparator() {
 		return getWorkflowComparatorFactory().getTaskNameComparator(false);
 	}

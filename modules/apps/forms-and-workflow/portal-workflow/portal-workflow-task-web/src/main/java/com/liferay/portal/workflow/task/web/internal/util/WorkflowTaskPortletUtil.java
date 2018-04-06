@@ -81,7 +81,7 @@ public class WorkflowTaskPortletUtil {
 		}
 		else {
 			orderByComparator =
-				WorkflowComparatorFactoryUtil.getTaskCreateDateComparator(
+				WorkflowComparatorFactoryUtil.getTaskModifiedDateComparator(
 					orderByAsc);
 		}
 

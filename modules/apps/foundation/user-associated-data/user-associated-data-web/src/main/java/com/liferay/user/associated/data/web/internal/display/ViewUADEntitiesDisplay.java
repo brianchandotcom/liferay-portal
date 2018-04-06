@@ -37,6 +37,10 @@ public class ViewUADEntitiesDisplay {
 		return _searchContainer;
 	}
 
+	public String getTypeName() {
+		return _typeName;
+	}
+
 	public UADEntityDisplay getUADEntityDisplay() {
 		return _uadEntityDisplay;
 	}
@@ -57,6 +61,10 @@ public class ViewUADEntitiesDisplay {
 		_searchContainer = searchContainer;
 	}
 
+	public void setTypeName(String typeName) {
+		_typeName = typeName;
+	}
+
 	public void setUADEntityDisplay(UADEntityDisplay uadEntityDisplay) {
 		_uadEntityDisplay = uadEntityDisplay;
 	}
@@ -68,6 +76,7 @@ public class ViewUADEntitiesDisplay {
 	private String _applicationName;
 	private List<NavigationItem> _navigationItems;
 	private SearchContainer<UADEntity> _searchContainer;
+	private String _typeName;
 	private UADEntityDisplay _uadEntityDisplay;
 	private String _uadRegistryKey;
 

@@ -17,13 +17,23 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Carlos Lancha
  */
 public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 
+	public ViewTypeItemList() {
+		_request = null;
+	}
+
+	public ViewTypeItemList(HttpServletRequest request) {
+		_request = request;
+	}
+
 	public void add(Consumer<ViewTypeItem> consumer) {
-		ViewTypeItem viewTypeItem = new ViewTypeItem();
+		ViewTypeItem viewTypeItem = new ViewTypeItem(_request);
 
 		consumer.accept(viewTypeItem);
 
@@ -31,7 +41,7 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 	}
 
 	public void addCardViewTypeItem(Consumer<ViewTypeItem> consumer) {
-		ViewTypeItem viewTypeItem = new ViewTypeItem();
+		ViewTypeItem viewTypeItem = new ViewTypeItem(_request);
 
 		viewTypeItem.setIcon("cards2");
 
@@ -41,7 +51,7 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 	}
 
 	public void addListViewTypeItem(Consumer<ViewTypeItem> consumer) {
-		ViewTypeItem viewTypeItem = new ViewTypeItem();
+		ViewTypeItem viewTypeItem = new ViewTypeItem(_request);
 
 		viewTypeItem.setIcon("list");
 
@@ -51,7 +61,7 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 	}
 
 	public void addTableViewTypeItem(Consumer<ViewTypeItem> consumer) {
-		ViewTypeItem viewTypeItem = new ViewTypeItem();
+		ViewTypeItem viewTypeItem = new ViewTypeItem(_request);
 
 		viewTypeItem.setIcon("table");
 
@@ -59,5 +69,7 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 
 		add(viewTypeItem);
 	}
+
+	private final HttpServletRequest _request;
 
 }

@@ -96,19 +96,6 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
 		<execute macro="User#editPasswordCP">
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userScreenName" value="usersn" />
@@ -156,19 +143,6 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
 		<execute macro="User#editPasswordCP">
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userScreenName" value="usersn" />
@@ -208,19 +182,6 @@
 		<execute macro="Site#addBlankCP">
 			<var name="membershipType" value="Restricted" />
 			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -324,19 +285,6 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
 		<execute macro="User#editPasswordCP">
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userScreenName" value="usersn" />
@@ -423,19 +371,6 @@
 
 	<command name="ViewMembershipAssignViaSiteCP" priority="3">
 		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />
@@ -592,19 +527,6 @@
 
 	<command name="ViewNoJoinOption" priority="3">
 		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />

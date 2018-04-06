@@ -268,19 +268,6 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
 		<execute macro="User#editPasswordCP">
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userScreenName" value="usersn" />
@@ -418,19 +405,6 @@
 
 		<execute macro="Site#configureCurrentLanguagesCP">
 			<var name="defaultSiteLanguage" value="Spanish (Spain)" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -821,19 +795,6 @@
 	<command name="ViewAvailableSiteLocaleAlternatives" priority="4">
 		<property name="test.name.skip.portal.instance" value="SitelocalizationUsecase#ViewAvailableSiteLocaleAlternatives" />
 		<property name="testray.component.names" value="Site Localization" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />

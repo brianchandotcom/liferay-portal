@@ -1307,9 +1307,9 @@
 
 		<execute macro="User#addCP">
 			<var method="TestPropsUtil#get('email.address.3')" name="userEmailAddress" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -1320,7 +1320,7 @@
 
 		<execute macro="User#editPasswordCP">
 			<var method="TestPropsUtil#get('email.address.3')" name="userEmailAddress" />
-			<var name="userScreenName" value="usersn" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -1331,7 +1331,7 @@
 
 		<execute macro="User#editUserSiteCP">
 			<var name="siteName" value="${siteName}" />
-			<var name="userScreenName" value="usersn" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="User#editEmailViaMyAccount">
@@ -1458,7 +1458,7 @@
 			<var name="threadBody" value="MB Thread Message Body" />
 			<var name="threadReplyBody" value="MB Thread Message Subject GMMB1 Reply" />
 			<var name="threadSubject" value="MB Thread Message Subject GMMB1" />
-			<var name="userName" value="userfn userln" />
+			<var name="userName" value="userfn1 userln1" />
 		</execute>
 
 		<execute macro="Gmail#gotoHtmlMode" />

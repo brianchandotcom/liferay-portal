@@ -764,19 +764,6 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
 		<execute macro="User#editPasswordCP">
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userScreenName" value="usersn" />
@@ -904,19 +891,6 @@
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
 			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
 			<var name="roleTitle" value="Portal Content Reviewer" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -1131,19 +1105,6 @@
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
 			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
 			<var name="roleTitle" value="Portal Content Reviewer" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -1367,19 +1328,6 @@
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
 			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
 			<var name="roleTitle" value="Portal Content Reviewer" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -1633,19 +1581,6 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
 		<execute macro="User#editUserSiteCP">
 			<var name="siteName" value="${siteName}" />
 			<var name="userScreenName" value="usersn" />
@@ -1846,19 +1781,6 @@
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
 			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
 			<var name="roleTitle" value="KaleoRegRole Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -6093,19 +6015,6 @@
 
 		<execute macro="KaleoFormsAdmin#viewProcessNoRecords">
 			<var name="kfProcessName" value="Kaleo Forms Process" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">

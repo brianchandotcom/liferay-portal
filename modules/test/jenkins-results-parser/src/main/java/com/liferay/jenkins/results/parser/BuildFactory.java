@@ -25,7 +25,6 @@ import java.util.Properties;
 public class BuildFactory {
 
 	public static Build newBuild(String url, Build parentBuild) {
-
 		url = JenkinsResultsParserUtil.getLocalURL(url);
 
 		if (url.contains("AXIS_VARIABLE=")) {
@@ -33,8 +32,7 @@ public class BuildFactory {
 		}
 
 		if (url.contains("-source-format")) {
-			return new SourceFormatBuild(
-				url, (TopLevelBuild)parentBuild);
+			return new SourceFormatBuild(url, (TopLevelBuild)parentBuild);
 		}
 
 		if (url.contains("-source")) {

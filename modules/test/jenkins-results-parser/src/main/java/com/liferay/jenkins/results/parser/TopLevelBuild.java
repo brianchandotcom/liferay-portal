@@ -42,6 +42,7 @@ import org.apache.commons.lang.StringUtils;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -360,6 +361,8 @@ public class TopLevelBuild extends BaseBuild {
 
 	protected TopLevelBuild(String url, TopLevelBuild topLevelBuild) {
 		super(url, topLevelBuild);
+
+		_pullRequest = new PullRequest(_getPullRequestString());
 	}
 
 	@Override
@@ -570,9 +573,9 @@ public class TopLevelBuild extends BaseBuild {
 			}
 		}
 
-		List<Element> failuresToAppend = new ArrayList<>();
+		List<Element> githubMessageFailureElements = new ArrayList<>();
 
-		failuresToAppend.add(Dom4JUtil.getNewElement("hr"));
+		githubMessageFailureElements.add(Dom4JUtil.getNewElement("hr"));
 
 		if (failureElements.isEmpty() && upstreamJobFailureElements.isEmpty()) {
 			failureElements.add(0, super.getGitHubMessageElement());
@@ -581,14 +584,18 @@ public class TopLevelBuild extends BaseBuild {
 		if (failureElements.isEmpty() &&
 			!upstreamJobFailureElements.isEmpty()) {
 
-			failuresToAppend.add(
+			githubMessageFailureElements.add(
 				Dom4JUtil.getNewElement(
 					"h4", null, "This pull contains no unique failures."));
 		}
 		else {
-			failuresToAppend.add(
+			githubMessageFailureElements.add(
 				Dom4JUtil.getNewElement(
 					"h4", null, "Failures unique to this pull:"));
+
+			githubMessageFailureElements.add(
+				Dom4JUtil.getOrderedListElement(
+					failureElements, maxFailureCount));
 		}
 
 		String acceptanceUpstreamJobURL = getAcceptanceUpstreamURL();
@@ -617,19 +624,25 @@ public class TopLevelBuild extends BaseBuild {
 				upstreamJobFailureElements, upstreamJobFailureElement,
 				remainingFailureCount);
 
-			failuresToAppend.add(Dom4J)
+			githubMessageFailureElements.add(Dom4JUtil.getNewElement("hr"));
+			githubMessageFailureElements.add(upstreamJobFailureElement);
 		}
 
 		if (jobName.contains("pullrequest") &&
 			upstreamJobFailureElements.isEmpty() &&
 			(acceptanceUpstreamJobURL != null)) {
 
+			Element upstreamResultElement = Dom4JUtil.getNewElement("h4");
+
 			Dom4JUtil.addToElement(
-				Dom4JUtil.getNewElement("h4", detailsElement),
-				"For upstream results, click ",
-				Dom4JUtil.getNewAnchorElement(acceptanceUpstreamJobURL, "here"),
-				".");
+				upstreamResultElement, "For upstream results, click ",
+				Dom4JUtil.getNewAnchorElement(
+					acceptanceUpstreamJobURL, "here"));
+
+			githubMessageFailureElements.add(upstreamResultElement);
 		}
+
+		return githubMessageFailureElements.toArray(new Element[0]);
 	}
 
 	protected Element getCompanionBranchDetailsElement() {
@@ -1282,9 +1295,7 @@ public class TopLevelBuild extends BaseBuild {
 		Dom4JUtil.addToElement(detailsElement, getMoreDetailsElement());
 
 		if (!result.equals("SUCCESS")) {
-			Dom4JUtil.addToElement(
-				detailsElement,
-				getBuildFailureElements();
+			Dom4JUtil.addToElement(detailsElement, getBuildFailureElements());
 		}
 
 		return rootElement;
@@ -1312,6 +1323,22 @@ public class TopLevelBuild extends BaseBuild {
 
 	protected static final Pattern gitRepositoryTempMapNamePattern =
 		Pattern.compile("git\\.(?<repositoryType>.*)\\.properties");
+
+	private String _getPullRequestString() {
+		JSONObject buildJSONObject = getBuildJSONObject();
+
+		JSONArray actionsJSONArray = buildJSONObject.getJSONArray("actions");
+
+		JSONObject parametersJSONObject = actionsJSONArray.getJSONObject(0);
+
+		JSONArray parametersJSONArray = parametersJSONObject.getJSONArray(
+			"parameters");
+
+		JSONObject pullRequestURLJSONObject = parametersJSONArray.getJSONObject(
+			2);
+
+		return pullRequestURLJSONObject.getString("value");
+	}
 
 	private static final long _DOWNSTREAM_BUILDS_LISTING_INTERVAL =
 		1000 * 60 * 5;

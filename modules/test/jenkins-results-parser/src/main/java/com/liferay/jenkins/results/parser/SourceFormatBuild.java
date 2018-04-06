@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import com.liferay.jenkins.results.parser.failure.message.generator.FailureMessageGenerator;
+import com.liferay.jenkins.results.parser.failure.message.generator.GenericFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.SourceFormatFailureMessageGenerator;
 
 import org.dom4j.Element;
@@ -29,8 +30,10 @@ public class SourceFormatBuild extends TopLevelBuild {
 		Element failureMessageElement = getFailureMessageElement();
 
 		if (failureMessageElement != null) {
-			return {failureMessageElement};
+			return new Element[] {failureMessageElement};
 		}
+
+		return null;
 	}
 
 	protected SourceFormatBuild(String url) {

@@ -25,7 +25,7 @@
 	actionItems="<%= assetTagsDisplayContext.getActionItemsDropdownItemList() %>"
 	clearResultsURL="<%= assetTagsDisplayContext.getClearResultsURL() %>"
 	componentId="assetTagsManagementToolbar"
-	creationMenu="<%= assetTagsDisplayContext.getEditTagURL() %>"
+	creationMenu="<%= assetTagsDisplayContext.isShowAddButton() ? assetTagsDisplayContext.getCreationMenu() : null %>"
 	filterItems="<%= assetTagsDisplayContext.getFilterItemsDropdownItemList() %>"
 	namespace="<%= renderResponse.getNamespace() %>"
 	searchActionURL="<%= assetTagsDisplayContext.getSearchTagURL() %>"

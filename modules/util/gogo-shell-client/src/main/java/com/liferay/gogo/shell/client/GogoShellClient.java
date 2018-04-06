@@ -24,9 +24,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * java client for telnet handshake
+ * Java client for Telnet handshake.
  *
- * reference: http://www.laynetworks.com/telnet.htm
+ * <p>
+ * Reference: http://www.laynetworks.com/telnet.htm
+ * </p>
  *
  * @author Gregory Amerson
  */
@@ -92,29 +94,30 @@ public class GogoShellClient implements AutoCloseable {
 
 	private void _handshake() throws IOException {
 
-		// gogo server first sends 4 commands
+		// Gogo server first sends 4 commands
 
 		_readOneCommand();
 		_readOneCommand();
 		_readOneCommand();
 		_readOneCommand();
 
-		// first we negotiate terminal type
+		// First we negotiate the terminal type:
 		// 255(IAC),251(WILL),24(terminal type)
 
 		_sendCommand(255, 251, 24);
 
-		// server should respond
+		// Server should respond:
 		// 255(IAC),250(SB),24,1,255(IAC),240(SE)
 
 		_readOneCommand();
 
-		// send the terminal type
+		// Send the terminal type:
 
 		//255(IAC),250(SB),24,0,'V','T','2','2','0',255(IAC),240(SE)
+
 		_sendCommand(255, 250, 24, 0, 'V', 'T', '2', '2', '0', 255, 240);
 
-		// read gogo shell prompt
+		// Read Gogo shell prompt
 
 		_readUntilNextGogoPrompt();
 	}

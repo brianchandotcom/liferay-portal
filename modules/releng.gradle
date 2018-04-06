@@ -104,7 +104,7 @@ lockDependencyVersion {
 			dependencyPattern = ~/(compileOnly|provided) project\(".+:${dependencyProjectName}"\)/
 		}
 
-		String dependencyReplacement = "$1 group: \"${dependencyGroup}\", name: \"${dependencyName}\", version: \"${dependencyVersion}\""
+		String dependencyReplacement = "\$1 group: \"${dependencyGroup}\", name: \"${dependencyName}\", version: \"${dependencyVersion}\""
 
 		boolean commitChanges = false
 

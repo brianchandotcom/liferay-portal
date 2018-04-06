@@ -65,7 +65,7 @@ long commerceRegionId = BeanParamUtil.getLong(shippingAddress, request, "commerc
 						<aui:input name="description" />
 
 						<aui:button-row>
-							<aui:icon cssClass="edit-form-link" image="edit" label="edit-location" url="javascript:;" />
+							<aui:icon cssClass="edit-form-link" image="edit" label="edit-address" url="javascript:;" />
 
 							<div class="edit-form-buttons hide">
 								<aui:button type="submit" />

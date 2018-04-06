@@ -81,7 +81,7 @@ boolean hasManageRestrictedNotesPermission = commerceOrganizationOrderDisplayCon
 								<aui:input autoFocus="<%= true %>" label="" name="content" placeholder="type-your-note-here" />
 
 								<c:if test="<%= hasManageRestrictedNotesPermission %>">
-									<aui:input helpMessage="restricted-help" name="restricted" />
+									<aui:input helpMessage="restricted-help" label="private" name="restricted" />
 								</c:if>
 
 								<aui:button-row>
@@ -129,7 +129,7 @@ boolean hasManageRestrictedNotesPermission = commerceOrganizationOrderDisplayCon
 												</aui:a>
 
 												<c:if test="<%= commerceOrderNote.isRestricted() %>">
-													<aui:icon image="lock" markupView="lexicon" message="restricted" />
+													<aui:icon image="lock" markupView="lexicon" message="private" />
 												</c:if>
 
 												<%

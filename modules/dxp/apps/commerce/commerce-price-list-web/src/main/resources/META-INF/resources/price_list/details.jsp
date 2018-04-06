@@ -39,7 +39,7 @@ List<CommercePriceListQualificationTypeRel> commercePriceListQualificationTypeRe
 <aui:fieldset>
 	<aui:input name="name" />
 
-	<aui:select label="commerce-currency" name="commerceCurrencyId" showEmptyOption="<%= true %>">
+	<aui:select label="store-currency" name="commerceCurrencyId" showEmptyOption="<%= true %>">
 
 		<%
 		List<CommerceCurrency> commerceCurrencies = commercePriceListDisplayContext.getCommerceCurrencies();

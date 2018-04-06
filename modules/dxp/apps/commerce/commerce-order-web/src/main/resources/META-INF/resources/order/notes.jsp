@@ -52,7 +52,7 @@ long commerceOrderId = commerceOrderEditDisplayContext.getCommerceOrderId();
 						<div class="lfr-discussion-body">
 							<aui:input autoFocus="<%= true %>" label="" name="content" placeholder="type-your-note-here" />
 
-							<aui:input helpMessage="restricted-help" name="restricted" />
+							<aui:input helpMessage="restricted-help" label="private" name="restricted" />
 
 							<aui:button-row>
 								<aui:button cssClass="btn-large btn-primary" type="submit" />
@@ -98,7 +98,7 @@ long commerceOrderId = commerceOrderEditDisplayContext.getCommerceOrderId();
 												</aui:a>
 
 												<c:if test="<%= commerceOrderNote.isRestricted() %>">
-													<aui:icon image="lock" markupView="lexicon" message="restricted" />
+													<aui:icon image="lock" markupView="lexicon" message="private" />
 												</c:if>
 
 												<%

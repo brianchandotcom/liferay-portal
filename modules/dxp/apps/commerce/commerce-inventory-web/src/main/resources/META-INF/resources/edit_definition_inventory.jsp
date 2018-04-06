@@ -110,7 +110,7 @@ long cpDefinitionId = cpDefinitionInventoryDisplayContext.getCPDefinitionId();
 
 				<aui:input name="minStockQuantity" />
 
-				<aui:input name="backOrders" />
+				<aui:input label="allow-back-orders" name="backOrders" />
 
 				<aui:input name="minOrderQuantity" />
 

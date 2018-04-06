@@ -44,7 +44,7 @@ boolean shipSeparately = BeanParamUtil.getBoolean(cpDefinition, request, "shipSe
 			<div class="<%= shippable ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />shippableOptions">
 				<aui:input checked="<%= freeShipping %>" name="freeShipping" type="toggle-switch" />
 
-				<aui:input checked="<%= shipSeparately %>" name="shipSeparately" type="toggle-switch" />
+				<aui:input checked="<%= shipSeparately %>" label="always-ship-separately" name="shipSeparately" type="toggle-switch" />
 
 				<aui:input name="shippingExtraPrice" />
 			</div>

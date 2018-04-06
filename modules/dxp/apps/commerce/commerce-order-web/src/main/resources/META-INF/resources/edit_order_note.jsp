@@ -45,7 +45,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "edit-note"));
 			<aui:fieldset>
 				<aui:input autoFocus="<%= true %>" name="content" />
 
-				<aui:input helpMessage="restricted-help" name="restricted" />
+				<aui:input helpMessage="restricted-help" label="private" name="restricted" />
 			</aui:fieldset>
 		</aui:fieldset-group>
 	</div>

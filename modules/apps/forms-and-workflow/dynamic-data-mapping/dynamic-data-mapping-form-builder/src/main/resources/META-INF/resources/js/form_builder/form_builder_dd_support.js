@@ -242,6 +242,7 @@ AUI.add(
 						},
 						dragNodes: '.lfr-ddm-form-builder-draggable-item',
 						dropNodes: '.col-empty',
+						placeholder: '<div class="hide"></div>',
 						proxy: null
 					}
 				);
@@ -338,6 +339,7 @@ AUI.add(
 						},
 						dragNodes: '.layout-col-content',
 						dropNodes: '.layout-row .col-empty',
+						placeholder: '<div class="hide"></div>',
 						proxy: null,
 						proxyNode: '<div></div>'
 					}

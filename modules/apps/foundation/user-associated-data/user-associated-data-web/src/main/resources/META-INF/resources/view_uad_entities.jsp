@@ -19,8 +19,6 @@
 <%
 ViewUADEntitiesDisplay viewUADEntitiesDisplay = (ViewUADEntitiesDisplay)request.getAttribute(UADWebKeys.VIEW_UAD_ENTITIES_DISPLAY);
 
-UADEntityDisplay uadEntityDisplay = viewUADEntitiesDisplay.getUADEntityDisplay();
-
 SearchContainer uadEntitySearchContainer = viewUADEntitiesDisplay.getSearchContainer();
 
 portletDisplay.setShowBackIcon(true);
@@ -32,7 +30,7 @@ backURL.setParameter("p_u_i_d", String.valueOf(selectedUser.getUserId()));
 
 portletDisplay.setURLBack(backURL.toString());
 
-renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", LanguageUtil.get(request, "personal-data-erasure"), " - ", uadEntityDisplay.getTypeName()));
+renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", LanguageUtil.get(request, "personal-data-erasure"), " - ", viewUADEntitiesDisplay.getTypeName()));
 %>
 
 <clay:navigation-bar

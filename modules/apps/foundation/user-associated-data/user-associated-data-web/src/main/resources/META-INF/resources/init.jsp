@@ -46,7 +46,6 @@ page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.TextFormatter" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
-page import="com.liferay.user.associated.data.display.UADEntityDisplay" %><%@
 page import="com.liferay.user.associated.data.web.internal.constants.UADWebKeys" %><%@
 page import="com.liferay.user.associated.data.web.internal.display.UADApplicationExportDisplay" %><%@
 page import="com.liferay.user.associated.data.web.internal.display.UADApplicationSummaryDisplay" %><%@

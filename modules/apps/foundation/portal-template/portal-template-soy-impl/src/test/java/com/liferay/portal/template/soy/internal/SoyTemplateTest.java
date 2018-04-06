@@ -14,8 +14,6 @@
 
 package com.liferay.portal.template.soy.internal;
 
-import com.google.template.soy.data.SoyMapData;
-import com.google.template.soy.data.SoyRecord;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.soy.constants.SoyTemplateConstants;
@@ -68,7 +66,8 @@ public class SoyTemplateTest {
 
 		Assert.assertEquals(keys.toString(), 0, keys.size());
 
-		SoyTemplateRecord injectedSoyMapData = soyTemplate.getSoyMapInjectedData();
+		SoyTemplateRecord injectedSoyMapData =
+			soyTemplate.getSoyMapInjectedData();
 
 		keys = injectedSoyMapData.keys();
 
@@ -167,7 +166,8 @@ public class SoyTemplateTest {
 		Assert.assertTrue(soyMapData.hasField("key1"));
 		Assert.assertEquals("value1", soyMapData.get("key1"));
 
-		SoyTemplateRecord injectedSoyMapData = soyTemplate.getSoyMapInjectedData();
+		SoyTemplateRecord injectedSoyMapData =
+			soyTemplate.getSoyMapInjectedData();
 
 		Assert.assertEquals(
 			"injectedValue", injectedSoyMapData.get("injectedKey"));
@@ -181,7 +181,8 @@ public class SoyTemplateTest {
 
 		soyTemplate.remove(SoyTemplateConstants.INJECTED_DATA);
 
-		SoyTemplateRecord injectedSoyMapData = soyTemplate.getSoyMapInjectedData();
+		SoyTemplateRecord injectedSoyMapData =
+			soyTemplate.getSoyMapInjectedData();
 
 		Set<String> keys = injectedSoyMapData.keys();
 

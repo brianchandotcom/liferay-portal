@@ -52,6 +52,7 @@ import com.liferay.gradle.plugins.soy.SoyTranslationPlugin;
 import com.liferay.gradle.plugins.soy.tasks.BuildSoyTask;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
 import com.liferay.gradle.plugins.tasks.ExecuteBndTask;
+import com.liferay.gradle.plugins.tasks.WatchTask;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationPlugin;
 import com.liferay.gradle.plugins.tld.formatter.TLDFormatterPlugin;
 import com.liferay.gradle.plugins.tlddoc.builder.TLDDocBuilderPlugin;
@@ -173,6 +174,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		_configureTaskJavadoc(project);
 		_configureTaskTest(project);
 		_configureTasksTest(project);
+		_configureTaskWatch(project);
 
 		if (GradleUtil.isRunningInsideDaemon()) {
 			_configureTasksJavaCompileFork(project, true);
@@ -787,6 +789,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, TLDDocBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, TLDFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, TestIntegrationPlugin.class);
+		GradleUtil.applyPlugin(project, WatchPlugin.class);
 		GradleUtil.applyPlugin(project, XMLFormatterPlugin.class);
 
 		AlloyTaglibDefaultsPlugin.INSTANCE.apply(project);
@@ -1158,6 +1161,18 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		if (includes.isEmpty()) {
 			test.setIncludes(Collections.singleton("**/*Test.class"));
 		}
+	}
+
+	private void _configureTaskWatch(Project project) {
+		WatchTask watchTask = (WatchTask)GradleUtil.getTask(
+			project, WatchPlugin.WATCH_TASK_NAME);
+
+		ExecuteBndTask executeBndTask = (ExecuteBndTask)GradleUtil.getTask(
+			project, JAR_COMPILE_INCLUDE_FRAGMENT_TASK_NAME);
+
+		TaskOutputs taskOutputs = executeBndTask.getOutputs();
+
+		watchTask.setFragments(taskOutputs.getFiles());
 	}
 
 	private void _configureVersion(Project project) {

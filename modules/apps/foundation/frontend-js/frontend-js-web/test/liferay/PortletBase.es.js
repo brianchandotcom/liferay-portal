@@ -80,6 +80,166 @@ describe(
 		);
 
 		describe(
+			'PortletBase.fetch',
+			() => {
+				let globalFetch;
+				let sampleBody;
+				const sampleUrl = 'http://sampleurl.com';
+
+				beforeEach(
+					() => {
+						globalFetch = global.fetch;
+						portletBase.ns = (obj) => obj;
+					}
+				);
+
+				afterEach(
+					() => {
+						global.fetch = globalFetch;
+					}
+				);
+
+				it(
+					'should make the request to the given url',
+					(done) => {
+						global.fetch = jest.fn(
+							(url) => {
+								expect(url).toBe(sampleUrl);
+								done();
+							}
+						);
+
+						portletBase.fetch(sampleUrl, sampleBody);
+					}
+				);
+
+				it(
+					'should add credentials option to the request',
+					(done) => {
+						global.fetch = jest.fn(
+							(url, options) => {
+								expect(options.credentials).toBe('include');
+								done();
+							}
+						);
+
+						portletBase.fetch(sampleUrl, sampleBody);
+					}
+				);
+
+				it(
+					'should add the POST method option to the request',
+					(done) => {
+						global.fetch = jest.fn(
+							(url, options) => {
+								expect(options.method).toBe('POST');
+								done();
+							}
+						);
+
+						portletBase.fetch(sampleUrl, sampleBody);
+					}
+				);
+
+				it(
+					'should add the given body to the request',
+					(done) => {
+						global.fetch = jest.fn(
+							(url, options) => {
+								expect(options.body).toBe(sampleBody);
+								done();
+							}
+						);
+
+						sampleBody = 'sample body';
+						portletBase.fetch(sampleUrl, sampleBody);
+					}
+				);
+
+				it(
+					'should transform the given body using getRequestBody_',
+					(done) => {
+						portletBase.getRequestBody_ = jest.fn();
+
+						global.fetch = jest.fn(
+							(url, options) => {
+								expect(
+									portletBase.getRequestBody_.mock.calls
+								).toEqual(
+									[[sampleBody]]
+								);
+								done();
+							}
+						);
+
+						expect(
+							portletBase.getRequestBody_.mock.calls.length
+						).toBe(0);
+
+						portletBase.fetch(sampleUrl, sampleBody);
+					}
+				);
+			}
+		);
+
+		describe(
+			'PortletBase.getRequestBody_',
+			() => {
+				it(
+					'should keep body intact if it is already a FormData instance',
+					() => {
+						const sampleFormData = new FormData();
+
+						expect(portletBase.getRequestBody_(sampleFormData))
+							.toBe(sampleFormData);
+					}
+				);
+
+				it(
+					'should create a FormData instance from a given HTMLFormElement',
+					() => {
+						const sampleFormElement = document.createElement('form');
+
+						sampleFormElement.innerHTML = `
+							<input name="field1" value="value1" />
+							<input name="field2" value="value2" />
+						`;
+
+						const sampleFormData = new FormData(sampleFormElement);
+
+						const resultFormData = portletBase
+							.getRequestBody_(sampleFormElement);
+
+						expect(resultFormData.get('field1'))
+							.toBe(sampleFormData.get('field1'));
+						expect(resultFormData.get('field2'))
+							.toBe(sampleFormData.get('field2'));
+					}
+				);
+
+				it(
+					'should append all object keys inside a new FormData element',
+					() => {
+						portletBase.ns = (obj) => obj;
+
+						const sampleBody = {
+							fieldA: 'valueA',
+							fieldB: 'valueB'
+						};
+
+						const resultFormData = portletBase
+							.getRequestBody_(sampleBody);
+
+						expect(resultFormData.get('fieldA'))
+							.toBe(sampleBody.fieldA);
+						expect(resultFormData.get('fieldB'))
+							.toBe(sampleBody.fieldB);
+					}
+				);
+			}
+		);
+
+		describe(
 			'PortletBase.ns',
 			() => {
 				it(

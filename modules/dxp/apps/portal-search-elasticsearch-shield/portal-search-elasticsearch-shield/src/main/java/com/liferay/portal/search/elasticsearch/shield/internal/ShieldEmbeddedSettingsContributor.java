@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
  * @author André de Oliveira
  */
 @Component(
-	immediate = true, property = {"operation.mode=EMBEDDED"},
+	immediate = true, property = "operation.mode=EMBEDDED",
 	service = SettingsContributor.class
 )
 public class ShieldEmbeddedSettingsContributor extends BaseSettingsContributor {

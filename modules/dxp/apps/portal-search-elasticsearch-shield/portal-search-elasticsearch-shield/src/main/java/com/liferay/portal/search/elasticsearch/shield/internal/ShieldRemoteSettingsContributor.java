@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.elasticsearch.shield.configuration.ShieldConfiguration",
-	immediate = true, property = {"operation.mode=REMOTE"},
+	immediate = true, property = "operation.mode=REMOTE",
 	service = SettingsContributor.class
 )
 public class ShieldRemoteSettingsContributor extends BaseSettingsContributor {

@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Riccardo Ferrari
  */
 @Component(
-	immediate = true, property = {"destination.name=lcs_echo"},
+	immediate = true, property = "destination.name=lcs_echo",
 	service = MessageListener.class
 )
 public class EchoMessageListener extends BaseMessageListener {

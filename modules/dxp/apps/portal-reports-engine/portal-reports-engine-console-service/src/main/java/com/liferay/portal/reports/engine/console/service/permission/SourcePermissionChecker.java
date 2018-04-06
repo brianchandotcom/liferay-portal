@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=com.liferay.portal.reports.engine.console.model.Source"},
+	property = "model.class.name=com.liferay.portal.reports.engine.console.model.Source",
 	service = BaseModelPermissionChecker.class
 )
 public class SourcePermissionChecker implements BaseModelPermissionChecker {

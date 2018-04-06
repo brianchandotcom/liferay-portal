@@ -37,8 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	immediate = true, property = {"key=auth.failure"},
-	service = AuthFailure.class
+	immediate = true, property = "key=auth.failure", service = AuthFailure.class
 )
 public class LoginFailure implements AuthFailure {
 

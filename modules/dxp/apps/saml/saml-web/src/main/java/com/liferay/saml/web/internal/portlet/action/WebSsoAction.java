@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mika Koivisto
  */
 @Component(
-	immediate = true, property = {"path=/portal/saml/sso"},
+	immediate = true, property = "path=/portal/saml/sso",
 	service = StrutsAction.class
 )
 public class WebSsoAction extends BaseSamlStrutsAction {

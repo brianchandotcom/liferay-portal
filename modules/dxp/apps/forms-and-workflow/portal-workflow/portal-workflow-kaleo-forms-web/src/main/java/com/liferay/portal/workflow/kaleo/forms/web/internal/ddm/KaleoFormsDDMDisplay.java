@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcellus Tavares
  */
 @Component(
-	property = {"javax.portlet.name=" + KaleoFormsPortletKeys.KALEO_FORMS_ADMIN},
+	property = "javax.portlet.name=" + KaleoFormsPortletKeys.KALEO_FORMS_ADMIN,
 	service = DDMDisplay.class
 )
 public class KaleoFormsDDMDisplay extends BaseDDMDisplay {

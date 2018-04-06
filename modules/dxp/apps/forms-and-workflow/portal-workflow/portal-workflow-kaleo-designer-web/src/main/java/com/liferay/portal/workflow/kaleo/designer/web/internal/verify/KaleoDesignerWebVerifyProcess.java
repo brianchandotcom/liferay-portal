@@ -38,9 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"verify.process.name=com.liferay.portal.workflow.kaleo.designer.web"
-	},
+	property = "verify.process.name=com.liferay.portal.workflow.kaleo.designer.web",
 	service = VerifyProcess.class
 )
 public class KaleoDesignerWebVerifyProcess extends VerifyProcess {

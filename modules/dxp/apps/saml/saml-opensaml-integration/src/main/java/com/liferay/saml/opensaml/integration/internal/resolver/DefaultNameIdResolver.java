@@ -28,8 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mika Koivisto
  */
 @Component(
-	immediate = true,
-	property = {"service.ranking:Integer=" + Integer.MIN_VALUE},
+	immediate = true, property = "service.ranking:Integer=" + Integer.MIN_VALUE,
 	service = NameIdResolver.class
 )
 public class DefaultNameIdResolver implements NameIdResolver {

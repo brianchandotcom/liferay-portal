@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + ReportsEngineConsolePortletKeys.REPORTS_ADMIN},
+	property = "javax.portlet.name=" + ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
 	service = ConfigurationAction.class
 )
 public class ReportsAdminConfigurationAction

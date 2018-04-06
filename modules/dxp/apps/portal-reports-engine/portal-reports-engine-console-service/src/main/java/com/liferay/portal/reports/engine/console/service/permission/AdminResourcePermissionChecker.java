@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"resource.name=" + AdminResourcePermissionChecker.RESOURCE_NAME},
+	property = "resource.name=" + AdminResourcePermissionChecker.RESOURCE_NAME,
 	service = ResourcePermissionChecker.class
 )
 public class AdminResourcePermissionChecker

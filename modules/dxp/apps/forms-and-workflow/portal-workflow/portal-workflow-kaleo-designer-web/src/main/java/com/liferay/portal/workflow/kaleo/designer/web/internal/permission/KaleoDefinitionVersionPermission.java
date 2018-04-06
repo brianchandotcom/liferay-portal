@@ -30,9 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"model.class.name=com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion"
-	}
+	property = "model.class.name=com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion"
 )
 public class KaleoDefinitionVersionPermission
 	implements BaseModelPermissionChecker {

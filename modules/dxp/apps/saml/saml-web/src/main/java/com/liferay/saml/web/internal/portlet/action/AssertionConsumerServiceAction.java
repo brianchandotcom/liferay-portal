@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mika Koivisto
  */
 @Component(
-	immediate = true, property = {"path=/portal/saml/acs"},
+	immediate = true, property = "path=/portal/saml/acs",
 	service = StrutsAction.class
 )
 public class AssertionConsumerServiceAction extends BaseSamlStrutsAction {

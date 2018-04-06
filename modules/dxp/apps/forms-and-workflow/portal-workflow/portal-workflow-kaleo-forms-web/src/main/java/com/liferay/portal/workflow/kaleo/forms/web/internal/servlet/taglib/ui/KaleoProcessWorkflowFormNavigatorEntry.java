@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rafael Praxedes
  */
 @Component(
-	property = {"form.navigator.entry.order:Integer=60"},
+	property = "form.navigator.entry.order:Integer=60",
 	service = FormNavigatorEntry.class
 )
 public class KaleoProcessWorkflowFormNavigatorEntry

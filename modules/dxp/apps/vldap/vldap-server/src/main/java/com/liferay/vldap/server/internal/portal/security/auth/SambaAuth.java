@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Minhchau Dang
  */
 @Component(
-	immediate = true, property = {"key=auth.pipeline.pre"},
+	immediate = true, property = "key=auth.pipeline.pre",
 	service = Authenticator.class
 )
 public class SambaAuth implements Authenticator {

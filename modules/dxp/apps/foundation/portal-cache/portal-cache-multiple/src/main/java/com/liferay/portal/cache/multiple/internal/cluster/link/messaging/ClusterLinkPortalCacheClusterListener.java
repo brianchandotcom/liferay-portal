@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = {"destination.name=" + PortalCacheDestinationNames.CACHE_REPLICATION},
+	property = "destination.name=" + PortalCacheDestinationNames.CACHE_REPLICATION,
 	service = MessageListener.class
 )
 public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {

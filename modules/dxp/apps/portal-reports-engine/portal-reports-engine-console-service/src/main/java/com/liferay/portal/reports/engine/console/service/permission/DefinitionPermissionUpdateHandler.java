@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Prathima Shreenath
  */
 @Component(
-	property = {"model.class.name=com.liferay.portal.reports.engine.console.model.Definition"},
+	property = "model.class.name=com.liferay.portal.reports.engine.console.model.Definition",
 	service = PermissionUpdateHandler.class
 )
 public class DefinitionPermissionUpdateHandler

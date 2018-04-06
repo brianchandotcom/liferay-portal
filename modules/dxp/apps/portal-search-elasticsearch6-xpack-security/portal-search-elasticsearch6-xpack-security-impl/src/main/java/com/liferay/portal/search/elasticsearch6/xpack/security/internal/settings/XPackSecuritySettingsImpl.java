@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.elasticsearch6.xpack.security.internal.configuration.XPackSecurityConfiguration",
-	immediate = true, property = {"operation.mode=REMOTE"},
+	immediate = true, property = "operation.mode=REMOTE",
 	service = XPackSecuritySettings.class
 )
 public class XPackSecuritySettingsImpl implements XPackSecuritySettings {

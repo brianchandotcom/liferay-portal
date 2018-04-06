@@ -393,43 +393,17 @@ public class AssetTagsDisplayContext {
 	}
 
 	public ViewTypeItemList getViewTypeItemList() {
-		return new ViewTypeItemList(_request) {
+		PortletURL portletURL = _renderResponse.createActionURL();
+
+		portletURL.setParameter(
+			ActionRequest.ACTION_NAME, "changeDisplayStyle");
+		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(_request));
+
+		return new ViewTypeItemList(_request, portletURL, getDisplayStyle()) {
 			{
-				addCardViewTypeItem(
-					viewTypeItem -> {
-						viewTypeItem.setActive(
-							Objects.equals(getDisplayStyle(), "icon"));
-						viewTypeItem.setHref(
-							_renderResponse.createActionURL(),
-							ActionRequest.ACTION_NAME, "changeDisplayStyle",
-							"redirect", PortalUtil.getCurrentURL(_request),
-							"displayStyle", "icon");
-						viewTypeItem.setLabel("cards");
-					});
-
-				addListViewTypeItem(
-					viewTypeItem -> {
-						viewTypeItem.setActive(
-							Objects.equals(getDisplayStyle(), "descriptive"));
-						viewTypeItem.setHref(
-							_renderResponse.createActionURL(),
-							ActionRequest.ACTION_NAME, "changeDisplayStyle",
-							"redirect", PortalUtil.getCurrentURL(_request),
-							"displayStyle", "descriptive");
-						viewTypeItem.setLabel("list");
-					});
-
-				addTableViewTypeItem(
-					viewTypeItem -> {
-						viewTypeItem.setActive(
-							Objects.equals(getDisplayStyle(), "list"));
-						viewTypeItem.setHref(
-							_renderResponse.createActionURL(),
-							ActionRequest.ACTION_NAME, "changeDisplayStyle",
-							"redirect", PortalUtil.getCurrentURL(_request),
-							"displayStyle", "list");
-						viewTypeItem.setLabel("table");
-					});
+				addCardViewTypeItem(viewTypeItem -> {});
+				addListViewTypeItem(viewTypeItem -> {});
+				addTableViewTypeItem(viewTypeItem -> {});
 			}
 		};
 	}

@@ -1986,7 +1986,7 @@ this task.
 					file="${app.server.tcserver.bin.dir}/setenv.sh"
 				>
 					<replacetoken><![CDATA[JVM_OPTS="-Xmx512M -Xss256K"]]></replacetoken>
-					<replacevalue><![CDATA[JVM_OPTS="-Dfile.encoding=UTF-8 -Duser.timezone=GMT -Xmx1024M -Xss512K -XX:MaxPermSize=512m"]]></replacevalue>
+					<replacevalue><![CDATA[JVM_OPTS="-Dfile.encoding=UTF-8 -Duser.timezone=GMT -Xmx1024M -Xss512K -XX:MaxMetaspaceSize=512m"]]></replacevalue>
 				</replace>
 			</else>
 		</if>
@@ -2039,7 +2039,7 @@ this task.
 				>
 					<replacetoken><![CDATA[wrapper.java.additional.9=-Xss256K]]></replacetoken>
 					<replacevalue><![CDATA[wrapper.java.additional.9="-Xss512K"
-wrapper.java.additional.10="-XX:MaxPermSize=256M"
+wrapper.java.additional.10="-XX:MaxMetaspaceSize=256M"
 wrapper.java.additional.11="-Dfile.encoding=UTF-8"]]></replacevalue>
 				</replace>
 			</then>

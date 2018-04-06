@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.tasks;
 
 import com.liferay.gogo.shell.client.GogoShellClient;
+import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
@@ -62,7 +63,7 @@ public class WatchTask extends DefaultTask {
 
 	@InputDirectory
 	public File getBundleDir() {
-		return _bundleDir;
+		return GradleUtil.toFile(getProject(), _bundleDir);
 	}
 
 	@InputFiles
@@ -71,7 +72,7 @@ public class WatchTask extends DefaultTask {
 		return _fragments;
 	}
 
-	public void setBundleDir(File bundleDir) {
+	public void setBundleDir(Object bundleDir) {
 		_bundleDir = bundleDir;
 	}
 
@@ -376,7 +377,7 @@ public class WatchTask extends DefaultTask {
 	private static final Pattern _installResponsePattern = Pattern.compile(
 		".*Bundle ID: (.*$).*", Pattern.DOTALL | Pattern.MULTILINE);
 
-	private File _bundleDir;
+	private Object _bundleDir;
 	private FileCollection _fragments;
 
 }

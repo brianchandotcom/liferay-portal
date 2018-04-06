@@ -27,8 +27,12 @@ import java.util.Properties;
 public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 
 	@Override
-	public int getAxisCount() {
-		return _DEFAULT_AXIS_COUNT;
+	public AxisTestClassGroup getAxisTestClassGroup(int axisId) {
+		if (axisId != 0) {
+			throw new IllegalArgumentException("axisId is not 0");
+		}
+
+		return super.getAxisTestClassGroup(axisId);
 	}
 
 	public String getRelevantTestBatchRunPropertyQuery() {
@@ -41,9 +45,7 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 
 		super(batchName, gitWorkingDirectory, testSuiteName);
 
-		for (int i = 0; i < _DEFAULT_AXIS_COUNT; i++) {
-			axisTestClassGroups.put(i, new AxisTestClassGroup(this, i));
-		}
+		axisTestClassGroups.put(0, new AxisTestClassGroup(this, 0));
 
 		_setRelevantTestBatchRunPropertyQuery();
 	}
@@ -142,8 +144,6 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 
 		_relevantTestBatchRunPropertyQuery = sb.toString();
 	}
-
-	private static final int _DEFAULT_AXIS_COUNT = 1;
 
 	private String _relevantTestBatchRunPropertyQuery;
 

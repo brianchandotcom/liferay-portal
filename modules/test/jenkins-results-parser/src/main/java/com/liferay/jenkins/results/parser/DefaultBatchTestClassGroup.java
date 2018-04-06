@@ -19,22 +19,13 @@ package com.liferay.jenkins.results.parser;
  */
 public class DefaultBatchTestClassGroup extends BatchTestClassGroup {
 
-	@Override
-	public int getAxisCount() {
-		return _DEFAULT_AXIS_COUNT;
-	}
-
 	protected DefaultBatchTestClassGroup(
 		String batchName, GitWorkingDirectory gitWorkingDirectory,
 		String testSuiteName) {
 
 		super(batchName, gitWorkingDirectory, testSuiteName);
 
-		for (int i = 0; i < _DEFAULT_AXIS_COUNT; i++) {
-			axisTestClassGroups.put(i, new AxisTestClassGroup(this, i));
-		}
+		axisTestClassGroups.put(0, new AxisTestClassGroup(this, 0));
 	}
-
-	private static final int _DEFAULT_AXIS_COUNT = 1;
 
 }

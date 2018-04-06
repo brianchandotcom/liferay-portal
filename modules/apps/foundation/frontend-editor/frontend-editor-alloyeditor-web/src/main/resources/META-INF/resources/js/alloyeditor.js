@@ -332,10 +332,8 @@ AUI.add(
 
 						setTimeout(
 							function() {
-								if (activeElement) {
-									nativeEditor.focusManager.blur(true);
-									activeElement.focus();
-								}
+								nativeEditor.focusManager.blur(true);
+								activeElement.focus();
 							},
 							100
 						);
@@ -365,10 +363,13 @@ AUI.add(
 						if (UA.edge && parseInt(UA.edge, 10) >= 14) {
 							A.soon(
 								function() {
-									var nativeEditor = instance.getNativeEditor();
+									if (document.activeElement && document.activeElement != document.body) {
+										var nativeEditor = instance.getNativeEditor();
 
-									nativeEditor.once('focus', A.bind('_onFocusFix', instance, document.activeElement, nativeEditor));
-									nativeEditor.focus();
+										nativeEditor.once('focus', A.bind('_onFocusFix', instance, document.activeElement, nativeEditor));
+
+										nativeEditor.focus();
+									}
 								}
 							);
 						}

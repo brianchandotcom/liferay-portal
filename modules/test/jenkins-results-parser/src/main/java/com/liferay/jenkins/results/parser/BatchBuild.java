@@ -438,11 +438,10 @@ public class BatchBuild extends BaseBuild {
 				"env.option." + environmentType + "." + name + "." +
 					environmentMajorVersion.replace(".", ""));
 		}
-		else {
-			return buildProperties.getProperty(
-				"env.option." + environmentType + "." + name +
-					environmentMajorVersion.replace(".", ""));
-		}
+
+		return buildProperties.getProperty(
+			"env.option." + environmentType + "." + name +
+				environmentMajorVersion.replace(".", ""));
 	}
 
 	@Override

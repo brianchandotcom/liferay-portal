@@ -531,10 +531,9 @@ public class LocalGitSyncUtil {
 	}
 
 	protected static String synchronizeToLocalGit(
-			GitWorkingDirectory gitWorkingDirectory, String receiverUsername,
-			int retryCount, String senderBranchName, String senderUsername,
-			String senderBranchSHA, String upstreamBranchSHA)
-		throws IOException {
+		GitWorkingDirectory gitWorkingDirectory, String receiverUsername,
+		int retryCount, String senderBranchName, String senderUsername,
+		String senderBranchSHA, String upstreamBranchSHA) {
 
 		long start = System.currentTimeMillis();
 

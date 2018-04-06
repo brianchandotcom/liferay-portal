@@ -1141,9 +1141,7 @@ public abstract class BaseBuild implements Build {
 						message, "jenkins", "Build Reinvoked",
 						reinvokeRule.notificationRecipients);
 				}
-				catch (InterruptedException | IOException |
-					   TimeoutException e) {
-
+				catch (IOException | TimeoutException e) {
 					throw new RuntimeException(
 						"Unable to send reinvoke notification", e);
 				}
@@ -1256,7 +1254,7 @@ public abstract class BaseBuild implements Build {
 					message, "jenkins", "Slave Offline",
 					slaveOfflineRule.notificationRecipients);
 			}
-			catch (InterruptedException | IOException | TimeoutException e) {
+			catch (IOException | TimeoutException e) {
 				throw new RuntimeException(
 					"Unable to send offline slave notification", e);
 			}

@@ -23,7 +23,7 @@ import org.junit.Test;
 public class JenkinsStopBuildUtilTest {
 
 	@Test
-	public void testEncodeAuthorizationFields() throws Exception {
+	public void testEncodeAuthorizationFields() {
 		String encodedString = JenkinsStopBuildUtil.encodeAuthorizationFields(
 			"test", "test");
 

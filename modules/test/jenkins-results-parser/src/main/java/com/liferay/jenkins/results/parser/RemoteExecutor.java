@@ -170,7 +170,7 @@ public class RemoteExecutor {
 		}
 
 		private int _executeBashCommands()
-			throws InterruptedException, IOException, TimeoutException {
+			throws IOException, TimeoutException {
 
 			StringBuffer sb = new StringBuffer(
 				"ssh -o NumberOfPasswordPrompts=0 ");

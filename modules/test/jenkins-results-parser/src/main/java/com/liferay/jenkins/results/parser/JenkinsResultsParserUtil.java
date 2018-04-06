@@ -196,7 +196,7 @@ public class JenkinsResultsParserUtil {
 		return URLDecoder.decode(url, "UTF-8");
 	}
 
-	public static void delete(File file) throws IOException {
+	public static void delete(File file) {
 		if (!file.exists()) {
 			System.out.println(
 				"Unable to delete because file does not exist " +
@@ -237,7 +237,7 @@ public class JenkinsResultsParserUtil {
 	public static Process executeBashCommands(
 			boolean exitOnFirstFail, File basedir, long timeout,
 			String... commands)
-		throws InterruptedException, IOException, TimeoutException {
+		throws IOException, TimeoutException {
 
 		System.out.print("Executing commands: ");
 
@@ -325,7 +325,7 @@ public class JenkinsResultsParserUtil {
 
 	public static Process executeBashCommands(
 			boolean exitOnFirstFail, String... commands)
-		throws InterruptedException, IOException, TimeoutException {
+		throws IOException, TimeoutException {
 
 		return executeBashCommands(
 			exitOnFirstFail, new File("."), _BASH_COMMAND_TIMEOUT_DEFAULT,
@@ -333,7 +333,7 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static Process executeBashCommands(String... commands)
-		throws InterruptedException, IOException, TimeoutException {
+		throws IOException, TimeoutException {
 
 		return executeBashCommands(
 			true, new File("."), _BASH_COMMAND_TIMEOUT_DEFAULT, commands);
@@ -525,9 +525,7 @@ public class JenkinsResultsParserUtil {
 		return null;
 	}
 
-	public static String getAxisVariable(JSONObject jsonObject)
-		throws Exception {
-
+	public static String getAxisVariable(JSONObject jsonObject) {
 		JSONArray actionsJSONArray = (JSONArray)jsonObject.get("actions");
 
 		for (int i = 0; i < actionsJSONArray.length(); i++) {
@@ -707,7 +705,7 @@ public class JenkinsResultsParserUtil {
 		return "";
 	}
 
-	public static String getJobVariant(String json) throws Exception {
+	public static String getJobVariant(String json) {
 		return getJobVariant(new JSONObject(json));
 	}
 
@@ -1116,7 +1114,7 @@ public class JenkinsResultsParserUtil {
 
 	public static void sendEmail(
 			String body, String from, String subject, String to)
-		throws InterruptedException, IOException, TimeoutException {
+		throws IOException, TimeoutException {
 
 		File file = new File("/tmp/" + body.hashCode() + ".txt");
 

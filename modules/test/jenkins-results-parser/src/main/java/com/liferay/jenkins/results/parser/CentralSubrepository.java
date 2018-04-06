@@ -121,7 +121,7 @@ public class CentralSubrepository {
 		return _subrepositoryUpstreamCommit;
 	}
 
-	public boolean isAutoPullEnabled() throws IOException {
+	public boolean isAutoPullEnabled() {
 		String mode = _gitrepoProperties.getProperty("mode", "push");
 
 		if (!mode.equals("pull")) {

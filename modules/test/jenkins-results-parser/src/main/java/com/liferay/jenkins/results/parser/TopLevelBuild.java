@@ -243,10 +243,9 @@ public class TopLevelBuild extends BaseBuild {
 
 					return null;
 				}
-				else {
-					if (!downstreamBuildResult.equals("SUCCESS")) {
-						hasFailure = true;
-					}
+
+				if (!downstreamBuildResult.equals("SUCCESS")) {
+					hasFailure = true;
 				}
 			}
 
@@ -254,9 +253,8 @@ public class TopLevelBuild extends BaseBuild {
 				if (hasFailure) {
 					return "FAILURE";
 				}
-				else {
-					return "SUCCESS";
-				}
+
+				return "SUCCESS";
 			}
 		}
 

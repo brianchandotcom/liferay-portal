@@ -166,9 +166,7 @@ public class JenkinsPerformanceDataUtil {
 			_setUrl(childJSONObject);
 		}
 
-		public Result(String jobName, JSONObject sourceJSONObject)
-			throws Exception {
-
+		public Result(String jobName, JSONObject sourceJSONObject) {
 			_axis = "";
 			_className = "";
 			_duration = sourceJSONObject.getInt("duration") / 1000;

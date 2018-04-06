@@ -12,16 +12,13 @@
  * details.
  */
 
-import java.nio.file.Paths
-import java.nio.file.Files
 import groovy.io.FileType
+import java.nio.file.Files
+import java.nio.file.Paths
 
+def projectDir = Paths.get(request.getOutputDirectory(), request.getArtifactId())
 
-def moduleDir = Paths.get(request.getOutputDirectory(), request.getArtifactId())
-
-def gradleFile = moduleDir.resolve('build.gradle')
-
-moduleDir.toFile().eachFileRecurse (FileType.FILES) { file ->
+projectDir.toFile().eachFileRecurse (FileType.FILES) { file ->
 	if (file.getName().equals("build.gradle")) {
 		file.delete()
 	}

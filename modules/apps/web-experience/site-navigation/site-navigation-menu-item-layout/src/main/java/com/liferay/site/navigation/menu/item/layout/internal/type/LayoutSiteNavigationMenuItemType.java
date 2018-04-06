@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"site.navigation.menu.item.type=" + SiteNavigationMenuItemTypeLayoutConstants.LAYOUT},
+	property = "site.navigation.menu.item.type=" + SiteNavigationMenuItemTypeLayoutConstants.LAYOUT,
 	service = SiteNavigationMenuItemType.class
 )
 public class LayoutSiteNavigationMenuItemType

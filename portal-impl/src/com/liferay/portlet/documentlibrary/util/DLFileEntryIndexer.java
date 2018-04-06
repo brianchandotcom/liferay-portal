@@ -101,9 +101,7 @@ import javax.portlet.PortletResponse;
  * @author Alexander Chow
  */
 @OSGiBeanProperties(
-	property = {
-		"related.entry.indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntry"
-	},
+	property = "related.entry.indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
 	service = {Indexer.class, RelatedEntryIndexer.class}
 )
 public class DLFileEntryIndexer

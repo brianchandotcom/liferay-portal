@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES},
+	property = "javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
 	service = ControlPanelEntry.class
 )
 public class GroupPagesControlPanelEntry extends BaseControlPanelEntry {

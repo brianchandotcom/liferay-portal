@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + ChangesetPortletKeys.CHANGESET},
+	property = "javax.portlet.name=" + ChangesetPortletKeys.CHANGESET,
 	service = PortletDataHandler.class
 )
 public class ChangesetPortletDataHandler extends BasePortletDataHandler {

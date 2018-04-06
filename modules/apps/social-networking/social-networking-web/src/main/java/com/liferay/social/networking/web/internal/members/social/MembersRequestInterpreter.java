@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author M Murali Krishna Reddy
  */
 @Component(
-	property = {"javax.portlet.name=" + SocialNetworkingPortletKeys.MEMBERS},
+	property = "javax.portlet.name=" + SocialNetworkingPortletKeys.MEMBERS,
 	service = SocialRequestInterpreter.class
 )
 public class MembersRequestInterpreter extends BaseSocialRequestInterpreter {

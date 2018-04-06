@@ -60,7 +60,7 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 	 * @param groupId the primary key of the group
 	 */
 	@Override
-	@Transactional(noRollbackFor = {TrashPermissionException.class})
+	@Transactional(noRollbackFor = TrashPermissionException.class)
 	public void deleteEntries(long groupId) throws PortalException {
 		boolean throwTrashPermissionException = false;
 
@@ -116,7 +116,7 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 	 * @param entryIds the primary keys of the trash entries
 	 */
 	@Override
-	@Transactional(noRollbackFor = {TrashPermissionException.class})
+	@Transactional(noRollbackFor = TrashPermissionException.class)
 	public void deleteEntries(long[] entryIds) throws PortalException {
 		boolean throwTrashPermissionException = false;
 

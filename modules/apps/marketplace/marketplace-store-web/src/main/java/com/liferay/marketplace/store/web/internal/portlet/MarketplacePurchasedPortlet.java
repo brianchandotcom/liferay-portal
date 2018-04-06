@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
-	service = {Portlet.class}
+	service = Portlet.class
 )
 public class MarketplacePurchasedPortlet extends MarketplaceStorePortlet {
 

@@ -41,9 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + LayoutPrototypePortletKeys.LAYOUT_PROTOTYPE
-	},
+	property = "javax.portlet.name=" + LayoutPrototypePortletKeys.LAYOUT_PROTOTYPE,
 	service = PortletDataHandler.class
 )
 public class LayoutPrototypePortletDataHandler extends BasePortletDataHandler {

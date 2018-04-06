@@ -89,7 +89,7 @@ import org.scribe.model.Verb;
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
-	service = {Portlet.class}
+	service = Portlet.class
 )
 public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 

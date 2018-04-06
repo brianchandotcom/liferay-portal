@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.journal.configuration.JournalFileUploadsConfiguration",
-	property = {"form.navigator.entry.order:Integer=70"},
+	property = "form.navigator.entry.order:Integer=70",
 	service = FormNavigatorEntry.class
 )
 public class JournalSmallImageFormNavigatorEntry

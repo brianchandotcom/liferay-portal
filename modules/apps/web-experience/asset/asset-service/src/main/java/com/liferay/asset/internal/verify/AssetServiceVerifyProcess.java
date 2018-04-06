@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"verify.process.name=com.liferay.asset.service"},
+	property = "verify.process.name=com.liferay.asset.service",
 	service = VerifyProcess.class
 )
 public class AssetServiceVerifyProcess extends VerifyLayout {

@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
  * @author Pavel Savinov
  */
 @OSGiBeanProperties(
-	property = {"resource.name=" + AssetTagsPermission.RESOURCE_NAME}
+	property = "resource.name=" + AssetTagsPermission.RESOURCE_NAME
 )
 public class AssetTagsPermission extends BaseResourcePermissionChecker {
 

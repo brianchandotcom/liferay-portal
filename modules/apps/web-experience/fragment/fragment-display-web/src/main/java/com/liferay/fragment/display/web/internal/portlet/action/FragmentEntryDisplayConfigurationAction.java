@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT_DISPLAY},
+	property = "javax.portlet.name=" + FragmentPortletKeys.FRAGMENT_DISPLAY,
 	service = ConfigurationAction.class
 )
 public class FragmentEntryDisplayConfigurationAction

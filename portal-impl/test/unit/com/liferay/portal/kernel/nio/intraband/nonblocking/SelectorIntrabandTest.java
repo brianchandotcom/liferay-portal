@@ -171,7 +171,7 @@ public class SelectorIntrabandTest {
 		}
 	}
 
-	@AdviseWith(adviceClasses = {Jdk14LogImplAdvice.class})
+	@AdviseWith(adviceClasses = Jdk14LogImplAdvice.class)
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testReceiveDatagram() throws Exception {
@@ -903,7 +903,7 @@ public class SelectorIntrabandTest {
 		}
 	}
 
-	@AdviseWith(adviceClasses = {Jdk14LogImplAdvice.class})
+	@AdviseWith(adviceClasses = Jdk14LogImplAdvice.class)
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testSendDatagramWithCallback() throws Exception {

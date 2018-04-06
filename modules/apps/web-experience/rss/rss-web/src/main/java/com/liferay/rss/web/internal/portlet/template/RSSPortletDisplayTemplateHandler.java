@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true, property = {"javax.portlet.name=" + RSSPortletKeys.RSS},
+	immediate = true, property = "javax.portlet.name=" + RSSPortletKeys.RSS,
 	service = TemplateHandler.class
 )
 public class RSSPortletDisplayTemplateHandler

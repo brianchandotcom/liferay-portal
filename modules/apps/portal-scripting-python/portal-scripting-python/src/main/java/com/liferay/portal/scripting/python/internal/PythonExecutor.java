@@ -40,7 +40,7 @@ import org.python.util.InteractiveInterpreter;
  */
 @Component(
 	immediate = true,
-	property = {"scripting.language=" + PythonExecutor.LANGUAGE},
+	property = "scripting.language=" + PythonExecutor.LANGUAGE,
 	service = ScriptingExecutor.class
 )
 public class PythonExecutor extends BaseScriptingExecutor {

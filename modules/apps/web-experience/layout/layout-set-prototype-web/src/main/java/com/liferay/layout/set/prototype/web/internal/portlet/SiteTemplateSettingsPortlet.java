@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.security-role-ref=administrator",
 		"javax.portlet.supports.mime-type=text/html"
 	},
-	service = {Portlet.class}
+	service = Portlet.class
 )
 public class SiteTemplateSettingsPortlet extends LayoutSetPrototypePortlet {
 }

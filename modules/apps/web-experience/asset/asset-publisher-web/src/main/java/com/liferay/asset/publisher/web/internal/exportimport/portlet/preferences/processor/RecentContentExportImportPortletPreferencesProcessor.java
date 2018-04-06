@@ -31,9 +31,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + AssetPublisherPortletKeys.RECENT_CONTENT
-	},
+	property = "javax.portlet.name=" + AssetPublisherPortletKeys.RECENT_CONTENT,
 	service = ExportImportPortletPreferencesProcessor.class
 )
 public class RecentContentExportImportPortletPreferencesProcessor

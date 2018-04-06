@@ -25,9 +25,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Garcia
  */
 @Component(
-	property = {
-		"portal.cache.manager.name=" + PortalCacheManagerNames.MULTI_VM
-	},
+	property = "portal.cache.manager.name=" + PortalCacheManagerNames.MULTI_VM,
 	service = PortalCacheConfiguratorSettings.class
 )
 public class JournalMultiVMClusteredCacheConfiguratorSettings

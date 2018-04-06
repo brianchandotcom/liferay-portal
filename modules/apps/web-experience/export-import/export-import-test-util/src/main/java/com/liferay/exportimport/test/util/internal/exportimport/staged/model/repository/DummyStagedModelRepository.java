@@ -66,7 +66,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=com.liferay.exportimport.test.util.model.Dummy"},
+	property = "model.class.name=com.liferay.exportimport.test.util.model.Dummy",
 	service = StagedModelRepository.class
 )
 public class DummyStagedModelRepository

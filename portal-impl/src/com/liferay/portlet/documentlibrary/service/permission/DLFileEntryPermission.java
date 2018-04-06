@@ -30,9 +30,7 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
  */
 @Deprecated
 @OSGiBeanProperties(
-	property = {
-		"model.class.name=com.liferay.document.library.kernel.model.DLFileEntry"
-	}
+	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry"
 )
 public class DLFileEntryPermission implements BaseModelPermissionChecker {
 

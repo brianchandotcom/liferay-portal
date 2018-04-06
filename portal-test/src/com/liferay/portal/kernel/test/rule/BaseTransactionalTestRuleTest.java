@@ -69,7 +69,7 @@ public class BaseTransactionalTestRuleTest {
 	@AfterClass
 	@Transactional(
 		isolation = Isolation.REPEATABLE_READ, readOnly = true,
-		rollbackFor = {Exception.class}
+		rollbackFor = Exception.class
 	)
 	public static void tearDownClass3() throws ReflectiveOperationException {
 		assertTransactionConfig();
@@ -104,7 +104,7 @@ public class BaseTransactionalTestRuleTest {
 	}
 
 	@After
-	@Transactional(noRollbackFor = {Exception.class}, timeout = 10)
+	@Transactional(noRollbackFor = Exception.class, timeout = 10)
 	public void tearDown3() throws ReflectiveOperationException {
 		assertTransactionConfig();
 	}

@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	property = {"item.selector.view.order:Integer=100"},
+	property = "item.selector.view.order:Integer=100",
 	service = ItemSelectorView.class
 )
 public class LayoutScopesItemSelectorView

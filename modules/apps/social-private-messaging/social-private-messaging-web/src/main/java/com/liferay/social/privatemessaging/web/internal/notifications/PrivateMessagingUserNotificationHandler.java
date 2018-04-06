@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + PrivateMessagingPortletKeys.PRIVATE_MESSAGING},
+	property = "javax.portlet.name=" + PrivateMessagingPortletKeys.PRIVATE_MESSAGING,
 	service = UserNotificationHandler.class
 )
 public class PrivateMessagingUserNotificationHandler

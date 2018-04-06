@@ -29,9 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + SitesDirectoryPortletKeys.SITES_DIRECTORY
-	},
+	property = "javax.portlet.name=" + SitesDirectoryPortletKeys.SITES_DIRECTORY,
 	service = ConfigurationAction.class
 )
 public class SitesDirectoryConfigurationAction

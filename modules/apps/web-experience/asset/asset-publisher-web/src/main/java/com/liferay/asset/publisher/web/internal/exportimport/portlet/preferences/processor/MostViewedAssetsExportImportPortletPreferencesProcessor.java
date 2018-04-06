@@ -31,9 +31,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + AssetPublisherPortletKeys.MOST_VIEWED_ASSETS
-	},
+	property = "javax.portlet.name=" + AssetPublisherPortletKeys.MOST_VIEWED_ASSETS,
 	service = ExportImportPortletPreferencesProcessor.class
 )
 public class MostViewedAssetsExportImportPortletPreferencesProcessor

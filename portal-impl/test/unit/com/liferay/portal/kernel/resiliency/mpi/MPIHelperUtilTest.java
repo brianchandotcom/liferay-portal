@@ -117,7 +117,7 @@ public class MPIHelperUtilTest {
 		}
 	}
 
-	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
+	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testClassInitializationFailed() {
 		System.setProperty(PropsKeys.INTRABAND_IMPL, "NoSuchClass");
@@ -140,7 +140,7 @@ public class MPIHelperUtilTest {
 		}
 	}
 
-	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
+	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testClassInitializationOnMPI() throws Exception {
 		PropsUtil.setProps(
@@ -180,7 +180,7 @@ public class MPIHelperUtilTest {
 			datagramReceiveHandlers[SystemDataType.RPC.getValue()].getClass());
 	}
 
-	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
+	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testClassInitializationOnSPI() throws Exception {
 		System.setProperty(
@@ -217,7 +217,7 @@ public class MPIHelperUtilTest {
 		new MPIHelperUtil();
 	}
 
-	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
+	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testShutdownFailWithLog() throws NoSuchObjectException {
 		UnicastRemoteObject.unexportObject(_getMPIImpl(), true);
@@ -265,7 +265,7 @@ public class MPIHelperUtilTest {
 		}
 	}
 
-	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
+	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testShutdownFailWithoutLog() throws NoSuchObjectException {
 		UnicastRemoteObject.unexportObject(_getMPIImpl(), true);
@@ -295,7 +295,7 @@ public class MPIHelperUtilTest {
 		}
 	}
 
-	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
+	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testShutdownSuccess() {
 		try (CaptureHandler captureHandler =
@@ -310,7 +310,7 @@ public class MPIHelperUtilTest {
 		}
 	}
 
-	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
+	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testSPIProviderRegistration() throws RemoteException {
 
@@ -739,7 +739,7 @@ public class MPIHelperUtilTest {
 		}
 	}
 
-	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
+	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testSPIRegistration() {
 		try (CaptureHandler captureHandler =

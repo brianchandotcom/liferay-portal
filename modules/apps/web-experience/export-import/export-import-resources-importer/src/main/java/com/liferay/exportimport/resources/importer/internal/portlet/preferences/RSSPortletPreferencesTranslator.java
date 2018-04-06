@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"portlet.preferences.translator.portlet.id=com_liferay_rss_web_portlet_RSSPortlet"},
+	property = "portlet.preferences.translator.portlet.id=com_liferay_rss_web_portlet_RSSPortlet",
 	service = PortletPreferencesTranslator.class
 )
 public class RSSPortletPreferencesTranslator

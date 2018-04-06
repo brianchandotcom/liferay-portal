@@ -27,7 +27,7 @@ import com.liferay.portal.util.PropsValues;
  * @author Shuyang Zhou
  */
 @DoPrivileged
-@OSGiBeanProperties(property = {"service.ranking:Integer=-1"})
+@OSGiBeanProperties(property = "service.ranking:Integer=-1")
 public class PermissionCheckerFactoryImpl implements PermissionCheckerFactory {
 
 	public PermissionCheckerFactoryImpl() throws Exception {

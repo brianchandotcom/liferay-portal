@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"type=" + TemplateContextContributor.TYPE_THEME},
+	property = "type=" + TemplateContextContributor.TYPE_THEME,
 	service = TemplateContextContributor.class
 )
 public class LayoutCustomizationTemplateContextContributor

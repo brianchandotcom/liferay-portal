@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	property = {"javax.portlet.name=" + JournalContentPortletKeys.JOURNAL_CONTENT},
+	property = "javax.portlet.name=" + JournalContentPortletKeys.JOURNAL_CONTENT,
 	service = DDMDisplay.class
 )
 public class JournalContentDDMDisplay extends BaseDDMDisplay {

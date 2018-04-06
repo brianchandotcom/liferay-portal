@@ -58,7 +58,7 @@ import org.osgi.service.url.URLStreamHandlerService;
  */
 @Component(
 	immediate = true,
-	property = {URLConstants.URL_HANDLER_PROTOCOL + "=webbundledir"},
+	property = URLConstants.URL_HANDLER_PROTOCOL + "=webbundledir",
 	service = URLStreamHandlerService.class
 )
 public class WabDirURLStreamHandlerService

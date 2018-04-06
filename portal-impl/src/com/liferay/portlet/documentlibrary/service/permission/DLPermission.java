@@ -27,7 +27,7 @@ import com.liferay.portlet.documentlibrary.constants.DLConstants;
  * @deprecated As of 7.0.0, with no direct replacement
  */
 @Deprecated
-@OSGiBeanProperties(property = {"resource.name=" + DLConstants.RESOURCE_NAME})
+@OSGiBeanProperties(property = "resource.name=" + DLConstants.RESOURCE_NAME)
 public class DLPermission extends BaseResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME = DLConstants.RESOURCE_NAME;

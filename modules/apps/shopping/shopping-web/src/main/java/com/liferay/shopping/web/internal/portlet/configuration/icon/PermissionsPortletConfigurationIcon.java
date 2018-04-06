@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true, property = {"javax.portlet.name=" + PortletKeys.SHOPPING},
+	immediate = true, property = "javax.portlet.name=" + PortletKeys.SHOPPING,
 	service = PortletConfigurationIcon.class
 )
 public class PermissionsPortletConfigurationIcon

@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Modified;
 @Component(
 	configurationPid = "com.liferay.push.notifications.sender.apple.internal.configuration.ApplePushNotificationsSenderConfiguration",
 	immediate = true,
-	property = {"platform=" + ApplePushNotificationsSender.PLATFORM}
+	property = "platform=" + ApplePushNotificationsSender.PLATFORM
 )
 public class ApplePushNotificationsSender implements PushNotificationsSender {
 

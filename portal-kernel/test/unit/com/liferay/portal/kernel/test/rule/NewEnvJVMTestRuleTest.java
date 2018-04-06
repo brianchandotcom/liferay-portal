@@ -39,7 +39,7 @@ import org.junit.Test;
 /**
  * @author Shuyang Zhou
  */
-@Environment(variables = {"ENV_KEY=ENV_VALUE"})
+@Environment(variables = "ENV_KEY=ENV_VALUE")
 @JVMArgsLine("-Dkey1=default1 -Dkey2=default2")
 @NewEnv(type = NewEnv.Type.JVM)
 public class NewEnvJVMTestRuleTest {
@@ -170,7 +170,7 @@ public class NewEnvJVMTestRuleTest {
 		Assert.assertEquals(_parentEnvironment, environment);
 	}
 
-	@Environment(append = false, variables = {"KEY1=VALUE1"})
+	@Environment(append = false, variables = "KEY1=VALUE1")
 	@JVMArgsLine(
 		"-D" + _SYSTEM_PROPERTY_KEY_ENVIRONMENT + "=${" +
 			_SYSTEM_PROPERTY_KEY_ENVIRONMENT + "}"

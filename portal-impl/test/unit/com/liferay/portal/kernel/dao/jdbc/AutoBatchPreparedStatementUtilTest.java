@@ -92,7 +92,7 @@ public class AutoBatchPreparedStatementUtilTest {
 				new PortalExecutorManagerInvocationHandler()));
 	}
 
-	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
+	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testCINITFailure() throws ClassNotFoundException {
 		PropsUtilAdvice.setProps(PropsKeys.HIBERNATE_JDBC_BATCH_SIZE, "0");
@@ -123,7 +123,7 @@ public class AutoBatchPreparedStatementUtilTest {
 		}
 	}
 
-	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
+	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testConcurrentCancellationException() {
 		Registry registry = RegistryUtil.getRegistry();
@@ -162,7 +162,7 @@ public class AutoBatchPreparedStatementUtilTest {
 		doTestConcurrentCancellationException(false);
 	}
 
-	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
+	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testConcurrentExecutionException() {
 		PropsUtilAdvice.setProps(PropsKeys.HIBERNATE_JDBC_BATCH_SIZE, "0");
@@ -171,7 +171,7 @@ public class AutoBatchPreparedStatementUtilTest {
 		doTestConcurrentExecutionExceptions(false);
 	}
 
-	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
+	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testConcurrentWaitingForFutures() throws SQLException {
 		PropsUtilAdvice.setProps(PropsKeys.HIBERNATE_JDBC_BATCH_SIZE, "0");
@@ -180,7 +180,7 @@ public class AutoBatchPreparedStatementUtilTest {
 		doTestConcurrentWaitingForFutures(false);
 	}
 
-	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
+	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testConstructor() throws ReflectiveOperationException {
 		PropsUtilAdvice.setProps(PropsKeys.HIBERNATE_JDBC_BATCH_SIZE, "0");
@@ -195,7 +195,7 @@ public class AutoBatchPreparedStatementUtilTest {
 		constructor.newInstance();
 	}
 
-	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
+	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testNotSupportBatchUpdates() throws Exception {
 		PropsUtilAdvice.setProps(PropsKeys.HIBERNATE_JDBC_BATCH_SIZE, "0");
@@ -204,7 +204,7 @@ public class AutoBatchPreparedStatementUtilTest {
 		doTestNotSupportBatchUpdatesConcurrent();
 	}
 
-	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
+	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testSupportBatchUpdates() throws Exception {
 		PropsUtilAdvice.setProps(PropsKeys.HIBERNATE_JDBC_BATCH_SIZE, "2");

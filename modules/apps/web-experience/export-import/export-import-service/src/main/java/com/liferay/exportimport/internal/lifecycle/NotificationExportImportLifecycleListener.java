@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Akos Thurzo
  */
-@Component(immediate = true, service = {ExportImportLifecycleListener.class})
+@Component(immediate = true, service = ExportImportLifecycleListener.class)
 public class NotificationExportImportLifecycleListener
 	implements ProcessAwareExportImportLifecycleListener {
 

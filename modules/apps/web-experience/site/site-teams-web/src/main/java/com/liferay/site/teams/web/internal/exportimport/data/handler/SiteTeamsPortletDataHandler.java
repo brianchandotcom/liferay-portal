@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Akos Thurzo
  */
 @Component(
-	property = {"javax.portlet.name=" + SiteTeamsPortletKeys.SITE_TEAMS},
+	property = "javax.portlet.name=" + SiteTeamsPortletKeys.SITE_TEAMS,
 	service = PortletDataHandler.class
 )
 public class SiteTeamsPortletDataHandler extends BasePortletDataHandler {

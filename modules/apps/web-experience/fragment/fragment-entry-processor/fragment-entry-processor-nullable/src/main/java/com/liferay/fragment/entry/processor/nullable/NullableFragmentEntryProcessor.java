@@ -30,8 +30,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true,
-	property = {"fragment.entry.processor.priority:Integer=0"},
+	immediate = true, property = "fragment.entry.processor.priority:Integer=0",
 	service = FragmentEntryProcessor.class
 )
 public class NullableFragmentEntryProcessor implements FragmentEntryProcessor {

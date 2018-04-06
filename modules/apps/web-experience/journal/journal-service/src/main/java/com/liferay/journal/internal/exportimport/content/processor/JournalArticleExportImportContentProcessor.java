@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mate Thurzo
  */
 @Component(
-	property = {"model.class.name=com.liferay.journal.model.JournalArticle"},
+	property = "model.class.name=com.liferay.journal.model.JournalArticle",
 	service = {
 		ExportImportContentProcessor.class,
 		JournalArticleExportImportContentProcessor.class

@@ -108,7 +108,7 @@ public class ServiceBeanMethodInvocationFactoryImplTest {
 
 	@Transactional(
 		isolation = Isolation.PORTAL, propagation = Propagation.REQUIRES_NEW,
-		rollbackFor = {Exception.class}
+		rollbackFor = Exception.class
 	)
 	protected void save(boolean rollback) throws Exception {
 		for (EmailAddress emailAddress : _emailAddresses) {

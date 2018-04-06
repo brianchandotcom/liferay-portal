@@ -100,7 +100,7 @@ public class ConfigurationImplTest {
 				new Filter("user", "/home")));
 	}
 
-	@Environment(variables = {"LIFERAY_NAMESPACE_PERIOD_KEY2=valuex"})
+	@Environment(variables = "LIFERAY_NAMESPACE_PERIOD_KEY2=valuex")
 	@NewEnv(type = NewEnv.Type.JVM)
 	@Test
 	public void testEnvironmentVariableOverrideProperties() throws IOException {

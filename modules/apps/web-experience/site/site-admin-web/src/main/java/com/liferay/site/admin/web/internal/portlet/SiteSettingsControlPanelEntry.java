@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + SiteAdminPortletKeys.SITE_SETTINGS},
+	property = "javax.portlet.name=" + SiteAdminPortletKeys.SITE_SETTINGS,
 	service = ControlPanelEntry.class
 )
 public class SiteSettingsControlPanelEntry extends BaseControlPanelEntry {

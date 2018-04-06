@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	property = {"javax.portlet.name=" + JournalPortletKeys.JOURNAL + ".filterStructure"},
+	property = "javax.portlet.name=" + JournalPortletKeys.JOURNAL + ".filterStructure",
 	service = DDMDisplay.class
 )
 public class JournalFilterStructuresDDMDisplay extends JournalDDMDisplay {

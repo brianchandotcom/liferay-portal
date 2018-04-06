@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	property = {"javax.portlet.name=" + SocialNetworkingPortletKeys.MEMBERS_ACTIVITIES},
+	property = "javax.portlet.name=" + SocialNetworkingPortletKeys.MEMBERS_ACTIVITIES,
 	service = ConfigurationAction.class
 )
 public class MembersActivitiesConfigurationAction

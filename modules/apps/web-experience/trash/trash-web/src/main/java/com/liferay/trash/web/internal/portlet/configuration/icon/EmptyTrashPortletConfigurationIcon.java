@@ -35,8 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true,
-	property = {"javax.portlet.name=" + TrashPortletKeys.TRASH},
+	immediate = true, property = "javax.portlet.name=" + TrashPortletKeys.TRASH,
 	service = PortletConfigurationIcon.class
 )
 public class EmptyTrashPortletConfigurationIcon

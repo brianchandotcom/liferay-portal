@@ -36,7 +36,7 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  */
 @OSGiBeanProperties(
-	property = {"model.class.name=com.liferay.shopping.model.ShoppingItem"}
+	property = "model.class.name=com.liferay.shopping.model.ShoppingItem"
 )
 public class ShoppingCategoryLocalServiceImpl
 	extends ShoppingCategoryLocalServiceBaseImpl {

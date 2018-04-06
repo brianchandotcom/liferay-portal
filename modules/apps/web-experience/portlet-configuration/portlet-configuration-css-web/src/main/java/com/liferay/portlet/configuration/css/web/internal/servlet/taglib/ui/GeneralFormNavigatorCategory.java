@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(
-	property = {"form.navigator.category.order:Integer=60"},
+	property = "form.navigator.category.order:Integer=60",
 	service = FormNavigatorCategory.class
 )
 public class GeneralFormNavigatorCategory implements FormNavigatorCategory {

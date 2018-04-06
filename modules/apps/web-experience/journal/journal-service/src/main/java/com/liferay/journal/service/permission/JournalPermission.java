@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"resource.name=" + JournalConstants.RESOURCE_NAME},
+	property = "resource.name=" + JournalConstants.RESOURCE_NAME,
 	service = ResourcePermissionChecker.class
 )
 @Deprecated

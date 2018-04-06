@@ -32,6 +32,7 @@ import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 
+import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 
@@ -99,6 +100,11 @@ public class EntryUADAnonymizerTest extends BaseUADAnonymizerTestCase {
 		}
 
 		return false;
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_entryUADEntityTestHelper.cleanUpDependencies(_entries);
 	}
 
 	@DeleteAfterTestRun

@@ -4026,7 +4026,7 @@ to version 2.3.123.
 - [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
 1.0.595.
 
-## 3.10.11 - 2018-04-06
+## 3.10.12 - 2018-04-06
 
 ### Added
 - [LPS-79450]: Filter out `.git`, `.gradle`, `build`, `node_modules`, and `tmp`

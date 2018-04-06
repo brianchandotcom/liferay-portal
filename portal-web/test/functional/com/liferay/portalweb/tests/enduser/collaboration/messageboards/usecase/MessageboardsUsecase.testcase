@@ -1708,8 +1708,10 @@
 
 		<execute function="Click" locator1="NavBar#HOME" />
 
-		<execute function="Click" locator1="ListGroupItem#ITEM_ACTIONS">
-			<var name="key_itemName" value="MB Thread Message Subject 1" />
+		<execute macro="MessageboardsThread#gotoPG">
+			<var name="lastPostUserName" value="Test Test" />
+			<var name="replyCount" value="0" />
+			<var name="threadSubject" value="MB Thread Message Subject 1" />
 		</execute>
 
 		<execute macro="RSS#viewFeed">
@@ -2014,7 +2016,12 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="MessageBoards#THREAD_LIST_THREAD" value1="MB Thread Message Subject" />
-		<execute function="AssertTextEquals" locator1="MessageBoardsThread#THREAD_ACTIONS_UNSUBSCRIBE" value1="Unsubscribe" />
+
+		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Unsubscribe">
+			<var name="key_menuItem" value="Unsubscribe" />
+		</execute>
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Message Boards Page" />
@@ -2056,7 +2063,12 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="MessageBoards#THREAD_LIST_THREAD" value1="MB Thread Message Subject" />
-		<execute function="AssertElementNotPresent" locator1="MessageBoardsThread#THREAD_ACTIONS_UNSUBSCRIBE" />
+
+		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Unsubscribe">
+			<var name="key_menuItem" value="Unsubscribe" />
+		</execute>
 	</command>
 
 	<command name="ViewQuestionOnSplitThread" priority="3">

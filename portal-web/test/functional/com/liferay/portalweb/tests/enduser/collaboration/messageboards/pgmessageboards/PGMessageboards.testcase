@@ -542,6 +542,7 @@
 
 		<execute macro="MessageboardsThread#cancelEdit">
 			<var name="threadBodyEdit" value="Message Boards Thread Body Edit" />
+			<var name="threadSubject" value="Message Boards Thread Subject" />
 			<var name="threadSubjectEdit" value="Message Boards Thread Subject Edit" />
 		</execute>
 

@@ -62,5 +62,24 @@ export default (entryId, blogsEntryBodyId) => {
 				document.addEventListener('scroll', debounce(sendEvent, 1500));
 			}
 		);
+
+		entry.addEventListener('click', event => {
+			var element = event.target;
+			var tagName = element.tagName.toLowerCase();
+			var payload = {
+				entryId,
+				tagName
+			};
+
+			if (tagName === 'a') {
+				payload.href = element.href;
+				payload.text = element.innerText;
+			}
+			else if (tagName === 'img') {
+				payload.src = element.src;
+			}
+
+			Analytics.send('CLICK', applicationId, payload);
+		});
 	}
 };

@@ -19,13 +19,18 @@ import com.liferay.gradle.plugins.internal.util.GradleUtil;
 
 import groovy.lang.Closure;
 
+import groovy.util.Node;
+
 import java.util.Iterator;
 import java.util.List;
 
+import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.XmlProvider;
 import org.gradle.plugins.ide.api.FileContentMerger;
+import org.gradle.plugins.ide.api.XmlFileContentMerger;
 import org.gradle.plugins.ide.eclipse.EclipsePlugin;
 import org.gradle.plugins.ide.eclipse.model.AbstractClasspathEntry;
 import org.gradle.plugins.ide.eclipse.model.Classpath;
@@ -107,6 +112,45 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 		List<String> natures = eclipseProject.getNatures();
 
 		natures.add("com.liferay.ide.core.liferayNature");
+
+		Action<XmlProvider> action = new Action<XmlProvider>() {
+
+			@Override
+			public void execute(XmlProvider xmlProvider) {
+				Node projectDescriptionNode = xmlProvider.asNode();
+
+				Node filteredResourcesNode = projectDescriptionNode.appendNode(
+					"filteredResources");
+
+				Node filterNode = filteredResourcesNode.appendNode("filter");
+
+				filterNode.appendNode("id", System.currentTimeMillis());
+				filterNode.appendNode("name");
+				filterNode.appendNode("type", "26");
+
+				Node matcherNode = filterNode.appendNode("matcher");
+
+				matcherNode.appendNode(
+					"id", "org.eclipse.ui.ide.orFilterMatcher");
+
+				Node argumentsNode = matcherNode.appendNode("arguments");
+
+				for (String filteredDirectory : _FILTERED_DIRECTORIES) {
+					Node curMatcherNode = argumentsNode.appendNode("matcher");
+
+					curMatcherNode.appendNode(
+						"arguments",
+						"1.0-name-matches-false-false-" + filteredDirectory);
+					curMatcherNode.appendNode(
+						"id", "org.eclipse.ui.ide.multiFilter");
+				}
+			}
+
+		};
+
+		XmlFileContentMerger xmlFileContentMerger = eclipseProject.getFile();
+
+		xmlFileContentMerger.withXml(action);
 	}
 
 	private void _configureTaskEclipse(EclipsePlugin eclipsePlugin) {
@@ -114,5 +158,8 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 
 		task.dependsOn(eclipsePlugin.getCleanTask());
 	}
+
+	private static final String[] _FILTERED_DIRECTORIES =
+		{".git", ".gradle", "build", "node_modules", "tmp"};
 
 }

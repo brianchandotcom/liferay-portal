@@ -51,6 +51,4 @@ public interface TokenRetriever {
 	public String getLoginToken(
 		HttpServletRequest request, String userTokenName);
 
-	public TokenLocation getTokenLocation();
-
 }

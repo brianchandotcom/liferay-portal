@@ -43,8 +43,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface LogoutProcessor {
 
-	public LogoutProcessorType getLogoutProcessorType();
-
 	public void logout(
 			HttpServletRequest request, HttpServletResponse response,
 			String... parameters)

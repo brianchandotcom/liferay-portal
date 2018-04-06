@@ -47,9 +47,20 @@ public interface TokenConfiguration {
 
 	@Meta.AD(
 		deflt = "REQUEST_HEADER", description = "token-location-help",
-		name = "token-location", required = false
+		name = "token-location",
+		optionLabels = {
+			"token-location-" + TokenLocation.COOKIE,
+			"token-location-" + TokenLocation.REQUEST,
+			"token-location-" + TokenLocation.REQUEST_HEADER,
+			"token-location-" + TokenLocation.SESSION
+		},
+		optionValues = {
+			TokenLocation.COOKIE, TokenLocation.REQUEST,
+			TokenLocation.REQUEST_HEADER, TokenLocation.SESSION
+		},
+		required = false
 	)
-	public TokenLocation tokenLocation();
+	public String tokenLocation();
 
 	@Meta.AD(
 		deflt = "SMIDENTITY|SMSESSION",

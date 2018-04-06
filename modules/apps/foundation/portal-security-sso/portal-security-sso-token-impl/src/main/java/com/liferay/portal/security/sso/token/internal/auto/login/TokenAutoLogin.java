@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.sso.token.internal.auto.login;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -33,22 +35,18 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.exportimport.UserImporter;
 import com.liferay.portal.security.sso.token.internal.configuration.TokenConfiguration;
 import com.liferay.portal.security.sso.token.internal.constants.TokenConstants;
-import com.liferay.portal.security.sso.token.security.auth.TokenLocation;
 import com.liferay.portal.security.sso.token.security.auth.TokenRetriever;
 import com.liferay.portal.util.PropsValues;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * Participates in every unauthenticated HTTP request to Liferay Portal.
@@ -63,10 +61,21 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(
 	configurationPid = "com.liferay.portal.security.sso.token.internal.configuration.TokenConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	configurationPolicy = ConfigurationPolicy.OPTIONAL,
 	service = AutoLogin.class
 )
 public class TokenAutoLogin extends BaseAutoLogin {
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_tokenRetrievers = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, TokenRetriever.class, "token.location");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_tokenRetrievers.close();
+	}
 
 	@Override
 	protected String[] doLogin(
@@ -87,10 +96,10 @@ public class TokenAutoLogin extends BaseAutoLogin {
 
 		String userTokenName = tokenCompanyServiceSettings.userTokenName();
 
-		TokenLocation tokenLocation =
-			tokenCompanyServiceSettings.tokenLocation();
+		String tokenLocation = tokenCompanyServiceSettings.tokenLocation();
 
-		TokenRetriever tokenRetriever = _tokenRetrievers.get(tokenLocation);
+		TokenRetriever tokenRetriever = _tokenRetrievers.getService(
+			tokenLocation);
 
 		if (tokenRetriever == null) {
 			if (_log.isWarnEnabled()) {
@@ -202,15 +211,6 @@ public class TokenAutoLogin extends BaseAutoLogin {
 		_configurationProvider = configurationProvider;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.AT_LEAST_ONE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setTokenRetriever(TokenRetriever tokenRetriever) {
-		_tokenRetrievers.put(tokenRetriever.getTokenLocation(), tokenRetriever);
-	}
-
 	@Reference(unbind = "-")
 	protected void setUserImporter(UserImporter userImporter) {
 		_userImporter = userImporter;
@@ -221,10 +221,6 @@ public class TokenAutoLogin extends BaseAutoLogin {
 		_userLocalService = userLocalService;
 	}
 
-	protected void unsetTokenRetriever(TokenRetriever tokenRetriever) {
-		_tokenRetrievers.remove(tokenRetriever.getTokenLocation());
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(TokenAutoLogin.class);
 
 	private ConfigurationProvider _configurationProvider;
@@ -232,8 +228,7 @@ public class TokenAutoLogin extends BaseAutoLogin {
 	@Reference
 	private Portal _portal;
 
-	private final Map<TokenLocation, TokenRetriever> _tokenRetrievers =
-		new ConcurrentHashMap<>();
+	private ServiceTrackerMap<String, TokenRetriever> _tokenRetrievers;
 	private UserImporter _userImporter;
 	private UserLocalService _userLocalService;
 

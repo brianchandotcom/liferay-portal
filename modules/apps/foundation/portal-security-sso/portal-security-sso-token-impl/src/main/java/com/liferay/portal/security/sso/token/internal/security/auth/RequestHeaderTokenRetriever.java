@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = TokenRetriever.class)
+@Component(property = {"token.location=" + TokenLocation.REQUEST_HEADER})
 public class RequestHeaderTokenRetriever implements TokenRetriever {
 
 	@Override
@@ -32,11 +32,6 @@ public class RequestHeaderTokenRetriever implements TokenRetriever {
 		HttpServletRequest request, String userTokenName) {
 
 		return request.getHeader(userTokenName);
-	}
-
-	@Override
-	public TokenLocation getTokenLocation() {
-		return TokenLocation.REQUEST_HEADER;
 	}
 
 }

@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = TokenRetriever.class)
+@Component(property = {"token.location=" + TokenLocation.SESSION})
 public class SessionTokenRetriever implements TokenRetriever {
 
 	@Override
@@ -35,11 +35,6 @@ public class SessionTokenRetriever implements TokenRetriever {
 		HttpSession httpSession = request.getSession();
 
 		return (String)httpSession.getAttribute(userTokenName);
-	}
-
-	@Override
-	public TokenLocation getTokenLocation() {
-		return TokenLocation.SESSION;
 	}
 
 }

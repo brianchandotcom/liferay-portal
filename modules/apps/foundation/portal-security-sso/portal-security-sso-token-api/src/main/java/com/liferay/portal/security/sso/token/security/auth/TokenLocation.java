@@ -17,8 +17,14 @@ package com.liferay.portal.security.sso.token.security.auth;
 /**
  * @author Michael C. Han
  */
-public enum TokenLocation {
+public final class TokenLocation {
 
-	COOKIE, REQUEST, REQUEST_HEADER, SESSION
+	public static final String COOKIE = "COOKIE";
+
+	public static final String REQUEST = "REQUEST";
+
+	public static final String REQUEST_HEADER = "REQUEST_HEADER";
+
+	public static final String SESSION = "SESSION";
 
 }

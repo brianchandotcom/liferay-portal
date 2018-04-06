@@ -17,8 +17,10 @@ package com.liferay.portal.security.sso.token.events;
 /**
  * @author Michael C. Han
  */
-public enum LogoutProcessorType {
+public final class LogoutProcessorType {
 
-	COOKIE, REDIRECT
+	public static final String COOKIE = "COOKIE";
+
+	public static final String REDIRECT = "REDIRECT";
 
 }

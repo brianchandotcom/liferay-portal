@@ -1,13 +1,20 @@
 import Component from 'metal-component';
 import {Config} from 'metal-state';
-import {isFunction, isObject, object} from 'metal';
+import {isFunction, isObject} from 'metal';
 import Soy from 'metal-soy';
 
+import EditableTextFragmentProcessor from './fragment_processors/EditableTextFragmentProcessor.es';
+import EditableImageFragmentProcessor from './fragment_processors/EditableImageFragmentProcessor.es';
 import templates from './FragmentEntryLink.soy';
 
 const ARROW_DOWN_KEYCODE = 40;
 
 const ARROW_UP_KEYCODE = 38;
+
+const FRAGMENT_PROCESSORS = [
+	EditableTextFragmentProcessor,
+	EditableImageFragmentProcessor
+];
 
 /**
  * FragmentEntryLink
@@ -22,9 +29,9 @@ class FragmentEntryLink extends Component {
 	 */
 
 	created() {
-		this._handleEditorChange = this._handleEditorChange.bind(this);
-
-		Liferay.on('beforeNavigate', () => this._destroyEditors());
+		this._processors = FRAGMENT_PROCESSORS.map(
+			Processor => new Processor(this)
+		);
 	}
 
 	/**
@@ -33,7 +40,11 @@ class FragmentEntryLink extends Component {
 	 */
 
 	disposed() {
-		this._destroyEditors();
+		this._processors.forEach(
+			processor => {
+				processor.dispose();
+			}
+		);
 	}
 
 	/**
@@ -60,9 +71,20 @@ class FragmentEntryLink extends Component {
 
 	rendered() {
 		if (this.refs.content) {
-			this._destroyEditors();
-			this._executeFragmentScripts(this.refs.content);
-			this._enableEditableFields(this.refs.content);
+			AUI().use(
+				'aui-parse-content',
+				A => {
+					const content = A.one(this.refs.content);
+					content.plug(A.Plugin.ParseContent);
+					content.setContent(this.content);
+
+					this._processors.forEach(
+						processor => {
+							processor.process();
+						}
+					);
+				}
+			);
 		}
 	}
 
@@ -73,22 +95,6 @@ class FragmentEntryLink extends Component {
 
 	shouldUpdate(changes) {
 		return !!changes.content;
-	}
-
-	/**
-	 * Destroy existing editors
-	 * @private
-	 * @review
-	 */
-
-	_destroyEditors() {
-		this._editors.forEach(
-			editor => {
-				editor.destroy();
-			}
-		);
-
-		this._editors = [];
 	}
 
 	/**
@@ -103,127 +109,6 @@ class FragmentEntryLink extends Component {
 			{
 				direction,
 				fragmentEntryLinkId: this.fragmentEntryLinkId
-			}
-		);
-	}
-
-	/**
-	 * Allow inline edition using AlloyEditor
-	 * @param {!HTMLElement} content
-	 * @private
-	 * @review
-	 */
-
-	_enableEditableFields(content) {
-		this._editors = [].slice
-			.call(content.querySelectorAll('lfr-editable'))
-			.map(
-				editableElement => {
-					const editableId = editableElement.id;
-
-					const editableContent = editableElement.innerHTML;
-
-					const wrapper = document.createElement('div');
-
-					wrapper.dataset.lfrEditableId = editableId;
-					wrapper.innerHTML = editableContent;
-
-					editableElement.parentNode.replaceChild(
-						wrapper,
-						editableElement
-					);
-
-					const editor = AlloyEditor.editable(
-						wrapper,
-						object.mixin(
-							this.defaultEditorConfiguration.editorConfig,
-							{
-								enterMode: CKEDITOR.ENTER_BR,
-								extraPlugins: [
-									'ae_autolink',
-									'ae_dragresize',
-									'ae_addimages',
-									'ae_imagealignment',
-									'ae_placeholder',
-									'ae_selectionregion',
-									'ae_tableresize',
-									'ae_tabletools',
-									'ae_uicore',
-									'itemselector',
-									'media',
-									'adaptivemedia'
-								].join(','),
-								removePlugins: [
-									'contextmenu',
-									'elementspath',
-									'image',
-									'link',
-									'liststyle',
-									'magicline',
-									'resize',
-									'tabletools',
-									'toolbar',
-									'ae_embed'
-								].join(',')
-							}
-						)
-					);
-
-					const nativeEditor = editor.get('nativeEditor');
-
-					nativeEditor.name = `${this.portletNamespace}fragmentEntryLink_`;
-
-					nativeEditor.on(
-						'change',
-						this._handleEditorChange
-					);
-
-					nativeEditor.on(
-						'selectionChange',
-						this._handleEditorChange
-					);
-
-					return editor;
-				}
-			);
-	}
-
-	/**
-	 * After each render, script tags need to be reapended to the DOM
-	 * in order to trigger an execution (content changes do not trigger it).
-	 * @param {!HTMLElement} content
-	 * @private
-	 * @review
-	 */
-
-	_executeFragmentScripts(content) {
-		AUI().use(
-			'aui-parse-content',
-			A => {
-				const content = A.one(this.refs.content);
-
-				content.plug(A.Plugin.ParseContent);
-
-				content.setContent(this.content);
-			}
-		);
-	}
-
-	/**
-	 * Handle AlloyEditor changes and propagate them with an
-	 * "editableChanged" event.
-	 * @param {!Object} event
-	 * @private
-	 * @review
-	 */
-
-	_handleEditorChange(event) {
-		this.emit(
-			'editableChanged',
-			{
-				editableId: event.editor.element.$.dataset.lfrEditableId,
-				fragmentEntryLinkId: this.fragmentEntryLinkId,
-				value: event.editor.getData()
 			}
 		);
 	}
@@ -288,6 +173,7 @@ class FragmentEntryLink extends Component {
 			}
 		);
 	}
+
 }
 
 /**
@@ -363,6 +249,17 @@ FragmentEntryLink.STATE = {
 	fragmentEntryLinkId: Config.string().required(),
 
 	/**
+	 * Image selector url
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEntryLink
+	 * @review
+	 * @type {!string}
+	 */
+
+	imageSelectorURL: Config.string().required(),
+
+	/**
 	 * Fragment name
 	 * @default ''
 	 * @instance
@@ -407,16 +304,17 @@ FragmentEntryLink.STATE = {
 	spritemap: Config.string().required(),
 
 	/**
-	 * List of AlloyEditor instances used for inline edition
+	 * Array of processors that will be applied to the fragments
+	 * content whenever it is created.
 	 * @default []
 	 * @instance
 	 * @memberOf FragmentEntryLink
 	 * @private
 	 * @review
-	 * @type {Array<AlloyEditor>}
+	 * @type {Array<object>}
 	 */
 
-	_editors: Config.arrayOf(Config.object())
+	_processors: Config.arrayOf(Config.object())
 		.internal()
 		.value([])
 };

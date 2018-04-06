@@ -132,6 +132,64 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 			annotation, StringPool.PERCENT, StringPool.BLANK, matcher.start());
 	}
 
+	private String _fixSingleValueArray(String annotation) {
+		int x = -1;
+
+		outerLoop:
+		while (true) {
+			x = annotation.indexOf("= {", x + 1);
+
+			if (x == -1) {
+				return annotation;
+			}
+
+			if (ToolsUtil.isInsideQuotes(annotation, x)) {
+				continue;
+			}
+
+			String arrayString = null;
+
+			int y = x;
+
+			while (true) {
+				y = annotation.indexOf("}", y + 1);
+
+				if (y == -1) {
+					return annotation;
+				}
+
+				if (!ToolsUtil.isInsideQuotes(annotation, y)) {
+					arrayString = annotation.substring(x + 2, y + 1);
+
+					if (getLevel(arrayString, "{", "}") == 0) {
+						break;
+					}
+				}
+			}
+
+			y = -1;
+
+			while (true) {
+				y = arrayString.indexOf(",", y + 1);
+
+				if (y == -1) {
+					break;
+				}
+
+				if (!ToolsUtil.isInsideQuotes(arrayString, y)) {
+					continue outerLoop;
+				}
+			}
+
+			String replacement = StringUtil.trim(
+				arrayString.substring(1, arrayString.length() - 1));
+
+			if (Validator.isNotNull(replacement)) {
+				return StringUtil.replace(annotation, arrayString, replacement);
+			}
+		}
+	}
+
 	private String _formatAnnotationParameterProperties(String annotation) {
 		if (!annotation.contains("@Component(")) {
 			return annotation;
@@ -239,6 +297,7 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 			if (newAnnotation.contains(StringPool.OPEN_PARENTHESIS)) {
 				newAnnotation = _fixAnnotationLineBreaks(newAnnotation, indent);
 				newAnnotation = _fixAnnotationMetaTypeProperties(newAnnotation);
+				newAnnotation = _fixSingleValueArray(newAnnotation);
 				newAnnotation = _formatAnnotationParameterProperties(
 					newAnnotation);
 

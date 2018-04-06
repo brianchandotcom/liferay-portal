@@ -41,7 +41,6 @@ import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.internal.Factory;
-import org.gradle.util.Clock;
 
 /**
  * @author Andrea Di Giorgi
@@ -59,7 +58,7 @@ public class ExecuteBndTask extends DefaultTask {
 		Logger logger = getLogger();
 		Properties properties = getProperties();
 
-		Clock clock = new Clock();
+		long clockStart = System.currentTimeMillis();
 
 		BundleExtension bundleExtension = GradleUtil.getExtension(
 			getProject(), BundleExtension.class);
@@ -106,9 +105,11 @@ public class ExecuteBndTask extends DefaultTask {
 		}
 
 		if (logger.isLifecycleEnabled()) {
+			long clockStop = System.currentTimeMillis();
+
 			logger.lifecycle(
-				"Building the {} file took {}.", outputFile.getName(),
-				clock.getTime());
+				"Building the {} file took {} seconds.", outputFile.getName(),
+				((clockStart - clockStop) / 1000));
 		}
 	}
 

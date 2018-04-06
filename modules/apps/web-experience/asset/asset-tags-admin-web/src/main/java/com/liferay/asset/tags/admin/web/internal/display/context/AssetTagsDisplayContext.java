@@ -403,7 +403,7 @@ public class AssetTagsDisplayContext {
 		return tagsSearchContainer.getTotal();
 	}
 
-	public ViewTypeItemList getViewTypeItemList() throws Exception {
+	public ViewTypeItemList getViewTypeItemList() {
 		return new ViewTypeItemList() {
 			{
 				addCardViewTypeItem(

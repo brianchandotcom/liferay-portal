@@ -26,8 +26,16 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class CreationMenu extends HashMap {
 
+	public CreationMenu() {
+		this(null);
+	}
+
 	public CreationMenu(HttpServletRequest request) {
 		_request = request;
+
+		_favoriteDropdownItemList = new DropdownItemList(_request);
+		_primaryDropdownItemList = new DropdownItemList(_request);
+		_restDropdownItemList = new DropdownItemList(_request);
 
 		put("primaryItems", _primaryDropdownItemList);
 	}
@@ -37,7 +45,7 @@ public class CreationMenu extends HashMap {
 	}
 
 	public void addFavoriteDropdownItem(Consumer<DropdownItem> consumer) {
-		DropdownItem dropdownItem = new DropdownItem();
+		DropdownItem dropdownItem = new DropdownItem(_request);
 
 		consumer.accept(dropdownItem);
 
@@ -47,7 +55,7 @@ public class CreationMenu extends HashMap {
 	}
 
 	public void addPrimaryDropdownItem(Consumer<DropdownItem> consumer) {
-		DropdownItem dropdownItem = new DropdownItem();
+		DropdownItem dropdownItem = new DropdownItem(_request);
 
 		consumer.accept(dropdownItem);
 
@@ -55,7 +63,7 @@ public class CreationMenu extends HashMap {
 	}
 
 	public void addRestDropdownItem(Consumer<DropdownItem> consumer) {
-		DropdownItem dropdownItem = new DropdownItem();
+		DropdownItem dropdownItem = new DropdownItem(_request);
 
 		consumer.accept(dropdownItem);
 
@@ -77,7 +85,8 @@ public class CreationMenu extends HashMap {
 	}
 
 	private DropdownItemList _buildSecondaryDropdownItemList() {
-		DropdownItemList secondaryDropdownItemList = new DropdownItemList();
+		DropdownItemList secondaryDropdownItemList = new DropdownItemList(
+			_request);
 
 		if (!_favoriteDropdownItemList.isEmpty()) {
 			secondaryDropdownItemList.addGroup(
@@ -104,9 +113,9 @@ public class CreationMenu extends HashMap {
 		return secondaryDropdownItemList;
 	}
 
-	private DropdownItemList _favoriteDropdownItemList = new DropdownItemList();
-	private DropdownItemList _primaryDropdownItemList = new DropdownItemList();
+	private final DropdownItemList _favoriteDropdownItemList;
+	private final DropdownItemList _primaryDropdownItemList;
 	private final HttpServletRequest _request;
-	private DropdownItemList _restDropdownItemList = new DropdownItemList();
+	private final DropdownItemList _restDropdownItemList;
 
 }

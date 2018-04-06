@@ -20,10 +20,20 @@ import java.util.HashMap;
 
 import javax.portlet.PortletURL;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Chema Balsas
  */
 public class NavigationItem extends HashMap<String, Object> {
+
+	public NavigationItem() {
+		_request = null;
+	}
+
+	public NavigationItem(HttpServletRequest request) {
+		_request = request;
+	}
 
 	public void setActive(boolean active) {
 		put("active", active);
@@ -63,5 +73,7 @@ public class NavigationItem extends HashMap<String, Object> {
 	public void setLabel(String label) {
 		put("label", label);
 	}
+
+	private final HttpServletRequest _request;
 
 }

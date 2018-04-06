@@ -17,17 +17,29 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Brian Wing Shun Chan
  */
 public class NavigationItemList extends ArrayList<NavigationItem> {
 
+	public NavigationItemList() {
+		_request = null;
+	}
+
+	public NavigationItemList(HttpServletRequest request) {
+		_request = request;
+	}
+
 	public void add(Consumer<NavigationItem> consumer) {
-		NavigationItem navigationItem = new NavigationItem();
+		NavigationItem navigationItem = new NavigationItem(_request);
 
 		consumer.accept(navigationItem);
 
 		add(navigationItem);
 	}
+
+	private final HttpServletRequest _request;
 
 }

@@ -12,30 +12,30 @@
  * details.
  */
 
-import java.nio.file.Paths
-import java.nio.file.Files
 import groovy.io.FileType
+import java.nio.file.Files
+import java.nio.file.Paths
 
-def moduleDir = Paths.get(request.getOutputDirectory(), request.getArtifactId())
+def projectDir = Paths.get(request.getOutputDirectory(), request.getArtifactId())
 
-def gradleFile = moduleDir.resolve('build.gradle')
+def buildGradleFile = projectDir.resolve('build.gradle')
 
-if (Files.exists(gradleFile)) {
-	Files.delete(gradleFile)
+if (Files.exists(buildGradleFile)) {
+	Files.delete(buildGradleFile)
 }
 
 def className = request.getProperties().get("className")
 def liferayVersion = request.getProperties().get("liferayVersion")
 
 if (liferayVersion.equals("7.1")) {
-	moduleDir.toFile().eachFileRecurse (FileType.FILES) { file ->
+	projectDir.toFile().eachFileRecurse (FileType.FILES) { file ->
 		if (file.getName().equals(className + 'Portlet.java')) {
 			file.delete()
 		}
 	}
 }
 else {
-	moduleDir.toFile().eachFileRecurse (FileType.FILES) { file ->
+	projectDir.toFile().eachFileRecurse (FileType.FILES) { file ->
 		if (file.getName().equals(className + 'SoyPortletRegister.java')) {
 			file.delete()
 		}

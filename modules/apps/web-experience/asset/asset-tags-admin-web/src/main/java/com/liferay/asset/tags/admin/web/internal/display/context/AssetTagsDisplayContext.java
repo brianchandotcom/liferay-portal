@@ -73,7 +73,7 @@ public class AssetTagsDisplayContext {
 	}
 
 	public DropdownItemList getActionItemsDropdownItemList() {
-		return new DropdownItemList() {
+		return new DropdownItemList(_request) {
 			{
 				add(
 					dropdownItem -> {
@@ -81,8 +81,7 @@ public class AssetTagsDisplayContext {
 							"javascript:" + _renderResponse.getNamespace() +
 								"mergeTags();");
 						dropdownItem.setIcon("change");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "merge"));
+						dropdownItem.setLabel("merge");
 						dropdownItem.setQuickAction(true);
 					});
 
@@ -92,8 +91,7 @@ public class AssetTagsDisplayContext {
 							"javascript:" + _renderResponse.getNamespace() +
 								"deleteTags();");
 						dropdownItem.setIcon("trash");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "delete"));
+						dropdownItem.setLabel("delete");
 						dropdownItem.setQuickAction(true);
 					});
 			}
@@ -126,7 +124,7 @@ public class AssetTagsDisplayContext {
 						dropdownItem.setHref(
 							_renderResponse.createRenderURL(), "mvcPath",
 							"/edit_tag.jsp");
-						dropdownItem.setLabel(_getLabel("add-tag"));
+						dropdownItem.setLabel("add-tag");
 					});
 			}
 		};
@@ -148,14 +146,13 @@ public class AssetTagsDisplayContext {
 	}
 
 	public DropdownItemList getFilterItemsDropdownItemList() {
-		return new DropdownItemList() {
+		return new DropdownItemList(_request) {
 			{
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItemList(
 							_getOrderByDropdownItemList());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
+						dropdownGroupItem.setLabel("order-by");
 					});
 			}
 		};
@@ -212,7 +209,7 @@ public class AssetTagsDisplayContext {
 	}
 
 	public NavigationItemList getNavigationItems() {
-		return new NavigationItemList() {
+		return new NavigationItemList(_request) {
 			{
 				add(
 					navigationItem -> {
@@ -222,8 +219,7 @@ public class AssetTagsDisplayContext {
 
 						navigationItem.setHref(mainURL.toString());
 
-						navigationItem.setLabel(
-							LanguageUtil.get(_request, "tags"));
+						navigationItem.setLabel("tags");
 					});
 			}
 		};
@@ -407,7 +403,7 @@ public class AssetTagsDisplayContext {
 	}
 
 	public ViewTypeItemList getViewTypeItemList() {
-		return new ViewTypeItemList() {
+		return new ViewTypeItemList(_request) {
 			{
 				addCardViewTypeItem(
 					viewTypeItem -> {
@@ -418,8 +414,7 @@ public class AssetTagsDisplayContext {
 							ActionRequest.ACTION_NAME, "changeDisplayStyle",
 							"redirect", PortalUtil.getCurrentURL(_request),
 							"displayStyle", "icon");
-						viewTypeItem.setLabel(
-							LanguageUtil.get(_request, "cards"));
+						viewTypeItem.setLabel("cards");
 					});
 
 				addListViewTypeItem(
@@ -431,8 +426,7 @@ public class AssetTagsDisplayContext {
 							ActionRequest.ACTION_NAME, "changeDisplayStyle",
 							"redirect", PortalUtil.getCurrentURL(_request),
 							"displayStyle", "descriptive");
-						viewTypeItem.setLabel(
-							LanguageUtil.get(_request, "list"));
+						viewTypeItem.setLabel("list");
 					});
 
 				addTableViewTypeItem(
@@ -444,8 +438,7 @@ public class AssetTagsDisplayContext {
 							ActionRequest.ACTION_NAME, "changeDisplayStyle",
 							"redirect", PortalUtil.getCurrentURL(_request),
 							"displayStyle", "list");
-						viewTypeItem.setLabel(
-							LanguageUtil.get(_request, "table"));
+						viewTypeItem.setLabel("table");
 					});
 			}
 		};
@@ -482,21 +475,19 @@ public class AssetTagsDisplayContext {
 	}
 
 	private DropdownItemList _getOrderByDropdownItemList() {
-		return new DropdownItemList() {
+		return new DropdownItemList(_request) {
 			{
 				add(
 					dropdownItem -> {
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", "name");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "name"));
+						dropdownItem.setLabel("name");
 					});
 				add(
 					dropdownItem -> {
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", "usages");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "usages"));
+						dropdownItem.setLabel("usages");
 					});
 			}
 		};

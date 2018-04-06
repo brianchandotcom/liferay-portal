@@ -113,7 +113,7 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 
 		Object object = _map.get(name);
 
-		soyValueProvider = _populateCollectionData(object);
+		soyValueProvider = _toSoyValue(object);
 
 		_computedValues.put(name, soyValueProvider);
 
@@ -183,7 +183,18 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 		return StringUtil.lowerCaseFirstLetter(string);
 	}
 
-	private SoyValue _populateCollectionData(Object object) {
+	private Object _propertyName(String methodName) {
+		if (methodName.startsWith("get")) {
+			methodName = methodName.replaceFirst("^get", "");
+		}
+		else if (methodName.startsWith("is")) {
+			methodName = methodName.replaceFirst("^is", "");
+		}
+
+		return _decapitalize(methodName);
+	}
+
+	private SoyValue _toSoyValue(Object object) {
 		if (object == null) {
 			return NullData.INSTANCE;
 		}
@@ -212,7 +223,7 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 
 			entries.forEach(
 				entry -> soyMapData.put(
-					entry.getKey(), _populateCollectionData(entry.getValue())));
+					entry.getKey(), _toSoyValue(entry.getValue())));
 
 			return soyMapData;
 		}
@@ -221,8 +232,7 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 
 			Iterable<?> iterable = (Iterable<?>)object;
 
-			iterable.forEach(
-				entry -> soyListData.add(_populateCollectionData(entry)));
+			iterable.forEach(entry -> soyListData.add(_toSoyValue(entry)));
 
 			return soyListData;
 		}
@@ -293,17 +303,6 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 		}
 
 		return soyMapData;
-	}
-
-	private Object _propertyName(String methodName) {
-		if (methodName.startsWith("get")) {
-			methodName = methodName.replaceFirst("^get", "");
-		}
-		else if (methodName.startsWith("is")) {
-			methodName = methodName.replaceFirst("^is", "");
-		}
-
-		return _decapitalize(methodName);
 	}
 
 	private final Map<String, SoyValueProvider> _computedValues =

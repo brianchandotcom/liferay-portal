@@ -51,6 +51,7 @@ public class GogoShellClient implements AutoCloseable {
 	public void close() {
 		try {
 			_socket.close();
+
 			_inputStream.close();
 			_outputStream.close();
 		}
@@ -75,21 +76,22 @@ public class GogoShellClient implements AutoCloseable {
 		return _readUntilNextGogoPrompt();
 	}
 
-	private static void _assertCond(boolean condition) {
+	private static void _assertCondition(boolean condition) {
 		if (!condition) {
 			throw new AssertionError();
 		}
 	}
 
 	private static int[] _toIntArray(List<Integer> list) {
-		int[] ret = new int[list.size()];
+		int[] array = new int[list.size()];
+
 		int i = 0;
 
-		for (Integer e : list) {
-			ret[i++] = e.intValue();
+		for (Integer integer : list) {
+			array[i++] = integer.intValue();
 		}
 
-		return ret;
+		return array;
 	}
 
 	private void _handshake() throws IOException {
@@ -127,7 +129,7 @@ public class GogoShellClient implements AutoCloseable {
 
 		int iac = _inputStream.read();
 
-		_assertCond(iac == 255);
+		_assertCondition(iac == 255);
 
 		bytes.add(iac);
 
@@ -146,7 +148,7 @@ public class GogoShellClient implements AutoCloseable {
 
 			int code = _inputStream.read();
 
-			_assertCond(code == 0 || code == 1);
+			_assertCondition(code == 0 || code == 1);
 
 			bytes.add(code);
 
@@ -156,7 +158,7 @@ public class GogoShellClient implements AutoCloseable {
 			else if (code == 1) {
 				iac = _inputStream.read();
 
-				_assertCond(iac == 255);
+				_assertCondition(iac == 255);
 
 				bytes.add(iac);
 
@@ -164,7 +166,7 @@ public class GogoShellClient implements AutoCloseable {
 
 				int se = _inputStream.read();
 
-				_assertCond(se == 240);
+				_assertCondition(se == 240);
 
 				bytes.add(se);
 			}

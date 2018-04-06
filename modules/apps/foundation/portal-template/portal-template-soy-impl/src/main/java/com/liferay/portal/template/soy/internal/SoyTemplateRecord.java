@@ -28,6 +28,8 @@ import com.google.template.soy.data.restricted.IntegerData;
 import com.google.template.soy.data.restricted.NullData;
 import com.google.template.soy.data.restricted.StringData;
 
+import com.liferay.portal.kernel.util.StringUtil;
+
 import java.io.IOException;
 
 import java.lang.annotation.Annotation;
@@ -51,7 +53,7 @@ import org.apache.commons.lang3.ClassUtils;
  *
  * @author Raymond Augé
  */
-class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
+public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 
 	public Object add(String key, Object value) {
 		return _map.put(key, value);
@@ -64,17 +66,17 @@ class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 
 	@Override
 	public String coerceToString() {
-		LoggingAdvisingAppendable mapStr =
+		LoggingAdvisingAppendable appendable =
 			LoggingAdvisingAppendable.buffering();
 
 		try {
-			render(mapStr);
+			render(appendable);
 		}
 		catch (IOException ioe) {
 			throw new AssertionError(ioe);
 		}
 
-		return mapStr.toString();
+		return appendable.toString();
 	}
 
 	@Override
@@ -103,69 +105,71 @@ class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 
 	@Override
 	public SoyValueProvider getFieldProvider(String name) {
-		SoyValueProvider soyValue = _computedValues.get(name);
+		SoyValueProvider soyValueProvider = _computedValues.get(name);
 
-		if (soyValue == null) {
+		if (soyValueProvider == null) {
 			Object object = _map.get(name);
 
 			if (object == null) {
-				soyValue = NullData.INSTANCE;
+				soyValueProvider = NullData.INSTANCE;
 			}
 			else if (object instanceof SoyData) {
-				soyValue = (SoyData)object;
+				soyValueProvider = (SoyData)object;
 			}
 			else if (object instanceof String) {
-				soyValue = StringData.forValue((String)object);
+				soyValueProvider = StringData.forValue((String)object);
 			}
 			else if (object instanceof Boolean) {
-				soyValue = BooleanData.forValue((Boolean)object);
+				soyValueProvider = BooleanData.forValue((Boolean)object);
 			}
 			else if (object instanceof Integer) {
-				soyValue = IntegerData.forValue((Integer)object);
+				soyValueProvider = IntegerData.forValue((Integer)object);
 			}
 			else if (object instanceof Long) {
-				soyValue = IntegerData.forValue((Long)object);
+				soyValueProvider = IntegerData.forValue((Long)object);
 			}
 			else if (object instanceof Map<?, ?>) {
 				@SuppressWarnings("unchecked")
-				Map<String, ?> objCast = (Map<String, ?>)object;
+				Map<String, ?> map = (Map<String, ?>)object;
 
-				SoyMapData soyMD = new SoyMapData();
+				SoyMapData soyMapData = new SoyMapData();
 
-				objCast.entrySet().forEach(
-					entry -> soyMD.put(
+				Set<? extends Entry<String, ?>> entrySet = map.entrySet();
+
+				entrySet.forEach(
+					entry -> soyMapData.put(
 						entry.getKey(),
 						_populateCollectionData(entry.getValue())));
 
-				soyValue = soyMD;
+				soyValueProvider = soyMapData;
 			}
 			else if (object instanceof Iterable<?>) {
-				SoyListData soyMD = new SoyListData();
+				SoyListData soyListData = new SoyListData();
 
 				Iterable<?> iterable = (Iterable<?>)object;
 
 				iterable.forEach(
-					entry -> soyMD.add(_populateCollectionData(entry)));
+					entry -> soyListData.add(_populateCollectionData(entry)));
 
-				soyValue = soyMD;
+				soyValueProvider = soyListData;
 			}
 			else if (object instanceof Double) {
-				soyValue = FloatData.forValue((Double)object);
+				soyValueProvider = FloatData.forValue((Double)object);
 			}
 			else if (object instanceof Float) {
-				soyValue = FloatData.forValue((Float)object);
+				soyValueProvider = FloatData.forValue((Float)object);
 			}
-
-			// TODO Futures?
-
 			else {
-				soyValue = _populateCollectionData(object);
+
+				// TODO Futures?
+
+				soyValueProvider = _populateCollectionData(object);
 			}
 
-			_computedValues.put(name, soyValue);
+			_computedValues.put(name, soyValueProvider);
 		}
 
-		return soyValue;
+		return soyValueProvider;
 	}
 
 	@Override
@@ -193,39 +197,42 @@ class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 
 		appendable.append('{');
 
-		boolean isFirst = true;
+		boolean first = true;
 
 		for (Entry<String, SoyValueProvider> entry :
 				_computedValues.entrySet()) {
 
-			SoyValue value = entry.getValue().resolve();
+			SoyValueProvider soyValueProvider = entry.getValue();
 
-			if (isFirst) {
-				isFirst = false;
+			SoyValue soyValue = soyValueProvider.resolve();
+
+			if (first) {
+				first = false;
 			}
 			else {
 				appendable.append(", ");
 			}
 
-			StringData.forValue(entry.getKey()).render(appendable);
+			String key = entry.getKey();
+
+			StringData stringData = StringData.forValue(key);
+
+			stringData.render(appendable);
 
 			appendable.append(": ");
 
-			value.render(appendable);
+			soyValue.render(appendable);
 		}
 
 		appendable.append('}');
 	}
 
 	private String _decapitalize(String string) {
-		if (string == null || string.length() == 0) {
+		if ((string == null) || string.isEmpty()) {
 			return string;
 		}
 
-		char c[] = string.toCharArray();
-		c[0] = Character.toLowerCase(c[0]);
-
-		return new String(c);
+		return StringUtil.lowerCaseFirstLetter(string);
 	}
 
 	private SoyValue _populateCollectionData(Object object) {
@@ -249,25 +256,27 @@ class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 		}
 		else if (object instanceof Map<?, ?>) {
 			@SuppressWarnings("unchecked")
-			Map<String, ?> objCast = (Map<String, ?>)object;
+			Map<String, ?> map = (Map<String, ?>)object;
 
-			SoyMapData soyMD = new SoyMapData();
+			SoyMapData soyMapData = new SoyMapData();
 
-			objCast.entrySet().forEach(
-				entry -> soyMD.put(
+			Set<? extends Entry<String, ?>> entries = map.entrySet();
+
+			entries.forEach(
+				entry -> soyMapData.put(
 					entry.getKey(), _populateCollectionData(entry.getValue())));
 
-			return soyMD;
+			return soyMapData;
 		}
 		else if (object instanceof Iterable<?>) {
-			SoyListData soyMD = new SoyListData();
+			SoyListData soyListData = new SoyListData();
 
 			Iterable<?> iterable = (Iterable<?>)object;
 
 			iterable.forEach(
-				entry -> soyMD.add(_populateCollectionData(entry)));
+				entry -> soyListData.add(_populateCollectionData(entry)));
 
-			return soyMD;
+			return soyListData;
 		}
 		else if (object instanceof Double) {
 			return FloatData.forValue((Double)object);
@@ -276,7 +285,7 @@ class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 			return FloatData.forValue((Float)object);
 		}
 
-		SoyMapData smd = new SoyMapData();
+		SoyMapData soyMapData = new SoyMapData();
 
 		Class<?> clazz = object.getClass();
 
@@ -285,49 +294,57 @@ class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 				Object fieldValue = field.get(object);
 
 				if (fieldValue == null) {
-					smd.put(_propertyName(field.getName()), NullData.INSTANCE);
+					soyMapData.put(
+						_propertyName(field.getName()), NullData.INSTANCE);
 				}
 				else if (ClassUtils.isPrimitiveOrWrapper(
 							fieldValue.getClass()) ||
 						 String.class.isInstance(fieldValue)) {
 
-					smd.put(field.getName(), fieldValue);
+					soyMapData.put(field.getName(), fieldValue);
 				}
 			}
 			catch (IllegalAccessException | IllegalArgumentException e) {
-				System.err.println(
-					"==========> ERROR on " + field + ": " + e.getMessage());
+				System.err.printf(
+					"==========> ERROR on %s: %s", field, e.getMessage());
 			}
 		}
 
 		for (Method method : clazz.getMethods()) {
-			if (method.getParameterTypes().length == 0 &&
-				!method.getReturnType().equals(Void.class) &&
-				!method.getDeclaringClass().equals(Object.class) &&
-				!method.getDeclaringClass().equals(Annotation.class)) {
+			Class<?>[] parameterTypes = method.getParameterTypes();
+			Class<?> returnType = method.getReturnType();
+			Class<?> declaringClass = method.getDeclaringClass();
+
+			if ((parameterTypes.length == 0) &&
+				!returnType.equals(Void.class) &&
+				!declaringClass.equals(Object.class) &&
+				!declaringClass.equals(Annotation.class)) {
 
 				try {
 					Object methodValue = method.invoke(object);
 
 					if (methodValue == null) {
-						smd.put(
+						soyMapData.put(
 							_propertyName(method.getName()), NullData.INSTANCE);
 					}
 					else if (ClassUtils.isPrimitiveOrWrapper(
 								methodValue.getClass()) ||
 							 String.class.isInstance(methodValue)) {
 
-						smd.put(_propertyName(method.getName()), methodValue);
+						soyMapData.put(
+							_propertyName(method.getName()), methodValue);
 					}
 				}
-				catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-					System.err.println(
-						"==========> ERROR on " + method + ": " + e.getMessage());
+				catch (IllegalAccessException | IllegalArgumentException |
+					   InvocationTargetException e) {
+
+					System.err.printf(
+						"==========> ERROR on %s: %s", method, e.getMessage());
 				}
 			}
 		}
 
-		return smd;
+		return soyMapData;
 	}
 
 	private Object _propertyName(String methodName) {

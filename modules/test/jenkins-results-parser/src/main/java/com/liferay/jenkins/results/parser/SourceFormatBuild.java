@@ -26,6 +26,11 @@ import org.dom4j.Element;
 public class SourceFormatBuild extends TopLevelBuild {
 
 	@Override
+	public String getBaseRepositoryName() {
+		return _pullRequest.getRepositoryName();
+	}
+
+	@Override
 	public Element[] getBuildFailureElements() {
 		return new Element[] {getFailureMessageElement()};
 	}
@@ -36,6 +41,8 @@ public class SourceFormatBuild extends TopLevelBuild {
 
 	protected SourceFormatBuild(String url, TopLevelBuild topLevelBuild) {
 		super(url, topLevelBuild);
+
+		_pullRequest = new PullRequest(getParameterValue("PULL_REQUEST_URL"));
 	}
 
 	@Override
@@ -46,5 +53,7 @@ public class SourceFormatBuild extends TopLevelBuild {
 			new GenericFailureMessageGenerator()
 		};
 	}
+
+	private PullRequest _pullRequest;
 
 }

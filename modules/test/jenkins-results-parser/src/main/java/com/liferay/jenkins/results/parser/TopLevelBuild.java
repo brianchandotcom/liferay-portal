@@ -42,7 +42,6 @@ import org.apache.commons.lang.StringUtils;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -133,11 +132,6 @@ public class TopLevelBuild extends BaseBuild {
 		String tempMapName = "git." + repositoryType + ".properties";
 
 		return getTempMap(tempMapName);
-	}
-
-	@Override
-	public String getBaseRepositoryName() {
-		return _pullRequest.getRepositoryName();
 	}
 
 	public String getCompanionBranchName() {
@@ -232,10 +226,6 @@ public class TopLevelBuild extends BaseBuild {
 			"https://", jenkinsMaster.getName(), ".liferay.com/",
 			"userContent/jobs/", getJobName(), "/builds/",
 			Integer.toString(getBuildNumber()), "/jenkins-report.html");
-	}
-
-	public PullRequest getPullRequest() {
-		return _pullRequest;
 	}
 
 	@Override
@@ -361,8 +351,6 @@ public class TopLevelBuild extends BaseBuild {
 
 	protected TopLevelBuild(String url, TopLevelBuild topLevelBuild) {
 		super(url, topLevelBuild);
-
-		_pullRequest = new PullRequest(_getPullRequestURLString());
 	}
 
 	@Override
@@ -646,7 +634,8 @@ public class TopLevelBuild extends BaseBuild {
 			buildFailureElements.add(upstreamResultElement);
 		}
 
-		return buildFailureElements.toArray(new Element[0]);
+		return buildFailureElements.toArray(
+			new Element[buildFailureElements.size()]);
 	}
 
 	protected Element getCompanionBranchDetailsElement() {
@@ -1299,7 +1288,8 @@ public class TopLevelBuild extends BaseBuild {
 		Dom4JUtil.addToElement(detailsElement, getMoreDetailsElement());
 
 		if (!result.equals("SUCCESS")) {
-			Dom4JUtil.addToElement(detailsElement, getBuildFailureElements());
+			Dom4JUtil.addToElement(
+				detailsElement, (Object[])getBuildFailureElements());
 		}
 
 		return rootElement;
@@ -1328,22 +1318,6 @@ public class TopLevelBuild extends BaseBuild {
 	protected static final Pattern gitRepositoryTempMapNamePattern =
 		Pattern.compile("git\\.(?<repositoryType>.*)\\.properties");
 
-	private String _getPullRequestURLString() {
-		JSONObject buildJSONObject = getBuildJSONObject();
-
-		JSONArray actionsJSONArray = buildJSONObject.getJSONArray("actions");
-
-		JSONObject parametersJSONObject = actionsJSONArray.getJSONObject(0);
-
-		JSONArray parametersJSONArray = parametersJSONObject.getJSONArray(
-			"parameters");
-
-		JSONObject pullRequestURLJSONObject = parametersJSONArray.getJSONObject(
-			2);
-
-		return pullRequestURLJSONObject.getString("value");
-	}
-
 	private static final long _DOWNSTREAM_BUILDS_LISTING_INTERVAL =
 		1000 * 60 * 5;
 
@@ -1366,7 +1340,6 @@ public class TopLevelBuild extends BaseBuild {
 
 	private boolean _compareToUpstream = true;
 	private long _lastDownstreamBuildsListingTimestamp = -1L;
-	private PullRequest _pullRequest;
 	private long _updateDuration;
 
 }

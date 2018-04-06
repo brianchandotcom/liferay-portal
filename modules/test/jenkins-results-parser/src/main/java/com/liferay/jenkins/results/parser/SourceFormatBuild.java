@@ -27,13 +27,7 @@ public class SourceFormatBuild extends TopLevelBuild {
 
 	@Override
 	public Element[] getBuildFailureElements() {
-		Element failureMessageElement = getFailureMessageElement();
-
-		if (failureMessageElement != null) {
-			return new Element[] {failureMessageElement};
-		}
-
-		return null;
+		return new Element[] {getFailureMessageElement()};
 	}
 
 	protected SourceFormatBuild(String url) {

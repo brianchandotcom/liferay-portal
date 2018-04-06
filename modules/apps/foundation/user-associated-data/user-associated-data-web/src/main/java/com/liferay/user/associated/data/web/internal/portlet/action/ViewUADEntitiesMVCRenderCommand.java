@@ -75,6 +75,9 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 			String uadRegistryKey = ParamUtil.getString(
 				renderRequest, "uadRegistryKey");
 
+			ViewUADEntitiesDisplay viewUADEntitiesDisplay =
+				new ViewUADEntitiesDisplay();
+
 			LiferayPortletResponse liferayPortletResponse =
 				_portal.getLiferayPortletResponse(
 					(PortletResponse)renderRequest.getAttribute(
@@ -88,25 +91,21 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 				_portal.getLiferayPortletRequest(portletRequest),
 				liferayPortletResponse);
 
-			ViewUADEntitiesDisplay viewUADEntitiesDisplay =
-				new ViewUADEntitiesDisplay();
-
+			viewUADEntitiesDisplay.setApplicationName(applicationName);
 			viewUADEntitiesDisplay.setNavigationItems(
 				_getNavigationItems(
 					applicationName, uadRegistryKey, currentURL,
 					liferayPortletResponse));
 
-			viewUADEntitiesDisplay.setSearchContainer(
-				_getSearchContainer(
-					renderRequest, currentURL, uadRegistryKey,
-					selectedUser.getUserId(), liferayPortletResponse));
-
 			UADEntityDisplay uadEntityDisplay =
 				_uadRegistry.getUADEntityDisplay(uadRegistryKey);
 
+			viewUADEntitiesDisplay.setSearchContainer(
+				_getSearchContainer(
+					renderRequest, currentURL, uadRegistryKey, uadEntityDisplay,
+					selectedUser.getUserId(), liferayPortletResponse));
 			viewUADEntitiesDisplay.setTypeName(uadEntityDisplay.getTypeName());
 
-			viewUADEntitiesDisplay.setApplicationName(applicationName);
 			viewUADEntitiesDisplay.setUADRegistryKey(uadRegistryKey);
 
 			renderRequest.setAttribute(
@@ -185,8 +184,8 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 
 	private SearchContainer<UADEntity> _getSearchContainer(
 			RenderRequest renderRequest, PortletURL currentURL,
-			String uadRegistryKey, long selectedUserId,
-			LiferayPortletResponse liferayPortletResponse)
+			String uadRegistryKey, UADEntityDisplay uadEntityDisplay,
+			long selectedUserId, LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
 		LiferayPortletRequest liferayPortletRequest =
@@ -205,9 +204,6 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 			searchContainer.getEnd());
 
 		List<UADEntity> uadEntities = new ArrayList<>();
-
-		UADEntityDisplay uadEntityDisplay = _uadRegistry.getUADEntityDisplay(
-			uadRegistryKey);
 
 		for (Object entity : entities) {
 			uadEntities.add(

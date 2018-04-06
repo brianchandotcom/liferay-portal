@@ -75,20 +75,13 @@ public class ManagementToolbarTag extends BaseClayTag {
 		if (creationMenu != null) {
 			DropdownItemList primaryItems = (DropdownItemList)creationMenu.get(
 				"primaryItems");
-			DropdownItemList secondaryItems =
-				(DropdownItemList)creationMenu.get("secondaryItems");
 
-			if ((primaryItems.size() + secondaryItems.size()) == 1) {
+			if ((primaryItems != null) && (primaryItems.size() == 1)) {
 				DropdownItem dropdownItem = primaryItems.get(0);
-
-				if (Validator.isNull(dropdownItem)) {
-					dropdownItem = secondaryItems.get(0);
-				}
 
 				setCreationMenu(dropdownItem.get("href"));
 
 				creationMenu.remove("primaryItems");
-				creationMenu.remove("secondaryItems");
 			}
 		}
 

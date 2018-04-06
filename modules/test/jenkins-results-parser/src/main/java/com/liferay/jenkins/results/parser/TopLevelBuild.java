@@ -625,6 +625,7 @@ public class TopLevelBuild extends BaseBuild {
 				remainingFailureCount);
 
 			githubMessageFailureElements.add(Dom4JUtil.getNewElement("hr"));
+
 			githubMessageFailureElements.add(upstreamJobFailureElement);
 		}
 

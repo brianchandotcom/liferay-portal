@@ -15,6 +15,7 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
 import java.util.function.Consumer;
@@ -73,10 +74,18 @@ public class CreationMenu extends HashMap {
 	}
 
 	public void setCaption(String caption) {
+		if (Validator.isNotNull(_request)) {
+			caption = LanguageUtil.get(_request, caption);
+		}
+
 		put("caption", caption);
 	}
 
 	public void setHelpText(String helpText) {
+		if (Validator.isNotNull(_request)) {
+			helpText = LanguageUtil.get(_request, helpText);
+		}
+
 		put("helpText", helpText);
 	}
 

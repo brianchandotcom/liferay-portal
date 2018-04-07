@@ -25,9 +25,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.net.URI;
-
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -54,6 +53,7 @@ import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.Optional;
+import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.incremental.IncrementalTaskInputs;
 import org.gradle.api.tasks.incremental.InputFileDetails;
@@ -89,6 +89,13 @@ public class WatchTask extends DefaultTask {
 	@InputDirectory
 	public File getBundleDir() {
 		return GradleUtil.toFile(getProject(), _bundleDir);
+	}
+
+	@OutputFile
+	public File getOutputFile() {
+		Project project = getProject();
+
+		return new File(project.getBuildDir(), "installedBundleId");
 	}
 
 	@Input
@@ -165,14 +172,21 @@ public class WatchTask extends DefaultTask {
 					"| --continuous)");
 		}
 
-		File bundleDir = getBundleDir();
 		Logger logger = getLogger();
 
-		Long bundleId = _installedBundleIds.get(bundleDir);
+		long bundleId = -1;
 
-		if ((bundleId == null) || (bundleId < 1) ||
-			!incrementalTaskInputs.isIncremental()) {
+		File outputFile = getOutputFile();
 
+		if (outputFile.exists()) {
+			byte[] bytes = Files.readAllBytes(outputFile.toPath());
+
+			String bundleIdString = new String(bytes);
+
+			bundleId = Long.parseLong(bundleIdString);
+		}
+
+		if (((bundleId < 1) || !incrementalTaskInputs.isIncremental())) {
 			_installBundleFully();
 
 			return;
@@ -284,8 +298,20 @@ public class WatchTask extends DefaultTask {
 		String response = _sendGogoShellCommand(
 			gogoShellClient, "install " + url);
 
+		Matcher matcher =
+			_installResponseBundleAlreadyInstalledPattern.matcher(response);
+
+		if (matcher.matches()) {
+			if (logger.isQuietEnabled()) {
+				logger.quiet("Bundle already installed, updating instead");
+
+				response =
+					_sendGogoShellCommand(gogoShellClient, "update " + url);
+			}
+		}
+
 		if (start) {
-			Matcher matcher = _installResponsePattern.matcher(response);
+			matcher = _installResponsePattern.matcher(response);
 
 			if (matcher.matches()) {
 				if (logger.isQuietEnabled()) {
@@ -312,7 +338,11 @@ public class WatchTask extends DefaultTask {
 		try (GogoShellClient gogoShellClient = new GogoShellClient()) {
 			long bundleId = _installBundle(bundleDir, gogoShellClient, true);
 
-			_installedBundleIds.put(bundleDir, bundleId);
+			File outputFile = getOutputFile();
+
+			String bundleIdString = Long.toString(bundleId);
+
+			Files.write(outputFile.toPath(), bundleIdString.getBytes());
 
 			File manifestFile = new File(bundleDir, "META-INF/MANIFEST.MF");
 
@@ -438,7 +468,11 @@ public class WatchTask extends DefaultTask {
 
 	private static final Map<File, Attributes> _installedAttributes =
 		new HashMap<>();
-	private static final Map<File, Long> _installedBundleIds = new HashMap<>();
+
+	private static final Pattern _installResponseBundleAlreadyInstalledPattern =
+		Pattern.compile(
+			".*A bundle is already installed \"(.*)\".*",
+				Pattern.DOTALL | Pattern.MULTILINE);
 	private static final Pattern _installResponsePattern = Pattern.compile(
 		".*Bundle ID: (.*$).*", Pattern.DOTALL | Pattern.MULTILINE);
 

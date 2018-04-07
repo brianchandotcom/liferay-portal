@@ -19,14 +19,16 @@ import aQute.bnd.osgi.Constants;
 import com.liferay.gogo.shell.client.GogoShellClient;
 import com.liferay.gradle.plugins.internal.util.FileUtil;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
-import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.net.URI;
+
 import java.nio.file.Files;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -35,6 +37,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
@@ -58,6 +61,9 @@ import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.incremental.IncrementalTaskInputs;
 import org.gradle.api.tasks.incremental.InputFileDetails;
 import org.gradle.util.GUtil;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.dto.BundleDTO;
 
 /**
  * @author Gregory Amerson
@@ -91,13 +97,6 @@ public class WatchTask extends DefaultTask {
 		return GradleUtil.toFile(getProject(), _bundleDir);
 	}
 
-	@OutputFile
-	public File getOutputFile() {
-		Project project = getProject();
-
-		return new File(project.getBuildDir(), "installedBundleId");
-	}
-
 	@Input
 	public Set<String> getClassLoaderFileExtensions() {
 		return _classLoaderFileExtensions;
@@ -112,6 +111,13 @@ public class WatchTask extends DefaultTask {
 	@Input
 	public Set<String> getIgnoredManifestKeys() {
 		return _ignoredManifestKeys;
+	}
+
+	@OutputFile
+	public File getOutputFile() {
+		Project project = getProject();
+
+		return new File(project.getBuildDir(), "installedBundleId");
 	}
 
 	public WatchTask ignoredManifestKeys(Iterable<String> ignoredManifestKeys) {
@@ -213,6 +219,35 @@ public class WatchTask extends DefaultTask {
 		}
 	}
 
+	private static long _getBundleId(
+			String bundleSymbolicName, GogoShellClient gogoShellClient)
+		throws IOException {
+
+		String command = String.format("lb -s %s", bundleSymbolicName);
+
+		String response = _sendGogoShellCommand(gogoShellClient, command);
+
+		try (Scanner scanner = new Scanner(response)) {
+			List<String> lines = new ArrayList<>();
+
+			while (scanner.hasNextLine()) {
+				lines.add(scanner.nextLine());
+			}
+
+			if (lines.size() > 2) {
+				String gogoLine = lines.get(2);
+
+				BundleDTO bundleDTO = _parseBundleDTO(gogoLine);
+
+				if (bundleDTO != null) {
+					return bundleDTO.id;
+				}
+			}
+		}
+
+		return -1;
+	}
+
 	private static <K, V> Map<K, V> _getDifferences(
 		Map<? extends K, ? extends V> leftMap,
 		Map<? extends K, ? extends V> rightMap) {
@@ -232,6 +267,61 @@ public class WatchTask extends DefaultTask {
 		}
 
 		return differences;
+	}
+
+	private static String _getReferenceInstallURL(File file) {
+		URI uri = file.toURI();
+
+		return "reference:" + uri.toASCIIString();
+	}
+
+	private static final int _getState(String state) {
+		String bundleState = state.toUpperCase();
+
+		if ("ACTIVE".equals(bundleState)) {
+			return Bundle.ACTIVE;
+		}
+		else if ("INSTALLED".equals(bundleState)) {
+			return Bundle.INSTALLED;
+		}
+		else if ("RESOLVED".equals(bundleState)) {
+			return Bundle.RESOLVED;
+		}
+		else if ("STARTING".equals(bundleState)) {
+			return Bundle.STARTING;
+		}
+		else if ("STOPPING".equals(bundleState)) {
+			return Bundle.STOPPING;
+		}
+		else if ("UNINSTALLED".equals(bundleState)) {
+			return Bundle.UNINSTALLED;
+		}
+
+		return 0;
+	}
+
+	private static final BundleDTO _newBundleDTO(
+		Long id, int state, String symbolicName) {
+
+		BundleDTO bundle = new BundleDTO();
+
+		bundle.id = id;
+		bundle.state = state;
+		bundle.symbolicName = symbolicName;
+
+		return bundle;
+	}
+
+	private static final BundleDTO _parseBundleDTO(String line) {
+		String[] fields = line.split("\\|");
+
+		Long id = Long.parseLong(fields[0].trim());
+
+		int state = _getState(fields[1].trim());
+
+		String symbolicName = fields[3];
+
+		return _newBundleDTO(id, state, symbolicName);
 	}
 
 	private static String _sendGogoShellCommand(
@@ -291,27 +381,13 @@ public class WatchTask extends DefaultTask {
 
 		long bundleId = -1;
 
-		URI uri = file.toURI();
-
-		String url = "reference:" + uri.toASCIIString();
+		String url = _getReferenceInstallURL(file);
 
 		String response = _sendGogoShellCommand(
 			gogoShellClient, "install " + url);
 
-		Matcher matcher =
-			_installResponseBundleAlreadyInstalledPattern.matcher(response);
-
-		if (matcher.matches()) {
-			if (logger.isQuietEnabled()) {
-				logger.quiet("Bundle already installed, updating instead");
-
-				response =
-					_sendGogoShellCommand(gogoShellClient, "update " + url);
-			}
-		}
-
 		if (start) {
-			matcher = _installResponsePattern.matcher(response);
+			Matcher matcher = _installResponsePattern.matcher(response);
 
 			if (matcher.matches()) {
 				if (logger.isQuietEnabled()) {
@@ -335,8 +411,26 @@ public class WatchTask extends DefaultTask {
 	private void _installBundleFully() throws IOException {
 		File bundleDir = getBundleDir();
 
-		try (GogoShellClient gogoShellClient = new GogoShellClient()) {
-			long bundleId = _installBundle(bundleDir, gogoShellClient, true);
+		File manifestFile = new File(bundleDir, "META-INF/MANIFEST.MF");
+
+		try (GogoShellClient gogoShellClient = new GogoShellClient();
+				InputStream inputStream = new FileInputStream(manifestFile)) {
+
+			Manifest manifest = new Manifest(inputStream);
+
+			Attributes attributes = manifest.getMainAttributes();
+
+			String bundleSymbolicName = attributes.getValue(
+				"Bundle-SymbolicName");
+
+			long bundleId = _getBundleId(bundleSymbolicName, gogoShellClient);
+
+			if (bundleId > 0) {
+				_updateBundle(bundleDir, bundleId, gogoShellClient);
+			}
+			else {
+				bundleId = _installBundle(bundleDir, gogoShellClient, true);
+			}
 
 			File outputFile = getOutputFile();
 
@@ -344,14 +438,7 @@ public class WatchTask extends DefaultTask {
 
 			Files.write(outputFile.toPath(), bundleIdString.getBytes());
 
-			File manifestFile = new File(bundleDir, "META-INF/MANIFEST.MF");
-
-			try (InputStream inputStream = new FileInputStream(manifestFile)) {
-				Manifest manifest = new Manifest(inputStream);
-
-				_installedAttributes.put(
-					bundleDir, manifest.getMainAttributes());
-			}
+			_installedAttributes.put(bundleDir, attributes);
 
 			FileCollection fileCollection = getFragments();
 
@@ -453,26 +540,40 @@ public class WatchTask extends DefaultTask {
 	private void _startBundle(long bundleId, GogoShellClient gogoShellClient)
 		throws IOException {
 
+		String command = String.format("start %", bundleId);
+
+		String response = _sendGogoShellCommand(gogoShellClient, command);
+
 		Logger logger = getLogger();
 
-		String response = _sendGogoShellCommand(
-			gogoShellClient, "start " + bundleId);
-
-		if (Validator.isNotNull(response)) {
-			logger.error("Unable to start bundle {}: {}", bundleId, response);
+		if (logger.isQuietEnabled()) {
+			logger.quiet("Bundle {} started: {}", bundleId, response);
 		}
-		else if (logger.isQuietEnabled()) {
-			logger.quiet("Bundle {} succesfully started", bundleId);
+	}
+
+	private void _updateBundle(
+			File bundleDir, long bundleId, GogoShellClient gogoShellClient)
+		throws IOException {
+
+		Logger logger = getLogger();
+
+		if (logger.isQuietEnabled()) {
+			logger.quiet("Updating bundle {} from {}", bundleId, bundleDir);
+		}
+
+		String url = _getReferenceInstallURL(bundleDir);
+
+		String command = String.format("update %s %s", bundleId, url);
+
+		String response = _sendGogoShellCommand(gogoShellClient, command);
+
+		if (logger.isQuietEnabled()) {
+			logger.quiet("Bundle {} updated.\n{}\n", bundleId, response);
 		}
 	}
 
 	private static final Map<File, Attributes> _installedAttributes =
 		new HashMap<>();
-
-	private static final Pattern _installResponseBundleAlreadyInstalledPattern =
-		Pattern.compile(
-			".*A bundle is already installed \"(.*)\".*",
-				Pattern.DOTALL | Pattern.MULTILINE);
 	private static final Pattern _installResponsePattern = Pattern.compile(
 		".*Bundle ID: (.*$).*", Pattern.DOTALL | Pattern.MULTILINE);
 

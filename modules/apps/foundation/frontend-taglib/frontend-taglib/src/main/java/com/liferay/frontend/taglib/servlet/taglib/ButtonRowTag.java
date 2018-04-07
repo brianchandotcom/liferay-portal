@@ -70,7 +70,7 @@ public class ButtonRowTag extends IncludeTag {
 	protected int processStartTag() throws Exception {
 		JspWriter jspWriter = pageContext.getOut();
 
-		jspWriter.write("<div class=\"sheet-footer ");
+		jspWriter.write("<div class=\"");
 
 		String cssClass = _cssClass;
 

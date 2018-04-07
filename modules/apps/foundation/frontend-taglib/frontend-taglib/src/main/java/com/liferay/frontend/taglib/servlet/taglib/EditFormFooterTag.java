@@ -16,8 +16,29 @@ package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.taglib.util.IncludeTag;
 
+import javax.servlet.jsp.JspWriter;
+
 /**
  * @author Eudaldo Alonso
  */
 public class EditFormFooterTag extends IncludeTag {
+
+	@Override
+	protected int processEndTag() throws Exception {
+		JspWriter jspWriter = pageContext.getOut();
+
+		jspWriter.write("</div>");
+
+		return EVAL_PAGE;
+	}
+
+	@Override
+	protected int processStartTag() throws Exception {
+		JspWriter jspWriter = pageContext.getOut();
+
+		jspWriter.write("<div class=\"sheet-footer\">");
+
+		return EVAL_BODY_INCLUDE;
+	}
+
 }

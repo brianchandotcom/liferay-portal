@@ -14,10 +14,56 @@
 
 package com.liferay.frontend.taglib.servlet.taglib;
 
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
+
+import javax.servlet.jsp.JspWriter;
 
 /**
  * @author Eudaldo Alonso
  */
 public class EditFormContentTag extends IncludeTag {
+
+	@Override
+	protected int processEndTag() throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (!themeDisplay.isStatePopUp()) {
+			return EVAL_BODY_INCLUDE;
+		}
+
+		JspWriter jspWriter = pageContext.getOut();
+
+		jspWriter.write("</div>");
+
+		return EVAL_BODY_INCLUDE;
+	}
+
+	@Override
+	protected int processStartTag() throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (!themeDisplay.isStatePopUp()) {
+			return EVAL_BODY_INCLUDE;
+		}
+
+		EditFormTag editFormTag = (EditFormTag)findAncestorWithClass(
+			this, EditFormTag.class);
+
+		JspWriter jspWriter = pageContext.getOut();
+
+		String cssClass = "sheet";
+
+		if ((editFormTag != null) && !editFormTag.isFluid()) {
+			cssClass = "sheet sheet-lg";
+		}
+
+		jspWriter.write("<div class=\"" + cssClass + ">");
+
+		return EVAL_BODY_INCLUDE;
+	}
+
 }

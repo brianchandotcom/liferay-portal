@@ -138,11 +138,8 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 		Collections.sort(testClassFiles);
 	}
 
-	private List<PathMatcher> _getPluginNamesPathMatchers(
-		String basePropertyName) {
-
-		String pluginNamesRelativeGlobs = _getPluginNamesPropertyValue(
-			basePropertyName);
+	private List<PathMatcher> _getPluginNamesPathMatchers(String propertyName) {
+		String pluginNamesRelativeGlobs = getFirstPropertyValue(propertyName);
 
 		if ((pluginNamesRelativeGlobs == null) ||
 			pluginNamesRelativeGlobs.isEmpty()) {
@@ -170,36 +167,6 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		return pathMatchers;
-	}
-
-	private String _getPluginNamesPropertyValue(String basePropertyName) {
-		List<String> propertyNames = new ArrayList<>();
-
-		if (testSuiteName != null) {
-			propertyNames.add(
-				JenkinsResultsParserUtil.combine(
-					basePropertyName, "[", batchName, "][", testSuiteName,
-					"]"));
-
-			propertyNames.add(
-				getWildcardPropertyName(
-					portalTestProperties, basePropertyName, testSuiteName));
-
-			propertyNames.add(
-				JenkinsResultsParserUtil.combine(
-					basePropertyName, "[", testSuiteName, "]"));
-		}
-
-		propertyNames.add(
-			getWildcardPropertyName(portalTestProperties, basePropertyName));
-
-		propertyNames.add(
-			JenkinsResultsParserUtil.combine(
-				basePropertyName, "[", batchName, "]"));
-
-		propertyNames.add(basePropertyName);
-
-		return getFirstPropertyValue(portalTestProperties, propertyNames);
 	}
 
 	private final GitWorkingDirectory _pluginGitWorkingDirectory;

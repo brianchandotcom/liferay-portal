@@ -381,7 +381,7 @@ public class NavItem implements Serializable {
 		StringBundler sb = new StringBundler(5);
 
 		sb.append(_themeDisplay.getPathImage());
-		sb.append("/layout_icon?img_id");
+		sb.append("/layout_icon?img_id=");
 		sb.append(_layout.getIconImageId());
 		sb.append("&t=");
 		sb.append(WebServerServletTokenUtil.getToken(_layout.getIconImageId()));

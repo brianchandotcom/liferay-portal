@@ -7,17 +7,6 @@ AUI.add(
 		var Lang = A.Lang;
 		var UA = A.UA;
 
-		var contentFilter = new CKEDITOR.filter(
-			{
-				$1: {
-					attributes: ['alt', 'aria-*', 'height', 'href', 'src', 'width'],
-					classes: false,
-					elements: CKEDITOR.dtd,
-					styles: false
-				}
-			}
-		);
-
 		var KEY_ENTER = 13;
 
 		var LiferayAlloyEditor = A.Component.create(
@@ -100,7 +89,6 @@ AUI.add(
 
 						nativeEditor.on('error', instance._onError, instance);
 						nativeEditor.on('instanceReady', instance._onInstanceReady, instance);
-						nativeEditor.on('paste', instance._onPaste, instance);
 
 						if (instance.get('onBlurMethod')) {
 							nativeEditor.on('blur', instance._onBlur, instance);
@@ -407,18 +395,6 @@ AUI.add(
 						if (event.data.keyCode === KEY_ENTER) {
 							event.cancel();
 						}
-					},
-
-					_onPaste: function(event) {
-						var fragment = CKEDITOR.htmlParser.fragment.fromHtml(event.data.dataValue);
-
-						var writer = new CKEDITOR.htmlParser.basicWriter();
-
-						contentFilter.applyTo(fragment);
-
-						fragment.writeHtml(writer);
-
-						event.data.dataValue = writer.getHtml();
 					},
 
 					_validateEditorMethod: function(method) {

@@ -1265,8 +1265,8 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateSoyPortletCustomClass71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"soy-portlet", "foo", "--class-name",
-			"MySPR", "--liferayVersion", "7.1");
+			"soy-portlet", "foo", "--class-name", "MySPR", "--liferayVersion",
+			"7.1");
 
 		_testContains(
 			gradleProjectDir,
@@ -2352,7 +2352,6 @@ public class ProjectTemplatesTest {
 			projectTemplatesArgs, archetyperDestinationDir);
 
 		File archetyperProjectDir = new File(archetyperDestinationDir, name);
-		
 
 		FileUtil.deleteFiles(archetyperDestinationDir.toPath(), "build.gradle");
 

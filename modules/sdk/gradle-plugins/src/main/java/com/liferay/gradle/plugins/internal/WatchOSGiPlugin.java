@@ -29,9 +29,12 @@ import java.util.concurrent.Callable;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.Task;
+import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.Sync;
 import org.gradle.api.tasks.TaskOutputs;
@@ -167,6 +170,20 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 					}
 
 				}));
+
+		executeBndTask.onlyIf(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					Configuration configuration = GradleUtil.getConfiguration(
+						project,
+						LiferayOSGiPlugin.COMPILE_INCLUDE_CONFIGURATION_NAME);
+
+					return !configuration.isEmpty();
+				}
+
+			});
 
 		SourceSet sourceSet = GradleUtil.getSourceSet(
 			project, SourceSet.MAIN_SOURCE_SET_NAME);

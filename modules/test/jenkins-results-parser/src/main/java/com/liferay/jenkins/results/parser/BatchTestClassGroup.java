@@ -67,16 +67,41 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		_setTestRelevantChanges();
 	}
 
-	protected String getFirstPropertyValue(
-		Properties properties, List<String> propertyNames) {
+	protected String getFirstPropertyValue(String basePropertyName) {
+		List<String> propertyNames = new ArrayList<>();
+
+		if (testSuiteName != null) {
+			propertyNames.add(
+				JenkinsResultsParserUtil.combine(
+					basePropertyName, "[", batchName, "][", testSuiteName,
+					"]"));
+
+			propertyNames.add(
+				getWildcardPropertyName(
+					portalTestProperties, basePropertyName, testSuiteName));
+
+			propertyNames.add(
+				JenkinsResultsParserUtil.combine(
+					basePropertyName, "[", testSuiteName, "]"));
+		}
+
+		propertyNames.add(
+			JenkinsResultsParserUtil.combine(
+				basePropertyName, "[", batchName, "]"));
+
+		propertyNames.add(
+			getWildcardPropertyName(portalTestProperties, basePropertyName));
+
+		propertyNames.add(basePropertyName);
 
 		for (String propertyName : propertyNames) {
 			if (propertyName == null) {
 				continue;
 			}
 
-			if (properties.containsKey(propertyName)) {
-				String propertyValue = properties.getProperty(propertyName);
+			if (portalTestProperties.containsKey(propertyName)) {
+				String propertyValue = portalTestProperties.getProperty(
+					propertyName);
 
 				if ((propertyValue != null) && !propertyValue.isEmpty()) {
 					return propertyValue;
@@ -179,50 +204,11 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	private String _getAxisMaxSizePropertyValue() {
-		List<String> propertyNames = new ArrayList<>();
-
-		if (testSuiteName != null) {
-			propertyNames.add(
-				JenkinsResultsParserUtil.combine(
-					"test.batch.axis.max.size[", batchName, "][", testSuiteName,
-					"]"));
-
-			propertyNames.add(
-				getWildcardPropertyName(
-					portalTestProperties, "test.batch.axis.max.size",
-					testSuiteName));
-
-			propertyNames.add(
-				JenkinsResultsParserUtil.combine(
-					"test.batch.axis.max.size[", testSuiteName, "]"));
-		}
-
-		propertyNames.add(
-			JenkinsResultsParserUtil.combine(
-				"test.batch.axis.max.size[", batchName, "]"));
-
-		propertyNames.add(
-			getWildcardPropertyName(
-				portalTestProperties, "test.batch.axis.max.size"));
-
-		propertyNames.add("test.batch.axis.max.size");
-
-		return getFirstPropertyValue(portalTestProperties, propertyNames);
+		return getFirstPropertyValue("test.batch.axis.max.size");
 	}
 
 	private void _setTestRelevantChanges() {
-		List<String> propertyNames = new ArrayList<>();
-
-		if (testSuiteName != null) {
-			propertyNames.add(
-				JenkinsResultsParserUtil.combine(
-					"test.relevant.changes[", testSuiteName, "]"));
-		}
-
-		propertyNames.add("test.relevant.changes");
-
-		String propertyValue = getFirstPropertyValue(
-			portalTestProperties, propertyNames);
+		String propertyValue = getFirstPropertyValue("test.relevant.changes");
 
 		if (propertyValue != null) {
 			testRelevantChanges = Boolean.parseBoolean(propertyValue);

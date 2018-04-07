@@ -196,71 +196,25 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		new ArrayList<>();
 
 	private String _getTestClassNamesExcludesPropertyValue() {
-		List<String> propertyNames = new ArrayList<>();
+		String propertyValue = getFirstPropertyValue(
+			"test.batch.class.names.excludes");
 
-		if (testSuiteName != null) {
-			propertyNames.add(
-				JenkinsResultsParserUtil.combine(
-					"test.batch.class.names.excludes[", batchName, "][",
-					testSuiteName, "]"));
-
-			propertyNames.add(
-				getWildcardPropertyName(
-					portalTestProperties, "test.batch.class.names.excludes",
-					testSuiteName));
-
-			propertyNames.add(
-				JenkinsResultsParserUtil.combine(
-					"test.batch.class.names.excludes[", testSuiteName, "]"));
+		if (propertyValue != null) {
+			return propertyValue;
 		}
 
-		propertyNames.add(
-			getWildcardPropertyName(
-				portalTestProperties, "test.batch.class.names.excludes"));
-
-		propertyNames.add(
-			JenkinsResultsParserUtil.combine(
-				"test.batch.class.names.excludes[", batchName, "]"));
-
-		propertyNames.add("test.batch.class.names.excludes");
-
-		propertyNames.add("test.class.names.excludes");
-
-		return getFirstPropertyValue(portalTestProperties, propertyNames);
+		return portalTestProperties.getProperty("test.class.names.excludes");
 	}
 
 	private String _getTestClassNamesIncludesPropertyValue() {
-		List<String> propertyNames = new ArrayList<>();
+		String propertyValue = getFirstPropertyValue(
+			"test.batch.class.names.includes");
 
-		if (testSuiteName != null) {
-			propertyNames.add(
-				JenkinsResultsParserUtil.combine(
-					"test.batch.class.names.includes[", batchName, "][",
-					testSuiteName, "]"));
-
-			propertyNames.add(
-				getWildcardPropertyName(
-					portalTestProperties, "test.batch.class.names.includes",
-					testSuiteName));
-
-			propertyNames.add(
-				JenkinsResultsParserUtil.combine(
-					"test.batch.class.names.includes[", testSuiteName, "]"));
+		if (propertyValue != null) {
+			return propertyValue;
 		}
 
-		propertyNames.add(
-			JenkinsResultsParserUtil.combine(
-				"test.batch.class.names.includes[", batchName, "]"));
-
-		propertyNames.add(
-			getWildcardPropertyName(
-				portalTestProperties, "test.batch.class.names.includes"));
-
-		propertyNames.add("test.batch.class.names.includes");
-
-		propertyNames.add("test.class.names.includes");
-
-		return getFirstPropertyValue(portalTestProperties, propertyNames);
+		return portalTestProperties.getProperty("test.class.names.includes");
 	}
 
 	private List<PathMatcher> _getTestClassNamesPathMatchers(

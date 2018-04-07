@@ -17,7 +17,6 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -51,30 +50,7 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	private String _getDefaultTestBatchRunPropertyQuery() {
-		List<String> propertyNames = new ArrayList<>();
-
-		if (testSuiteName != null) {
-			propertyNames.add(
-				getWildcardPropertyName(
-					portalTestProperties, "test.batch.run.property.query",
-					testSuiteName));
-
-			propertyNames.add(
-				JenkinsResultsParserUtil.combine(
-					"test.batch.run.property.query[", testSuiteName, "]"));
-		}
-
-		propertyNames.add(
-			getWildcardPropertyName(
-				portalTestProperties, "test.batch.run.property.query"));
-
-		propertyNames.add(
-			JenkinsResultsParserUtil.combine(
-				"test.batch.run.property.query[", batchName, "]"));
-
-		propertyNames.add("test.batch.run.property.query");
-
-		return getFirstPropertyValue(portalTestProperties, propertyNames);
+		return getFirstPropertyValue("test.batch.run.property.query");
 	}
 
 	private void _setRelevantTestBatchRunPropertyQuery() {

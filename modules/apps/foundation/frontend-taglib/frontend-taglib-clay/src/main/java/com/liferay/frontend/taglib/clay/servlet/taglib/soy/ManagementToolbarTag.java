@@ -70,9 +70,13 @@ public class ManagementToolbarTag extends BaseClayTag {
 			setShowFiltersDoneButton(false);
 		}
 
-		CreationMenu creationMenu = (CreationMenu)context.get("creationMenu");
+		Object creationMenuObj = context.get("creationMenu");
 
-		if (creationMenu != null) {
+		if ((creationMenuObj != null) &&
+			(creationMenuObj instanceof CreationMenu)) {
+
+			CreationMenu creationMenu = (CreationMenu)creationMenuObj;
+
 			DropdownItemList primaryItems = (DropdownItemList)creationMenu.get(
 				"primaryItems");
 

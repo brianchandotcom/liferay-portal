@@ -45,19 +45,6 @@ public class SiteNavigationMenuItemTypeRegistry {
 		return _siteNavigationMenuItemTypes.get(type);
 	}
 
-	public SiteNavigationMenuItemType getSiteNavigationMenuItemTypeByLayoutType(
-		String layoutType) {
-
-		SiteNavigationMenuItemType siteNavigationMenuItemType =
-			_siteNavigationMenuItemTypes.get(layoutType);
-
-		if (siteNavigationMenuItemType != null) {
-			return siteNavigationMenuItemType;
-		}
-
-		return _siteNavigationMenuItemTypes.get("layout");
-	}
-
 	public List<SiteNavigationMenuItemType> getSiteNavigationMenuItemTypes() {
 		return ListUtil.fromMapValues(_siteNavigationMenuItemTypes);
 	}

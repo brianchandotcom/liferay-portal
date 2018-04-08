@@ -15,5 +15,6 @@ dependencies {
 	compileOnly project(":apps:web-experience:layout:layout-taglib")
 	compileOnly project(":apps:web-experience:site-navigation:site-navigation-admin-api")
 	compileOnly project(":apps:web-experience:site-navigation:site-navigation-api")
+	compileOnly project(":apps:web-experience:site-navigation:site-navigation-menu-item-api")
 	compileOnly project(":core:petra:petra-string")
 }

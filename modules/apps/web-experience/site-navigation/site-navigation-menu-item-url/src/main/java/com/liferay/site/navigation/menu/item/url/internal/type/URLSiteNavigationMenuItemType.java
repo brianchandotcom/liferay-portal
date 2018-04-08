@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.site.navigation.constants.SiteNavigationWebKeys;
-import com.liferay.site.navigation.menu.item.url.internal.constants.SiteNavigationMenuItemTypeURLConstants;
+import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 
@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "site.navigation.menu.item.type=" + SiteNavigationMenuItemTypeURLConstants.URL,
+	property = "site.navigation.menu.item.type=" + SiteNavigationMenuItemTypeConstants.URL,
 	service = SiteNavigationMenuItemType.class
 )
 public class URLSiteNavigationMenuItemType
@@ -69,7 +69,7 @@ public class URLSiteNavigationMenuItemType
 
 	@Override
 	public String getType() {
-		return SiteNavigationMenuItemTypeURLConstants.URL;
+		return SiteNavigationMenuItemTypeConstants.URL;
 	}
 
 	@Override

@@ -23,7 +23,7 @@ import javax.servlet.jsp.JspWriter;
 /**
  * @author Eudaldo Alonso
  */
-public class EditFormContentTag extends IncludeTag {
+public class EditFormBodyTag extends IncludeTag {
 
 	@Override
 	protected int processEndTag() throws Exception {

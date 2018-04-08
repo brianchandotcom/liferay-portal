@@ -327,13 +327,13 @@
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>
-		<description>Creates a the form content that offers additional styling.</description>
-		<name>edit-form-content</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.EditFormContentTag</tag-class>
+		<description>Creates an edit form body that offers additional styling.</description>
+		<name>edit-form-body</name>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.EditFormBodyTag</tag-class>
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
-		<description>Creates a the form footer that offers additional styling.</description>
+		<description>Creates an edit form footer that offers additional styling.</description>
 		<name>edit-form-footer</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.EditFormFooterTag</tag-class>
 		<body-content>JSP</body-content>

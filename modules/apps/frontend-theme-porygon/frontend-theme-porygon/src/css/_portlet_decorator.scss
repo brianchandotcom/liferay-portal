@@ -1,0 +1,60 @@
+.portlet-decorate .portlet-content {
+	background: $portlet-topper-color;
+	border: 1px solid #DEEEEE;
+}
+
+.portlet-barebone .portlet-content {
+	padding: 0;
+}
+
+.portlet-trending .portlet-content {
+	background-color: $brand-bg-color-2;
+	font-size: 12px;
+	margin-top: 40px;
+	padding: 50px 20px 20px;
+
+	span {
+		line-height: 2;
+	}
+
+	h3, .h3 {
+		font-weight: 300;
+	}
+
+	.portlet-title-text {
+		border-bottom: 1px solid lighten($main-black-color, 70%);
+		font-size: 16px;
+		font-weight: 300;
+		margin-top: 16px;
+		padding-bottom: 10px;
+		text-transform: uppercase;
+
+		@include sm {
+			margin-top: 30px;
+		}
+	}
+
+	.table-bordered > tbody > tr > td {
+		background-color: $brand-bg-color-2;
+		border-color: $brand-bg-color-2;
+	}
+
+	.user-name {
+		text-decoration: none;
+	}
+
+	.user-icon-default {
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	.user-icon-porygon {
+		color: #FFF;
+		margin: -74px auto 0;
+		position: relative;
+
+		@include sm {
+			margin-top: -84px;
+		}
+	}
+}

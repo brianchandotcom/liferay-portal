@@ -1,0 +1,28 @@
+.navbar-inverse.navbar-porygon {
+	background-color: $main-black-color;
+	border-width: 0;
+	margin-bottom: 0;
+
+	.navbar-nav {
+		li {
+			& > a {
+				font-size: 12px;
+				text-transform: uppercase;
+
+				&:hover, &:focus, &.active, &.open {
+					color: #787878;
+				}
+			}
+		}
+
+		& > .open > a, & > .active > a {
+			color: #787878;
+		}
+	}
+
+	section, .navbar {
+		@include sm {
+			margin: 0;
+		}
+	}
+}

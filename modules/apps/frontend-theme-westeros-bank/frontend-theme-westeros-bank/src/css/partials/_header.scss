@@ -1,0 +1,272 @@
+.navbar-recursive {
+	.navbar-toggle {
+		margin: 0 12px;
+		padding: 12px;
+	}
+
+	.navbar-inverse {
+		background: $main-black;
+		border-width: 0;
+		min-height: 28px;
+
+		.navbar-nav > li > a {
+			color: #858E93;
+			font-size: 12px;
+			padding: 6px 15px;
+			text-transform: uppercase;
+
+			&:hover, &:focus {
+				color: $brand-color-3;
+			}
+		}
+	}
+
+	.icon-user {
+		display: none;
+	}
+
+	.portlet-user-personal-bar {
+		display: inline-block;
+	}
+
+	.portlet:hover {
+		background: $main-black;
+		z-index: 1050;
+	}
+}
+
+.signed-out .user-area .navbar-nav {
+	@include sm {
+		margin-top: 6px;
+	}
+}
+
+.user-avatar-image {
+	display: inline-block;
+	margin-right: 5px;
+	vertical-align: middle;
+}
+
+.user-area {
+	a {
+		color: #858E93;
+		display: block;
+		font-size: 12px;
+		padding: 6px 24px 6px 0;
+		text-transform: uppercase;
+
+		@include sm {
+			padding: 6px;
+		}
+
+		&:hover, &:focus {
+			color: $brand-color-3;
+			text-decoration: initial;
+		}
+
+		.icon-login {
+			@include sm {
+				padding-top: 3px;
+			}
+		}
+	}
+
+	.lexicon-icon {
+		fill: #858E93;
+	}
+}
+
+#headerTopBar {
+	font-weight: bold;
+	min-height: 44px;
+
+	.navbar, .portlet {
+		margin-bottom: 0;
+		min-height: 0;
+	}
+}
+
+#banner {
+	padding-bottom: 10px;
+	position: relative;
+
+	a:active, a:hover, a:focus {
+		text-decoration: none;
+	}
+
+	.navbar-toggle {
+		margin: 12px 0;
+	}
+
+	#heading {
+		@include sm {
+			margin-left: 12px;
+		}
+
+		.site-name {
+			font-size: 150%;
+			letter-spacing: 2px;
+			margin-left: 20px;
+			vertical-align: middle;
+		}
+	}
+
+	#navigation {
+		clear: both;
+
+		@include sm {
+			padding-top: 10px;
+			width: 100%;
+		}
+
+		.nav > li {
+			& > a {
+				border-top: 1px solid #EDEDED;
+				color: $default-text-dark;
+				text-align: left;
+
+				i {
+					color: #969696;
+				}
+
+				@include sm {
+					margin-right: 20px;
+					padding: 12px 24px 12px 0;
+				}
+			}
+
+			.lfr-nav-child-toggle {
+				float: right;
+
+				@include sm {
+					position: absolute;
+					right: 12px;
+					top: 12px;
+				}
+			}
+
+			&:last-child > a {
+				margin-right: 0;
+			}
+
+			&:hover > a, &.hover > a, &.active > a {
+				background-color: none;
+				color: $main-black;
+			}
+
+			&.lfr-nav-hover .dropdown-menu {
+				display: block;
+				left: 0;
+				margin-top: 0;
+				right: 0;
+
+				.active > a {
+					font-weight: bold;
+				}
+			}
+		}
+	}
+
+	.child-menu.dropdown-menu {
+		background-color: $main-bg-color;
+		border-radius: 0;
+		box-shadow: none;
+		margin-top: 0;
+	}
+
+	.dropdown-menu > li > a {
+		color: #969696;
+
+		&:focus, &:hover {
+			background-color: $brand-bg-color-3;
+			color: $main-black;
+		}
+	}
+
+	.navbar, .portlet {
+		margin-bottom: 0;
+	}
+
+	.nav-header-global .navbar-nav {
+		margin: 0;
+
+		@include sm {
+			margin-left: 30px;
+		}
+
+		@include media-query($breakpoint_tablet, null) {
+			margin-left: 60px;
+		}
+
+		& > li {
+			& > a {
+				margin: 0 15px;
+				text-transform: uppercase;
+
+				@include sm {
+					font-size: 12px;
+					margin: 16px 15px;
+					padding: 0;
+				}
+			}
+
+			&.active, &.open {
+				a {
+					border-bottom: 1px solid $brand-color-1;
+					color: $brand-color-1;
+				}
+			}
+		}
+	}
+
+	.navbar-form {
+		@include media-query(null, $screen-xs-max) {
+			padding: 4px;
+		}
+
+		@include sm {
+			margin-left: 30px;
+		}
+
+		.portlet-content {
+			position: relative;
+		}
+
+		.form-control {
+			border-bottom-width: 0;
+			margin-top: 2px;
+		}
+
+		.form-group-inline {
+			@include media-query(null, $screen-xs-max) {
+				display: block;
+			}
+		}
+
+		.search-input {
+			font-size: 16px;
+			height: auto;
+			padding-right: 40px;
+
+			@include media-query($breakpoint_tablet, null) {
+				max-width: 290px;
+			}
+
+			@include media-query(sm, $screen-sm-max) {
+				max-width: 200px;
+			}
+		}
+
+		.search-select {
+			margin-right: 40px;
+			padding-right: 20px;
+		}
+
+		.field-wrapper {
+			margin-bottom: 0;
+			position: absolute;
+			right: 0;
+			top: 2px;
+		}
+	}
+}

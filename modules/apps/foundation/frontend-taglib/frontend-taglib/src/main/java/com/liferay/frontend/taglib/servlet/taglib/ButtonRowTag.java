@@ -70,15 +70,15 @@ public class ButtonRowTag extends IncludeTag {
 	protected int processStartTag() throws Exception {
 		JspWriter jspWriter = pageContext.getOut();
 
-		jspWriter.write("<div class=\"");
+		jspWriter.write("<div ");
 
 		String cssClass = _cssClass;
 
 		if (cssClass != null) {
+			jspWriter.write("class=\"");
 			jspWriter.write(cssClass);
+			jspWriter.write("\" ");
 		}
-
-		jspWriter.write("\" ");
 
 		String id = _id;
 

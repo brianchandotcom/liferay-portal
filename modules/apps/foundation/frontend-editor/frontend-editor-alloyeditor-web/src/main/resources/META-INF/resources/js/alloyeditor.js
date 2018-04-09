@@ -5,9 +5,9 @@ AUI.add(
 	function(A) {
 		var Do = A.Do;
 		var Lang = A.Lang;
-		var UA = A.UA;
 
 		var KEY_ENTER = 13;
+		var UA = A.UA;
 
 		var LiferayAlloyEditor = A.Component.create(
 			{

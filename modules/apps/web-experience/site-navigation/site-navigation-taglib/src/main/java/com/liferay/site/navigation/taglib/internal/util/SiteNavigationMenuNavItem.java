@@ -14,6 +14,8 @@
 
 package com.liferay.site.navigation.taglib.internal.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
@@ -71,15 +73,78 @@ public class SiteNavigationMenuNavItem extends NavItem {
 	}
 
 	@Override
+	public Layout getLayout() {
+		return _siteNavigationMenuItemType.getLayout(_siteNavigationMenuItem);
+	}
+
+	@Override
+	public long getLayoutId() {
+		return _siteNavigationMenuItem.getSiteNavigationMenuItemId();
+	}
+
+	@Override
 	public String getRegularURL() throws Exception {
 		return _siteNavigationMenuItemType.getRegularURL(
 			_request, _siteNavigationMenuItem);
 	}
 
 	@Override
+	public String getResetLayoutURL() throws Exception {
+		return _siteNavigationMenuItemType.getResetLayoutURL(
+			_request, _siteNavigationMenuItem);
+	}
+
+	@Override
+	public String getResetMaxStateURL() throws Exception {
+		return _siteNavigationMenuItemType.getResetMaxStateURL(
+			_request, _siteNavigationMenuItem);
+	}
+
+	@Override
+	public String getTarget() {
+		return _siteNavigationMenuItemType.getTarget(_siteNavigationMenuItem);
+	}
+
+	@Override
 	public String getTitle() {
 		return _siteNavigationMenuItemType.getTitle(
 			_siteNavigationMenuItem, _themeDisplay.getLocale());
+	}
+
+	@Override
+	public String getUnescapedName() {
+		return _siteNavigationMenuItemType.getUnescapedName(
+			_themeDisplay, _siteNavigationMenuItem);
+	}
+
+	@Override
+	public int hashCode() {
+		return _siteNavigationMenuItem.hashCode();
+	}
+
+	@Override
+	public String iconURL() {
+		return _siteNavigationMenuItemType.iconURL(
+			_themeDisplay, _siteNavigationMenuItem);
+	}
+
+	@Override
+	public boolean isBrowsable() {
+		return _siteNavigationMenuItemType.isBrowsable(_siteNavigationMenuItem);
+	}
+
+	@Override
+	public boolean isChildSelected() throws PortalException {
+		return _siteNavigationMenuItemType.isChildSelected(
+			_themeDisplay.isTilesSelectable(), _siteNavigationMenuItem,
+			_themeDisplay.getLayout());
+	}
+
+	@Override
+	public boolean isSelected() throws Exception {
+		return _siteNavigationMenuItemType.isSelected(
+			_themeDisplay.isTilesSelectable(), _siteNavigationMenuItem,
+			_themeDisplay.getLayout());
 	}
 
 	private final HttpServletRequest _request;

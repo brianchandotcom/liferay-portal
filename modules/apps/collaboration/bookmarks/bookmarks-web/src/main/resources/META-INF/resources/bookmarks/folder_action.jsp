@@ -132,11 +132,12 @@ if (row == null) {
 
 	<%
 	boolean bookmarksAdmin = portletName.equals(BookmarksPortletKeys.BOOKMARKS_ADMIN);
+	boolean hasExportImportPortletInfoPermission = GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
 	boolean inStagingGroup = stagingGroupHelper.isStagingGroup(scopeGroupId);
 	boolean portletStaged = stagingGroupHelper.isStagedPortlet(scopeGroupId, BookmarksPortletKeys.BOOKMARKS);
 	%>
 
-	<c:if test="<%= (folder != null) && bookmarksAdmin && inStagingGroup && portletStaged %>">
+	<c:if test="<%= (folder != null) && hasExportImportPortletInfoPermission && bookmarksAdmin && inStagingGroup && portletStaged %>">
 		<portlet:actionURL name="/bookmarks/publish_folder" var="publishFolderURL">
 			<portlet:param name="folderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
 		</portlet:actionURL>

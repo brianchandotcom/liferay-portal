@@ -17,6 +17,7 @@ package com.liferay.portal.template.soy.internal;
 import com.google.template.soy.data.LoggingAdvisingAppendable;
 import com.google.template.soy.data.SoyAbstractValue;
 import com.google.template.soy.data.SoyData;
+import com.google.template.soy.data.SoyDataException;
 import com.google.template.soy.data.SoyListData;
 import com.google.template.soy.data.SoyMapData;
 import com.google.template.soy.data.SoyRecord;
@@ -37,7 +38,6 @@ import java.io.IOException;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Iterator;
@@ -268,8 +268,8 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 
 		Class<?> clazz = object.getClass();
 
-		for (Field field : clazz.getFields()) {
-			try {
+		try {
+			for (Field field : clazz.getFields()) {
 				Object fieldValue = field.get(object);
 
 				if (fieldValue == null) {
@@ -283,23 +283,17 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 					soyMapData.put(field.getName(), fieldValue);
 				}
 			}
-			catch (IllegalAccessException | IllegalArgumentException e) {
-				System.err.printf(
-					"==========> ERROR on %s: %s", field, e.getMessage());
-			}
-		}
 
-		for (Method method : clazz.getMethods()) {
-			Class<?>[] parameterTypes = method.getParameterTypes();
-			Class<?> returnType = method.getReturnType();
-			Class<?> declaringClass = method.getDeclaringClass();
+			for (Method method : clazz.getMethods()) {
+				Class<?>[] parameterTypes = method.getParameterTypes();
+				Class<?> returnType = method.getReturnType();
+				Class<?> declaringClass = method.getDeclaringClass();
 
-			if ((parameterTypes.length == 0) &&
-				!returnType.equals(Void.class) &&
-				!declaringClass.equals(Object.class) &&
-				!declaringClass.equals(Annotation.class)) {
+				if ((parameterTypes.length == 0) &&
+					!returnType.equals(Void.class) &&
+					!declaringClass.equals(Object.class) &&
+					!declaringClass.equals(Annotation.class)) {
 
-				try {
 					Object methodValue = method.invoke(object);
 
 					if (methodValue == null) {
@@ -314,13 +308,13 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 							_propertyName(method.getName()), methodValue);
 					}
 				}
-				catch (IllegalAccessException | IllegalArgumentException |
-					   InvocationTargetException e) {
-
-					System.err.printf(
-						"==========> ERROR on %s: %s", method, e.getMessage());
-				}
 			}
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new SoyDataException(e.getMessage(), e);
 		}
 
 		return soyMapData;

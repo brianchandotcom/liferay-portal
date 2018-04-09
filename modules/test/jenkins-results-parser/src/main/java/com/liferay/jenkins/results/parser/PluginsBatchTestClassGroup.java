@@ -49,7 +49,7 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 					"release.properties"));
 
 		try {
-			_pluginGitWorkingDirectory = new GitWorkingDirectory(
+			_pluginGitWorkingDirectory = new PluginsGitWorkingDirectory(
 				gitWorkingDirectory.getUpstreamBranchName(),
 				portalReleaseProperties.getProperty("lp.plugins.dir"));
 
@@ -169,7 +169,7 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 		return pathMatchers;
 	}
 
-	private final GitWorkingDirectory _pluginGitWorkingDirectory;
+	private final PluginsGitWorkingDirectory _pluginGitWorkingDirectory;
 	private final List<PathMatcher> _pluginNamesExcludePathMatchers;
 	private final List<PathMatcher> _pluginNamesIncludePathMatchers;
 

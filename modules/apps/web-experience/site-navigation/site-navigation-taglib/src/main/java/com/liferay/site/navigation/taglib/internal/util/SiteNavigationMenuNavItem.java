@@ -16,7 +16,6 @@ package com.liferay.site.navigation.taglib.internal.util;
 
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServiceUtil;
 import com.liferay.site.navigation.taglib.internal.servlet.ServletContextUtil;
@@ -81,15 +80,6 @@ public class SiteNavigationMenuNavItem extends NavItem {
 	public String getTitle() {
 		return _siteNavigationMenuItemType.getTitle(
 			_siteNavigationMenuItem, _themeDisplay.getLocale());
-	}
-
-	@Override
-	public boolean isInNavigation(List<NavItem> navItems) {
-		if (ListUtil.isEmpty(navItems)) {
-			return true;
-		}
-
-		return super.isInNavigation(navItems);
 	}
 
 	private final HttpServletRequest _request;

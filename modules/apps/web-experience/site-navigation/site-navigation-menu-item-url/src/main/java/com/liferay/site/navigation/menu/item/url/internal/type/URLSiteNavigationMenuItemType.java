@@ -15,7 +15,6 @@
 package com.liferay.site.navigation.menu.item.url.internal.type;
 
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.site.navigation.constants.SiteNavigationWebKeys;
@@ -56,6 +55,19 @@ public class URLSiteNavigationMenuItemType
 	}
 
 	@Override
+	public String getRegularURL(
+		HttpServletRequest request,
+		SiteNavigationMenuItem siteNavigationMenuItem) {
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.fastLoad(
+			siteNavigationMenuItem.getTypeSettings());
+
+		return typeSettingsProperties.get("url");
+	}
+
+	@Override
 	public String getTitle(
 		SiteNavigationMenuItem siteNavigationMenuItem, Locale locale) {
 
@@ -70,20 +82,6 @@ public class URLSiteNavigationMenuItemType
 	@Override
 	public String getType() {
 		return SiteNavigationMenuItemTypeConstants.URL;
-	}
-
-	@Override
-	public String getURL(
-			HttpServletRequest request,
-			SiteNavigationMenuItem siteNavigationMenuItem)
-		throws PortalException {
-
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-
-		typeSettingsProperties.fastLoad(
-			siteNavigationMenuItem.getTypeSettings());
-
-		return typeSettingsProperties.get("url");
 	}
 
 	@Override

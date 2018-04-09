@@ -317,9 +317,6 @@ public class SourceFormatter {
 			Thread.sleep(20);
 		}
 
-		AlloyMVCCheckstyleUtil.cleanUpSuppressionsFiles(
-			_sourceFormatterSuppressionsFiles);
-
 		if (_sourceFormatterArgs.isShowDebugInformation()) {
 			DebugUtil.printSourceFormatterInformation();
 		}
@@ -557,6 +554,9 @@ public class SourceFormatter {
 
 		_sourceFormatterSuppressions = SuppressionsLoader.loadSuppressions(
 			_sourceFormatterArgs.getBaseDirName(), suppressionsFiles);
+
+		AlloyMVCCheckstyleUtil.cleanUpSuppressionsFiles(
+			_sourceFormatterSuppressionsFiles);
 
 		_sourceFormatterConfiguration = ConfigurationLoader.loadConfiguration(
 			"sourcechecks.xml");

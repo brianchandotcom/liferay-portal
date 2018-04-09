@@ -320,26 +320,6 @@ public class CommerceUtil {
 		return orderByComparator;
 	}
 
-	public static OrderByComparator<CommerceTaxCategoryRel>
-		getCommerceTaxCategoryRelOrderByComparator(
-			String orderByCol, String orderByType) {
-
-		boolean orderByAsc = false;
-
-		if (orderByType.equals("asc")) {
-			orderByAsc = true;
-		}
-
-		OrderByComparator<CommerceTaxCategoryRel> orderByComparator = null;
-
-		if (orderByCol.equals("create-date")) {
-			orderByComparator = new CommerceTaxCategoryRelCreateDateComparator(
-				orderByAsc);
-		}
-
-		return orderByComparator;
-	}
-
 	public static OrderByComparator<CommerceTierPriceEntry>
 		getCommerceTierPriceEntryOrderByComparator(
 			String orderByCol, String orderByType) {

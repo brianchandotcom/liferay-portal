@@ -4046,6 +4046,12 @@ version 2.1.7.
 - [LPS-79385]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 1.0.190.
 
+## 3.10.13 - 2018-04-09
+
+### Changed
+- [LPS-74171]: Update the default value of the
+`liferay.appServers.tomcat.version` property to `9.0.6`.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

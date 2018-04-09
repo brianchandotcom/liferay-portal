@@ -139,16 +139,17 @@ public class ECBExchangeRateProvider implements ExchangeRateProvider {
 	}
 
 	private URL _getURL() throws Exception {
-		if (_url.startsWith("http")) {
-			return new URL(_url);
-		}
-		else {
-			Class<?> clazz = getClass();
+		Class<?> clazz = getClass();
 
-			ClassLoader classLoader = clazz.getClassLoader();
+		ClassLoader classLoader = clazz.getClassLoader();
 
-			return classLoader.getResource(_url);
+		URL url = classLoader.getResource(_url);
+
+		if (url == null) {
+			url = new URL(_url);
 		}
+
+		return url;
 	}
 
 	@Reference

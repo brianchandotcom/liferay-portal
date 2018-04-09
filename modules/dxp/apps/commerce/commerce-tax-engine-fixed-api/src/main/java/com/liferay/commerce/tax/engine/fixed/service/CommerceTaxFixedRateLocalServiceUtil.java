@@ -16,7 +16,8 @@ package com.liferay.commerce.tax.engine.fixed.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -97,14 +98,16 @@ public class CommerceTaxFixedRateLocalServiceUtil {
 		return getService().deleteCommerceTaxFixedRate(commerceTaxFixedRateId);
 	}
 
-	public static void deleteCommerceTaxFixedRates(long commerceTaxCategoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteCommerceTaxFixedRates(commerceTaxCategoryId);
+	public static void deleteCommerceTaxFixedRateByCommerceTaxCategoryId(
+		long commerceTaxCategoryId) {
+		getService()
+			.deleteCommerceTaxFixedRateByCommerceTaxCategoryId(commerceTaxCategoryId);
 	}
 
-	public static void deleteCommerceTaxMethodFixedRates(
+	public static void deleteCommerceTaxFixedRateByCommerceTaxMethodId(
 		long commerceTaxMethodId) {
-		getService().deleteCommerceTaxMethodFixedRates(commerceTaxMethodId);
+		getService()
+			.deleteCommerceTaxFixedRateByCommerceTaxMethodId(commerceTaxMethodId);
 	}
 
 	/**
@@ -199,14 +202,16 @@ public class CommerceTaxFixedRateLocalServiceUtil {
 		return getService().fetchCommerceTaxFixedRate(commerceTaxFixedRateId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
+	public static com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate fetchCommerceTaxFixedRateByCTC_CTM(
+		long commerceTaxCategoryId, long commerceTaxMethodId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .fetchCommerceTaxFixedRateByCTC_CTM(commerceTaxCategoryId,
+			commerceTaxMethodId);
 	}
 
-	public static java.util.List<com.liferay.commerce.model.CommerceTaxCategory> getAvailableCommerceTaxCategories(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getAvailableCommerceTaxCategories(groupId);
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
 	}
 
 	/**
@@ -220,6 +225,14 @@ public class CommerceTaxFixedRateLocalServiceUtil {
 		long commerceTaxFixedRateId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCommerceTaxFixedRate(commerceTaxFixedRateId);
+	}
+
+	public static com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate getCommerceTaxFixedRateByCTC_CTM(
+		long commerceTaxCategoryId, long commerceTaxMethodId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCommerceTaxFixedRateByCTC_CTM(commerceTaxCategoryId,
+			commerceTaxMethodId);
 	}
 
 	/**
@@ -236,12 +249,6 @@ public class CommerceTaxFixedRateLocalServiceUtil {
 	public static java.util.List<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate> getCommerceTaxFixedRates(
 		int start, int end) {
 		return getService().getCommerceTaxFixedRates(start, end);
-	}
-
-	public static java.util.List<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate> getCommerceTaxFixedRates(
-		long commerceTaxMethodId, int start, int end) {
-		return getService()
-				   .getCommerceTaxFixedRates(commerceTaxMethodId, start, end);
 	}
 
 	public static java.util.List<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate> getCommerceTaxFixedRates(
@@ -306,6 +313,17 @@ public class CommerceTaxFixedRateLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CommerceTaxFixedRateLocalService, CommerceTaxFixedRateLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(CommerceTaxFixedRateLocalService.class);
+	private static ServiceTracker<CommerceTaxFixedRateLocalService, CommerceTaxFixedRateLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CommerceTaxFixedRateLocalService.class);
+
+		ServiceTracker<CommerceTaxFixedRateLocalService, CommerceTaxFixedRateLocalService> serviceTracker =
+			new ServiceTracker<CommerceTaxFixedRateLocalService, CommerceTaxFixedRateLocalService>(bundle.getBundleContext(),
+				CommerceTaxFixedRateLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

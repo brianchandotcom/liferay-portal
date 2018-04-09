@@ -51,35 +51,34 @@ public class CommerceTaxFixedRateServiceWrapper
 
 	@Override
 	public com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate fetchCommerceTaxFixedRate(
-		long commerceTaxFixedRateId) {
+		long commerceTaxFixedRateId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceTaxFixedRateService.fetchCommerceTaxFixedRate(commerceTaxFixedRateId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.commerce.model.CommerceTaxCategory> getAvailableCommerceTaxCategories(
-		long groupId)
+	public com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate fetchCommerceTaxFixedRateByCTC_CTM(
+		long commerceTaxCategoryId, long commerceTaxMethodId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceTaxFixedRateService.getAvailableCommerceTaxCategories(groupId);
+		return _commerceTaxFixedRateService.fetchCommerceTaxFixedRateByCTC_CTM(commerceTaxCategoryId,
+			commerceTaxMethodId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate> getCommerceTaxFixedRates(
-		long commerceTaxMethodId, int start, int end) {
-		return _commerceTaxFixedRateService.getCommerceTaxFixedRates(commerceTaxMethodId,
-			start, end);
+		long groupId, long commerceTaxMethodId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceTaxFixedRateService.getCommerceTaxFixedRates(groupId,
+			commerceTaxMethodId, start, end, orderByComparator);
 	}
 
 	@Override
-	public java.util.List<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate> getCommerceTaxFixedRates(
-		long commerceTaxMethodId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate> orderByComparator) {
-		return _commerceTaxFixedRateService.getCommerceTaxFixedRates(commerceTaxMethodId,
-			start, end, orderByComparator);
-	}
-
-	@Override
-	public int getCommerceTaxFixedRatesCount(long commerceTaxMethodId) {
-		return _commerceTaxFixedRateService.getCommerceTaxFixedRatesCount(commerceTaxMethodId);
+	public int getCommerceTaxFixedRatesCount(long groupId,
+		long commerceTaxMethodId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceTaxFixedRateService.getCommerceTaxFixedRatesCount(groupId,
+			commerceTaxMethodId);
 	}
 
 	/**

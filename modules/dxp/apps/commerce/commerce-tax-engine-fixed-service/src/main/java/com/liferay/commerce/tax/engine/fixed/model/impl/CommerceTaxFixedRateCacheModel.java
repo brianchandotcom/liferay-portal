@@ -81,10 +81,10 @@ public class CommerceTaxFixedRateCacheModel implements CacheModel<CommerceTaxFix
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", commerceTaxMethodId=");
-		sb.append(commerceTaxMethodId);
 		sb.append(", commerceTaxCategoryId=");
 		sb.append(commerceTaxCategoryId);
+		sb.append(", commerceTaxMethodId=");
+		sb.append(commerceTaxMethodId);
 		sb.append(", rate=");
 		sb.append(rate);
 		sb.append("}");
@@ -122,8 +122,8 @@ public class CommerceTaxFixedRateCacheModel implements CacheModel<CommerceTaxFix
 			commerceTaxFixedRateImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		commerceTaxFixedRateImpl.setCommerceTaxMethodId(commerceTaxMethodId);
 		commerceTaxFixedRateImpl.setCommerceTaxCategoryId(commerceTaxCategoryId);
+		commerceTaxFixedRateImpl.setCommerceTaxMethodId(commerceTaxMethodId);
 		commerceTaxFixedRateImpl.setRate(rate);
 
 		commerceTaxFixedRateImpl.resetOriginalValues();
@@ -144,9 +144,9 @@ public class CommerceTaxFixedRateCacheModel implements CacheModel<CommerceTaxFix
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
-		commerceTaxMethodId = objectInput.readLong();
-
 		commerceTaxCategoryId = objectInput.readLong();
+
+		commerceTaxMethodId = objectInput.readLong();
 
 		rate = objectInput.readDouble();
 	}
@@ -172,9 +172,9 @@ public class CommerceTaxFixedRateCacheModel implements CacheModel<CommerceTaxFix
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		objectOutput.writeLong(commerceTaxMethodId);
-
 		objectOutput.writeLong(commerceTaxCategoryId);
+
+		objectOutput.writeLong(commerceTaxMethodId);
 
 		objectOutput.writeDouble(rate);
 	}
@@ -186,7 +186,7 @@ public class CommerceTaxFixedRateCacheModel implements CacheModel<CommerceTaxFix
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public long commerceTaxMethodId;
 	public long commerceTaxCategoryId;
+	public long commerceTaxMethodId;
 	public double rate;
 }

@@ -136,9 +136,9 @@ public class CommerceTaxFixedRatePersistenceTest {
 
 		newCommerceTaxFixedRate.setModifiedDate(RandomTestUtil.nextDate());
 
-		newCommerceTaxFixedRate.setCommerceTaxMethodId(RandomTestUtil.nextLong());
-
 		newCommerceTaxFixedRate.setCommerceTaxCategoryId(RandomTestUtil.nextLong());
+
+		newCommerceTaxFixedRate.setCommerceTaxMethodId(RandomTestUtil.nextLong());
 
 		newCommerceTaxFixedRate.setRate(RandomTestUtil.nextDouble());
 
@@ -162,12 +162,19 @@ public class CommerceTaxFixedRatePersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCommerceTaxFixedRate.getModifiedDate()),
 			Time.getShortTimestamp(newCommerceTaxFixedRate.getModifiedDate()));
-		Assert.assertEquals(existingCommerceTaxFixedRate.getCommerceTaxMethodId(),
-			newCommerceTaxFixedRate.getCommerceTaxMethodId());
 		Assert.assertEquals(existingCommerceTaxFixedRate.getCommerceTaxCategoryId(),
 			newCommerceTaxFixedRate.getCommerceTaxCategoryId());
+		Assert.assertEquals(existingCommerceTaxFixedRate.getCommerceTaxMethodId(),
+			newCommerceTaxFixedRate.getCommerceTaxMethodId());
 		AssertUtils.assertEquals(existingCommerceTaxFixedRate.getRate(),
 			newCommerceTaxFixedRate.getRate());
+	}
+
+	@Test
+	public void testCountByCommerceTaxCategoryId() throws Exception {
+		_persistence.countByCommerceTaxCategoryId(RandomTestUtil.nextLong());
+
+		_persistence.countByCommerceTaxCategoryId(0L);
 	}
 
 	@Test
@@ -178,10 +185,11 @@ public class CommerceTaxFixedRatePersistenceTest {
 	}
 
 	@Test
-	public void testCountByCommerceTaxCategoryId() throws Exception {
-		_persistence.countByCommerceTaxCategoryId(RandomTestUtil.nextLong());
+	public void testCountByCTC_CTM() throws Exception {
+		_persistence.countByCTC_CTM(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
-		_persistence.countByCommerceTaxCategoryId(0L);
+		_persistence.countByCTC_CTM(0L, 0L);
 	}
 
 	@Test
@@ -211,8 +219,8 @@ public class CommerceTaxFixedRatePersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CommerceTaxFixedRate",
 			"commerceTaxFixedRateId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "commerceTaxMethodId", true,
-			"commerceTaxCategoryId", true, "rate", true);
+			"modifiedDate", true, "commerceTaxCategoryId", true,
+			"commerceTaxMethodId", true, "rate", true);
 	}
 
 	@Test
@@ -425,6 +433,10 @@ public class CommerceTaxFixedRatePersistenceTest {
 				existingCommerceTaxFixedRate.getCommerceTaxCategoryId()),
 			ReflectionTestUtil.<Long>invoke(existingCommerceTaxFixedRate,
 				"getOriginalCommerceTaxCategoryId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(
+				existingCommerceTaxFixedRate.getCommerceTaxMethodId()),
+			ReflectionTestUtil.<Long>invoke(existingCommerceTaxFixedRate,
+				"getOriginalCommerceTaxMethodId", new Class<?>[0]));
 	}
 
 	protected CommerceTaxFixedRate addCommerceTaxFixedRate()
@@ -445,9 +457,9 @@ public class CommerceTaxFixedRatePersistenceTest {
 
 		commerceTaxFixedRate.setModifiedDate(RandomTestUtil.nextDate());
 
-		commerceTaxFixedRate.setCommerceTaxMethodId(RandomTestUtil.nextLong());
-
 		commerceTaxFixedRate.setCommerceTaxCategoryId(RandomTestUtil.nextLong());
+
+		commerceTaxFixedRate.setCommerceTaxMethodId(RandomTestUtil.nextLong());
 
 		commerceTaxFixedRate.setRate(RandomTestUtil.nextDouble());
 

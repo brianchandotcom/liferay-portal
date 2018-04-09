@@ -12,15 +12,31 @@
  * details.
  */
 
-package com.liferay.commerce.tax.engine.fixed.service.persistence;
+package com.liferay.commerce.tax.engine.fixed.exception;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * @author Alessio Antonio Rendina
- * @generated
  */
 @ProviderType
-public interface CommerceTaxFixedRateFinder {
-	public java.util.List<java.lang.Long> getCommerceTaxCategoryIds();
+public class DuplicateCommerceTaxFixedRateException extends PortalException {
+
+	public DuplicateCommerceTaxFixedRateException() {
+	}
+
+	public DuplicateCommerceTaxFixedRateException(String msg) {
+		super(msg);
+	}
+
+	public DuplicateCommerceTaxFixedRateException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public DuplicateCommerceTaxFixedRateException(Throwable cause) {
+		super(cause);
+	}
+
 }

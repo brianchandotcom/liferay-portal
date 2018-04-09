@@ -9,10 +9,10 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="commerceTaxMethodId" type="long" />
 		<field name="commerceTaxCategoryId" type="long">
 			<validator name="required" />
 		</field>
+		<field name="commerceTaxMethodId" type="long" />
 		<field name="rate" type="double" />
 	</model>
 	<model name="com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel">

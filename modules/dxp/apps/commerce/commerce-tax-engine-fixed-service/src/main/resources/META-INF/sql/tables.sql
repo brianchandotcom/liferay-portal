@@ -6,8 +6,8 @@ create table CommerceTaxFixedRate (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	commerceTaxMethodId LONG,
 	commerceTaxCategoryId LONG,
+	commerceTaxMethodId LONG,
 	rate DOUBLE
 );
 

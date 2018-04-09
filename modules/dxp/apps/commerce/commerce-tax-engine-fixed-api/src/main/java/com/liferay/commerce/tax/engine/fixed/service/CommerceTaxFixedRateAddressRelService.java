@@ -66,38 +66,17 @@ public interface CommerceTaxFixedRateAddressRelService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceTaxFixedRateAddressRel fetchCommerceTaxFixedRateAddressRel(
-		long commerceTaxFixedRateAddressRelId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceTaxFixedRateAddressRel fetchCommerceTaxFixedRateAddressRel(
-		long commerceTaxMethodId, long commerceCountryId,
-		long commerceRegionId, java.lang.String zip);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceTaxFixedRateAddressRel> getCommerceTaxFixedRateAddressRels(
-		long commerceTaxCategoryId, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceTaxFixedRateAddressRel> getCommerceTaxFixedRateAddressRels(
-		long commerceTaxCategoryId, int start, int end,
-		OrderByComparator<CommerceTaxFixedRateAddressRel> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceTaxFixedRateAddressRelsCount(
-		long commerceTaxCategoryId);
+		long commerceTaxFixedRateAddressRelId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceTaxFixedRateAddressRel> getCommerceTaxMethodFixedRateAddressRels(
-		long commerceTaxMethodId, int start, int end);
+		long groupId, long commerceTaxMethodId, int start, int end,
+		OrderByComparator<CommerceTaxFixedRateAddressRel> orderByComparator)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceTaxFixedRateAddressRel> getCommerceTaxMethodFixedRateAddressRels(
-		long commerceTaxMethodId, int start, int end,
-		OrderByComparator<CommerceTaxFixedRateAddressRel> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceTaxMethodFixedRateAddressRelsCount(
-		long commerceTaxMethodId);
+	public int getCommerceTaxMethodFixedRateAddressRelsCount(long groupId,
+		long commerceTaxMethodId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

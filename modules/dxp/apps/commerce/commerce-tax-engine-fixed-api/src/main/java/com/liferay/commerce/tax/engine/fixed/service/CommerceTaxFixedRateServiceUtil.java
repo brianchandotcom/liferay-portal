@@ -16,7 +16,8 @@ package com.liferay.commerce.tax.engine.fixed.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -56,32 +57,33 @@ public class CommerceTaxFixedRateServiceUtil {
 	}
 
 	public static com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate fetchCommerceTaxFixedRate(
-		long commerceTaxFixedRateId) {
+		long commerceTaxFixedRateId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().fetchCommerceTaxFixedRate(commerceTaxFixedRateId);
 	}
 
-	public static java.util.List<com.liferay.commerce.model.CommerceTaxCategory> getAvailableCommerceTaxCategories(
-		long groupId)
+	public static com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate fetchCommerceTaxFixedRateByCTC_CTM(
+		long commerceTaxCategoryId, long commerceTaxMethodId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getAvailableCommerceTaxCategories(groupId);
+		return getService()
+				   .fetchCommerceTaxFixedRateByCTC_CTM(commerceTaxCategoryId,
+			commerceTaxMethodId);
 	}
 
 	public static java.util.List<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate> getCommerceTaxFixedRates(
-		long commerceTaxMethodId, int start, int end) {
+		long groupId, long commerceTaxMethodId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .getCommerceTaxFixedRates(commerceTaxMethodId, start, end);
+				   .getCommerceTaxFixedRates(groupId, commerceTaxMethodId,
+			start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate> getCommerceTaxFixedRates(
-		long commerceTaxMethodId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate> orderByComparator) {
+	public static int getCommerceTaxFixedRatesCount(long groupId,
+		long commerceTaxMethodId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .getCommerceTaxFixedRates(commerceTaxMethodId, start, end,
-			orderByComparator);
-	}
-
-	public static int getCommerceTaxFixedRatesCount(long commerceTaxMethodId) {
-		return getService().getCommerceTaxFixedRatesCount(commerceTaxMethodId);
+				   .getCommerceTaxFixedRatesCount(groupId, commerceTaxMethodId);
 	}
 
 	/**
@@ -104,6 +106,17 @@ public class CommerceTaxFixedRateServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CommerceTaxFixedRateService, CommerceTaxFixedRateService> _serviceTracker =
-		ServiceTrackerFactory.open(CommerceTaxFixedRateService.class);
+	private static ServiceTracker<CommerceTaxFixedRateService, CommerceTaxFixedRateService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CommerceTaxFixedRateService.class);
+
+		ServiceTracker<CommerceTaxFixedRateService, CommerceTaxFixedRateService> serviceTracker =
+			new ServiceTracker<CommerceTaxFixedRateService, CommerceTaxFixedRateService>(bundle.getBundleContext(),
+				CommerceTaxFixedRateService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

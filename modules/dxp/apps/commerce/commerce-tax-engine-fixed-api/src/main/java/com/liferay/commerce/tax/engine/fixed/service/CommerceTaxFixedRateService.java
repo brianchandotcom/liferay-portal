@@ -16,7 +16,6 @@ package com.liferay.commerce.tax.engine.fixed.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.model.CommerceTaxCategory;
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -66,23 +65,22 @@ public interface CommerceTaxFixedRateService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceTaxFixedRate fetchCommerceTaxFixedRate(
-		long commerceTaxFixedRateId);
+		long commerceTaxFixedRateId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceTaxCategory> getAvailableCommerceTaxCategories(
-		long groupId) throws PortalException;
+	public CommerceTaxFixedRate fetchCommerceTaxFixedRateByCTC_CTM(
+		long commerceTaxCategoryId, long commerceTaxMethodId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceTaxFixedRate> getCommerceTaxFixedRates(
-		long commerceTaxMethodId, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceTaxFixedRate> getCommerceTaxFixedRates(
+	public List<CommerceTaxFixedRate> getCommerceTaxFixedRates(long groupId,
 		long commerceTaxMethodId, int start, int end,
-		OrderByComparator<CommerceTaxFixedRate> orderByComparator);
+		OrderByComparator<CommerceTaxFixedRate> orderByComparator)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceTaxFixedRatesCount(long commerceTaxMethodId);
+	public int getCommerceTaxFixedRatesCount(long groupId,
+		long commerceTaxMethodId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

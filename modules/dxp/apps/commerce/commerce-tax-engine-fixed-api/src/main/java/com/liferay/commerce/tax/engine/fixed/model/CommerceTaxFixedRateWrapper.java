@@ -66,8 +66,8 @@ public class CommerceTaxFixedRateWrapper implements CommerceTaxFixedRate,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("commerceTaxMethodId", getCommerceTaxMethodId());
 		attributes.put("commerceTaxCategoryId", getCommerceTaxCategoryId());
+		attributes.put("commerceTaxMethodId", getCommerceTaxMethodId());
 		attributes.put("rate", getRate());
 
 		return attributes;
@@ -118,17 +118,17 @@ public class CommerceTaxFixedRateWrapper implements CommerceTaxFixedRate,
 			setModifiedDate(modifiedDate);
 		}
 
-		Long commerceTaxMethodId = (Long)attributes.get("commerceTaxMethodId");
-
-		if (commerceTaxMethodId != null) {
-			setCommerceTaxMethodId(commerceTaxMethodId);
-		}
-
 		Long commerceTaxCategoryId = (Long)attributes.get(
 				"commerceTaxCategoryId");
 
 		if (commerceTaxCategoryId != null) {
 			setCommerceTaxCategoryId(commerceTaxCategoryId);
+		}
+
+		Long commerceTaxMethodId = (Long)attributes.get("commerceTaxMethodId");
+
+		if (commerceTaxMethodId != null) {
+			setCommerceTaxMethodId(commerceTaxMethodId);
 		}
 
 		Double rate = (Double)attributes.get("rate");

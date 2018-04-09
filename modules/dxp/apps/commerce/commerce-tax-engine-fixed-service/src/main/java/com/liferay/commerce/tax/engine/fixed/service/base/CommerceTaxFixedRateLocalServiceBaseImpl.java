@@ -20,7 +20,6 @@ import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateLocalService;
 import com.liferay.commerce.tax.engine.fixed.service.persistence.CommerceTaxFixedRateAddressRelFinder;
 import com.liferay.commerce.tax.engine.fixed.service.persistence.CommerceTaxFixedRateAddressRelPersistence;
-import com.liferay.commerce.tax.engine.fixed.service.persistence.CommerceTaxFixedRateFinder;
 import com.liferay.commerce.tax.engine.fixed.service.persistence.CommerceTaxFixedRatePersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -364,25 +363,6 @@ public abstract class CommerceTaxFixedRateLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the commerce tax fixed rate finder.
-	 *
-	 * @return the commerce tax fixed rate finder
-	 */
-	public CommerceTaxFixedRateFinder getCommerceTaxFixedRateFinder() {
-		return commerceTaxFixedRateFinder;
-	}
-
-	/**
-	 * Sets the commerce tax fixed rate finder.
-	 *
-	 * @param commerceTaxFixedRateFinder the commerce tax fixed rate finder
-	 */
-	public void setCommerceTaxFixedRateFinder(
-		CommerceTaxFixedRateFinder commerceTaxFixedRateFinder) {
-		this.commerceTaxFixedRateFinder = commerceTaxFixedRateFinder;
-	}
-
-	/**
 	 * Returns the commerce tax fixed rate address rel local service.
 	 *
 	 * @return the commerce tax fixed rate address rel local service
@@ -608,8 +588,6 @@ public abstract class CommerceTaxFixedRateLocalServiceBaseImpl
 	protected CommerceTaxFixedRateLocalService commerceTaxFixedRateLocalService;
 	@BeanReference(type = CommerceTaxFixedRatePersistence.class)
 	protected CommerceTaxFixedRatePersistence commerceTaxFixedRatePersistence;
-	@BeanReference(type = CommerceTaxFixedRateFinder.class)
-	protected CommerceTaxFixedRateFinder commerceTaxFixedRateFinder;
 	@BeanReference(type = com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateAddressRelLocalService.class)
 	protected com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateAddressRelLocalService commerceTaxFixedRateAddressRelLocalService;
 	@BeanReference(type = CommerceTaxFixedRateAddressRelPersistence.class)

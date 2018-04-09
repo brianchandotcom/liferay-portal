@@ -94,14 +94,15 @@ public class CommerceTaxFixedRateLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCommerceTaxFixedRates(long commerceTaxCategoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_commerceTaxFixedRateLocalService.deleteCommerceTaxFixedRates(commerceTaxCategoryId);
+	public void deleteCommerceTaxFixedRateByCommerceTaxCategoryId(
+		long commerceTaxCategoryId) {
+		_commerceTaxFixedRateLocalService.deleteCommerceTaxFixedRateByCommerceTaxCategoryId(commerceTaxCategoryId);
 	}
 
 	@Override
-	public void deleteCommerceTaxMethodFixedRates(long commerceTaxMethodId) {
-		_commerceTaxFixedRateLocalService.deleteCommerceTaxMethodFixedRates(commerceTaxMethodId);
+	public void deleteCommerceTaxFixedRateByCommerceTaxMethodId(
+		long commerceTaxMethodId) {
+		_commerceTaxFixedRateLocalService.deleteCommerceTaxFixedRateByCommerceTaxMethodId(commerceTaxMethodId);
 	}
 
 	/**
@@ -207,15 +208,16 @@ public class CommerceTaxFixedRateLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _commerceTaxFixedRateLocalService.getActionableDynamicQuery();
+	public com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate fetchCommerceTaxFixedRateByCTC_CTM(
+		long commerceTaxCategoryId, long commerceTaxMethodId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceTaxFixedRateLocalService.fetchCommerceTaxFixedRateByCTC_CTM(commerceTaxCategoryId,
+			commerceTaxMethodId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.commerce.model.CommerceTaxCategory> getAvailableCommerceTaxCategories(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceTaxFixedRateLocalService.getAvailableCommerceTaxCategories(groupId);
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _commerceTaxFixedRateLocalService.getActionableDynamicQuery();
 	}
 
 	/**
@@ -230,6 +232,14 @@ public class CommerceTaxFixedRateLocalServiceWrapper
 		long commerceTaxFixedRateId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceTaxFixedRateLocalService.getCommerceTaxFixedRate(commerceTaxFixedRateId);
+	}
+
+	@Override
+	public com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate getCommerceTaxFixedRateByCTC_CTM(
+		long commerceTaxCategoryId, long commerceTaxMethodId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceTaxFixedRateLocalService.getCommerceTaxFixedRateByCTC_CTM(commerceTaxCategoryId,
+			commerceTaxMethodId);
 	}
 
 	/**
@@ -248,13 +258,6 @@ public class CommerceTaxFixedRateLocalServiceWrapper
 		int start, int end) {
 		return _commerceTaxFixedRateLocalService.getCommerceTaxFixedRates(start,
 			end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate> getCommerceTaxFixedRates(
-		long commerceTaxMethodId, int start, int end) {
-		return _commerceTaxFixedRateLocalService.getCommerceTaxFixedRates(commerceTaxMethodId,
-			start, end);
 	}
 
 	@Override

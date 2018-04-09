@@ -16,7 +16,8 @@ package com.liferay.commerce.tax.engine.fixed.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -104,15 +105,16 @@ public class CommerceTaxFixedRateAddressRelLocalServiceUtil {
 				   .deleteCommerceTaxFixedRateAddressRel(commerceTaxFixedRateAddressRelId);
 	}
 
-	public static void deleteCommerceTaxFixedRateAddressRels(
+	public static void deleteCommerceTaxFixedRateAddressRelsByCommerceTaxCategoryId(
 		long commerceTaxCategoryId) {
-		getService().deleteCommerceTaxFixedRateAddressRels(commerceTaxCategoryId);
+		getService()
+			.deleteCommerceTaxFixedRateAddressRelsByCommerceTaxCategoryId(commerceTaxCategoryId);
 	}
 
-	public static void deleteCommerceTaxMethodFixedRateAddressRels(
+	public static void deleteCommerceTaxFixedRateAddressRelsByCommerceTaxMethodId(
 		long commerceTaxMethodId) {
 		getService()
-			.deleteCommerceTaxMethodFixedRateAddressRels(commerceTaxMethodId);
+			.deleteCommerceTaxFixedRateAddressRelsByCommerceTaxMethodId(commerceTaxMethodId);
 	}
 
 	/**
@@ -345,6 +347,17 @@ public class CommerceTaxFixedRateAddressRelLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CommerceTaxFixedRateAddressRelLocalService, CommerceTaxFixedRateAddressRelLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(CommerceTaxFixedRateAddressRelLocalService.class);
+	private static ServiceTracker<CommerceTaxFixedRateAddressRelLocalService, CommerceTaxFixedRateAddressRelLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CommerceTaxFixedRateAddressRelLocalService.class);
+
+		ServiceTracker<CommerceTaxFixedRateAddressRelLocalService, CommerceTaxFixedRateAddressRelLocalService> serviceTracker =
+			new ServiceTracker<CommerceTaxFixedRateAddressRelLocalService, CommerceTaxFixedRateAddressRelLocalService>(bundle.getBundleContext(),
+				CommerceTaxFixedRateAddressRelLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

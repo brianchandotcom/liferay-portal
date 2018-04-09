@@ -123,7 +123,8 @@ public class CommerceTaxFixedRateAddressRelServiceHttp {
 	}
 
 	public static com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel fetchCommerceTaxFixedRateAddressRel(
-		HttpPrincipal httpPrincipal, long commerceTaxFixedRateAddressRelId) {
+		HttpPrincipal httpPrincipal, long commerceTaxFixedRateAddressRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceTaxFixedRateAddressRelServiceUtil.class,
 					"fetchCommerceTaxFixedRateAddressRel",
@@ -138,6 +139,10 @@ public class CommerceTaxFixedRateAddressRelServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -150,162 +155,17 @@ public class CommerceTaxFixedRateAddressRelServiceHttp {
 		}
 	}
 
-	public static com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel fetchCommerceTaxFixedRateAddressRel(
-		HttpPrincipal httpPrincipal, long commerceTaxMethodId,
-		long commerceCountryId, long commerceRegionId, java.lang.String zip) {
-		try {
-			MethodKey methodKey = new MethodKey(CommerceTaxFixedRateAddressRelServiceUtil.class,
-					"fetchCommerceTaxFixedRateAddressRel",
-					_fetchCommerceTaxFixedRateAddressRelParameterTypes3);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commerceTaxMethodId, commerceCountryId, commerceRegionId,
-					zip);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static java.util.List<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel> getCommerceTaxFixedRateAddressRels(
-		HttpPrincipal httpPrincipal, long commerceTaxCategoryId, int start,
-		int end) {
-		try {
-			MethodKey methodKey = new MethodKey(CommerceTaxFixedRateAddressRelServiceUtil.class,
-					"getCommerceTaxFixedRateAddressRels",
-					_getCommerceTaxFixedRateAddressRelsParameterTypes4);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commerceTaxCategoryId, start, end);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (java.util.List<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel>)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static java.util.List<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel> getCommerceTaxFixedRateAddressRels(
-		HttpPrincipal httpPrincipal, long commerceTaxCategoryId, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel> orderByComparator) {
-		try {
-			MethodKey methodKey = new MethodKey(CommerceTaxFixedRateAddressRelServiceUtil.class,
-					"getCommerceTaxFixedRateAddressRels",
-					_getCommerceTaxFixedRateAddressRelsParameterTypes5);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commerceTaxCategoryId, start, end, orderByComparator);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (java.util.List<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel>)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static int getCommerceTaxFixedRateAddressRelsCount(
-		HttpPrincipal httpPrincipal, long commerceTaxCategoryId) {
-		try {
-			MethodKey methodKey = new MethodKey(CommerceTaxFixedRateAddressRelServiceUtil.class,
-					"getCommerceTaxFixedRateAddressRelsCount",
-					_getCommerceTaxFixedRateAddressRelsCountParameterTypes6);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commerceTaxCategoryId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return ((Integer)returnObj).intValue();
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
 	public static java.util.List<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel> getCommerceTaxMethodFixedRateAddressRels(
-		HttpPrincipal httpPrincipal, long commerceTaxMethodId, int start,
-		int end) {
+		HttpPrincipal httpPrincipal, long groupId, long commerceTaxMethodId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceTaxFixedRateAddressRelServiceUtil.class,
 					"getCommerceTaxMethodFixedRateAddressRels",
-					_getCommerceTaxMethodFixedRateAddressRelsParameterTypes7);
+					_getCommerceTaxMethodFixedRateAddressRelsParameterTypes3);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commerceTaxMethodId, start, end);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (java.util.List<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel>)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static java.util.List<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel> getCommerceTaxMethodFixedRateAddressRels(
-		HttpPrincipal httpPrincipal, long commerceTaxMethodId, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel> orderByComparator) {
-		try {
-			MethodKey methodKey = new MethodKey(CommerceTaxFixedRateAddressRelServiceUtil.class,
-					"getCommerceTaxMethodFixedRateAddressRels",
-					_getCommerceTaxMethodFixedRateAddressRelsParameterTypes8);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey,
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					commerceTaxMethodId, start, end, orderByComparator);
 
 			Object returnObj = null;
@@ -314,6 +174,10 @@ public class CommerceTaxFixedRateAddressRelServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -327,13 +191,14 @@ public class CommerceTaxFixedRateAddressRelServiceHttp {
 	}
 
 	public static int getCommerceTaxMethodFixedRateAddressRelsCount(
-		HttpPrincipal httpPrincipal, long commerceTaxMethodId) {
+		HttpPrincipal httpPrincipal, long groupId, long commerceTaxMethodId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceTaxFixedRateAddressRelServiceUtil.class,
 					"getCommerceTaxMethodFixedRateAddressRelsCount",
-					_getCommerceTaxMethodFixedRateAddressRelsCountParameterTypes9);
+					_getCommerceTaxMethodFixedRateAddressRelsCountParameterTypes4);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					commerceTaxMethodId);
 
 			Object returnObj = null;
@@ -342,6 +207,10 @@ public class CommerceTaxFixedRateAddressRelServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -361,7 +230,7 @@ public class CommerceTaxFixedRateAddressRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceTaxFixedRateAddressRelServiceUtil.class,
 					"updateCommerceTaxFixedRateAddressRel",
-					_updateCommerceTaxFixedRateAddressRelParameterTypes10);
+					_updateCommerceTaxFixedRateAddressRelParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceTaxFixedRateAddressRelId, commerceCountryId,
@@ -400,27 +269,14 @@ public class CommerceTaxFixedRateAddressRelServiceHttp {
 		new Class[] { long.class };
 	private static final Class<?>[] _fetchCommerceTaxFixedRateAddressRelParameterTypes2 =
 		new Class[] { long.class };
-	private static final Class<?>[] _fetchCommerceTaxFixedRateAddressRelParameterTypes3 =
-		new Class[] { long.class, long.class, long.class, java.lang.String.class };
-	private static final Class<?>[] _getCommerceTaxFixedRateAddressRelsParameterTypes4 =
-		new Class[] { long.class, int.class, int.class };
-	private static final Class<?>[] _getCommerceTaxFixedRateAddressRelsParameterTypes5 =
+	private static final Class<?>[] _getCommerceTaxMethodFixedRateAddressRelsParameterTypes3 =
 		new Class[] {
-			long.class, int.class, int.class,
+			long.class, long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getCommerceTaxFixedRateAddressRelsCountParameterTypes6 =
-		new Class[] { long.class };
-	private static final Class<?>[] _getCommerceTaxMethodFixedRateAddressRelsParameterTypes7 =
-		new Class[] { long.class, int.class, int.class };
-	private static final Class<?>[] _getCommerceTaxMethodFixedRateAddressRelsParameterTypes8 =
-		new Class[] {
-			long.class, int.class, int.class,
-			com.liferay.portal.kernel.util.OrderByComparator.class
-		};
-	private static final Class<?>[] _getCommerceTaxMethodFixedRateAddressRelsCountParameterTypes9 =
-		new Class[] { long.class };
-	private static final Class<?>[] _updateCommerceTaxFixedRateAddressRelParameterTypes10 =
+	private static final Class<?>[] _getCommerceTaxMethodFixedRateAddressRelsCountParameterTypes4 =
+		new Class[] { long.class, long.class };
+	private static final Class<?>[] _updateCommerceTaxFixedRateAddressRelParameterTypes5 =
 		new Class[] {
 			long.class, long.class, long.class, java.lang.String.class,
 			double.class

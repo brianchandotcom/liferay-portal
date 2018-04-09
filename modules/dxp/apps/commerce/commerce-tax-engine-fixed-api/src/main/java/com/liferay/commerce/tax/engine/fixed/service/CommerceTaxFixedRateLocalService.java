@@ -16,7 +16,6 @@ package com.liferay.commerce.tax.engine.fixed.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.model.CommerceTaxCategory;
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -107,10 +106,11 @@ public interface CommerceTaxFixedRateLocalService extends BaseLocalService,
 	public CommerceTaxFixedRate deleteCommerceTaxFixedRate(
 		long commerceTaxFixedRateId) throws PortalException;
 
-	public void deleteCommerceTaxFixedRates(long commerceTaxCategoryId)
-		throws PortalException;
+	public void deleteCommerceTaxFixedRateByCommerceTaxCategoryId(
+		long commerceTaxCategoryId);
 
-	public void deleteCommerceTaxMethodFixedRates(long commerceTaxMethodId);
+	public void deleteCommerceTaxFixedRateByCommerceTaxMethodId(
+		long commerceTaxMethodId);
 
 	/**
 	* @throws PortalException
@@ -183,11 +183,12 @@ public interface CommerceTaxFixedRateLocalService extends BaseLocalService,
 		long commerceTaxFixedRateId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
+	public CommerceTaxFixedRate fetchCommerceTaxFixedRateByCTC_CTM(
+		long commerceTaxCategoryId, long commerceTaxMethodId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceTaxCategory> getAvailableCommerceTaxCategories(
-		long groupId) throws PortalException;
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
 	* Returns the commerce tax fixed rate with the primary key.
@@ -199,6 +200,11 @@ public interface CommerceTaxFixedRateLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceTaxFixedRate getCommerceTaxFixedRate(
 		long commerceTaxFixedRateId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceTaxFixedRate getCommerceTaxFixedRateByCTC_CTM(
+		long commerceTaxCategoryId, long commerceTaxMethodId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the commerce tax fixed rates.
@@ -214,10 +220,6 @@ public interface CommerceTaxFixedRateLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceTaxFixedRate> getCommerceTaxFixedRates(int start,
 		int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceTaxFixedRate> getCommerceTaxFixedRates(
-		long commerceTaxMethodId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceTaxFixedRate> getCommerceTaxFixedRates(

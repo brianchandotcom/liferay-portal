@@ -97,15 +97,15 @@ public class CommerceTaxFixedRateAddressRelLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCommerceTaxFixedRateAddressRels(
+	public void deleteCommerceTaxFixedRateAddressRelsByCommerceTaxCategoryId(
 		long commerceTaxCategoryId) {
-		_commerceTaxFixedRateAddressRelLocalService.deleteCommerceTaxFixedRateAddressRels(commerceTaxCategoryId);
+		_commerceTaxFixedRateAddressRelLocalService.deleteCommerceTaxFixedRateAddressRelsByCommerceTaxCategoryId(commerceTaxCategoryId);
 	}
 
 	@Override
-	public void deleteCommerceTaxMethodFixedRateAddressRels(
+	public void deleteCommerceTaxFixedRateAddressRelsByCommerceTaxMethodId(
 		long commerceTaxMethodId) {
-		_commerceTaxFixedRateAddressRelLocalService.deleteCommerceTaxMethodFixedRateAddressRels(commerceTaxMethodId);
+		_commerceTaxFixedRateAddressRelLocalService.deleteCommerceTaxFixedRateAddressRelsByCommerceTaxMethodId(commerceTaxMethodId);
 	}
 
 	/**

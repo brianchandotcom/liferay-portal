@@ -87,6 +87,538 @@ public class CommerceTaxFixedRatePersistenceImpl extends BasePersistenceImpl<Com
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(CommerceTaxFixedRateModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceTaxFixedRateModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_COMMERCETAXCATEGORYID =
+		new FinderPath(CommerceTaxFixedRateModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceTaxFixedRateModelImpl.FINDER_CACHE_ENABLED,
+			CommerceTaxFixedRateImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByCommerceTaxCategoryId",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMMERCETAXCATEGORYID =
+		new FinderPath(CommerceTaxFixedRateModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceTaxFixedRateModelImpl.FINDER_CACHE_ENABLED,
+			CommerceTaxFixedRateImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByCommerceTaxCategoryId",
+			new String[] { Long.class.getName() },
+			CommerceTaxFixedRateModelImpl.COMMERCETAXCATEGORYID_COLUMN_BITMASK |
+			CommerceTaxFixedRateModelImpl.CREATEDATE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_COMMERCETAXCATEGORYID = new FinderPath(CommerceTaxFixedRateModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceTaxFixedRateModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCommerceTaxCategoryId",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the commerce tax fixed rates where commerceTaxCategoryId = &#63;.
+	 *
+	 * @param commerceTaxCategoryId the commerce tax category ID
+	 * @return the matching commerce tax fixed rates
+	 */
+	@Override
+	public List<CommerceTaxFixedRate> findByCommerceTaxCategoryId(
+		long commerceTaxCategoryId) {
+		return findByCommerceTaxCategoryId(commerceTaxCategoryId,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce tax fixed rates where commerceTaxCategoryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceTaxFixedRateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param commerceTaxCategoryId the commerce tax category ID
+	 * @param start the lower bound of the range of commerce tax fixed rates
+	 * @param end the upper bound of the range of commerce tax fixed rates (not inclusive)
+	 * @return the range of matching commerce tax fixed rates
+	 */
+	@Override
+	public List<CommerceTaxFixedRate> findByCommerceTaxCategoryId(
+		long commerceTaxCategoryId, int start, int end) {
+		return findByCommerceTaxCategoryId(commerceTaxCategoryId, start, end,
+			null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce tax fixed rates where commerceTaxCategoryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceTaxFixedRateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param commerceTaxCategoryId the commerce tax category ID
+	 * @param start the lower bound of the range of commerce tax fixed rates
+	 * @param end the upper bound of the range of commerce tax fixed rates (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce tax fixed rates
+	 */
+	@Override
+	public List<CommerceTaxFixedRate> findByCommerceTaxCategoryId(
+		long commerceTaxCategoryId, int start, int end,
+		OrderByComparator<CommerceTaxFixedRate> orderByComparator) {
+		return findByCommerceTaxCategoryId(commerceTaxCategoryId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce tax fixed rates where commerceTaxCategoryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceTaxFixedRateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param commerceTaxCategoryId the commerce tax category ID
+	 * @param start the lower bound of the range of commerce tax fixed rates
+	 * @param end the upper bound of the range of commerce tax fixed rates (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching commerce tax fixed rates
+	 */
+	@Override
+	public List<CommerceTaxFixedRate> findByCommerceTaxCategoryId(
+		long commerceTaxCategoryId, int start, int end,
+		OrderByComparator<CommerceTaxFixedRate> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMMERCETAXCATEGORYID;
+			finderArgs = new Object[] { commerceTaxCategoryId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_COMMERCETAXCATEGORYID;
+			finderArgs = new Object[] {
+					commerceTaxCategoryId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<CommerceTaxFixedRate> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<CommerceTaxFixedRate>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CommerceTaxFixedRate commerceTaxFixedRate : list) {
+					if ((commerceTaxCategoryId != commerceTaxFixedRate.getCommerceTaxCategoryId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_COMMERCETAXFIXEDRATE_WHERE);
+
+			query.append(_FINDER_COLUMN_COMMERCETAXCATEGORYID_COMMERCETAXCATEGORYID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CommerceTaxFixedRateModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(commerceTaxCategoryId);
+
+				if (!pagination) {
+					list = (List<CommerceTaxFixedRate>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<CommerceTaxFixedRate>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first commerce tax fixed rate in the ordered set where commerceTaxCategoryId = &#63;.
+	 *
+	 * @param commerceTaxCategoryId the commerce tax category ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce tax fixed rate
+	 * @throws NoSuchTaxFixedRateException if a matching commerce tax fixed rate could not be found
+	 */
+	@Override
+	public CommerceTaxFixedRate findByCommerceTaxCategoryId_First(
+		long commerceTaxCategoryId,
+		OrderByComparator<CommerceTaxFixedRate> orderByComparator)
+		throws NoSuchTaxFixedRateException {
+		CommerceTaxFixedRate commerceTaxFixedRate = fetchByCommerceTaxCategoryId_First(commerceTaxCategoryId,
+				orderByComparator);
+
+		if (commerceTaxFixedRate != null) {
+			return commerceTaxFixedRate;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("commerceTaxCategoryId=");
+		msg.append(commerceTaxCategoryId);
+
+		msg.append("}");
+
+		throw new NoSuchTaxFixedRateException(msg.toString());
+	}
+
+	/**
+	 * Returns the first commerce tax fixed rate in the ordered set where commerceTaxCategoryId = &#63;.
+	 *
+	 * @param commerceTaxCategoryId the commerce tax category ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce tax fixed rate, or <code>null</code> if a matching commerce tax fixed rate could not be found
+	 */
+	@Override
+	public CommerceTaxFixedRate fetchByCommerceTaxCategoryId_First(
+		long commerceTaxCategoryId,
+		OrderByComparator<CommerceTaxFixedRate> orderByComparator) {
+		List<CommerceTaxFixedRate> list = findByCommerceTaxCategoryId(commerceTaxCategoryId,
+				0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last commerce tax fixed rate in the ordered set where commerceTaxCategoryId = &#63;.
+	 *
+	 * @param commerceTaxCategoryId the commerce tax category ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce tax fixed rate
+	 * @throws NoSuchTaxFixedRateException if a matching commerce tax fixed rate could not be found
+	 */
+	@Override
+	public CommerceTaxFixedRate findByCommerceTaxCategoryId_Last(
+		long commerceTaxCategoryId,
+		OrderByComparator<CommerceTaxFixedRate> orderByComparator)
+		throws NoSuchTaxFixedRateException {
+		CommerceTaxFixedRate commerceTaxFixedRate = fetchByCommerceTaxCategoryId_Last(commerceTaxCategoryId,
+				orderByComparator);
+
+		if (commerceTaxFixedRate != null) {
+			return commerceTaxFixedRate;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("commerceTaxCategoryId=");
+		msg.append(commerceTaxCategoryId);
+
+		msg.append("}");
+
+		throw new NoSuchTaxFixedRateException(msg.toString());
+	}
+
+	/**
+	 * Returns the last commerce tax fixed rate in the ordered set where commerceTaxCategoryId = &#63;.
+	 *
+	 * @param commerceTaxCategoryId the commerce tax category ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce tax fixed rate, or <code>null</code> if a matching commerce tax fixed rate could not be found
+	 */
+	@Override
+	public CommerceTaxFixedRate fetchByCommerceTaxCategoryId_Last(
+		long commerceTaxCategoryId,
+		OrderByComparator<CommerceTaxFixedRate> orderByComparator) {
+		int count = countByCommerceTaxCategoryId(commerceTaxCategoryId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CommerceTaxFixedRate> list = findByCommerceTaxCategoryId(commerceTaxCategoryId,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the commerce tax fixed rates before and after the current commerce tax fixed rate in the ordered set where commerceTaxCategoryId = &#63;.
+	 *
+	 * @param commerceTaxFixedRateId the primary key of the current commerce tax fixed rate
+	 * @param commerceTaxCategoryId the commerce tax category ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce tax fixed rate
+	 * @throws NoSuchTaxFixedRateException if a commerce tax fixed rate with the primary key could not be found
+	 */
+	@Override
+	public CommerceTaxFixedRate[] findByCommerceTaxCategoryId_PrevAndNext(
+		long commerceTaxFixedRateId, long commerceTaxCategoryId,
+		OrderByComparator<CommerceTaxFixedRate> orderByComparator)
+		throws NoSuchTaxFixedRateException {
+		CommerceTaxFixedRate commerceTaxFixedRate = findByPrimaryKey(commerceTaxFixedRateId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceTaxFixedRate[] array = new CommerceTaxFixedRateImpl[3];
+
+			array[0] = getByCommerceTaxCategoryId_PrevAndNext(session,
+					commerceTaxFixedRate, commerceTaxCategoryId,
+					orderByComparator, true);
+
+			array[1] = commerceTaxFixedRate;
+
+			array[2] = getByCommerceTaxCategoryId_PrevAndNext(session,
+					commerceTaxFixedRate, commerceTaxCategoryId,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceTaxFixedRate getByCommerceTaxCategoryId_PrevAndNext(
+		Session session, CommerceTaxFixedRate commerceTaxFixedRate,
+		long commerceTaxCategoryId,
+		OrderByComparator<CommerceTaxFixedRate> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_COMMERCETAXFIXEDRATE_WHERE);
+
+		query.append(_FINDER_COLUMN_COMMERCETAXCATEGORYID_COMMERCETAXCATEGORYID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CommerceTaxFixedRateModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(commerceTaxCategoryId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(commerceTaxFixedRate);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CommerceTaxFixedRate> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the commerce tax fixed rates where commerceTaxCategoryId = &#63; from the database.
+	 *
+	 * @param commerceTaxCategoryId the commerce tax category ID
+	 */
+	@Override
+	public void removeByCommerceTaxCategoryId(long commerceTaxCategoryId) {
+		for (CommerceTaxFixedRate commerceTaxFixedRate : findByCommerceTaxCategoryId(
+				commerceTaxCategoryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null)) {
+			remove(commerceTaxFixedRate);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce tax fixed rates where commerceTaxCategoryId = &#63;.
+	 *
+	 * @param commerceTaxCategoryId the commerce tax category ID
+	 * @return the number of matching commerce tax fixed rates
+	 */
+	@Override
+	public int countByCommerceTaxCategoryId(long commerceTaxCategoryId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_COMMERCETAXCATEGORYID;
+
+		Object[] finderArgs = new Object[] { commerceTaxCategoryId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_COMMERCETAXFIXEDRATE_WHERE);
+
+			query.append(_FINDER_COLUMN_COMMERCETAXCATEGORYID_COMMERCETAXCATEGORYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(commerceTaxCategoryId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_COMMERCETAXCATEGORYID_COMMERCETAXCATEGORYID_2 =
+		"commerceTaxFixedRate.commerceTaxCategoryId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_COMMERCETAXMETHODID =
 		new FinderPath(CommerceTaxFixedRateModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceTaxFixedRateModelImpl.FINDER_CACHE_ENABLED,
@@ -615,37 +1147,42 @@ public class CommerceTaxFixedRatePersistenceImpl extends BasePersistenceImpl<Com
 
 	private static final String _FINDER_COLUMN_COMMERCETAXMETHODID_COMMERCETAXMETHODID_2 =
 		"commerceTaxFixedRate.commerceTaxMethodId = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_COMMERCETAXCATEGORYID = new FinderPath(CommerceTaxFixedRateModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_FETCH_BY_CTC_CTM = new FinderPath(CommerceTaxFixedRateModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceTaxFixedRateModelImpl.FINDER_CACHE_ENABLED,
 			CommerceTaxFixedRateImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByCommerceTaxCategoryId",
-			new String[] { Long.class.getName() },
-			CommerceTaxFixedRateModelImpl.COMMERCETAXCATEGORYID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_COMMERCETAXCATEGORYID = new FinderPath(CommerceTaxFixedRateModelImpl.ENTITY_CACHE_ENABLED,
+			"fetchByCTC_CTM",
+			new String[] { Long.class.getName(), Long.class.getName() },
+			CommerceTaxFixedRateModelImpl.COMMERCETAXCATEGORYID_COLUMN_BITMASK |
+			CommerceTaxFixedRateModelImpl.COMMERCETAXMETHODID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_CTC_CTM = new FinderPath(CommerceTaxFixedRateModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceTaxFixedRateModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommerceTaxCategoryId",
-			new String[] { Long.class.getName() });
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCTC_CTM",
+			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns the commerce tax fixed rate where commerceTaxCategoryId = &#63; or throws a {@link NoSuchTaxFixedRateException} if it could not be found.
+	 * Returns the commerce tax fixed rate where commerceTaxCategoryId = &#63; and commerceTaxMethodId = &#63; or throws a {@link NoSuchTaxFixedRateException} if it could not be found.
 	 *
 	 * @param commerceTaxCategoryId the commerce tax category ID
+	 * @param commerceTaxMethodId the commerce tax method ID
 	 * @return the matching commerce tax fixed rate
 	 * @throws NoSuchTaxFixedRateException if a matching commerce tax fixed rate could not be found
 	 */
 	@Override
-	public CommerceTaxFixedRate findByCommerceTaxCategoryId(
-		long commerceTaxCategoryId) throws NoSuchTaxFixedRateException {
-		CommerceTaxFixedRate commerceTaxFixedRate = fetchByCommerceTaxCategoryId(commerceTaxCategoryId);
+	public CommerceTaxFixedRate findByCTC_CTM(long commerceTaxCategoryId,
+		long commerceTaxMethodId) throws NoSuchTaxFixedRateException {
+		CommerceTaxFixedRate commerceTaxFixedRate = fetchByCTC_CTM(commerceTaxCategoryId,
+				commerceTaxMethodId);
 
 		if (commerceTaxFixedRate == null) {
-			StringBundler msg = new StringBundler(4);
+			StringBundler msg = new StringBundler(6);
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
 			msg.append("commerceTaxCategoryId=");
 			msg.append(commerceTaxCategoryId);
+
+			msg.append(", commerceTaxMethodId=");
+			msg.append(commerceTaxMethodId);
 
 			msg.append("}");
 
@@ -660,50 +1197,57 @@ public class CommerceTaxFixedRatePersistenceImpl extends BasePersistenceImpl<Com
 	}
 
 	/**
-	 * Returns the commerce tax fixed rate where commerceTaxCategoryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the commerce tax fixed rate where commerceTaxCategoryId = &#63; and commerceTaxMethodId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param commerceTaxCategoryId the commerce tax category ID
+	 * @param commerceTaxMethodId the commerce tax method ID
 	 * @return the matching commerce tax fixed rate, or <code>null</code> if a matching commerce tax fixed rate could not be found
 	 */
 	@Override
-	public CommerceTaxFixedRate fetchByCommerceTaxCategoryId(
-		long commerceTaxCategoryId) {
-		return fetchByCommerceTaxCategoryId(commerceTaxCategoryId, true);
+	public CommerceTaxFixedRate fetchByCTC_CTM(long commerceTaxCategoryId,
+		long commerceTaxMethodId) {
+		return fetchByCTC_CTM(commerceTaxCategoryId, commerceTaxMethodId, true);
 	}
 
 	/**
-	 * Returns the commerce tax fixed rate where commerceTaxCategoryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the commerce tax fixed rate where commerceTaxCategoryId = &#63; and commerceTaxMethodId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param commerceTaxCategoryId the commerce tax category ID
+	 * @param commerceTaxMethodId the commerce tax method ID
 	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching commerce tax fixed rate, or <code>null</code> if a matching commerce tax fixed rate could not be found
 	 */
 	@Override
-	public CommerceTaxFixedRate fetchByCommerceTaxCategoryId(
-		long commerceTaxCategoryId, boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { commerceTaxCategoryId };
+	public CommerceTaxFixedRate fetchByCTC_CTM(long commerceTaxCategoryId,
+		long commerceTaxMethodId, boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] {
+				commerceTaxCategoryId, commerceTaxMethodId
+			};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_COMMERCETAXCATEGORYID,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_CTC_CTM,
 					finderArgs, this);
 		}
 
 		if (result instanceof CommerceTaxFixedRate) {
 			CommerceTaxFixedRate commerceTaxFixedRate = (CommerceTaxFixedRate)result;
 
-			if ((commerceTaxCategoryId != commerceTaxFixedRate.getCommerceTaxCategoryId())) {
+			if ((commerceTaxCategoryId != commerceTaxFixedRate.getCommerceTaxCategoryId()) ||
+					(commerceTaxMethodId != commerceTaxFixedRate.getCommerceTaxMethodId())) {
 				result = null;
 			}
 		}
 
 		if (result == null) {
-			StringBundler query = new StringBundler(3);
+			StringBundler query = new StringBundler(4);
 
 			query.append(_SQL_SELECT_COMMERCETAXFIXEDRATE_WHERE);
 
-			query.append(_FINDER_COLUMN_COMMERCETAXCATEGORYID_COMMERCETAXCATEGORYID_2);
+			query.append(_FINDER_COLUMN_CTC_CTM_COMMERCETAXCATEGORYID_2);
+
+			query.append(_FINDER_COLUMN_CTC_CTM_COMMERCETAXMETHODID_2);
 
 			String sql = query.toString();
 
@@ -718,10 +1262,12 @@ public class CommerceTaxFixedRatePersistenceImpl extends BasePersistenceImpl<Com
 
 				qPos.add(commerceTaxCategoryId);
 
+				qPos.add(commerceTaxMethodId);
+
 				List<CommerceTaxFixedRate> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_COMMERCETAXCATEGORYID,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_CTC_CTM,
 						finderArgs, list);
 				}
 				else {
@@ -731,14 +1277,15 @@ public class CommerceTaxFixedRatePersistenceImpl extends BasePersistenceImpl<Com
 
 					cacheResult(commerceTaxFixedRate);
 
-					if ((commerceTaxFixedRate.getCommerceTaxCategoryId() != commerceTaxCategoryId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_COMMERCETAXCATEGORYID,
+					if ((commerceTaxFixedRate.getCommerceTaxCategoryId() != commerceTaxCategoryId) ||
+							(commerceTaxFixedRate.getCommerceTaxMethodId() != commerceTaxMethodId)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_CTC_CTM,
 							finderArgs, commerceTaxFixedRate);
 					}
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_COMMERCETAXCATEGORYID,
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_CTC_CTM,
 					finderArgs);
 
 				throw processException(e);
@@ -757,39 +1304,47 @@ public class CommerceTaxFixedRatePersistenceImpl extends BasePersistenceImpl<Com
 	}
 
 	/**
-	 * Removes the commerce tax fixed rate where commerceTaxCategoryId = &#63; from the database.
+	 * Removes the commerce tax fixed rate where commerceTaxCategoryId = &#63; and commerceTaxMethodId = &#63; from the database.
 	 *
 	 * @param commerceTaxCategoryId the commerce tax category ID
+	 * @param commerceTaxMethodId the commerce tax method ID
 	 * @return the commerce tax fixed rate that was removed
 	 */
 	@Override
-	public CommerceTaxFixedRate removeByCommerceTaxCategoryId(
-		long commerceTaxCategoryId) throws NoSuchTaxFixedRateException {
-		CommerceTaxFixedRate commerceTaxFixedRate = findByCommerceTaxCategoryId(commerceTaxCategoryId);
+	public CommerceTaxFixedRate removeByCTC_CTM(long commerceTaxCategoryId,
+		long commerceTaxMethodId) throws NoSuchTaxFixedRateException {
+		CommerceTaxFixedRate commerceTaxFixedRate = findByCTC_CTM(commerceTaxCategoryId,
+				commerceTaxMethodId);
 
 		return remove(commerceTaxFixedRate);
 	}
 
 	/**
-	 * Returns the number of commerce tax fixed rates where commerceTaxCategoryId = &#63;.
+	 * Returns the number of commerce tax fixed rates where commerceTaxCategoryId = &#63; and commerceTaxMethodId = &#63;.
 	 *
 	 * @param commerceTaxCategoryId the commerce tax category ID
+	 * @param commerceTaxMethodId the commerce tax method ID
 	 * @return the number of matching commerce tax fixed rates
 	 */
 	@Override
-	public int countByCommerceTaxCategoryId(long commerceTaxCategoryId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_COMMERCETAXCATEGORYID;
+	public int countByCTC_CTM(long commerceTaxCategoryId,
+		long commerceTaxMethodId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_CTC_CTM;
 
-		Object[] finderArgs = new Object[] { commerceTaxCategoryId };
+		Object[] finderArgs = new Object[] {
+				commerceTaxCategoryId, commerceTaxMethodId
+			};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(2);
+			StringBundler query = new StringBundler(3);
 
 			query.append(_SQL_COUNT_COMMERCETAXFIXEDRATE_WHERE);
 
-			query.append(_FINDER_COLUMN_COMMERCETAXCATEGORYID_COMMERCETAXCATEGORYID_2);
+			query.append(_FINDER_COLUMN_CTC_CTM_COMMERCETAXCATEGORYID_2);
+
+			query.append(_FINDER_COLUMN_CTC_CTM_COMMERCETAXMETHODID_2);
 
 			String sql = query.toString();
 
@@ -803,6 +1358,8 @@ public class CommerceTaxFixedRatePersistenceImpl extends BasePersistenceImpl<Com
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				qPos.add(commerceTaxCategoryId);
+
+				qPos.add(commerceTaxMethodId);
 
 				count = (Long)q.uniqueResult();
 
@@ -821,8 +1378,8 @@ public class CommerceTaxFixedRatePersistenceImpl extends BasePersistenceImpl<Com
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_COMMERCETAXCATEGORYID_COMMERCETAXCATEGORYID_2 =
-		"commerceTaxFixedRate.commerceTaxCategoryId = ?";
+	private static final String _FINDER_COLUMN_CTC_CTM_COMMERCETAXCATEGORYID_2 = "commerceTaxFixedRate.commerceTaxCategoryId = ? AND ";
+	private static final String _FINDER_COLUMN_CTC_CTM_COMMERCETAXMETHODID_2 = "commerceTaxFixedRate.commerceTaxMethodId = ?";
 
 	public CommerceTaxFixedRatePersistenceImpl() {
 		setModelClass(CommerceTaxFixedRate.class);
@@ -839,9 +1396,11 @@ public class CommerceTaxFixedRatePersistenceImpl extends BasePersistenceImpl<Com
 			CommerceTaxFixedRateImpl.class,
 			commerceTaxFixedRate.getPrimaryKey(), commerceTaxFixedRate);
 
-		finderCache.putResult(FINDER_PATH_FETCH_BY_COMMERCETAXCATEGORYID,
-			new Object[] { commerceTaxFixedRate.getCommerceTaxCategoryId() },
-			commerceTaxFixedRate);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_CTC_CTM,
+			new Object[] {
+				commerceTaxFixedRate.getCommerceTaxCategoryId(),
+				commerceTaxFixedRate.getCommerceTaxMethodId()
+			}, commerceTaxFixedRate);
 
 		commerceTaxFixedRate.resetOriginalValues();
 	}
@@ -919,12 +1478,13 @@ public class CommerceTaxFixedRatePersistenceImpl extends BasePersistenceImpl<Com
 	protected void cacheUniqueFindersCache(
 		CommerceTaxFixedRateModelImpl commerceTaxFixedRateModelImpl) {
 		Object[] args = new Object[] {
-				commerceTaxFixedRateModelImpl.getCommerceTaxCategoryId()
+				commerceTaxFixedRateModelImpl.getCommerceTaxCategoryId(),
+				commerceTaxFixedRateModelImpl.getCommerceTaxMethodId()
 			};
 
-		finderCache.putResult(FINDER_PATH_COUNT_BY_COMMERCETAXCATEGORYID, args,
+		finderCache.putResult(FINDER_PATH_COUNT_BY_CTC_CTM, args,
 			Long.valueOf(1), false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_COMMERCETAXCATEGORYID, args,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_CTC_CTM, args,
 			commerceTaxFixedRateModelImpl, false);
 	}
 
@@ -933,25 +1493,23 @@ public class CommerceTaxFixedRatePersistenceImpl extends BasePersistenceImpl<Com
 		boolean clearCurrent) {
 		if (clearCurrent) {
 			Object[] args = new Object[] {
-					commerceTaxFixedRateModelImpl.getCommerceTaxCategoryId()
+					commerceTaxFixedRateModelImpl.getCommerceTaxCategoryId(),
+					commerceTaxFixedRateModelImpl.getCommerceTaxMethodId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_COMMERCETAXCATEGORYID,
-				args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_COMMERCETAXCATEGORYID,
-				args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_CTC_CTM, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_CTC_CTM, args);
 		}
 
 		if ((commerceTaxFixedRateModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_COMMERCETAXCATEGORYID.getColumnBitmask()) != 0) {
+				FINDER_PATH_FETCH_BY_CTC_CTM.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
-					commerceTaxFixedRateModelImpl.getOriginalCommerceTaxCategoryId()
+					commerceTaxFixedRateModelImpl.getOriginalCommerceTaxCategoryId(),
+					commerceTaxFixedRateModelImpl.getOriginalCommerceTaxMethodId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_COMMERCETAXCATEGORYID,
-				args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_COMMERCETAXCATEGORYID,
-				args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_CTC_CTM, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_CTC_CTM, args);
 		}
 	}
 
@@ -1121,6 +1679,15 @@ public class CommerceTaxFixedRatePersistenceImpl extends BasePersistenceImpl<Com
 		else
 		 if (isNew) {
 			Object[] args = new Object[] {
+					commerceTaxFixedRateModelImpl.getCommerceTaxCategoryId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_COMMERCETAXCATEGORYID,
+				args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMMERCETAXCATEGORYID,
+				args);
+
+			args = new Object[] {
 					commerceTaxFixedRateModelImpl.getCommerceTaxMethodId()
 				};
 
@@ -1135,6 +1702,27 @@ public class CommerceTaxFixedRatePersistenceImpl extends BasePersistenceImpl<Com
 		}
 
 		else {
+			if ((commerceTaxFixedRateModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMMERCETAXCATEGORYID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						commerceTaxFixedRateModelImpl.getOriginalCommerceTaxCategoryId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMMERCETAXCATEGORYID,
+					args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMMERCETAXCATEGORYID,
+					args);
+
+				args = new Object[] {
+						commerceTaxFixedRateModelImpl.getCommerceTaxCategoryId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMMERCETAXCATEGORYID,
+					args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMMERCETAXCATEGORYID,
+					args);
+			}
+
 			if ((commerceTaxFixedRateModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMMERCETAXMETHODID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
@@ -1187,8 +1775,8 @@ public class CommerceTaxFixedRatePersistenceImpl extends BasePersistenceImpl<Com
 		commerceTaxFixedRateImpl.setUserName(commerceTaxFixedRate.getUserName());
 		commerceTaxFixedRateImpl.setCreateDate(commerceTaxFixedRate.getCreateDate());
 		commerceTaxFixedRateImpl.setModifiedDate(commerceTaxFixedRate.getModifiedDate());
-		commerceTaxFixedRateImpl.setCommerceTaxMethodId(commerceTaxFixedRate.getCommerceTaxMethodId());
 		commerceTaxFixedRateImpl.setCommerceTaxCategoryId(commerceTaxFixedRate.getCommerceTaxCategoryId());
+		commerceTaxFixedRateImpl.setCommerceTaxMethodId(commerceTaxFixedRate.getCommerceTaxMethodId());
 		commerceTaxFixedRateImpl.setRate(commerceTaxFixedRate.getRate());
 
 		return commerceTaxFixedRateImpl;

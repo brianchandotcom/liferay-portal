@@ -51,12 +51,12 @@ public class ExportApplicationDataMVCActionCommand
 
 		long selUserId = getSelectedUserId(actionRequest);
 
-		String[] applicaitonNames = StringUtil.split(
+		String[] applicationNames = StringUtil.split(
 			ParamUtil.getString(actionRequest, "applicationNames"));
 
-		for (String applicaitonName : applicaitonNames) {
+		for (String applicationName : applicationNames) {
 			UADExporter.exportApplicationDataInBackground(
-				applicaitonName, selUserId, themeDisplay.getScopeGroupId());
+				applicationName, selUserId, themeDisplay.getScopeGroupId());
 		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");

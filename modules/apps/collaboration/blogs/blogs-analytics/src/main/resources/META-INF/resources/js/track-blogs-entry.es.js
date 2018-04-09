@@ -67,6 +67,7 @@ export default (entryId, blogsEntryBodyId) => {
 		var onClick = event => {
 			var element = event.target;
 			var tagName = element.tagName.toLowerCase();
+
 			var payload = {
 				entryId,
 				tagName

@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.segments.asset.categories.demo.internal.model;
+package com.liferay.segments.asset.categories.demo.internal;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.segments.model.Segment;
+import com.liferay.segments.Segment;
 
 import java.util.Locale;
 

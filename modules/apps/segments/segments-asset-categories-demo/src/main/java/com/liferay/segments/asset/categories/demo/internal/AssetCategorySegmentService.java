@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.segments.asset.categories.demo.internal.service;
+package com.liferay.segments.asset.categories.demo.internal;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
@@ -24,8 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.segments.asset.categories.demo.internal.model.AssetCategorySegment;
-import com.liferay.segments.service.SegmentService;
+import com.liferay.segments.SegmentService;
 
 import java.util.Collection;
 import java.util.Collections;

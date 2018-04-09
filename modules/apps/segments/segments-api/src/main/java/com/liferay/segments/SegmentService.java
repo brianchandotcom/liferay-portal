@@ -12,11 +12,9 @@
  * details.
  */
 
-package com.liferay.segments.service;
+package com.liferay.segments;
 
 import aQute.bnd.annotation.ProviderType;
-
-import com.liferay.segments.model.Segment;
 
 import java.util.Collection;
 import java.util.Map;

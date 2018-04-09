@@ -14,11 +14,8 @@
 
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
@@ -42,29 +39,27 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteRemainingUADMVCActionCommand extends BaseMVCActionCommand {
+public class DeleteRemainingUADMVCActionCommand
+	extends BaseUADMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		User selectedUser = _portal.getSelectedUser(actionRequest);
+		long selectedUserId = getSelectedUserId(actionRequest);
 
 		Collection<UADAnonymizer> uadAnonymizers =
 			_uadRegistry.getUADAnonymizers();
 
 		for (UADAnonymizer uadAnonymizer : uadAnonymizers) {
-			uadAnonymizer.autoAnonymizeAll(selectedUser.getUserId());
+			uadAnonymizer.autoAnonymizeAll(selectedUserId);
 		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 		sendRedirect(actionRequest, actionResponse, redirect);
 	}
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private UADRegistry _uadRegistry;

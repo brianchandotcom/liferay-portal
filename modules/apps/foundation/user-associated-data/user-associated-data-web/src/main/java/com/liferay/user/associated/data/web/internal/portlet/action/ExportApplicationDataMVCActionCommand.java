@@ -14,12 +14,9 @@
 
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
@@ -29,7 +26,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
@@ -43,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class ExportApplicationDataMVCActionCommand
-	extends BaseMVCActionCommand {
+	extends BaseUADMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -53,23 +49,19 @@ public class ExportApplicationDataMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		User selUser = _portal.getSelectedUser(actionRequest);
+		long selUserId = getSelectedUserId(actionRequest);
 
-		String[] applicaitonNames = StringUtil.split(
+		String[] applicationNames = StringUtil.split(
 			ParamUtil.getString(actionRequest, "applicationNames"));
 
-		for (String applicaitonName : applicaitonNames) {
+		for (String applicationName : applicationNames) {
 			UADExporter.exportApplicationDataInBackground(
-				applicaitonName, selUser.getUserId(),
-				themeDisplay.getScopeGroupId());
+				applicationName, selUserId, themeDisplay.getScopeGroupId());
 		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 		sendRedirect(actionRequest, actionResponse, redirect);
 	}
-
-	@Reference
-	private Portal _portal;
 
 }

@@ -15,7 +15,6 @@
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 
@@ -25,30 +24,31 @@ import javax.portlet.ActionResponse;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author William Newbury
+ * @author Noah Sherrill
  */
 @Component(
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
-		"mvc.command.name=/auto_anonymize_uad"
+		"mvc.command.name=/anonymize_uad_entities"
 	},
 	service = MVCActionCommand.class
 )
-public class AutoAnonymizeUADMVCActionCommand extends BaseUADMVCActionCommand {
+public class AnonymizeUADEntitiesMVCActionCommand
+	extends BaseUADMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		long selectedUserId = getSelectedUserId(actionRequest);
+
 		UADAnonymizer uadAnonymizer = getUADAnonymizer(actionRequest);
 
-		uadAnonymizer.autoAnonymizeAll(getSelectedUserId(actionRequest));
-
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		sendRedirect(actionRequest, actionResponse, redirect);
+		doMultipleAction(
+			actionRequest,
+			entity -> uadAnonymizer.autoAnonymize(entity, selectedUserId));
 	}
 
 }

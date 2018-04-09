@@ -15,7 +15,6 @@
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 
@@ -25,17 +24,17 @@ import javax.portlet.ActionResponse;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author William Newbury
+ * @author Noah Sherrill
  */
 @Component(
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
-		"mvc.command.name=/auto_anonymize_uad"
+		"mvc.command.name=/delete_uad_entities"
 	},
 	service = MVCActionCommand.class
 )
-public class AutoAnonymizeUADMVCActionCommand extends BaseUADMVCActionCommand {
+public class DeleteUADEntitiesMVCActionCommand extends BaseUADMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -44,11 +43,7 @@ public class AutoAnonymizeUADMVCActionCommand extends BaseUADMVCActionCommand {
 
 		UADAnonymizer uadAnonymizer = getUADAnonymizer(actionRequest);
 
-		uadAnonymizer.autoAnonymizeAll(getSelectedUserId(actionRequest));
-
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		sendRedirect(actionRequest, actionResponse, redirect);
+		doMultipleAction(actionRequest, uadAnonymizer::delete);
 	}
 
 }

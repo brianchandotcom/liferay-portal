@@ -64,7 +64,8 @@ public class CommerceAvailabilityRangeLocalServiceImpl
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceAvailabilityRange deleteCommerceAvailabilityRange(
-		CommerceAvailabilityRange commerceAvailabilityRange) {
+			CommerceAvailabilityRange commerceAvailabilityRange)
+		throws PortalException{
 
 		// Commerce availability range
 

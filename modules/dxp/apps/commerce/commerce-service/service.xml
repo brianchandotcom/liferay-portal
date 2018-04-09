@@ -896,12 +896,7 @@
 		<finder name="CommerceTaxCategoryId" return-type="Collection">
 			<finder-column name="commerceTaxCategoryId" />
 		</finder>
-		<finder name="C_C" return-type="Collection">
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
-		</finder>
-		<finder name="C_C_C" return-type="CommerceTaxCategoryRel" unique="true">
-			<finder-column name="commerceTaxCategoryId" />
+		<finder name="C_C" return-type="CommerceTaxCategoryRel" unique="true">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>

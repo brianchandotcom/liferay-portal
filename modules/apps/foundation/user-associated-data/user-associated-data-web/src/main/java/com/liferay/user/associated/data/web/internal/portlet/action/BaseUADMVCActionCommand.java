@@ -15,8 +15,11 @@
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
@@ -68,6 +71,20 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 		return uadAggregator.get(primaryKey);
 	}
 
+	protected User getSelectedUser(ActionRequest actionRequest)
+		throws PortalException {
+
+		return portal.getSelectedUser(actionRequest);
+	}
+
+	protected long getSelectedUserId(ActionRequest actionRequest)
+		throws PortalException {
+
+		User selectedUser = portal.getSelectedUser(actionRequest);
+
+		return selectedUser.getUserId();
+	}
+
 	protected UADAggregator getUADAggregator(ActionRequest actionRequest) {
 		return uadRegistry.getUADAggregator(getUADRegistryKey(actionRequest));
 	}
@@ -79,6 +96,9 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 	protected String getUADRegistryKey(ActionRequest actionRequest) {
 		return ParamUtil.getString(actionRequest, "uadRegistryKey");
 	}
+
+	@Reference
+	protected Portal portal;
 
 	@Reference
 	protected UADRegistry uadRegistry;

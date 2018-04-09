@@ -39,13 +39,6 @@ public class SourceFormatterSuppressions {
 				suppressionsFileLocation, checkName, fileNameRegex);
 		}
 		else {
-			String alloyMVCJavaFileName =
-				AlloyMVCCheckstyleUtil.getJavaFileName(fileNameRegex);
-
-			if (alloyMVCJavaFileName != null) {
-				fileNameRegex = alloyMVCJavaFileName;
-			}
-
 			_addCheckstyleSuppression(checkName, fileNameRegex);
 		}
 	}
@@ -75,6 +68,13 @@ public class SourceFormatterSuppressions {
 
 			for (String fileNameRegex : fileNameRegexes) {
 				if (absolutePath.matches(".*" + fileNameRegex)) {
+					return true;
+				}
+
+				String fileName = AlloyMVCCheckstyleUtil.getSourceFileName(
+					absolutePath);
+
+				if (fileName.matches(".*" + fileNameRegex)) {
 					return true;
 				}
 			}

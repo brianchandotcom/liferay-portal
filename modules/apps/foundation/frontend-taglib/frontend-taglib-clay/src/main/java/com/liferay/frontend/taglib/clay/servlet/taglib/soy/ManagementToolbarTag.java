@@ -116,7 +116,7 @@ public class ManagementToolbarTag extends BaseClayTag {
 		putValue("contentRenderer", contentRenderer);
 	}
 
-	public void setCreationMenu(Object creationMenu) {
+	public void setCreationMenu(CreationMenu creationMenu) {
 		putValue("creationMenu", creationMenu);
 	}
 

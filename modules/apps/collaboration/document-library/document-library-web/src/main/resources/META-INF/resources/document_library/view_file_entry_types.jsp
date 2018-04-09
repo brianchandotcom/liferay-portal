@@ -24,7 +24,7 @@ DLViewFileEntryTypesDisplayContext dlViewFileEntryTypesDisplayContext = new DLVi
 
 <clay:management-toolbar
 	clearResultsURL="<%= dlViewFileEntryTypesDisplayContext.getClearResultsURL() %>"
-	creationMenu="<%= dlViewFileEntryTypesDisplayContext.getCreationURL() %>"
+	creationMenu="<%= dlViewFileEntryTypesDisplayContext.getCreationMenu() %>"
 	namespace="<%= renderResponse.getNamespace() %>"
 	searchActionURL="<%= dlViewFileEntryTypesDisplayContext.getSearchActionURL() %>"
 	searchFormName="fm"

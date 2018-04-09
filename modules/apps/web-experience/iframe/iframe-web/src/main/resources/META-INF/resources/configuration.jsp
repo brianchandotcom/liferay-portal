@@ -85,7 +85,7 @@ String htmlAttributes =
 								</table>
 							</aui:field-wrapper>
 
-							<aui:field-wrapper name="password">
+							<aui:field-wrapper label="password">
 								<table class="lfr-table">
 									<tr>
 										<td>

@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -59,20 +58,19 @@ public class EditCommerceTaxCategoryRelMVCActionCommand
 
 		try {
 			if (cmd.equals(Constants.UPDATE)) {
-
 				long cpDefinitionId = ParamUtil.getLong(
 					actionRequest, "cpDefinitionId");
 				long commerceTaxCategoryId = ParamUtil.getLong(
 					actionRequest, "commerceTaxCategoryId");
 
-				ServiceContext serviceContext = ServiceContextFactory.getInstance(
-					CommerceTaxCategoryRel.class.getName(), actionRequest);
+				ServiceContext serviceContext =
+					ServiceContextFactory.getInstance(
+						CommerceTaxCategoryRel.class.getName(), actionRequest);
 
 				_commerceTaxCategoryRelService.updateCommerceTaxCategoryRel(
 					commerceTaxCategoryId, CPDefinition.class.getName(),
 					cpDefinitionId, serviceContext);
 			}
-
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchTaxCategoryRelException ||

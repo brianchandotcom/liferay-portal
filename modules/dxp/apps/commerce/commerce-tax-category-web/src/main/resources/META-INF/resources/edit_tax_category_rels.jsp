@@ -50,11 +50,11 @@ String catalogURL = catalogURLObj.toString();
 					for (CommerceTaxCategory commerceTaxCategory : commerceTaxCategories) {
 					%>
 
-					<aui:option
-						label="<%= commerceTaxCategory.getName(locale) %>"
-						selected="<%= (commerceTaxCategoryRel != null) && (commerceTaxCategoryRel.getCommerceTaxCategoryId() == commerceTaxCategory.getCommerceTaxCategoryId()) %>"
-						value="<%= commerceTaxCategory.getCommerceTaxCategoryId() %>"
-					/>
+						<aui:option
+							label="<%= commerceTaxCategory.getName(locale) %>"
+							selected="<%= (commerceTaxCategoryRel != null) && (commerceTaxCategoryRel.getCommerceTaxCategoryId() == commerceTaxCategory.getCommerceTaxCategoryId()) %>"
+							value="<%= commerceTaxCategory.getCommerceTaxCategoryId() %>"
+						/>
 
 					<%
 					}

@@ -125,7 +125,6 @@ public class EditCPInstanceCommercePriceEntryMVCActionCommand
 			else if (cmd.equals(Constants.UPDATE)) {
 				updateCommercePriceEntry(actionRequest);
 			}
-
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchCPInstanceException ||

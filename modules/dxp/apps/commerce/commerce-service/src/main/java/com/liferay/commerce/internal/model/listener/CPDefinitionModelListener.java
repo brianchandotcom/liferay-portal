@@ -42,12 +42,15 @@ public class CPDefinitionModelListener extends BaseModelListener<CPDefinition> {
 			_commerceTaxCategoryRelLocalService.deleteCommerceTaxCategoryRel(
 				cpDefinition.getModelClassName(), cpDefinitionId);
 			_cpDefinitionInventoryLocalService.
-			  deleteCPDefinitionInventoryByCPDefinitionId(cpDefinitionId);
+			deleteCPDefinitionInventoryByCPDefinitionId(cpDefinitionId);
 		}
-		catch (PortalException pe){
+		catch (PortalException pe) {
 			_log.error(pe, pe);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CPDefinitionModelListener.class);
 
 	@Reference
 	private CommerceTaxCategoryRelLocalService
@@ -57,6 +60,4 @@ public class CPDefinitionModelListener extends BaseModelListener<CPDefinition> {
 	private CPDefinitionInventoryLocalService
 		_cpDefinitionInventoryLocalService;
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		CPDefinitionModelListener.class);
 }

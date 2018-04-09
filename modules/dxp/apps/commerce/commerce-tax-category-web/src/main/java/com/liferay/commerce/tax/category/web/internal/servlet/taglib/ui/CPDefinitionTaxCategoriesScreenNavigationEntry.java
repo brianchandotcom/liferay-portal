@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.tax.category.web.internal.servlet.taglib.ui;
 
-import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.service.CommerceTaxCategoryRelService;
@@ -22,12 +21,10 @@ import com.liferay.commerce.service.CommerceTaxCategoryService;
 import com.liferay.commerce.tax.category.web.internal.display.context.CommerceTaxCategoryRelDisplayContext;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -93,7 +90,6 @@ public class CPDefinitionTaxCategoriesScreenNavigationEntry
 		throws IOException {
 
 		try {
-
 			CommerceTaxCategoryRelDisplayContext
 				commerceTaxCategoryRelDisplayContext =
 					new CommerceTaxCategoryRelDisplayContext(
@@ -124,7 +120,6 @@ public class CPDefinitionTaxCategoriesScreenNavigationEntry
 
 	@Reference
 	private JSPRenderer _jspRenderer;
-
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.tax.category.web)"

@@ -14,21 +14,42 @@
 
 package com.liferay.commerce.service.impl;
 
-import com.liferay.commerce.model.CommerceTaxCategory;
 import com.liferay.commerce.model.CommerceTaxCategoryRel;
 import com.liferay.commerce.service.base.CommerceTaxCategoryRelLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.OrderByComparator;
-
-import java.util.List;
 
 /**
  * @author Marco Leo
  */
 public class CommerceTaxCategoryRelLocalServiceImpl
 	extends CommerceTaxCategoryRelLocalServiceBaseImpl {
+
+	@Override
+	public void deleteCommerceTaxCategoryRel(String className, long classPK)
+		throws PortalException {
+
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		commerceTaxCategoryRelPersistence.removeByC_C(classNameId, classPK);
+	}
+
+	@Override
+	public void deleteCommerceTaxCategoryRels(long commerceTaxCategoryId) {
+		commerceTaxCategoryRelPersistence.removeByCommerceTaxCategoryId(
+			commerceTaxCategoryId);
+	}
+
+	@Override
+	public CommerceTaxCategoryRel fetchCommerceTaxCategoryRel(
+		String className, long classPK) {
+
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		return commerceTaxCategoryRelPersistence.fetchByC_C(
+			classNameId, classPK);
+	}
 
 	@Override
 	public CommerceTaxCategoryRel updateCommerceTaxCategoryRel(
@@ -41,8 +62,7 @@ public class CommerceTaxCategoryRelLocalServiceImpl
 		CommerceTaxCategoryRel commerceTaxCategoryRel =
 			fetchCommerceTaxCategoryRel(className, classPK);
 
-		if(commerceTaxCategoryRel == null) {
-
+		if (commerceTaxCategoryRel == null) {
 			long commerceTaxCategoryRelId = counterLocalService.increment();
 
 			commerceTaxCategoryRel = commerceTaxCategoryRelPersistence.create(
@@ -63,30 +83,4 @@ public class CommerceTaxCategoryRelLocalServiceImpl
 		return commerceTaxCategoryRel;
 	}
 
-	@Override
-	public void deleteCommerceTaxCategoryRels(long commerceTaxCategoryId) {
-
-		commerceTaxCategoryRelPersistence.removeByCommerceTaxCategoryId(
-			commerceTaxCategoryId);
-	}
-
-	@Override
-	public void deleteCommerceTaxCategoryRel(
-			String className, long classPK)
-		throws PortalException{
-
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		commerceTaxCategoryRelPersistence.removeByC_C(classNameId, classPK);
-	}
-
-	@Override
-	public CommerceTaxCategoryRel fetchCommerceTaxCategoryRel(
-		String className, long classPK) {
-
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return commerceTaxCategoryRelPersistence.fetchByC_C(
-			classNameId, classPK);
-	}
 }

@@ -21,9 +21,6 @@ import com.liferay.commerce.service.base.CommerceTaxCategoryRelServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.OrderByComparator;
-
-import java.util.List;
 
 /**
  * @author Marco Leo
@@ -31,6 +28,27 @@ import java.util.List;
  */
 public class CommerceTaxCategoryRelServiceImpl
 	extends CommerceTaxCategoryRelServiceBaseImpl {
+
+	@Override
+	public void deleteCommerceTaxCategoryRel(String className, long classPK)
+		throws PortalException {
+
+		checkModel(className, classPK);
+
+		commerceTaxCategoryRelLocalService.deleteCommerceTaxCategoryRel(
+			className, classPK);
+	}
+
+	@Override
+	public CommerceTaxCategoryRel fetchCommerceTaxCategoryRel(
+			String className, long classPK)
+		throws PortalException {
+
+		checkModel(className, classPK);
+
+		return commerceTaxCategoryRelLocalService.fetchCommerceTaxCategoryRel(
+			className, classPK);
+	}
 
 	@Override
 	public CommerceTaxCategoryRel updateCommerceTaxCategoryRel(
@@ -42,28 +60,6 @@ public class CommerceTaxCategoryRelServiceImpl
 
 		return commerceTaxCategoryRelLocalService.updateCommerceTaxCategoryRel(
 			commerceTaxCategoryId, className, classPK, serviceContext);
-	}
-
-	@Override
-	public void deleteCommerceTaxCategoryRel(
-			String className, long classPK)
-		throws PortalException{
-
-		checkModel(className, classPK);
-
-		commerceTaxCategoryRelLocalService.deleteCommerceTaxCategoryRel(
-			className, classPK);
-	}
-
-	@Override
-	public CommerceTaxCategoryRel fetchCommerceTaxCategoryRel(
-			String className, long classPK)
-		throws  PortalException {
-
-		checkModel(className, classPK);
-
-		return commerceTaxCategoryRelLocalService.fetchCommerceTaxCategoryRel(
-			className, classPK);
 	}
 
 	protected void checkModel(String className, long classPK)

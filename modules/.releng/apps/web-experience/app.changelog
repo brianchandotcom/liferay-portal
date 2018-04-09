@@ -1752,3 +1752,134 @@ app.artifacts-7.0.9=\
 app.change.log-7.0.9=LPS-51377 LPS-52675 LPS-57200 LPS-58672 LPS-60598 LPS-60689 LPS-60792 LPS-61099 LPS-61420 LPS-61443 LPS-63118 LPS-63778 LPS-63907 LPS-64031 LPS-64237 LPS-64277 LPS-64335 LPS-64383 LPS-64491 LPS-64558 LPS-64559 LPS-64560 LPS-64570 LPS-64577 LPS-64646 LPS-64674 LPS-64706 LPS-64790 LPS-64809 LPS-64819 LPS-64862 LPS-64923 LPS-65012 LPS-65063 LPS-65080 LPS-65107 LPS-65135 LPS-65225 LPS-65240 LPS-65260 LPS-65268 LPS-65298 LPS-65332 LPS-65362 LPS-65381 LPS-65427 LPS-65436 LPS-65466 LPS-65509 LPS-65569 LPS-65600 LPS-65608 LPS-65660 LPS-65726 LPS-65768 LPS-65794 LPS-65818 LPS-65909 LPS-66293 LPS-66532 LPS-66820 LPS-66842 LPS-66853 LPS-66974 LPS-67079 LPS-67094 LPS-67126 LPS-67325 LPS-67326 LPS-67352 LPS-67406 LPS-67407 LPS-67430 LPS-67649 LPS-67693 LPS-67760 LPS-67840 LPS-67850 LPS-67885 LPS-67971 LPS-68062 LPS-68405 LPS-68448 LPS-68453 LPS-68570 LPS-68616 LPS-69010 LPS-69030 LPS-69406 LPS-69421 LPS-69604 LPS-69630 LPS-69659 LPS-69661 LPS-69740 LPS-69936 LPS-69996 LPS-70043 LPS-70150 LPS-70182 LPS-70310 LPS-70346 LPS-70416 LPS-70435 LPS-70540 LPS-70739 LPS-70946 LPS-70955 LPS-71025 LPS-71121 LPS-71181 LPS-71307 LPS-71393 LPS-71451 LPS-71536 LPS-71537 LPS-71555 LPS-71556 LPS-71566 LPS-71589 LPS-71627 LPS-71668 LPS-71720 LPS-71777 LPS-71786 LPS-71915 LPS-71942 LPS-72054 LPS-72081 LPS-72095 LPS-72163 LPS-72169 LPS-72227 LPS-72233 LPS-72246 LPS-72346 LPS-72390 LPS-72427 LPS-72496 LPS-72507 LPS-72509 LPS-72553 LPS-72670 LPS-72726 LPS-72834 LPS-72906 LPS-72924 LPS-72934 LPS-72938 LPS-72996 LPS-73142 LPS-73172 LPS-73178 LPS-73234 LPS-73400 LPS-73491 LPS-73518 LPS-73586 LPS-73742 LPS-73789 LPS-73910 LPS-73925 LPS-73935 LPS-73940 LPS-73948 LPS-73956 LPS-74002 LPS-74021 LPS-74024 LPS-74081 LPS-74083 LPS-74112 LPS-74130 LPS-74158 LPS-74205 LPS-74209 LPS-74229 LPS-74263 LPS-74281 LPS-74389 LPS-74414 LPS-74500 LPS-74501 LPS-74502 LPS-74532 LPS-74534 LPS-74536 LPS-74544 LPS-74548 LPS-74575 LPS-74598 LPS-74631 LPS-74647 LPS-74678 LPS-74704 LPS-74705 LPS-74735 LPS-74798 LPS-74800 LPS-74803 LPS-74836 LPS-74849 LPS-74862 LPS-74897 LPS-74910 LPS-74934 LPS-74947 LPS-75010 LPS-75034 LPS-75073 LPS-75090 LPS-75131 LPS-75138 LPS-75162 LPS-75231 LPS-75259 LPS-75274 LPS-75291 LPS-75329 LPS-75352 LPS-75432 LPS-75444 LPS-75489 LPS-75533 LPS-75572 LPS-75591 LPS-75614 LPS-75696 LPS-75743 LPS-75766 LPS-75770 LPS-75787 LPS-75796 LPS-75797 LPS-75798 LPS-75808 LPS-75827 LPS-75832 LPS-75859 LPS-75865 LPS-75869 LPS-75871 LPS-75901 LPS-75936 LPS-75950 LPS-75956 LPS-75958 LPS-75969 LPS-75971 LPS-75984 LPS-75997 LPS-76010 LPS-76036 LPS-76041 LPS-76048 LPS-76067 LPS-76111 LPS-76116 LPS-76146 LPS-76151 LPS-76163 LPS-76221 LPS-76226 LPS-76280 LPS-76339 LPS-76344 LPS-76373 LPS-76497 LPS-76579 LPS-76604 LPS-76631 LPS-76651 LPS-76672 LPS-76673 LPS-76690 LPS-76696 LPS-76706 LPS-76727 LPS-76737 LPS-76747 LPS-76766 LPS-76797 LPS-76828 LPS-76840 LPS-76981 LPS-77018 LPS-77025 LPS-77038 LPS-77111 LPS-77143 LPS-77164 LPS-77194 LPS-77319 LPS-77321 LPS-77382 LPS-77428 LPS-77459 LPS-77464 LPS-77484 LPS-77685 LPS-77761 LPS-77766 LPS-78057 LPS-78064 LPS-78128 LPS-78150 LPS-78181 
 
 app.git.id-7.0.9=1315ff6875135daf5f41378e56cdd6def2ac7e14
+
+#
+# Liferay App Version 7.0.10
+#
+
+app.artifacts-7.0.10=\
+	com.liferay.application.list.api-2.2.5.jar,\
+	com.liferay.application.list.taglib-2.0.14.jar,\
+	com.liferay.application.list.user.personal.site.permissions-2.0.7.jar,\
+	com.liferay.asset.browser.web-1.0.25.jar,\
+	com.liferay.asset.categories.admin.web-1.1.15.jar,\
+	com.liferay.asset.categories.navigation.api-1.0.1.jar,\
+	com.liferay.asset.categories.navigation.web-2.0.7.jar,\
+	com.liferay.asset.categories.service-1.0.12.jar,\
+	com.liferay.asset.display.web-1.0.9.jar,\
+	com.liferay.asset.entry.query.processor.custom.user.attributes-2.0.9.jar,\
+	com.liferay.asset.publisher.layout.prototype-1.0.15.jar,\
+	com.liferay.asset.publisher.web-1.8.12.jar,\
+	com.liferay.asset.service-1.1.4.jar,\
+	com.liferay.asset.taglib-2.0.11.jar,\
+	com.liferay.asset.tags.admin.web-1.0.15.jar,\
+	com.liferay.asset.tags.api-1.0.3.jar,\
+	com.liferay.asset.tags.compiler.web-2.0.7.jar,\
+	com.liferay.asset.tags.navigation.api-1.0.1.jar,\
+	com.liferay.asset.tags.navigation.web-3.0.8.jar,\
+	com.liferay.asset.tags.service-2.0.4.jar,\
+	com.liferay.asset.web-2.0.6.jar,\
+	com.liferay.exportimport.api-2.2.2.jar,\
+	com.liferay.exportimport.resources.importer-2.0.3.jar,\
+	com.liferay.exportimport.service-4.0.9.jar,\
+	com.liferay.exportimport.web-1.0.38.jar,\
+	com.liferay.iframe.web-1.0.17.jar,\
+	com.liferay.journal.api-2.12.8.jar,\
+	com.liferay.journal.content.asset.addon.entry.comments-1.0.10.jar,\
+	com.liferay.journal.content.asset.addon.entry.common-2.0.4.jar,\
+	com.liferay.journal.content.asset.addon.entry.conversions-2.0.9.jar,\
+	com.liferay.journal.content.asset.addon.entry.locales-1.0.8.jar,\
+	com.liferay.journal.content.asset.addon.entry.print-2.0.5.jar,\
+	com.liferay.journal.content.asset.addon.entry.ratings-2.0.5.jar,\
+	com.liferay.journal.content.asset.addon.entry.related.assets-2.0.5.jar,\
+	com.liferay.journal.content.search.web-1.0.17.jar,\
+	com.liferay.journal.content.web-2.0.9.jar,\
+	com.liferay.journal.editor.configuration-1.0.3.jar,\
+	com.liferay.journal.item.selector.api-1.0.3.jar,\
+	com.liferay.journal.item.selector.web-1.0.6.jar,\
+	com.liferay.journal.lang-2.0.16.jar,\
+	com.liferay.journal.ratings.definition-2.0.3.jar,\
+	com.liferay.journal.service-3.24.8.jar,\
+	com.liferay.journal.taglib-1.0.7.jar,\
+	com.liferay.journal.terms.of.use-2.0.27.jar,\
+	com.liferay.journal.web-1.10.17.jar,\
+	com.liferay.layout.admin.web-1.0.65.jar,\
+	com.liferay.layout.impl-2.0.5.jar,\
+	com.liferay.layout.item.selector.api-1.0.4.jar,\
+	com.liferay.layout.item.selector.web-1.1.11.jar,\
+	com.liferay.layout.prototype.api-1.0.1.jar,\
+	com.liferay.layout.prototype.impl-1.0.6.jar,\
+	com.liferay.layout.prototype.web-1.0.15.jar,\
+	com.liferay.layout.set.prototype.api-1.0.2.jar,\
+	com.liferay.layout.set.prototype.impl-2.0.2.jar,\
+	com.liferay.layout.set.prototype.web-1.0.16.jar,\
+	com.liferay.layout.taglib-2.2.2.jar,\
+	com.liferay.layout.type.controller.control.panel-2.0.5.jar,\
+	com.liferay.layout.type.controller.full.page.application-2.0.9.jar,\
+	com.liferay.layout.type.controller.node-2.0.7.jar,\
+	com.liferay.layout.type.controller.shared.portlet-2.0.6.jar,\
+	com.liferay.nested.portlets.web-2.0.17.jar,\
+	com.liferay.portlet.configuration.css.web-2.0.19.jar,\
+	com.liferay.portlet.configuration.icon.close-2.0.3.jar,\
+	com.liferay.portlet.configuration.icon.edit-2.0.3.jar,\
+	com.liferay.portlet.configuration.icon.edit.defaults-2.0.3.jar,\
+	com.liferay.portlet.configuration.icon.edit.guest-2.0.3.jar,\
+	com.liferay.portlet.configuration.icon.help-2.0.3.jar,\
+	com.liferay.portlet.configuration.icon.locator.api-2.0.4.jar,\
+	com.liferay.portlet.configuration.icon.maximize-2.0.3.jar,\
+	com.liferay.portlet.configuration.icon.minimize-2.0.3.jar,\
+	com.liferay.portlet.configuration.icon.print-2.0.3.jar,\
+	com.liferay.portlet.configuration.icon.refresh-2.0.3.jar,\
+	com.liferay.portlet.configuration.sharing.web-2.0.11.jar,\
+	com.liferay.portlet.configuration.toolbar.contributor.locator.api-2.0.3.jar,\
+	com.liferay.portlet.configuration.web-1.0.28.jar,\
+	com.liferay.portlet.display.template-2.2.3.jar,\
+	com.liferay.portlet.display.template.web-2.0.8.jar,\
+	com.liferay.product.navigation.control.menu.api-3.0.1.jar,\
+	com.liferay.product.navigation.control.menu.theme.contributor-2.0.13.jar,\
+	com.liferay.product.navigation.control.menu.web-2.0.19.jar,\
+	com.liferay.product.navigation.control.panel-2.0.3.jar,\
+	com.liferay.product.navigation.product.menu.theme.contributor-2.0.8.jar,\
+	com.liferay.product.navigation.product.menu.web-2.0.24.jar,\
+	com.liferay.product.navigation.simulation.api-1.1.0.jar,\
+	com.liferay.product.navigation.simulation.device-2.0.13.jar,\
+	com.liferay.product.navigation.simulation.theme.contributor-2.0.4.jar,\
+	com.liferay.product.navigation.simulation.web-3.0.3.jar,\
+	com.liferay.product.navigation.site.administration-2.0.15.jar,\
+	com.liferay.product.navigation.taglib-2.0.14.jar,\
+	com.liferay.product.navigation.user-2.0.8.jar,\
+	com.liferay.product.navigation.user.personal.bar.web-2.0.10.jar,\
+	com.liferay.rss.api-1.0.1.jar,\
+	com.liferay.rss.util-1.0.12.jar,\
+	com.liferay.rss.web-3.0.2.jar,\
+	com.liferay.site.admin.web-1.0.39.jar,\
+	com.liferay.site.api-2.1.9.jar,\
+	com.liferay.site.browser.web-2.0.18.jar,\
+	com.liferay.site.item.selector.api-1.0.4.jar,\
+	com.liferay.site.item.selector.web-2.0.21.jar,\
+	com.liferay.site.memberships.web-1.0.28.jar,\
+	com.liferay.site.my.sites.web-2.0.6.jar,\
+	com.liferay.site.navigation.breadcrumb.web-3.0.4.jar,\
+	com.liferay.site.navigation.directory.web-2.0.10.jar,\
+	com.liferay.site.navigation.language.api-1.0.1.jar,\
+	com.liferay.site.navigation.language.web-3.0.5.jar,\
+	com.liferay.site.navigation.menu.web-2.0.21.jar,\
+	com.liferay.site.navigation.site.map.web-2.0.18.jar,\
+	com.liferay.site.navigation.taglib-2.1.9.jar,\
+	com.liferay.site.teams.web-1.0.18.jar,\
+	com.liferay.staging.api-2.1.1.jar,\
+	com.liferay.staging.bar.web-1.0.24.jar,\
+	com.liferay.staging.configuration.web-1.0.21.jar,\
+	com.liferay.staging.lang-2.0.16.jar,\
+	com.liferay.staging.portlet.data.handler-3.0.1.jar,\
+	com.liferay.staging.processes.web-1.0.27.jar,\
+	com.liferay.staging.security-2.0.29.jar,\
+	com.liferay.staging.taglib-3.1.20.jar,\
+	com.liferay.trash.service-1.0.3.jar,\
+	com.liferay.trash.taglib-2.0.10.jar,\
+	com.liferay.trash.web-1.0.26.jar,\
+	com.liferay.xsl.content.web-2.0.11.jar
+
+app.change.log-7.0.10=LPS-52675 LPS-60764 LPS-61099 LPS-61420 LPS-61443 LPS-63057 LPS-63118 LPS-63235 LPS-63581 LPS-64031 LPS-64034 LPS-64196 LPS-64277 LPS-64370 LPS-64383 LPS-64557 LPS-64673 LPS-64704 LPS-64706 LPS-64809 LPS-64812 LPS-64863 LPS-65012 LPS-65072 LPS-65101 LPS-65107 LPS-65135 LPS-65225 LPS-65297 LPS-65362 LPS-65381 LPS-65432 LPS-65435 LPS-65509 LPS-65534 LPS-65535 LPS-65640 LPS-65658 LPS-65660 LPS-65698 LPS-65775 LPS-65790 LPS-65810 LPS-65850 LPS-65909 LPS-66017 LPS-66099 LPS-66323 LPS-66404 LPS-66416 LPS-66429 LPS-66526 LPS-66646 LPS-66853 LPS-66864 LPS-66875 LPS-66883 LPS-66935 LPS-66938 LPS-66974 LPS-67079 LPS-67225 LPS-67352 LPS-67389 LPS-67430 LPS-68062 LPS-68301 LPS-68514 LPS-68923 LPS-69082 LPS-69252 LPS-69551 LPS-69661 LPS-70231 LPS-70257 LPS-70739 LPS-71004 LPS-71619 LPS-71775 LPS-71786 LPS-72054 LPS-72081 LPS-72095 LPS-72256 LPS-72472 LPS-72638 LPS-72726 LPS-72930 LPS-73178 LPS-73518 LPS-74544 LPS-74849 LPS-74897 LPS-75010 LPS-75049 LPS-75551 LPS-75984 LPS-76221 LPS-77143 LPS-77273 LPS-77688 LPS-77775 LPS-77803 LPS-77901 LPS-77925 LPS-78013 LPS-78167 LPS-78248 LPS-78262 LPS-78290 LPS-78429 LPS-78476 LPS-78748 LPS-78772 LPS-78901 
+
+app.git.id-7.0.10=3cb195a08b88175d5549fb1a8fb10e7399a416e9

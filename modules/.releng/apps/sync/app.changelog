@@ -123,3 +123,17 @@ app.artifacts-4.1.3=\
 app.change.log-4.1.3=LPS-78901 SYNC-1762 
 
 app.git.id-4.1.3=da5e756302809472f0553744d324e90ba218842d
+
+#
+# Liferay App Version 4.1.4
+#
+
+app.artifacts-4.1.4=\
+	com.liferay.sync.api-3.0.4.jar,\
+	com.liferay.sync.security-2.0.9.jar,\
+	com.liferay.sync.service-1.6.4.jar,\
+	com.liferay.sync.web-1.0.19.jar
+
+app.change.log-4.1.4=LPS-74544 LPS-75049
+
+app.git.id-4.1.4=3cb195a08b88175d5549fb1a8fb10e7399a416e9

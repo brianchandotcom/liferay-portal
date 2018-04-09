@@ -824,6 +824,8 @@
 
 		<reference entity="Image" package-path="com.liferay.portal" />
 	</entity>
+	<entity local-service="true" name="CommerceTaxCalculation" remote-service="false">
+	</entity>
 	<entity local-service="true" name="CommerceTaxCategory" remote-service="true">
 
 		<!-- PK fields -->

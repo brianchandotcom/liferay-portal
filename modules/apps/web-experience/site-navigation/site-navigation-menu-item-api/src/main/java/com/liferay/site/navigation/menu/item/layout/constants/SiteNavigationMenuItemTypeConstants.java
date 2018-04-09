@@ -12,13 +12,17 @@
  * details.
  */
 
-package com.liferay.site.navigation.menu.item.url.internal.constants;
+package com.liferay.site.navigation.menu.item.layout.constants;
 
 /**
- * @author Eudaldo Alonso
+ * @author Eudaldo Alonsoa
  */
-public class SiteNavigationMenuItemTypeURLConstants {
+public class SiteNavigationMenuItemTypeConstants {
+
+	public static final String LAYOUT = "layout";
 
 	public static final String URL = "url";
+
+	public static final String NODE = "node";
 
 }

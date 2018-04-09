@@ -15,13 +15,11 @@
 package com.liferay.site.navigation.menu.item.node.internal.type;
 
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.site.navigation.constants.SiteNavigationWebKeys;
-import com.liferay.site.navigation.menu.item.node.internal.constants.SiteNavigationMenuItemTypeNodeConstants;
+import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 
@@ -42,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "site.navigation.menu.item.type=" + SiteNavigationMenuItemTypeNodeConstants.NODE,
+	property = "site.navigation.menu.item.type=" + SiteNavigationMenuItemTypeConstants.NODE,
 	service = SiteNavigationMenuItemType.class
 )
 public class NodeSiteNavigationMenuItemType
@@ -75,16 +73,7 @@ public class NodeSiteNavigationMenuItemType
 
 	@Override
 	public String getType() {
-		return SiteNavigationMenuItemTypeNodeConstants.NODE;
-	}
-
-	@Override
-	public String getURL(
-			HttpServletRequest request,
-			SiteNavigationMenuItem siteNavigationMenuItem)
-		throws PortalException {
-
-		return StringPool.BLANK;
+		return SiteNavigationMenuItemTypeConstants.NODE;
 	}
 
 	@Override

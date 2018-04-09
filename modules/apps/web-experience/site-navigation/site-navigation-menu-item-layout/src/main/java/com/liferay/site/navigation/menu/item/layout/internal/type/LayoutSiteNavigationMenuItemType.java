@@ -16,17 +16,21 @@ package com.liferay.site.navigation.menu.item.layout.internal.type;
 
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.navigation.menu.item.layout.internal.constants.SiteNavigationMenuItemTypeLayoutConstants;
+import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
+import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.menu.item.layout.internal.constants.SiteNavigationMenuItemTypeLayoutWebKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
@@ -52,7 +56,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "site.navigation.menu.item.type=" + SiteNavigationMenuItemTypeLayoutConstants.LAYOUT,
+	property = "site.navigation.menu.item.type=" + SiteNavigationMenuItemTypeConstants.LAYOUT,
 	service = SiteNavigationMenuItemType.class
 )
 public class LayoutSiteNavigationMenuItemType
@@ -82,6 +86,51 @@ public class LayoutSiteNavigationMenuItemType
 	}
 
 	@Override
+	public Layout getLayout(SiteNavigationMenuItem siteNavigationMenuItem) {
+		return _getLayout(siteNavigationMenuItem);
+	}
+
+	@Override
+	public String getRegularURL(
+			HttpServletRequest request,
+			SiteNavigationMenuItem siteNavigationMenuItem)
+		throws Exception {
+
+		Layout layout = _getLayout(siteNavigationMenuItem);
+
+		return layout.getRegularURL(request);
+	}
+
+	@Override
+	public String getResetLayoutURL(
+			HttpServletRequest request,
+			SiteNavigationMenuItem siteNavigationMenuItem)
+		throws Exception {
+
+		Layout layout = _getLayout(siteNavigationMenuItem);
+
+		return layout.getResetLayoutURL(request);
+	}
+
+	@Override
+	public String getResetMaxStateURL(
+			HttpServletRequest request,
+			SiteNavigationMenuItem siteNavigationMenuItem)
+		throws Exception {
+
+		Layout layout = _getLayout(siteNavigationMenuItem);
+
+		return layout.getResetMaxStateURL(request);
+	}
+
+	@Override
+	public String getTarget(SiteNavigationMenuItem siteNavigationMenuItem) {
+		Layout layout = _getLayout(siteNavigationMenuItem);
+
+		return layout.getTarget();
+	}
+
+	@Override
 	public String getTitle(
 		SiteNavigationMenuItem siteNavigationMenuItem, Locale locale) {
 
@@ -96,7 +145,7 @@ public class LayoutSiteNavigationMenuItemType
 			return label;
 		}
 
-		Layout layout = getLayout(siteNavigationMenuItem);
+		Layout layout = _getLayout(siteNavigationMenuItem);
 
 		if (layout != null) {
 			return layout.getName(locale);
@@ -107,7 +156,7 @@ public class LayoutSiteNavigationMenuItemType
 
 	@Override
 	public String getType() {
-		return SiteNavigationMenuItemTypeLayoutConstants.LAYOUT;
+		return SiteNavigationMenuItemTypeConstants.LAYOUT;
 	}
 
 	@Override
@@ -124,17 +173,65 @@ public class LayoutSiteNavigationMenuItemType
 	}
 
 	@Override
-	public String getURL(
-			HttpServletRequest request,
-			SiteNavigationMenuItem siteNavigationMenuItem)
+	public String getUnescapedName(
+		SiteNavigationMenuItem siteNavigationMenuItem, String languageId) {
+
+		Layout layout = _getLayout(siteNavigationMenuItem);
+
+		return layout.getName(languageId);
+	}
+
+	@Override
+	public String iconURL(
+		SiteNavigationMenuItem siteNavigationMenuItem, String pathImage) {
+
+		Layout layout = _getLayout(siteNavigationMenuItem);
+
+		if ((layout == null) || !layout.isIconImage()) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(pathImage);
+		sb.append("/layout_icon?img_id=");
+		sb.append(layout.getIconImageId());
+		sb.append("&t=");
+		sb.append(WebServerServletTokenUtil.getToken(layout.getIconImageId()));
+
+		return sb.toString();
+	}
+
+	@Override
+	public boolean isBrowsable(SiteNavigationMenuItem siteNavigationMenuItem) {
+		Layout layout = _getLayout(siteNavigationMenuItem);
+
+		LayoutType layoutType = layout.getLayoutType();
+
+		return layoutType.isBrowsable();
+	}
+
+	@Override
+	public boolean isChildSelected(
+			boolean selectable, SiteNavigationMenuItem siteNavigationMenuItem,
+			Layout curLayout)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		Layout layout = _getLayout(siteNavigationMenuItem);
 
-		Layout layout = getLayout(siteNavigationMenuItem);
+		return layout.isChildSelected(selectable, curLayout);
+	}
 
-		return _portal.getLayoutFullURL(layout, themeDisplay, true);
+	@Override
+	public boolean isSelected(
+			boolean selectable, SiteNavigationMenuItem siteNavigationMenuItem,
+			Layout curLayout)
+		throws Exception {
+
+		Layout layout = _getLayout(siteNavigationMenuItem);
+
+		return layout.isSelected(
+			selectable, curLayout, curLayout.getAncestorPlid());
 	}
 
 	@Override
@@ -164,7 +261,7 @@ public class LayoutSiteNavigationMenuItemType
 			_itemSelector);
 
 		request.setAttribute(
-			WebKeys.SEL_LAYOUT, getLayout(siteNavigationMenuItem));
+			WebKeys.SEL_LAYOUT, _getLayout(siteNavigationMenuItem));
 		request.setAttribute(
 			WebKeys.TITLE,
 			getTitle(siteNavigationMenuItem, themeDisplay.getLocale()));
@@ -173,7 +270,7 @@ public class LayoutSiteNavigationMenuItemType
 			_servletContext, request, response, "/edit_layout.jsp");
 	}
 
-	protected Layout getLayout(SiteNavigationMenuItem siteNavigationMenuItem) {
+	private Layout _getLayout(SiteNavigationMenuItem siteNavigationMenuItem) {
 		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
 
 		typeSettingsProperties.fastLoad(

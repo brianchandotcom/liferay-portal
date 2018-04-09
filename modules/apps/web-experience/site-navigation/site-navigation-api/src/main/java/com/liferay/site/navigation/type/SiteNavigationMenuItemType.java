@@ -58,10 +58,13 @@ public interface SiteNavigationMenuItemType {
 		return layout.getTypeSettings();
 	}
 
-	public String getURL(
+	public default String getURL(
 			HttpServletRequest request,
 			SiteNavigationMenuItem siteNavigationMenuItem)
-		throws PortalException;
+		throws PortalException {
+
+		return StringPool.BLANK;
+	}
 
 	public default void renderAddPage(
 			HttpServletRequest request, HttpServletResponse response)

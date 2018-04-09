@@ -172,11 +172,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	@Override
-	public List<File> getSourceFormatterSuppressionsFiles() {
-		return _sourceFormatterSuppressionsFiles;
-	}
-
-	@Override
 	public List<SourceMismatchException> getSourceMismatchExceptions() {
 		return _sourceMismatchExceptions;
 	}
@@ -242,13 +237,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		SourceFormatterSuppressions sourceFormatterSuppressions) {
 
 		_sourceFormatterSuppressions = sourceFormatterSuppressions;
-	}
-
-	@Override
-	public void setSourceFormatterSuppressionsFiles(
-		List<File> sourceFormatterSuppressionsFiles) {
-
-		_sourceFormatterSuppressionsFiles = sourceFormatterSuppressionsFiles;
 	}
 
 	@Override
@@ -748,7 +736,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private Map<String, Set<SourceFormatterMessage>>
 		_sourceFormatterMessagesMap = new ConcurrentHashMap<>();
 	private SourceFormatterSuppressions _sourceFormatterSuppressions;
-	private List<File> _sourceFormatterSuppressionsFiles;
 	private final List<SourceMismatchException> _sourceMismatchExceptions =
 		new ArrayList<>();
 

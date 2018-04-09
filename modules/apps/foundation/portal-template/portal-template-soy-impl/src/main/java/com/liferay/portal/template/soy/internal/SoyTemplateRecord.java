@@ -31,6 +31,7 @@ import com.google.template.soy.data.restricted.StringData;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.template.soy.utils.SoyRawData;
 
 import java.io.IOException;
 
@@ -192,6 +193,11 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 		}
 		else if (object instanceof SoyData) {
 			return (SoyData)object;
+		}
+		else if (object instanceof SoyRawData) {
+			SoyRawData soyRawData = (SoyRawData)object;
+
+			return _toSoyValue(soyRawData.getValue());
 		}
 		else if (object instanceof String) {
 			return StringData.forValue((String)object);

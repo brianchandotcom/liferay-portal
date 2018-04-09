@@ -37,9 +37,9 @@ public class CommerceTaxCategoryRelDisplayContext {
 		CommerceTaxCategoryService commerceTaxCategoryService,
 		CommerceTaxCategoryRelService commerceTaxCategoryRelService) {
 
+		_httpServletRequest = httpServletRequest;
 		_commerceTaxCategoryService = commerceTaxCategoryService;
 		_commerceTaxCategoryRelService = commerceTaxCategoryRelService;
-		_httpServletRequest = httpServletRequest;
 	}
 
 	public List<CommerceTaxCategory> getCommerceTaxCategories(long groupId) {

@@ -42,7 +42,7 @@ public class CPDefinitionModelListener extends BaseModelListener<CPDefinition> {
 			_commerceTaxCategoryRelLocalService.deleteCommerceTaxCategoryRel(
 				cpDefinition.getModelClassName(), cpDefinitionId);
 			_cpDefinitionInventoryLocalService.
-			deleteCPDefinitionInventoryByCPDefinitionId(cpDefinitionId);
+				deleteCPDefinitionInventoryByCPDefinitionId(cpDefinitionId);
 		}
 		catch (PortalException pe) {
 			_log.error(pe, pe);

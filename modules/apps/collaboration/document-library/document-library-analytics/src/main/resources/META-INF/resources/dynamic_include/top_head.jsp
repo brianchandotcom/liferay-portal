@@ -57,7 +57,7 @@
 		}
 	);
 
-	function onDestroyPortlet() {
+	var onDestroyPortlet = function() {
 		downloadClickHandler.removeListener()
 		Liferay.detach('destroyPortlet', onDestroyPortlet);
 	}

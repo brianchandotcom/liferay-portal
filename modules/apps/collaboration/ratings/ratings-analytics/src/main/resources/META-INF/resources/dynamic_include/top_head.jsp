@@ -17,7 +17,7 @@
 <%@ include file="/dynamic_include/init.jsp" %>
 
 <aui:script sandbox="<%= true %>">
-	function onVote(event) {
+	var onVote = function(event) {
 		if (window.Analytics) {
 			Analytics.send(
 				'VOTE',
@@ -31,7 +31,7 @@
 		}
 	}
 
-	function onDestroyPortlet() {
+	var onDestroyPortlet = function() {
 		Liferay.detach('ratings:vote', onVote);
 		Liferay.detach('destroyPortlet', onDestroyPortlet);
 	}

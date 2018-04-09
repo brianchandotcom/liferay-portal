@@ -17,7 +17,7 @@
 <%@ include file="/dynamic_include/init.jsp" %>
 
 <aui:script sandbox="<%= true %>">
-	function onMessagePosted(event) {
+	var onMessagePosted = function(event) {
 		if (window.Analytics) {
 			Analytics.send(
 				'POST',
@@ -32,7 +32,7 @@
 		}
 	}
 
-	function onDestroyPortlet() {
+	var onDestroyPortlet = function() {
 		Liferay.detach('messagePosted', onMessagePosted);
 		Liferay.detach('destroyPortlet', onDestroyPortlet);
 	}

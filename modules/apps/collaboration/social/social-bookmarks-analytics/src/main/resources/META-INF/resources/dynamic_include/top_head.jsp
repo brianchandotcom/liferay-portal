@@ -17,7 +17,7 @@
 <%@ include file="/dynamic_include/init.jsp" %>
 
 <aui:script sandbox="<%= true %>">
-	function onShare(data) {
+	var onShare = function(data) {
 		if (window.Analytics) {
 			Analytics.send(
 				'SHARE',
@@ -32,7 +32,7 @@
 		}
 	}
 
-	function onDestroyPortlet() {
+	var onDestroyPortlet = function() {
 		Liferay.detach('socialBookmarks:share', onShare);
 		Liferay.detach('destroyPortlet', onDestroyPortlet);
 	}

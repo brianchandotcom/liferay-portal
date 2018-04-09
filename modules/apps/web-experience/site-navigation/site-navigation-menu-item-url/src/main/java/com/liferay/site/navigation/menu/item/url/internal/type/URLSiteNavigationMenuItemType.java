@@ -85,6 +85,11 @@ public class URLSiteNavigationMenuItemType
 	}
 
 	@Override
+	public boolean isBrowsable(SiteNavigationMenuItem siteNavigationMenuItem) {
+		return true;
+	}
+
+	@Override
 	public void renderAddPage(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {

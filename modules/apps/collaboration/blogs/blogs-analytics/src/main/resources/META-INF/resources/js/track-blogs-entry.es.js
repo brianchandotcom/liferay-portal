@@ -1,4 +1,4 @@
-/* global Analytics */
+/* global Analytics, Liferay */
 
 import debounce from 'metal-debounce';
 
@@ -56,32 +56,44 @@ export default (entryId, blogsEntryBodyId) => {
 			}
 		};
 
-		Analytics.registerPlugin(
-			function(analytics) {
-				document.addEventListener('scroll', throttle(sendEvent, 500));
-				document.addEventListener('scroll', debounce(sendEvent, 1500));
+		var onScrollProgress = throttle(sendEvent, 500);
+
+		document.addEventListener('scroll', onScrollProgress);
+
+		var onScrollEnd = debounce(sendEvent, 1500);
+
+		document.addEventListener('scroll', onScrollEnd);
+
+		var onClick = event => {
+			var element = event.target;
+			var tagName = element.tagName.toLowerCase();
+			var payload = {
+				entryId,
+				tagName
+			};
+
+			if (tagName === 'a') {
+				payload.href = element.href;
+				payload.text = element.innerText;
 			}
-		);
+			else if (tagName === 'img') {
+				payload.src = element.src;
+			}
 
-		entry.addEventListener(
-			'click',
-			event => {
-				var element = event.target;
-				var tagName = element.tagName.toLowerCase();
-				var payload = {
-					entryId,
-					tagName
-				};
+			Analytics.send('CLICK', applicationId, payload);
+		};
 
-				if (tagName === 'a') {
-					payload.href = element.href;
-					payload.text = element.innerText;
-				}
-				else if (tagName === 'img') {
-					payload.src = element.src;
-				}
+		entry.addEventListener('click', onClick);
 
-				Analytics.send('CLICK', applicationId, payload);
-			});
+		var onDestroyPortlet = function() {
+			document.removeEventListener('scroll', onScrollProgress);
+			document.removeEventListener('scroll', onScrollEnd);
+
+			entry.removeEventListener('click', onClick);
+
+			Liferay.detach('destroyPortlet', onDestroyPortlet);
+		};
+
+		Liferay.on('destroyPortlet', onDestroyPortlet);
 	}
 };

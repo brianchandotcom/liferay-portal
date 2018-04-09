@@ -36,6 +36,7 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
@@ -138,6 +139,11 @@ public class ECBExchangeRateProvider implements ExchangeRateProvider {
 		_url = ecbExchangeRateProviderConfiguration.europeanCentralBankURL();
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_url = null;
+	}
+
 	private URL _getURL() throws Exception {
 		Class<?> clazz = getClass();
 
@@ -158,7 +164,6 @@ public class ECBExchangeRateProvider implements ExchangeRateProvider {
 	@Reference
 	private SAXReader _saxReader;
 
-	private String _url =
-		"http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml";
+	private volatile String _url;
 
 }

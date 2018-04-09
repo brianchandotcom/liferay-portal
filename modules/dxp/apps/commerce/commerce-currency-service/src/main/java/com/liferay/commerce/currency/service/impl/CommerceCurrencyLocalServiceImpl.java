@@ -167,7 +167,8 @@ public class CommerceCurrencyLocalServiceImpl
 		Class<?> clazz = getClass();
 
 		String currenciesPath =
-			"com/liferay/commerce/currency/internal/currencies.json";
+			"com/liferay/commerce/currency/service/impl/dependencies" +
+				"/currencies.json";
 
 		String countriesJSON = StringUtil.read(
 			clazz.getClassLoader(), currenciesPath, false);

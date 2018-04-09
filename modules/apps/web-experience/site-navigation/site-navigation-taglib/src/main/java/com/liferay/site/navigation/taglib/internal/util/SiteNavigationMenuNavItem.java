@@ -78,8 +78,8 @@ public class SiteNavigationMenuNavItem extends NavItem {
 	}
 
 	@Override
-	public String getURL() {
-		return _siteNavigationMenuItemType.getURL(
+	public String getRegularURL() throws Exception {
+		return _siteNavigationMenuItemType.getRegularURL(
 			_request, _siteNavigationMenuItem);
 	}
 

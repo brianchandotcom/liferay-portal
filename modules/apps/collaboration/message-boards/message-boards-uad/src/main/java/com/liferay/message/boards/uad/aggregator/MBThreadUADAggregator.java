@@ -21,8 +21,8 @@ import com.liferay.message.boards.uad.constants.MBUADConstants;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import com.liferay.user.associated.data.aggregator.DynamicQueryUADEntityAggregator;
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
+import com.liferay.user.associated.data.aggregator.DynamicQueryUADAggregator;
+import com.liferay.user.associated.data.aggregator.UADAggregator;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,17 +36,17 @@ import java.util.List;
  * @generated
  */
 @Component(immediate = true, property =  {
-	"model.class.name=" + MBUADConstants.CLASS_NAME_MB_THREAD}, service = UADEntityAggregator.class)
-public class MBThreadUADEntityAggregator extends DynamicQueryUADEntityAggregator<MBThread> {
+	"model.class.name=" + MBUADConstants.CLASS_NAME_MB_THREAD}, service = UADAggregator.class)
+public class MBThreadUADAggregator extends DynamicQueryUADAggregator<MBThread> {
 	@Override
 	public String getApplicationName() {
 		return MBUADConstants.APPLICATION_NAME;
 	}
 
 	@Override
-	public MBThread getEntity(Serializable entityId) throws PortalException {
+	public MBThread get(Serializable primaryKey) throws PortalException {
 		return _mbThreadLocalService.getMBThread(Long.valueOf(
-				entityId.toString()));
+				primaryKey.toString()));
 	}
 
 	@Override
@@ -60,8 +60,8 @@ public class MBThreadUADEntityAggregator extends DynamicQueryUADEntityAggregator
 	}
 
 	@Override
-	protected List<MBThread> doGetEntities(DynamicQuery dynamicQuery,
-		int start, int end) {
+	protected List<MBThread> doGetRange(DynamicQuery dynamicQuery, int start,
+		int end) {
 		return _mbThreadLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 

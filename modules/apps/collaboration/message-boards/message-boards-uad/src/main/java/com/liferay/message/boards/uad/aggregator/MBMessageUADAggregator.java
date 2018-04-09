@@ -14,15 +14,15 @@
 
 package com.liferay.message.boards.uad.aggregator;
 
-import com.liferay.message.boards.model.MBCategory;
-import com.liferay.message.boards.service.MBCategoryLocalService;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.uad.constants.MBUADConstants;
 
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import com.liferay.user.associated.data.aggregator.DynamicQueryUADEntityAggregator;
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
+import com.liferay.user.associated.data.aggregator.DynamicQueryUADAggregator;
+import com.liferay.user.associated.data.aggregator.UADAggregator;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,42 +36,40 @@ import java.util.List;
  * @generated
  */
 @Component(immediate = true, property =  {
-	"model.class.name=" + MBUADConstants.CLASS_NAME_MB_CATEGORY}, service = UADEntityAggregator.class)
-public class MBCategoryUADEntityAggregator
-	extends DynamicQueryUADEntityAggregator<MBCategory> {
+	"model.class.name=" + MBUADConstants.CLASS_NAME_MB_MESSAGE}, service = UADAggregator.class)
+public class MBMessageUADAggregator extends DynamicQueryUADAggregator<MBMessage> {
 	@Override
 	public String getApplicationName() {
 		return MBUADConstants.APPLICATION_NAME;
 	}
 
 	@Override
-	public MBCategory getEntity(Serializable entityId)
-		throws PortalException {
-		return _mbCategoryLocalService.getMBCategory(Long.valueOf(
-				entityId.toString()));
+	public MBMessage get(Serializable primaryKey) throws PortalException {
+		return _mbMessageLocalService.getMBMessage(Long.valueOf(
+				primaryKey.toString()));
 	}
 
 	@Override
 	protected long doCount(DynamicQuery dynamicQuery) {
-		return _mbCategoryLocalService.dynamicQueryCount(dynamicQuery);
+		return _mbMessageLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
 	@Override
 	protected DynamicQuery doGetDynamicQuery() {
-		return _mbCategoryLocalService.dynamicQuery();
+		return _mbMessageLocalService.dynamicQuery();
 	}
 
 	@Override
-	protected List<MBCategory> doGetEntities(DynamicQuery dynamicQuery,
-		int start, int end) {
-		return _mbCategoryLocalService.dynamicQuery(dynamicQuery, start, end);
+	protected List<MBMessage> doGetRange(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return _mbMessageLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
 	@Override
 	protected String[] doGetUserIdFieldNames() {
-		return MBUADConstants.USER_ID_FIELD_NAMES_MB_CATEGORY;
+		return MBUADConstants.USER_ID_FIELD_NAMES_MB_MESSAGE;
 	}
 
 	@Reference
-	private MBCategoryLocalService _mbCategoryLocalService;
+	private MBMessageLocalService _mbMessageLocalService;
 }

@@ -16,9 +16,9 @@ package com.liferay.message.boards.uad.aggregator.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
-import com.liferay.message.boards.model.MBThread;
+import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.uad.constants.MBUADConstants;
-import com.liferay.message.boards.uad.test.MBThreadUADEntityTestHelper;
+import com.liferay.message.boards.uad.test.MBCategoryUADEntityTestHelper;
 
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -26,8 +26,8 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
-import com.liferay.user.associated.data.test.util.BaseUADEntityAggregatorTestCase;
+import com.liferay.user.associated.data.aggregator.UADAggregator;
+import com.liferay.user.associated.data.test.util.BaseUADAggregatorTestCase;
 import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 
 import org.junit.After;
@@ -44,8 +44,7 @@ import java.util.List;
  * @generated
  */
 @RunWith(Arquillian.class)
-public class MBThreadUADEntityAggregatorTest
-	extends BaseUADEntityAggregatorTestCase
+public class MBCategoryUADAggregatorTest extends BaseUADAggregatorTestCase
 	implements WhenHasStatusByUserIdField {
 	@ClassRule
 	@Rule
@@ -54,37 +53,38 @@ public class MBThreadUADEntityAggregatorTest
 	@Override
 	public BaseModel<?> addBaseModelWithStatusByUserId(long userId,
 		long statusByUserId) throws Exception {
-		MBThread mbThread = _mbThreadUADEntityTestHelper.addMBThreadWithStatusByUserId(userId,
+		MBCategory mbCategory = _mbCategoryUADEntityTestHelper.addMBCategoryWithStatusByUserId(userId,
 				statusByUserId);
 
-		_mbThreads.add(mbThread);
+		_mbCategories.add(mbCategory);
 
-		return mbThread;
+		return mbCategory;
 	}
 
 	@Override
 	protected BaseModel<?> addBaseModel(long userId) throws Exception {
-		MBThread mbThread = _mbThreadUADEntityTestHelper.addMBThread(userId);
+		MBCategory mbCategory = _mbCategoryUADEntityTestHelper.addMBCategory(userId);
 
-		_mbThreads.add(mbThread);
+		_mbCategories.add(mbCategory);
 
-		return mbThread;
+		return mbCategory;
 	}
 
 	@Override
-	protected UADEntityAggregator getUADEntityAggregator() {
-		return _uadEntityAggregator;
+	protected UADAggregator getUADAggregator() {
+		return _uadAggregator;
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		_mbThreadUADEntityTestHelper.cleanUpDependencies(_mbThreads);
+		_mbCategoryUADEntityTestHelper.cleanUpDependencies(_mbCategories);
 	}
 
 	@DeleteAfterTestRun
-	private final List<MBThread> _mbThreads = new ArrayList<MBThread>();
+	private final List<MBCategory> _mbCategories = new ArrayList<MBCategory>();
 	@Inject
-	private MBThreadUADEntityTestHelper _mbThreadUADEntityTestHelper;
-	@Inject(filter = "model.class.name=" + MBUADConstants.CLASS_NAME_MB_THREAD)
-	private UADEntityAggregator _uadEntityAggregator;
+	private MBCategoryUADEntityTestHelper _mbCategoryUADEntityTestHelper;
+	@Inject(filter = "model.class.name=" +
+	MBUADConstants.CLASS_NAME_MB_CATEGORY)
+	private UADAggregator _uadAggregator;
 }

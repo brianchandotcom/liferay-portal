@@ -76,46 +76,37 @@ renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
 				<div class="row">
-					<c:choose>
-						<c:when test="<%= commerceTaxFixedRateAddressRel == null %>">
-							<div class="col-md-6">
-								<aui:select disabled="<%= commerceTaxFixedRateAddressRel != null %>" label="tax-category" name="commerceTaxCategoryId">
+					<div class="col-md-6">
+						<aui:select disabled="<%= commerceTaxFixedRateAddressRel != null %>" label="tax-category" name="commerceTaxCategoryId">
 
-									<%
-									List<CommerceTaxCategory> commerceTaxCategories = commerceTaxFixedRateAddressRelsDisplayContext.getAvailableCommerceTaxCategories();
+							<%
+							List<CommerceTaxCategory> commerceTaxCategories = commerceTaxFixedRateAddressRelsDisplayContext.getAvailableCommerceTaxCategories();
 
-									for (CommerceTaxCategory commerceTaxCategory : commerceTaxCategories) {
-									%>
+							for (CommerceTaxCategory commerceTaxCategory : commerceTaxCategories) {
+							%>
 
-										<aui:option
-											label="<%= commerceTaxCategory.getName(languageId) %>"
-											value="<%= commerceTaxCategory.getCommerceTaxCategoryId() %>"
-										/>
+								<aui:option
+									label="<%= commerceTaxCategory.getName(languageId) %>"
+									value="<%= commerceTaxCategory.getCommerceTaxCategoryId() %>"
+								/>
 
-									<%
-									}
-									%>
+							<%
+							}
+							%>
 
-								</aui:select>
+						</aui:select>
 
-								<liferay-portlet:renderURL var="taxCategoriesURL">
-									<portlet:param name="commerceAdminModuleKey" value="<%= CommerceConstants.TAXES_COMMERCE_ADMIN_MODULE_KEY %>" />
-									<portlet:param name="screenNavigationEntryKey" value="tax-categories" />
-								</liferay-portlet:renderURL>
+						<liferay-portlet:renderURL var="taxCategoriesURL">
+							<portlet:param name="commerceAdminModuleKey" value="<%= CommerceConstants.TAXES_COMMERCE_ADMIN_MODULE_KEY %>" />
+							<portlet:param name="screenNavigationEntryKey" value="tax-categories" />
+						</liferay-portlet:renderURL>
 
-								<a data-senna-off target="_parent" href="<%= taxCategoriesURL %>"><liferay-ui:message key="manage-tax-categories" /></a>
-							</div>
+						<a data-senna-off target="_parent" href="<%= taxCategoriesURL %>"><liferay-ui:message key="manage-tax-categories" /></a>
+					</div>
 
-							<div class="col-md-6">
-								<aui:input name="rate" suffix="<%= commerceTaxFixedRateAddressRelsDisplayContext.getCommerceCurrencyCode() %>" />
-							</div>
-						</c:when>
-						<c:otherwise>
-							<div class="col-md-12">
-								<aui:input name="rate" suffix="<%= commerceTaxFixedRateAddressRelsDisplayContext.getCommerceCurrencyCode() %>" />
-							</div>
-						</c:otherwise>
-					</c:choose>
+					<div class="col-md-6">
+						<aui:input name="rate" suffix="<%= commerceTaxFixedRateAddressRelsDisplayContext.getCommerceCurrencyCode() %>" />
+					</div>
 				</div>
 
 				<div class="row">

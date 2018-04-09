@@ -19,14 +19,12 @@
 <%
 CommerceTaxFixedRatesDisplayContext commerceTaxFixedRatesDisplayContext = (CommerceTaxFixedRatesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-SearchContainer<CommerceTaxFixedRate> commerceTaxFixedRateSearchContainer = commerceTaxFixedRatesDisplayContext.getSearchContainer();
-
-boolean hasManageCommerceTaxMethodsPermission = CommercePermission.contains(permissionChecker, scopeGroupId, CommerceActionKeys.MANAGE_COMMERCE_TAX_METHODS);
+SearchContainer<CommerceTaxCategory> commerceTaxCategorySearchContainer = commerceTaxFixedRatesDisplayContext.getSearchContainer();
 %>
 
 <liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
-	searchContainerId="commerceTaxFixedRates"
+	includeCheckBox="<%= false %>"
+	searchContainerId="commerceTaxCategories"
 >
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
@@ -37,7 +35,7 @@ boolean hasManageCommerceTaxMethodsPermission = CommercePermission.contains(perm
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= commerceTaxFixedRatesDisplayContext.getOrderByCol() %>"
 			orderByType="<%= commerceTaxFixedRatesDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"create-date"} %>'
+			orderColumns='<%= new String[] {"name"} %>'
 			portletURL="<%= commerceTaxFixedRatesDisplayContext.getPortletURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>
@@ -48,53 +46,34 @@ boolean hasManageCommerceTaxMethodsPermission = CommercePermission.contains(perm
 			portletURL="<%= commerceTaxFixedRatesDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="list"
 		/>
-
-		<c:if test="<%= hasManageCommerceTaxMethodsPermission %>">
-			<liferay-portlet:renderURL var="addCommerceTaxFixedRateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="mvcRenderCommandName" value="editCommerceTaxFixedRate" />
-				<portlet:param name="commerceTaxMethodId" value="<%= String.valueOf(commerceTaxFixedRatesDisplayContext.getCommerceTaxMethodId()) %>" />
-			</liferay-portlet:renderURL>
-
-			<%
-			String url = commerceTaxFixedRatesDisplayContext.getEditTaxRateURL(null, "editCommerceTaxFixedRate", true, addCommerceTaxFixedRateURL);
-			%>
-
-			<liferay-frontend:add-menu inline="<%= true %>">
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(resourceBundle, "add-tax-rate") %>' url="<%= url %>" />
-			</liferay-frontend:add-menu>
-		</c:if>
 	</liferay-frontend:management-bar-buttons>
-
-	<c:if test="<%= hasManageCommerceTaxMethodsPermission %>">
-		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceTaxFixedRates();" %>' icon="times" label="delete" />
-		</liferay-frontend:management-bar-action-buttons>
-	</c:if>
 </liferay-frontend:management-bar>
 
 <portlet:actionURL name="editCommerceTaxFixedRate" var="editCommerceTaxFixedRateActionURL" />
 
 <aui:form action="<%= editCommerceTaxFixedRateActionURL %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.DELETE %>" />
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="deleteCommerceTaxFixedRateIds" type="hidden" />
+	<aui:input name="commerceTaxCategoryId" type="hidden" />
+	<aui:input name="commerceTaxMethodId" type="hidden" value="<%= commerceTaxFixedRatesDisplayContext.getCommerceTaxMethodId() %>" />
+	<aui:input name="rate" type="hidden" />
 
-	<liferay-ui:error exception="<%= CommerceTaxFixedRateCommerceTaxCategoryIdException.class %>" message="please-select-a-valid-tax-category" />
+	<liferay-ui:error exception="<%= DuplicateCommerceTaxFixedRateException.class %>" message="please-select-a-valid-tax-category" />
 	<liferay-ui:error exception="<%= NoSuchTaxCategoryException.class %>" message="the-tax-category-could-not-be-found" />
 	<liferay-ui:error exception="<%= NoSuchTaxFixedRateException.class %>" message="the-tax-fixed-rate-could-not-be-found" />
 
 	<liferay-ui:search-container
-		id="commerceTaxFixedRates"
-		searchContainer="<%= commerceTaxFixedRateSearchContainer %>"
+		id="commerceTaxCategories"
+		searchContainer="<%= commerceTaxCategorySearchContainer %>"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate"
-			keyProperty="commerceTaxFixedRateId"
-			modelVar="commerceTaxFixedRate"
+			className="com.liferay.commerce.model.CommerceTaxCategory"
+			keyProperty="commerceTaxCategoryId"
+			modelVar="commerceTaxCategory"
 		>
 
 			<%
-			CommerceTaxCategory commerceTaxCategory = commerceTaxFixedRate.getCommerceTaxCategory();
+			CommerceTaxFixedRate commerceTaxFixedRate = commerceTaxFixedRatesDisplayContext.getCommerceTaxFixedRate(commerceTaxCategory.getCommerceTaxCategoryId());
 			%>
 
 			<liferay-ui:search-container-column-text
@@ -105,19 +84,21 @@ boolean hasManageCommerceTaxMethodsPermission = CommercePermission.contains(perm
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				property="rate"
-			/>
+				cssClass="table-cell-content tax-fixed-rate"
+				name="rate"
+			>
+				<aui:model-context bean="<%= commerceTaxFixedRate %>" model="<%= CommerceTaxFixedRate.class %>" />
 
-			<liferay-ui:search-container-column-date
-				name="create-date"
-				property="createDate"
-			/>
+				<div class="form-group">
+					<div class="input-group m-0">
+						<aui:input id='<%= "rate" + index %>' label="" name="rate" suffix="<%= commerceTaxFixedRatesDisplayContext.getCommerceCurrencyCode() %>" />
 
-			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action-column"
-				path="/tax_rate_action.jsp"
-			/>
+						<div class="input-group-item input-group-item-shrink">
+							<aui:button cssClass="btn btn-primary" name='<%= "saveButton" + index %>' onClick='<%= "javascript:"+ renderResponse.getNamespace() +"updateCommerceTaxFixedRate(" + commerceTaxCategory.getCommerceTaxCategoryId() + "," + index + ")" %>' primary="<%= true %>" value="save" />
+						</div>
+					</div>
+				</div>
+			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator markupView="lexicon" />
@@ -125,65 +106,21 @@ boolean hasManageCommerceTaxMethodsPermission = CommercePermission.contains(perm
 </aui:form>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace/>editCommerceTaxFixedRate',
-		function(isNew, arg, uri) {
-			var title = '<liferay-ui:message key="edit" />' + ' ' + arg;
+	function <portlet:namespace/>updateCommerceTaxFixedRate(commerceTaxCategoryId, index) {
+		var form = $(document.<portlet:namespace />fm);
 
-			if (isNew) {
-				title = '<liferay-ui:message key="add-tax-rate" />';
-			}
+		form.fm('commerceTaxCategoryId').val(commerceTaxCategoryId);
 
-			Liferay.Util.openWindow(
-				{
-					dialog: {
-						centered: true,
-						destroyOnClose: true,
-						height: 400,
-						modal: true,
-						width: 500
-					},
-					dialogIframe: {
-						bodyCssClass: 'dialog-with-footer'
-					},
-					id: 'editTaxFixedRateDialog',
-					title: title,
-					uri: uri
-				}
-			);
-		}
-	);
+		var rateInput = $('#<portlet:namespace />rate' + index);
 
-	Liferay.provide(
-		window,
-		'refreshPortlet',
-		function() {
-			var curPortlet = '#p_p_id<portlet:namespace/>';
+		form.fm('rate').val(rateInput.val());
 
-			Liferay.Portlet.refresh(curPortlet);
-		},
-		['aui-dialog','aui-dialog-iframe']
-	);
-
-	Liferay.provide(
-		window,
-		'closePopup',
-		function(dialogId) {
-			var dialog = Liferay.Util.Window.getById(dialogId);
-
-			dialog.destroy();
-		},
-		['liferay-util-window']
-	);
-
-	function <portlet:namespace />deleteCommerceTaxFixedRates() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-tax-rates" />')) {
-			var form = AUI.$(document.<portlet:namespace />fm);
-
-			form.fm('deleteCommerceTaxFixedRateIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-
-			submitForm(form);
-		}
+		submitForm(form);
 	}
 </aui:script>
+
+<style>
+	.tax-fixed-rate .form-group{
+		margin-bottom: 0;
+	}
+</style>

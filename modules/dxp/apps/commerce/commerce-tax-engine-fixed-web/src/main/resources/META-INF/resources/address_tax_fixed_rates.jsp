@@ -89,15 +89,7 @@ boolean hasManageCommerceTaxMethodsPermission = CommercePermission.contains(perm
 			<%
 			CommerceCountry commerceCountry = commerceTaxFixedRateAddressRel.getCommerceCountry();
 			CommerceRegion commerceRegion = commerceTaxFixedRateAddressRel.getCommerceRegion();
-			CommerceTaxMethod commerceTaxMethod = commerceTaxFixedRateAddressRel.getCommerceTaxMethod();
 			%>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="tax-method"
-			>
-				<%= HtmlUtil.escape(commerceTaxMethod.getName(languageId)) %>
-			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
@@ -127,17 +119,14 @@ boolean hasManageCommerceTaxMethodsPermission = CommercePermission.contains(perm
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
-				property="zip"
-			/>
+				name="zip"
+			>
+				<%= Validator.isBlank(commerceTaxFixedRateAddressRel.getZip()) ? StringPool.STAR : HtmlUtil.escape(commerceTaxFixedRateAddressRel.getZip()) %>
+			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				property="rate"
-			/>
-
-			<liferay-ui:search-container-column-date
-				name="create-date"
-				property="createDate"
 			/>
 
 			<liferay-ui:search-container-column-jsp

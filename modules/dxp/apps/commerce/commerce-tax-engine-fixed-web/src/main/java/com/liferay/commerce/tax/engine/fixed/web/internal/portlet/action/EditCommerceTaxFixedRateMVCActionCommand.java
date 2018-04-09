@@ -16,7 +16,7 @@ package com.liferay.commerce.tax.engine.fixed.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.exception.NoSuchTaxCategoryException;
-import com.liferay.commerce.tax.engine.fixed.exception.CommerceTaxFixedRateCommerceTaxCategoryIdException;
+import com.liferay.commerce.tax.engine.fixed.exception.DuplicateCommerceTaxFixedRateException;
 import com.liferay.commerce.tax.engine.fixed.exception.NoSuchTaxFixedRateException;
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateService;
@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -38,7 +37,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  */
 @Component(
 	immediate = true,
@@ -51,32 +50,6 @@ import org.osgi.service.component.annotations.Reference;
 public class EditCommerceTaxFixedRateMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void deleteCommerceTaxFixedRates(ActionRequest actionRequest)
-		throws PortalException {
-
-		long[] deleteCommerceTaxFixedRateIds = null;
-
-		long commerceTaxFixedRateId = ParamUtil.getLong(
-			actionRequest, "commerceTaxFixedRateId");
-
-		if (commerceTaxFixedRateId > 0) {
-			deleteCommerceTaxFixedRateIds = new long[] {commerceTaxFixedRateId};
-		}
-		else {
-			deleteCommerceTaxFixedRateIds = StringUtil.split(
-				ParamUtil.getString(
-					actionRequest, "deleteCommerceTaxFixedRateIds"),
-				0L);
-		}
-
-		for (long deleteCommerceTaxFixedRateId :
-				deleteCommerceTaxFixedRateIds) {
-
-			_commerceTaxFixedRateService.deleteCommerceTaxFixedRate(
-				deleteCommerceTaxFixedRateId);
-		}
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -88,13 +61,10 @@ public class EditCommerceTaxFixedRateMVCActionCommand
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				updateCommerceTaxFixedRate(actionRequest);
 			}
-			else if (cmd.equals(Constants.DELETE)) {
-				deleteCommerceTaxFixedRates(actionRequest);
-			}
 		}
 		catch (Exception e) {
 			if (e instanceof
-					CommerceTaxFixedRateCommerceTaxCategoryIdException ||
+					DuplicateCommerceTaxFixedRateException ||
 				e instanceof NoSuchTaxCategoryException ||
 				e instanceof NoSuchTaxFixedRateException ||
 				e instanceof PrincipalException) {
@@ -110,9 +80,6 @@ public class EditCommerceTaxFixedRateMVCActionCommand
 	protected void updateCommerceTaxFixedRate(ActionRequest actionRequest)
 		throws PortalException {
 
-		long commerceTaxFixedRateId = ParamUtil.getLong(
-			actionRequest, "commerceTaxFixedRateId");
-
 		long commerceTaxMethodId = ParamUtil.getLong(
 			actionRequest, "commerceTaxMethodId");
 		long commerceTaxCategoryId = ParamUtil.getLong(
@@ -120,14 +87,18 @@ public class EditCommerceTaxFixedRateMVCActionCommand
 
 		double rate = ParamUtil.getDouble(actionRequest, "rate");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceTaxFixedRate.class.getName(), actionRequest);
+		CommerceTaxFixedRate commerceTaxFixedRate =
+			_commerceTaxFixedRateService.fetchCommerceTaxFixedRateByCTC_CTM(
+				commerceTaxCategoryId, commerceTaxMethodId);
 
-		if (commerceTaxFixedRateId > 0) {
+		if (commerceTaxFixedRate != null) {
 			_commerceTaxFixedRateService.updateCommerceTaxFixedRate(
-				commerceTaxFixedRateId, rate);
+				commerceTaxFixedRate.getCommerceTaxFixedRateId(), rate);
 		}
 		else {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				CommerceTaxFixedRate.class.getName(), actionRequest);
+
 			_commerceTaxFixedRateService.addCommerceTaxFixedRate(
 				commerceTaxMethodId, commerceTaxCategoryId, rate,
 				serviceContext);

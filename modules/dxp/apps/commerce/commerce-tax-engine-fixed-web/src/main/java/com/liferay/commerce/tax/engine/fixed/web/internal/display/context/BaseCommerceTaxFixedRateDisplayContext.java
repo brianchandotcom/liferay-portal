@@ -20,21 +20,22 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.model.CommerceTaxMethod;
 import com.liferay.commerce.service.CommerceTaxMethodService;
+import com.liferay.commerce.tax.engine.fixed.web.internal.display.context.util.CommerceTaxFixedRateRequestHelper;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 public abstract class BaseCommerceTaxFixedRateDisplayContext<T> {
@@ -46,8 +47,9 @@ public abstract class BaseCommerceTaxFixedRateDisplayContext<T> {
 
 		this.commerceCurrencyService = commerceCurrencyService;
 		this.commerceTaxMethodService = commerceTaxMethodService;
-		this.renderRequest = renderRequest;
-		this.renderResponse = renderResponse;
+
+		commerceTaxFixedRateRequestHelper =
+			new CommerceTaxFixedRateRequestHelper(renderRequest);
 
 		_defaultOrderByCol = "create-date";
 		_defaultOrderByType = "desc";
@@ -60,12 +62,9 @@ public abstract class BaseCommerceTaxFixedRateDisplayContext<T> {
 			return StringPool.PERCENT;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		CommerceCurrency commerceCurrency =
 			commerceCurrencyService.fetchPrimaryCommerceCurrency(
-				themeDisplay.getScopeGroupId());
+				commerceTaxFixedRateRequestHelper.getScopeGroupId());
 
 		if (commerceCurrency != null) {
 			return commerceCurrency.getCode();
@@ -79,8 +78,7 @@ public abstract class BaseCommerceTaxFixedRateDisplayContext<T> {
 			return _commerceTaxMethod;
 		}
 
-		long commerceTaxMethodId = ParamUtil.getLong(
-			renderRequest, "commerceTaxMethodId");
+		long commerceTaxMethodId = getCommerceTaxMethodId();
 
 		if (commerceTaxMethodId > 0) {
 			_commerceTaxMethod = commerceTaxMethodService.getCommerceTaxMethod(
@@ -91,29 +89,30 @@ public abstract class BaseCommerceTaxFixedRateDisplayContext<T> {
 	}
 
 	public long getCommerceTaxMethodId() throws PortalException {
-		CommerceTaxMethod commerceTaxMethod = getCommerceTaxMethod();
+		long commerceTaxMethodId = ParamUtil.getLong(
+			commerceTaxFixedRateRequestHelper.getRequest(),
+			"commerceTaxMethodId");
 
-		if (commerceTaxMethod == null) {
-			return 0;
-		}
-
-		return commerceTaxMethod.getCommerceTaxMethodId();
+		return commerceTaxMethodId;
 	}
 
 	public String getOrderByCol() {
 		return ParamUtil.getString(
-			renderRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM,
-			_defaultOrderByCol);
+			commerceTaxFixedRateRequestHelper.getRequest(),
+			SearchContainer.DEFAULT_ORDER_BY_COL_PARAM, _defaultOrderByCol);
 	}
 
 	public String getOrderByType() {
 		return ParamUtil.getString(
-			renderRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM,
-			_defaultOrderByType);
+			commerceTaxFixedRateRequestHelper.getRequest(),
+			SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM, _defaultOrderByType);
 	}
 
 	public PortletURL getPortletURL() throws PortalException {
-		PortletURL portletURL = renderResponse.createRenderURL();
+		LiferayPortletResponse liferayPortletResponse =
+			commerceTaxFixedRateRequestHelper.getLiferayPortletResponse();
+
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter(
 			"commerceAdminModuleKey",
@@ -131,13 +130,15 @@ public abstract class BaseCommerceTaxFixedRateDisplayContext<T> {
 				String.valueOf(commerceTaxMethod.getCommerceTaxMethodId()));
 		}
 
-		String engineKey = ParamUtil.getString(renderRequest, "engineKey");
+		String engineKey = ParamUtil.getString(
+			commerceTaxFixedRateRequestHelper.getRequest(), "engineKey");
 
 		if (Validator.isNotNull(engineKey)) {
 			portletURL.setParameter("engineKey", engineKey);
 		}
 
-		String delta = ParamUtil.getString(renderRequest, "delta");
+		String delta = ParamUtil.getString(
+			commerceTaxFixedRateRequestHelper.getRequest(), "delta");
 
 		if (Validator.isNotNull(delta)) {
 			portletURL.setParameter("delta", delta);
@@ -151,7 +152,8 @@ public abstract class BaseCommerceTaxFixedRateDisplayContext<T> {
 
 	public RowChecker getRowChecker() {
 		if (_rowChecker == null) {
-			_rowChecker = new EmptyOnClickRowChecker(renderResponse);
+			_rowChecker = new EmptyOnClickRowChecker(
+				commerceTaxFixedRateRequestHelper.getLiferayPortletResponse());
 		}
 
 		return _rowChecker;
@@ -175,14 +177,14 @@ public abstract class BaseCommerceTaxFixedRateDisplayContext<T> {
 
 	protected String getSelectedScreenNavigationEntryKey() {
 		return ParamUtil.getString(
-			renderRequest, "screenNavigationEntryKey",
-			getScreenNavigationEntryKey());
+			commerceTaxFixedRateRequestHelper.getRequest(),
+			"screenNavigationEntryKey", getScreenNavigationEntryKey());
 	}
 
 	protected final CommerceCurrencyService commerceCurrencyService;
+	protected final CommerceTaxFixedRateRequestHelper
+		commerceTaxFixedRateRequestHelper;
 	protected final CommerceTaxMethodService commerceTaxMethodService;
-	protected final RenderRequest renderRequest;
-	protected final RenderResponse renderResponse;
 	protected SearchContainer<T> searchContainer;
 
 	private CommerceTaxMethod _commerceTaxMethod;

@@ -30,10 +30,8 @@ import com.liferay.commerce.util.comparator.CommerceTaxCategoryCreateDateCompara
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
@@ -41,6 +39,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 public class CommerceTaxFixedRateAddressRelsDisplayContext
@@ -69,23 +68,18 @@ public class CommerceTaxFixedRateAddressRelsDisplayContext
 	}
 
 	public List<CommerceTaxCategory> getAvailableCommerceTaxCategories() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		return _commerceTaxCategoryService.getCommerceTaxCategories(
-			themeDisplay.getScopeGroupId(), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, new CommerceTaxCategoryCreateDateComparator());
+			commerceTaxFixedRateRequestHelper.getScopeGroupId(),
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new CommerceTaxCategoryCreateDateComparator());
 	}
 
 	public List<CommerceCountry> getCommerceCountries() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		return _commerceCountryService.getCommerceCountries(
-			themeDisplay.getScopeGroupId(), true);
+			commerceTaxFixedRateRequestHelper.getScopeGroupId(), true);
 	}
 
-	public long getCommerceCountryId() {
+	public long getCommerceCountryId() throws PortalException {
 		long commerceCountryId = 0;
 
 		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel =
@@ -99,7 +93,7 @@ public class CommerceTaxFixedRateAddressRelsDisplayContext
 		return commerceCountryId;
 	}
 
-	public long getCommerceRegionId() {
+	public long getCommerceRegionId() throws PortalException {
 		long commerceRegionId = 0;
 
 		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel =
@@ -113,14 +107,17 @@ public class CommerceTaxFixedRateAddressRelsDisplayContext
 		return commerceRegionId;
 	}
 
-	public List<CommerceRegion> getCommerceRegions() {
+	public List<CommerceRegion> getCommerceRegions() throws PortalException {
 		return _commerceRegionService.getCommerceRegions(
 			getCommerceCountryId(), true);
 	}
 
-	public CommerceTaxFixedRateAddressRel getCommerceTaxFixedRateAddressRel() {
+	public CommerceTaxFixedRateAddressRel getCommerceTaxFixedRateAddressRel()
+		throws PortalException {
+
 		long commerceTaxFixedRateAddressRelId = ParamUtil.getLong(
-			renderRequest, "commerceTaxFixedRateAddressRelId");
+			commerceTaxFixedRateRequestHelper.getRequest(),
+			"commerceTaxFixedRateAddressRelId");
 
 		return _commerceTaxFixedRateAddressRelService.
 			fetchCommerceTaxFixedRateAddressRel(
@@ -141,7 +138,8 @@ public class CommerceTaxFixedRateAddressRelsDisplayContext
 		}
 
 		searchContainer = new SearchContainer<>(
-			renderRequest, getPortletURL(), null, null);
+			commerceTaxFixedRateRequestHelper.getLiferayPortletRequest(),
+			getPortletURL(), null, null);
 
 		searchContainer.setEmptyResultsMessage(
 			"there-are-no-tax-rate-settings");
@@ -159,6 +157,7 @@ public class CommerceTaxFixedRateAddressRelsDisplayContext
 		int total =
 			_commerceTaxFixedRateAddressRelService.
 				getCommerceTaxMethodFixedRateAddressRelsCount(
+					commerceTaxFixedRateRequestHelper.getScopeGroupId(),
 					getCommerceTaxMethodId());
 
 		searchContainer.setTotal(total);
@@ -166,6 +165,7 @@ public class CommerceTaxFixedRateAddressRelsDisplayContext
 		List<CommerceTaxFixedRateAddressRel> results =
 			_commerceTaxFixedRateAddressRelService.
 				getCommerceTaxMethodFixedRateAddressRels(
+					commerceTaxFixedRateRequestHelper.getScopeGroupId(),
 					getCommerceTaxMethodId(), searchContainer.getStart(),
 					searchContainer.getEnd(), orderByComparator);
 

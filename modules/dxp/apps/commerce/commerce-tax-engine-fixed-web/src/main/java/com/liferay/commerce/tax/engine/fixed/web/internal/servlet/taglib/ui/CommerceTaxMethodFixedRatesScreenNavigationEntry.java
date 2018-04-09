@@ -17,9 +17,9 @@ package com.liferay.commerce.tax.engine.fixed.web.internal.servlet.taglib.ui;
 import com.liferay.commerce.constants.CommerceTaxScreenNavigationConstants;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.model.CommerceTaxMethod;
+import com.liferay.commerce.service.CommerceTaxCategoryService;
 import com.liferay.commerce.service.CommerceTaxMethodService;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateService;
-import com.liferay.commerce.tax.engine.fixed.web.internal.FixedCommerceTaxEngine;
 import com.liferay.commerce.tax.engine.fixed.web.internal.display.context.CommerceTaxFixedRatesDisplayContext;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -85,7 +85,7 @@ public class CommerceTaxMethodFixedRatesScreenNavigationEntry
 	public boolean isVisible(User user, CommerceTaxMethod commerceTaxMethod) {
 		String engineKey = commerceTaxMethod.getEngineKey();
 
-		if (engineKey.equals(FixedCommerceTaxEngine.KEY)) {
+		if (engineKey.equals("fixed-tax")) {
 			return true;
 		}
 
@@ -108,8 +108,9 @@ public class CommerceTaxMethodFixedRatesScreenNavigationEntry
 		CommerceTaxFixedRatesDisplayContext
 			commerceTaxFixedRatesDisplayContext =
 				new CommerceTaxFixedRatesDisplayContext(
-					_commerceCurrencyService, _commerceTaxFixedRateService,
-					_commerceTaxMethodService, renderRequest, renderResponse);
+					_commerceCurrencyService, _commerceTaxCategoryService,
+					_commerceTaxFixedRateService, _commerceTaxMethodService,
+					renderRequest, renderResponse);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -122,6 +123,9 @@ public class CommerceTaxMethodFixedRatesScreenNavigationEntry
 
 	@Reference
 	private CommerceCurrencyService _commerceCurrencyService;
+
+	@Reference
+	private CommerceTaxCategoryService _commerceTaxCategoryService;
 
 	@Reference
 	private CommerceTaxFixedRateService _commerceTaxFixedRateService;

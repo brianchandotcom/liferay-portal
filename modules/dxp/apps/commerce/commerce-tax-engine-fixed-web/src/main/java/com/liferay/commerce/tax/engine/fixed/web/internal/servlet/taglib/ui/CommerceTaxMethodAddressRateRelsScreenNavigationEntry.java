@@ -22,7 +22,6 @@ import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.commerce.service.CommerceTaxCategoryService;
 import com.liferay.commerce.service.CommerceTaxMethodService;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateAddressRelService;
-import com.liferay.commerce.tax.engine.fixed.web.internal.ByAddressCommerceTaxEngine;
 import com.liferay.commerce.tax.engine.fixed.web.internal.display.context.CommerceTaxFixedRateAddressRelsDisplayContext;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -88,7 +87,7 @@ public class CommerceTaxMethodAddressRateRelsScreenNavigationEntry
 	public boolean isVisible(User user, CommerceTaxMethod commerceTaxMethod) {
 		String engineKey = commerceTaxMethod.getEngineKey();
 
-		if (engineKey.equals(ByAddressCommerceTaxEngine.KEY)) {
+		if (engineKey.equals("by-address")) {
 			return true;
 		}
 

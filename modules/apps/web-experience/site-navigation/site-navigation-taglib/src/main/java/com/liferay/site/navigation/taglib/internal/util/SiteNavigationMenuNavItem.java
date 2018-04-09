@@ -14,11 +14,15 @@
 
 package com.liferay.site.navigation.taglib.internal.util;
 
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.site.navigation.model.SiteNavigationMenuItem;
+import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServiceUtil;
+import com.liferay.site.navigation.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,34 +34,53 @@ import javax.servlet.http.HttpServletRequest;
 public class SiteNavigationMenuNavItem extends NavItem {
 
 	public SiteNavigationMenuNavItem(
-		HttpServletRequest request, ThemeDisplay themeDisplay, Layout layout,
-		String label, String url, List<NavItem> children) {
+		HttpServletRequest request, ThemeDisplay themeDisplay,
+		SiteNavigationMenuItem siteNavigationMenuItem) {
 
-		super(request, themeDisplay, layout, new HashMap<String, Object>());
+		super(
+			request, themeDisplay, themeDisplay.getLayout(),
+			new HashMap<String, Object>());
 
-		_label = label;
-		_url = url;
-		_children = children;
-	}
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			ServletContextUtil.getSiteNavigationMenuItemType(
+				siteNavigationMenuItem.getType());
 
-	@Override
-	public List<NavItem> getBrowsableChildren() {
-		return _children;
+		_request = request;
+		_themeDisplay = themeDisplay;
+		_siteNavigationMenuItem = siteNavigationMenuItem;
+		_siteNavigationMenuItemType = siteNavigationMenuItemType;
 	}
 
 	@Override
 	public List<NavItem> getChildren() {
-		return _children;
+		List<NavItem> navItems = new ArrayList<>();
+
+		List<SiteNavigationMenuItem> siteNavigationMenuItems =
+			SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(
+				_siteNavigationMenuItem.getSiteNavigationMenuId(),
+				_siteNavigationMenuItem.getSiteNavigationMenuItemId());
+
+		for (SiteNavigationMenuItem siteNavigationMenuItem :
+				siteNavigationMenuItems) {
+
+			navItems.add(
+				new SiteNavigationMenuNavItem(
+					_request, _themeDisplay, siteNavigationMenuItem));
+		}
+
+		return navItems;
 	}
 
 	@Override
 	public String getName() {
-		return _label;
+		return _siteNavigationMenuItemType.getTitle(
+			_siteNavigationMenuItem, _themeDisplay.getLocale());
 	}
 
 	@Override
 	public String getURL() {
-		return _url;
+		return _siteNavigationMenuItemType.getURL(
+			_request, _siteNavigationMenuItem);
 	}
 
 	@Override
@@ -69,8 +92,9 @@ public class SiteNavigationMenuNavItem extends NavItem {
 		return super.isInNavigation(navItems);
 	}
 
-	private final List<NavItem> _children;
-	private final String _label;
-	private final String _url;
+	private final HttpServletRequest _request;
+	private final SiteNavigationMenuItem _siteNavigationMenuItem;
+	private final SiteNavigationMenuItemType _siteNavigationMenuItemType;
+	private final ThemeDisplay _themeDisplay;
 
 }

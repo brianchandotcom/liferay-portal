@@ -28,9 +28,11 @@ public class AlloyMVCCheckstyleUtil {
 	public static File getJavaFile(String absolutePath, String content)
 		throws IOException {
 
-		String javaFileName = getJavaFileName(absolutePath);
+		if (!absolutePath.contains(_SRC_DIR)) {
+			return null;
+		}
 
-		if (javaFileName == null) {
+		if (!absolutePath.endsWith(".jspf")) {
 			return null;
 		}
 
@@ -46,7 +48,9 @@ public class AlloyMVCCheckstyleUtil {
 			return null;
 		}
 
-		File javaFile = new File(javaFileName);
+		String s = absolutePath.replace(_SRC_DIR, _TMP_DIR);
+
+		File javaFile = new File(s.substring(0, s.lastIndexOf(".")) + ".java");
 
 		String javaContent = StringUtil.replace(
 			content, new String[] {"<%--", "--%>", "<%@", "<%!"},
@@ -57,19 +61,6 @@ public class AlloyMVCCheckstyleUtil {
 		FileUtil.write(javaFile, javaContent);
 
 		return javaFile;
-	}
-
-	public static String getJavaFileName(String fileName) {
-		if ((!fileName.startsWith(_SRC_DIR) &&
-			 !fileName.contains("/" + _SRC_DIR)) ||
-			!fileName.endsWith(".jspf")) {
-
-			return null;
-		}
-
-		String s = fileName.replace(_SRC_DIR, _TMP_DIR);
-
-		return s.substring(0, s.lastIndexOf(".")) + ".java";
 	}
 
 	public static String getSourceFileName(String fileName) {

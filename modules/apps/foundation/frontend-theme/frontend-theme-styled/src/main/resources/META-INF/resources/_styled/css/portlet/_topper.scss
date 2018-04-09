@@ -1,3 +1,11 @@
+%display-portlet-topper {
+	@include media-query(sm) {
+		opacity: 1;
+
+		@include transform(translateY(-97%));
+	}
+}
+
 .portlet {
 	margin-bottom: 10px;
 	position: relative;
@@ -21,6 +29,10 @@
 
 			top: 0;
 		}
+
+		&.open {
+			@extend %display-portlet-topper;
+		}
 	}
 }
 
@@ -35,11 +47,7 @@
 		}
 
 		> .portlet-topper {
-			@include media-query(sm) {
-				opacity: 1;
-
-				@include transform(translateY(-97%));
-			}
+			@extend %display-portlet-topper;
 		}
 	}
 }

@@ -3381,17 +3381,17 @@ information. Make sure to commit in all build services results.
 				<setup-sdk />
 
 				<gradle-execute dir="modules/core" task="deploy">
-					<arg value="--parallel" />
 					<arg value="-Dbuild.profile=portal-pre" />
 					<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
+					<arg value="--parallel" />
 				</gradle-execute>
 
 				<ant dir="portal-kernel" inheritAll="false" target="install-portal-snapshot" />
 
 				<gradle-execute dir="modules/apps" task="deploy">
-					<arg value="--parallel" />
 					<arg value="-Dbuild.profile=portal-pre" />
 					<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
+					<arg value="--parallel" />
 				</gradle-execute>
 
 				<parallel failonany="true" threadcount="${parallel.thread.count}">
@@ -3416,8 +3416,8 @@ information. Make sure to commit in all build services results.
 
 				<exec executable="git" failonerror="true" outputproperty="git.diff">
 					<arg value="diff" />
-					<arg value="--name-only" />
 					<arg value="${liferay.portal.branch}..HEAD" />
+					<arg value="--name-only" />
 				</exec>
 
 				<var name="format.current.branch" value="true" />

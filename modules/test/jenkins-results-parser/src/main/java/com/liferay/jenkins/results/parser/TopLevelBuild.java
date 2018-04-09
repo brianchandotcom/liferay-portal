@@ -102,7 +102,7 @@ public class TopLevelBuild extends BaseBuild {
 		}
 	}
 
-	public String getAcceptanceUpstreamURL() {
+	public String getAcceptanceUpstreamJobURL() {
 		String jobName = getJobName();
 
 		if (jobName.contains("pullrequest")) {
@@ -589,7 +589,7 @@ public class TopLevelBuild extends BaseBuild {
 					allCurrentBuildFailureElements, maxFailureCount));
 		}
 
-		String acceptanceUpstreamJobURL = getAcceptanceUpstreamURL();
+		String acceptanceUpstreamJobURL = getAcceptanceUpstreamJobURL();
 
 		if ((allCurrentBuildFailureElements.size() < maxFailureCount) &&
 			!upstreamBuildFailureElements.isEmpty()) {

@@ -27,6 +27,7 @@ import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -1530,6 +1531,204 @@ public class CommerceOrderUtil {
 	*/
 	public static int countByG_U_O(long groupId, long userId, int orderStatus) {
 		return getPersistence().countByG_U_O(groupId, userId, orderStatus);
+	}
+
+	/**
+	* Returns all the commerce orders where userId = &#63; and createDate &lt; &#63; and orderStatus = &#63;.
+	*
+	* @param userId the user ID
+	* @param createDate the create date
+	* @param orderStatus the order status
+	* @return the matching commerce orders
+	*/
+	public static List<CommerceOrder> findByU_LtC_O(long userId,
+		Date createDate, int orderStatus) {
+		return getPersistence().findByU_LtC_O(userId, createDate, orderStatus);
+	}
+
+	/**
+	* Returns a range of all the commerce orders where userId = &#63; and createDate &lt; &#63; and orderStatus = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceOrderModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param createDate the create date
+	* @param orderStatus the order status
+	* @param start the lower bound of the range of commerce orders
+	* @param end the upper bound of the range of commerce orders (not inclusive)
+	* @return the range of matching commerce orders
+	*/
+	public static List<CommerceOrder> findByU_LtC_O(long userId,
+		Date createDate, int orderStatus, int start, int end) {
+		return getPersistence()
+				   .findByU_LtC_O(userId, createDate, orderStatus, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the commerce orders where userId = &#63; and createDate &lt; &#63; and orderStatus = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceOrderModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param createDate the create date
+	* @param orderStatus the order status
+	* @param start the lower bound of the range of commerce orders
+	* @param end the upper bound of the range of commerce orders (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching commerce orders
+	*/
+	public static List<CommerceOrder> findByU_LtC_O(long userId,
+		Date createDate, int orderStatus, int start, int end,
+		OrderByComparator<CommerceOrder> orderByComparator) {
+		return getPersistence()
+				   .findByU_LtC_O(userId, createDate, orderStatus, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the commerce orders where userId = &#63; and createDate &lt; &#63; and orderStatus = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceOrderModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param createDate the create date
+	* @param orderStatus the order status
+	* @param start the lower bound of the range of commerce orders
+	* @param end the upper bound of the range of commerce orders (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching commerce orders
+	*/
+	public static List<CommerceOrder> findByU_LtC_O(long userId,
+		Date createDate, int orderStatus, int start, int end,
+		OrderByComparator<CommerceOrder> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByU_LtC_O(userId, createDate, orderStatus, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first commerce order in the ordered set where userId = &#63; and createDate &lt; &#63; and orderStatus = &#63;.
+	*
+	* @param userId the user ID
+	* @param createDate the create date
+	* @param orderStatus the order status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce order
+	* @throws NoSuchOrderException if a matching commerce order could not be found
+	*/
+	public static CommerceOrder findByU_LtC_O_First(long userId,
+		Date createDate, int orderStatus,
+		OrderByComparator<CommerceOrder> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchOrderException {
+		return getPersistence()
+				   .findByU_LtC_O_First(userId, createDate, orderStatus,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first commerce order in the ordered set where userId = &#63; and createDate &lt; &#63; and orderStatus = &#63;.
+	*
+	* @param userId the user ID
+	* @param createDate the create date
+	* @param orderStatus the order status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce order, or <code>null</code> if a matching commerce order could not be found
+	*/
+	public static CommerceOrder fetchByU_LtC_O_First(long userId,
+		Date createDate, int orderStatus,
+		OrderByComparator<CommerceOrder> orderByComparator) {
+		return getPersistence()
+				   .fetchByU_LtC_O_First(userId, createDate, orderStatus,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last commerce order in the ordered set where userId = &#63; and createDate &lt; &#63; and orderStatus = &#63;.
+	*
+	* @param userId the user ID
+	* @param createDate the create date
+	* @param orderStatus the order status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce order
+	* @throws NoSuchOrderException if a matching commerce order could not be found
+	*/
+	public static CommerceOrder findByU_LtC_O_Last(long userId,
+		Date createDate, int orderStatus,
+		OrderByComparator<CommerceOrder> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchOrderException {
+		return getPersistence()
+				   .findByU_LtC_O_Last(userId, createDate, orderStatus,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last commerce order in the ordered set where userId = &#63; and createDate &lt; &#63; and orderStatus = &#63;.
+	*
+	* @param userId the user ID
+	* @param createDate the create date
+	* @param orderStatus the order status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce order, or <code>null</code> if a matching commerce order could not be found
+	*/
+	public static CommerceOrder fetchByU_LtC_O_Last(long userId,
+		Date createDate, int orderStatus,
+		OrderByComparator<CommerceOrder> orderByComparator) {
+		return getPersistence()
+				   .fetchByU_LtC_O_Last(userId, createDate, orderStatus,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the commerce orders before and after the current commerce order in the ordered set where userId = &#63; and createDate &lt; &#63; and orderStatus = &#63;.
+	*
+	* @param commerceOrderId the primary key of the current commerce order
+	* @param userId the user ID
+	* @param createDate the create date
+	* @param orderStatus the order status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next commerce order
+	* @throws NoSuchOrderException if a commerce order with the primary key could not be found
+	*/
+	public static CommerceOrder[] findByU_LtC_O_PrevAndNext(
+		long commerceOrderId, long userId, Date createDate, int orderStatus,
+		OrderByComparator<CommerceOrder> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchOrderException {
+		return getPersistence()
+				   .findByU_LtC_O_PrevAndNext(commerceOrderId, userId,
+			createDate, orderStatus, orderByComparator);
+	}
+
+	/**
+	* Removes all the commerce orders where userId = &#63; and createDate &lt; &#63; and orderStatus = &#63; from the database.
+	*
+	* @param userId the user ID
+	* @param createDate the create date
+	* @param orderStatus the order status
+	*/
+	public static void removeByU_LtC_O(long userId, Date createDate,
+		int orderStatus) {
+		getPersistence().removeByU_LtC_O(userId, createDate, orderStatus);
+	}
+
+	/**
+	* Returns the number of commerce orders where userId = &#63; and createDate &lt; &#63; and orderStatus = &#63;.
+	*
+	* @param userId the user ID
+	* @param createDate the create date
+	* @param orderStatus the order status
+	* @return the number of matching commerce orders
+	*/
+	public static int countByU_LtC_O(long userId, Date createDate,
+		int orderStatus) {
+		return getPersistence().countByU_LtC_O(userId, createDate, orderStatus);
 	}
 
 	/**

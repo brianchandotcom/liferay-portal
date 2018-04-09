@@ -156,13 +156,13 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 			true);
 	public static final long BILLINGADDRESSID_COLUMN_BITMASK = 1L;
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
-	public static final long GROUPID_COLUMN_BITMASK = 4L;
-	public static final long ORDERSTATUS_COLUMN_BITMASK = 8L;
-	public static final long ORDERUSERID_COLUMN_BITMASK = 16L;
-	public static final long SHIPPINGADDRESSID_COLUMN_BITMASK = 32L;
-	public static final long USERID_COLUMN_BITMASK = 64L;
-	public static final long UUID_COLUMN_BITMASK = 128L;
-	public static final long CREATEDATE_COLUMN_BITMASK = 256L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
+	public static final long ORDERSTATUS_COLUMN_BITMASK = 16L;
+	public static final long ORDERUSERID_COLUMN_BITMASK = 32L;
+	public static final long SHIPPINGADDRESSID_COLUMN_BITMASK = 64L;
+	public static final long USERID_COLUMN_BITMASK = 128L;
+	public static final long UUID_COLUMN_BITMASK = 256L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -632,7 +632,15 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 	public void setCreateDate(Date createDate) {
 		_columnBitmask = -1L;
 
+		if (_originalCreateDate == null) {
+			_originalCreateDate = _createDate;
+		}
+
 		_createDate = createDate;
+	}
+
+	public Date getOriginalCreateDate() {
+		return _originalCreateDate;
 	}
 
 	@JSON
@@ -1204,6 +1212,8 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 		commerceOrderModelImpl._setOriginalUserId = false;
 
+		commerceOrderModelImpl._originalCreateDate = commerceOrderModelImpl._createDate;
+
 		commerceOrderModelImpl._setModifiedDate = false;
 
 		commerceOrderModelImpl._originalOrderUserId = commerceOrderModelImpl._orderUserId;
@@ -1563,6 +1573,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
+	private Date _originalCreateDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _siteGroupId;

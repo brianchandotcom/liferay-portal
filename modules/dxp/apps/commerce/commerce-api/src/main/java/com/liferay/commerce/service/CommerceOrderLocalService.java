@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -135,6 +136,8 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public void deleteCommerceOrders(long groupId) throws PortalException;
+
+	public void deleteCommerceOrders(long userId, Date date, int status);
 
 	/**
 	* @throws PortalException

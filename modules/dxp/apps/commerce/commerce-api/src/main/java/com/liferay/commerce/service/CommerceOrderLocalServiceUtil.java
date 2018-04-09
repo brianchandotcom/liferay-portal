@@ -147,6 +147,11 @@ public class CommerceOrderLocalServiceUtil {
 		getService().deleteCommerceOrders(groupId);
 	}
 
+	public static void deleteCommerceOrders(long userId, java.util.Date date,
+		int status) {
+		getService().deleteCommerceOrders(userId, date, status);
+	}
+
 	/**
 	* @throws PortalException
 	*/

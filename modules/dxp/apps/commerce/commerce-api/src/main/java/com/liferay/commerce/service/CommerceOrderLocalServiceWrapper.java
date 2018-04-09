@@ -152,6 +152,12 @@ public class CommerceOrderLocalServiceWrapper
 		_commerceOrderLocalService.deleteCommerceOrders(groupId);
 	}
 
+	@Override
+	public void deleteCommerceOrders(long userId, java.util.Date date,
+		int status) {
+		_commerceOrderLocalService.deleteCommerceOrders(userId, date, status);
+	}
+
 	/**
 	* @throws PortalException
 	*/

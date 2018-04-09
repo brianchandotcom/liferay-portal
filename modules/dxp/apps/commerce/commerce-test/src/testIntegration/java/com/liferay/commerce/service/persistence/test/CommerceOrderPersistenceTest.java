@@ -320,6 +320,14 @@ public class CommerceOrderPersistenceTest {
 	}
 
 	@Test
+	public void testCountByU_LtC_O() throws Exception {
+		_persistence.countByU_LtC_O(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextDate(), RandomTestUtil.nextInt());
+
+		_persistence.countByU_LtC_O(0L, RandomTestUtil.nextDate(), 0);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CommerceOrder newCommerceOrder = addCommerceOrder();
 

@@ -15,7 +15,6 @@
 package com.liferay.commerce.tax.engine.fixed.service.impl;
 
 import com.liferay.commerce.constants.CommerceActionKeys;
-import com.liferay.commerce.model.CommerceTaxCategory;
 import com.liferay.commerce.service.permission.CommercePermission;
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate;
 import com.liferay.commerce.tax.engine.fixed.service.base.CommerceTaxFixedRateServiceBaseImpl;
@@ -26,6 +25,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.util.List;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 public class CommerceTaxFixedRateServiceImpl
@@ -63,44 +63,63 @@ public class CommerceTaxFixedRateServiceImpl
 
 	@Override
 	public CommerceTaxFixedRate fetchCommerceTaxFixedRate(
-		long commerceTaxFixedRateId) {
+			long commerceTaxFixedRateId)
+		throws PortalException {
 
-		return commerceTaxFixedRateLocalService.fetchCommerceTaxFixedRate(
-			commerceTaxFixedRateId);
+		CommerceTaxFixedRate commerceTaxFixedRate =
+			commerceTaxFixedRateLocalService.fetchCommerceTaxFixedRate(
+				commerceTaxFixedRateId);
+
+		if (commerceTaxFixedRate != null) {
+			CommercePermission.check(
+				getPermissionChecker(), commerceTaxFixedRate.getGroupId(),
+				CommerceActionKeys.MANAGE_COMMERCE_TAX_METHODS);
+		}
+
+		return commerceTaxFixedRate;
 	}
 
 	@Override
-	public List<CommerceTaxCategory> getAvailableCommerceTaxCategories(
-			long groupId)
+	public CommerceTaxFixedRate fetchCommerceTaxFixedRateByCTC_CTM(
+			long commerceTaxCategoryId, long commerceTaxMethodId)
+		throws PortalException {
+
+		CommerceTaxFixedRate commerceTaxFixedRate =
+			commerceTaxFixedRateLocalService.fetchCommerceTaxFixedRateByCTC_CTM(
+				commerceTaxCategoryId, commerceTaxMethodId);
+
+		if (commerceTaxFixedRate != null) {
+			CommercePermission.check(
+				getPermissionChecker(), commerceTaxFixedRate.getGroupId(),
+				CommerceActionKeys.MANAGE_COMMERCE_TAX_METHODS);
+		}
+
+		return commerceTaxFixedRate;
+	}
+
+	@Override
+	public List<CommerceTaxFixedRate> getCommerceTaxFixedRates(
+			long groupId, long commerceTaxMethodId, int start, int end,
+			OrderByComparator<CommerceTaxFixedRate> orderByComparator)
 		throws PortalException {
 
 		CommercePermission.check(
 			getPermissionChecker(), groupId,
 			CommerceActionKeys.MANAGE_COMMERCE_TAX_METHODS);
-		return
-			commerceTaxFixedRateLocalService.getAvailableCommerceTaxCategories(
-				groupId);
-	}
-
-	@Override
-	public List<CommerceTaxFixedRate> getCommerceTaxFixedRates(
-		long commerceTaxMethodId, int start, int end) {
-
-		return commerceTaxFixedRateLocalService.getCommerceTaxFixedRates(
-			commerceTaxMethodId, start, end);
-	}
-
-	@Override
-	public List<CommerceTaxFixedRate> getCommerceTaxFixedRates(
-		long commerceTaxMethodId, int start, int end,
-		OrderByComparator<CommerceTaxFixedRate> orderByComparator) {
 
 		return commerceTaxFixedRateLocalService.getCommerceTaxFixedRates(
 			commerceTaxMethodId, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getCommerceTaxFixedRatesCount(long commerceTaxMethodId) {
+	public int getCommerceTaxFixedRatesCount(
+			long groupId, long commerceTaxMethodId)
+		throws PortalException {
+
+		CommercePermission.check(
+			getPermissionChecker(), groupId,
+			CommerceActionKeys.MANAGE_COMMERCE_TAX_METHODS);
+
 		return commerceTaxFixedRateLocalService.getCommerceTaxFixedRatesCount(
 			commerceTaxMethodId);
 	}

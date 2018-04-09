@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.util.List;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 public class CommerceTaxFixedRateAddressRelServiceImpl
@@ -68,69 +69,35 @@ public class CommerceTaxFixedRateAddressRelServiceImpl
 
 	@Override
 	public CommerceTaxFixedRateAddressRel fetchCommerceTaxFixedRateAddressRel(
-		long commerceTaxFixedRateAddressRelId) {
+			long commerceTaxFixedRateAddressRelId)
+		throws PortalException {
 
-		return commerceTaxFixedRateAddressRelLocalService.
-			fetchCommerceTaxFixedRateAddressRel(
-				commerceTaxFixedRateAddressRelId);
-	}
+		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel =
+			commerceTaxFixedRateAddressRelLocalService.
+				fetchCommerceTaxFixedRateAddressRel(
+					commerceTaxFixedRateAddressRelId);
 
-	@Override
-	public CommerceTaxFixedRateAddressRel fetchCommerceTaxFixedRateAddressRel(
-		long commerceTaxMethodId, long commerceCountryId, long commerceRegionId,
-		String zip) {
+		if (commerceTaxFixedRateAddressRel != null) {
+			CommercePermission.check(
+				getPermissionChecker(),
+				commerceTaxFixedRateAddressRel.getGroupId(),
+				CommerceActionKeys.MANAGE_COMMERCE_TAX_METHODS);
+		}
 
-		return commerceTaxFixedRateAddressRelLocalService.
-			fetchCommerceTaxFixedRateAddressRel(
-				commerceTaxMethodId, commerceCountryId, commerceRegionId, zip);
-	}
-
-	@Override
-	public List<CommerceTaxFixedRateAddressRel>
-		getCommerceTaxFixedRateAddressRels(
-			long commerceTaxCategoryId, int start, int end) {
-
-		return commerceTaxFixedRateAddressRelLocalService.
-			getCommerceTaxFixedRateAddressRels(
-				commerceTaxCategoryId, start, end);
+		return commerceTaxFixedRateAddressRel;
 	}
 
 	@Override
 	public List<CommerceTaxFixedRateAddressRel>
-		getCommerceTaxFixedRateAddressRels(
-			long commerceTaxCategoryId, int start, int end,
-			OrderByComparator<CommerceTaxFixedRateAddressRel>
-				orderByComparator) {
-
-		return commerceTaxFixedRateAddressRelLocalService.
-			getCommerceTaxFixedRateAddressRels(
-				commerceTaxCategoryId, start, end, orderByComparator);
-	}
-
-	@Override
-	public int getCommerceTaxFixedRateAddressRelsCount(
-		long commerceTaxCategoryId) {
-
-		return commerceTaxFixedRateAddressRelLocalService.
-			getCommerceTaxFixedRateAddressRelsCount(commerceTaxCategoryId);
-	}
-
-	@Override
-	public List<CommerceTaxFixedRateAddressRel>
-		getCommerceTaxMethodFixedRateAddressRels(
-			long commerceTaxMethodId, int start, int end) {
-
-		return commerceTaxFixedRateAddressRelLocalService.
 			getCommerceTaxMethodFixedRateAddressRels(
-				commerceTaxMethodId, start, end);
-	}
+				long groupId, long commerceTaxMethodId, int start, int end,
+				OrderByComparator<CommerceTaxFixedRateAddressRel>
+					orderByComparator)
+		throws PortalException {
 
-	@Override
-	public List<CommerceTaxFixedRateAddressRel>
-		getCommerceTaxMethodFixedRateAddressRels(
-			long commerceTaxMethodId, int start, int end,
-			OrderByComparator<CommerceTaxFixedRateAddressRel>
-				orderByComparator) {
+		CommercePermission.check(
+			getPermissionChecker(), groupId,
+			CommerceActionKeys.MANAGE_COMMERCE_TAX_METHODS);
 
 		return commerceTaxFixedRateAddressRelLocalService.
 			getCommerceTaxMethodFixedRateAddressRels(
@@ -139,7 +106,12 @@ public class CommerceTaxFixedRateAddressRelServiceImpl
 
 	@Override
 	public int getCommerceTaxMethodFixedRateAddressRelsCount(
-		long commerceTaxMethodId) {
+			long groupId, long commerceTaxMethodId)
+		throws PortalException {
+
+		CommercePermission.check(
+			getPermissionChecker(), groupId,
+			CommerceActionKeys.MANAGE_COMMERCE_TAX_METHODS);
 
 		return commerceTaxFixedRateAddressRelLocalService.
 			getCommerceTaxMethodFixedRateAddressRelsCount(commerceTaxMethodId);

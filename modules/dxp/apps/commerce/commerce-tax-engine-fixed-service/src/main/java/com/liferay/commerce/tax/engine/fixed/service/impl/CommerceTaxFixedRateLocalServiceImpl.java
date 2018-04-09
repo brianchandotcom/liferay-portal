@@ -14,22 +14,20 @@
 
 package com.liferay.commerce.tax.engine.fixed.service.impl;
 
-import com.liferay.commerce.model.CommerceTaxCategory;
 import com.liferay.commerce.service.CommerceTaxCategoryLocalService;
-import com.liferay.commerce.tax.engine.fixed.exception.CommerceTaxFixedRateCommerceTaxCategoryIdException;
+import com.liferay.commerce.tax.engine.fixed.exception.DuplicateCommerceTaxFixedRateException;
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate;
 import com.liferay.commerce.tax.engine.fixed.service.base.CommerceTaxFixedRateLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 public class CommerceTaxFixedRateLocalServiceImpl
@@ -41,25 +39,21 @@ public class CommerceTaxFixedRateLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CommerceTaxCategory commerceTaxCategory =
-			_commerceTaxCategoryLocalService.getCommerceTaxCategory(
-				commerceTaxCategoryId);
 		User user = userLocalService.getUser(serviceContext.getUserId());
 
-		validate(commerceTaxCategory);
+		validate(commerceTaxCategoryId, commerceTaxMethodId);
 
 		long commerceTaxFixedRateId = counterLocalService.increment();
 
 		CommerceTaxFixedRate commerceTaxFixedRate =
 			commerceTaxFixedRatePersistence.create(commerceTaxFixedRateId);
 
-		commerceTaxFixedRate.setGroupId(commerceTaxCategory.getGroupId());
+		commerceTaxFixedRate.setGroupId(serviceContext.getScopeGroupId());
 		commerceTaxFixedRate.setCompanyId(user.getCompanyId());
 		commerceTaxFixedRate.setUserId(user.getUserId());
 		commerceTaxFixedRate.setUserName(user.getFullName());
 		commerceTaxFixedRate.setCommerceTaxMethodId(commerceTaxMethodId);
-		commerceTaxFixedRate.setCommerceTaxCategoryId(
-			commerceTaxCategory.getCommerceTaxCategoryId());
+		commerceTaxFixedRate.setCommerceTaxCategoryId(commerceTaxCategoryId);
 		commerceTaxFixedRate.setRate(rate);
 
 		commerceTaxFixedRatePersistence.update(commerceTaxFixedRate);
@@ -68,51 +62,37 @@ public class CommerceTaxFixedRateLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCommerceTaxFixedRates(long commerceTaxCategoryId)
-		throws PortalException {
+	public void deleteCommerceTaxFixedRateByCommerceTaxCategoryId(
+		long commerceTaxCategoryId) {
 
 		commerceTaxFixedRatePersistence.removeByCommerceTaxCategoryId(
 			commerceTaxCategoryId);
 	}
 
 	@Override
-	public void deleteCommerceTaxMethodFixedRates(long commerceTaxMethodId) {
+	public void deleteCommerceTaxFixedRateByCommerceTaxMethodId(
+		long commerceTaxMethodId) {
+
 		commerceTaxFixedRatePersistence.removeByCommerceTaxMethodId(
 			commerceTaxMethodId);
 	}
 
 	@Override
-	public List<CommerceTaxCategory> getAvailableCommerceTaxCategories(
-			long groupId)
+	public CommerceTaxFixedRate fetchCommerceTaxFixedRateByCTC_CTM(
+			long commerceTaxCategoryId, long commerceTaxMethodId)
 		throws PortalException {
 
-		List<CommerceTaxCategory> availableCommerceTaxCategories =
-			ListUtil.copy(
-				_commerceTaxCategoryLocalService.getCommerceTaxCategories(
-					groupId));
-
-		long[] commerceTaxCategoryIds = ArrayUtil.toLongArray(
-			commerceTaxFixedRateFinder.getCommerceTaxCategoryIds());
-
-		for (long commerceTaxCategoryId : commerceTaxCategoryIds) {
-			CommerceTaxCategory commerceTaxCategory =
-				_commerceTaxCategoryLocalService.getCommerceTaxCategory(
-					commerceTaxCategoryId);
-
-			if (commerceTaxCategory != null) {
-				availableCommerceTaxCategories.remove(commerceTaxCategory);
-			}
-		}
-
-		return availableCommerceTaxCategories;
+		return commerceTaxFixedRatePersistence.fetchByCTC_CTM(
+			commerceTaxCategoryId, commerceTaxMethodId);
 	}
 
 	@Override
-	public List<CommerceTaxFixedRate> getCommerceTaxFixedRates(
-		long commerceTaxMethodId, int start, int end) {
+	public CommerceTaxFixedRate getCommerceTaxFixedRateByCTC_CTM(
+			long commerceTaxCategoryId, long commerceTaxMethodId)
+		throws PortalException {
 
-		return commerceTaxFixedRatePersistence.findByCommerceTaxMethodId(
-			commerceTaxMethodId, start, end);
+		return commerceTaxFixedRatePersistence.findByCTC_CTM(
+			commerceTaxCategoryId, commerceTaxMethodId);
 	}
 
 	@Override
@@ -146,16 +126,15 @@ public class CommerceTaxFixedRateLocalServiceImpl
 		return commerceTaxFixedRate;
 	}
 
-	protected void validate(CommerceTaxCategory commerceTaxCategory)
+	protected void validate(
+			long commerceTaxCategoryId, long commerceTaxMethodId)
 		throws PortalException {
 
-		List<Long> commerceTaxCategoryIds =
-			commerceTaxFixedRateFinder.getCommerceTaxCategoryIds();
+		int count = commerceTaxFixedRatePersistence.countByCTC_CTM(
+			commerceTaxCategoryId, commerceTaxMethodId);
 
-		if (commerceTaxCategoryIds.contains(
-				commerceTaxCategory.getCommerceTaxCategoryId())) {
-
-			throw new CommerceTaxFixedRateCommerceTaxCategoryIdException();
+		if (count > 0) {
+			throw new DuplicateCommerceTaxFixedRateException();
 		}
 	}
 

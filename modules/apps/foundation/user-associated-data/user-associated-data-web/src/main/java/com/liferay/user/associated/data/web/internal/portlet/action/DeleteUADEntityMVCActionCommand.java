@@ -42,13 +42,9 @@ public class DeleteUADEntityMVCActionCommand extends BaseUADMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String uadRegistryKey = ParamUtil.getString(
-			actionRequest, "uadRegistryKey");
+		UADAnonymizer uadAnonymizer = getUADAnonymizer(actionRequest);
 
-		UADAnonymizer uadAnonymizer = uadRegistry.getUADAnonymizer(
-			uadRegistryKey);
-
-		uadAnonymizer.delete(getEntity(actionRequest, uadRegistryKey));
+		uadAnonymizer.delete(getEntity(actionRequest));
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 

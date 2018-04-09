@@ -15,11 +15,8 @@
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
-
-import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -44,16 +41,9 @@ public class DeleteUADEntitiesMVCActionCommand extends BaseUADMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String uadRegistryKey = ParamUtil.getString(
-			actionRequest, "uadRegistryKey");
+		UADAnonymizer uadAnonymizer = getUADAnonymizer(actionRequest);
 
-		List<Object> entities = getEntities(actionRequest, uadRegistryKey);
-		UADAnonymizer uadAnonymizer = uadRegistry.getUADAnonymizer(
-			uadRegistryKey);
-
-		for (Object entity : entities) {
-			uadAnonymizer.delete(entity);
-		}
+		doMultipleAction(actionRequest, uadAnonymizer::delete);
 	}
 
 }

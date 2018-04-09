@@ -14,9 +14,11 @@
 
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.user.associated.data.aggregator.UADAggregator;
+import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
 import java.util.ArrayList;
@@ -31,12 +33,20 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 
-	protected List<Object> getEntities(
-			ActionRequest actionRequest, String uadRegistryKey)
+	protected void doMultipleAction(
+			ActionRequest actionRequest,
+			UnsafeConsumer<Object, Exception> unsafeConsumer)
 		throws Exception {
 
-		UADAggregator uadAggregator = uadRegistry.getUADAggregator(
-			uadRegistryKey);
+		for (Object entity : getEntities(actionRequest)) {
+			unsafeConsumer.accept(entity);
+		}
+	}
+
+	protected List<Object> getEntities(ActionRequest actionRequest)
+		throws Exception {
+
+		UADAggregator uadAggregator = getUADAggregator(actionRequest);
 
 		String[] primaryKeys = ParamUtil.getStringValues(
 			actionRequest, "primaryKeys");
@@ -50,16 +60,24 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 		return entities;
 	}
 
-	protected Object getEntity(
-			ActionRequest actionRequest, String uadRegistryKey)
-		throws Exception {
-
-		UADAggregator uadAggregator = uadRegistry.getUADAggregator(
-			uadRegistryKey);
+	protected Object getEntity(ActionRequest actionRequest) throws Exception {
+		UADAggregator uadAggregator = getUADAggregator(actionRequest);
 
 		String primaryKey = ParamUtil.getString(actionRequest, "primaryKey");
 
 		return uadAggregator.get(primaryKey);
+	}
+
+	protected UADAggregator getUADAggregator(ActionRequest actionRequest) {
+		return uadRegistry.getUADAggregator(getUADRegistryKey(actionRequest));
+	}
+
+	protected UADAnonymizer getUADAnonymizer(ActionRequest actionRequest) {
+		return uadRegistry.getUADAnonymizer(getUADRegistryKey(actionRequest));
+	}
+
+	protected String getUADRegistryKey(ActionRequest actionRequest) {
+		return ParamUtil.getString(actionRequest, "uadRegistryKey");
 	}
 
 	@Reference

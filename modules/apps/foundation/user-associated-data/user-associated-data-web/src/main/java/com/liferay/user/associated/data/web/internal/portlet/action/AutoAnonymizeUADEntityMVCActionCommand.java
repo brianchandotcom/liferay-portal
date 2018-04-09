@@ -48,14 +48,10 @@ public class AutoAnonymizeUADEntityMVCActionCommand
 
 		User selectedUser = _portal.getSelectedUser(actionRequest);
 
-		String uadRegistryKey = ParamUtil.getString(
-			actionRequest, "uadRegistryKey");
-
-		UADAnonymizer uadAnonymizer = uadRegistry.getUADAnonymizer(
-			uadRegistryKey);
+		UADAnonymizer uadAnonymizer = getUADAnonymizer(actionRequest);
 
 		uadAnonymizer.autoAnonymize(
-			getEntity(actionRequest, uadRegistryKey), selectedUser.getUserId());
+			getEntity(actionRequest), selectedUser.getUserId());
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 

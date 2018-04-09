@@ -25,7 +25,7 @@ import java.util.Map;
  * @author Eduardo Garcia
  */
 @ProviderType
-public interface SegmentService<T extends Segment> {
+public interface SegmentsManager<T extends Segment> {
 
 	public Collection<T> getSegments(long groupId);
 

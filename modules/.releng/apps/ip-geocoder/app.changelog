@@ -25,3 +25,18 @@ app.artifacts-3.0.1=\
 app.change.log-3.0.1=LPS-69661 LPS-73178
 
 app.git.id-3.0.1=cd94d89d3356dcb3755743309eb16cc3b3f0dd0e
+
+#
+# Liferay App Version 3.0.2
+#
+
+app.artifacts-3.0.2=\
+	com.liferay.ip.geocoder-3.0.1.jar,\
+	com.liferay.ip.geocoder.api-1.0.2.jar,\
+	com.liferay.ip.geocoder.sample.web-2.0.11.jar,\
+	com.maxmind.geoip.api-1.2.14.jar,\
+	org.tukaani.xz-1.5.jar
+
+app.change.log-3.0.2=LPS-61099 LPS-61420 LPS-63325 LPS-64031 LPS-65225 LPS-65232 LPS-65909 LPS-66625 LPS-68924 LPS-69453 LPS-73178 LPS-74897 LPS-75049 LPS-75293 LPS-76221 LPS-76649 
+
+app.git.id-3.0.2=3cb195a08b88175d5549fb1a8fb10e7399a416e9

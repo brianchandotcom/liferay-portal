@@ -1181,3 +1181,99 @@ app.artifacts-7.0.8=\
 app.change.log-7.0.8=LPS-67851 LPS-67872 LPS-67895 LPS-68480 LPS-69222 LPS-69406 LPS-71605 LPS-71635 LPS-72054 LPS-72169 LPS-72385 LPS-72604 LPS-73551 LPS-73579 LPS-73816 LPS-73833 LPS-73946 LPS-74024 LPS-74451 LPS-74468 LPS-74544 LPS-74547 LPS-74618 LPS-74784 LPS-74800 LPS-74807 LPS-74849 LPS-74894 LPS-74897 LPS-74898 LPS-74918 LPS-75010 LPS-75057 LPS-75071 LPS-75176 LPS-75225 LPS-75272 LPS-75276 LPS-75288 LPS-75322 LPS-75324 LPS-75364 LPS-75366 LPS-75439 LPS-75440 LPS-75449 LPS-75458 LPS-75460 LPS-75465 LPS-75480 LPS-75493 LPS-75560 LPS-75564 LPS-75601 LPS-75606 LPS-75610 LPS-75646 LPS-75692 LPS-75708 LPS-75711 LPS-75731 LPS-75735 LPS-75759 LPS-75762 LPS-75795 LPS-75796 LPS-75798 LPS-75804 LPS-75808 LPS-75837 LPS-75859 LPS-75909 LPS-75969 LPS-75971 LPS-75975 LPS-76088 LPS-76110 LPS-76157 LPS-76187 LPS-76221 LPS-76226 LPS-76230 LPS-76292 LPS-76334 LPS-76348 LPS-76528 LPS-76604 LPS-76632 LPS-76662 LPS-76706 LPS-76747 LPS-76754 LPS-76783 LPS-76840 LPS-76896 LPS-77025 LPS-77111 LPS-77135 LPS-77143 LPS-77193 LPS-77287 LPS-77290 LPS-77319 LPS-77402 LPS-77761 LPS-77880 LPS-78064 LPS-78150 
 
 app.git.id-7.0.8=1315ff6875135daf5f41378e56cdd6def2ac7e14
+
+#
+# Liferay App Version 7.0.9
+#
+
+app.artifacts-7.0.9=\
+	com.liferay.announcements.api-1.0.1.jar,\
+	com.liferay.announcements.web-2.0.9.jar,\
+	com.liferay.blogs.api-3.1.1.jar,\
+	com.liferay.blogs.editor.configuration-1.0.11.jar,\
+	com.liferay.blogs.item.selector.api-1.1.1.jar,\
+	com.liferay.blogs.item.selector.web-2.0.1.jar,\
+	com.liferay.blogs.layout.prototype-2.0.14.jar,\
+	com.liferay.blogs.recent.bloggers.api-1.0.1.jar,\
+	com.liferay.blogs.recent.bloggers.web-2.0.2.jar,\
+	com.liferay.blogs.service-1.1.12.jar,\
+	com.liferay.blogs.web-2.0.5.jar,\
+	com.liferay.bookmarks.api-2.0.13.jar,\
+	com.liferay.bookmarks.service-1.1.27.jar,\
+	com.liferay.bookmarks.web-1.0.36.jar,\
+	com.liferay.comment.api-2.0.2.jar,\
+	com.liferay.comment.editor.configuration-1.0.3.jar,\
+	com.liferay.comment.page.comments.web-1.0.12.jar,\
+	com.liferay.comment.ratings.definition-2.0.3.jar,\
+	com.liferay.comment.sanitizer-2.0.6.jar,\
+	com.liferay.comment.web-2.0.5.jar,\
+	com.liferay.directory.web-1.0.23.jar,\
+	com.liferay.document.library.api-3.5.1.jar,\
+	com.liferay.document.library.item.selector.web-1.0.10.jar,\
+	com.liferay.document.library.layout.set.prototype-2.0.14.jar,\
+	com.liferay.document.library.repository.authorization.api-1.0.3.jar,\
+	com.liferay.document.library.repository.cmis.api-1.1.12.jar,\
+	com.liferay.document.library.repository.cmis.impl-2.0.28.jar,\
+	com.liferay.document.library.repository.external.api-1.0.3.jar,\
+	com.liferay.document.library.repository.search-3.0.3.jar,\
+	com.liferay.document.library.service-2.0.9.jar,\
+	com.liferay.document.library.web-2.0.9.jar,\
+	com.liferay.flags.api-2.0.11.jar,\
+	com.liferay.flags.service-2.0.14.jar,\
+	com.liferay.flags.taglib-2.0.11.jar,\
+	com.liferay.flags.web-2.0.14.jar,\
+	com.liferay.image.uploader.web-1.0.18.jar,\
+	com.liferay.invitation.invite.members.api-2.1.5.jar,\
+	com.liferay.invitation.invite.members.service-3.0.6.jar,\
+	com.liferay.invitation.invite.members.web-1.0.29.jar,\
+	com.liferay.item.selector.api-2.4.3.jar,\
+	com.liferay.item.selector.criteria.api-2.1.2.jar,\
+	com.liferay.item.selector.editor.configuration-2.0.5.jar,\
+	com.liferay.item.selector.taglib-1.1.18.jar,\
+	com.liferay.item.selector.upload.web-2.0.10.jar,\
+	com.liferay.item.selector.url.web-2.0.9.jar,\
+	com.liferay.item.selector.web-3.0.8.jar,\
+	com.liferay.mentions.api-2.2.2.jar,\
+	com.liferay.mentions.service-2.0.17.jar,\
+	com.liferay.mentions.web-2.0.4.jar,\
+	com.liferay.message.boards.api-3.1.8.jar,\
+	com.liferay.message.boards.comment-2.0.20.jar,\
+	com.liferay.message.boards.editor.configuration-1.0.3.jar,\
+	com.liferay.message.boards.layout.set.prototype-1.0.15.jar,\
+	com.liferay.message.boards.parser.bbcode-2.0.13.jar,\
+	com.liferay.message.boards.service-1.0.17.jar,\
+	com.liferay.message.boards.web-1.3.1.jar,\
+	com.liferay.microblogs.api-2.1.5.jar,\
+	com.liferay.microblogs.service-2.1.18.jar,\
+	com.liferay.microblogs.web-2.0.27.jar,\
+	com.liferay.notifications.web-1.0.33.jar,\
+	com.liferay.quick.note.web-2.0.6.jar,\
+	com.liferay.ratings.api-2.0.1.jar,\
+	com.liferay.ratings.page.ratings.web-2.0.10.jar,\
+	com.liferay.ratings.service-1.0.11.jar,\
+	com.liferay.recent.documents.web-2.0.16.jar,\
+	com.liferay.social.activities.api-1.0.1.jar,\
+	com.liferay.social.activities.web-2.0.9.jar,\
+	com.liferay.social.activity.api-1.0.7.jar,\
+	com.liferay.social.activity.web-2.0.12.jar,\
+	com.liferay.social.group.statistics.web-2.0.15.jar,\
+	com.liferay.social.requests.web-1.0.8.jar,\
+	com.liferay.social.user.statistics.api-1.0.1.jar,\
+	com.liferay.social.user.statistics.web-3.0.5.jar,\
+	com.liferay.upload.api-1.0.2.jar,\
+	com.liferay.upload.web-1.0.7.jar,\
+	com.liferay.wiki.api-2.5.6.jar,\
+	com.liferay.wiki.editor.configuration-1.0.10.jar,\
+	com.liferay.wiki.engine.creole-2.0.17.jar,\
+	com.liferay.wiki.engine.html-2.0.7.jar,\
+	com.liferay.wiki.engine.input.editor.common-3.0.2.jar,\
+	com.liferay.wiki.engine.lang-1.0.4.jar,\
+	com.liferay.wiki.engine.text-2.0.8.jar,\
+	com.liferay.wiki.layout.prototype-1.0.17.jar,\
+	com.liferay.wiki.navigation.web-2.0.15.jar,\
+	com.liferay.wiki.service-1.6.24.jar,\
+	com.liferay.wiki.web-3.0.12.jar
+
+app.change.log-7.0.9=LPS-52675 LPS-61099 LPS-61420 LPS-64031 LPS-64563 LPS-65012 LPS-65225 LPS-66133 LPS-66923 LPS-66924 LPS-67352 LPS-67714 LPS-69661 LPS-70668 LPS-71490 LPS-72347 LPS-72658 LPS-72847 LPS-73423 LPS-73470 LPS-73550 LPS-74544 LPS-74806 LPS-75017 LPS-75049 LPS-75551 LPS-77274 LPS-77803 LPS-78459 LPS-78772 LPS-78858 LPS-78871 LPS-78901 LPS-79226 
+
+app.git.id-7.0.9=3cb195a08b88175d5549fb1a8fb10e7399a416e9

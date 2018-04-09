@@ -28,6 +28,8 @@ import com.google.template.soy.data.restricted.IntegerData;
 import com.google.template.soy.data.restricted.NullData;
 import com.google.template.soy.data.restricted.StringData;
 
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
@@ -37,6 +39,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -215,6 +218,29 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 					entry.getKey(), _toSoyValue(entry.getValue())));
 
 			return soyMapData;
+		}
+		else if (object instanceof JSONObject) {
+			JSONObject jsonObject = (JSONObject)object;
+
+			SoyMapData soyMapData = new SoyMapData();
+
+			Iterator<String> it = jsonObject.keys();
+
+			it.forEachRemaining(
+				key -> soyMapData.put(key, _toSoyValue(jsonObject.get(key))));
+
+			return soyMapData;
+		}
+		else if (object instanceof JSONArray) {
+			JSONArray jsonArray = (JSONArray)object;
+
+			SoyListData soyListData = new SoyListData();
+
+			Iterator it = jsonArray.iterator();
+
+			it.forEachRemaining(value -> soyListData.add(_toSoyValue(value)));
+
+			return soyListData;
 		}
 		else if (object instanceof Iterable<?>) {
 			SoyListData soyListData = new SoyListData();

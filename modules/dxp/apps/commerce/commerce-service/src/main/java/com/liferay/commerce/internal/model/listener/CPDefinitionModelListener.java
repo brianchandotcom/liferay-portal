@@ -17,6 +17,9 @@ package com.liferay.commerce.internal.model.listener;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.commerce.service.CommerceTaxCategoryRelLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 
@@ -26,6 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  * @author Andrea Di Giorgi
+ * @author Marco Leo
  */
 @Component(immediate = true, service = ModelListener.class)
 public class CPDefinitionModelListener extends BaseModelListener<CPDefinition> {
@@ -34,10 +38,15 @@ public class CPDefinitionModelListener extends BaseModelListener<CPDefinition> {
 	public void onBeforeRemove(CPDefinition cpDefinition) {
 		long cpDefinitionId = cpDefinition.getCPDefinitionId();
 
-		_commerceTaxCategoryRelLocalService.deleteCommerceTaxCategoryRels(
-			cpDefinition.getModelClassName(), cpDefinitionId);
-		_cpDefinitionInventoryLocalService.
-			deleteCPDefinitionInventoryByCPDefinitionId(cpDefinitionId);
+		try {
+			_commerceTaxCategoryRelLocalService.deleteCommerceTaxCategoryRel(
+				cpDefinition.getModelClassName(), cpDefinitionId);
+			_cpDefinitionInventoryLocalService.
+			  deleteCPDefinitionInventoryByCPDefinitionId(cpDefinitionId);
+		}
+		catch (PortalException pe){
+			_log.error(pe, pe);
+		}
 	}
 
 	@Reference
@@ -48,4 +57,6 @@ public class CPDefinitionModelListener extends BaseModelListener<CPDefinition> {
 	private CPDefinitionInventoryLocalService
 		_cpDefinitionInventoryLocalService;
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		CPDefinitionModelListener.class);
 }

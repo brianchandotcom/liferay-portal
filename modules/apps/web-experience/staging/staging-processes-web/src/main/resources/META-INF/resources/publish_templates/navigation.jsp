@@ -16,23 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="publish-templates" selected="<%= true %>" />
-	</aui:nav>
-
-	<aui:nav-bar-search>
-		<liferay-portlet:renderURL varImpl="searchURL">
-			<portlet:param name="mvcRenderCommandName" value="viewPublishConfigurations" />
-		</liferay-portlet:renderURL>
-
-		<aui:form action="<%= searchURL.toString() %>" name="searchFm">
-			<liferay-portlet:renderURLParams varImpl="searchURL" />
-			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-
-			<liferay-ui:input-search
-				markupView="lexicon"
-			/>
-		</aui:form>
-	</aui:nav-bar-search>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= publishTemplatesDisplayContext.getJSPNavigationItemList() %>"
+/>

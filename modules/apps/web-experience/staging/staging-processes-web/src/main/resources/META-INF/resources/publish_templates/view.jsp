@@ -33,6 +33,11 @@ renderResponse.setTitle(LanguageUtil.get(request, "publish-templates"));
 
 <liferay-util:include page="/publish_templates/navigation.jsp" servletContext="<%= application %>" />
 
+<liferay-util:include page="/publish_templates/toolbar.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
+	<liferay-util:param name="layoutSetBranchName" value="<%= layoutSetBranchName %>" />
+</liferay-util:include>
+
 <portlet:actionURL name="editPublishConfiguration" var="restoreTrashEntriesURL">
 	<portlet:param name="mvcRenderCommandName" value="viewPublishConfigurations" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
@@ -114,8 +119,8 @@ int exportImportConfigurationType = stagingGroup.isStagedRemotely() ? ExportImpo
 				/>
 
 				<%
-				request.setAttribute("view.jsp-layoutSetBranchId", layoutSetBranchId);
-				request.setAttribute("view.jsp-layoutSetBranchName", layoutSetBranchName);
+					request.setAttribute("view.jsp-layoutSetBranchId", layoutSetBranchId);
+					request.setAttribute("view.jsp-layoutSetBranchName", layoutSetBranchName);
 				%>
 
 				<liferay-ui:search-container-column-jsp
@@ -129,20 +134,5 @@ int exportImportConfigurationType = stagingGroup.isStagedRemotely() ? ExportImpo
 				markupView="lexicon"
 			/>
 		</liferay-ui:search-container>
-
-		<portlet:renderURL var="addPublishConfigurationURL">
-			<portlet:param name="mvcRenderCommandName" value="editPublishConfiguration" />
-			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-			<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
-			<portlet:param name="layoutSetBranchName" value="<%= layoutSetBranchName %>" />
-			<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
-		</portlet:renderURL>
-
-		<liferay-frontend:add-menu>
-			<liferay-frontend:add-menu-item
-				title='<%= LanguageUtil.get(request, "new") %>'
-				url="<%= addPublishConfigurationURL %>"
-			/>
-		</liferay-frontend:add-menu>
 	</aui:form>
 </div>

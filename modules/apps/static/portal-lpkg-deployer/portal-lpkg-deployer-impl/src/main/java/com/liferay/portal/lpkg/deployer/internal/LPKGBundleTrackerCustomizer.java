@@ -151,9 +151,7 @@ public class LPKGBundleTrackerCustomizer
 
 		String symbolicName = bundle.getSymbolicName();
 
-		if (symbolicName.equals(
-				StaticLPKGResolver.getStaticLPKGBundleSymbolicName())) {
-
+		if (_staticLPKGBundleSymbolicNames.contains(symbolicName)) {
 			return Collections.emptyList();
 		}
 
@@ -743,6 +741,8 @@ public class LPKGBundleTrackerCustomizer
 
 	private static final Pattern _pattern = Pattern.compile(
 		"/(.*?)(-\\d+\\.\\d+\\.\\d+)(\\..+)?(\\.[jw]ar)");
+	private static final List<String> _staticLPKGBundleSymbolicNames =
+		StaticLPKGResolver.getStaticLPKGBundleSymbolicNames();
 
 	private final BundleContext _bundleContext;
 	private final Set<String> _outdatedRemoteAppIds = new HashSet<>();

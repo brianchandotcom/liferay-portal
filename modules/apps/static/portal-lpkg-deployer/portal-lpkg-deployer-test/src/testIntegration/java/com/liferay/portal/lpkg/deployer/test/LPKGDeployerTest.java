@@ -168,10 +168,7 @@ public class LPKGDeployerTest {
 				String name = zipEntry.getName();
 
 				if (name.endsWith(".jar")) {
-					if (symbolicName.equals(
-							StaticLPKGResolver.
-								getStaticLPKGBundleSymbolicName())) {
-
+					if (_staticLPKGBundleSymbolicNames.contains(symbolicName)) {
 						String location =
 							"file:/" + name + "?protocol=lpkg&static=true";
 
@@ -293,5 +290,8 @@ public class LPKGDeployerTest {
 			}
 		}
 	}
+
+	private static final List<String> _staticLPKGBundleSymbolicNames =
+		StaticLPKGResolver.getStaticLPKGBundleSymbolicNames();
 
 }

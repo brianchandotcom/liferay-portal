@@ -132,19 +132,23 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 
 <aui:script>
 	function <portlet:namespace/>doAnonymizeMultiple() {
-		<portlet:namespace />doMultiple('<portlet:actionURL name="/anonymize_uad_entities" />');
+		<portlet:namespace />doMultiple(
+			'<portlet:actionURL name="/anonymize_uad_entities" />',
+			'<liferay-ui:message key="are-you-sure-you-want-to-anonymize-the-selected items" />');
 	}
 
 	function <portlet:namespace/>doDeleteMultiple() {
-		<portlet:namespace />doMultiple('<portlet:actionURL name="/delete_uad_entities" />');
+		<portlet:namespace />doMultiple(
+			'<portlet:actionURL name="/delete_uad_entities" />',
+			'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected items" />');
 	}
 
-	function <portlet:namespace/>doMultiple(actionURL) {
+	function <portlet:namespace/>doMultiple(actionURL, message) {
 		var form = document.forms['<portlet:namespace />viewUADEntitiesFm'];
 
 		form.elements['<portlet:namespace />primaryKeys'].value = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
 
-		submitForm(form, actionURL);
+		<portlet:namespace />confirmAction('viewUADEntitiesFm', actionURL, message);
 	}
 </aui:script>
 

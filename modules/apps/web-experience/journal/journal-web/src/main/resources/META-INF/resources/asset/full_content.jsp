@@ -16,6 +16,8 @@
 
 <%@ include file="/asset/init.jsp" %>
 
+<liferay-util:dynamic-include key="com.liferay.journal.web#/asset/full_content.jsp#pre" />
+
 <%
 AssetRendererFactory<?> assetRendererFactory = (AssetRendererFactory<?>)request.getAttribute(WebKeys.ASSET_RENDERER_FACTORY);
 
@@ -62,3 +64,5 @@ JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribu
 
 	<br />
 </c:if>
+
+<liferay-util:dynamic-include key="com.liferay.journal.web#/asset/full_content.jsp#post" />

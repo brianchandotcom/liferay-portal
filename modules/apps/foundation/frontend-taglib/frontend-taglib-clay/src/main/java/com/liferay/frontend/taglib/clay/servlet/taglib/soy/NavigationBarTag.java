@@ -15,6 +15,9 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+
+import java.util.List;
 
 /**
  * @author Chema Balsas
@@ -29,8 +32,8 @@ public class NavigationBarTag extends BaseClayTag {
 		putValue("inverted", inverted);
 	}
 
-	public void setItems(Object items) {
-		putValue("items", items);
+	public void setItems(List<NavigationItem> navigationItems) {
+		putValue("items", navigationItems);
 	}
 
 }

@@ -19,6 +19,9 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.portlet.ActionRequest;
 
 import org.osgi.service.component.annotations.Reference;
@@ -27,6 +30,25 @@ import org.osgi.service.component.annotations.Reference;
  * @author Drew Brokke
  */
 public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
+
+	protected List<Object> getEntities(
+			ActionRequest actionRequest, String uadRegistryKey)
+		throws Exception {
+
+		UADAggregator uadAggregator = uadRegistry.getUADAggregator(
+			uadRegistryKey);
+
+		String[] primaryKeys = ParamUtil.getStringValues(
+			actionRequest, "primaryKeys");
+
+		List<Object> entities = new ArrayList<>();
+
+		for (String primaryKey : primaryKeys) {
+			entities.add(uadAggregator.get(primaryKey));
+		}
+
+		return entities;
+	}
 
 	protected Object getEntity(
 			ActionRequest actionRequest, String uadRegistryKey)

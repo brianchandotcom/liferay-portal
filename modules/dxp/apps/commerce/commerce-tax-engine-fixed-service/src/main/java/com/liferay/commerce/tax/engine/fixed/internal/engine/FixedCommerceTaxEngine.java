@@ -12,19 +12,14 @@
  * details.
  */
 
-package com.liferay.commerce.tax.engine.fixed.web.internal;
+package com.liferay.commerce.tax.engine.fixed.internal.engine;
 
 import com.liferay.commerce.exception.CommerceTaxEngineException;
-import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceTaxCategory;
+import com.liferay.commerce.model.CommerceTaxCalculateRequest;
 import com.liferay.commerce.model.CommerceTaxEngine;
-import com.liferay.commerce.model.CommerceTaxMethod;
 import com.liferay.commerce.model.CommerceTaxRate;
-import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.service.CommerceTaxMethodService;
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate;
-import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateService;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -32,7 +27,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -41,6 +35,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 @Component(
@@ -50,23 +45,31 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class FixedCommerceTaxEngine implements CommerceTaxEngine {
 
-	public static final String KEY = "fixed";
+	public static final String KEY = "fixed-tax";
 
 	@Override
 	public List<CommerceTaxRate> getCommerceTaxRates(
-			CPDefinition cpDefinition, CommerceAddress commerceAddress,
-			Locale locale)
+			CommerceTaxCalculateRequest commerceTaxCalculateRequest)
 		throws CommerceTaxEngineException {
 
 		List<CommerceTaxRate> commerceTaxRates = new ArrayList<>();
 
 		try {
-			commerceTaxRates = _getCommerceTaxRates(cpDefinition, locale);
+			CommerceTaxFixedRate commerceTaxFixedRate =
+				_commerceTaxFixedRateLocalService.
+					getCommerceTaxFixedRateByCTC_CTM(
+						commerceTaxCalculateRequest.getTaxCategoryId(),
+						commerceTaxCalculateRequest.getCommerceTaxMethodId());
+
+			CommerceTaxRate commerceTaxRate = new CommerceTaxRate(
+				KEY, KEY, commerceTaxFixedRate.getRate());
+
+			commerceTaxRates.add(commerceTaxRate);
 		}
 		catch (PortalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
+			_log.error(pe, pe);
+
+			throw new CommerceTaxEngineException(pe);
 		}
 
 		return commerceTaxRates;
@@ -83,57 +86,7 @@ public class FixedCommerceTaxEngine implements CommerceTaxEngine {
 	public String getName(Locale locale) {
 		ResourceBundle resourceBundle = _getResourceBundle(locale);
 
-		return LanguageUtil.get(resourceBundle, "fixed");
-	}
-
-	@Override
-	public boolean isPercentage(long groupId) {
-		CommerceTaxMethod commerceTaxMethod =
-			_commerceTaxMethodService.fetchCommerceTaxMethod(groupId, KEY);
-
-		if (commerceTaxMethod != null) {
-			return commerceTaxMethod.getPercentage();
-		}
-
-		return true;
-	}
-
-	private List<CommerceTaxFixedRate> _getCommerceTaxFixedRates(long groupId) {
-		CommerceTaxMethod commerceTaxMethod =
-			_commerceTaxMethodService.fetchCommerceTaxMethod(groupId, KEY);
-
-		if (commerceTaxMethod == null) {
-			return Collections.emptyList();
-		}
-
-		return _commerceTaxFixedRateService.getCommerceTaxFixedRates(
-			commerceTaxMethod.getCommerceTaxMethodId(), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
-	}
-
-	private List<CommerceTaxRate> _getCommerceTaxRates(
-			CPDefinition cpDefinition, Locale locale)
-		throws PortalException {
-
-		List<CommerceTaxRate> commerceTaxRates = new ArrayList<>();
-
-		List<CommerceTaxFixedRate> commerceTaxFixedRates =
-			_getCommerceTaxFixedRates(cpDefinition.getGroupId());
-
-		for (CommerceTaxFixedRate commerceTaxFixedRate :
-				commerceTaxFixedRates) {
-
-			CommerceTaxCategory commerceTaxCategory =
-				commerceTaxFixedRate.getCommerceTaxCategory();
-
-			String name = commerceTaxCategory.getName(locale);
-
-			double rate = commerceTaxFixedRate.getRate();
-
-			commerceTaxRates.add(new CommerceTaxRate(name, name, rate));
-		}
-
-		return commerceTaxRates;
+		return LanguageUtil.get(resourceBundle, KEY);
 	}
 
 	private ResourceBundle _getResourceBundle(Locale locale) {
@@ -145,9 +98,6 @@ public class FixedCommerceTaxEngine implements CommerceTaxEngine {
 		FixedCommerceTaxEngine.class);
 
 	@Reference
-	private CommerceTaxFixedRateService _commerceTaxFixedRateService;
-
-	@Reference
-	private CommerceTaxMethodService _commerceTaxMethodService;
+	private CommerceTaxFixedRateLocalService _commerceTaxFixedRateLocalService;
 
 }

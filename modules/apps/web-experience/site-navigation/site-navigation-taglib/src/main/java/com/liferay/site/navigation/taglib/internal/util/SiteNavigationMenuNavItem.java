@@ -114,7 +114,7 @@ public class SiteNavigationMenuNavItem extends NavItem {
 	@Override
 	public String getUnescapedName() {
 		return _siteNavigationMenuItemType.getUnescapedName(
-			_themeDisplay, _siteNavigationMenuItem);
+			_siteNavigationMenuItem, _themeDisplay.getLanguageId());
 	}
 
 	@Override
@@ -125,7 +125,7 @@ public class SiteNavigationMenuNavItem extends NavItem {
 	@Override
 	public String iconURL() {
 		return _siteNavigationMenuItemType.iconURL(
-			_themeDisplay, _siteNavigationMenuItem);
+			_siteNavigationMenuItem, _themeDisplay.getPathImage());
 	}
 
 	@Override

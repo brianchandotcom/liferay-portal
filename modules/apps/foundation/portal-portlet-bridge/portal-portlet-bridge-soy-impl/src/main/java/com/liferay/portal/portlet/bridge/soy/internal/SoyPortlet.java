@@ -58,6 +58,7 @@ import com.liferay.portlet.RenderRequestImpl;
 import java.io.IOException;
 import java.io.Writer;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -489,9 +490,9 @@ public class SoyPortlet extends MVCPortlet {
 			return _templateResources;
 		}
 
-		List<TemplateResource> templateResources =
+		List<TemplateResource> templateResources = new ArrayList<>(
 			SoyTemplateResourcesProviderUtil.getBundleTemplateResources(
-				_bundle, templatePath);
+				_bundle, templatePath));
 
 		MVCCommandCache mvcCommandCache = getRenderMVCCommandCache();
 

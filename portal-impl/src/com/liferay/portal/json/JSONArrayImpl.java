@@ -58,7 +58,17 @@ public class JSONArrayImpl implements JSONArray {
 
 	@Override
 	public Object get(int index) {
-		return _jsonArray.opt(index);
+		Object value = _jsonArray.opt(index);
+
+		if (value instanceof org.json.JSONArray) {
+			return new JSONArrayImpl((org.json.JSONArray)value);
+		}
+
+		if (value instanceof org.json.JSONObject) {
+			return new JSONObjectImpl((org.json.JSONObject)value);
+		}
+
+		return value;
 	}
 
 	@Override

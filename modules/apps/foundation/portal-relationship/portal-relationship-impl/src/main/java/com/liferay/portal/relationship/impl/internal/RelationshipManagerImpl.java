@@ -40,13 +40,12 @@ public class RelationshipManagerImpl implements RelationshipManager {
 
 	@Override
 	public <T extends ClassedModel> Collection<? extends ClassedModel>
-		getRelationships(Class<T> relationshipBaseClass, long primKey) {
+		getInboundRelationships(Class<T> relationshipBaseClass, long primKey) {
 
-		Relationship<T> relationship = _getRelationship(
-			relationshipBaseClass, primKey);
+		Relationship<T> relationship = _getRelationship(relationshipBaseClass);
 
-		Stream<? extends ClassedModel> stream = relationship.getRelatedModels(
-			primKey);
+		Stream<? extends ClassedModel> stream =
+			relationship.getInboundRelatedModels(primKey);
 
 		return stream.collect(Collectors.toList());
 	}
@@ -55,8 +54,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
 	public <T extends ClassedModel> Collection<? extends ClassedModel>
 		getOutboundRelationships(Class<T> relationshipBaseClass, long primKey) {
 
-		Relationship<T> relationship = _getRelationship(
-			relationshipBaseClass, primKey);
+		Relationship<T> relationship = _getRelationship(relationshipBaseClass);
 
 		Stream<? extends ClassedModel> stream =
 			relationship.getOutboundRelatedModels(primKey);
@@ -66,27 +64,14 @@ public class RelationshipManagerImpl implements RelationshipManager {
 
 	@Override
 	public <T extends ClassedModel> Collection<? extends ClassedModel>
-		getInboundRelationships(Class<T> relationshipBaseClass, long primKey) {
+		getRelationships(Class<T> relationshipBaseClass, long primKey) {
 
-		Relationship<T> relationship = _getRelationship(
-			relationshipBaseClass, primKey);
+		Relationship<T> relationship = _getRelationship(relationshipBaseClass);
 
-		Stream<? extends ClassedModel> stream =
-			relationship.getInboundRelatedModels(primKey);
+		Stream<? extends ClassedModel> stream = relationship.getRelatedModels(
+			primKey);
 
 		return stream.collect(Collectors.toList());
-	}
-
-	@SuppressWarnings("unchecked")
-	private <T extends ClassedModel> Relationship<T> _getRelationship(
-		Class<T> relationshipBaseClass, long primKey) {
-
-		RelationshipResource<T> relationshipResource =
-			_serviceTrackerMap.getService(relationshipBaseClass.getName());
-
-		Relationship.Builder<T> builder = new Relationship.Builder<>();
-
-		return relationshipResource.relationship(builder);
 	}
 
 	@Activate
@@ -105,6 +90,18 @@ public class RelationshipManagerImpl implements RelationshipManager {
 
 				emitter.emit(modelClassName);
 			});
+	}
+
+	@SuppressWarnings("unchecked")
+	private <T extends ClassedModel> Relationship<T> _getRelationship(
+		Class<T> relationshipBaseClass) {
+
+		RelationshipResource<T> relationshipResource =
+			_serviceTrackerMap.getService(relationshipBaseClass.getName());
+
+		Relationship.Builder<T> builder = new Relationship.Builder<>();
+
+		return relationshipResource.relationship(builder);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -26,53 +26,44 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.util.List;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 public class CommerceTaxCategoryRelServiceImpl
 	extends CommerceTaxCategoryRelServiceBaseImpl {
 
 	@Override
-	public CommerceTaxCategoryRel addCommerceTaxCategoryRel(
+	public CommerceTaxCategoryRel updateCommerceTaxCategoryRel(
 			long commerceTaxCategoryId, String className, long classPK,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		checkModel(className, classPK);
 
-		return commerceTaxCategoryRelLocalService.addCommerceTaxCategoryRel(
+		return commerceTaxCategoryRelLocalService.updateCommerceTaxCategoryRel(
 			commerceTaxCategoryId, className, classPK, serviceContext);
 	}
 
 	@Override
-	public void deleteCommerceTaxCategoryRel(long commercetaxCategoryRelId)
-		throws PortalException {
+	public void deleteCommerceTaxCategoryRel(
+			String className, long classPK)
+		throws PortalException{
 
-		CommerceTaxCategoryRel commerceTaxCategoryRel =
-			commerceTaxCategoryRelLocalService.getCommerceTaxCategoryRel(
-				commercetaxCategoryRelId);
-
-		checkModel(
-			commerceTaxCategoryRel.getClassName(),
-			commerceTaxCategoryRel.getClassPK());
+		checkModel(className, classPK);
 
 		commerceTaxCategoryRelLocalService.deleteCommerceTaxCategoryRel(
-			commerceTaxCategoryRel);
+			className, classPK);
 	}
 
 	@Override
-	public List<CommerceTaxCategoryRel> getCommerceTaxCategoryRels(
-		String className, long classPK, int start, int end,
-		OrderByComparator<CommerceTaxCategoryRel> orderByComparator) {
+	public CommerceTaxCategoryRel fetchCommerceTaxCategoryRel(
+			String className, long classPK)
+		throws  PortalException {
 
-		return commerceTaxCategoryRelLocalService.getCommerceTaxCategoryRels(
-			className, classPK, start, end, orderByComparator);
-	}
+		checkModel(className, classPK);
 
-	@Override
-	public int getCommerceTaxCategoryRelsCount(String className, long classPK) {
-		return
-			commerceTaxCategoryRelLocalService.getCommerceTaxCategoryRelsCount(
-				className, classPK);
+		return commerceTaxCategoryRelLocalService.fetchCommerceTaxCategoryRel(
+			className, classPK);
 	}
 
 	protected void checkModel(String className, long classPK)

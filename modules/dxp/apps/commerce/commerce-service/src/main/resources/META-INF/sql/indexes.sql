@@ -51,7 +51,7 @@ create index IX_1FB6FD31 on CommercePaymentMethod (groupId, active_);
 create unique index IX_B0FDFD55 on CommercePaymentMethod (groupId, engineKey[$COLUMN_LENGTH:75$]);
 
 create unique index IX_2083879C on CommercePriceEntry (CPInstanceId, commercePriceListId);
-create unique index IX_BD2945DE on CommercePriceEntry (commercePriceListId, CPInstanceId);
+create index IX_CA7A2D0D on CommercePriceEntry (commercePriceListId);
 create index IX_5E36B51E on CommercePriceEntry (companyId);
 create index IX_E185EB20 on CommercePriceEntry (groupId);
 create index IX_1578F03E on CommercePriceEntry (uuid_[$COLUMN_LENGTH:75$], companyId);
@@ -78,8 +78,8 @@ create unique index IX_C4557F93 on CommerceShippingMethod (groupId, engineKey[$C
 
 create index IX_1143BF16 on CommerceTaxCategory (groupId);
 
-create index IX_A8CAAE86 on CommerceTaxCategoryRel (classNameId, classPK);
-create unique index IX_762A5C5D on CommerceTaxCategoryRel (commerceTaxCategoryId, classNameId, classPK);
+create unique index IX_A8CAAE86 on CommerceTaxCategoryRel (classNameId, classPK);
+create index IX_452D2008 on CommerceTaxCategoryRel (commerceTaxCategoryId);
 
 create index IX_F3810116 on CommerceTaxMethod (groupId, active_);
 create unique index IX_BA569BFA on CommerceTaxMethod (groupId, engineKey[$COLUMN_LENGTH:75$]);

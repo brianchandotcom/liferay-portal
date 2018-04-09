@@ -1052,6 +1052,25 @@ public abstract class CommerceWarehouseItemServiceBaseImpl
 	}
 
 	/**
+	 * Returns the commerce tax calculation local service.
+	 *
+	 * @return the commerce tax calculation local service
+	 */
+	public com.liferay.commerce.service.CommerceTaxCalculationLocalService getCommerceTaxCalculationLocalService() {
+		return commerceTaxCalculationLocalService;
+	}
+
+	/**
+	 * Sets the commerce tax calculation local service.
+	 *
+	 * @param commerceTaxCalculationLocalService the commerce tax calculation local service
+	 */
+	public void setCommerceTaxCalculationLocalService(
+		com.liferay.commerce.service.CommerceTaxCalculationLocalService commerceTaxCalculationLocalService) {
+		this.commerceTaxCalculationLocalService = commerceTaxCalculationLocalService;
+	}
+
+	/**
 	 * Returns the commerce tax category local service.
 	 *
 	 * @return the commerce tax category local service
@@ -1846,6 +1865,8 @@ public abstract class CommerceWarehouseItemServiceBaseImpl
 	protected com.liferay.commerce.service.CommerceShippingMethodService commerceShippingMethodService;
 	@BeanReference(type = CommerceShippingMethodPersistence.class)
 	protected CommerceShippingMethodPersistence commerceShippingMethodPersistence;
+	@BeanReference(type = com.liferay.commerce.service.CommerceTaxCalculationLocalService.class)
+	protected com.liferay.commerce.service.CommerceTaxCalculationLocalService commerceTaxCalculationLocalService;
 	@BeanReference(type = com.liferay.commerce.service.CommerceTaxCategoryLocalService.class)
 	protected com.liferay.commerce.service.CommerceTaxCategoryLocalService commerceTaxCategoryLocalService;
 	@BeanReference(type = com.liferay.commerce.service.CommerceTaxCategoryService.class)

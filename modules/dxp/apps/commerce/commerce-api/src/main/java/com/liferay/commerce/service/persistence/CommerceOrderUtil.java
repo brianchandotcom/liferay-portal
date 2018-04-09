@@ -663,6 +663,163 @@ public class CommerceOrderUtil {
 	}
 
 	/**
+	* Returns all the commerce orders where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @return the matching commerce orders
+	*/
+	public static List<CommerceOrder> findByUserId(long userId) {
+		return getPersistence().findByUserId(userId);
+	}
+
+	/**
+	* Returns a range of all the commerce orders where userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceOrderModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param start the lower bound of the range of commerce orders
+	* @param end the upper bound of the range of commerce orders (not inclusive)
+	* @return the range of matching commerce orders
+	*/
+	public static List<CommerceOrder> findByUserId(long userId, int start,
+		int end) {
+		return getPersistence().findByUserId(userId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the commerce orders where userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceOrderModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param start the lower bound of the range of commerce orders
+	* @param end the upper bound of the range of commerce orders (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching commerce orders
+	*/
+	public static List<CommerceOrder> findByUserId(long userId, int start,
+		int end, OrderByComparator<CommerceOrder> orderByComparator) {
+		return getPersistence()
+				   .findByUserId(userId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the commerce orders where userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceOrderModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param start the lower bound of the range of commerce orders
+	* @param end the upper bound of the range of commerce orders (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching commerce orders
+	*/
+	public static List<CommerceOrder> findByUserId(long userId, int start,
+		int end, OrderByComparator<CommerceOrder> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByUserId(userId, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first commerce order in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce order
+	* @throws NoSuchOrderException if a matching commerce order could not be found
+	*/
+	public static CommerceOrder findByUserId_First(long userId,
+		OrderByComparator<CommerceOrder> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchOrderException {
+		return getPersistence().findByUserId_First(userId, orderByComparator);
+	}
+
+	/**
+	* Returns the first commerce order in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce order, or <code>null</code> if a matching commerce order could not be found
+	*/
+	public static CommerceOrder fetchByUserId_First(long userId,
+		OrderByComparator<CommerceOrder> orderByComparator) {
+		return getPersistence().fetchByUserId_First(userId, orderByComparator);
+	}
+
+	/**
+	* Returns the last commerce order in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce order
+	* @throws NoSuchOrderException if a matching commerce order could not be found
+	*/
+	public static CommerceOrder findByUserId_Last(long userId,
+		OrderByComparator<CommerceOrder> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchOrderException {
+		return getPersistence().findByUserId_Last(userId, orderByComparator);
+	}
+
+	/**
+	* Returns the last commerce order in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce order, or <code>null</code> if a matching commerce order could not be found
+	*/
+	public static CommerceOrder fetchByUserId_Last(long userId,
+		OrderByComparator<CommerceOrder> orderByComparator) {
+		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
+	}
+
+	/**
+	* Returns the commerce orders before and after the current commerce order in the ordered set where userId = &#63;.
+	*
+	* @param commerceOrderId the primary key of the current commerce order
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next commerce order
+	* @throws NoSuchOrderException if a commerce order with the primary key could not be found
+	*/
+	public static CommerceOrder[] findByUserId_PrevAndNext(
+		long commerceOrderId, long userId,
+		OrderByComparator<CommerceOrder> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchOrderException {
+		return getPersistence()
+				   .findByUserId_PrevAndNext(commerceOrderId, userId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the commerce orders where userId = &#63; from the database.
+	*
+	* @param userId the user ID
+	*/
+	public static void removeByUserId(long userId) {
+		getPersistence().removeByUserId(userId);
+	}
+
+	/**
+	* Returns the number of commerce orders where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @return the number of matching commerce orders
+	*/
+	public static int countByUserId(long userId) {
+		return getPersistence().countByUserId(userId);
+	}
+
+	/**
 	* Returns all the commerce orders where billingAddressId = &#63;.
 	*
 	* @param billingAddressId the billing address ID
@@ -1373,163 +1530,6 @@ public class CommerceOrderUtil {
 	*/
 	public static int countByG_U_O(long groupId, long userId, int orderStatus) {
 		return getPersistence().countByG_U_O(groupId, userId, orderStatus);
-	}
-
-	/**
-	* Returns all the commerce orders where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @return the matching commerce orders
-	*/
-	public static List<CommerceOrder> findByUserId(long userId) {
-		return getPersistence().findByUserId(userId);
-	}
-
-	/**
-	* Returns a range of all the commerce orders where userId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceOrderModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param userId the user ID
-	* @param start the lower bound of the range of commerce orders
-	* @param end the upper bound of the range of commerce orders (not inclusive)
-	* @return the range of matching commerce orders
-	*/
-	public static List<CommerceOrder> findByUserId(long userId, int start,
-		int end) {
-		return getPersistence().findByUserId(userId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the commerce orders where userId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceOrderModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param userId the user ID
-	* @param start the lower bound of the range of commerce orders
-	* @param end the upper bound of the range of commerce orders (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching commerce orders
-	*/
-	public static List<CommerceOrder> findByUserId(long userId, int start,
-		int end, OrderByComparator<CommerceOrder> orderByComparator) {
-		return getPersistence()
-				   .findByUserId(userId, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns an ordered range of all the commerce orders where userId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceOrderModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param userId the user ID
-	* @param start the lower bound of the range of commerce orders
-	* @param end the upper bound of the range of commerce orders (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching commerce orders
-	*/
-	public static List<CommerceOrder> findByUserId(long userId, int start,
-		int end, OrderByComparator<CommerceOrder> orderByComparator,
-		boolean retrieveFromCache) {
-		return getPersistence()
-				   .findByUserId(userId, start, end, orderByComparator,
-			retrieveFromCache);
-	}
-
-	/**
-	* Returns the first commerce order in the ordered set where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching commerce order
-	* @throws NoSuchOrderException if a matching commerce order could not be found
-	*/
-	public static CommerceOrder findByUserId_First(long userId,
-		OrderByComparator<CommerceOrder> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderException {
-		return getPersistence().findByUserId_First(userId, orderByComparator);
-	}
-
-	/**
-	* Returns the first commerce order in the ordered set where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching commerce order, or <code>null</code> if a matching commerce order could not be found
-	*/
-	public static CommerceOrder fetchByUserId_First(long userId,
-		OrderByComparator<CommerceOrder> orderByComparator) {
-		return getPersistence().fetchByUserId_First(userId, orderByComparator);
-	}
-
-	/**
-	* Returns the last commerce order in the ordered set where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching commerce order
-	* @throws NoSuchOrderException if a matching commerce order could not be found
-	*/
-	public static CommerceOrder findByUserId_Last(long userId,
-		OrderByComparator<CommerceOrder> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderException {
-		return getPersistence().findByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	* Returns the last commerce order in the ordered set where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching commerce order, or <code>null</code> if a matching commerce order could not be found
-	*/
-	public static CommerceOrder fetchByUserId_Last(long userId,
-		OrderByComparator<CommerceOrder> orderByComparator) {
-		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	* Returns the commerce orders before and after the current commerce order in the ordered set where userId = &#63;.
-	*
-	* @param commerceOrderId the primary key of the current commerce order
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next commerce order
-	* @throws NoSuchOrderException if a commerce order with the primary key could not be found
-	*/
-	public static CommerceOrder[] findByUserId_PrevAndNext(
-		long commerceOrderId, long userId,
-		OrderByComparator<CommerceOrder> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderException {
-		return getPersistence()
-				   .findByUserId_PrevAndNext(commerceOrderId, userId,
-			orderByComparator);
-	}
-
-	/**
-	* Removes all the commerce orders where userId = &#63; from the database.
-	*
-	* @param userId the user ID
-	*/
-	public static void removeByUserId(long userId) {
-		getPersistence().removeByUserId(userId);
-	}
-
-	/**
-	* Returns the number of commerce orders where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @return the number of matching commerce orders
-	*/
-	public static int countByUserId(long userId) {
-		return getPersistence().countByUserId(userId);
 	}
 
 	/**

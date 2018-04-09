@@ -54,15 +54,6 @@ public class CommerceTaxCategoryRelLocalServiceUtil {
 		return getService().addCommerceTaxCategoryRel(commerceTaxCategoryRel);
 	}
 
-	public static com.liferay.commerce.model.CommerceTaxCategoryRel addCommerceTaxCategoryRel(
-		long commerceTaxCategoryId, java.lang.String className, long classPK,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addCommerceTaxCategoryRel(commerceTaxCategoryId, className,
-			classPK, serviceContext);
-	}
-
 	/**
 	* Creates a new commerce tax category rel with the primary key. Does not add the commerce tax category rel to the database.
 	*
@@ -100,13 +91,14 @@ public class CommerceTaxCategoryRelLocalServiceUtil {
 				   .deleteCommerceTaxCategoryRel(commerceTaxCategoryRelId);
 	}
 
-	public static void deleteCommerceTaxCategoryRels(long commerceTaxCategoryId) {
-		getService().deleteCommerceTaxCategoryRels(commerceTaxCategoryId);
+	public static void deleteCommerceTaxCategoryRel(
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCommerceTaxCategoryRel(className, classPK);
 	}
 
-	public static void deleteCommerceTaxCategoryRels(
-		java.lang.String className, long classPK) {
-		getService().deleteCommerceTaxCategoryRels(className, classPK);
+	public static void deleteCommerceTaxCategoryRels(long commerceTaxCategoryId) {
+		getService().deleteCommerceTaxCategoryRels(commerceTaxCategoryId);
 	}
 
 	/**
@@ -201,6 +193,11 @@ public class CommerceTaxCategoryRelLocalServiceUtil {
 		return getService().fetchCommerceTaxCategoryRel(commerceTaxCategoryRelId);
 	}
 
+	public static com.liferay.commerce.model.CommerceTaxCategoryRel fetchCommerceTaxCategoryRel(
+		java.lang.String className, long classPK) {
+		return getService().fetchCommerceTaxCategoryRel(className, classPK);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -234,14 +231,6 @@ public class CommerceTaxCategoryRelLocalServiceUtil {
 		return getService().getCommerceTaxCategoryRels(start, end);
 	}
 
-	public static java.util.List<com.liferay.commerce.model.CommerceTaxCategoryRel> getCommerceTaxCategoryRels(
-		java.lang.String className, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceTaxCategoryRel> orderByComparator) {
-		return getService()
-				   .getCommerceTaxCategoryRels(className, classPK, start, end,
-			orderByComparator);
-	}
-
 	/**
 	* Returns the number of commerce tax category rels.
 	*
@@ -249,11 +238,6 @@ public class CommerceTaxCategoryRelLocalServiceUtil {
 	*/
 	public static int getCommerceTaxCategoryRelsCount() {
 		return getService().getCommerceTaxCategoryRelsCount();
-	}
-
-	public static int getCommerceTaxCategoryRelsCount(
-		java.lang.String className, long classPK) {
-		return getService().getCommerceTaxCategoryRelsCount(className, classPK);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
@@ -284,6 +268,15 @@ public class CommerceTaxCategoryRelLocalServiceUtil {
 	public static com.liferay.commerce.model.CommerceTaxCategoryRel updateCommerceTaxCategoryRel(
 		com.liferay.commerce.model.CommerceTaxCategoryRel commerceTaxCategoryRel) {
 		return getService().updateCommerceTaxCategoryRel(commerceTaxCategoryRel);
+	}
+
+	public static com.liferay.commerce.model.CommerceTaxCategoryRel updateCommerceTaxCategoryRel(
+		long commerceTaxCategoryId, java.lang.String className, long classPK,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommerceTaxCategoryRel(commerceTaxCategoryId,
+			className, classPK, serviceContext);
 	}
 
 	public static CommerceTaxCategoryRelLocalService getService() {

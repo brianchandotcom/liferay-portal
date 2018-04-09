@@ -283,6 +283,13 @@ public class CommerceOrderPersistenceTest {
 	}
 
 	@Test
+	public void testCountByUserId() throws Exception {
+		_persistence.countByUserId(RandomTestUtil.nextLong());
+
+		_persistence.countByUserId(0L);
+	}
+
+	@Test
 	public void testCountByBillingAddressId() throws Exception {
 		_persistence.countByBillingAddressId(RandomTestUtil.nextLong());
 
@@ -310,13 +317,6 @@ public class CommerceOrderPersistenceTest {
 			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByG_U_O(0L, 0L, 0);
-	}
-
-	@Test
-	public void testCountByUserId() throws Exception {
-		_persistence.countByUserId(RandomTestUtil.nextLong());
-
-		_persistence.countByUserId(0L);
 	}
 
 	@Test

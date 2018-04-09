@@ -42,32 +42,16 @@ public class CommerceTaxCategoryRelServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceTaxCategoryRelServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.commerce.model.CommerceTaxCategoryRel addCommerceTaxCategoryRel(
-		long commerceTaxCategoryId, java.lang.String className, long classPK,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addCommerceTaxCategoryRel(commerceTaxCategoryId, className,
-			classPK, serviceContext);
-	}
-
 	public static void deleteCommerceTaxCategoryRel(
-		long commercetaxCategoryRelId)
+		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteCommerceTaxCategoryRel(commercetaxCategoryRelId);
+		getService().deleteCommerceTaxCategoryRel(className, classPK);
 	}
 
-	public static java.util.List<com.liferay.commerce.model.CommerceTaxCategoryRel> getCommerceTaxCategoryRels(
-		java.lang.String className, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceTaxCategoryRel> orderByComparator) {
-		return getService()
-				   .getCommerceTaxCategoryRels(className, classPK, start, end,
-			orderByComparator);
-	}
-
-	public static int getCommerceTaxCategoryRelsCount(
-		java.lang.String className, long classPK) {
-		return getService().getCommerceTaxCategoryRelsCount(className, classPK);
+	public static com.liferay.commerce.model.CommerceTaxCategoryRel fetchCommerceTaxCategoryRel(
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchCommerceTaxCategoryRel(className, classPK);
 	}
 
 	/**
@@ -77,6 +61,15 @@ public class CommerceTaxCategoryRelServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.commerce.model.CommerceTaxCategoryRel updateCommerceTaxCategoryRel(
+		long commerceTaxCategoryId, java.lang.String className, long classPK,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommerceTaxCategoryRel(commerceTaxCategoryId,
+			className, classPK, serviceContext);
 	}
 
 	public static CommerceTaxCategoryRelService getService() {

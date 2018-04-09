@@ -65,12 +65,12 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class CommerceTaxCategoryRelServiceSoap {
-	public static com.liferay.commerce.model.CommerceTaxCategoryRelSoap addCommerceTaxCategoryRel(
+	public static com.liferay.commerce.model.CommerceTaxCategoryRelSoap updateCommerceTaxCategoryRel(
 		long commerceTaxCategoryId, java.lang.String className, long classPK,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			com.liferay.commerce.model.CommerceTaxCategoryRel returnValue = CommerceTaxCategoryRelServiceUtil.addCommerceTaxCategoryRel(commerceTaxCategoryId,
+			com.liferay.commerce.model.CommerceTaxCategoryRel returnValue = CommerceTaxCategoryRelServiceUtil.updateCommerceTaxCategoryRel(commerceTaxCategoryId,
 					className, classPK, serviceContext);
 
 			return com.liferay.commerce.model.CommerceTaxCategoryRelSoap.toSoapModel(returnValue);
@@ -83,42 +83,25 @@ public class CommerceTaxCategoryRelServiceSoap {
 	}
 
 	public static void deleteCommerceTaxCategoryRel(
-		long commercetaxCategoryRelId) throws RemoteException {
-		try {
-			CommerceTaxCategoryRelServiceUtil.deleteCommerceTaxCategoryRel(commercetaxCategoryRelId);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.model.CommerceTaxCategoryRelSoap[] getCommerceTaxCategoryRels(
-		java.lang.String className, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceTaxCategoryRel> orderByComparator)
-		throws RemoteException {
-		try {
-			java.util.List<com.liferay.commerce.model.CommerceTaxCategoryRel> returnValue =
-				CommerceTaxCategoryRelServiceUtil.getCommerceTaxCategoryRels(className,
-					classPK, start, end, orderByComparator);
-
-			return com.liferay.commerce.model.CommerceTaxCategoryRelSoap.toSoapModels(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static int getCommerceTaxCategoryRelsCount(
 		java.lang.String className, long classPK) throws RemoteException {
 		try {
-			int returnValue = CommerceTaxCategoryRelServiceUtil.getCommerceTaxCategoryRelsCount(className,
+			CommerceTaxCategoryRelServiceUtil.deleteCommerceTaxCategoryRel(className,
+				classPK);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceTaxCategoryRelSoap fetchCommerceTaxCategoryRel(
+		java.lang.String className, long classPK) throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceTaxCategoryRel returnValue = CommerceTaxCategoryRelServiceUtil.fetchCommerceTaxCategoryRel(className,
 					classPK);
 
-			return returnValue;
+			return com.liferay.commerce.model.CommerceTaxCategoryRelSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

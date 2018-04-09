@@ -186,14 +186,6 @@ public class CommerceTaxCategoryRelPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_C_C() throws Exception {
-		_persistence.countByC_C_C(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
-
-		_persistence.countByC_C_C(0L, 0L, 0L);
-	}
-
-	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CommerceTaxCategoryRel newCommerceTaxCategoryRel = addCommerceTaxCategoryRel();
 
@@ -437,10 +429,6 @@ public class CommerceTaxCategoryRelPersistenceTest {
 
 		CommerceTaxCategoryRel existingCommerceTaxCategoryRel = _persistence.findByPrimaryKey(newCommerceTaxCategoryRel.getPrimaryKey());
 
-		Assert.assertEquals(Long.valueOf(
-				existingCommerceTaxCategoryRel.getCommerceTaxCategoryId()),
-			ReflectionTestUtil.<Long>invoke(existingCommerceTaxCategoryRel,
-				"getOriginalCommerceTaxCategoryId", new Class<?>[0]));
 		Assert.assertEquals(Long.valueOf(
 				existingCommerceTaxCategoryRel.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(existingCommerceTaxCategoryRel,

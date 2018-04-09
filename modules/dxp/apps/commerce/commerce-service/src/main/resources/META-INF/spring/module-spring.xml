@@ -58,6 +58,7 @@
 	<bean class="com.liferay.commerce.service.impl.CommerceShippingMethodLocalServiceImpl" id="com.liferay.commerce.service.CommerceShippingMethodLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceShippingMethodServiceImpl" id="com.liferay.commerce.service.CommerceShippingMethodService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceShippingMethodPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceShippingMethodPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.service.impl.CommerceTaxCalculationLocalServiceImpl" id="com.liferay.commerce.service.CommerceTaxCalculationLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceTaxCategoryLocalServiceImpl" id="com.liferay.commerce.service.CommerceTaxCategoryLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceTaxCategoryServiceImpl" id="com.liferay.commerce.service.CommerceTaxCategoryService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceTaxCategoryPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceTaxCategoryPersistence" parent="basePersistence" />

@@ -28,9 +28,6 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.OrderByComparator;
-
-import java.util.List;
 
 /**
  * Provides the remote service interface for CommerceTaxCategoryRel. Methods of this
@@ -56,21 +53,12 @@ public interface CommerceTaxCategoryRelService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceTaxCategoryRelServiceUtil} to access the commerce tax category rel remote service. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceTaxCategoryRelServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public CommerceTaxCategoryRel addCommerceTaxCategoryRel(
-		long commerceTaxCategoryId, java.lang.String className, long classPK,
-		ServiceContext serviceContext) throws PortalException;
-
-	public void deleteCommerceTaxCategoryRel(long commercetaxCategoryRelId)
-		throws PortalException;
+	public void deleteCommerceTaxCategoryRel(java.lang.String className,
+		long classPK) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceTaxCategoryRel> getCommerceTaxCategoryRels(
-		java.lang.String className, long classPK, int start, int end,
-		OrderByComparator<CommerceTaxCategoryRel> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceTaxCategoryRelsCount(java.lang.String className,
-		long classPK);
+	public CommerceTaxCategoryRel fetchCommerceTaxCategoryRel(
+		java.lang.String className, long classPK) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -78,4 +66,8 @@ public interface CommerceTaxCategoryRelService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	public CommerceTaxCategoryRel updateCommerceTaxCategoryRel(
+		long commerceTaxCategoryId, java.lang.String className, long classPK,
+		ServiceContext serviceContext) throws PortalException;
 }

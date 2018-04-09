@@ -55,15 +55,15 @@ import com.liferay.portal.kernel.util.MethodKey;
  */
 @ProviderType
 public class CommerceTaxCategoryRelServiceHttp {
-	public static com.liferay.commerce.model.CommerceTaxCategoryRel addCommerceTaxCategoryRel(
+	public static com.liferay.commerce.model.CommerceTaxCategoryRel updateCommerceTaxCategoryRel(
 		HttpPrincipal httpPrincipal, long commerceTaxCategoryId,
 		java.lang.String className, long classPK,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceTaxCategoryRelServiceUtil.class,
-					"addCommerceTaxCategoryRel",
-					_addCommerceTaxCategoryRelParameterTypes0);
+					"updateCommerceTaxCategoryRel",
+					_updateCommerceTaxCategoryRelParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceTaxCategoryId, className, classPK, serviceContext);
@@ -91,7 +91,7 @@ public class CommerceTaxCategoryRelServiceHttp {
 	}
 
 	public static void deleteCommerceTaxCategoryRel(
-		HttpPrincipal httpPrincipal, long commercetaxCategoryRelId)
+		HttpPrincipal httpPrincipal, java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceTaxCategoryRelServiceUtil.class,
@@ -99,7 +99,7 @@ public class CommerceTaxCategoryRelServiceHttp {
 					_deleteCommerceTaxCategoryRelParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commercetaxCategoryRelId);
+					className, classPK);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -119,42 +119,13 @@ public class CommerceTaxCategoryRelServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.commerce.model.CommerceTaxCategoryRel> getCommerceTaxCategoryRels(
-		HttpPrincipal httpPrincipal, java.lang.String className, long classPK,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceTaxCategoryRel> orderByComparator) {
+	public static com.liferay.commerce.model.CommerceTaxCategoryRel fetchCommerceTaxCategoryRel(
+		HttpPrincipal httpPrincipal, java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceTaxCategoryRelServiceUtil.class,
-					"getCommerceTaxCategoryRels",
-					_getCommerceTaxCategoryRelsParameterTypes2);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					className, classPK, start, end, orderByComparator);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (java.util.List<com.liferay.commerce.model.CommerceTaxCategoryRel>)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static int getCommerceTaxCategoryRelsCount(
-		HttpPrincipal httpPrincipal, java.lang.String className, long classPK) {
-		try {
-			MethodKey methodKey = new MethodKey(CommerceTaxCategoryRelServiceUtil.class,
-					"getCommerceTaxCategoryRelsCount",
-					_getCommerceTaxCategoryRelsCountParameterTypes3);
+					"fetchCommerceTaxCategoryRel",
+					_fetchCommerceTaxCategoryRelParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					className, classPK);
@@ -165,10 +136,14 @@ public class CommerceTaxCategoryRelServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return ((Integer)returnObj).intValue();
+			return (com.liferay.commerce.model.CommerceTaxCategoryRel)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -178,16 +153,14 @@ public class CommerceTaxCategoryRelServiceHttp {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(CommerceTaxCategoryRelServiceHttp.class);
-	private static final Class<?>[] _addCommerceTaxCategoryRelParameterTypes0 = new Class[] {
+	private static final Class<?>[] _updateCommerceTaxCategoryRelParameterTypes0 =
+		new Class[] {
 			long.class, java.lang.String.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommerceTaxCategoryRelParameterTypes1 =
-		new Class[] { long.class };
-	private static final Class<?>[] _getCommerceTaxCategoryRelsParameterTypes2 = new Class[] {
-			java.lang.String.class, long.class, int.class, int.class,
-			com.liferay.portal.kernel.util.OrderByComparator.class
-		};
-	private static final Class<?>[] _getCommerceTaxCategoryRelsCountParameterTypes3 =
 		new Class[] { java.lang.String.class, long.class };
+	private static final Class<?>[] _fetchCommerceTaxCategoryRelParameterTypes2 = new Class[] {
+			java.lang.String.class, long.class
+		};
 }

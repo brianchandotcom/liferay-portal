@@ -72,10 +72,6 @@ public interface CommerceTaxCategoryRelLocalService extends BaseLocalService,
 	public CommerceTaxCategoryRel addCommerceTaxCategoryRel(
 		CommerceTaxCategoryRel commerceTaxCategoryRel);
 
-	public CommerceTaxCategoryRel addCommerceTaxCategoryRel(
-		long commerceTaxCategoryId, java.lang.String className, long classPK,
-		ServiceContext serviceContext) throws PortalException;
-
 	/**
 	* Creates a new commerce tax category rel with the primary key. Does not add the commerce tax category rel to the database.
 	*
@@ -106,10 +102,10 @@ public interface CommerceTaxCategoryRelLocalService extends BaseLocalService,
 	public CommerceTaxCategoryRel deleteCommerceTaxCategoryRel(
 		long commerceTaxCategoryRelId) throws PortalException;
 
-	public void deleteCommerceTaxCategoryRels(long commerceTaxCategoryId);
+	public void deleteCommerceTaxCategoryRel(java.lang.String className,
+		long classPK) throws PortalException;
 
-	public void deleteCommerceTaxCategoryRels(java.lang.String className,
-		long classPK);
+	public void deleteCommerceTaxCategoryRels(long commerceTaxCategoryId);
 
 	/**
 	* @throws PortalException
@@ -182,6 +178,10 @@ public interface CommerceTaxCategoryRelLocalService extends BaseLocalService,
 		long commerceTaxCategoryRelId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceTaxCategoryRel fetchCommerceTaxCategoryRel(
+		java.lang.String className, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
@@ -210,11 +210,6 @@ public interface CommerceTaxCategoryRelLocalService extends BaseLocalService,
 	public List<CommerceTaxCategoryRel> getCommerceTaxCategoryRels(int start,
 		int end);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceTaxCategoryRel> getCommerceTaxCategoryRels(
-		java.lang.String className, long classPK, int start, int end,
-		OrderByComparator<CommerceTaxCategoryRel> orderByComparator);
-
 	/**
 	* Returns the number of commerce tax category rels.
 	*
@@ -222,10 +217,6 @@ public interface CommerceTaxCategoryRelLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceTaxCategoryRelsCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceTaxCategoryRelsCount(java.lang.String className,
-		long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -251,4 +242,8 @@ public interface CommerceTaxCategoryRelLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceTaxCategoryRel updateCommerceTaxCategoryRel(
 		CommerceTaxCategoryRel commerceTaxCategoryRel);
+
+	public CommerceTaxCategoryRel updateCommerceTaxCategoryRel(
+		long commerceTaxCategoryId, java.lang.String className, long classPK,
+		ServiceContext serviceContext) throws PortalException;
 }

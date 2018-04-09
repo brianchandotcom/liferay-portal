@@ -86,6 +86,6 @@
 		</finder>
 	</entity>
 	<exceptions>
-		<exception>CommerceTaxFixedRateCommerceTaxCategoryId</exception>
+		<exception>DuplicateCommerceTaxFixedRate</exception>
 	</exceptions>
 </service-builder>

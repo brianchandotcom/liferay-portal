@@ -86,12 +86,9 @@ public class LayoutSiteNavigationMenuItemType
 			SiteNavigationMenuItem siteNavigationMenuItem)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		Layout layout = _getLayout(siteNavigationMenuItem);
 
-		return _portal.getLayoutFullURL(layout, themeDisplay, true);
+		return layout.getRegularURL(request);
 	}
 
 	@Override

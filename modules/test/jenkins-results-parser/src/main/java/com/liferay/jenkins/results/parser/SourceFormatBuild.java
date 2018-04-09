@@ -47,12 +47,15 @@ public class SourceFormatBuild extends TopLevelBuild {
 
 	@Override
 	protected FailureMessageGenerator[] getFailureMessageGenerators() {
-		return new FailureMessageGenerator[] {
+		return _FAILURE_MESSAGE_GENERATORS;
+	}
+
+	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =
+		{
 			new SourceFormatFailureMessageGenerator(),
 
 			new GenericFailureMessageGenerator()
 		};
-	}
 
 	private PullRequest _pullRequest;
 

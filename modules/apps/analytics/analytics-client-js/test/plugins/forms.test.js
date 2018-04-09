@@ -21,8 +21,8 @@ describe('Forms Plugin', () => {
 	describe('formViewed event', () => {
 		it('should be fired for every form on the page', () => {
 			const form = document.createElement('form');
-			form.dataset.analytics = 'true';
-			form.id = 'myId';
+			form.dataset.analyticsAssetId = 'formId';
+			form.dataset.analyticsAssetTitle = 'Form Title';
 			document.body.appendChild(form);
 
 			const domContentLoaded = new Event('DOMContentLoaded');
@@ -38,7 +38,8 @@ describe('Forms Plugin', () => {
 				applicationId: 'forms',
 				eventId: 'formViewed',
 				properties: {
-					formId: 'myId'
+					formId: 'formId',
+					title: 'Form Title'
 				}
 			});
 		});
@@ -47,8 +48,8 @@ describe('Forms Plugin', () => {
 	describe('formSubmitted event', () => {
 		it('should be fired when a form is submitted', () => {
 			const form = document.createElement('form');
-			form.dataset.analytics = 'true';
-			form.id = 'myId';
+			form.dataset.analyticsAssetId = 'formId';
+			form.dataset.analyticsAssetTitle = 'Form Title';
 			document.body.appendChild(form);
 			form.addEventListener('submit', event => event.preventDefault());
 
@@ -67,7 +68,7 @@ describe('Forms Plugin', () => {
 				applicationId: 'forms',
 				eventId: 'formSubmitted',
 				properties: {
-					formId: 'myId'
+					formId: 'formId'
 				}
 			});
 		});
@@ -76,8 +77,8 @@ describe('Forms Plugin', () => {
 	describe('fieldFocused event', () => {
 		it('should be fired whenever a field is focused', () => {
 			const form = document.createElement('form');
-			form.dataset.analytics = 'true';
-			form.id = 'myId';
+			form.dataset.analyticsAssetId = 'formId';
+			form.dataset.analyticsAssetTitle = 'Form Title';
 			document.body.appendChild(form);
 			const field = document.createElement('input');
 			field.name = 'myField';
@@ -96,7 +97,7 @@ describe('Forms Plugin', () => {
 				applicationId: 'forms',
 				eventId: 'fieldFocused',
 				properties: {
-					formId: 'myId',
+					formId: 'formId',
 					fieldName: 'myField'
 				}
 			});
@@ -106,8 +107,8 @@ describe('Forms Plugin', () => {
 	describe('fieldBlurred event', () => {
 		it('should be fired whenever a field is blurred', (done) => {
 			const form = document.createElement('form');
-			form.dataset.analytics = 'true';
-			form.id = 'myId';
+			form.dataset.analyticsAssetId = 'formId';
+			form.dataset.analyticsAssetTitle = 'Form Title';
 			document.body.appendChild(form);
 			const field = document.createElement('input');
 			field.name = 'myField';
@@ -127,7 +128,7 @@ describe('Forms Plugin', () => {
 
 				events[0].applicationId.should.equal('forms');
 				events[0].eventId.should.equal('fieldBlurred');
-				events[0].properties.formId.should.equal('myId');
+				events[0].properties.formId.should.equal('formId');
 				events[0].properties.fieldName.should.equal('myField');
 				events[0].properties.focusDuration.should.be.at.least(1500);
 

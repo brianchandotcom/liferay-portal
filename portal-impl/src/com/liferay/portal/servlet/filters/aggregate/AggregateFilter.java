@@ -62,7 +62,9 @@ import java.util.regex.Pattern;
 
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -443,8 +445,7 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 				_log.info("Minifying CSS " + resourcePath);
 			}
 
-			content = getCssContent(
-				request, response, resourceURL, resourcePath);
+			content = getCssContent(request, response, resourcePath);
 
 			response.setContentType(ContentTypes.TEXT_CSS);
 
@@ -457,7 +458,8 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 				_log.info("Minifying JavaScript " + resourcePath);
 			}
 
-			content = getJavaScriptContent(resourceURL);
+			content = getJavaScriptContent(
+				request, response, resourcePath, resourceURL);
 
 			response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 
@@ -535,6 +537,46 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 	}
 
 	protected String getCssContent(
+			HttpServletRequest request, HttpServletResponse response,
+			String resourcePath)
+		throws IOException, ServletException {
+
+		String resourcePathRoot = null;
+
+		String requestURI = request.getRequestURI();
+
+		ServletContext cssServletContext = ResourceUtil.getPathServletContext(
+			resourcePath, requestURI, _servletContext);
+
+		if (PortalWebResourcesUtil.hasContextPath(requestURI)) {
+			resourcePathRoot = PortalWebResourcesUtil.stripContextPath(
+				cssServletContext, resourcePath);
+
+			resourcePathRoot = ServletPaths.getParentPath(resourcePathRoot);
+
+			if (resourcePathRoot.equals(StringPool.BLANK)) {
+				resourcePathRoot = "/";
+			}
+		}
+		else {
+			resourcePathRoot = ServletPaths.getParentPath(resourcePath);
+		}
+
+		String content = _readResource(request, response, resourcePath);
+
+		if (_isLegacyIe(request)) {
+			return getCssContent(
+				request, response, cssServletContext, resourcePath, content);
+		}
+
+		content = aggregateCss(
+			new ServletPaths(cssServletContext, resourcePathRoot), content);
+
+		return getCssContent(
+			request, response, cssServletContext, resourcePath, content);
+	}
+
+	protected String getCssContent(
 		HttpServletRequest request, HttpServletResponse response,
 		String resourcePath, String content) {
 
@@ -563,52 +605,12 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		}
 	}
 
-	protected String getCssContent(
+	protected String getJavaScriptContent(
 			HttpServletRequest request, HttpServletResponse response,
-			URL resourceURL, String resourcePath)
-		throws IOException {
+			String resourcePath, URL resourceURL)
+		throws IOException, ServletException {
 
-		String resourcePathRoot = null;
-
-		String requestURI = request.getRequestURI();
-
-		ServletContext cssServletContext = ResourceUtil.getPathServletContext(
-			resourcePath, requestURI, _servletContext);
-
-		if (PortalWebResourcesUtil.hasContextPath(requestURI)) {
-			resourcePathRoot = PortalWebResourcesUtil.stripContextPath(
-				cssServletContext, resourcePath);
-
-			resourcePathRoot = ServletPaths.getParentPath(resourcePathRoot);
-
-			if (resourcePathRoot.equals(StringPool.BLANK)) {
-				resourcePathRoot = "/";
-			}
-		}
-		else {
-			resourcePathRoot = ServletPaths.getParentPath(resourcePath);
-		}
-
-		URLConnection urlConnection = resourceURL.openConnection();
-
-		String content = StringUtil.read(urlConnection.getInputStream());
-
-		if (_isLegacyIe(request)) {
-			return getCssContent(
-				request, response, cssServletContext, resourcePath, content);
-		}
-
-		content = aggregateCss(
-			new ServletPaths(cssServletContext, resourcePathRoot), content);
-
-		return getCssContent(
-			request, response, cssServletContext, resourcePath, content);
-	}
-
-	protected String getJavaScriptContent(URL resourceURL) throws IOException {
-		URLConnection urlConnection = resourceURL.openConnection();
-
-		String content = StringUtil.read(urlConnection.getInputStream());
+		String content = _readResource(request, response, resourcePath);
 
 		return getJavaScriptContent(resourceURL.toString(), content);
 	}
@@ -659,6 +661,30 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		}
 
 		return false;
+	}
+
+	private String _readResource(
+			HttpServletRequest request, HttpServletResponse response,
+			String resourcePath)
+		throws IOException, ServletException {
+
+		URL url = _servletContext.getResource(resourcePath);
+
+		if (url == null) {
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher(
+				resourcePath);
+
+			BufferCacheServletResponse bufferCacheServletResponse =
+				new BufferCacheServletResponse(response);
+
+			requestDispatcher.include(request, bufferCacheServletResponse);
+
+			return bufferCacheServletResponse.getString();
+		}
+
+		URLConnection urlConnection = url.openConnection();
+
+		return StringUtil.read(urlConnection.getInputStream());
 	}
 
 	private static final String _BASE_URL = "@base_url@";

@@ -49,6 +49,11 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		/>
 
 		<liferay-frontend:management-bar-action-buttons>
+			<liferay-frontend:management-bar-sidenav-toggler-button
+				icon="info-circle"
+				label="info"
+			/>
+
 			<liferay-frontend:management-bar-button
 				href='<%= "javascript:" + renderResponse.getNamespace() + "doAnonymizeMultiple();" %>'
 				icon="magic"

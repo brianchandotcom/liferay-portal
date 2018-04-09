@@ -26,6 +26,7 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 						return {
 							id: provider.id,
 							schemas: provider.schemas.map(schema => new RegExp(schema)),
+							type: provider.type,
 							tpl: new CKEDITOR.template(`<div class="embed-responsive embed-responsive-16by9" data-embed-id="{embedId}">${provider.tpl}</div>`)
 						}
 					}
@@ -145,6 +146,12 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 							if (editor._selectEmbedWidget === event.data.url) {
 								setTimeout(
 									function() {
+										var iframe = instance.wrapper.findOne('iframe');
+
+										if (iframe) {
+											iframe.addClass('embed-responsive-item');
+										}
+
 										editor.getSelection().selectElement(instance.wrapper);
 
 										editor._selectEmbedWidget = null;

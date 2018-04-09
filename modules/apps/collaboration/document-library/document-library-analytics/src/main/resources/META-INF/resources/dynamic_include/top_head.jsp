@@ -22,16 +22,16 @@
 	}
 </script>
 
-<aui:script require="metal-dom/src/all/dom as dom,metal-uri/src/Uri">
-	if (window.Analytics) {
-		var Uri = metalUriSrcUri.default;
-		var pathnameRegexp = /\/documents\/(\d+)\/(\d+)\/(.+)\/(.+)/;
+<aui:script require="metal-dom/src/all/dom as dom,metal-uri/src/Uri" sandbox="<%= true %>">
+	var Uri = metalUriSrcUri.default;
+	var pathnameRegexp = /\/documents\/(\d+)\/(\d+)\/(.+)\/(.+)/;
 
-		dom.delegate(
-			document.body,
-			'click',
-			'a',
-			function(event) {
+	var downloadClickHandler = dom.delegate(
+		document.body,
+		'click',
+		'a',
+		function(event) {
+			if (window.Analytics) {
 				var anchor = event.delegateTarget;
 				var uri = new Uri(anchor.href);
 
@@ -54,6 +54,13 @@
 					);
 				}
 			}
-		);
+		}
+	);
+
+	var onDestroyPortlet = function() {
+		downloadClickHandler.removeListener()
+		Liferay.detach('destroyPortlet', onDestroyPortlet);
 	}
+
+	Liferay.on('destroyPortlet', onDestroyPortlet);
 </aui:script>

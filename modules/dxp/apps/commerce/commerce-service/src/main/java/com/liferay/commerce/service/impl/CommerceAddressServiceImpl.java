@@ -71,7 +71,9 @@ public class CommerceAddressServiceImpl extends CommerceAddressServiceBaseImpl {
 		CommerceAddress commerceAddress =
 			commerceAddressLocalService.fetchCommerceAddress(commerceAddressId);
 
-		checkPermission(commerceAddress);
+		if(commerceAddress != null) {
+			checkPermission(commerceAddress);
+		}
 
 		return commerceAddress;
 	}

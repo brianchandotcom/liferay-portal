@@ -48,6 +48,12 @@ public abstract class BaseAddressCheckoutStepDisplayContext {
 			_commerceOrder.getClassPK());
 	}
 
+	public CommerceAddress getCommerceAddress(long commerceAddressId)
+		throws PortalException{
+
+		return _commerceAddressService.fetchCommerceAddress(commerceAddressId);
+	}
+
 	public abstract String getCommerceCountrySelectionColumnName();
 
 	public abstract String getCommerceCountrySelectionMethodName();

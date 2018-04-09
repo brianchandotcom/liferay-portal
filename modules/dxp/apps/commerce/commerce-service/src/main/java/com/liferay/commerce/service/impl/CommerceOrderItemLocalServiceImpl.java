@@ -17,6 +17,7 @@ package com.liferay.commerce.service.impl;
 import com.liferay.commerce.configuration.CommerceOrderConfiguration;
 import com.liferay.commerce.exception.CommerceOrderValidatorException;
 import com.liferay.commerce.exception.GuestCartItemMaxAllowedException;
+import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.internal.search.CommerceOrderItemIndexer;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -120,6 +121,8 @@ public class CommerceOrderItemLocalServiceImpl
 	public CommerceOrderItem deleteCommerceOrderItem(
 			CommerceOrderItem commerceOrderItem)
 		throws PortalException {
+
+		validateCommerceOrder(commerceOrderItem.getCommerceOrder());
 
 		// Commerce order item
 
@@ -403,10 +406,20 @@ public class CommerceOrderItemLocalServiceImpl
 			"Unable to fix the search index after 10 attempts");
 	}
 
+	protected void validateCommerceOrder(CommerceOrder commerceOrder)
+		throws PortalException{
+
+		if(!commerceOrder.isOpen()){
+			throw new NoSuchOrderException();
+		}
+	}
+
 	protected void validate(
 			CommerceOrder commerceOrder, CPDefinition cpDefinition,
 			CPInstance cpInstance, int quantity)
 		throws PortalException {
+
+		validateCommerceOrder(commerceOrder);
 
 		if (commerceOrder.getUserId() == 0) {
 			int count = commerceOrderItemPersistence.countByCommerceOrderId(

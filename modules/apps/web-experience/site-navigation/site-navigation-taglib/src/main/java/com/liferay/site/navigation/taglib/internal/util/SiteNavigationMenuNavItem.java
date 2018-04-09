@@ -72,15 +72,15 @@ public class SiteNavigationMenuNavItem extends NavItem {
 	}
 
 	@Override
-	public String getName() {
-		return _siteNavigationMenuItemType.getTitle(
-			_siteNavigationMenuItem, _themeDisplay.getLocale());
-	}
-
-	@Override
 	public String getRegularURL() throws Exception {
 		return _siteNavigationMenuItemType.getRegularURL(
 			_request, _siteNavigationMenuItem);
+	}
+
+	@Override
+	public String getTitle() {
+		return _siteNavigationMenuItemType.getTitle(
+			_siteNavigationMenuItem, _themeDisplay.getLocale());
 	}
 
 	@Override

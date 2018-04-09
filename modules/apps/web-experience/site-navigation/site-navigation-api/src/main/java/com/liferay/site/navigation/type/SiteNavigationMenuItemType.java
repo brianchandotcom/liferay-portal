@@ -15,7 +15,6 @@
 package com.liferay.site.navigation.type;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 
@@ -47,6 +46,14 @@ public interface SiteNavigationMenuItemType {
 
 	public String getLabel(Locale locale);
 
+	public default String getRegularURL(
+			HttpServletRequest request,
+			SiteNavigationMenuItem siteNavigationMenuItem)
+		throws Exception {
+
+		return StringPool.BLANK;
+	}
+
 	public String getTitle(
 		SiteNavigationMenuItem siteNavigationMenuItem, Locale locale);
 
@@ -56,14 +63,6 @@ public interface SiteNavigationMenuItemType {
 
 	public default String getTypeSettingsFromLayout(Layout layout) {
 		return layout.getTypeSettings();
-	}
-
-	public default String getURL(
-			HttpServletRequest request,
-			SiteNavigationMenuItem siteNavigationMenuItem)
-		throws PortalException {
-
-		return StringPool.BLANK;
 	}
 
 	public default void renderAddPage(

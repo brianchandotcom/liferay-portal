@@ -14,48 +14,23 @@
 
 package com.liferay.source.formatter.checkstyle.util;
 
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 import java.io.IOException;
-
-import java.nio.file.Files;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Peter Shin
  */
 public class AlloyMVCCheckstyleUtil {
 
-	public static void cleanUpSuppressionsFiles(List<File> suppressionsFiles)
-		throws Exception {
-
-		if (suppressionsFiles == null) {
-			return;
-		}
-
-		for (File suppressionsFile : suppressionsFiles) {
-			String path = SourceUtil.getAbsolutePath(suppressionsFile);
-
-			if (path.contains(_TMP_DIR)) {
-				Files.deleteIfExists(suppressionsFile.toPath());
-			}
-		}
-	}
-
 	public static File getJavaFile(String absolutePath, String content)
 		throws IOException {
 
-		if (!absolutePath.contains(_SRC_DIR)) {
-			return null;
-		}
+		String javaFileName = getJavaFileName(absolutePath);
 
-		if (!absolutePath.endsWith(".jspf")) {
+		if (javaFileName == null) {
 			return null;
 		}
 
@@ -71,7 +46,7 @@ public class AlloyMVCCheckstyleUtil {
 			return null;
 		}
 
-		File javaFile = new File(_getJavaFileName(absolutePath));
+		File javaFile = new File(javaFileName);
 
 		String javaContent = StringUtil.replace(
 			content, new String[] {"<%--", "--%>", "<%@", "<%!"},
@@ -84,6 +59,19 @@ public class AlloyMVCCheckstyleUtil {
 		return javaFile;
 	}
 
+	public static String getJavaFileName(String fileName) {
+		if ((!fileName.startsWith(_SRC_DIR) &&
+			 !fileName.contains("/" + _SRC_DIR)) ||
+			!fileName.endsWith(".jspf")) {
+
+			return null;
+		}
+
+		String s = fileName.replace(_SRC_DIR, _TMP_DIR);
+
+		return s.substring(0, s.lastIndexOf(".")) + ".java";
+	}
+
 	public static String getSourceFileName(String fileName) {
 		if (!fileName.contains(_TMP_DIR)) {
 			return fileName;
@@ -94,74 +82,8 @@ public class AlloyMVCCheckstyleUtil {
 		return s.substring(0, s.lastIndexOf(".")) + ".jspf";
 	}
 
-	public static List<File> getSuppressionsFiles(List<File> suppressionsFiles)
-		throws Exception {
+	private static final String _SRC_DIR = "src/main/resources/alloy_mvc/jsp/";
 
-		List<File> tempSuppressionsFiles = new ArrayList<>();
-
-		for (File suppressionsFile : suppressionsFiles) {
-			String content = FileUtil.read(suppressionsFile);
-
-			String[] lines = StringUtil.splitLines(content);
-
-			StringBundler sb = new StringBundler(lines.length * 2);
-
-			for (String line : lines) {
-				String trimmedLine = StringUtil.trim(line);
-
-				if (trimmedLine.startsWith("<suppress") &&
-					line.contains("\"src/")) {
-
-					String s = StringUtil.replace(
-						line, new String[] {"\"src/", ".jspf"},
-						new String[] {"\"tmp/", ".java"});
-
-					sb.append(s);
-				}
-				else if (trimmedLine.startsWith("<suppress") &&
-						 line.contains("/src/")) {
-
-					String s = StringUtil.replace(
-						line, new String[] {"/src/", ".jspf"},
-						new String[] {"/tmp/", ".java"});
-
-					sb.append(s);
-				}
-				else {
-					sb.append(line);
-				}
-
-				sb.append("\n");
-			}
-
-			sb.setIndex(sb.index() - 1);
-
-			if (!content.equals(sb.toString())) {
-				File tempSuppressionsFile = new File(
-					suppressionsFile.getParentFile() + _TMP_DIR +
-						suppressionsFile.getName());
-
-				FileUtil.write(tempSuppressionsFile, sb.toString());
-
-				tempSuppressionsFiles.add(tempSuppressionsFile);
-			}
-		}
-
-		return tempSuppressionsFiles;
-	}
-
-	private static String _getJavaFileName(String fileName) {
-		if (!fileName.contains(_SRC_DIR)) {
-			return fileName;
-		}
-
-		String s = fileName.replace(_SRC_DIR, _TMP_DIR);
-
-		return s.substring(0, s.lastIndexOf(".")) + ".java";
-	}
-
-	private static final String _SRC_DIR = "/src/main/resources/alloy_mvc/jsp/";
-
-	private static final String _TMP_DIR = "/tmp/main/resources/alloy_mvc/jsp/";
+	private static final String _TMP_DIR = "tmp/main/resources/alloy_mvc/jsp/";
 
 }

@@ -25,7 +25,6 @@ import com.liferay.source.formatter.ExcludeSyntax;
 import com.liferay.source.formatter.ExcludeSyntaxPattern;
 import com.liferay.source.formatter.SourceFormatterExcludes;
 import com.liferay.source.formatter.checks.util.SourceUtil;
-import com.liferay.source.formatter.checkstyle.util.AlloyMVCCheckstyleUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -335,9 +334,6 @@ public class SourceFormatterUtil {
 
 			suppressionsFiles.add(new File(moduleSuppressionsFileName));
 		}
-
-		suppressionsFiles.addAll(
-			AlloyMVCCheckstyleUtil.getSuppressionsFiles(suppressionsFiles));
 
 		return suppressionsFiles;
 	}

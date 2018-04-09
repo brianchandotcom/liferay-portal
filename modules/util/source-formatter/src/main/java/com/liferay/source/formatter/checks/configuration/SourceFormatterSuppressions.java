@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checks.configuration;
 
+import com.liferay.source.formatter.checkstyle.util.AlloyMVCCheckstyleUtil;
 import com.liferay.source.formatter.util.CheckType;
 
 import com.puppycrawl.tools.checkstyle.api.FilterSet;
@@ -38,6 +39,13 @@ public class SourceFormatterSuppressions {
 				suppressionsFileLocation, checkName, fileName);
 		}
 		else {
+			String alloyMVCJavaFileName =
+				AlloyMVCCheckstyleUtil.getJavaFileName(fileName);
+
+			if (alloyMVCJavaFileName != null) {
+				fileName = alloyMVCJavaFileName;
+			}
+
 			_addCheckstyleSuppression(checkName, fileName);
 		}
 	}

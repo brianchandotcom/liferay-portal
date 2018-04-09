@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.segments.asset.categories.demo.service.test;
+package com.liferay.segments.asset.categories.demo.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
@@ -34,8 +34,8 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.segments.model.Segment;
-import com.liferay.segments.service.SegmentService;
+import com.liferay.segments.Segment;
+import com.liferay.segments.SegmentService;
 
 import java.util.Collection;
 import java.util.HashMap;

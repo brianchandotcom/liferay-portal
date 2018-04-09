@@ -17,26 +17,23 @@ package com.liferay.commerce.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.exception.CommerceTaxEngineException;
-import com.liferay.commerce.product.model.CPDefinition;
 
 import java.util.List;
 import java.util.Locale;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 @ProviderType
 public interface CommerceTaxEngine {
 
 	public List<CommerceTaxRate> getCommerceTaxRates(
-			CPDefinition cpDefinition, CommerceAddress commerceAddress,
-			Locale locale)
+			CommerceTaxCalculateRequest commerceTaxCalculateRequest)
 		throws CommerceTaxEngineException;
 
 	public String getDescription(Locale locale);
 
 	public String getName(Locale locale);
-
-	public boolean isPercentage(long groupId);
 
 }

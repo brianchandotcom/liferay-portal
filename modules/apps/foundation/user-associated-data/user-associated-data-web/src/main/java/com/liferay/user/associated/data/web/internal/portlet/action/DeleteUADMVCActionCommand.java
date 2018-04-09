@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
+import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
@@ -50,12 +50,12 @@ public class DeleteUADMVCActionCommand extends BaseMVCActionCommand {
 		String uadRegistryKey = ParamUtil.getString(
 			actionRequest, "uadRegistryKey");
 
-		UADEntityAnonymizer uadEntityAnonymizer =
-			_uadRegistry.getUADEntityAnonymizer(uadRegistryKey);
+		UADAnonymizer uadAnonymizer = _uadRegistry.getUADAnonymizer(
+			uadRegistryKey);
 
 		User selectedUser = _portal.getSelectedUser(actionRequest);
 
-		uadEntityAnonymizer.deleteAll(selectedUser.getUserId());
+		uadAnonymizer.deleteAll(selectedUser.getUserId());
 
 		sendRedirect(actionRequest, actionResponse);
 	}

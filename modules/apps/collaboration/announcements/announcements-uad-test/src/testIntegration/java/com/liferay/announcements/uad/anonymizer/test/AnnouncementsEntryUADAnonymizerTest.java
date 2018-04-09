@@ -14,20 +14,21 @@
 
 package com.liferay.announcements.uad.anonymizer.test;
 
-import com.liferay.announcements.kernel.model.AnnouncementsFlag;
-import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService;
+import com.liferay.announcements.kernel.model.AnnouncementsEntry;
+import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
-import com.liferay.announcements.uad.test.AnnouncementsFlagUADEntityTestHelper;
+import com.liferay.announcements.uad.test.AnnouncementsEntryUADEntityTestHelper;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.aggregator.UADAggregator;
-import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
-import com.liferay.user.associated.data.test.util.BaseUADEntityAnonymizerTestCase;
+import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
+import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,8 +41,8 @@ import org.junit.runner.RunWith;
  * @author Noah Sherrill
  */
 @RunWith(Arquillian.class)
-public class AnnouncementsFlagUADEntityAnonymizerTest
-	extends BaseUADEntityAnonymizerTestCase {
+public class AnnouncementsEntryUADAnonymizerTest
+	extends BaseUADAnonymizerTestCase {
 
 	@ClassRule
 	@Rule
@@ -57,14 +58,15 @@ public class AnnouncementsFlagUADEntityAnonymizerTest
 	protected BaseModel<?> addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
 
-		AnnouncementsFlag announcementsFlag =
-			_announcementsFlagUADEntityTestHelper.addAnnouncementsFlag(userId);
+		AnnouncementsEntry announcementsEntry =
+			_announcementsEntryUADEntityTestHelper.addAnnouncementsEntry(
+				userId);
 
 		if (deleteAfterTestRun) {
-			_announcementsFlags.add(announcementsFlag);
+			_announcementsEntries.add(announcementsEntry);
 		}
 
-		return announcementsFlag;
+		return announcementsEntry;
 	}
 
 	@Override
@@ -73,18 +75,21 @@ public class AnnouncementsFlagUADEntityAnonymizerTest
 	}
 
 	@Override
-	protected UADEntityAnonymizer getUADEntityAnonymizer() {
-		return _uadEntityAnonymizer;
+	protected UADAnonymizer getUADAnonymizer() {
+		return _uadAnonymizer;
 	}
 
 	@Override
 	protected boolean isBaseModelAutoAnonymized(long baseModelPK, User user)
 		throws Exception {
 
-		AnnouncementsFlag announcementsFlag =
-			_announcementsFlagLocalService.getAnnouncementsFlag(baseModelPK);
+		AnnouncementsEntry announcementsEntry =
+			_announcementsEntryLocalService.getEntry(baseModelPK);
 
-		if (user.getUserId() != announcementsFlag.getUserId()) {
+		if ((user.getUserId() != announcementsEntry.getUserId()) &&
+			!StringUtil.equals(
+				user.getFullName(), announcementsEntry.getUserName())) {
+
 			return true;
 		}
 
@@ -93,7 +98,7 @@ public class AnnouncementsFlagUADEntityAnonymizerTest
 
 	@Override
 	protected boolean isBaseModelDeleted(long baseModelPK) {
-		if (_announcementsFlagLocalService.fetchAnnouncementsFlag(
+		if (_announcementsEntryLocalService.fetchAnnouncementsEntry(
 				baseModelPK) == null) {
 
 			return true;
@@ -102,25 +107,25 @@ public class AnnouncementsFlagUADEntityAnonymizerTest
 		return false;
 	}
 
-	@Inject
-	private AnnouncementsFlagLocalService _announcementsFlagLocalService;
-
 	@DeleteAfterTestRun
-	private final List<AnnouncementsFlag> _announcementsFlags =
+	private final List<AnnouncementsEntry> _announcementsEntries =
 		new ArrayList<>();
 
 	@Inject
-	private AnnouncementsFlagUADEntityTestHelper
-		_announcementsFlagUADEntityTestHelper;
+	private AnnouncementsEntryLocalService _announcementsEntryLocalService;
+
+	@Inject
+	private AnnouncementsEntryUADEntityTestHelper
+		_announcementsEntryUADEntityTestHelper;
 
 	@Inject(
-		filter = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_FLAG
+		filter = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_ENTRY
 	)
 	private UADAggregator _uadAggregator;
 
 	@Inject(
-		filter = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_FLAG
+		filter = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_ENTRY
 	)
-	private UADEntityAnonymizer _uadEntityAnonymizer;
+	private UADAnonymizer _uadAnonymizer;
 
 }

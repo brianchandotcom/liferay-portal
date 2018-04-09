@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 
-import com.liferay.user.associated.data.anonymizer.DynamicQueryUADEntityAnonymizer;
-import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
+import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
+import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.util.UADAnonymizerHelper;
 
 import org.osgi.service.component.annotations.Component;
@@ -37,9 +37,8 @@ import java.util.List;
  * @generated
  */
 @Component(immediate = true, property =  {
-	"model.class.name=" + BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY}, service = UADEntityAnonymizer.class)
-public class BlogsEntryUADEntityAnonymizer
-	extends DynamicQueryUADEntityAnonymizer<BlogsEntry> {
+	"model.class.name=" + BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY}, service = UADAnonymizer.class)
+public class BlogsEntryUADAnonymizer extends DynamicQueryUADAnonymizer<BlogsEntry> {
 	@Override
 	public void autoAnonymize(BlogsEntry blogsEntry, long userId)
 		throws PortalException {

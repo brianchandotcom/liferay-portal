@@ -22,8 +22,8 @@ import com.liferay.user.associated.data.util.UADDynamicQueryUtil;
 /**
  * @author William Newbury
  */
-public abstract class DynamicQueryUADEntityAnonymizer<T extends BaseModel>
-	implements UADEntityAnonymizer<T> {
+public abstract class DynamicQueryUADAnonymizer<T extends BaseModel>
+	implements UADAnonymizer<T> {
 
 	@Override
 	public void autoAnonymizeAll(long userId) throws PortalException {

@@ -27,8 +27,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.aggregator.UADAggregator;
-import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
-import com.liferay.user.associated.data.test.util.BaseUADEntityAnonymizerTestCase;
+import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
+import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 
 import java.util.ArrayList;
@@ -42,9 +42,8 @@ import org.junit.runner.RunWith;
  * @author Noah Sherrill
  */
 @RunWith(Arquillian.class)
-public class BookmarksEntryUADEntityAnonymizerTest
-	extends BaseUADEntityAnonymizerTestCase
-	implements WhenHasStatusByUserIdField {
+public class BookmarksEntryUADAnonymizerTest
+	extends BaseUADAnonymizerTestCase implements WhenHasStatusByUserIdField {
 
 	@ClassRule
 	@Rule
@@ -90,8 +89,8 @@ public class BookmarksEntryUADEntityAnonymizerTest
 	}
 
 	@Override
-	protected UADEntityAnonymizer getUADEntityAnonymizer() {
-		return _uadEntityAnonymizer;
+	protected UADAnonymizer getUADAnonymizer() {
+		return _uadAnonymizer;
 	}
 
 	@Override
@@ -143,6 +142,6 @@ public class BookmarksEntryUADEntityAnonymizerTest
 	@Inject(
 		filter = "model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY
 	)
-	private UADEntityAnonymizer _uadEntityAnonymizer;
+	private UADAnonymizer _uadAnonymizer;
 
 }

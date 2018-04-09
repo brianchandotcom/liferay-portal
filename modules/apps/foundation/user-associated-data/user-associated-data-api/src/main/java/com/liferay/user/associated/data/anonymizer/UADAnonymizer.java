@@ -24,7 +24,7 @@ import java.util.List;
  * @author William Newbury
  */
 @ProviderType
-public interface UADEntityAnonymizer<T> {
+public interface UADAnonymizer<T> {
 
 	public void autoAnonymize(T t, long userId) throws PortalException;
 

@@ -13,8 +13,8 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.aggregator.UADAggregator;
-import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
-import com.liferay.user.associated.data.test.util.BaseUADEntityAnonymizerTestCase;
+import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
+import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 
 <#if entity.hasEntityColumn("statusByUserId")>
 	import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
@@ -33,7 +33,7 @@ import org.junit.runner.RunWith;
  * @generated
  */
 @RunWith(Arquillian.class)
-public class ${entity.name}UADEntityAnonymizerTest extends BaseUADEntityAnonymizerTestCase <#if entity.hasEntityColumn("statusByUserId")>implements WhenHasStatusByUserIdField </#if>{
+public class ${entity.name}UADAnonymizerTest extends BaseUADAnonymizerTestCase <#if entity.hasEntityColumn("statusByUserId")>implements WhenHasStatusByUserIdField </#if>{
 
 	@ClassRule
 	@Rule
@@ -72,8 +72,8 @@ public class ${entity.name}UADEntityAnonymizerTest extends BaseUADEntityAnonymiz
 	}
 
 	@Override
-	protected UADEntityAnonymizer getUADEntityAnonymizer() {
-		return _uadEntityAnonymizer;
+	protected UADAnonymizer getUADAnonymizer() {
+		return _uadAnonymizer;
 	}
 
 	@Override
@@ -141,6 +141,6 @@ public class ${entity.name}UADEntityAnonymizerTest extends BaseUADEntityAnonymiz
 	@Inject(
 		filter = "model.class.name=" + ${portletShortName}UADConstants.CLASS_NAME_${entity.constantName}
 	)
-	private UADEntityAnonymizer _uadEntityAnonymizer;
+	private UADAnonymizer _uadAnonymizer;
 
 }

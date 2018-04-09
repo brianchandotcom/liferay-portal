@@ -18,12 +18,12 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 
-import com.liferay.user.associated.data.anonymizer.DynamicQueryUADEntityAnonymizer;
-import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
+import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
+import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.util.UADAnonymizerHelper;
 
-import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.service.WikiPageLocalService;
+import com.liferay.wiki.model.WikiNode;
+import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.uad.constants.WikiUADConstants;
 
 import org.osgi.service.component.annotations.Component;
@@ -37,48 +37,48 @@ import java.util.List;
  * @generated
  */
 @Component(immediate = true, property =  {
-	"model.class.name=" + WikiUADConstants.CLASS_NAME_WIKI_PAGE}, service = UADEntityAnonymizer.class)
-public class WikiPageUADEntityAnonymizer extends DynamicQueryUADEntityAnonymizer<WikiPage> {
+	"model.class.name=" + WikiUADConstants.CLASS_NAME_WIKI_NODE}, service = UADAnonymizer.class)
+public class WikiNodeUADAnonymizer extends DynamicQueryUADAnonymizer<WikiNode> {
 	@Override
-	public void autoAnonymize(WikiPage wikiPage, long userId)
+	public void autoAnonymize(WikiNode wikiNode, long userId)
 		throws PortalException {
 		User anonymousUser = _uadAnonymizerHelper.getAnonymousUser();
 
-		if (wikiPage.getUserId() == userId) {
-			wikiPage.setUserId(anonymousUser.getUserId());
-			wikiPage.setUserName(anonymousUser.getFullName());
+		if (wikiNode.getUserId() == userId) {
+			wikiNode.setUserId(anonymousUser.getUserId());
+			wikiNode.setUserName(anonymousUser.getFullName());
 		}
 
-		if (wikiPage.getStatusByUserId() == userId) {
-			wikiPage.setStatusByUserId(anonymousUser.getUserId());
-			wikiPage.setStatusByUserName(anonymousUser.getFullName());
+		if (wikiNode.getStatusByUserId() == userId) {
+			wikiNode.setStatusByUserId(anonymousUser.getUserId());
+			wikiNode.setStatusByUserName(anonymousUser.getFullName());
 		}
 
-		_wikiPageLocalService.updateWikiPage(wikiPage);
+		_wikiNodeLocalService.updateWikiNode(wikiNode);
 	}
 
 	@Override
-	public void delete(WikiPage wikiPage) throws PortalException {
-		_wikiPageLocalService.deletePage(wikiPage);
+	public void delete(WikiNode wikiNode) throws PortalException {
+		_wikiNodeLocalService.deleteNode(wikiNode);
 	}
 
 	@Override
 	public List<String> getNonanonymizableFieldNames() {
-		return Arrays.asList("title", "content", "summary");
+		return Arrays.asList("name", "description");
 	}
 
 	@Override
 	protected ActionableDynamicQuery doGetActionableDynamicQuery() {
-		return _wikiPageLocalService.getActionableDynamicQuery();
+		return _wikiNodeLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	protected String[] doGetUserIdFieldNames() {
-		return WikiUADConstants.USER_ID_FIELD_NAMES_WIKI_PAGE;
+		return WikiUADConstants.USER_ID_FIELD_NAMES_WIKI_NODE;
 	}
 
 	@Reference
-	private WikiPageLocalService _wikiPageLocalService;
+	private WikiNodeLocalService _wikiNodeLocalService;
 	@Reference
 	private UADAnonymizerHelper _uadAnonymizerHelper;
 }

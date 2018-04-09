@@ -19,8 +19,8 @@ import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.user.associated.data.anonymizer.DynamicQueryUADEntityAnonymizer;
-import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
+import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
+import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.util.UADAnonymizerHelper;
 
 import java.util.Collections;
@@ -35,10 +35,10 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_FLAG,
-	service = UADEntityAnonymizer.class
+	service = UADAnonymizer.class
 )
-public class AnnouncementsFlagUADEntityAnonymizer
-	extends DynamicQueryUADEntityAnonymizer<AnnouncementsFlag> {
+public class AnnouncementsFlagUADAnonymizer
+	extends DynamicQueryUADAnonymizer<AnnouncementsFlag> {
 
 	@Override
 	public void autoAnonymize(AnnouncementsFlag announcementsFlag, long userId)

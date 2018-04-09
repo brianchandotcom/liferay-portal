@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
+import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.web.internal.util.UADApplicationSummaryHelper;
 
@@ -55,12 +55,12 @@ public class AnonymizeApplicationUADEntitiesMVCActionCommand
 		String applicationName = ParamUtil.getString(
 			actionRequest, "applicationName");
 
-		List<UADEntityAnonymizer> uadEntityAnonymizers =
-			_uadApplicationSummaryHelper.getApplicationUADEntityAnonymizers(
+		List<UADAnonymizer> uadAnonymizers =
+			_uadApplicationSummaryHelper.getApplicationUADAnonymizers(
 				applicationName);
 
-		for (UADEntityAnonymizer uadEntityAnonymizer : uadEntityAnonymizers) {
-			uadEntityAnonymizer.autoAnonymizeAll(selectedUser.getUserId());
+		for (UADAnonymizer uadAnonymizer : uadAnonymizers) {
+			uadAnonymizer.autoAnonymizeAll(selectedUser.getUserId());
 		}
 	}
 

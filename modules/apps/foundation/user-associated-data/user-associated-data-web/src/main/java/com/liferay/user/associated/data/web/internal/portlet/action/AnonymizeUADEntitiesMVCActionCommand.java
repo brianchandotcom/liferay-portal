@@ -14,9 +14,7 @@
 
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 
@@ -24,7 +22,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Noah Sherrill
@@ -45,17 +42,13 @@ public class AnonymizeUADEntitiesMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		User selectedUser = _portal.getSelectedUser(actionRequest);
+		long selectedUserId = getSelectedUserId(actionRequest);
 
 		UADAnonymizer uadAnonymizer = getUADAnonymizer(actionRequest);
 
 		doMultipleAction(
 			actionRequest,
-			entity -> uadAnonymizer.autoAnonymize(
-				entity, selectedUser.getUserId()));
+			entity -> uadAnonymizer.autoAnonymize(entity, selectedUserId));
 	}
-
-	@Reference
-	private Portal _portal;
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet;
 
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -116,12 +117,15 @@ public class PortletContainerImpl implements PortletContainer {
 			Portlet portlet)
 		throws PortletContainerException {
 
-		try {
-			return _processAction(request, response, portlet);
-		}
-		catch (Exception e) {
-			throw new PortletContainerException(e);
-		}
+		return _preserveGroupIds(
+			request,
+			() -> {
+				if (portlet != null) {
+					_processGroupId(request, portlet);
+				}
+
+				return _processAction(request, response, portlet);
+			});
 	}
 
 	@Override
@@ -130,12 +134,19 @@ public class PortletContainerImpl implements PortletContainer {
 			Portlet portlet, Layout layout, Event event)
 		throws PortletContainerException {
 
-		try {
-			return _processEvent(request, response, portlet, layout, event);
-		}
-		catch (Exception e) {
-			throw new PortletContainerException(e);
-		}
+		return _preserveGroupIds(
+			request,
+			() -> {
+				String portletId = ParamUtil.getString(request, "p_p_id");
+
+				if ((portlet != null) &&
+					portletId.equals(portlet.getPortletId())) {
+
+					_processGroupId(request, portlet);
+				}
+
+				return _processEvent(request, response, portlet, layout, event);
+			});
 	}
 
 	@Override
@@ -170,12 +181,21 @@ public class PortletContainerImpl implements PortletContainer {
 			Portlet portlet)
 		throws PortletContainerException {
 
-		try {
-			_render(request, response, portlet);
-		}
-		catch (Exception e) {
-			throw new PortletContainerException(e);
-		}
+		_preserveGroupIds(
+			request,
+			() -> {
+				String portletId = ParamUtil.getString(request, "p_p_id");
+
+				if ((portlet != null) &&
+					portletId.equals(portlet.getPortletId())) {
+
+					_processGroupId(request, portlet);
+				}
+
+				_render(request, response, portlet);
+
+				return null;
+			});
 	}
 
 	@Override
@@ -184,12 +204,17 @@ public class PortletContainerImpl implements PortletContainer {
 			Portlet portlet)
 		throws PortletContainerException {
 
-		try {
-			_serveResource(request, response, portlet);
-		}
-		catch (Exception e) {
-			throw new PortletContainerException(e);
-		}
+		_preserveGroupIds(
+			request,
+			() -> {
+				if (portlet != null) {
+					_processGroupId(request, portlet);
+				}
+
+				_serveResource(request, response, portlet);
+
+				return null;
+			});
 	}
 
 	public void setPortletConfigurationIconMenu(
@@ -268,22 +293,6 @@ public class PortletContainerImpl implements PortletContainer {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long scopeGroupId = PortalUtil.getScopeGroupId(
-			request, portlet.getPortletId());
-
-		themeDisplay.setScopeGroupId(scopeGroupId);
-
-		long siteGroupId = 0;
-
-		if (layout.isTypeControlPanel()) {
-			siteGroupId = PortalUtil.getSiteGroupId(scopeGroupId);
-		}
-		else {
-			siteGroupId = PortalUtil.getSiteGroupId(layout.getGroupId());
-		}
-
-		themeDisplay.setSiteGroupId(siteGroupId);
-
 		if (user != null) {
 			HttpSession session = request.getSession();
 
@@ -318,6 +327,36 @@ public class PortletContainerImpl implements PortletContainer {
 
 			PortalUtil.updatePortletMode(
 				portlet.getPortletId(), user, layout, portletMode, request);
+		}
+	}
+
+	private <T> T _preserveGroupIds(
+			HttpServletRequest request,
+			UnsafeSupplier<T, Exception> unsafeSupplier)
+		throws PortletContainerException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long previousScopeGroupId = 0;
+		long previousSiteGroupId = 0;
+
+		if (themeDisplay != null) {
+			previousScopeGroupId = themeDisplay.getScopeGroupId();
+			previousSiteGroupId = themeDisplay.getSiteGroupId();
+		}
+
+		try {
+			return unsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new PortletContainerException(e);
+		}
+		finally {
+			if (themeDisplay != null) {
+				themeDisplay.setScopeGroupId(previousScopeGroupId);
+				themeDisplay.setSiteGroupId(previousSiteGroupId);
+			}
 		}
 	}
 
@@ -556,6 +595,31 @@ public class PortletContainerImpl implements PortletContainer {
 		finally {
 			eventRequestImpl.cleanUp();
 		}
+	}
+
+	private void _processGroupId(HttpServletRequest request, Portlet portlet)
+		throws Exception {
+
+		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long scopeGroupId = PortalUtil.getScopeGroupId(
+			request, portlet.getPortletId());
+
+		themeDisplay.setScopeGroupId(scopeGroupId);
+
+		long siteGroupId = 0;
+
+		if (layout.isTypeControlPanel()) {
+			siteGroupId = PortalUtil.getSiteGroupId(scopeGroupId);
+		}
+		else {
+			siteGroupId = PortalUtil.getSiteGroupId(layout.getGroupId());
+		}
+
+		themeDisplay.setSiteGroupId(siteGroupId);
 	}
 
 	private void _processPublicRenderParameters(

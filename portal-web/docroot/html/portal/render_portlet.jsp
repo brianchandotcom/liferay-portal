@@ -316,16 +316,12 @@ if (layoutTypeController.isFullPageDisplayable()) {
 	showCloseIcon = false;
 }
 
-long previousScopeGroupId = themeDisplay.getScopeGroupId();
-
 if (Validator.isNotNull(portletResource)) {
 	themeDisplay.setScopeGroupId(PortalUtil.getScopeGroupId(request, portletResourcePortlet.getPortletId()));
 }
 else {
 	themeDisplay.setScopeGroupId(PortalUtil.getScopeGroupId(request, portletId));
 }
-
-long previousSiteGroupId = themeDisplay.getSiteGroupId();
 
 Group siteGroup = themeDisplay.getSiteGroup();
 
@@ -1261,9 +1257,6 @@ if (themeDisplay.isStatePopUp()) {
 <%
 	}
 }
-
-themeDisplay.setScopeGroupId(previousScopeGroupId);
-themeDisplay.setSiteGroupId(previousSiteGroupId);
 
 if (showPortletCssIcon) {
 	themeDisplay.setIncludePortletCssJs(true);

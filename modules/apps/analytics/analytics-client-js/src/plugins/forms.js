@@ -5,7 +5,7 @@
  */
 function getFormKey(form) {
 	return (
-		form.dataset.analyticsFormId ||
+		form.dataset.analyticsAssetId ||
 		form.id ||
 		form.getAttribute('name') ||
 		form.action
@@ -39,7 +39,7 @@ function getFormPayload(form) {
  * @return {boolean} True if the form is trackable.
  */
 function isTrackableForm(form) {
-	return 'analytics' in form.dataset && !!getFormKey(form);
+	return 'analyticsAssetId' in form.dataset && !!getFormKey(form);
 }
 
 /**
@@ -129,7 +129,7 @@ function trackFormViewed(analytics) {
 			.filter(form => isTrackableForm(form))
 			.forEach(form => {
 				let payload = getFormPayload(form);
-				const title = form.dataset.analyticsTitle;
+				const title = form.dataset.analyticsAssetTitle;
 
 				if (title) {
 					payload = {title, ...payload};

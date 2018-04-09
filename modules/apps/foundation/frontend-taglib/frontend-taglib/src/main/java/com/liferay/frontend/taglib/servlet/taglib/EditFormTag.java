@@ -44,6 +44,10 @@ public class EditFormTag extends IncludeTag {
 		return super.doStartTag();
 	}
 
+	public boolean isFluid() {
+		return _fluid;
+	}
+
 	public void setAction(PortletURL portletURL) {
 		if (portletURL != null) {
 			setAction(portletURL.toString());

@@ -23,7 +23,10 @@
 		<c:if test="<%= Validator.isNotNull(onSubmit) %>">
 			</fieldset>
 		</c:if>
-	</div>
+
+	<c:if test="<%= !themeDisplay.isStatePopUp() %>">
+		</div>
+	</c:if>
 </form>
 
 <%

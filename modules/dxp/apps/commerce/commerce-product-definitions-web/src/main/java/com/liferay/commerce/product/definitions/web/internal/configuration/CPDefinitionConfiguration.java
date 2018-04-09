@@ -31,47 +31,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface CPDefinitionConfiguration {
 
-	@Meta.AD(
-		deflt = "false",
-		description = "changeable-default-language-description",
-		name = "changeable-default-language", required = false
-	)
-	public boolean changeableDefaultLanguage();
-
 	@Meta.AD(deflt = "15", name = "check-internal", required = false)
 	public int checkInterval();
-
-	@Meta.AD(
-		deflt = "descriptive", name = "default-display-view", required = false
-	)
-	public String defaultDisplayView();
-
-	@Meta.AD(
-		deflt = "icon|descriptive|list", name = "display-views",
-		required = false
-	)
-	public String[] displayViews();
-
-	@Meta.AD(
-		deflt = "true", name = "definition-force-autogenerate-id",
-		required = false
-	)
-	public boolean definitionForceAutogenerateId();
-
-	@Meta.AD(
-		deflt = "true", name = "definitions-search-with-index", required = false
-	)
-	public boolean definitionsSearchWithIndex();
-
-	@Meta.AD(
-		deflt = "true", name = "publish-to-live-by-default", required = false
-	)
-	public boolean publishToLiveByDefault();
-
-	@Meta.AD(
-		deflt = "true", name = "publish-version-history-by-default",
-		required = false
-	)
-	public boolean publishVersionHistoryByDefault();
 
 }

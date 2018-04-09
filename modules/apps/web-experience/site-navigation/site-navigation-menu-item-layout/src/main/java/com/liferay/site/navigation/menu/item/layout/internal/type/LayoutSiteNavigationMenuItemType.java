@@ -89,7 +89,7 @@ public class LayoutSiteNavigationMenuItemType
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Layout layout = getLayout(siteNavigationMenuItem);
+		Layout layout = _getLayout(siteNavigationMenuItem);
 
 		return _portal.getLayoutFullURL(layout, themeDisplay, true);
 	}
@@ -109,7 +109,7 @@ public class LayoutSiteNavigationMenuItemType
 			return label;
 		}
 
-		Layout layout = getLayout(siteNavigationMenuItem);
+		Layout layout = _getLayout(siteNavigationMenuItem);
 
 		if (layout != null) {
 			return layout.getName(locale);
@@ -163,7 +163,7 @@ public class LayoutSiteNavigationMenuItemType
 			_itemSelector);
 
 		request.setAttribute(
-			WebKeys.SEL_LAYOUT, getLayout(siteNavigationMenuItem));
+			WebKeys.SEL_LAYOUT, _getLayout(siteNavigationMenuItem));
 		request.setAttribute(
 			WebKeys.TITLE,
 			getTitle(siteNavigationMenuItem, themeDisplay.getLocale()));
@@ -172,7 +172,7 @@ public class LayoutSiteNavigationMenuItemType
 			_servletContext, request, response, "/edit_layout.jsp");
 	}
 
-	protected Layout getLayout(SiteNavigationMenuItem siteNavigationMenuItem) {
+	private Layout _getLayout(SiteNavigationMenuItem siteNavigationMenuItem) {
 		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
 
 		typeSettingsProperties.fastLoad(

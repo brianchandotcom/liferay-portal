@@ -16,21 +16,26 @@
 
 <%@ include file="/dynamic_include/init.jsp" %>
 
-<aui:script>
-	Liferay.on(
-		'ratings:vote',
-		function(event) {
-			if (window.Analytics) {
-				Analytics.send(
-					'VOTE',
-					'Ratings',
-					{
-						className: event.className,
-						classPK: event.classPK,
-						score: event.score
-					}
-				);
-			}
+<aui:script sandbox="<%= true %>">
+	function onVote(event) {
+		if (window.Analytics) {
+			Analytics.send(
+				'VOTE',
+				'Ratings',
+				{
+					className: event.className,
+					classPK: event.classPK,
+					score: event.score
+				}
+			);
 		}
-	);
+	}
+
+	function onDestroyPortlet() {
+		Liferay.detach('ratings:vote', onVote);
+		Liferay.detach('destroyPortlet', onDestroyPortlet);
+	}
+
+	Liferay.on('ratings:vote', onVote);
+	Liferay.on('destroyPortlet', onDestroyPortlet);
 </aui:script>

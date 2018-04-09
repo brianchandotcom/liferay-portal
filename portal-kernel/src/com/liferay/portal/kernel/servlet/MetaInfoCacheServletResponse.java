@@ -87,7 +87,7 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 			}
 
 			if (metaInfoDataBag._contentLength != -1) {
-				response.setContentLength(metaInfoDataBag._contentLength);
+				response.setContentLengthLong(metaInfoDataBag._contentLength);
 			}
 
 			if (metaInfoDataBag._contentType != null) {
@@ -457,10 +457,15 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 		super.setContentLength(contentLength);
 	}
 
-	public void setContentLengthLong(long contentLengthLong) {
-		int contentLength = Math.toIntExact(contentLengthLong);
+	@Override
+	public void setContentLengthLong(long contentLength) {
+		if (isCommitted()) {
+			return;
+		}
 
-		setContentLength(contentLength);
+		_metaData._contentLength = contentLength;
+
+		super.setContentLengthLong(contentLength);
 	}
 
 	@Override
@@ -617,7 +622,7 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 
 		private int _bufferSize;
 		private String _charsetName;
-		private int _contentLength = -1;
+		private long _contentLength = -1;
 		private String _contentType;
 		private boolean _error;
 		private String _errorMessage;

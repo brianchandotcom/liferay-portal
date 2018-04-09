@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.WriteListener;
 
 /**
  * @author Shuyang Zhou
@@ -36,6 +37,16 @@ public class ServletOutputStreamAdapter extends ServletOutputStream {
 	@Override
 	public void flush() throws IOException {
 		outputStream.flush();
+	}
+
+	@Override
+	public boolean isReady() {
+		return true;
+	}
+
+	@Override
+	public void setWriteListener(WriteListener writeListener) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

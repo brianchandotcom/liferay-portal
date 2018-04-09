@@ -174,18 +174,16 @@ public class LayoutSiteNavigationMenuItemType
 
 	@Override
 	public String getUnescapedName(
-		ThemeDisplay themeDisplay,
-		SiteNavigationMenuItem siteNavigationMenuItem) {
+		SiteNavigationMenuItem siteNavigationMenuItem, String languageId) {
 
 		Layout layout = _getLayout(siteNavigationMenuItem);
 
-		return layout.getName(themeDisplay.getLanguageId());
+		return layout.getName(languageId);
 	}
 
 	@Override
 	public String iconURL(
-		ThemeDisplay themeDisplay,
-		SiteNavigationMenuItem siteNavigationMenuItem) {
+		SiteNavigationMenuItem siteNavigationMenuItem, String pathImage) {
 
 		Layout layout = _getLayout(siteNavigationMenuItem);
 
@@ -195,7 +193,7 @@ public class LayoutSiteNavigationMenuItemType
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append(themeDisplay.getPathImage());
+		sb.append(pathImage);
 		sb.append("/layout_icon?img_id=");
 		sb.append(layout.getIconImageId());
 		sb.append("&t=");

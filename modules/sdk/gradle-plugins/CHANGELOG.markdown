@@ -4026,11 +4026,31 @@ to version 2.3.123.
 - [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
 1.0.595.
 
-## 3.10.12 - 2018-04-06
+## 3.10.11 - 2018-04-06
+
+### Changed
+- [LPS-78971]: Update the [Liferay Gradle Plugins Service Builder] dependency to
+version 2.1.6.
+- [LPS-78971]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.189.
+
+## 3.10.12 - 2018-04-09
 
 ### Added
 - [LPS-79450]: Filter out `.git`, `.gradle`, `build`, `node_modules`, and `tmp`
 in the project directory for Eclipse.
+
+### Changed
+- [LPS-79385]: Update the [Liferay Gradle Plugins Service Builder] dependency to
+version 2.1.7.
+- [LPS-79385]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.190.
+
+## 3.10.13 - 2018-04-09
+
+### Changed
+- [LPS-74171]: Update the default value of the
+`liferay.appServers.tomcat.version` property to `9.0.6`.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
@@ -4364,6 +4384,7 @@ in the project directory for Eclipse.
 [LPS-78854]: https://issues.liferay.com/browse/LPS-78854
 [LPS-78901]: https://issues.liferay.com/browse/LPS-78901
 [LPS-78911]: https://issues.liferay.com/browse/LPS-78911
+[LPS-78971]: https://issues.liferay.com/browse/LPS-78971
 [LPS-79131]: https://issues.liferay.com/browse/LPS-79131
 [LPS-79191]: https://issues.liferay.com/browse/LPS-79191
 [LPS-79192]: https://issues.liferay.com/browse/LPS-79192
@@ -4373,5 +4394,6 @@ in the project directory for Eclipse.
 [LPS-79286]: https://issues.liferay.com/browse/LPS-79286
 [LPS-79360]: https://issues.liferay.com/browse/LPS-79360
 [LPS-79365]: https://issues.liferay.com/browse/LPS-79365
+[LPS-79385]: https://issues.liferay.com/browse/LPS-79385
 [LPS-79450]: https://issues.liferay.com/browse/LPS-79450
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

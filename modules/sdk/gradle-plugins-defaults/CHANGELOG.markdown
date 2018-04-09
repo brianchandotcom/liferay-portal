@@ -3227,17 +3227,29 @@ classpath.
 - [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version
 3.10.10.
 
+## 5.3.67 - 2018-04-06
+
+### Changed
+- [LPS-78971]: Update the [Liferay Gradle Plugins] dependency to version
+3.10.11.
+
 ## 5.3.68 - 2018-04-06
 
 ### Changed
 - [LPS-75049]: Add `compileOnly` dependencies to the test integration runtime
 classpath.
 
-## 5.3.69 - 2018-04-06
+## 5.3.69 - 2018-04-09
 
 ### Changed
 - [LPS-79450]: Update the [Liferay Gradle Plugins] dependency to version
 3.10.12.
+
+## 5.3.70 - 2018-04-09
+
+### Changed
+- [LPS-74171]: Update the [Liferay Gradle Plugins] dependency to version
+3.10.13.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -3461,6 +3473,7 @@ classpath.
 [LPS-74139]: https://issues.liferay.com/browse/LPS-74139
 [LPS-74143]: https://issues.liferay.com/browse/LPS-74143
 [LPS-74155]: https://issues.liferay.com/browse/LPS-74155
+[LPS-74171]: https://issues.liferay.com/browse/LPS-74171
 [LPS-74207]: https://issues.liferay.com/browse/LPS-74207
 [LPS-74210]: https://issues.liferay.com/browse/LPS-74210
 [LPS-74222]: https://issues.liferay.com/browse/LPS-74222
@@ -3598,6 +3611,7 @@ classpath.
 [LPS-78854]: https://issues.liferay.com/browse/LPS-78854
 [LPS-78901]: https://issues.liferay.com/browse/LPS-78901
 [LPS-78911]: https://issues.liferay.com/browse/LPS-78911
+[LPS-78971]: https://issues.liferay.com/browse/LPS-78971
 [LPS-79131]: https://issues.liferay.com/browse/LPS-79131
 [LPS-79191]: https://issues.liferay.com/browse/LPS-79191
 [LPS-79192]: https://issues.liferay.com/browse/LPS-79192

@@ -24,6 +24,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 @Component(immediate = true, service = ModelListener.class)
@@ -33,10 +34,12 @@ public class CommerceTaxMethodModelListener
 	@Override
 	public void onBeforeRemove(CommerceTaxMethod commerceTaxMethod) {
 		_commerceTaxFixedRateAddressRelLocalService.
-			deleteCommerceTaxMethodFixedRateAddressRels(
+			deleteCommerceTaxFixedRateAddressRelsByCommerceTaxMethodId(
 				commerceTaxMethod.getCommerceTaxMethodId());
-		_commerceTaxFixedRateLocalService.deleteCommerceTaxMethodFixedRates(
-			commerceTaxMethod.getCommerceTaxMethodId());
+
+		_commerceTaxFixedRateLocalService.
+			deleteCommerceTaxFixedRateByCommerceTaxMethodId(
+				commerceTaxMethod.getCommerceTaxMethodId());
 	}
 
 	@Reference

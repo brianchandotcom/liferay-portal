@@ -18,6 +18,7 @@ import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.service.CommerceTaxCategoryRelService;
+import com.liferay.commerce.service.CommerceTaxCategoryService;
 import com.liferay.commerce.tax.category.web.internal.display.context.CommerceTaxCategoryRelDisplayContext;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -92,11 +93,12 @@ public class CPDefinitionTaxCategoriesScreenNavigationEntry
 		throws IOException {
 
 		try {
+
 			CommerceTaxCategoryRelDisplayContext
 				commerceTaxCategoryRelDisplayContext =
 					new CommerceTaxCategoryRelDisplayContext(
-						_actionHelper, httpServletRequest,
-						_commerceTaxCategoryRelService, _itemSelector);
+						httpServletRequest, _commerceTaxCategoryService,
+						_commerceTaxCategoryRelService);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -108,26 +110,21 @@ public class CPDefinitionTaxCategoriesScreenNavigationEntry
 
 		_jspRenderer.renderJSP(
 			_setServletContext, httpServletRequest, httpServletResponse,
-			"/view_tax_category_rels.jsp");
+			"/edit_tax_category_rels.jsp");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPDefinitionTaxCategoriesScreenNavigationEntry.class);
 
 	@Reference
-	private ActionHelper _actionHelper;
-
-	@Reference
 	private CommerceTaxCategoryRelService _commerceTaxCategoryRelService;
 
 	@Reference
-	private ItemSelector _itemSelector;
+	private CommerceTaxCategoryService _commerceTaxCategoryService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;
 
-	@Reference
-	private Portal _portal;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.tax.category.web)"

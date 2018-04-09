@@ -36,6 +36,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 @Component(
@@ -49,62 +50,6 @@ import org.osgi.service.component.annotations.Reference;
 public class EditCommerceTaxCategoryRelMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void addCommerceTaxCategoryRels(ActionRequest actionRequest)
-		throws Exception {
-
-		long[] addCommerceTaxCategoryIds = null;
-
-		long cpDefinitionId = ParamUtil.getLong(
-			actionRequest, "cpDefinitionId");
-		long commerceTaxCategoryId = ParamUtil.getLong(
-			actionRequest, "commerceTaxCategoryId");
-
-		if (commerceTaxCategoryId > 0) {
-			addCommerceTaxCategoryIds = new long[] {commerceTaxCategoryId};
-		}
-		else {
-			addCommerceTaxCategoryIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "commerceTaxCategoryIds"),
-				0L);
-		}
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceTaxCategoryRel.class.getName(), actionRequest);
-
-		for (long addCommerceTaxCategoryId : addCommerceTaxCategoryIds) {
-			_commerceTaxCategoryRelService.addCommerceTaxCategoryRel(
-				addCommerceTaxCategoryId, CPDefinition.class.getName(),
-				cpDefinitionId, serviceContext);
-		}
-	}
-
-	protected void deleteCommerceTaxCategoryRels(ActionRequest actionRequest)
-		throws Exception {
-
-		long[] deleteCommerceTaxCategoryRelIds = null;
-
-		long commerceTaxCategoryRelId = ParamUtil.getLong(
-			actionRequest, "commerceTaxCategoryRelId");
-
-		if (commerceTaxCategoryRelId > 0) {
-			deleteCommerceTaxCategoryRelIds =
-				new long[] {commerceTaxCategoryRelId};
-		}
-		else {
-			deleteCommerceTaxCategoryRelIds = StringUtil.split(
-				ParamUtil.getString(
-					actionRequest, "deleteCommerceTaxCategoryRelIds"),
-				0L);
-		}
-
-		for (long deleteCommerceTaxCategoryRelId :
-				deleteCommerceTaxCategoryRelIds) {
-
-			_commerceTaxCategoryRelService.deleteCommerceTaxCategoryRel(
-				deleteCommerceTaxCategoryRelId);
-		}
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -113,21 +58,25 @@ public class EditCommerceTaxCategoryRelMVCActionCommand
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			if (cmd.equals(Constants.ADD) ||
-				cmd.equals(Constants.ADD_MULTIPLE)) {
+			if (cmd.equals(Constants.UPDATE)) {
 
-				addCommerceTaxCategoryRels(actionRequest);
+				long cpDefinitionId = ParamUtil.getLong(
+					actionRequest, "cpDefinitionId");
+				long commerceTaxCategoryId = ParamUtil.getLong(
+					actionRequest, "commerceTaxCategoryId");
+
+				ServiceContext serviceContext = ServiceContextFactory.getInstance(
+					CommerceTaxCategoryRel.class.getName(), actionRequest);
+
+				_commerceTaxCategoryRelService.updateCommerceTaxCategoryRel(
+					commerceTaxCategoryId, CPDefinition.class.getName(),
+					cpDefinitionId, serviceContext);
 			}
-			else if (cmd.equals(Constants.DELETE)) {
-				deleteCommerceTaxCategoryRels(actionRequest);
-			}
+
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchTaxCategoryRelException ||
 				e instanceof PrincipalException) {
-
-				hideDefaultErrorMessage(actionRequest);
-				hideDefaultSuccessMessage(actionRequest);
 
 				SessionErrors.add(actionRequest, e.getClass());
 

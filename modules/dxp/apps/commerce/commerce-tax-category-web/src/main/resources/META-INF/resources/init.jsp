@@ -41,7 +41,9 @@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %>
+page import="com.liferay.portal.kernel.util.WebKeys" %><%@ page import="com.liferay.commerce.product.constants.CPPortletKeys" %>
+<%@ page import="com.liferay.portal.kernel.portlet.LiferayPortletRequest" %>
+<%@ page import="java.util.List" %>
 
 <%@ page import="java.util.HashMap" %><%@
 page import="java.util.Map" %>

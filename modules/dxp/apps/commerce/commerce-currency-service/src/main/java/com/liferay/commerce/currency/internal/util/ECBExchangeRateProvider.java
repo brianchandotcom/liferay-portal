@@ -77,7 +77,7 @@ public class ECBExchangeRateProvider implements ExchangeRateProvider {
 			}
 
 			if (i >= 10) {
-				throw new PortalException("Impossible to load " + _ECB_URL);
+				throw new PortalException("Impossible to load " + _url);
 			}
 		}
 
@@ -135,30 +135,29 @@ public class ECBExchangeRateProvider implements ExchangeRateProvider {
 				ConfigurableUtil.createConfigurable(
 					ECBExchangeRateProviderConfiguration.class, properties);
 
-		_ECB_URL =
-			ecbExchangeRateProviderConfiguration.europeanCentralBankURL();
+		_url = ecbExchangeRateProviderConfiguration.europeanCentralBankURL();
 	}
 
 	private URL _getURL() throws Exception {
-		if (_ECB_URL.startsWith("http")) {
-			return new URL(_ECB_URL);
+		if (_url.startsWith("http")) {
+			return new URL(_url);
 		}
 		else {
 			Class<?> clazz = getClass();
 
 			ClassLoader classLoader = clazz.getClassLoader();
 
-			return classLoader.getResource(_ECB_URL);
+			return classLoader.getResource(_url);
 		}
 	}
-
-	private String _ECB_URL =
-		"http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml";
 
 	@Reference
 	private Http _http;
 
 	@Reference
 	private SAXReader _saxReader;
+
+	private String _url =
+		"http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml";
 
 }

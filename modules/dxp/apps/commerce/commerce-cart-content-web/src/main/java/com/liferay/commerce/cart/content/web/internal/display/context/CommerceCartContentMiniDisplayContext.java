@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Marco Leo
@@ -40,7 +39,6 @@ public class CommerceCartContentMiniDisplayContext
 
 	public CommerceCartContentMiniDisplayContext(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse,
 			CommerceOrderHelper commerceOrderHelper,
 			CommerceOrderItemService commerceOrderItemService,
 			CommerceOrderValidatorRegistry commerceOrderValidatorRegistry,
@@ -51,8 +49,8 @@ public class CommerceCartContentMiniDisplayContext
 		throws ConfigurationException {
 
 		super(
-			httpServletRequest, httpServletResponse, commerceOrderHelper,
-			commerceOrderItemService, commerceOrderValidatorRegistry,
+			httpServletRequest, commerceOrderHelper, commerceOrderItemService,
+			commerceOrderValidatorRegistry,
 			commercePriceCalculationLocalService, cpDefinitionHelper,
 			cpInstanceHelper);
 

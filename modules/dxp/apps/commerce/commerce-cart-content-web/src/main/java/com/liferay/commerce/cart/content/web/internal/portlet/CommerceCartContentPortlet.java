@@ -34,7 +34,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -76,12 +75,9 @@ public class CommerceCartContentPortlet extends MVCPortlet {
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);
 
-		HttpServletResponse httpServletResponse =
-			_portal.getHttpServletResponse(renderResponse);
-
 		CommerceCartContentDisplayContext commerceCartContentDisplayContext =
 			new CommerceCartContentDisplayContext(
-				httpServletRequest, httpServletResponse, _commerceOrderHelper,
+				httpServletRequest, _commerceOrderHelper,
 				_commerceOrderItemService, _commerceOrderValidatorRegistry,
 				_commercePriceCalculationLocalService, _cpDefinitionHelper,
 				_cpInstanceHelper);

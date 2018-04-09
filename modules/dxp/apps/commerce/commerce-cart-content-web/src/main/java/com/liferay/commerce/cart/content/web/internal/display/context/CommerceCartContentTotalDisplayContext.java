@@ -34,7 +34,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Alessio Antonio Rendina
@@ -44,7 +43,6 @@ public class CommerceCartContentTotalDisplayContext
 
 	public CommerceCartContentTotalDisplayContext(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse,
 			CommerceOrderHelper commerceOrderHelper,
 			CommerceOrderItemService commerceOrderItemService,
 			CommerceOrderValidatorRegistry commerceOrderValidatorRegistry,
@@ -55,8 +53,8 @@ public class CommerceCartContentTotalDisplayContext
 		throws ConfigurationException {
 
 		super(
-			httpServletRequest, httpServletResponse, commerceOrderHelper,
-			commerceOrderItemService, commerceOrderValidatorRegistry,
+			httpServletRequest, commerceOrderHelper, commerceOrderItemService,
+			commerceOrderValidatorRegistry,
 			commercePriceCalculationLocalService, cpDefinitionHelper,
 			cpInstanceHelper);
 

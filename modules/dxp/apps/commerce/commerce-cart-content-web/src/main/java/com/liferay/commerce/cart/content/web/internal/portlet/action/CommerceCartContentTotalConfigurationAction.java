@@ -64,8 +64,8 @@ public class CommerceCartContentTotalConfigurationAction
 			CommerceCartContentTotalDisplayContext
 				commerceCartContentTotalDisplayContext =
 					new CommerceCartContentTotalDisplayContext(
-						httpServletRequest, httpServletResponse,
-						_commerceOrderHelper, _commerceOrderItemService,
+						httpServletRequest, _commerceOrderHelper,
+						_commerceOrderItemService,
 						_commerceOrderValidatorRegistry,
 						_commercePriceCalculationLocalService,
 						_cpDefinitionHelper, _cpInstanceHelper, _portal);

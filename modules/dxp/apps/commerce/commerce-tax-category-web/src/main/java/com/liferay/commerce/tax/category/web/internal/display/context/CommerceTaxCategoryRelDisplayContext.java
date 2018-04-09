@@ -63,7 +63,6 @@ public class CommerceTaxCategoryRelDisplayContext {
 
 	private final CommerceTaxCategoryRelService _commerceTaxCategoryRelService;
 	private final CommerceTaxCategoryService _commerceTaxCategoryService;
-	private CPDefinition _cpDefinition;
 	private final HttpServletRequest _httpServletRequest;
 
 }

@@ -44,7 +44,6 @@ import java.util.Map;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Marco Leo
@@ -54,7 +53,6 @@ public class CommerceCartContentDisplayContext {
 
 	public CommerceCartContentDisplayContext(
 		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse,
 		CommerceOrderHelper commerceOrderHelper,
 		CommerceOrderItemService commerceOrderItemService,
 		CommerceOrderValidatorRegistry commerceOrderValidatorRegistry,
@@ -65,7 +63,6 @@ public class CommerceCartContentDisplayContext {
 
 		this.commerceOrderHelper = commerceOrderHelper;
 
-		_httpServletResponse = httpServletResponse;
 		_commerceOrderItemService = commerceOrderItemService;
 		_commerceOrderValidatorRegistry = commerceOrderValidatorRegistry;
 		_commercePriceCalculationLocalService =
@@ -265,7 +262,6 @@ public class CommerceCartContentDisplayContext {
 		_commerceOrderValidatorRegistry;
 	private final CommercePriceCalculationLocalService
 		_commercePriceCalculationLocalService;
-	private final HttpServletResponse _httpServletResponse;
 	private SearchContainer<CommerceOrderItem> _searchContainer;
 
 }

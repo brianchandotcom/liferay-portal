@@ -135,6 +135,25 @@ renderResponse.setTitle(title);
 
 			dom.toElement('#<portlet:namespace />status').value = '<%= WorkflowConstants.STATUS_APPROVED %>';
 
+			if (!fragmentEditor.isHtmlValid()) {
+				AUI().use('liferay-alert', () => {
+					new Liferay.Alert(
+						{
+							delay: {
+								hide: 500,
+								show: 0
+							},
+							duration: 500,
+							icon: 'exclamation-circle',
+							message: '<liferay-ui:message key="fragment-html-is-invalid" />',
+							type: 'danger'
+						}
+					).render();
+				});
+
+				return;
+			}
+
 			submitForm(document.querySelector('#<portlet:namespace />fm'));
 		}
 	);

@@ -25,6 +25,16 @@ class FragmentEditor extends Component {
 	}
 
 	/**
+	 * Returns true when HTML content is valid, false otherwise.
+	 * @public
+	 * @review
+	 */
+
+	isHtmlValid() {
+		return this._htmlValid;
+	}
+
+	/**
 	 * Event handler executed when any content is changed
 	 * @private
 	 * @review
@@ -62,6 +72,8 @@ class FragmentEditor extends Component {
 
 	_handleHTMLChanged(event) {
 		this._html = event.content;
+		this._htmlValid = event.valid;
+
 		this._handleContentChanged();
 	}
 
@@ -246,6 +258,21 @@ FragmentEditor.STATE = {
 	_html: Config.string()
 		.internal()
 		.value(''),
+
+	/**
+	 * Property that contains the flag if updated HTML content of
+	 * the editor is valid.
+	 * @default true
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @private
+	 * @review
+	 * @type {boolean}
+	 */
+
+	_htmlValid: Config.bool()
+		.internal()
+		.value(true),
 
 	/**
 	 * Property that contains the updated JS content of

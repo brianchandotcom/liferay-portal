@@ -25,7 +25,8 @@ class SourceEditor extends Component {
 		this.emit(
 			'contentChanged',
 			{
-				content: event.content
+				content: event.content,
+				valid: event.valid
 			}
 		);
 	}

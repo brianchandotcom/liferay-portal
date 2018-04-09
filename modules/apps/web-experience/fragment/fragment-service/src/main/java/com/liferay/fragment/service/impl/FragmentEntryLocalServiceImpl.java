@@ -15,6 +15,7 @@
 package com.liferay.fragment.service.impl;
 
 import com.liferay.fragment.exception.DuplicateFragmentEntryKeyException;
+import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.exception.FragmentEntryNameException;
 import com.liferay.fragment.exception.RequiredFragmentEntryException;
 import com.liferay.fragment.model.FragmentEntry;
@@ -407,7 +408,9 @@ public class FragmentEntryLocalServiceImpl
 		return StringPool.BLANK;
 	}
 
-	private String _parseHTMLContent(String html) {
+	private String _parseHTMLContent(String html)
+		throws FragmentEntryContentException {
+
 		Document document = Jsoup.parse(html);
 
 		Document.OutputSettings outputSettings = new Document.OutputSettings();
@@ -418,7 +421,13 @@ public class FragmentEntryLocalServiceImpl
 
 		Element bodyElement = document.body();
 
-		return bodyElement.html();
+		String bodyHtml = bodyElement.html();
+
+		if (Validator.isNull(bodyHtml)) {
+			throw new FragmentEntryContentException();
+		}
+
+		return bodyHtml;
 	}
 
 	private HtmlPreviewEntry _updateHtmlPreviewEntry(

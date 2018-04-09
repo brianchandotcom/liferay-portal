@@ -34,12 +34,16 @@ class AceEditor extends Component {
 				);
 
 				this._overrideSetAnnotations(editor.getSession());
+				this._editorSession = editor.getSession();
 				this._editorDocument = editor.getSession().getDocument();
 
 				this.refs.wrapper.style.height = '';
 				this.refs.wrapper.style.width = '';
 
 				this._editorDocument.on('change', this._handleDocumentChanged);
+
+				editor.getSession().on(
+					'changeAnnotation', this._handleDocumentChanged);
 
 				if (this.initialContent) {
 					this._editorDocument.setValue(this.initialContent);
@@ -65,10 +69,17 @@ class AceEditor extends Component {
 	 */
 
 	_handleDocumentChanged() {
+		const valid = this._editorSession.getAnnotations().reduce(
+			(acc, annotation) =>
+				!acc || annotation.type === 'error' ? false : acc,
+			true
+		);
+
 		this.emit(
 			'contentChanged',
 			{
-				content: this._editorDocument.getValue()
+				content: this._editorDocument.getValue(),
+				valid: valid
 			}
 		);
 	}

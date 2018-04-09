@@ -24,13 +24,13 @@
 						{param title: $item.title /}
 					{/call}
 				{ifempty}
-					<li class="tbar-item empty-toolbar">
+					<li class="empty-toolbar tbar-item">
 						{msg desc=""}no-toolbar-items{/msg}
 					</li>
 				{/foreach}
 			{/if}
 
-			<li class="tbar-item tbar-item-expand source-editor-toolbar__syntax">
+			<li class="source-editor-toolbar__syntax tbar-item tbar-item-expand">
 				{$_syntaxLabel ?: ''}
 			</li>
 
@@ -76,7 +76,7 @@
 		data-onclick="{$handler}"
 		title="{$title}"
 	>
-		<button class="btn btn-unstyled btn-sm" type="button">
+		<button class="btn btn-sm btn-unstyled" type="button">
 			<span class="inline-item">
 				<svg class="icon-monospaced lexicon-icon">
 					<use xlink:href="{$spritemap}#{$icon}"></use>

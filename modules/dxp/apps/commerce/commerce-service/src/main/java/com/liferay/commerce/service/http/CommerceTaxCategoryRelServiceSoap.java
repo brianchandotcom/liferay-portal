@@ -65,23 +65,6 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class CommerceTaxCategoryRelServiceSoap {
-	public static com.liferay.commerce.model.CommerceTaxCategoryRelSoap updateCommerceTaxCategoryRel(
-		long commerceTaxCategoryId, java.lang.String className, long classPK,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-		try {
-			com.liferay.commerce.model.CommerceTaxCategoryRel returnValue = CommerceTaxCategoryRelServiceUtil.updateCommerceTaxCategoryRel(commerceTaxCategoryId,
-					className, classPK, serviceContext);
-
-			return com.liferay.commerce.model.CommerceTaxCategoryRelSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static void deleteCommerceTaxCategoryRel(
 		java.lang.String className, long classPK) throws RemoteException {
 		try {
@@ -100,6 +83,23 @@ public class CommerceTaxCategoryRelServiceSoap {
 		try {
 			com.liferay.commerce.model.CommerceTaxCategoryRel returnValue = CommerceTaxCategoryRelServiceUtil.fetchCommerceTaxCategoryRel(className,
 					classPK);
+
+			return com.liferay.commerce.model.CommerceTaxCategoryRelSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceTaxCategoryRelSoap updateCommerceTaxCategoryRel(
+		long commerceTaxCategoryId, java.lang.String className, long classPK,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceTaxCategoryRel returnValue = CommerceTaxCategoryRelServiceUtil.updateCommerceTaxCategoryRel(commerceTaxCategoryId,
+					className, classPK, serviceContext);
 
 			return com.liferay.commerce.model.CommerceTaxCategoryRelSoap.toSoapModel(returnValue);
 		}

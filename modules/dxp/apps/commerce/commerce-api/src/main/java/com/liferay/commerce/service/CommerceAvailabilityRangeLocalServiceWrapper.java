@@ -73,10 +73,12 @@ public class CommerceAvailabilityRangeLocalServiceWrapper
 	*
 	* @param commerceAvailabilityRange the commerce availability range
 	* @return the commerce availability range that was removed
+	* @throws PortalException
 	*/
 	@Override
 	public com.liferay.commerce.model.CommerceAvailabilityRange deleteCommerceAvailabilityRange(
-		com.liferay.commerce.model.CommerceAvailabilityRange commerceAvailabilityRange) {
+		com.liferay.commerce.model.CommerceAvailabilityRange commerceAvailabilityRange)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceAvailabilityRangeLocalService.deleteCommerceAvailabilityRange(commerceAvailabilityRange);
 	}
 

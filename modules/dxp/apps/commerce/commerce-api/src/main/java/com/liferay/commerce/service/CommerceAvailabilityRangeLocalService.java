@@ -97,11 +97,13 @@ public interface CommerceAvailabilityRangeLocalService extends BaseLocalService,
 	*
 	* @param commerceAvailabilityRange the commerce availability range
 	* @return the commerce availability range that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceAvailabilityRange deleteCommerceAvailabilityRange(
-		CommerceAvailabilityRange commerceAvailabilityRange);
+		CommerceAvailabilityRange commerceAvailabilityRange)
+		throws PortalException;
 
 	/**
 	* Deletes the commerce availability range with the primary key from the database. Also notifies the appropriate model listeners.

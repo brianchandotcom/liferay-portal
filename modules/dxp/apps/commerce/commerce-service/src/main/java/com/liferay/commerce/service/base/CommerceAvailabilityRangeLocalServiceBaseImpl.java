@@ -154,11 +154,13 @@ public abstract class CommerceAvailabilityRangeLocalServiceBaseImpl
 	 *
 	 * @param commerceAvailabilityRange the commerce availability range
 	 * @return the commerce availability range that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CommerceAvailabilityRange deleteCommerceAvailabilityRange(
-		CommerceAvailabilityRange commerceAvailabilityRange) {
+		CommerceAvailabilityRange commerceAvailabilityRange)
+		throws PortalException {
 		return commerceAvailabilityRangePersistence.remove(commerceAvailabilityRange);
 	}
 

@@ -55,48 +55,13 @@ import com.liferay.portal.kernel.util.MethodKey;
  */
 @ProviderType
 public class CommerceTaxCategoryRelServiceHttp {
-	public static com.liferay.commerce.model.CommerceTaxCategoryRel updateCommerceTaxCategoryRel(
-		HttpPrincipal httpPrincipal, long commerceTaxCategoryId,
-		java.lang.String className, long classPK,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(CommerceTaxCategoryRelServiceUtil.class,
-					"updateCommerceTaxCategoryRel",
-					_updateCommerceTaxCategoryRelParameterTypes0);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commerceTaxCategoryId, className, classPK, serviceContext);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (com.liferay.commerce.model.CommerceTaxCategoryRel)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
 	public static void deleteCommerceTaxCategoryRel(
 		HttpPrincipal httpPrincipal, java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceTaxCategoryRelServiceUtil.class,
 					"deleteCommerceTaxCategoryRel",
-					_deleteCommerceTaxCategoryRelParameterTypes1);
+					_deleteCommerceTaxCategoryRelParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					className, classPK);
@@ -125,7 +90,7 @@ public class CommerceTaxCategoryRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceTaxCategoryRelServiceUtil.class,
 					"fetchCommerceTaxCategoryRel",
-					_fetchCommerceTaxCategoryRelParameterTypes2);
+					_fetchCommerceTaxCategoryRelParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					className, classPK);
@@ -152,15 +117,50 @@ public class CommerceTaxCategoryRelServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceTaxCategoryRel updateCommerceTaxCategoryRel(
+		HttpPrincipal httpPrincipal, long commerceTaxCategoryId,
+		java.lang.String className, long classPK,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceTaxCategoryRelServiceUtil.class,
+					"updateCommerceTaxCategoryRel",
+					_updateCommerceTaxCategoryRelParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceTaxCategoryId, className, classPK, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.model.CommerceTaxCategoryRel)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(CommerceTaxCategoryRelServiceHttp.class);
-	private static final Class<?>[] _updateCommerceTaxCategoryRelParameterTypes0 =
+	private static final Class<?>[] _deleteCommerceTaxCategoryRelParameterTypes0 =
+		new Class[] { java.lang.String.class, long.class };
+	private static final Class<?>[] _fetchCommerceTaxCategoryRelParameterTypes1 = new Class[] {
+			java.lang.String.class, long.class
+		};
+	private static final Class<?>[] _updateCommerceTaxCategoryRelParameterTypes2 =
 		new Class[] {
 			long.class, java.lang.String.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
-		};
-	private static final Class<?>[] _deleteCommerceTaxCategoryRelParameterTypes1 =
-		new Class[] { java.lang.String.class, long.class };
-	private static final Class<?>[] _fetchCommerceTaxCategoryRelParameterTypes2 = new Class[] {
-			java.lang.String.class, long.class
 		};
 }

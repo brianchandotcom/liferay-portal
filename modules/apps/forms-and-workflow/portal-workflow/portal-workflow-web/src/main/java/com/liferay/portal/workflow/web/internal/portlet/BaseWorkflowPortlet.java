@@ -17,9 +17,7 @@ package com.liferay.portal.workflow.web.internal.portlet;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.portlet.tab.WorkflowPortletTab;
 
@@ -117,21 +115,11 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		if (SessionErrors.contains(
-				renderRequest, WorkflowException.class.getName())) {
-
-			include("/instance/error.jsp", renderRequest, renderResponse);
+		for (WorkflowPortletTab workflowPortletTab : getWorkflowPortletTabs()) {
+			workflowPortletTab.prepareDispatch(renderRequest, renderResponse);
 		}
-		else {
-			for (WorkflowPortletTab workflowPortletTab :
-					getWorkflowPortletTabs()) {
 
-				workflowPortletTab.prepareDispatch(
-					renderRequest, renderResponse);
-			}
-
-			super.doDispatch(renderRequest, renderResponse);
-		}
+		super.doDispatch(renderRequest, renderResponse);
 	}
 
 	protected WorkflowPortletTab getSelectedWorkflowPortletTab(

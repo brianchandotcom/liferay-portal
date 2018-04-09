@@ -39,6 +39,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 />
 
 <liferay-frontend:management-bar
+	includeCheckBox="<%= true %>"
 	searchContainerId="UADEntities"
 >
 	<liferay-frontend:management-bar-buttons>
@@ -46,6 +47,20 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 			icon="info-circle"
 			label="info"
 		/>
+
+		<liferay-frontend:management-bar-action-buttons>
+			<liferay-frontend:management-bar-button
+				href='<%= "javascript:" + renderResponse.getNamespace() + "doAnonymizeMultiple();" %>'
+				icon="magic"
+				label="anonymize"
+			/>
+
+			<liferay-frontend:management-bar-button
+				href='<%= "javascript:" + renderResponse.getNamespace() + "doDeleteMultiple();" %>'
+				icon="trash"
+				label="delete"
+			/>
+		</liferay-frontend:management-bar-action-buttons>
 	</liferay-frontend:management-bar-buttons>
 </liferay-frontend:management-bar>
 
@@ -53,6 +68,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="p_u_i_d" type="hidden" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
 	<aui:input name="uadRegistryKey" type="hidden" value="<%= viewUADEntitiesDisplay.getUADRegistryKey() %>" />
+	<aui:input name="primaryKeys" type="hidden" />
 
 	<div class="closed container-fluid container-fluid-max-xl sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= true %>" id="/entity_type_sidebar" var="entityTypeSidebarURL" />
@@ -73,7 +89,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 				<liferay-ui:search-container-row
 					className="com.liferay.user.associated.data.web.internal.display.UADEntity"
 					escapedModel="<%= true %>"
-					keyProperty="name"
+					keyProperty="primaryKey"
 					modelVar="uadEntity"
 				>
 
@@ -108,5 +124,23 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		</div>
 	</div>
 </aui:form>
+
+<aui:script>
+	function <portlet:namespace/>doAnonymizeMultiple() {
+		<portlet:namespace />doMultiple('<portlet:actionURL name="/anonymize_uad_entities" />');
+	}
+
+	function <portlet:namespace/>doDeleteMultiple() {
+		<portlet:namespace />doMultiple('<portlet:actionURL name="/delete_uad_entities" />');
+	}
+
+	function <portlet:namespace/>doMultiple(actionURL) {
+		var form = document.forms['<portlet:namespace />viewUADEntitiesFm'];
+
+		form.elements['<portlet:namespace />primaryKeys'].value = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
+
+		submitForm(form, actionURL);
+	}
+</aui:script>
 
 <%@ include file="/action/confirm_action_js.jspf" %>

@@ -24,8 +24,8 @@
 
 		<!-- Other fields -->
 
-		<column name="commerceTaxMethodId" type="long" />
 		<column name="commerceTaxCategoryId" type="long" />
+		<column name="commerceTaxMethodId" type="long" />
 		<column name="rate" type="double" />
 
 		<!-- Order -->

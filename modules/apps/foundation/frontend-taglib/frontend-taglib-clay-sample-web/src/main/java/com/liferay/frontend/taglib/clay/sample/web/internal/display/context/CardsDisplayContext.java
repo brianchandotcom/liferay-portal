@@ -87,7 +87,7 @@ public class CardsDisplayContext {
 		};
 	}
 
-	public Map<String, Object> getLabelStylesMap() {
+	public Map<String, String> getLabelStylesMap() {
 		if (_labelStylesMap != null) {
 			return _labelStylesMap;
 		}
@@ -100,6 +100,6 @@ public class CardsDisplayContext {
 	}
 
 	private DropdownItemList _actionDropdownItems;
-	private Map<String, Object> _labelStylesMap;
+	private Map<String, String> _labelStylesMap;
 
 }

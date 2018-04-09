@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.segments.asset.categories.demo.test;
+package com.liferay.segments.asset.category.demo.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
@@ -35,7 +35,7 @@ import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.segments.Segment;
-import com.liferay.segments.SegmentService;
+import com.liferay.segments.SegmentsManager;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -51,7 +51,7 @@ import org.junit.runner.RunWith;
  * @author Eduardo Garcia
  */
 @RunWith(Arquillian.class)
-public class AssetCategorySegmentServiceTest {
+public class AssetCategorySegmentsManagerTest {
 
 	@ClassRule
 	@Rule
@@ -88,7 +88,7 @@ public class AssetCategorySegmentServiceTest {
 
 	@Test
 	public void testMatches() throws Exception {
-		Collection segments = _segmentService.getSegments(_group.getGroupId());
+		Collection segments = _segmentsManager.getSegments(_group.getGroupId());
 
 		Assert.assertFalse("Segments list is empty", segments.isEmpty());
 
@@ -96,14 +96,14 @@ public class AssetCategorySegmentServiceTest {
 
 		Assert.assertTrue(
 			"User does not match the segment",
-			_segmentService.matches(
+			_segmentsManager.matches(
 				_user.getUserId(), segment, new HashMap<>()));
 	}
 
 	private static final String _ASSET_VOCABULARY_NAME = "Segments";
 
 	@Inject
-	private static SegmentService _segmentService;
+	private static SegmentsManager _segmentsManager;
 
 	@DeleteAfterTestRun
 	private Group _group;

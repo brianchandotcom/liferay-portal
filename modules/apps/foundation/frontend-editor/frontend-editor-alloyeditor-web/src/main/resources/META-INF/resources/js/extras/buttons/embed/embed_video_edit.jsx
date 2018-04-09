@@ -158,7 +158,8 @@ var EmbedVideoEdit = React.createClass({
 	_embedVideoURL: function() {
 		var nativeEditor = this.props.editor.get('nativeEditor');
 
-		nativeEditor.execCommand('embedVideoUrl', {
+		nativeEditor.execCommand('embedUrl', {
+			type: 'video',
 			url: this.state.videoURL
 		});
 

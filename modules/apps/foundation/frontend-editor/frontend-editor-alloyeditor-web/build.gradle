@@ -3,6 +3,9 @@ import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 task buildAlloyEditor(type: Copy)
 
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 File editorDestinationDir = file("tmp/META-INF/resources")
 
 buildAlloyEditor {
@@ -47,6 +50,7 @@ dependencies {
 	compileOnly project(":apps:foundation:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:foundation:petra:petra-encryptor")
 	compileOnly project(":apps:web-experience:layout:layout-item-selector-api")
+	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
 }

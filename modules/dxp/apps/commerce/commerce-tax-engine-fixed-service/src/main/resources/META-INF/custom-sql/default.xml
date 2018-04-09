@@ -23,12 +23,4 @@
 				)
 		]]>
 	</sql>
-	<sql id="com.liferay.commerce.tax.engine.fixed.service.persistence.CommerceTaxFixedRateFinder.getCommerceTaxCategoryIds">
-		<![CDATA[
-			SELECT
-				DISTINCT CommerceTaxFixedRate.commerceTaxCategoryId
-			FROM
-				CommerceTaxFixedRate
-		]]>
-	</sql>
 </custom-sql>

@@ -43,8 +43,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
 	public <T extends ClassedModel> Collection<? extends ClassedModel>
 		getInboundRelationships(Class<T> relationshipBaseClass, long primKey) {
 
-		Relationship<T> relationship = _getRelationship(
-			relationshipBaseClass, primKey);
+		Relationship<T> relationship = _getRelationship(relationshipBaseClass);
 
 		Stream<? extends ClassedModel> stream =
 			relationship.getInboundRelatedModels(primKey);
@@ -56,8 +55,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
 	public <T extends ClassedModel> Collection<? extends ClassedModel>
 		getOutboundRelationships(Class<T> relationshipBaseClass, long primKey) {
 
-		Relationship<T> relationship = _getRelationship(
-			relationshipBaseClass, primKey);
+		Relationship<T> relationship = _getRelationship(relationshipBaseClass);
 
 		Stream<? extends ClassedModel> stream =
 			relationship.getOutboundRelatedModels(primKey);
@@ -69,8 +67,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
 	public <T extends ClassedModel> Collection<? extends ClassedModel>
 		getRelationships(Class<T> relationshipBaseClass, long primKey) {
 
-		Relationship<T> relationship = _getRelationship(
-			relationshipBaseClass, primKey);
+		Relationship<T> relationship = _getRelationship(relationshipBaseClass);
 
 		Stream<? extends ClassedModel> stream = relationship.getRelatedModels(
 			primKey);
@@ -103,7 +100,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
 
 	@SuppressWarnings("unchecked")
 	private <T extends ClassedModel> Relationship<T> _getRelationship(
-		Class<T> relationshipBaseClass, long primKey) {
+		Class<T> relationshipBaseClass) {
 
 		RelationshipResource<T> relationshipResource =
 			_serviceTrackerMap.getService(relationshipBaseClass.getName());

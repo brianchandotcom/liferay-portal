@@ -200,3 +200,15 @@ Time elapsed since the field received focus.
 #### title: String
 
 This attribute can be used to describe any kind of asset. This information will be presented in the analytics reports.
+
+### Asset Information
+
+To help the client gather more information about the assets on a page, it's helpful to annotate the asset markup with some [data attributes](https://www.w3.org/TR/2011/WD-html5-20110525/elements.html#embedding-custom-non-visible-data-with-the-data-attributes).
+
+#### Supported data attributes
+
+| Attribute                  | Data  | Description                                     |
+| -------------------------- | ----- | ----------------------------------------------- |
+| data-analytics-asset-id    | id    | An unique identifier for your asset.            |
+| data-analytics-asset-title | title | A descriptitve tittle about your asset.         |
+| data-analytics-asset-type  | type  | The type (File, Blog, Form, etc) of your asset. |

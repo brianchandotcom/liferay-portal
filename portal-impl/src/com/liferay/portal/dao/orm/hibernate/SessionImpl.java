@@ -29,6 +29,8 @@ import java.io.Serializable;
 
 import java.sql.Connection;
 
+import org.hibernate.LockOptions;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
@@ -188,18 +190,16 @@ public class SessionImpl implements Session {
 		}
 	}
 
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
 	@NotPrivileged
 	@Override
 	public Object get(Class<?> clazz, Serializable id, LockMode lockMode)
 		throws ORMException {
 
+		LockOptions lockOptions = new LockOptions(
+			LockModeTranslator.translate(lockMode));
+
 		try {
-			return _session.get(
-				clazz, id, LockModeTranslator.translate(lockMode));
+			return _session.get(clazz, id, lockOptions);
 		}
 		catch (Exception e) {
 			throw ExceptionTranslator.translate(e);

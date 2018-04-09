@@ -132,20 +132,6 @@ public class InjectTestBag {
 	}
 
 	private <T> ServiceReference<T> _getServiceReference(
-			Registry registry, Class<T> clazz, String filterString)
-		throws Exception {
-
-		Collection<ServiceReference<T>> serviceReferences =
-			registry.getServiceReferences(clazz, filterString);
-
-		Stream<ServiceReference<T>> stream = serviceReferences.stream();
-
-		Optional<ServiceReference<T>> optional = stream.findFirst();
-
-		return optional.orElse(null);
-	}
-
-	private <T> ServiceReference<T> _getServiceReference(
 			Registry registry, Class<T> clazz, Field field, String filterString,
 			boolean blocking)
 		throws Exception {
@@ -227,6 +213,20 @@ public class InjectTestBag {
 		}
 
 		return serviceReference;
+	}
+
+	private <T> ServiceReference<T> _getServiceReference(
+			Registry registry, Class<T> clazz, String filterString)
+		throws Exception {
+
+		Collection<ServiceReference<T>> serviceReferences =
+			registry.getServiceReferences(clazz, filterString);
+
+		Stream<ServiceReference<T>> stream = serviceReferences.stream();
+
+		Optional<ServiceReference<T>> optional = stream.findFirst();
+
+		return optional.orElse(null);
 	}
 
 	private static final int _SLEEP_TIME = 2000;

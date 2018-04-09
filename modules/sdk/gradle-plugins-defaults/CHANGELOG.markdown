@@ -3233,6 +3233,12 @@ classpath.
 - [LPS-75049]: Add `compileOnly` dependencies to the test integration runtime
 classpath.
 
+## 5.3.69 - 2018-04-06
+
+### Changed
+- [LPS-79450]: Update the [Liferay Gradle Plugins] dependency to version
+3.10.12.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -3600,6 +3606,7 @@ classpath.
 [LPS-79286]: https://issues.liferay.com/browse/LPS-79286
 [LPS-79360]: https://issues.liferay.com/browse/LPS-79360
 [LPS-79365]: https://issues.liferay.com/browse/LPS-79365
+[LPS-79450]: https://issues.liferay.com/browse/LPS-79450
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

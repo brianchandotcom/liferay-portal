@@ -16,15 +16,20 @@ package com.liferay.site.navigation.menu.item.layout.internal.type;
 
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.menu.item.layout.internal.constants.SiteNavigationMenuItemTypeLayoutWebKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
@@ -81,6 +86,11 @@ public class LayoutSiteNavigationMenuItemType
 	}
 
 	@Override
+	public Layout getLayout(SiteNavigationMenuItem siteNavigationMenuItem) {
+		return _getLayout(siteNavigationMenuItem);
+	}
+
+	@Override
 	public String getRegularURL(
 			HttpServletRequest request,
 			SiteNavigationMenuItem siteNavigationMenuItem)
@@ -89,6 +99,35 @@ public class LayoutSiteNavigationMenuItemType
 		Layout layout = _getLayout(siteNavigationMenuItem);
 
 		return layout.getRegularURL(request);
+	}
+
+	@Override
+	public String getResetLayoutURL(
+			HttpServletRequest request,
+			SiteNavigationMenuItem siteNavigationMenuItem)
+		throws Exception {
+
+		Layout layout = _getLayout(siteNavigationMenuItem);
+
+		return layout.getResetLayoutURL(request);
+	}
+
+	@Override
+	public String getResetMaxStateURL(
+			HttpServletRequest request,
+			SiteNavigationMenuItem siteNavigationMenuItem)
+		throws Exception {
+
+		Layout layout = _getLayout(siteNavigationMenuItem);
+
+		return layout.getResetMaxStateURL(request);
+	}
+
+	@Override
+	public String getTarget(SiteNavigationMenuItem siteNavigationMenuItem) {
+		Layout layout = _getLayout(siteNavigationMenuItem);
+
+		return layout.getTarget();
 	}
 
 	@Override
@@ -131,6 +170,70 @@ public class LayoutSiteNavigationMenuItemType
 			"privateLayout", String.valueOf(layout.isPrivateLayout()));
 
 		return unicodeProperties.toString();
+	}
+
+	@Override
+	public String getUnescapedName(
+		ThemeDisplay themeDisplay,
+		SiteNavigationMenuItem siteNavigationMenuItem) {
+
+		Layout layout = _getLayout(siteNavigationMenuItem);
+
+		return layout.getName(themeDisplay.getLanguageId());
+	}
+
+	@Override
+	public String iconURL(
+		ThemeDisplay themeDisplay,
+		SiteNavigationMenuItem siteNavigationMenuItem) {
+
+		Layout layout = _getLayout(siteNavigationMenuItem);
+
+		if ((layout == null) || !layout.isIconImage()) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(themeDisplay.getPathImage());
+		sb.append("/layout_icon?img_id=");
+		sb.append(layout.getIconImageId());
+		sb.append("&t=");
+		sb.append(WebServerServletTokenUtil.getToken(layout.getIconImageId()));
+
+		return sb.toString();
+	}
+
+	@Override
+	public boolean isBrowsable(SiteNavigationMenuItem siteNavigationMenuItem) {
+		Layout layout = _getLayout(siteNavigationMenuItem);
+
+		LayoutType layoutType = layout.getLayoutType();
+
+		return layoutType.isBrowsable();
+	}
+
+	@Override
+	public boolean isChildSelected(
+			boolean selectable, SiteNavigationMenuItem siteNavigationMenuItem,
+			Layout curLayout)
+		throws PortalException {
+
+		Layout layout = _getLayout(siteNavigationMenuItem);
+
+		return layout.isChildSelected(selectable, curLayout);
+	}
+
+	@Override
+	public boolean isSelected(
+			boolean selectable, SiteNavigationMenuItem siteNavigationMenuItem,
+			Layout curLayout)
+		throws Exception {
+
+		Layout layout = _getLayout(siteNavigationMenuItem);
+
+		return layout.isSelected(
+			selectable, curLayout, curLayout.getAncestorPlid());
 	}
 
 	@Override

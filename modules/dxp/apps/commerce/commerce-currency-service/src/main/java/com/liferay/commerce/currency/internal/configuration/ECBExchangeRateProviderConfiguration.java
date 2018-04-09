@@ -32,7 +32,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface ECBExchangeRateProviderConfiguration {
 
 	@Meta.AD(
-		deflt = "http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml",
+		deflt = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml",
 		name = "european-central-bank-url", required = false
 	)
 	public String europeanCentralBankURL();

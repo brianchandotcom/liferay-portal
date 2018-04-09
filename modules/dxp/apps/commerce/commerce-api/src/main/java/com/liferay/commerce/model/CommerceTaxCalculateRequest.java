@@ -89,7 +89,7 @@ public class CommerceTaxCalculateRequest {
 		_userId = userId;
 	}
 
-	private Map<String, Serializable> _attributes = new LinkedHashMap();
+	private Map<String, Serializable> _attributes = new LinkedHashMap<>();
 	private long _commerceAddressId;
 	private long _commerceTaxMethodId;
 	private Locale _locale;

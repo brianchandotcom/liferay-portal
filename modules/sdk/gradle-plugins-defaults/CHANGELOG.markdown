@@ -3239,7 +3239,7 @@ classpath.
 - [LPS-75049]: Add `compileOnly` dependencies to the test integration runtime
 classpath.
 
-## 5.3.69 - 2018-04-06
+## 5.3.69 - 2018-04-09
 
 ### Changed
 - [LPS-79450]: Update the [Liferay Gradle Plugins] dependency to version

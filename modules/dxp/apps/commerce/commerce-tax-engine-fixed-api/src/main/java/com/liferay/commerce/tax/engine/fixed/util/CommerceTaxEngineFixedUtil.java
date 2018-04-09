@@ -14,16 +14,36 @@
 
 package com.liferay.commerce.tax.engine.fixed.util;
 
-import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate;
+import com.liferay.commerce.model.CommerceTaxCategory;
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel;
+import com.liferay.commerce.tax.engine.fixed.util.comparator.CommerceTaxCategoryNameComparator;
 import com.liferay.commerce.tax.engine.fixed.util.comparator.CommerceTaxFixedRateAddressRelCreateDateComparator;
-import com.liferay.commerce.tax.engine.fixed.util.comparator.CommerceTaxFixedRateCreateDateComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
  * @author Alessio Antonio Rendina
  */
 public class CommerceTaxEngineFixedUtil {
+
+	public static OrderByComparator<CommerceTaxCategory>
+		getCommerceTaxCategoryOrderByComparator(
+			String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<CommerceTaxCategory> orderByComparator = null;
+
+		if (orderByCol.equals("name")) {
+			orderByComparator = new CommerceTaxCategoryNameComparator(
+				orderByAsc);
+		}
+
+		return orderByComparator;
+	}
 
 	public static OrderByComparator<CommerceTaxFixedRateAddressRel>
 		getCommerceTaxFixedRateAddressRelOrderByComparator(
@@ -42,26 +62,6 @@ public class CommerceTaxEngineFixedUtil {
 			orderByComparator =
 				new CommerceTaxFixedRateAddressRelCreateDateComparator(
 					orderByAsc);
-		}
-
-		return orderByComparator;
-	}
-
-	public static OrderByComparator<CommerceTaxFixedRate>
-		getCommerceTaxFixedRateOrderByComparator(
-			String orderByCol, String orderByType) {
-
-		boolean orderByAsc = false;
-
-		if (orderByType.equals("asc")) {
-			orderByAsc = true;
-		}
-
-		OrderByComparator<CommerceTaxFixedRate> orderByComparator = null;
-
-		if (orderByCol.equals("create-date")) {
-			orderByComparator = new CommerceTaxFixedRateCreateDateComparator(
-				orderByAsc);
 		}
 
 		return orderByComparator;

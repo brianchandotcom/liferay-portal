@@ -3018,8 +3018,8 @@ marker file.
 ## 5.3.30 - 2018-03-15
 
 ### Changed
-- [LPS-78741]: Configure the `npmInstall` task to run `npm ci` instead of
-`npm install` when not on Jenkins.
+- [LPS-78741]: Configure the `npmInstall` task to run `npm ci` instead of `npm
+install` when not on Jenkins.
 - [LPS-78741]: Update the [Liferay Gradle Plugins] dependency to version 3.8.19.
 - [LPS-78741]: Update the [Liferay Gradle Plugins JSDoc] dependency to version
 2.0.2.
@@ -3117,7 +3117,7 @@ marker file.
 
 ### Added
 - [LPS-78477]: When on Jenkins, fail the `testIntegration` task if any dependent
-projects defined in the `testIntegrationCompile` configuration does not have a
+projects defined in the `testIntegrationCompile` configuration do not have a
 `.lfrbuild-portal` or a `lfrbuild-ci` marker file.
 
 ### Changed
@@ -3163,7 +3163,7 @@ projects defined in the `testIntegrationCompile` configuration does not have a
 ### Changed
 - [LPS-78741]: Configure the `npmInstall` task to run `npm ci` instead of
 `npm install` when on the master branch and not on Jenkins.
-- [LPS-78741]: Set the Node.js version to `6.6.0` and disable global Node.js
+- [LPS-78741]: Set the Node.js version to 6.6.0 and disable the global Node.js
 execution when on the `7.0.x` branch.
 - [LPS-78741]: Update the [Liferay Gradle Plugins JSDoc] dependency to version
 2.0.4.
@@ -3216,7 +3216,7 @@ version 1.2.2.
 ## 5.3.65 - 2018-04-05
 
 ### Changed
-- [LPS-75049]: Add support for `compileOnly` configuration.
+- [LPS-75049]: Add support for the `compileOnly` configuration.
 - [LPS-75049]: Add `compileOnly` dependencies to the test integration compile
 classpath.
 - [LPS-79365]: Update the [Liferay Gradle Plugins] dependency to version 3.10.9.

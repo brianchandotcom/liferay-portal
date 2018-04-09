@@ -3732,9 +3732,9 @@ version 2.2.1.
 
 ### Added
 - [LPS-77425]: Add support for multiple portal versions when selecting the
-default tool dependency versions: by setting the project property
-`portal.version` to `7.0.x`, Gradle will use the portal tools for Liferay 7.0.x
-instead of the latest ones.
+default tool dependency versions. For example, setting the project property
+`portal.version` to `7.0.x` now instructs Gradle to use the portal tools for
+Liferay 7.0.x instead of the latest ones.
 
 ## 3.9.1 - 2018-03-17
 
@@ -3915,7 +3915,7 @@ version 1.0.186.
 ## 3.10.0 - 2018-03-30
 
 ### Added
-- [LPS-78741]: Add method to get the project property `portal.version`.
+- [LPS-78741]: Add a method to get the project property `portal.version`.
 
 ### Changed
 - [LPS-78741]: Update the [Liferay Gradle Plugins Gulp] dependency to version

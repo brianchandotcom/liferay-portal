@@ -104,22 +104,9 @@ public class CoreServiceUpgrade extends UpgradeProcess {
 		return null;
 	}
 
-	protected static void initializeSchemaVersion() throws SQLException {
-		try (Connection con = DataAccess.getConnection();
-			PreparedStatement ps = con.prepareStatement(
-				"update Release_ set schemaVersion = ? where " +
-					"servletContextName = ? and buildNumber < 7100")) {
-
-			ps.setString(1, _INITIAL_SCHEMA_VERSION);
-			ps.setString(2, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
-
-			ps.execute();
-		}
-	}
-
 	@Override
 	protected void doUpgrade() throws Exception {
-		initializeSchemaVersion();
+		_initializeSchemaVersion();
 
 		for (Version pendingSchemaVersion :
 				getPendingSchemaVersions(getCurrentSchemaVersion())) {
@@ -152,6 +139,19 @@ public class CoreServiceUpgrade extends UpgradeProcess {
 					"servletContextName = ?")) {
 
 			ps.setString(1, newSchemaVersion.toString());
+			ps.setString(2, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
+
+			ps.execute();
+		}
+	}
+
+	private static void _initializeSchemaVersion() throws SQLException {
+		try (Connection con = DataAccess.getConnection();
+			PreparedStatement ps = con.prepareStatement(
+				"update Release_ set schemaVersion = ? where " +
+					"servletContextName = ? and buildNumber < 7100")) {
+
+			ps.setString(1, _INITIAL_SCHEMA_VERSION);
 			ps.setString(2, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
 
 			ps.execute();

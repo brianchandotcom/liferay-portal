@@ -19,7 +19,7 @@ import com.liferay.contacts.model.impl.EntryImpl;
 import com.liferay.contacts.service.persistence.EntryFinder;
 import com.liferay.contacts.service.persistence.EntryUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -55,8 +55,8 @@ public class EntryFinderImpl
 				companyId, keywords, keywords, keywords, keywords, keywords, 0,
 				null, false);
 
-			String[] fullNames = CustomSQLUtil.keywords(keywords);
-			String[] emailAddresses = CustomSQLUtil.keywords(keywords);
+			String[] fullNames = _customSQL.keywords(keywords);
+			String[] emailAddresses = _customSQL.keywords(keywords);
 
 			count += countByU_FN_EA(userId, fullNames, emailAddresses);
 
@@ -73,8 +73,8 @@ public class EntryFinderImpl
 	@Override
 	public int countByKeywords(long userId, String keywords) {
 		if (Validator.isNotNull(keywords)) {
-			String[] fullNames = CustomSQLUtil.keywords(keywords);
-			String[] emailAddresses = CustomSQLUtil.keywords(keywords);
+			String[] fullNames = _customSQL.keywords(keywords);
+			String[] emailAddresses = _customSQL.keywords(keywords);
 
 			return countByU_FN_EA(userId, fullNames, emailAddresses);
 		}
@@ -103,8 +103,8 @@ public class EntryFinderImpl
 				start -= count;
 				end -= count;
 
-				String[] fullNames = CustomSQLUtil.keywords(keywords);
-				String[] emailAddresses = CustomSQLUtil.keywords(keywords);
+				String[] fullNames = _customSQL.keywords(keywords);
+				String[] emailAddresses = _customSQL.keywords(keywords);
 
 				models.addAll(
 					findByU_FN_EA(
@@ -136,8 +136,8 @@ public class EntryFinderImpl
 		long userId, String keywords, int start, int end) {
 
 		if (Validator.isNotNull(keywords)) {
-			String[] fullNames = CustomSQLUtil.keywords(keywords);
-			String[] emailAddresses = CustomSQLUtil.keywords(keywords);
+			String[] fullNames = _customSQL.keywords(keywords);
+			String[] emailAddresses = _customSQL.keywords(keywords);
 
 			return findByU_FN_EA(userId, fullNames, emailAddresses, start, end);
 		}
@@ -148,22 +148,22 @@ public class EntryFinderImpl
 	protected int countByU_FN_EA(
 		long userId, String[] fullNames, String[] emailAddresses) {
 
-		fullNames = CustomSQLUtil.keywords(fullNames, true);
-		emailAddresses = CustomSQLUtil.keywords(emailAddresses, true);
+		fullNames = _customSQL.keywords(fullNames, true);
+		emailAddresses = _customSQL.keywords(emailAddresses, true);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_U_FN_EA);
+			String sql = _customSQL.get(getClass(), COUNT_BY_U_FN_EA);
 
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(fullName)", StringPool.LIKE, false, fullNames);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(emailAddress)", StringPool.LIKE, true,
 				emailAddresses);
-			sql = CustomSQLUtil.replaceAndOperator(sql, false);
+			sql = _customSQL.replaceAndOperator(sql, false);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -199,22 +199,22 @@ public class EntryFinderImpl
 		long userId, String[] fullNames, String[] emailAddresses, int start,
 		int end) {
 
-		fullNames = CustomSQLUtil.keywords(fullNames, true);
-		emailAddresses = CustomSQLUtil.keywords(emailAddresses, true);
+		fullNames = _customSQL.keywords(fullNames, true);
+		emailAddresses = _customSQL.keywords(emailAddresses, true);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_U_FN_EA);
+			String sql = _customSQL.get(getClass(), FIND_BY_U_FN_EA);
 
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(fullName)", StringPool.LIKE, false, fullNames);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(emailAddress)", StringPool.LIKE, true,
 				emailAddresses);
-			sql = CustomSQLUtil.replaceAndOperator(sql, false);
+			sql = _customSQL.replaceAndOperator(sql, false);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -235,6 +235,9 @@ public class EntryFinderImpl
 			closeSession(session);
 		}
 	}
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 	@ServiceReference(type = UserLocalService.class)
 	private UserLocalService _userLocalService;

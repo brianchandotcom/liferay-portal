@@ -18,7 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.model.impl.PollsQuestionImpl;
 import com.liferay.polls.service.persistence.PollsQuestionFinder;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Iterator;
 import java.util.List;
@@ -56,8 +57,8 @@ public class PollsQuestionFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			titles = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			titles = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
 		}
 		else {
 			andOperator = true;
@@ -72,8 +73,8 @@ public class PollsQuestionFinderImpl
 		long companyId, long[] groupIds, String title, String description,
 		boolean andOperator) {
 
-		String[] names = CustomSQLUtil.keywords(title);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
+		String[] names = _customSQL.keywords(title);
+		String[] descriptions = _customSQL.keywords(description, false);
 
 		return doCountByC_G_T_D(
 			companyId, groupIds, names, descriptions, andOperator, false);
@@ -89,8 +90,8 @@ public class PollsQuestionFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			titles = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			titles = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
 		}
 		else {
 			andOperator = true;
@@ -107,8 +108,8 @@ public class PollsQuestionFinderImpl
 		boolean andOperator, int start, int end,
 		OrderByComparator<PollsQuestion> orderByComparator) {
 
-		String[] titles = CustomSQLUtil.keywords(title);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
+		String[] titles = _customSQL.keywords(title);
+		String[] descriptions = _customSQL.keywords(description, false);
 
 		return doFindByC_G_T_D(
 			companyId, groupIds, titles, descriptions, andOperator, start, end,
@@ -119,15 +120,15 @@ public class PollsQuestionFinderImpl
 		long companyId, long[] groupIds, String[] titles, String[] descriptions,
 		boolean andOperator, boolean inlineSQLHelper) {
 
-		titles = CustomSQLUtil.keywords(titles);
-		descriptions = CustomSQLUtil.keywords(descriptions, false);
+		titles = _customSQL.keywords(titles);
+		descriptions = _customSQL.keywords(descriptions, false);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_C_G_T_D);
+			String sql = _customSQL.get(getClass(), COUNT_BY_C_G_T_D);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -137,13 +138,13 @@ public class PollsQuestionFinderImpl
 
 			sql = StringUtil.replace(
 				sql, "[$GROUP_ID$]", getGroupIds(groupIds));
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(PollsQuestion.title)", StringPool.LIKE, false,
 				titles);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "PollsQuestion.description", StringPool.LIKE, true,
 				descriptions);
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -186,15 +187,15 @@ public class PollsQuestionFinderImpl
 		OrderByComparator<PollsQuestion> orderByComparator,
 		boolean inlineSQLHelper) {
 
-		titles = CustomSQLUtil.keywords(titles);
-		descriptions = CustomSQLUtil.keywords(descriptions, false);
+		titles = _customSQL.keywords(titles);
+		descriptions = _customSQL.keywords(descriptions, false);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_C_G_T_D);
+			String sql = _customSQL.get(getClass(), FIND_BY_C_G_T_D);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -204,14 +205,14 @@ public class PollsQuestionFinderImpl
 
 			sql = StringUtil.replace(
 				sql, "[$GROUP_ID$]", getGroupIds(groupIds));
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(PollsQuestion.title)", StringPool.LIKE, false,
 				titles);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "PollsQuestion.description", StringPool.LIKE, true,
 				descriptions);
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
-			sql = CustomSQLUtil.replaceOrderBy(sql, orderByComparator);
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceOrderBy(sql, orderByComparator);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -260,5 +261,8 @@ public class PollsQuestionFinderImpl
 
 		return sb.toString();
 	}
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

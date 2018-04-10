@@ -17,12 +17,13 @@ package com.liferay.document.library.file.rank.service.persistence.impl;
 import com.liferay.document.library.file.rank.model.DLFileRank;
 import com.liferay.document.library.file.rank.model.impl.DLFileRankImpl;
 import com.liferay.document.library.file.rank.service.persistence.DLFileRankFinder;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class DLFileRankFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_STALE_RANKS);
+			String sql = _customSQL.get(getClass(), FIND_BY_STALE_RANKS);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -73,7 +74,7 @@ public class DLFileRankFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_FOLDER_ID);
+			String sql = _customSQL.get(getClass(), FIND_BY_FOLDER_ID);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -92,5 +93,8 @@ public class DLFileRankFinderImpl
 			closeSession(session);
 		}
 	}
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

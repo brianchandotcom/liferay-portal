@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.impl.DDLRecordImpl;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordFinder;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Iterator;
 import java.util.List;
@@ -58,7 +59,7 @@ public class DDLRecordFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_R_S);
+			String sql = _customSQL.get(getClass(), COUNT_BY_R_S);
 
 			if (status == WorkflowConstants.STATUS_ANY) {
 				sql = StringUtil.replace(
@@ -104,7 +105,7 @@ public class DDLRecordFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_C_S_S);
+			String sql = _customSQL.get(getClass(), COUNT_BY_C_S_S);
 
 			if (status == WorkflowConstants.STATUS_ANY) {
 				sql = StringUtil.replace(
@@ -154,14 +155,14 @@ public class DDLRecordFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_R_S);
+			String sql = _customSQL.get(getClass(), FIND_BY_R_S);
 
 			if (status == WorkflowConstants.STATUS_ANY) {
 				sql = StringUtil.replace(
 					sql, "(DDLRecordVersion.status = ?) AND", StringPool.BLANK);
 			}
 
-			sql = CustomSQLUtil.replaceOrderBy(sql, orderByComparator);
+			sql = _customSQL.replaceOrderBy(sql, orderByComparator);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -195,14 +196,14 @@ public class DDLRecordFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_C_S_S);
+			String sql = _customSQL.get(getClass(), FIND_BY_C_S_S);
 
 			if (status == WorkflowConstants.STATUS_ANY) {
 				sql = StringUtil.replace(
 					sql, "(DDLRecordVersion.status = ?) AND", StringPool.BLANK);
 			}
 
-			sql = CustomSQLUtil.replaceOrderBy(sql, orderByComparator);
+			sql = _customSQL.replaceOrderBy(sql, orderByComparator);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -234,7 +235,7 @@ public class DDLRecordFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_C_S_S);
+			String sql = _customSQL.get(getClass(), COUNT_BY_C_S_S);
 
 			sql = StringUtil.replace(
 				sql, "COUNT(DISTINCT DDLRecord.recordId) AS COUNT_VALUE",
@@ -286,14 +287,14 @@ public class DDLRecordFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_C_S_S);
+			String sql = _customSQL.get(getClass(), FIND_BY_C_S_S);
 
 			if (status == WorkflowConstants.STATUS_ANY) {
 				sql = StringUtil.replace(
 					sql, "(DDLRecordVersion.status = ?) AND", StringPool.BLANK);
 			}
 
-			sql = CustomSQLUtil.removeOrderBy(sql);
+			sql = _customSQL.removeOrderBy(sql);
 
 			sql +=
 				" AND (DDLRecord.recordId >= ?) AND (DDLRecord.recordId < ?)";
@@ -322,5 +323,8 @@ public class DDLRecordFinderImpl
 			closeSession(session);
 		}
 	}
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

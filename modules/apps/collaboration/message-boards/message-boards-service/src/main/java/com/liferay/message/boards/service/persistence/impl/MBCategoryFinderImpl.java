@@ -25,7 +25,7 @@ import com.liferay.message.boards.service.persistence.MBCategoryFinder;
 import com.liferay.message.boards.service.persistence.MBCategoryUtil;
 import com.liferay.message.boards.service.persistence.MBThreadUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -201,7 +201,7 @@ public class MBCategoryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(
+			String sql = _customSQL.get(
 				getClass(), COUNT_C_BY_G_P, queryDefinition,
 				MBCategoryImpl.TABLE_NAME);
 
@@ -256,7 +256,7 @@ public class MBCategoryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_C_BY_S_G_U_P);
+			String sql = _customSQL.get(getClass(), COUNT_C_BY_S_G_U_P);
 
 			if (ArrayUtil.isEmpty(parentCategoryIds)) {
 				sql = StringUtil.replace(
@@ -340,7 +340,7 @@ public class MBCategoryFinderImpl
 
 			sb.append(StringPool.OPEN_PARENTHESIS);
 
-			String sql = CustomSQLUtil.get(
+			String sql = _customSQL.get(
 				getClass(), COUNT_T_BY_G_C, queryDefinition,
 				MBThreadImpl.TABLE_NAME);
 
@@ -353,7 +353,7 @@ public class MBCategoryFinderImpl
 			sb.append(sql);
 			sb.append(") UNION ALL (");
 
-			sql = CustomSQLUtil.get(
+			sql = _customSQL.get(
 				getClass(), COUNT_C_BY_G_P, queryDefinition,
 				MBCategoryImpl.TABLE_NAME);
 
@@ -451,7 +451,7 @@ public class MBCategoryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(
+			String sql = _customSQL.get(
 				getClass(), FIND_C_BY_G_P, queryDefinition,
 				MBCategoryImpl.TABLE_NAME);
 
@@ -513,7 +513,7 @@ public class MBCategoryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_C_BY_S_G_U_P);
+			String sql = _customSQL.get(getClass(), FIND_C_BY_S_G_U_P);
 
 			if (ArrayUtil.isEmpty(parentCategoryIds)) {
 				sql = StringUtil.replace(
@@ -608,7 +608,7 @@ public class MBCategoryFinderImpl
 
 			sb.append("SELECT * FROM (");
 
-			String sql = CustomSQLUtil.get(
+			String sql = _customSQL.get(
 				getClass(), FIND_T_BY_G_C, queryDefinition,
 				MBThreadImpl.TABLE_NAME);
 
@@ -621,7 +621,7 @@ public class MBCategoryFinderImpl
 			sb.append(sql);
 			sb.append(" UNION ALL ");
 
-			sql = CustomSQLUtil.get(
+			sql = _customSQL.get(
 				getClass(), FIND_C_BY_G_P, queryDefinition,
 				MBCategoryImpl.TABLE_NAME);
 
@@ -637,7 +637,7 @@ public class MBCategoryFinderImpl
 
 			sql = sb.toString();
 
-			sql = CustomSQLUtil.replaceOrderBy(
+			sql = _customSQL.replaceOrderBy(
 				sql, queryDefinition.getOrderByComparator());
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -713,12 +713,15 @@ public class MBCategoryFinderImpl
 		}
 
 		if (queryDefinition.isExcludeStatus()) {
-			return CustomSQLUtil.appendCriteria(
+			return _customSQL.appendCriteria(
 				sql, "AND (MBCategory.status != ?)");
 		}
 
-		return CustomSQLUtil.appendCriteria(sql, "AND (MBCategory.status = ?)");
+		return _customSQL.appendCriteria(sql, "AND (MBCategory.status = ?)");
 	}
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 	@ServiceReference(type = GroupLocalService.class)
 	private GroupLocalService _groupLocalService;

@@ -19,7 +19,7 @@ import com.liferay.calendar.model.impl.CalendarBookingImpl;
 import com.liferay.calendar.model.impl.CalendarBookingModelImpl;
 import com.liferay.calendar.service.persistence.CalendarBookingFinder;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Iterator;
 import java.util.List;
@@ -65,9 +66,9 @@ public class CalendarBookingFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			titles = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
-			locations = CustomSQLUtil.keywords(keywords);
+			titles = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
+			locations = _customSQL.keywords(keywords);
 		}
 		else {
 			andOperator = true;
@@ -86,9 +87,9 @@ public class CalendarBookingFinderImpl
 		String description, String location, long startTime, long endTime,
 		int[] statuses, boolean andOperator) {
 
-		String[] titles = CustomSQLUtil.keywords(title);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
-		String[] locations = CustomSQLUtil.keywords(location);
+		String[] titles = _customSQL.keywords(title);
+		String[] descriptions = _customSQL.keywords(description, false);
+		String[] locations = _customSQL.keywords(location);
 
 		return countByC_G_C_C_P_T_D_L_S_E_S(
 			companyId, groupIds, calendarIds, calendarResourceIds,
@@ -121,9 +122,9 @@ public class CalendarBookingFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			titles = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
-			locations = CustomSQLUtil.keywords(keywords);
+			titles = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
+			locations = _customSQL.keywords(keywords);
 		}
 		else {
 			andOperator = true;
@@ -142,9 +143,9 @@ public class CalendarBookingFinderImpl
 		String description, String location, long startTime, long endTime,
 		int[] statuses, boolean andOperator) {
 
-		String[] titles = CustomSQLUtil.keywords(title);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
-		String[] locations = CustomSQLUtil.keywords(location);
+		String[] titles = _customSQL.keywords(title);
+		String[] descriptions = _customSQL.keywords(description, false);
+		String[] locations = _customSQL.keywords(location);
 
 		return filterCountByC_G_C_C_P_T_D_L_S_E_S(
 			companyId, groupIds, calendarIds, calendarResourceIds,
@@ -179,9 +180,9 @@ public class CalendarBookingFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			titles = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
-			locations = CustomSQLUtil.keywords(keywords);
+			titles = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
+			locations = _customSQL.keywords(keywords);
 		}
 		else {
 			andOperator = true;
@@ -202,9 +203,9 @@ public class CalendarBookingFinderImpl
 		boolean recurring, int[] statuses, boolean andOperator, int start,
 		int end, OrderByComparator<CalendarBooking> orderByComparator) {
 
-		String[] titles = CustomSQLUtil.keywords(title);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
-		String[] locations = CustomSQLUtil.keywords(location);
+		String[] titles = _customSQL.keywords(title);
+		String[] descriptions = _customSQL.keywords(description, false);
+		String[] locations = _customSQL.keywords(location);
 
 		return filterFindByC_G_C_C_P_T_D_L_S_E_S(
 			companyId, groupIds, calendarIds, calendarResourceIds,
@@ -236,8 +237,7 @@ public class CalendarBookingFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(
-				getClass(), FIND_BY_FUTURE_REMINDERS);
+			String sql = _customSQL.get(getClass(), FIND_BY_FUTURE_REMINDERS);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -271,9 +271,9 @@ public class CalendarBookingFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			titles = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
-			locations = CustomSQLUtil.keywords(keywords);
+			titles = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
+			locations = _customSQL.keywords(keywords);
 		}
 		else {
 			andOperator = true;
@@ -294,9 +294,9 @@ public class CalendarBookingFinderImpl
 		boolean recurring, int[] statuses, boolean andOperator, int start,
 		int end, OrderByComparator<CalendarBooking> orderByComparator) {
 
-		String[] titles = CustomSQLUtil.keywords(title);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
-		String[] locations = CustomSQLUtil.keywords(location);
+		String[] titles = _customSQL.keywords(title);
+		String[] descriptions = _customSQL.keywords(description, false);
+		String[] locations = _customSQL.keywords(location);
 
 		return findByC_G_C_C_P_T_D_L_S_E_S(
 			companyId, groupIds, calendarIds, calendarResourceIds,
@@ -328,16 +328,16 @@ public class CalendarBookingFinderImpl
 		long startTime, long endTime, int[] statuses, boolean andOperator,
 		boolean inlineSQLHelper) {
 
-		titles = CustomSQLUtil.keywords(titles);
-		descriptions = CustomSQLUtil.keywords(descriptions, false);
-		locations = CustomSQLUtil.keywords(locations);
+		titles = _customSQL.keywords(titles);
+		descriptions = _customSQL.keywords(descriptions, false);
+		locations = _customSQL.keywords(locations);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(
+			String sql = _customSQL.get(
 				getClass(), COUNT_BY_C_G_C_C_P_T_D_L_S_E_S);
 
 			if (inlineSQLHelper) {
@@ -360,13 +360,13 @@ public class CalendarBookingFinderImpl
 					sql, "(parentCalendarBookingId = ?) AND", StringPool.BLANK);
 			}
 
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(title)", StringPool.LIKE, false, titles);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "description", StringPool.LIKE, false, descriptions);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(location)", StringPool.LIKE, true, locations);
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -436,16 +436,16 @@ public class CalendarBookingFinderImpl
 		OrderByComparator<CalendarBooking> orderByComparator,
 		boolean inlineSQLHelper) {
 
-		titles = CustomSQLUtil.keywords(titles);
-		descriptions = CustomSQLUtil.keywords(descriptions, false);
-		locations = CustomSQLUtil.keywords(locations);
+		titles = _customSQL.keywords(titles);
+		descriptions = _customSQL.keywords(descriptions, false);
+		locations = _customSQL.keywords(locations);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(
+			String sql = _customSQL.get(
 				getClass(), FIND_BY_C_G_C_C_P_T_D_L_S_E_S);
 
 			if (inlineSQLHelper) {
@@ -470,13 +470,13 @@ public class CalendarBookingFinderImpl
 					sql, "(parentCalendarBookingId = ?) AND", StringPool.BLANK);
 			}
 
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(title)", StringPool.LIKE, false, titles);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "description", StringPool.LIKE, false, descriptions);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(location)", StringPool.LIKE, true, locations);
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
 
 			StringBundler sb = new StringBundler();
 
@@ -641,5 +641,8 @@ public class CalendarBookingFinderImpl
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CalendarBookingModelImpl.TABLE_COLUMNS_MAP;
 	}
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

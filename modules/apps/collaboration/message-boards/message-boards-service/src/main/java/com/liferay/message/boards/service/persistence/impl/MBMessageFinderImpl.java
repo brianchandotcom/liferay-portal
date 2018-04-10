@@ -18,7 +18,7 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.impl.MBMessageImpl;
 import com.liferay.message.boards.service.persistence.MBMessageFinder;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.sql.Timestamp;
 
@@ -81,7 +82,7 @@ public class MBMessageFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_C_T);
+			String sql = _customSQL.get(getClass(), COUNT_BY_C_T);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -208,7 +209,7 @@ public class MBMessageFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_NO_ASSETS);
+			String sql = _customSQL.get(getClass(), FIND_BY_NO_ASSETS);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -237,7 +238,7 @@ public class MBMessageFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(
+			String sql = _customSQL.get(
 				getClass(), FIND_BY_THREAD_ID, queryDefinition,
 				MBMessageImpl.TABLE_NAME);
 
@@ -294,7 +295,7 @@ public class MBMessageFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_U_C_S);
+			String sql = _customSQL.get(getClass(), COUNT_BY_G_U_C_S);
 
 			if (userId <= 0) {
 				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
@@ -314,7 +315,7 @@ public class MBMessageFinderImpl
 			}
 
 			if (status != WorkflowConstants.STATUS_ANY) {
-				sql = CustomSQLUtil.appendCriteria(
+				sql = _customSQL.appendCriteria(
 					sql, "AND (currentMessage.status = ?)");
 			}
 
@@ -369,7 +370,7 @@ public class MBMessageFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_U_C_A_S);
+			String sql = _customSQL.get(getClass(), COUNT_BY_G_U_C_A_S);
 
 			if (ArrayUtil.isEmpty(categoryIds)) {
 				sql = StringUtil.replace(
@@ -385,7 +386,7 @@ public class MBMessageFinderImpl
 			}
 
 			if (status != WorkflowConstants.STATUS_ANY) {
-				sql = CustomSQLUtil.appendCriteria(
+				sql = _customSQL.appendCriteria(
 					sql, "AND (currentMessage.status = ?)");
 			}
 
@@ -447,7 +448,7 @@ public class MBMessageFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_U_MD_C_A_S);
+			String sql = _customSQL.get(getClass(), COUNT_BY_G_U_MD_C_A_S);
 
 			if (userId <= 0) {
 				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
@@ -467,12 +468,12 @@ public class MBMessageFinderImpl
 			}
 
 			if (status != WorkflowConstants.STATUS_ANY) {
-				sql = CustomSQLUtil.appendCriteria(
+				sql = _customSQL.appendCriteria(
 					sql, "AND (currentMessage.status = ?)");
 			}
 
 			if (!anonymous) {
-				sql = CustomSQLUtil.appendCriteria(
+				sql = _customSQL.appendCriteria(
 					sql, "AND (currentMessage.anonymous = [$FALSE$])");
 			}
 
@@ -529,7 +530,7 @@ public class MBMessageFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_U_C_S);
+			String sql = _customSQL.get(getClass(), FIND_BY_G_U_C_S);
 
 			if (userId <= 0) {
 				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
@@ -549,7 +550,7 @@ public class MBMessageFinderImpl
 			}
 
 			if (status != WorkflowConstants.STATUS_ANY) {
-				sql = CustomSQLUtil.appendCriteria(
+				sql = _customSQL.appendCriteria(
 					sql, "AND (currentMessage.status = ?)");
 			}
 
@@ -594,7 +595,7 @@ public class MBMessageFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_U_C_A_S);
+			String sql = _customSQL.get(getClass(), FIND_BY_G_U_C_A_S);
 
 			if (ArrayUtil.isEmpty(categoryIds)) {
 				sql = StringUtil.replace(
@@ -610,7 +611,7 @@ public class MBMessageFinderImpl
 			}
 
 			if (status != WorkflowConstants.STATUS_ANY) {
-				sql = CustomSQLUtil.appendCriteria(
+				sql = _customSQL.appendCriteria(
 					sql, "AND (currentMessage.status = ?)");
 			}
 
@@ -663,7 +664,7 @@ public class MBMessageFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_U_MD_C_A_S);
+			String sql = _customSQL.get(getClass(), FIND_BY_G_U_MD_C_A_S);
 
 			if (userId <= 0) {
 				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
@@ -683,12 +684,12 @@ public class MBMessageFinderImpl
 			}
 
 			if (status != WorkflowConstants.STATUS_ANY) {
-				sql = CustomSQLUtil.appendCriteria(
+				sql = _customSQL.appendCriteria(
 					sql, "AND (currentMessage.status = ?)");
 			}
 
 			if (!anonymous) {
-				sql = CustomSQLUtil.appendCriteria(
+				sql = _customSQL.appendCriteria(
 					sql, "AND (currentMessage.anonymous = [$FALSE$])");
 			}
 
@@ -728,5 +729,8 @@ public class MBMessageFinderImpl
 
 	private static final String _USER_ID_SQL =
 		"AND (currentMessage.userId = ?)";
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

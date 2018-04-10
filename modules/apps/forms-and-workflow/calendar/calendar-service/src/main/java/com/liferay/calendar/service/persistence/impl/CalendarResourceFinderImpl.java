@@ -19,7 +19,7 @@ import com.liferay.calendar.model.impl.CalendarResourceImpl;
 import com.liferay.calendar.model.impl.CalendarResourceModelImpl;
 import com.liferay.calendar.service.persistence.CalendarResourceFinder;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Iterator;
 import java.util.List;
@@ -61,9 +62,9 @@ public class CalendarResourceFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			codes = CustomSQLUtil.keywords(keywords);
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			codes = _customSQL.keywords(keywords);
+			names = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
 		}
 		else {
 			andOperator = true;
@@ -79,9 +80,9 @@ public class CalendarResourceFinderImpl
 		long companyId, long[] groupIds, long[] classNameIds, String code,
 		String name, String description, boolean active, boolean andOperator) {
 
-		String[] codes = CustomSQLUtil.keywords(code);
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
+		String[] codes = _customSQL.keywords(code);
+		String[] names = _customSQL.keywords(name);
+		String[] descriptions = _customSQL.keywords(description, false);
 
 		return countByC_G_C_C_N_D_A(
 			companyId, groupIds, classNameIds, codes, names, descriptions,
@@ -110,9 +111,9 @@ public class CalendarResourceFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			codes = CustomSQLUtil.keywords(keywords);
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			codes = _customSQL.keywords(keywords);
+			names = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
 		}
 		else {
 			andOperator = true;
@@ -128,9 +129,9 @@ public class CalendarResourceFinderImpl
 		long companyId, long[] groupIds, long[] classNameIds, String code,
 		String name, String description, boolean active, boolean andOperator) {
 
-		String[] codes = CustomSQLUtil.keywords(code);
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
+		String[] codes = _customSQL.keywords(code);
+		String[] names = _customSQL.keywords(name);
+		String[] descriptions = _customSQL.keywords(description, false);
 
 		return filterCountByC_G_C_C_N_D_A(
 			companyId, groupIds, classNameIds, codes, names, descriptions,
@@ -160,9 +161,9 @@ public class CalendarResourceFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			codes = CustomSQLUtil.keywords(keywords);
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			codes = _customSQL.keywords(keywords);
+			names = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
 		}
 		else {
 			andOperator = true;
@@ -180,9 +181,9 @@ public class CalendarResourceFinderImpl
 		int start, int end,
 		OrderByComparator<CalendarResource> orderByComparator) {
 
-		String[] codes = CustomSQLUtil.keywords(code);
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
+		String[] codes = _customSQL.keywords(code);
+		String[] names = _customSQL.keywords(name);
+		String[] descriptions = _customSQL.keywords(description, false);
 
 		return filterFindByC_G_C_C_N_D_A(
 			companyId, groupIds, classNameIds, codes, names, descriptions,
@@ -213,9 +214,9 @@ public class CalendarResourceFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			codes = CustomSQLUtil.keywords(keywords);
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			codes = _customSQL.keywords(keywords);
+			names = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
 		}
 		else {
 			andOperator = true;
@@ -233,9 +234,9 @@ public class CalendarResourceFinderImpl
 		int start, int end,
 		OrderByComparator<CalendarResource> orderByComparator) {
 
-		String[] codes = CustomSQLUtil.keywords(code);
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
+		String[] codes = _customSQL.keywords(code);
+		String[] names = _customSQL.keywords(name);
+		String[] descriptions = _customSQL.keywords(description, false);
 
 		return findByC_G_C_C_N_D_A(
 			companyId, groupIds, classNameIds, codes, names, descriptions,
@@ -259,16 +260,16 @@ public class CalendarResourceFinderImpl
 		String[] names, String[] descriptions, boolean active,
 		boolean andOperator, boolean inlineSQLHelper) {
 
-		codes = CustomSQLUtil.keywords(codes);
-		names = CustomSQLUtil.keywords(names);
-		descriptions = CustomSQLUtil.keywords(descriptions, false);
+		codes = _customSQL.keywords(codes);
+		names = _customSQL.keywords(names);
+		descriptions = _customSQL.keywords(descriptions, false);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_C_G_C_C_N_D_A);
+			String sql = _customSQL.get(getClass(), COUNT_BY_C_G_C_C_N_D_A);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -280,13 +281,13 @@ public class CalendarResourceFinderImpl
 				sql, "[$GROUP_ID$]", getGroupIds(groupIds));
 			sql = StringUtil.replace(
 				sql, "[$CLASS_NAME_ID$]", getClassNameIds(classNameIds));
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(code_)", StringPool.LIKE, false, codes);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(name)", StringPool.LIKE, false, names);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "description", StringPool.LIKE, true, descriptions);
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -333,16 +334,16 @@ public class CalendarResourceFinderImpl
 		OrderByComparator<CalendarResource> orderByComparator,
 		boolean inlineSQLHelper) {
 
-		codes = CustomSQLUtil.keywords(codes);
-		names = CustomSQLUtil.keywords(names);
-		descriptions = CustomSQLUtil.keywords(descriptions, false);
+		codes = _customSQL.keywords(codes);
+		names = _customSQL.keywords(names);
+		descriptions = _customSQL.keywords(descriptions, false);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_C_G_C_C_N_D_A);
+			String sql = _customSQL.get(getClass(), FIND_BY_C_G_C_C_N_D_A);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -354,13 +355,13 @@ public class CalendarResourceFinderImpl
 				sql, "[$GROUP_ID$]", getGroupIds(groupIds));
 			sql = StringUtil.replace(
 				sql, "[$CLASS_NAME_ID$]", getClassNameIds(classNameIds));
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(code_)", StringPool.LIKE, false, codes);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(name)", StringPool.LIKE, false, names);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "description", StringPool.LIKE, true, descriptions);
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
 
 			StringBundler sb = new StringBundler();
 
@@ -440,5 +441,8 @@ public class CalendarResourceFinderImpl
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CalendarResourceModelImpl.TABLE_COLUMNS_MAP;
 	}
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

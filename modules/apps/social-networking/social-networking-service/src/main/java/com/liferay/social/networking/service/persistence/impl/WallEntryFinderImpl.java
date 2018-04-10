@@ -14,13 +14,14 @@
 
 package com.liferay.social.networking.service.persistence.impl;
 
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.social.networking.model.WallEntry;
 import com.liferay.social.networking.model.impl.WallEntryImpl;
 import com.liferay.social.networking.service.persistence.WallEntryFinder;
@@ -49,7 +50,7 @@ public class WallEntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G1_G2_U1_U2);
+			String sql = _customSQL.get(getClass(), COUNT_BY_G1_G2_U1_U2);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -92,7 +93,7 @@ public class WallEntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G1_G2_U1_U2);
+			String sql = _customSQL.get(getClass(), FIND_BY_G1_G2_U1_U2);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -114,5 +115,8 @@ public class WallEntryFinderImpl
 			closeSession(session);
 		}
 	}
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

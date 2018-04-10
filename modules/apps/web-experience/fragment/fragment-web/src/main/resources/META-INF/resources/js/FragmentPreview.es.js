@@ -201,6 +201,16 @@ FragmentPreview.STATE = {
 	html: Config.string().required(),
 
 	/**
+	 * Render fragment entry URL
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @type {!string}
+	 */
+
+	iframeFragmentEntryURL: Config.string().required(),
+
+	/**
 	 * JS content of the preview
 	 * @instance
 	 * @memberOf FragmentPreview

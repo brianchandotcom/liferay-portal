@@ -100,6 +100,10 @@ renderResponse.setTitle(title);
 	<portlet:param name="fragmentEntryId" value="<%= String.valueOf(fragmentDisplayContext.getFragmentEntryId()) %>" />
 </liferay-portlet:renderURL>
 
+<liferay-portlet:renderURL var="iframeFragmentEntryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcRenderCommandName" value="/fragment/iframe_fragment_entry" />
+</liferay-portlet:renderURL>
+
 <aui:script require="fragment-web/js/FragmentEditor.es as FragmentEditor, metal-dom/src/all/dom as dom">
 	var cssInput = document.getElementById('<portlet:namespace />cssContent');
 	var htmlInput = document.getElementById('<portlet:namespace />htmlContent');
@@ -115,6 +119,7 @@ renderResponse.setTitle(title);
 					jsInput.value = event.js;
 				}
 			},
+			iframeFragmentEntryURL: '<%= iframeFragmentEntryURL %>',
 			initialCSS: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getCssContent()) %>',
 			initialHTML: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getHtmlContent()) %>',
 			initialJS: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getJsContent()) %>',

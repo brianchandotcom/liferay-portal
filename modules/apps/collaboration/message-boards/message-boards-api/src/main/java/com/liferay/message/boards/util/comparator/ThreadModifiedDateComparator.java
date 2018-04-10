@@ -15,71 +15,20 @@
 package com.liferay.message.boards.util.comparator;
 
 import com.liferay.message.boards.model.MBThread;
-import com.liferay.portal.kernel.util.DateUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.Date;
 
 /**
  * @author David Zhang
  */
-public class ThreadModifiedDateComparator<T> extends OrderByComparator<T> {
-
-	public static final String ORDER_BY_ASC =
-		"modelCategory ASC, priority DESC, modifiedDate ASC, name ASC, " +
-			"modelId ASC";
-
-	public static final String ORDER_BY_DESC =
-		"modelCategory ASC, priority DESC, modifiedDate DESC, name ASC, " +
-			"modelId ASC";
-
-	public static final String[] ORDER_BY_FIELDS =
-		{"modelCategory", "priority", "modifiedDate", "name", "modelId"};
-
-	public ThreadModifiedDateComparator() {
-		this(false);
-	}
+public class ThreadModifiedDateComparator<T>
+	extends MBEntryModifiedDateComparator<T> {
 
 	public ThreadModifiedDateComparator(boolean ascending) {
-		_ascending = ascending;
+		super(ascending);
 	}
 
-	@Override
-	public int compare(T t1, T t2) {
-		Date modifiedDate1 = getModifiedDate(t1);
-		Date modifiedDate2 = getModifiedDate(t2);
-
-		int value = DateUtil.compareTo(modifiedDate1, modifiedDate2);
-
-		if (_ascending) {
-			return value;
-		}
-		else {
-			return -value;
-		}
-	}
-
-	@Override
-	public String getOrderBy() {
-		if (_ascending) {
-			return ORDER_BY_ASC;
-		}
-		else {
-			return ORDER_BY_DESC;
-		}
-	}
-
-	@Override
-	public String[] getOrderByFields() {
-		return ORDER_BY_FIELDS;
-	}
-
-	@Override
-	public boolean isAscending() {
-		return _ascending;
-	}
-
-	protected Date getModifiedDate(Object obj) {
+	protected Date getMBEntryModifiedDate(Object obj) {
 		if (obj instanceof MBThread) {
 			MBThread mbThread = (MBThread)obj;
 
@@ -89,6 +38,12 @@ public class ThreadModifiedDateComparator<T> extends OrderByComparator<T> {
 		return null;
 	}
 
-	private final boolean _ascending;
+	/**
+	 * @deprecated As of 4.0.0, replaced by {@link #getMBEntryModifiedDate(Object)}
+	 */
+	@Deprecated
+	protected Date getModifiedDate(Object obj) {
+		return getMBEntryModifiedDate(obj);
+	}
 
 }

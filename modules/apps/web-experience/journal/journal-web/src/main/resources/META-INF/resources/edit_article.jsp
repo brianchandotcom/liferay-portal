@@ -221,62 +221,66 @@ if (classNameId > JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
 	<aui:input name="ddmTemplateId" type="hidden" />
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
-	<liferay-ui:error exception="<%= ArticleContentSizeException.class %>" message="you-have-exceeded-the-maximum-web-content-size-allowed" />
-	<liferay-ui:error exception="<%= ArticleFriendlyURLException.class %>" message="you-must-define-a-friendly-url-for-default-language" />
-	<liferay-ui:error exception="<%= DuplicateFileEntryException.class %>" message="a-file-with-that-name-already-exists" />
+	<liferay-frontend:edit-form-body>
+		<liferay-ui:error exception="<%= ArticleContentSizeException.class %>" message="you-have-exceeded-the-maximum-web-content-size-allowed" />
+		<liferay-ui:error exception="<%= ArticleFriendlyURLException.class %>" message="you-must-define-a-friendly-url-for-default-language" />
+		<liferay-ui:error exception="<%= DuplicateFileEntryException.class %>" message="a-file-with-that-name-already-exists" />
 
-	<liferay-ui:error exception="<%= FileSizeException.class %>">
+		<liferay-ui:error exception="<%= FileSizeException.class %>">
 
-		<%
-		long fileMaxSize = DLValidatorUtil.getMaxAllowableSize();
-		%>
+			<%
+			long fileMaxSize = DLValidatorUtil.getMaxAllowableSize();
+			%>
 
-		<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(fileMaxSize, locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
-	</liferay-ui:error>
+			<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(fileMaxSize, locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
+		</liferay-ui:error>
 
-	<liferay-ui:error exception="<%= LiferayFileItemException.class %>">
-		<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(LiferayFileItem.THRESHOLD_SIZE, locale) %>" key="please-enter-valid-content-with-valid-content-size-no-larger-than-x" translateArguments="<%= false %>" />
-	</liferay-ui:error>
+		<liferay-ui:error exception="<%= LiferayFileItemException.class %>">
+			<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(LiferayFileItem.THRESHOLD_SIZE, locale) %>" key="please-enter-valid-content-with-valid-content-size-no-larger-than-x" translateArguments="<%= false %>" />
+		</liferay-ui:error>
 
-	<c:if test="<%= (article != null) && !article.isNew() && (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) %>">
-		<liferay-frontend:info-bar>
-			<aui:workflow-status id="<%= String.valueOf(article.getArticleId()) %>" markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" version="<%= String.valueOf(article.getVersion()) %>" />
-		</liferay-frontend:info-bar>
-	</c:if>
-
-	<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
-		<c:if test="<%= approved %>">
-			<div class="alert alert-info">
-				<liferay-ui:message key="a-new-version-is-created-automatically-if-this-content-is-modified" />
-			</div>
+		<c:if test="<%= (article != null) && !article.isNew() && (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) %>">
+			<liferay-frontend:info-bar>
+				<aui:workflow-status id="<%= String.valueOf(article.getArticleId()) %>" markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" version="<%= String.valueOf(article.getVersion()) %>" />
+			</liferay-frontend:info-bar>
 		</c:if>
 
-		<c:if test="<%= pending %>">
-			<div class="alert alert-info">
-				<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
-			</div>
-		</c:if>
-	</c:if>
+		<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
+			<c:if test="<%= approved %>">
+				<div class="alert alert-info">
+					<liferay-ui:message key="a-new-version-is-created-automatically-if-this-content-is-modified" />
+				</div>
+			</c:if>
 
-	<liferay-frontend:form-navigator
-		formModelBean="<%= article %>"
-		id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_JOURNAL %>"
-		showButtons="<%= false %>"
-	/>
-
-	<liferay-frontend:button-row
-		cssClass="journal-article-button-row"
-	>
-		<c:if test="<%= hasSavePermission %>">
-			<aui:button data-actionname="<%= Constants.PUBLISH %>" disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
-
-			<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
-				<aui:button data-actionname='<%= ((article == null) || Validator.isNull(article.getArticleId())) ? "addArticle" : "updateArticle" %>' name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
+			<c:if test="<%= pending %>">
+				<div class="alert alert-info">
+					<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
+				</div>
 			</c:if>
 		</c:if>
 
-		<aui:button href="<%= redirect %>" type="cancel" />
-	</liferay-frontend:button-row>
+		<liferay-frontend:form-navigator
+			formModelBean="<%= article %>"
+			id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_JOURNAL %>"
+			showButtons="<%= false %>"
+		/>
+	</liferay-frontend:edit-form-body>
+
+	<liferay-frontend:edit-form-footer>
+		<liferay-frontend:button-row
+			cssClass="journal-article-button-row"
+		>
+			<c:if test="<%= hasSavePermission %>">
+				<aui:button data-actionname="<%= Constants.PUBLISH %>" disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
+
+				<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
+					<aui:button data-actionname='<%= ((article == null) || Validator.isNull(article.getArticleId())) ? "addArticle" : "updateArticle" %>' name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
+				</c:if>
+			</c:if>
+
+			<aui:button href="<%= redirect %>" type="cancel" />
+		</liferay-frontend:button-row>
+	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
 <liferay-portlet:renderURL plid="<%= JournalUtil.getPreviewPlid(article, themeDisplay) %>" var="previewArticleContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

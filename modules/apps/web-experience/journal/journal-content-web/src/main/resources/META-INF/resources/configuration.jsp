@@ -35,21 +35,25 @@ String redirect = ParamUtil.getString(request, "redirect");
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 	<aui:input name="preferences--assetEntryId--" type="hidden" value="<%= journalContentDisplayContext.getAssetEntryId() %>" />
 
-	<liferay-frontend:fieldset-group>
-		<liferay-frontend:fieldset>
-			<div id="<portlet:namespace />articlePreview">
-				<liferay-util:include page="/journal_resources.jsp" servletContext="<%= application %>">
-					<liferay-util:param name="refererPortletName" value="<%= renderResponse.getNamespace() %>" />
-				</liferay-util:include>
-			</div>
-		</liferay-frontend:fieldset>
-	</liferay-frontend:fieldset-group>
+	<liferay-frontend:edit-form-body>
+		<liferay-frontend:fieldset-group>
+			<liferay-frontend:fieldset>
+				<div id="<portlet:namespace />articlePreview">
+					<liferay-util:include page="/journal_resources.jsp" servletContext="<%= application %>">
+						<liferay-util:param name="refererPortletName" value="<%= renderResponse.getNamespace() %>" />
+					</liferay-util:include>
+				</div>
+			</liferay-frontend:fieldset>
+		</liferay-frontend:fieldset-group>
+	</liferay-frontend:edit-form-body>
 
-	<liferay-frontend:button-row>
-		<aui:button name="saveButton" type="submit" />
+	<liferay-frontend:edit-form-footer>
+		<liferay-frontend:button-row>
+			<aui:button name="saveButton" type="submit" />
 
-		<aui:button href="<%= redirect %>" type="cancel" />
-	</liferay-frontend:button-row>
+			<aui:button href="<%= redirect %>" type="cancel" />
+		</liferay-frontend:button-row>
+	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
 <aui:script sandbox="<%= true %>" use="aui-base">

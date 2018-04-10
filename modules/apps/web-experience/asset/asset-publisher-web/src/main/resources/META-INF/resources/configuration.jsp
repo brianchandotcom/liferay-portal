@@ -46,14 +46,18 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 	request.setAttribute("configuration.jsp-redirect", redirect);
 	%>
 
-	<liferay-frontend:form-navigator
-		id="<%= AssetPublisherConstants.FORM_NAVIGATOR_ID_CONFIGURATION %>"
-		showButtons="<%= false %>"
-	/>
+	<liferay-frontend:edit-form-body>
+		<liferay-frontend:form-navigator
+			id="<%= AssetPublisherConstants.FORM_NAVIGATOR_ID_CONFIGURATION %>"
+			showButtons="<%= false %>"
+		/>
+	</liferay-frontend:edit-form-body>
 
-	<liferay-frontend:button-row>
-		<aui:button onClick='<%= renderResponse.getNamespace() + "saveSelectBoxes();" %>' type="submit" />
-	</liferay-frontend:button-row>
+	<liferay-frontend:edit-form-footer>
+		<liferay-frontend:button-row>
+			<aui:button onClick='<%= renderResponse.getNamespace() + "saveSelectBoxes();" %>' type="submit" />
+		</liferay-frontend:button-row>
+	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
 <aui:script>

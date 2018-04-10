@@ -29,45 +29,49 @@
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<aui:row>
-		<aui:col width="<%= 50 %>">
-			<liferay-frontend:fieldset-group>
-				<liferay-frontend:fieldset
-					cssClass="ml-3"
-				>
-					<aui:row>
-						<aui:select name="preferences--sites--" value="<%= sitesDirectoryDisplayContext.getSites() %>">
-							<aui:option label="<%= SitesDirectoryTag.SITES_TOP_LEVEL %>" />
-							<aui:option label="<%= SitesDirectoryTag.SITES_PARENT_LEVEL %>" />
-							<aui:option label="<%= SitesDirectoryTag.SITES_SIBLINGS %>" />
-							<aui:option label="<%= SitesDirectoryTag.SITES_CHILDREN %>" />
-						</aui:select>
-					</aui:row>
+	<liferay-frontend:edit-form-body>
+		<aui:row>
+			<aui:col width="<%= 50 %>">
+				<liferay-frontend:fieldset-group>
+					<liferay-frontend:fieldset
+						cssClass="ml-3"
+					>
+						<aui:row>
+							<aui:select name="preferences--sites--" value="<%= sitesDirectoryDisplayContext.getSites() %>">
+								<aui:option label="<%= SitesDirectoryTag.SITES_TOP_LEVEL %>" />
+								<aui:option label="<%= SitesDirectoryTag.SITES_PARENT_LEVEL %>" />
+								<aui:option label="<%= SitesDirectoryTag.SITES_SIBLINGS %>" />
+								<aui:option label="<%= SitesDirectoryTag.SITES_CHILDREN %>" />
+							</aui:select>
+						</aui:row>
 
-					<aui:row>
-						<aui:select name="preferences--displayStyle--" value="<%= sitesDirectoryDisplayContext.getDisplayStyle() %>">
-							<aui:option label="icon" />
-							<aui:option label="descriptive" />
-							<aui:option label="list" />
-							<aui:option label="list-hierarchy" />
-						</aui:select>
-					</aui:row>
-				</liferay-frontend:fieldset>
-			</liferay-frontend:fieldset-group>
-		</aui:col>
+						<aui:row>
+							<aui:select name="preferences--displayStyle--" value="<%= sitesDirectoryDisplayContext.getDisplayStyle() %>">
+								<aui:option label="icon" />
+								<aui:option label="descriptive" />
+								<aui:option label="list" />
+								<aui:option label="list-hierarchy" />
+							</aui:select>
+						</aui:row>
+					</liferay-frontend:fieldset>
+				</liferay-frontend:fieldset-group>
+			</aui:col>
 
-		<aui:col width="<%= 50 %>">
-			<liferay-portlet:preview
-				portletName="<%= portletResource %>"
-				queryString="struts_action=/sites_directory/view"
-				showBorders="<%= true %>"
-			/>
-		</aui:col>
-	</aui:row>
+			<aui:col width="<%= 50 %>">
+				<liferay-portlet:preview
+					portletName="<%= portletResource %>"
+					queryString="struts_action=/sites_directory/view"
+					showBorders="<%= true %>"
+				/>
+			</aui:col>
+		</aui:row>
+	</liferay-frontend:edit-form-body>
 
-	<liferay-frontend:button-row>
-		<aui:button type="submit" />
-	</liferay-frontend:button-row>
+	<liferay-frontend:edit-form-footer>
+		<liferay-frontend:button-row>
+			<aui:button type="submit" />
+		</liferay-frontend:button-row>
+	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
 <aui:script sandbox="<%= true %>">

@@ -34,25 +34,25 @@ public class Relationship<T extends ClassedModel> {
 	public Stream<? extends ClassedModel> getInboundRelatedModelStream(
 		long primKey) {
 
-		T relationshipBaseModel = _baseSupplier.supply(primKey);
+		T relationshipBase = _relationshipBaseSupplier.supply(primKey);
 
-		return _getInboundRelatedModelStream(relationshipBaseModel);
+		return _getInboundRelatedModelStream(relationshipBase);
 	}
 
 	public Stream<? extends ClassedModel> getOutboundRelatedModelStream(
 		long primKey) {
 
-		T relationshipBaseModel = _baseSupplier.supply(primKey);
+		T relationshipBase = _relationshipBaseSupplier.supply(primKey);
 
-		return _getOutboundRelatedModelStream(relationshipBaseModel);
+		return _getOutboundRelatedModelStream(relationshipBase);
 	}
 
-		T relationshipBaseModel = _baseSupplier.supply(primKey);
 	public Stream<? extends ClassedModel> getRelatedModelStream(long primKey) {
+		T relationshipBase = _relationshipBaseSupplier.supply(primKey);
 
 		return Stream.concat(
-			_getInboundRelatedModelStream(relationshipBaseModel),
-			_getOutboundRelatedModelStream(relationshipBaseModel));
+			_getInboundRelatedModelStream(relationshipBase),
+			_getOutboundRelatedModelStream(relationshipBase));
 	}
 
 	public static class Builder<T extends ClassedModel> {
@@ -65,10 +65,10 @@ public class Relationship<T extends ClassedModel> {
 			_relationship = relationship;
 		}
 
-		public RelationshipStep baseSupplier(
+		public RelationshipStep relationshipBaseSupplier(
 			RelationshipBaseSupplier<Long, T> supplier) {
 
-			_relationship._baseSupplier = supplier;
+			_relationship._relationshipBaseSupplier = supplier;
 
 			return new RelationshipStep();
 		}
@@ -204,11 +204,11 @@ public class Relationship<T extends ClassedModel> {
 				relationshipBaseModel));
 	}
 
-	private RelationshipBaseSupplier<Long, T> _baseSupplier;
 	private final Set<MultiRelationshipFunction<T, ? extends ClassedModel>>
 		_multiInboundRelationshipFunctions;
 	private final Set<MultiRelationshipFunction<T, ? extends ClassedModel>>
 		_multiOutboundRelationshipFunctions;
+	private RelationshipBaseSupplier<Long, T> _relationshipBaseSupplier;
 	private final Set<Function<T, ? extends ClassedModel>>
 		_singleInboundRelationshipFunctions;
 	private final Set<Function<T, ? extends ClassedModel>>

@@ -73,7 +73,7 @@ body .ddm-user-view-content {
 		position: relative;
 
 		&.has-error .liferay-ddm-form-field-date .input-group-addon {
-			border-width: 0 0 2px 0;
+			border-width: 0 0 2px;
 		}
 
 		@include keyframes(spin) {
@@ -360,6 +360,10 @@ body .ddm-user-view-content {
 			}
 		}
 	}
+}
+
+.lfr-ddm-form-paginated .pagination {
+	justify-content: center;
 }
 
 .liferay-ddm-form-field-fieldset {

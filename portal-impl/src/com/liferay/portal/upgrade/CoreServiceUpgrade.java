@@ -106,7 +106,7 @@ public class CoreServiceUpgrade extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_initializeSchemaVersion();
+		_initializeSchemaVersion(connection);
 
 		for (Version pendingSchemaVersion :
 				getPendingSchemaVersions(getCurrentSchemaVersion())) {
@@ -145,9 +145,10 @@ public class CoreServiceUpgrade extends UpgradeProcess {
 		}
 	}
 
-	private static void _initializeSchemaVersion() throws SQLException {
-		try (Connection con = DataAccess.getConnection();
-			PreparedStatement ps = con.prepareStatement(
+	private static void _initializeSchemaVersion(Connection connection)
+		throws SQLException {
+
+		try (PreparedStatement ps = connection.prepareStatement(
 				"update Release_ set schemaVersion = ? where " +
 					"servletContextName = ? and buildNumber < 7100")) {
 

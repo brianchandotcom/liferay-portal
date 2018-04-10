@@ -27,7 +27,9 @@ import ${apiPackagePath}.model.${entity.name}Soap;
 </#list>
 
 <#if entity.localizedEntity??>
-	import ${apiPackagePath}.model.${entity.name}Localization;
+	<#assign localizedEntity = entity.localizedEntity />
+
+	import ${apiPackagePath}.model.${localizedEntity.name};
 </#if>
 
 import ${apiPackagePath}.service.${entity.name}LocalServiceUtil;

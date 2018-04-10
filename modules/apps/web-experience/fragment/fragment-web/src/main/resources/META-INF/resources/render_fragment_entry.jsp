@@ -19,9 +19,18 @@
 <%
 long fragmentEntryId = ParamUtil.getLong(renderRequest, "fragmentEntryId");
 
-String css = ParamUtil.getString(renderRequest, "css");
-String html = ParamUtil.getString(renderRequest, "html");
-String js = ParamUtil.getString(renderRequest, "js");
+FragmentEntry fragmentEntry = FragmentEntryLocalServiceUtil.fetchFragmentEntry(fragmentEntryId);
+
+String css = BeanParamUtil.getString(fragmentEntry, renderRequest, "css");
+String html = BeanParamUtil.getString(fragmentEntry, renderRequest, "html");
+String js = BeanParamUtil.getString(fragmentEntry, renderRequest, "js");
+
+FragmentEntryLink fragmentEntryLink = FragmentEntryLinkLocalServiceUtil.createFragmentEntryLink(0);
+
+fragmentEntryLink.setCss(css);
+fragmentEntryLink.setHtml(html);
+fragmentEntryLink.setJs(js);
+fragmentEntryLink.setFragmentEntryId(fragmentEntryId);
 %>
 
-<%= FragmentEntryRenderUtil.renderFragmentEntry(fragmentEntryId, css, html, js) %>
+<%= FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink, request, response) %>

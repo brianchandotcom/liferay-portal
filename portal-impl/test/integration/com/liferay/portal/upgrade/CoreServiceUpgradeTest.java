@@ -46,7 +46,8 @@ public class CoreServiceUpgradeTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_currentSchemaVersion = CoreServiceUpgrade.getCurrentSchemaVersion();
+		_currentSchemaVersion = CoreServiceUpgrade.getCurrentSchemaVersion(
+			DataAccess.getUpgradeOptimizedConnection());
 	}
 
 	@Before
@@ -97,7 +98,9 @@ public class CoreServiceUpgradeTest {
 		_innerCoreServiceUpgrade.updateSchemaVersion(
 			CoreServiceUpgrade.getLatestSchemaVersion());
 
-		Assert.assertTrue(CoreServiceUpgrade.isInLatestSchemaVersion());
+		Assert.assertTrue(
+			CoreServiceUpgrade.isInLatestSchemaVersion(
+				DataAccess.getUpgradeOptimizedConnection()));
 	}
 
 	@Test
@@ -105,21 +108,27 @@ public class CoreServiceUpgradeTest {
 		_innerCoreServiceUpgrade.updateSchemaVersion(
 			CoreServiceUpgrade.getRequiredSchemaVersion());
 
-		Assert.assertTrue(CoreServiceUpgrade.isInRequiredSchemaVersion());
+		Assert.assertTrue(
+			CoreServiceUpgrade.isInRequiredSchemaVersion(
+				DataAccess.getUpgradeOptimizedConnection()));
 	}
 
 	@Test
 	public void testIsNotInLatestSchemaVersion() throws Exception {
 		_innerCoreServiceUpgrade.updateSchemaVersion(_ORIGINAL_SCHEMA_VERSION);
 
-		Assert.assertFalse(CoreServiceUpgrade.isInLatestSchemaVersion());
+		Assert.assertFalse(
+			CoreServiceUpgrade.isInLatestSchemaVersion(
+				DataAccess.getUpgradeOptimizedConnection()));
 	}
 
 	@Test
 	public void testIsNotInRequiredSchemaVersion() throws Exception {
 		_innerCoreServiceUpgrade.updateSchemaVersion(_ORIGINAL_SCHEMA_VERSION);
 
-		Assert.assertFalse(CoreServiceUpgrade.isInRequiredSchemaVersion());
+		Assert.assertFalse(
+			CoreServiceUpgrade.isInRequiredSchemaVersion(
+				DataAccess.getUpgradeOptimizedConnection()));
 	}
 
 	@Test
@@ -138,7 +147,9 @@ public class CoreServiceUpgradeTest {
 			return;
 		}
 
-		Assert.assertTrue(CoreServiceUpgrade.isInLatestSchemaVersion());
+		Assert.assertTrue(
+			CoreServiceUpgrade.isInLatestSchemaVersion(
+				DataAccess.getUpgradeOptimizedConnection()));
 	}
 
 	@Test
@@ -162,7 +173,9 @@ public class CoreServiceUpgradeTest {
 			return;
 		}
 
-		Assert.assertTrue(CoreServiceUpgrade.isInLatestSchemaVersion());
+		Assert.assertTrue(
+			CoreServiceUpgrade.isInLatestSchemaVersion(
+				DataAccess.getUpgradeOptimizedConnection()));
 	}
 
 	@Test
@@ -170,7 +183,8 @@ public class CoreServiceUpgradeTest {
 		Assert.assertTrue(
 			"You must first upgrade the Core to the required Schema Version " +
 				CoreServiceUpgrade.getRequiredSchemaVersion(),
-			CoreServiceUpgrade.isInRequiredSchemaVersion());
+			CoreServiceUpgrade.isInRequiredSchemaVersion(
+				DataAccess.getUpgradeOptimizedConnection()));
 	}
 
 	public class InnerCoreServiceUpgrade extends CoreServiceUpgrade {

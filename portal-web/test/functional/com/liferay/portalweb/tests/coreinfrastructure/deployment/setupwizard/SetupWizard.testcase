@@ -5,6 +5,7 @@
 
 	<command name="HypersonicToHypersonic" priority="5">
 		<property name="database.types" value="hypersonic" />
+		<property name="portal.acceptance" value="quarantine" />
 
 		<execute macro="SetupWizard#configurePG">
 			<var name="administratorEmail" value="test@liferay.com" />
@@ -26,6 +27,7 @@
 		<property name="database.types" value="mysql" />
 		<property name="portal.release" value="true" />
 		<property name="portal.upstream" value="true" />
+		<property name="portal.acceptance" value="quarantine" />
 
 		<execute macro="SetupWizard#configurePG">
 			<var name="administratorEmail" value="test@liferay.com" />

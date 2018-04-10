@@ -14,6 +14,9 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * @author Michael Hashimoto
  */
@@ -29,9 +32,24 @@ public abstract class RepositoryJob extends BaseJob {
 
 	protected RepositoryJob(String jobName) {
 		super(jobName);
+
+		branchName = _getBranchName(jobName);
 	}
 
 	protected String branchName;
 	protected GitWorkingDirectory gitWorkingDirectory;
+
+	private String _getBranchName(String jobName) {
+		Matcher matcher = _jobNamePattern.matcher(jobName);
+
+		if (matcher.find()) {
+			return matcher.group("branchName");
+		}
+
+		return "master";
+	}
+
+	private static final Pattern _jobNamePattern = Pattern.compile(
+		"[^\\(]+\\((?<branchName>[^\\)]+)\\)");
 
 }

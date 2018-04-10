@@ -90,10 +90,6 @@ public class WorkflowDefinitionsDataProvider implements DDMDataProvider {
 			String languageId = LocaleUtil.toLanguageId(locale);
 
 			for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
-				String version = LanguageUtil.format(
-					locale, "version-x", workflowDefinition.getVersion(),
-					false);
-
 				String value =
 					workflowDefinition.getName() + StringPool.AT +
 						workflowDefinition.getVersion();

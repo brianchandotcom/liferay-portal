@@ -32,7 +32,7 @@ public class ThreadLocalFilter
 	@Override
 	public void doFilterFinally(
 		HttpServletRequest request, HttpServletResponse response,
-		Object ojbect) {
+		Object object) {
 
 		ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 

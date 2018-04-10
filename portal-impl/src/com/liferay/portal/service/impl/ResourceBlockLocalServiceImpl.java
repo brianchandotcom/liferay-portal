@@ -237,10 +237,10 @@ public class ResourceBlockLocalServiceImpl
 	public long getActionId(String name, String actionId)
 		throws PortalException {
 
-		ResourceAction resourcAction =
+		ResourceAction resourceAction =
 			resourceActionLocalService.getResourceAction(name, actionId);
 
-		return resourcAction.getBitwiseValue();
+		return resourceAction.getBitwiseValue();
 	}
 
 	@Override

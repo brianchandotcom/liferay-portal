@@ -574,11 +574,11 @@ public class PortletPreferencesLocalServiceTest {
 			portletPreferencesList.toString(), 1,
 			portletPreferencesList.size());
 
-		PortletPreferencesImpl portletPreferenesImpl =
+		PortletPreferencesImpl portletPreferencesImpl =
 			PortletPreferencesImplTestUtil.toPortletPreferencesImpl(
 				portletPreferencesList.get(0));
 
-		assertOwner(_layout.getGroup(), portletPreferenesImpl);
+		assertOwner(_layout.getGroup(), portletPreferencesImpl);
 	}
 
 	@Test
@@ -813,11 +813,11 @@ public class PortletPreferencesLocalServiceTest {
 			portletPreferencesList.toString(), 1,
 			portletPreferencesList.size());
 
-		PortletPreferencesImpl portletPreferenesImpl =
+		PortletPreferencesImpl portletPreferencesImpl =
 			PortletPreferencesImplTestUtil.toPortletPreferencesImpl(
 				portletPreferencesList.get(0));
 
-		assertOwner(_layout, portletPreferenesImpl);
+		assertOwner(_layout, portletPreferencesImpl);
 	}
 
 	@Test
@@ -1147,11 +1147,11 @@ public class PortletPreferencesLocalServiceTest {
 			portletPreferencesList.toString(), 1,
 			portletPreferencesList.size());
 
-		PortletPreferencesImpl portletPreferenesImpl =
+		PortletPreferencesImpl portletPreferencesImpl =
 			PortletPreferencesImplTestUtil.toPortletPreferencesImpl(
 				portletPreferencesList.get(0));
 
-		assertOwner(_layout, portletPreferenesImpl);
+		assertOwner(_layout, portletPreferencesImpl);
 
 		Group group = GroupTestUtil.addGroup();
 

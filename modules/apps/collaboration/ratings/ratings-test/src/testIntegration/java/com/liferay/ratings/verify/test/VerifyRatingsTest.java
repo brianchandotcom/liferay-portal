@@ -91,25 +91,25 @@ public class VerifyRatingsTest extends BaseVerifyProcessTestCase {
 
 		doVerify();
 
-		RatingsStats ratingStats = RatingsStatsLocalServiceUtil.getStats(
+		RatingsStats ratingsStats = RatingsStatsLocalServiceUtil.getStats(
 			_CLASS_NAME, _CLASS_PK);
 
-		Assert.assertEquals(totalEntries, ratingStats.getTotalEntries());
-		Assert.assertEquals(totalScore, ratingStats.getTotalScore(), 0.0001);
+		Assert.assertEquals(totalEntries, ratingsStats.getTotalEntries());
+		Assert.assertEquals(totalScore, ratingsStats.getTotalScore(), 0.0001);
 		Assert.assertEquals(
-			totalScore / totalEntries, ratingStats.getAverageScore(), 0.0001);
+			totalScore / totalEntries, ratingsStats.getAverageScore(), 0.0001);
 	}
 
 	@Test
 	public void testVerifyStatsWithNoEntries() throws Exception {
 		doVerify();
 
-		RatingsStats ratingStats = RatingsStatsLocalServiceUtil.getStats(
+		RatingsStats ratingsStats = RatingsStatsLocalServiceUtil.getStats(
 			_CLASS_NAME, _CLASS_PK);
 
-		Assert.assertEquals(0, ratingStats.getTotalEntries());
-		Assert.assertEquals(0.0, ratingStats.getTotalScore(), 0.0001);
-		Assert.assertEquals(0.0, ratingStats.getAverageScore(), 0.0001);
+		Assert.assertEquals(0, ratingsStats.getTotalEntries());
+		Assert.assertEquals(0.0, ratingsStats.getTotalScore(), 0.0001);
+		Assert.assertEquals(0.0, ratingsStats.getAverageScore(), 0.0001);
 	}
 
 	protected double addVote() throws Exception {

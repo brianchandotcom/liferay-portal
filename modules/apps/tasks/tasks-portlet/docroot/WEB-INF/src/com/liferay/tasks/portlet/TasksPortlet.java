@@ -144,17 +144,17 @@ public class TasksPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			TasksEntry.class.getName(), actionRequest);
 
-		TasksEntry taskEntry = null;
+		TasksEntry tasksEntry = null;
 
 		try {
 			if (tasksEntryId <= 0) {
-				taskEntry = TasksEntryServiceUtil.addTasksEntry(
+				tasksEntry = TasksEntryServiceUtil.addTasksEntry(
 					title, priority, assigneeUserId, dueDateMonth, dueDateDay,
 					dueDateYear, dueDateHour, dueDateMinute, addDueDate,
 					serviceContext);
 			}
 			else {
-				taskEntry = TasksEntryServiceUtil.updateTasksEntry(
+				tasksEntry = TasksEntryServiceUtil.updateTasksEntry(
 					tasksEntryId, title, priority, assigneeUserId,
 					resolverUserId, dueDateMonth, dueDateDay, dueDateYear,
 					dueDateHour, dueDateMinute, addDueDate, status,
@@ -169,7 +169,7 @@ public class TasksPortlet extends MVCPortlet {
 
 			portletURL.setParameter("mvcPath", "/tasks/view_task.jsp");
 			portletURL.setParameter(
-				"tasksEntryId", String.valueOf(taskEntry.getTasksEntryId()));
+				"tasksEntryId", String.valueOf(tasksEntry.getTasksEntryId()));
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 			actionResponse.sendRedirect(portletURL.toString());

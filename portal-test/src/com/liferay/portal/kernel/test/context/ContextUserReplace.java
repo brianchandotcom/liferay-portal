@@ -31,7 +31,7 @@ public class ContextUserReplace implements AutoCloseable {
 
 	public ContextUserReplace(User user, PermissionChecker permissionChecker) {
 		_name = PrincipalThreadLocal.getName();
-		_permissionCheker = PermissionThreadLocal.getPermissionChecker();
+		_permissionChecker = PermissionThreadLocal.getPermissionChecker();
 
 		PrincipalThreadLocal.setName(user.getUserId());
 		PermissionThreadLocal.setPermissionChecker(permissionChecker);
@@ -40,10 +40,10 @@ public class ContextUserReplace implements AutoCloseable {
 	@Override
 	public void close() {
 		PrincipalThreadLocal.setName(_name);
-		PermissionThreadLocal.setPermissionChecker(_permissionCheker);
+		PermissionThreadLocal.setPermissionChecker(_permissionChecker);
 	}
 
 	private final String _name;
-	private final PermissionChecker _permissionCheker;
+	private final PermissionChecker _permissionChecker;
 
 }

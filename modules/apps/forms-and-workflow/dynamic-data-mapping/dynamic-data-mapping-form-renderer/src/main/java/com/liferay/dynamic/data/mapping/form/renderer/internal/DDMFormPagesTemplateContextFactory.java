@@ -231,14 +231,14 @@ public class DDMFormPagesTemplateContextFactory {
 	}
 
 	protected Map<String, Object> createRowTemplateContext(
-		DDMFormLayoutRow ddFormLayoutRow) {
+		DDMFormLayoutRow ddmFormLayoutRow) {
 
 		Map<String, Object> rowTemplateContext = new HashMap<>();
 
 		rowTemplateContext.put(
 			"columns",
 			createColumnsTemplateContext(
-				ddFormLayoutRow.getDDMFormLayoutColumns()));
+				ddmFormLayoutRow.getDDMFormLayoutColumns()));
 
 		return rowTemplateContext;
 	}

@@ -497,12 +497,12 @@ public class PortletPreferencesLocalServiceImpl
 				ownerId = PortletIdCodec.decodeUserId(portletId);
 				ownerType = PortletKeys.PREFS_OWNER_TYPE_USER;
 
-				PortletPreferences portletsPreferences =
+				PortletPreferences portletPreferences =
 					portletPreferencesPersistence.fetchByO_O_P_P(
 						ownerId, ownerType, plid, portletId);
 
-				if (portletsPreferences != null) {
-					preferences = portletsPreferences.getPreferences();
+				if (portletPreferences != null) {
+					preferences = portletPreferences.getPreferences();
 				}
 			}
 			else {

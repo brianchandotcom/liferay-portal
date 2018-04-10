@@ -122,7 +122,7 @@ public class SampleDroolsConfigurationAction
 					String.valueOf(RulesLanguage.DROOLS_RULE_LANGUAGE));
 
 			try {
-				_ruleEngine.update(domainName, rulesResourceRetriever);
+				_rulesEngine.update(domainName, rulesResourceRetriever);
 			}
 			catch (RulesEngineException ree) {
 				_log.error(ree, ree);
@@ -148,6 +148,6 @@ public class SampleDroolsConfigurationAction
 	private Portal _portal;
 
 	@Reference
-	private RulesEngine _ruleEngine;
+	private RulesEngine _rulesEngine;
 
 }

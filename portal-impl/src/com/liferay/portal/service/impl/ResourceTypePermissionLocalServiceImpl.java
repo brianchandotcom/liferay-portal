@@ -85,18 +85,18 @@ public class ResourceTypePermissionLocalServiceImpl
 			resourceTypePermissionFinder.findByEitherScopeC_G_N(
 				companyId, groupId, name);
 
-		ResourceBlockPermissionsContainer resourceBlockPermissionContainer =
+		ResourceBlockPermissionsContainer resourceBlockPermissionsContainer =
 			new ResourceBlockPermissionsContainer();
 
 		for (ResourceTypePermission resourceTypePermission :
 				resourceTypePermissions) {
 
-			resourceBlockPermissionContainer.setPermissions(
+			resourceBlockPermissionsContainer.setPermissions(
 				resourceTypePermission.getRoleId(),
 				resourceTypePermission.getActionIds());
 		}
 
-		return resourceBlockPermissionContainer;
+		return resourceBlockPermissionsContainer;
 	}
 
 	@Override

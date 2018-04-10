@@ -220,15 +220,15 @@ public class AlloyEditorConfigContributor
 	}
 
 	protected JSONObject getToolbarsStylesSelectionsImageJSONObject() {
-		JSONObject jsonNObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonNObject.put(
+		jsonObject.put(
 			"buttons",
 			toJSONArray("['imageLeft', 'imageCenter', 'imageRight', 'link']"));
-		jsonNObject.put("name", "image");
-		jsonNObject.put("test", "AlloyEditor.SelectionTest.image");
+		jsonObject.put("name", "image");
+		jsonObject.put("test", "AlloyEditor.SelectionTest.image");
 
-		return jsonNObject;
+		return jsonObject;
 	}
 
 	protected JSONArray getToolbarsStylesSelectionsJSONArray(Locale locale) {

@@ -77,25 +77,25 @@ public class ViewChartMVCResourceCommand extends BaseMVCResourceCommand {
 			CategoryDataset categoryDataset = PollsUtil.getVotesDataset(
 				questionId);
 
-			JFreeChart jFreeChat = null;
+			JFreeChart jFreeChart = null;
 
 			if (chartType.equals("area")) {
-				jFreeChat = ChartFactory.createAreaChart(
+				jFreeChart = ChartFactory.createAreaChart(
 					chartName, xName, yName, categoryDataset,
 					PlotOrientation.VERTICAL, true, false, false);
 			}
 			else if (chartType.equals("horizontal_bar")) {
-				jFreeChat = ChartFactory.createBarChart(
+				jFreeChart = ChartFactory.createBarChart(
 					chartName, xName, yName, categoryDataset,
 					PlotOrientation.HORIZONTAL, true, false, false);
 			}
 			else if (chartType.equals("line")) {
-				jFreeChat = ChartFactory.createLineChart(
+				jFreeChart = ChartFactory.createLineChart(
 					chartName, xName, yName, categoryDataset,
 					PlotOrientation.VERTICAL, true, false, false);
 			}
 			else if (chartType.equals("vertical_bar")) {
-				jFreeChat = ChartFactory.createBarChart(
+				jFreeChart = ChartFactory.createBarChart(
 					chartName, xName, yName, categoryDataset,
 					PlotOrientation.VERTICAL, true, false, false);
 			}
@@ -103,7 +103,7 @@ public class ViewChartMVCResourceCommand extends BaseMVCResourceCommand {
 				PieDataset pieDataset = DatasetUtilities.createPieDatasetForRow(
 					categoryDataset, 0);
 
-				jFreeChat = ChartFactory.createPieChart(
+				jFreeChart = ChartFactory.createPieChart(
 					chartName, pieDataset, true, false, false);
 			}
 
@@ -112,7 +112,7 @@ public class ViewChartMVCResourceCommand extends BaseMVCResourceCommand {
 			OutputStream outputStream =
 				resourceResponse.getPortletOutputStream();
 
-			ChartUtilities.writeChartAsJPEG(outputStream, jFreeChat, 400, 400);
+			ChartUtilities.writeChartAsJPEG(outputStream, jFreeChart, 400, 400);
 		}
 		catch (Exception e) {
 			PortletSession portletSession = resourceRequest.getPortletSession();

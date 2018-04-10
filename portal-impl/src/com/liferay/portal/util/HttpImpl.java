@@ -1867,12 +1867,12 @@ public class HttpImpl implements Http {
 			if (auth != null) {
 				requestConfigBuilder.setAuthenticationEnabled(true);
 
-				CredentialsProvider credentialProvider =
+				CredentialsProvider credentialsProvider =
 					new BasicCredentialsProvider();
 
-				httpClientContext.setCredentialsProvider(credentialProvider);
+				httpClientContext.setCredentialsProvider(credentialsProvider);
 
-				credentialProvider.setCredentials(
+				credentialsProvider.setCredentials(
 					new AuthScope(
 						auth.getHost(), auth.getPort(), auth.getRealm()),
 					new UsernamePasswordCredentials(

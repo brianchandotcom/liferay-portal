@@ -64,11 +64,11 @@ public class PortletURLFactoryUtil {
 	}
 
 	public static LiferayPortletURL create(
-		PortletRequest portletRequest, Portlet porltet, Layout layout,
+		PortletRequest portletRequest, Portlet portlet, Layout layout,
 		String lifecycle) {
 
 		return getPortletURLFactory().create(
-			portletRequest, porltet, layout, lifecycle);
+			portletRequest, portlet, layout, lifecycle);
 	}
 
 	public static LiferayPortletURL create(

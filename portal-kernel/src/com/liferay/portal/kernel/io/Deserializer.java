@@ -150,11 +150,11 @@ public class Deserializer {
 		}
 		else if (tcByte == SerializationConstants.TC_OBJECT) {
 			try {
-				ObjectInputStream objectInpputStream =
+				ObjectInputStream objectInputStream =
 					new ProtectedAnnotatedObjectInputStream(
 						new BufferInputStream());
 
-				return (T)objectInpputStream.readObject();
+				return (T)objectInputStream.readObject();
 			}
 			catch (IOException ioe) {
 				throw new RuntimeException(ioe);

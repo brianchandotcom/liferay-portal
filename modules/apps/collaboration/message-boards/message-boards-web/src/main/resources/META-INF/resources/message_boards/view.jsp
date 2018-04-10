@@ -193,7 +193,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 						<div class="autofit-col autofit-col-expand">
 							<c:choose>
 								<c:when test="<%= category != null %>">
-									<h3><%= category.getName() %></h3>
+									<h3><%= HtmlUtil.escape(category.getName()) %></h3>
 								</c:when>
 								<c:otherwise>
 

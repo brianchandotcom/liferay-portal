@@ -89,15 +89,10 @@
 <blockquote><p>Selectors are frequently used as a part of forms. This elements are used when we need to select one or more within several options. These options are displayed in the button once selected.</p></blockquote>
 
 <%
-List<Map<String, Object>> options = new ArrayList<>();
+List<SelectOption> options = new ArrayList<>();
 
 for (int i = 0; i < 8; i++) {
-	Map<String, Object> option = new HashMap<>();
-
-	option.put("label", "Sample " + i);
-	option.put("value", i);
-
-	options.add(option);
+	options.add(new SelectOption("Sample " + i, String.valueOf(i)));
 }
 %>
 

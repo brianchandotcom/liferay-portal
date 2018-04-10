@@ -12,28 +12,37 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
-
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-
-import java.util.List;
+package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
 /**
- * @author Chema Balsas
+ * @author Adolfo Pérez
  */
-public class NavigationBarTag extends BaseClayTag {
+public class SelectOption {
 
-	public NavigationBarTag() {
-		super("navigation-bar", "ClayNavigationBar");
+	public SelectOption(String label, String value) {
+		this(label, value, false);
 	}
 
-	public void setInverted(Boolean inverted) {
-		putValue("inverted", inverted);
+	public SelectOption(String label, String value, boolean selected) {
+		_label = label;
+		_value = value;
+		_selected = selected;
 	}
 
-	public void setItems(List<NavigationItem> navigationItems) {
-		putValue("items", navigationItems);
+	public String getLabel() {
+		return _label;
 	}
+
+	public String getValue() {
+		return _value;
+	}
+
+	public boolean isSelected() {
+		return _selected;
+	}
+
+	private final String _label;
+	private final boolean _selected;
+	private final String _value;
 
 }

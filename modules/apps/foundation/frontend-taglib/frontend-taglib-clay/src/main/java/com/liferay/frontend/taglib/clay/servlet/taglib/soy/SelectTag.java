@@ -15,6 +15,9 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption;
+
+import java.util.List;
 
 /**
  * @author Chema Balsas
@@ -41,7 +44,7 @@ public class SelectTag extends BaseClayTag {
 		putValue("name", name);
 	}
 
-	public void setOptions(Object options) {
+	public void setOptions(List<SelectOption> options) {
 		putValue("options", options);
 	}
 

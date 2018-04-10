@@ -41,13 +41,9 @@ public class ManagementToolbarTag extends BaseClayTag {
 	public int doStartTag() {
 		Map<String, Object> context = getContext();
 
-		Object creationMenuObj = context.get("creationMenu");
+		CreationMenu creationMenu = (CreationMenu)context.get("creationMenu");
 
-		if ((creationMenuObj != null) &&
-			(creationMenuObj instanceof CreationMenu)) {
-
-			CreationMenu creationMenu = (CreationMenu)creationMenuObj;
-
+		if (creationMenu != null) {
 			DropdownItemList dropdownItemList =
 				(DropdownItemList)creationMenu.get("primaryItems");
 

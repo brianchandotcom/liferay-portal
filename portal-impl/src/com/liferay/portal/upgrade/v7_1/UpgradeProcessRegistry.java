@@ -26,6 +26,7 @@ import java.util.TreeMap;
  */
 public class UpgradeProcessRegistry implements CoreUpgradeProcessRegistry {
 
+	@Override
 	public void registerUpgradeProcesses(
 		TreeMap<Version, UpgradeProcess> upgradeProcesses) {
 

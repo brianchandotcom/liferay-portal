@@ -64,6 +64,7 @@
 							ref="selectMappingSubtype"
 						>
 							<option disabled value="-">-</option>
+
 							{foreach $mappingSubtype in $_mappingSubtypes}
 								<option value="{$mappingSubtype.id}">{$mappingSubtype.label}</option>
 							{/foreach}
@@ -112,6 +113,7 @@
 							<span class="inline-item inline-item-before">
 								<span aria-hidden="true" class="loading-animation"></span>
 							</span>
+
 							{msg desc=""}saving-changes{/msg}
 						{else}
 							{msg desc=""}save{/msg}

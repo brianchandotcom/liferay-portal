@@ -7544,22 +7544,18 @@ public class PortalImpl implements Portal {
 	protected long doGetPlidFromPortletId(
 		List<Layout> layouts, String portletId, long scopeGroupId) {
 
-		long plid = LayoutConstants.DEFAULT_PLID;
-
 		for (Layout layout : layouts) {
 			LayoutTypePortlet layoutTypePortlet =
 				(LayoutTypePortlet)layout.getLayoutType();
 
-			if (layoutTypePortlet.hasPortletId(portletId, true)) {
-				if (getScopeGroupId(layout, portletId) == scopeGroupId) {
-					plid = layout.getPlid();
+			if (layoutTypePortlet.hasPortletId(portletId, true) &&
+				(getScopeGroupId(layout, portletId) == scopeGroupId)) {
 
-					return plid;
-				}
+				return layout.getPlid();
 			}
 		}
 
-		return plid;
+		return LayoutConstants.DEFAULT_PLID;
 	}
 
 	protected long doGetPlidFromPortletId(
@@ -7585,7 +7581,7 @@ public class PortalImpl implements Portal {
 
 		long plid = doGetPlidFromPortletId(layouts, portletId, scopeGroupId);
 
-		if (plid > LayoutConstants.DEFAULT_PLID) {
+		if (plid != LayoutConstants.DEFAULT_PLID) {
 			return plid;
 		}
 
@@ -7594,16 +7590,14 @@ public class PortalImpl implements Portal {
 
 		plid = doGetPlidFromPortletId(layouts, portletId, scopeGroupId);
 
-		if (plid > LayoutConstants.DEFAULT_PLID) {
+		if (plid != LayoutConstants.DEFAULT_PLID) {
 			return plid;
 		}
 
 		layouts = LayoutLocalServiceUtil.getLayouts(
 			groupId, privateLayout, LayoutConstants.TYPE_PANEL);
 
-		plid = doGetPlidFromPortletId(layouts, portletId, scopeGroupId);
-
-		return plid;
+		return doGetPlidFromPortletId(layouts, portletId, scopeGroupId);
 	}
 
 	protected List<Portlet> filterControlPanelPortlets(

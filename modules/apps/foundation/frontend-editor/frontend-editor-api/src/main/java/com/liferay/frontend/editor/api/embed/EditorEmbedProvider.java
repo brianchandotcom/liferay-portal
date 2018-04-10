@@ -61,8 +61,12 @@ public interface EditorEmbedProvider {
 	 * Returns an array with the the url schemes for the embed provider.
 	 *
 	 * The url scheme describes which urls of the provider have an embedded
-	 * representation. Url schemes are defined using a regular expression that
-	 * indicates whether a url matches with the provider or not.
+	 * representation. Url schemes are defined using a JavaScript Regular
+	 * Expression that indicates whether a url matches with the provider or not.
+	 *
+	 * Every url scheme should contain a single matching group. This match will
+	 * be used replace the <code>{embedId}</code> placeholder from the provided
+	 * template.
 	 *
 	 * @return the url schemes for the embed provider
 	 */

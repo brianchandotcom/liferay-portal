@@ -87,3 +87,19 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		<liferay-util:include page="/export_processes.jsp" servletContext="<%= application %>" />
 	</div>
 </aui:form>
+
+<aui:script use="liferay-uad-export">
+	<portlet:resourceURL id="/get_export_processes" var="exportProcessesURL">
+		<portlet:param name="p_u_i_d" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
+		<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
+		<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
+	</portlet:resourceURL>
+
+	var uadExport = new Liferay.UADExport(
+		{
+			namespace: '<portlet:namespace />',
+			exportProcessesNode: '#exportProcesses',
+			exportProcessesResourceURL: '<%= exportProcessesURL.toString() %>'
+		}
+	);
+</aui:script>

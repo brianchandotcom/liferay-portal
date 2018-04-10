@@ -92,10 +92,7 @@ public class FragmentsEditorContext {
 	}
 
 	public SoyContext getEditorContext() throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
@@ -109,7 +106,7 @@ public class FragmentsEditorContext {
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
 				PortletIdCodec.decodePortletName(portletDisplay.getId()),
 				"fragmenEntryLinkEditor", StringPool.BLANK,
-				Collections.emptyMap(), themeDisplay,
+				Collections.emptyMap(), _themeDisplay,
 				RequestBackedPortletURLFactoryUtil.create(_request));
 
 		soyContext.put(
@@ -153,7 +150,7 @@ public class FragmentsEditorContext {
 		soyContext.put("sidebarTabs", _getSidebarTabs());
 		soyContext.put(
 			"spritemap",
-			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
+			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
 		soyContext.put(
 			"updateFragmentEntryLinksURL",
 			_getFragmentEntryActionURL("/layout/update_fragment_entry_links"));
@@ -168,9 +165,6 @@ public class FragmentsEditorContext {
 	private List<SoyContext> _getFragmentEntriesSoyContext(
 		List<FragmentEntry> fragmentEntries) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		List<SoyContext> soyContexts = new ArrayList<>();
 
 		for (FragmentEntry fragmentEntry : fragmentEntries) {
@@ -180,7 +174,7 @@ public class FragmentsEditorContext {
 				"fragmentEntryId", fragmentEntry.getFragmentEntryId());
 			soyContext.put(
 				"imagePreviewURL",
-				fragmentEntry.getImagePreviewURL(themeDisplay));
+				fragmentEntry.getImagePreviewURL(_themeDisplay));
 			soyContext.put("name", fragmentEntry.getName());
 
 			soyContexts.add(soyContext);
@@ -310,12 +304,9 @@ public class FragmentsEditorContext {
 	private List<SoyContext> _getSoyContextFragmentCollections() {
 		List<SoyContext> soyContexts = new ArrayList<>();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		List<FragmentCollection> fragmentCollections =
 			FragmentCollectionServiceUtil.getFragmentCollections(
-				themeDisplay.getScopeGroupId());
+				_themeDisplay.getScopeGroupId());
 
 		for (FragmentCollection fragmentCollection : fragmentCollections) {
 			List<FragmentEntry> fragmentEntries =
@@ -348,12 +339,9 @@ public class FragmentsEditorContext {
 
 		List<SoyContext> soyContexts = new ArrayList<>();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		List<FragmentEntryLink> fragmentEntryLinks =
 			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
-				themeDisplay.getScopeGroupId(), _classNameId, _classPK);
+				_themeDisplay.getScopeGroupId(), _classNameId, _classPK);
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			FragmentEntry fragmentEntry =

@@ -174,8 +174,8 @@ public class DDLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDMWebDav(DDMWebDAV ddmWebDav) {
-		_ddmWebDAV = ddmWebDav;
+	protected void setDDMWebDav(DDMWebDAV ddmWebDAV) {
+		_ddmWebDAV = ddmWebDAV;
 	}
 
 	private DDMStructureLocalService _ddmStructureLocalService;

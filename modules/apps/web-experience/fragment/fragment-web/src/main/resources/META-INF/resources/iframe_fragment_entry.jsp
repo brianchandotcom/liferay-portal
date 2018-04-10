@@ -1,0 +1,61 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%@ include file="/init.jsp" %>
+
+<%
+long fragmentEntryId = ParamUtil.getLong(renderRequest, "fragmentEntryId");
+
+String css = ParamUtil.getString(renderRequest, "css");
+String html = ParamUtil.getString(renderRequest, "html");
+String js = ParamUtil.getString(renderRequest, "js");
+%>
+
+<c:if test="<%= Validator.isNotNull(css) || Validator.isNotNull(html) || Validator.isNotNull(js) %>">
+	<%= FragmentEntryRenderUtil.renderFragmentEntry(fragmentEntryId, css, html, js) %>
+</c:if>
+
+<c:if test="<%= Validator.isNull(css) && Validator.isNull(html) && Validator.isNull(js) %>">
+	<script>
+		var NAMESPACE = 'LFR_FRAGMENT_RENDER';
+
+		function handleIframeMessage (event) {
+			var data = event.data;
+			var prevData = localStorage.getItem(NAMESPACE) || '';
+
+			if (data && data !== prevData) {
+				localStorage.setItem(NAMESPACE, data);
+				location.reload();
+			}
+		}
+
+		function updatePreview () {
+			window.addEventListener('message', handleIframeMessage);
+			window[NAMESPACE] = true;
+
+			var content = JSON.parse(
+				localStorage.getItem(NAMESPACE) || '{}'
+			).data || '';
+
+			document.open();
+			document.write(content);
+		}
+
+		if (!window[NAMESPACE]) {
+			updatePreview();
+		}
+	</script>
+</c:if>

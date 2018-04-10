@@ -67,6 +67,8 @@ page import="com.liferay.taglib.search.ResultRow" %>
 page import="java.util.HashMap" %><%@
 page import="java.util.Map" %>
 
+<%@ page import="javax.portlet.PortletMode" %>
+
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />

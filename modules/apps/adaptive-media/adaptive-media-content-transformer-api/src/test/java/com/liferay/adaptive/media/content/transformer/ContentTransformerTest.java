@@ -88,19 +88,19 @@ public class ContentTransformerTest {
 		String intermediateTransformedContent = RandomTestUtil.randomString();
 
 		_registerContentTransformer(
-			_contentTransfomerContentType, _ORIGINAL_CONTENT,
+			_contentTransformerContentType, _ORIGINAL_CONTENT,
 			intermediateTransformedContent);
 
 		String finalTransformedContent = RandomTestUtil.randomString();
 
 		_registerContentTransformer(
-			_contentTransfomerContentType, intermediateTransformedContent,
+			_contentTransformerContentType, intermediateTransformedContent,
 			finalTransformedContent);
 
 		Assert.assertEquals(
 			finalTransformedContent,
 			_contentTransformerHandler.transform(
-				_contentTransfomerContentType, _ORIGINAL_CONTENT));
+				_contentTransformerContentType, _ORIGINAL_CONTENT));
 	}
 
 	@Test
@@ -110,13 +110,13 @@ public class ContentTransformerTest {
 		String transformedContent = RandomTestUtil.randomString();
 
 		_registerContentTransformer(
-			_contentTransfomerContentType, _ORIGINAL_CONTENT,
+			_contentTransformerContentType, _ORIGINAL_CONTENT,
 			transformedContent);
 
 		Assert.assertEquals(
 			transformedContent,
 			_contentTransformerHandler.transform(
-				_contentTransfomerContentType, _ORIGINAL_CONTENT));
+				_contentTransformerContentType, _ORIGINAL_CONTENT));
 	}
 
 	@Test
@@ -124,12 +124,12 @@ public class ContentTransformerTest {
 		throws Exception {
 
 		_registerInvalidContentTransformer(
-			_contentTransfomerContentType, _ORIGINAL_CONTENT);
+			_contentTransformerContentType, _ORIGINAL_CONTENT);
 
 		Assert.assertSame(
 			_ORIGINAL_CONTENT,
 			_contentTransformerHandler.transform(
-				_contentTransfomerContentType, _ORIGINAL_CONTENT));
+				_contentTransformerContentType, _ORIGINAL_CONTENT));
 	}
 
 	@Test
@@ -137,7 +137,7 @@ public class ContentTransformerTest {
 		Assert.assertSame(
 			_ORIGINAL_CONTENT,
 			_contentTransformerHandler.transform(
-				_contentTransfomerContentType, _ORIGINAL_CONTENT));
+				_contentTransformerContentType, _ORIGINAL_CONTENT));
 	}
 
 	@Test
@@ -145,18 +145,18 @@ public class ContentTransformerTest {
 		throws Exception {
 
 		_registerInvalidContentTransformer(
-			_contentTransfomerContentType, _ORIGINAL_CONTENT);
+			_contentTransformerContentType, _ORIGINAL_CONTENT);
 
 		String transformedContent = RandomTestUtil.randomString();
 
 		_registerContentTransformer(
-			_contentTransfomerContentType, _ORIGINAL_CONTENT,
+			_contentTransformerContentType, _ORIGINAL_CONTENT,
 			transformedContent);
 
 		Assert.assertEquals(
 			transformedContent,
 			_contentTransformerHandler.transform(
-				_contentTransfomerContentType, _ORIGINAL_CONTENT));
+				_contentTransformerContentType, _ORIGINAL_CONTENT));
 	}
 
 	private ContentTransformer<String> _registerContentTransformer(
@@ -204,7 +204,7 @@ public class ContentTransformerTest {
 		RandomTestUtil.randomString();
 
 	private final ContentTransformerContentType<String>
-		_contentTransfomerContentType =
+		_contentTransformerContentType =
 			new TestContentTransformerContentType<>();
 	private final ContentTransformerHandler _contentTransformerHandler =
 		new ContentTransformerHandler();

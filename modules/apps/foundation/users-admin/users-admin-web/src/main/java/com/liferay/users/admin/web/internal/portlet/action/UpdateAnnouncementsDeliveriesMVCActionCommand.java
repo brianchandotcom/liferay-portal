@@ -64,7 +64,7 @@ public class UpdateAnnouncementsDeliveriesMVCActionCommand
 		for (AnnouncementsDelivery announcementsDelivery :
 				announcementsDeliveries) {
 
-			_announcementsDeliverySerivce.updateDelivery(
+			_announcementsDeliveryService.updateDelivery(
 				user.getUserId(), announcementsDelivery.getType(),
 				announcementsDelivery.getEmail(),
 				announcementsDelivery.getSms());
@@ -116,7 +116,7 @@ public class UpdateAnnouncementsDeliveriesMVCActionCommand
 		_announcementsDeliveryLocalService;
 
 	@Reference
-	private AnnouncementsDeliveryService _announcementsDeliverySerivce;
+	private AnnouncementsDeliveryService _announcementsDeliveryService;
 
 	@Reference
 	private Portal _portal;

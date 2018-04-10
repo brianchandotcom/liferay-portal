@@ -52,11 +52,11 @@ public class ImageEditorSoyPortletRegister implements SoyPortletRegister {
 
 	@Override
 	public Set<String> getJavaScriptRequiredModules(String path) {
-		return _imageEditoryCapabilityTracker.
+		return _imageEditorCapabilityTracker.
 			getImageEditorCapabilitiesRequirements();
 	}
 
 	@Reference
-	private ImageEditorCapabilityTracker _imageEditoryCapabilityTracker;
+	private ImageEditorCapabilityTracker _imageEditorCapabilityTracker;
 
 }

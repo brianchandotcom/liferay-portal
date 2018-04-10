@@ -31,12 +31,12 @@ public class TimeZoneThreadLocal {
 		return _themeDisplayTimeZone.get();
 	}
 
-	public static void setDefaultTimeZone(TimeZone timeZonee) {
-		_defaultTimeZone.set(timeZonee);
+	public static void setDefaultTimeZone(TimeZone timeZone) {
+		_defaultTimeZone.set(timeZone);
 	}
 
-	public static void setThemeDisplayTimeZone(TimeZone timeZonee) {
-		_themeDisplayTimeZone.set(timeZonee);
+	public static void setThemeDisplayTimeZone(TimeZone timeZone) {
+		_themeDisplayTimeZone.set(timeZone);
 	}
 
 	private static final ThreadLocal<TimeZone> _defaultTimeZone =

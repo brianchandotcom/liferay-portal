@@ -2186,13 +2186,13 @@ public class PortalUtil {
 	}
 
 	public static boolean isSkipPortletContentProcesssing(
-			Group group, HttpServletRequest htpServletRequest,
+			Group group, HttpServletRequest httpServletRequest,
 			LayoutTypePortlet layoutTypePortlet, PortletDisplay portletDisplay,
 			String portletName)
 		throws Exception {
 
 		return getPortal().isSkipPortletContentProcessing(
-			group, htpServletRequest, layoutTypePortlet, portletDisplay,
+			group, httpServletRequest, layoutTypePortlet, portletDisplay,
 			portletName);
 	}
 

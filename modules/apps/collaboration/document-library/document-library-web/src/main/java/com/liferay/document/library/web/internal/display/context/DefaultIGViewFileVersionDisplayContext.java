@@ -58,7 +58,7 @@ public class DefaultIGViewFileVersionDisplayContext
 
 		_igRequestHelper = new IGRequestHelper(request);
 
-		_dlPorletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(
+		_dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(
 			_igRequestHelper);
 
 		if (fileShortcut == null) {
@@ -97,7 +97,7 @@ public class DefaultIGViewFileVersionDisplayContext
 	public List<MenuItem> getMenuItems() throws PortalException {
 		List<MenuItem> menuItems = new ArrayList<>();
 
-		if (_dlPorletInstanceSettingsHelper.isShowActions()) {
+		if (_dlPortletInstanceSettingsHelper.isShowActions()) {
 			_uiItemsBuilder.addDownloadMenuItem(menuItems);
 
 			_uiItemsBuilder.addViewOriginalFileMenuItem(menuItems);
@@ -121,7 +121,7 @@ public class DefaultIGViewFileVersionDisplayContext
 		"C04528F9-C005-4E21-A926-F068750B99DB");
 
 	private final DLPortletInstanceSettingsHelper
-		_dlPorletInstanceSettingsHelper;
+		_dlPortletInstanceSettingsHelper;
 	private final IGRequestHelper _igRequestHelper;
 	private final UIItemsBuilder _uiItemsBuilder;
 

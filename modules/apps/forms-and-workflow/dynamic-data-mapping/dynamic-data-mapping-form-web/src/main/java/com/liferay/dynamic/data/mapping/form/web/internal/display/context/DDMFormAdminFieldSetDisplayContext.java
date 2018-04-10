@@ -203,7 +203,7 @@ public class DDMFormAdminFieldSetDisplayContext
 
 		portletURL.setParameter("displayStyle", getDisplayStyle());
 
-		FieldSetSearch fieldSetsSearch = new FieldSetSearch(
+		FieldSetSearch fieldSetSearch = new FieldSetSearch(
 			getRenderRequest(), portletURL);
 
 		String orderByCol = getOrderByCol();
@@ -212,22 +212,21 @@ public class DDMFormAdminFieldSetDisplayContext
 		OrderByComparator<DDMStructure> orderByComparator =
 			getDDMStructureOrderByComparator(orderByCol, orderByType);
 
-		fieldSetsSearch.setOrderByCol(orderByCol);
-		fieldSetsSearch.setOrderByComparator(orderByComparator);
-		fieldSetsSearch.setOrderByType(orderByType);
+		fieldSetSearch.setOrderByCol(orderByCol);
+		fieldSetSearch.setOrderByComparator(orderByComparator);
+		fieldSetSearch.setOrderByType(orderByType);
 
-		if (fieldSetsSearch.isSearch()) {
-			fieldSetsSearch.setEmptyResultsMessage(
-				"no-element-sets-were-found");
+		if (fieldSetSearch.isSearch()) {
+			fieldSetSearch.setEmptyResultsMessage("no-element-sets-were-found");
 		}
 		else {
-			fieldSetsSearch.setEmptyResultsMessage("there-are-no-element-sets");
+			fieldSetSearch.setEmptyResultsMessage("there-are-no-element-sets");
 		}
 
-		setFieldSetsSearchResults(fieldSetsSearch);
-		setFieldSetsSearchTotal(fieldSetsSearch);
+		setFieldSetsSearchResults(fieldSetSearch);
+		setFieldSetsSearchTotal(fieldSetSearch);
 
-		return fieldSetsSearch;
+		return fieldSetSearch;
 	}
 
 	@Override
@@ -278,70 +277,68 @@ public class DDMFormAdminFieldSetDisplayContext
 		return orderByComparator;
 	}
 
-	protected void setFieldSetsSearchResults(FieldSetSearch fieldSetsSearch) {
-		FieldSetSearchTerms fieldSetsSearchTerms =
-			(FieldSetSearchTerms)fieldSetsSearch.getSearchTerms();
+	protected void setFieldSetsSearchResults(FieldSetSearch fieldSetSearch) {
+		FieldSetSearchTerms fieldSetSearchTerms =
+			(FieldSetSearchTerms)fieldSetSearch.getSearchTerms();
 
 		List<DDMStructure> results = null;
 
 		DDMStructureService structureService = getStructureService();
 
-		if (fieldSetsSearchTerms.isAdvancedSearch()) {
+		if (fieldSetSearchTerms.isAdvancedSearch()) {
 			results = structureService.search(
 				getCompanyId(), new long[] {getScopeGroupId()},
 				PortalUtil.getClassNameId(DDMFormInstance.class),
-				fieldSetsSearchTerms.getName(),
-				fieldSetsSearchTerms.getDescription(),
+				fieldSetSearchTerms.getName(),
+				fieldSetSearchTerms.getDescription(),
 				StorageType.JSON.toString(),
 				DDMStructureConstants.TYPE_FRAGMENT,
 				WorkflowConstants.STATUS_ANY,
-				fieldSetsSearchTerms.isAndOperator(),
-				fieldSetsSearch.getStart(), fieldSetsSearch.getEnd(),
-				fieldSetsSearch.getOrderByComparator());
+				fieldSetSearchTerms.isAndOperator(), fieldSetSearch.getStart(),
+				fieldSetSearch.getEnd(), fieldSetSearch.getOrderByComparator());
 		}
 		else {
 			results = structureService.search(
 				getCompanyId(), new long[] {getScopeGroupId()},
 				PortalUtil.getClassNameId(DDMFormInstance.class),
-				fieldSetsSearchTerms.getKeywords(),
+				fieldSetSearchTerms.getKeywords(),
 				DDMStructureConstants.TYPE_FRAGMENT,
-				WorkflowConstants.STATUS_ANY, fieldSetsSearch.getStart(),
-				fieldSetsSearch.getEnd(),
-				fieldSetsSearch.getOrderByComparator());
+				WorkflowConstants.STATUS_ANY, fieldSetSearch.getStart(),
+				fieldSetSearch.getEnd(), fieldSetSearch.getOrderByComparator());
 		}
 
-		fieldSetsSearch.setResults(results);
+		fieldSetSearch.setResults(results);
 	}
 
-	protected void setFieldSetsSearchTotal(FieldSetSearch fieldSetsSearch) {
-		FieldSetSearchTerms fieldSetsSearchTerms =
-			(FieldSetSearchTerms)fieldSetsSearch.getSearchTerms();
+	protected void setFieldSetsSearchTotal(FieldSetSearch fieldSetSearch) {
+		FieldSetSearchTerms fieldSetSearchTerms =
+			(FieldSetSearchTerms)fieldSetSearch.getSearchTerms();
 
 		int total = 0;
 
 		DDMStructureService structureService = getStructureService();
 
-		if (fieldSetsSearchTerms.isAdvancedSearch()) {
+		if (fieldSetSearchTerms.isAdvancedSearch()) {
 			total = structureService.searchCount(
 				getCompanyId(), new long[] {getScopeGroupId()},
 				PortalUtil.getClassNameId(DDMFormInstance.class),
-				fieldSetsSearchTerms.getName(),
-				fieldSetsSearchTerms.getDescription(),
+				fieldSetSearchTerms.getName(),
+				fieldSetSearchTerms.getDescription(),
 				StorageType.JSON.toString(),
 				DDMStructureConstants.TYPE_FRAGMENT,
 				WorkflowConstants.STATUS_ANY,
-				fieldSetsSearchTerms.isAndOperator());
+				fieldSetSearchTerms.isAndOperator());
 		}
 		else {
 			total = structureService.searchCount(
 				getCompanyId(), new long[] {getScopeGroupId()},
 				PortalUtil.getClassNameId(DDMFormInstance.class),
-				fieldSetsSearchTerms.getKeywords(),
+				fieldSetSearchTerms.getKeywords(),
 				DDMStructureConstants.TYPE_FRAGMENT,
 				WorkflowConstants.STATUS_ANY);
 		}
 
-		fieldSetsSearch.setTotal(total);
+		fieldSetSearch.setTotal(total);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

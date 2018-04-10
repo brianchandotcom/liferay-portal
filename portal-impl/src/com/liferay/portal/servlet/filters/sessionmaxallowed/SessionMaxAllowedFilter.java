@@ -32,7 +32,7 @@ public class SessionMaxAllowedFilter
 	@Override
 	public void doFilterFinally(
 		HttpServletRequest request, HttpServletResponse response,
-		Object ojbect) {
+		Object object) {
 
 		if (PropsValues.SESSION_MAX_ALLOWED > 0) {
 			HttpSession session = request.getSession();

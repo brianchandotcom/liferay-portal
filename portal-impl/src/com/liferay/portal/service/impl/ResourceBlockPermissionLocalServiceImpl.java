@@ -137,18 +137,18 @@ public class ResourceBlockPermissionLocalServiceImpl
 			resourceBlockPermissionPersistence.findByResourceBlockId(
 				resourceBlockId);
 
-		ResourceBlockPermissionsContainer resourceBlockPermissionContainer =
+		ResourceBlockPermissionsContainer resourceBlockPermissionsContainer =
 			new ResourceBlockPermissionsContainer();
 
 		for (ResourceBlockPermission resourceBlockPermission :
 				resourceBlockPermissions) {
 
-			resourceBlockPermissionContainer.setPermissions(
+			resourceBlockPermissionsContainer.setPermissions(
 				resourceBlockPermission.getRoleId(),
 				resourceBlockPermission.getActionIds());
 		}
 
-		return resourceBlockPermissionContainer;
+		return resourceBlockPermissionsContainer;
 	}
 
 	@Override

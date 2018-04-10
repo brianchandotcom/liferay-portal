@@ -66,9 +66,9 @@ public class DDMFormRuleToDDMFormRuleModelConverterTest
 	public void setUp() throws Exception {
 		setUpDDMFormRuleDeserializer();
 
-		_ddmFormRulesConverter = new DDMFormRuleConverter();
+		_ddmFormRuleConverter = new DDMFormRuleConverter();
 
-		_ddmFormRulesConverter.ddmExpressionFactory =
+		_ddmFormRuleConverter.ddmExpressionFactory =
 			new DDMExpressionFactoryImpl();
 	}
 
@@ -336,7 +336,7 @@ public class DDMFormRuleToDDMFormRuleModelConverterTest
 				serializedDDMFormRules,
 				com.liferay.dynamic.data.mapping.model.DDMFormRule[].class);
 
-		List<DDMFormRule> actualDDMFormRules = _ddmFormRulesConverter.convert(
+		List<DDMFormRule> actualDDMFormRules = _ddmFormRuleConverter.convert(
 			ListUtil.toList(ddmFormRules));
 
 		JSONAssert.assertEquals(
@@ -360,8 +360,8 @@ public class DDMFormRuleToDDMFormRuleModelConverterTest
 
 		String serializedDDMFormRules = read(fileName);
 
-		return _ddmFormRulesConverter.convert(
-			_ddmFormRulesDeserializer.deserialize(serializedDDMFormRules),
+		return _ddmFormRuleConverter.convert(
+			_ddmFormRuleDeserializer.deserialize(serializedDDMFormRules),
 			_ddmFormRuleSerializerContext);
 	}
 
@@ -383,16 +383,16 @@ public class DDMFormRuleToDDMFormRuleModelConverterTest
 		throws Exception, IllegalAccessException {
 
 		Field field = ReflectionUtil.getDeclaredField(
-			_ddmFormRulesDeserializer.getClass(), "_jsonFactory");
+			_ddmFormRuleDeserializer.getClass(), "_jsonFactory");
 
-		field.set(_ddmFormRulesDeserializer, new JSONFactoryImpl());
+		field.set(_ddmFormRuleDeserializer, new JSONFactoryImpl());
 	}
 
 	private final Pattern _callFunctionPattern = Pattern.compile(
 		"call\\(\\s*\'([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-" +
 			"[0-9a-f]{12})\'\\s*,\\s*\'(.*)\'\\s*,\\s*\'(.*)\'\\s*\\)");
-	private DDMFormRuleConverter _ddmFormRulesConverter;
-	private final DDMFormRuleDeserializer _ddmFormRulesDeserializer =
+	private DDMFormRuleConverter _ddmFormRuleConverter;
+	private final DDMFormRuleDeserializer _ddmFormRuleDeserializer =
 		new DDMFormRuleDeserializer();
 
 	@Mock

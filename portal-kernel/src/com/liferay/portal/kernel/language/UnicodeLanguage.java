@@ -72,7 +72,7 @@ public interface UnicodeLanguage {
 		ResourceBundle resourceBundle, String pattern, Object argument);
 
 	public String format(
-		ResourceBundle resourceBundlee, String pattern, Object argument,
+		ResourceBundle resourceBundle, String pattern, Object argument,
 		boolean translateArguments);
 
 	public String format(

@@ -126,14 +126,14 @@ public class RSSAction extends BaseRSSStrutsAction {
 			WebKeys.THEME_DISPLAY);
 
 		BlogsGroupServiceOverriddenConfiguration
-			blogsGroupServiceOverridenConfiguration =
+			blogsGroupServiceOverriddenConfiguration =
 				_configurationProvider.getConfiguration(
 					BlogsGroupServiceOverriddenConfiguration.class,
 					new GroupServiceSettingsLocator(
 						themeDisplay.getSiteGroupId(),
 						BlogsConstants.SERVICE_NAME));
 
-		return blogsGroupServiceOverridenConfiguration.enableRss();
+		return blogsGroupServiceOverriddenConfiguration.enableRss();
 	}
 
 	@Reference(unbind = "-")

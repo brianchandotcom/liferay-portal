@@ -382,7 +382,7 @@ public class SearchResultSummaryDisplayBuilder {
 			return;
 		}
 
-		SearchResultImage searchResultsImage = new SearchResultImage() {
+		SearchResultImage searchResultImage = new SearchResultImage() {
 
 			@Override
 			public String getClassName() {
@@ -413,7 +413,7 @@ public class SearchResultSummaryDisplayBuilder {
 
 		_searchResultImageContributorsStream.forEach(
 			searchResultImageContributor -> {
-				searchResultImageContributor.contribute(searchResultsImage);
+				searchResultImageContributor.contribute(searchResultImage);
 			});
 	}
 

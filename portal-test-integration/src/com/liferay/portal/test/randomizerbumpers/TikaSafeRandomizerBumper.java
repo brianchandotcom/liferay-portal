@@ -46,18 +46,18 @@ public class TikaSafeRandomizerBumper implements RandomizerBumper<byte[]> {
 	@Override
 	public boolean accept(byte[] randomValue) {
 		try {
-			ParseContext parserContext = new ParseContext();
+			ParseContext parseContext = new ParseContext();
 
 			Parser parser = new AutoDetectParser(_tikaConfig);
 
-			parserContext.set(Parser.class, parser);
+			parseContext.set(Parser.class, parser);
 
 			Metadata metadata = new Metadata();
 
 			parser.parse(
 				new UnsyncByteArrayInputStream(randomValue),
 				new WriteOutContentHandler(new DummyWriter()), metadata,
-				parserContext);
+				parseContext);
 
 			if (_contentType == null) {
 				if (_log.isInfoEnabled()) {

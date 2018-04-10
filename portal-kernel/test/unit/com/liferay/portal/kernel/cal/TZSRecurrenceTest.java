@@ -103,7 +103,7 @@ public class TZSRecurrenceTest extends RecurrenceTestCase {
 	}
 
 	protected void checkWithinTSZRecurrence(
-		Calendar calendar, Duration duration, TZSRecurrence tszRecurrence) {
+		Calendar calendar, Duration duration, TZSRecurrence tzsRecurrence) {
 
 		Calendar afterTSZRecurrenceCalendar = Calendar.getInstance();
 
@@ -111,7 +111,7 @@ public class TZSRecurrenceTest extends RecurrenceTestCase {
 			calendar.getTimeInMillis() + duration.getInterval() + Time.MINUTE);
 
 		assertTZSRecurrenceEquals(
-			false, tszRecurrence, afterTSZRecurrenceCalendar);
+			false, tzsRecurrence, afterTSZRecurrenceCalendar);
 
 		Calendar beforeTSZRecurrenceCalendar = Calendar.getInstance();
 
@@ -119,7 +119,7 @@ public class TZSRecurrenceTest extends RecurrenceTestCase {
 			calendar.getTimeInMillis() - Time.MINUTE);
 
 		assertTZSRecurrenceEquals(
-			false, tszRecurrence, beforeTSZRecurrenceCalendar);
+			false, tzsRecurrence, beforeTSZRecurrenceCalendar);
 
 		Calendar endOfTSZRecurrenceCalendar = Calendar.getInstance();
 
@@ -127,7 +127,7 @@ public class TZSRecurrenceTest extends RecurrenceTestCase {
 			calendar.getTimeInMillis() + duration.getInterval() - Time.MINUTE);
 
 		assertTZSRecurrenceEquals(
-			true, tszRecurrence, endOfTSZRecurrenceCalendar);
+			true, tzsRecurrence, endOfTSZRecurrenceCalendar);
 
 		Calendar startOfTSZRecurrenceCalendar = Calendar.getInstance();
 
@@ -135,7 +135,7 @@ public class TZSRecurrenceTest extends RecurrenceTestCase {
 			calendar.getTimeInMillis() + Time.MINUTE);
 
 		assertTZSRecurrenceEquals(
-			true, tszRecurrence, startOfTSZRecurrenceCalendar);
+			true, tzsRecurrence, startOfTSZRecurrenceCalendar);
 	}
 
 	protected void checkWithinTSZRecurrence(TimeZone timeZone) {
@@ -187,17 +187,17 @@ public class TZSRecurrenceTest extends RecurrenceTestCase {
 		// Returns a month by day (e.g. first Monday, second Tuesday of every
 		// month) recurrence object based on the UTC start date of the event
 
-		TZSRecurrence tszRecurrence = new TZSRecurrence(
+		TZSRecurrence tzsRecurrence = new TZSRecurrence(
 			dtStart, duration, Recurrence.MONTHLY);
 
 		DayAndPosition[] dayAndPositions = {new DayAndPosition(day, position)};
 
-		tszRecurrence.setByDay(dayAndPositions);
+		tzsRecurrence.setByDay(dayAndPositions);
 
-		tszRecurrence.setInterval(interval);
-		tszRecurrence.setTimeZone(timeZone);
+		tzsRecurrence.setInterval(interval);
+		tzsRecurrence.setTimeZone(timeZone);
 
-		return tszRecurrence;
+		return tzsRecurrence;
 	}
 
 	protected TZSRecurrence getMonthByMonthDayTSZRecurrence(
@@ -207,14 +207,14 @@ public class TZSRecurrenceTest extends RecurrenceTestCase {
 		// Returns a month by month day (e.g. the 5th, or the 6th of every
 		// month) recurrence object based on the UTC start date of the event
 
-		TZSRecurrence tszRecurrence = new TZSRecurrence(
+		TZSRecurrence tzsRecurrence = new TZSRecurrence(
 			dtStart, duration, Recurrence.MONTHLY);
 
-		tszRecurrence.setByMonthDay(new int[] {monthDay});
-		tszRecurrence.setInterval(interval);
-		tszRecurrence.setTimeZone(timeZone);
+		tzsRecurrence.setByMonthDay(new int[] {monthDay});
+		tzsRecurrence.setInterval(interval);
+		tzsRecurrence.setTimeZone(timeZone);
 
-		return tszRecurrence;
+		return tzsRecurrence;
 	}
 
 	protected Calendar getOutsideDSTCalendar(int month, int date) {

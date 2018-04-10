@@ -137,15 +137,15 @@ public class DDMDataProviderPaginatorServlet extends HttpServlet {
 			DDMDataProviderResponse ddmDataProviderResponse =
 				_ddmDataProviderInvoker.invoke(ddmDataProviderRequest);
 
-			DDMDataProviderResponseOutput ddDataProviderResponseOutput =
+			DDMDataProviderResponseOutput ddmDataProviderResponseOutput =
 				ddmDataProviderResponse.get(outputParameterName);
 
-			if (ddDataProviderResponseOutput == null) {
+			if (ddmDataProviderResponseOutput == null) {
 				return dataProviderResult;
 			}
 
 			List<KeyValuePair> keyValuePairs =
-				ddDataProviderResponseOutput.getValue(List.class);
+				ddmDataProviderResponseOutput.getValue(List.class);
 
 			for (KeyValuePair keyValuePair : keyValuePairs) {
 				Map<String, String> result = new HashMap<>();

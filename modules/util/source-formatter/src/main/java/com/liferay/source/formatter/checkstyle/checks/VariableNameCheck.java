@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
@@ -22,6 +23,7 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -38,12 +40,21 @@ public class VariableNameCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		DetailAST modifiersAST = detailAST.findFirstToken(TokenTypes.MODIFIERS);
+
+		if (modifiersAST.branchContains(TokenTypes.LITERAL_PROTECTED) ||
+			modifiersAST.branchContains(TokenTypes.LITERAL_PUBLIC)) {
+
+			return;
+		}
+
 		DetailAST nameAST = detailAST.findFirstToken(TokenTypes.IDENT);
 
 		String name = nameAST.getText();
 
 		_checkCaps(detailAST, name);
 		_checkIsVariableName(detailAST, name);
+		_checkTypo(detailAST, name);
 	}
 
 	private void _checkCaps(DetailAST detailAST, String name) {
@@ -95,6 +106,84 @@ public class VariableNameCheck extends BaseCheck {
 		}
 	}
 
+	private void _checkTypo(DetailAST detailAST, String name) {
+		DetailAST typeAST = detailAST.findFirstToken(TokenTypes.TYPE);
+
+		DetailAST firstChildAST = typeAST.getFirstChild();
+
+		if ((firstChildAST == null) ||
+			(firstChildAST.getType() != TokenTypes.IDENT)) {
+
+			return;
+		}
+
+		String typeName = firstChildAST.getText();
+
+		String s1 = StringUtil.toLowerCase(_trimTrailingDigits(typeName));
+
+		String originalName = name;
+
+		boolean leadingUnderLine = false;
+
+		if (name.startsWith(StringPool.UNDERLINE)) {
+			leadingUnderLine = true;
+
+			name = name.substring(1);
+		}
+
+		String s2 = StringUtil.toLowerCase(_trimTrailingDigits(name));
+
+		if (s1.equals(s2)) {
+			return;
+		}
+
+		if ((s1.charAt(0) != s2.charAt(0)) ||
+			(s1.charAt(s1.length() - 1) != s2.charAt(s2.length() - 1))) {
+
+			return;
+		}
+
+		int min = Math.min(s1.length(), s2.length());
+		int diff = Math.abs(s1.length() - s2.length());
+
+		if ((min < 5) || (diff > 1)) {
+			return;
+		}
+
+		int i = StringUtil.startsWithWeight(s1, s2);
+
+		s1 = s1.substring(i);
+		s2 = s2.substring(i);
+
+		if (s2.startsWith(StringPool.UNDERLINE)) {
+			return;
+		}
+
+		for (int j = 1;; j++) {
+			if ((j > s1.length()) || (j > s2.length())) {
+				break;
+			}
+
+			if (s1.charAt(s1.length() - j) != s2.charAt(s2.length() - j)) {
+				if (!_containSameCharacters(s1, s2)) {
+					return;
+				}
+
+				break;
+			}
+		}
+
+		String expectedName = _getExpectedVariableName(typeName);
+
+		if (leadingUnderLine) {
+			expectedName = StringPool.UNDERLINE + expectedName;
+		}
+
+		log(
+			detailAST.getLineNo(), _MSG_TYPO_VARIABLE, originalName,
+			expectedName);
+	}
+
 	private boolean _classHasVariableWithName(
 		DetailAST detailAST, String variableName) {
 
@@ -138,6 +227,44 @@ public class VariableNameCheck extends BaseCheck {
 		return false;
 	}
 
+	private boolean _containSameCharacters(String s1, String s2) {
+		char[] chars1 = s1.toCharArray();
+		char[] chars2 = s2.toCharArray();
+
+		Arrays.sort(chars1);
+		Arrays.sort(chars2);
+
+		return Arrays.equals(chars1, chars2);
+	}
+
+	private String _getExpectedVariableName(String typeName) {
+		if (StringUtil.isUpperCase(typeName)) {
+			return StringUtil.toLowerCase(typeName);
+		}
+
+		for (int i = 0; i < typeName.length(); i++) {
+			char c = typeName.charAt(i);
+
+			if (!Character.isLowerCase(c)) {
+				continue;
+			}
+
+			if (i == 0) {
+				return typeName;
+			}
+
+			if (i == 1) {
+				return StringUtil.toLowerCase(typeName.substring(0, 1)) +
+					typeName.substring(1);
+			}
+
+			return StringUtil.toLowerCase(typeName.substring(0, i - 1)) +
+				typeName.substring(i - 1);
+		}
+
+		return StringUtil.toLowerCase(typeName);
+	}
+
 	private boolean _isBooleanType(DetailAST typeAST) {
 		DetailAST childAST = typeAST.getFirstChild();
 
@@ -160,12 +287,24 @@ public class VariableNameCheck extends BaseCheck {
 		return false;
 	}
 
+	private String _trimTrailingDigits(String s) {
+		for (int i = s.length() - 1; i >= 0; i--) {
+			if (!Character.isDigit(s.charAt(i))) {
+				return s.substring(0, i + 1);
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private static final String[][] _ALL_CAPS_STRINGS = {
 		new String[] {"DDL", "Ddl"}, new String[] {"DDM", "Ddm"},
 		new String[] {"DL", "Dl"}, new String[] {"PK", "Pk"}
 	};
 
 	private static final String _MSG_RENAME_VARIABLE = "variable.rename";
+
+	private static final String _MSG_TYPO_VARIABLE = "variable.typo";
 
 	private static final Pattern _isVariableNamePattern = Pattern.compile(
 		"(_?)(is|IS_)([A-Z])(.*)");

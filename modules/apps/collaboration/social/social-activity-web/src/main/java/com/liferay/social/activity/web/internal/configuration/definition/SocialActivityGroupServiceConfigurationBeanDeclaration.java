@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.social.activity.configuration.definition;
+package com.liferay.social.activity.web.internal.configuration.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 import com.liferay.social.activity.configuration.SocialActivityGroupServiceConfiguration;

@@ -494,10 +494,10 @@
 		<column name="viewCount" type="int" />
 		<column name="lastPostByUserId" type="long" />
 		<column name="lastPostDate" type="Date" />
+		<column name="lastPublishDate" type="Date" />
 		<column name="priority" type="double" />
 		<column name="question" type="boolean" />
 		<column name="title" type="String" />
-		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" uad-anonymize-field-name="fullName" />

@@ -35,10 +35,6 @@
 				var anchor = event.delegateTarget;
 				var uri = new Uri(anchor.href);
 
-				if (!uri.getParameterValue('download')) {
-					return;
-				}
-
 				var match = pathnameRegexp.exec(uri.getPathname());
 
 				if (match) {

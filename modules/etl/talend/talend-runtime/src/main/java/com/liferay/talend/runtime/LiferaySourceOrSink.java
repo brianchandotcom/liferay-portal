@@ -142,7 +142,7 @@ public class LiferaySourceOrSink
 				_log.debug(ae.toString());
 			}
 
-			throw new IOException(ae);
+			throw ae;
 		}
 
 		return _toJsonNode(apioResult);
@@ -631,9 +631,7 @@ public class LiferaySourceOrSink
 				(LiferayConnectionProperties)
 					liferayConnectionPropertiesProvider);
 
-			RESTClient restClient = liferaySourceOrSink.getRestClient(null);
-
-			restClient.executeGetRequest();
+			doApioGetRequest((RuntimeContainer)null);
 
 			validationResultMutable.setMessage(
 				i18nMessages.getMessage("success.validation.connection"));
@@ -643,6 +641,12 @@ public class LiferaySourceOrSink
 				i18nMessages.getMessage(
 					"error.validation.connection.testconnection",
 					ae.getLocalizedMessage(), ae.getCode()));
+			validationResultMutable.setStatus(Result.ERROR);
+		}
+		catch (IOException ioe) {
+			validationResultMutable.setMessage(
+				i18nMessages.getMessage(
+					"error.validation.connection.testconnection.json"));
 			validationResultMutable.setStatus(Result.ERROR);
 		}
 		catch (ProcessingException pe) {
@@ -760,10 +764,7 @@ public class LiferaySourceOrSink
 			jsonNode = doApioGetRequest((RuntimeContainer)null);
 		}
 		catch (IOException ioe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to fetch the list of exposed resources", ioe);
-			}
+			_log.error("Unable to fetch the list of exposed resources", ioe);
 
 			throw ioe;
 		}

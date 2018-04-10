@@ -56,7 +56,7 @@ if (portletTitleBasedNavigation) {
 <c:if test="<%= !portletTitleBasedNavigation %>">
 	<div class="autofit-float autofit-row">
 		<div class="autofit-col autofit-col-expand">
-			<h3><%= message.getSubject() %></h3>
+			<h3><%= HtmlUtil.escape(message.getSubject()) %></h3>
 		</div>
 
 		<div class="autofit-col autofit-col-end">

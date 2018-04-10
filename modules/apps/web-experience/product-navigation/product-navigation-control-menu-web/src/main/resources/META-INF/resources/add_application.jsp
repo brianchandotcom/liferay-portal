@@ -43,8 +43,6 @@ refererURL.setParameter("updateLayout", "true");
 		</c:if>
 
 		<%
-		int portletCategoryIndex = 0;
-
 		PortletCategory portletCategory = (PortletCategory)WebAppPool.get(company.getCompanyId(), WebKeys.PORTLET_CATEGORY);
 
 		portletCategory = PortletCategoryUtil.getRelevantPortletCategory(permissionChecker, user.getCompanyId(), layout, portletCategory, layoutTypePortlet);
@@ -54,6 +52,10 @@ refererURL.setParameter("updateLayout", "true");
 		categories = ListUtil.sort(categories, new PortletCategoryComparator(locale));
 
 		for (PortletCategory curPortletCategory : categories) {
+			int portletCategoryIndex = GetterUtil.getInteger(request.getAttribute(WebKeys.PORTLET_CATEGORY_INDEX), -1);
+
+			portletCategoryIndex++;
+
 			if (curPortletCategory.isHidden()) {
 				continue;
 			}
@@ -65,7 +67,6 @@ refererURL.setParameter("updateLayout", "true");
 			<liferay-util:include page="/view_category.jsp" servletContext="<%= application %>" />
 
 		<%
-			portletCategoryIndex++;
 		}
 		%>
 

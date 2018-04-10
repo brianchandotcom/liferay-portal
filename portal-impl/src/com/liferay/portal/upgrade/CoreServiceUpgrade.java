@@ -133,10 +133,7 @@ public class CoreServiceUpgrade extends UpgradeProcess {
 
 	protected Set<Version> getPendingSchemaVersions(Version fromSchemaVersion) {
 		SortedMap<Version, UpgradeProcess> pendingUpgradeProcesses =
-			new TreeMap<>(_upgradeProcesses);
-
-		pendingUpgradeProcesses = _upgradeProcesses.tailMap(
-			fromSchemaVersion, false);
+			_upgradeProcesses.tailMap(fromSchemaVersion, false);
 
 		return pendingUpgradeProcesses.keySet();
 	}

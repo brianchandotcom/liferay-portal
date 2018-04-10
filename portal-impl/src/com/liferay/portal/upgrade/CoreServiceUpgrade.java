@@ -16,7 +16,6 @@ package com.liferay.portal.upgrade;
 
 import aQute.bnd.version.Version;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -68,13 +67,18 @@ public class CoreServiceUpgrade extends UpgradeProcess {
 		return requiredSchemaVersion;
 	}
 
-	public static boolean isInLatestSchemaVersion() throws SQLException {
-		return getLatestSchemaVersion().equals(getCurrentSchemaVersion());
+	public static boolean isInLatestSchemaVersion(Connection connection)
+		throws SQLException {
+
+		return getLatestSchemaVersion().equals(
+			getCurrentSchemaVersion(connection));
 	}
 
-	public static boolean isInRequiredSchemaVersion() throws SQLException {
-		if (getRequiredSchemaVersion().compareTo(getCurrentSchemaVersion()) <=
-				0) {
+	public static boolean isInRequiredSchemaVersion(Connection connection)
+		throws SQLException {
+
+		if (getRequiredSchemaVersion().compareTo(
+				getCurrentSchemaVersion(connection)) <= 0) {
 
 			return true;
 		}
@@ -82,9 +86,10 @@ public class CoreServiceUpgrade extends UpgradeProcess {
 		return false;
 	}
 
-	protected static Version getCurrentSchemaVersion() throws SQLException {
-		try (Connection con = DataAccess.getConnection();
-			PreparedStatement ps = con.prepareStatement(
+	protected static Version getCurrentSchemaVersion(Connection connection)
+		throws SQLException {
+
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select schemaVersion from Release_ where servletContextName " +
 					"= ?");) {
 
@@ -109,7 +114,7 @@ public class CoreServiceUpgrade extends UpgradeProcess {
 		_initializeSchemaVersion(connection);
 
 		for (Version pendingSchemaVersion :
-				getPendingSchemaVersions(getCurrentSchemaVersion())) {
+				getPendingSchemaVersions(getCurrentSchemaVersion(connection))) {
 
 			upgrade(_upgradeProcesses.get(pendingSchemaVersion));
 

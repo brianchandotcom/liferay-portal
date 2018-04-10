@@ -31,6 +31,7 @@ import java.util.stream.Stream;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Mate Thurzo
@@ -90,6 +91,11 @@ public class RelationshipManagerImpl implements RelationshipManager {
 
 				emitter.emit(modelClassName);
 			});
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
 	@SuppressWarnings("unchecked")

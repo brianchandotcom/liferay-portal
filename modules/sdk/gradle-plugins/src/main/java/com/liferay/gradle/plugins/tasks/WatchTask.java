@@ -185,14 +185,24 @@ public class WatchTask extends DefaultTask {
 		File outputFile = getOutputFile();
 
 		if (outputFile.exists()) {
-			byte[] bytes = Files.readAllBytes(outputFile.toPath());
+			try (GogoShellClient gogoShellClient = new GogoShellClient()) {
+				long outputFileBundleId = _readLong(outputFile);
 
-			String bundleIdString = new String(bytes);
+				String bundleSymbolicName = _readBundleSymbolicName(
+					getBundleDir());
 
-			bundleId = Long.parseLong(bundleIdString);
+				long installedBundleId = _getBundleId(
+					bundleSymbolicName, gogoShellClient);
+
+				if (installedBundleId == outputFileBundleId) {
+					bundleId = outputFileBundleId;
+				}
+			}
+			catch (Exception e) {
+			}
 		}
 
-		if (((bundleId < 1) || !incrementalTaskInputs.isIncremental())) {
+		if ((bundleId < 1) || !incrementalTaskInputs.isIncremental()) {
 			_installBundleFully();
 
 			return;
@@ -324,6 +334,28 @@ public class WatchTask extends DefaultTask {
 		return _newBundleDTO(id, state, symbolicName);
 	}
 
+	private static String _readBundleSymbolicName(File bundleDir)
+		throws IOException {
+
+		File manifestFile = new File(bundleDir, "META-INF/MANIFEST.MF");
+
+		try (InputStream inputStream = new FileInputStream(manifestFile)) {
+			Manifest manifest = new Manifest(inputStream);
+
+			Attributes attributes = manifest.getMainAttributes();
+
+			return attributes.getValue("Bundle-SymbolicName");
+		}
+	}
+
+	private static long _readLong(File file) throws IOException {
+		byte[] bytes = Files.readAllBytes(file.toPath());
+
+		String content = new String(bytes);
+
+		return Long.parseLong(content);
+	}
+
 	private static String _sendGogoShellCommand(
 			GogoShellClient gogoShellClient, String command)
 		throws IOException {
@@ -414,7 +446,7 @@ public class WatchTask extends DefaultTask {
 		File manifestFile = new File(bundleDir, "META-INF/MANIFEST.MF");
 
 		try (GogoShellClient gogoShellClient = new GogoShellClient();
-				InputStream inputStream = new FileInputStream(manifestFile)) {
+			InputStream inputStream = new FileInputStream(manifestFile)) {
 
 			Manifest manifest = new Manifest(inputStream);
 
@@ -540,7 +572,7 @@ public class WatchTask extends DefaultTask {
 	private void _startBundle(long bundleId, GogoShellClient gogoShellClient)
 		throws IOException {
 
-		String command = String.format("start %", bundleId);
+		String command = String.format("start %s", bundleId);
 
 		String response = _sendGogoShellCommand(gogoShellClient, command);
 

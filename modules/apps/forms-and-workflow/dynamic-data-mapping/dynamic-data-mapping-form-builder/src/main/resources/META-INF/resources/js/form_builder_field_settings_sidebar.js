@@ -3,7 +3,7 @@ AUI.add(
 	function(A) {
 		var CSS_PREFIX = A.getClassName('form', 'builder', 'field', 'settings', 'sidebar');
 
-		var TPL_LOADING = '<div class="loading-icon loading-icon-lg"></div>';
+		var TPL_LOADING = '<div class="loading-animation"></div>';
 
 		var TPL_NAVBAR_WRAPER = '<nav class="navbar navbar-default navbar-no-collapse"></nav>';
 
@@ -241,6 +241,10 @@ AUI.add(
 					_changeFieldTypeMenu: function(fieldType) {
 						var instance = this;
 
+						instance._showLoading();
+
+						instance._disableSidebarHeader();
+
 						A.one('#field-type-menu-content').html(instance._getFieldTypeMenuLayout(fieldType));
 					},
 
@@ -262,9 +266,11 @@ AUI.add(
 							}
 						);
 
-						settingsForm.render();
-
 						instance._removeLoading();
+
+						instance._enableSidebarHeader();
+
+						settingsForm.render();
 
 						instance._setFocusToFirstPageField(settingsForm);
 
@@ -290,6 +296,22 @@ AUI.add(
 						return toolbar;
 					},
 
+					_disableSidebarHeader: function() {
+						var instance = this;
+
+						var contentBox = instance.get('contentBox');
+
+						contentBox.all('.sidebar .sidebar-header .dropdown .dropdown-toggle.nav-link').addClass('disabled');
+					},
+
+					_enableSidebarHeader: function() {
+						var instance = this;
+
+						var contentBox = instance.get('contentBox');
+
+						contentBox.all('.sidebar .sidebar-header .dropdown .dropdown-toggle.nav-link').removeClass('disabled');
+					},
+
 					_getFieldTypeMenuLayout: function(fieldType) {
 						var instance = this;
 
@@ -307,7 +329,6 @@ AUI.add(
 					},
 
 					_isValueEmpty: function(settingsFormFieldContextValue) {
-
 						if (Lang.isString(settingsFormFieldContextValue)) {
 							return settingsFormFieldContextValue.trim() === '';
 						}
@@ -371,18 +392,15 @@ AUI.add(
 										var previousFieldLocalizable = previousSettingsFormFieldContext.localizable;
 										var previousFieldName = previousSettingsFormFieldContext.fieldName;
 
-										if (!(fieldName === 'type') && fieldName === previousFieldName) {
-
+										if (!(fieldName === 'type') && (fieldName === previousFieldName)) {
 											if (fieldLocalizable && previousFieldLocalizable) {
 												settingsFormFieldContext.localizedValue = previousSettingsFormFieldContext.localizedValue;
 											}
-
 											if (instance._isSameType(previousSettingsFormFieldContext, settingsFormFieldContext)) {
 												if (!instance._isValueEmpty(previousSettingsFormFieldContext.value)) {
 													settingsFormFieldContext.value = previousSettingsFormFieldContext.value;
 													settingsFormFieldContext.dataType = previousSettingsFormFieldContext.dataType;
 												}
-
 											}
 											else if (settingsFormFieldContext.localizedValue) {
 												var settingsFormFieldContextLocalizedValueKeys = Object.keys(settingsFormFieldContext.localizedValue);
@@ -393,9 +411,7 @@ AUI.add(
 													}
 												);
 											}
-
 										}
-
 									}
 								);
 							}
@@ -407,9 +423,12 @@ AUI.add(
 					_removeLoading: function() {
 						var instance = this;
 
-						var boundingBox = instance.get('boundingBox');
+						var contentBox = instance.get('contentBox');
+						var loading = contentBox.one('.loading-animation');
 
-						boundingBox.removeClass('loading-data');
+						if (loading) {
+							loading.remove();
+						}
 					},
 
 					_saveCurrentContext: function() {
@@ -451,14 +470,11 @@ AUI.add(
 					_showLoading: function() {
 						var instance = this;
 
-						var boundingBox = instance.get('boundingBox');
 						var contentBox = instance.get('contentBox');
 
-						if (!contentBox.one('.loading-icon')) {
+						if (!contentBox.one('.loading-animation')) {
 							contentBox.append(TPL_LOADING);
 						}
-
-						boundingBox.addClass('loading-data');
 					},
 
 					_updateField: function(previousField, field, column) {

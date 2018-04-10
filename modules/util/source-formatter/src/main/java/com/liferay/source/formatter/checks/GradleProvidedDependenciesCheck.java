@@ -34,9 +34,7 @@ public class GradleProvidedDependenciesCheck extends BaseFileCheck {
 			return content;
 		}
 
-		List<String> blocks = _getBlocks(content);
-
-		for (String block : blocks) {
+		for (String block : _getBlocks(content)) {
 			content = _format(content, block);
 		}
 
@@ -49,9 +47,10 @@ public class GradleProvidedDependenciesCheck extends BaseFileCheck {
 	}
 
 	private String _format(String content, String dependencies) {
-		String s = dependencies.replaceAll("\\bprovided\\b", "compileOnly");
+		String newDependencies = dependencies.replaceAll(
+			"\\bprovided\\b", "compileOnly");
 
-		return StringUtil.replace(content, dependencies, s);
+		return StringUtil.replace(content, dependencies, newDependencies);
 	}
 
 	private List<String> _getBlocks(String content) {

@@ -14,17 +14,19 @@
 
 package com.liferay.dynamic.data.mapping.service.permission;
 
-import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
-import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
- * @deprecated As of 3.0.0, replaced by {@link DDMFormInstancePermission}
+ * @deprecated As of 3.0.0, with no direct replacement
  */
+@Component(immediate = true, service = DDMFormInstanceRecordPermission.class)
 @Deprecated
 public class DDMFormInstanceRecordPermission {
 
@@ -33,11 +35,8 @@ public class DDMFormInstanceRecordPermission {
 			DDMFormInstanceRecord ddmFormInstanceRecord, String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, ddmFormInstanceRecord, actionId)) {
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, DDMFormInstanceRecord.class.getName(),
-				ddmFormInstanceRecord.getFormInstanceRecordId(), actionId);
-		}
+		_ddmFormInstanceRecordModelResourcePermission.check(
+			permissionChecker, ddmFormInstanceRecord, actionId);
 	}
 
 	public static void check(
@@ -45,11 +44,8 @@ public class DDMFormInstanceRecordPermission {
 			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, ddmFormInstanceRecord, actionId)) {
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, DDMFormInstanceRecord.class.getName(),
-				ddmFormInstanceRecord, actionId);
-		}
+		_ddmFormInstanceRecordModelResourcePermission.check(
+			permissionChecker, ddmFormInstanceRecord, actionId);
 	}
 
 	public static boolean contains(
@@ -57,11 +53,8 @@ public class DDMFormInstanceRecordPermission {
 			DDMFormInstanceRecord ddmFormInstanceRecord, String actionId)
 		throws PortalException {
 
-		DDMFormInstance ddmFormInstance =
-			ddmFormInstanceRecord.getFormInstance();
-
-		return DDMFormInstancePermission.contains(
-			permissionChecker, ddmFormInstance, actionId);
+		return _ddmFormInstanceRecordModelResourcePermission.contains(
+			permissionChecker, ddmFormInstanceRecord, actionId);
 	}
 
 	public static boolean contains(
@@ -69,11 +62,22 @@ public class DDMFormInstanceRecordPermission {
 			String actionId)
 		throws PortalException {
 
-		DDMFormInstanceRecord ddmFormInstanceRecord =
-			DDMFormInstanceRecordLocalServiceUtil.getFormInstanceRecord(
-				formInstanceRecordId);
-
-		return contains(permissionChecker, ddmFormInstanceRecord, actionId);
+		return _ddmFormInstanceRecordModelResourcePermission.contains(
+			permissionChecker, formInstanceRecordId, actionId);
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord)",
+		unbind = "-"
+	)
+	protected void setModelResourcePermission(
+		ModelResourcePermission<DDMFormInstanceRecord>
+			modelResourcePermission) {
+
+		_ddmFormInstanceRecordModelResourcePermission = modelResourcePermission;
+	}
+
+	private static ModelResourcePermission<DDMFormInstanceRecord>
+		_ddmFormInstanceRecordModelResourcePermission;
 
 }

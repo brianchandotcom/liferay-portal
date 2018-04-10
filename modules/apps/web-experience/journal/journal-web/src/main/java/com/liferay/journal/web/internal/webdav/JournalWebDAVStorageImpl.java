@@ -17,7 +17,7 @@ package com.liferay.journal.web.internal.webdav;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
-import com.liferay.dynamic.data.mapping.webdav.DDMWebDav;
+import com.liferay.dynamic.data.mapping.webdav.DDMWebDAV;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolderConstants;
@@ -56,7 +56,7 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	public int deleteResource(WebDAVRequest webDAVRequest)
 		throws WebDAVException {
 
-		return _ddmWebDav.deleteResource(
+		return _ddmWebDAV.deleteResource(
 			webDAVRequest, getRootPath(), getToken(),
 			_portal.getClassNameId(JournalArticle.class));
 	}
@@ -65,7 +65,7 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	public Resource getResource(WebDAVRequest webDAVRequest)
 		throws WebDAVException {
 
-		return _ddmWebDav.getResource(
+		return _ddmWebDAV.getResource(
 			webDAVRequest, getRootPath(), getToken(),
 			_portal.getClassNameId(JournalArticle.class));
 	}
@@ -83,10 +83,10 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			else if (pathArray.length == 3) {
 				String type = pathArray[2];
 
-				if (type.equals(DDMWebDav.TYPE_STRUCTURES)) {
+				if (type.equals(DDMWebDAV.TYPE_STRUCTURES)) {
 					return getStructures(webDAVRequest);
 				}
-				else if (type.equals(DDMWebDav.TYPE_TEMPLATES)) {
+				else if (type.equals(DDMWebDAV.TYPE_TEMPLATES)) {
 					return getTemplates(webDAVRequest);
 				}
 			}
@@ -100,7 +100,7 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 	@Override
 	public int putResource(WebDAVRequest webDAVRequest) throws WebDAVException {
-		return _ddmWebDav.putResource(
+		return _ddmWebDAV.putResource(
 			webDAVRequest, getRootPath(), getToken(),
 			_portal.getClassNameId(JournalArticle.class));
 	}
@@ -111,11 +111,11 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		List<Resource> resources = new ArrayList<>();
 
 		resources.add(
-			_ddmWebDav.toResource(
-				webDAVRequest, DDMWebDav.TYPE_STRUCTURES, getRootPath(), true));
+			_ddmWebDAV.toResource(
+				webDAVRequest, DDMWebDAV.TYPE_STRUCTURES, getRootPath(), true));
 		resources.add(
-			_ddmWebDav.toResource(
-				webDAVRequest, DDMWebDav.TYPE_TEMPLATES, getRootPath(), true));
+			_ddmWebDAV.toResource(
+				webDAVRequest, DDMWebDAV.TYPE_TEMPLATES, getRootPath(), true));
 
 		return resources;
 	}
@@ -132,7 +132,7 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				JournalFolderConstants.RESTRICTION_TYPE_INHERIT);
 
 		for (DDMStructure ddmStructure : ddmStructures) {
-			Resource resource = _ddmWebDav.toResource(
+			Resource resource = _ddmWebDAV.toResource(
 				webDAVRequest, ddmStructure, getRootPath(), true);
 
 			resources.add(resource);
@@ -154,7 +154,7 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				QueryUtil.ALL_POS, null);
 
 		for (DDMTemplate ddmTemplate : ddmTemplates) {
-			Resource resource = _ddmWebDav.toResource(
+			Resource resource = _ddmWebDAV.toResource(
 				webDAVRequest, ddmTemplate, getRootPath(), true);
 
 			resources.add(resource);
@@ -171,8 +171,8 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDMWebDav(DDMWebDav ddmWebDav) {
-		_ddmWebDav = ddmWebDav;
+	protected void setDDMWebDAV(DDMWebDAV ddmWebDAV) {
+		_ddmWebDAV = ddmWebDAV;
 	}
 
 	@Reference(unbind = "-")
@@ -183,7 +183,7 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	}
 
 	private DDMTemplateLocalService _ddmTemplateLocalService;
-	private DDMWebDav _ddmWebDav;
+	private DDMWebDAV _ddmWebDAV;
 	private JournalFolderService _journalFolderService;
 
 	@Reference

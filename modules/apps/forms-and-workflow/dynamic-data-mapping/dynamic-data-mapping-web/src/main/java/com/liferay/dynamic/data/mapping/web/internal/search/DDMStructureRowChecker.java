@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.mapping.web.internal.search;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission;
+import com.liferay.dynamic.data.mapping.web.internal.security.permission.resource.DDMStructurePermission;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

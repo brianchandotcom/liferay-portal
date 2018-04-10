@@ -19,8 +19,6 @@ dependencies {
 	compileOnly project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
 	compileOnly project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-data-provider-web")
 	compileOnly project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-form-taglib")
-	compileOnly project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-service")
-	compileOnly project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-validator")
 	compileOnly project(":apps:foundation:captcha:captcha-api")
 	compileOnly project(":apps:foundation:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:foundation:frontend-taglib:frontend-taglib-clay")

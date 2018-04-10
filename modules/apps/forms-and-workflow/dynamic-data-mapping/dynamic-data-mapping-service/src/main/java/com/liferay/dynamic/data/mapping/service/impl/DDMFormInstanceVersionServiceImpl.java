@@ -14,11 +14,13 @@
 
 package com.liferay.dynamic.data.mapping.service.impl;
 
+import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
 import com.liferay.dynamic.data.mapping.service.base.DDMFormInstanceVersionServiceBaseImpl;
-import com.liferay.dynamic.data.mapping.service.permission.DDMFormInstancePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -39,7 +41,7 @@ public class DDMFormInstanceVersionServiceImpl
 			ddmFormInstanceVersionLocalService.getFormInstanceVersion(
 				ddmFormInstanceVersionId);
 
-		DDMFormInstancePermission.check(
+		_ddmFormInstanceVersionPermissionModelResourcePermission.check(
 			getPermissionChecker(), ddmFormInstanceVersion.getFormInstanceId(),
 			ActionKeys.VIEW);
 
@@ -52,7 +54,7 @@ public class DDMFormInstanceVersionServiceImpl
 			OrderByComparator<DDMFormInstanceVersion> orderByComparator)
 		throws PortalException {
 
-		DDMFormInstancePermission.check(
+		_ddmFormInstanceVersionPermissionModelResourcePermission.check(
 			getPermissionChecker(), ddmFormInstanceId, ActionKeys.VIEW);
 
 		return ddmFormInstanceVersionLocalService.getFormInstanceVersions(
@@ -63,7 +65,7 @@ public class DDMFormInstanceVersionServiceImpl
 	public int getFormInstanceVersionsCount(long ddmFormInstanceId)
 		throws PortalException {
 
-		DDMFormInstancePermission.check(
+		_ddmFormInstanceVersionPermissionModelResourcePermission.check(
 			getPermissionChecker(), ddmFormInstanceId, ActionKeys.VIEW);
 
 		return ddmFormInstanceVersionLocalService.getFormInstanceVersionsCount(
@@ -75,11 +77,18 @@ public class DDMFormInstanceVersionServiceImpl
 			long ddmFormInstanceId)
 		throws PortalException {
 
-		DDMFormInstancePermission.check(
+		_ddmFormInstanceVersionPermissionModelResourcePermission.check(
 			getPermissionChecker(), ddmFormInstanceId, ActionKeys.VIEW);
 
 		return ddmFormInstanceVersionLocalService.getLatestFormInstanceVersion(
 			ddmFormInstanceId);
 	}
+
+	private static volatile ModelResourcePermission<DDMFormInstance>
+		_ddmFormInstanceVersionPermissionModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				DDMFormInstanceVersionServiceImpl.class,
+				"_ddmFormInstanceVersionPermissionModelResourcePermission",
+				DDMFormInstance.class);
 
 }

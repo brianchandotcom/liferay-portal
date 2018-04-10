@@ -33,7 +33,7 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, scopeGroupId, template, refererPortletName, ActionKeys.UPDATE) %>">
+	<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, template, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcPath" value="/edit_template.jsp" />
 			<portlet:param name="groupId" value="<%= String.valueOf(template.getGroupId()) %>" />
@@ -48,7 +48,7 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, scopeGroupId, template, refererPortletName, ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, template, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= DDMTemplatePermission.getTemplateModelResourceName(template.getResourceClassNameId()) %>"
 			modelResourceDescription="<%= template.getName(locale) %>"
@@ -80,7 +80,7 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, scopeGroupId, template, refererPortletName, ActionKeys.DELETE) %>">
+	<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, template, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="deleteTemplate" var="deleteURL">
 			<portlet:param name="mvcPath" value="/view_template.jsp" />
 			<portlet:param name="templateId" value="<%= String.valueOf(template.getTemplateId()) %>" />

@@ -110,6 +110,8 @@ for (Layout scopeGroupLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layou
 		<liferay-frontend:edit-form-footer>
 			<liferay-frontend:button-row>
 				<aui:button type="submit" />
+
+				<aui:button type="cancel" />
 			</liferay-frontend:button-row>
 		</liferay-frontend:edit-form-footer>
 	</liferay-frontend:edit-form>

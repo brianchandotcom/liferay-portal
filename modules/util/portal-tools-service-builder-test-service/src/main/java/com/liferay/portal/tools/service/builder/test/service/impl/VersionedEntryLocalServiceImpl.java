@@ -14,7 +14,11 @@
 
 package com.liferay.portal.tools.service.builder.test.service.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.tools.service.builder.test.model.VersionedEntryContentVersion;
 import com.liferay.portal.tools.service.builder.test.service.base.VersionedEntryLocalServiceBaseImpl;
+
+import java.util.List;
 
 /**
  * The implementation of the versioned entry local service.
@@ -33,10 +37,30 @@ import com.liferay.portal.tools.service.builder.test.service.base.VersionedEntry
 public class VersionedEntryLocalServiceImpl
 	extends VersionedEntryLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.portal.tools.service.builder.test.service.VersionedEntryLocalServiceUtil} to access the versioned entry local service.
-	 */
+	@Override
+	public VersionedEntryContentVersion fetchVersionedEntryContentVersion(
+		long versionedEntryId, String languageId, int version) {
+
+		return versionedEntryContentVersionPersistence.
+			fetchByVersionedEntryId_LanguageId_Version(
+				versionedEntryId, languageId, version);
+	}
+
+	@Override
+	public List<VersionedEntryContentVersion> getVersionedEntryContentVersions(
+		long versionedEntryId) {
+
+		return versionedEntryContentVersionPersistence.findByVersionedEntryId(
+			versionedEntryId);
+	}
+
+	@Override
+	public List<VersionedEntryContentVersion> getVersionedEntryContentVersions(
+			long versionedEntryId, String languageId)
+		throws PortalException {
+
+		return versionedEntryContentVersionPersistence.
+			findByVersionedEntryId_LanguageId(versionedEntryId, languageId);
+	}
 
 }

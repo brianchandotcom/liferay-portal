@@ -43,8 +43,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return batchName;
 	}
 
-	public GitWorkingDirectory getGitWorkingDirectory() {
-		return gitWorkingDirectory;
+	public PortalGitWorkingDirectory getPortalGitWorkingDirectory() {
+		return portalGitWorkingDirectory;
 	}
 
 	public Properties getPortalTestProperties() {
@@ -52,16 +52,16 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	protected BatchTestClassGroup(
-		String batchName, GitWorkingDirectory gitWorkingDirectory,
+		String batchName, PortalGitWorkingDirectory portalGitWorkingDirectory,
 		String testSuiteName) {
 
 		this.batchName = batchName;
-		this.gitWorkingDirectory = gitWorkingDirectory;
+		this.portalGitWorkingDirectory = portalGitWorkingDirectory;
 		this.testSuiteName = testSuiteName;
 
 		portalTestProperties = JenkinsResultsParserUtil.getProperties(
 			new File(
-				this.gitWorkingDirectory.getWorkingDirectory(),
+				this.portalGitWorkingDirectory.getWorkingDirectory(),
 				"test.properties"));
 
 		_setTestRelevantChanges();
@@ -188,7 +188,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	protected final Map<Integer, AxisTestClassGroup> axisTestClassGroups =
 		new HashMap<>();
 	protected final String batchName;
-	protected final GitWorkingDirectory gitWorkingDirectory;
+	protected final PortalGitWorkingDirectory portalGitWorkingDirectory;
 	protected final Properties portalTestProperties;
 	protected boolean testRelevantChanges;
 	protected final String testSuiteName;

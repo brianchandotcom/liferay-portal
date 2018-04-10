@@ -28,11 +28,13 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public class VersionedEntryContentVersionImpl
 	extends VersionedEntryContentVersionBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a versioned entry content version model instance should use the {@link com.liferay.portal.tools.service.builder.test.model.VersionedEntryContentVersion} interface instead.
 	 */
 	public VersionedEntryContentVersionImpl() {
 	}
+
 }

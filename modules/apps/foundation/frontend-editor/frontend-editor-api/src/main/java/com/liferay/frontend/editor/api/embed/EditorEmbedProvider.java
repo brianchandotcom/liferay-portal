@@ -25,8 +25,8 @@ package com.liferay.frontend.editor.api.embed;
  * <p>
  * The embed providers can optionally be categorized by using the
  * <code>type</code> OSGi property with any of the values defined in
- * {@link EditorEmbedProviderTypeConstants}. By default the provider will be
- * categorized as {@link EditorEmbedProviderTypeConstants.UNKNOWN} unless
+ * {@link EditorEmbedProviderTypeConstants}. By default, the provider is
+ * categorized as {@link EditorEmbedProviderTypeConstants.UNKNOWN}, unless
  * specified otherwise.
  * </p>
  *
@@ -42,33 +42,31 @@ public interface EditorEmbedProvider {
 	public String getId();
 
 	/**
-	 * Returns the template that will be used by the editor to embed the
+	 * Returns the template that is used by the editor to embed the content.
+	 *
+	 * The template accepts the <code>{embedId}</code> that represents the ID of
+	 * the content to embed. This value is obtained from the URL scheme regular
+	 * expressions.
+	 *
+	 * This template is usually an iframe to the provider that displays the
 	 * content.
 	 *
-	 * The template accepts the variable <code>{embedId}</code> that represents
-	 * the content id that should be embedded. This value is obtained from the
-	 * url scheme regular expressions.
-	 *
-	 * This template is tipically an iframe to the provider that will display
-	 * the content.
-	 *
-	 * @return the template that will be used by the editor to embedded the
-	 *         content
+	 * @return the template that is used by the editor to embed the content
 	 */
 	public String getTpl();
 
 	/**
-	 * Returns an array with the the url schemes for the embed provider.
+	 * Returns an array with the URL schemes for the embed provider.
 	 *
-	 * The url scheme describes which urls of the provider have an embedded
+	 * The URL scheme describes which URLs of the provider have an embedded
 	 * representation. Url schemes are defined using a JavaScript Regular
-	 * Expression that indicates whether a url matches with the provider or not.
+	 * Expression that indicates whether a URL matches with the provider or not.
 	 *
-	 * Every url scheme should contain a single matching group. This match will
-	 * be used replace the <code>{embedId}</code> placeholder from the provided
+	 * Every URL scheme should contain a single matching group. This match is used
+	 * to replace the <code>{embedId}</code> placeholder from the provided
 	 * template.
 	 *
-	 * @return the url schemes for the embed provider
+	 * @return the URL schemes for the embed provider
 	 */
 	public String[] getURLSchemes();
 

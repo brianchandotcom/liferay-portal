@@ -43,7 +43,7 @@
 
 		<!-- Localized entity -->
 
-		<localized-entity>
+		<localized-entity name="VersionedEntryContent">
 			<localized-column name="content" />
 		</localized-entity>
 

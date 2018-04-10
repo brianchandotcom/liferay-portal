@@ -114,6 +114,8 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 		Set<String> set = new TreeSet<>();
 
 		for (String item : StringUtils.split(string, ",")) {
+			item = item.trim();
+
 			if (item.startsWith("#")) {
 				continue;
 			}

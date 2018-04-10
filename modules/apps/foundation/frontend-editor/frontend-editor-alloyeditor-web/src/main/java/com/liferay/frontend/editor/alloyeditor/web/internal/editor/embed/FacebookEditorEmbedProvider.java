@@ -36,13 +36,6 @@ public class FacebookEditorEmbedProvider implements EditorEmbedProvider {
 	}
 
 	@Override
-	public String[] getSchemas() {
-		return new String[] {
-			"(https?:\\/\\/(?:www\\.)?facebook.com\\/\\S*\\/videos\\/\\S*)"
-		};
-	}
-
-	@Override
 	public String getTpl() {
 		return StringBundler.concat(
 			"<iframe allowFullScreen=\"true\" allowTransparency=\"true\" ",
@@ -50,6 +43,13 @@ public class FacebookEditorEmbedProvider implements EditorEmbedProvider {
 			"src=\"https://www.facebook.com/plugins/video.php?href={embedId}",
 			"&show_text=0&width=560&height=315\" scrolling=\"no\" ",
 			"style=\"border:none;overflow:hidden\" width=\"560\"></iframe>");
+	}
+
+	@Override
+	public String[] getURLSchemes() {
+		return new String[] {
+			"(https?:\\/\\/(?:www\\.)?facebook.com\\/\\S*\\/videos\\/\\S*)"
+		};
 	}
 
 }

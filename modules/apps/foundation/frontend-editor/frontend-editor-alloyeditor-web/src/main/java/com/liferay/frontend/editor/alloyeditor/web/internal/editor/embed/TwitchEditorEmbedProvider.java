@@ -36,19 +36,19 @@ public class TwitchEditorEmbedProvider implements EditorEmbedProvider {
 	}
 
 	@Override
-	public String[] getSchemas() {
-		return new String[] {
-			"https?:\\/\\/(?:www\\.)?twitch.tv\\/videos\\/(\\S*)$"
-		};
-	}
-
-	@Override
 	public String getTpl() {
 		return StringBundler.concat(
 			"<iframe allowfullscreen=\"true\" frameborder=\"0\" ",
 			"height=\"315\" ",
 			"src=\"https://player.twitch.tv/?autoplay=false&video={embedId}\" ",
 			"scrolling=\"no\" width=\"560\" ></iframe>");
+	}
+
+	@Override
+	public String[] getURLSchemes() {
+		return new String[] {
+			"https?:\\/\\/(?:www\\.)?twitch.tv\\/videos\\/(\\S*)$"
+		};
 	}
 
 }

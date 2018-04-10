@@ -76,7 +76,7 @@
 	<sql id="com.liferay.message.boards.service.persistence.MBCategoryFinder.findT_ByG_C">
 		<![CDATA[
 			SELECT
-				DISTINCT MBThread.threadId AS modelId, MBThread.modifiedDate AS modifiedDate, MBThread.priority AS priority, '' AS name, 1 AS modelCategory
+				DISTINCT MBThread.threadId AS modelId, MBThread.modifiedDate AS modifiedDate, MBThread.priority AS priority, MBThread.title AS name, 1 AS modelCategory
 			FROM
 				MBThread
 			WHERE

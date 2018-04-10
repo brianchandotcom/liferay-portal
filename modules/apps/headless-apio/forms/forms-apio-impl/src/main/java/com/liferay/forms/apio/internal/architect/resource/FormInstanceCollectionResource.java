@@ -14,21 +14,37 @@
 
 package com.liferay.forms.apio.internal.architect.resource;
 
+import com.liferay.apio.architect.language.Language;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
+import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
+import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.forms.apio.architect.identifier.FormInstanceIdentifier;
 import com.liferay.forms.apio.architect.identifier.StructureIdentifier;
+import com.liferay.forms.apio.internal.architect.form.FormContextForm;
+import com.liferay.forms.apio.internal.architect.helper.FormInstanceRecordResourceHelper;
+import com.liferay.portal.apio.architect.context.auth.MockPermissions;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.ws.rs.InternalServerErrorException;
 
@@ -66,6 +82,10 @@ public class FormInstanceCollectionResource
 
 		return builder.addGetter(
 			this::_getFormInstance
+		).addUpdater(
+			this::_evaluateContext, Language.class,
+			DDMFormRenderingContext.class, MockPermissions::validPermission,
+			FormContextForm::buildForm
 		).build();
 	}
 
@@ -108,6 +128,48 @@ public class FormInstanceCollectionResource
 		).build();
 	}
 
+	private DDMFormInstance _evaluateContext(
+		Long formInstanceId, FormContextForm formContextForm, Language language,
+		DDMFormRenderingContext ddmFormRenderingContext) {
+
+		try {
+			Locale locale = LocaleUtil.fromLanguageId(
+				formContextForm.getLanguageId());
+
+			LocaleThreadLocal.setThemeDisplayLocale(locale);
+
+			DDMFormInstance formInstance =
+				_ddmFormInstanceService.getFormInstance(formInstanceId);
+
+			DDMStructure structure = formInstance.getStructure();
+
+			DDMForm ddmForm = structure.getDDMForm();
+			DDMFormLayout ddmFormLayout = structure.getDDMFormLayout();
+
+			DDMFormValues ddmFormValues =
+				FormInstanceRecordResourceHelper.getDDMFormValues(
+					formContextForm.getFieldValues(), ddmForm, locale);
+
+			ddmFormRenderingContext.setLocale(locale);
+			ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
+
+			Map<String, Object> templateContext =
+				_ddmFormTemplateContextFactory.create(
+					ddmForm, ddmFormLayout, ddmFormRenderingContext);
+
+			JSONSerializer jsonSerializer = _jsonFactory.createJSONSerializer();
+
+			String json = jsonSerializer.serializeDeep(templateContext);
+
+			System.out.println(json);
+
+			return formInstance;
+		}
+		catch (Exception pe) {
+			throw new InternalServerErrorException(pe.getMessage(), pe);
+		}
+	}
+
 	private DDMFormInstance _getFormInstance(Long formInstanceId) {
 		try {
 			return _ddmFormInstanceService.getFormInstance(formInstanceId);
@@ -133,5 +195,11 @@ public class FormInstanceCollectionResource
 
 	@Reference
 	private DDMFormInstanceService _ddmFormInstanceService;
+
+	@Reference
+	private DDMFormTemplateContextFactory _ddmFormTemplateContextFactory;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

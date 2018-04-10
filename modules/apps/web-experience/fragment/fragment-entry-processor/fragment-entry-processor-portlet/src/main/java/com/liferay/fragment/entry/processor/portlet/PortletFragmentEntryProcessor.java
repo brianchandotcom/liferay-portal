@@ -70,7 +70,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
 	public String processFragmentEntryLinkHTML(
-			FragmentEntryLink fragmentEntryLink, String html)
+			FragmentEntryLink fragmentEntryLink, String html, String mode)
 		throws PortalException {
 
 		Document document = _getDocument(html);

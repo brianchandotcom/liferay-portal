@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.social.privatemessaging.configuration;
+package com.liferay.social.privatemessaging.internal.configuration.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.social.privatemessaging.configuration.PrivateMessagingConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 

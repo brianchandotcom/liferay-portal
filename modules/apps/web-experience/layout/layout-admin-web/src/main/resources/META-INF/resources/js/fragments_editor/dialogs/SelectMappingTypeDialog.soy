@@ -39,7 +39,7 @@
 							ref="selectMappingType"
 						>
 							{if length($_mappingTypes) != 1}
-								<option disabled value="-">-</option>
+								<option disabled value=""></option>
 							{/if}
 
 							{foreach $mappingType in $_mappingTypes}
@@ -63,7 +63,7 @@
 							id="selectMappingSubtype"
 							ref="selectMappingSubtype"
 						>
-							<option disabled value="-">-</option>
+							<option disabled value=""></option>
 
 							{foreach $mappingSubtype in $_mappingSubtypes}
 								<option value="{$mappingSubtype.id}">{$mappingSubtype.label}</option>

@@ -360,6 +360,15 @@ public interface FriendlyURLEntryLocalService extends BaseLocalService,
 		Map<java.lang.String, java.lang.String> urlTitleMap)
 		throws PortalException;
 
+	public FriendlyURLEntryLocalization updateFriendlyURLEntryLocalization(
+		FriendlyURLEntry friendlyURLEntry, java.lang.String languageId,
+		java.lang.String urlTitle) throws PortalException;
+
+	public List<FriendlyURLEntryLocalization> updateFriendlyURLEntryLocalizations(
+		FriendlyURLEntry friendlyURLEntry,
+		Map<java.lang.String, java.lang.String> urlTitleMap)
+		throws PortalException;
+
 	public FriendlyURLEntryLocalization updateFriendlyURLLocalization(
 		FriendlyURLEntryLocalization friendlyURLEntryLocalization);
 

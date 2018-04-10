@@ -39,15 +39,11 @@ import java.util.TreeMap;
  */
 public class CoreServiceUpgrade extends UpgradeProcess {
 
-	public static Version getLatestSchemaVersion() throws Exception {
-		initializeUpgradeProcesses();
-
+	public static Version getLatestSchemaVersion() {
 		return _upgradeProcesses.lastKey();
 	}
 
-	public static Version getRequiredSchemaVersion() throws Exception {
-		initializeUpgradeProcesses();
-
+	public static Version getRequiredSchemaVersion() {
 		NavigableSet<Version> reverseSchemaVersions =
 			_upgradeProcesses.descendingKeySet();
 
@@ -72,11 +68,11 @@ public class CoreServiceUpgrade extends UpgradeProcess {
 		return requiredSchemaVersion;
 	}
 
-	public static boolean isInLatestSchemaVersion() throws Exception {
+	public static boolean isInLatestSchemaVersion() throws SQLException {
 		return getLatestSchemaVersion().equals(getCurrentSchemaVersion());
 	}
 
-	public static boolean isInRequiredSchemaVersion() throws Exception {
+	public static boolean isInRequiredSchemaVersion() throws SQLException {
 		if (getRequiredSchemaVersion().compareTo(getCurrentSchemaVersion()) <=
 				0) {
 
@@ -84,10 +80,6 @@ public class CoreServiceUpgrade extends UpgradeProcess {
 		}
 
 		return false;
-	}
-
-	public CoreServiceUpgrade() throws Exception {
-		initializeUpgradeProcesses();
 	}
 
 	protected static Version getCurrentSchemaVersion() throws SQLException {
@@ -122,27 +114,6 @@ public class CoreServiceUpgrade extends UpgradeProcess {
 			ps.setString(2, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
 
 			ps.execute();
-		}
-	}
-
-	protected static void initializeUpgradeProcesses() throws Exception {
-		if (_upgradeProcesses != null) {
-			return;
-		}
-
-		_upgradeProcesses = new TreeMap<>();
-
-		_upgradeProcesses.put(
-			new Version(_INITIAL_SCHEMA_VERSION), new DummyUpgradeProcess());
-
-		for (Class<?> coreUpgradeProcessRegistry :
-				_CORE_UPGRADE_PROCESS_REGISTRIES) {
-
-			CoreUpgradeProcessRegistry registry =
-				(CoreUpgradeProcessRegistry)
-					coreUpgradeProcessRegistry.newInstance();
-
-			registry.registerUpgradeProcesses(_upgradeProcesses);
 		}
 	}
 
@@ -192,6 +163,27 @@ public class CoreServiceUpgrade extends UpgradeProcess {
 
 	private static final String _INITIAL_SCHEMA_VERSION = "0.1.0";
 
-	private static TreeMap<Version, UpgradeProcess> _upgradeProcesses;
+	private static final TreeMap<Version, UpgradeProcess> _upgradeProcesses =
+		new TreeMap<>();
+
+	static {
+		_upgradeProcesses.put(
+			new Version(_INITIAL_SCHEMA_VERSION), new DummyUpgradeProcess());
+
+		try {
+			for (Class<?> coreUpgradeProcessRegistry :
+					_CORE_UPGRADE_PROCESS_REGISTRIES) {
+
+				CoreUpgradeProcessRegistry registry =
+					(CoreUpgradeProcessRegistry)
+						coreUpgradeProcessRegistry.newInstance();
+
+				registry.registerUpgradeProcesses(_upgradeProcesses);
+			}
+		}
+		catch (ReflectiveOperationException roe) {
+			throw new ExceptionInInitializerError(roe);
+		}
+	}
 
 }

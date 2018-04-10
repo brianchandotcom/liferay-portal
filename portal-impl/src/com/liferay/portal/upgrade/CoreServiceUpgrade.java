@@ -70,14 +70,21 @@ public class CoreServiceUpgrade extends UpgradeProcess {
 	public static boolean isInLatestSchemaVersion(Connection connection)
 		throws SQLException {
 
-		return getLatestSchemaVersion().equals(
-			getCurrentSchemaVersion(connection));
+		Version latestSchemaVersion = getLatestSchemaVersion();
+
+		if (latestSchemaVersion.equals(getCurrentSchemaVersion(connection))) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean isInRequiredSchemaVersion(Connection connection)
 		throws SQLException {
 
-		if (getRequiredSchemaVersion().compareTo(
+		Version requiredSchemaVersion = getRequiredSchemaVersion();
+
+		if (requiredSchemaVersion.compareTo(
 				getCurrentSchemaVersion(connection)) <= 0) {
 
 			return true;

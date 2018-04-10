@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Segments Asset Category Demo
+Bundle-SymbolicName: com.liferay.segments.asset.category.demo
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:

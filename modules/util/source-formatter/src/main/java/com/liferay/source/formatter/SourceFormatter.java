@@ -549,8 +549,6 @@ public class SourceFormatter {
 			"source-formatter-suppressions.xml",
 			"sourcechecks-suppressions.xml");
 
-		_sourceFormatterSuppressionsFiles = suppressionsFiles;
-
 		_sourceFormatterSuppressions = SuppressionsLoader.loadSuppressions(
 			_sourceFormatterArgs.getBaseDirName(), suppressionsFiles);
 
@@ -670,8 +668,6 @@ public class SourceFormatter {
 		sourceProcessor.setSourceFormatterExcludes(_sourceFormatterExcludes);
 		sourceProcessor.setSourceFormatterSuppressions(
 			_sourceFormatterSuppressions);
-		sourceProcessor.setSourceFormatterSuppressionsFiles(
-			_sourceFormatterSuppressionsFiles);
 		sourceProcessor.setSubrepository(_subrepository);
 
 		sourceProcessor.format();
@@ -806,7 +802,6 @@ public class SourceFormatter {
 	private final Set<SourceFormatterMessage> _sourceFormatterMessages =
 		new ConcurrentSkipListSet<>();
 	private SourceFormatterSuppressions _sourceFormatterSuppressions;
-	private List<File> _sourceFormatterSuppressionsFiles;
 	private volatile List<SourceMismatchException> _sourceMismatchExceptions =
 		new ArrayList<>();
 	private List<SourceProcessor> _sourceProcessors = new ArrayList<>();

@@ -125,7 +125,7 @@ public class SuppressionsLoader {
 			sourceFormatterSuppressions.addSuppression(
 				CheckType.CHECKSTYLE, null,
 				suppressElement.attributeValue(_CHECK_ATTRIBUTE_NAME),
-				suppressElement.attributeValue(_FILE_ATTRIBUTE_NAME));
+				suppressElement.attributeValue(_FILE_REGEX_ATTRIBUTE_NAME));
 		}
 
 		return sourceFormatterSuppressions;
@@ -153,17 +153,17 @@ public class SuppressionsLoader {
 		String suppressionsFileLocation = _getFileLocation(absolutePath);
 
 		for (Element suppressElement : suppressElements) {
-			String fileName = suppressElement.attributeValue(
-				_FILE_ATTRIBUTE_NAME);
+			String fileNameRegex = suppressElement.attributeValue(
+				_FILE_REGEX_ATTRIBUTE_NAME);
 
 			if (Objects.equals(portalFileLocation, suppressionsFileLocation)) {
-				fileName = portalFileLocation + fileName;
+				fileNameRegex = portalFileLocation + fileNameRegex;
 			}
 
 			sourceFormatterSuppressions.addSuppression(
 				CheckType.SOURCE_CHECK, suppressionsFileLocation,
 				suppressElement.attributeValue(_CHECK_ATTRIBUTE_NAME),
-				fileName);
+				fileNameRegex);
 		}
 
 		return sourceFormatterSuppressions;
@@ -240,7 +240,7 @@ public class SuppressionsLoader {
 
 	private static final String _CHECKSTYLE_ATTRIBUTE_NAME = "checkstyle";
 
-	private static final String _FILE_ATTRIBUTE_NAME = "files";
+	private static final String _FILE_REGEX_ATTRIBUTE_NAME = "files";
 
 	private static final String _SOURCE_CHECK_ATTRIBUTE_NAME = "source-check";
 

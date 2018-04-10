@@ -136,9 +136,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 			printError(fileName, sourceFormatterMessage.toString());
 		}
-
-		AlloyMVCCheckstyleUtil.cleanUpSuppressionsFiles(
-			getSourceFormatterSuppressionsFiles());
 	}
 
 	private Map<String, String> _getDeletedContentsMap(String[] excludes)

@@ -51,6 +51,17 @@ UADExportProcessDisplayContext uadExportProcessDisplayContext = new UADExportPro
 			cssClass="autofit-col-expand"
 		>
 			<%= LanguageUtil.get(request, "create-date") + StringPool.COLON + dateFormat.format(backgroundTask.getCreateDate()) %>
+
+			<c:if test="<%= backgroundTask.isInProgress() %>">
+
+				<%
+				request.setAttribute("backgroundTask", backgroundTask);
+				%>
+
+				<liferay-util:include page="/export_process_progress_bar.jsp" servletContext="<%= application %>">
+					<liferay-util:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
+				</liferay-util:include>
+			</c:if>
 		</liferay-ui:search-container-column-text>
 
 		<c:if test="<%= backgroundTask.isCompleted() %>">

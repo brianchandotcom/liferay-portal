@@ -150,7 +150,10 @@
 		<field name="lastPublishDate" type="Date" />
 		<field name="priority" type="double" />
 		<field name="question" type="boolean" />
-		<field name="title" type="String" />
+		<field name="title" type="String">
+			<sanitize content-type="text/plain" modes="ALL" />
+			<validator name="required" />
+		</field>
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />

@@ -95,12 +95,16 @@ renderResponse.setTitle(title);
 	<div id="<portlet:namespace />fragmentEditor"></div>
 </aui:form>
 
-<liferay-portlet:renderURL var="renderFragmentEntryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+<%
+Layout renderLayout = LayoutLocalServiceUtil.fetchFirstLayout(themeDisplay.getScopeGroupId(), false, 0);
+%>
+
+<liferay-portlet:renderURL plid="<%= renderLayout.getPlid() %>" var="renderFragmentEntryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcRenderCommandName" value="/fragment/render_fragment_entry" />
 	<portlet:param name="fragmentEntryId" value="<%= String.valueOf(fragmentDisplayContext.getFragmentEntryId()) %>" />
 </liferay-portlet:renderURL>
 
-<liferay-portlet:renderURL var="iframeFragmentEntryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+<liferay-portlet:renderURL plid="<%= renderLayout.getPlid() %>" var="iframeFragmentEntryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcRenderCommandName" value="/fragment/iframe_fragment_entry" />
 </liferay-portlet:renderURL>
 

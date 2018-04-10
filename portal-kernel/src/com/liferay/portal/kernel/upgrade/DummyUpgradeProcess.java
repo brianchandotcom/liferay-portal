@@ -12,17 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_1_0;
+package com.liferay.portal.kernel.upgrade;
 
 /**
- * @author Adolfo Pérez
+ * @author Alberto Chaparro
  */
-public class UpgradeMVCCVersion
-	extends com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion {
+public class DummyUpgradeProcess extends UpgradeProcess {
 
 	@Override
-	protected String[] getModuleTableNames() {
-		return new String[] {"Subscription"};
+	public void doUpgrade() throws Exception {
 	}
 
 }

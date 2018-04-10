@@ -12,32 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.upgrade;
+package com.liferay.portal.upgrade.v7_1;
+
+import aQute.bnd.version.Version;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.upgrade.v7_1_0.UpgradeModules;
-import com.liferay.portal.upgrade.v7_1_0.UpgradeRepository;
-import com.liferay.portal.upgrade.v7_1_0.UpgradeSchema;
+import com.liferay.portal.upgrade.util.CoreUpgradeProcessRegistry;
+
+import java.util.TreeMap;
 
 /**
  * @author Alberto Chaparro
  */
-public class UpgradeProcess_7_1_0 extends UpgradeProcess {
+public class UpgradeProcessRegistry implements CoreUpgradeProcessRegistry {
 
 	@Override
-	public int getThreshold() {
-		return ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER;
-	}
+	public void registerUpgradeProcesses(
+		TreeMap<Version, UpgradeProcess> upgradeProcesses) {
 
-	@Override
-	protected void doUpgrade() throws Exception {
-		upgrade(new UpgradeSchema());
+		upgradeProcesses.put(new Version("1.0.0"), new UpgradeSchema());
 
-		upgrade(new UpgradeModules());
-		upgrade(new UpgradeRepository());
+		upgradeProcesses.put(new Version("1.1.0"), new UpgradeModules());
 
-		clearIndexesCache();
+		upgradeProcesses.put(new Version("1.1.1"), new UpgradeRepository());
 	}
 
 }

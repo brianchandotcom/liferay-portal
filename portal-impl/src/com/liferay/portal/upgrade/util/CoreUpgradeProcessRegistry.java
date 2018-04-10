@@ -12,18 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_1_0;
+package com.liferay.portal.upgrade.util;
+
+import aQute.bnd.version.Version;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
-/**
- * @author Adolfo Pérez
- */
-public class UpgradeSchema extends UpgradeProcess {
+import java.util.TreeMap;
 
-	@Override
-	protected void doUpgrade() throws Exception {
-		upgrade(new UpgradeMVCCVersion());
-	}
+/**
+ * @author Alberto Chaparro
+ */
+public interface CoreUpgradeProcessRegistry {
+
+	public void registerUpgradeProcesses(
+		TreeMap<Version, UpgradeProcess> upgradeProcesses);
 
 }

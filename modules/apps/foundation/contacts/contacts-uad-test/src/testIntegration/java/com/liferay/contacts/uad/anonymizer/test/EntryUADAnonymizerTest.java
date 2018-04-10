@@ -21,7 +21,6 @@ import com.liferay.contacts.service.EntryLocalService;
 import com.liferay.contacts.uad.constants.ContactsUADConstants;
 import com.liferay.contacts.uad.test.EntryUADEntityTestHelper;
 
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -46,18 +45,18 @@ import java.util.List;
  * @generated
  */
 @RunWith(Arquillian.class)
-public class EntryUADAnonymizerTest extends BaseUADAnonymizerTestCase {
+public class EntryUADAnonymizerTest extends BaseUADAnonymizerTestCase<Entry> {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
 
 	@Override
-	protected BaseModel<?> addBaseModel(long userId) throws Exception {
+	protected Entry addBaseModel(long userId) throws Exception {
 		return addBaseModel(userId, true);
 	}
 
 	@Override
-	protected BaseModel<?> addBaseModel(long userId, boolean deleteAfterTestRun)
+	protected Entry addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
 		Entry entry = _entryUADEntityTestHelper.addEntry(userId);
 
@@ -100,6 +99,12 @@ public class EntryUADAnonymizerTest extends BaseUADAnonymizerTestCase {
 		}
 
 		return false;
+	}
+
+	@Override
+	public void tearDownBaseModels(List<Entry> baseModels)
+		throws Exception {
+		_entryUADEntityTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@After

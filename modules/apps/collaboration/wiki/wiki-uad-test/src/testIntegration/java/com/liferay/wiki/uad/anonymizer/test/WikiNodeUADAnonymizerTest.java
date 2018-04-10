@@ -16,7 +16,6 @@ package com.liferay.wiki.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -47,14 +46,14 @@ import java.util.List;
  * @generated
  */
 @RunWith(Arquillian.class)
-public class WikiNodeUADAnonymizerTest extends BaseUADAnonymizerTestCase
+public class WikiNodeUADAnonymizerTest extends BaseUADAnonymizerTestCase<WikiNode>
 	implements WhenHasStatusByUserIdField {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
 
 	@Override
-	public BaseModel<?> addBaseModelWithStatusByUserId(long userId,
+	public WikiNode addBaseModelWithStatusByUserId(long userId,
 		long statusByUserId) throws Exception {
 		WikiNode wikiNode = _wikiNodeUADEntityTestHelper.addWikiNodeWithStatusByUserId(userId,
 				statusByUserId);
@@ -65,12 +64,12 @@ public class WikiNodeUADAnonymizerTest extends BaseUADAnonymizerTestCase
 	}
 
 	@Override
-	protected BaseModel<?> addBaseModel(long userId) throws Exception {
+	protected WikiNode addBaseModel(long userId) throws Exception {
 		return addBaseModel(userId, true);
 	}
 
 	@Override
-	protected BaseModel<?> addBaseModel(long userId, boolean deleteAfterTestRun)
+	protected WikiNode addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
 		WikiNode wikiNode = _wikiNodeUADEntityTestHelper.addWikiNode(userId);
 
@@ -116,6 +115,12 @@ public class WikiNodeUADAnonymizerTest extends BaseUADAnonymizerTestCase
 		}
 
 		return false;
+	}
+
+	@Override
+	public void tearDownBaseModels(List<WikiNode> baseModels)
+		throws Exception {
+		_wikiNodeUADEntityTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@After

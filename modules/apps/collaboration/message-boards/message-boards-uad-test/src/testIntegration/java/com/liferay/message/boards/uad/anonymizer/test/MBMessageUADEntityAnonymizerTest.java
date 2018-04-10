@@ -21,7 +21,6 @@ import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.uad.constants.MBUADConstants;
 import com.liferay.message.boards.uad.test.MBMessageUADEntityTestHelper;
 
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -48,14 +47,14 @@ import java.util.List;
  */
 @RunWith(Arquillian.class)
 public class MBMessageUADEntityAnonymizerTest
-	extends BaseUADEntityAnonymizerTestCase
+	extends BaseUADEntityAnonymizerTestCase<MBMessage>
 	implements WhenHasStatusByUserIdField {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
 
 	@Override
-	public BaseModel<?> addBaseModelWithStatusByUserId(long userId,
+	public MBMessage addBaseModelWithStatusByUserId(long userId,
 		long statusByUserId) throws Exception {
 		MBMessage mbMessage = _mbMessageUADEntityTestHelper.addMBMessageWithStatusByUserId(userId,
 				statusByUserId);
@@ -66,12 +65,12 @@ public class MBMessageUADEntityAnonymizerTest
 	}
 
 	@Override
-	protected BaseModel<?> addBaseModel(long userId) throws Exception {
+	protected MBMessage addBaseModel(long userId) throws Exception {
 		return addBaseModel(userId, true);
 	}
 
 	@Override
-	protected BaseModel<?> addBaseModel(long userId, boolean deleteAfterTestRun)
+	protected MBMessage addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
 		MBMessage mbMessage = _mbMessageUADEntityTestHelper.addMBMessage(userId);
 
@@ -117,6 +116,12 @@ public class MBMessageUADEntityAnonymizerTest
 		}
 
 		return false;
+	}
+
+	@Override
+	public void tearDownBaseModels(List<MBMessage> baseModels)
+		throws Exception {
+		_mbMessageUADEntityTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@After

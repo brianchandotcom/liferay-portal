@@ -21,7 +21,6 @@ import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.uad.constants.MBUADConstants;
 import com.liferay.message.boards.uad.test.MBCategoryUADEntityTestHelper;
 
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -48,14 +47,14 @@ import java.util.List;
  */
 @RunWith(Arquillian.class)
 public class MBCategoryUADEntityAnonymizerTest
-	extends BaseUADEntityAnonymizerTestCase
+	extends BaseUADEntityAnonymizerTestCase<MBCategory>
 	implements WhenHasStatusByUserIdField {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
 
 	@Override
-	public BaseModel<?> addBaseModelWithStatusByUserId(long userId,
+	public MBCategory addBaseModelWithStatusByUserId(long userId,
 		long statusByUserId) throws Exception {
 		MBCategory mbCategory = _mbCategoryUADEntityTestHelper.addMBCategoryWithStatusByUserId(userId,
 				statusByUserId);
@@ -66,12 +65,12 @@ public class MBCategoryUADEntityAnonymizerTest
 	}
 
 	@Override
-	protected BaseModel<?> addBaseModel(long userId) throws Exception {
+	protected MBCategory addBaseModel(long userId) throws Exception {
 		return addBaseModel(userId, true);
 	}
 
 	@Override
-	protected BaseModel<?> addBaseModel(long userId, boolean deleteAfterTestRun)
+	protected MBCategory addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
 		MBCategory mbCategory = _mbCategoryUADEntityTestHelper.addMBCategory(userId);
 
@@ -117,6 +116,12 @@ public class MBCategoryUADEntityAnonymizerTest
 		}
 
 		return false;
+	}
+
+	@Override
+	public void tearDownBaseModels(List<MBCategory> baseModels)
+		throws Exception {
+		_mbCategoryUADEntityTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@After

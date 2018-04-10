@@ -16,8 +16,8 @@
 
 <#else>
 	<#assign
-		nav_css_right = "navbar-right"
-		nav_collapse = "navbar-collapse"
+		nav_css_right = "ml-auto"
+		nav_collapse = "navbar-expand-md"
 	/>
 </#if>
 

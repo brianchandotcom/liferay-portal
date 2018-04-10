@@ -3,10 +3,9 @@
 
 <look-and-feel>
 	<compatibility>
-		<version>7.0.0+</version>
 		<version>7.1.0+</version>
 	</compatibility>
-	<theme id="fjord" name="Fjord">
+	<theme id="fjord" name="fjord">
 		<template-extension>ftl</template-extension>
 		<settings>
 			<setting configurable="true" key="facebook-icon" type="checkbox" value="true" />
@@ -14,10 +13,15 @@
 			<setting configurable="true" key="show-main-navigation-in-full-screen" type="checkbox" value="false" />
 			<setting configurable="true" key="twitter-icon" type="checkbox" value="true" />
 			<setting configurable="true" key="twitter-icon-link-url" value="http://www.twitter.com" />
+			<setting configurable="false" key="show-site-name-default" value="true" />
+			<setting configurable="false" key="show-site-name-supported" value="true" />
 			<setting configurable="true" key="use-a-retina-logo" type="checkbox" value="true" />
 		</settings>
 		<portlet-decorator id="barebone" name="Barebone">
 			<portlet-decorator-css-class>portlet-barebone</portlet-decorator-css-class>
+		</portlet-decorator>
+		<portlet-decorator id="borderless" name="Borderless">
+			<portlet-decorator-css-class>portlet-borderless</portlet-decorator-css-class>
 		</portlet-decorator>
 		<portlet-decorator id="decorate" name="Decorate">
 			<default-portlet-decorator>true</default-portlet-decorator>

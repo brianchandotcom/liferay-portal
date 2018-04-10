@@ -9,7 +9,7 @@ AUI().ready(
 			signIn.plug(Liferay.SignInModal);
 		}
 
-		var fullScreenToggleIcon = A.one('.full-screen-navigation #banner .navbar-header .navbar-toggle');
+		var fullScreenToggleIcon = A.one('.full-screen-navigation #banner .navbar-toggler');
 
 		if (fullScreenToggleIcon) {
 			fullScreenToggleIcon.on(

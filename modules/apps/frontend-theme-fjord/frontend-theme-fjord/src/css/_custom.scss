@@ -1,4 +1,6 @@
-@import "portlet_decorator";
+@import "partials/variables";
+
+@import "portlet/portlet_decorator";
 
 @import "partials/buttons";
 @import "partials/footer";
@@ -32,10 +34,12 @@
 
 .jumbotron {
 	background-color: transparent;
+	border-radius: 0;
 	margin-bottom: 0;
 
 	h2 {
 		font-size: 22px;
+		margin-top: 20px;
 	}
 
 	p {
@@ -46,7 +50,7 @@
 		margin-bottom: 18px;
 	}
 
-	.well {
+	.card.card-body {
 		background-color: rgba(#FFF, 0.08);
 		border-width: 0;
 

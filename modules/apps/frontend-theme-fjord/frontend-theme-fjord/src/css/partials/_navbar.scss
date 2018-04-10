@@ -19,6 +19,9 @@
 
 	.navbar {
 		margin-bottom: 0;
+		min-height: 60px;
+		padding-bottom: 8px;
+		padding-top: 8px;
 
 		.custom-logo {
 			color: $color-2;
@@ -40,11 +43,6 @@
 
 	a.logo {
 		color: $color-2;
-		margin-top: 10px;
-
-		@include sm {
-			margin-top: 17px;
-		}
 	}
 }
 
@@ -52,27 +50,12 @@
 	&.main-nav-opened {
 		overflow: hidden;
 
-		#banner .navbar-toggle {
+		#banner .navbar-toggler {
 			z-index: 953;
 		}
 	}
 
 	#banner {
-		@include sm {
-			.navbar-header {
-				margin-top: 8px;
-			}
-
-			.logo {
-				margin-top: 9px;
-			}
-		}
-
-		.navbar-toggle {
-			display: block;
-			position: relative;
-		}
-
 		.lfr-nav-child-toggle, .child-menu {
 			display: none;
 		}
@@ -94,12 +77,8 @@
 			}
 		}
 
-		.navbar-header, .navbar-left, .navbar-right {
-			float: none;
-		}
-
 		.navbar-nav {
-			float: none;
+			display: block;
 			margin-right: 0;
 
 			> li {
@@ -120,7 +99,7 @@
 	}
 
 	#navigationCollapse {
-		&.in, &.collapsing {
+		&.collapse.show, &.collapsing {
 			bottom: 0;
 			height: auto;
 			left: 0;
@@ -140,33 +119,45 @@
 			}
 		}
 
-		&.collapsing {
+		&.collapse:not(.show) {
 			display: none;
 		}
 	}
 }
 
-.navbar-toggle {
+.navbar-toggler {
+	margin: 4px;
+	padding: 6px;
+
 	.icon-bar {
 		background-color: $color-2;
+		display: block;
+		height: 2px;
+		left: 2px;
+		width: 20px;
 
 		@include transform(rotate(0));
 		@include transition(all 0.2s ease-in-out);
+
+		&:first-child {
+			margin-bottom: 4px;
+		}
 	}
 
 	&[aria-expanded="true"] {
 		.icon-bar {
+			margin-bottom: 0;
 			position: relative;
 
 			&:first-child {
-				top: -2px;
+				top: -4px;
 
 				@include transform(rotate(45deg));
 				@include transform-origin(10% 10%);
 			}
 
 			&:last-child {
-				bottom: -2px;
+				bottom: -5px;
 
 				@include transform(rotate(-45deg));
 				@include transform-origin(10% 90%);

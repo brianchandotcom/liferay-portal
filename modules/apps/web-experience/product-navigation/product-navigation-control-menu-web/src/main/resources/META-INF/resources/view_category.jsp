@@ -82,6 +82,8 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 	String title = Validator.isNotNull(externalPortletCategory) ? externalPortletCategory : LanguageUtil.get(request, portletCategory.getName());
 %>
 
+	<input id="<portlet:namespace />portletCategory<%= portletCategoryIndex %>CategoryPath" type="hidden" value="<%= newCategoryPath.replace(':', '-') %>" />
+
 	<div class="lfr-content-category panel-page-category">
 		<a class="collapse-icon collapse-icon-middle collapsed list-group-heading" data-toggle="collapse" href="#<%= panelId %>">
 			<%= title %>
@@ -234,8 +236,6 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 			</div>
 		</div>
 	</div>
-
-	<input id="<portlet:namespace />portletCategory<%= portletCategoryIndex %>CategoryPath" type="hidden" value="<%= newCategoryPath.replace(':', '-') %>" />
 
 <%
 }

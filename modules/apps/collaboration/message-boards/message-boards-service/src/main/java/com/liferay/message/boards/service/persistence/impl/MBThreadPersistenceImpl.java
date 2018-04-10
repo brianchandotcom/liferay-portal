@@ -30,8 +30,13 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerException;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -39,6 +44,8 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -13216,6 +13223,30 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			}
 			else {
 				mbThread.setModifiedDate(serviceContext.getModifiedDate(now));
+			}
+		}
+
+		long userId = GetterUtil.getLong(PrincipalThreadLocal.getName());
+
+		if (userId > 0) {
+			long companyId = mbThread.getCompanyId();
+
+			long groupId = mbThread.getGroupId();
+
+			long threadId = 0;
+
+			if (!isNew) {
+				threadId = mbThread.getPrimaryKey();
+			}
+
+			try {
+				mbThread.setTitle(SanitizerUtil.sanitize(companyId, groupId,
+						userId, MBThread.class.getName(), threadId,
+						ContentTypes.TEXT_PLAIN, Sanitizer.MODE_ALL,
+						mbThread.getTitle(), null));
+			}
+			catch (SanitizerException se) {
+				throw new SystemException(se);
 			}
 		}
 

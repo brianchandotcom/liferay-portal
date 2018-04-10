@@ -44,7 +44,6 @@ import org.osgi.service.component.ComponentFactory;
 import org.osgi.service.component.ComponentInstance;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
@@ -95,11 +94,6 @@ public class AnalyticsClientImpl implements AnalyticsClient {
 			AnalyticsClientConfiguration.class, properties);
 
 		initializeJSONWebServiceClient();
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_jsonWebServiceClient.destroy();
 	}
 
 	protected String getUserId(String analyticsKey) throws Exception {

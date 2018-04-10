@@ -1,3 +1,9 @@
+import './CPDefinitionOptionDetail.es';
+import './CPDefinitionOptionList.es';
+import './CPDefinitionOptionValuesEditor.es';
+import './CPDefinitionOptionValueDetail.es';
+import './CPDefinitionOptionValueList.es';
+
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';

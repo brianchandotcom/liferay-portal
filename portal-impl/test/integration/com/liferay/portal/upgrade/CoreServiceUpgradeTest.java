@@ -178,12 +178,14 @@ public class CoreServiceUpgradeTest {
 		public InnerCoreServiceUpgrade() throws Exception {
 		}
 
+		@Override
 		public Set<Version> getPendingSchemaVersions(
 			Version fromSchemaVersion) {
 
 			return super.getPendingSchemaVersions(fromSchemaVersion);
 		}
 
+		@Override
 		public void updateSchemaVersion(Version newSchemaVersion)
 			throws SQLException {
 

@@ -17,10 +17,10 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Properties;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -30,19 +30,19 @@ import org.apache.commons.lang.StringUtils;
 public abstract class PortalRepositoryJob extends RepositoryJob {
 
 	@Override
-	public List<String> getBatchNames() {
+	public Set<String> getBatchNames() {
 		String testBatchNames = getProperty(
 			portalTestProperties, "test.batch.names");
 
-		return getListFromString(testBatchNames);
+		return getSetFromString(testBatchNames);
 	}
 
 	@Override
-	public List<String> getDistTypes() {
+	public Set<String> getDistTypes() {
 		String testBatchDistAppServers = getProperty(
 			portalTestProperties, "test.batch.dist.app.servers");
 
-		return getListFromString(testBatchDistAppServers);
+		return getSetFromString(testBatchDistAppServers);
 	}
 
 	@Override
@@ -106,24 +106,22 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 				gitWorkingDirectory.getWorkingDirectory(), "test.properties"));
 	}
 
-	protected List<String> getListFromString(String string) {
+	protected Set<String> getSetFromString(String string) {
 		if (string == null) {
-			return Collections.emptyList();
+			return Collections.emptySet();
 		}
 
-		List<String> list = new ArrayList<>();
+		Set<String> set = new TreeSet<>();
 
 		for (String item : StringUtils.split(string, ",")) {
-			if (list.contains(item) || item.startsWith("#")) {
+			if (item.startsWith("#")) {
 				continue;
 			}
 
-			list.add(item);
+			set.add(item);
 		}
 
-		Collections.sort(list);
-
-		return list;
+		return set;
 	}
 
 	protected final Properties portalTestProperties;

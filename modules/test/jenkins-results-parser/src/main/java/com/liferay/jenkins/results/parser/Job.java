@@ -14,16 +14,16 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author Michael Hashimoto
  */
 public interface Job {
 
-	public List<String> getBatchNames();
+	public Set<String> getBatchNames();
 
-	public List<String> getDistTypes();
+	public Set<String> getDistTypes();
 
 	public String getJobName();
 

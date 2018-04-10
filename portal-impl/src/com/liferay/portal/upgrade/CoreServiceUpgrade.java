@@ -158,9 +158,6 @@ public class CoreServiceUpgrade extends UpgradeProcess {
 		}
 	}
 
-	private static final Class<?>[] _CORE_UPGRADE_PROCESS_REGISTRIES =
-		{UpgradeProcessRegistry.class};
-
 	private static final String _INITIAL_SCHEMA_VERSION = "0.1.0";
 
 	private static final TreeMap<Version, UpgradeProcess> _upgradeProcesses =
@@ -170,20 +167,10 @@ public class CoreServiceUpgrade extends UpgradeProcess {
 		_upgradeProcesses.put(
 			new Version(_INITIAL_SCHEMA_VERSION), new DummyUpgradeProcess());
 
-		try {
-			for (Class<?> coreUpgradeProcessRegistry :
-					_CORE_UPGRADE_PROCESS_REGISTRIES) {
+		CoreUpgradeProcessRegistry coreUpgradeProcessRegistry =
+			new UpgradeProcessRegistry();
 
-				CoreUpgradeProcessRegistry registry =
-					(CoreUpgradeProcessRegistry)
-						coreUpgradeProcessRegistry.newInstance();
-
-				registry.registerUpgradeProcesses(_upgradeProcesses);
-			}
-		}
-		catch (ReflectiveOperationException roe) {
-			throw new ExceptionInInitializerError(roe);
-		}
+		coreUpgradeProcessRegistry.registerUpgradeProcesses(_upgradeProcesses);
 	}
 
 }

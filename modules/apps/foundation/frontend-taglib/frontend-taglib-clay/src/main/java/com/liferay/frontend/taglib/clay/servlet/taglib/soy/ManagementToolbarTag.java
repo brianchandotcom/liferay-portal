@@ -41,21 +41,6 @@ public class ManagementToolbarTag extends BaseClayTag {
 	public int doStartTag() {
 		Map<String, Object> context = getContext();
 
-		CreationMenu creationMenu = (CreationMenu)context.get("creationMenu");
-
-		if (creationMenu != null) {
-			DropdownItemList dropdownItemList =
-				(DropdownItemList)creationMenu.get("primaryItems");
-
-			if ((dropdownItemList != null) && (dropdownItemList.size() == 1)) {
-				DropdownItem dropdownItem = dropdownItemList.get(0);
-
-				setCreationMenu(dropdownItem.get("href"));
-
-				creationMenu.remove("primaryItems");
-			}
-		}
-
 		String searchInputName = (String)context.get("searchInputName");
 
 		if (Validator.isNull(searchInputName)) {
@@ -116,6 +101,10 @@ public class ManagementToolbarTag extends BaseClayTag {
 		putValue("creationMenu", creationMenu);
 	}
 
+	public void setDisabled(Boolean disabled) {
+		putValue("disabled", disabled);
+	}
+
 	public void setFilterItems(DropdownItemList filterItems) {
 		putValue("filterItems", filterItems);
 	}
@@ -150,6 +139,10 @@ public class ManagementToolbarTag extends BaseClayTag {
 
 	public void setShowAdvancedSearch(Boolean showAdvancedSearch) {
 		putValue("showAdvancedSearch", showAdvancedSearch);
+	}
+
+	public void setShowCreationMenu(Boolean showCreationMenu) {
+		putValue("showCreationMenu", showCreationMenu);
 	}
 
 	public void setShowFiltersDoneButton(Boolean showFiltersDoneButton) {

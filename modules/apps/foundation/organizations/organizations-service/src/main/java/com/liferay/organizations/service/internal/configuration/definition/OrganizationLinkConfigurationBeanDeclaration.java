@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.organizations.api.configuration.definition;
+package com.liferay.organizations.service.internal.configuration.definition;
 
 import com.liferay.organizations.api.configuration.OrganizationLinkConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;

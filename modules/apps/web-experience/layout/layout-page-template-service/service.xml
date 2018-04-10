@@ -79,6 +79,7 @@
 
 		<column name="layoutPageTemplateCollectionId" type="long" />
 		<column name="classNameId" type="long" />
+		<column name="classTypeId" type="long" />
 		<column name="name" type="String" />
 		<column name="htmlPreviewEntryId" type="long" />
 		<column name="defaultTemplate" type="boolean" />

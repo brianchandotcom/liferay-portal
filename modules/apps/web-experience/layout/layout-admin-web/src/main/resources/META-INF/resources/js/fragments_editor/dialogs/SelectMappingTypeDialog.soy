@@ -1,0 +1,138 @@
+{namespace com.liferay.layout.admin.web.SelectMappingTypeDialog}
+
+/**
+ * SelectMappingTypeDialog
+ */
+{template .render}
+	{@param spritemap: string}
+	{@param visible: bool}
+	{@param? _handleCloseButtonClick: any}
+	{@param? _handleMappingSubtypeSelectChange: any}
+	{@param? _handleMappingTypeSelectChange: any}
+	{@param? _handleSubmitButtonClick: any}
+	{@param? _handleVisibleChanged: any}
+	{@param? _mappingSubtypes: list<[
+		id: string,
+		label: string
+	]>}
+	{@param? _mappingTypes: list<[
+		id: string,
+		label: string
+	]>}
+	{@param? _savingChanges: bool}
+	{@param? _selectedMappingSubtypeId: string}
+	{@param? _selectedMappingTypeId: string}
+
+	{call liferay.frontend.Modal.render}
+		{param body kind="html"}
+			<form>
+				{if $_mappingTypes}
+					<div class="form-group">
+						<label for="selectMappingType">
+							{msg desc=""}asset-type{/msg}
+						</label>
+
+						<select
+							class="form-control"
+							data-onchange="{$_handleMappingTypeSelectChange}"
+							id="selectMappingType"
+							ref="selectMappingType"
+						>
+							{if length($_mappingTypes) != 1}
+								<option disabled value=""></option>
+							{/if}
+
+							{foreach $mappingType in $_mappingTypes}
+								<option value="{$mappingType.id}">{$mappingType.label}</option>
+							{/foreach}
+						</select>
+					</div>
+				{else}
+					<div class="loading-animation"></div>
+				{/if}
+
+				{if $_mappingSubtypes and length($_mappingSubtypes) > 0}
+					<div class="form-group">
+						<label for="selectMappingSubtype">
+							{msg desc=""}subtype{/msg}
+						</label>
+
+						<select
+							class="form-control"
+							data-onchange="{$_handleMappingSubtypeSelectChange}"
+							id="selectMappingSubtype"
+							ref="selectMappingSubtype"
+						>
+							<option disabled value=""></option>
+
+							{foreach $mappingSubtype in $_mappingSubtypes}
+								<option value="{$mappingSubtype.id}">{$mappingSubtype.label}</option>
+							{/foreach}
+						</select>
+					</div>
+				{elseif not $_mappingSubtypes}
+					<div class="loading-animation"></div>
+				{/if}
+			</form>
+		{/param}
+
+		{param footer kind="html"}
+			<div class="btn-group">
+				<div class="btn-group-item">
+					<button
+						class="btn btn-secondary"
+						data-dismiss="modal"
+						data-onclick="{$_handleCloseButtonClick}"
+						type="button"
+					>
+						{msg desc=""}cancel{/msg}
+					</button>
+				</div>
+
+				<div class="btn-group-item">
+					{let $submitButtonDisabled kind="attributes"}
+						{if
+							$_savingChanges or
+							not $_selectedMappingTypeId or
+							not $_mappingTypes or
+							length($_mappingTypes) == 0 or
+							not $_mappingSubtypes or
+							(length($_mappingSubtypes) > 0 and not $_selectedMappingSubtypeId)
+						}
+							disabled
+						{/if}
+					{/let}
+
+					<button
+						class="btn btn-primary"
+						data-onclick="{$_handleSubmitButtonClick}"
+						type="button"
+						{$submitButtonDisabled}
+					>
+						{if $_savingChanges}
+							<span class="inline-item inline-item-before">
+								<span aria-hidden="true" class="loading-animation"></span>
+							</span>
+
+							{msg desc=""}saving-changes{/msg}
+						{else}
+							{msg desc=""}save{/msg}
+						{/if}
+					</button>
+				</div>
+			</div>
+		{/param}
+
+		{param dialogClasses: 'modal-dialog-sm' /}
+		{param events: ['visibleChanged': $_handleVisibleChanged] /}
+
+		{param header kind="html"}
+			{msg desc=""}select-asset-type{/msg}
+		{/param}
+
+		{param ref: 'modal' /}
+
+		{param spritemap: $spritemap /}
+		{param visible: $visible /}
+	{/call}
+{/template}

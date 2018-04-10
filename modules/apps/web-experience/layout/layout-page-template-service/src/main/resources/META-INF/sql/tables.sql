@@ -21,6 +21,7 @@ create table LayoutPageTemplateEntry (
 	modifiedDate DATE null,
 	layoutPageTemplateCollectionId LONG,
 	classNameId LONG,
+	classTypeId LONG,
 	name VARCHAR(75) null,
 	htmlPreviewEntryId LONG,
 	defaultTemplate BOOLEAN

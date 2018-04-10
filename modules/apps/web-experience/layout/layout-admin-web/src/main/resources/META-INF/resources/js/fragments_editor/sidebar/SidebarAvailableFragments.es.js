@@ -2,13 +2,13 @@ import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
-import templates from './SidebarFragmentCollections.soy';
+import templates from './SidebarAvailableFragments.soy';
 
 /**
- * SidebarFragmentCollections
+ * SidebarAvailableFragments
  */
 
-class SidebarFragmentCollections extends Component {
+class SidebarAvailableFragments extends Component {
 
 	/**
 	 * Callback that is executed when a fragment entry is clicked.
@@ -37,14 +37,14 @@ class SidebarFragmentCollections extends Component {
  * @static
  */
 
-SidebarFragmentCollections.STATE = {
+SidebarAvailableFragments.STATE = {
 
 	/**
 	 * Available entries that can be dragged inside the existing Page Template,
 	 * organized by fragment categories.
 	 * @default undefined
 	 * @instance
-	 * @memberOf SidebarFragmentCollections
+	 * @memberOf SidebarAvailableFragments
 	 * @type {!Array<{
 	 *   fragmentCollectionId: !string,
 	 *   fragmentEntries: Array<{
@@ -78,14 +78,14 @@ SidebarFragmentCollections.STATE = {
 	 * Path of the available icons.
 	 * @default undefined
 	 * @instance
-	 * @memberOf SidebarFragmentCollections
+	 * @memberOf SidebarAvailableFragments
 	 * @type {!string}
 	 */
 
 	spritemap: Config.string().required()
 };
 
-Soy.register(SidebarFragmentCollections, templates);
+Soy.register(SidebarAvailableFragments, templates);
 
-export {SidebarFragmentCollections};
-export default SidebarFragmentCollections;
+export {SidebarAvailableFragments};
+export default SidebarAvailableFragments;

@@ -5,6 +5,7 @@
  */
 {template .render}
 	{@param defaultEditorConfiguration: ?}
+	{@param classPK: ?}
 	{@param fragmentCollections: list<[
 		fragmentEntries: list<[
 			fragmentEntryId: string,
@@ -24,45 +25,37 @@
 	{@param? _handleFragmentMove: any}
 	{@param? _handleFragmentRemove: any}
 	{@param? _handleHideContextualSidebar: any}
+	{@param? _handleMappingTypeSelected: any}
 	{@param? _handleToggleContextualSidebarButtonClick: any}
+	{@param? _handleSelectAssetTypeButtonClick: any}
+	{@param? _handleSelectMappingTypeDialogVisibleChanged: any}
 	{@param? _handleSidebarTabClick: any}
 	{@param? _lastSaveDate: string}
-	{@param? _sidebarTabs: list<[id:string, name:string, visible:bool]>}
+	{@param? _selectMappingTypeDialogVisible: bool}
 	{@param? _sidebarSelectedTab: string}
+	{@param? _sidebarTabs: list<[id:string, label:string]>}
 	{@param? fragmentEntryLinks: list<[
 		content: html|null,
 		editableValues: ?,
 		fragmentEntryLinkId: number,
 		name: string
 	]>}
+	{@param? getAssetClassTypesURL: any}
+	{@param? getAssetDisplayContributorsURL: any}
 	{@param? id: string}
+	{@param? selectedMappingTypeLabel: [
+		type: string,
+		subtype: string
+	]}
+	{@param? updateLayoutPageTemplateEntryAssetTypeURL: any}
 
 	<div id="{$id}">
-		<div class="management-bar management-bar-light navbar navbar-expand-md">
-			<div class="container">
-				<ul class="navbar-nav">
-					<li class="nav-item">
-						<span class="navbar-text">
-							{if $_dirty}
-								{msg desc=""}saving-changes{/msg}
-							{elseif $_lastSaveDate}
-								{msg desc=""}changes-saved-at-{$_lastSaveDate}{/msg}
-							{/if}
-						</span>
-					</li>
-				</ul>
-
-				<ul class="navbar-nav">
-					<li class="nav-item">
-						<button class="btn btn-secondary nav-btn" data-onclick="{$_handleToggleContextualSidebarButtonClick}">
-							<svg class="icon-monospaced lexicon-icon">
-								<use xlink:href="{$spritemap}#cards"></use>
-							</svg>
-						</button>
-					</li>
-				</ul>
-			</div>
-		</div>
+		{call .managementBar}
+			{param spritemap: $spritemap /}
+			{param dirty: $_dirty /}
+			{param handleToggleContextualSidebarButtonClick: $_handleToggleContextualSidebarButtonClick /}
+			{param lastSaveDate: $_lastSaveDate /}
+		{/call}
 
 		<div class="container-fluid-1280 contextual-sidebar-content">
 			<div class="fragments-editor__fragment-entry-links" ref="fragmentEntryLinks">
@@ -91,10 +84,42 @@
 				{/if}
 			</div>
 
+			{call com.liferay.layout.admin.web.SelectMappingTypeDialog.render}
+				{param classPK: $classPK /}
+				{param events: [
+					'mappingTypeSelected': $_handleMappingTypeSelected,
+					'visibleChanged': $_handleSelectMappingTypeDialogVisibleChanged
+				] /}
+				{param getAssetClassTypesURL: $getAssetClassTypesURL /}
+				{param getAssetDisplayContributorsURL: $getAssetDisplayContributorsURL /}
+				{param portletNamespace: $portletNamespace /}
+				{param spritemap: $spritemap /}
+				{param updateLayoutPageTemplateEntryAssetTypeURL: $updateLayoutPageTemplateEntryAssetTypeURL /}
+				{param visible: $_selectMappingTypeDialogVisible ?: false /}
+			{/call}
+
 			{call liferay.frontend.ContextualSidebar.render}
 				{param body kind="html"}
-					{if $_sidebarSelectedTab == 'fragments'}
-						{call com.liferay.layout.admin.web.SidebarFragmentCollections.render}
+					<div class="sidebar-section">
+						<nav class="navbar navbar-expand-md navbar-underline">
+							<ul class="navbar-nav">
+								{if $_sidebarTabs}
+									{foreach $sidebarTab in $_sidebarTabs}
+										{call .sidebarTab}
+											{param active: $sidebarTab.id == $_sidebarSelectedTab /}
+											{param id: $sidebarTab.id /}
+											{param key: $sidebarTab.id /}
+											{param handleTabClick: $_handleSidebarTabClick /}
+											{param label: $sidebarTab.label /}
+										{/call}
+									{/foreach}
+								{/if}
+							</ul>
+						</nav>
+					</div>
+
+					{if $_sidebarSelectedTab == 'available'}
+						{call com.liferay.layout.admin.web.SidebarAvailableFragments.render}
 							{param events: ['collectionEntryClick': $_handleFragmentCollectionEntryClick] /}
 							{param fragmentCollections: $fragmentCollections /}
 							{param spritemap: $spritemap /}
@@ -103,6 +128,12 @@
 						{call com.liferay.layout.admin.web.SidebarAddedFragments.render}
 							{param events: ['fragmentRemoveButtonClick': $_handleFragmentRemove] /}
 							{param fragmentEntryLinks: $fragmentEntryLinks /}
+							{param spritemap: $spritemap /}
+						{/call}
+					{elseif $_sidebarSelectedTab == 'mapping'}
+						{call com.liferay.layout.admin.web.SidebarMapping.render}
+							{param events: ['selectAssetTypeButtonClick': $_handleSelectAssetTypeButtonClick] /}
+							{param selectedMappingTypeLabel: $selectedMappingTypeLabel /}
 							{param spritemap: $spritemap /}
 						{/call}
 					{/if}
@@ -115,24 +146,26 @@
 				]/}
 
 				{param header kind="html"}
-					<div class="sidebar-section">
-						{if $_sidebarTabs}
-							<nav class="navbar navbar-expand-md navbar-underline">
-								<ul class="navbar-nav">
-									{foreach $sidebarTab in $_sidebarTabs}
-										{if $sidebarTab.visible}
-											{call .sidebarTab}
-												{param active: $sidebarTab.id == $_sidebarSelectedTab /}
-												{param id: $sidebarTab.id /}
-												{param key: $sidebarTab.id /}
-												{param handleTabClick: $_handleSidebarTabClick /}
-												{param name: $sidebarTab.name /}
-											{/call}
-										{/if}
-									{/foreach}
-								</ul>
-							</nav>
-						{/if}
+					<div class="autofit-row sidebar-section">
+						<div class="autofit-col autofit-col-expand">
+							<h4 class="component-title">
+								<span class="text-truncate-inline">
+									Fragments
+								</span>
+							</h4>
+						</div>
+
+						<div class="autofit-col">
+							<button
+								class="component-action"
+								data-onclick="{$_handleToggleContextualSidebarButtonClick}"
+								type="button"
+							>
+								<svg class="icon-monospaced lexicon-icon">
+									<use xlink:href="{$spritemap}#times"></use>
+								</svg>
+							</button>
+						</div>
 					</div>
 				{/param}
 
@@ -156,13 +189,49 @@
 {/template}
 
 /**
+ * Management bar
+ */
+{template .managementBar}
+	{@param spritemap: string}
+	{@param? dirty: bool}
+	{@param? handleToggleContextualSidebarButtonClick: any}
+	{@param? lastSaveDate: string}
+
+	<div class="management-bar management-bar-light navbar navbar-expand-md">
+		<div class="container">
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<span class="navbar-text">
+						{if $dirty}
+							{msg desc=""}saving-changes{/msg}
+						{elseif $lastSaveDate}
+							{msg desc=""}changes-saved-at-{$lastSaveDate}{/msg}
+						{/if}
+					</span>
+				</li>
+			</ul>
+
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<button class="btn btn-secondary nav-btn" data-onclick="{$handleToggleContextualSidebarButtonClick}">
+						<svg class="icon-monospaced lexicon-icon">
+							<use xlink:href="{$spritemap}#cards"></use>
+						</svg>
+					</button>
+				</li>
+			</ul>
+		</div>
+	</div>
+{/template}
+
+/**
  * Sidebar tab
  */
 {template .sidebarTab}
 	{@param id: string}
 	{@param handleTabClick: any}
 	{@param active: bool}
-	{@param name: string}
+	{@param label: string}
 
 	<li class="nav-item">
 		{let $navLinkClasses kind="text"}
@@ -179,7 +248,7 @@
 			href="javascript:;"
 		>
 			<span class="text-truncate">
-				{$name}
+				{$label}
 			</span>
 		</a>
 	</li>

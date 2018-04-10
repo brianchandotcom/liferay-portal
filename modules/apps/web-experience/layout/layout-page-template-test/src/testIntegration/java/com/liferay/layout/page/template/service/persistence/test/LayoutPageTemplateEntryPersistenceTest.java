@@ -140,6 +140,8 @@ public class LayoutPageTemplateEntryPersistenceTest {
 
 		newLayoutPageTemplateEntry.setClassNameId(RandomTestUtil.nextLong());
 
+		newLayoutPageTemplateEntry.setClassTypeId(RandomTestUtil.nextLong());
+
 		newLayoutPageTemplateEntry.setName(RandomTestUtil.randomString());
 
 		newLayoutPageTemplateEntry.setHtmlPreviewEntryId(RandomTestUtil.nextLong());
@@ -171,6 +173,8 @@ public class LayoutPageTemplateEntryPersistenceTest {
 			newLayoutPageTemplateEntry.getLayoutPageTemplateCollectionId());
 		Assert.assertEquals(existingLayoutPageTemplateEntry.getClassNameId(),
 			newLayoutPageTemplateEntry.getClassNameId());
+		Assert.assertEquals(existingLayoutPageTemplateEntry.getClassTypeId(),
+			newLayoutPageTemplateEntry.getClassTypeId());
 		Assert.assertEquals(existingLayoutPageTemplateEntry.getName(),
 			newLayoutPageTemplateEntry.getName());
 		Assert.assertEquals(existingLayoutPageTemplateEntry.getHtmlPreviewEntryId(),
@@ -255,8 +259,8 @@ public class LayoutPageTemplateEntryPersistenceTest {
 			"layoutPageTemplateEntryId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "layoutPageTemplateCollectionId", true,
-			"classNameId", true, "name", true, "htmlPreviewEntryId", true,
-			"defaultTemplate", true);
+			"classNameId", true, "classTypeId", true, "name", true,
+			"htmlPreviewEntryId", true, "defaultTemplate", true);
 	}
 
 	@Test
@@ -503,6 +507,8 @@ public class LayoutPageTemplateEntryPersistenceTest {
 		layoutPageTemplateEntry.setLayoutPageTemplateCollectionId(RandomTestUtil.nextLong());
 
 		layoutPageTemplateEntry.setClassNameId(RandomTestUtil.nextLong());
+
+		layoutPageTemplateEntry.setClassTypeId(RandomTestUtil.nextLong());
 
 		layoutPageTemplateEntry.setName(RandomTestUtil.randomString());
 

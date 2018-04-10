@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.definition;
+package com.liferay.document.library.internal.definition;
 
 import com.liferay.document.library.configuration.DLFileEntryConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;

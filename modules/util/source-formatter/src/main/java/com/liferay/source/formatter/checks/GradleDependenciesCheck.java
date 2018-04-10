@@ -128,9 +128,9 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 					configuration.equals("compile")) {
 
 					dependency = StringUtil.replaceFirst(
-						dependency, "compile", "provided");
+						dependency, "compile", "compileOnly");
 				}
-				else if (configuration.equals("provided")) {
+				else if (configuration.equals("compileOnly")) {
 					dependency = StringUtil.removeSubstrings(
 						dependency, "transitive: false, ", "transitive: true,");
 				}

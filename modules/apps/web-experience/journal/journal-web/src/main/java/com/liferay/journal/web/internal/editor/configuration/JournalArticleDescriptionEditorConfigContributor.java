@@ -92,7 +92,6 @@ public class JournalArticleDescriptionEditorConfigContributor
 		jsonArray.put("ol");
 		jsonArray.put("ul");
 		jsonArray.put("link");
-		jsonArray.put("twitter");
 
 		jsonObject.put("buttons", jsonArray);
 

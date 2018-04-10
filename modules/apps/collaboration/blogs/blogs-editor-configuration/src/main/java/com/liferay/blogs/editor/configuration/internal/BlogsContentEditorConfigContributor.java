@@ -26,6 +26,7 @@ import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCri
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -87,6 +88,8 @@ public class BlogsContentEditorConfigContributor
 		populateFileBrowserURL(
 			jsonObject, themeDisplay, requestBackedPortletURLFactory,
 			namespace + name + "selectItem");
+
+		_populateTwitterButton(jsonObject);
 	}
 
 	@Reference(unbind = "-")
@@ -177,6 +180,57 @@ public class BlogsContentEditorConfigContributor
 		jsonObject.put(
 			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());
 		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
+	}
+
+	private void _populateTwitterButton(JSONObject jsonObject) {
+		JSONObject toolbarsJSONObject = jsonObject.getJSONObject("toolbars");
+
+		if (toolbarsJSONObject == null) {
+			return;
+		}
+
+		JSONObject toolbarsStylesJSONObject = toolbarsJSONObject.getJSONObject(
+			"styles");
+
+		if (toolbarsStylesJSONObject == null) {
+			return;
+		}
+
+		JSONArray toolbarsStylesSelectionsJSONArray =
+			toolbarsStylesJSONObject.getJSONArray("selections");
+
+		if (toolbarsStylesSelectionsJSONArray == null) {
+			return;
+		}
+
+		for (int i = 0; i < toolbarsStylesSelectionsJSONArray.length(); i++) {
+			JSONObject toolbarsStylesSelectionsJSONObject =
+				toolbarsStylesSelectionsJSONArray.getJSONObject(i);
+
+			if (toolbarsStylesSelectionsJSONObject == null) {
+				continue;
+			}
+
+			String toolbarsStylesSelectionsTest =
+				toolbarsStylesSelectionsJSONObject.getString("test");
+
+			if (!toolbarsStylesSelectionsTest.equals(
+					"AlloyEditor.SelectionTest.text")) {
+
+				continue;
+			}
+
+			JSONArray buttonsJSONArray =
+				toolbarsStylesSelectionsJSONObject.getJSONArray("buttons");
+
+			if (buttonsJSONArray == null) {
+				continue;
+			}
+
+			buttonsJSONArray.put("twitter");
+
+			return;
+		}
 	}
 
 	private ItemSelector _itemSelector;

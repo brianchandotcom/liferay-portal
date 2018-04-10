@@ -285,7 +285,6 @@ public class AlloyEditorConfigContributor
 		jsonArray.put("ol");
 		jsonArray.put("ul");
 		jsonArray.put("linkBrowse");
-		jsonArray.put("twitter");
 
 		jsonObject.put("buttons", jsonArray);
 

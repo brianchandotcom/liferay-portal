@@ -26,6 +26,7 @@
 	clearResultsURL="<%= assetTagsDisplayContext.getClearResultsURL() %>"
 	componentId="assetTagsManagementToolbar"
 	creationMenu="<%= assetTagsDisplayContext.isShowAddButton() ? assetTagsDisplayContext.getCreationMenu() : null %>"
+	disabled="<%= assetTagsDisplayContext.getTotalItems() == 0  %>"
 	filterItems="<%= assetTagsDisplayContext.getFilterItemsDropdownItemList() %>"
 	namespace="<%= renderResponse.getNamespace() %>"
 	searchActionURL="<%= assetTagsDisplayContext.getSearchActionURL() %>"

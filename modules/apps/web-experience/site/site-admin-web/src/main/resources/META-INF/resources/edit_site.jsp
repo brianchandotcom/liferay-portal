@@ -114,8 +114,14 @@ if (layoutSetPrototypeId > 0) {
 		backURL="<%= backURL %>"
 		formModelBean="<%= group %>"
 		id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES %>"
-		showButtons="<%= true %>"
+		showButtons="<%= false %>"
 	/>
+
+	<liferay-frontend:button-row>
+		<aui:button type="submit" />
+
+		<aui:button href="<%= backURL %>" type="cancel" />
+	</liferay-frontend:button-row>
 </liferay-frontend:edit-form>
 
 <aui:script>

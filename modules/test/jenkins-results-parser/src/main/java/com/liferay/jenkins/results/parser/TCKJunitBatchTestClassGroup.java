@@ -35,15 +35,15 @@ import java.util.regex.Pattern;
 public class TCKJunitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 
 	protected TCKJunitBatchTestClassGroup(
-		String batchName, GitWorkingDirectory gitWorkingDirectory,
+		String batchName, PortalGitWorkingDirectory portalGitWorkingDirectory,
 		String testSuiteName) {
 
-		super(batchName, gitWorkingDirectory, testSuiteName);
+		super(batchName, portalGitWorkingDirectory, testSuiteName);
 	}
 
 	@Override
 	protected void setTestClassFiles() {
-		File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
+		File workingDirectory = portalGitWorkingDirectory.getWorkingDirectory();
 
 		File tckHomeDirectory = new File(workingDirectory, "tools/tck");
 

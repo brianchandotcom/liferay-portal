@@ -26,10 +26,10 @@ import java.util.List;
 public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 
 	protected ModulesJUnitBatchTestClassGroup(
-		String batchName, GitWorkingDirectory gitWorkingDirectory,
+		String batchName, PortalGitWorkingDirectory portalGitWorkingDirectory,
 		String testSuiteName) {
 
-		super(batchName, gitWorkingDirectory, testSuiteName);
+		super(batchName, portalGitWorkingDirectory, testSuiteName);
 	}
 
 	@Override
@@ -38,9 +38,6 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 
 		List<String> relevantTestClassNameRelativeGlobs = new ArrayList<>();
 
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			(PortalGitWorkingDirectory)gitWorkingDirectory;
-
 		List<File> modifiedModuleDirsList = null;
 
 		try {
@@ -48,7 +45,8 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 				portalGitWorkingDirectory.getModifiedModuleDirsList();
 		}
 		catch (IOException ioe) {
-			File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
+			File workingDirectory =
+				portalGitWorkingDirectory.getWorkingDirectory();
 
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(

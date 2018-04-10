@@ -49,7 +49,38 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 
 	@Override
 	public GitWorkingDirectory getGitWorkingDirectory() {
-		return _getPortalGitWorkingDirectory();
+		return getPortalGitWorkingDirectory();
+	}
+
+	public PortalGitWorkingDirectory getPortalGitWorkingDirectory() {
+		if ((gitWorkingDirectory != null) &&
+			gitWorkingDirectory instanceof PortalGitWorkingDirectory) {
+
+			return (PortalGitWorkingDirectory)gitWorkingDirectory;
+		}
+
+		String branchName = _getBranchName();
+		String workingDirectoryPath = "/opt/dev/projects/github/liferay-portal";
+
+		if (!branchName.equals("master")) {
+			workingDirectoryPath = JenkinsResultsParserUtil.combine(
+				workingDirectoryPath, "-", branchName);
+		}
+
+		PortalGitWorkingDirectory portalGitWorkingDirectory = null;
+
+		try {
+			portalGitWorkingDirectory = new PortalGitWorkingDirectory(
+				branchName, workingDirectoryPath);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Invalid Git working directory " + workingDirectoryPath, ioe);
+		}
+
+		gitWorkingDirectory = portalGitWorkingDirectory;
+
+		return portalGitWorkingDirectory;
 	}
 
 	public String getPoshiQuery(String testBatchName) {
@@ -72,7 +103,7 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 		super(jobName);
 
 		branchName = _getBranchName();
-		gitWorkingDirectory = _getPortalGitWorkingDirectory();
+		gitWorkingDirectory = getPortalGitWorkingDirectory();
 
 		portalTestProperties = JenkinsResultsParserUtil.getProperties(
 			new File(
@@ -128,37 +159,6 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 		}
 
 		return "master";
-	}
-
-	private PortalGitWorkingDirectory _getPortalGitWorkingDirectory() {
-		if ((gitWorkingDirectory != null) &&
-			gitWorkingDirectory instanceof PortalGitWorkingDirectory) {
-
-			return (PortalGitWorkingDirectory)gitWorkingDirectory;
-		}
-
-		String branchName = _getBranchName();
-		String workingDirectoryPath = "/opt/dev/projects/github/liferay-portal";
-
-		if (!branchName.equals("master")) {
-			workingDirectoryPath = JenkinsResultsParserUtil.combine(
-				workingDirectoryPath, "-", branchName);
-		}
-
-		PortalGitWorkingDirectory portalGitWorkingDirectory = null;
-
-		try {
-			portalGitWorkingDirectory = new PortalGitWorkingDirectory(
-				branchName, workingDirectoryPath);
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(
-				"Invalid Git working directory " + workingDirectoryPath, ioe);
-		}
-
-		gitWorkingDirectory = portalGitWorkingDirectory;
-
-		return portalGitWorkingDirectory;
 	}
 
 	private static final Pattern _jobNamePattern = Pattern.compile(

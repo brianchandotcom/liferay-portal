@@ -39,10 +39,10 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected FunctionalBatchTestClassGroup(
-		String batchName, GitWorkingDirectory gitWorkingDirectory,
+		String batchName, PortalGitWorkingDirectory portalGitWorkingDirectory,
 		String testSuiteName) {
 
-		super(batchName, gitWorkingDirectory, testSuiteName);
+		super(batchName, portalGitWorkingDirectory, testSuiteName);
 
 		axisTestClassGroups.put(0, new AxisTestClassGroup(this, 0));
 
@@ -61,9 +61,6 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 			return;
 		}
 
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			(PortalGitWorkingDirectory)gitWorkingDirectory;
-
 		List<File> modifiedModuleDirsList = null;
 
 		try {
@@ -71,7 +68,8 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 				portalGitWorkingDirectory.getModifiedModuleDirsList();
 		}
 		catch (IOException ioe) {
-			File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
+			File workingDirectory =
+				portalGitWorkingDirectory.getWorkingDirectory();
 
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(

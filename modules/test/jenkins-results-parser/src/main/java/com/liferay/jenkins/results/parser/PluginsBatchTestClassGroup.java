@@ -37,20 +37,20 @@ import java.util.Properties;
 public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 
 	protected PluginsBatchTestClassGroup(
-		String batchName, GitWorkingDirectory gitWorkingDirectory,
+		String batchName, PortalGitWorkingDirectory portalGitWorkingDirectory,
 		String testSuiteName) {
 
-		super(batchName, gitWorkingDirectory, testSuiteName);
+		super(batchName, portalGitWorkingDirectory, testSuiteName);
 
 		Properties portalReleaseProperties =
 			JenkinsResultsParserUtil.getProperties(
 				new File(
-					gitWorkingDirectory.getWorkingDirectory(),
+					portalGitWorkingDirectory.getWorkingDirectory(),
 					"release.properties"));
 
 		try {
 			_pluginGitWorkingDirectory = new PluginsGitWorkingDirectory(
-				gitWorkingDirectory.getUpstreamBranchName(),
+				portalGitWorkingDirectory.getUpstreamBranchName(),
 				portalReleaseProperties.getProperty("lp.plugins.dir"));
 
 			_pluginNamesExcludePathMatchers = _getPluginNamesPathMatchers(

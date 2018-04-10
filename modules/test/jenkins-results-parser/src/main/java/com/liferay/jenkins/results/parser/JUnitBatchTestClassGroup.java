@@ -39,10 +39,10 @@ import java.util.regex.Pattern;
 public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 	protected JUnitBatchTestClassGroup(
-		String batchName, GitWorkingDirectory gitWorkingDirectory,
+		String batchName, PortalGitWorkingDirectory portalGitWorkingDirectory,
 		String testSuiteName) {
 
-		super(batchName, gitWorkingDirectory, testSuiteName);
+		super(batchName, portalGitWorkingDirectory, testSuiteName);
 
 		_setTestClassNamesExcludesRelativeGlobs();
 		_setTestClassNamesIncludesRelativeGlobs();
@@ -57,16 +57,14 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		List<String> relevantTestClassNameRelativeGlobs = new ArrayList<>();
 
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			(PortalGitWorkingDirectory)gitWorkingDirectory;
-
 		List<File> moduleDirsList = null;
 
 		try {
 			moduleDirsList = portalGitWorkingDirectory.getModuleDirsList();
 		}
 		catch (IOException ioe) {
-			File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
+			File workingDirectory =
+				portalGitWorkingDirectory.getWorkingDirectory();
 
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
@@ -76,7 +74,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		List<File> modifiedFilesList =
-			gitWorkingDirectory.getModifiedFilesList();
+			portalGitWorkingDirectory.getModifiedFilesList();
 
 		for (File modifiedFile : modifiedFilesList) {
 			boolean foundModuleFile = false;
@@ -105,7 +103,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected void setTestClassFiles() {
-		File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
+		File workingDirectory = portalGitWorkingDirectory.getWorkingDirectory();
 
 		try {
 			Files.walkFileTree(
@@ -222,7 +220,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		List<PathMatcher> pathMatchers = new ArrayList<>();
 
-		File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
+		File workingDirectory = portalGitWorkingDirectory.getWorkingDirectory();
 
 		String workingDirectoryPath = workingDirectory.getAbsolutePath();
 

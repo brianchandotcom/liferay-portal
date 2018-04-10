@@ -81,6 +81,9 @@ public class FragmentsEditorContext {
 
 		_request = PortalUtil.getHttpServletRequest(renderRequest);
 
+		_assetDisplayContributorTracker =
+			(AssetDisplayContributorTracker)_renderRequest.getAttribute(
+				LayoutAdminWebKeys.ASSET_DISPLAY_CONTRIBUTOR_TRACKER);
 		_classNameId = PortalUtil.getClassNameId(className);
 		_itemSelector = (ItemSelector)_request.getAttribute(
 			LayoutAdminWebKeys.ITEM_SELECTOR);
@@ -224,67 +227,65 @@ public class FragmentsEditorContext {
 		return _layoutPageTemplateEntry;
 	}
 
-	private String _getMappingSubtypeLabel(String className, long classTypeId)
-		throws PortalException {
+	private String _getMappingSubtypeLabel() throws PortalException {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_getLayoutPageTemplateEntry();
 
-		String mappingSubtypeLabel = null;
+		String className = PortalUtil.getClassName(
+			layoutPageTemplateEntry.getClassNameId());
 
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				className);
 
-		if (assetRendererFactory != null) {
-			ClassTypeReader classTypeReader =
-				assetRendererFactory.getClassTypeReader();
-
-			ClassType classType = classTypeReader.getClassType(
-				classTypeId, _themeDisplay.getLocale());
-
-			mappingSubtypeLabel = classType.getName();
+		if (assetRendererFactory == null) {
+			return null;
 		}
 
-		return mappingSubtypeLabel;
+		ClassTypeReader classTypeReader =
+			assetRendererFactory.getClassTypeReader();
+
+		ClassType classType = classTypeReader.getClassType(
+			layoutPageTemplateEntry.getClassTypeId(),
+			_themeDisplay.getLocale());
+
+		return classType.getName();
 	}
 
-	private String _getMappingTypeLabel(String className) {
-		String mappingTypeLabel = null;
+	private String _getMappingTypeLabel() throws PortalException {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_getLayoutPageTemplateEntry();
 
-		AssetDisplayContributorTracker assetDisplayContributorTracker =
-			(AssetDisplayContributorTracker)_renderRequest.getAttribute(
-				LayoutAdminWebKeys.ASSET_DISPLAY_CONTRIBUTOR_TRACKER);
+		String className = PortalUtil.getClassName(
+			layoutPageTemplateEntry.getClassNameId());
 
 		AssetDisplayContributor assetDisplayContributor =
-			assetDisplayContributorTracker.getAssetDisplayContributor(
+			_assetDisplayContributorTracker.getAssetDisplayContributor(
 				className);
 
-		if (assetDisplayContributor != null) {
-			mappingTypeLabel = assetDisplayContributor.getLabel(
-				_themeDisplay.getLocale());
+		if (assetDisplayContributor == null) {
+			return null;
 		}
 
-		return mappingTypeLabel;
+		return assetDisplayContributor.getLabel(_themeDisplay.getLocale());
 	}
 
 	private SoyContext _getSelectedMappingTypeLabel() throws PortalException {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_getLayoutPageTemplateEntry();
 
+		if ((layoutPageTemplateEntry == null) ||
+			(layoutPageTemplateEntry.getClassNameId() <= 0)) {
+
+			return SoyContextFactoryUtil.createSoyContext();
+		}
+
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
-		if ((layoutPageTemplateEntry != null) &&
-			(layoutPageTemplateEntry.getClassNameId() > 0)) {
+		soyContext.put("type", _getMappingTypeLabel());
 
-			String className = PortalUtil.getClassName(
-				layoutPageTemplateEntry.getClassNameId());
-
-			soyContext.put("type", _getMappingTypeLabel(className));
-
-			if (layoutPageTemplateEntry.getClassTypeId() > 0) {
-				soyContext.put(
-					"subtype",
-					_getMappingSubtypeLabel(
-						className, layoutPageTemplateEntry.getClassTypeId()));
-			}
+		if (layoutPageTemplateEntry.getClassTypeId() <= 0) {
+			soyContext.put("subtype", _getMappingSubtypeLabel());
 		}
 
 		return soyContext;
@@ -405,6 +406,8 @@ public class FragmentsEditorContext {
 		return urlItemSelectorCriterion;
 	}
 
+	private final AssetDisplayContributorTracker
+		_assetDisplayContributorTracker;
 	private final long _classNameId;
 	private final long _classPK;
 	private final ItemSelector _itemSelector;

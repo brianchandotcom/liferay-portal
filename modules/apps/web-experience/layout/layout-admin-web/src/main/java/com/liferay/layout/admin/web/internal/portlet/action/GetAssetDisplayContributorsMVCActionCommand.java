@@ -27,8 +27,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.List;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -57,13 +55,10 @@ public class GetAssetDisplayContributorsMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		List<AssetDisplayContributor> assetDisplayContributors =
-			_assetDisplayContributorTracker.getAssetDisplayContributors();
-
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (AssetDisplayContributor assetDisplayContributor :
-				assetDisplayContributors) {
+				_assetDisplayContributorTracker.getAssetDisplayContributors()) {
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 

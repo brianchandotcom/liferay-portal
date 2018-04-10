@@ -23,13 +23,13 @@ import javax.portlet.RenderResponse;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Pablo Molina
+ * @author Eudaldo Alonso
  */
 @Component(
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT,
-		"mvc.command.name=/fragment/render_fragment_entry"
+		"mvc.command.name=/fragment/iframe_fragment_entry"
 	},
 	service = MVCRenderCommand.class
 )
@@ -39,7 +39,7 @@ public class IframeFragmentEntryMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/render_fragment_entry.jsp";
+		return "/iframe_fragment_entry.jsp";
 	}
 
 }

@@ -24,38 +24,4 @@ String html = ParamUtil.getString(renderRequest, "html");
 String js = ParamUtil.getString(renderRequest, "js");
 %>
 
-<c:if test="<%= Validator.isNotNull(css) || Validator.isNotNull(html) || Validator.isNotNull(js) %>">
-	<%= FragmentEntryRenderUtil.renderFragmentEntry(fragmentEntryId, css, html, js) %>
-</c:if>
-
-<c:if test="<%= Validator.isNull(css) && Validator.isNull(html) && Validator.isNull(js) %>">
-	<script>
-		var NAMESPACE = 'LFR_FRAGMENT_RENDER';
-
-		function handleIframeMessage (event) {
-			var data = event.data;
-			var prevData = localStorage.getItem(NAMESPACE) || '';
-
-			if (data && data !== prevData) {
-				localStorage.setItem(NAMESPACE, data);
-				location.reload();
-			}
-		}
-
-		function updatePreview () {
-			window.addEventListener('message', handleIframeMessage);
-			window[NAMESPACE] = true;
-
-			var content = JSON.parse(
-				localStorage.getItem(NAMESPACE) || '{}'
-			).data || '';
-
-			document.open();
-			document.write(content);
-		}
-
-		if (!window[NAMESPACE]) {
-			updatePreview();
-		}
-	</script>
-</c:if>
+<%= FragmentEntryRenderUtil.renderFragmentEntry(fragmentEntryId, css, html, js) %>

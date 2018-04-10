@@ -315,6 +315,8 @@ Liferay = window.Liferay || {};
 		}
 		else {
 			if (components[id] && value !== null) {
+				delete componentPromiseWrappers[id];
+
 				console.warn('Component with id "' + id + '" is being registered twice. This can lead to unexpected behaviour in the "Liferay.component" and "Liferay.componentReady" APIs, as well as in the "*:registered" events.');
 			}
 

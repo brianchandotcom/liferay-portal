@@ -2,14 +2,14 @@ sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
 dependencies {
-	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "2.4.1"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
-	provided group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
-	provided group: "org.osgi", name: "org.osgi.service.component", version: "1.3.0"
-	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
-	provided project(":apps:foundation:portal-cache:portal-cache-api")
-	provided project(":apps:static:portal-configuration:portal-configuration-metatype-api")
-	provided project(":apps:static:portal:portal-profile-api")
-	provided project(":core:petra:petra-lang")
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "2.4.1"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
+	compileOnly group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component", version: "1.3.0"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
+	compileOnly project(":apps:foundation:portal-cache:portal-cache-api")
+	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
+	compileOnly project(":apps:static:portal:portal-profile-api")
+	compileOnly project(":core:petra:petra-lang")
 }

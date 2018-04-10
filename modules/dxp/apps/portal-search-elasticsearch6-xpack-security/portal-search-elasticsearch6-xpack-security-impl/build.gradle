@@ -2,8 +2,8 @@ sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
 dependencies {
-	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	provided project(":apps:portal-search-elasticsearch6:portal-search-elasticsearch6-api")
-	provided project(":apps:static:portal-configuration:portal-configuration-metatype-api")
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly project(":apps:portal-search-elasticsearch6:portal-search-elasticsearch6-api")
+	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 }

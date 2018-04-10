@@ -14,7 +14,7 @@ else {
 }
 
 dependencies {
-	provided project(":core:petra:petra-string")
+	compileOnly project(":core:petra:petra-string")
 
 	testCompile project(":core:petra:petra-lang")
 }

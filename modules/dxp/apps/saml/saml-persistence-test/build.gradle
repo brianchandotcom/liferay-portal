@@ -3,8 +3,8 @@ copyLibs {
 }
 
 dependencies {
-	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
-	provided project(":apps:foundation:petra:petra-xml")
+	compileOnly group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
+	compileOnly project(":apps:foundation:petra:petra-xml")
 
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile project(":core:registry-api")

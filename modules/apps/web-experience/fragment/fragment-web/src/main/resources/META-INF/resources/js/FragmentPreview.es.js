@@ -74,28 +74,6 @@ class FragmentPreview extends Component {
 	}
 
 	/**
-	 * After each render, script tags need to be reapended to the DOM
-	 * in order to trigger an execution (content changes do not trigger it).
-	 * @inheritDoc
-	 */
-
-	rendered() {
-		if (this.refs.preview) {
-			this.refs.preview.querySelectorAll('script').forEach(
-				(script) => {
-					const newScript = document.createElement('script');
-					const parentNode = script.parentNode;
-
-					newScript.innerHTML = script.innerHTML;
-
-					parentNode.removeChild(script);
-					parentNode.appendChild(newScript);
-				}
-			);
-		}
-	}
-
-	/**
 	 * @inheritDoc
 	 */
 
@@ -154,10 +132,10 @@ class FragmentPreview extends Component {
 			).then(
 				response => {
 					this._loading = false;
-					this.refs.previewFrame.src = `
-						data:text/html;charset=utf-8,
-						${encodeURIComponent(response)}
-					`;
+					this.refs.previewFrame.contentWindow.postMessage(
+						JSON.stringify({data: response}),
+						'*'
+					);
 				}
 			);
 		}

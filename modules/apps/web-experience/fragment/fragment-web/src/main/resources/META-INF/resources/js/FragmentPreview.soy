@@ -4,6 +4,7 @@
  * Renders a FragmentPreview
  */
 {template .render}
+	{@param renderFragmentEntryURL: string}
 	{@param spritemap: string}
 	{@param? _currentPreviewSize: string}
 	{@param? _handlePreviewSizeButtonClick: any}
@@ -75,7 +76,11 @@
 				</div>
 			{/if}
 
-			<iframe class="fragment-preview__content" ref="previewFrame"></iframe>
+			<iframe
+				class="fragment-preview__content"
+				ref="previewFrame"
+				src="{$renderFragmentEntryURL}"
+			></iframe>
 		</div>
 	</div>
 {/template}

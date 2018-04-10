@@ -28,13 +28,11 @@ public class UnicodePropertiesTest {
 	public void testSetBlankProperty() throws Exception {
 		UnicodeProperties props = new UnicodeProperties();
 
-		int hashCode = props.hashCode();
+		props.setProperty("key1", StringPool.BLANK);
+		props.setProperty("key2", null);
+		props.setProperty("key3", StringPool.NULL);
 
-		props.setProperty("key", StringPool.BLANK);
-
-		Assert.assertNotEquals(
-			"setProperty() of blank value must not remove entry", hashCode,
-			props.hashCode());
+		Assert.assertEquals("key1=\nkey3=null\n", props.toString());
 	}
 
 	@Test

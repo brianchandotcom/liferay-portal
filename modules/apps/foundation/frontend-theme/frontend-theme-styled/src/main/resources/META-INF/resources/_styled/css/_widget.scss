@@ -23,6 +23,10 @@
 	.widget-mode-detail-text {
 		margin-top: 48px;
 
+		img {
+			max-width: 100%;
+		}
+
 		p {
 			font-size: 18px;
 			line-height: 1.8;

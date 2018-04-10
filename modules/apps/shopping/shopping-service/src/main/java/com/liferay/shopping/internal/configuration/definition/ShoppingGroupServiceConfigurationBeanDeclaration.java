@@ -12,23 +12,23 @@
  * details.
  */
 
-package com.liferay.shopping.configuration.definition;
+package com.liferay.shopping.internal.configuration.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.shopping.configuration.ShoppingFileUploadsConfiguration;
+import com.liferay.shopping.configuration.ShoppingGroupServiceConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Drew Brokke
+ * @author Peter Fellwock
  */
 @Component
-public class ShoppingFileUploadsConfigurationBeanDeclaration
+public class ShoppingGroupServiceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return ShoppingFileUploadsConfiguration.class;
+		return ShoppingGroupServiceConfiguration.class;
 	}
 
 }

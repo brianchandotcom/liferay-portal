@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.shopping.configuration.definition;
+package com.liferay.shopping.internal.configuration.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 import com.liferay.shopping.configuration.ShoppingGroupServiceConfiguration;

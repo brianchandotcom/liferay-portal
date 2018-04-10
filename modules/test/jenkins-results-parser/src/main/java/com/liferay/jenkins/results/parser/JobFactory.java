@@ -14,19 +14,23 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.File;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * @author Michael Hashimoto
  */
 public class JobFactory {
 
-	public static PortalRepositoryJob newPortalRepositoryJob(String jobName) {
-		return newPortalRepositoryJob(jobName, "default");
+	public static RepositoryJob newRepositoryJob(String jobName) {
+		return newRepositoryJob(jobName, "default");
 	}
 
-	public static PortalRepositoryJob newPortalRepositoryJob(
+	public static RepositoryJob newRepositoryJob(
 		String jobName, String testSuiteName) {
 
 		if (_jobs.containsKey(jobName)) {
@@ -40,24 +44,77 @@ public class JobFactory {
 				jobName + " is not a portal repository job");
 		}
 
-		PortalRepositoryJob portalRepositoryJob = null;
+		RepositoryJob repositoryJob = null;
 
 		if (jobName.contains("test-portal-acceptance-pullrequest(")) {
-			portalRepositoryJob = new PortalAcceptancePullRequestJob(
+			repositoryJob = new PortalAcceptancePullRequestJob(
 				jobName, testSuiteName);
+
+			GitWorkingDirectory gitWorkingDirectory =
+				repositoryJob.getGitWorkingDirectory();
+
+			String subrepositoryModuleName = _getSubrepositoryModuleName(
+				gitWorkingDirectory);
+
+			if (subrepositoryModuleName != null) {
+				repositoryJob = new SubrepositoryAcceptancePullRequestJob(
+					jobName, subrepositoryModuleName);
+			}
 		}
 		else if (jobName.contains("test-portal-acceptance-upstream(")) {
-			portalRepositoryJob = new PortalAcceptanceUpstreamJob(jobName);
+			repositoryJob = new PortalAcceptanceUpstreamJob(jobName);
+		}
+		else if (jobName.contains(
+					"test-subrepository-acceptance-pullrequest(")) {
+
+			repositoryJob = new SubrepositoryAcceptancePullRequestJob(
+				jobName, System.getenv("REPOSITORY_NAME"));
 		}
 		else {
 			throw new RuntimeException("Invalid job name " + jobName);
 		}
 
-		if (portalRepositoryJob != null) {
-			_jobs.put(jobName, portalRepositoryJob);
+		if (repositoryJob != null) {
+			_jobs.put(jobName, repositoryJob);
 		}
 
-		return portalRepositoryJob;
+		return repositoryJob;
+	}
+
+	private static String _getSubrepositoryModuleName(
+		GitWorkingDirectory gitWorkingDirectory) {
+
+		List<File> currentBranchFiles =
+			gitWorkingDirectory.getModifiedFilesList();
+
+		if (currentBranchFiles.size() == 1) {
+			File diffFile = currentBranchFiles.get(0);
+
+			String diffFilePath = diffFile.toString();
+
+			if (diffFilePath.endsWith("ci-merge")) {
+				File moduleDir = diffFile.getParentFile();
+
+				List<File> lfrBuildPortalFiles =
+					JenkinsResultsParserUtil.findFiles(
+						moduleDir, "\\.lfrbuild-portal");
+
+				if (lfrBuildPortalFiles.isEmpty()) {
+					File gitRepoFile = new File(moduleDir, ".gitrepo");
+
+					Properties properties =
+						JenkinsResultsParserUtil.getProperties(gitRepoFile);
+
+					String subrepositoryRemote = properties.getProperty(
+						"remote");
+
+					return subrepositoryRemote.replaceAll(
+						".*(com-liferay-[^\\.]+)\\.git", "$1");
+				}
+			}
+		}
+
+		return null;
 	}
 
 	private static final Map<String, Job> _jobs = new HashMap<>();

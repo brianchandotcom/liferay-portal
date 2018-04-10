@@ -58,7 +58,9 @@ public class SourceFormatBuild extends TopLevelBuild {
 			Dom4JUtil.getNewElement(
 				"summary", null, "Click here for more details."),
 			Dom4JUtil.getNewElement("h4", null, "Base Branch:"),
-			getBaseBranchDetailsElement());
+			getBaseBranchDetailsElement(),
+			Dom4JUtil.getNewElement("h4", null, "Sender Branch:"),
+			getSenderBranchDetailsElement());
 
 		String result = getResult();
 
@@ -113,6 +115,33 @@ public class SourceFormatBuild extends TopLevelBuild {
 
 			new GenericFailureMessageGenerator()
 		};
+	}
+
+	protected Element getSenderBranchDetailsElement() {
+		String repositoryName = _pullRequest.getRepositoryName();
+		String senderBranchName = _pullRequest.getSenderBranchName();
+		String senderUsername = _pullRequest.getSenderUsername();
+
+		String senderBranchURL =
+			"https://github.com/" + senderUsername + "/" + repositoryName +
+				"/tree/" + senderBranchName;
+
+		String senderSHA = _pullRequest.getSenderSHA();
+
+		String senderCommitURL =
+			"https://github.com/" + senderUsername + "/" + repositoryName +
+				"/commit/" + senderSHA;
+
+		Element senderBranchDetailsElement = Dom4JUtil.getNewElement(
+			"p", null, "Branch Name: ",
+			Dom4JUtil.getNewAnchorElement(senderBranchURL, senderBranchName));
+
+		Dom4JUtil.addToElement(
+			senderBranchDetailsElement, Dom4JUtil.getNewElement("br"),
+			"Branch GIT ID: ",
+			Dom4JUtil.getNewAnchorElement(senderCommitURL, senderSHA));
+
+		return senderBranchDetailsElement;
 	}
 
 	@Override

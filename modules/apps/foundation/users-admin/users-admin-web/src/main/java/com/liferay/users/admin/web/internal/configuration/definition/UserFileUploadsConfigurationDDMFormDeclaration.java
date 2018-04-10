@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.users.admin.configuration.definition;
+package com.liferay.users.admin.web.internal.configuration.definition;
 
 import com.liferay.configuration.admin.definition.ConfigurationDDMFormDeclaration;
+import com.liferay.users.admin.configuration.definition.UserFileUploadsConfigurationForm;
 
 import org.osgi.service.component.annotations.Component;
 

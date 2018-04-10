@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.users.admin.configuration.definition;
+package com.liferay.users.admin.web.internal.configuration.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 import com.liferay.users.admin.configuration.UserFileUploadsConfiguration;

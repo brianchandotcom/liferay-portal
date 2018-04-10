@@ -33,4 +33,4 @@ fragmentEntryLink.setJs(js);
 fragmentEntryLink.setFragmentEntryId(fragmentEntryId);
 %>
 
-<%= FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink, request, response) %>
+<%= FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink, PortletMode.VIEW.toString(), request, response) %>

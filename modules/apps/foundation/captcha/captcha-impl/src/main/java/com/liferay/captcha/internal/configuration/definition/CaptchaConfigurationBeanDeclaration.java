@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.captcha.configuration.definition;
+package com.liferay.captcha.internal.configuration.definition;
 
 import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;

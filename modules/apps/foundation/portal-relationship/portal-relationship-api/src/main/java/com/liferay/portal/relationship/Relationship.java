@@ -31,28 +31,28 @@ import java.util.stream.Stream;
 @ProviderType
 public class Relationship<T extends ClassedModel> {
 
-	public Stream<? extends ClassedModel> getInboundRelatedModels(
+	public Stream<? extends ClassedModel> getInboundRelatedModelStream(
 		long primKey) {
 
 		T relationshipBaseModel = _baseSupplier.supply(primKey);
 
-		return _getInboundRelationships(relationshipBaseModel);
+		return _getInboundRelatedModelStream(relationshipBaseModel);
 	}
 
-	public Stream<? extends ClassedModel> getOutboundRelatedModels(
+	public Stream<? extends ClassedModel> getOutboundRelatedModelStream(
 		long primKey) {
 
 		T relationshipBaseModel = _baseSupplier.supply(primKey);
 
-		return _getOutboundRelationships(relationshipBaseModel);
+		return _getOutboundRelatedModelStream(relationshipBaseModel);
 	}
 
-	public Stream<? extends ClassedModel> getRelatedModels(long primKey) {
 		T relationshipBaseModel = _baseSupplier.supply(primKey);
+	public Stream<? extends ClassedModel> getRelatedModelStream(long primKey) {
 
 		return Stream.concat(
-			_getInboundRelationships(relationshipBaseModel),
-			_getOutboundRelationships(relationshipBaseModel));
+			_getInboundRelatedModelStream(relationshipBaseModel),
+			_getOutboundRelatedModelStream(relationshipBaseModel));
 	}
 
 	public static class Builder<T extends ClassedModel> {
@@ -138,15 +138,15 @@ public class Relationship<T extends ClassedModel> {
 		_singleOutboundRelationshipFunctions = new HashSet<>();
 	}
 
-	private Stream<? extends ClassedModel> _getInboundRelationships(
+	private Stream<? extends ClassedModel> _getInboundRelatedModelStream(
 		T relationBaseModel) {
 
 		return Stream.concat(
-			_getMultiInboundRelationships(relationBaseModel),
-			_getSingleInboundRelationships(relationBaseModel));
+			_getMultiInboundRelatedModelStream(relationBaseModel),
+			_getSingleInboundRelatedModelStream(relationBaseModel));
 	}
 
-	private Stream<? extends ClassedModel> _getMultiInboundRelationships(
+	private Stream<? extends ClassedModel> _getMultiInboundRelatedModelStream(
 		T relationshipBaseModel) {
 
 		Stream<MultiRelationshipFunction<T, ? extends ClassedModel>> stream =
@@ -160,7 +160,7 @@ public class Relationship<T extends ClassedModel> {
 		);
 	}
 
-	private Stream<? extends ClassedModel> _getMultiOutboundRelationships(
+	private Stream<? extends ClassedModel> _getMultiOutboundRelatedModelStream(
 		T relationshipBaseModel) {
 
 		Stream<MultiRelationshipFunction<T, ? extends ClassedModel>> stream =
@@ -174,15 +174,15 @@ public class Relationship<T extends ClassedModel> {
 		);
 	}
 
-	private Stream<? extends ClassedModel> _getOutboundRelationships(
+	private Stream<? extends ClassedModel> _getOutboundRelatedModelStream(
 		T relationBaseModel) {
 
 		return Stream.concat(
-			_getMultiOutboundRelationships(relationBaseModel),
-			_getSingleOutboudRelationships(relationBaseModel));
+			_getMultiOutboundRelatedModelStream(relationBaseModel),
+			_getSingleOutboudRelatedModelStream(relationBaseModel));
 	}
 
-	private Stream<? extends ClassedModel> _getSingleInboundRelationships(
+	private Stream<? extends ClassedModel> _getSingleInboundRelatedModelStream(
 		T relationshipBaseModel) {
 
 		Stream<Function<T, ? extends ClassedModel>> stream =
@@ -193,7 +193,7 @@ public class Relationship<T extends ClassedModel> {
 				relationshipBaseModel));
 	}
 
-	private Stream<? extends ClassedModel> _getSingleOutboudRelationships(
+	private Stream<? extends ClassedModel> _getSingleOutboudRelatedModelStream(
 		T relationshipBaseModel) {
 
 		Stream<Function<T, ? extends ClassedModel>> stream =

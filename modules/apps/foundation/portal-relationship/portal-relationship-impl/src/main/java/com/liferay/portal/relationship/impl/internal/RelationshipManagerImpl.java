@@ -46,7 +46,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
 		Relationship<T> relationship = _getRelationship(relationshipBaseClass);
 
 		Stream<? extends ClassedModel> stream =
-			relationship.getInboundRelatedModels(primKey);
+			relationship.getInboundRelatedModelStream(primKey);
 
 		return stream.collect(Collectors.toList());
 	}
@@ -58,7 +58,7 @@ public class RelationshipManagerImpl implements RelationshipManager {
 		Relationship<T> relationship = _getRelationship(relationshipBaseClass);
 
 		Stream<? extends ClassedModel> stream =
-			relationship.getOutboundRelatedModels(primKey);
+			relationship.getOutboundRelatedModelStream(primKey);
 
 		return stream.collect(Collectors.toList());
 	}
@@ -69,8 +69,8 @@ public class RelationshipManagerImpl implements RelationshipManager {
 
 		Relationship<T> relationship = _getRelationship(relationshipBaseClass);
 
-		Stream<? extends ClassedModel> stream = relationship.getRelatedModels(
-			primKey);
+		Stream<? extends ClassedModel> stream =
+			relationship.getRelatedModelStream(primKey);
 
 		return stream.collect(Collectors.toList());
 	}

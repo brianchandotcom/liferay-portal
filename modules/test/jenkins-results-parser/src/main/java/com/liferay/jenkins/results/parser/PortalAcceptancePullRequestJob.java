@@ -14,7 +14,9 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Michael Hashimoto
@@ -41,7 +43,25 @@ public class PortalAcceptancePullRequestJob extends PortalRepositoryJob {
 				portalTestProperties, "test.batch.names");
 		}
 
-		return getListFromString(testBatchNames);
+		List<String> testBatchNamesList = getListFromString(testBatchNames);
+
+		if (_isPortalWebOnly()) {
+			List<String> irrelevantBatchNamesList = new ArrayList<>();
+
+			for (String testBatchName : testBatchNamesList) {
+				if (!testBatchName.contains("compile-jsp") &&
+					!testBatchName.contains("functional") &&
+					!testBatchName.contains("portal-web") &&
+					!testBatchName.contains("source-format")) {
+
+					irrelevantBatchNamesList.add(testBatchName);
+				}
+			}
+
+			testBatchNamesList.removeAll(irrelevantBatchNamesList);
+		}
+
+		return testBatchNamesList;
 	}
 
 	@Override
@@ -84,6 +104,32 @@ public class PortalAcceptancePullRequestJob extends PortalRepositoryJob {
 
 	public String getTestSuiteName() {
 		return _testSuiteName;
+	}
+
+	private boolean _isPortalWebOnly() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("git diff-tree --no-commit-id --name-only -r ");
+		sb.append(System.getenv("TOP_LEVEL_BRANCH_NAME"));
+		sb.append(" ");
+		sb.append(System.getenv("GITHUB_UPSTREAM_BRANCH_SHA"));
+
+		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+
+		GitWorkingDirectory.ExecutionResult executionResult =
+			gitWorkingDirectory.executeBashCommands(sb.toString());
+
+		String standardOut = executionResult.getStandardOut();
+
+		if (!Objects.isNull(standardOut)) {
+			for (String diffFilePath : standardOut.split("\n")) {
+				if (!diffFilePath.contains("portal-web/")) {
+					return false;
+				}
+			}
+		}
+
+		return true;
 	}
 
 	private final String _testSuiteName;

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 import java.util.Iterator;
@@ -45,23 +44,23 @@ public class CoreServiceUpgradeTest {
 		new LiferayIntegrationTestRule();
 
 	@BeforeClass
-	public static void setUpClass() throws Exception {
+	public static void setUpClass() throws SQLException {
 		_currentSchemaVersion = CoreServiceUpgrade.getCurrentSchemaVersion(
 			DataAccess.getUpgradeOptimizedConnection());
 	}
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws SQLException {
 		_innerCoreServiceUpgrade = new InnerCoreServiceUpgrade();
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() throws SQLException {
 		_innerCoreServiceUpgrade.updateSchemaVersion(_currentSchemaVersion);
 	}
 
 	@Test
-	public void testGetLatestSchemaVersion() throws Exception {
+	public void testGetLatestSchemaVersion() {
 		Set<Version> pendingSchemaVersions =
 			_innerCoreServiceUpgrade.getPendingSchemaVersions(
 				_ORIGINAL_SCHEMA_VERSION);
@@ -79,7 +78,7 @@ public class CoreServiceUpgradeTest {
 	}
 
 	@Test
-	public void testGetRequiredSchemaVersion() throws Exception {
+	public void testGetRequiredSchemaVersion() {
 		Version latestSchemaVersion =
 			CoreServiceUpgrade.getLatestSchemaVersion();
 
@@ -94,7 +93,7 @@ public class CoreServiceUpgradeTest {
 	}
 
 	@Test
-	public void testIsInLatestSchemaVersion() throws Exception {
+	public void testIsInLatestSchemaVersion() throws SQLException {
 		_innerCoreServiceUpgrade.updateSchemaVersion(
 			CoreServiceUpgrade.getLatestSchemaVersion());
 
@@ -104,7 +103,7 @@ public class CoreServiceUpgradeTest {
 	}
 
 	@Test
-	public void testIsInRequiredSchemaVersion() throws Exception {
+	public void testIsInRequiredSchemaVersion() throws SQLException {
 		_innerCoreServiceUpgrade.updateSchemaVersion(
 			CoreServiceUpgrade.getRequiredSchemaVersion());
 
@@ -114,7 +113,7 @@ public class CoreServiceUpgradeTest {
 	}
 
 	@Test
-	public void testIsNotInLatestSchemaVersion() throws Exception {
+	public void testIsNotInLatestSchemaVersion() throws SQLException {
 		_innerCoreServiceUpgrade.updateSchemaVersion(_ORIGINAL_SCHEMA_VERSION);
 
 		Assert.assertFalse(
@@ -123,7 +122,7 @@ public class CoreServiceUpgradeTest {
 	}
 
 	@Test
-	public void testIsNotInRequiredSchemaVersion() throws Exception {
+	public void testIsNotInRequiredSchemaVersion() throws SQLException {
 		_innerCoreServiceUpgrade.updateSchemaVersion(_ORIGINAL_SCHEMA_VERSION);
 
 		Assert.assertFalse(
@@ -132,7 +131,9 @@ public class CoreServiceUpgradeTest {
 	}
 
 	@Test
-	public void testUpgradeWhenCoreIsInLatestSchemaVersion() throws Exception {
+	public void testUpgradeWhenCoreIsInLatestSchemaVersion()
+		throws SQLException {
+
 		_innerCoreServiceUpgrade.updateSchemaVersion(
 			CoreServiceUpgrade.getLatestSchemaVersion());
 
@@ -154,7 +155,7 @@ public class CoreServiceUpgradeTest {
 
 	@Test
 	public void testUpgradeWhenCoreIsInRequiredSchemaVersion()
-		throws Exception {
+		throws SQLException {
 
 		_innerCoreServiceUpgrade.updateSchemaVersion(
 			CoreServiceUpgrade.getRequiredSchemaVersion());
@@ -179,7 +180,9 @@ public class CoreServiceUpgradeTest {
 	}
 
 	@Test
-	public void testValidateCoreIsInRequiredSchemaVersion() throws Exception {
+	public void testValidateCoreIsInRequiredSchemaVersion()
+		throws SQLException {
+
 		Assert.assertTrue(
 			"You must first upgrade the Core to the required Schema Version " +
 				CoreServiceUpgrade.getRequiredSchemaVersion(),
@@ -187,38 +190,19 @@ public class CoreServiceUpgradeTest {
 				DataAccess.getUpgradeOptimizedConnection()));
 	}
 
-	public class InnerCoreServiceUpgrade extends CoreServiceUpgrade {
-
-		public InnerCoreServiceUpgrade() throws Exception {
-		}
-
-		@Override
-		public Set<Version> getPendingSchemaVersions(
-			Version fromSchemaVersion) {
-
-			return super.getPendingSchemaVersions(fromSchemaVersion);
-		}
-
-		@Override
-		public void updateSchemaVersion(Version newSchemaVersion)
-			throws SQLException {
-
-			try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
-				connection = con;
-
-				super.updateSchemaVersion(newSchemaVersion);
-			}
-			finally {
-				connection = null;
-			}
-		}
-
-	}
-
 	private static final Version _ORIGINAL_SCHEMA_VERSION = new Version(
 		"0.0.0");
 
 	private static Version _currentSchemaVersion;
-	private static InnerCoreServiceUpgrade _innerCoreServiceUpgrade;
+
+	private InnerCoreServiceUpgrade _innerCoreServiceUpgrade;
+
+	private static class InnerCoreServiceUpgrade extends CoreServiceUpgrade {
+
+		private InnerCoreServiceUpgrade() throws SQLException {
+			connection = DataAccess.getUpgradeOptimizedConnection();
+		}
+
+	}
 
 }

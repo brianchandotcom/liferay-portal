@@ -113,7 +113,7 @@ public class CoreServiceUpgrade extends UpgradeProcess {
 			}
 		}
 
-		return null;
+		return new Version(0, 0, 0);
 	}
 
 	@Override
@@ -135,10 +135,8 @@ public class CoreServiceUpgrade extends UpgradeProcess {
 		SortedMap<Version, UpgradeProcess> pendingUpgradeProcesses =
 			new TreeMap<>(_upgradeProcesses);
 
-		if (fromSchemaVersion != null) {
-			pendingUpgradeProcesses = _upgradeProcesses.tailMap(
-				fromSchemaVersion, false);
-		}
+		pendingUpgradeProcesses = _upgradeProcesses.tailMap(
+			fromSchemaVersion, false);
 
 		return pendingUpgradeProcesses.keySet();
 	}

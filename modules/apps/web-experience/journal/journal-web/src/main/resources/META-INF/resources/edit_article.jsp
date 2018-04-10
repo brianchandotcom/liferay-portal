@@ -83,16 +83,8 @@ if (ddmTemplate == null) {
 
 String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
 
-boolean changeableDefaultLanguage = journalWebConfiguration.changeableDefaultLanguage();
-
 if (article != null) {
-	String articleDefaultLanguageId = LocalizationUtil.getDefaultLanguageId(article.getContent(), LocaleUtil.getSiteDefault());
-
-	if (!Objects.equals(defaultLanguageId, articleDefaultLanguageId)) {
-		changeableDefaultLanguage = true;
-	}
-
-	defaultLanguageId = articleDefaultLanguageId;
+	defaultLanguageId = LocalizationUtil.getDefaultLanguageId(article.getContent(), LocaleUtil.getSiteDefault());
 }
 
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
@@ -137,19 +129,6 @@ if (showHeader) {
 
 	renderResponse.setTitle(title);
 }
-
-DDMFormValues ddmFormValues = journalDisplayContext.getDDMFormValues(ddmStructure);
-
-Set<Locale> availableLocalesSet = new HashSet<>();
-
-availableLocalesSet.add(LocaleUtil.fromLanguageId(defaultLanguageId));
-availableLocalesSet.addAll(journalDisplayContext.getAvailableArticleLocales());
-
-if (ddmFormValues != null) {
-	availableLocalesSet.addAll(ddmFormValues.getAvailableLocales());
-}
-
-Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
 
 boolean approved = false;
 boolean pending = false;

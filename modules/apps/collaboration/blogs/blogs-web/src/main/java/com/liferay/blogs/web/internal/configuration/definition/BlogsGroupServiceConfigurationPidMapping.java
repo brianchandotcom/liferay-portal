@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.blogs.configuration.definition;
+package com.liferay.blogs.web.internal.configuration.definition;
 
 import com.liferay.blogs.configuration.BlogsGroupServiceConfiguration;
-import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.blogs.constants.BlogsConstants;
+import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -23,12 +24,17 @@ import org.osgi.service.component.annotations.Component;
  * @author Sergio González
  */
 @Component
-public class BlogsGroupServiceConfigurationBeanDeclaration
-	implements ConfigurationBeanDeclaration {
+public class BlogsGroupServiceConfigurationPidMapping
+	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
 		return BlogsGroupServiceConfiguration.class;
+	}
+
+	@Override
+	public String getConfigurationPid() {
+		return BlogsConstants.SERVICE_NAME;
 	}
 
 }

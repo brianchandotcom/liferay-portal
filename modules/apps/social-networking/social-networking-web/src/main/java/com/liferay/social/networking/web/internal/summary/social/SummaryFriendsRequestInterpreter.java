@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "javax.portlet.name=" + SocialNetworkingPortletKeys.SUMMARY,
 	service = SocialRequestInterpreter.class
 )
-public class SummaryRequestInterpreter
+public class SummaryFriendsRequestInterpreter
 	extends BaseSocialNetworkingRequestInterpreter {
 
 	@Override

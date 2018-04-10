@@ -5,4 +5,34 @@
 		<field name="bigDecimalEntryId" type="long" />
 		<field name="bigDecimalValue" type="BigDecimal" />
 	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.VersionedEntry">
+		<field name="mvccVersion" type="long" />
+		<field name="versionedEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="headId" type="long" />
+		<field name="defaultLanguageId" type="String" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.VersionedEntryContent">
+		<field name="mvccVersion" type="long" />
+		<field name="versionedEntryContentId" type="long" />
+		<field name="versionedEntryId" type="long" />
+		<field name="languageId" type="String" />
+		<field name="content" type="String" />
+		<field name="headId" type="long" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.VersionedEntryContentVersion">
+		<field name="versionedEntryContentVersionId" type="long" />
+		<field name="version" type="int" />
+		<field name="versionedEntryContentId" type="long" />
+		<field name="versionedEntryId" type="long" />
+		<field name="languageId" type="String" />
+		<field name="content" type="String" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.VersionedEntryVersion">
+		<field name="versionedEntryVersionId" type="long" />
+		<field name="version" type="int" />
+		<field name="versionedEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="defaultLanguageId" type="String" />
+	</model>
 </model-hints>

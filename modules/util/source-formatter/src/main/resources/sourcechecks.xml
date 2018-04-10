@@ -68,6 +68,7 @@
 		<check name="GradleImportsCheck" />
 		<check name="GradleIndentationCheck" />
 		<check name="GradlePropertiesCheck" />
+		<check name="GradleProvidedDependenciesCheck" />
 		<check name="GradleVersionCheck" />
 		<check name="WhitespaceCheck" />
 	</source-processor>

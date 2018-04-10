@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
-import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -34,7 +33,6 @@ import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
 import java.io.IOException;
 
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -236,19 +234,9 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 
 	private Template _getTemplate() throws TemplateException {
 		return TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_SOY, _getTemplateResources(), false);
+			TemplateConstants.LANG_TYPE_SOY,
+			SoyTemplateResourcesProviderUtil.getAllTemplateResources(), false);
 	}
-
-	private List<TemplateResource> _getTemplateResources() {
-		if (_templateResources == null) {
-			_templateResources =
-				SoyTemplateResourcesProviderUtil.getAllTemplateResources();
-		}
-
-		return _templateResources;
-	}
-
-	private static List<TemplateResource> _templateResources;
 
 	private String _componentId;
 	private Map<String, Object> _context;

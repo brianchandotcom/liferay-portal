@@ -18,14 +18,10 @@ import com.google.common.io.CharStreams;
 import com.google.template.soy.SoyFileSet;
 import com.google.template.soy.SoyFileSet.Builder;
 import com.google.template.soy.data.SanitizedContent;
-import com.google.template.soy.data.SoyMapData;
 import com.google.template.soy.msgs.SoyMsgBundle;
 import com.google.template.soy.tofu.SoyTofu;
 import com.google.template.soy.tofu.SoyTofu.Renderer;
 
-import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -43,12 +39,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.template.AbstractMultiResourceTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.soy.constants.SoyTemplateConstants;
-import com.liferay.portal.template.soy.utils.SoyRawData;
 
 import java.io.Reader;
 import java.io.Writer;
-
-import java.lang.reflect.Array;
 
 import java.security.AccessController;
 import java.security.PrivilegedActionException;
@@ -58,8 +51,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.IdentityHashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -67,13 +58,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang3.ClassUtils;
-
-import org.json.JSONArray;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.wiring.BundleWiring;
@@ -96,15 +82,15 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 		_templateContextHelper = templateContextHelper;
 		_privileged = privileged;
 
-		_soyMapData = new SoyMapData();
-		_injectedSoyMapData = new SoyMapData();
+		_injectedSoyTemplateRecord = new SoyTemplateRecord();
+		_soyTemplateRecord = new SoyTemplateRecord();
 		_soyTofuCacheHandler = soyTofuCacheHandler;
 	}
 
 	@Override
 	public void clear() {
-		_soyMapData = new SoyMapData();
-		_injectedSoyMapData = new SoyMapData();
+		_injectedSoyTemplateRecord = new SoyTemplateRecord();
+		_soyTemplateRecord = new SoyTemplateRecord();
 
 		super.clear();
 	}
@@ -133,9 +119,7 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 		if (!restrictedVariables.contains(key) &&
 			!Objects.equals(value, currentValue)) {
 
-			Object soyMapValue = getSoyMapValue(value);
-
-			_soyMapData.put(key, soyMapValue);
+			_soyTemplateRecord.add(key, value);
 		}
 
 		return super.put(key, value);
@@ -149,16 +133,18 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 	}
 
 	public void putInjectedData(String key, Object value) {
-		_injectedSoyMapData.put(key, getSoyMapValue(value));
+		_injectedSoyTemplateRecord.add(key, value);
 	}
 
 	@Override
 	public Object remove(Object key) {
 		if (SoyTemplateConstants.INJECTED_DATA.equals(key)) {
-			_injectedSoyMapData = new SoyMapData();
+			_injectedSoyTemplateRecord = new SoyTemplateRecord();
+
+			return super.remove(key);
 		}
 
-		_soyMapData.remove((String)key);
+		_soyTemplateRecord.remove((String)key);
 
 		return super.remove(key);
 	}
@@ -175,6 +161,20 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 			soyMsgBundle, locale, languageResourceBundle);
 
 		return soyMsgBundleBridge;
+	}
+
+	protected SoyTemplateRecord getInjectedSoyTemplateRecord() {
+		if (containsKey(SoyTemplateConstants.INJECTED_DATA)) {
+			@SuppressWarnings("unchecked")
+			Map<String, Object> injectedData = (Map<String, Object>)get(
+				SoyTemplateConstants.INJECTED_DATA);
+
+			for (Map.Entry<String, Object> entry : injectedData.entrySet()) {
+				putInjectedData(entry.getKey(), entry.getValue());
+			}
+		}
+
+		return _injectedSoyTemplateRecord;
 	}
 
 	protected SoyFileSet getSoyFileSet(List<TemplateResource> templateResources)
@@ -209,193 +209,6 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 		return soyFileSet;
 	}
 
-	protected SoyMapData getSoyMapData() {
-		return _soyMapData;
-	}
-
-	protected SoyMapData getSoyMapInjectedData() {
-		if (containsKey(SoyTemplateConstants.INJECTED_DATA)) {
-			Map<String, Object> injectedData = (Map<String, Object>)get(
-				SoyTemplateConstants.INJECTED_DATA);
-
-			for (Map.Entry<String, Object> entry : injectedData.entrySet()) {
-				putInjectedData(entry.getKey(), entry.getValue());
-			}
-		}
-
-		return _injectedSoyMapData;
-	}
-
-	protected Object getSoyMapValue(IdentityHashMap cache, Object value) {
-		if (cache.containsKey(value)) {
-			return cache.get(value);
-		}
-
-		Class<?> clazz = value.getClass();
-
-		if (ClassUtils.isPrimitiveOrWrapper(clazz) || value instanceof String) {
-			return value;
-		}
-
-		if (value instanceof Class) {
-			clazz = (Class)value;
-
-			return clazz.getName();
-		}
-
-		if (clazz.isEnum()) {
-			return String.valueOf(value);
-		}
-
-		if (clazz.isArray()) {
-			List<Object> newList = new ArrayList<>();
-
-			cache.put(value, newList);
-
-			for (int i = 0; i < Array.getLength(value); i++) {
-				Object object = Array.get(value, i);
-
-				newList.add(getSoyMapValue(cache, object));
-			}
-
-			return newList;
-		}
-
-		if (value instanceof Iterable) {
-			@SuppressWarnings("unchecked")
-			Iterable<Object> iterable = (Iterable<Object>)value;
-
-			List<Object> newList = new ArrayList<>();
-
-			cache.put(value, newList);
-
-			for (Object object : iterable) {
-				newList.add(getSoyMapValue(cache, object));
-			}
-
-			return newList;
-		}
-
-		if (value instanceof JSONArray) {
-			JSONArray jsonArray = (JSONArray)value;
-
-			List<Object> newList = new ArrayList<>();
-
-			cache.put(value, newList);
-
-			for (int i = 0; i < jsonArray.length(); i++) {
-				Object object = jsonArray.opt(i);
-
-				newList.add(getSoyMapValue(cache, object));
-			}
-
-			return newList;
-		}
-
-		if (value instanceof Map) {
-			Map<Object, Object> map = (Map<Object, Object>)value;
-
-			Map<Object, Object> newMap = new TreeMap<>();
-
-			cache.put(value, newMap);
-
-			for (Map.Entry<Object, Object> entry : map.entrySet()) {
-				Object newKey = getSoyMapValue(cache, entry.getKey());
-
-				if (newKey == null) {
-					continue;
-				}
-
-				Object newValue = getSoyMapValue(cache, entry.getValue());
-
-				newMap.put(newKey, newValue);
-			}
-
-			return newMap;
-		}
-
-		if (value instanceof JSONObject) {
-			JSONObject jsonObject = (JSONObject)value;
-
-			Map<String, Object> newMap = new TreeMap<>();
-
-			cache.put(value, newMap);
-
-			Iterator<String> iterator = jsonObject.keys();
-
-			while (iterator.hasNext()) {
-				String key = iterator.next();
-
-				Object object = jsonObject.get(key);
-
-				Object newValue = getSoyMapValue(cache, object);
-
-				newMap.put(key, newValue);
-			}
-
-			return newMap;
-		}
-
-		if (value instanceof org.json.JSONObject) {
-			org.json.JSONObject jsonObject = (org.json.JSONObject)value;
-
-			Map<Object, Object> newMap = new TreeMap<>();
-
-			cache.put(value, newMap);
-
-			Iterator<String> iterator = jsonObject.keys();
-
-			while (iterator.hasNext()) {
-				String key = iterator.next();
-
-				Object object = jsonObject.opt(key);
-
-				Object newValue = getSoyMapValue(cache, object);
-
-				newMap.put(key, newValue);
-			}
-
-			return newMap;
-		}
-
-		if (value instanceof SoyRawData) {
-			SoyRawData soyRawData = (SoyRawData)value;
-
-			return soyRawData.getValue();
-		}
-
-		String json = JSONFactoryUtil.looseSerialize(value);
-
-		Object deserialized = JSONFactoryUtil.looseDeserialize(json);
-
-		if (deserialized instanceof Map) {
-			Map<String, Object> map = (Map<String, Object>)deserialized;
-
-			Map<String, Object> newMap = new TreeMap<>();
-
-			for (String key : map.keySet()) {
-				Object newValue = BeanPropertiesUtil.getObjectSilent(
-					value, key);
-
-				newMap.put(key, newValue);
-			}
-
-			if (!newMap.isEmpty()) {
-				return getSoyMapValue(cache, newMap);
-			}
-		}
-
-		return _templateContextHelper.deserializeValue(value);
-	}
-
-	protected Object getSoyMapValue(Object value) {
-		IdentityHashMap cache = new IdentityHashMap<>();
-
-		cache.put(null, null);
-
-		return getSoyMapValue(cache, value);
-	}
-
 	protected Optional<SoyMsgBundle> getSoyMsgBundle(
 		SoyFileSet soyFileSet, SoyTofuCacheBag soyTofuCacheBag) {
 
@@ -415,6 +228,10 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 		}
 
 		return Optional.empty();
+	}
+
+	protected SoyTemplateRecord getSoyTemplateRecord() {
+		return _soyTemplateRecord;
 	}
 
 	protected SoyTofuCacheBag getSoyTofuCacheBag(
@@ -498,8 +315,8 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 
 			Renderer renderer = soyTofu.newRenderer(namespace);
 
-			renderer.setData(getSoyMapData());
-			renderer.setIjData(getSoyMapInjectedData());
+			renderer.setData(getSoyTemplateRecord());
+			renderer.setIjData(getInjectedSoyTemplateRecord());
 
 			SoyFileSet soyFileSet = soyTofuCacheBag.getSoyFileSet();
 
@@ -567,9 +384,9 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 
 	private static final Log _log = LogFactoryUtil.getLog(SoyTemplate.class);
 
-	private SoyMapData _injectedSoyMapData;
+	private SoyTemplateRecord _injectedSoyTemplateRecord;
 	private final boolean _privileged;
-	private SoyMapData _soyMapData;
+	private SoyTemplateRecord _soyTemplateRecord;
 	private final SoyTofuCacheHandler _soyTofuCacheHandler;
 	private final SoyTemplateContextHelper _templateContextHelper;
 

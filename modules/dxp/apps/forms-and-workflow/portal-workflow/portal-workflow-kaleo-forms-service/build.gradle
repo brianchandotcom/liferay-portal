@@ -13,7 +13,7 @@ dependencies {
 	compileOnly project(":apps:forms-and-workflow:dynamic-data-lists:dynamic-data-lists-api")
 	compileOnly project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
 	compileOnly project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-service")
-	compileOnly project(":apps:foundation:portal:portal-dao-orm-custom-sql")
+	compileOnly project(":apps:foundation:portal:portal-dao-orm-custom-sql-api")
 	compileOnly project(":apps:foundation:portal:portal-spring-extender-api")
 	compileOnly project(":apps:foundation:portal:portal-upgrade-api")
 	compileOnly project(":core:osgi-service-tracker-collections")

@@ -42,17 +42,6 @@ public interface EditorEmbedProvider {
 	public String getId();
 
 	/**
-	 * Returns an array with the the url schemes for the embed provider.
-	 *
-	 * The url scheme describes which urls of the provider have an embedded
-	 * representation. Url schemes are defined using a regular expression that
-	 * indicates whether a url matches with the provider or not.
-	 *
-	 * @return the url schemes for the embed provider
-	 */
-	public String[] getSchemas();
-
-	/**
 	 * Returns the template that will be used by the editor to embed the
 	 * content.
 	 *
@@ -67,5 +56,16 @@ public interface EditorEmbedProvider {
 	 *         content
 	 */
 	public String getTpl();
+
+	/**
+	 * Returns an array with the the url schemes for the embed provider.
+	 *
+	 * The url scheme describes which urls of the provider have an embedded
+	 * representation. Url schemes are defined using a regular expression that
+	 * indicates whether a url matches with the provider or not.
+	 *
+	 * @return the url schemes for the embed provider
+	 */
+	public String[] getURLSchemes();
 
 }

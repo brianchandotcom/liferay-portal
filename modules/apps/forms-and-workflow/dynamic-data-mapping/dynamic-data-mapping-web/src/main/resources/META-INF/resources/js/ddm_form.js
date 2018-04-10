@@ -3286,6 +3286,16 @@ AUI.add(
 									sortCondition: function(event) {
 										var dropNode = event.drop.get('node');
 
+										var dropNodeAncestor = dropNode.ancestor();
+
+										var dragNode = event.drag.get('node');
+
+										var dragNodeAncestor =  dragNode.ancestor();
+
+										if (dropNodeAncestor.get('id') != dragNodeAncestor.get('id')) {
+											return false;
+										}
+
 										return dropNode.getData('fieldName') === fieldName;
 									}
 								}

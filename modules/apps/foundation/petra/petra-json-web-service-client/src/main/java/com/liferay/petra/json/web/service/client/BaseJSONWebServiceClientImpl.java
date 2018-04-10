@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
+import com.liferay.petra.json.web.service.client.internal.AsyncHttpClient;
 import com.liferay.petra.json.web.service.client.internal.IdleConnectionMonitorThread;
 import com.liferay.petra.json.web.service.client.internal.JSONWebServiceClientImpl;
 import com.liferay.petra.json.web.service.client.internal.X509TrustManagerImpl;
@@ -123,9 +124,13 @@ public abstract class BaseJSONWebServiceClientImpl
 		setProxyHost(httpAsyncClientBuilder);
 
 		try {
-			_closeableHttpAsyncClient = httpAsyncClientBuilder.build();
+			CloseableHttpAsyncClient closeableHttpAsyncClient =
+				httpAsyncClientBuilder.build();
 
-			_closeableHttpAsyncClient.start();
+			closeableHttpAsyncClient.start();
+
+			_asyncHttpClient = new AsyncHttpClient(
+				_maxRetryCount, closeableHttpAsyncClient);
 
 			_idleConnectionMonitorThread = new IdleConnectionMonitorThread(
 				nHttpClientConnectionManager);
@@ -153,13 +158,13 @@ public abstract class BaseJSONWebServiceClientImpl
 	@Override
 	public void destroy() {
 		try {
-			_closeableHttpAsyncClient.close();
+			_asyncHttpClient.close();
 		}
 		catch (IOException ioe) {
 			_logger.error("Unable to close client", ioe);
 		}
 
-		_closeableHttpAsyncClient = null;
+		_asyncHttpClient = null;
 
 		_idleConnectionMonitorThread.shutdown();
 	}
@@ -614,6 +619,11 @@ public abstract class BaseJSONWebServiceClientImpl
 	}
 
 	@Override
+	public void setMaxRetryCount(int maxRetryCount) {
+		_maxRetryCount = maxRetryCount;
+	}
+
+	@Override
 	public void setOAuthAccessSecret(String oAuthAccessSecret) {
 		_oAuthAccessSecret = oAuthAccessSecret;
 	}
@@ -700,7 +710,7 @@ public abstract class BaseJSONWebServiceClientImpl
 		HttpHost httpHost = new HttpHost(_hostName, _hostPort, _protocol);
 
 		try {
-			if (_closeableHttpAsyncClient == null) {
+			if (_asyncHttpClient == null) {
 				afterPropertiesSet();
 			}
 
@@ -726,12 +736,11 @@ public abstract class BaseJSONWebServiceClientImpl
 				httpClientContext.setAttribute(
 					ClientContext.AUTH_CACHE, authCache);
 
-				future = _closeableHttpAsyncClient.execute(
-					httpHost, httpRequestBase, httpClientContext, null);
+				future = _asyncHttpClient.execute(
+					httpHost, httpRequestBase, httpClientContext);
 			}
 			else {
-				future = _closeableHttpAsyncClient.execute(
-					httpHost, httpRequestBase, null);
+				future = _asyncHttpClient.execute(httpHost, httpRequestBase);
 			}
 
 			HttpResponse httpResponse = future.get();
@@ -1087,7 +1096,7 @@ public abstract class BaseJSONWebServiceClientImpl
 	private static final Logger _logger = LoggerFactory.getLogger(
 		JSONWebServiceClientImpl.class);
 
-	private CloseableHttpAsyncClient _closeableHttpAsyncClient;
+	private AsyncHttpClient _asyncHttpClient;
 	private String _contextPath;
 	private final Pattern _errorMessagePattern = Pattern.compile(
 		"errorCode\":\\s*(\\d+).+message\":.+status\":\\s*(\\d+)");
@@ -1097,6 +1106,7 @@ public abstract class BaseJSONWebServiceClientImpl
 	private IdleConnectionMonitorThread _idleConnectionMonitorThread;
 	private KeyStore _keyStore;
 	private String _login;
+	private int _maxRetryCount;
 	private String _oAuthAccessSecret;
 	private String _oAuthAccessToken;
 	private String _oAuthConsumerKey;

@@ -58,11 +58,11 @@ if (orderByType.equals("asc")) {
 OrderByComparator orderByComparator = null;
 
 if (orderByCol.equals("modified-date")) {
-	orderByComparator = new ThreadModifiedDateComparator(orderByAsc);
+	orderByComparator = new MBEntryModifiedDateComparator(orderByAsc);
 
 }
 else if (orderByCol.equals("title")) {
-	orderByComparator = new CategoryTitleComparator(orderByAsc);
+	orderByComparator = new MBEntryTitleComparator(orderByAsc);
 }
 
 request.setAttribute("view.jsp-categoryId", categoryId);

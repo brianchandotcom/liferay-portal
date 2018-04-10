@@ -29,16 +29,20 @@
 		>
 			<aui:input name="portletId" type="hidden" value="<%= portletConfigurationCSSPortletDisplayContext.getPortletResource() %>" />
 
-			<liferay-frontend:form-navigator
-				id="<%= PortletConfigurationCSSConstants.FORM_NAVIGATOR_ID %>"
-				showButtons="<%= false %>"
-			/>
+			<liferay-frontend:edit-form-body>
+				<liferay-frontend:form-navigator
+					id="<%= PortletConfigurationCSSConstants.FORM_NAVIGATOR_ID %>"
+					showButtons="<%= false %>"
+				/>
+			</liferay-frontend:edit-form-body>
 
-			<liferay-frontend:button-row>
-				<aui:button type="submit" />
+			<liferay-frontend:edit-form-footer>
+				<liferay-frontend:button-row>
+					<aui:button type="submit" />
 
-				<aui:button type="cancel" />
-			</liferay-frontend:button-row>
+					<aui:button type="cancel" />
+				</liferay-frontend:button-row>
+			</liferay-frontend:edit-form-footer>
 		</liferay-frontend:edit-form>
 	</c:when>
 	<c:otherwise>

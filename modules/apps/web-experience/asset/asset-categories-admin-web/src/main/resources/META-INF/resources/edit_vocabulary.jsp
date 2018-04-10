@@ -50,38 +50,42 @@ renderResponse.setTitle(((vocabulary == null) ? LanguageUtil.get(request, "add-v
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="vocabularyId" type="hidden" value="<%= vocabularyId %>" />
 
-	<liferay-ui:error exception="<%= DuplicateVocabularyException.class %>" message="please-enter-a-unique-name" />
-	<liferay-ui:error exception="<%= VocabularyNameException.class %>" message="please-enter-a-valid-name" />
+	<liferay-frontend:edit-form-body>
+		<liferay-ui:error exception="<%= DuplicateVocabularyException.class %>" message="please-enter-a-unique-name" />
+		<liferay-ui:error exception="<%= VocabularyNameException.class %>" message="please-enter-a-valid-name" />
 
-	<aui:model-context bean="<%= vocabulary %>" model="<%= AssetVocabulary.class %>" />
+		<aui:model-context bean="<%= vocabulary %>" model="<%= AssetVocabulary.class %>" />
 
-	<liferay-frontend:fieldset-group>
-		<liferay-frontend:fieldset>
-			<aui:input autoFocus="<%= true %>" label="name" name="title" placeholder="name" />
+		<liferay-frontend:fieldset-group>
+			<liferay-frontend:fieldset>
+				<aui:input autoFocus="<%= true %>" label="name" name="title" placeholder="name" />
 
-			<aui:input name="description" placeholder="description" />
+				<aui:input name="description" placeholder="description" />
 
-			<aui:input helpMessage="multi-valued-help" label="allow-multiple-categories" name="multiValued" type="toggle-switch" value="<%= (vocabulary != null) ? vocabulary.isMultiValued() : true %>" />
-		</liferay-frontend:fieldset>
-
-		<%@ include file="/edit_vocabulary_settings.jspf" %>
-
-		<c:if test="<%= vocabulary == null %>">
-			<liferay-frontend:fieldset
-				collapsed="<%= true %>"
-				collapsible="<%= true %>"
-				label="permissions"
-			>
-				<liferay-ui:input-permissions
-					modelName="<%= AssetVocabulary.class.getName() %>"
-				/>
+				<aui:input helpMessage="multi-valued-help" label="allow-multiple-categories" name="multiValued" type="toggle-switch" value="<%= (vocabulary != null) ? vocabulary.isMultiValued() : true %>" />
 			</liferay-frontend:fieldset>
-		</c:if>
-	</liferay-frontend:fieldset-group>
 
-	<liferay-frontend:button-row>
-		<aui:button type="submit" />
+			<%@ include file="/edit_vocabulary_settings.jspf" %>
 
-		<aui:button href="<%= redirect %>" type="cancel" />
-	</liferay-frontend:button-row>
+			<c:if test="<%= vocabulary == null %>">
+				<liferay-frontend:fieldset
+					collapsed="<%= true %>"
+					collapsible="<%= true %>"
+					label="permissions"
+				>
+					<liferay-ui:input-permissions
+						modelName="<%= AssetVocabulary.class.getName() %>"
+					/>
+				</liferay-frontend:fieldset>
+			</c:if>
+		</liferay-frontend:fieldset-group>
+	</liferay-frontend:edit-form-body>
+
+	<liferay-frontend:edit-form-footer>
+		<liferay-frontend:button-row>
+			<aui:button type="submit" />
+
+			<aui:button href="<%= redirect %>" type="cancel" />
+		</liferay-frontend:button-row>
+	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>

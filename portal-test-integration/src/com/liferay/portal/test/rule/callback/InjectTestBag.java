@@ -76,7 +76,7 @@ public class InjectTestBag {
 			}
 
 			ServiceReference<?> serviceReference = _getServiceReference(
-				registry, clazz, inject.filter(), inject.blocking());
+				registry, clazz, field, inject.filter(), inject.blocking());
 
 			if (serviceReference != null) {
 				_serviceReferences.add(serviceReference);
@@ -132,21 +132,7 @@ public class InjectTestBag {
 	}
 
 	private <T> ServiceReference<T> _getServiceReference(
-			Registry registry, Class<T> clazz, String filterString)
-		throws Exception {
-
-		Collection<ServiceReference<T>> serviceReferences =
-			registry.getServiceReferences(clazz, filterString);
-
-		Stream<ServiceReference<T>> stream = serviceReferences.stream();
-
-		Optional<ServiceReference<T>> optional = stream.findFirst();
-
-		return optional.orElse(null);
-	}
-
-	private <T> ServiceReference<T> _getServiceReference(
-			Registry registry, Class<T> clazz, String filterString,
+			Registry registry, Class<T> clazz, Field field, String filterString,
 			boolean blocking)
 		throws Exception {
 
@@ -209,9 +195,12 @@ public class InjectTestBag {
 						filterString));
 			}
 
+			Class<?> testClass = field.getDeclaringClass();
+
 			System.out.println(
 				StringBundler.concat(
-					"Waiting for service ", className, " ", filterString));
+					"Waiting for service ", className, " ", filterString,
+					" for field ", testClass.getName(), ".", field.getName()));
 
 			try {
 				countDownLatch.await(_SLEEP_TIME, TimeUnit.MILLISECONDS);
@@ -224,6 +213,20 @@ public class InjectTestBag {
 		}
 
 		return serviceReference;
+	}
+
+	private <T> ServiceReference<T> _getServiceReference(
+			Registry registry, Class<T> clazz, String filterString)
+		throws Exception {
+
+		Collection<ServiceReference<T>> serviceReferences =
+			registry.getServiceReferences(clazz, filterString);
+
+		Stream<ServiceReference<T>> stream = serviceReferences.stream();
+
+		Optional<ServiceReference<T>> optional = stream.findFirst();
+
+		return optional.orElse(null);
 	}
 
 	private static final int _SLEEP_TIME = 2000;

@@ -29,7 +29,7 @@ dependencies {
 	compileOnly project(":apps:collaboration:item-selector:item-selector-api")
 	compileOnly project(":apps:collaboration:subscription:subscription-api")
 	compileOnly project(":apps:collaboration:wiki:wiki-api")
-	compileOnly project(":apps:foundation:portal:portal-dao-orm-custom-sql")
+	compileOnly project(":apps:foundation:portal:portal-dao-orm-custom-sql-api")
 	compileOnly project(":apps:foundation:portal:portal-spring-extender-api")
 	compileOnly project(":apps:foundation:portal:portal-upgrade-api")
 	compileOnly project(":apps:foundation:xstream:xstream-configurator-api")

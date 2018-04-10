@@ -11,7 +11,7 @@ dependencies {
 	compileOnly project(":apps:forms-and-workflow:calendar:calendar-api")
 	compileOnly project(":apps:foundation:expando:expando-taglib")
 	compileOnly project(":apps:foundation:frontend-taglib:frontend-taglib")
-	compileOnly project(":apps:foundation:portal:portal-dao-orm-custom-sql")
+	compileOnly project(":apps:foundation:portal:portal-dao-orm-custom-sql-api")
 	compileOnly project(":apps:foundation:portal:portal-upgrade-api")
 	compileOnly project(":apps:web-experience:asset:asset-taglib")
 	compileOnly project(":apps:web-experience:rss:rss-api")

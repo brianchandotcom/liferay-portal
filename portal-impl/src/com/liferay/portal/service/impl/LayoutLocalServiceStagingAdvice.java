@@ -93,7 +93,7 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 				LayoutLocalServiceStagingAdvice.class.getClassLoader(),
 				new Class<?>[] {LayoutLocalService.class},
 				new LayoutLocalServiceStagingInvocationHandler(
-					targetSource.getTarget())));
+					this, targetSource.getTarget())));
 
 		layoutLocalServiceHelper =
 			(LayoutLocalServiceHelper)_beanFactory.getBean(
@@ -704,7 +704,7 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 			}
 			else {
 				try {
-					Class<?> clazz = getClass();
+					Class<?> clazz = LayoutLocalServiceStagingAdvice.class;
 
 					parameterTypes = ArrayUtil.append(
 						new Class<?>[] {LayoutLocalService.class},
@@ -717,7 +717,7 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 						new Object[] {_targetObject}, arguments);
 
 					returnValue = layoutLocalServiceStagingAdviceMethod.invoke(
-						this, arguments);
+						_layoutLocalServiceStagingAdvice, arguments);
 				}
 				catch (InvocationTargetException ite) {
 					throw ite.getTargetException();
@@ -733,8 +733,10 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 		}
 
 		private LayoutLocalServiceStagingInvocationHandler(
+			LayoutLocalServiceStagingAdvice layoutLocalServiceStagingAdvice,
 			Object targetObject) {
 
+			_layoutLocalServiceStagingAdvice = layoutLocalServiceStagingAdvice;
 			_targetObject = targetObject;
 		}
 
@@ -749,6 +751,8 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 			}
 		}
 
+		private final LayoutLocalServiceStagingAdvice
+			_layoutLocalServiceStagingAdvice;
 		private final Object _targetObject;
 
 	}

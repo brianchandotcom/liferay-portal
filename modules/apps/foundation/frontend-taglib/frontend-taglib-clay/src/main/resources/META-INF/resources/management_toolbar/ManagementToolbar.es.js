@@ -26,6 +26,22 @@ class ManagementToolbar extends ClayManagementToolbar {
 				this._searchContainer = searchContainer;
 			}
 		);
+
+		if (this.infoPanelId) {
+			let sidenavToggle = $(this.refs.infoButton);
+
+			if (!sidenavToggle.sideNavigation('instance')) {
+				sidenavToggle.sideNavigation(
+					{
+						container: '#' + this.infoPanelId,
+						position: 'right',
+						type: 'relative',
+						typeMobile: 'fixed',
+						width: '320px'
+					}
+				);
+			}
+		}
 	}
 
 	/**
@@ -113,6 +129,17 @@ class ManagementToolbar extends ClayManagementToolbar {
  */
 
 ManagementToolbar.STATE = {
+
+	/**
+	 * Id to get the infoPanel node.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @review
+	 * @type {?string|undefined}
+	 */
+
+	infoPanelId: Config.string(),
 
 	/**
 	 * Id to get a instance of the searchContainer.

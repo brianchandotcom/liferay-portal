@@ -108,6 +108,10 @@ public class ManagementToolbarTag extends BaseClayTag {
 		putValue("filterItems", filterItems);
 	}
 
+	public void setInfoPanelId(String infoPanelId) {
+		putValue("infoPanelId", infoPanelId);
+	}
+
 	public void setSearchActionURL(String searchActionURL) {
 		putValue("searchActionURL", searchActionURL);
 	}
@@ -177,7 +181,8 @@ public class ManagementToolbarTag extends BaseClayTag {
 		return _NAMESPACED_PARAMS;
 	}
 
-	private static final String[] _NAMESPACED_PARAMS =
-		{"searchContainerId", "searchFormName", "searchInputName"};
+	private static final String[] _NAMESPACED_PARAMS = {
+		"infoPanelId", "searchContainerId", "searchFormName", "searchInputName"
+	};
 
 }

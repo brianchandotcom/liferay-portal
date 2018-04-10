@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mentions.configuration.definition;
+package com.liferay.mentions.internal.configuration.definition;
 
 import com.liferay.mentions.configuration.MentionsGroupServiceConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;

@@ -32,9 +32,11 @@ import com.liferay.portal.tools.service.builder.test.service.base.VersionedEntry
  */
 public class VersionedEntryLocalServiceImpl
 	extends VersionedEntryLocalServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.portal.tools.service.builder.test.service.VersionedEntryLocalServiceUtil} to access the versioned entry local service.
 	 */
+
 }

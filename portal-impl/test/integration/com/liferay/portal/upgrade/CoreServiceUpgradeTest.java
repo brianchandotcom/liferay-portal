@@ -140,7 +140,7 @@ public class CoreServiceUpgradeTest {
 		CoreServiceUpgrade coreServiceUpgrade = new CoreServiceUpgrade();
 
 		try {
-			coreServiceUpgrade.doUpgrade();
+			coreServiceUpgrade.upgrade();
 		}
 		catch (Exception e) {
 			Assert.fail("No upgrade processes should have been executed");

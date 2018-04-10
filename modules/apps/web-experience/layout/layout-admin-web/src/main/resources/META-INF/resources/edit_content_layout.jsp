@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-FragmentsEditorContext fragmentsEditorContext = new FragmentsEditorContext(renderRequest, renderResponse, Layout.class.getName(), layoutsAdminDisplayContext.getSelPlid(), false);
+FragmentsEditorContext fragmentsEditorContext = new FragmentsEditorContext(request, renderResponse, Layout.class.getName(), layoutsAdminDisplayContext.getSelPlid(), false);
 
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 

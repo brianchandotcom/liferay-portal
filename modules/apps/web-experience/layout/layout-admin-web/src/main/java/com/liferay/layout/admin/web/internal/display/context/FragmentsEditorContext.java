@@ -231,12 +231,9 @@ public class FragmentsEditorContext {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_getLayoutPageTemplateEntry();
 
-		String className = PortalUtil.getClassName(
-			layoutPageTemplateEntry.getClassNameId());
-
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				className);
+				layoutPageTemplateEntry.getClassName());
 
 		if (assetRendererFactory == null) {
 			return null;
@@ -256,12 +253,9 @@ public class FragmentsEditorContext {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_getLayoutPageTemplateEntry();
 
-		String className = PortalUtil.getClassName(
-			layoutPageTemplateEntry.getClassNameId());
-
 		AssetDisplayContributor assetDisplayContributor =
 			_assetDisplayContributorTracker.getAssetDisplayContributor(
-				className);
+				layoutPageTemplateEntry.getClassName());
 
 		if (assetDisplayContributor == null) {
 			return null;

@@ -31,6 +31,10 @@ public class BuildFactory {
 			return new AxisBuild(url, (BatchBuild)parentBuild);
 		}
 
+		if (url.contains("-source-format")) {
+			return new SourceFormatBuild(url, (TopLevelBuild)parentBuild);
+		}
+
 		if (url.contains("-source")) {
 			return new SourceBuild(url, parentBuild);
 		}

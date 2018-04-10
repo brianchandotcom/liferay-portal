@@ -50,7 +50,7 @@ public class PullRequest {
 
 		_number = Integer.parseInt(matcher.group("number"));
 		_repositoryName = matcher.group("repository");
-		_ownerUserName = matcher.group("owner");
+		_ownerUsername = matcher.group("owner");
 
 		refresh();
 	}
@@ -91,8 +91,12 @@ public class PullRequest {
 		return StringUtils.replace(labelsURL, "{/name}", "");
 	}
 
-	public String getOwnerUserName() {
-		return _ownerUserName;
+	public String getNumber() {
+		return String.valueOf(_number);
+	}
+
+	public String getOwnerUsername() {
+		return _ownerUsername;
 	}
 
 	public String getRepositoryName() {
@@ -103,6 +107,12 @@ public class PullRequest {
 		JSONObject headJSONObject = _jsonObject.getJSONObject("head");
 
 		return headJSONObject.getString("ref");
+	}
+
+	public String getSenderSHA() {
+		JSONObject headJSONObject = _jsonObject.getJSONObject("head");
+
+		return headJSONObject.getString("sha");
 	}
 
 	public String getSenderUsername() {
@@ -187,7 +197,7 @@ public class PullRequest {
 
 	protected String getURL() {
 		return JenkinsResultsParserUtil.combine(
-			"https://api.github.com/repos/", _ownerUserName, "/",
+			"https://api.github.com/repos/", _ownerUsername, "/",
 			_repositoryName, "/pulls/", _number.toString());
 	}
 
@@ -267,7 +277,7 @@ public class PullRequest {
 	private JSONObject _jsonObject;
 	private final List<Label> _labels = new ArrayList<>();
 	private Integer _number;
-	private String _ownerUserName;
+	private String _ownerUsername;
 	private String _repositoryName;
 	private final String _testSuiteName;
 	private TestSuiteStatus _testSuiteStatus = TestSuiteStatus.MISSING;

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -76,8 +77,9 @@ public class ResourceRequestPortletContainerTest
 		String layoutURL = layout.getRegularURL(httpServletRequest);
 
 		String url =
-			layoutURL +
-				"?p_p_id='\"><script>alert(1)</script>&p_p_lifecycle=2&";
+			layoutURL + "?p_p_id=" +
+				URLCodec.encodeURL("'\"><script>alert(1)</script>") +
+					"&p_p_lifecycle=2&";
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(

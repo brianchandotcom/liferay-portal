@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.wiki.configuration.definition;
+package com.liferay.wiki.internal.configuration.definition;
 
-import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
-import com.liferay.wiki.constants.WikiConstants;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,17 +23,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Iván Zaera
  */
 @Component
-public class WikiGroupServiceConfigurationPidMapping
-	implements ConfigurationPidMapping {
+public class WikiGroupServiceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
 		return WikiGroupServiceConfiguration.class;
-	}
-
-	@Override
-	public String getConfigurationPid() {
-		return WikiConstants.SERVICE_NAME;
 	}
 
 }

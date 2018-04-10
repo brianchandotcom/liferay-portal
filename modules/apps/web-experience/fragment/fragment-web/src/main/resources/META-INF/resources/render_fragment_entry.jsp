@@ -25,3 +25,33 @@ String js = ParamUtil.getString(renderRequest, "js");
 %>
 
 <%= FragmentEntryRenderUtil.renderFragmentEntry(fragmentEntryId, css, html, js) %>
+
+<script>
+	var NAMESPACE = 'LFR_FRAGMENT_RENDER';
+
+	function handleIframeMessage (event) {
+		var data = event.data;
+		var prevData = localStorage.getItem(NAMESPACE) || '';
+
+		if (data && data !== prevData) {
+			localStorage.setItem(NAMESPACE, data);
+			location.reload();
+		}
+	}
+
+	function updatePreview () {
+		window.addEventListener('message', handleIframeMessage);
+		window[NAMESPACE] = true;
+
+		var content = JSON.parse(
+			localStorage.getItem(NAMESPACE) || '{}'
+		).data || '';
+
+		document.open();
+		document.write(content);
+	}
+
+	if (!window[NAMESPACE]) {
+		updatePreview();
+	}
+</script>

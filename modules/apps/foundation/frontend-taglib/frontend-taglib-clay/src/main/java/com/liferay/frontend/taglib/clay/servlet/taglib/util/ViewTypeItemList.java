@@ -79,11 +79,12 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 		ViewTypeItem viewTypeItem = new ViewTypeItem(_request);
 
 		if (Validator.isNotNull(_selectedType)) {
-			viewTypeItem.setActive(Objects.equals(_selectedType, "list"));
+			viewTypeItem.setActive(
+				Objects.equals(_selectedType, "descriptive"));
 		}
 
 		if (Validator.isNotNull(_portletURL)) {
-			viewTypeItem.setHref(_portletURL, "displayStyle", "list");
+			viewTypeItem.setHref(_portletURL, "displayStyle", "descriptive");
 		}
 
 		viewTypeItem.setIcon("list");
@@ -102,12 +103,11 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 		ViewTypeItem viewTypeItem = new ViewTypeItem(_request);
 
 		if (Validator.isNotNull(_selectedType)) {
-			viewTypeItem.setActive(
-				Objects.equals(_selectedType, "descriptive"));
+			viewTypeItem.setActive(Objects.equals(_selectedType, "list"));
 		}
 
 		if (Validator.isNotNull(_portletURL)) {
-			viewTypeItem.setHref(_portletURL, "displayStyle", "descriptive");
+			viewTypeItem.setHref(_portletURL, "displayStyle", "list");
 		}
 
 		viewTypeItem.setIcon("table");

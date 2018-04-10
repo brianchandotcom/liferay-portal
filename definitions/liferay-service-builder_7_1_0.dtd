@@ -361,6 +361,19 @@ columns, finders, and update methods are generated for the localized entity.
 <!ELEMENT localized-entity (column*, localized-column+, order?, finder*)>
 
 <!--
+The name value specifies the name of the localized entity. If this value is not
+set, then the parent entity's name is used with "Localization" appended.
+
+The table value specifies the name of the table that this localized entity maps
+to in the database. If this value is not set, then the name of the table is the
+same as the name of the localized entity.
+-->
+<!ATTLIST localized-entity
+	name CDATA #IMPLIED
+	table CDATA #IMPLIED
+>
+
+<!--
 The localized-column element represents a column in the localization table.
 -->
 <!ELEMENT localized-column (#PCDATA)>

@@ -77,7 +77,9 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 </#if>
 
 <#if entity.localizedEntity??>
-	import ${apiPackagePath}.model.${entity.name}Localization;
+	<#assign localizedEntity = entity.localizedEntity />
+
+	import ${apiPackagePath}.model.${localizedEntity.name};
 </#if>
 
 <#list referenceEntities as referenceEntity>

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wsrp.configuration.definition;
+package com.liferay.wsrp.internal.configuration.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 import com.liferay.wsrp.configuration.WSRPGroupServiceConfiguration;

@@ -21,12 +21,6 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute("view_en
 
 BlogsEntry entry = (BlogsEntry)request.getAttribute("view_entry_content.jsp-entry");
 
-AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp-assetEntry");
-
-if (assetEntry == null) {
-	assetEntry = AssetEntryLocalServiceUtil.getEntry(BlogsEntry.class.getName(), entry.getEntryId());
-}
-
 RatingsEntry ratingsEntry = (RatingsEntry)request.getAttribute("view_entry_content.jsp-ratingsEntry");
 RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_content.jsp-ratingsStats");
 %>
@@ -84,8 +78,7 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 							%>
 
 							<liferay-ui:user-portrait
-								userId="<%= entry.getUserId() %>"
-								userName="<%= entry.getUserName() %>"
+								user="<%= entryUser %>"
 							/>
 						</div>
 
@@ -98,6 +91,8 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 										<span class="hide-accessible"><liferay-ui:message key="published-date" /></span><liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
 
 										<c:if test="<%= blogsPortletInstanceConfiguration.enableViewCount() %>">
+											<% AssetEntry assetEntry = _getAssetEntry(request, entry); %>
+
 											- <liferay-ui:message arguments="<%= assetEntry.getViewCount() %>" key='<%= assetEntry.getViewCount() == 1 ? "x-view" : "x-views" %>' />
 										</c:if>
 									</div>
@@ -157,9 +152,9 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 
 							<a class="btn btn-outline-borderless btn-outline-secondary btn-sm" href="<%= viewEntryCommentsURL.toString() %>">
 								<span class="inline-item inline-item-before">
-									<clay:icon
-										symbol="comments"
-									/>
+									<svg aria-hidden="true" class="lexicon-icon lexicon-icon-comments">
+										<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#comments" />
+									</svg>
 								</span>
 
 								<%= String.valueOf(messagesCount) %>
@@ -171,9 +166,9 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 						<div class="autofit-col">
 							<button class="btn btn-outline-borderless btn-outline-secondary btn-sm" type="button">
 								<span class="inline-item inline-item-before">
-									<clay:icon
-										symbol="time"
-									/>
+									<svg aria-hidden="true" class="lexicon-icon lexicon-icon-time">
+										<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#time" />
+									</svg>
 								</span>
 
 								<liferay-reading-time:reading-time
@@ -232,6 +227,8 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 				</liferay-asset:asset-tags-available>
 
 				<c:if test="<%= blogsPortletInstanceConfiguration.enableRelatedAssets() %>">
+					<% AssetEntry assetEntry = _getAssetEntry(request, entry); %>
+
 					<div class="entry-links">
 						<liferay-asset:asset-links
 							assetEntryId="<%= (assetEntry != null) ? assetEntry.getEntryId() : 0 %>"
@@ -266,3 +263,17 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 
 	</c:otherwise>
 </c:choose>
+
+<%!
+private AssetEntry _getAssetEntry(HttpServletRequest request, BlogsEntry entry) throws PortalException, SystemException {
+	AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp-assetEntry");
+
+	if (assetEntry == null) {
+		assetEntry = AssetEntryLocalServiceUtil.getEntry(BlogsEntry.class.getName(), entry.getEntryId());
+
+		request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
+	}
+
+	return assetEntry;
+}
+%>

@@ -141,6 +141,12 @@ public class PullRequest {
 		return baseJSONObject.getString("ref");
 	}
 
+	public String getUpstreamBranchSHA() {
+		JSONObject baseJSONObject = _jsonObject.getJSONObject("base");
+
+		return baseJSONObject.getString("sha");
+	}
+
 	public boolean isAutoCloseCommentAvailable() {
 		String url = JenkinsResultsParserUtil.combine(
 			"https://api.github.com/repos/", getOwnerUsername(), "/",

@@ -1128,16 +1128,7 @@ public class TopLevelBuild extends BaseBuild {
 			sb.append(":x: ");
 		}
 
-		sb.append("ci:test");
-
-		String ciTestSuite = getParameterValue("CI_TEST_SUITE");
-
-		if ((ciTestSuite != null) && !ciTestSuite.isEmpty() &&
-			!ciTestSuite.equals("default")) {
-
-			sb.append(":");
-			sb.append(ciTestSuite);
-		}
+		sb.append(getTestSuiteReportString());
 
 		sb.append(" - ");
 		sb.append(String.valueOf(successCount));
@@ -1231,6 +1222,20 @@ public class TopLevelBuild extends BaseBuild {
 		}
 
 		return testCount;
+	}
+
+	protected String getTestSuiteReportString() {
+		String testSuiteReportString = "ci:test";
+
+		String ciTestSuite = getParameterValue("CI_TEST_SUITE");
+
+		if ((ciTestSuite != null) && !ciTestSuite.isEmpty() &&
+			!ciTestSuite.equals("default")) {
+
+			testSuiteReportString = testSuiteReportString + ":" + ciTestSuite;
+		}
+
+		return testSuiteReportString;
 	}
 
 	protected Element getTopGitHubMessageElement() {

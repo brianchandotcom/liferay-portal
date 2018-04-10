@@ -61,7 +61,7 @@ public class EditFormBodyTag extends IncludeTag {
 			cssClass = "sheet sheet-lg";
 		}
 
-		jspWriter.write("<div class=\"" + cssClass + ">");
+		jspWriter.write("<div class=\"" + cssClass + "\">");
 
 		return EVAL_BODY_INCLUDE;
 	}

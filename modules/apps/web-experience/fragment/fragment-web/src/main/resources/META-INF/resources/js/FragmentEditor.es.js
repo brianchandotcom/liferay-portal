@@ -146,6 +146,17 @@ FragmentEditor.STATE = {
 	).value([]),
 
 	/**
+	 * Iframe fragment entry URL
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	iframeFragmentEntryURL: Config.string().required(),
+
+	/**
 	 * Initial HTML sent to the editor
 	 * @instance
 	 * @memberOf FragmentEditor

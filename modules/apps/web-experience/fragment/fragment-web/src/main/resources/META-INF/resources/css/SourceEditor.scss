@@ -1,12 +1,13 @@
 @import "mixins";
+@import "variables";
 
 .source-editor {
-	border: solid 4px #EEE;
+	border: solid $editorBorderWidth $editorBorderColor;
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
-	height: 40vh;
-	min-height: 20ch;
+	height: $editorHeight;
+	min-height: $editorMinHeight;
 	overflow: hidden;
 	position: relative;
 	width: 100%;

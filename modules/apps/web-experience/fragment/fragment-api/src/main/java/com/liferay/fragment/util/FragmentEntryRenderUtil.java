@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
+import javax.portlet.PortletMode;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -118,12 +120,21 @@ public class FragmentEntryRenderUtil {
 			HttpServletResponse response)
 		throws PortalException {
 
+		return renderFragmentEntryLink(
+			fragmentEntryLink, PortletMode.EDIT.toString(), request, response);
+	}
+
+	public static String renderFragmentEntryLink(
+			FragmentEntryLink fragmentEntryLink, String mode,
+			HttpServletRequest request, HttpServletResponse response)
+		throws PortalException {
+
 		FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry =
 			getService();
 
 		String html =
 			fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink);
+				fragmentEntryLink, mode);
 
 		html = _processTemplate(html, request, response);
 

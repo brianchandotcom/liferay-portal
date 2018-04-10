@@ -45,8 +45,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.configuration.kernel.util.PortletConfigurationApplicationType;
 
+import java.util.Objects;
 import java.util.ResourceBundle;
 
+import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
 
@@ -70,7 +72,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
 	public String processFragmentEntryLinkHTML(
-			FragmentEntryLink fragmentEntryLink, String html)
+			FragmentEntryLink fragmentEntryLink, String html, String mode)
 		throws PortalException {
 
 		Document document = _getDocument(html);
@@ -135,7 +137,8 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 					themeDisplay.getPermissionChecker(),
 					fragmentEntryLink.getGroupId(), portletName,
 					ActionKeys.CONFIGURATION) &&
-				layout.isTypeControlPanel()) {
+				layout.isTypeControlPanel() &&
+				Objects.equals(mode, PortletMode.EDIT.toString())) {
 
 				portletElement.appendChild(
 					_getPortletTopperElement(portletName, instanceId));

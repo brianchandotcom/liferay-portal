@@ -37,7 +37,7 @@ public class NullableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
 	public String processFragmentEntryLinkHTML(
-		FragmentEntryLink fragmentEntryLink, String html) {
+		FragmentEntryLink fragmentEntryLink, String html, String mode) {
 
 		return html;
 	}

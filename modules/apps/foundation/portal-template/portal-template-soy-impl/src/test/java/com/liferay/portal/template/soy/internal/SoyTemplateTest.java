@@ -56,9 +56,10 @@ public class SoyTemplateTest {
 
 		soyTemplate.clear();
 
-		SoyTemplateRecord soyMapData = soyTemplate.getSoyMapData();
+		SoyTemplateRecord soyTemplateRecord =
+			soyTemplate.getSoyTemplateRecord();
 
-		Set<String> keys = soyMapData.keys();
+		Set<String> keys = soyTemplateRecord.keys();
 
 		Assert.assertEquals(keys.toString(), 0, keys.size());
 
@@ -66,10 +67,10 @@ public class SoyTemplateTest {
 
 		Assert.assertEquals(keys.toString(), 0, keys.size());
 
-		SoyTemplateRecord injectedSoyMapData =
-			soyTemplate.getSoyMapInjectedData();
+		SoyTemplateRecord injectedSoyTemplateRecord =
+			soyTemplate.getInjectedSoyTemplateRecord();
 
-		keys = injectedSoyMapData.keys();
+		keys = injectedSoyTemplateRecord.keys();
 
 		Assert.assertEquals(keys.toString(), 0, keys.size());
 	}
@@ -101,11 +102,12 @@ public class SoyTemplateTest {
 	public void testPut() {
 		SoyTemplate soyTemplate = _soyTestHelper.getSoyTemplate("ijdata.soy");
 
-		SoyTemplateRecord soyMapData = soyTemplate.getSoyMapData();
+		SoyTemplateRecord soyTemplateRecord =
+			soyTemplate.getSoyTemplateRecord();
 
 		soyTemplate.put("key", "value");
 
-		Assert.assertEquals("value", soyMapData.get("key"));
+		Assert.assertEquals("value", soyTemplateRecord.get("key"));
 	}
 
 	@Test
@@ -130,9 +132,11 @@ public class SoyTemplateTest {
 
 		soyTemplate.put("restrictedKey", "restrictedValue");
 
-		SoyTemplateRecord soyMapData = soyTemplate.getSoyMapData();
+		SoyTemplateRecord soyTemplateRecord =
+			soyTemplate.getSoyTemplateRecord();
 
-		Assert.assertNull("restrictedValue", soyMapData.get("restrictedKey"));
+		Assert.assertNull(
+			"restrictedValue", soyTemplateRecord.get("restrictedKey"));
 	}
 
 	@Test
@@ -145,9 +149,10 @@ public class SoyTemplateTest {
 		soyTemplate.put("key", value);
 		soyTemplate.put("key", value);
 
-		SoyTemplateRecord soyMapData = soyTemplate.getSoyMapData();
+		SoyTemplateRecord soyTemplateRecord =
+			soyTemplate.getSoyTemplateRecord();
 
-		Assert.assertEquals("value", soyMapData.get("key"));
+		Assert.assertEquals("value", soyTemplateRecord.get("key"));
 	}
 
 	@Test
@@ -161,16 +166,17 @@ public class SoyTemplateTest {
 
 		soyTemplate.remove("key2");
 
-		SoyTemplateRecord soyMapData = soyTemplate.getSoyMapData();
+		SoyTemplateRecord soyTemplateRecord =
+			soyTemplate.getSoyTemplateRecord();
 
-		Assert.assertTrue(soyMapData.hasField("key1"));
-		Assert.assertEquals("value1", soyMapData.get("key1"));
+		Assert.assertTrue(soyTemplateRecord.hasField("key1"));
+		Assert.assertEquals("value1", soyTemplateRecord.get("key1"));
 
-		SoyTemplateRecord injectedSoyMapData =
-			soyTemplate.getSoyMapInjectedData();
+		SoyTemplateRecord injectedSoyTemplateRecord =
+			soyTemplate.getInjectedSoyTemplateRecord();
 
 		Assert.assertEquals(
-			"injectedValue", injectedSoyMapData.get("injectedKey"));
+			"injectedValue", injectedSoyTemplateRecord.get("injectedKey"));
 	}
 
 	@Test
@@ -181,10 +187,10 @@ public class SoyTemplateTest {
 
 		soyTemplate.remove(SoyTemplateConstants.INJECTED_DATA);
 
-		SoyTemplateRecord injectedSoyMapData =
-			soyTemplate.getSoyMapInjectedData();
+		SoyTemplateRecord injectedSoyTemplateRecord =
+			soyTemplate.getInjectedSoyTemplateRecord();
 
-		Set<String> keys = injectedSoyMapData.keys();
+		Set<String> keys = injectedSoyTemplateRecord.keys();
 
 		Assert.assertEquals(keys.toString(), 0, keys.size());
 	}

@@ -82,15 +82,15 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 		_templateContextHelper = templateContextHelper;
 		_privileged = privileged;
 
-		_injectedSoyMapData = new SoyTemplateRecord();
-		_soyRecord = new SoyTemplateRecord();
+		_injectedSoyTemplateRecord = new SoyTemplateRecord();
+		_soyTemplateRecord = new SoyTemplateRecord();
 		_soyTofuCacheHandler = soyTofuCacheHandler;
 	}
 
 	@Override
 	public void clear() {
-		_injectedSoyMapData = new SoyTemplateRecord();
-		_soyRecord = new SoyTemplateRecord();
+		_injectedSoyTemplateRecord = new SoyTemplateRecord();
+		_soyTemplateRecord = new SoyTemplateRecord();
 
 		super.clear();
 	}
@@ -119,7 +119,7 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 		if (!restrictedVariables.contains(key) &&
 			!Objects.equals(value, currentValue)) {
 
-			_soyRecord.add(key, value);
+			_soyTemplateRecord.add(key, value);
 		}
 
 		return super.put(key, value);
@@ -133,18 +133,18 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 	}
 
 	public void putInjectedData(String key, Object value) {
-		_injectedSoyMapData.add(key, value);
+		_injectedSoyTemplateRecord.add(key, value);
 	}
 
 	@Override
 	public Object remove(Object key) {
 		if (SoyTemplateConstants.INJECTED_DATA.equals(key)) {
-			_injectedSoyMapData = new SoyTemplateRecord();
+			_injectedSoyTemplateRecord = new SoyTemplateRecord();
 
 			return super.remove(key);
 		}
 
-		_soyRecord.remove((String)key);
+		_soyTemplateRecord.remove((String)key);
 
 		return super.remove(key);
 	}
@@ -161,6 +161,20 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 			soyMsgBundle, locale, languageResourceBundle);
 
 		return soyMsgBundleBridge;
+	}
+
+	protected SoyTemplateRecord getInjectedSoyTemplateRecord() {
+		if (containsKey(SoyTemplateConstants.INJECTED_DATA)) {
+			@SuppressWarnings("unchecked")
+			Map<String, Object> injectedData = (Map<String, Object>)get(
+				SoyTemplateConstants.INJECTED_DATA);
+
+			for (Map.Entry<String, Object> entry : injectedData.entrySet()) {
+				putInjectedData(entry.getKey(), entry.getValue());
+			}
+		}
+
+		return _injectedSoyTemplateRecord;
 	}
 
 	protected SoyFileSet getSoyFileSet(List<TemplateResource> templateResources)
@@ -195,24 +209,6 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 		return soyFileSet;
 	}
 
-	protected SoyTemplateRecord getSoyMapData() {
-		return _soyRecord;
-	}
-
-	protected SoyTemplateRecord getSoyMapInjectedData() {
-		if (containsKey(SoyTemplateConstants.INJECTED_DATA)) {
-			@SuppressWarnings("unchecked")
-			Map<String, Object> injectedData = (Map<String, Object>)get(
-				SoyTemplateConstants.INJECTED_DATA);
-
-			for (Map.Entry<String, Object> entry : injectedData.entrySet()) {
-				putInjectedData(entry.getKey(), entry.getValue());
-			}
-		}
-
-		return _injectedSoyMapData;
-	}
-
 	protected Optional<SoyMsgBundle> getSoyMsgBundle(
 		SoyFileSet soyFileSet, SoyTofuCacheBag soyTofuCacheBag) {
 
@@ -232,6 +228,10 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 		}
 
 		return Optional.empty();
+	}
+
+	protected SoyTemplateRecord getSoyTemplateRecord() {
+		return _soyTemplateRecord;
 	}
 
 	protected SoyTofuCacheBag getSoyTofuCacheBag(
@@ -315,8 +315,8 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 
 			Renderer renderer = soyTofu.newRenderer(namespace);
 
-			renderer.setData(getSoyMapData());
-			renderer.setIjData(getSoyMapInjectedData());
+			renderer.setData(getSoyTemplateRecord());
+			renderer.setIjData(getInjectedSoyTemplateRecord());
 
 			SoyFileSet soyFileSet = soyTofuCacheBag.getSoyFileSet();
 
@@ -384,9 +384,9 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 
 	private static final Log _log = LogFactoryUtil.getLog(SoyTemplate.class);
 
-	private SoyTemplateRecord _injectedSoyMapData;
+	private SoyTemplateRecord _injectedSoyTemplateRecord;
 	private final boolean _privileged;
-	private SoyTemplateRecord _soyRecord;
+	private SoyTemplateRecord _soyTemplateRecord;
 	private final SoyTofuCacheHandler _soyTofuCacheHandler;
 	private final SoyTemplateContextHelper _templateContextHelper;
 

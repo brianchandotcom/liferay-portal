@@ -137,7 +137,9 @@ public class DBUpgrader {
 
 		checkRequiredBuildNumber(ReleaseInfo.RELEASE_6_1_0_BUILD_NUMBER);
 
-		if (CoreServiceUpgrade.isInLatestSchemaVersion()) {
+		if (CoreServiceUpgrade.isInLatestSchemaVersion(
+				DataAccess.getConnection())) {
+
 			return;
 		}
 

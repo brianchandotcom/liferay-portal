@@ -21,6 +21,7 @@ import com.liferay.portal.jericho.CachedLoggerProvider;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.log.Log;
@@ -188,7 +189,9 @@ public class StartupAction extends SimpleAction {
 
 		DBUpgrader.checkRequiredBuildNumber(ReleaseInfo.getParentBuildNumber());
 
-		if (!CoreServiceUpgrade.isInRequiredSchemaVersion()) {
+		if (!CoreServiceUpgrade.isInRequiredSchemaVersion(
+				DataAccess.getConnection())) {
+
 			String msg =
 				"You must first upgrade the Core to the required Schema " +
 					"Version " + CoreServiceUpgrade.getRequiredSchemaVersion();

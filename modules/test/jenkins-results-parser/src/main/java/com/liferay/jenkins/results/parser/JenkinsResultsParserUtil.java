@@ -36,8 +36,15 @@ import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.net.UnknownHostException;
 
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.PathMatcher;
 import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -643,6 +650,75 @@ public class JenkinsResultsParserUtil {
 		catch (UnknownHostException uhe) {
 			return defaultHostName;
 		}
+	}
+
+	public static List<URL> getIncludedResourceURLs(
+			FileSystem fileSystem, String[] includes, File file)
+		throws IOException {
+
+		return getIncludedResourceURLs(fileSystem, includes, file.toPath());
+	}
+
+	public static List<URL> getIncludedResourceURLs(
+			FileSystem fileSystem, String[] includes, Path path)
+		throws IOException {
+
+		final List<PathMatcher> pathMatchers = new ArrayList<>();
+
+		for (String include : includes) {
+			pathMatchers.add(fileSystem.getPathMatcher("glob:" + include));
+		}
+
+		final List<URL> filePaths = new ArrayList<>();
+
+		if (!Files.exists(path)) {
+			System.out.println(
+				"Directory " + path.toString() + " does not exist.");
+
+			return filePaths;
+		}
+
+		Files.walkFileTree(
+			path,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult visitFile(
+						Path filePath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					for (PathMatcher pathMatcher : pathMatchers) {
+						URI uri = filePath.toUri();
+
+						if (pathMatcher.matches(filePath)) {
+							filePaths.add(uri.toURL());
+
+							break;
+						}
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+
+		return filePaths;
+	}
+
+	public static List<URL> getIncludedResourceURLs(
+			String[] includes, File file)
+		throws IOException {
+
+		return getIncludedResourceURLs(
+			FileSystems.getDefault(), includes, file.toPath());
+	}
+
+	public static List<URL> getIncludedResourceURLs(
+			String[] includes, Path path)
+		throws IOException {
+
+		return getIncludedResourceURLs(
+			FileSystems.getDefault(), includes, path);
 	}
 
 	public static float getJavaVersionNumber() {

@@ -1174,6 +1174,12 @@
 		</attribute>
 		<attribute>
 			<description></description>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>elementClasses</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1241,6 +1247,12 @@
 		<attribute>
 			<description></description>
 			<name>showAdvancedSearch</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>showCreationMenu</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

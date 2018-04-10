@@ -20,15 +20,15 @@
  * Prints the DDM form validation field.
  */
 {template .render}
+	{@param name: string}
+	{@param value: ?}
 	{@param? enableValidationValue: bool}
 	{@param? errorMessagePlaceholder: string}
 	{@param? errorMessageValue: string}
-	{@param name: string}
 	{@param? parameterMessagePlaceholder: string}
 	{@param? parameterValue: string}
 	{@param? validationMessage: string}
 	{@param? validationsOptions: list<[label: string, status: string, value: string]>}
-	{@param value: ?}
 
 	<div class="form-group lfr-ddm-form-field-validation" data-fieldname="{$name}">
 		<div class="form-group">
@@ -48,9 +48,7 @@
 			</label>
 		</div>
 
-		<br />
-
-		<div class="{$enableValidationValue ? '' : 'hide'} row">
+		<div class="{$enableValidationValue ? '' : 'hide'} mb-3 mt-3 row">
 			<div class="col-md-6">
 				<select class="form-control validations-select">
 					{if $validationsOptions}
@@ -72,8 +70,6 @@
 				/>
 			</div>
 		</div>
-
-		<br />
 
 		<div class="{$enableValidationValue ? '' : 'hide'} row">
 			<div class="col-md-12">

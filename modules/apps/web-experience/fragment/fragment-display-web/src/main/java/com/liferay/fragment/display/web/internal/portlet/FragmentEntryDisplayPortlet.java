@@ -36,6 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
+		"com.liferay.portlet.ajaxable=false",
 		"com.liferay.portlet.css-class-wrapper=portlet-fragment-display",
 		"com.liferay.portlet.display-category=category.cms",
 		"com.liferay.portlet.display-category=category.highlighted",

@@ -434,9 +434,6 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 	protected void updateTaxCategoryInfo(ActionRequest actionRequest)
 		throws PortalException {
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CPDefinition.class.getName(), actionRequest);
-
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
 
@@ -447,8 +444,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "telcoOrElectronics");
 
 		_cpDefinitionService.updateTaxCategoryInfo(
-			cpDefinitionId, cpTaxCategoryId, taxExempt, telcoOrElectronics,
-			serviceContext);
+			cpDefinitionId, cpTaxCategoryId, taxExempt, telcoOrElectronics);
 	}
 
 	@Reference

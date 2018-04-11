@@ -29,17 +29,17 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT,
-		"mvc.command.name=/fragment/iframe_fragment_entry"
+		"mvc.command.name=/fragment/preview_fragment_entry"
 	},
 	service = MVCRenderCommand.class
 )
-public class IframeFragmentEntryMVCRenderCommand implements MVCRenderCommand {
+public class PreviewFragmentEntryMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/iframe_fragment_entry.jsp";
+		return "/preview_fragment_entry.jsp";
 	}
 
 }

@@ -104,8 +104,8 @@ Layout renderLayout = LayoutLocalServiceUtil.fetchFirstLayout(themeDisplay.getSc
 	<portlet:param name="fragmentEntryId" value="<%= String.valueOf(fragmentDisplayContext.getFragmentEntryId()) %>" />
 </liferay-portlet:renderURL>
 
-<liferay-portlet:renderURL plid="<%= renderLayout.getPlid() %>" var="iframeFragmentEntryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcRenderCommandName" value="/fragment/iframe_fragment_entry" />
+<liferay-portlet:renderURL plid="<%= renderLayout.getPlid() %>" var="previewFragmentEntryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcRenderCommandName" value="/fragment/preview_fragment_entry" />
 </liferay-portlet:renderURL>
 
 <aui:script require="fragment-web/js/FragmentEditor.es as FragmentEditor, metal-dom/src/all/dom as dom">
@@ -123,11 +123,11 @@ Layout renderLayout = LayoutLocalServiceUtil.fetchFirstLayout(themeDisplay.getSc
 					jsInput.value = event.js;
 				}
 			},
-			iframeFragmentEntryURL: '<%= iframeFragmentEntryURL %>',
 			initialCSS: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getCssContent()) %>',
 			initialHTML: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getHtmlContent()) %>',
 			initialJS: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getJsContent()) %>',
 			namespace: '<portlet:namespace />',
+			previewFragmentEntryURL: '<%= previewFragmentEntryURL %>',
 			renderFragmentEntryURL: '<%= renderFragmentEntryURL %>',
 			spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
 		},

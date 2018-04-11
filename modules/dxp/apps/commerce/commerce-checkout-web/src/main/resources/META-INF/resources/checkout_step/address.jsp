@@ -66,23 +66,23 @@ long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 	<div class="form-group-autofit">
 		<aui:input label="" name="name" placeholder="name" wrapperCssClass="form-group-item" disabled="<%= (commerceAddressId > 0) %>" />
 
-		<aui:input label="" name="phoneNumber" placeholder="phone-number" wrapperCssClass="form-group-item" disabled="<%= (commerceAddressId > 0) %>"  />
+		<aui:input label="" name="phoneNumber" placeholder="phone-number" wrapperCssClass="form-group-item" disabled="<%= (commerceAddressId > 0) %>" />
 	</div>
 
 	<div class="form-group-autofit">
-		<aui:input label="" name="street1" placeholder="shipping-address" wrapperCssClass="form-group-item" disabled="<%= (commerceAddressId > 0) %>"  />
+		<aui:input label="" name="street1" placeholder="shipping-address" wrapperCssClass="form-group-item" disabled="<%= (commerceAddressId > 0) %>" />
 
-		<aui:select label="" name="commerceCountryId" placeholder="country" wrapperCssClass="form-group-item" disabled="<%= (commerceAddressId > 0) %>"  />
+		<aui:select label="" name="commerceCountryId" placeholder="country" wrapperCssClass="form-group-item" disabled="<%= (commerceAddressId > 0) %>" />
 	</div>
 
 	<div class="form-group-autofit add-street-link">
-		<aui:a cssClass="form-group-item" href="javascript:;" label="+-add-address-line" disabled="<%= (commerceAddressId > 0) %>"  onClick='<%= renderResponse.getNamespace() + "addStreetAddress();" %>' />
+		<aui:a cssClass="form-group-item" href="javascript:;" label="+-add-address-line" disabled="<%= (commerceAddressId > 0) %>" onClick='<%= renderResponse.getNamespace() + "addStreetAddress();" %>' />
 	</div>
 
 	<div class="add-street-fields form-group-autofit hide">
-		<aui:input label="" name="street2" placeholder="shipping-address-2" wrapperCssClass="form-group-item" disabled="<%= (commerceAddressId > 0) %>"  />
+		<aui:input label="" name="street2" placeholder="shipping-address-2" wrapperCssClass="form-group-item" disabled="<%= (commerceAddressId > 0) %>" />
 
-		<aui:input label="" name="street3" placeholder="shipping-address-3" wrapperCssClass="form-group-item" disabled="<%= (commerceAddressId > 0) %>"  />
+		<aui:input label="" name="street3" placeholder="shipping-address-3" wrapperCssClass="form-group-item" disabled="<%= (commerceAddressId > 0) %>" />
 	</div>
 
 	<div class="form-group-autofit">
@@ -90,7 +90,7 @@ long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 
 		<aui:input label="" name="city" placeholder="city" wrapperCssClass="form-group-item" disabled="<%= (commerceAddressId > 0) %>" />
 
-		<aui:select label="" name="commerceRegionId" placeholder="region" wrapperCssClass="form-group-item" disabled="<%= (commerceAddressId > 0) %>"  />
+		<aui:select label="" name="commerceRegionId" placeholder="region" wrapperCssClass="form-group-item" disabled="<%= (commerceAddressId > 0) %>" />
 	</div>
 </div>
 

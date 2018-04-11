@@ -42,16 +42,16 @@ public abstract class BaseAddressCheckoutStepDisplayContext {
 			CommerceCheckoutWebKeys.COMMERCE_ORDER);
 	}
 
+	public CommerceAddress getCommerceAddress(long commerceAddressId)
+		throws PortalException {
+
+		return _commerceAddressService.fetchCommerceAddress(commerceAddressId);
+	}
+
 	public List<CommerceAddress> getCommerceAddresses() throws PortalException {
 		return _commerceAddressService.getCommerceAddresses(
 			_commerceOrder.getGroupId(), _commerceOrder.getClassName(),
 			_commerceOrder.getClassPK());
-	}
-
-	public CommerceAddress getCommerceAddress(long commerceAddressId)
-		throws PortalException{
-
-		return _commerceAddressService.fetchCommerceAddress(commerceAddressId);
 	}
 
 	public abstract String getCommerceCountrySelectionColumnName();

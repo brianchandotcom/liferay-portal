@@ -79,11 +79,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
-import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
 import java.text.Format;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -91,6 +89,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Function;
+
+import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Andrea Di Giorgi

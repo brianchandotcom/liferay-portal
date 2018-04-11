@@ -171,7 +171,7 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 			commerceOrder = _getUserCurrentCommerceOrder(themeDisplay);
 		}
 
-		if(!commerceOrder.isOpen()){
+		if (!commerceOrder.isOpen()) {
 			return null;
 		}
 

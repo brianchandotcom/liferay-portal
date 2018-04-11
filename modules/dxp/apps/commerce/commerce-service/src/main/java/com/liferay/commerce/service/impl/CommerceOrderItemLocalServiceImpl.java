@@ -406,14 +406,6 @@ public class CommerceOrderItemLocalServiceImpl
 			"Unable to fix the search index after 10 attempts");
 	}
 
-	protected void validateCommerceOrder(CommerceOrder commerceOrder)
-		throws PortalException{
-
-		if(!commerceOrder.isOpen()){
-			throw new NoSuchOrderException();
-		}
-	}
-
 	protected void validate(
 			CommerceOrder commerceOrder, CPDefinition cpDefinition,
 			CPInstance cpInstance, int quantity)
@@ -447,6 +439,14 @@ public class CommerceOrderItemLocalServiceImpl
 		if (!commerceCartValidatorResults.isEmpty()) {
 			throw new CommerceOrderValidatorException(
 				commerceCartValidatorResults);
+		}
+	}
+
+	protected void validateCommerceOrder(CommerceOrder commerceOrder)
+		throws PortalException {
+
+		if (!commerceOrder.isOpen()) {
+			throw new NoSuchOrderException();
 		}
 	}
 

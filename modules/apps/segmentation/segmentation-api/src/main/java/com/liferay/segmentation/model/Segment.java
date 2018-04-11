@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.segments.model;
+package com.liferay.segmentation.model;
 
 import aQute.bnd.annotation.ProviderType;
 

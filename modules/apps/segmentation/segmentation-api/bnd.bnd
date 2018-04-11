@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Segmentation API
+Bundle-SymbolicName: com.liferay.segmentation.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.segmentation.model,\
+	com.liferay.segmentation.service
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:

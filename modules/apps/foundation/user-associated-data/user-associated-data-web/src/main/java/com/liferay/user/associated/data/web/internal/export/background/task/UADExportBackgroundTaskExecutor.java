@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageTranslator;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
 import com.liferay.user.associated.data.web.internal.export.controller.UADApplicationExportController;
@@ -73,8 +74,23 @@ public class UADExportBackgroundTaskExecutor
 		return null;
 	}
 
+	@Override
+	public BackgroundTaskStatusMessageTranslator
+		getBackgroundTaskStatusMessageTranslator() {
+
+		if (_backgroundTaskStatusMessageTranslator == null) {
+			_backgroundTaskStatusMessageTranslator =
+				new UADExportBackgroundTaskStatusMessageTranslator();
+		}
+
+		return _backgroundTaskStatusMessageTranslator;
+	}
+
 	@Reference
 	private BackgroundTaskManager _backgroundTaskManager;
+
+	private BackgroundTaskStatusMessageTranslator
+		_backgroundTaskStatusMessageTranslator;
 
 	@Reference
 	private UADApplicationExportController _uadApplicationExportController;

@@ -1214,6 +1214,15 @@ public class JournalPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		try {
+			ActionUtil.getFolder(renderRequest);
+		}
+		catch (Exception e) {
+			_log.error(e.getMessage());
+
+			SessionErrors.add(renderRequest, e.getClass());
+		}
+
 		if (SessionErrors.contains(
 				renderRequest, NoSuchArticleException.class.getName()) ||
 			SessionErrors.contains(

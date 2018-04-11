@@ -41,7 +41,7 @@ if (Validator.isNotNull(title)) {
 
 <div id="<portlet:namespace />journalContainer">
 	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-		<c:if test="<%= journalDisplayContext.isShowInfoPanel() %>">
+		<c:if test="<%= journalDisplayContext.isShowInfoButton() %>">
 			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/journal/info_panel" var="sidebarPanelURL" />
 
 			<liferay-frontend:sidebar-panel
@@ -83,7 +83,7 @@ if (Validator.isNotNull(title)) {
 							String[] tabsValues = new String[0];
 
 							if (journalDisplayContext.hasResults()) {
-								String tabName = StringUtil.appendParentheticalSuffix(LanguageUtil.get(request, "web-content"), journalDisplayContext.getTotal());
+								String tabName = StringUtil.appendParentheticalSuffix(LanguageUtil.get(request, "web-content"), journalDisplayContext.getTotalItems());
 
 								tabsNames = ArrayUtil.append(tabsNames, tabName);
 								tabsValues = ArrayUtil.append(tabsValues, "web-content");

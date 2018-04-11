@@ -20,154 +20,25 @@
 String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 %>
 
-<liferay-frontend:management-bar
-	disabled="<%= journalDisplayContext.isDisabledManagementBar() %>"
-	includeCheckBox='<%= !user.isDefaultUser() && journalDisplayContext.isShowEditActions() && !Objects.equals(journalDisplayContext.getTabs1(), "versions") %>'
+<clay:management-toolbar
+	actionItems="<%= journalDisplayContext.getActionItemsDropdownItemList() %>"
+	clearResultsURL="<%= journalDisplayContext.getClearResultsURL() %>"
+	componentId="journalWebManagementToolbar"
+	creationMenu="<%= journalDisplayContext.getCreationMenu() %>"
+	disabled="<%= journalDisplayContext.isDisabled() %>"
+	filterItems="<%= journalDisplayContext.getFilterItemsDropdownItemList() %>"
+	infoPanelId="infoPanelId"
+	namespace="<%= renderResponse.getNamespace() %>"
+	searchActionURL="<%= journalDisplayContext.getSearchActionURL() %>"
 	searchContainerId="<%= searchContainerId %>"
->
-	<liferay-frontend:management-bar-buttons>
-		<c:if test="<%= journalDisplayContext.isShowInfoPanel() %>">
-			<liferay-frontend:management-bar-sidenav-toggler-button
-				icon="info-circle"
-				label="info"
-			/>
-		</c:if>
-
-		<liferay-frontend:management-bar-display-buttons
-			displayViews="<%= journalDisplayContext.getDisplayViews() %>"
-			portletURL="<%= journalDisplayContext.getPortletURL() %>"
-			selectedDisplayStyle="<%= journalDisplayContext.getDisplayStyle() %>"
-		/>
-
-		<c:if test="<%= !journalDisplayContext.isSearch() %>">
-			<liferay-util:include page="/add_button.jsp" servletContext="<%= application %>" />
-		</c:if>
-	</liferay-frontend:management-bar-buttons>
-
-	<%
-	String label = null;
-
-	if (journalDisplayContext.isNavigationStructure()) {
-		label = LanguageUtil.get(request, "structure") + StringPool.COLON + StringPool.SPACE + HtmlUtil.escape(journalDisplayContext.getDDMStructureName());
-	}
-	%>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			label="<%= label %>"
-		>
-			<portlet:renderURL var="viewArticlesHomeURL">
-				<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-				<portlet:param name="showEditActions" value="<%= String.valueOf(journalDisplayContext.isShowEditActions()) %>" />
-			</portlet:renderURL>
-
-			<liferay-frontend:management-bar-filter-item
-				active="<%= journalDisplayContext.isNavigationHome() %>"
-				label="all"
-				url="<%= viewArticlesHomeURL.toString() %>"
-			/>
-
-			<portlet:renderURL var="viewRecentArticlesURL">
-				<portlet:param name="navigation" value="recent" />
-				<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-				<portlet:param name="showEditActions" value="<%= String.valueOf(journalDisplayContext.isShowEditActions()) %>" />
-			</portlet:renderURL>
-
-			<liferay-frontend:management-bar-filter-item
-				active="<%= journalDisplayContext.isNavigationRecent() %>"
-				label="recent"
-				url="<%= viewRecentArticlesURL.toString() %>"
-			/>
-
-			<portlet:renderURL var="viewMyArticlesURL">
-				<portlet:param name="navigation" value="mine" />
-				<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-				<portlet:param name="showEditActions" value="<%= String.valueOf(journalDisplayContext.isShowEditActions()) %>" />
-			</portlet:renderURL>
-
-			<liferay-frontend:management-bar-filter-item
-				active="<%= journalDisplayContext.isNavigationMine() %>"
-				label="mine"
-				url="<%= viewMyArticlesURL.toString() %>"
-			/>
-
-			<liferay-frontend:management-bar-filter-item
-				active="<%= journalDisplayContext.isNavigationStructure() %>"
-				id="structures"
-				label="structures"
-				url="javascript:;"
-			/>
-		</liferay-frontend:management-bar-navigation>
-
-		<liferay-frontend:management-bar-filter
-			label="status"
-			managementBarFilterItems="<%= journalDisplayContext.getManagementBarStatusFilterItems() %>"
-			value="<%= journalDisplayContext.getManagementBarStatusFilterValue() %>"
-		/>
-
-		<c:if test="<%= !journalDisplayContext.isNavigationRecent() %>">
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= journalDisplayContext.getOrderByCol() %>"
-				orderByType="<%= journalDisplayContext.getOrderByType() %>"
-				orderColumns="<%= journalDisplayContext.getOrderColumns() %>"
-				portletURL="<%= journalDisplayContext.getPortletURL() %>"
-			/>
-		</c:if>
-
-		<li>
-			<c:if test="<%= journalDisplayContext.isShowSearch() %>">
-
-				<%
-				PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-				portletURL.setParameter("folderId", String.valueOf(journalDisplayContext.getFolderId()));
-				portletURL.setParameter("showEditActions", String.valueOf(journalDisplayContext.isShowEditActions()));
-				%>
-
-				<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
-					<liferay-ui:input-search
-						markupView="lexicon"
-					/>
-				</aui:form>
-			</c:if>
-		</li>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<c:if test="<%= journalDisplayContext.isShowInfoPanel() %>">
-			<liferay-frontend:management-bar-sidenav-toggler-button
-				icon="info-circle"
-				label="info"
-			/>
-		</c:if>
-
-		<liferay-frontend:management-bar-button
-			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteEntries();" %>'
-			icon='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "trash" : "times" %>'
-			label='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>'
-		/>
-
-		<%
-		String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: 'expireEntries'}); void(0);";
-		%>
-
-		<liferay-frontend:management-bar-button
-			href="<%= taglibURL %>"
-			icon="time"
-			label="expire"
-		/>
-
-		<%
-		taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: 'moveEntries'}); void(0);";
-		%>
-
-		<liferay-frontend:management-bar-button
-			href="<%= taglibURL %>"
-			icon="change"
-			label="move"
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+	searchFormName="fm1"
+	showInfoButton="<%= journalDisplayContext.isShowInfoButton() %>"
+	showSearch="<%= journalDisplayContext.isShowSearch() %>"
+	sortingOrder="<%= journalDisplayContext.getOrderByType() %>"
+	sortingURL="<%= journalDisplayContext.getSortingURL() %>"
+	totalItems="<%= journalDisplayContext.getTotalItems() %>"
+	viewTypes="<%= journalDisplayContext.getViewTypesItemList() %>"
+/>
 
 <aui:script>
 	function <portlet:namespace />deleteEntries() {
@@ -180,48 +51,64 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 			);
 		}
 	}
-</aui:script>
 
-<aui:script>
 	<portlet:renderURL var="viewDDMStructureArticlesURL">
 		<portlet:param name="navigation" value="structure" />
 		<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
 		<portlet:param name="showEditActions" value="<%= String.valueOf(journalDisplayContext.isShowEditActions()) %>" />
 	</portlet:renderURL>
 
-	$('#<portlet:namespace />structures').on(
-		'click',
-		function(event) {
-			Liferay.Util.openDDMPortlet(
-				{
-					basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.VIEW), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
-					classPK: <%= journalDisplayContext.getDDMStructurePrimaryKey() %>,
-					dialog: {
-						destroyOnHide: true
-					},
-					eventName: '<portlet:namespace />selectStructure',
-					groupId: <%= themeDisplay.getScopeGroupId() %>,
-					mvcPath: '/select_structure.jsp',
-					navigationStartsOn: '<%= DDMNavigationHelper.SELECT_STRUCTURE %>',
-					refererPortletName: '<%= JournalPortletKeys.JOURNAL + ".filterStructure" %>',
-
-					<%
-					Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
-					%>
-
-					refererWebDAVToken: '<%= HtmlUtil.escapeJS(WebDAVUtil.getStorageToken(portlet)) %>',
-
-					showAncestorScopes: true,
-					title: '<%= UnicodeLanguageUtil.get(request, "structures") %>'
+	function <portlet:namespace />openStructuresSelector() {
+		Liferay.Util.openDDMPortlet(
+			{
+				basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.VIEW), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
+				classPK: <%= journalDisplayContext.getDDMStructurePrimaryKey() %>,
+				dialog: {
+					destroyOnHide: true
 				},
-				function(event) {
-					var uri = '<%= viewDDMStructureArticlesURL %>';
+				eventName: '<portlet:namespace />selectStructure',
+				groupId: <%= themeDisplay.getScopeGroupId() %>,
+				mvcPath: '/select_structure.jsp',
+				navigationStartsOn: '<%= DDMNavigationHelper.SELECT_STRUCTURE %>',
+				refererPortletName: '<%= JournalPortletKeys.JOURNAL + ".filterStructure" %>',
 
-					uri = Liferay.Util.addParams('<portlet:namespace />ddmStructureKey=' + event.ddmstructurekey, uri);
+				<%
+				Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
+				%>
 
-					location.href = uri;
-				}
-			);
-		}
-	);
+				refererWebDAVToken: '<%= HtmlUtil.escapeJS(WebDAVUtil.getStorageToken(portlet)) %>',
+
+				showAncestorScopes: true,
+				title: '<%= UnicodeLanguageUtil.get(request, "structures") %>'
+			},
+			function(event) {
+				var uri = '<%= viewDDMStructureArticlesURL %>';
+
+				uri = Liferay.Util.addParams('<portlet:namespace />ddmStructureKey=' + event.ddmstructurekey, uri);
+
+				location.href = uri;
+			}
+		);
+	}
+
+	function <portlet:namespace />openViewMoreStructuresSelector() {
+		Liferay.Util.openWindow(
+			{
+				dialog: {
+					destroyOnHide: true,
+					modal: true
+				},
+				id: '<portlet:namespace />selectAddMenuItem',
+				title: '<liferay-ui:message key="more" />',
+
+				<portlet:renderURL var="viewMoreURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<portlet:param name="mvcPath" value="/view_more_menu_items.jsp" />
+					<portlet:param name="folderId" value="<%= String.valueOf(journalDisplayContext.getFolderId()) %>" />
+					<portlet:param name="eventName" value='<%= renderResponse.getNamespace() + "selectAddMenuItem" %>' />
+				</portlet:renderURL>
+
+				uri: '<%= viewMoreURL %>'
+			}
+		);
+	}
 </aui:script>

@@ -568,11 +568,11 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			long companyId, long groupId, long ddlRecordId)
 		throws Exception {
 
-		WorkflowInstanceLink workfowInstanceLink =
+		WorkflowInstanceLink workflowInstanceLink =
 			_workflowInstanceLinkLocalService.getWorkflowInstanceLink(
 				companyId, groupId, KaleoProcess.class.getName(), ddlRecordId);
 
-		return workfowInstanceLink.getWorkflowInstanceLinkId();
+		return workflowInstanceLink.getWorkflowInstanceLinkId();
 	}
 
 	/**

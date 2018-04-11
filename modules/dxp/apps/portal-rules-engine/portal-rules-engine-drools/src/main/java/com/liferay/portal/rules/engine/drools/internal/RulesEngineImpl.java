@@ -405,9 +405,9 @@ public class RulesEngineImpl implements RulesEngine {
 
 		String[] queryResultsIdentifiers = queryResults.getIdentifiers();
 
-		for (QueryResultsRow queryResultRow : queryResults) {
+		for (QueryResultsRow queryResultsRow : queryResults) {
 			for (String identifier : queryResultsIdentifiers) {
-				Object returnValue = queryResultRow.get(identifier);
+				Object returnValue = queryResultsRow.get(identifier);
 
 				if (returnValue != null) {
 					returnValues.put(identifier, returnValue);

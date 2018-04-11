@@ -694,17 +694,17 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 	}
 
 	protected void setUpExpando() {
-		ExpandoBridge expandBridge = mock(ExpandoBridge.class);
+		ExpandoBridge expandoBridge = mock(ExpandoBridge.class);
 
 		when(
-			expandBridge.getAttribute(
+			expandoBridge.getAttribute(
 				Mockito.eq("sambaLMPassword"), Mockito.eq(false))
 		).thenReturn(
 			"testLMPassword"
 		);
 
 		when(
-			expandBridge.getAttribute(
+			expandoBridge.getAttribute(
 				Mockito.eq("sambaNTPassword"), Mockito.eq(false))
 		).thenReturn(
 			"testNTPassword"
@@ -713,7 +713,7 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 		when(
 			_user.getExpandoBridge()
 		).thenReturn(
-			expandBridge
+			expandoBridge
 		);
 	}
 

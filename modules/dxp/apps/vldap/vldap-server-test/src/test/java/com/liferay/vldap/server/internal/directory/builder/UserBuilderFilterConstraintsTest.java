@@ -95,17 +95,17 @@ public class UserBuilderFilterConstraintsTest extends BaseVLDAPTestCase {
 	}
 
 	protected void setUpExpando() {
-		ExpandoBridge expandBridge = mock(ExpandoBridge.class);
+		ExpandoBridge expandoBridge = mock(ExpandoBridge.class);
 
 		when(
-			expandBridge.getAttribute(
+			expandoBridge.getAttribute(
 				Mockito.eq("sambaLMPassword"), Mockito.eq(false))
 		).thenReturn(
 			"testLMPassword"
 		);
 
 		when(
-			expandBridge.getAttribute(
+			expandoBridge.getAttribute(
 				Mockito.eq("sambaNTPassword"), Mockito.eq(false))
 		).thenReturn(
 			"testNTPassword"
@@ -114,13 +114,13 @@ public class UserBuilderFilterConstraintsTest extends BaseVLDAPTestCase {
 		when(
 			_hasOrganizationUser.getExpandoBridge()
 		).thenReturn(
-			expandBridge
+			expandoBridge
 		);
 
 		when(
 			_hasRoleUser.getExpandoBridge()
 		).thenReturn(
-			expandBridge
+			expandoBridge
 		);
 	}
 

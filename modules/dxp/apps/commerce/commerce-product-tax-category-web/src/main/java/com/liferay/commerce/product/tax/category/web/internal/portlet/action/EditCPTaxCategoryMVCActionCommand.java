@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.commerce.tax.category.web.internal.portlet.action;
+package com.liferay.commerce.product.tax.category.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
-import com.liferay.commerce.exception.CommerceTaxCategoryNameException;
-import com.liferay.commerce.exception.NoSuchTaxCategoryException;
-import com.liferay.commerce.model.CommerceTaxCategory;
-import com.liferay.commerce.service.CommerceTaxCategoryService;
+import com.liferay.commerce.product.exception.CPTaxCategoryNameException;
+import com.liferay.commerce.product.exception.NoSuchCPTaxCategoryException;
+import com.liferay.commerce.product.model.CPTaxCategory;
+import com.liferay.commerce.product.service.CPTaxCategoryService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -47,34 +47,31 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN,
-		"mvc.command.name=editCommerceTaxCategory"
+		"mvc.command.name=editCPTaxCategory"
 	},
 	service = MVCActionCommand.class
 )
-public class EditCommerceTaxCategoryMVCActionCommand
-	extends BaseMVCActionCommand {
+public class EditCPTaxCategoryMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void deleteCommerceTaxCategories(ActionRequest actionRequest)
+	protected void deleteCPTaxCategories(ActionRequest actionRequest)
 		throws PortalException {
 
-		long[] deleteCommerceTaxCategoryIds = null;
+		long[] deleteCPTaxCategoryIds = null;
 
-		long commerceTaxCategoryId = ParamUtil.getLong(
-			actionRequest, "commerceTaxCategoryId");
+		long cpTaxCategoryId = ParamUtil.getLong(
+			actionRequest, "cpTaxCategoryId");
 
-		if (commerceTaxCategoryId > 0) {
-			deleteCommerceTaxCategoryIds = new long[] {commerceTaxCategoryId};
+		if (cpTaxCategoryId > 0) {
+			deleteCPTaxCategoryIds = new long[] {cpTaxCategoryId};
 		}
 		else {
-			deleteCommerceTaxCategoryIds = StringUtil.split(
-				ParamUtil.getString(
-					actionRequest, "deleteCommerceTaxCategoryIds"),
+			deleteCPTaxCategoryIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "deleteCPTaxCategoryIds"),
 				0L);
 		}
 
-		for (long deleteCommerceTaxCategoryId : deleteCommerceTaxCategoryIds) {
-			_commerceTaxCategoryService.deleteCommerceTaxCategory(
-				deleteCommerceTaxCategoryId);
+		for (long deleteCPTaxCategoryId : deleteCPTaxCategoryIds) {
+			_cpTaxCategoryService.deleteCPTaxCategory(deleteCPTaxCategoryId);
 		}
 	}
 
@@ -87,30 +84,30 @@ public class EditCommerceTaxCategoryMVCActionCommand
 
 		try {
 			if (cmd.equals(Constants.DELETE)) {
-				deleteCommerceTaxCategories(actionRequest);
+				deleteCPTaxCategories(actionRequest);
 			}
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.UPDATE)) {
 
-				updateCommerceTaxCategory(actionRequest);
+				updateCPTaxCategory(actionRequest);
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchTaxCategoryException ||
+			if (e instanceof NoSuchCPTaxCategoryException ||
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (e instanceof CommerceTaxCategoryNameException) {
+			else if (e instanceof CPTaxCategoryNameException) {
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 
 				SessionErrors.add(actionRequest, e.getClass());
 
 				actionResponse.setRenderParameter(
-					"mvcRenderCommandName", "editCommerceTaxCategory");
+					"mvcRenderCommandName", "editCPTaxCategory");
 			}
 			else {
 				throw e;
@@ -118,11 +115,11 @@ public class EditCommerceTaxCategoryMVCActionCommand
 		}
 	}
 
-	protected void updateCommerceTaxCategory(ActionRequest actionRequest)
+	protected void updateCPTaxCategory(ActionRequest actionRequest)
 		throws PortalException {
 
-		long commerceTaxCategoryId = ParamUtil.getLong(
-			actionRequest, "commerceTaxCategoryId");
+		long cpTaxCategoryId = ParamUtil.getLong(
+			actionRequest, "cpTaxCategoryId");
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
@@ -130,19 +127,19 @@ public class EditCommerceTaxCategoryMVCActionCommand
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceTaxCategory.class.getName(), actionRequest);
+			CPTaxCategory.class.getName(), actionRequest);
 
-		if (commerceTaxCategoryId <= 0) {
-			_commerceTaxCategoryService.addCommerceTaxCategory(
+		if (cpTaxCategoryId <= 0) {
+			_cpTaxCategoryService.addCPTaxCategory(
 				nameMap, descriptionMap, serviceContext);
 		}
 		else {
-			_commerceTaxCategoryService.updateCommerceTaxCategory(
-				commerceTaxCategoryId, nameMap, descriptionMap);
+			_cpTaxCategoryService.updateCPTaxCategory(
+				cpTaxCategoryId, nameMap, descriptionMap);
 		}
 	}
 
 	@Reference
-	private CommerceTaxCategoryService _commerceTaxCategoryService;
+	private CPTaxCategoryService _cpTaxCategoryService;
 
 }

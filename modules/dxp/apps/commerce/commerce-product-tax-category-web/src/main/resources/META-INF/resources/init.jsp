@@ -25,18 +25,14 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.commerce.admin.constants.CommerceAdminWebKeys" %><%@
-page import="com.liferay.commerce.constants.CommerceActionKeys" %><%@
 page import="com.liferay.commerce.constants.CommerceConstants" %><%@
-page import="com.liferay.commerce.exception.CommerceTaxCategoryNameException" %><%@
-page import="com.liferay.commerce.model.CommerceTaxCategory" %><%@
-page import="com.liferay.commerce.model.CommerceTaxCategoryRel" %><%@
-page import="com.liferay.commerce.product.constants.CPPortletKeys" %><%@
-page import="com.liferay.commerce.service.permission.CommercePermission" %><%@
-page import="com.liferay.commerce.tax.category.web.internal.display.context.CommerceTaxCategoryDisplayContext" %><%@
-page import="com.liferay.commerce.tax.category.web.internal.display.context.CommerceTaxCategoryRelDisplayContext" %><%@
+page import="com.liferay.commerce.product.constants.CPActionKeys" %><%@
+page import="com.liferay.commerce.product.exception.CPTaxCategoryNameException" %><%@
+page import="com.liferay.commerce.product.model.CPTaxCategory" %><%@
+page import="com.liferay.commerce.product.service.permission.CPPermission" %><%@
+page import="com.liferay.commerce.product.tax.category.web.internal.display.context.CPTaxCategoryDisplayContext" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.portlet.LiferayPortletRequest" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
@@ -45,7 +41,6 @@ page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <%@ page import="java.util.HashMap" %><%@
-page import="java.util.List" %><%@
 page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
@@ -61,5 +56,5 @@ String commerceAdminModuleKey = CommerceConstants.TAXES_COMMERCE_ADMIN_MODULE_KE
 
 String languageId = LanguageUtil.getLanguageId(locale);
 
-boolean hasManageCommerceTaxCategoriesPermission = CommercePermission.contains(permissionChecker, scopeGroupId, CommerceActionKeys.MANAGE_COMMERCE_TAX_CATEGORIES);
+boolean hasManageCPTaxCategoriesPermission = CPPermission.contains(permissionChecker, scopeGroupId, CPActionKeys.MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES);
 %>

@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.commerce.tax.category.web.internal.servlet.taglib.ui;
+package com.liferay.commerce.product.tax.category.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.admin.CommerceAdminModule;
 import com.liferay.commerce.constants.CommerceTaxScreenNavigationConstants;
-import com.liferay.commerce.service.CommerceTaxCategoryService;
+import com.liferay.commerce.product.service.CPTaxCategoryService;
+import com.liferay.commerce.product.tax.category.web.internal.display.context.CPTaxCategoryDisplayContext;
 import com.liferay.commerce.service.CommerceTaxMethodService;
-import com.liferay.commerce.tax.category.web.internal.display.context.CommerceTaxCategoryDisplayContext;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "screen.navigation.entry.order:Integer=20",
 	service = ScreenNavigationEntry.class
 )
-public class CommerceTaxCategoryScreenNavigationEntry
+public class CPTaxCategoryScreenNavigationEntry
 	implements ScreenNavigationEntry<CommerceAdminModule> {
 
 	public static final String ENTRY_KEY = "tax-categories";
@@ -91,13 +91,13 @@ public class CommerceTaxCategoryScreenNavigationEntry
 			(RenderResponse)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		CommerceTaxCategoryDisplayContext commerceTaxCategoryDisplayContext =
-			new CommerceTaxCategoryDisplayContext(
-				_commerceTaxCategoryService, _commerceTaxMethodService,
-				renderRequest, renderResponse);
+		CPTaxCategoryDisplayContext cpTaxCategoryDisplayContext =
+			new CPTaxCategoryDisplayContext(
+				_commerceTaxMethodService, _cpTaxCategoryService, renderRequest,
+				renderResponse);
 
 		httpServletRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceTaxCategoryDisplayContext);
+			WebKeys.PORTLET_DISPLAY_CONTEXT, cpTaxCategoryDisplayContext);
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
@@ -105,16 +105,16 @@ public class CommerceTaxCategoryScreenNavigationEntry
 	}
 
 	@Reference
-	private CommerceTaxCategoryService _commerceTaxCategoryService;
+	private CommerceTaxMethodService _commerceTaxMethodService;
 
 	@Reference
-	private CommerceTaxMethodService _commerceTaxMethodService;
+	private CPTaxCategoryService _cpTaxCategoryService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.tax.category.web)"
+		target = "(osgi.web.symbolicname=com.liferay.commerce.product.tax.category.web)"
 	)
 	private ServletContext _servletContext;
 

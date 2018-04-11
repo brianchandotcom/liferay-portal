@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.commerce.tax.category.web.internal.display.context;
+package com.liferay.commerce.product.tax.category.web.internal.display.context;
 
 import com.liferay.commerce.constants.CommerceConstants;
-import com.liferay.commerce.model.CommerceTaxCategory;
 import com.liferay.commerce.model.CommerceTaxMethod;
-import com.liferay.commerce.service.CommerceTaxCategoryService;
+import com.liferay.commerce.product.model.CPTaxCategory;
+import com.liferay.commerce.product.service.CPTaxCategoryService;
+import com.liferay.commerce.product.tax.category.web.internal.servlet.taglib.ui.CPTaxCategoryScreenNavigationEntry;
+import com.liferay.commerce.product.util.comparator.CPTaxCategoryCreateDateComparator;
 import com.liferay.commerce.service.CommerceTaxMethodService;
-import com.liferay.commerce.tax.category.web.internal.servlet.taglib.ui.CommerceTaxCategoryScreenNavigationEntry;
-import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -39,34 +39,17 @@ import javax.portlet.RenderResponse;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceTaxCategoryDisplayContext {
+public class CPTaxCategoryDisplayContext {
 
-	public CommerceTaxCategoryDisplayContext(
-		CommerceTaxCategoryService commerceTaxCategoryService,
+	public CPTaxCategoryDisplayContext(
 		CommerceTaxMethodService commerceTaxMethodService,
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		CPTaxCategoryService cpTaxCategoryService, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
-		_commerceTaxCategoryService = commerceTaxCategoryService;
 		_commerceTaxMethodService = commerceTaxMethodService;
+		_cpTaxCategoryService = cpTaxCategoryService;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-	}
-
-	public CommerceTaxCategory getCommerceTaxCategory() throws PortalException {
-		if (_commerceTaxCategory != null) {
-			return _commerceTaxCategory;
-		}
-
-		long commerceTaxCategoryId = ParamUtil.getLong(
-			_renderRequest, "commerceTaxCategoryId");
-
-		if (commerceTaxCategoryId > 0) {
-			_commerceTaxCategory =
-				_commerceTaxCategoryService.getCommerceTaxCategory(
-					commerceTaxCategoryId);
-		}
-
-		return _commerceTaxCategory;
 	}
 
 	public CommerceTaxMethod getCommerceTaxMethod() throws PortalException {
@@ -93,6 +76,22 @@ public class CommerceTaxCategoryDisplayContext {
 		}
 
 		return commerceTaxMethod.getCommerceTaxMethodId();
+	}
+
+	public CPTaxCategory getCPTaxCategory() throws PortalException {
+		if (_cpTaxCategory != null) {
+			return _cpTaxCategory;
+		}
+
+		long cpTaxCategoryId = ParamUtil.getLong(
+			_renderRequest, "cpTaxCategoryId");
+
+		if (cpTaxCategoryId > 0) {
+			_cpTaxCategory = _cpTaxCategoryService.getCPTaxCategory(
+				cpTaxCategoryId);
+		}
+
+		return _cpTaxCategory;
 	}
 
 	public String getOrderByCol() {
@@ -122,10 +121,12 @@ public class CommerceTaxCategoryDisplayContext {
 	}
 
 	public String getScreenNavigationEntryKey() {
-		return CommerceTaxCategoryScreenNavigationEntry.ENTRY_KEY;
+		return CPTaxCategoryScreenNavigationEntry.ENTRY_KEY;
 	}
 
-	public SearchContainer<CommerceTaxCategory> getSearchContainer() {
+	public SearchContainer<CPTaxCategory> getSearchContainer()
+		throws PortalException {
+
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}
@@ -141,27 +142,45 @@ public class CommerceTaxCategoryDisplayContext {
 		String orderByCol = getOrderByCol();
 		String orderByType = getOrderByType();
 
-		OrderByComparator<CommerceTaxCategory> orderByComparator =
-			CommerceUtil.getCommerceTaxCategoryOrderByComparator(
-				orderByCol, orderByType);
+		OrderByComparator<CPTaxCategory> orderByComparator =
+			getCPTaxCategoryOrderByComparator(orderByCol, orderByType);
 
 		_searchContainer.setOrderByCol(orderByCol);
 		_searchContainer.setOrderByComparator(orderByComparator);
 		_searchContainer.setOrderByType(orderByType);
 		_searchContainer.setRowChecker(getRowChecker());
 
-		int total = _commerceTaxCategoryService.getCommerceTaxCategoriesCount(
+		int total = _cpTaxCategoryService.getCPTaxCategoriesCount(
 			themeDisplay.getScopeGroupId());
 
-		List<CommerceTaxCategory> results =
-			_commerceTaxCategoryService.getCommerceTaxCategories(
-				themeDisplay.getScopeGroupId(), _searchContainer.getStart(),
-				_searchContainer.getEnd(), orderByComparator);
+		List<CPTaxCategory> results = _cpTaxCategoryService.getCPTaxCategories(
+			themeDisplay.getScopeGroupId(), _searchContainer.getStart(),
+			_searchContainer.getEnd(), orderByComparator);
 
 		_searchContainer.setTotal(total);
 		_searchContainer.setResults(results);
 
 		return _searchContainer;
+	}
+
+	protected OrderByComparator<CPTaxCategory>
+		getCPTaxCategoryOrderByComparator(
+			String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<CPTaxCategory> orderByComparator = null;
+
+		if (orderByCol.equals("create-date")) {
+			orderByComparator = new CPTaxCategoryCreateDateComparator(
+				orderByAsc);
+		}
+
+		return orderByComparator;
 	}
 
 	protected RowChecker getRowChecker() {
@@ -172,13 +191,13 @@ public class CommerceTaxCategoryDisplayContext {
 		return _rowChecker;
 	}
 
-	private CommerceTaxCategory _commerceTaxCategory;
-	private final CommerceTaxCategoryService _commerceTaxCategoryService;
 	private CommerceTaxMethod _commerceTaxMethod;
 	private final CommerceTaxMethodService _commerceTaxMethodService;
+	private CPTaxCategory _cpTaxCategory;
+	private final CPTaxCategoryService _cpTaxCategoryService;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private RowChecker _rowChecker;
-	private SearchContainer<CommerceTaxCategory> _searchContainer;
+	private SearchContainer<CPTaxCategory> _searchContainer;
 
 }

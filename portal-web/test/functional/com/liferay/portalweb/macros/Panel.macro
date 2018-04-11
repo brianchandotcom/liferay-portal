@@ -4,8 +4,8 @@
 
 		<if>
 			<and>
-				<condition function="IsElementPresent" locator1="Panel#PANEL_COLLAPSED" value1="${panel}" />
-				<condition function="IsVisible" locator1="Panel#PANEL_COLLAPSED" value1="${panel}" />
+				<condition function="IsElementPresent" locator1="Panel#PANEL_COLLAPSED" />
+				<condition function="IsVisible" locator1="Panel#PANEL_COLLAPSED" />
 			</and>
 			<then>
 				<execute function="AssertClick" locator1="Panel#PANEL_COLLAPSED" value1="${panel}" />

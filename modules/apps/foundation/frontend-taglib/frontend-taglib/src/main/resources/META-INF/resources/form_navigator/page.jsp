@@ -29,7 +29,7 @@ String tabs1Value = GetterUtil.getString(SessionClicks.get(request, namespace + 
 			names="<%= StringUtil.merge(categoryKeys, StringPool.COMMA) %>"
 			param="<%= tabs1Param %>"
 			refresh="<%= false %>"
-			type="tabs nav-tabs-default"
+			type="tabs nav-underline"
 			value="<%= tabs1Value %>"
 		>
 

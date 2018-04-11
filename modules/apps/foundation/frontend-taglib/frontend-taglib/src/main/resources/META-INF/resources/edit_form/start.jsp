@@ -25,8 +25,9 @@ String fullName = namespace.concat(HtmlUtil.escapeAttribute(name));
 		<div class="sheet <%= fluid ? StringPool.BLANK : "sheet-lg" %>">
 	</c:if>
 
-		<c:if test="<%= Validator.isNotNull(onSubmit) %>">
-			<fieldset class="input-container" disabled="disabled">
-		</c:if>
+		<div class="panel-group panel-group-flush">
+			<c:if test="<%= Validator.isNotNull(onSubmit) %>">
+				<fieldset class="input-container" disabled="disabled">
+			</c:if>
 
-		<aui:input name="formDate" type="hidden" value="<%= System.currentTimeMillis() %>" />
+			<aui:input name="formDate" type="hidden" value="<%= System.currentTimeMillis() %>" />

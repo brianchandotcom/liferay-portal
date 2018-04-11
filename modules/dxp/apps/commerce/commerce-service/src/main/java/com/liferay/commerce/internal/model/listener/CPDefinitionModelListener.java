@@ -17,7 +17,6 @@ package com.liferay.commerce.internal.model.listener;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.service.CPDefinitionAvailabilityRangeLocalService;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
-import com.liferay.commerce.service.CommerceTaxCategoryRelLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -40,8 +39,6 @@ public class CPDefinitionModelListener extends BaseModelListener<CPDefinition> {
 		long cpDefinitionId = cpDefinition.getCPDefinitionId();
 
 		try {
-			_commerceTaxCategoryRelLocalService.deleteCommerceTaxCategoryRel(
-				cpDefinition.getModelClassName(), cpDefinitionId);
 			_cpDefinitionAvailabilityRangeLocalService.
 				deleteCPDefinitionAvailabilityRangesByCPDefinitionId(
 					cpDefinitionId);
@@ -55,10 +52,6 @@ public class CPDefinitionModelListener extends BaseModelListener<CPDefinition> {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPDefinitionModelListener.class);
-
-	@Reference
-	private CommerceTaxCategoryRelLocalService
-		_commerceTaxCategoryRelLocalService;
 
 	@Reference
 	private CPDefinitionAvailabilityRangeLocalService

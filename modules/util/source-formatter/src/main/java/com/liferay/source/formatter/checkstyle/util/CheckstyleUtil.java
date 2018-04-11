@@ -23,6 +23,7 @@ import com.liferay.source.formatter.util.SourceFormatterUtil;
 import com.puppycrawl.tools.checkstyle.ConfigurationLoader;
 import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
 import com.puppycrawl.tools.checkstyle.PropertiesExpander;
+import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.Configuration;
 
 import java.util.ArrayList;
@@ -135,7 +136,8 @@ public class CheckstyleUtil {
 	}
 
 	private static Configuration _addPropertiesAttributes(
-		Configuration configuration, Map<String, Properties> propertiesMap) {
+			Configuration configuration, Map<String, Properties> propertiesMap)
+		throws CheckstyleException {
 
 		Configuration[] checkConfigurations = _getCheckConfigurations(
 			configuration);
@@ -159,10 +161,19 @@ public class CheckstyleUtil {
 					attributeName, CheckType.CHECKSTYLE, checkName,
 					propertiesMap);
 
-				if (Validator.isNotNull(value)) {
-					DefaultConfiguration defaultChildConfiguration =
-						(DefaultConfiguration)checkConfiguration;
+				if (Validator.isNull(value)) {
+					continue;
+				}
 
+				DefaultConfiguration defaultChildConfiguration =
+					(DefaultConfiguration)checkConfiguration;
+
+				if (Validator.isBoolean(value) || Validator.isNumber(value)) {
+					configuration = _overrideAttributeValue(
+						configuration, defaultChildConfiguration, attributeName,
+						value);
+				}
+				else {
 					defaultChildConfiguration.addAttribute(
 						attributeName, value);
 				}
@@ -175,6 +186,19 @@ public class CheckstyleUtil {
 	private static Configuration[] _getCheckConfigurations(
 		Configuration configuration) {
 
+		DefaultConfiguration treeWalkerConfiguration = _getChildConfiguration(
+			configuration, "TreeWalker");
+
+		if (treeWalkerConfiguration == null) {
+			return null;
+		}
+
+		return treeWalkerConfiguration.getChildren();
+	}
+
+	private static DefaultConfiguration _getChildConfiguration(
+		Configuration configuration, String name) {
+
 		if (!(configuration instanceof DefaultConfiguration)) {
 			return null;
 		}
@@ -182,27 +206,54 @@ public class CheckstyleUtil {
 		DefaultConfiguration defaultConfiguration =
 			(DefaultConfiguration)configuration;
 
-		DefaultConfiguration treeWalkerModule = null;
-
 		for (Configuration childConfiguration :
 				defaultConfiguration.getChildren()) {
 
-			String name = childConfiguration.getName();
+			String configurationName = childConfiguration.getName();
 
-			if (name.equals("TreeWalker") &&
+			if (configurationName.equals(name) &&
 				(childConfiguration instanceof DefaultConfiguration)) {
 
-				treeWalkerModule = (DefaultConfiguration)childConfiguration;
-
-				break;
+				return (DefaultConfiguration)childConfiguration;
 			}
 		}
 
-		if (treeWalkerModule != null) {
-			return treeWalkerModule.getChildren();
+		return null;
+	}
+
+	private static Configuration _overrideAttributeValue(
+			Configuration configuration,
+			DefaultConfiguration defaultChildConfiguration,
+			String attributeName, String value)
+		throws CheckstyleException {
+
+		DefaultConfiguration treeWalkerConfiguration = _getChildConfiguration(
+			configuration, "TreeWalker");
+
+		DefaultConfiguration copyConfiguration = new DefaultConfiguration(
+			defaultChildConfiguration.getName());
+
+		Map<String, String> messages = defaultChildConfiguration.getMessages();
+
+		for (Map.Entry<String, String> entry : messages.entrySet()) {
+			copyConfiguration.addMessage(entry.getKey(), entry.getValue());
 		}
 
-		return null;
+		for (String name : defaultChildConfiguration.getAttributeNames()) {
+			if (name.equals(attributeName)) {
+				copyConfiguration.addAttribute(name, value);
+			}
+			else {
+				copyConfiguration.addAttribute(
+					name, defaultChildConfiguration.getAttribute(name));
+			}
+		}
+
+		treeWalkerConfiguration.removeChild(defaultChildConfiguration);
+
+		treeWalkerConfiguration.addChild(copyConfiguration);
+
+		return configuration;
 	}
 
 }

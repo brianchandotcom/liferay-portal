@@ -37,7 +37,7 @@ if (commerceShippingFixedOption != null) {
 	<aui:input name="commerceShippingFixedOptionId" type="hidden" value="<%= commerceShippingFixedOptionId %>" />
 	<aui:input name="commerceShippingMethodId" type="hidden" value="<%= commerceShippingMethodId %>" />
 
-	<div class="lfr-form-content">
+	<div class="lfr-form-content sheet">
 		<aui:model-context bean="<%= commerceShippingFixedOption %>" model="<%= CommerceShippingFixedOption.class %>" />
 
 		<aui:input autoFocus="<%= true %>" name="name" />
@@ -52,7 +52,7 @@ if (commerceShippingFixedOption != null) {
 	</div>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" name="saveButton" value="save" />
+		<aui:button cssClass="btn-lg" name="saveButton" primary="<%= true %>" value="save" />
 
 		<aui:button cssClass="btn-lg" name="cancelButton" type="cancel" />
 	</aui:button-row>

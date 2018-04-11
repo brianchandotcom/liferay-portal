@@ -1617,53 +1617,20 @@ public class JournalDisplayContext {
 		};
 	}
 
-	private Consumer<DropdownItem> _getFilterStatusDropdownItem(
-		final int status) {
-
-		return dropdownItem -> {
-			dropdownItem.setActive(getStatus() == status);
-			dropdownItem.setHref(
-				getPortletURL(), "status", String.valueOf(status));
-			dropdownItem.setLabel(WorkflowConstants.getStatusLabel(status));
-		};
-	}
-
 	private DropdownItemList _getFilterStatusDropdownItemList() {
 		return new DropdownItemList(_request) {
 			{
-				add(_getFilterStatusDropdownItem(WorkflowConstants.STATUS_ANY));
-				add(
-					_getFilterStatusDropdownItem(
-						WorkflowConstants.STATUS_DRAFT));
-
-				ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-				int workflowDefinitionLinksCount =
-					WorkflowDefinitionLinkLocalServiceUtil.
-						getWorkflowDefinitionLinksCount(
-							themeDisplay.getCompanyId(),
-							themeDisplay.getScopeGroupId(),
-							JournalFolder.class.getName());
-
-				if (workflowDefinitionLinksCount > 0) {
+				for (int status : _getStatuses()) {
 					add(
-						_getFilterStatusDropdownItem(
-							WorkflowConstants.STATUS_PENDING));
-					add(
-						_getFilterStatusDropdownItem(
-							WorkflowConstants.STATUS_DENIED));
+						dropdownItem -> {
+							dropdownItem.setActive(getStatus() == status);
+							dropdownItem.setHref(
+								getPortletURL(), "status",
+								String.valueOf(status));
+							dropdownItem.setLabel(
+								WorkflowConstants.getStatusLabel(status));
+						});
 				}
-
-				add(
-					_getFilterStatusDropdownItem(
-						WorkflowConstants.STATUS_SCHEDULED));
-				add(
-					_getFilterStatusDropdownItem(
-						WorkflowConstants.STATUS_APPROVED));
-				add(
-					_getFilterStatusDropdownItem(
-						WorkflowConstants.STATUS_EXPIRED));
 			}
 		};
 	}
@@ -1716,6 +1683,33 @@ public class JournalDisplayContext {
 				}
 			}
 		};
+	}
+
+	private List<Integer> _getStatuses() {
+		List<Integer> statuses = new ArrayList<>();
+
+		statuses.add(WorkflowConstants.STATUS_ANY);
+		statuses.add(WorkflowConstants.STATUS_DRAFT);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		int workflowDefinitionLinksCount =
+			WorkflowDefinitionLinkLocalServiceUtil.
+				getWorkflowDefinitionLinksCount(
+					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+					JournalFolder.class.getName());
+
+		if (workflowDefinitionLinksCount > 0) {
+			statuses.add(WorkflowConstants.STATUS_PENDING);
+			statuses.add(WorkflowConstants.STATUS_DENIED);
+		}
+
+		statuses.add(WorkflowConstants.STATUS_SCHEDULED);
+		statuses.add(WorkflowConstants.STATUS_APPROVED);
+		statuses.add(WorkflowConstants.STATUS_EXPIRED);
+
+		return statuses;
 	}
 
 	private String _getStructuresURL() {

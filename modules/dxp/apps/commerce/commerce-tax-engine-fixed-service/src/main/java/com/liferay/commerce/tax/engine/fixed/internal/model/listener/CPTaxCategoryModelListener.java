@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.tax.engine.fixed.internal.model.listener;
 
-import com.liferay.commerce.model.CommerceTaxCategory;
+import com.liferay.commerce.product.model.CPTaxCategory;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateAddressRelLocalService;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateLocalService;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -27,18 +27,18 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(immediate = true, service = ModelListener.class)
-public class CommerceTaxCategoryModelListener
-	extends BaseModelListener<CommerceTaxCategory> {
+public class CPTaxCategoryModelListener
+	extends BaseModelListener<CPTaxCategory> {
 
 	@Override
-	public void onBeforeRemove(CommerceTaxCategory commerceTaxCategory) {
+	public void onBeforeRemove(CPTaxCategory cpTaxCategory) {
 		_commerceTaxFixedRateAddressRelLocalService.
-			deleteCommerceTaxFixedRateAddressRelsByCommerceTaxCategoryId(
-				commerceTaxCategory.getCommerceTaxCategoryId());
+			deleteCommerceTaxFixedRateAddressRelsByCPTaxCategoryId(
+				cpTaxCategory.getCPTaxCategoryId());
 
 		_commerceTaxFixedRateLocalService.
-			deleteCommerceTaxFixedRateByCommerceTaxCategoryId(
-				commerceTaxCategory.getCommerceTaxCategoryId());
+			deleteCommerceTaxFixedRateByCPTaxCategoryId(
+				cpTaxCategory.getCPTaxCategoryId());
 	}
 
 	@Reference

@@ -7,6 +7,7 @@ AUI.add(
 		var Lang = A.Lang;
 
 		var KEY_ENTER = 13;
+
 		var UA = A.UA;
 
 		var LiferayAlloyEditor = A.Component.create(

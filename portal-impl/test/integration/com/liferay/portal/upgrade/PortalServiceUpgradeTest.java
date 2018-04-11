@@ -170,8 +170,8 @@ public class PortalServiceUpgradeTest {
 		catch (Exception e) {
 			Assert.fail(
 				"The execution of the upgrade process failed after being " +
-					"re-executed. Upgrade processes must be harmless if they " +
-						"were executed previously");
+					"reexecuted. Upgrade processes must be harmless if they " +
+						"were executed previously.");
 
 			return;
 		}

@@ -42,7 +42,7 @@
 		<finder name="CommerceTaxMethodId" return-type="Collection">
 			<finder-column name="commerceTaxMethodId" />
 		</finder>
-		<finder name="CPTC_CTM" return-type="CommerceTaxFixedRate" unique="true">
+		<finder name="C_C" return-type="CommerceTaxFixedRate" unique="true">
 			<finder-column name="CPTaxCategoryId" />
 			<finder-column name="commerceTaxMethodId" />
 		</finder>

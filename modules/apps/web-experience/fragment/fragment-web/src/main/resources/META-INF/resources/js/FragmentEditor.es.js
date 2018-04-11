@@ -208,6 +208,17 @@ FragmentEditor.STATE = {
 	namespace: Config.string().required(),
 
 	/**
+	 * Preview fragment entry URL
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	previewFragmentEntryURL: Config.string().required(),
+
+	/**
 	 * Render fragment entry URL
 	 * @default undefined
 	 * @instance

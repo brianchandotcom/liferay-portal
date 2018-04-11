@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.Collections;
 
+import javax.portlet.PortletMode;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -37,13 +39,21 @@ public class FragmentEntryProcessorRegistry {
 			FragmentEntryLink fragmentEntryLink)
 		throws PortalException {
 
+		return processFragmentEntryLinkHTML(
+			fragmentEntryLink, PortletMode.EDIT.toString());
+	}
+
+	public String processFragmentEntryLinkHTML(
+			FragmentEntryLink fragmentEntryLink, String mode)
+		throws PortalException {
+
 		String html = fragmentEntryLink.getHtml();
 
 		for (FragmentEntryProcessor fragmentEntryProcessor :
 				_serviceTrackerList) {
 
 			html = fragmentEntryProcessor.processFragmentEntryLinkHTML(
-				fragmentEntryLink, html);
+				fragmentEntryLink, html, mode);
 		}
 
 		return html;

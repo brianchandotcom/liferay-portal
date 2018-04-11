@@ -37,9 +37,7 @@ renderResponse.setTitle(title);
 			<div class="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-light">
 				<ul class="navbar-nav">
 					<li class="nav-item">
-						<portlet:renderURL var="mainURL" />
-
-						<aui:a cssClass="active nav-link" href="<%= mainURL %>" label="code" />
+						<aui:a cssClass="active nav-link" href="<%= currentURL %>" label="code" />
 					</li>
 				</ul>
 			</div>
@@ -97,9 +95,18 @@ renderResponse.setTitle(title);
 	<div id="<portlet:namespace />fragmentEditor"></div>
 </aui:form>
 
-<portlet:actionURL name="/fragment/render_fragment_entry" var="renderFragmentEntryURL">
+<%
+Layout renderLayout = LayoutLocalServiceUtil.fetchFirstLayout(themeDisplay.getScopeGroupId(), false, 0);
+%>
+
+<liferay-portlet:renderURL plid="<%= renderLayout.getPlid() %>" var="renderFragmentEntryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcRenderCommandName" value="/fragment/render_fragment_entry" />
 	<portlet:param name="fragmentEntryId" value="<%= String.valueOf(fragmentDisplayContext.getFragmentEntryId()) %>" />
-</portlet:actionURL>
+</liferay-portlet:renderURL>
+
+<liferay-portlet:renderURL plid="<%= renderLayout.getPlid() %>" var="previewFragmentEntryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcRenderCommandName" value="/fragment/preview_fragment_entry" />
+</liferay-portlet:renderURL>
 
 <aui:script require="fragment-web/js/FragmentEditor.es as FragmentEditor, metal-dom/src/all/dom as dom">
 	var cssInput = document.getElementById('<portlet:namespace />cssContent');
@@ -120,6 +127,7 @@ renderResponse.setTitle(title);
 			initialHTML: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getHtmlContent()) %>',
 			initialJS: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getJsContent()) %>',
 			namespace: '<portlet:namespace />',
+			previewFragmentEntryURL: '<%= previewFragmentEntryURL %>',
 			renderFragmentEntryURL: '<%= renderFragmentEntryURL %>',
 			spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
 		},

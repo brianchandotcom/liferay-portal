@@ -4,8 +4,13 @@
 <routes>
 	<route>
 		<pattern>/fragment_collection/{fragmentCollectionId:\d+}/fragment_entry/{fragmentEntryId:\d+}/edit</pattern>
+		<ignored-parameter name="redirect" />
 		<implicit-parameter name="mvcRenderCommandName">/fragment/edit_fragment_entry</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/fragment_collection/{fragmentCollectionId:\d+}/fragment_entry/{fragmentEntryId:\d+}/render</pattern>
+		<implicit-parameter name="mvcRenderCommandName">/fragment/render_fragment_entry</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/fragment_collection/{fragmentCollectionId:\d+}/edit</pattern>

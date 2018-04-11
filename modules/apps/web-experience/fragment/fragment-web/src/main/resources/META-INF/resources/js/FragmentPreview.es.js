@@ -74,33 +74,11 @@ class FragmentPreview extends Component {
 	}
 
 	/**
-	 * After each render, script tags need to be reapended to the DOM
-	 * in order to trigger an execution (content changes do not trigger it).
-	 * @inheritDoc
-	 */
-
-	rendered() {
-		if (this.refs.preview) {
-			this.refs.preview.querySelectorAll('script').forEach(
-				(script) => {
-					const newScript = document.createElement('script');
-					const parentNode = script.parentNode;
-
-					newScript.innerHTML = script.innerHTML;
-
-					parentNode.removeChild(script);
-					parentNode.appendChild(newScript);
-				}
-			);
-		}
-	}
-
-	/**
 	 * @inheritDoc
 	 */
 
 	shouldUpdate(changes) {
-		return changes._currentPreviewSize || changes._previewContent;
+		return !!changes._currentPreviewSize;
 	}
 
 	/**
@@ -150,11 +128,14 @@ class FragmentPreview extends Component {
 					method: 'post'
 				}
 			).then(
-				response => response.json()
+				response => response.text()
 			).then(
 				response => {
 					this._loading = false;
-					this._previewContent = Soy.toIncDom(response.content);
+					this.refs.previewFrame.contentWindow.postMessage(
+						JSON.stringify({data: response}),
+						'*'
+					);
 				}
 			);
 		}
@@ -246,6 +227,16 @@ FragmentPreview.STATE = {
 	 * @type {!string}
 	 */
 
+	previewFragmentEntryURL: Config.string().required(),
+
+	/**
+	 * Render fragment entry URL
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @type {!string}
+	 */
+
 	renderFragmentEntryURL: Config.string().required(),
 
 	/**
@@ -285,19 +276,6 @@ FragmentPreview.STATE = {
 	_loading: Config.bool()
 		.internal()
 		.value(false),
-
-	/**
-	 * Processed iframe content
-	 * @default ''
-	 * @instance
-	 * @memberOf FragmentPreview
-	 * @protected
-	 * @type {function}
-	 */
-
-	_previewContent: Config.func()
-		.internal()
-		.value(Soy.toIncDom('')),
 
 	/**
 	 * List of available sizes

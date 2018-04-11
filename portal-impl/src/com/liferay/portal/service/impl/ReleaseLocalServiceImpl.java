@@ -397,13 +397,16 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 
 			java.sql.Date now = new java.sql.Date(System.currentTimeMillis());
 
+			ps.setDate(1, now);
+			ps.setDate(2, now);
+
+			ps.setString(3, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
+
 			Version latestSchemaVersion =
 				PortalServiceUpgrade.getLatestSchemaVersion();
 
-			ps.setDate(1, now);
-			ps.setDate(2, now);
-			ps.setString(3, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
 			ps.setString(4, latestSchemaVersion.toString());
+
 			ps.setInt(5, ReleaseInfo.getBuildNumber());
 			ps.setBoolean(6, false);
 

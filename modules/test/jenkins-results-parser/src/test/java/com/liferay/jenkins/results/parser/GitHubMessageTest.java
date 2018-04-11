@@ -29,6 +29,8 @@ public class GitHubMessageTest extends BuildTest {
 	public void setUp() throws Exception {
 		super.setUp();
 
+		System.out.println("null");
+
 		downloadSample(
 			"test-jenkins-acceptance-pullrequest_passed", "117",
 			"test-jenkins-acceptance-pullrequest", "test-1-17");

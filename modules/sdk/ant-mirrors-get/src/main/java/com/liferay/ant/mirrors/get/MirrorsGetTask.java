@@ -51,6 +51,16 @@ public class MirrorsGetTask extends Task {
 	}
 
 	public void setDest(File dest) {
+		String destPath = dest.getPath();
+
+		if (destPath.matches(".*\\$\\{.+\\}.*")) {
+			Project project = getProject();
+
+			_dest = new File(project.replaceProperties(destPath));
+
+			return;
+		}
+
 		_dest = dest;
 	}
 
@@ -67,6 +77,10 @@ public class MirrorsGetTask extends Task {
 	}
 
 	public void setSrc(String src) {
+		Project project = getProject();
+
+		src = project.replaceProperties(src);
+
 		Matcher matcher = _srcPattern.matcher(src);
 
 		if (!matcher.find()) {

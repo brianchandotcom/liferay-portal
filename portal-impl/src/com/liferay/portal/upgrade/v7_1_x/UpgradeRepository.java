@@ -12,17 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_1;
+package com.liferay.portal.upgrade.v7_1_x;
+
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.upgrade.v7_1_x.util.RepositoryTable;
 
 /**
- * @author Adolfo Pérez
+ * @author Alec Shay
  */
-public class UpgradeMVCCVersion
-	extends com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion {
+public class UpgradeRepository extends UpgradeProcess {
 
 	@Override
-	protected String[] getModuleTableNames() {
-		return new String[] {"Subscription"};
+	protected void doUpgrade() throws Exception {
+		alter(
+			RepositoryTable.class,
+			new AlterColumnType("name", "VARCHAR(200) null"));
 	}
 
 }

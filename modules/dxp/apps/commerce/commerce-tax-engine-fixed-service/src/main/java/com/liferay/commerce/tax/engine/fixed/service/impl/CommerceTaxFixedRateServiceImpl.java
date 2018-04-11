@@ -33,7 +33,7 @@ public class CommerceTaxFixedRateServiceImpl
 
 	@Override
 	public CommerceTaxFixedRate addCommerceTaxFixedRate(
-			long commerceTaxMethodId, long commerceTaxCategoryId, double rate,
+			long commerceTaxMethodId, long cpTaxCategoryId, double rate,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -42,7 +42,7 @@ public class CommerceTaxFixedRateServiceImpl
 			CommerceActionKeys.MANAGE_COMMERCE_TAX_METHODS);
 
 		return commerceTaxFixedRateLocalService.addCommerceTaxFixedRate(
-			commerceTaxMethodId, commerceTaxCategoryId, rate, serviceContext);
+			commerceTaxMethodId, cpTaxCategoryId, rate, serviceContext);
 	}
 
 	@Override
@@ -80,13 +80,14 @@ public class CommerceTaxFixedRateServiceImpl
 	}
 
 	@Override
-	public CommerceTaxFixedRate fetchCommerceTaxFixedRateByCTC_CTM(
-			long commerceTaxCategoryId, long commerceTaxMethodId)
+	public CommerceTaxFixedRate fetchCommerceTaxFixedRateByCPTC_CTM(
+			long cpTaxCategoryId, long commerceTaxMethodId)
 		throws PortalException {
 
 		CommerceTaxFixedRate commerceTaxFixedRate =
-			commerceTaxFixedRateLocalService.fetchCommerceTaxFixedRateByCTC_CTM(
-				commerceTaxCategoryId, commerceTaxMethodId);
+			commerceTaxFixedRateLocalService.
+				fetchCommerceTaxFixedRateByCPTC_CTM(
+					cpTaxCategoryId, commerceTaxMethodId);
 
 		if (commerceTaxFixedRate != null) {
 			CommercePermission.check(

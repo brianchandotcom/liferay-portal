@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.tax.engine.fixed.service.impl;
 
-import com.liferay.commerce.service.CommerceTaxCategoryLocalService;
 import com.liferay.commerce.tax.engine.fixed.exception.DuplicateCommerceTaxFixedRateException;
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate;
 import com.liferay.commerce.tax.engine.fixed.service.base.CommerceTaxFixedRateLocalServiceBaseImpl;
@@ -22,7 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
 
@@ -35,13 +33,13 @@ public class CommerceTaxFixedRateLocalServiceImpl
 
 	@Override
 	public CommerceTaxFixedRate addCommerceTaxFixedRate(
-			long commerceTaxMethodId, long commerceTaxCategoryId, double rate,
+			long commerceTaxMethodId, long cpTaxCategoryId, double rate,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 
-		validate(commerceTaxCategoryId, commerceTaxMethodId);
+		validate(cpTaxCategoryId, commerceTaxMethodId);
 
 		long commerceTaxFixedRateId = counterLocalService.increment();
 
@@ -53,20 +51,12 @@ public class CommerceTaxFixedRateLocalServiceImpl
 		commerceTaxFixedRate.setUserId(user.getUserId());
 		commerceTaxFixedRate.setUserName(user.getFullName());
 		commerceTaxFixedRate.setCommerceTaxMethodId(commerceTaxMethodId);
-		commerceTaxFixedRate.setCommerceTaxCategoryId(commerceTaxCategoryId);
+		commerceTaxFixedRate.setCPTaxCategoryId(cpTaxCategoryId);
 		commerceTaxFixedRate.setRate(rate);
 
 		commerceTaxFixedRatePersistence.update(commerceTaxFixedRate);
 
 		return commerceTaxFixedRate;
-	}
-
-	@Override
-	public void deleteCommerceTaxFixedRateByCommerceTaxCategoryId(
-		long commerceTaxCategoryId) {
-
-		commerceTaxFixedRatePersistence.removeByCommerceTaxCategoryId(
-			commerceTaxCategoryId);
 	}
 
 	@Override
@@ -78,21 +68,29 @@ public class CommerceTaxFixedRateLocalServiceImpl
 	}
 
 	@Override
-	public CommerceTaxFixedRate fetchCommerceTaxFixedRateByCTC_CTM(
-			long commerceTaxCategoryId, long commerceTaxMethodId)
-		throws PortalException {
+	public void deleteCommerceTaxFixedRateByCPTaxCategoryId(
+		long cpTaxCategoryId) {
 
-		return commerceTaxFixedRatePersistence.fetchByCTC_CTM(
-			commerceTaxCategoryId, commerceTaxMethodId);
+		commerceTaxFixedRatePersistence.removeByCPTaxCategoryId(
+			cpTaxCategoryId);
 	}
 
 	@Override
-	public CommerceTaxFixedRate getCommerceTaxFixedRateByCTC_CTM(
-			long commerceTaxCategoryId, long commerceTaxMethodId)
+	public CommerceTaxFixedRate fetchCommerceTaxFixedRateByCPTC_CTM(
+			long cpTaxCategoryId, long commerceTaxMethodId)
 		throws PortalException {
 
-		return commerceTaxFixedRatePersistence.findByCTC_CTM(
-			commerceTaxCategoryId, commerceTaxMethodId);
+		return commerceTaxFixedRatePersistence.fetchByCPTC_CTM(
+			cpTaxCategoryId, commerceTaxMethodId);
+	}
+
+	@Override
+	public CommerceTaxFixedRate getCommerceTaxFixedRateByCPTC_CTM(
+			long cpTaxCategoryId, long commerceTaxMethodId)
+		throws PortalException {
+
+		return commerceTaxFixedRatePersistence.findByCPTC_CTM(
+			cpTaxCategoryId, commerceTaxMethodId);
 	}
 
 	@Override
@@ -126,19 +124,15 @@ public class CommerceTaxFixedRateLocalServiceImpl
 		return commerceTaxFixedRate;
 	}
 
-	protected void validate(
-			long commerceTaxCategoryId, long commerceTaxMethodId)
+	protected void validate(long cpTaxCategoryId, long commerceTaxMethodId)
 		throws PortalException {
 
-		int count = commerceTaxFixedRatePersistence.countByCTC_CTM(
-			commerceTaxCategoryId, commerceTaxMethodId);
+		int count = commerceTaxFixedRatePersistence.countByCPTC_CTM(
+			cpTaxCategoryId, commerceTaxMethodId);
 
 		if (count > 0) {
 			throw new DuplicateCommerceTaxFixedRateException();
 		}
 	}
-
-	@ServiceReference(type = CommerceTaxCategoryLocalService.class)
-	private CommerceTaxCategoryLocalService _commerceTaxCategoryLocalService;
 
 }

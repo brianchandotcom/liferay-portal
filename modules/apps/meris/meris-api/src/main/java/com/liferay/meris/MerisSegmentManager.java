@@ -26,19 +26,27 @@ import java.util.Map;
  * @author Eduardo Garcia
  */
 @ProviderType
-public interface MerisSegmentManager<T extends MerisSegment> {
+public interface MerisSegmentManager
+	<S extends MerisSegment, P extends MerisProfile> {
 
-	public T getMerisSegment(String merisSegmentId);
+	public P getMerisProfile(String merisProfileId);
 
-	public List<T> getMerisSegments(
-		long groupId, int start, int end, Comparator<T> comparator);
+	public List<P> getMerisProfiles(
+		String merisSegmentId, Map<String, Object> context, int start, int end,
+		Comparator<P> comparator);
 
-	public List<T> getMerisSegments(
-		long groupId, long userId, String merisSegmentId,
+	public S getMerisSegment(String merisSegmentId);
+
+	public List<S> getMerisSegments(
+		long groupId, int start, int end, Comparator<S> comparator);
+
+	public List<S> getMerisSegments(
+		long groupId, String merisProfileId, String merisSegmentId,
 		Map<String, Object> context, int start, int end,
-		Comparator<T> comparator);
+		Comparator<S> comparator);
 
 	public boolean matches(
-		long userId, String merisSegmentId, Map<String, Object> context);
+		String merisProfileId, String merisSegmentId,
+		Map<String, Object> context);
 
 }

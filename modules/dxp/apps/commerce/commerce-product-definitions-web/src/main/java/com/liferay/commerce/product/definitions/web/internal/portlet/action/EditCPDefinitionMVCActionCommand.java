@@ -148,6 +148,9 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			else if (cmd.equals("updateShippingInfo")) {
 				updateShippingInfo(actionRequest);
 			}
+			else if (cmd.equals("updateTaxCategoryInfo")) {
+				updateTaxCategoryInfo(actionRequest);
+			}
 			else if (cmd.equals(Constants.RESTORE)) {
 				restoreTrashEntries(actionRequest);
 			}
@@ -426,6 +429,26 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		_cpDefinitionService.updateShippingInfo(
 			cpDefinitionId, shippable, freeShipping, shipSeparately,
 			shippingExtraPrice, width, height, depth, weight, serviceContext);
+	}
+
+	protected void updateTaxCategoryInfo(ActionRequest actionRequest)
+		throws PortalException {
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CPDefinition.class.getName(), actionRequest);
+
+		long cpDefinitionId = ParamUtil.getLong(
+			actionRequest, "cpDefinitionId");
+
+		long cpTaxCategoryId = ParamUtil.getLong(
+			actionRequest, "cpTaxCategoryId");
+		boolean taxExempt = ParamUtil.getBoolean(actionRequest, "taxExempt");
+		boolean telcoOrElectronics = ParamUtil.getBoolean(
+			actionRequest, "telcoOrElectronics");
+
+		_cpDefinitionService.updateTaxCategoryInfo(
+			cpDefinitionId, cpTaxCategoryId, taxExempt, telcoOrElectronics,
+			serviceContext);
 	}
 
 	@Reference

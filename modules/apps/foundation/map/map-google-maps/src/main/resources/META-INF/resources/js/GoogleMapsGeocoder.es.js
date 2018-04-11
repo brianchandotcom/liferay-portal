@@ -19,12 +19,13 @@ class GoogleMapsGeocoder extends State {
 	/**
 	 * Handles the server response of a successfull address/location resolution
 	 * @param {function} callback Callback that will be executed on success
+  	 * @param {Object} location Raw location information
 	 * @param {Object} response Server response
 	 * @param {Object} status Server response status
 	 * @protected
 	 * @review
 	 */
-	_handleGeocoderResponse(callback, response, status) {
+	_handleGeocoderResponse(callback, location, response, status) {
 		const result = {
 			data: {},
 			err: status === google.maps.GeocoderStatus.OK ? null : status,
@@ -40,6 +41,12 @@ class GoogleMapsGeocoder extends State {
 					lat: location.lat(),
 					lng: location.lng(),
 				},
+			};
+		}
+		else {
+			result.data = {
+				address: '',
+				location: location
 			};
 		}
 
@@ -76,7 +83,7 @@ class GoogleMapsGeocoder extends State {
 
 		this._geocoder.geocode(
 			payload,
-			this._handleGeocoderResponse.bind(this, callback)
+			this._handleGeocoderResponse.bind(this, callback, location)
 		);
 	}
 }

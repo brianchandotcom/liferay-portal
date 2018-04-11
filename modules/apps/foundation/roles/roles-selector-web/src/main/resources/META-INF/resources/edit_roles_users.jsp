@@ -33,12 +33,6 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portlet
 <aui:input name="addUserIds" type="hidden" />
 <aui:input name="removeUserIds" type="hidden" />
 
-<div class="alert alert-info">
-	<liferay-ui:message arguments='<%= new String[] {"2", "2"} %>' key="step-x-of-x" translateArguments="<%= false %>" />
-
-	<liferay-ui:message arguments='<%= new String[] {HtmlUtil.escape(role.getTitle(locale)), HtmlUtil.escape(groupDescriptiveName), LanguageUtil.get(request, (group.isOrganization() ? "organization" : "site"))} %>' key="current-signifies-current-users-associated-with-the-x-role.-available-signifies-all-users-associated-with-the-x-x" translateArguments="<%= false %>" />
-</div>
-
 <liferay-ui:membership-policy-error />
 
 <liferay-ui:search-container

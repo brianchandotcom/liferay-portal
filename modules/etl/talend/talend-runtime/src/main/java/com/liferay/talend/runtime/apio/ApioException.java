@@ -14,10 +14,12 @@
 
 package com.liferay.talend.runtime.apio;
 
+import java.io.IOException;
+
 /**
  * @author Zoltán Takács
  */
-public class ApioException extends Exception {
+public class ApioException extends IOException {
 
 	public ApioException(int code, String message) {
 		super(message);

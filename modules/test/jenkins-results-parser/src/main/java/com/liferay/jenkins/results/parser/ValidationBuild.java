@@ -17,7 +17,7 @@ package com.liferay.jenkins.results.parser;
 import com.liferay.jenkins.results.parser.failure.message.generator.FailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.GenericFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.RebaseFailureMessageGenerator;
-import com.liferay.jenkins.results.parser.failure.message.generator.SubrepositorySourceFormatFailureMessageGenerator;
+import com.liferay.jenkins.results.parser.failure.message.generator.SourceFormatFailureMessageGenerator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -226,6 +226,19 @@ public class ValidationBuild extends BaseBuild {
 			getTaskResultIcon(taskResult));
 
 		if (taskResult.equals("FAILED")) {
+			if (taskName.contains("subrepository-source-format")) {
+				SourceFormatFailureMessageGenerator
+					sourceFormatFailureMessageGenerator =
+						new SourceFormatFailureMessageGenerator();
+
+				Dom4JUtil.addToElement(
+					taskSummaryIndexElement,
+					sourceFormatFailureMessageGenerator.getMessageElement(
+						this));
+
+				return taskSummaryIndexElement;
+			}
+
 			GenericFailureMessageGenerator genericFailureMessageGenerator =
 				new GenericFailureMessageGenerator();
 
@@ -298,7 +311,7 @@ public class ValidationBuild extends BaseBuild {
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =
 		{
 			new RebaseFailureMessageGenerator(),
-			new SubrepositorySourceFormatFailureMessageGenerator(),
+			new SourceFormatFailureMessageGenerator(),
 
 			new GenericFailureMessageGenerator()
 		};

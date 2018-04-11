@@ -315,25 +315,23 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>
-		<liferay-frontend:button-row>
 
-			<%
-			boolean hasSavePermission = false;
+		<%
+		boolean hasSavePermission = false;
 
-			if (feed != null) {
-				hasSavePermission = JournalFeedPermission.contains(permissionChecker, feed, ActionKeys.UPDATE);
-			}
-			else {
-				hasSavePermission = JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_FEED);
-			}
-			%>
+		if (feed != null) {
+			hasSavePermission = JournalFeedPermission.contains(permissionChecker, feed, ActionKeys.UPDATE);
+		}
+		else {
+			hasSavePermission = JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_FEED);
+		}
+		%>
 
-			<c:if test="<%= hasSavePermission %>">
-				<aui:button type="submit" />
-			</c:if>
+		<c:if test="<%= hasSavePermission %>">
+			<aui:button type="submit" />
+		</c:if>
 
-			<aui:button href="<%= redirect %>" type="cancel" />
-		</liferay-frontend:button-row>
+		<aui:button href="<%= redirect %>" type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 

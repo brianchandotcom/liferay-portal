@@ -68,10 +68,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "web-content"));
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>
-		<liferay-frontend:button-row>
-			<aui:button type="submit" value="copy" />
+		<aui:button type="submit" value="copy" />
 
-			<aui:button href="<%= redirect %>" value="cancel" />
-		</liferay-frontend:button-row>
+		<aui:button href="<%= redirect %>" value="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>

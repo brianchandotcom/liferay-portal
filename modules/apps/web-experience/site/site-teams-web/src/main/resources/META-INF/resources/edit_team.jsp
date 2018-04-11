@@ -67,11 +67,9 @@ renderResponse.setTitle(((team == null) ? LanguageUtil.get(request, "new-team") 
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>
-		<liferay-frontend:button-row>
-			<aui:button type="submit" />
+		<aui:button type="submit" />
 
-			<aui:button href="<%= redirect %>" type="cancel" />
-		</liferay-frontend:button-row>
+		<aui:button href="<%= redirect %>" type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 

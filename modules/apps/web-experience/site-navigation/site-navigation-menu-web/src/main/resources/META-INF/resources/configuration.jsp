@@ -220,11 +220,9 @@ if (siteNavigationMenu != null) {
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>
-		<liferay-frontend:button-row>
-			<aui:button type="submit" />
+		<aui:button type="submit" />
 
-			<aui:button type="cancel" />
-		</liferay-frontend:button-row>
+		<aui:button type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 

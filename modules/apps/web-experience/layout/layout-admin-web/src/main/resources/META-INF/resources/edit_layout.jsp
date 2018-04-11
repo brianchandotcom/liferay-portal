@@ -243,13 +243,11 @@ renderResponse.setTitle(selLayout.getName(locale));
 
 			<liferay-frontend:edit-form-footer>
 				<c:if test="<%= (selLayout.getGroupId() == layoutsAdminDisplayContext.getGroupId()) && SitesUtil.isLayoutUpdateable(selLayout) && LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.UPDATE) %>">
-					<liferay-frontend:button-row>
-						<aui:button type="submit" />
+					<aui:button type="submit" />
 
-						<c:if test="<%= Validator.isNotNull(backURL) %>">
-							<aui:button href="<%= backURL %>" name="cancelButton" type="cancel" />
-						</c:if>
-					</liferay-frontend:button-row>
+					<c:if test="<%= Validator.isNotNull(backURL) %>">
+						<aui:button href="<%= backURL %>" name="cancelButton" type="cancel" />
+					</c:if>
 				</c:if>
 			</liferay-frontend:edit-form-footer>
 		</liferay-frontend:edit-form>

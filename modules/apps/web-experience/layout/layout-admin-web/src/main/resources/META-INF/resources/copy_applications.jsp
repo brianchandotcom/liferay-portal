@@ -72,10 +72,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "copy-applications"));
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>
-		<liferay-frontend:button-row>
-			<aui:button type="submit" value="save" />
+		<aui:button type="submit" value="save" />
 
-			<aui:button href="<%= redirect %>" type="cancel" />
-		</liferay-frontend:button-row>
+		<aui:button href="<%= redirect %>" type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>

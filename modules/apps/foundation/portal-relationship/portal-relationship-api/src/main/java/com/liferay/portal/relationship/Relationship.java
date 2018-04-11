@@ -142,11 +142,11 @@ public class Relationship<T extends ClassedModel> {
 		T relationBaseModel) {
 
 		return Stream.concat(
-			_getMultiInboundRelatedModelStream(relationBaseModel),
+			_getInboundMultiRelatedModelStream(relationBaseModel),
 			_getSingleInboundRelatedModelStream(relationBaseModel));
 	}
 
-	private Stream<? extends ClassedModel> _getMultiInboundRelatedModelStream(
+	private Stream<? extends ClassedModel> _getInboundMultiRelatedModelStream(
 		T relationshipBaseModel) {
 
 		Stream<MultiRelationshipFunction<T, ? extends ClassedModel>> stream =
@@ -160,7 +160,7 @@ public class Relationship<T extends ClassedModel> {
 		);
 	}
 
-	private Stream<? extends ClassedModel> _getMultiOutboundRelatedModelStream(
+	private Stream<? extends ClassedModel> _getOutboundMultiRelatedModelStream(
 		T relationshipBaseModel) {
 
 		Stream<MultiRelationshipFunction<T, ? extends ClassedModel>> stream =
@@ -178,7 +178,7 @@ public class Relationship<T extends ClassedModel> {
 		T relationBaseModel) {
 
 		return Stream.concat(
-			_getMultiOutboundRelatedModelStream(relationBaseModel),
+			_getOutboundMultiRelatedModelStream(relationBaseModel),
 			_getSingleOutboudRelatedModelStream(relationBaseModel));
 	}
 

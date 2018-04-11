@@ -20,6 +20,9 @@ import com.liferay.analytics.model.AnalyticsEventsMessage.Builder;
 import com.liferay.analytics.model.AnalyticsEventsMessage.Event;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 
@@ -32,8 +35,15 @@ public abstract class DDMFormBaseModelListener<T extends BaseModel<T>>
 	extends BaseModelListener<T> {
 
 	protected void sendAnalytics(
-			String eventId, String userId, Map<String, String> properties)
+			long companyId, String eventId, Map<String, String> properties)
 		throws Exception {
+
+		String analyticsKey = PrefsPropsUtil.getString(
+			companyId, PropsKeys.ADMIN_ANALYTICS_KEY);
+
+		if (Validator.isNull(analyticsKey)) {
+			return;
+		}
 
 		AnalyticsEventsMessage.Event.Builder eventBuilder =
 			AnalyticsEventsMessage.Event.builder(_APPLICATION_ID, eventId);
@@ -42,8 +52,7 @@ public abstract class DDMFormBaseModelListener<T extends BaseModel<T>>
 
 		Event event = eventBuilder.build();
 
-		Builder builder = AnalyticsEventsMessage.builder(
-			_ANALYTICS_KEY, userId);
+		Builder builder = AnalyticsEventsMessage.builder(analyticsKey, null);
 
 		builder = builder.event(event);
 
@@ -52,9 +61,6 @@ public abstract class DDMFormBaseModelListener<T extends BaseModel<T>>
 
 	@Reference
 	protected AnalyticsClient analyticsClient;
-
-	private static final String _ANALYTICS_KEY = System.getProperty(
-		"analytics.key");
 
 	private static final String _APPLICATION_ID = "Forms";
 

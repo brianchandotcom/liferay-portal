@@ -163,21 +163,11 @@ public class JournalDisplayContext {
 							boolean trashEnabled = _trashHelper.isTrashEnabled(
 								themeDisplay.getScopeGroupId());
 
-							String icon = "times";
+							dropdownItem.setIcon(
+								trashEnabled ? "trash" : "times");
+							dropdownItem.setLabel(
+								trashEnabled ? "recycle-bin" : "delete");
 
-							if (trashEnabled) {
-								icon = "trash";
-							}
-
-							dropdownItem.setIcon(icon);
-
-							String label = "delete";
-
-							if (trashEnabled) {
-								label = "recycle-bin";
-							}
-
-							dropdownItem.setLabel(label);
 							dropdownItem.setQuickAction(true);
 						}));
 
@@ -360,8 +350,8 @@ public class JournalDisplayContext {
 					WebKeys.THEME_DISPLAY);
 
 				setHelpText(
-						"you-can-customize-this-menu-or-see-all-you-have-by-" +
-							"clicking-more");
+					"you-can-customize-this-menu-or-see-all-you-have-by-" +
+						"clicking-more");
 
 				setViewMoreURL(
 					"javascript:" + _liferayPortletResponse.getNamespace() +
@@ -373,26 +363,18 @@ public class JournalDisplayContext {
 						ActionKeys.ADD_FOLDER)) {
 
 					addPrimaryDropdownItem(
-						SafeConsumer.ignore(
-							dropdownItem -> {
-								dropdownItem.setHref(
-									_liferayPortletResponse.createRenderURL(),
-									"mvcPath", "/edit_folder.jsp", "redirect",
-									PortalUtil.getCurrentURL(_request),
-									"groupId",
-									String.valueOf(
-										themeDisplay.getScopeGroupId()),
-									"parentFolderId",
-									String.valueOf(getFolderId()));
+						dropdownItem -> {
+							dropdownItem.setHref(
+								_liferayPortletResponse.createRenderURL(),
+								"mvcPath", "/edit_folder.jsp", "redirect",
+								PortalUtil.getCurrentURL(_request), "groupId",
+								String.valueOf(themeDisplay.getScopeGroupId()),
+								"parentFolderId",
+								String.valueOf(getFolderId()));
 
-								String label = "subfolder";
-
-								if (getFolder() == null) {
-									label = "folder";
-								}
-
-								dropdownItem.setLabel(label);
-							}));
+							dropdownItem.setLabel(
+								(getFolder() == null) ? "folder" : "subfolder");
+						});
 				}
 
 				if (JournalFolderPermission.contains(
@@ -416,12 +398,12 @@ public class JournalDisplayContext {
 									"ddmStructureKey",
 									ddmStructure.getStructureKey());
 
-									dropdownItem.setLabel(
-										ddmStructure.getUnambiguousName(
-											ddmStructures,
-											themeDisplay.getScopeGroupId(),
-											themeDisplay.getLocale()));
-								});
+								dropdownItem.setLabel(
+									ddmStructure.getUnambiguousName(
+										ddmStructures,
+										themeDisplay.getScopeGroupId(),
+										themeDisplay.getLocale()));
+							});
 
 						if (ArrayUtil.contains(
 								getAddMenuFavItems(),
@@ -1335,10 +1317,9 @@ public class JournalDisplayContext {
 	public String getSortingURL() {
 		PortletURL sortingURL = getPortletURL();
 
-		String orderByType = ParamUtil.getString(_request, "orderByType");
-
 		sortingURL.setParameter(
-			"orderByType", orderByType.equals("asc") ? "desc" : "asc");
+			"orderByType",
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
 
 		return sortingURL.toString();
 	}
@@ -1395,18 +1376,16 @@ public class JournalDisplayContext {
 			_request, getPortletURL(), getDisplayStyle()) {
 
 			{
-				String[] viewTypes = getDisplayViews();
+				if (ArrayUtil.contains(getDisplayViews(), "icon")) {
+					addCardViewTypeItem();
+				}
 
-				for (String viewType : viewTypes) {
-					if (viewType.equals("icon")) {
-						addCardViewTypeItem();
-					}
-					else if (viewType.equals("descriptive")) {
-						addListViewTypeItem();
-					}
-					else if (viewType.equals("list")) {
-						addTableViewTypeItem();
-					}
+				if (ArrayUtil.contains(getDisplayViews(), "descriptive")) {
+					addListViewTypeItem();
+				}
+
+				if (ArrayUtil.contains(getDisplayViews(), "list")) {
+					addTableViewTypeItem();
 				}
 			}
 
@@ -1695,14 +1674,13 @@ public class JournalDisplayContext {
 	}
 
 	private Consumer<DropdownItem> _getFilterStatusDropdownItem(
-		final int workflowStatus) {
+		final int status) {
 
 		return dropdownItem -> {
-			dropdownItem.setActive(getStatus() == workflowStatus);
+			dropdownItem.setActive(getStatus() == status);
 			dropdownItem.setHref(
-				getPortletURL(), "status", String.valueOf(workflowStatus));
-			dropdownItem.setLabel(
-				WorkflowConstants.getStatusLabel(workflowStatus));
+				getPortletURL(), "status", String.valueOf(status));
+			dropdownItem.setLabel(WorkflowConstants.getStatusLabel(status));
 		};
 	}
 

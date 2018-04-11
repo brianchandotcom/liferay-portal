@@ -24,7 +24,7 @@
 			<div class="product-title">
 				<h1 class="d-inline"><%= HtmlUtil.escape(title) %></h1>
 
-				<c:if test="<%= Validator.isNotNull(productURL) %>">
+				<c:if test="<%= cpDefinition.isApproved() && Validator.isNotNull(productURL) %>">
 					<span class="d-inline p-2" id="<portlet:namespace />urlIcon">
 						<liferay-ui:icon
 							iconCssClass="icon-new-window"

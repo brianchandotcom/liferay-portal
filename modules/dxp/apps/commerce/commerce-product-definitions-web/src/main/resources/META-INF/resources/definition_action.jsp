@@ -43,16 +43,19 @@ else {
 		url="<%= editURL %>"
 	/>
 
-	<%
-	String productURL = cpDefinitionsDisplayContext.getProductURL(cpDefinition);
-	%>
+	<c:if test="<%= cpDefinition.isApproved() %>">
 
-	<liferay-ui:icon
-		iconCssClass="icon-new-window"
-		message="view-in-public-store"
-		target="_blank"
-		url="<%= productURL %>"
-	/>
+		<%
+		String productURL = cpDefinitionsDisplayContext.getProductURL(cpDefinition);
+		%>
+
+		<liferay-ui:icon
+			iconCssClass="icon-new-window"
+			message="view-in-public-store"
+			target="_blank"
+			url="<%= productURL %>"
+		/>
+	</c:if>
 
 	<portlet:actionURL name="editProductDefinition" var="deleteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />

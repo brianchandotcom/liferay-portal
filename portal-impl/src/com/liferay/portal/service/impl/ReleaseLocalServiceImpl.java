@@ -481,7 +481,8 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 		try {
 			con = DataAccess.getConnection();
 
-			ps = con.prepareStatement(_SQL_TEST_DATABASE_STRING_CASE_SENSITIVITY);
+			ps = con.prepareStatement(
+				_SQL_TEST_DATABASE_STRING_CASE_SENSITIVITY);
 
 			ps.setLong(1, ReleaseConstants.DEFAULT_ID);
 			ps.setString(2, testString);

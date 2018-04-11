@@ -65,7 +65,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		/>
 	</liferay-frontend:management-bar-action-buttons>
 
-	<c:if test="<%= ddmDisplay.isShowAddButton(themeDisplay.getScopeGroup()) && DDMStructurePermission.containsAddStruturePermission(permissionChecker, groupId, scopeClassNameId) %>">
+	<c:if test="<%= ddmDisplay.isShowAddButton(themeDisplay.getScopeGroup()) && DDMStructurePermission.containsAddStructurePermission(permissionChecker, groupId, scopeClassNameId) %>">
 		<liferay-frontend:management-bar-buttons>
 			<liferay-portlet:renderURL var="viewStructuresURL">
 				<portlet:param name="mvcPath" value="/view.jsp" />

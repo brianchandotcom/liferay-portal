@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
  */
 public interface DDMPermissionSupport {
 
-	public void checkAddStruturePermission(
+	public void checkAddStructurePermission(
 			PermissionChecker permissionChecker, long groupId, long classNameId)
 		throws PortalException;
 
@@ -36,7 +36,7 @@ public interface DDMPermissionSupport {
 			String resourceClassName)
 		throws PortalException;
 
-	public boolean containsAddStruturePermission(
+	public boolean containsAddStructurePermission(
 			PermissionChecker permissionChecker, long groupId, long classNameId)
 		throws PortalException;
 

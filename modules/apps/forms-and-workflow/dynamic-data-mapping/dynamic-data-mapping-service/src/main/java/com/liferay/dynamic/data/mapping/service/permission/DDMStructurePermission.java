@@ -77,7 +77,7 @@ public class DDMStructurePermission extends BaseResourcePermissionChecker {
 			PermissionChecker permissionChecker, long groupId, long classNameId)
 		throws PortalException {
 
-		_ddmPermissionSupport.checkAddStruturePermission(
+		_ddmPermissionSupport.checkAddStructurePermission(
 			permissionChecker, groupId, classNameId);
 	}
 
@@ -144,7 +144,7 @@ public class DDMStructurePermission extends BaseResourcePermissionChecker {
 			PermissionChecker permissionChecker, long groupId, long classNameId)
 		throws PortalException {
 
-		return _ddmPermissionSupport.containsAddStruturePermission(
+		return _ddmPermissionSupport.containsAddStructurePermission(
 			permissionChecker, groupId, classNameId);
 	}
 

@@ -82,7 +82,7 @@ request.setAttribute(WebKeys.SEARCH_CONTAINER, structureSearch);
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 
-		<c:if test="<%= ddmDisplay.isShowAddStructureButton() && DDMStructurePermission.containsAddStruturePermission(permissionChecker, groupId, scopeClassNameId) && !searchRestriction %>">
+		<c:if test="<%= ddmDisplay.isShowAddStructureButton() && DDMStructurePermission.containsAddStructurePermission(permissionChecker, groupId, scopeClassNameId) && !searchRestriction %>">
 			<portlet:renderURL var="viewStructureURL">
 				<portlet:param name="mvcPath" value="/select_structure.jsp" />
 				<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />

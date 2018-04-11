@@ -86,7 +86,7 @@ DDMStructure structure = (DDMStructure)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= ddmDisplay.isShowAddButton(themeDisplay.getScopeGroup()) && DDMStructurePermission.containsAddStruturePermission(permissionChecker, scopeGroupId, structure.getClassNameId()) %>">
+	<c:if test="<%= ddmDisplay.isShowAddButton(themeDisplay.getScopeGroup()) && DDMStructurePermission.containsAddStructurePermission(permissionChecker, scopeGroupId, structure.getClassNameId()) %>">
 		<portlet:renderURL var="copyURL">
 			<portlet:param name="mvcPath" value="/copy_structure.jsp" />
 			<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />

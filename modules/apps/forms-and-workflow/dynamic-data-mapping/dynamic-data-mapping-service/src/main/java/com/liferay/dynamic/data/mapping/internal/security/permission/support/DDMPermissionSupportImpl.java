@@ -42,11 +42,11 @@ import org.osgi.service.component.annotations.Reference;
 public class DDMPermissionSupportImpl implements DDMPermissionSupport {
 
 	@Override
-	public void checkAddStruturePermission(
+	public void checkAddStructurePermission(
 			PermissionChecker permissionChecker, long groupId, long classNameId)
 		throws PortalException {
 
-		if (!containsAddStruturePermission(
+		if (!containsAddStructurePermission(
 				permissionChecker, groupId, classNameId)) {
 
 			ServiceWrapper<DDMStructurePermissionSupport>
@@ -97,7 +97,7 @@ public class DDMPermissionSupportImpl implements DDMPermissionSupport {
 	}
 
 	@Override
-	public boolean containsAddStruturePermission(
+	public boolean containsAddStructurePermission(
 			PermissionChecker permissionChecker, long groupId, long classNameId)
 		throws PortalException {
 

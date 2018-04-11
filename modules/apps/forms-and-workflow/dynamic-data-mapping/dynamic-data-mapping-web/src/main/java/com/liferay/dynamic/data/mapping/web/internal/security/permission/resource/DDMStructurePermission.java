@@ -47,11 +47,11 @@ public class DDMStructurePermission {
 			permissionChecker, structureId, actionId);
 	}
 
-	public static boolean containsAddStruturePermission(
+	public static boolean containsAddStructurePermission(
 			PermissionChecker permissionChecker, long groupId, long classNameId)
 		throws PortalException {
 
-		return _ddmPermissionSupport.containsAddStruturePermission(
+		return _ddmPermissionSupport.containsAddStructurePermission(
 			permissionChecker, groupId, classNameId);
 	}
 

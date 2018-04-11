@@ -51,7 +51,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_ddmPermissionSupport.checkAddStruturePermission(
+		_ddmPermissionSupport.checkAddStructurePermission(
 			getPermissionChecker(), groupId, classNameId);
 
 		return ddmStructureLocalService.addStructure(
@@ -87,7 +87,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			String xsd, ServiceContext serviceContext)
 		throws PortalException {
 
-		_ddmPermissionSupport.checkAddStruturePermission(
+		_ddmPermissionSupport.checkAddStructurePermission(
 			getPermissionChecker(), groupId, classNameId);
 
 		return ddmStructureLocalService.addStructure(
@@ -104,7 +104,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_ddmPermissionSupport.checkAddStruturePermission(
+		_ddmPermissionSupport.checkAddStructurePermission(
 			getPermissionChecker(), groupId, classNameId);
 
 		return ddmStructureLocalService.addStructure(
@@ -150,7 +150,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			int type, ServiceContext serviceContext)
 		throws PortalException {
 
-		_ddmPermissionSupport.checkAddStruturePermission(
+		_ddmPermissionSupport.checkAddStructurePermission(
 			getPermissionChecker(), groupId, classNameId);
 
 		return ddmStructureLocalService.addStructure(
@@ -167,7 +167,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_ddmPermissionSupport.checkAddStruturePermission(
+		_ddmPermissionSupport.checkAddStructurePermission(
 			getPermissionChecker(), groupId, classNameId);
 
 		return ddmStructureLocalService.addStructure(
@@ -216,7 +216,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			int type, ServiceContext serviceContext)
 		throws PortalException {
 
-		_ddmPermissionSupport.checkAddStruturePermission(
+		_ddmPermissionSupport.checkAddStructurePermission(
 			getPermissionChecker(), groupId, classNameId);
 
 		return ddmStructureLocalService.addStructure(
@@ -250,7 +250,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 		_ddmStructureModelResourcePermission.check(
 			getPermissionChecker(), structure, ActionKeys.VIEW);
 
-		_ddmPermissionSupport.checkAddStruturePermission(
+		_ddmPermissionSupport.checkAddStructurePermission(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			structure.getClassNameId());
 
@@ -269,7 +269,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 		_ddmStructureModelResourcePermission.check(
 			getPermissionChecker(), structure, ActionKeys.VIEW);
 
-		_ddmPermissionSupport.checkAddStruturePermission(
+		_ddmPermissionSupport.checkAddStructurePermission(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			structure.getClassNameId());
 

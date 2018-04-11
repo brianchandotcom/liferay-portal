@@ -27,9 +27,15 @@ import java.util.Map;
 @ProviderType
 public interface MerisSegmentManager<T extends MerisSegment> {
 
+	public T getMerisSegment(String merisSegmentId);
+
 	public Collection<T> getMerisSegments(long groupId);
 
+	public Collection<T> getMerisSegments(
+		long groupId, long userId, String merisSegmentId,
+		Map<String, Object> context);
+
 	public boolean matches(
-		long userId, T merisSegment, Map<String, Object> context);
+		long userId, String merisSegmentId, Map<String, Object> context);
 
 }

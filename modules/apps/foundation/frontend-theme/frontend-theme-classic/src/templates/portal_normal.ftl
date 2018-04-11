@@ -73,11 +73,11 @@
 				<div class="col-md-6 text-center text-md-left">
 					<@liferay.language key="powered-by" />
 
-					<a class="ml-1 text-white" href="http://www.liferay.com" rel="external">Liferay</a>
+					<a class="text-white" href="http://www.liferay.com" rel="external">Liferay</a>
 				</div>
 
 				<div class="col-md-6 text-center text-md-right">
-					2017
+					2018
 				</div>
 			</div>
 		</div>

@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.transaction.TransactionsUtil;
-import com.liferay.portal.upgrade.PortalServiceUpgrade;
+import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PortalClassPathUtil;
 import com.liferay.portal.util.PropsValues;
@@ -137,7 +137,7 @@ public class DBUpgrader {
 
 		checkRequiredBuildNumber(ReleaseInfo.RELEASE_6_1_0_BUILD_NUMBER);
 
-		if (PortalServiceUpgrade.isInLatestSchemaVersion(
+		if (PortalUpgradeProcess.isInLatestSchemaVersion(
 				DataAccess.getConnection())) {
 
 			return;

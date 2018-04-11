@@ -36,7 +36,7 @@ import org.junit.Test;
 /**
  * @author Alberto Chaparro
  */
-public class PortalServiceUpgradeTest {
+public class PortalUpgradeProcessTest {
 
 	@ClassRule
 	@Rule
@@ -45,24 +45,24 @@ public class PortalServiceUpgradeTest {
 
 	@BeforeClass
 	public static void setUpClass() throws SQLException {
-		_currentSchemaVersion = PortalServiceUpgrade.getCurrentSchemaVersion(
+		_currentSchemaVersion = PortalUpgradeProcess.getCurrentSchemaVersion(
 			DataAccess.getUpgradeOptimizedConnection());
 	}
 
 	@Before
 	public void setUp() throws SQLException {
-		_innerPortalServiceUpgrade = new InnerPortalServiceUpgrade();
+		_innerPortalUpgradeProcess = new InnerPortalUpgradeProcess();
 	}
 
 	@After
 	public void tearDown() throws SQLException {
-		_innerPortalServiceUpgrade.updateSchemaVersion(_currentSchemaVersion);
+		_innerPortalUpgradeProcess.updateSchemaVersion(_currentSchemaVersion);
 	}
 
 	@Test
 	public void testGetLatestSchemaVersion() {
 		Set<Version> pendingSchemaVersions =
-			_innerPortalServiceUpgrade.getPendingSchemaVersions(
+			_innerPortalUpgradeProcess.getPendingSchemaVersions(
 				_ORIGINAL_SCHEMA_VERSION);
 
 		Iterator<Version> itr = pendingSchemaVersions.iterator();
@@ -74,16 +74,16 @@ public class PortalServiceUpgradeTest {
 		}
 
 		Assert.assertEquals(
-			latestSchemaVersion, PortalServiceUpgrade.getLatestSchemaVersion());
+			latestSchemaVersion, PortalUpgradeProcess.getLatestSchemaVersion());
 	}
 
 	@Test
 	public void testGetRequiredSchemaVersion() {
 		Version latestSchemaVersion =
-			PortalServiceUpgrade.getLatestSchemaVersion();
+			PortalUpgradeProcess.getLatestSchemaVersion();
 
 		Version requiredSchemaVersion =
-			PortalServiceUpgrade.getRequiredSchemaVersion();
+			PortalUpgradeProcess.getRequiredSchemaVersion();
 
 		Assert.assertEquals(
 			latestSchemaVersion.getMinor(), requiredSchemaVersion.getMinor());
@@ -94,41 +94,41 @@ public class PortalServiceUpgradeTest {
 
 	@Test
 	public void testIsInLatestSchemaVersion() throws SQLException {
-		_innerPortalServiceUpgrade.updateSchemaVersion(
-			PortalServiceUpgrade.getLatestSchemaVersion());
+		_innerPortalUpgradeProcess.updateSchemaVersion(
+			PortalUpgradeProcess.getLatestSchemaVersion());
 
 		Assert.assertTrue(
-			PortalServiceUpgrade.isInLatestSchemaVersion(
+			PortalUpgradeProcess.isInLatestSchemaVersion(
 				DataAccess.getUpgradeOptimizedConnection()));
 	}
 
 	@Test
 	public void testIsInRequiredSchemaVersion() throws SQLException {
-		_innerPortalServiceUpgrade.updateSchemaVersion(
-			PortalServiceUpgrade.getRequiredSchemaVersion());
+		_innerPortalUpgradeProcess.updateSchemaVersion(
+			PortalUpgradeProcess.getRequiredSchemaVersion());
 
 		Assert.assertTrue(
-			PortalServiceUpgrade.isInRequiredSchemaVersion(
+			PortalUpgradeProcess.isInRequiredSchemaVersion(
 				DataAccess.getUpgradeOptimizedConnection()));
 	}
 
 	@Test
 	public void testIsNotInLatestSchemaVersion() throws SQLException {
-		_innerPortalServiceUpgrade.updateSchemaVersion(
+		_innerPortalUpgradeProcess.updateSchemaVersion(
 			_ORIGINAL_SCHEMA_VERSION);
 
 		Assert.assertFalse(
-			PortalServiceUpgrade.isInLatestSchemaVersion(
+			PortalUpgradeProcess.isInLatestSchemaVersion(
 				DataAccess.getUpgradeOptimizedConnection()));
 	}
 
 	@Test
 	public void testIsNotInRequiredSchemaVersion() throws SQLException {
-		_innerPortalServiceUpgrade.updateSchemaVersion(
+		_innerPortalUpgradeProcess.updateSchemaVersion(
 			_ORIGINAL_SCHEMA_VERSION);
 
 		Assert.assertFalse(
-			PortalServiceUpgrade.isInRequiredSchemaVersion(
+			PortalUpgradeProcess.isInRequiredSchemaVersion(
 				DataAccess.getUpgradeOptimizedConnection()));
 	}
 
@@ -136,10 +136,10 @@ public class PortalServiceUpgradeTest {
 	public void testUpgradeWhenCoreIsInLatestSchemaVersion()
 		throws SQLException {
 
-		_innerPortalServiceUpgrade.updateSchemaVersion(
-			PortalServiceUpgrade.getLatestSchemaVersion());
+		_innerPortalUpgradeProcess.updateSchemaVersion(
+			PortalUpgradeProcess.getLatestSchemaVersion());
 
-		PortalServiceUpgrade portalServiceUpgrade = new PortalServiceUpgrade();
+		PortalUpgradeProcess portalServiceUpgrade = new PortalUpgradeProcess();
 
 		try {
 			portalServiceUpgrade.upgrade();
@@ -151,7 +151,7 @@ public class PortalServiceUpgradeTest {
 		}
 
 		Assert.assertTrue(
-			PortalServiceUpgrade.isInLatestSchemaVersion(
+			PortalUpgradeProcess.isInLatestSchemaVersion(
 				DataAccess.getUpgradeOptimizedConnection()));
 	}
 
@@ -159,10 +159,10 @@ public class PortalServiceUpgradeTest {
 	public void testUpgradeWhenCoreIsInRequiredSchemaVersion()
 		throws SQLException {
 
-		_innerPortalServiceUpgrade.updateSchemaVersion(
-			PortalServiceUpgrade.getRequiredSchemaVersion());
+		_innerPortalUpgradeProcess.updateSchemaVersion(
+			PortalUpgradeProcess.getRequiredSchemaVersion());
 
-		PortalServiceUpgrade portalServiceUpgrade = new PortalServiceUpgrade();
+		PortalUpgradeProcess portalServiceUpgrade = new PortalUpgradeProcess();
 
 		try {
 			portalServiceUpgrade.upgrade();
@@ -177,7 +177,7 @@ public class PortalServiceUpgradeTest {
 		}
 
 		Assert.assertTrue(
-			PortalServiceUpgrade.isInLatestSchemaVersion(
+			PortalUpgradeProcess.isInLatestSchemaVersion(
 				DataAccess.getUpgradeOptimizedConnection()));
 	}
 
@@ -187,8 +187,8 @@ public class PortalServiceUpgradeTest {
 
 		Assert.assertTrue(
 			"You must first upgrade the portal to the required schema " +
-				"version " + PortalServiceUpgrade.getRequiredSchemaVersion(),
-			PortalServiceUpgrade.isInRequiredSchemaVersion(
+				"version " + PortalUpgradeProcess.getRequiredSchemaVersion(),
+			PortalUpgradeProcess.isInRequiredSchemaVersion(
 				DataAccess.getUpgradeOptimizedConnection()));
 	}
 
@@ -197,12 +197,12 @@ public class PortalServiceUpgradeTest {
 
 	private static Version _currentSchemaVersion;
 
-	private InnerPortalServiceUpgrade _innerPortalServiceUpgrade;
+	private InnerPortalUpgradeProcess _innerPortalUpgradeProcess;
 
-	private static class InnerPortalServiceUpgrade
-		extends PortalServiceUpgrade {
+	private static class InnerPortalUpgradeProcess
+		extends PortalUpgradeProcess {
 
-		private InnerPortalServiceUpgrade() throws SQLException {
+		private InnerPortalUpgradeProcess() throws SQLException {
 			connection = DataAccess.getUpgradeOptimizedConnection();
 		}
 

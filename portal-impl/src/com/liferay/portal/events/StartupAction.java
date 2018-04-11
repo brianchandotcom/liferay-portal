@@ -53,7 +53,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.plugin.PluginPackageIndexer;
 import com.liferay.portal.tools.DBUpgrader;
-import com.liferay.portal.upgrade.PortalServiceUpgrade;
+import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -189,13 +189,13 @@ public class StartupAction extends SimpleAction {
 
 		DBUpgrader.checkRequiredBuildNumber(ReleaseInfo.getParentBuildNumber());
 
-		if (!PortalServiceUpgrade.isInRequiredSchemaVersion(
+		if (!PortalUpgradeProcess.isInRequiredSchemaVersion(
 				DataAccess.getConnection())) {
 
 			String msg =
 				"You must first upgrade the portal core to the required " +
 					"schema version " +
-						PortalServiceUpgrade.getRequiredSchemaVersion();
+						PortalUpgradeProcess.getRequiredSchemaVersion();
 
 			System.out.println(msg);
 

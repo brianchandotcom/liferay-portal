@@ -198,8 +198,6 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 		ResultSet rs = null;
 
 		try {
-			int buildNumber;
-
 			con = DataAccess.getConnection();
 
 			ps = con.prepareStatement(_GET_BUILD_NUMBER);
@@ -207,6 +205,8 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 			ps.setLong(1, ReleaseConstants.DEFAULT_ID);
 
 			rs = ps.executeQuery();
+
+			int buildNumber = 0;
 
 			if (rs.next()) {
 				buildNumber = rs.getInt("buildNumber");

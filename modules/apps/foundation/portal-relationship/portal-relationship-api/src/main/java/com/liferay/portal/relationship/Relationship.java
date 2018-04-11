@@ -66,9 +66,9 @@ public class Relationship<T extends ClassedModel> {
 		}
 
 		public RelationshipStep relationshipBaseSupplier(
-			RelationshipBaseSupplier<Long, T> supplier) {
+			RelationshipBaseSupplier<Long, T> relationshipBaseSupplier) {
 
-			_relationship._relationshipBaseSupplier = supplier;
+			_relationship._relationshipBaseSupplier = relationshipBaseSupplier;
 
 			return new RelationshipStep();
 		}

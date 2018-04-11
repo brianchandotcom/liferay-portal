@@ -9,17 +9,20 @@
 	}
 
 	.lfr-icon-item {
-		height: 32px;
-		width: 37px;
+		height: 35px;
+		width: 34px;
+		span {
+			display: inline-block;
+			height: 16px;
+			width: 16px;
+		}
 		img {
-			height: 13px;
+			height: 16px;
+			vertical-align: top;
+			width: 16px;
 		}
 		i {
-			display: inline-block;
-			font-size: 15px;
-			position: relative;
-			top: -1px;
-			width: 14px;
+			font-size: 18.5px;
 		}
 	}
 
@@ -27,5 +30,9 @@
 		display: inline-block;
 		margin: 0;
 		vertical-align: top;
+	}
+
+	.btn-sm {
+		font-size: 1rem;
 	}
 }

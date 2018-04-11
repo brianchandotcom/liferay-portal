@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
+import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +26,14 @@ import javax.servlet.jsp.PageContext;
 public class JSPViewTypeItemList extends ViewTypeItemList {
 
 	public JSPViewTypeItemList(PageContext pageContext) {
+		renderResponse = (RenderResponse)pageContext.findAttribute(
+			"renderResponse");
+		request = (HttpServletRequest)pageContext.getRequest();
+	}
+
+	public JSPViewTypeItemList(PageContext pageContext, PortletURL portletURL, String selectedType) {
+		super((HttpServletRequest)pageContext.getRequest(), portletURL, selectedType);
+
 		renderResponse = (RenderResponse)pageContext.findAttribute(
 			"renderResponse");
 		request = (HttpServletRequest)pageContext.getRequest();

@@ -66,11 +66,11 @@ String tabs1Value = GetterUtil.getString(SessionClicks.get(request, namespace + 
 </c:choose>
 
 <c:if test="<%= showButtons %>">
-	<liferay-frontend:button-row>
+	<div>
 		<aui:button primary="<%= true %>" type="submit" />
 
 		<aui:button href="<%= backURL %>" type="cancel" />
-	</liferay-frontend:button-row>
+	</div>
 </c:if>
 
 <aui:script require="metal-dom/src/dom,metal-uri/src/Uri">

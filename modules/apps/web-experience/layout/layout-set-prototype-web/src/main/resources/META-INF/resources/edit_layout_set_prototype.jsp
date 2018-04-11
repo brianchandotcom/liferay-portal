@@ -124,13 +124,11 @@ request.setAttribute("edit_layout_set_prototype.jsp-redirect", currentURL);
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>
-		<liferay-frontend:button-row>
-			<aui:button type="submit" />
+		<aui:button type="submit" />
 
-			<c:if test="<%= layoutSetPrototype.isNew() %>">
-				<aui:button href="<%= redirect %>" type="cancel" />
-			</c:if>
-		</liferay-frontend:button-row>
+		<c:if test="<%= layoutSetPrototype.isNew() %>">
+			<aui:button href="<%= redirect %>" type="cancel" />
+		</c:if>
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 

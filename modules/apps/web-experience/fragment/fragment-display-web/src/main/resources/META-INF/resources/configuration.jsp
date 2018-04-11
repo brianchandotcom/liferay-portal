@@ -117,11 +117,9 @@ FragmentEntry fragmentEntry = fragmentEntryDisplayContext.getFragmentEntry();
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>
-		<liferay-frontend:button-row>
-			<aui:button name="saveButton" type="submit" />
+		<aui:button name="saveButton" type="submit" />
 
-			<aui:button href="<%= redirect %>" type="cancel" />
-		</liferay-frontend:button-row>
+		<aui:button href="<%= redirect %>" type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 

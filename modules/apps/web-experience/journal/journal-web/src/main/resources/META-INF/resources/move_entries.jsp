@@ -161,11 +161,9 @@ JournalMoveEntriesDisplayContext journalMovesEntriesDisplayContext = new Journal
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>
-		<liferay-frontend:button-row>
-			<aui:button type="submit" value="move" />
+		<aui:button type="submit" value="move" />
 
-			<aui:button href="<%= journalMovesEntriesDisplayContext.getRedirect() %>" type="cancel" />
-		</liferay-frontend:button-row>
+		<aui:button href="<%= journalMovesEntriesDisplayContext.getRedirect() %>" type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 

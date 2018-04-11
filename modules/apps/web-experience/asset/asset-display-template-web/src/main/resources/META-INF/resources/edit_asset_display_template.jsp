@@ -85,11 +85,9 @@ long classNameId = BeanParamUtil.getLong(assetDisplayTemplate, request, "classNa
 	%>
 
 	<liferay-frontend:edit-form-footer>
-		<liferay-frontend:button-row>
-			<aui:button onClick="<%= taglibOnClick %>" type="submit" />
+		<aui:button onClick="<%= taglibOnClick %>" type="submit" />
 
-			<aui:button href="<%= redirect %>" type="cancel" />
-		</liferay-frontend:button-row>
+		<aui:button href="<%= redirect %>" type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 

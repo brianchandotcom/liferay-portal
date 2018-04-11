@@ -72,7 +72,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 
 				<aui:input name="code" />
 
-				<aui:select name="roundingType" showEmptyOption="<%= true %>">
+				<aui:select name="roundingType">
 
 					<%
 					for (RoundingType roundingType : roundingTypes) {

@@ -42,7 +42,7 @@ long cpDefinitionId = cpDefinitionInventoryDisplayContext.getCPDefinitionId();
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-				<aui:select label="inventory-engine" name="CPDefinitionInventoryEngine" showEmptyOption="<%= true %>">
+				<aui:select label="inventory-engine" name="CPDefinitionInventoryEngine">
 
 					<%
 					List<CPDefinitionInventoryEngine> cpDefinitionInventoryEngines = cpDefinitionInventoryDisplayContext.getCPDefinitionInventoryEngines();
@@ -63,7 +63,7 @@ long cpDefinitionId = cpDefinitionInventoryDisplayContext.getCPDefinitionId();
 
 				</aui:select>
 
-				<aui:select name="lowStockActivity" showEmptyOption="<%= true %>">
+				<aui:select name="lowStockActivity">
 
 					<%
 					List<CommerceLowStockActivity> commerceLowStockActivities = cpDefinitionInventoryDisplayContext.getCommerceLowStockActivities();

@@ -22,31 +22,4 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 UADEntity uadEntity = (UADEntity)row.getObject();
 %>
 
-<liferay-ui:icon-menu
-	direction="left-side"
-	icon="<%= StringPool.BLANK %>"
-	markupView="lexicon"
-	message="<%= StringPool.BLANK %>"
-	showWhenSingleIcon="<%= true %>"
-	triggerCssClass="component-action"
->
-	<portlet:actionURL name="/auto_anonymize_uad_entity" var="autoAnonymizeURL">
-		<portlet:param name="primaryKey" value="<%= String.valueOf(uadEntity.getPrimaryKey()) %>" />
-	</portlet:actionURL>
-
-	<liferay-ui:icon
-		message="anonymize"
-		onClick='<%= renderResponse.getNamespace() + "confirmAction('viewUADEntitiesFm', '" + autoAnonymizeURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-anonymize-this-entity") + "')" %>'
-		url="javascript:;"
-	/>
-
-	<portlet:actionURL name="/delete_uad_entity" var="deleteURL">
-		<portlet:param name="primaryKey" value="<%= String.valueOf(uadEntity.getPrimaryKey()) %>" />
-	</portlet:actionURL>
-
-	<liferay-ui:icon
-		message="delete"
-		onClick='<%= renderResponse.getNamespace() + "confirmAction('viewUADEntitiesFm', '" + deleteURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this-entity") + "')" %>'
-		url="javascript:;"
-	/>
-</liferay-ui:icon-menu>
+<%@ include file="/single_entity_action_menu.jspf" %>

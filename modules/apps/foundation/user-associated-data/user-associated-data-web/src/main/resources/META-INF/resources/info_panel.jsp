@@ -22,92 +22,61 @@ UADEntityDisplay uadEntityDisplay = (UADEntityDisplay)request.getAttribute(UADWe
 %>
 
 <div class="sidebar sidebar-light">
-	<div class="sidebar-body">
-		<dl class="sidebar-dl sidebar-section">
-			<c:choose>
-				<c:when test="<%= ListUtil.isEmpty(uadEntities) %>">
-					<div class="sidebar-header">
-						<h2 class="sidebar-title"><%= uadEntityDisplay.getTypeName() %></h2>
-						<h4 class="sidebar-subtitle"><%= uadEntityDisplay.getApplicationName() %></h4>
-					</div>
-				</c:when>
-				<c:when test="<%= ListUtil.isNotEmpty(uadEntities) && (uadEntities.size() == 1) %>">
+	<c:choose>
+		<c:when test="<%= ListUtil.isEmpty(uadEntities) %>">
+			<div class="sidebar-header">
+				<h2 class="sidebar-title"><%= uadEntityDisplay.getTypeName() %></h2>
+				<h4 class="sidebar-subtitle"><%= uadEntityDisplay.getApplicationName() %></h4>
+			</div>
+		</c:when>
+		<c:when test="<%= ListUtil.isNotEmpty(uadEntities) && (uadEntities.size() == 1) %>">
+
+			<%
+			UADEntity uadEntity = uadEntities.get(0);
+
+			Serializable primaryKey = uadEntity.getPrimaryKey();
+
+			Map<String, Object> displayValues = uadEntityDisplay.getNonanonymizableFieldValues(uadEntity.getEntity());
+			String identifierFieldName = uadEntityDisplay.getDisplayFieldNames()[0];
+			%>
+
+			<div class="sidebar-header">
+				<ul class="sidebar-header-actions">
+					<li>
+						<%@ include file="/single_entity_action_menu.jspf" %>
+					</li>
+				</ul>
+
+				<h2 class="sidebar-title"><%= StringUtil.shorten(String.valueOf(displayValues.get(identifierFieldName)), 200) %></h2>
+
+				<h4 class="sidebar-subtitle"><%= uadEntityDisplay.getTypeName() %></h4>
+			</div>
+
+			<div class="sidebar-body">
+				<dl class="sidebar-dl sidebar-section sidebar-block">
 
 					<%
-					UADEntity uadEntity = uadEntities.get(0);
-
-					Serializable primaryKey = uadEntity.getPrimaryKey();
-
-					Map<String, Object> displayValues = uadEntityDisplay.getNonanonymizableFieldValues(uadEntity.getEntity());
-					String identifierFieldName = uadEntityDisplay.getDisplayFieldNames()[0];
+					for (Map.Entry<String, Object> entry : displayValues.entrySet()) {
+						if (identifierFieldName.equals(entry.getKey())) {
+							continue;
+						}
 					%>
 
-					<div class="sidebar-header">
-						<ul class="sidebar-header-actions">
-							<li>
-								<liferay-ui:icon-menu
-									direction="left-side"
-									icon="<%= StringPool.BLANK %>"
-									markupView="lexicon"
-									message="<%= StringPool.BLANK %>"
-									showWhenSingleIcon="<%= true %>"
-									triggerCssClass="component-action"
-								>
-									<portlet:actionURL name="/auto_anonymize_uad_entity" var="autoAnonymizeURL">
-										<portlet:param name="primaryKey" value="<%= String.valueOf(uadEntity.getPrimaryKey()) %>" />
-									</portlet:actionURL>
+						<dt class="sidebar-dt"><%= entry.getKey() %></dt>
+						<dd class="sidebar-dd"><%= StringUtil.shorten(String.valueOf(entry.getValue()), 200) %></dd>
 
-									<liferay-ui:icon
-										message="anonymize"
-										onClick='<%= resourceResponse.getNamespace() + "confirmAction('viewUADEntitiesFm', '" + autoAnonymizeURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-anonymize-this-entity") + "')" %>'
-										url="javascript:;"
-									/>
+					<%
+					}
+					%>
 
-									<portlet:actionURL name="/delete_uad_entity" var="deleteURL">
-										<portlet:param name="primaryKey" value="<%= String.valueOf(uadEntity.getPrimaryKey()) %>" />
-									</portlet:actionURL>
-
-									<liferay-ui:icon
-										message="delete"
-										onClick='<%= resourceResponse.getNamespace() + "confirmAction('viewUADEntitiesFm', '" + deleteURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this-entity") + "')" %>'
-										url="javascript:;"
-									/>
-								</liferay-ui:icon-menu>
-							</li>
-						</ul>
-
-						<h2 class="sidebar-title"><%= StringUtil.shorten(String.valueOf(displayValues.get(identifierFieldName)), 200) %></h2>
-
-						<h4 class="sidebar-subtitle"><%= uadEntityDisplay.getTypeName() %></h4>
-					</div>
-
-					<div class="sidebar-body">
-						<dl class="sidebar-dl sidebar-section">
-
-							<%
-							for (Map.Entry<String, Object> entry : displayValues.entrySet()) {
-								if (identifierFieldName.equals(entry.getKey())) {
-									continue;
-								}
-							%>
-
-								<dt class="sidebar-dt"><%= entry.getKey() %></dt>
-								<dd class="sidebar-dd"><%= StringUtil.shorten(String.valueOf(entry.getValue()), 200) %></dd>
-
-							<%
-							}
-							%>
-
-						</dl>
-					</div>
-				</c:when>
-				<c:when test="<%= ListUtil.isNotEmpty(uadEntities) && (uadEntities.size() > 1) %>">
-					<div class="sidebar-header">
-						<h2 class="sidebar-title"><%= uadEntityDisplay.getTypeName() %></h2>
-						<h4 class="sidebar-subtitle"><%= uadEntities.size() %> items are selected.</h4>
-					</div>
-				</c:when>
-			</c:choose>
-		</dl>
-	</div>
+				</dl>
+			</div>
+		</c:when>
+		<c:when test="<%= ListUtil.isNotEmpty(uadEntities) && (uadEntities.size() > 1) %>">
+			<div class="sidebar-header">
+				<h2 class="sidebar-title"><%= uadEntityDisplay.getTypeName() %></h2>
+				<h4 class="sidebar-subtitle"><%= uadEntities.size() %> items are selected.</h4>
+			</div>
+		</c:when>
+	</c:choose>
 </div>

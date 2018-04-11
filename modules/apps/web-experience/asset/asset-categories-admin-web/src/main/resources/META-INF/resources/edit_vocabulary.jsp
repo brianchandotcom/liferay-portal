@@ -57,7 +57,11 @@ renderResponse.setTitle(((vocabulary == null) ? LanguageUtil.get(request, "add-v
 		<aui:model-context bean="<%= vocabulary %>" model="<%= AssetVocabulary.class %>" />
 
 		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset>
+			<liferay-frontend:fieldset
+				collapsed="<%= false %>"
+				collapsible="<%= true %>"
+				label="details"
+			>
 				<aui:input autoFocus="<%= true %>" label="name" name="title" placeholder="name" />
 
 				<aui:input name="description" placeholder="description" />

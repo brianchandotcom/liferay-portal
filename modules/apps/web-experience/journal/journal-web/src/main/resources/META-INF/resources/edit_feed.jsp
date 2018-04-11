@@ -136,7 +136,11 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 		<aui:model-context bean="<%= feed %>" model="<%= JournalFeed.class %>" />
 
 		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset>
+			<liferay-frontend:fieldset
+				collapsed="<%= false %>"
+				collapsible="<%= true %>"
+				label="details"
+			>
 				<c:choose>
 					<c:when test="<%= feed == null %>">
 						<c:choose>

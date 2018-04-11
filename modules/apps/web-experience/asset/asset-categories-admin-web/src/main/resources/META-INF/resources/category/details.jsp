@@ -53,7 +53,11 @@ renderResponse.setTitle(((category == null) ? LanguageUtil.get(request, "add-new
 		<aui:model-context bean="<%= category %>" model="<%= AssetCategory.class %>" />
 
 		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset>
+			<liferay-frontend:fieldset
+				collapsed="<%= false %>"
+				collapsible="<%= true %>"
+				label="details"
+			>
 				<aui:input autoFocus="<%= true %>" label="name" name="title" placeholder="name" />
 
 				<aui:input name="description" placeholder="description" />

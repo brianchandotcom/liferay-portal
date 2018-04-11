@@ -1791,7 +1791,7 @@ public class JournalDisplayContext {
 			String.valueOf(
 				_journalWebConfiguration.showAncestorScopesByDefault()));
 		portletURL.setParameter("showCacheableInput", Boolean.TRUE.toString());
-		portletURL.setParameter("showHeader", Boolean.TRUE.toString());
+		portletURL.setParameter("showHeader", Boolean.FALSE.toString());
 
 		return portletURL.toString();
 	}

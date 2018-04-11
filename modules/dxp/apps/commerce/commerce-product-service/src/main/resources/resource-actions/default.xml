@@ -10,7 +10,6 @@
 			<portlet-name>com_liferay_commerce_product_options_web_internal_portlet_CPOptionCategoriesPortlet</portlet-name>
 			<portlet-name>com_liferay_commerce_product_options_web_internal_portlet_CPOptionsPortlet</portlet-name>
 			<portlet-name>com_liferay_commerce_product_options_web_internal_portlet_CPSpecificationOptionsPortlet</portlet-name>
-			<portlet-name>com_liferay_commerce_wizard_web_internal_portlet_CommerceWizardPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
@@ -24,6 +23,7 @@
 				<action-key>MANAGE_COMMERCE_PRODUCT_ATTACHMENTS</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_IMAGES</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS</action-key>
+				<action-key>MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES</action-key>
 				<action-key>PERMISSIONS</action-key>
 			</supports>
 			<site-member-defaults />
@@ -37,6 +37,7 @@
 				<action-key>MANAGE_COMMERCE_PRODUCT_ATTACHMENTS</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_IMAGES</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS</action-key>
+				<action-key>MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES</action-key>
 				<action-key>PERMISSIONS</action-key>
 			</guest-unsupported>
 		</permissions>

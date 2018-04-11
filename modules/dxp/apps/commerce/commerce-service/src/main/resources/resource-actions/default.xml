@@ -22,7 +22,6 @@
 				<action-key>MANAGE_COMMERCE_PRODUCT_DEFINITION_INVENTORY</action-key>
 				<action-key>MANAGE_COMMERCE_SHIPMENTS</action-key>
 				<action-key>MANAGE_COMMERCE_SHIPPING_METHODS</action-key>
-				<action-key>MANAGE_COMMERCE_TAX_CATEGORIES</action-key>
 				<action-key>MANAGE_COMMERCE_TAX_METHODS</action-key>
 				<action-key>MANAGE_COMMERCE_WAREHOUSES</action-key>
 			</supports>
@@ -37,7 +36,6 @@
 				<action-key>MANAGE_COMMERCE_PRODUCT_DEFINITION_INVENTORY</action-key>
 				<action-key>MANAGE_COMMERCE_SHIPMENTS</action-key>
 				<action-key>MANAGE_COMMERCE_SHIPPING_METHODS</action-key>
-				<action-key>MANAGE_COMMERCE_TAX_CATEGORIES</action-key>
 				<action-key>MANAGE_COMMERCE_TAX_METHODS</action-key>
 				<action-key>MANAGE_COMMERCE_WAREHOUSES</action-key>
 			</guest-unsupported>

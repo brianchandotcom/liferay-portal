@@ -23,35 +23,35 @@ import java.io.IOException;
 public class PluginsGitWorkingDirectory extends GitWorkingDirectory {
 
 	public PluginsGitWorkingDirectory(
-			String upstreamBranchName, String workingDirectoryPath)
+			String portalUpstreamBranchName, String workingDirectoryPath)
 		throws IOException {
 
 		super(
-			_getPluginsUpstreamBranchName(upstreamBranchName),
+			_getPluginsUpstreamBranchName(portalUpstreamBranchName),
 			workingDirectoryPath);
 	}
 
 	public PluginsGitWorkingDirectory(
-			String upstreamBranchName, String workingDirectoryPath,
+			String portalUpstreamBranchName, String workingDirectoryPath,
 			String repositoryName)
 		throws IOException {
 
 		super(
-			_getPluginsUpstreamBranchName(upstreamBranchName),
+			_getPluginsUpstreamBranchName(portalUpstreamBranchName),
 			workingDirectoryPath, repositoryName);
 	}
 
 	private static String _getPluginsUpstreamBranchName(
-		String upstreamBranchName) {
+		String portalUpstreamBranchName) {
 
-		if (upstreamBranchName.contains("7.0.x") ||
-			upstreamBranchName.contains("7.1.x") ||
-			upstreamBranchName.contains("master")) {
+		if (portalUpstreamBranchName.contains("7.0.x") ||
+			portalUpstreamBranchName.contains("7.1.x") ||
+			portalUpstreamBranchName.contains("master")) {
 
 			return "7.0.x";
 		}
 
-		return upstreamBranchName;
+		return portalUpstreamBranchName;
 	}
 
 }

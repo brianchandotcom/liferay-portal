@@ -16,6 +16,7 @@ package com.liferay.commerce.shipping.engine.fixed.web.internal.display.context;
 
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.price.CommercePriceFormatter;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipping.engine.fixed.constants.CommerceShippingEngineFixedWebKeys;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
@@ -24,11 +25,13 @@ import com.liferay.commerce.shipping.engine.fixed.util.CommerceShippingEngineFix
 import com.liferay.commerce.shipping.engine.fixed.web.internal.FixedCommerceShippingEngine;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
@@ -44,6 +47,7 @@ public class CommerceShippingFixedOptionsDisplayContext
 
 	public CommerceShippingFixedOptionsDisplayContext(
 		CommerceCurrencyService commerceCurrencyService,
+		CommercePriceFormatter commercePriceFormatter,
 		CommerceShippingMethodService commerceShippingMethodService,
 		CommerceShippingFixedOptionService commerceShippingFixedOptionService,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
@@ -52,6 +56,7 @@ public class CommerceShippingFixedOptionsDisplayContext
 			commerceCurrencyService, commerceShippingMethodService,
 			renderRequest, renderResponse);
 
+		_commercePriceFormatter = commercePriceFormatter;
 		_commerceShippingFixedOptionService =
 			commerceShippingFixedOptionService;
 	}
@@ -78,6 +83,16 @@ public class CommerceShippingFixedOptionsDisplayContext
 			commerceShippingFixedOption);
 
 		return commerceShippingFixedOption;
+	}
+
+	public String getCommerceShippingFixedOptionAmount(double amount)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return _commercePriceFormatter.format(
+			themeDisplay.getScopeGroupId(), amount);
 	}
 
 	public String getEditURL(String functionName, boolean isNew, String url) {
@@ -156,6 +171,7 @@ public class CommerceShippingFixedOptionsDisplayContext
 		return false;
 	}
 
+	private final CommercePriceFormatter _commercePriceFormatter;
 	private final CommerceShippingFixedOptionService
 		_commerceShippingFixedOptionService;
 

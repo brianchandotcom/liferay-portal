@@ -111,7 +111,8 @@ boolean hasManageCommerceShippingMethodsPermission = CommercePermission.contains
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
-				property="amount"
+				name="amount"
+				value="<%= HtmlUtil.escape(commerceShippingFixedOptionsDisplayContext.getCommerceShippingFixedOptionAmount(commerceShippingFixedOption.getAmount())) %>"
 			/>
 
 			<liferay-ui:search-container-column-text

@@ -105,10 +105,10 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 					renderRequest, currentURL, uadRegistryKey, uadEntityDisplay,
 					selectedUser.getUserId(), liferayPortletResponse));
 			viewUADEntitiesDisplay.setTypeName(uadEntityDisplay.getTypeName());
-			viewUADEntitiesDisplay.setUADEntityDisplay(uadEntityDisplay);
 
 			viewUADEntitiesDisplay.setUADRegistryKey(uadRegistryKey);
 
+			renderRequest.setAttribute("UAD_ENTITY_DISPLAY", uadEntityDisplay);
 			renderRequest.setAttribute(
 				UADWebKeys.VIEW_UAD_ENTITIES_DISPLAY, viewUADEntitiesDisplay);
 		}

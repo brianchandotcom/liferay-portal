@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
-import com.liferay.portal.upgrade.v7_1_x.UpgradeProcessRegistry;
+import com.liferay.portal.upgrade.v7_1_x.PortalUpgradeProcessRegistryImpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -176,7 +176,7 @@ public class PortalServiceUpgrade extends UpgradeProcess {
 			new Version(_INITIAL_SCHEMA_VERSION), new DummyUpgradeProcess());
 
 		PortalUpgradeProcessRegistry portalUpgradeProcessRegistry =
-			new UpgradeProcessRegistry();
+			new PortalUpgradeProcessRegistryImpl();
 
 		portalUpgradeProcessRegistry.registerUpgradeProcesses(
 			_upgradeProcesses);

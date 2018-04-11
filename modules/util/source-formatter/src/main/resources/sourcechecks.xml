@@ -62,9 +62,7 @@
 		<check name="GradleBlockOrderCheck" />
 		<check name="GradleBodyCheck" />
 		<check name="GradleDependenciesCheck" />
-		<check name="GradleExportedPackageDependenciesCheck">
-			<property name="enabled" value="false" />
-		</check>
+		<check name="GradleExportedPackageDependenciesCheck" />
 		<check name="GradleImportsCheck" />
 		<check name="GradleIndentationCheck" />
 		<check name="GradlePropertiesCheck" />
@@ -88,9 +86,7 @@
 		<check name="GetterUtilCheck" />
 		<check name="Java2HTMLCheck" />
 		<check name="JavaAggregateTestRuleParameterOrderCheck" />
-		<check name="JavaAnnotationsCheck">
-			<property name="enabled" value="false" />
-		</check>
+		<check name="JavaAnnotationsCheck" />
 		<check name="JavaAssertEqualsCheck" />
 		<check name="JavaBooleanStatementCheck" />
 		<check name="JavaBooleanUsageCheck" />
@@ -246,9 +242,7 @@
 		<check name="JSPStringBundlerCheck" />
 		<check name="JSPStylingCheck" />
 		<check name="JSPSubnameCheck" />
-		<check name="JSPTagAttributesCheck">
-			<property name="enabled" value="false" />
-		</check>
+		<check name="JSPTagAttributesCheck" />
 		<check name="JSPTaglibVariableCheck" />
 		<check name="JSPUnusedTermsCheck" />
 		<check name="JSPWhitespaceCheck" />
@@ -353,9 +347,7 @@
 		<check name="XMLServiceFileCheck" />
 		<check name="XMLSolrSchemaFileCheck" />
 		<check name="XMLSuppressionsFileCheck" />
-		<check name="XMLTagAttributesCheck">
-			<property name="enabled" value="false" />
-		</check>
+		<check name="XMLTagAttributesCheck" />
 		<check name="XMLToggleFileCheck" />
 		<check name="XMLWhitespaceCheck" />
 

@@ -625,6 +625,8 @@ public class LayoutsAdminDisplayContext {
 			"selPlid", String.valueOf(selPlid));
 		selectLayoutPageTemplateEntryURL.setParameter(
 			"privateLayout", String.valueOf(isPrivatePages()));
+		selectLayoutPageTemplateEntryURL.setParameter(
+			"navigation", getNavigation());
 
 		if (layoutPageTemplateCollectionId > 0) {
 			selectLayoutPageTemplateEntryURL.setParameter(

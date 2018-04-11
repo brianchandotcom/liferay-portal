@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.configuration.icon;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
-import com.liferay.dynamic.data.mapping.service.permission.DDMFormInstancePermission;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -92,7 +93,7 @@ public class ExportDDMFormInstancePortletConfigurationIcon
 		}
 
 		try {
-			return DDMFormInstancePermission.contains(
+			return _ddmFormInstanceModelResourcePermission.contains(
 				themeDisplay.getPermissionChecker(), formInstanceId,
 				ActionKeys.VIEW);
 		}
@@ -124,5 +125,11 @@ public class ExportDDMFormInstancePortletConfigurationIcon
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExportDDMFormInstancePortletConfigurationIcon.class);
+
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstance)"
+	)
+	private ModelResourcePermission<DDMFormInstance>
+		_ddmFormInstanceModelResourcePermission;
 
 }

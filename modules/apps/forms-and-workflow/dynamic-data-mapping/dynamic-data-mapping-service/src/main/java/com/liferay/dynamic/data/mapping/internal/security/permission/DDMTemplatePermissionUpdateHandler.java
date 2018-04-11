@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.service.permission;
+package com.liferay.dynamic.data.mapping.internal.security.permission;
 
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.portal.kernel.security.permission.PermissionUpdateHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -28,33 +28,33 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	property = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure",
+	property = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMTemplate",
 	service = PermissionUpdateHandler.class
 )
-public class DDMStructurePermissionUpdateHandler
+public class DDMTemplatePermissionUpdateHandler
 	implements PermissionUpdateHandler {
 
 	@Override
 	public void updatedPermission(String primKey) {
-		DDMStructure ddmStructure = _ddmStructureLocalService.fetchDDMStructure(
+		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchDDMTemplate(
 			GetterUtil.getLong(primKey));
 
-		if (ddmStructure == null) {
+		if (ddmTemplate == null) {
 			return;
 		}
 
-		ddmStructure.setModifiedDate(new Date());
+		ddmTemplate.setModifiedDate(new Date());
 
-		_ddmStructureLocalService.updateDDMStructure(ddmStructure);
+		_ddmTemplateLocalService.updateDDMTemplate(ddmTemplate);
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
+	protected void setDDMTemplateLocalService(
+		DDMTemplateLocalService ddmTemplateLocalService) {
 
-		_ddmStructureLocalService = ddmStructureLocalService;
+		_ddmTemplateLocalService = ddmTemplateLocalService;
 	}
 
-	private DDMStructureLocalService _ddmStructureLocalService;
+	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 }

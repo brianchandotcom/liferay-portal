@@ -15,7 +15,6 @@
 package com.liferay.journal.service.impl;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.base.JournalFolderServiceBaseImpl;
@@ -448,7 +447,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		while (itr.hasNext()) {
 			DDMStructure ddmStructure = itr.next();
 
-			if (!DDMStructurePermission.contains(
+			if (!_ddmStructureModelResourcePermission.contains(
 					permissionChecker, ddmStructure, ActionKeys.VIEW)) {
 
 				itr.remove();
@@ -458,6 +457,11 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		return ddmStructures;
 	}
 
+	private static volatile ModelResourcePermission<DDMStructure>
+		_ddmStructureModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				JournalFolderServiceImpl.class,
+				"_ddmStructureModelResourcePermission", DDMStructure.class);
 	private static volatile ModelResourcePermission<JournalFolder>
 		_journalFolderModelResourcePermission =
 			ModelResourcePermissionFactory.getInstance(

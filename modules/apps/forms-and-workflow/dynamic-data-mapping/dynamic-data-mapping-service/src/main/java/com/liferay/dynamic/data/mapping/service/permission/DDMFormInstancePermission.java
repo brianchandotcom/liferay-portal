@@ -24,8 +24,10 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
+ * @deprecated As of 3.0.0, with no direct replacement
  */
 @Component(immediate = true)
+@Deprecated
 public class DDMFormInstancePermission {
 
 	public static void check(

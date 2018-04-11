@@ -35,7 +35,7 @@ DDMTemplate ddmTemplate = (DDMTemplate)request.getAttribute("edit_article.jsp-te
 
 	<span id="<portlet:namespace />structureNameLabel">
 		<c:choose>
-			<c:when test="<%= DDMStructurePermission.contains(permissionChecker, ddmStructure, JournalPortletKeys.JOURNAL, ActionKeys.UPDATE) %>">
+			<c:when test="<%= DDMStructurePermission.contains(permissionChecker, ddmStructure, ActionKeys.UPDATE) %>">
 				<aui:a href="javascript:;" id="editDDMStructure" label="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>" />
 			</c:when>
 			<c:otherwise>
@@ -60,7 +60,7 @@ DDMTemplate ddmTemplate = (DDMTemplate)request.getAttribute("edit_article.jsp-te
 		</c:if>
 
 		<c:choose>
-			<c:when test="<%= (ddmTemplate != null) && DDMTemplatePermission.contains(permissionChecker, scopeGroupId, ddmTemplate, JournalPortletKeys.JOURNAL, ActionKeys.UPDATE) %>">
+			<c:when test="<%= (ddmTemplate != null) && DDMTemplatePermission.contains(permissionChecker, ddmTemplate, ActionKeys.UPDATE) %>">
 				<aui:a href="javascript:;" id="editDDMTemplate" label="<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>" />
 			</c:when>
 			<c:otherwise>

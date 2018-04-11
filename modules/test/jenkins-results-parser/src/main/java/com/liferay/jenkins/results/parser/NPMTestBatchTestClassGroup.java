@@ -40,10 +40,10 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected NPMTestBatchTestClassGroup(
-		String batchName, GitWorkingDirectory gitWorkingDirectory,
+		String batchName, PortalGitWorkingDirectory portalGitWorkingDirectory,
 		String testSuiteName) {
 
-		super(batchName, gitWorkingDirectory, testSuiteName);
+		super(batchName, portalGitWorkingDirectory, testSuiteName);
 
 		_setTestClassFiles();
 
@@ -65,9 +65,6 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 
 	private void _setTestClassFiles() {
 		if (testRelevantChanges) {
-			PortalGitWorkingDirectory portalGitWorkingDirectory =
-				(PortalGitWorkingDirectory)gitWorkingDirectory;
-
 			try {
 				List<File> moduleDirs =
 					portalGitWorkingDirectory.
@@ -83,7 +80,9 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 		}
 		else {
 			testClassFiles.add(
-				new File(gitWorkingDirectory.getWorkingDirectory(), "modules"));
+				new File(
+					portalGitWorkingDirectory.getWorkingDirectory(),
+					"modules"));
 		}
 	}
 

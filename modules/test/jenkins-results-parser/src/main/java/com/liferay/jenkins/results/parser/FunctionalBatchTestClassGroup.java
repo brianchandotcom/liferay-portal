@@ -17,7 +17,6 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -40,10 +39,10 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected FunctionalBatchTestClassGroup(
-		String batchName, GitWorkingDirectory gitWorkingDirectory,
+		String batchName, PortalGitWorkingDirectory portalGitWorkingDirectory,
 		String testSuiteName) {
 
-		super(batchName, gitWorkingDirectory, testSuiteName);
+		super(batchName, portalGitWorkingDirectory, testSuiteName);
 
 		axisTestClassGroups.put(0, new AxisTestClassGroup(this, 0));
 
@@ -51,30 +50,7 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	private String _getDefaultTestBatchRunPropertyQuery() {
-		List<String> propertyNames = new ArrayList<>();
-
-		if (testSuiteName != null) {
-			propertyNames.add(
-				getWildcardPropertyName(
-					portalTestProperties, "test.batch.run.property.query",
-					testSuiteName));
-
-			propertyNames.add(
-				JenkinsResultsParserUtil.combine(
-					"test.batch.run.property.query[", testSuiteName, "]"));
-		}
-
-		propertyNames.add(
-			getWildcardPropertyName(
-				portalTestProperties, "test.batch.run.property.query"));
-
-		propertyNames.add(
-			JenkinsResultsParserUtil.combine(
-				"test.batch.run.property.query[", batchName, "]"));
-
-		propertyNames.add("test.batch.run.property.query");
-
-		return getFirstPropertyValue(portalTestProperties, propertyNames);
+		return getFirstPropertyValue("test.batch.run.property.query");
 	}
 
 	private void _setRelevantTestBatchRunPropertyQuery() {
@@ -85,9 +61,6 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 			return;
 		}
 
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			(PortalGitWorkingDirectory)gitWorkingDirectory;
-
 		List<File> modifiedModuleDirsList = null;
 
 		try {
@@ -95,7 +68,8 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 				portalGitWorkingDirectory.getModifiedModuleDirsList();
 		}
 		catch (IOException ioe) {
-			File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
+			File workingDirectory =
+				portalGitWorkingDirectory.getWorkingDirectory();
 
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(

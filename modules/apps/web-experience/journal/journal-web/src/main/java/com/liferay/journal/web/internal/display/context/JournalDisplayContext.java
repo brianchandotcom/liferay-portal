@@ -177,7 +177,7 @@ public class JournalDisplayContext {
 							StringBundler.concat(
 								"javascript:Liferay.fire('",
 								_liferayPortletResponse.getNamespace(),
-								"editEntry', {action: 'expireEntries']);",
+								"editEntry', {action: 'expireEntries'});",
 								"void(0);"));
 						dropdownItem.setIcon("time");
 						dropdownItem.setLabel("expire");
@@ -190,7 +190,7 @@ public class JournalDisplayContext {
 							StringBundler.concat(
 								"javascript:Liferay.fire('",
 								_liferayPortletResponse.getNamespace(),
-								"editEntry', {action: 'moveEntries']);",
+								"editEntry', {action: 'moveEntries'});",
 								"void(0);"));
 						dropdownItem.setIcon("change");
 						dropdownItem.setLabel("move");

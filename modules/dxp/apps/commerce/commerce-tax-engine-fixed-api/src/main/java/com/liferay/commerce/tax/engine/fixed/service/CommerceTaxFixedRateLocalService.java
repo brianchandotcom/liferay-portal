@@ -73,7 +73,7 @@ public interface CommerceTaxFixedRateLocalService extends BaseLocalService,
 		CommerceTaxFixedRate commerceTaxFixedRate);
 
 	public CommerceTaxFixedRate addCommerceTaxFixedRate(
-		long commerceTaxMethodId, long commerceTaxCategoryId, double rate,
+		long commerceTaxMethodId, long cpTaxCategoryId, double rate,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -106,11 +106,11 @@ public interface CommerceTaxFixedRateLocalService extends BaseLocalService,
 	public CommerceTaxFixedRate deleteCommerceTaxFixedRate(
 		long commerceTaxFixedRateId) throws PortalException;
 
-	public void deleteCommerceTaxFixedRateByCommerceTaxCategoryId(
-		long commerceTaxCategoryId);
-
 	public void deleteCommerceTaxFixedRateByCommerceTaxMethodId(
 		long commerceTaxMethodId);
+
+	public void deleteCommerceTaxFixedRateByCPTaxCategoryId(
+		long cpTaxCategoryId);
 
 	/**
 	* @throws PortalException
@@ -183,8 +183,8 @@ public interface CommerceTaxFixedRateLocalService extends BaseLocalService,
 		long commerceTaxFixedRateId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceTaxFixedRate fetchCommerceTaxFixedRateByCTC_CTM(
-		long commerceTaxCategoryId, long commerceTaxMethodId)
+	public CommerceTaxFixedRate fetchCommerceTaxFixedRate(
+		long cpTaxCategoryId, long commerceTaxMethodId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -202,9 +202,8 @@ public interface CommerceTaxFixedRateLocalService extends BaseLocalService,
 		long commerceTaxFixedRateId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceTaxFixedRate getCommerceTaxFixedRateByCTC_CTM(
-		long commerceTaxCategoryId, long commerceTaxMethodId)
-		throws PortalException;
+	public CommerceTaxFixedRate getCommerceTaxFixedRate(long cpTaxCategoryId,
+		long commerceTaxMethodId) throws PortalException;
 
 	/**
 	* Returns a range of all the commerce tax fixed rates.

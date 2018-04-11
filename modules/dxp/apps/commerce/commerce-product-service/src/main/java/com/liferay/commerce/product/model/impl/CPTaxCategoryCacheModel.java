@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.commerce.model.impl;
+package com.liferay.commerce.product.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.model.CommerceTaxCategory;
+import com.liferay.commerce.product.model.CPTaxCategory;
 
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
@@ -30,14 +30,14 @@ import java.io.ObjectOutput;
 import java.util.Date;
 
 /**
- * The cache model class for representing CommerceTaxCategory in entity cache.
+ * The cache model class for representing CPTaxCategory in entity cache.
  *
- * @author Alessio Antonio Rendina
- * @see CommerceTaxCategory
+ * @author Marco Leo
+ * @see CPTaxCategory
  * @generated
  */
 @ProviderType
-public class CommerceTaxCategoryCacheModel implements CacheModel<CommerceTaxCategory>,
+public class CPTaxCategoryCacheModel implements CacheModel<CPTaxCategory>,
 	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
@@ -45,13 +45,13 @@ public class CommerceTaxCategoryCacheModel implements CacheModel<CommerceTaxCate
 			return true;
 		}
 
-		if (!(obj instanceof CommerceTaxCategoryCacheModel)) {
+		if (!(obj instanceof CPTaxCategoryCacheModel)) {
 			return false;
 		}
 
-		CommerceTaxCategoryCacheModel commerceTaxCategoryCacheModel = (CommerceTaxCategoryCacheModel)obj;
+		CPTaxCategoryCacheModel cpTaxCategoryCacheModel = (CPTaxCategoryCacheModel)obj;
 
-		if (commerceTaxCategoryId == commerceTaxCategoryCacheModel.commerceTaxCategoryId) {
+		if (CPTaxCategoryId == cpTaxCategoryCacheModel.CPTaxCategoryId) {
 			return true;
 		}
 
@@ -60,15 +60,15 @@ public class CommerceTaxCategoryCacheModel implements CacheModel<CommerceTaxCate
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, commerceTaxCategoryId);
+		return HashUtil.hash(0, CPTaxCategoryId);
 	}
 
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(19);
 
-		sb.append("{commerceTaxCategoryId=");
-		sb.append(commerceTaxCategoryId);
+		sb.append("{CPTaxCategoryId=");
+		sb.append(CPTaxCategoryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
@@ -91,57 +91,57 @@ public class CommerceTaxCategoryCacheModel implements CacheModel<CommerceTaxCate
 	}
 
 	@Override
-	public CommerceTaxCategory toEntityModel() {
-		CommerceTaxCategoryImpl commerceTaxCategoryImpl = new CommerceTaxCategoryImpl();
+	public CPTaxCategory toEntityModel() {
+		CPTaxCategoryImpl cpTaxCategoryImpl = new CPTaxCategoryImpl();
 
-		commerceTaxCategoryImpl.setCommerceTaxCategoryId(commerceTaxCategoryId);
-		commerceTaxCategoryImpl.setGroupId(groupId);
-		commerceTaxCategoryImpl.setCompanyId(companyId);
-		commerceTaxCategoryImpl.setUserId(userId);
+		cpTaxCategoryImpl.setCPTaxCategoryId(CPTaxCategoryId);
+		cpTaxCategoryImpl.setGroupId(groupId);
+		cpTaxCategoryImpl.setCompanyId(companyId);
+		cpTaxCategoryImpl.setUserId(userId);
 
 		if (userName == null) {
-			commerceTaxCategoryImpl.setUserName("");
+			cpTaxCategoryImpl.setUserName("");
 		}
 		else {
-			commerceTaxCategoryImpl.setUserName(userName);
+			cpTaxCategoryImpl.setUserName(userName);
 		}
 
 		if (createDate == Long.MIN_VALUE) {
-			commerceTaxCategoryImpl.setCreateDate(null);
+			cpTaxCategoryImpl.setCreateDate(null);
 		}
 		else {
-			commerceTaxCategoryImpl.setCreateDate(new Date(createDate));
+			cpTaxCategoryImpl.setCreateDate(new Date(createDate));
 		}
 
 		if (modifiedDate == Long.MIN_VALUE) {
-			commerceTaxCategoryImpl.setModifiedDate(null);
+			cpTaxCategoryImpl.setModifiedDate(null);
 		}
 		else {
-			commerceTaxCategoryImpl.setModifiedDate(new Date(modifiedDate));
+			cpTaxCategoryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
 		if (name == null) {
-			commerceTaxCategoryImpl.setName("");
+			cpTaxCategoryImpl.setName("");
 		}
 		else {
-			commerceTaxCategoryImpl.setName(name);
+			cpTaxCategoryImpl.setName(name);
 		}
 
 		if (description == null) {
-			commerceTaxCategoryImpl.setDescription("");
+			cpTaxCategoryImpl.setDescription("");
 		}
 		else {
-			commerceTaxCategoryImpl.setDescription(description);
+			cpTaxCategoryImpl.setDescription(description);
 		}
 
-		commerceTaxCategoryImpl.resetOriginalValues();
+		cpTaxCategoryImpl.resetOriginalValues();
 
-		return commerceTaxCategoryImpl;
+		return cpTaxCategoryImpl;
 	}
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		commerceTaxCategoryId = objectInput.readLong();
+		CPTaxCategoryId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
 
@@ -158,7 +158,7 @@ public class CommerceTaxCategoryCacheModel implements CacheModel<CommerceTaxCate
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(commerceTaxCategoryId);
+		objectOutput.writeLong(CPTaxCategoryId);
 
 		objectOutput.writeLong(groupId);
 
@@ -191,7 +191,7 @@ public class CommerceTaxCategoryCacheModel implements CacheModel<CommerceTaxCate
 		}
 	}
 
-	public long commerceTaxCategoryId;
+	public long CPTaxCategoryId;
 	public long groupId;
 	public long companyId;
 	public long userId;

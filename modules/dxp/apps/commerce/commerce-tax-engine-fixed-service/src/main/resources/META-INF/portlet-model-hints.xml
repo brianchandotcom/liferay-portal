@@ -9,7 +9,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="commerceTaxCategoryId" type="long">
+		<field name="CPTaxCategoryId" type="long">
 			<validator name="required" />
 		</field>
 		<field name="commerceTaxMethodId" type="long" />
@@ -24,7 +24,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="commerceTaxMethodId" type="long" />
-		<field name="commerceTaxCategoryId" type="long">
+		<field name="CPTaxCategoryId" type="long">
 			<validator name="required" />
 		</field>
 		<field name="commerceCountryId" type="long" />

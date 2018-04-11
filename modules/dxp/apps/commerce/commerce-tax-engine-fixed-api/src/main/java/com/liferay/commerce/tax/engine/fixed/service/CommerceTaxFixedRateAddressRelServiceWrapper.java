@@ -36,14 +36,13 @@ public class CommerceTaxFixedRateAddressRelServiceWrapper
 
 	@Override
 	public com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
-		long commerceTaxMethodId, long commerceTaxCategoryId,
-		long commerceCountryId, long commerceRegionId, java.lang.String zip,
-		double rate,
+		long commerceTaxMethodId, long cpTaxCategoryId, long commerceCountryId,
+		long commerceRegionId, java.lang.String zip, double rate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceTaxFixedRateAddressRelService.addCommerceTaxFixedRateAddressRel(commerceTaxMethodId,
-			commerceTaxCategoryId, commerceCountryId, commerceRegionId, zip,
-			rate, serviceContext);
+			cpTaxCategoryId, commerceCountryId, commerceRegionId, zip, rate,
+			serviceContext);
 	}
 
 	@Override

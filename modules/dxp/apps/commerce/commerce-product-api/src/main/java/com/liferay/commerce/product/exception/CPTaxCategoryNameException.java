@@ -12,30 +12,30 @@
  * details.
  */
 
-package com.liferay.commerce.exception;
+package com.liferay.commerce.product.exception;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  */
 @ProviderType
-public class NoSuchTaxCategoryException extends NoSuchModelException {
+public class CPTaxCategoryNameException extends PortalException {
 
-	public NoSuchTaxCategoryException() {
+	public CPTaxCategoryNameException() {
 	}
 
-	public NoSuchTaxCategoryException(String msg) {
+	public CPTaxCategoryNameException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchTaxCategoryException(String msg, Throwable cause) {
+	public CPTaxCategoryNameException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSuchTaxCategoryException(Throwable cause) {
+	public CPTaxCategoryNameException(Throwable cause) {
 		super(cause);
 	}
 

@@ -319,31 +319,6 @@ create table CommerceShippingMethod (
 	active_ BOOLEAN
 );
 
-create table CommerceTaxCategory (
-	commerceTaxCategoryId LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	name STRING null,
-	description STRING null
-);
-
-create table CommerceTaxCategoryRel (
-	commerceTaxCategoryRelId LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	commerceTaxCategoryId LONG,
-	classNameId LONG,
-	classPK LONG
-);
-
 create table CommerceTaxMethod (
 	commerceTaxMethodId LONG not null primary key,
 	groupId LONG,

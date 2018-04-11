@@ -193,18 +193,18 @@ public interface CommerceTaxFixedRateModel extends BaseModel<CommerceTaxFixedRat
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the commerce tax category ID of this commerce tax fixed rate.
+	 * Returns the cp tax category ID of this commerce tax fixed rate.
 	 *
-	 * @return the commerce tax category ID of this commerce tax fixed rate
+	 * @return the cp tax category ID of this commerce tax fixed rate
 	 */
-	public long getCommerceTaxCategoryId();
+	public long getCPTaxCategoryId();
 
 	/**
-	 * Sets the commerce tax category ID of this commerce tax fixed rate.
+	 * Sets the cp tax category ID of this commerce tax fixed rate.
 	 *
-	 * @param commerceTaxCategoryId the commerce tax category ID of this commerce tax fixed rate
+	 * @param CPTaxCategoryId the cp tax category ID of this commerce tax fixed rate
 	 */
-	public void setCommerceTaxCategoryId(long commerceTaxCategoryId);
+	public void setCPTaxCategoryId(long CPTaxCategoryId);
 
 	/**
 	 * Returns the commerce tax method ID of this commerce tax fixed rate.

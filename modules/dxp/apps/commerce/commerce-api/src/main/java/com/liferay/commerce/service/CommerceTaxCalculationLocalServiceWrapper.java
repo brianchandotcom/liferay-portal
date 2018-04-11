@@ -36,9 +36,9 @@ public class CommerceTaxCalculationLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceTaxRate> getCommerceTaxRates(
-		long siteGroupId, long userId, long commerceTaxCategoryId) {
+		long siteGroupId, long userId, long cpTaxCategoryId) {
 		return _commerceTaxCalculationLocalService.getCommerceTaxRates(siteGroupId,
-			userId, commerceTaxCategoryId);
+			userId, cpTaxCategoryId);
 	}
 
 	/**

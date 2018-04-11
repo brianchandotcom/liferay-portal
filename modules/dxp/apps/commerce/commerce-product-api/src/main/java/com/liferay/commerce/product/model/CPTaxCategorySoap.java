@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.model;
+package com.liferay.commerce.product.model;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -23,18 +23,18 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.service.http.CommerceTaxCategoryServiceSoap}.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.product.service.http.CPTaxCategoryServiceSoap}.
  *
- * @author Alessio Antonio Rendina
- * @see com.liferay.commerce.service.http.CommerceTaxCategoryServiceSoap
+ * @author Marco Leo
+ * @see com.liferay.commerce.product.service.http.CPTaxCategoryServiceSoap
  * @generated
  */
 @ProviderType
-public class CommerceTaxCategorySoap implements Serializable {
-	public static CommerceTaxCategorySoap toSoapModel(CommerceTaxCategory model) {
-		CommerceTaxCategorySoap soapModel = new CommerceTaxCategorySoap();
+public class CPTaxCategorySoap implements Serializable {
+	public static CPTaxCategorySoap toSoapModel(CPTaxCategory model) {
+		CPTaxCategorySoap soapModel = new CPTaxCategorySoap();
 
-		soapModel.setCommerceTaxCategoryId(model.getCommerceTaxCategoryId());
+		soapModel.setCPTaxCategoryId(model.getCPTaxCategoryId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -47,9 +47,8 @@ public class CommerceTaxCategorySoap implements Serializable {
 		return soapModel;
 	}
 
-	public static CommerceTaxCategorySoap[] toSoapModels(
-		CommerceTaxCategory[] models) {
-		CommerceTaxCategorySoap[] soapModels = new CommerceTaxCategorySoap[models.length];
+	public static CPTaxCategorySoap[] toSoapModels(CPTaxCategory[] models) {
+		CPTaxCategorySoap[] soapModels = new CPTaxCategorySoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -58,15 +57,14 @@ public class CommerceTaxCategorySoap implements Serializable {
 		return soapModels;
 	}
 
-	public static CommerceTaxCategorySoap[][] toSoapModels(
-		CommerceTaxCategory[][] models) {
-		CommerceTaxCategorySoap[][] soapModels = null;
+	public static CPTaxCategorySoap[][] toSoapModels(CPTaxCategory[][] models) {
+		CPTaxCategorySoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new CommerceTaxCategorySoap[models.length][models[0].length];
+			soapModels = new CPTaxCategorySoap[models.length][models[0].length];
 		}
 		else {
-			soapModels = new CommerceTaxCategorySoap[0][0];
+			soapModels = new CPTaxCategorySoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -76,34 +74,33 @@ public class CommerceTaxCategorySoap implements Serializable {
 		return soapModels;
 	}
 
-	public static CommerceTaxCategorySoap[] toSoapModels(
-		List<CommerceTaxCategory> models) {
-		List<CommerceTaxCategorySoap> soapModels = new ArrayList<CommerceTaxCategorySoap>(models.size());
+	public static CPTaxCategorySoap[] toSoapModels(List<CPTaxCategory> models) {
+		List<CPTaxCategorySoap> soapModels = new ArrayList<CPTaxCategorySoap>(models.size());
 
-		for (CommerceTaxCategory model : models) {
+		for (CPTaxCategory model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new CommerceTaxCategorySoap[soapModels.size()]);
+		return soapModels.toArray(new CPTaxCategorySoap[soapModels.size()]);
 	}
 
-	public CommerceTaxCategorySoap() {
+	public CPTaxCategorySoap() {
 	}
 
 	public long getPrimaryKey() {
-		return _commerceTaxCategoryId;
+		return _CPTaxCategoryId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setCommerceTaxCategoryId(pk);
+		setCPTaxCategoryId(pk);
 	}
 
-	public long getCommerceTaxCategoryId() {
-		return _commerceTaxCategoryId;
+	public long getCPTaxCategoryId() {
+		return _CPTaxCategoryId;
 	}
 
-	public void setCommerceTaxCategoryId(long commerceTaxCategoryId) {
-		_commerceTaxCategoryId = commerceTaxCategoryId;
+	public void setCPTaxCategoryId(long CPTaxCategoryId) {
+		_CPTaxCategoryId = CPTaxCategoryId;
 	}
 
 	public long getGroupId() {
@@ -170,7 +167,7 @@ public class CommerceTaxCategorySoap implements Serializable {
 		_description = description;
 	}
 
-	private long _commerceTaxCategoryId;
+	private long _CPTaxCategoryId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;

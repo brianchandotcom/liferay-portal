@@ -404,6 +404,62 @@ public interface CPDefinitionModel extends BaseModel<CPDefinition>, ShardedModel
 	public void setWeight(double weight);
 
 	/**
+	 * Returns the cp tax category ID of this cp definition.
+	 *
+	 * @return the cp tax category ID of this cp definition
+	 */
+	public long getCPTaxCategoryId();
+
+	/**
+	 * Sets the cp tax category ID of this cp definition.
+	 *
+	 * @param CPTaxCategoryId the cp tax category ID of this cp definition
+	 */
+	public void setCPTaxCategoryId(long CPTaxCategoryId);
+
+	/**
+	 * Returns the tax exempt of this cp definition.
+	 *
+	 * @return the tax exempt of this cp definition
+	 */
+	public boolean getTaxExempt();
+
+	/**
+	 * Returns <code>true</code> if this cp definition is tax exempt.
+	 *
+	 * @return <code>true</code> if this cp definition is tax exempt; <code>false</code> otherwise
+	 */
+	public boolean isTaxExempt();
+
+	/**
+	 * Sets whether this cp definition is tax exempt.
+	 *
+	 * @param taxExempt the tax exempt of this cp definition
+	 */
+	public void setTaxExempt(boolean taxExempt);
+
+	/**
+	 * Returns the telco or electronics of this cp definition.
+	 *
+	 * @return the telco or electronics of this cp definition
+	 */
+	public boolean getTelcoOrElectronics();
+
+	/**
+	 * Returns <code>true</code> if this cp definition is telco or electronics.
+	 *
+	 * @return <code>true</code> if this cp definition is telco or electronics; <code>false</code> otherwise
+	 */
+	public boolean isTelcoOrElectronics();
+
+	/**
+	 * Sets whether this cp definition is telco or electronics.
+	 *
+	 * @param telcoOrElectronics the telco or electronics of this cp definition
+	 */
+	public void setTelcoOrElectronics(boolean telcoOrElectronics);
+
+	/**
 	 * Returns the ddm structure key of this cp definition.
 	 *
 	 * @return the ddm structure key of this cp definition

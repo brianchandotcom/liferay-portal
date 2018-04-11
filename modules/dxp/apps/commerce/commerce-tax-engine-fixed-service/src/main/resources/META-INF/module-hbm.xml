@@ -14,7 +14,7 @@
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="commerceTaxCategoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="CPTaxCategoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="commerceTaxMethodId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="rate" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 	</class>
@@ -29,7 +29,7 @@
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="commerceTaxMethodId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="commerceTaxCategoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="CPTaxCategoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="commerceCountryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="commerceRegionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="zip" type="com.liferay.portal.dao.orm.hibernate.StringType" />

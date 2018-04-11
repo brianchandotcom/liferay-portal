@@ -56,15 +56,14 @@ public class CommerceTaxFixedRateAddressRelLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
-		long commerceTaxMethodId, long commerceTaxCategoryId,
-		long commerceCountryId, long commerceRegionId, java.lang.String zip,
-		double rate,
+		long commerceTaxMethodId, long cpTaxCategoryId, long commerceCountryId,
+		long commerceRegionId, java.lang.String zip, double rate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCommerceTaxFixedRateAddressRel(commerceTaxMethodId,
-			commerceTaxCategoryId, commerceCountryId, commerceRegionId, zip,
-			rate, serviceContext);
+			cpTaxCategoryId, commerceCountryId, commerceRegionId, zip, rate,
+			serviceContext);
 	}
 
 	/**
@@ -105,16 +104,16 @@ public class CommerceTaxFixedRateAddressRelLocalServiceUtil {
 				   .deleteCommerceTaxFixedRateAddressRel(commerceTaxFixedRateAddressRelId);
 	}
 
-	public static void deleteCommerceTaxFixedRateAddressRelsByCommerceTaxCategoryId(
-		long commerceTaxCategoryId) {
-		getService()
-			.deleteCommerceTaxFixedRateAddressRelsByCommerceTaxCategoryId(commerceTaxCategoryId);
-	}
-
 	public static void deleteCommerceTaxFixedRateAddressRelsByCommerceTaxMethodId(
 		long commerceTaxMethodId) {
 		getService()
 			.deleteCommerceTaxFixedRateAddressRelsByCommerceTaxMethodId(commerceTaxMethodId);
+	}
+
+	public static void deleteCommerceTaxFixedRateAddressRelsByCPTaxCategoryId(
+		long cpTaxCategoryId) {
+		getService()
+			.deleteCommerceTaxFixedRateAddressRelsByCPTaxCategoryId(cpTaxCategoryId);
 	}
 
 	/**
@@ -253,18 +252,18 @@ public class CommerceTaxFixedRateAddressRelLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel> getCommerceTaxFixedRateAddressRels(
-		long commerceTaxCategoryId, int start, int end) {
+		long cpTaxCategoryId, int start, int end) {
 		return getService()
-				   .getCommerceTaxFixedRateAddressRels(commerceTaxCategoryId,
-			start, end);
+				   .getCommerceTaxFixedRateAddressRels(cpTaxCategoryId, start,
+			end);
 	}
 
 	public static java.util.List<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel> getCommerceTaxFixedRateAddressRels(
-		long commerceTaxCategoryId, int start, int end,
+		long cpTaxCategoryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel> orderByComparator) {
 		return getService()
-				   .getCommerceTaxFixedRateAddressRels(commerceTaxCategoryId,
-			start, end, orderByComparator);
+				   .getCommerceTaxFixedRateAddressRels(cpTaxCategoryId, start,
+			end, orderByComparator);
 	}
 
 	/**
@@ -277,9 +276,9 @@ public class CommerceTaxFixedRateAddressRelLocalServiceUtil {
 	}
 
 	public static int getCommerceTaxFixedRateAddressRelsCount(
-		long commerceTaxCategoryId) {
+		long cpTaxCategoryId) {
 		return getService()
-				   .getCommerceTaxFixedRateAddressRelsCount(commerceTaxCategoryId);
+				   .getCommerceTaxFixedRateAddressRelsCount(cpTaxCategoryId);
 	}
 
 	public static java.util.List<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel> getCommerceTaxMethodFixedRateAddressRels(

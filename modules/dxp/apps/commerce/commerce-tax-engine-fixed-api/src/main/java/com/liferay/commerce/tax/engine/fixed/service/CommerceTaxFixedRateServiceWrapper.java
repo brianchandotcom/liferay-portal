@@ -36,11 +36,11 @@ public class CommerceTaxFixedRateServiceWrapper
 
 	@Override
 	public com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate addCommerceTaxFixedRate(
-		long commerceTaxMethodId, long commerceTaxCategoryId, double rate,
+		long commerceTaxMethodId, long cpTaxCategoryId, double rate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceTaxFixedRateService.addCommerceTaxFixedRate(commerceTaxMethodId,
-			commerceTaxCategoryId, rate, serviceContext);
+			cpTaxCategoryId, rate, serviceContext);
 	}
 
 	@Override
@@ -57,10 +57,10 @@ public class CommerceTaxFixedRateServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate fetchCommerceTaxFixedRateByCTC_CTM(
-		long commerceTaxCategoryId, long commerceTaxMethodId)
+	public com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate fetchCommerceTaxFixedRate(
+		long cpTaxCategoryId, long commerceTaxMethodId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceTaxFixedRateService.fetchCommerceTaxFixedRateByCTC_CTM(commerceTaxCategoryId,
+		return _commerceTaxFixedRateService.fetchCommerceTaxFixedRate(cpTaxCategoryId,
 			commerceTaxMethodId);
 	}
 

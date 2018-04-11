@@ -50,7 +50,7 @@ public interface CommerceTaxCalculationLocalService extends BaseLocalService {
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceTaxRate> getCommerceTaxRates(long siteGroupId,
-		long userId, long commerceTaxCategoryId);
+		long userId, long cpTaxCategoryId);
 
 	/**
 	* Returns the OSGi service identifier.

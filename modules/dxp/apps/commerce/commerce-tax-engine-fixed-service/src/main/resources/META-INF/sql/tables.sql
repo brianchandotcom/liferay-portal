@@ -6,7 +6,7 @@ create table CommerceTaxFixedRate (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	commerceTaxCategoryId LONG,
+	CPTaxCategoryId LONG,
 	commerceTaxMethodId LONG,
 	rate DOUBLE
 );
@@ -20,7 +20,7 @@ create table CommerceTaxFixedRateAddressRel (
 	createDate DATE null,
 	modifiedDate DATE null,
 	commerceTaxMethodId LONG,
-	commerceTaxCategoryId LONG,
+	CPTaxCategoryId LONG,
 	commerceCountryId LONG,
 	commerceRegionId LONG,
 	zip VARCHAR(75) null,

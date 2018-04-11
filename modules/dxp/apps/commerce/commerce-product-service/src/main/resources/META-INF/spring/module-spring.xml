@@ -53,4 +53,7 @@
 	<bean class="com.liferay.commerce.product.service.impl.CPSpecificationOptionLocalServiceImpl" id="com.liferay.commerce.product.service.CPSpecificationOptionLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPSpecificationOptionServiceImpl" id="com.liferay.commerce.product.service.CPSpecificationOptionService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPSpecificationOptionPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPSpecificationOptionPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.product.service.impl.CPTaxCategoryLocalServiceImpl" id="com.liferay.commerce.product.service.CPTaxCategoryLocalService" />
+	<bean class="com.liferay.commerce.product.service.impl.CPTaxCategoryServiceImpl" id="com.liferay.commerce.product.service.CPTaxCategoryService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPTaxCategoryPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPTaxCategoryPersistence" parent="basePersistence" />
 </beans>

@@ -38,8 +38,6 @@ import com.liferay.commerce.service.persistence.CommerceRegionPersistence;
 import com.liferay.commerce.service.persistence.CommerceShipmentItemPersistence;
 import com.liferay.commerce.service.persistence.CommerceShipmentPersistence;
 import com.liferay.commerce.service.persistence.CommerceShippingMethodPersistence;
-import com.liferay.commerce.service.persistence.CommerceTaxCategoryPersistence;
-import com.liferay.commerce.service.persistence.CommerceTaxCategoryRelPersistence;
 import com.liferay.commerce.service.persistence.CommerceTaxMethodPersistence;
 import com.liferay.commerce.service.persistence.CommerceTierPriceEntryPersistence;
 import com.liferay.commerce.service.persistence.CommerceWarehouseFinder;
@@ -789,82 +787,6 @@ public abstract class CommercePriceCalculationLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the commerce tax category local service.
-	 *
-	 * @return the commerce tax category local service
-	 */
-	public com.liferay.commerce.service.CommerceTaxCategoryLocalService getCommerceTaxCategoryLocalService() {
-		return commerceTaxCategoryLocalService;
-	}
-
-	/**
-	 * Sets the commerce tax category local service.
-	 *
-	 * @param commerceTaxCategoryLocalService the commerce tax category local service
-	 */
-	public void setCommerceTaxCategoryLocalService(
-		com.liferay.commerce.service.CommerceTaxCategoryLocalService commerceTaxCategoryLocalService) {
-		this.commerceTaxCategoryLocalService = commerceTaxCategoryLocalService;
-	}
-
-	/**
-	 * Returns the commerce tax category persistence.
-	 *
-	 * @return the commerce tax category persistence
-	 */
-	public CommerceTaxCategoryPersistence getCommerceTaxCategoryPersistence() {
-		return commerceTaxCategoryPersistence;
-	}
-
-	/**
-	 * Sets the commerce tax category persistence.
-	 *
-	 * @param commerceTaxCategoryPersistence the commerce tax category persistence
-	 */
-	public void setCommerceTaxCategoryPersistence(
-		CommerceTaxCategoryPersistence commerceTaxCategoryPersistence) {
-		this.commerceTaxCategoryPersistence = commerceTaxCategoryPersistence;
-	}
-
-	/**
-	 * Returns the commerce tax category rel local service.
-	 *
-	 * @return the commerce tax category rel local service
-	 */
-	public com.liferay.commerce.service.CommerceTaxCategoryRelLocalService getCommerceTaxCategoryRelLocalService() {
-		return commerceTaxCategoryRelLocalService;
-	}
-
-	/**
-	 * Sets the commerce tax category rel local service.
-	 *
-	 * @param commerceTaxCategoryRelLocalService the commerce tax category rel local service
-	 */
-	public void setCommerceTaxCategoryRelLocalService(
-		com.liferay.commerce.service.CommerceTaxCategoryRelLocalService commerceTaxCategoryRelLocalService) {
-		this.commerceTaxCategoryRelLocalService = commerceTaxCategoryRelLocalService;
-	}
-
-	/**
-	 * Returns the commerce tax category rel persistence.
-	 *
-	 * @return the commerce tax category rel persistence
-	 */
-	public CommerceTaxCategoryRelPersistence getCommerceTaxCategoryRelPersistence() {
-		return commerceTaxCategoryRelPersistence;
-	}
-
-	/**
-	 * Sets the commerce tax category rel persistence.
-	 *
-	 * @param commerceTaxCategoryRelPersistence the commerce tax category rel persistence
-	 */
-	public void setCommerceTaxCategoryRelPersistence(
-		CommerceTaxCategoryRelPersistence commerceTaxCategoryRelPersistence) {
-		this.commerceTaxCategoryRelPersistence = commerceTaxCategoryRelPersistence;
-	}
-
-	/**
 	 * Returns the commerce tax method local service.
 	 *
 	 * @return the commerce tax method local service
@@ -1357,14 +1279,6 @@ public abstract class CommercePriceCalculationLocalServiceBaseImpl
 	protected CommerceShippingMethodPersistence commerceShippingMethodPersistence;
 	@BeanReference(type = com.liferay.commerce.service.CommerceTaxCalculationLocalService.class)
 	protected com.liferay.commerce.service.CommerceTaxCalculationLocalService commerceTaxCalculationLocalService;
-	@BeanReference(type = com.liferay.commerce.service.CommerceTaxCategoryLocalService.class)
-	protected com.liferay.commerce.service.CommerceTaxCategoryLocalService commerceTaxCategoryLocalService;
-	@BeanReference(type = CommerceTaxCategoryPersistence.class)
-	protected CommerceTaxCategoryPersistence commerceTaxCategoryPersistence;
-	@BeanReference(type = com.liferay.commerce.service.CommerceTaxCategoryRelLocalService.class)
-	protected com.liferay.commerce.service.CommerceTaxCategoryRelLocalService commerceTaxCategoryRelLocalService;
-	@BeanReference(type = CommerceTaxCategoryRelPersistence.class)
-	protected CommerceTaxCategoryRelPersistence commerceTaxCategoryRelPersistence;
 	@BeanReference(type = com.liferay.commerce.service.CommerceTaxMethodLocalService.class)
 	protected com.liferay.commerce.service.CommerceTaxMethodLocalService commerceTaxMethodLocalService;
 	@BeanReference(type = CommerceTaxMethodPersistence.class)

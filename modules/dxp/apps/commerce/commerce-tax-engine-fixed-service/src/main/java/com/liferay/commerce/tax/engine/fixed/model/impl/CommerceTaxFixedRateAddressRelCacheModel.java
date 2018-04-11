@@ -84,8 +84,8 @@ public class CommerceTaxFixedRateAddressRelCacheModel implements CacheModel<Comm
 		sb.append(modifiedDate);
 		sb.append(", commerceTaxMethodId=");
 		sb.append(commerceTaxMethodId);
-		sb.append(", commerceTaxCategoryId=");
-		sb.append(commerceTaxCategoryId);
+		sb.append(", CPTaxCategoryId=");
+		sb.append(CPTaxCategoryId);
 		sb.append(", commerceCountryId=");
 		sb.append(commerceCountryId);
 		sb.append(", commerceRegionId=");
@@ -132,7 +132,7 @@ public class CommerceTaxFixedRateAddressRelCacheModel implements CacheModel<Comm
 		}
 
 		commerceTaxFixedRateAddressRelImpl.setCommerceTaxMethodId(commerceTaxMethodId);
-		commerceTaxFixedRateAddressRelImpl.setCommerceTaxCategoryId(commerceTaxCategoryId);
+		commerceTaxFixedRateAddressRelImpl.setCPTaxCategoryId(CPTaxCategoryId);
 		commerceTaxFixedRateAddressRelImpl.setCommerceCountryId(commerceCountryId);
 		commerceTaxFixedRateAddressRelImpl.setCommerceRegionId(commerceRegionId);
 
@@ -165,7 +165,7 @@ public class CommerceTaxFixedRateAddressRelCacheModel implements CacheModel<Comm
 
 		commerceTaxMethodId = objectInput.readLong();
 
-		commerceTaxCategoryId = objectInput.readLong();
+		CPTaxCategoryId = objectInput.readLong();
 
 		commerceCountryId = objectInput.readLong();
 
@@ -198,7 +198,7 @@ public class CommerceTaxFixedRateAddressRelCacheModel implements CacheModel<Comm
 
 		objectOutput.writeLong(commerceTaxMethodId);
 
-		objectOutput.writeLong(commerceTaxCategoryId);
+		objectOutput.writeLong(CPTaxCategoryId);
 
 		objectOutput.writeLong(commerceCountryId);
 
@@ -222,7 +222,7 @@ public class CommerceTaxFixedRateAddressRelCacheModel implements CacheModel<Comm
 	public long createDate;
 	public long modifiedDate;
 	public long commerceTaxMethodId;
-	public long commerceTaxCategoryId;
+	public long CPTaxCategoryId;
 	public long commerceCountryId;
 	public long commerceRegionId;
 	public String zip;

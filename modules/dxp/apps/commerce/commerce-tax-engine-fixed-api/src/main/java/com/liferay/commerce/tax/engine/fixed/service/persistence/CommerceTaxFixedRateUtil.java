@@ -114,180 +114,177 @@ public class CommerceTaxFixedRateUtil {
 	}
 
 	/**
-	* Returns all the commerce tax fixed rates where commerceTaxCategoryId = &#63;.
+	* Returns all the commerce tax fixed rates where CPTaxCategoryId = &#63;.
 	*
-	* @param commerceTaxCategoryId the commerce tax category ID
+	* @param CPTaxCategoryId the cp tax category ID
 	* @return the matching commerce tax fixed rates
 	*/
-	public static List<CommerceTaxFixedRate> findByCommerceTaxCategoryId(
-		long commerceTaxCategoryId) {
-		return getPersistence()
-				   .findByCommerceTaxCategoryId(commerceTaxCategoryId);
+	public static List<CommerceTaxFixedRate> findByCPTaxCategoryId(
+		long CPTaxCategoryId) {
+		return getPersistence().findByCPTaxCategoryId(CPTaxCategoryId);
 	}
 
 	/**
-	* Returns a range of all the commerce tax fixed rates where commerceTaxCategoryId = &#63;.
+	* Returns a range of all the commerce tax fixed rates where CPTaxCategoryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceTaxFixedRateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param commerceTaxCategoryId the commerce tax category ID
+	* @param CPTaxCategoryId the cp tax category ID
 	* @param start the lower bound of the range of commerce tax fixed rates
 	* @param end the upper bound of the range of commerce tax fixed rates (not inclusive)
 	* @return the range of matching commerce tax fixed rates
 	*/
-	public static List<CommerceTaxFixedRate> findByCommerceTaxCategoryId(
-		long commerceTaxCategoryId, int start, int end) {
+	public static List<CommerceTaxFixedRate> findByCPTaxCategoryId(
+		long CPTaxCategoryId, int start, int end) {
 		return getPersistence()
-				   .findByCommerceTaxCategoryId(commerceTaxCategoryId, start,
-			end);
+				   .findByCPTaxCategoryId(CPTaxCategoryId, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the commerce tax fixed rates where commerceTaxCategoryId = &#63;.
+	* Returns an ordered range of all the commerce tax fixed rates where CPTaxCategoryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceTaxFixedRateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param commerceTaxCategoryId the commerce tax category ID
+	* @param CPTaxCategoryId the cp tax category ID
 	* @param start the lower bound of the range of commerce tax fixed rates
 	* @param end the upper bound of the range of commerce tax fixed rates (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching commerce tax fixed rates
 	*/
-	public static List<CommerceTaxFixedRate> findByCommerceTaxCategoryId(
-		long commerceTaxCategoryId, int start, int end,
+	public static List<CommerceTaxFixedRate> findByCPTaxCategoryId(
+		long CPTaxCategoryId, int start, int end,
 		OrderByComparator<CommerceTaxFixedRate> orderByComparator) {
 		return getPersistence()
-				   .findByCommerceTaxCategoryId(commerceTaxCategoryId, start,
-			end, orderByComparator);
+				   .findByCPTaxCategoryId(CPTaxCategoryId, start, end,
+			orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the commerce tax fixed rates where commerceTaxCategoryId = &#63;.
+	* Returns an ordered range of all the commerce tax fixed rates where CPTaxCategoryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceTaxFixedRateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param commerceTaxCategoryId the commerce tax category ID
+	* @param CPTaxCategoryId the cp tax category ID
 	* @param start the lower bound of the range of commerce tax fixed rates
 	* @param end the upper bound of the range of commerce tax fixed rates (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching commerce tax fixed rates
 	*/
-	public static List<CommerceTaxFixedRate> findByCommerceTaxCategoryId(
-		long commerceTaxCategoryId, int start, int end,
+	public static List<CommerceTaxFixedRate> findByCPTaxCategoryId(
+		long CPTaxCategoryId, int start, int end,
 		OrderByComparator<CommerceTaxFixedRate> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .findByCommerceTaxCategoryId(commerceTaxCategoryId, start,
-			end, orderByComparator, retrieveFromCache);
+				   .findByCPTaxCategoryId(CPTaxCategoryId, start, end,
+			orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	* Returns the first commerce tax fixed rate in the ordered set where commerceTaxCategoryId = &#63;.
+	* Returns the first commerce tax fixed rate in the ordered set where CPTaxCategoryId = &#63;.
 	*
-	* @param commerceTaxCategoryId the commerce tax category ID
+	* @param CPTaxCategoryId the cp tax category ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching commerce tax fixed rate
 	* @throws NoSuchTaxFixedRateException if a matching commerce tax fixed rate could not be found
 	*/
-	public static CommerceTaxFixedRate findByCommerceTaxCategoryId_First(
-		long commerceTaxCategoryId,
+	public static CommerceTaxFixedRate findByCPTaxCategoryId_First(
+		long CPTaxCategoryId,
 		OrderByComparator<CommerceTaxFixedRate> orderByComparator)
 		throws com.liferay.commerce.tax.engine.fixed.exception.NoSuchTaxFixedRateException {
 		return getPersistence()
-				   .findByCommerceTaxCategoryId_First(commerceTaxCategoryId,
+				   .findByCPTaxCategoryId_First(CPTaxCategoryId,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the first commerce tax fixed rate in the ordered set where commerceTaxCategoryId = &#63;.
+	* Returns the first commerce tax fixed rate in the ordered set where CPTaxCategoryId = &#63;.
 	*
-	* @param commerceTaxCategoryId the commerce tax category ID
+	* @param CPTaxCategoryId the cp tax category ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching commerce tax fixed rate, or <code>null</code> if a matching commerce tax fixed rate could not be found
 	*/
-	public static CommerceTaxFixedRate fetchByCommerceTaxCategoryId_First(
-		long commerceTaxCategoryId,
+	public static CommerceTaxFixedRate fetchByCPTaxCategoryId_First(
+		long CPTaxCategoryId,
 		OrderByComparator<CommerceTaxFixedRate> orderByComparator) {
 		return getPersistence()
-				   .fetchByCommerceTaxCategoryId_First(commerceTaxCategoryId,
+				   .fetchByCPTaxCategoryId_First(CPTaxCategoryId,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the last commerce tax fixed rate in the ordered set where commerceTaxCategoryId = &#63;.
+	* Returns the last commerce tax fixed rate in the ordered set where CPTaxCategoryId = &#63;.
 	*
-	* @param commerceTaxCategoryId the commerce tax category ID
+	* @param CPTaxCategoryId the cp tax category ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching commerce tax fixed rate
 	* @throws NoSuchTaxFixedRateException if a matching commerce tax fixed rate could not be found
 	*/
-	public static CommerceTaxFixedRate findByCommerceTaxCategoryId_Last(
-		long commerceTaxCategoryId,
+	public static CommerceTaxFixedRate findByCPTaxCategoryId_Last(
+		long CPTaxCategoryId,
 		OrderByComparator<CommerceTaxFixedRate> orderByComparator)
 		throws com.liferay.commerce.tax.engine.fixed.exception.NoSuchTaxFixedRateException {
 		return getPersistence()
-				   .findByCommerceTaxCategoryId_Last(commerceTaxCategoryId,
+				   .findByCPTaxCategoryId_Last(CPTaxCategoryId,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the last commerce tax fixed rate in the ordered set where commerceTaxCategoryId = &#63;.
+	* Returns the last commerce tax fixed rate in the ordered set where CPTaxCategoryId = &#63;.
 	*
-	* @param commerceTaxCategoryId the commerce tax category ID
+	* @param CPTaxCategoryId the cp tax category ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching commerce tax fixed rate, or <code>null</code> if a matching commerce tax fixed rate could not be found
 	*/
-	public static CommerceTaxFixedRate fetchByCommerceTaxCategoryId_Last(
-		long commerceTaxCategoryId,
+	public static CommerceTaxFixedRate fetchByCPTaxCategoryId_Last(
+		long CPTaxCategoryId,
 		OrderByComparator<CommerceTaxFixedRate> orderByComparator) {
 		return getPersistence()
-				   .fetchByCommerceTaxCategoryId_Last(commerceTaxCategoryId,
+				   .fetchByCPTaxCategoryId_Last(CPTaxCategoryId,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the commerce tax fixed rates before and after the current commerce tax fixed rate in the ordered set where commerceTaxCategoryId = &#63;.
+	* Returns the commerce tax fixed rates before and after the current commerce tax fixed rate in the ordered set where CPTaxCategoryId = &#63;.
 	*
 	* @param commerceTaxFixedRateId the primary key of the current commerce tax fixed rate
-	* @param commerceTaxCategoryId the commerce tax category ID
+	* @param CPTaxCategoryId the cp tax category ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next commerce tax fixed rate
 	* @throws NoSuchTaxFixedRateException if a commerce tax fixed rate with the primary key could not be found
 	*/
-	public static CommerceTaxFixedRate[] findByCommerceTaxCategoryId_PrevAndNext(
-		long commerceTaxFixedRateId, long commerceTaxCategoryId,
+	public static CommerceTaxFixedRate[] findByCPTaxCategoryId_PrevAndNext(
+		long commerceTaxFixedRateId, long CPTaxCategoryId,
 		OrderByComparator<CommerceTaxFixedRate> orderByComparator)
 		throws com.liferay.commerce.tax.engine.fixed.exception.NoSuchTaxFixedRateException {
 		return getPersistence()
-				   .findByCommerceTaxCategoryId_PrevAndNext(commerceTaxFixedRateId,
-			commerceTaxCategoryId, orderByComparator);
+				   .findByCPTaxCategoryId_PrevAndNext(commerceTaxFixedRateId,
+			CPTaxCategoryId, orderByComparator);
 	}
 
 	/**
-	* Removes all the commerce tax fixed rates where commerceTaxCategoryId = &#63; from the database.
+	* Removes all the commerce tax fixed rates where CPTaxCategoryId = &#63; from the database.
 	*
-	* @param commerceTaxCategoryId the commerce tax category ID
+	* @param CPTaxCategoryId the cp tax category ID
 	*/
-	public static void removeByCommerceTaxCategoryId(long commerceTaxCategoryId) {
-		getPersistence().removeByCommerceTaxCategoryId(commerceTaxCategoryId);
+	public static void removeByCPTaxCategoryId(long CPTaxCategoryId) {
+		getPersistence().removeByCPTaxCategoryId(CPTaxCategoryId);
 	}
 
 	/**
-	* Returns the number of commerce tax fixed rates where commerceTaxCategoryId = &#63;.
+	* Returns the number of commerce tax fixed rates where CPTaxCategoryId = &#63;.
 	*
-	* @param commerceTaxCategoryId the commerce tax category ID
+	* @param CPTaxCategoryId the cp tax category ID
 	* @return the number of matching commerce tax fixed rates
 	*/
-	public static int countByCommerceTaxCategoryId(long commerceTaxCategoryId) {
-		return getPersistence()
-				   .countByCommerceTaxCategoryId(commerceTaxCategoryId);
+	public static int countByCPTaxCategoryId(long CPTaxCategoryId) {
+		return getPersistence().countByCPTaxCategoryId(CPTaxCategoryId);
 	}
 
 	/**
@@ -465,74 +462,68 @@ public class CommerceTaxFixedRateUtil {
 	}
 
 	/**
-	* Returns the commerce tax fixed rate where commerceTaxCategoryId = &#63; and commerceTaxMethodId = &#63; or throws a {@link NoSuchTaxFixedRateException} if it could not be found.
+	* Returns the commerce tax fixed rate where CPTaxCategoryId = &#63; and commerceTaxMethodId = &#63; or throws a {@link NoSuchTaxFixedRateException} if it could not be found.
 	*
-	* @param commerceTaxCategoryId the commerce tax category ID
+	* @param CPTaxCategoryId the cp tax category ID
 	* @param commerceTaxMethodId the commerce tax method ID
 	* @return the matching commerce tax fixed rate
 	* @throws NoSuchTaxFixedRateException if a matching commerce tax fixed rate could not be found
 	*/
-	public static CommerceTaxFixedRate findByCTC_CTM(
-		long commerceTaxCategoryId, long commerceTaxMethodId)
+	public static CommerceTaxFixedRate findByC_C(long CPTaxCategoryId,
+		long commerceTaxMethodId)
 		throws com.liferay.commerce.tax.engine.fixed.exception.NoSuchTaxFixedRateException {
-		return getPersistence()
-				   .findByCTC_CTM(commerceTaxCategoryId, commerceTaxMethodId);
+		return getPersistence().findByC_C(CPTaxCategoryId, commerceTaxMethodId);
 	}
 
 	/**
-	* Returns the commerce tax fixed rate where commerceTaxCategoryId = &#63; and commerceTaxMethodId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the commerce tax fixed rate where CPTaxCategoryId = &#63; and commerceTaxMethodId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
-	* @param commerceTaxCategoryId the commerce tax category ID
+	* @param CPTaxCategoryId the cp tax category ID
 	* @param commerceTaxMethodId the commerce tax method ID
 	* @return the matching commerce tax fixed rate, or <code>null</code> if a matching commerce tax fixed rate could not be found
 	*/
-	public static CommerceTaxFixedRate fetchByCTC_CTM(
-		long commerceTaxCategoryId, long commerceTaxMethodId) {
-		return getPersistence()
-				   .fetchByCTC_CTM(commerceTaxCategoryId, commerceTaxMethodId);
+	public static CommerceTaxFixedRate fetchByC_C(long CPTaxCategoryId,
+		long commerceTaxMethodId) {
+		return getPersistence().fetchByC_C(CPTaxCategoryId, commerceTaxMethodId);
 	}
 
 	/**
-	* Returns the commerce tax fixed rate where commerceTaxCategoryId = &#63; and commerceTaxMethodId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the commerce tax fixed rate where CPTaxCategoryId = &#63; and commerceTaxMethodId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
-	* @param commerceTaxCategoryId the commerce tax category ID
+	* @param CPTaxCategoryId the cp tax category ID
 	* @param commerceTaxMethodId the commerce tax method ID
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching commerce tax fixed rate, or <code>null</code> if a matching commerce tax fixed rate could not be found
 	*/
-	public static CommerceTaxFixedRate fetchByCTC_CTM(
-		long commerceTaxCategoryId, long commerceTaxMethodId,
-		boolean retrieveFromCache) {
+	public static CommerceTaxFixedRate fetchByC_C(long CPTaxCategoryId,
+		long commerceTaxMethodId, boolean retrieveFromCache) {
 		return getPersistence()
-				   .fetchByCTC_CTM(commerceTaxCategoryId, commerceTaxMethodId,
+				   .fetchByC_C(CPTaxCategoryId, commerceTaxMethodId,
 			retrieveFromCache);
 	}
 
 	/**
-	* Removes the commerce tax fixed rate where commerceTaxCategoryId = &#63; and commerceTaxMethodId = &#63; from the database.
+	* Removes the commerce tax fixed rate where CPTaxCategoryId = &#63; and commerceTaxMethodId = &#63; from the database.
 	*
-	* @param commerceTaxCategoryId the commerce tax category ID
+	* @param CPTaxCategoryId the cp tax category ID
 	* @param commerceTaxMethodId the commerce tax method ID
 	* @return the commerce tax fixed rate that was removed
 	*/
-	public static CommerceTaxFixedRate removeByCTC_CTM(
-		long commerceTaxCategoryId, long commerceTaxMethodId)
+	public static CommerceTaxFixedRate removeByC_C(long CPTaxCategoryId,
+		long commerceTaxMethodId)
 		throws com.liferay.commerce.tax.engine.fixed.exception.NoSuchTaxFixedRateException {
-		return getPersistence()
-				   .removeByCTC_CTM(commerceTaxCategoryId, commerceTaxMethodId);
+		return getPersistence().removeByC_C(CPTaxCategoryId, commerceTaxMethodId);
 	}
 
 	/**
-	* Returns the number of commerce tax fixed rates where commerceTaxCategoryId = &#63; and commerceTaxMethodId = &#63;.
+	* Returns the number of commerce tax fixed rates where CPTaxCategoryId = &#63; and commerceTaxMethodId = &#63;.
 	*
-	* @param commerceTaxCategoryId the commerce tax category ID
+	* @param CPTaxCategoryId the cp tax category ID
 	* @param commerceTaxMethodId the commerce tax method ID
 	* @return the number of matching commerce tax fixed rates
 	*/
-	public static int countByCTC_CTM(long commerceTaxCategoryId,
-		long commerceTaxMethodId) {
-		return getPersistence()
-				   .countByCTC_CTM(commerceTaxCategoryId, commerceTaxMethodId);
+	public static int countByC_C(long CPTaxCategoryId, long commerceTaxMethodId) {
+		return getPersistence().countByC_C(CPTaxCategoryId, commerceTaxMethodId);
 	}
 
 	/**

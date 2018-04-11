@@ -77,7 +77,7 @@ public class CommerceTaxFixedRateModelImpl extends BaseModelImpl<CommerceTaxFixe
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
-			{ "commerceTaxCategoryId", Types.BIGINT },
+			{ "CPTaxCategoryId", Types.BIGINT },
 			{ "commerceTaxMethodId", Types.BIGINT },
 			{ "rate", Types.DOUBLE }
 		};
@@ -91,12 +91,12 @@ public class CommerceTaxFixedRateModelImpl extends BaseModelImpl<CommerceTaxFixe
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("commerceTaxCategoryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("CPTaxCategoryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceTaxMethodId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("rate", Types.DOUBLE);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceTaxFixedRate (commerceTaxFixedRateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceTaxCategoryId LONG,commerceTaxMethodId LONG,rate DOUBLE)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceTaxFixedRate (commerceTaxFixedRateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPTaxCategoryId LONG,commerceTaxMethodId LONG,rate DOUBLE)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceTaxFixedRate";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceTaxFixedRate.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceTaxFixedRate.createDate DESC";
@@ -112,7 +112,7 @@ public class CommerceTaxFixedRateModelImpl extends BaseModelImpl<CommerceTaxFixe
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.commerce.tax.engine.fixed.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate"),
 			true);
-	public static final long COMMERCETAXCATEGORYID_COLUMN_BITMASK = 1L;
+	public static final long CPTAXCATEGORYID_COLUMN_BITMASK = 1L;
 	public static final long COMMERCETAXMETHODID_COLUMN_BITMASK = 2L;
 	public static final long CREATEDATE_COLUMN_BITMASK = 4L;
 
@@ -137,7 +137,7 @@ public class CommerceTaxFixedRateModelImpl extends BaseModelImpl<CommerceTaxFixe
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setCommerceTaxCategoryId(soapModel.getCommerceTaxCategoryId());
+		model.setCPTaxCategoryId(soapModel.getCPTaxCategoryId());
 		model.setCommerceTaxMethodId(soapModel.getCommerceTaxMethodId());
 		model.setRate(soapModel.getRate());
 
@@ -212,7 +212,7 @@ public class CommerceTaxFixedRateModelImpl extends BaseModelImpl<CommerceTaxFixe
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("commerceTaxCategoryId", getCommerceTaxCategoryId());
+		attributes.put("CPTaxCategoryId", getCPTaxCategoryId());
 		attributes.put("commerceTaxMethodId", getCommerceTaxMethodId());
 		attributes.put("rate", getRate());
 
@@ -267,11 +267,10 @@ public class CommerceTaxFixedRateModelImpl extends BaseModelImpl<CommerceTaxFixe
 			setModifiedDate(modifiedDate);
 		}
 
-		Long commerceTaxCategoryId = (Long)attributes.get(
-				"commerceTaxCategoryId");
+		Long CPTaxCategoryId = (Long)attributes.get("CPTaxCategoryId");
 
-		if (commerceTaxCategoryId != null) {
-			setCommerceTaxCategoryId(commerceTaxCategoryId);
+		if (CPTaxCategoryId != null) {
+			setCPTaxCategoryId(CPTaxCategoryId);
 		}
 
 		Long commerceTaxMethodId = (Long)attributes.get("commerceTaxMethodId");
@@ -395,25 +394,25 @@ public class CommerceTaxFixedRateModelImpl extends BaseModelImpl<CommerceTaxFixe
 
 	@JSON
 	@Override
-	public long getCommerceTaxCategoryId() {
-		return _commerceTaxCategoryId;
+	public long getCPTaxCategoryId() {
+		return _CPTaxCategoryId;
 	}
 
 	@Override
-	public void setCommerceTaxCategoryId(long commerceTaxCategoryId) {
-		_columnBitmask |= COMMERCETAXCATEGORYID_COLUMN_BITMASK;
+	public void setCPTaxCategoryId(long CPTaxCategoryId) {
+		_columnBitmask |= CPTAXCATEGORYID_COLUMN_BITMASK;
 
-		if (!_setOriginalCommerceTaxCategoryId) {
-			_setOriginalCommerceTaxCategoryId = true;
+		if (!_setOriginalCPTaxCategoryId) {
+			_setOriginalCPTaxCategoryId = true;
 
-			_originalCommerceTaxCategoryId = _commerceTaxCategoryId;
+			_originalCPTaxCategoryId = _CPTaxCategoryId;
 		}
 
-		_commerceTaxCategoryId = commerceTaxCategoryId;
+		_CPTaxCategoryId = CPTaxCategoryId;
 	}
 
-	public long getOriginalCommerceTaxCategoryId() {
-		return _originalCommerceTaxCategoryId;
+	public long getOriginalCPTaxCategoryId() {
+		return _originalCPTaxCategoryId;
 	}
 
 	@JSON
@@ -488,7 +487,7 @@ public class CommerceTaxFixedRateModelImpl extends BaseModelImpl<CommerceTaxFixe
 		commerceTaxFixedRateImpl.setUserName(getUserName());
 		commerceTaxFixedRateImpl.setCreateDate(getCreateDate());
 		commerceTaxFixedRateImpl.setModifiedDate(getModifiedDate());
-		commerceTaxFixedRateImpl.setCommerceTaxCategoryId(getCommerceTaxCategoryId());
+		commerceTaxFixedRateImpl.setCPTaxCategoryId(getCPTaxCategoryId());
 		commerceTaxFixedRateImpl.setCommerceTaxMethodId(getCommerceTaxMethodId());
 		commerceTaxFixedRateImpl.setRate(getRate());
 
@@ -556,9 +555,9 @@ public class CommerceTaxFixedRateModelImpl extends BaseModelImpl<CommerceTaxFixe
 
 		commerceTaxFixedRateModelImpl._setModifiedDate = false;
 
-		commerceTaxFixedRateModelImpl._originalCommerceTaxCategoryId = commerceTaxFixedRateModelImpl._commerceTaxCategoryId;
+		commerceTaxFixedRateModelImpl._originalCPTaxCategoryId = commerceTaxFixedRateModelImpl._CPTaxCategoryId;
 
-		commerceTaxFixedRateModelImpl._setOriginalCommerceTaxCategoryId = false;
+		commerceTaxFixedRateModelImpl._setOriginalCPTaxCategoryId = false;
 
 		commerceTaxFixedRateModelImpl._originalCommerceTaxMethodId = commerceTaxFixedRateModelImpl._commerceTaxMethodId;
 
@@ -605,7 +604,7 @@ public class CommerceTaxFixedRateModelImpl extends BaseModelImpl<CommerceTaxFixe
 			commerceTaxFixedRateCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		commerceTaxFixedRateCacheModel.commerceTaxCategoryId = getCommerceTaxCategoryId();
+		commerceTaxFixedRateCacheModel.CPTaxCategoryId = getCPTaxCategoryId();
 
 		commerceTaxFixedRateCacheModel.commerceTaxMethodId = getCommerceTaxMethodId();
 
@@ -632,8 +631,8 @@ public class CommerceTaxFixedRateModelImpl extends BaseModelImpl<CommerceTaxFixe
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
-		sb.append(", commerceTaxCategoryId=");
-		sb.append(getCommerceTaxCategoryId());
+		sb.append(", CPTaxCategoryId=");
+		sb.append(getCPTaxCategoryId());
 		sb.append(", commerceTaxMethodId=");
 		sb.append(getCommerceTaxMethodId());
 		sb.append(", rate=");
@@ -681,8 +680,8 @@ public class CommerceTaxFixedRateModelImpl extends BaseModelImpl<CommerceTaxFixe
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>commerceTaxCategoryId</column-name><column-value><![CDATA[");
-		sb.append(getCommerceTaxCategoryId());
+			"<column><column-name>CPTaxCategoryId</column-name><column-value><![CDATA[");
+		sb.append(getCPTaxCategoryId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>commerceTaxMethodId</column-name><column-value><![CDATA[");
@@ -710,9 +709,9 @@ public class CommerceTaxFixedRateModelImpl extends BaseModelImpl<CommerceTaxFixe
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private long _commerceTaxCategoryId;
-	private long _originalCommerceTaxCategoryId;
-	private boolean _setOriginalCommerceTaxCategoryId;
+	private long _CPTaxCategoryId;
+	private long _originalCPTaxCategoryId;
+	private boolean _setOriginalCPTaxCategoryId;
 	private long _commerceTaxMethodId;
 	private long _originalCommerceTaxMethodId;
 	private boolean _setOriginalCommerceTaxMethodId;

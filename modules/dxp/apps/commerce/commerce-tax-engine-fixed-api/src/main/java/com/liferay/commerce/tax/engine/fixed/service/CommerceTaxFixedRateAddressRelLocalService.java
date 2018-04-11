@@ -73,9 +73,9 @@ public interface CommerceTaxFixedRateAddressRelLocalService
 		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel);
 
 	public CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
-		long commerceTaxMethodId, long commerceTaxCategoryId,
-		long commerceCountryId, long commerceRegionId, java.lang.String zip,
-		double rate, ServiceContext serviceContext) throws PortalException;
+		long commerceTaxMethodId, long cpTaxCategoryId, long commerceCountryId,
+		long commerceRegionId, java.lang.String zip, double rate,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new commerce tax fixed rate address rel with the primary key. Does not add the commerce tax fixed rate address rel to the database.
@@ -107,11 +107,11 @@ public interface CommerceTaxFixedRateAddressRelLocalService
 	public CommerceTaxFixedRateAddressRel deleteCommerceTaxFixedRateAddressRel(
 		long commerceTaxFixedRateAddressRelId) throws PortalException;
 
-	public void deleteCommerceTaxFixedRateAddressRelsByCommerceTaxCategoryId(
-		long commerceTaxCategoryId);
-
 	public void deleteCommerceTaxFixedRateAddressRelsByCommerceTaxMethodId(
 		long commerceTaxMethodId);
+
+	public void deleteCommerceTaxFixedRateAddressRelsByCPTaxCategoryId(
+		long cpTaxCategoryId);
 
 	/**
 	* @throws PortalException
@@ -219,11 +219,11 @@ public interface CommerceTaxFixedRateAddressRelLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceTaxFixedRateAddressRel> getCommerceTaxFixedRateAddressRels(
-		long commerceTaxCategoryId, int start, int end);
+		long cpTaxCategoryId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceTaxFixedRateAddressRel> getCommerceTaxFixedRateAddressRels(
-		long commerceTaxCategoryId, int start, int end,
+		long cpTaxCategoryId, int start, int end,
 		OrderByComparator<CommerceTaxFixedRateAddressRel> orderByComparator);
 
 	/**
@@ -235,8 +235,7 @@ public interface CommerceTaxFixedRateAddressRelLocalService
 	public int getCommerceTaxFixedRateAddressRelsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceTaxFixedRateAddressRelsCount(
-		long commerceTaxCategoryId);
+	public int getCommerceTaxFixedRateAddressRelsCount(long cpTaxCategoryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceTaxFixedRateAddressRel> getCommerceTaxMethodFixedRateAddressRels(

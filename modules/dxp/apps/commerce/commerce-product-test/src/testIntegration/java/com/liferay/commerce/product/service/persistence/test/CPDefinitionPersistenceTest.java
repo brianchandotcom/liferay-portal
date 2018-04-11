@@ -161,6 +161,12 @@ public class CPDefinitionPersistenceTest {
 
 		newCPDefinition.setWeight(RandomTestUtil.nextDouble());
 
+		newCPDefinition.setCPTaxCategoryId(RandomTestUtil.nextLong());
+
+		newCPDefinition.setTaxExempt(RandomTestUtil.randomBoolean());
+
+		newCPDefinition.setTelcoOrElectronics(RandomTestUtil.randomBoolean());
+
 		newCPDefinition.setDDMStructureKey(RandomTestUtil.randomString());
 
 		newCPDefinition.setPublished(RandomTestUtil.randomBoolean());
@@ -225,6 +231,12 @@ public class CPDefinitionPersistenceTest {
 			newCPDefinition.getDepth());
 		AssertUtils.assertEquals(existingCPDefinition.getWeight(),
 			newCPDefinition.getWeight());
+		Assert.assertEquals(existingCPDefinition.getCPTaxCategoryId(),
+			newCPDefinition.getCPTaxCategoryId());
+		Assert.assertEquals(existingCPDefinition.getTaxExempt(),
+			newCPDefinition.getTaxExempt());
+		Assert.assertEquals(existingCPDefinition.getTelcoOrElectronics(),
+			newCPDefinition.getTelcoOrElectronics());
 		Assert.assertEquals(existingCPDefinition.getDDMStructureKey(),
 			newCPDefinition.getDDMStructureKey());
 		Assert.assertEquals(existingCPDefinition.getPublished(),
@@ -293,6 +305,13 @@ public class CPDefinitionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByCPTaxCategoryId() throws Exception {
+		_persistence.countByCPTaxCategoryId(RandomTestUtil.nextLong());
+
+		_persistence.countByCPTaxCategoryId(0L);
+	}
+
+	@Test
 	public void testCountByG_S() throws Exception {
 		_persistence.countByG_S(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextInt());
@@ -352,10 +371,12 @@ public class CPDefinitionPersistenceTest {
 			"availableIndividually", true, "ignoreSKUCombinations", true,
 			"shippable", true, "freeShipping", true, "shipSeparately", true,
 			"shippingExtraPrice", true, "width", true, "height", true, "depth",
-			true, "weight", true, "DDMStructureKey", true, "published", true,
-			"displayDate", true, "expirationDate", true, "lastPublishDate",
-			true, "status", true, "statusByUserId", true, "statusByUserName",
-			true, "statusDate", true, "defaultLanguageId", true);
+			true, "weight", true, "CPTaxCategoryId", true, "taxExempt", true,
+			"telcoOrElectronics", true, "DDMStructureKey", true, "published",
+			true, "displayDate", true, "expirationDate", true,
+			"lastPublishDate", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true, "defaultLanguageId",
+			true);
 	}
 
 	@Test
@@ -608,6 +629,12 @@ public class CPDefinitionPersistenceTest {
 		cpDefinition.setDepth(RandomTestUtil.nextDouble());
 
 		cpDefinition.setWeight(RandomTestUtil.nextDouble());
+
+		cpDefinition.setCPTaxCategoryId(RandomTestUtil.nextLong());
+
+		cpDefinition.setTaxExempt(RandomTestUtil.randomBoolean());
+
+		cpDefinition.setTelcoOrElectronics(RandomTestUtil.randomBoolean());
 
 		cpDefinition.setDDMStructureKey(RandomTestUtil.randomString());
 

@@ -1,5 +1,5 @@
-create unique index IX_7F86B26F on CommerceTaxFixedRate (commerceTaxCategoryId);
-create unique index IX_9E7BEC07 on CommerceTaxFixedRate (commerceTaxMethodId, commerceTaxCategoryId);
+create unique index IX_DA39AA7F on CommerceTaxFixedRate (CPTaxCategoryId, commerceTaxMethodId);
+create index IX_52767DD2 on CommerceTaxFixedRate (commerceTaxMethodId);
 
-create index IX_8798C6EA on CommerceTaxFixedRateAddressRel (commerceTaxCategoryId);
+create index IX_37AE3A58 on CommerceTaxFixedRateAddressRel (CPTaxCategoryId);
 create index IX_CB69750D on CommerceTaxFixedRateAddressRel (commerceTaxMethodId);

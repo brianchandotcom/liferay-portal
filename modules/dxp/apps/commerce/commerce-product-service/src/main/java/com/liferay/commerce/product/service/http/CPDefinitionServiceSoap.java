@@ -87,11 +87,12 @@ public class CPDefinitionServiceSoap {
 		java.lang.String productTypeName, boolean ignoreSKUCombinations,
 		boolean shippable, boolean freeShipping, boolean shipSeparately,
 		double shippingExtraPrice, double width, double height, double depth,
-		double weight, java.lang.String ddmStructureKey, boolean published,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
+		double weight, long cpTaxCategoryId, boolean taxExempt,
+		boolean telcoOrElectronics, java.lang.String ddmStructureKey,
+		boolean published, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -115,7 +116,8 @@ public class CPDefinitionServiceSoap {
 					metaTitleMap, metaKeywordsMap, metaDescriptionMap,
 					productTypeName, ignoreSKUCombinations, shippable,
 					freeShipping, shipSeparately, shippingExtraPrice, width,
-					height, depth, weight, ddmStructureKey, published,
+					height, depth, weight, cpTaxCategoryId, taxExempt,
+					telcoOrElectronics, ddmStructureKey, published,
 					displayDateMonth, displayDateDay, displayDateYear,
 					displayDateHour, displayDateMinute, expirationDateMonth,
 					expirationDateDay, expirationDateYear, expirationDateHour,
@@ -395,7 +397,8 @@ public class CPDefinitionServiceSoap {
 		java.lang.String[] metaDescriptionMapValues,
 		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
 		boolean shipSeparately, double shippingExtraPrice, double width,
-		double height, double depth, double weight,
+		double height, double depth, double weight, long cpTaxCategoryId,
+		boolean taxExempt, boolean telcoOrElectronics,
 		java.lang.String ddmStructureKey, boolean published,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
@@ -424,7 +427,8 @@ public class CPDefinitionServiceSoap {
 					metaTitleMap, metaKeywordsMap, metaDescriptionMap,
 					ignoreSKUCombinations, shippable, freeShipping,
 					shipSeparately, shippingExtraPrice, width, height, depth,
-					weight, ddmStructureKey, published, displayDateMonth,
+					weight, cpTaxCategoryId, taxExempt, telcoOrElectronics,
+					ddmStructureKey, published, displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,
 					displayDateMinute, expirationDateMonth, expirationDateDay,
 					expirationDateYear, expirationDateHour,
@@ -555,6 +559,22 @@ public class CPDefinitionServiceSoap {
 					shippable, freeShipping, shipSeparately,
 					shippingExtraPrice, width, height, depth, weight,
 					serviceContext);
+
+			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionSoap updateTaxCategoryInfo(
+		long cpDefinitionId, long cpTaxCategoryId, boolean taxExempt,
+		boolean telcoOrElectronics) throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.updateTaxCategoryInfo(cpDefinitionId,
+					cpTaxCategoryId, taxExempt, telcoOrElectronics);
 
 			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModel(returnValue);
 		}

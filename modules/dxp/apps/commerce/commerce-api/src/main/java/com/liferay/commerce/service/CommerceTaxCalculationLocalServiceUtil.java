@@ -43,10 +43,9 @@ public class CommerceTaxCalculationLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceTaxCalculationLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static java.util.List<com.liferay.commerce.model.CommerceTaxRate> getCommerceTaxRates(
-		long siteGroupId, long userId, long commerceTaxCategoryId) {
+		long siteGroupId, long userId, long cpTaxCategoryId) {
 		return getService()
-				   .getCommerceTaxRates(siteGroupId, userId,
-			commerceTaxCategoryId);
+				   .getCommerceTaxRates(siteGroupId, userId, cpTaxCategoryId);
 	}
 
 	/**

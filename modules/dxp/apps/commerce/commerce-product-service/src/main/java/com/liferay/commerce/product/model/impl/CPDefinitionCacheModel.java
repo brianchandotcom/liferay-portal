@@ -65,7 +65,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(59);
+		StringBundler sb = new StringBundler(65);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -105,6 +105,12 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		sb.append(depth);
 		sb.append(", weight=");
 		sb.append(weight);
+		sb.append(", CPTaxCategoryId=");
+		sb.append(CPTaxCategoryId);
+		sb.append(", taxExempt=");
+		sb.append(taxExempt);
+		sb.append(", telcoOrElectronics=");
+		sb.append(telcoOrElectronics);
 		sb.append(", DDMStructureKey=");
 		sb.append(DDMStructureKey);
 		sb.append(", published=");
@@ -184,6 +190,9 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		cpDefinitionImpl.setHeight(height);
 		cpDefinitionImpl.setDepth(depth);
 		cpDefinitionImpl.setWeight(weight);
+		cpDefinitionImpl.setCPTaxCategoryId(CPTaxCategoryId);
+		cpDefinitionImpl.setTaxExempt(taxExempt);
+		cpDefinitionImpl.setTelcoOrElectronics(telcoOrElectronics);
 
 		if (DDMStructureKey == null) {
 			cpDefinitionImpl.setDDMStructureKey("");
@@ -279,6 +288,12 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		depth = objectInput.readDouble();
 
 		weight = objectInput.readDouble();
+
+		CPTaxCategoryId = objectInput.readLong();
+
+		taxExempt = objectInput.readBoolean();
+
+		telcoOrElectronics = objectInput.readBoolean();
 		DDMStructureKey = objectInput.readUTF();
 
 		published = objectInput.readBoolean();
@@ -349,6 +364,12 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 
 		objectOutput.writeDouble(weight);
 
+		objectOutput.writeLong(CPTaxCategoryId);
+
+		objectOutput.writeBoolean(taxExempt);
+
+		objectOutput.writeBoolean(telcoOrElectronics);
+
 		if (DDMStructureKey == null) {
 			objectOutput.writeUTF("");
 		}
@@ -401,6 +422,9 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 	public double height;
 	public double depth;
 	public double weight;
+	public long CPTaxCategoryId;
+	public boolean taxExempt;
+	public boolean telcoOrElectronics;
 	public String DDMStructureKey;
 	public boolean published;
 	public long displayDate;

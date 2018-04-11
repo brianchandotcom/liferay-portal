@@ -56,6 +56,6 @@ public interface CommerceTaxFixedRate extends CommerceTaxFixedRateModel,
 			}
 		};
 
-	public com.liferay.commerce.model.CommerceTaxCategory getCommerceTaxCategory()
+	public com.liferay.commerce.product.model.CPTaxCategory getCPTaxCategory()
 		throws com.liferay.portal.kernel.exception.PortalException;
 }

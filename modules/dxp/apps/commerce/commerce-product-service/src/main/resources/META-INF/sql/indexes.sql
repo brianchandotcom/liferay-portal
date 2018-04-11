@@ -12,6 +12,7 @@ create index IX_8DA57014 on CPDSpecificationOptionValue (groupId);
 create index IX_508DBDCA on CPDSpecificationOptionValue (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_551F2ECC on CPDSpecificationOptionValue (uuid_[$COLUMN_LENGTH:75$], groupId);
 
+create index IX_3D5A0021 on CPDefinition (CPTaxCategoryId);
 create index IX_217AF702 on CPDefinition (companyId);
 create index IX_A465D100 on CPDefinition (displayDate, status);
 create index IX_419350EA on CPDefinition (groupId, status);
@@ -85,3 +86,5 @@ create index IX_421ED80 on CPSpecificationOption (CPOptionCategoryId);
 create unique index IX_1E01842D on CPSpecificationOption (groupId, key_[$COLUMN_LENGTH:75$]);
 create index IX_5B218A65 on CPSpecificationOption (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_FFE36627 on CPSpecificationOption (uuid_[$COLUMN_LENGTH:75$], groupId);
+
+create index IX_DB66F708 on CPTaxCategory (groupId);

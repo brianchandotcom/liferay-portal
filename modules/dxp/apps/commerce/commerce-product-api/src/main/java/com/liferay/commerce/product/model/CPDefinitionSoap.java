@@ -53,6 +53,9 @@ public class CPDefinitionSoap implements Serializable {
 		soapModel.setHeight(model.getHeight());
 		soapModel.setDepth(model.getDepth());
 		soapModel.setWeight(model.getWeight());
+		soapModel.setCPTaxCategoryId(model.getCPTaxCategoryId());
+		soapModel.setTaxExempt(model.getTaxExempt());
+		soapModel.setTelcoOrElectronics(model.getTelcoOrElectronics());
 		soapModel.setDDMStructureKey(model.getDDMStructureKey());
 		soapModel.setPublished(model.getPublished());
 		soapModel.setDisplayDate(model.getDisplayDate());
@@ -287,6 +290,38 @@ public class CPDefinitionSoap implements Serializable {
 		_weight = weight;
 	}
 
+	public long getCPTaxCategoryId() {
+		return _CPTaxCategoryId;
+	}
+
+	public void setCPTaxCategoryId(long CPTaxCategoryId) {
+		_CPTaxCategoryId = CPTaxCategoryId;
+	}
+
+	public boolean getTaxExempt() {
+		return _taxExempt;
+	}
+
+	public boolean isTaxExempt() {
+		return _taxExempt;
+	}
+
+	public void setTaxExempt(boolean taxExempt) {
+		_taxExempt = taxExempt;
+	}
+
+	public boolean getTelcoOrElectronics() {
+		return _telcoOrElectronics;
+	}
+
+	public boolean isTelcoOrElectronics() {
+		return _telcoOrElectronics;
+	}
+
+	public void setTelcoOrElectronics(boolean telcoOrElectronics) {
+		_telcoOrElectronics = telcoOrElectronics;
+	}
+
 	public String getDDMStructureKey() {
 		return _DDMStructureKey;
 	}
@@ -390,6 +425,9 @@ public class CPDefinitionSoap implements Serializable {
 	private double _height;
 	private double _depth;
 	private double _weight;
+	private long _CPTaxCategoryId;
+	private boolean _taxExempt;
+	private boolean _telcoOrElectronics;
 	private String _DDMStructureKey;
 	private boolean _published;
 	private Date _displayDate;

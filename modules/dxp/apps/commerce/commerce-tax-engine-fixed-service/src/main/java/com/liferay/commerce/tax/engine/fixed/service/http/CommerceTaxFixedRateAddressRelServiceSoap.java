@@ -66,16 +66,15 @@ import java.rmi.RemoteException;
 @ProviderType
 public class CommerceTaxFixedRateAddressRelServiceSoap {
 	public static com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRelSoap addCommerceTaxFixedRateAddressRel(
-		long commerceTaxMethodId, long commerceTaxCategoryId,
-		long commerceCountryId, long commerceRegionId, java.lang.String zip,
-		double rate,
+		long commerceTaxMethodId, long cpTaxCategoryId, long commerceCountryId,
+		long commerceRegionId, java.lang.String zip, double rate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel returnValue =
 				CommerceTaxFixedRateAddressRelServiceUtil.addCommerceTaxFixedRateAddressRel(commerceTaxMethodId,
-					commerceTaxCategoryId, commerceCountryId, commerceRegionId,
-					zip, rate, serviceContext);
+					cpTaxCategoryId, commerceCountryId, commerceRegionId, zip,
+					rate, serviceContext);
 
 			return com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRelSoap.toSoapModel(returnValue);
 		}

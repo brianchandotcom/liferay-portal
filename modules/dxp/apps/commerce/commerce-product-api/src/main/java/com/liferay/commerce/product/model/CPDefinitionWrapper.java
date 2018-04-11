@@ -79,6 +79,9 @@ public class CPDefinitionWrapper implements CPDefinition,
 		attributes.put("height", getHeight());
 		attributes.put("depth", getDepth());
 		attributes.put("weight", getWeight());
+		attributes.put("CPTaxCategoryId", getCPTaxCategoryId());
+		attributes.put("taxExempt", getTaxExempt());
+		attributes.put("telcoOrElectronics", getTelcoOrElectronics());
 		attributes.put("DDMStructureKey", getDDMStructureKey());
 		attributes.put("published", getPublished());
 		attributes.put("displayDate", getDisplayDate());
@@ -211,6 +214,25 @@ public class CPDefinitionWrapper implements CPDefinition,
 			setWeight(weight);
 		}
 
+		Long CPTaxCategoryId = (Long)attributes.get("CPTaxCategoryId");
+
+		if (CPTaxCategoryId != null) {
+			setCPTaxCategoryId(CPTaxCategoryId);
+		}
+
+		Boolean taxExempt = (Boolean)attributes.get("taxExempt");
+
+		if (taxExempt != null) {
+			setTaxExempt(taxExempt);
+		}
+
+		Boolean telcoOrElectronics = (Boolean)attributes.get(
+				"telcoOrElectronics");
+
+		if (telcoOrElectronics != null) {
+			setTelcoOrElectronics(telcoOrElectronics);
+		}
+
 		String DDMStructureKey = (String)attributes.get("DDMStructureKey");
 
 		if (DDMStructureKey != null) {
@@ -330,6 +352,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public java.util.List<CPInstance> getCPInstances() {
 		return _cpDefinition.getCPInstances();
+	}
+
+	/**
+	* Returns the cp tax category ID of this cp definition.
+	*
+	* @return the cp tax category ID of this cp definition
+	*/
+	@Override
+	public long getCPTaxCategoryId() {
+		return _cpDefinition.getCPTaxCategoryId();
 	}
 
 	/**
@@ -744,6 +776,26 @@ public class CPDefinitionWrapper implements CPDefinition,
 		return _cpDefinition.getStatusDate();
 	}
 
+	/**
+	* Returns the tax exempt of this cp definition.
+	*
+	* @return the tax exempt of this cp definition
+	*/
+	@Override
+	public boolean getTaxExempt() {
+		return _cpDefinition.getTaxExempt();
+	}
+
+	/**
+	* Returns the telco or electronics of this cp definition.
+	*
+	* @return the telco or electronics of this cp definition
+	*/
+	@Override
+	public boolean getTelcoOrElectronics() {
+		return _cpDefinition.getTelcoOrElectronics();
+	}
+
 	@Override
 	public java.lang.String getTitle() {
 		return _cpDefinition.getTitle();
@@ -1063,6 +1115,26 @@ public class CPDefinitionWrapper implements CPDefinition,
 		return _cpDefinition.isShipSeparately();
 	}
 
+	/**
+	* Returns <code>true</code> if this cp definition is tax exempt.
+	*
+	* @return <code>true</code> if this cp definition is tax exempt; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isTaxExempt() {
+		return _cpDefinition.isTaxExempt();
+	}
+
+	/**
+	* Returns <code>true</code> if this cp definition is telco or electronics.
+	*
+	* @return <code>true</code> if this cp definition is telco or electronics; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isTelcoOrElectronics() {
+		return _cpDefinition.isTelcoOrElectronics();
+	}
+
 	@Override
 	public void persist() {
 		_cpDefinition.persist();
@@ -1101,6 +1173,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public void setCPDefinitionId(long CPDefinitionId) {
 		_cpDefinition.setCPDefinitionId(CPDefinitionId);
+	}
+
+	/**
+	* Sets the cp tax category ID of this cp definition.
+	*
+	* @param CPTaxCategoryId the cp tax category ID of this cp definition
+	*/
+	@Override
+	public void setCPTaxCategoryId(long CPTaxCategoryId) {
+		_cpDefinition.setCPTaxCategoryId(CPTaxCategoryId);
 	}
 
 	/**
@@ -1374,6 +1456,26 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public void setStatusDate(Date statusDate) {
 		_cpDefinition.setStatusDate(statusDate);
+	}
+
+	/**
+	* Sets whether this cp definition is tax exempt.
+	*
+	* @param taxExempt the tax exempt of this cp definition
+	*/
+	@Override
+	public void setTaxExempt(boolean taxExempt) {
+		_cpDefinition.setTaxExempt(taxExempt);
+	}
+
+	/**
+	* Sets whether this cp definition is telco or electronics.
+	*
+	* @param telcoOrElectronics the telco or electronics of this cp definition
+	*/
+	@Override
+	public void setTelcoOrElectronics(boolean telcoOrElectronics) {
+		_cpDefinition.setTelcoOrElectronics(telcoOrElectronics);
 	}
 
 	@Override

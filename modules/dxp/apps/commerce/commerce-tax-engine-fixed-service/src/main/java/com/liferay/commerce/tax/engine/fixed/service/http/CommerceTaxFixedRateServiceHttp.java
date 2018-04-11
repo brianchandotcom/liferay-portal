@@ -57,7 +57,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CommerceTaxFixedRateServiceHttp {
 	public static com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate addCommerceTaxFixedRate(
 		HttpPrincipal httpPrincipal, long commerceTaxMethodId,
-		long commerceTaxCategoryId, double rate,
+		long cpTaxCategoryId, double rate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -66,8 +66,7 @@ public class CommerceTaxFixedRateServiceHttp {
 					_addCommerceTaxFixedRateParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commerceTaxMethodId, commerceTaxCategoryId, rate,
-					serviceContext);
+					commerceTaxMethodId, cpTaxCategoryId, rate, serviceContext);
 
 			Object returnObj = null;
 
@@ -153,17 +152,17 @@ public class CommerceTaxFixedRateServiceHttp {
 		}
 	}
 
-	public static com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate fetchCommerceTaxFixedRateByCTC_CTM(
-		HttpPrincipal httpPrincipal, long commerceTaxCategoryId,
+	public static com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate fetchCommerceTaxFixedRate(
+		HttpPrincipal httpPrincipal, long cpTaxCategoryId,
 		long commerceTaxMethodId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceTaxFixedRateServiceUtil.class,
-					"fetchCommerceTaxFixedRateByCTC_CTM",
-					_fetchCommerceTaxFixedRateByCTC_CTMParameterTypes3);
+					"fetchCommerceTaxFixedRate",
+					_fetchCommerceTaxFixedRateParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commerceTaxCategoryId, commerceTaxMethodId);
+					cpTaxCategoryId, commerceTaxMethodId);
 
 			Object returnObj = null;
 
@@ -299,8 +298,9 @@ public class CommerceTaxFixedRateServiceHttp {
 	private static final Class<?>[] _fetchCommerceTaxFixedRateParameterTypes2 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _fetchCommerceTaxFixedRateByCTC_CTMParameterTypes3 =
-		new Class[] { long.class, long.class };
+	private static final Class<?>[] _fetchCommerceTaxFixedRateParameterTypes3 = new Class[] {
+			long.class, long.class
+		};
 	private static final Class<?>[] _getCommerceTaxFixedRatesParameterTypes4 = new Class[] {
 			long.class, long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class

@@ -57,6 +57,9 @@
 		<field name="weight" type="double">
 			<validator name="number" />
 		</field>
+		<field name="CPTaxCategoryId" type="long" />
+		<field name="taxExempt" type="boolean" />
+		<field name="telcoOrElectronics" type="boolean" />
 		<field name="DDMStructureKey" type="String" />
 		<field name="published" type="boolean">
 			<hint name="default-value">true</hint>
@@ -362,5 +365,16 @@
 			<validator name="required" />
 		</field>
 		<field name="lastPublishDate" type="Date" />
+	</model>
+	<model name="com.liferay.commerce.product.model.CPTaxCategory">
+		<field name="CPTaxCategoryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field localized="true" name="name" type="String" />
+		<field localized="true" name="description" type="String" />
 	</model>
 </model-hints>

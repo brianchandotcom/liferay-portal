@@ -137,7 +137,7 @@ public class CommerceTaxFixedRateAddressRelPersistenceTest {
 
 		newCommerceTaxFixedRateAddressRel.setCommerceTaxMethodId(RandomTestUtil.nextLong());
 
-		newCommerceTaxFixedRateAddressRel.setCommerceTaxCategoryId(RandomTestUtil.nextLong());
+		newCommerceTaxFixedRateAddressRel.setCPTaxCategoryId(RandomTestUtil.nextLong());
 
 		newCommerceTaxFixedRateAddressRel.setCommerceCountryId(RandomTestUtil.nextLong());
 
@@ -172,8 +172,8 @@ public class CommerceTaxFixedRateAddressRelPersistenceTest {
 				newCommerceTaxFixedRateAddressRel.getModifiedDate()));
 		Assert.assertEquals(existingCommerceTaxFixedRateAddressRel.getCommerceTaxMethodId(),
 			newCommerceTaxFixedRateAddressRel.getCommerceTaxMethodId());
-		Assert.assertEquals(existingCommerceTaxFixedRateAddressRel.getCommerceTaxCategoryId(),
-			newCommerceTaxFixedRateAddressRel.getCommerceTaxCategoryId());
+		Assert.assertEquals(existingCommerceTaxFixedRateAddressRel.getCPTaxCategoryId(),
+			newCommerceTaxFixedRateAddressRel.getCPTaxCategoryId());
 		Assert.assertEquals(existingCommerceTaxFixedRateAddressRel.getCommerceCountryId(),
 			newCommerceTaxFixedRateAddressRel.getCommerceCountryId());
 		Assert.assertEquals(existingCommerceTaxFixedRateAddressRel.getCommerceRegionId(),
@@ -192,10 +192,10 @@ public class CommerceTaxFixedRateAddressRelPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCommerceTaxCategoryId() throws Exception {
-		_persistence.countByCommerceTaxCategoryId(RandomTestUtil.nextLong());
+	public void testCountByCPTaxCategoryId() throws Exception {
+		_persistence.countByCPTaxCategoryId(RandomTestUtil.nextLong());
 
-		_persistence.countByCommerceTaxCategoryId(0L);
+		_persistence.countByCPTaxCategoryId(0L);
 	}
 
 	@Test
@@ -226,7 +226,7 @@ public class CommerceTaxFixedRateAddressRelPersistenceTest {
 			"commerceTaxFixedRateAddressRelId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "commerceTaxMethodId", true,
-			"commerceTaxCategoryId", true, "commerceCountryId", true,
+			"CPTaxCategoryId", true, "commerceCountryId", true,
 			"commerceRegionId", true, "zip", true, "rate", true);
 	}
 
@@ -460,7 +460,7 @@ public class CommerceTaxFixedRateAddressRelPersistenceTest {
 
 		commerceTaxFixedRateAddressRel.setCommerceTaxMethodId(RandomTestUtil.nextLong());
 
-		commerceTaxFixedRateAddressRel.setCommerceTaxCategoryId(RandomTestUtil.nextLong());
+		commerceTaxFixedRateAddressRel.setCPTaxCategoryId(RandomTestUtil.nextLong());
 
 		commerceTaxFixedRateAddressRel.setCommerceCountryId(RandomTestUtil.nextLong());
 

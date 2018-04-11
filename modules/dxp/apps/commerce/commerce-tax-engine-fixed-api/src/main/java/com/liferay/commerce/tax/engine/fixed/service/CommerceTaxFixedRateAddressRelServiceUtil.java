@@ -43,15 +43,14 @@ public class CommerceTaxFixedRateAddressRelServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.tax.engine.fixed.service.impl.CommerceTaxFixedRateAddressRelServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
-		long commerceTaxMethodId, long commerceTaxCategoryId,
-		long commerceCountryId, long commerceRegionId, java.lang.String zip,
-		double rate,
+		long commerceTaxMethodId, long cpTaxCategoryId, long commerceCountryId,
+		long commerceRegionId, java.lang.String zip, double rate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCommerceTaxFixedRateAddressRel(commerceTaxMethodId,
-			commerceTaxCategoryId, commerceCountryId, commerceRegionId, zip,
-			rate, serviceContext);
+			cpTaxCategoryId, commerceCountryId, commerceRegionId, zip, rate,
+			serviceContext);
 	}
 
 	public static void deleteCommerceTaxFixedRateAddressRel(

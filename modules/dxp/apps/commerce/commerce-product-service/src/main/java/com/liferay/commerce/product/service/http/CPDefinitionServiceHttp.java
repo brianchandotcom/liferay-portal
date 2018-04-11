@@ -67,11 +67,12 @@ public class CPDefinitionServiceHttp {
 		java.lang.String productTypeName, boolean ignoreSKUCombinations,
 		boolean shippable, boolean freeShipping, boolean shipSeparately,
 		double shippingExtraPrice, double width, double height, double depth,
-		double weight, java.lang.String ddmStructureKey, boolean published,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
+		double weight, long cpTaxCategoryId, boolean taxExempt,
+		boolean telcoOrElectronics, java.lang.String ddmStructureKey,
+		boolean published, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -83,7 +84,8 @@ public class CPDefinitionServiceHttp {
 					metaTitleMap, metaKeywordsMap, metaDescriptionMap,
 					productTypeName, ignoreSKUCombinations, shippable,
 					freeShipping, shipSeparately, shippingExtraPrice, width,
-					height, depth, weight, ddmStructureKey, published,
+					height, depth, weight, cpTaxCategoryId, taxExempt,
+					telcoOrElectronics, ddmStructureKey, published,
 					displayDateMonth, displayDateDay, displayDateYear,
 					displayDateHour, displayDateMinute, expirationDateMonth,
 					expirationDateDay, expirationDateYear, expirationDateHour,
@@ -641,7 +643,8 @@ public class CPDefinitionServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
 		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
 		boolean shipSeparately, double shippingExtraPrice, double width,
-		double height, double depth, double weight,
+		double height, double depth, double weight, long cpTaxCategoryId,
+		boolean taxExempt, boolean telcoOrElectronics,
 		java.lang.String ddmStructureKey, boolean published,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
@@ -658,7 +661,8 @@ public class CPDefinitionServiceHttp {
 					descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
 					metaDescriptionMap, ignoreSKUCombinations, shippable,
 					freeShipping, shipSeparately, shippingExtraPrice, width,
-					height, depth, weight, ddmStructureKey, published,
+					height, depth, weight, cpTaxCategoryId, taxExempt,
+					telcoOrElectronics, ddmStructureKey, published,
 					displayDateMonth, displayDateDay, displayDateYear,
 					displayDateHour, displayDateMinute, expirationDateMonth,
 					expirationDateDay, expirationDateYear, expirationDateHour,
@@ -910,16 +914,51 @@ public class CPDefinitionServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CPDefinition updateTaxCategoryInfo(
+		HttpPrincipal httpPrincipal, long cpDefinitionId, long cpTaxCategoryId,
+		boolean taxExempt, boolean telcoOrElectronics)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CPDefinitionServiceUtil.class,
+					"updateTaxCategoryInfo",
+					_updateTaxCategoryInfoParameterTypes24);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					cpDefinitionId, cpTaxCategoryId, taxExempt,
+					telcoOrElectronics);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.product.model.CPDefinition)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(CPDefinitionServiceHttp.class);
 	private static final Class<?>[] _addCPDefinitionParameterTypes0 = new Class[] {
 			java.util.Map.class, java.util.Map.class, java.util.Map.class,
 			java.util.Map.class, java.util.Map.class, java.util.Map.class,
 			java.util.Map.class, java.lang.String.class, boolean.class,
 			boolean.class, boolean.class, boolean.class, double.class,
-			double.class, double.class, double.class, double.class,
-			java.lang.String.class, boolean.class, int.class, int.class,
+			double.class, double.class, double.class, double.class, long.class,
+			boolean.class, boolean.class, java.lang.String.class, boolean.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, boolean.class,
+			int.class, int.class, int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addCPDefinitionParameterTypes1 = new Class[] {
@@ -981,10 +1020,10 @@ public class CPDefinitionServiceHttp {
 			java.util.Map.class, java.util.Map.class, java.util.Map.class,
 			java.util.Map.class, java.util.Map.class, boolean.class,
 			boolean.class, boolean.class, boolean.class, double.class,
-			double.class, double.class, double.class, double.class,
-			java.lang.String.class, boolean.class, int.class, int.class,
+			double.class, double.class, double.class, double.class, long.class,
+			boolean.class, boolean.class, java.lang.String.class, boolean.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, boolean.class,
+			int.class, int.class, int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateCPDefinitionParameterTypes18 = new Class[] {
@@ -1018,5 +1057,8 @@ public class CPDefinitionServiceHttp {
 			long.class, long.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class,
 			java.util.Map.class
+		};
+	private static final Class<?>[] _updateTaxCategoryInfoParameterTypes24 = new Class[] {
+			long.class, long.class, boolean.class, boolean.class
 		};
 }

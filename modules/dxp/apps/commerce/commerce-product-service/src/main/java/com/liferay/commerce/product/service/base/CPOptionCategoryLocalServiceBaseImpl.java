@@ -36,6 +36,7 @@ import com.liferay.commerce.product.service.persistence.CPOptionCategoryPersiste
 import com.liferay.commerce.product.service.persistence.CPOptionPersistence;
 import com.liferay.commerce.product.service.persistence.CPOptionValuePersistence;
 import com.liferay.commerce.product.service.persistence.CPSpecificationOptionPersistence;
+import com.liferay.commerce.product.service.persistence.CPTaxCategoryPersistence;
 
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -1059,6 +1060,44 @@ public abstract class CPOptionCategoryLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the cp tax category local service.
+	 *
+	 * @return the cp tax category local service
+	 */
+	public com.liferay.commerce.product.service.CPTaxCategoryLocalService getCPTaxCategoryLocalService() {
+		return cpTaxCategoryLocalService;
+	}
+
+	/**
+	 * Sets the cp tax category local service.
+	 *
+	 * @param cpTaxCategoryLocalService the cp tax category local service
+	 */
+	public void setCPTaxCategoryLocalService(
+		com.liferay.commerce.product.service.CPTaxCategoryLocalService cpTaxCategoryLocalService) {
+		this.cpTaxCategoryLocalService = cpTaxCategoryLocalService;
+	}
+
+	/**
+	 * Returns the cp tax category persistence.
+	 *
+	 * @return the cp tax category persistence
+	 */
+	public CPTaxCategoryPersistence getCPTaxCategoryPersistence() {
+		return cpTaxCategoryPersistence;
+	}
+
+	/**
+	 * Sets the cp tax category persistence.
+	 *
+	 * @param cpTaxCategoryPersistence the cp tax category persistence
+	 */
+	public void setCPTaxCategoryPersistence(
+		CPTaxCategoryPersistence cpTaxCategoryPersistence) {
+		this.cpTaxCategoryPersistence = cpTaxCategoryPersistence;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -1287,6 +1326,10 @@ public abstract class CPOptionCategoryLocalServiceBaseImpl
 	protected com.liferay.commerce.product.service.CPSpecificationOptionLocalService cpSpecificationOptionLocalService;
 	@BeanReference(type = CPSpecificationOptionPersistence.class)
 	protected CPSpecificationOptionPersistence cpSpecificationOptionPersistence;
+	@BeanReference(type = com.liferay.commerce.product.service.CPTaxCategoryLocalService.class)
+	protected com.liferay.commerce.product.service.CPTaxCategoryLocalService cpTaxCategoryLocalService;
+	@BeanReference(type = CPTaxCategoryPersistence.class)
+	protected CPTaxCategoryPersistence cpTaxCategoryPersistence;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)

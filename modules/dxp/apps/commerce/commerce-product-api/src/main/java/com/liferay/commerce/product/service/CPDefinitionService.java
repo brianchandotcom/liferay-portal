@@ -76,11 +76,12 @@ public interface CPDefinitionService extends BaseService {
 		java.lang.String productTypeName, boolean ignoreSKUCombinations,
 		boolean shippable, boolean freeShipping, boolean shipSeparately,
 		double shippingExtraPrice, double width, double height, double depth,
-		double weight, java.lang.String ddmStructureKey, boolean published,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
+		double weight, long cpTaxCategoryId, boolean taxExempt,
+		boolean telcoOrElectronics, java.lang.String ddmStructureKey,
+		boolean published, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
 	public CPDefinition addCPDefinition(
@@ -175,7 +176,8 @@ public interface CPDefinitionService extends BaseService {
 		Map<Locale, java.lang.String> metaDescriptionMap,
 		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
 		boolean shipSeparately, double shippingExtraPrice, double width,
-		double height, double depth, double weight,
+		double height, double depth, double weight, long cpTaxCategoryId,
+		boolean taxExempt, boolean telcoOrElectronics,
 		java.lang.String ddmStructureKey, boolean published,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
@@ -217,5 +219,9 @@ public interface CPDefinitionService extends BaseService {
 	public CPDefinition updateStatus(long userId, long cpDefinitionId,
 		int status, ServiceContext serviceContext,
 		Map<java.lang.String, Serializable> workflowContext)
+		throws PortalException;
+
+	public CPDefinition updateTaxCategoryInfo(long cpDefinitionId,
+		long cpTaxCategoryId, boolean taxExempt, boolean telcoOrElectronics)
 		throws PortalException;
 }

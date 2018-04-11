@@ -57,8 +57,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CommerceTaxFixedRateAddressRelServiceHttp {
 	public static com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
 		HttpPrincipal httpPrincipal, long commerceTaxMethodId,
-		long commerceTaxCategoryId, long commerceCountryId,
-		long commerceRegionId, java.lang.String zip, double rate,
+		long cpTaxCategoryId, long commerceCountryId, long commerceRegionId,
+		java.lang.String zip, double rate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -67,9 +67,8 @@ public class CommerceTaxFixedRateAddressRelServiceHttp {
 					_addCommerceTaxFixedRateAddressRelParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commerceTaxMethodId, commerceTaxCategoryId,
-					commerceCountryId, commerceRegionId, zip, rate,
-					serviceContext);
+					commerceTaxMethodId, cpTaxCategoryId, commerceCountryId,
+					commerceRegionId, zip, rate, serviceContext);
 
 			Object returnObj = null;
 

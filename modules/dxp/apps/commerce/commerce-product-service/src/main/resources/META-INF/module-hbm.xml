@@ -17,6 +17,7 @@
 	<import class="com.liferay.commerce.product.model.CPOptionCategory" />
 	<import class="com.liferay.commerce.product.model.CPOptionValue" />
 	<import class="com.liferay.commerce.product.model.CPSpecificationOption" />
+	<import class="com.liferay.commerce.product.model.CPTaxCategory" />
 	<class name="com.liferay.commerce.product.model.impl.CPAttachmentFileEntryImpl" table="CPAttachmentFileEntry">
 		<id name="CPAttachmentFileEntryId" type="long">
 			<generator class="assigned" />
@@ -65,6 +66,9 @@
 		<property name="height" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="depth" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="weight" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="CPTaxCategoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="taxExempt" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="telcoOrElectronics" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="DDMStructureKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="published" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="displayDate" type="org.hibernate.type.TimestampType" />
@@ -316,5 +320,18 @@
 		<property name="facetable" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property column="key_" name="key" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="com.liferay.commerce.product.model.impl.CPTaxCategoryImpl" table="CPTaxCategory">
+		<id name="CPTaxCategoryId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 </hibernate-mapping>

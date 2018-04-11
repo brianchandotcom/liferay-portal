@@ -96,11 +96,12 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 		java.lang.String productTypeName, boolean ignoreSKUCombinations,
 		boolean shippable, boolean freeShipping, boolean shipSeparately,
 		double shippingExtraPrice, double width, double height, double depth,
-		double weight, java.lang.String ddmStructureKey, boolean published,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
+		double weight, long cpTaxCategoryId, boolean taxExempt,
+		boolean telcoOrElectronics, java.lang.String ddmStructureKey,
+		boolean published, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		boolean hasDefaultInstance, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -115,11 +116,12 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 		java.lang.String productTypeName, boolean ignoreSKUCombinations,
 		boolean shippable, boolean freeShipping, boolean shipSeparately,
 		double shippingExtraPrice, double width, double height, double depth,
-		double weight, java.lang.String ddmStructureKey, boolean published,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
+		double weight, long cpTaxCategoryId, boolean taxExempt,
+		boolean telcoOrElectronics, java.lang.String ddmStructureKey,
+		boolean published, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
 	public CPDefinition addCPDefinition(
@@ -479,7 +481,8 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 		Map<Locale, java.lang.String> metaDescriptionMap,
 		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
 		boolean shipSeparately, double shippingExtraPrice, double width,
-		double height, double depth, double weight,
+		double height, double depth, double weight, long cpTaxCategoryId,
+		boolean taxExempt, boolean telcoOrElectronics,
 		java.lang.String ddmStructureKey, boolean published,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
@@ -511,6 +514,9 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 		long cpDefinitionId, boolean ignoreSKUCombinations,
 		ServiceContext serviceContext) throws PortalException;
 
+	public void updateCPDefinitionsByCPTaxCategoryId(long cpTaxCategoryId)
+		throws PortalException;
+
 	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinition updateShippingInfo(long cpDefinitionId,
 		boolean shippable, boolean freeShipping, boolean shipSeparately,
@@ -521,5 +527,9 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	public CPDefinition updateStatus(long userId, long cpDefinitionId,
 		int status, ServiceContext serviceContext,
 		Map<java.lang.String, Serializable> workflowContext)
+		throws PortalException;
+
+	public CPDefinition updateTaxCategoryInfo(long cpDefinitionId,
+		long cpTaxCategoryId, boolean taxExempt, boolean telcoOrElectronics)
 		throws PortalException;
 }

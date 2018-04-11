@@ -66,13 +66,13 @@ import java.rmi.RemoteException;
 @ProviderType
 public class CommerceTaxFixedRateServiceSoap {
 	public static com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateSoap addCommerceTaxFixedRate(
-		long commerceTaxMethodId, long commerceTaxCategoryId, double rate,
+		long commerceTaxMethodId, long cpTaxCategoryId, double rate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate returnValue =
 				CommerceTaxFixedRateServiceUtil.addCommerceTaxFixedRate(commerceTaxMethodId,
-					commerceTaxCategoryId, rate, serviceContext);
+					cpTaxCategoryId, rate, serviceContext);
 
 			return com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateSoap.toSoapModel(returnValue);
 		}
@@ -110,12 +110,12 @@ public class CommerceTaxFixedRateServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateSoap fetchCommerceTaxFixedRateByCTC_CTM(
-		long commerceTaxCategoryId, long commerceTaxMethodId)
+	public static com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateSoap fetchCommerceTaxFixedRate(
+		long cpTaxCategoryId, long commerceTaxMethodId)
 		throws RemoteException {
 		try {
 			com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate returnValue =
-				CommerceTaxFixedRateServiceUtil.fetchCommerceTaxFixedRateByCTC_CTM(commerceTaxCategoryId,
+				CommerceTaxFixedRateServiceUtil.fetchCommerceTaxFixedRate(cpTaxCategoryId,
 					commerceTaxMethodId);
 
 			return com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateSoap.toSoapModel(returnValue);

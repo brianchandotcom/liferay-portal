@@ -66,7 +66,7 @@ public class CommerceTaxFixedRateWrapper implements CommerceTaxFixedRate,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("commerceTaxCategoryId", getCommerceTaxCategoryId());
+		attributes.put("CPTaxCategoryId", getCPTaxCategoryId());
 		attributes.put("commerceTaxMethodId", getCommerceTaxMethodId());
 		attributes.put("rate", getRate());
 
@@ -118,11 +118,10 @@ public class CommerceTaxFixedRateWrapper implements CommerceTaxFixedRate,
 			setModifiedDate(modifiedDate);
 		}
 
-		Long commerceTaxCategoryId = (Long)attributes.get(
-				"commerceTaxCategoryId");
+		Long CPTaxCategoryId = (Long)attributes.get("CPTaxCategoryId");
 
-		if (commerceTaxCategoryId != null) {
-			setCommerceTaxCategoryId(commerceTaxCategoryId);
+		if (CPTaxCategoryId != null) {
+			setCPTaxCategoryId(CPTaxCategoryId);
 		}
 
 		Long commerceTaxMethodId = (Long)attributes.get("commerceTaxMethodId");
@@ -146,22 +145,6 @@ public class CommerceTaxFixedRateWrapper implements CommerceTaxFixedRate,
 	@Override
 	public int compareTo(CommerceTaxFixedRate commerceTaxFixedRate) {
 		return _commerceTaxFixedRate.compareTo(commerceTaxFixedRate);
-	}
-
-	@Override
-	public com.liferay.commerce.model.CommerceTaxCategory getCommerceTaxCategory()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceTaxFixedRate.getCommerceTaxCategory();
-	}
-
-	/**
-	* Returns the commerce tax category ID of this commerce tax fixed rate.
-	*
-	* @return the commerce tax category ID of this commerce tax fixed rate
-	*/
-	@Override
-	public long getCommerceTaxCategoryId() {
-		return _commerceTaxFixedRate.getCommerceTaxCategoryId();
 	}
 
 	/**
@@ -192,6 +175,22 @@ public class CommerceTaxFixedRateWrapper implements CommerceTaxFixedRate,
 	@Override
 	public long getCompanyId() {
 		return _commerceTaxFixedRate.getCompanyId();
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPTaxCategory getCPTaxCategory()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceTaxFixedRate.getCPTaxCategory();
+	}
+
+	/**
+	* Returns the cp tax category ID of this commerce tax fixed rate.
+	*
+	* @return the cp tax category ID of this commerce tax fixed rate
+	*/
+	@Override
+	public long getCPTaxCategoryId() {
+		return _commerceTaxFixedRate.getCPTaxCategoryId();
 	}
 
 	/**
@@ -315,16 +314,6 @@ public class CommerceTaxFixedRateWrapper implements CommerceTaxFixedRate,
 	}
 
 	/**
-	* Sets the commerce tax category ID of this commerce tax fixed rate.
-	*
-	* @param commerceTaxCategoryId the commerce tax category ID of this commerce tax fixed rate
-	*/
-	@Override
-	public void setCommerceTaxCategoryId(long commerceTaxCategoryId) {
-		_commerceTaxFixedRate.setCommerceTaxCategoryId(commerceTaxCategoryId);
-	}
-
-	/**
 	* Sets the commerce tax fixed rate ID of this commerce tax fixed rate.
 	*
 	* @param commerceTaxFixedRateId the commerce tax fixed rate ID of this commerce tax fixed rate
@@ -352,6 +341,16 @@ public class CommerceTaxFixedRateWrapper implements CommerceTaxFixedRate,
 	@Override
 	public void setCompanyId(long companyId) {
 		_commerceTaxFixedRate.setCompanyId(companyId);
+	}
+
+	/**
+	* Sets the cp tax category ID of this commerce tax fixed rate.
+	*
+	* @param CPTaxCategoryId the cp tax category ID of this commerce tax fixed rate
+	*/
+	@Override
+	public void setCPTaxCategoryId(long CPTaxCategoryId) {
+		_commerceTaxFixedRate.setCPTaxCategoryId(CPTaxCategoryId);
 	}
 
 	/**

@@ -42,7 +42,7 @@ public class CommerceTaxFixedRateSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setCommerceTaxCategoryId(model.getCommerceTaxCategoryId());
+		soapModel.setCPTaxCategoryId(model.getCPTaxCategoryId());
 		soapModel.setCommerceTaxMethodId(model.getCommerceTaxMethodId());
 		soapModel.setRate(model.getRate());
 
@@ -156,12 +156,12 @@ public class CommerceTaxFixedRateSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public long getCommerceTaxCategoryId() {
-		return _commerceTaxCategoryId;
+	public long getCPTaxCategoryId() {
+		return _CPTaxCategoryId;
 	}
 
-	public void setCommerceTaxCategoryId(long commerceTaxCategoryId) {
-		_commerceTaxCategoryId = commerceTaxCategoryId;
+	public void setCPTaxCategoryId(long CPTaxCategoryId) {
+		_CPTaxCategoryId = CPTaxCategoryId;
 	}
 
 	public long getCommerceTaxMethodId() {
@@ -187,7 +187,7 @@ public class CommerceTaxFixedRateSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private long _commerceTaxCategoryId;
+	private long _CPTaxCategoryId;
 	private long _commerceTaxMethodId;
 	private double _rate;
 }

@@ -57,7 +57,7 @@ public interface CommerceTaxFixedRateService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CommerceTaxFixedRateServiceUtil} to access the commerce tax fixed rate remote service. Add custom service methods to {@link com.liferay.commerce.tax.engine.fixed.service.impl.CommerceTaxFixedRateServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CommerceTaxFixedRate addCommerceTaxFixedRate(
-		long commerceTaxMethodId, long commerceTaxCategoryId, double rate,
+		long commerceTaxMethodId, long cpTaxCategoryId, double rate,
 		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteCommerceTaxFixedRate(long commerceTaxFixedRateId)
@@ -68,8 +68,8 @@ public interface CommerceTaxFixedRateService extends BaseService {
 		long commerceTaxFixedRateId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceTaxFixedRate fetchCommerceTaxFixedRateByCTC_CTM(
-		long commerceTaxCategoryId, long commerceTaxMethodId)
+	public CommerceTaxFixedRate fetchCommerceTaxFixedRate(
+		long cpTaxCategoryId, long commerceTaxMethodId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

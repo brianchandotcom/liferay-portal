@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.commerce.service;
+package com.liferay.commerce.product.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.model.CommerceTaxCategory;
+import com.liferay.commerce.product.model.CPTaxCategory;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -35,48 +35,52 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Provides the remote service interface for CommerceTaxCategory. Methods of this
+ * Provides the remote service interface for CPTaxCategory. Methods of this
  * service are expected to have security checks based on the propagated JAAS
  * credentials because this service can be accessed remotely.
  *
- * @author Alessio Antonio Rendina
- * @see CommerceTaxCategoryServiceUtil
- * @see com.liferay.commerce.service.base.CommerceTaxCategoryServiceBaseImpl
- * @see com.liferay.commerce.service.impl.CommerceTaxCategoryServiceImpl
+ * @author Marco Leo
+ * @see CPTaxCategoryServiceUtil
+ * @see com.liferay.commerce.product.service.base.CPTaxCategoryServiceBaseImpl
+ * @see com.liferay.commerce.product.service.impl.CPTaxCategoryServiceImpl
  * @generated
  */
 @AccessControlled
 @JSONWebService
 @OSGiBeanProperties(property =  {
-	"json.web.service.context.name=commerce", "json.web.service.context.path=CommerceTaxCategory"}, service = CommerceTaxCategoryService.class)
+	"json.web.service.context.name=commerce", "json.web.service.context.path=CPTaxCategory"}, service = CPTaxCategoryService.class)
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
-public interface CommerceTaxCategoryService extends BaseService {
+public interface CPTaxCategoryService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceTaxCategoryServiceUtil} to access the commerce tax category remote service. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceTaxCategoryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link CPTaxCategoryServiceUtil} to access the cp tax category remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPTaxCategoryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public CommerceTaxCategory addCommerceTaxCategory(
+	public CPTaxCategory addCPTaxCategory(
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap,
 		ServiceContext serviceContext) throws PortalException;
 
-	public void deleteCommerceTaxCategory(long commerceTaxCategoryId)
+	public void deleteCPTaxCategory(long cpTaxCategoryId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceTaxCategory> getCommerceTaxCategories(long groupId,
-		int start, int end,
-		OrderByComparator<CommerceTaxCategory> orderByComparator);
+	public List<CPTaxCategory> getCPTaxCategories(long groupId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceTaxCategoriesCount(long groupId);
+	public List<CPTaxCategory> getCPTaxCategories(long groupId, int start,
+		int end, OrderByComparator<CPTaxCategory> orderByComparator)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceTaxCategory getCommerceTaxCategory(
-		long commerceTaxCategoryId) throws PortalException;
+	public int getCPTaxCategoriesCount(long groupId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPTaxCategory getCPTaxCategory(long cpTaxCategoryId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -85,7 +89,7 @@ public interface CommerceTaxCategoryService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public CommerceTaxCategory updateCommerceTaxCategory(
-		long commerceTaxCategoryId, Map<Locale, java.lang.String> nameMap,
+	public CPTaxCategory updateCPTaxCategory(long cpTaxCategoryId,
+		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap) throws PortalException;
 }

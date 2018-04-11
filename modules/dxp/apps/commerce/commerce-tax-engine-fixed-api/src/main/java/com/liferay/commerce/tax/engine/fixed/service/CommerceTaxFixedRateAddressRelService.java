@@ -57,9 +57,9 @@ public interface CommerceTaxFixedRateAddressRelService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CommerceTaxFixedRateAddressRelServiceUtil} to access the commerce tax fixed rate address rel remote service. Add custom service methods to {@link com.liferay.commerce.tax.engine.fixed.service.impl.CommerceTaxFixedRateAddressRelServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
-		long commerceTaxMethodId, long commerceTaxCategoryId,
-		long commerceCountryId, long commerceRegionId, java.lang.String zip,
-		double rate, ServiceContext serviceContext) throws PortalException;
+		long commerceTaxMethodId, long cpTaxCategoryId, long commerceCountryId,
+		long commerceRegionId, java.lang.String zip, double rate,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteCommerceTaxFixedRateAddressRel(
 		long commerceTaxFixedRateAddressRelId) throws PortalException;

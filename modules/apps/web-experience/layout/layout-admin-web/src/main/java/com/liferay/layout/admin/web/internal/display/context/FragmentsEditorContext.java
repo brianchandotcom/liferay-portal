@@ -269,7 +269,7 @@ public class FragmentsEditorContext {
 
 		soyContext.put("type", _getMappingTypeLabel());
 
-		if (layoutPageTemplateEntry.getClassTypeId() <= 0) {
+		if (layoutPageTemplateEntry.getClassTypeId() > 0) {
 			soyContext.put("subtype", _getMappingSubtypeLabel());
 		}
 

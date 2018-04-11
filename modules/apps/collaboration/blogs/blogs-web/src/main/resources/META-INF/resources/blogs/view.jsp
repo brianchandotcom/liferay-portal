@@ -80,17 +80,31 @@ searchContainer.setResults(results);
 %>
 
 <c:if test="<%= notPublishedEntriesCount > 0 %>">
-	<aui:nav-bar markupView="lexicon">
-		<aui:nav cssClass="navbar-nav">
-			<aui:nav-item href="<%= portletURL.toString() %>" label="published" selected='<%= !mvcRenderCommandName.equals("/blogs/view_not_published_entries") %>' />
+	<clay:navigation-bar
+		items='<%=
+			new JSPNavigationItemList(pageContext) {
+				{
+					add(
+						navigationItem -> {
+							navigationItem.setActive(!mvcRenderCommandName.equals("/blogs/view_not_published_entries"));
+							navigationItem.setHref(portletURL);
+							navigationItem.setLabel(LanguageUtil.get(request, "published"));
+						});
 
-			<portlet:renderURL var="viewNotPublishedEntriesURL">
-				<portlet:param name="mvcRenderCommandName" value="/blogs/view_not_published_entries" />
-			</portlet:renderURL>
+					PortletURL viewNotPublishedEntriesURL = renderResponse.createRenderURL();
 
-			<aui:nav-item href="<%= viewNotPublishedEntriesURL %>" label='<%= LanguageUtil.format(resourceBundle, "not-published-x", notPublishedEntriesCount, false) %>' selected='<%= mvcRenderCommandName.equals("/blogs/view_not_published_entries") %>' />
-		</aui:nav>
-	</aui:nav-bar>
+					viewNotPublishedEntriesURL.setParameter("mvcRenderCommandName", "/blogs/view_not_published_entries");
+
+					add(
+						navigationItem -> {
+							navigationItem.setActive(mvcRenderCommandName.equals("/blogs/view_not_published_entries"));
+							navigationItem.setHref(viewNotPublishedEntriesURL);
+							navigationItem.setLabel(LanguageUtil.format(request, "not-published-x", notPublishedEntriesCount, false));
+						});
+				}
+			}
+		%>'
+	/>
 </c:if>
 
 <%@ include file="/blogs/view_entries.jspf" %>

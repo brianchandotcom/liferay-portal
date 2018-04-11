@@ -18,7 +18,6 @@
 
 <%
 String backURL = GetterUtil.getString(request.getAttribute("view.jsp-backURL"));
-int inactiveUsersCount = GetterUtil.getInteger(request.getAttribute("view.jsp-inactiveUsersCount"));
 PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 int status = GetterUtil.getInteger(request.getAttribute("view.jsp-status"));
 String usersListView = GetterUtil.getString(request.getAttribute("view.jsp-usersListView"));
@@ -187,8 +186,6 @@ boolean showRestoreButton = (searchTerms.getStatus() != WorkflowConstants.STATUS
 
 		<%
 		if ((searchTerms.getOrganizationId() > 0) && !OrganizationPermissionUtil.contains(permissionChecker, searchTerms.getOrganizationId(), ActionKeys.MANAGE_USERS)) {
-			inactiveUsersCount = 0;
-
 			status = WorkflowConstants.STATUS_APPROVED;
 		}
 
@@ -365,9 +362,6 @@ boolean showRestoreButton = (searchTerms.getStatus() != WorkflowConstants.STATUS
 			if (!UserPermissionUtil.contains(permissionChecker, user2.getUserId(), ActionKeys.UPDATE)) {
 				rowURL = null;
 			}
-
-			boolean organizationContextView = false;
-			long organizationGroupId = 0;
 			%>
 
 			<%@ include file="/user/search_columns.jspf" %>

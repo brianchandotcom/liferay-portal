@@ -42,9 +42,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 request.setAttribute("view.jsp-usersListView", usersListView);
 
-int inactiveUsersCount = 0;
-int usersCount = 0;
-
 long organizationId = ParamUtil.getLong(request, "organizationId", OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
 
 Organization organization = null;
@@ -53,25 +50,11 @@ if (organizationId != 0) {
 	organization = OrganizationServiceUtil.getOrganization(organizationId);
 }
 
-if (organization != null) {
-	inactiveUsersCount = UserLocalServiceUtil.getOrganizationUsersCount(organizationId, WorkflowConstants.STATUS_INACTIVE);
-	usersCount = UserLocalServiceUtil.getOrganizationUsersCount(organizationId, WorkflowConstants.STATUS_APPROVED);
+if (!usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS)) {
+	portletDisplay.setShowExportImportIcon(true);
 }
 else {
-	LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
-
-	if (!usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS)) {
-		portletDisplay.setShowExportImportIcon(true);
-
-		userParams.put("noOrganizations", Boolean.TRUE);
-		userParams.put("usersOrgsCount", 0);
-	}
-	else {
-		portletDisplay.setShowExportImportIcon(false);
-	}
-
-	inactiveUsersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), null, WorkflowConstants.STATUS_INACTIVE, userParams);
-	usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED, userParams);
+	portletDisplay.setShowExportImportIcon(false);
 }
 %>
 
@@ -102,7 +85,6 @@ else {
 
 		<%
 		request.setAttribute("view.jsp-backURL", backURL);
-		request.setAttribute("view.jsp-inactiveUsersCount", inactiveUsersCount);
 		request.setAttribute("view.jsp-status", status);
 		request.setAttribute("view.jsp-usersListView", usersListView);
 		request.setAttribute("view.jsp-viewUsersRedirect", viewUsersRedirect);

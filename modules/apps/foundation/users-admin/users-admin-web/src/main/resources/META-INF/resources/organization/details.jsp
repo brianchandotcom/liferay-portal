@@ -23,8 +23,6 @@ Organization organization = OrganizationServiceUtil.fetchOrganization(organizati
 
 long parentOrganizationId = ParamUtil.getLong(request, "parentOrganizationSearchContainerPrimaryKeys", (organization != null) ? organization.getParentOrganizationId() : OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
 
-String parentOrganizationName = ParamUtil.getString(request, "parentOrganizationName");
-
 if (parentOrganizationId <= 0) {
 	parentOrganizationId = OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID;
 
@@ -165,8 +163,6 @@ if ((organization == null) && (parentOrganizationId == OrganizationConstants.DEF
 if (parentOrganizationId != OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {
 	try {
 		parentOrganization = OrganizationLocalServiceUtil.getOrganization(parentOrganizationId);
-
-		parentOrganizationName = parentOrganization.getName();
 	}
 	catch (NoSuchOrganizationException nsoe) {
 	}

@@ -19,8 +19,6 @@
 <%
 long organizationId = ParamUtil.getLong(request, "organizationId");
 
-Organization organization = OrganizationServiceUtil.fetchOrganization(organizationId);
-
 List<OrgLabor> orgLabors = Collections.emptyList();
 
 int[] orgLaborsIndexes = null;

@@ -84,36 +84,17 @@
 			value="<%= user2.getJobTitle() %>"
 		/>
 
-		<c:choose>
-			<c:when test="<%= organizationContextView && (organizationGroupId > 0) %>">
+		<%
+		List<Organization> userOrganizations = OrganizationLocalServiceUtil.getUserOrganizations(user2.getUserId(), 0, PropsValues.USERS_ADMIN_ORGANIZATION_COLUMN_LIMIT);
+		int userOrganizationsCount = OrganizationLocalServiceUtil.getUserOrganizationsCount(user2.getUserId());
+		%>
 
-				<%
-				List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(user2.getUserId(), organizationGroupId, 0, PropsValues.USERS_ADMIN_ROLE_COLUMN_LIMIT);
-				int userGroupRolesCount = UserGroupRoleLocalServiceUtil.getUserGroupRolesCount(user2.getUserId(), organizationGroupId);
-				%>
-
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
-					href="<%= rowURL %>"
-					name="organization-roles"
-					value="<%= HtmlUtil.escape(UsersAdminUtil.getUserColumnText(locale, userGroupRoles, UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR, userGroupRolesCount)) %>"
-				/>
-			</c:when>
-			<c:otherwise>
-
-				<%
-				List<Organization> userOrganizations = OrganizationLocalServiceUtil.getUserOrganizations(user2.getUserId(), 0, PropsValues.USERS_ADMIN_ORGANIZATION_COLUMN_LIMIT);
-				int userOrganizationsCount = OrganizationLocalServiceUtil.getUserOrganizationsCount(user2.getUserId());
-				%>
-
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
-					href="<%= rowURL %>"
-					name="organizations"
-					value="<%= HtmlUtil.escape(UsersAdminUtil.getUserColumnText(locale, userOrganizations, Organization.NAME_ACCESSOR, userOrganizationsCount)) %>"
-				/>
-			</c:otherwise>
-		</c:choose>
+		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
+			href="<%= rowURL %>"
+			name="organizations"
+			value="<%= HtmlUtil.escape(UsersAdminUtil.getUserColumnText(locale, userOrganizations, Organization.NAME_ACCESSOR, userOrganizationsCount)) %>"
+		/>
 
 		<%
 		List<UserGroup> userUserGroups = UserGroupLocalServiceUtil.getUserUserGroups(user2.getUserId(), 0, PropsValues.USERS_ADMIN_USER_GROUP_COLUMN_LIMIT);

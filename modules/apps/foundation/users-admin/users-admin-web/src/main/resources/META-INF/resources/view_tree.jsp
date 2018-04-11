@@ -293,17 +293,3 @@ if (organization != null) {
 		}
 	);
 </aui:script>
-
-<%!
-private long _getParentOrganizationId(HttpServletRequest request, Organization organization, boolean filterManageableOrganizations) {
-	if (organization != null) {
-		return organization.getOrganizationId();
-	}
-
-	if (filterManageableOrganizations) {
-		return OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
-	}
-
-	return ParamUtil.getLong(request, "parentOrganizationId", OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
-}
-%>

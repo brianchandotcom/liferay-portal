@@ -41,16 +41,6 @@ long organizationId = organization.getOrganizationId();
 Group organizationGroup = organization.getGroup();
 
 long organizationGroupId = organization.getGroupId();
-
-String cssClass = StringPool.BLANK;
-
-boolean view = false;
-
-if (row == null) {
-	cssClass = "list-group nav";
-
-	view = true;
-}
 %>
 
 <liferay-ui:icon-menu

@@ -103,6 +103,13 @@
 	}
 }
 
+#deleteFieldDialog, #leaveFormDialog {
+	.modal-full-screen-content .modal-body {
+		overflow: visible;
+		padding: 1rem 1.5rem;
+	}
+}
+
 #deleteFieldDialog {
 	.btn {
 		border: 1px solid transparent;
@@ -129,10 +136,5 @@
 		&:hover {
 			text-decoration: none;
 		}
-	}
-
-	.modal-full-screen-content .modal-body {
-		overflow: visible;
-		padding: 1rem 1.5rem;
 	}
 }

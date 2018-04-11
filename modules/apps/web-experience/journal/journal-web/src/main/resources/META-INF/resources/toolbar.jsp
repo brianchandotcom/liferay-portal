@@ -25,7 +25,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 	clearResultsURL="<%= journalDisplayContext.getClearResultsURL() %>"
 	componentId="journalWebManagementToolbar"
 	creationMenu="<%= journalDisplayContext.getCreationMenu() %>"
-	disabled="<%= journalDisplayContext.getTotal() == 0 %>"
+	disabled="<%= journalDisplayContext.isDisabledManagementBar() %>"
 	filterItems="<%= journalDisplayContext.getFilterItemsDropdownItemList() %>"
 	infoPanelId="infoPanelId"
 	namespace="<%= renderResponse.getNamespace() %>"

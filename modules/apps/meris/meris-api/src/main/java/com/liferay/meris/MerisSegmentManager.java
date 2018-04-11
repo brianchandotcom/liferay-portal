@@ -16,7 +16,8 @@ package com.liferay.meris;
 
 import aQute.bnd.annotation.ProviderType;
 
-import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,11 +30,13 @@ public interface MerisSegmentManager<T extends MerisSegment> {
 
 	public T getMerisSegment(String merisSegmentId);
 
-	public Collection<T> getMerisSegments(long groupId);
+	public List<T> getMerisSegments(
+		long groupId, int start, int end, Comparator<T> comparator);
 
-	public Collection<T> getMerisSegments(
+	public List<T> getMerisSegments(
 		long groupId, long userId, String merisSegmentId,
-		Map<String, Object> context);
+		Map<String, Object> context, int start, int end,
+		Comparator<T> comparator);
 
 	public boolean matches(
 		long userId, String merisSegmentId, Map<String, Object> context);

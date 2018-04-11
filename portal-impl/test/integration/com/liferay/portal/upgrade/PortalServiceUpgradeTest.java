@@ -36,7 +36,7 @@ import org.junit.Test;
 /**
  * @author Alberto Chaparro
  */
-public class CoreServiceUpgradeTest {
+public class PortalServiceUpgradeTest {
 
 	@ClassRule
 	@Rule
@@ -45,24 +45,24 @@ public class CoreServiceUpgradeTest {
 
 	@BeforeClass
 	public static void setUpClass() throws SQLException {
-		_currentSchemaVersion = CoreServiceUpgrade.getCurrentSchemaVersion(
+		_currentSchemaVersion = PortalServiceUpgrade.getCurrentSchemaVersion(
 			DataAccess.getUpgradeOptimizedConnection());
 	}
 
 	@Before
 	public void setUp() throws SQLException {
-		_innerCoreServiceUpgrade = new InnerCoreServiceUpgrade();
+		_innerPortalServiceUpgrade = new InnerPortalServiceUpgrade();
 	}
 
 	@After
 	public void tearDown() throws SQLException {
-		_innerCoreServiceUpgrade.updateSchemaVersion(_currentSchemaVersion);
+		_innerPortalServiceUpgrade.updateSchemaVersion(_currentSchemaVersion);
 	}
 
 	@Test
 	public void testGetLatestSchemaVersion() {
 		Set<Version> pendingSchemaVersions =
-			_innerCoreServiceUpgrade.getPendingSchemaVersions(
+			_innerPortalServiceUpgrade.getPendingSchemaVersions(
 				_ORIGINAL_SCHEMA_VERSION);
 
 		Iterator<Version> itr = pendingSchemaVersions.iterator();
@@ -74,16 +74,16 @@ public class CoreServiceUpgradeTest {
 		}
 
 		Assert.assertEquals(
-			latestSchemaVersion, CoreServiceUpgrade.getLatestSchemaVersion());
+			latestSchemaVersion, PortalServiceUpgrade.getLatestSchemaVersion());
 	}
 
 	@Test
 	public void testGetRequiredSchemaVersion() {
 		Version latestSchemaVersion =
-			CoreServiceUpgrade.getLatestSchemaVersion();
+			PortalServiceUpgrade.getLatestSchemaVersion();
 
 		Version requiredSchemaVersion =
-			CoreServiceUpgrade.getRequiredSchemaVersion();
+			PortalServiceUpgrade.getRequiredSchemaVersion();
 
 		Assert.assertEquals(
 			latestSchemaVersion.getMinor(), requiredSchemaVersion.getMinor());
@@ -94,39 +94,41 @@ public class CoreServiceUpgradeTest {
 
 	@Test
 	public void testIsInLatestSchemaVersion() throws SQLException {
-		_innerCoreServiceUpgrade.updateSchemaVersion(
-			CoreServiceUpgrade.getLatestSchemaVersion());
+		_innerPortalServiceUpgrade.updateSchemaVersion(
+			PortalServiceUpgrade.getLatestSchemaVersion());
 
 		Assert.assertTrue(
-			CoreServiceUpgrade.isInLatestSchemaVersion(
+			PortalServiceUpgrade.isInLatestSchemaVersion(
 				DataAccess.getUpgradeOptimizedConnection()));
 	}
 
 	@Test
 	public void testIsInRequiredSchemaVersion() throws SQLException {
-		_innerCoreServiceUpgrade.updateSchemaVersion(
-			CoreServiceUpgrade.getRequiredSchemaVersion());
+		_innerPortalServiceUpgrade.updateSchemaVersion(
+			PortalServiceUpgrade.getRequiredSchemaVersion());
 
 		Assert.assertTrue(
-			CoreServiceUpgrade.isInRequiredSchemaVersion(
+			PortalServiceUpgrade.isInRequiredSchemaVersion(
 				DataAccess.getUpgradeOptimizedConnection()));
 	}
 
 	@Test
 	public void testIsNotInLatestSchemaVersion() throws SQLException {
-		_innerCoreServiceUpgrade.updateSchemaVersion(_ORIGINAL_SCHEMA_VERSION);
+		_innerPortalServiceUpgrade.updateSchemaVersion(
+			_ORIGINAL_SCHEMA_VERSION);
 
 		Assert.assertFalse(
-			CoreServiceUpgrade.isInLatestSchemaVersion(
+			PortalServiceUpgrade.isInLatestSchemaVersion(
 				DataAccess.getUpgradeOptimizedConnection()));
 	}
 
 	@Test
 	public void testIsNotInRequiredSchemaVersion() throws SQLException {
-		_innerCoreServiceUpgrade.updateSchemaVersion(_ORIGINAL_SCHEMA_VERSION);
+		_innerPortalServiceUpgrade.updateSchemaVersion(
+			_ORIGINAL_SCHEMA_VERSION);
 
 		Assert.assertFalse(
-			CoreServiceUpgrade.isInRequiredSchemaVersion(
+			PortalServiceUpgrade.isInRequiredSchemaVersion(
 				DataAccess.getUpgradeOptimizedConnection()));
 	}
 
@@ -134,13 +136,13 @@ public class CoreServiceUpgradeTest {
 	public void testUpgradeWhenCoreIsInLatestSchemaVersion()
 		throws SQLException {
 
-		_innerCoreServiceUpgrade.updateSchemaVersion(
-			CoreServiceUpgrade.getLatestSchemaVersion());
+		_innerPortalServiceUpgrade.updateSchemaVersion(
+			PortalServiceUpgrade.getLatestSchemaVersion());
 
-		CoreServiceUpgrade coreServiceUpgrade = new CoreServiceUpgrade();
+		PortalServiceUpgrade portalServiceUpgrade = new PortalServiceUpgrade();
 
 		try {
-			coreServiceUpgrade.upgrade();
+			portalServiceUpgrade.upgrade();
 		}
 		catch (Exception e) {
 			Assert.fail("No upgrade processes should have been executed");
@@ -149,7 +151,7 @@ public class CoreServiceUpgradeTest {
 		}
 
 		Assert.assertTrue(
-			CoreServiceUpgrade.isInLatestSchemaVersion(
+			PortalServiceUpgrade.isInLatestSchemaVersion(
 				DataAccess.getUpgradeOptimizedConnection()));
 	}
 
@@ -157,13 +159,13 @@ public class CoreServiceUpgradeTest {
 	public void testUpgradeWhenCoreIsInRequiredSchemaVersion()
 		throws SQLException {
 
-		_innerCoreServiceUpgrade.updateSchemaVersion(
-			CoreServiceUpgrade.getRequiredSchemaVersion());
+		_innerPortalServiceUpgrade.updateSchemaVersion(
+			PortalServiceUpgrade.getRequiredSchemaVersion());
 
-		CoreServiceUpgrade coreServiceUpgrade = new CoreServiceUpgrade();
+		PortalServiceUpgrade portalServiceUpgrade = new PortalServiceUpgrade();
 
 		try {
-			coreServiceUpgrade.upgrade();
+			portalServiceUpgrade.upgrade();
 		}
 		catch (Exception e) {
 			Assert.fail(
@@ -175,7 +177,7 @@ public class CoreServiceUpgradeTest {
 		}
 
 		Assert.assertTrue(
-			CoreServiceUpgrade.isInLatestSchemaVersion(
+			PortalServiceUpgrade.isInLatestSchemaVersion(
 				DataAccess.getUpgradeOptimizedConnection()));
 	}
 
@@ -184,9 +186,9 @@ public class CoreServiceUpgradeTest {
 		throws SQLException {
 
 		Assert.assertTrue(
-			"You must first upgrade the Core to the required Schema Version " +
-				CoreServiceUpgrade.getRequiredSchemaVersion(),
-			CoreServiceUpgrade.isInRequiredSchemaVersion(
+			"You must first upgrade the portal to the required schema " +
+				"version " + PortalServiceUpgrade.getRequiredSchemaVersion(),
+			PortalServiceUpgrade.isInRequiredSchemaVersion(
 				DataAccess.getUpgradeOptimizedConnection()));
 	}
 
@@ -195,11 +197,12 @@ public class CoreServiceUpgradeTest {
 
 	private static Version _currentSchemaVersion;
 
-	private InnerCoreServiceUpgrade _innerCoreServiceUpgrade;
+	private InnerPortalServiceUpgrade _innerPortalServiceUpgrade;
 
-	private static class InnerCoreServiceUpgrade extends CoreServiceUpgrade {
+	private static class InnerPortalServiceUpgrade
+		extends PortalServiceUpgrade {
 
-		private InnerCoreServiceUpgrade() throws SQLException {
+		private InnerPortalServiceUpgrade() throws SQLException {
 			connection = DataAccess.getUpgradeOptimizedConnection();
 		}
 

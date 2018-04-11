@@ -145,7 +145,7 @@ public class SourceFormatBuild extends TopLevelBuild {
 	}
 
 	@Override
-	protected String getTestSuiteReportString() {
+	protected String getTestSuiteName() {
 		return "ci:test:sf";
 	}
 

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay SAML Persistence Test
 Bundle-SymbolicName: com.liferay.saml.persistence.test
-Bundle-Version: 1.0.0
+Bundle-Version: 2.0.0
 Include-Resource: test-classes/integration
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Web Content

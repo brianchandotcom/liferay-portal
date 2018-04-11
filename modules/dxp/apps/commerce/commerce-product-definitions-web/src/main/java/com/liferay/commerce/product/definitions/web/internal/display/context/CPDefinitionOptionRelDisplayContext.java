@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
+import com.liferay.commerce.product.configuration.CPOptionConfiguration;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsSearchContainerDisplayContext;
 import com.liferay.commerce.product.definitions.web.internal.util.CPDefinitionsPortletUtil;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
@@ -21,6 +23,7 @@ import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefiniti
 import com.liferay.commerce.product.item.selector.criterion.CPOptionItemSelectorCriterion;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
+import com.liferay.commerce.product.util.DDMFormFieldTypeUtil;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.item.selector.ItemSelector;
@@ -28,25 +31,21 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.CustomAttributesUtil;
 
+import javax.portlet.PortletURL;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import javax.portlet.PortletURL;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Alessio Antonio Rendina
@@ -57,6 +56,7 @@ public class CPDefinitionOptionRelDisplayContext extends
 
 	public CPDefinitionOptionRelDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
+			ConfigurationProvider configurationProvider,
 			CPDefinitionOptionRelService cpDefinitionOptionRelService,
 			DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
 			ItemSelector itemSelector)
@@ -68,6 +68,7 @@ public class CPDefinitionOptionRelDisplayContext extends
 
 		setDefaultOrderByCol("priority");
 
+		_configurationProvider = configurationProvider;
 		_cpDefinitionOptionRelService = cpDefinitionOptionRelService;
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
 		_itemSelector = itemSelector;
@@ -97,24 +98,22 @@ public class CPDefinitionOptionRelDisplayContext extends
 		return cpDefinitionOptionRel.getCPDefinitionOptionRelId();
 	}
 
-	public List<DDMFormFieldType> getDDMFormFieldTypes() {
+	public List<DDMFormFieldType> getDDMFormFieldTypes()
+		throws PortalException {
+
 		List<DDMFormFieldType> ddmFormFieldTypes =
 			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypes();
 
-		Stream<DDMFormFieldType> stream = ddmFormFieldTypes.stream();
+		CPOptionConfiguration cpOptionConfiguration =
+			_configurationProvider.getConfiguration(
+				CPOptionConfiguration.class,
+				new SystemSettingsLocator(CPConstants.CP_OPTION_SERVICE_NAME));
 
-		return stream.filter(
-			fieldType -> {
-				Map<String, Object> properties =
-					_ddmFormFieldTypeServicesTracker.
-						getDDMFormFieldTypeProperties(fieldType.getName());
+		String[] ddmFormFieldTypesAllowed =
+			cpOptionConfiguration.ddmFormFieldTypesAllowed();
 
-				return !MapUtil.getBoolean(
-					properties, "ddm.form.field.type.system");
-			}
-		).collect(
-			Collectors.toList()
-		);
+		return DDMFormFieldTypeUtil.getDDMFormFieldTypesAllowed(
+			ddmFormFieldTypes, ddmFormFieldTypesAllowed);
 	}
 
 	public String getItemSelectorUrl() {
@@ -224,6 +223,7 @@ public class CPDefinitionOptionRelDisplayContext extends
 			getCPDefinitionOptionRelId(), null);
 	}
 
+	private final ConfigurationProvider _configurationProvider;
 	private CPDefinitionOptionRel _cpDefinitionOptionRel;
 	private final CPDefinitionOptionRelService _cpDefinitionOptionRelService;
 	private final DDMFormFieldTypeServicesTracker

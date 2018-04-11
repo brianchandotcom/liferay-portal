@@ -14,16 +14,17 @@
 
 package com.liferay.commerce.product.options.web.internal.display.context;
 
+import com.liferay.commerce.product.configuration.CPOptionConfiguration;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.util.DDMFormFieldTypeUtil;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Marco Leo
@@ -31,10 +32,11 @@ import java.util.stream.Stream;
 public class CPOptionDisplayContext {
 
 	public CPOptionDisplayContext(
-			CPOption cpOption,
+			ConfigurationProvider configurationProvider, CPOption cpOption,
 			DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker)
 		throws PortalException {
 
+		_configurationProvider = configurationProvider;
 		_cpOption = cpOption;
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
 	}
@@ -51,26 +53,25 @@ public class CPOptionDisplayContext {
 		return _cpOption.getCPOptionId();
 	}
 
-	public List<DDMFormFieldType> getDDMFormFieldTypes() {
+	public List<DDMFormFieldType> getDDMFormFieldTypes()
+		throws PortalException {
+
 		List<DDMFormFieldType> ddmFormFieldTypes =
 			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypes();
 
-		Stream<DDMFormFieldType> stream = ddmFormFieldTypes.stream();
+		CPOptionConfiguration cpOptionConfiguration =
+			_configurationProvider.getConfiguration(
+				CPOptionConfiguration.class,
+				new SystemSettingsLocator(CPConstants.CP_OPTION_SERVICE_NAME));
 
-		return stream.filter(
-			fieldType -> {
-				Map<String, Object> properties =
-					_ddmFormFieldTypeServicesTracker.
-						getDDMFormFieldTypeProperties(fieldType.getName());
+		String[] ddmFormFieldTypesAllowed =
+			cpOptionConfiguration.ddmFormFieldTypesAllowed();
 
-				return !MapUtil.getBoolean(
-					properties, "ddm.form.field.type.system");
-			}
-		).collect(
-			Collectors.toList()
-		);
+		return DDMFormFieldTypeUtil.getDDMFormFieldTypesAllowed(
+			ddmFormFieldTypes, ddmFormFieldTypesAllowed);
 	}
 
+	private final ConfigurationProvider _configurationProvider;
 	private CPOption _cpOption;
 	private final DDMFormFieldTypeServicesTracker
 		_ddmFormFieldTypeServicesTracker;

@@ -16,27 +16,23 @@ package com.liferay.meris;
 
 import aQute.bnd.annotation.ProviderType;
 
-import java.util.Comparator;
-import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
- * Models a Segment.
+ * Models a Rule.
  *
  * @author Eduardo Garcia
  */
 @ProviderType
-public interface MerisSegment {
+public interface MerisRule {
 
 	public String getDescription(Locale locale);
 
-	public List<MerisRule> getMerisRules(
-		int start, int end, Comparator<MerisRule> comparator);
-
-	public String getMerisSegmentId();
+	public String getMerisRuleId();
 
 	public String getName(Locale locale);
 
-	public String getScopeId();
+	public boolean matches(Map<String, Object> context);
 
 }

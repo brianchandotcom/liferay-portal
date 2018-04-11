@@ -25,20 +25,20 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 					provider => {
 						return {
 							id: provider.id,
-							schemas: provider.schemas.map(schema => new RegExp(schema)),
+							tpl: new CKEDITOR.template(`<div class="embed-responsive embed-responsive-16by9" data-embed-id="{embedId}">${provider.tpl}</div>`),
 							type: provider.type,
-							tpl: new CKEDITOR.template(`<div class="embed-responsive embed-responsive-16by9" data-embed-id="{embedId}">${provider.tpl}</div>`)
-						}
+							urlSchemes: provider.urlSchemes.map(scheme => new RegExp(scheme))
+						};
 					}
 				);
 
 				var generateEmbedContent = function(url, content) {
 					return LFR_EMBED_WIDGET_TPL.output(
 						{
+							content: content,
 							helpMessage: Liferay.Language.get('video-playback-is-disabled-during-edition-mode'),
 							helpMessageIcon: Liferay.Util.getLexiconIconTpl('info-circle'),
-							url: url,
-							content: content
+							url: url
 						}
 					);
 				};
@@ -91,18 +91,18 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 							if (REGEX_HTTP.test(url)) {
 								var validProvider = providers.filter(
 									provider => {
-										return type ? provider.type === type : true
+										return type ? provider.type === type : true;
 									}
 								).some(
 									provider => {
-										var schema = provider.schemas.find(
-											function(schema) {
-												return schema.test(url);
+										var scheme = provider.urlSchemes.find(
+											function(scheme) {
+												return scheme.test(url);
 											}
 										);
 
-										if (schema) {
-											var embedId = schema.exec(url)[1];
+										if (scheme) {
+											var embedId = scheme.exec(url)[1];
 
 											content = provider.tpl.output(
 												{
@@ -111,7 +111,7 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 											);
 										}
 
-										return schema;
+										return scheme;
 									}
 								);
 

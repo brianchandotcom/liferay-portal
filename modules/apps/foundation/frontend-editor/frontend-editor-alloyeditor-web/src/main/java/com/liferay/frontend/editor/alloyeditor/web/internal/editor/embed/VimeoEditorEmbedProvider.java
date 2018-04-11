@@ -36,7 +36,16 @@ public class VimeoEditorEmbedProvider implements EditorEmbedProvider {
 	}
 
 	@Override
-	public String[] getSchemas() {
+	public String getTpl() {
+		return StringBundler.concat(
+			"<iframe allowfullscreen frameborder=\"0\" height=\"315\" ",
+			"mozallowfullscreen ",
+			"src=\"https://player.vimeo.com/video/{embedId}\" ",
+			"webkitallowfullscreen width=\"560\"></iframe>");
+	}
+
+	@Override
+	public String[] getURLSchemes() {
 		return new String[] {
 			"https?:\\/\\/(?:www\\.)?vimeo\\.com\\/album\\/.*\\/video\\/(\\S*)",
 			"https?:\\/\\/(?:www\\.)?vimeo\\.com\\/channels\\/.*\\/(\\S*)",
@@ -44,15 +53,6 @@ public class VimeoEditorEmbedProvider implements EditorEmbedProvider {
 				"/(\\S*)",
 			"https?:\\/\\/(?:www\\.)?vimeo\\.com\\/(\\S*)$"
 		};
-	}
-
-	@Override
-	public String getTpl() {
-		return StringBundler.concat(
-			"<iframe allowfullscreen frameborder=\"0\" height=\"315\" ",
-			"mozallowfullscreen ",
-			"src=\"https://player.vimeo.com/video/{embedId}\" ",
-			"webkitallowfullscreen width=\"560\"></iframe>");
 	}
 
 }

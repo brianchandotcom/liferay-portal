@@ -15,39 +15,72 @@
 package com.liferay.meris.asset.category.demo.internal;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.meris.MerisRule;
 import com.liferay.meris.MerisSegment;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * @author Eduardo Garcia
  */
-public class AssetCategoryMerisSegment implements MerisSegment {
+public class AssetCategoryMerisSegment
+	implements MerisSegment, Comparable<AssetCategoryMerisSegment> {
 
-	public AssetCategoryMerisSegment(AssetCategory assetCategory) {
-		_assetCategory = assetCategory;
+	public AssetCategoryMerisSegment(AssetVocabulary assetVocabulary) {
+		_assetVocabulary = assetVocabulary;
+
+		for (AssetCategory assetCategory : assetVocabulary.getCategories()) {
+			_merisRules.add(new AssetCategoryMerisRule(assetCategory));
+		}
 	}
 
-	public long getAssetCategoryId() {
-		return _assetCategory.getCategoryId();
+	@Override
+	public int compareTo(AssetCategoryMerisSegment assetCategoryMerisSegment) {
+		String merisSegmentId = getMerisSegmentId();
+
+		return merisSegmentId.compareTo(
+			assetCategoryMerisSegment.getMerisSegmentId());
 	}
 
 	@Override
 	public String getDescription(Locale locale) {
-		return _assetCategory.getDescription(locale);
+		return _assetVocabulary.getDescription(locale);
+	}
+
+	@Override
+	public List<MerisRule> getMerisRules(
+		int start, int end, Comparator<MerisRule> comparator) {
+
+		List merisRules = ListUtil.sort(_merisRules, comparator);
+
+		ListUtil.subList(merisRules, start, end);
+
+		return Collections.unmodifiableList(merisRules);
 	}
 
 	@Override
 	public String getMerisSegmentId() {
-		return GetterUtil.getString(_assetCategory.getCategoryId());
+		return Objects.toString(_assetVocabulary.getVocabularyId());
 	}
 
 	@Override
 	public String getName(Locale locale) {
-		return _assetCategory.getTitle(locale);
+		return _assetVocabulary.getTitle(locale);
 	}
 
-	private final AssetCategory _assetCategory;
+	@Override
+	public String getScopeId() {
+		return Objects.toString(_assetVocabulary.getGroupId());
+	}
+
+	private final AssetVocabulary _assetVocabulary;
+	private List<MerisRule> _merisRules = new ArrayList();
 
 }

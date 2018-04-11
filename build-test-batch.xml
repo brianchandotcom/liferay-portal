@@ -2288,8 +2288,16 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test app.server.type="jboss" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
+	<target name="functional-smoke-jboss70-mysql57-jdk8">
+		<run-functional-test app.server.type="jboss" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
+	</target>
+
 	<target name="functional-smoke-tcserver32-mysql56-jdk8">
 		<run-functional-test app.server.type="tcserver" database.type="mysql" test.portal.log.assert="false" />
+	</target>
+
+	<target name="functional-smoke-tcserver32-mysql57-jdk8">
+		<run-functional-test app.server.type="tcserver" database.type="mysql" database.version="5.7" test.portal.log.assert="false" />
 	</target>
 
 	<target name="functional-smoke-tomcat80-db2105-jdk8">
@@ -2348,8 +2356,16 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test app.server.type="weblogic" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
+	<target name="functional-smoke-weblogic121-mysql57-jdk8">
+		<run-functional-test app.server.type="weblogic" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
+	</target>
+
 	<target name="functional-smoke-websphere85-mysql56-jdk8">
 		<run-functional-test app.server.type="websphere" database.type="mysql" test.portal.log.assert="true" />
+	</target>
+
+	<target name="functional-smoke-websphere85-mysql57-jdk8">
+		<run-functional-test app.server.type="websphere" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
 	<target name="functional-smoke-wildfly100-mariadb100-jdk8">
@@ -2428,8 +2444,16 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test app.server.type="jboss" database.type="mysql" />
 	</target>
 
+	<target name="functional-upgrade-jboss70-mysql57-jdk8">
+		<run-functional-test app.server.type="jboss" database.type="mysql" database.version="5.7" />
+	</target>
+
 	<target name="functional-upgrade-tcserver32-mysql56-jdk8">
 		<run-functional-test app.server.type="tcserver" database.type="mysql" />
+	</target>
+
+	<target name="functional-upgrade-tcserver32-mysql57-jdk8">
+		<run-functional-test app.server.type="tcserver" database.type="mysql" database.version="5.7" />
 	</target>
 
 	<target name="functional-upgrade-tomcat80-mariadb100-jdk8">
@@ -2482,6 +2506,10 @@ app.server.type=@{app.server.type}]]></echo>
 
 	<target name="functional-upgrade-weblogic121-mysql56-jdk8">
 		<run-functional-test app.server.type="weblogic" database.type="mysql" />
+	</target>
+
+	<target name="functional-upgrade-weblogic121-mysql57-jdk8">
+		<run-functional-test app.server.type="weblogic" database.type="mysql" database.version="5.7" />
 	</target>
 
 	<target name="functional-upgrade-wildfly100-mariadb100-jdk8">
@@ -3534,6 +3562,12 @@ information. Make sure to commit in all build services results.
 		<fail message="Please set the property ${subrepository.name}." unless="subrepository.name" />
 
 		<run-modules-integration-test database.type="mysql" refreshdependencies="true" subrepository.name="${subrepository.name}" />
+	</target>
+
+	<target name="subrepository-integration-mysql57-jdk8">
+		<fail message="Please set the property ${subrepository.name}." unless="subrepository.name" />
+
+		<run-modules-integration-test database.type="mysql" database.version="5.7" refreshdependencies="true" subrepository.name="${subrepository.name}" />
 	</target>
 
 	<target name="subrepository-pmd-jdk8">

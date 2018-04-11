@@ -14,37 +14,36 @@
 
 package com.liferay.commerce.tax.engine.fixed.util.comparator;
 
-import com.liferay.commerce.model.CommerceTaxCategory;
+import com.liferay.commerce.product.model.CPTaxCategory;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Marco Leo
  */
-public class CommerceTaxCategoryNameComparator
-	extends OrderByComparator<CommerceTaxCategory> {
+public class CPTaxCategoryNameComparator
+	extends OrderByComparator<CPTaxCategory> {
 
-	public static final String ORDER_BY_ASC = "CommerceTaxCategory.name ASC";
+	public static final String ORDER_BY_ASC = "CPTaxCategory.name ASC";
 
-	public static final String ORDER_BY_DESC = "CommerceTaxCategory.name DESC";
+	public static final String ORDER_BY_DESC = "CPTaxCategory.name DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public CommerceTaxCategoryNameComparator() {
+	public CPTaxCategoryNameComparator() {
 		this(false);
 	}
 
-	public CommerceTaxCategoryNameComparator(boolean ascending) {
+	public CPTaxCategoryNameComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
 	@Override
 	public int compare(
-		CommerceTaxCategory commerceTaxCategory1,
-		CommerceTaxCategory commerceTaxCategory2) {
+		CPTaxCategory cpTaxCategory1, CPTaxCategory cpTaxCategory2) {
 
-		String name1 = StringUtil.toLowerCase(commerceTaxCategory1.getName());
-		String name2 = StringUtil.toLowerCase(commerceTaxCategory2.getName());
+		String name1 = StringUtil.toLowerCase(cpTaxCategory1.getName());
+		String name2 = StringUtil.toLowerCase(cpTaxCategory2.getName());
 
 		int value = name1.compareTo(name2);
 

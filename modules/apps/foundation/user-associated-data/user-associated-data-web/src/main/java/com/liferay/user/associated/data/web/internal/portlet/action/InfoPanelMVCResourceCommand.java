@@ -21,6 +21,7 @@ import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
 import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
+import com.liferay.user.associated.data.web.internal.display.UADEntity;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 
 		String[] rowIds = ParamUtil.getStringValues(resourceRequest, "rowIds");
 
-		List<Object> rowObjects = new ArrayList<>();
+		List<UADEntity> uadEntities = new ArrayList<>();
 
 		String uadRegistryKey = ParamUtil.getString(
 			resourceRequest, "uadRegistryKey");
@@ -61,11 +62,16 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 			uadRegistryKey);
 
 		for (String rowId : rowIds) {
-			rowObjects.add(uadAggregator.get(rowId));
+			Object entity = uadAggregator.get(rowId);
+
+			UADEntity uadEntity = new UADEntity(
+				entity, uadAggregator.getPrimaryKey(entity), null);
+
+			uadEntities.add(uadEntity);
 		}
 
 		resourceRequest.setAttribute(
-			UADWebKeys.INFO_PANEL_ROW_OBJECTS, rowObjects);
+			UADWebKeys.INFO_PANEL_UAD_ENTITIES, uadEntities);
 
 		UADEntityDisplay uadEntityDisplay = _uadRegistry.getUADEntityDisplay(
 			uadRegistryKey);

@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<Object> rowObjects = (List<Object>)request.getAttribute(UADWebKeys.INFO_PANEL_ROW_OBJECTS);
+List<UADEntity> uadEntities = (List<UADEntity>)request.getAttribute(UADWebKeys.INFO_PANEL_UAD_ENTITIES);
 UADEntityDisplay uadEntityDisplay = (UADEntityDisplay)request.getAttribute(UADWebKeys.INFO_PANEL_UAD_ENTITY_DISPLAY);
 %>
 
@@ -25,16 +25,16 @@ UADEntityDisplay uadEntityDisplay = (UADEntityDisplay)request.getAttribute(UADWe
 	<div class="sidebar-body">
 		<dl class="sidebar-dl sidebar-section">
 			<c:choose>
-				<c:when test="<%= ListUtil.isEmpty(rowObjects) %>">
+				<c:when test="<%= ListUtil.isEmpty(uadEntities) %>">
 					<div class="sidebar-header">
 						<h2 class="sidebar-title"><%= uadEntityDisplay.getTypeName() %></h2>
 						<h4 class="sidebar-subtitle"><%= uadEntityDisplay.getApplicationName() %></h4>
 					</div>
 				</c:when>
-				<c:when test="<%= ListUtil.isNotEmpty(rowObjects) && (rowObjects.size() == 1) %>">
+				<c:when test="<%= ListUtil.isNotEmpty(uadEntities) && (uadEntities.size() == 1) %>">
 
 					<%
-					Map<String, Object> displayValues = uadEntityDisplay.getNonanonymizableFieldValues(rowObjects.get(0));
+					Map<String, Object> displayValues = uadEntityDisplay.getNonanonymizableFieldValues(uadEntities.get(0));
 					String identifierFieldName = uadEntityDisplay.getDisplayFieldNames()[0];
 					%>
 
@@ -64,10 +64,10 @@ UADEntityDisplay uadEntityDisplay = (UADEntityDisplay)request.getAttribute(UADWe
 						</dl>
 					</div>
 				</c:when>
-				<c:when test="<%= ListUtil.isNotEmpty(rowObjects) && (rowObjects.size() > 1) %>">
+				<c:when test="<%= ListUtil.isNotEmpty(uadEntities) && (uadEntities.size() > 1) %>">
 					<div class="sidebar-header">
 						<h2 class="sidebar-title"><%= uadEntityDisplay.getTypeName() %></h2>
-						<h4 class="sidebar-subtitle"><%= rowObjects.size() %> items are selected.</h4>
+						<h4 class="sidebar-subtitle"><%= uadEntities.size() %> items are selected.</h4>
 					</div>
 				</c:when>
 			</c:choose>

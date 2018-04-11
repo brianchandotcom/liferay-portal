@@ -19,8 +19,8 @@ package com.liferay.user.associated.data.web.internal.constants;
  */
 public class UADWebKeys {
 
-	public static final String INFO_PANEL_ROW_OBJECTS =
-		"INFO_PANEL_ROW_OBJECTS";
+	public static final String INFO_PANEL_UAD_ENTITIES =
+		"INFO_PANEL_UAD_ENTITIES";
 
 	public static final String INFO_PANEL_UAD_ENTITY_DISPLAY =
 		"INFO_PANEL_UAD_ENTITY_DISPLAY";

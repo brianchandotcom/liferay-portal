@@ -779,45 +779,6 @@ public class JournalDisplayContext {
 		return sb.toString();
 	}
 
-	public List<ManagementBarFilterItem> getManagementBarStatusFilterItems() {
-		List<ManagementBarFilterItem> managementBarFilterItems =
-			new ArrayList<>();
-
-		managementBarFilterItems.add(
-			getManagementBarFilterItem(WorkflowConstants.STATUS_ANY));
-		managementBarFilterItems.add(
-			getManagementBarFilterItem(WorkflowConstants.STATUS_DRAFT));
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		int workflowDefinitionLinksCount =
-			WorkflowDefinitionLinkLocalServiceUtil.
-				getWorkflowDefinitionLinksCount(
-					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
-					JournalFolder.class.getName());
-
-		if (workflowDefinitionLinksCount > 0) {
-			managementBarFilterItems.add(
-				getManagementBarFilterItem(WorkflowConstants.STATUS_PENDING));
-			managementBarFilterItems.add(
-				getManagementBarFilterItem(WorkflowConstants.STATUS_DENIED));
-		}
-
-		managementBarFilterItems.add(
-			getManagementBarFilterItem(WorkflowConstants.STATUS_SCHEDULED));
-		managementBarFilterItems.add(
-			getManagementBarFilterItem(WorkflowConstants.STATUS_APPROVED));
-		managementBarFilterItems.add(
-			getManagementBarFilterItem(WorkflowConstants.STATUS_EXPIRED));
-
-		return managementBarFilterItems;
-	}
-
-	public String getManagementBarStatusFilterValue() {
-		return WorkflowConstants.getStatusLabel(getStatus());
-	}
-
 	public int getMaxAddMenuItems() {
 		if (_maxAddMenuItems != null) {
 			return _maxAddMenuItems;
@@ -1600,22 +1561,6 @@ public class JournalDisplayContext {
 		searchContext.setStart(start);
 
 		return searchContext;
-	}
-
-	protected ManagementBarFilterItem getManagementBarFilterItem(int status) {
-		boolean active = false;
-
-		if (status == getStatus()) {
-			active = true;
-		}
-
-		PortletURL portletURL = getPortletURL();
-
-		portletURL.setParameter("status", String.valueOf(status));
-
-		return new ManagementBarFilterItem(
-			active, WorkflowConstants.getStatusLabel(status),
-			portletURL.toString());
 	}
 
 	private String _getFeedsURL() {

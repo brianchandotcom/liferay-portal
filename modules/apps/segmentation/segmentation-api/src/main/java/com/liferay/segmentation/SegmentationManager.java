@@ -12,24 +12,23 @@
  * details.
  */
 
-package com.liferay.segmentation.model;
+package com.liferay.segmentation;
 
 import aQute.bnd.annotation.ProviderType;
 
-import java.util.Locale;
+import java.util.Collection;
+import java.util.Map;
 
 /**
- * Models a Segment.
+ * Models a service to retrieve segments.
  *
  * @author Eduardo Garcia
  */
 @ProviderType
-public interface Segment {
+public interface SegmentationManager<T extends SegmentationSegment> {
 
-	public String getDescription(Locale locale);
+	public Collection<T> getSegments(long groupId);
 
-	public String getName(Locale locale);
-
-	public String getSegmentId();
+	public boolean matches(long userId, T segment, Map<String, Object> context);
 
 }

@@ -12,20 +12,20 @@
  * details.
  */
 
-package com.liferay.segments.asset.categories.demo.internal.model;
+package com.liferay.segmentation.asset.categories.demo.internal;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.segments.model.Segment;
+import com.liferay.segmentation.SegmentationSegment;
 
 import java.util.Locale;
 
 /**
  * @author Eduardo Garcia
  */
-public class AssetCategorySegment implements Segment {
+public class AssetCategorySegmentationSegment implements SegmentationSegment {
 
-	public AssetCategorySegment(AssetCategory assetCategory) {
+	public AssetCategorySegmentationSegment(AssetCategory assetCategory) {
 		_assetCategory = assetCategory;
 	}
 

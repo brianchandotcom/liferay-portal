@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.segmentation.asset.categories.demo.internal.service;
+package com.liferay.segmentation.asset.categories.demo.internal;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
@@ -24,8 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.segmentation.asset.categories.demo.internal.model.AssetCategorySegment;
-import com.liferay.segmentation.service.SegmentService;
+import com.liferay.segmentation.SegmentationManager;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -40,12 +39,14 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eduardo Garcia
  */
-@Component(immediate = true, service = SegmentService.class)
-public class AssetCategorySegmentService
-	implements SegmentService<AssetCategorySegment> {
+@Component(immediate = true, service = SegmentationManager.class)
+public class AssetCategorySegmentationManager
+	implements SegmentationManager<AssetCategorySegmentationSegment> {
 
 	@Override
-	public Collection<AssetCategorySegment> getSegments(long groupId) {
+	public Collection<AssetCategorySegmentationSegment> getSegments(
+		long groupId) {
+
 		try {
 			AssetVocabulary assetVocabulary =
 				_assetVocabularyLocalService.getGroupVocabulary(
@@ -57,7 +58,8 @@ public class AssetCategorySegmentService
 			Stream<AssetCategory> stream = assetCategories.stream();
 
 			return stream.map(
-				assetCategory -> new AssetCategorySegment(assetCategory)
+				assetCategory -> new AssetCategorySegmentationSegment(
+					assetCategory)
 			).collect(
 				Collectors.toList()
 			);
@@ -75,7 +77,7 @@ public class AssetCategorySegmentService
 
 	@Override
 	public boolean matches(
-		long userId, AssetCategorySegment segment,
+		long userId, AssetCategorySegmentationSegment segment,
 		Map<String, Object> context) {
 
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
@@ -92,7 +94,7 @@ public class AssetCategorySegmentService
 	private static final String _ASSET_VOCABULARY_NAME = "Segments";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AssetCategorySegmentService.class);
+		AssetCategorySegmentationManager.class);
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;

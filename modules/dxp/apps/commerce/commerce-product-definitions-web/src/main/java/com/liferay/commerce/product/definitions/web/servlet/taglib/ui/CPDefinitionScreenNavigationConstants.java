@@ -43,6 +43,8 @@ public class CPDefinitionScreenNavigationConstants {
 
 	public static final String ENTRY_KEY_SHIPPING = "shipping";
 
+	public static final String ENTRY_KEY_TAX_CATEGORY = "tax-category";
+
 	public static final String SCREEN_NAVIGATION_KEY_CP_DEFINITION_GENERAL =
 		"cp.definition.general";
 

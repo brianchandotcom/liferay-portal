@@ -20,7 +20,6 @@ import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
-import com.liferay.dynamic.data.mapping.form.web.internal.security.permission.resource.DDMFormInstancePermission;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
@@ -29,6 +28,7 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLoca
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
 import javax.servlet.ServletContext;
 
@@ -120,7 +120,7 @@ public class DDMFormAssetRendererFactory
 		DDMFormInstance ddmFormInstance =
 			ddmFormInstanceRecord.getFormInstance();
 
-		return DDMFormInstancePermission.contains(
+		return _ddmFormInstanceModelResourcePermission.contains(
 			permissionChecker, ddmFormInstance, actionId);
 	}
 
@@ -139,13 +139,20 @@ public class DDMFormAssetRendererFactory
 		DDMFormAssetRenderer ddmFormAssetRenderer = new DDMFormAssetRenderer(
 			formInstanceRecord, formInstanceRecordVersion,
 			_ddmFormInstanceRecordLocalService, _ddmFormRenderer,
-			_ddmFormValuesFactory, _ddmFormValuesMerger);
+			_ddmFormValuesFactory, _ddmFormValuesMerger,
+			_ddmFormInstanceModelResourcePermission);
 
 		ddmFormAssetRenderer.setAssetRendererType(type);
 		ddmFormAssetRenderer.setServletContext(_servletContext);
 
 		return ddmFormAssetRenderer;
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstance)"
+	)
+	private ModelResourcePermission<DDMFormInstance>
+		_ddmFormInstanceModelResourcePermission;
 
 	@Reference
 	private DDMFormInstanceRecordLocalService

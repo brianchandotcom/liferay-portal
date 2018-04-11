@@ -158,15 +158,17 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 								</c:choose>
 							</portlet:renderURL>
 
-							<a class="btn btn-outline-borderless btn-outline-secondary btn-sm" href="<%= viewEntryCommentsURL.toString() %>">
-								<span class="inline-item inline-item-before">
-									<clay:icon
-										symbol="comments"
-									/>
-								</span>
+							<liferay-util:whitespace-remover>
+								<a class="btn btn-outline-borderless btn-outline-secondary btn-sm" href="<%= viewEntryCommentsURL.toString() %>">
+									<span class="inline-item inline-item-before">
+										<clay:icon
+											symbol="comments"
+										/>
+									</span>
 
-								<%= String.valueOf(messagesCount) %>
-							</a>
+									<%= String.valueOf(messagesCount) %>
+								</a>
+							</liferay-util:whitespace-remover>
 						</div>
 					</c:if>
 

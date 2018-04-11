@@ -6,6 +6,7 @@
 {template .render}
 	{@param defaultEditorConfiguration: ?}
 	{@param fragmentEntryLink: ?}
+	{@param imageSelectorURL: string}
 	{@param portletNamespace: string}
 	{@param spritemap: string}
 	{@param? _handleEditableChanged: any}
@@ -19,6 +20,7 @@
 					'editableChanged': $_handleEditableChanged
 					] /}
 			{param fragmentEntryLinkId: $fragmentEntryLink.fragmentEntryLinkId /}
+			{param imageSelectorURL: $imageSelectorURL /}
 			{param name: $fragmentEntryLink.name /}
 			{param spritemap: $spritemap /}
 			{param portletNamespace: $portletNamespace /}

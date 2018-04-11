@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.commerce.util.comparator;
+package com.liferay.commerce.product.util.comparator;
 
-import com.liferay.commerce.model.CommerceTaxCategory;
+import com.liferay.commerce.product.model.CPTaxCategory;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceTaxCategoryCreateDateComparator
-	extends OrderByComparator<CommerceTaxCategory> {
+public class CPTaxCategoryCreateDateComparator
+	extends OrderByComparator<CPTaxCategory> {
 
 	public static final String ORDER_BY_ASC = "createDate ASC";
 
@@ -30,22 +30,20 @@ public class CommerceTaxCategoryCreateDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public CommerceTaxCategoryCreateDateComparator() {
+	public CPTaxCategoryCreateDateComparator() {
 		this(false);
 	}
 
-	public CommerceTaxCategoryCreateDateComparator(boolean ascending) {
+	public CPTaxCategoryCreateDateComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
 	@Override
 	public int compare(
-		CommerceTaxCategory commerceTaxCategory1,
-		CommerceTaxCategory commerceTaxCategory2) {
+		CPTaxCategory cpTaxCategory1, CPTaxCategory cpTaxCategory2) {
 
 		int value = DateUtil.compareTo(
-			commerceTaxCategory1.getCreateDate(),
-			commerceTaxCategory2.getCreateDate());
+			cpTaxCategory1.getCreateDate(), cpTaxCategory2.getCreateDate());
 
 		if (_ascending) {
 			return value;

@@ -28,17 +28,17 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 							tpl: new CKEDITOR.template(`<div class="embed-responsive embed-responsive-16by9" data-embed-id="{embedId}">${provider.tpl}</div>`),
 							type: provider.type,
 							urlSchemes: provider.urlSchemes.map(scheme => new RegExp(scheme))
-						}
+						};
 					}
 				);
 
 				var generateEmbedContent = function(url, content) {
 					return LFR_EMBED_WIDGET_TPL.output(
 						{
+							content: content,
 							helpMessage: Liferay.Language.get('video-playback-is-disabled-during-edition-mode'),
 							helpMessageIcon: Liferay.Util.getLexiconIconTpl('info-circle'),
-							url: url,
-							content: content
+							url: url
 						}
 					);
 				};
@@ -91,7 +91,7 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 							if (REGEX_HTTP.test(url)) {
 								var validProvider = providers.filter(
 									provider => {
-										return type ? provider.type === type : true
+										return type ? provider.type === type : true;
 									}
 								).some(
 									provider => {

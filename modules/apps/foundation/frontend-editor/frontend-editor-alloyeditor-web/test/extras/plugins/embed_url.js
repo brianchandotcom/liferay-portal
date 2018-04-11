@@ -15,7 +15,7 @@ describe(
 			]
 		};
 
-		const video2EmbedProvider = {
+		const video2EmbedProvider = {
 			id: 'video2',
 			tpl: 'video2 {embedId}',
 			type: 'video',
@@ -76,7 +76,9 @@ describe(
 						template => {
 							templateOutput = {
 								output: jest.fn(
-									data => data.content ? data.content : template
+									data => {
+										return data.content ? data.content : template;
+									}
 								)
 							};
 

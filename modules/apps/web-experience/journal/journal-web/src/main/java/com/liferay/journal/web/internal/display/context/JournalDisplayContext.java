@@ -1767,9 +1767,9 @@ public class JournalDisplayContext {
 	private DropdownItemList _getOrderByDropdownItemList() {
 		return new DropdownItemList(_request) {
 			{
-				add(_getOrderByDropdownItem("display-date"));
-				add(_getOrderByDropdownItem("modified-date"));
-				add(_getOrderByDropdownItem("title"));
+				for (String orderColumn : getOrderColumns()) {
+					add(_getOrderByDropdownItem(orderColumn));
+				}
 			}
 		};
 	}

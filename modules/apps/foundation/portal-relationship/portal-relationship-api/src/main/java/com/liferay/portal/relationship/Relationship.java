@@ -84,7 +84,7 @@ public class Relationship<T extends ClassedModel> {
 
 				Objects.requireNonNull(function);
 
-				_relationship._singleInboundRelationshipFunctions.add(
+				_relationship._inboundSingleRelationshipFunctions.add(
 					function);
 
 				return this;
@@ -96,7 +96,7 @@ public class Relationship<T extends ClassedModel> {
 
 				Objects.requireNonNull(multiRelationshipFunction);
 
-				_relationship._multiInboundRelationshipFunctions.add(
+				_relationship._inboundMultiRelationshipFunctions.add(
 					multiRelationshipFunction);
 
 				return this;
@@ -107,7 +107,7 @@ public class Relationship<T extends ClassedModel> {
 
 				Objects.requireNonNull(function);
 
-				_relationship._singleOutboundRelationshipFunctions.add(
+				_relationship._outboundSingleRelationshipFunctions.add(
 					function);
 
 				return this;
@@ -119,7 +119,7 @@ public class Relationship<T extends ClassedModel> {
 
 				Objects.requireNonNull(multiRelationshipFunction);
 
-				_relationship._multiOutboundRelationshipFunctions.add(
+				_relationship._outboundMultiRelationshipFunctions.add(
 					multiRelationshipFunction);
 
 				return this;
@@ -132,10 +132,10 @@ public class Relationship<T extends ClassedModel> {
 	}
 
 	private Relationship() {
-		_multiInboundRelationshipFunctions = new HashSet<>();
-		_multiOutboundRelationshipFunctions = new HashSet<>();
-		_singleInboundRelationshipFunctions = new HashSet<>();
-		_singleOutboundRelationshipFunctions = new HashSet<>();
+		_inboundMultiRelationshipFunctions = new HashSet<>();
+		_outboundMultiRelationshipFunctions = new HashSet<>();
+		_inboundSingleRelationshipFunctions = new HashSet<>();
+		_outboundSingleRelationshipFunctions = new HashSet<>();
 	}
 
 	private Stream<? extends ClassedModel> _getInboundRelatedModelStream(
@@ -150,7 +150,7 @@ public class Relationship<T extends ClassedModel> {
 		T relationshipBaseModel) {
 
 		Stream<MultiRelationshipFunction<T, ? extends ClassedModel>> stream =
-			_multiInboundRelationshipFunctions.stream();
+			_inboundMultiRelationshipFunctions.stream();
 
 		return stream.map(
 			multiRelationshipFunction -> multiRelationshipFunction.apply(
@@ -164,7 +164,7 @@ public class Relationship<T extends ClassedModel> {
 		T relationshipBaseModel) {
 
 		Stream<MultiRelationshipFunction<T, ? extends ClassedModel>> stream =
-			_multiOutboundRelationshipFunctions.stream();
+			_outboundMultiRelationshipFunctions.stream();
 
 		return stream.map(
 			multiRelationshipFunction -> multiRelationshipFunction.apply(
@@ -186,7 +186,7 @@ public class Relationship<T extends ClassedModel> {
 		T relationshipBaseModel) {
 
 		Stream<Function<T, ? extends ClassedModel>> stream =
-			_singleInboundRelationshipFunctions.stream();
+			_inboundSingleRelationshipFunctions.stream();
 
 		return stream.map(
 			function -> function.apply(
@@ -197,7 +197,7 @@ public class Relationship<T extends ClassedModel> {
 		T relationshipBaseModel) {
 
 		Stream<Function<T, ? extends ClassedModel>> stream =
-			_singleOutboundRelationshipFunctions.stream();
+			_outboundSingleRelationshipFunctions.stream();
 
 		return stream.map(
 			function -> function.apply(
@@ -205,13 +205,13 @@ public class Relationship<T extends ClassedModel> {
 	}
 
 	private final Set<MultiRelationshipFunction<T, ? extends ClassedModel>>
-		_multiInboundRelationshipFunctions;
+		_inboundMultiRelationshipFunctions;
 	private final Set<MultiRelationshipFunction<T, ? extends ClassedModel>>
-		_multiOutboundRelationshipFunctions;
+		_outboundMultiRelationshipFunctions;
 	private RelationshipBaseSupplier<Long, T> _relationshipBaseSupplier;
 	private final Set<Function<T, ? extends ClassedModel>>
-		_singleInboundRelationshipFunctions;
+		_inboundSingleRelationshipFunctions;
 	private final Set<Function<T, ? extends ClassedModel>>
-		_singleOutboundRelationshipFunctions;
+		_outboundSingleRelationshipFunctions;
 
 }

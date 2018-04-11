@@ -916,6 +916,8 @@ AUI.add(
 					_getFieldActionsLayout: function() {
 						var instance = this;
 
+						instance._toggleRequiredMessage();
+
 						return '<div class="lfr-ddm-field-actions-container"> ' +
 							'<button class="btn btn-monospaced btn-sm label-primary lfr-duplicate-field" type="button">' + Liferay.Util.getLexiconIconTpl('paste') + '</button>' +
 							'<button class="btn btn-monospaced btn-sm label-primary lfr-delete-field" type="button">' + Liferay.Util.getLexiconIconTpl('trash') + '</button>' +
@@ -1348,6 +1350,25 @@ AUI.add(
 						var rows = instance.getActiveLayout().get('rows');
 
 						rows.forEach(instance._syncRowLastColumnUI);
+					},
+
+					_toggleRequiredMessage: function() {
+						var instance = this;
+
+						instance._renderRequiredFieldsWarning();
+
+						var warningMessage = instance.get('container').one('.required-warning');
+
+						if (instance.get('container').one('.lfr-ddm-form-field-container .lexicon-icon-asterisk')) {
+							warningMessage.removeClass('hide');
+							warningMessage.removeAttribute('style')
+							warningMessage.set('hidden', false);
+						}
+						else {
+							warningMessage.addClass('hide');
+							warningMessage.setStyle('display', 'none');
+							warningMessage.set('hidden', true);
+						}
 					},
 
 					_traverseFormPages: function() {

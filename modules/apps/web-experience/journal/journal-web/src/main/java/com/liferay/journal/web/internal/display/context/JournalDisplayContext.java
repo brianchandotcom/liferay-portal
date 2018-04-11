@@ -73,7 +73,6 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
@@ -301,11 +300,8 @@ public class JournalDisplayContext {
 		return journalServiceConfiguration.charactersblacklist();
 	}
 
-	public String getClearResultsURL()
-		throws PortalException, PortletException {
-
-		PortletURL clearResultsURL = PortletURLUtil.clone(
-			getPortletURL(), _liferayPortletResponse);
+	public String getClearResultsURL() throws PortalException {
+		PortletURL clearResultsURL = getPortletURL();
 
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
 
@@ -1347,8 +1343,7 @@ public class JournalDisplayContext {
 	}
 
 	public String getSortingURL() throws Exception {
-		PortletURL sortingURL = PortletURLUtil.clone(
-			getPortletURL(), _liferayPortletResponse);
+		PortletURL sortingURL = getPortletURL();
 
 		String orderByType = ParamUtil.getString(_request, "orderByType");
 
@@ -1406,10 +1401,9 @@ public class JournalDisplayContext {
 	}
 
 	public ViewTypeItemList getViewTypesItemList() throws Exception {
-		PortletURL portletURL = PortletURLUtil.clone(
-			getPortletURL(), _liferayPortletResponse);
+		return new ViewTypeItemList(
+			_request, getPortletURL(), getDisplayStyle()) {
 
-		return new ViewTypeItemList(_request, portletURL, getDisplayStyle()) {
 			{
 				String[] viewTypes = getDisplayViews();
 
@@ -1425,6 +1419,7 @@ public class JournalDisplayContext {
 					}
 				}
 			}
+
 		};
 	}
 
@@ -1639,7 +1634,7 @@ public class JournalDisplayContext {
 	}
 
 	protected ManagementBarFilterItem getManagementBarFilterItem(int status)
-		throws PortalException, PortletException {
+		throws PortalException {
 
 		boolean active = false;
 
@@ -1647,8 +1642,7 @@ public class JournalDisplayContext {
 			active = true;
 		}
 
-		PortletURL portletURL = PortletURLUtil.clone(
-			getPortletURL(), _liferayPortletResponse);
+		PortletURL portletURL = getPortletURL();
 
 		portletURL.setParameter("status", String.valueOf(status));
 
@@ -1716,10 +1710,9 @@ public class JournalDisplayContext {
 
 	private Consumer<DropdownItem> _getFilterStatusDropdownItem(
 			final int workflowStatus)
-		throws PortalException, PortletException {
+		throws PortalException {
 
-		PortletURL portletURL = PortletURLUtil.clone(
-			getPortletURL(), _liferayPortletResponse);
+		PortletURL portletURL = getPortletURL();
 
 		return dropdownItem -> {
 			dropdownItem.setActive(getStatus() == workflowStatus);
@@ -1806,10 +1799,9 @@ public class JournalDisplayContext {
 
 	private Consumer<DropdownItem> _getOrderByDropdownItem(
 			final String orderByCol)
-		throws PortalException, PortletException {
+		throws PortalException {
 
-		PortletURL portletURL = PortletURLUtil.clone(
-			getPortletURL(), _liferayPortletResponse);
+		PortletURL portletURL = getPortletURL();
 
 		return dropdownItem -> {
 			dropdownItem.setActive(orderByCol.equals(getOrderByCol()));

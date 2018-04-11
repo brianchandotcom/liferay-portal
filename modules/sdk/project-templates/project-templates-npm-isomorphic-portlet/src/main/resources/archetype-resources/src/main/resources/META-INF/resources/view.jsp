@@ -4,7 +4,7 @@
 <pre id="<portlet:namespace />">
 </pre>
 
-#if (${liferayVersion} == "7.1")
+#if (${liferayVersion.startsWith("7.1")})
 <aui:script require="<%= bootstrapRequire %>">
 #else
 <aui:script require="${artifactId}@${packageJsonVersion}">
@@ -15,7 +15,7 @@
 	out.innerHTML += "Invoking portlet's main module default export.\n";
 	out.innerHTML += '\n';
 
-#if (${liferayVersion} == "7.1")
+#if (${liferayVersion.startsWith("7.1")})
 	bootstrapRequire.default({
 #else
 	${auiScriptRequireVarName}.default({

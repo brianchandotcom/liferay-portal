@@ -6,7 +6,7 @@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
-#if (${liferayVersion} == "7.1")
+#if (${liferayVersion.startsWith("7.1")})
 
 <%@ page import="${package}.constants.${className}WebKeys" %>
 #end
@@ -16,7 +16,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <portlet:defineObjects />
 
 <%
-#if (${liferayVersion} == "7.1")
+#if (${liferayVersion.startsWith("7.1")})
 String bootstrapRequire = (String)renderRequest.getAttribute(${className}WebKeys.BOOTSTRAP_REQUIRE);
 #end
 String stylesheetURL = (String)renderRequest.getAttribute("stylesheetURL");

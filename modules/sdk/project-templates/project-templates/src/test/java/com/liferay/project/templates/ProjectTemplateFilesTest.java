@@ -44,6 +44,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
@@ -958,6 +959,10 @@ public class ProjectTemplateFilesTest {
 			while (matcher.find()) {
 				String name = matcher.group(1);
 
+				if (Objects.equals(fileName, "pom.xml") && 
+					_pomXmlProperties.contains(name)) {	
+					continue;
+				}
 				if (!text.contains("#set ($" + name + " = ")) {
 					archetypeResourcePropertyNames.add(name);
 				}
@@ -976,7 +981,7 @@ public class ProjectTemplateFilesTest {
 	private static final Pattern _archetypeMetadataXmlRequiredPropertyPattern =
 		Pattern.compile("<requiredProperty key=\"(\\w+)\">");
 	private static final Pattern _archetypeResourcePropertyNamePattern =
-		Pattern.compile("\\$\\{(\\w+)\\}");
+		Pattern.compile("\\$\\{(\\w+)(\\}|\\.)");
 	private static final Pattern _buildGradleDependencyPattern =
 		Pattern.compile(
 			"(compile(?:Only)?) group: \"(.+)\", name: \"(.+)\", " +
@@ -1015,6 +1020,8 @@ public class ProjectTemplateFilesTest {
 
 	private static final Pattern _pomXmlExecutionIdPattern = Pattern.compile(
 		"[a-z]+(?:-[a-z]+)*");
+	private static final Set<String> _pomXmlProperties = new HashSet<>(
+		Arrays.asList("groupId", "artifactId", "project", "com"));
 	private static final Pattern _projectTemplateDirNameSeparatorPattern =
 		Pattern.compile("(?:^|-)(\\w)");
 	private static final Set<String> _textFileExtensions = new HashSet<>(

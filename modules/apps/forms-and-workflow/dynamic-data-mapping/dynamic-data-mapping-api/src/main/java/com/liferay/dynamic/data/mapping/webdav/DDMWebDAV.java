@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.webdav.WebDAVRequest;
 /**
  * @author Rafael Praxedes
  */
-public interface DDMWebDav {
+public interface DDMWebDAV {
 
 	public static final String TYPE_STRUCTURES = "Structures";
 

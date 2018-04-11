@@ -15,13 +15,16 @@
 package com.liferay.dynamic.data.mapping.service.impl;
 
 import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
+import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.service.base.DDMDataProviderInstanceServiceBaseImpl;
-import com.liferay.dynamic.data.mapping.service.permission.DDMDataProviderInstancePermission;
-import com.liferay.dynamic.data.mapping.service.permission.DDMFormPermission;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -42,7 +45,7 @@ public class DDMDataProviderInstanceServiceImpl
 			String type, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMFormPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), groupId,
 			DDMActionKeys.ADD_DATA_PROVIDER_INSTANCE);
 
@@ -55,7 +58,7 @@ public class DDMDataProviderInstanceServiceImpl
 	public void deleteDataProviderInstance(long dataProviderInstanceId)
 		throws PortalException {
 
-		DDMDataProviderInstancePermission.check(
+		_ddmDataProviderInstanceModelResourcePermission.check(
 			getPermissionChecker(), dataProviderInstanceId, ActionKeys.DELETE);
 
 		ddmDataProviderInstanceLocalService.deleteDataProviderInstance(
@@ -75,7 +78,7 @@ public class DDMDataProviderInstanceServiceImpl
 			return null;
 		}
 
-		DDMDataProviderInstancePermission.check(
+		_ddmDataProviderInstanceModelResourcePermission.check(
 			getPermissionChecker(),
 			dataProviderInstance.getDataProviderInstanceId(), ActionKeys.VIEW);
 
@@ -94,7 +97,7 @@ public class DDMDataProviderInstanceServiceImpl
 			return null;
 		}
 
-		DDMDataProviderInstancePermission.check(
+		_ddmDataProviderInstanceModelResourcePermission.check(
 			getPermissionChecker(),
 			dataProviderInstance.getDataProviderInstanceId(), ActionKeys.VIEW);
 
@@ -106,7 +109,7 @@ public class DDMDataProviderInstanceServiceImpl
 			long dataProviderInstanceId)
 		throws PortalException {
 
-		DDMDataProviderInstancePermission.check(
+		_ddmDataProviderInstanceModelResourcePermission.check(
 			getPermissionChecker(), dataProviderInstanceId, ActionKeys.VIEW);
 
 		return ddmDataProviderInstanceLocalService.getDataProviderInstance(
@@ -121,7 +124,7 @@ public class DDMDataProviderInstanceServiceImpl
 			ddmDataProviderInstanceLocalService.getDataProviderInstanceByUuid(
 				uuid);
 
-		DDMDataProviderInstancePermission.check(
+		_ddmDataProviderInstanceModelResourcePermission.check(
 			getPermissionChecker(),
 			ddmDataProviderInstance.getDataProviderInstanceId(),
 			ActionKeys.VIEW);
@@ -185,12 +188,24 @@ public class DDMDataProviderInstanceServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMDataProviderInstancePermission.check(
+		_ddmDataProviderInstanceModelResourcePermission.check(
 			getPermissionChecker(), dataProviderInstanceId, ActionKeys.UPDATE);
 
 		return ddmDataProviderInstanceLocalService.updateDataProviderInstance(
 			getUserId(), dataProviderInstanceId, nameMap, descriptionMap,
 			ddmFormValues, serviceContext);
 	}
+
+	private static volatile ModelResourcePermission<DDMDataProviderInstance>
+		_ddmDataProviderInstanceModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				DDMDataProviderInstanceServiceImpl.class,
+				"_ddmDataProviderInstanceModelResourcePermission",
+				DDMDataProviderInstance.class);
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				DDMDataProviderInstanceServiceImpl.class,
+				"_portletResourcePermission", DDMConstants.RESOURCE_NAME);
 
 }

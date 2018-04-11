@@ -24,7 +24,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
-import com.liferay.dynamic.data.mapping.service.permission.DDMFormInstancePermission;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -34,6 +33,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
@@ -56,7 +56,9 @@ public class DDMFormAssetRenderer
 		DDMFormInstanceRecordLocalService ddmFormInstanceRecordLocalService,
 		DDMFormRenderer ddmFormRenderer,
 		DDMFormValuesFactory ddmFormValuesFactory,
-		DDMFormValuesMerger ddmFormValuesMerger) {
+		DDMFormValuesMerger ddmFormValuesMerger,
+		ModelResourcePermission<DDMFormInstance>
+			ddmFormInstanceModelResourcePermission) {
 
 		_formInstanceRecord = formInstanceRecord;
 		_formInstanceRecordVersion = formInstanceRecordVersion;
@@ -64,6 +66,8 @@ public class DDMFormAssetRenderer
 		_ddmFormRenderer = ddmFormRenderer;
 		_ddmFormValuesFactory = ddmFormValuesFactory;
 		_ddmFormValuesMerger = ddmFormValuesMerger;
+		_ddmFormInstanceModelResourcePermission =
+			ddmFormInstanceModelResourcePermission;
 
 		DDMFormInstance formInstance = null;
 
@@ -168,7 +172,7 @@ public class DDMFormAssetRenderer
 	@Override
 	public boolean hasViewPermission(PermissionChecker permissionChecker) {
 		try {
-			return DDMFormInstancePermission.contains(
+			return _ddmFormInstanceModelResourcePermission.contains(
 				permissionChecker, _formInstance, ActionKeys.VIEW);
 		}
 		catch (PortalException pe) {
@@ -205,6 +209,8 @@ public class DDMFormAssetRenderer
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormAssetRenderer.class);
 
+	private final ModelResourcePermission<DDMFormInstance>
+		_ddmFormInstanceModelResourcePermission;
 	private final DDMFormInstanceRecordLocalService
 		_ddmFormInstanceRecordLocalService;
 	private final DDMFormRenderer _ddmFormRenderer;

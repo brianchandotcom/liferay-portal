@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.service.permission;
+package com.liferay.dynamic.data.mapping.form.web.internal.security.permission.resource;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -23,29 +23,11 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Leonardo Barros
+ * @author Rafael Praxedes
  */
 @Component(immediate = true)
 public class DDMFormInstancePermission {
 
-	public static void check(
-			PermissionChecker permissionChecker,
-			DDMFormInstance ddmFormInstance, String actionId)
-		throws PortalException {
-
-		_ddmFormInstanceModelResourcePermission.check(
-			permissionChecker, ddmFormInstance, actionId);
-	}
-
-	public static void check(
-			PermissionChecker permissionChecker, long ddmFormInstanceId,
-			String actionId)
-		throws PortalException {
-
-		_ddmFormInstanceModelResourcePermission.check(
-			permissionChecker, ddmFormInstanceId, actionId);
-	}
-
 	public static boolean contains(
 			PermissionChecker permissionChecker,
 			DDMFormInstance ddmFormInstance, String actionId)
@@ -56,12 +38,12 @@ public class DDMFormInstancePermission {
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, long ddmFormInstanceId,
+			PermissionChecker permissionChecker, long formInstanceId,
 			String actionId)
 		throws PortalException {
 
 		return _ddmFormInstanceModelResourcePermission.contains(
-			permissionChecker, ddmFormInstanceId, actionId);
+			permissionChecker, formInstanceId, actionId);
 	}
 
 	@Reference(

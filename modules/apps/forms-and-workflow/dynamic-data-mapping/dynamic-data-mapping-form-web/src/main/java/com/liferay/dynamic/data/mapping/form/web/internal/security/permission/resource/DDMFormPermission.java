@@ -12,34 +12,27 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.service.permission;
+package com.liferay.dynamic.data.mapping.form.web.internal.security.permission.resource;
 
 import com.liferay.dynamic.data.mapping.constants.DDMConstants;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.ResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Leonardo Barros
+ * @author Rafael Praxedes
  */
-@Component(
-	immediate = true, property = "resource.name=" + DDMConstants.RESOURCE_NAME,
-	service = ResourcePermissionChecker.class
-)
-public class DDMFormPermission extends BaseResourcePermissionChecker {
+@Component(immediate = true)
+public class DDMFormPermission {
 
-	public static final String RESOURCE_NAME = DDMConstants.RESOURCE_NAME;
+	public static boolean contains(
+		PermissionChecker permissionChecker, Group group, String actionId) {
 
-	public static void check(
-			PermissionChecker permissionChecker, long groupId, String actionId)
-		throws PortalException {
-
-		_portletResourcePermission.check(permissionChecker, groupId, actionId);
+		return _portletResourcePermission.contains(
+			permissionChecker, group, actionId);
 	}
 
 	public static boolean contains(
@@ -47,14 +40,6 @@ public class DDMFormPermission extends BaseResourcePermissionChecker {
 
 		return _portletResourcePermission.contains(
 			permissionChecker, groupId, actionId);
-	}
-
-	@Override
-	public Boolean checkResource(
-		PermissionChecker permissionChecker, long classPK, String actionId) {
-
-		return _portletResourcePermission.contains(
-			permissionChecker, classPK, actionId);
 	}
 
 	@Reference(

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaDeprecatedKernelClassesCheck" files="modules/private/.*" />
+	</source-check>
+</suppressions>

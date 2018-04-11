@@ -200,7 +200,7 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 		try {
 			con = DataAccess.getConnection();
 
-			ps = con.prepareStatement(_GET_BUILD_NUMBER);
+			ps = con.prepareStatement(_SQL_GET_BUILD_NUMBER);
 
 			ps.setLong(1, ReleaseConstants.DEFAULT_ID);
 
@@ -393,7 +393,7 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 	protected int addReleaseInfo() throws Exception {
 		try (Connection con = DataAccess.getConnection();
 			PreparedStatement ps =
-				con.prepareStatement(_INSERT_RELEASE_RECORD);) {
+				con.prepareStatement(_SQL_INSERT_RELEASE);) {
 
 			java.sql.Date now = new java.sql.Date(System.currentTimeMillis());
 
@@ -481,7 +481,7 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 		try {
 			con = DataAccess.getConnection();
 
-			ps = con.prepareStatement(_TEST_DATABASE_STRING_CASE_SENSITIVITY);
+			ps = con.prepareStatement(_SQL_TEST_DATABASE_STRING_CASE_SENSITIVITY);
 
 			ps.setLong(1, ReleaseConstants.DEFAULT_ID);
 			ps.setString(2, testString);
@@ -504,15 +504,15 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 		return count;
 	}
 
-	private static final String _GET_BUILD_NUMBER =
+	private static final String _SQL_GET_BUILD_NUMBER =
 		"select buildNumber from Release_ where releaseId = ?";
 
-	private static final String _INSERT_RELEASE_RECORD =
+	private static final String _SQL_INSERT_RELEASE =
 		"insert into Release_ (releaseId, createDate, modifiedDate, " +
 			"servletContextName, schemaVersion, buildNumber, verified) " +
 				"values (1, ?, ?, ?, ?, ?, ?)";
 
-	private static final String _TEST_DATABASE_STRING_CASE_SENSITIVITY =
+	private static final String _SQL_TEST_DATABASE_STRING_CASE_SENSITIVITY =
 		"select count(*) from Release_ where releaseId = ? and testString = ?";
 
 	private static final Log _log = LogFactoryUtil.getLog(

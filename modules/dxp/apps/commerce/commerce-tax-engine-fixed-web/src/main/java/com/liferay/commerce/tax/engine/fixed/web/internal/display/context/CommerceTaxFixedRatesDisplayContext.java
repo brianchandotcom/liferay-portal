@@ -55,7 +55,7 @@ public class CommerceTaxFixedRatesDisplayContext
 	public CommerceTaxFixedRate getCommerceTaxFixedRate(long cpTaxCategoryId)
 		throws PortalException {
 
-		return _commerceTaxFixedRateService.fetchCommerceTaxFixedRateByCPTC_CTM(
+		return _commerceTaxFixedRateService.fetchCommerceTaxFixedRate(
 			cpTaxCategoryId, getCommerceTaxMethodId());
 	}
 

@@ -56,10 +56,9 @@ public class FixedCommerceTaxEngine implements CommerceTaxEngine {
 
 		try {
 			CommerceTaxFixedRate commerceTaxFixedRate =
-				_commerceTaxFixedRateLocalService.
-					getCommerceTaxFixedRateByCPTC_CTM(
-						commerceTaxCalculateRequest.getTaxCategoryId(),
-						commerceTaxCalculateRequest.getCommerceTaxMethodId());
+				_commerceTaxFixedRateLocalService.getCommerceTaxFixedRate(
+					commerceTaxCalculateRequest.getTaxCategoryId(),
+					commerceTaxCalculateRequest.getCommerceTaxMethodId());
 
 			CommerceTaxRate commerceTaxRate = new CommerceTaxRate(
 				KEY, KEY, commerceTaxFixedRate.getRate());

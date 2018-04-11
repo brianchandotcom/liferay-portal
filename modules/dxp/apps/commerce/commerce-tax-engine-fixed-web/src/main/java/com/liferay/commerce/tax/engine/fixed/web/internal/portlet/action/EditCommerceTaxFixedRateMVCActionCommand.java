@@ -88,7 +88,7 @@ public class EditCommerceTaxFixedRateMVCActionCommand
 		double rate = ParamUtil.getDouble(actionRequest, "rate");
 
 		CommerceTaxFixedRate commerceTaxFixedRate =
-			_commerceTaxFixedRateService.fetchCommerceTaxFixedRateByCPTC_CTM(
+			_commerceTaxFixedRateService.fetchCommerceTaxFixedRate(
 				cpTaxCategoryId, commerceTaxMethodId);
 
 		if (commerceTaxFixedRate != null) {

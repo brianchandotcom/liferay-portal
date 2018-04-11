@@ -26,7 +26,8 @@ public class UpgradeAssetVocabularyTest {
 	public void testUpgradeWithEmptySettings() {
 		testUpgrade(
 			"multiValued=false\nselectedClassNameIds=0\n",
-			"multiValued=false\nselectedClassNameIds=0:-1\n");
+			"multiValued=false\nrequiredClassNameIds=\n" +
+				"selectedClassNameIds=0:-1\n");
 	}
 
 	@Test
@@ -42,14 +43,16 @@ public class UpgradeAssetVocabularyTest {
 	public void testUpgradeWithMultiValuedSettings() {
 		testUpgrade(
 			"multiValued=true\nselectedClassNameIds=10007,10005\n",
-			"multiValued=true\nselectedClassNameIds=10007:-1,10005:-1\n");
+			"multiValued=true\nrequiredClassNameIds=\n" +
+				"selectedClassNameIds=10007:-1,10005:-1\n");
 	}
 
 	@Test
 	public void testUpgradeWithoutRequiredSettings() {
 		testUpgrade(
 			"multiValued=false\nselectedClassNameIds=10007\n",
-			"multiValued=false\nselectedClassNameIds=10007:-1\n");
+			"multiValued=false\nrequiredClassNameIds=\n" +
+				"selectedClassNameIds=10007:-1\n");
 	}
 
 	@Test

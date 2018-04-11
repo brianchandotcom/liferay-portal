@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.security.permission.resource;
 
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
-import com.liferay.portal.kernel.model.StagedGroupedModel;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 import java.util.Objects;
@@ -24,7 +24,7 @@ import java.util.function.ToLongFunction;
 /**
  * @author Preston Crary
  */
-public class StagedModelPermissionLogic<T extends StagedGroupedModel>
+public class StagedModelPermissionLogic<T extends GroupedModel>
 	implements ModelResourcePermissionLogic<T> {
 
 	public StagedModelPermissionLogic(

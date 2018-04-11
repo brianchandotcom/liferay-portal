@@ -90,6 +90,12 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		return DLUtil.getThumbnailSrc(fileEntry, themeDisplay);
 	}
 
+	public String getCommerceOrderShippingPrice() throws PortalException {
+		return _commercePriceCalculationLocalService.formatPriceWithCurrency(
+			_commerceOrder.getCommerceCurrencyId(),
+			_commerceOrder.getShippingPrice());
+	}
+
 	public String getCommerceOrderSubtotal() throws PortalException {
 		return _commercePriceCalculationLocalService.getFormattedOrderSubtotal(
 			getCommerceOrder());

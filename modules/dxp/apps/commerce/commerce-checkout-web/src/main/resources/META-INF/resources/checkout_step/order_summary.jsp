@@ -21,6 +21,20 @@ OrderSummaryCheckoutStepDisplayContext orderSummaryCheckoutStepDisplayContext = 
 
 CommerceOrder commerceOrder = orderSummaryCheckoutStepDisplayContext.getCommerceOrder();
 
+String commercePaymentMethodName = StringPool.BLANK;
+String commerceShippingMethodName = StringPool.BLANK;
+
+CommercePaymentMethod commercePaymentMethod = commerceOrder.getCommercePaymentMethod();
+CommerceShippingMethod commerceShippingMethod = commerceOrder.getCommerceShippingMethod();
+
+if (commercePaymentMethod != null) {
+	commercePaymentMethodName = commercePaymentMethod.getName(locale);
+}
+
+if (commerceShippingMethod != null) {
+	commerceShippingMethodName = commerceShippingMethod.getName(locale);
+}
+
 Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = orderSummaryCheckoutStepDisplayContext.getCommerceOrderValidatorResults();
 %>
 
@@ -142,7 +156,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 					</div>
 
 					<div class="autofit-col">
-						<div class="commerce-value">Free</div>
+						<div class="commerce-value"><%= HtmlUtil.escape(orderSummaryCheckoutStepDisplayContext.getCommerceOrderShippingPrice()) %></div>
 					</div>
 				</li>
 				<li class="autofit-row commerce-tax">
@@ -213,11 +227,11 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 				<img src="" />
 
 				<div class="shipping-description">
-					Domestic Ground
+					<%= HtmlUtil.escape(commerceShippingMethodName) %>
 				</div>
 
 				<div class="shipping-cost">
-					Free
+					<%= HtmlUtil.escape(orderSummaryCheckoutStepDisplayContext.getCommerceOrderShippingPrice()) %>
 				</div>
 			</div>
 
@@ -229,7 +243,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 				<img src="" />
 
 				<div class="shipping-description">
-					PayPal
+					<%= HtmlUtil.escape(commercePaymentMethodName) %>
 				</div>
 			</div>
 		</aui:col>

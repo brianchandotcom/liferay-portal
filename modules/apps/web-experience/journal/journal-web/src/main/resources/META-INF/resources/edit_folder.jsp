@@ -101,7 +101,11 @@ renderResponse.setTitle(title);
 
 		<liferay-frontend:fieldset-group>
 			<c:if test="<%= !rootFolder %>">
-				<liferay-frontend:fieldset>
+				<liferay-frontend:fieldset
+					collapsed="<%= false %>"
+					collapsible="<%= true %>"
+					label="details"
+				>
 					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />
 
 					<aui:input name="description" />

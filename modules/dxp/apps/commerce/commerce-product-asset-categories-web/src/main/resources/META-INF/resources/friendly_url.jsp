@@ -53,39 +53,43 @@ renderResponse.setTitle(category.getTitle(locale));
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="categoryId" type="hidden" value="<%= category.getCategoryId() %>" />
 
-	<div class="commerce-product-definition-url-title form-group">
-		<label for="<portlet:namespace />friendlyURL"><liferay-ui:message key="friendly-url" /> <liferay-ui:icon-help message='<%= LanguageUtil.format(request, "for-example-x", "<em>/news</em>", false) %>' /></label>
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<div class="commerce-product-definition-url-title form-group">
+				<label for="<portlet:namespace />friendlyURL"><liferay-ui:message key="friendly-url" /> <liferay-ui:icon-help message='<%= LanguageUtil.format(request, "for-example-x", "<em>/news</em>", false) %>' /></label>
 
-		<div class="input-group lfr-friendly-url-input-group">
-			<span class="input-group-addon" id="<portlet:namespace />urlBase">
-				<span class="input-group-constrain"><liferay-ui:message key="<%= StringUtil.shorten(friendlyURLBase.toString(), 40) %>" /></span>
-			</span>
+				<div class="input-group lfr-friendly-url-input-group">
+					<span class="input-group-addon" id="<portlet:namespace />urlBase">
+						<span class="input-group-constrain"><liferay-ui:message key="<%= StringUtil.shorten(friendlyURLBase.toString(), 40) %>" /></span>
+					</span>
 
-			<liferay-ui:input-localized cssClass="form-control" defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="urlTitleMapAsXML" xml="<%= HttpUtil.decodeURL(titleMapAsXML) %>" />
-		</div>
-	</div>
+					<liferay-ui:input-localized cssClass="form-control" defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="urlTitleMapAsXML" xml="<%= HttpUtil.decodeURL(titleMapAsXML) %>" />
+				</div>
+			</div>
 
-	<aui:input id="pagesContainerInput" ignoreRequestValue="<%= true %>" name="layoutUuid" type="hidden" value="<%= layoutUuid %>" />
+			<aui:input id="pagesContainerInput" ignoreRequestValue="<%= true %>" name="layoutUuid" type="hidden" value="<%= layoutUuid %>" />
 
-	<aui:field-wrapper helpMessage="category-display-page-help" label="category-display-page">
-		<p class="text-default">
-			<span class="<%= Validator.isNull(layoutBreadcrumb) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />displayPageItemRemove" role="button">
-				<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
-			</span>
-			<span id="<portlet:namespace />displayPageNameInput">
-				<c:choose>
-					<c:when test="<%= Validator.isNull(layoutBreadcrumb) %>">
-						<span class="text-muted"><liferay-ui:message key="none" /></span>
-					</c:when>
-					<c:otherwise>
-						<%= layoutBreadcrumb %>
-					</c:otherwise>
-				</c:choose>
-			</span>
-		</p>
-	</aui:field-wrapper>
+			<aui:field-wrapper helpMessage="category-display-page-help" label="category-display-page">
+				<p class="text-default">
+					<span class="<%= Validator.isNull(layoutBreadcrumb) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />displayPageItemRemove" role="button">
+						<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
+					</span>
+					<span id="<portlet:namespace />displayPageNameInput">
+						<c:choose>
+							<c:when test="<%= Validator.isNull(layoutBreadcrumb) %>">
+								<span class="text-muted"><liferay-ui:message key="none" /></span>
+							</c:when>
+							<c:otherwise>
+								<%= layoutBreadcrumb %>
+							</c:otherwise>
+						</c:choose>
+					</span>
+				</p>
 
-	<aui:button name="chooseDisplayPage" value="choose" />
+				<aui:button name="chooseDisplayPage" value="choose" />
+			</aui:field-wrapper>
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

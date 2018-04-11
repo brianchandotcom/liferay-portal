@@ -29,77 +29,79 @@ String[] serviceTypes = StringUtil.split(fedExCommerceShippingEngineGroupService
 <aui:form action="<%= editCommerceShippingMethodConfigurationActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCommerceShippingMethodConfiguration();" %>'>
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-	<aui:fieldset>
-		<aui:input name="settings--url--" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.url() %>" />
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:input name="settings--url--" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.url() %>" />
 
-		<aui:input name="settings--key--" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.key() %>" />
+			<aui:input name="settings--key--" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.key() %>" />
 
-		<aui:input name="settings--password--" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.password() %>" />
+			<aui:input name="settings--password--" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.password() %>" />
 
-		<aui:input label="account-number" name="settings--accountNumber--" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.accountNumber() %>" />
+			<aui:input label="account-number" name="settings--accountNumber--" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.accountNumber() %>" />
 
-		<aui:input label="meter-number" name="settings--meterNumber--" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.meterNumber() %>" />
+			<aui:input label="meter-number" name="settings--meterNumber--" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.meterNumber() %>" />
 
-		<aui:select label="dropoff-type" name="settings--dropoffType--">
+			<aui:select label="dropoff-type" name="settings--dropoffType--">
 
-			<%
-			for (String dropoffType : FedExCommerceShippingEngineConstants.DROPOFF_TYPES) {
-			%>
+				<%
+				for (String dropoffType : FedExCommerceShippingEngineConstants.DROPOFF_TYPES) {
+				%>
 
-				<aui:option label="<%= FedExCommerceShippingEngineConstants.getDropoffTypeLabel(dropoffType) %>" selected="<%= dropoffType.equals(fedExCommerceShippingEngineGroupServiceConfiguration.dropoffType()) %>" value="<%= dropoffType %>" />
+					<aui:option label="<%= FedExCommerceShippingEngineConstants.getDropoffTypeLabel(dropoffType) %>" selected="<%= dropoffType.equals(fedExCommerceShippingEngineGroupServiceConfiguration.dropoffType()) %>" value="<%= dropoffType %>" />
 
-			<%
-			}
-			%>
+				<%
+				}
+				%>
 
-		</aui:select>
+			</aui:select>
 
-		<aui:input checked="<%= fedExCommerceShippingEngineGroupServiceConfiguration.useResidentialRates() %>" label="use-residential-rates" name="settings--useResidentialRates--" type="checkbox" />
+			<aui:input checked="<%= fedExCommerceShippingEngineGroupServiceConfiguration.useResidentialRates() %>" label="use-residential-rates" name="settings--useResidentialRates--" type="checkbox" />
 
-		<aui:input checked="<%= fedExCommerceShippingEngineGroupServiceConfiguration.useDiscountedRates() %>" label="use-discounted-rates" name="settings--useDiscountedRates--" type="checkbox" />
+			<aui:input checked="<%= fedExCommerceShippingEngineGroupServiceConfiguration.useDiscountedRates() %>" label="use-discounted-rates" name="settings--useDiscountedRates--" type="checkbox" />
 
-		<aui:field-wrapper label="service-types">
+			<aui:field-wrapper label="service-types">
 
-			<%
-			for (String serviceType : FedExCommerceShippingEngineConstants.SERVICE_TYPES) {
-			%>
+				<%
+				for (String serviceType : FedExCommerceShippingEngineConstants.SERVICE_TYPES) {
+				%>
 
-				<div>
-					<aui:input checked="<%= ArrayUtil.contains(serviceTypes, serviceType) %>" label="<%= FedExCommerceShippingEngineConstants.getServiceTypeLabel(serviceType) %>" name="settings--serviceTypes--" type="checkbox" value="<%= serviceType %>" />
-				</div>
+					<div>
+						<aui:input checked="<%= ArrayUtil.contains(serviceTypes, serviceType) %>" label="<%= FedExCommerceShippingEngineConstants.getServiceTypeLabel(serviceType) %>" name="settings--serviceTypes--" type="checkbox" value="<%= serviceType %>" />
+					</div>
 
-			<%
-			}
-			%>
+				<%
+				}
+				%>
 
-		</aui:field-wrapper>
+			</aui:field-wrapper>
 
-		<aui:select label="packing-type" name="settings--packingType--">
+			<aui:select label="packing-type" name="settings--packingType--">
 
-			<%
-			for (String packingType : FedExCommerceShippingEngineConstants.PACKING_TYPES) {
-			%>
+				<%
+				for (String packingType : FedExCommerceShippingEngineConstants.PACKING_TYPES) {
+				%>
 
-				<aui:option label="<%= packingType %>" selected="<%= packingType.equals(fedExCommerceShippingEngineGroupServiceConfiguration.packingType()) %>" value="<%= packingType %>" />
+					<aui:option label="<%= packingType %>" selected="<%= packingType.equals(fedExCommerceShippingEngineGroupServiceConfiguration.packingType()) %>" value="<%= packingType %>" />
 
-			<%
-			}
-			%>
+				<%
+				}
+				%>
 
-		</aui:select>
+			</aui:select>
 
-		<aui:field-wrapper label="max-weight">
-			<aui:input label="" name="settings--maxWeightPounds--" suffix="lb" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.maxWeightPounds() %>" />
+			<aui:field-wrapper label="max-weight">
+				<aui:input label="" name="settings--maxWeightPounds--" suffix="lb" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.maxWeightPounds() %>" />
 
-			<aui:input label="" name="settings--maxWeightKilograms--" suffix="kg" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.maxWeightKilograms() %>" />
-		</aui:field-wrapper>
+				<aui:input label="" name="settings--maxWeightKilograms--" suffix="kg" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.maxWeightKilograms() %>" />
+			</aui:field-wrapper>
 
-		<aui:field-wrapper label="max-size">
-			<aui:input label="" name="settings--maxmaxSizeInches--" suffix="in" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.maxSizeInches() %>" />
+			<aui:field-wrapper label="max-size">
+				<aui:input label="" name="settings--maxmaxSizeInches--" suffix="in" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.maxSizeInches() %>" />
 
-			<aui:input label="" name="settings--maxSizeCentimeters--" suffix="cm" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.maxSizeCentimeters() %>" />
-		</aui:field-wrapper>
-	</aui:fieldset>
+				<aui:input label="" name="settings--maxSizeCentimeters--" suffix="cm" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.maxSizeCentimeters() %>" />
+			</aui:field-wrapper>
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

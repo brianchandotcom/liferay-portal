@@ -17,8 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<Object> rowObjects = (List<Object>)request.getAttribute("ROW_OBJECTS");
-UADEntityDisplay uadEntityDisplay = (UADEntityDisplay)request.getAttribute("UAD_ENTITY_DISPLAY");
+List<Object> rowObjects = (List<Object>)request.getAttribute(UADWebKeys.INFO_PANEL_ROW_OBJECTS);
+UADEntityDisplay uadEntityDisplay = (UADEntityDisplay)request.getAttribute(UADWebKeys.INFO_PANEL_UAD_ENTITY_DISPLAY);
 %>
 
 <div class="sidebar sidebar-light">

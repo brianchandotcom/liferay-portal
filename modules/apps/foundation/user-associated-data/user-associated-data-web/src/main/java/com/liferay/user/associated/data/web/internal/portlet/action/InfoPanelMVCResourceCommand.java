@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
+import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
 import java.util.ArrayList;
@@ -63,12 +64,14 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 			rowObjects.add(uadAggregator.get(rowId));
 		}
 
-		resourceRequest.setAttribute("ROW_OBJECTS", rowObjects);
+		resourceRequest.setAttribute(
+			UADWebKeys.INFO_PANEL_ROW_OBJECTS, rowObjects);
 
 		UADEntityDisplay uadEntityDisplay = _uadRegistry.getUADEntityDisplay(
 			uadRegistryKey);
 
-		resourceRequest.setAttribute("UAD_ENTITY_DISPLAY", uadEntityDisplay);
+		resourceRequest.setAttribute(
+			UADWebKeys.INFO_PANEL_UAD_ENTITY_DISPLAY, uadEntityDisplay);
 
 		include(resourceRequest, resourceResponse, "/info_panel.jsp");
 	}

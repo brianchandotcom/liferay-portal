@@ -24,7 +24,8 @@ import java.util.TreeMap;
 /**
  * @author Alberto Chaparro
  */
-public class UpgradeProcessRegistry implements PortalUpgradeProcessRegistry {
+public class PortalUpgradeProcessRegistryImpl
+	implements PortalUpgradeProcessRegistry {
 
 	@Override
 	public void registerUpgradeProcesses(

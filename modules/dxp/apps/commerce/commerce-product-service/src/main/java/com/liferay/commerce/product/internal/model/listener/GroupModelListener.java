@@ -14,8 +14,11 @@
 
 package com.liferay.commerce.product.internal.model.listener;
 
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
+import com.liferay.commerce.product.service.CPTaxCategoryLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -50,10 +53,28 @@ public class GroupModelListener extends BaseModelListener<Group> {
 		}
 	}
 
+	@Override
+	public void onBeforeRemove(Group group) throws ModelListenerException {
+		try {
+			_cpDefinitionLocalService.deleteCPDefinitions(group.getGroupId());
+			_cpTaxCategoryLocalService.deleteCPTaxCategories(
+				group.getGroupId());
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		GroupModelListener.class);
 
 	@Reference
+	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Reference
 	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
+
+	@Reference
+	private CPTaxCategoryLocalService _cpTaxCategoryLocalService;
 
 }

@@ -76,20 +76,20 @@ public class CommerceTaxFixedRateLocalServiceImpl
 	}
 
 	@Override
-	public CommerceTaxFixedRate fetchCommerceTaxFixedRateByCPTC_CTM(
+	public CommerceTaxFixedRate fetchCommerceTaxFixedRate(
 			long cpTaxCategoryId, long commerceTaxMethodId)
 		throws PortalException {
 
-		return commerceTaxFixedRatePersistence.fetchByCPTC_CTM(
+		return commerceTaxFixedRatePersistence.fetchByC_C(
 			cpTaxCategoryId, commerceTaxMethodId);
 	}
 
 	@Override
-	public CommerceTaxFixedRate getCommerceTaxFixedRateByCPTC_CTM(
+	public CommerceTaxFixedRate getCommerceTaxFixedRate(
 			long cpTaxCategoryId, long commerceTaxMethodId)
 		throws PortalException {
 
-		return commerceTaxFixedRatePersistence.findByCPTC_CTM(
+		return commerceTaxFixedRatePersistence.fetchByC_C(
 			cpTaxCategoryId, commerceTaxMethodId);
 	}
 
@@ -127,7 +127,7 @@ public class CommerceTaxFixedRateLocalServiceImpl
 	protected void validate(long cpTaxCategoryId, long commerceTaxMethodId)
 		throws PortalException {
 
-		int count = commerceTaxFixedRatePersistence.countByCPTC_CTM(
+		int count = commerceTaxFixedRatePersistence.countByC_C(
 			cpTaxCategoryId, commerceTaxMethodId);
 
 		if (count > 0) {

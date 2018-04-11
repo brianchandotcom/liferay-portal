@@ -80,14 +80,13 @@ public class CommerceTaxFixedRateServiceImpl
 	}
 
 	@Override
-	public CommerceTaxFixedRate fetchCommerceTaxFixedRateByCPTC_CTM(
+	public CommerceTaxFixedRate fetchCommerceTaxFixedRate(
 			long cpTaxCategoryId, long commerceTaxMethodId)
 		throws PortalException {
 
 		CommerceTaxFixedRate commerceTaxFixedRate =
-			commerceTaxFixedRateLocalService.
-				fetchCommerceTaxFixedRateByCPTC_CTM(
-					cpTaxCategoryId, commerceTaxMethodId);
+			commerceTaxFixedRateLocalService.fetchCommerceTaxFixedRate(
+				cpTaxCategoryId, commerceTaxMethodId);
 
 		if (commerceTaxFixedRate != null) {
 			CommercePermission.check(

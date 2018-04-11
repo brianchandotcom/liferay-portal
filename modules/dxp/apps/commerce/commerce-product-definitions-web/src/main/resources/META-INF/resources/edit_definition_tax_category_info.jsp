@@ -20,9 +20,7 @@
 CPDefinitionTaxCategoryDisplayContext cpDefinitionTaxCategoryDisplayContext = (CPDefinitionTaxCategoryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CPDefinition cpDefinition = cpDefinitionTaxCategoryDisplayContext.getCPDefinition();
-
 long cpDefinitionId = cpDefinitionTaxCategoryDisplayContext.getCPDefinitionId();
-
 List<CPTaxCategory> cpTaxCategories = cpDefinitionTaxCategoryDisplayContext.getCPTaxCategories();
 %>
 

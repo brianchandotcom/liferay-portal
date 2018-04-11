@@ -11,14 +11,14 @@ $card-horizontal-on-border-width: 2px !default;
 
 /* ---------- Dialogs ---------- */
 
-$dialog-footer-bg: $modal-footer-bg !default;
+$dialog-footer-bg: #FFF !default;
 $dialog-footer-border-color: $modal-footer-border-color !default;
 $dialog-footer-box-shadow: if(variable-exists(modal-footer-box-shadow), $modal-footer-box-shadow, null) !default;
 $dialog-footer-height: 60px;
-$dialog-navbar-height: 60px !default;
+$dialog-navbar-height: 48px !default;
 
 $dialog-desktop-footer-bg: if(variable-exists(modal-desktop-footer-bg), $modal-desktop-footer-bg, $dialog-footer-bg) !default;
-$dialog-desktop-footer-height: 89px;
+$dialog-desktop-footer-height: 80px;
 $dialog-desktop-navbar-height: if(variable-exists(navbar-desktop-height), $navbar-desktop-height, $dialog-navbar-height) !default;
 
 $dialog-footer-padding: 20px !default;

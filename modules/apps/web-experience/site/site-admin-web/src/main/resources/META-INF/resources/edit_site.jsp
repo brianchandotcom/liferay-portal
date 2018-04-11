@@ -110,12 +110,20 @@ if (layoutSetPrototypeId > 0) {
 	request.setAttribute("site.stagingGroupId", Long.valueOf(stagingGroupId));
 	%>
 
-	<liferay-frontend:form-navigator
-		backURL="<%= backURL %>"
-		formModelBean="<%= group %>"
-		id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES %>"
-		showButtons="<%= true %>"
-	/>
+	<liferay-frontend:edit-form-body>
+		<liferay-frontend:form-navigator
+			backURL="<%= backURL %>"
+			formModelBean="<%= group %>"
+			id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES %>"
+			showButtons="<%= false %>"
+		/>
+	</liferay-frontend:edit-form-body>
+
+	<liferay-frontend:edit-form-footer>
+		<aui:button type="submit" />
+
+		<aui:button href="<%= backURL %>" type="cancel" />
+	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
 <aui:script>

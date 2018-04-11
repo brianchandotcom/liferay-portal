@@ -30,11 +30,13 @@ public class EditFormBodyTag extends IncludeTag {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		JspWriter jspWriter = pageContext.getOut();
+
+		jspWriter.write("</div>");
+
 		if (!themeDisplay.isStatePopUp()) {
 			return EVAL_BODY_INCLUDE;
 		}
-
-		JspWriter jspWriter = pageContext.getOut();
 
 		jspWriter.write("</div>");
 
@@ -46,6 +48,10 @@ public class EditFormBodyTag extends IncludeTag {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		JspWriter jspWriter = pageContext.getOut();
+
+		jspWriter.write("<div class=\"lfr-form-content\">");
+
 		if (!themeDisplay.isStatePopUp()) {
 			return EVAL_BODY_INCLUDE;
 		}
@@ -53,15 +59,13 @@ public class EditFormBodyTag extends IncludeTag {
 		EditFormTag editFormTag = (EditFormTag)findAncestorWithClass(
 			this, EditFormTag.class);
 
-		JspWriter jspWriter = pageContext.getOut();
-
 		String cssClass = "sheet";
 
 		if ((editFormTag != null) && !editFormTag.isFluid()) {
 			cssClass = "sheet sheet-lg";
 		}
 
-		jspWriter.write("<div class=\"" + cssClass + ">");
+		jspWriter.write("<div class=\"" + cssClass + "\">");
 
 		return EVAL_BODY_INCLUDE;
 	}

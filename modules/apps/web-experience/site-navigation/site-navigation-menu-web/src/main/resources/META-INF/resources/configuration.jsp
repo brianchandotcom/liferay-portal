@@ -32,189 +32,199 @@ if (siteNavigationMenu != null) {
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
+<liferay-frontend:edit-form
+	action="<%= configurationActionURL %>"
+	method="post"
+	name="fm"
+>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<div class="portlet-configuration-body-content">
-		<div class="container-fluid-1280">
-			<aui:row>
-				<aui:col width="<%= 50 %>">
-					<aui:fieldset-group markupView="lexicon">
-						<aui:fieldset cssClass="p-3" label="navigation-menu">
-							<aui:input id="siteNavigationMenuId" name="preferences--siteNavigationMenuId--" type="hidden" value="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuId() %>" />
-							<aui:input id="siteNavigationMenuType" name="preferences--siteNavigationMenuType--" type="hidden" value="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() %>" />
+	<liferay-frontend:edit-form-body>
+		<aui:row>
+			<aui:col width="<%= 50 %>">
+				<liferay-frontend:fieldset-group>
+					<liferay-frontend:fieldset
+						cssClass="p-3"
+						label="navigation-menu"
+					>
+						<aui:input id="siteNavigationMenuId" name="preferences--siteNavigationMenuId--" type="hidden" value="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuId() %>" />
+						<aui:input id="siteNavigationMenuType" name="preferences--siteNavigationMenuType--" type="hidden" value="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() %>" />
 
-							<c:choose>
-								<c:when test="<%= SiteNavigationMenuLocalServiceUtil.getSiteNavigationMenusCount(scopeGroupId) > 0 %>">
-									<div>
-										<aui:input checked="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() != -1 %>" cssClass="select-navigation" label="select-navigation" name="selectNavigation" type="radio" value="0" />
+						<c:choose>
+							<c:when test="<%= SiteNavigationMenuLocalServiceUtil.getSiteNavigationMenusCount(scopeGroupId) > 0 %>">
+								<div>
+									<aui:input checked="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() != -1 %>" cssClass="select-navigation" label="select-navigation" name="selectNavigation" type="radio" value="0" />
 
-										<aui:select disabled="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1 %>" label="" name="selectSiteNavigationMenuType" value="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() %>">
-											<aui:option label="primary-navigation" selected="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PRIMARY %>" value="<%= SiteNavigationConstants.TYPE_PRIMARY %>" />
-											<aui:option label="secondary-navigation" selected="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == SiteNavigationConstants.TYPE_SECONDARY %>" value="<%= SiteNavigationConstants.TYPE_SECONDARY %>" />
-											<aui:option label="social-navigation" selected="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == SiteNavigationConstants.TYPE_SOCIAL %>" value="<%= SiteNavigationConstants.TYPE_SOCIAL %>" />
-										</aui:select>
+									<aui:select disabled="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1 %>" label="" name="selectSiteNavigationMenuType" value="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() %>">
+										<aui:option label="primary-navigation" selected="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PRIMARY %>" value="<%= SiteNavigationConstants.TYPE_PRIMARY %>" />
+										<aui:option label="secondary-navigation" selected="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == SiteNavigationConstants.TYPE_SECONDARY %>" value="<%= SiteNavigationConstants.TYPE_SECONDARY %>" />
+										<aui:option label="social-navigation" selected="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == SiteNavigationConstants.TYPE_SOCIAL %>" value="<%= SiteNavigationConstants.TYPE_SOCIAL %>" />
+									</aui:select>
 
-										<aui:input checked="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1 %>" cssClass="select-navigation" label="choose-menu" name="selectNavigation" type="radio" value="-1" />
+									<aui:input checked="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1 %>" cssClass="select-navigation" label="choose-menu" name="selectNavigation" type="radio" value="-1" />
 
-										<div class="mb-2 text-muted">
-											<span id="<portlet:namespace />navigationMenuName">
-												<c:if test="<%= (siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1) && (siteNavigationMenuDisplayContext.getSiteNavigationMenuId() > 0) %>">
-													<%= siteNavigationMenuName %>
-												</c:if>
-											</span>
-											<span class="mt-1 <%= ((siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1) && (siteNavigationMenuDisplayContext.getSiteNavigationMenuId() > 0)) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />removeSiteNavigationMenu" role="button">
-												<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
-											</span>
-										</div>
-
-										<aui:button disabled="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() != -1 %>" name="chooseSiteNavigationMenu" value="select" />
+									<div class="mb-2 text-muted">
+										<span id="<portlet:namespace />navigationMenuName">
+											<c:if test="<%= (siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1) && (siteNavigationMenuDisplayContext.getSiteNavigationMenuId() > 0) %>">
+												<%= siteNavigationMenuName %>
+											</c:if>
+										</span>
+										<span class="mt-1 <%= ((siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1) && (siteNavigationMenuDisplayContext.getSiteNavigationMenuId() > 0)) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />removeSiteNavigationMenu" role="button">
+											<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
+										</span>
 									</div>
-								</c:when>
-								<c:otherwise>
-									<div class="card card-horizontal taglib-horizontal-card">
-										<div class="card-row card-row-padded ">
-											<div class="card-col-field">
-												<div class="sticker sticker-secondary sticker-static">
-													<aui:icon image="blogs" markupView="lexicon" />
-												</div>
-											</div>
 
-											<div class="card-col-content card-col-gutters">
-												<span class="lfr-card-title-text truncate-text" id="<portlet:namespace />siteNavigationMenuName">
-													<%= siteNavigationMenuName %>
-												</span>
+									<aui:button disabled="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() != -1 %>" name="chooseSiteNavigationMenu" value="select" />
+								</div>
+							</c:when>
+							<c:otherwise>
+								<div class="card card-horizontal taglib-horizontal-card">
+									<div class="card-row card-row-padded ">
+										<div class="card-col-field">
+											<div class="sticker sticker-secondary sticker-static">
+												<aui:icon image="blogs" markupView="lexicon" />
 											</div>
 										</div>
-									</div>
-								</c:otherwise>
-							</c:choose>
 
-							<div class="display-template mt-4">
-								<liferay-ddm:template-selector
-									className="<%= NavItem.class.getName() %>"
-									displayStyle="<%= siteNavigationMenuDisplayContext.getDisplayStyle() %>"
-									displayStyleGroupId="<%= siteNavigationMenuDisplayContext.getDisplayStyleGroupId() %>"
-									refreshURL="<%= configurationRenderURL %>"
-								/>
-							</div>
-						</aui:fieldset>
-
-						<aui:fieldset cssClass="p-3" label="menu-items-to-show">
-							<div id="<portlet:namespace />customDisplayOptions">
-								<aui:row>
-									<aui:col width="<%= 80 %>">
-										<aui:select id="rootMenuItemType" label="start-with-menu-items-in" name="preferences--rootMenuItemType--" value="<%= rootMenuItemType %>">
-											<aui:option label="level" value="absolute" />
-											<aui:option label="level-relative-to-the-current-menu-item" value="relative" />
-											<aui:option label="select" value="select" />
-										</aui:select>
-									</aui:col>
-
-									<aui:col width="<%= 20 %>">
-										<div class="mt-4 <%= rootMenuItemType.equals("parent-at-level") || rootMenuItemType.equals("relative-parent-up-by") ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />rootMenuItemLevel">
-											<aui:select label="" name="preferences--rootMenuItemLevel--">
-
-												<%
-												for (int i = 0; i <= 4; i++) {
-												%>
-
-													<aui:option label="<%= i %>" selected="<%= siteNavigationMenuDisplayContext.getRootMenuItemLevel() == i %>" />
-
-												<%
-												}
-												%>
-
-											</aui:select>
+										<div class="card-col-content card-col-gutters">
+											<span class="lfr-card-title-text truncate-text" id="<portlet:namespace />siteNavigationMenuName">
+												<%= siteNavigationMenuName %>
+											</span>
 										</div>
-									</aui:col>
-								</aui:row>
+									</div>
+								</div>
+							</c:otherwise>
+						</c:choose>
 
-								<aui:row>
-									<aui:col width="<%= 80 %>">
-										<div class="mb-3 <%= rootMenuItemType.equals("select") ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />rootMenuItemIdPanel">
-											<aui:input id="rootMenuItemId" ignoreRequestValue="<%= true %>" name="preferences--rootMenuItemId--" type="hidden" value="<%= siteNavigationMenuDisplayContext.getRootMenuItemId() %>" />
+						<div class="display-template mt-4">
+							<liferay-ddm:template-selector
+								className="<%= NavItem.class.getName() %>"
+								displayStyle="<%= siteNavigationMenuDisplayContext.getDisplayStyle() %>"
+								displayStyleGroupId="<%= siteNavigationMenuDisplayContext.getDisplayStyleGroupId() %>"
+								refreshURL="<%= configurationRenderURL %>"
+							/>
+						</div>
+					</liferay-frontend:fieldset>
+
+					<liferay-frontend:fieldset
+						cssClass="p-3"
+						label="menu-items-to-show"
+					>
+						<div id="<portlet:namespace />customDisplayOptions">
+							<aui:row>
+								<aui:col width="<%= 80 %>">
+									<aui:select id="rootMenuItemType" label="start-with-menu-items-in" name="preferences--rootMenuItemType--" value="<%= rootMenuItemType %>">
+										<aui:option label="level" value="absolute" />
+										<aui:option label="level-relative-to-the-current-menu-item" value="relative" />
+										<aui:option label="select" value="select" />
+									</aui:select>
+								</aui:col>
+
+								<aui:col width="<%= 20 %>">
+									<div class="mt-4 <%= rootMenuItemType.equals("parent-at-level") || rootMenuItemType.equals("relative-parent-up-by") ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />rootMenuItemLevel">
+										<aui:select label="" name="preferences--rootMenuItemLevel--">
 
 											<%
-											String rootMenuItemName = siteNavigationMenuName;
-
-											SiteNavigationMenuItem siteNavigationMenuItem = SiteNavigationMenuItemLocalServiceUtil.fetchSiteNavigationMenuItem(GetterUtil.getLong(siteNavigationMenuDisplayContext.getRootMenuItemId()));
-
-											if (siteNavigationMenuItem != null) {
-												SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry = (SiteNavigationMenuItemTypeRegistry)request.getAttribute(SiteNavigationMenuWebKeys.SITE_NAVIGATION_MENU_ITEM_TYPE_REGISTRY);
-
-												SiteNavigationMenuItemType siteNavigationMenuItemType = siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(siteNavigationMenuItem.getType());
-
-												rootMenuItemName = siteNavigationMenuItemType.getTitle(siteNavigationMenuItem, locale);
-											}
+											for (int i = 0; i <= 4; i++) {
 											%>
 
-											<div class="card card-horizontal taglib-horizontal-card">
-												<div class="card-row card-row-padded ">
-													<div class="card-col-field">
-														<div class="sticker sticker-secondary sticker-static">
-															<aui:icon image="blogs" markupView="lexicon" />
-														</div>
-													</div>
-
-													<div class="card-col-content card-col-gutters">
-														<span class="lfr-card-title-text truncate-text" id="<portlet:namespace />rootMenuItemName">
-															<%= rootMenuItemName %>
-														</span>
-													</div>
-												</div>
-											</div>
-
-											<aui:button name="chooseRootMenuItem" value="menu-item" />
-										</div>
-									</aui:col>
-								</aui:row>
-
-								<aui:row>
-									<aui:col width="<%= 50 %>">
-										<aui:select label="sublevels-to-display" name="preferences--displayDepth--">
-											<aui:option label="unlimited" value="0" />
-
-											<%
-											for (int i = 1; i <= 20; i++) {
-											%>
-
-												<aui:option label="<%= i %>" selected="<%= siteNavigationMenuDisplayContext.getDisplayDepth() == i %>" />
+												<aui:option label="<%= i %>" selected="<%= siteNavigationMenuDisplayContext.getRootMenuItemLevel() == i %>" />
 
 											<%
 											}
 											%>
 
 										</aui:select>
-									</aui:col>
+									</div>
+								</aui:col>
+							</aui:row>
 
-									<aui:col width="<%= 50 %>">
-										<aui:select label="expand-sublevels" name="preferences--expandedLevels--" value="<%= siteNavigationMenuDisplayContext.getExpandedLevels() %>">
-											<aui:option label="auto" />
-											<aui:option label="all" />
-										</aui:select>
-									</aui:col>
-								</aui:row>
-							</div>
-						</aui:fieldset>
-					</aui:fieldset-group>
-				</aui:col>
+							<aui:row>
+								<aui:col width="<%= 80 %>">
+									<div class="mb-3 <%= rootMenuItemType.equals("select") ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />rootMenuItemIdPanel">
+										<aui:input id="rootMenuItemId" ignoreRequestValue="<%= true %>" name="preferences--rootMenuItemId--" type="hidden" value="<%= siteNavigationMenuDisplayContext.getRootMenuItemId() %>" />
 
-				<aui:col width="<%= 50 %>">
-					<liferay-portlet:preview
-						portletName="<%= portletResource %>"
-						showBorders="<%= true %>"
-					/>
-				</aui:col>
-			</aui:row>
-		</div>
-	</div>
+										<%
+										String rootMenuItemName = siteNavigationMenuName;
 
-	<aui:button-row>
+										SiteNavigationMenuItem siteNavigationMenuItem = SiteNavigationMenuItemLocalServiceUtil.fetchSiteNavigationMenuItem(GetterUtil.getLong(siteNavigationMenuDisplayContext.getRootMenuItemId()));
+
+										if (siteNavigationMenuItem != null) {
+											SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry = (SiteNavigationMenuItemTypeRegistry)request.getAttribute(SiteNavigationMenuWebKeys.SITE_NAVIGATION_MENU_ITEM_TYPE_REGISTRY);
+
+											SiteNavigationMenuItemType siteNavigationMenuItemType = siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(siteNavigationMenuItem.getType());
+
+											rootMenuItemName = siteNavigationMenuItemType.getTitle(siteNavigationMenuItem, locale);
+										}
+										%>
+
+										<div class="card card-horizontal taglib-horizontal-card">
+											<div class="card-row card-row-padded ">
+												<div class="card-col-field">
+													<div class="sticker sticker-secondary sticker-static">
+														<aui:icon image="blogs" markupView="lexicon" />
+													</div>
+												</div>
+
+												<div class="card-col-content card-col-gutters">
+													<span class="lfr-card-title-text truncate-text" id="<portlet:namespace />rootMenuItemName">
+														<%= rootMenuItemName %>
+													</span>
+												</div>
+											</div>
+										</div>
+
+										<aui:button name="chooseRootMenuItem" value="menu-item" />
+									</div>
+								</aui:col>
+							</aui:row>
+
+							<aui:row>
+								<aui:col width="<%= 50 %>">
+									<aui:select label="sublevels-to-display" name="preferences--displayDepth--">
+										<aui:option label="unlimited" value="0" />
+
+										<%
+										for (int i = 1; i <= 20; i++) {
+										%>
+
+											<aui:option label="<%= i %>" selected="<%= siteNavigationMenuDisplayContext.getDisplayDepth() == i %>" />
+
+										<%
+										}
+										%>
+
+									</aui:select>
+								</aui:col>
+
+								<aui:col width="<%= 50 %>">
+									<aui:select label="expand-sublevels" name="preferences--expandedLevels--" value="<%= siteNavigationMenuDisplayContext.getExpandedLevels() %>">
+										<aui:option label="auto" />
+										<aui:option label="all" />
+									</aui:select>
+								</aui:col>
+							</aui:row>
+						</div>
+					</liferay-frontend:fieldset>
+				</liferay-frontend:fieldset-group>
+			</aui:col>
+
+			<aui:col width="<%= 50 %>">
+				<liferay-portlet:preview
+					portletName="<%= portletResource %>"
+					showBorders="<%= true %>"
+				/>
+			</aui:col>
+		</aui:row>
+	</liferay-frontend:edit-form-body>
+
+	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" />
-	</aui:button-row>
-</aui:form>
+
+		<aui:button type="cancel" />
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>
 
 <aui:script sandbox="<%= true %>" use="liferay-item-selector-dialog">
 	var form = $('#<portlet:namespace />fm');

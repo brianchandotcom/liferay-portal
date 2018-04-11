@@ -82,296 +82,302 @@ renderResponse.setTitle(title);
 	<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
 	<aui:input name="parentFolderId" type="hidden" value="<%= parentFolderId %>" />
 
-	<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="please-enter-a-unique-folder-name" />
+	<liferay-frontend:edit-form-body>
+		<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="please-enter-a-unique-folder-name" />
 
-	<liferay-ui:error exception="<%= FolderNameException.class %>">
-		<p>
-			<liferay-ui:message arguments="<%= new String[] {JournalFolderConstants.NAME_LABEL, JournalFolderConstants.NAME_GENERAL_RESTRICTIONS, JournalFolderConstants.NAME_RESERVED_WORDS} %>" key="the-x-cannot-be-x-or-a-reserved-word-such-as-x" />
-		</p>
+		<liferay-ui:error exception="<%= FolderNameException.class %>">
+			<p>
+				<liferay-ui:message arguments="<%= new String[] {JournalFolderConstants.NAME_LABEL, JournalFolderConstants.NAME_GENERAL_RESTRICTIONS, JournalFolderConstants.NAME_RESERVED_WORDS} %>" key="the-x-cannot-be-x-or-a-reserved-word-such-as-x" />
+			</p>
 
-		<p>
-			<liferay-ui:message arguments="<%= new String[] {JournalFolderConstants.NAME_LABEL, JournalFolderConstants.getNameInvalidCharacters(journalDisplayContext.getCharactersBlacklist())} %>" key="the-x-cannot-contain-the-following-invalid-characters-x" />
-		</p>
-	</liferay-ui:error>
+			<p>
+				<liferay-ui:message arguments="<%= new String[] {JournalFolderConstants.NAME_LABEL, JournalFolderConstants.getNameInvalidCharacters(journalDisplayContext.getCharactersBlacklist())} %>" key="the-x-cannot-contain-the-following-invalid-characters-x" />
+			</p>
+		</liferay-ui:error>
 
-	<liferay-ui:error exception="<%= InvalidDDMStructureException.class %>" message="you-cannot-apply-the-selected-structure-restrictions-for-this-folder.-at-least-one-web-content-references-another-structure" />
+		<liferay-ui:error exception="<%= InvalidDDMStructureException.class %>" message="you-cannot-apply-the-selected-structure-restrictions-for-this-folder.-at-least-one-web-content-references-another-structure" />
 
-	<aui:model-context bean="<%= folder %>" model="<%= JournalFolder.class %>" />
+		<aui:model-context bean="<%= folder %>" model="<%= JournalFolder.class %>" />
 
-	<liferay-frontend:fieldset-group>
-		<c:if test="<%= !rootFolder %>">
-			<liferay-frontend:fieldset>
-				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />
+		<liferay-frontend:fieldset-group>
+			<c:if test="<%= !rootFolder %>">
+				<liferay-frontend:fieldset
+					collapsed="<%= false %>"
+					collapsible="<%= true %>"
+					label="details"
+				>
+					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />
 
-				<aui:input name="description" />
-			</liferay-frontend:fieldset>
+					<aui:input name="description" />
+				</liferay-frontend:fieldset>
 
-			<liferay-expando:custom-attributes-available
-				className="<%= JournalFolder.class.getName() %>"
-			>
+				<liferay-expando:custom-attributes-available
+					className="<%= JournalFolder.class.getName() %>"
+				>
+					<liferay-frontend:fieldset
+						collapsed="<%= true %>"
+						collapsible="<%= true %>"
+						label="custom-fields"
+					>
+						<liferay-expando:custom-attribute-list
+							className="<%= JournalFolder.class.getName() %>"
+							classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
+							editable="<%= true %>"
+							label="<%= true %>"
+						/>
+					</liferay-frontend:fieldset>
+				</liferay-expando:custom-attributes-available>
+			</c:if>
+
+			<c:if test="<%= !rootFolder && (folder != null) %>">
 				<liferay-frontend:fieldset
 					collapsed="<%= true %>"
 					collapsible="<%= true %>"
-					label="custom-fields"
+					label="parent-folder"
 				>
-					<liferay-expando:custom-attribute-list
-						className="<%= JournalFolder.class.getName() %>"
-						classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
-						editable="<%= true %>"
-						label="<%= true %>"
-					/>
-				</liferay-frontend:fieldset>
-			</liferay-expando:custom-attributes-available>
-		</c:if>
-
-		<c:if test="<%= !rootFolder && (folder != null) %>">
-			<liferay-frontend:fieldset
-				collapsed="<%= true %>"
-				collapsible="<%= true %>"
-				label="parent-folder"
-			>
-
-				<%
-				String parentFolderName = LanguageUtil.get(request, "home");
-
-				JournalFolder parentFolder = JournalFolderServiceUtil.fetchFolder(parentFolderId);
-
-				if (parentFolder != null) {
-					parentFolderName = parentFolder.getName();
-				}
-				%>
-
-				<div class="form-group">
-					<aui:input name="parentFolderName" type="resource" value="<%= parentFolderName %>" />
-
-					<aui:button name="selectFolderButton" value="select" />
-
-					<aui:script use="liferay-item-selector-dialog">
-						$('#<portlet:namespace />selectFolderButton').on(
-							'click',
-							function(event) {
-								event.preventDefault();
-
-								var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-									{
-										eventName: '<portlet:namespace />selectFolder',
-										on: {
-											selectedItemChange: function(event) {
-												var selectedItem = event.newVal;
-
-												if (selectedItem) {
-													var folderData = {
-														idString: 'parentFolderId',
-														idValue: selectedItem.folderId,
-														nameString: 'parentFolderName',
-														nameValue: selectedItem.folderName
-													};
-
-													Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
-												}
-											}
-										},
-										'strings.add': '<liferay-ui:message key="done" />',
-										title: '<liferay-ui:message arguments="folder" key="select-x" />',
-
-										<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-											<portlet:param name="mvcPath" value="/select_folder.jsp" />
-											<portlet:param name="folderId" value="<%= String.valueOf(parentFolderId) %>" />
-										</portlet:renderURL>
-
-										url: '<%= selectFolderURL.toString() %>'
-									}
-								);
-
-								itemSelectorDialog.open();
-							}
-						);
-					</aui:script>
 
 					<%
-					String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('parentFolderId', 'parentFolderName', this, '" + renderResponse.getNamespace() + "');";
-					%>
-
-					<aui:button disabled="<%= (parentFolderId <= 0) %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
-				</div>
-
-				<aui:input disabled="<%= mergeWithParentFolderDisabled %>" label="merge-with-parent-folder" name="mergeWithParentFolder" type="toggle-switch" />
-			</liferay-frontend:fieldset>
-		</c:if>
-
-		<c:if test="<%= rootFolder || (folder != null) %>">
-
-			<%
-			List<DDMStructure> ddmStructures = journalDisplayContext.getDDMStructures(JournalFolderConstants.RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW);
-
-			String headerNames = null;
-
-			if (workflowEnabled) {
-				headerNames = "name,workflow,null";
-			}
-			else {
-				headerNames = "name,null";
-			}
-			%>
-
-			<liferay-frontend:fieldset
-				collapsed="<%= true %>"
-				collapsible="<%= true %>"
-				helpMessage='<%= rootFolder ? "" : "structure-restrictions-help" %>'
-				label='<%= rootFolder ? "" : (workflowEnabled ? "structure-restrictions-and-workflow" : "structure-restrictions") %>'
-			>
-				<c:if test="<%= !rootFolder %>">
-
-					<%
-					JournalFolder parentFolder = JournalFolderLocalServiceUtil.fetchFolder(folder.getParentFolderId());
-
 					String parentFolderName = LanguageUtil.get(request, "home");
+
+					JournalFolder parentFolder = JournalFolderServiceUtil.fetchFolder(parentFolderId);
 
 					if (parentFolder != null) {
 						parentFolderName = parentFolder.getName();
 					}
 					%>
 
-					<aui:input checked="<%= folder.getRestrictionType() == JournalFolderConstants.RESTRICTION_TYPE_INHERIT %>" id="restrictionTypeInherit" label='<%= workflowEnabled ? LanguageUtil.format(request, "use-structure-restrictions-and-workflow-of-the-parent-folder-x", HtmlUtil.escape(parentFolderName)) : LanguageUtil.format(request, "use-structure-restrictions-of-the-parent-folder-x", HtmlUtil.escape(parentFolderName)) %>' name="restrictionType" type="radio" value="<%= JournalFolderConstants.RESTRICTION_TYPE_INHERIT %>" />
+					<div class="form-group">
+						<aui:input name="parentFolderName" type="resource" value="<%= parentFolderName %>" />
 
-					<aui:input checked="<%= folder.getRestrictionType() == JournalFolderConstants.RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW %>" id="restrictionTypeDefined" label='<%= workflowEnabled ? LanguageUtil.format(request, "define-specific-structure-restrictions-and-workflow-for-this-folder-x", HtmlUtil.escape(folder.getName())) : LanguageUtil.format(request, "define-specific-structure-restrictions-for-this-folder-x", HtmlUtil.escape(folder.getName())) %>' name="restrictionType" type="radio" value="<%= JournalFolderConstants.RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW %>" />
+						<aui:button name="selectFolderButton" value="select" />
 
-					<div class="<%= (folder.getRestrictionType() == JournalFolderConstants.RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />restrictionTypeDefinedDiv">
-						<liferay-ui:search-container
-							headerNames="<%= headerNames %>"
-							total="<%= ddmStructures.size() %>"
-						>
-							<liferay-ui:search-container-results
-								results="<%= ddmStructures %>"
-							/>
+						<aui:script use="liferay-item-selector-dialog">
+							$('#<portlet:namespace />selectFolderButton').on(
+								'click',
+								function(event) {
+									event.preventDefault();
 
-							<liferay-ui:search-container-row
-								className="com.liferay.dynamic.data.mapping.model.DDMStructure"
-								keyProperty="structureId"
-								modelVar="ddmStructure"
+									var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+										{
+											eventName: '<portlet:namespace />selectFolder',
+											on: {
+												selectedItemChange: function(event) {
+													var selectedItem = event.newVal;
+
+													if (selectedItem) {
+														var folderData = {
+															idString: 'parentFolderId',
+															idValue: selectedItem.folderId,
+															nameString: 'parentFolderName',
+															nameValue: selectedItem.folderName
+														};
+
+														Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
+													}
+												}
+											},
+											'strings.add': '<liferay-ui:message key="done" />',
+											title: '<liferay-ui:message arguments="folder" key="select-x" />',
+
+											<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+												<portlet:param name="mvcPath" value="/select_folder.jsp" />
+												<portlet:param name="folderId" value="<%= String.valueOf(parentFolderId) %>" />
+											</portlet:renderURL>
+
+											url: '<%= selectFolderURL.toString() %>'
+										}
+									);
+
+									itemSelectorDialog.open();
+								}
+							);
+						</aui:script>
+
+						<%
+						String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('parentFolderId', 'parentFolderName', this, '" + renderResponse.getNamespace() + "');";
+						%>
+
+						<aui:button disabled="<%= (parentFolderId <= 0) %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+					</div>
+
+					<aui:input disabled="<%= mergeWithParentFolderDisabled %>" label="merge-with-parent-folder" name="mergeWithParentFolder" type="toggle-switch" />
+				</liferay-frontend:fieldset>
+			</c:if>
+
+			<c:if test="<%= rootFolder || (folder != null) %>">
+
+				<%
+				List<DDMStructure> ddmStructures = journalDisplayContext.getDDMStructures(JournalFolderConstants.RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW);
+
+				String headerNames = null;
+
+				if (workflowEnabled) {
+					headerNames = "name,workflow,null";
+				}
+				else {
+					headerNames = "name,null";
+				}
+				%>
+
+				<liferay-frontend:fieldset
+					collapsed="<%= true %>"
+					collapsible="<%= true %>"
+					helpMessage='<%= rootFolder ? "" : "structure-restrictions-help" %>'
+					label='<%= rootFolder ? "" : (workflowEnabled ? "structure-restrictions-and-workflow" : "structure-restrictions") %>'
+				>
+					<c:if test="<%= !rootFolder %>">
+
+						<%
+						JournalFolder parentFolder = JournalFolderLocalServiceUtil.fetchFolder(folder.getParentFolderId());
+
+						String parentFolderName = LanguageUtil.get(request, "home");
+
+						if (parentFolder != null) {
+							parentFolderName = parentFolder.getName();
+						}
+						%>
+
+						<aui:input checked="<%= folder.getRestrictionType() == JournalFolderConstants.RESTRICTION_TYPE_INHERIT %>" id="restrictionTypeInherit" label='<%= workflowEnabled ? LanguageUtil.format(request, "use-structure-restrictions-and-workflow-of-the-parent-folder-x", HtmlUtil.escape(parentFolderName)) : LanguageUtil.format(request, "use-structure-restrictions-of-the-parent-folder-x", HtmlUtil.escape(parentFolderName)) %>' name="restrictionType" type="radio" value="<%= JournalFolderConstants.RESTRICTION_TYPE_INHERIT %>" />
+
+						<aui:input checked="<%= folder.getRestrictionType() == JournalFolderConstants.RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW %>" id="restrictionTypeDefined" label='<%= workflowEnabled ? LanguageUtil.format(request, "define-specific-structure-restrictions-and-workflow-for-this-folder-x", HtmlUtil.escape(folder.getName())) : LanguageUtil.format(request, "define-specific-structure-restrictions-for-this-folder-x", HtmlUtil.escape(folder.getName())) %>' name="restrictionType" type="radio" value="<%= JournalFolderConstants.RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW %>" />
+
+						<div class="<%= (folder.getRestrictionType() == JournalFolderConstants.RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />restrictionTypeDefinedDiv">
+							<liferay-ui:search-container
+								headerNames="<%= headerNames %>"
+								total="<%= ddmStructures.size() %>"
 							>
-								<liferay-ui:search-container-column-text
-									name="name"
-									truncate="<%= true %>"
-									value="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>"
+								<liferay-ui:search-container-results
+									results="<%= ddmStructures %>"
 								/>
 
-								<c:if test="<%= workflowEnabled %>">
+								<liferay-ui:search-container-row
+									className="com.liferay.dynamic.data.mapping.model.DDMStructure"
+									keyProperty="structureId"
+									modelVar="ddmStructure"
+								>
 									<liferay-ui:search-container-column-text
-										name="workflow"
-									>
-										<aui:select label="" name='<%= "workflowDefinition" + ddmStructure.getStructureId() %>'>
-											<aui:option label="no-workflow" value="" />
+										name="name"
+										truncate="<%= true %>"
+										value="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>"
+									/>
 
-											<%
-											WorkflowDefinitionLink workflowDefinitionLink = null;
+									<c:if test="<%= workflowEnabled %>">
+										<liferay-ui:search-container-column-text
+											name="workflow"
+										>
+											<aui:select label="" name='<%= "workflowDefinition" + ddmStructure.getStructureId() %>'>
+												<aui:option label="no-workflow" value="" />
 
-											try {
-												workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(company.getCompanyId(), scopeGroupId, JournalFolder.class.getName(), folderId, ddmStructure.getStructureId(), true);
-											}
-											catch (NoSuchWorkflowDefinitionLinkException nswdle) {
-											}
+												<%
+												WorkflowDefinitionLink workflowDefinitionLink = null;
 
-											for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
-												boolean selected = false;
-
-												if ((workflowDefinitionLink != null) && workflowDefinitionLink.getWorkflowDefinitionName().equals(workflowDefinition.getName()) && (workflowDefinitionLink.getWorkflowDefinitionVersion() == workflowDefinition.getVersion())) {
-													selected = true;
+												try {
+													workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(company.getCompanyId(), scopeGroupId, JournalFolder.class.getName(), folderId, ddmStructure.getStructureId(), true);
 												}
-											%>
+												catch (NoSuchWorkflowDefinitionLinkException nswdle) {
+												}
 
-												<aui:option label="<%= HtmlUtil.escape(workflowDefinition.getTitle(languageId)) %>" selected="<%= selected %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />
+												for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
+													boolean selected = false;
 
-											<%
-											}
-											%>
+													if ((workflowDefinitionLink != null) && workflowDefinitionLink.getWorkflowDefinitionName().equals(workflowDefinition.getName()) && (workflowDefinitionLink.getWorkflowDefinitionVersion() == workflowDefinition.getVersion())) {
+														selected = true;
+													}
+												%>
 
-										</aui:select>
+													<aui:option label="<%= HtmlUtil.escape(workflowDefinition.getTitle(languageId)) %>" selected="<%= selected %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />
+
+												<%
+												}
+												%>
+
+											</aui:select>
+										</liferay-ui:search-container-column-text>
+									</c:if>
+
+									<liferay-ui:search-container-column-text>
+										<a class="modify-link" data-rowId="<%= ddmStructure.getStructureId() %>" href="javascript:;"><%= removeDDMStructureIcon %></a>
 									</liferay-ui:search-container-column-text>
-								</c:if>
+								</liferay-ui:search-container-row>
 
-								<liferay-ui:search-container-column-text>
-									<a class="modify-link" data-rowId="<%= ddmStructure.getStructureId() %>" href="javascript:;"><%= removeDDMStructureIcon %></a>
-								</liferay-ui:search-container-column-text>
-							</liferay-ui:search-container-row>
+								<liferay-ui:search-iterator
+									markupView="lexicon"
+									paginate="<%= false %>"
+								/>
+							</liferay-ui:search-container>
 
-							<liferay-ui:search-iterator
-								markupView="lexicon"
-								paginate="<%= false %>"
+							<liferay-ui:icon
+								cssClass="modify-link select-structure"
+								label="<%= true %>"
+								linkCssClass="btn btn-default"
+								message="choose-structure"
+								url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
 							/>
-						</liferay-ui:search-container>
+						</div>
+					</c:if>
 
-						<liferay-ui:icon
-							cssClass="modify-link select-structure"
-							label="<%= true %>"
-							linkCssClass="btn btn-default"
-							message="choose-structure"
-							url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
-						/>
-					</div>
-				</c:if>
+					<c:if test="<%= workflowEnabled %>">
+						<c:choose>
+							<c:when test="<%= !rootFolder %>">
+								<aui:input checked="<%= folder.getRestrictionType() == JournalFolderConstants.RESTRICTION_TYPE_WORKFLOW %>" id="restrictionTypeWorkflow" label='<%= LanguageUtil.format(request, "default-workflow-for-this-folder-x", HtmlUtil.escape(folder.getName())) %>' name="restrictionType" type="radio" value="<%= JournalFolderConstants.RESTRICTION_TYPE_WORKFLOW %>" />
+							</c:when>
+							<c:otherwise>
+								<aui:input name="restrictionType" type="hidden" value="<%= JournalFolderConstants.RESTRICTION_TYPE_WORKFLOW %>" />
+							</c:otherwise>
+						</c:choose>
 
-				<c:if test="<%= workflowEnabled %>">
-					<c:choose>
-						<c:when test="<%= !rootFolder %>">
-							<aui:input checked="<%= folder.getRestrictionType() == JournalFolderConstants.RESTRICTION_TYPE_WORKFLOW %>" id="restrictionTypeWorkflow" label='<%= LanguageUtil.format(request, "default-workflow-for-this-folder-x", HtmlUtil.escape(folder.getName())) %>' name="restrictionType" type="radio" value="<%= JournalFolderConstants.RESTRICTION_TYPE_WORKFLOW %>" />
-						</c:when>
-						<c:otherwise>
-							<aui:input name="restrictionType" type="hidden" value="<%= JournalFolderConstants.RESTRICTION_TYPE_WORKFLOW %>" />
-						</c:otherwise>
-					</c:choose>
+						<div class="<%= (rootFolder || (folder.getRestrictionType() == JournalFolderConstants.RESTRICTION_TYPE_WORKFLOW)) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />restrictionTypeWorkflowDiv">
+							<aui:select label='<%= rootFolder ? "default-workflow-for-all-structures" : StringPool.BLANK %>' name='<%= "workflowDefinition" + JournalArticleConstants.DDM_STRUCTURE_ID_ALL %>'>
+								<aui:option label="no-workflow" value="" />
 
-					<div class="<%= (rootFolder || (folder.getRestrictionType() == JournalFolderConstants.RESTRICTION_TYPE_WORKFLOW)) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />restrictionTypeWorkflowDiv">
-						<aui:select label='<%= rootFolder ? "default-workflow-for-all-structures" : StringPool.BLANK %>' name='<%= "workflowDefinition" + JournalArticleConstants.DDM_STRUCTURE_ID_ALL %>'>
-							<aui:option label="no-workflow" value="" />
+								<%
+								WorkflowDefinitionLink workflowDefinitionLink = null;
 
-							<%
-							WorkflowDefinitionLink workflowDefinitionLink = null;
-
-							try {
-								workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(company.getCompanyId(), scopeGroupId, JournalFolder.class.getName(), folderId, JournalArticleConstants.DDM_STRUCTURE_ID_ALL, true);
-							}
-							catch (NoSuchWorkflowDefinitionLinkException nswdle) {
-							}
-
-							for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
-								boolean selected = false;
-
-								if ((workflowDefinitionLink != null) && workflowDefinitionLink.getWorkflowDefinitionName().equals(workflowDefinition.getName()) && (workflowDefinitionLink.getWorkflowDefinitionVersion() == workflowDefinition.getVersion())) {
-									selected = true;
+								try {
+									workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(company.getCompanyId(), scopeGroupId, JournalFolder.class.getName(), folderId, JournalArticleConstants.DDM_STRUCTURE_ID_ALL, true);
 								}
-							%>
+								catch (NoSuchWorkflowDefinitionLinkException nswdle) {
+								}
 
-								<aui:option label="<%= HtmlUtil.escape(workflowDefinition.getTitle(languageId)) %>" selected="<%= selected %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />
+								for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
+									boolean selected = false;
 
-							<%
-							}
-							%>
+									if ((workflowDefinitionLink != null) && workflowDefinitionLink.getWorkflowDefinitionName().equals(workflowDefinition.getName()) && (workflowDefinitionLink.getWorkflowDefinitionVersion() == workflowDefinition.getVersion())) {
+										selected = true;
+									}
+								%>
 
-						</aui:select>
-					</div>
-				</c:if>
-			</liferay-frontend:fieldset>
-		</c:if>
+									<aui:option label="<%= HtmlUtil.escape(workflowDefinition.getTitle(languageId)) %>" selected="<%= selected %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />
 
-		<c:if test="<%= !rootFolder && (folder == null) %>">
-			<liferay-frontend:fieldset
-				collapsed="<%= true %>"
-				collapsible="<%= true %>"
-				label="permissions"
-			>
-				<liferay-ui:input-permissions
-					modelName="<%= JournalFolder.class.getName() %>"
-				/>
-			</liferay-frontend:fieldset>
-		</c:if>
-	</liferay-frontend:fieldset-group>
+								<%
+								}
+								%>
 
-	<liferay-frontend:button-row>
+							</aui:select>
+						</div>
+					</c:if>
+				</liferay-frontend:fieldset>
+			</c:if>
+
+			<c:if test="<%= !rootFolder && (folder == null) %>">
+				<liferay-frontend:fieldset
+					collapsed="<%= true %>"
+					collapsible="<%= true %>"
+					label="permissions"
+				>
+					<liferay-ui:input-permissions
+						modelName="<%= JournalFolder.class.getName() %>"
+					/>
+				</liferay-frontend:fieldset>
+			</c:if>
+		</liferay-frontend:fieldset-group>
+	</liferay-frontend:edit-form-body>
+
+	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" />
 
 		<aui:button href="<%= redirect %>" type="cancel" />
-	</liferay-frontend:button-row>
+	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
 <liferay-util:buffer

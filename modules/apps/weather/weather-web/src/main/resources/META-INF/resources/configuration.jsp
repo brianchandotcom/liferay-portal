@@ -26,46 +26,54 @@ zipsString = StringUtil.merge(zips, StringPool.NEW_LINE);
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
-<aui:form action="<%= configurationActionURL %>" cssClass="container-fluid-1280" method="post">
+<liferay-frontend:edit-form
+	action="<%= configurationActionURL %>"
+	cssClass="container-fluid-1280"
+	method="post"
+>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
-	<liferay-ui:error exception="<%= ValidatorException.class %>">
+	<liferay-frontend:edit-form-body>
+		<liferay-ui:error exception="<%= ValidatorException.class %>">
 
-		<%
-		ValidatorException ve = (ValidatorException)errorException;
-		%>
+			<%
+			ValidatorException ve = (ValidatorException)errorException;
+			%>
 
-		<liferay-ui:message key="the-following-are-invalid-cities-or-zip-codes" />
+			<liferay-ui:message key="the-following-are-invalid-cities-or-zip-codes" />
 
-		<%
-		Enumeration<String> enu = ve.getFailedKeys();
+			<%
+			Enumeration<String> enu = ve.getFailedKeys();
 
-		while (enu.hasMoreElements()) {
-			String zip = enu.nextElement();
-		%>
+			while (enu.hasMoreElements()) {
+				String zip = enu.nextElement();
+			%>
 
-			<strong><%= HtmlUtil.escape(zip) %></strong><%= (enu.hasMoreElements()) ? ", " : "." %>
+				<strong><%= HtmlUtil.escape(zip) %></strong><%= (enu.hasMoreElements()) ? ", " : "." %>
 
-		<%
-		}
-		%>
+			<%
+			}
+			%>
 
-	</liferay-ui:error>
+		</liferay-ui:error>
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
-			<aui:input label="openweathermap-api-key" name="preferences--apiKey--" type="text" value="<%= apiKey %>" />
+		<liferay-frontend:fieldset-group>
+			<liferay-frontend:fieldset>
+				<aui:input label="openweathermap-api-key" name="preferences--apiKey--" type="text" value="<%= apiKey %>" />
 
-			<aui:input label="enter-one-city-or-zip-code-per-line" name="preferences--zips--" type="textarea" value="<%= zipsString %>" wrapperCssClass="lfr-textarea-container" />
+				<aui:input label="enter-one-city-or-zip-code-per-line" name="preferences--zips--" type="textarea" value="<%= zipsString %>" wrapperCssClass="lfr-textarea-container" />
 
-			<aui:select label="temperature-format" name="preferences--fahrenheit--">
-				<aui:option label="fahrenheit" selected="<%= fahrenheit %>" value="1" />
-				<aui:option label="celsius" selected="<%= !fahrenheit %>" value="0" />
-			</aui:select>
-		</aui:fieldset>
-	</aui:fieldset-group>
+				<aui:select label="temperature-format" name="preferences--fahrenheit--">
+					<aui:option label="fahrenheit" selected="<%= fahrenheit %>" value="1" />
+					<aui:option label="celsius" selected="<%= !fahrenheit %>" value="0" />
+				</aui:select>
+			</liferay-frontend:fieldset>
+		</liferay-frontend:fieldset-group>
+	</liferay-frontend:edit-form-body>
 
-	<aui:button-row>
+	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" />
-	</aui:button-row>
-</aui:form>
+
+		<aui:button type="cancel" />
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>

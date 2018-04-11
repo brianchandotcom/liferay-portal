@@ -1,0 +1,15 @@
+.sheet > .panel-group .sheet-footer {
+margin-bottom: 0;
+}
+
+.sheet-footer {
+display: inline-flex;
+
+.btn {
+	margin-right: $btn-group-item-margin-right;
+
+	&:last-child {
+	 margin-right: 0;
+	}
+}
+}

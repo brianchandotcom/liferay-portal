@@ -22,25 +22,26 @@
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</portlet:actionURL>
 
-		<aui:form action="<%= updateLookAndFeelURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+		<liferay-frontend:edit-form
+			action="<%= updateLookAndFeelURL %>"
+			method="post"
+			name="fm"
+		>
 			<aui:input name="portletId" type="hidden" value="<%= portletConfigurationCSSPortletDisplayContext.getPortletResource() %>" />
 
-			<div class="portlet-configuration-body-content">
-				<div class="container-fluid-1280">
-					<liferay-ui:form-navigator
-						id="<%= PortletConfigurationCSSConstants.FORM_NAVIGATOR_ID %>"
-						markupView="lexicon"
-						showButtons="<%= false %>"
-					/>
-				</div>
-			</div>
+			<liferay-frontend:edit-form-body>
+				<liferay-frontend:form-navigator
+					id="<%= PortletConfigurationCSSConstants.FORM_NAVIGATOR_ID %>"
+					showButtons="<%= false %>"
+				/>
+			</liferay-frontend:edit-form-body>
 
-			<aui:button-row>
+			<liferay-frontend:edit-form-footer>
 				<aui:button type="submit" />
 
 				<aui:button type="cancel" />
-			</aui:button-row>
-		</aui:form>
+			</liferay-frontend:edit-form-footer>
+		</liferay-frontend:edit-form>
 	</c:when>
 	<c:otherwise>
 		<liferay-util:include page="/html/portal/portlet_access_denied.jsp" />

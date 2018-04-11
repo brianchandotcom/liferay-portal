@@ -628,8 +628,8 @@ public class TopLevelBuild extends BaseBuild {
 
 			Dom4JUtil.addToElement(
 				upstreamResultElement, "For upstream results, click ",
-				Dom4JUtil.getNewAnchorElement(
-					acceptanceUpstreamJobURL, "here"));
+				Dom4JUtil.getNewAnchorElement(acceptanceUpstreamJobURL, "here"),
+				".");
 
 			buildFailureElements.add(upstreamResultElement);
 		}

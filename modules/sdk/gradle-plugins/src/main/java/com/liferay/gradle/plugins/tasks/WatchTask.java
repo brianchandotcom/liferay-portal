@@ -344,7 +344,7 @@ public class WatchTask extends DefaultTask {
 
 			Attributes attributes = manifest.getMainAttributes();
 
-			return attributes.getValue("Bundle-SymbolicName");
+			return attributes.getValue(Constants.BUNDLE_SYMBOLICNAME);
 		}
 	}
 

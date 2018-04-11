@@ -103,13 +103,15 @@ public class CPDefinitionLocalServiceImpl
 			boolean ignoreSKUCombinations, boolean shippable,
 			boolean freeShipping, boolean shipSeparately,
 			double shippingExtraPrice, double width, double height,
-			double depth, double weight, String ddmStructureKey,
-			boolean published, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			boolean hasDefaultInstance, ServiceContext serviceContext)
+			double depth, double weight, long cpTaxCategoryId,
+			boolean taxExempt, boolean telcoOrElectronics,
+			String ddmStructureKey, boolean published, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, boolean hasDefaultInstance,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition
@@ -157,6 +159,9 @@ public class CPDefinitionLocalServiceImpl
 		cpDefinition.setHeight(height);
 		cpDefinition.setDepth(depth);
 		cpDefinition.setWeight(weight);
+		cpDefinition.setCPTaxCategoryId(cpTaxCategoryId);
+		cpDefinition.setTaxExempt(taxExempt);
+		cpDefinition.setTelcoOrElectronics(telcoOrElectronics);
 		cpDefinition.setDDMStructureKey(ddmStructureKey);
 		cpDefinition.setPublished(published);
 		cpDefinition.setDefaultLanguageId(LocaleUtil.toLanguageId(locale));
@@ -234,24 +239,26 @@ public class CPDefinitionLocalServiceImpl
 			boolean ignoreSKUCombinations, boolean shippable,
 			boolean freeShipping, boolean shipSeparately,
 			double shippingExtraPrice, double width, double height,
-			double depth, double weight, String ddmStructureKey,
-			boolean published, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			ServiceContext serviceContext)
+			double depth, double weight, long cpTaxCategoryId,
+			boolean taxExempt, boolean telcoOrElectronics,
+			String ddmStructureKey, boolean published, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
 		return cpDefinitionLocalService.addCPDefinition(
 			titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
 			metaTitleMap, metaKeywordsMap, metaDescriptionMap, productTypeName,
 			ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
-			shippingExtraPrice, width, height, depth, weight, ddmStructureKey,
-			published, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, true, serviceContext);
+			shippingExtraPrice, width, height, depth, weight, cpTaxCategoryId,
+			taxExempt, telcoOrElectronics, ddmStructureKey, published,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, true, serviceContext);
 	}
 
 	@Override
@@ -274,8 +281,8 @@ public class CPDefinitionLocalServiceImpl
 		return cpDefinitionLocalService.addCPDefinition(
 			titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
 			metaTitleMap, metaKeywordsMap, metaDescriptionMap, productTypeName,
-			ignoreSKUCombinations, false, false, false, 0, 0, 0, 0, 0,
-			ddmStructureKey, published, displayDateMonth, displayDateDay,
+			ignoreSKUCombinations, false, false, false, 0, 0, 0, 0, 0, 0, false,
+			false, ddmStructureKey, published, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
@@ -841,13 +848,14 @@ public class CPDefinitionLocalServiceImpl
 			boolean ignoreSKUCombinations, boolean shippable,
 			boolean freeShipping, boolean shipSeparately,
 			double shippingExtraPrice, double width, double height,
-			double depth, double weight, String ddmStructureKey,
-			boolean published, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			ServiceContext serviceContext)
+			double depth, double weight, long cpTaxCategoryId,
+			boolean taxExempt, boolean telcoOrElectronics,
+			String ddmStructureKey, boolean published, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition
@@ -884,6 +892,9 @@ public class CPDefinitionLocalServiceImpl
 		cpDefinition.setHeight(height);
 		cpDefinition.setDepth(depth);
 		cpDefinition.setWeight(weight);
+		cpDefinition.setCPTaxCategoryId(cpTaxCategoryId);
+		cpDefinition.setTaxExempt(taxExempt);
+		cpDefinition.setTelcoOrElectronics(telcoOrElectronics);
 		cpDefinition.setDDMStructureKey(ddmStructureKey);
 		cpDefinition.setPublished(published);
 		cpDefinition.setDisplayDate(displayDate);
@@ -961,11 +972,13 @@ public class CPDefinitionLocalServiceImpl
 			cpDefinition.isFreeShipping(), cpDefinition.isShipSeparately(),
 			cpDefinition.getShippingExtraPrice(), cpDefinition.getWidth(),
 			cpDefinition.getHeight(), cpDefinition.getDepth(),
-			cpDefinition.getWeight(), ddmStructureKey, published,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
+			cpDefinition.getWeight(), cpDefinition.getCPTaxCategoryId(),
+			cpDefinition.getTaxExempt(), cpDefinition.getTelcoOrElectronics(),
+			ddmStructureKey, published, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -1008,6 +1021,21 @@ public class CPDefinitionLocalServiceImpl
 		cpDefinition.setIgnoreSKUCombinations(ignoreSKUCombinations);
 
 		return cpDefinitionPersistence.update(cpDefinition);
+	}
+
+	@Override
+	public void updateCPDefinitionsByCPTaxCategoryId(long cpTaxCategoryId)
+		throws PortalException {
+
+		List<CPDefinition> cpDefinitions =
+			cpDefinitionPersistence.findByCPTaxCategoryId(cpTaxCategoryId);
+
+		for (CPDefinition cpDefinition : cpDefinitions) {
+			updateTaxCategoryInfo(
+				cpDefinition.getCPDefinitionId(), 0,
+				cpDefinition.getTaxExempt(),
+				cpDefinition.getTelcoOrElectronics());
+		}
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -1125,6 +1153,22 @@ public class CPDefinitionLocalServiceImpl
 		}
 
 		return cpDefinition;
+	}
+
+	@Override
+	public CPDefinition updateTaxCategoryInfo(
+			long cpDefinitionId, long cpTaxCategoryId, boolean taxExempt,
+			boolean telcoOrElectronics)
+		throws PortalException {
+
+		CPDefinition cpDefinition = cpDefinitionPersistence.findByPrimaryKey(
+			cpDefinitionId);
+
+		cpDefinition.setCPTaxCategoryId(cpTaxCategoryId);
+		cpDefinition.setTaxExempt(taxExempt);
+		cpDefinition.setTelcoOrElectronics(telcoOrElectronics);
+
+		return cpDefinitionPersistence.update(cpDefinition);
 	}
 
 	protected SearchContext buildSearchContext(

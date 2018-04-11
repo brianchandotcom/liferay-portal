@@ -1,7 +1,7 @@
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
-import globalEval from 'metal-dom';
+import {globalEval} from 'metal-dom';
 
 import templates from './CPOptionValueDetail.soy';
 

@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.base.ReleaseLocalServiceBaseImpl;
-import com.liferay.portal.upgrade.PortalServiceUpgrade;
+import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -403,7 +403,7 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 			ps.setString(3, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
 
 			Version latestSchemaVersion =
-				PortalServiceUpgrade.getLatestSchemaVersion();
+				PortalUpgradeProcess.getLatestSchemaVersion();
 
 			ps.setString(4, latestSchemaVersion.toString());
 

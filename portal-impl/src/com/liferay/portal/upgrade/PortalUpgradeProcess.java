@@ -36,7 +36,7 @@ import java.util.TreeMap;
 /**
  * @author Alberto Chaparro
  */
-public class PortalServiceUpgrade extends UpgradeProcess {
+public class PortalUpgradeProcess extends UpgradeProcess {
 
 	public static Version getLatestSchemaVersion() {
 		return _upgradeProcesses.lastKey();

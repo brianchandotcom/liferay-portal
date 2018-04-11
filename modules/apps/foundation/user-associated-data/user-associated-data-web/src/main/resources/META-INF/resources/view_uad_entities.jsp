@@ -76,13 +76,13 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 	<aui:input name="primaryKeys" type="hidden" />
 
 	<div class="closed container-fluid container-fluid-max-xl sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= true %>" id="/entity_type_sidebar" var="entityTypeSidebarURL" />
+		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= true %>" id="/info_panel" var="entityTypeSidebarURL" />
 
 		<liferay-frontend:sidebar-panel
 			resourceURL="<%= entityTypeSidebarURL %>"
 			searchContainerId="UADEntities"
 		>
-			<%@ include file="/uad_entity_type_sidebar.jspf" %>
+			<liferay-util:include page="/info_panel.jsp" servletContext="<%= application %>" />
 		</liferay-frontend:sidebar-panel>
 
 		<div class="sidenav-content">

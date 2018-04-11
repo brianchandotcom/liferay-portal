@@ -21,7 +21,6 @@ import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContri
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
 import com.liferay.portal.search.spi.model.query.contributor.QueryConfigContributor;
-import com.liferay.portal.search.spi.model.query.contributor.QueryPreFilterContributor;
 import com.liferay.portal.search.spi.model.query.contributor.SearchContextContributor;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 import com.liferay.portal.search.spi.model.result.contributor.ModelVisibilityContributor;
@@ -49,8 +48,6 @@ public interface ModelSearchConfigurator<T extends BaseModel<?>> {
 	public ModelVisibilityContributor getModelVisibilityContributor();
 
 	public Iterable<QueryConfigContributor> getQueryConfigContributors();
-
-	public Iterable<QueryPreFilterContributor> getQueryPreFilterContributors();
 
 	public Iterable<SearchContextContributor> getSearchContextContributors();
 

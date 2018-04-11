@@ -33,7 +33,7 @@ public class CommerceTaxFixedRateAddressRelServiceImpl
 
 	@Override
 	public CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
-			long commerceTaxMethodId, long commerceTaxCategoryId,
+			long commerceTaxMethodId, long cpTaxCategoryId,
 			long commerceCountryId, long commerceRegionId, String zip,
 			double rate, ServiceContext serviceContext)
 		throws PortalException {
@@ -44,7 +44,7 @@ public class CommerceTaxFixedRateAddressRelServiceImpl
 
 		return commerceTaxFixedRateAddressRelLocalService.
 			addCommerceTaxFixedRateAddressRel(
-				commerceTaxMethodId, commerceTaxCategoryId, commerceCountryId,
+				commerceTaxMethodId, cpTaxCategoryId, commerceCountryId,
 				commerceRegionId, zip, rate, serviceContext);
 	}
 

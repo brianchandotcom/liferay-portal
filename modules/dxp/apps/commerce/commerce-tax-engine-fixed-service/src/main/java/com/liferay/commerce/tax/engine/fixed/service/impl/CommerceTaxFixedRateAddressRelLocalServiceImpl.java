@@ -14,14 +14,12 @@
 
 package com.liferay.commerce.tax.engine.fixed.service.impl;
 
-import com.liferay.commerce.service.CommerceTaxCategoryLocalService;
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel;
 import com.liferay.commerce.tax.engine.fixed.service.base.CommerceTaxFixedRateAddressRelLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
 
@@ -33,7 +31,7 @@ public class CommerceTaxFixedRateAddressRelLocalServiceImpl
 
 	@Override
 	public CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
-			long commerceTaxMethodId, long commerceTaxCategoryId,
+			long commerceTaxMethodId, long cpTaxCategoryId,
 			long commerceCountryId, long commerceRegionId, String zip,
 			double rate, ServiceContext serviceContext)
 		throws PortalException {
@@ -53,8 +51,7 @@ public class CommerceTaxFixedRateAddressRelLocalServiceImpl
 		commerceTaxFixedRateAddressRel.setUserName(user.getFullName());
 		commerceTaxFixedRateAddressRel.setCommerceTaxMethodId(
 			commerceTaxMethodId);
-		commerceTaxFixedRateAddressRel.setCommerceTaxCategoryId(
-			commerceTaxCategoryId);
+		commerceTaxFixedRateAddressRel.setCPTaxCategoryId(cpTaxCategoryId);
 		commerceTaxFixedRateAddressRel.setCommerceCountryId(commerceCountryId);
 		commerceTaxFixedRateAddressRel.setCommerceRegionId(commerceRegionId);
 		commerceTaxFixedRateAddressRel.setZip(zip);
@@ -67,19 +64,19 @@ public class CommerceTaxFixedRateAddressRelLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCommerceTaxFixedRateAddressRelsByCommerceTaxCategoryId(
-		long commerceTaxCategoryId) {
-
-		commerceTaxFixedRateAddressRelPersistence.removeByCommerceTaxCategoryId(
-			commerceTaxCategoryId);
-	}
-
-	@Override
 	public void deleteCommerceTaxFixedRateAddressRelsByCommerceTaxMethodId(
 		long commerceTaxMethodId) {
 
 		commerceTaxFixedRateAddressRelPersistence.removeByCommerceTaxMethodId(
 			commerceTaxMethodId);
+	}
+
+	@Override
+	public void deleteCommerceTaxFixedRateAddressRelsByCPTaxCategoryId(
+		long cpTaxCategoryId) {
+
+		commerceTaxFixedRateAddressRelPersistence.removeByCPTaxCategoryId(
+			cpTaxCategoryId);
 	}
 
 	@Override
@@ -94,30 +91,27 @@ public class CommerceTaxFixedRateAddressRelLocalServiceImpl
 	@Override
 	public List<CommerceTaxFixedRateAddressRel>
 		getCommerceTaxFixedRateAddressRels(
-			long commerceTaxCategoryId, int start, int end) {
+			long cpTaxCategoryId, int start, int end) {
 
-		return commerceTaxFixedRateAddressRelPersistence.
-			findByCommerceTaxCategoryId(commerceTaxCategoryId, start, end);
+		return commerceTaxFixedRateAddressRelPersistence.findByCPTaxCategoryId(
+			cpTaxCategoryId, start, end);
 	}
 
 	@Override
 	public List<CommerceTaxFixedRateAddressRel>
 		getCommerceTaxFixedRateAddressRels(
-			long commerceTaxCategoryId, int start, int end,
+			long cpTaxCategoryId, int start, int end,
 			OrderByComparator<CommerceTaxFixedRateAddressRel>
 				orderByComparator) {
 
-		return commerceTaxFixedRateAddressRelPersistence.
-			findByCommerceTaxCategoryId(
-				commerceTaxCategoryId, start, end, orderByComparator);
+		return commerceTaxFixedRateAddressRelPersistence.findByCPTaxCategoryId(
+			cpTaxCategoryId, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getCommerceTaxFixedRateAddressRelsCount(
-		long commerceTaxCategoryId) {
-
-		return commerceTaxFixedRateAddressRelPersistence.
-			countByCommerceTaxCategoryId(commerceTaxCategoryId);
+	public int getCommerceTaxFixedRateAddressRelsCount(long cpTaxCategoryId) {
+		return commerceTaxFixedRateAddressRelPersistence.countByCPTaxCategoryId(
+			cpTaxCategoryId);
 	}
 
 	@Override
@@ -170,8 +164,5 @@ public class CommerceTaxFixedRateAddressRelLocalServiceImpl
 
 		return commerceTaxFixedRateAddressRel;
 	}
-
-	@ServiceReference(type = CommerceTaxCategoryLocalService.class)
-	private CommerceTaxCategoryLocalService _commerceTaxCategoryLocalService;
 
 }

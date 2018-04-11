@@ -80,47 +80,47 @@ public class Relationship<T extends ClassedModel> {
 			}
 
 			public <U extends ClassedModel> RelationshipStep
-				inboundRelationship(Function<T, U> relationshipFunction) {
+				inboundRelationship(Function<T, U> function) {
 
-				Objects.requireNonNull(relationshipFunction);
+				Objects.requireNonNull(function);
 
 				_relationship._singleInboundRelationshipFunctions.add(
-					relationshipFunction);
+					function);
 
 				return this;
 			}
 
 			public <U extends ClassedModel> RelationshipStep
 				inboundRelationship(
-					MultiRelationshipFunction<T, U> relationshipFunction) {
+					MultiRelationshipFunction<T, U> multiRelationshipFunction) {
 
-				Objects.requireNonNull(relationshipFunction);
+				Objects.requireNonNull(multiRelationshipFunction);
 
 				_relationship._multiInboundRelationshipFunctions.add(
-					relationshipFunction);
+					multiRelationshipFunction);
 
 				return this;
 			}
 
 			public <U extends ClassedModel> RelationshipStep
-				outboundRelationship(Function<T, U> relationshipFunction) {
+				outboundRelationship(Function<T, U> function) {
 
-				Objects.requireNonNull(relationshipFunction);
+				Objects.requireNonNull(function);
 
 				_relationship._singleOutboundRelationshipFunctions.add(
-					relationshipFunction);
+					function);
 
 				return this;
 			}
 
 			public <U extends ClassedModel> RelationshipStep
 				outboundRelationship(
-					MultiRelationshipFunction<T, U> relationshipFunction) {
+					MultiRelationshipFunction<T, U> multiRelationshipFunction) {
 
-				Objects.requireNonNull(relationshipFunction);
+				Objects.requireNonNull(multiRelationshipFunction);
 
 				_relationship._multiOutboundRelationshipFunctions.add(
-					relationshipFunction);
+					multiRelationshipFunction);
 
 				return this;
 			}
@@ -153,7 +153,7 @@ public class Relationship<T extends ClassedModel> {
 			_multiInboundRelationshipFunctions.stream();
 
 		return stream.map(
-			relationshipFunction -> relationshipFunction.apply(
+			multiRelationshipFunction -> multiRelationshipFunction.apply(
 				relationshipBaseModel)
 		).flatMap(
 			Collection::stream
@@ -167,7 +167,7 @@ public class Relationship<T extends ClassedModel> {
 			_multiOutboundRelationshipFunctions.stream();
 
 		return stream.map(
-			relationshipFunction -> relationshipFunction.apply(
+			multiRelationshipFunction -> multiRelationshipFunction.apply(
 				relationshipBaseModel)
 		).flatMap(
 			Collection::stream
@@ -189,7 +189,7 @@ public class Relationship<T extends ClassedModel> {
 			_singleInboundRelationshipFunctions.stream();
 
 		return stream.map(
-			relationshipFunction -> relationshipFunction.apply(
+			function -> function.apply(
 				relationshipBaseModel));
 	}
 
@@ -200,7 +200,7 @@ public class Relationship<T extends ClassedModel> {
 			_singleOutboundRelationshipFunctions.stream();
 
 		return stream.map(
-			relationshipFunction -> relationshipFunction.apply(
+			function -> function.apply(
 				relationshipBaseModel));
 	}
 

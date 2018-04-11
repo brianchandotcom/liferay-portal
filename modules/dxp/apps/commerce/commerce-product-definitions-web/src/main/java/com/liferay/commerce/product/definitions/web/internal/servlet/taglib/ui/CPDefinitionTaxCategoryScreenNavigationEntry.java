@@ -12,15 +12,18 @@
  * details.
  */
 
-package com.liferay.commerce.tax.category.web.internal.servlet.taglib.ui;
+package com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui;
 
+import com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionTaxCategoryDisplayContext;
+import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.service.CommerceTaxCategoryRelService;
-import com.liferay.commerce.service.CommerceTaxCategoryService;
-import com.liferay.commerce.tax.category.web.internal.display.context.CommerceTaxCategoryRelDisplayContext;
+import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.commerce.product.service.CPTaxCategoryService;
+import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -47,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "screen.navigation.entry.order:Integer=40",
 	service = ScreenNavigationEntry.class
 )
-public class CPDefinitionTaxCategoriesScreenNavigationEntry
+public class CPDefinitionTaxCategoryScreenNavigationEntry
 	implements ScreenNavigationEntry<CPDefinition> {
 
 	@Override
@@ -57,7 +60,7 @@ public class CPDefinitionTaxCategoriesScreenNavigationEntry
 
 	@Override
 	public String getEntryKey() {
-		return "tax-categories";
+		return CPDefinitionScreenNavigationConstants.ENTRY_KEY_TAX_CATEGORY;
 	}
 
 	@Override
@@ -65,7 +68,9 @@ public class CPDefinitionTaxCategoriesScreenNavigationEntry
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "tax-categories");
+		return LanguageUtil.get(
+			resourceBundle,
+			CPDefinitionScreenNavigationConstants.ENTRY_KEY_TAX_CATEGORY);
 	}
 
 	@Override
@@ -90,15 +95,16 @@ public class CPDefinitionTaxCategoriesScreenNavigationEntry
 		throws IOException {
 
 		try {
-			CommerceTaxCategoryRelDisplayContext
-				commerceTaxCategoryRelDisplayContext =
-					new CommerceTaxCategoryRelDisplayContext(
-						httpServletRequest, _commerceTaxCategoryService,
-						_commerceTaxCategoryRelService);
+			CPDefinitionTaxCategoryDisplayContext
+				cpDefinitionTaxCategoryDisplayContext =
+					new CPDefinitionTaxCategoryDisplayContext(
+						_actionHelper, httpServletRequest, _cpDefinitionHelper,
+						_cpDefinitionService, _itemSelector,
+						_cpTaxCategoryService);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				commerceTaxCategoryRelDisplayContext);
+				cpDefinitionTaxCategoryDisplayContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -106,23 +112,32 @@ public class CPDefinitionTaxCategoriesScreenNavigationEntry
 
 		_jspRenderer.renderJSP(
 			_setServletContext, httpServletRequest, httpServletResponse,
-			"/edit_tax_category_rels.jsp");
+			"/edit_definition_tax_category_info.jsp");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CPDefinitionTaxCategoriesScreenNavigationEntry.class);
+		CPDefinitionTaxCategoryScreenNavigationEntry.class);
 
 	@Reference
-	private CommerceTaxCategoryRelService _commerceTaxCategoryRelService;
+	private ActionHelper _actionHelper;
 
 	@Reference
-	private CommerceTaxCategoryService _commerceTaxCategoryService;
+	private CPDefinitionHelper _cpDefinitionHelper;
+
+	@Reference
+	private CPDefinitionService _cpDefinitionService;
+
+	@Reference
+	private CPTaxCategoryService _cpTaxCategoryService;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private JSPRenderer _jspRenderer;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.tax.category.web)"
+		target = "(osgi.web.symbolicname=com.liferay.commerce.product.definitions.web)"
 	)
 	private ServletContext _setServletContext;
 

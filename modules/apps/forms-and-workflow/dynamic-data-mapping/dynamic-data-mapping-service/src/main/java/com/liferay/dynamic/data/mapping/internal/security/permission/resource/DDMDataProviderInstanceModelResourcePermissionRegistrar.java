@@ -19,12 +19,10 @@ import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalService;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.util.Dictionary;
@@ -58,7 +56,9 @@ public class DDMDataProviderInstanceModelResourcePermissionRegistrar {
 					getDDMDataProviderInstance,
 				_portletResourcePermission,
 				(modelResourcePermission, consumer) -> consumer.accept(
-					new DDMDataProviderInstanceStagedModelLogic())),
+					new StagedModelPermissionLogic<>(
+						_stagingPermission, DDMPortletKeys.DYNAMIC_DATA_MAPPING,
+						DDMDataProviderInstance::getDataProviderInstanceId))),
 			properties);
 	}
 
@@ -78,22 +78,5 @@ public class DDMDataProviderInstanceModelResourcePermissionRegistrar {
 
 	@Reference
 	private StagingPermission _stagingPermission;
-
-	private class DDMDataProviderInstanceStagedModelLogic
-		implements ModelResourcePermissionLogic<DDMDataProviderInstance> {
-
-		@Override
-		public Boolean contains(
-				PermissionChecker permissionChecker, String name,
-				DDMDataProviderInstance dataProviderInstance, String actionId)
-			throws PortalException {
-
-			return _stagingPermission.hasPermission(
-				permissionChecker, dataProviderInstance.getGroupId(), name,
-				dataProviderInstance.getDataProviderInstanceId(),
-				DDMPortletKeys.DYNAMIC_DATA_MAPPING, actionId);
-		}
-
-	}
 
 }

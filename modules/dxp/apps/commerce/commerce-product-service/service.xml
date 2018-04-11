@@ -110,6 +110,9 @@
 		<column name="height" type="double" />
 		<column name="depth" type="double" />
 		<column name="weight" type="double" />
+		<column name="CPTaxCategoryId" type="long" />
+		<column name="taxExempt" type="boolean" />
+		<column name="telcoOrElectronics" type="boolean" />
 		<column name="DDMStructureKey" type="String" />
 		<column name="published" type="boolean" />
 		<column name="displayDate" type="Date" />
@@ -145,6 +148,9 @@
 		</finder>
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
+		</finder>
+		<finder name="CPTaxCategoryId" return-type="Collection">
+			<finder-column name="CPTaxCategoryId" />
 		</finder>
 		<finder name="G_S" return-type="Collection">
 			<finder-column name="groupId" />
@@ -844,6 +850,41 @@
 
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
+	<entity local-service="true" name="CPTaxCategory" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="CPTaxCategoryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column localized="true" name="name" type="String" />
+		<column localized="true" name="description" type="String" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+	</entity>
 	<exceptions>
 		<exception>CPAttachmentFileEntryDisplayDate</exception>
 		<exception>CPAttachmentFileEntryExpirationDate</exception>
@@ -865,6 +906,7 @@
 		<exception>CPOptionValueKey</exception>
 		<exception>CPSpecificationOptionKey</exception>
 		<exception>CPSpecificationOptionTitle</exception>
+		<exception>CPTaxCategoryName</exception>
 		<exception>DuplicateCPFriendlyURLEntry</exception>
 		<exception>NoSuchSkuContributorCPDefinitionOptionRel</exception>
 	</exceptions>

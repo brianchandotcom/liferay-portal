@@ -111,7 +111,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 					continue;
 				}
 
-				if ((testSuiteName != null) &&
+				if ((testSuiteName == null) ||
 					!testSuiteName.equals(matcher.group("testSuiteName"))) {
 
 					continue;

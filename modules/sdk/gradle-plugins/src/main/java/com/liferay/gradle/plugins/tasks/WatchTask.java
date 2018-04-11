@@ -199,6 +199,9 @@ public class WatchTask extends DefaultTask {
 				}
 			}
 			catch (Exception e) {
+				if (logger.isDebugEnabled()) {
+					logger.debug("Unable to get bundle ID", e);
+				}
 			}
 		}
 

@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.commerce.model.impl;
+package com.liferay.commerce.product.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  */
 @ProviderType
-public class CommerceTaxCategoryImpl extends CommerceTaxCategoryBaseImpl {
+public class CPTaxCategoryImpl extends CPTaxCategoryBaseImpl {
 
-	public CommerceTaxCategoryImpl() {
+	public CPTaxCategoryImpl() {
 	}
 
 }

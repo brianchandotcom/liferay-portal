@@ -139,9 +139,8 @@
 			<var name="configurationScope" value="Virtual Instance Scope" />
 		</execute>
 
-		<execute macro="SystemSettings#viewConfiguration">
-			<var name="configurationName" value="LDAP Auth" />
-			<var name="enableLDAP" value="false" />
+		<execute macro="FormFields#viewCheckboxNotChecked">
+			<var name="fieldName" value="enabled" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -158,8 +157,8 @@
 
 		<execute macro="PortalSettingsNavigator#gotoLDAP" />
 
-		<execute macro="PortalSettings#viewEnabledLDAPSetting">
-			<var name="enableCheckboxKey" value="ENABLED" />
+		<execute macro="FormFields#viewCheckboxChecked">
+			<var name="fieldName" value="ldap--enabled" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -174,9 +173,8 @@
 			<var name="configurationScope" value="Virtual Instance Scope" />
 		</execute>
 
-		<execute macro="SystemSettings#viewConfiguration">
-			<var name="configurationName" value="LDAP Auth" />
-			<var name="enableLDAP" value="false" />
+		<execute macro="FormFields#viewCheckboxNotChecked">
+			<var name="fieldName" value="enabled" />
 		</execute>
 	</command>
 </definition>

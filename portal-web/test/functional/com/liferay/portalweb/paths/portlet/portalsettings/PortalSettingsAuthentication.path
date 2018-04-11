@@ -199,36 +199,6 @@
 </tr>
 <!--AUTHENTICATION_LDAP-->
 <tr>
-	<td>AUTHENTICATION_LDAP_ENABLED_CHECKBOX</td>
-	<td>//input[contains(@name,'ldap--enabled')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_LDAP_REQUIRED_CHECKBOX</td>
-	<td>//input[contains(@name,'ldap--required')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_LDAP_IMPORT_ENABLED_CHECKBOX</td>
-	<td>//input[contains(@id,'ldapImportEnabled')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_LDAP_IMPORT_ON_STARTUP_ENABLED_CHECKBOX</td>
-	<td>//input[contains(@id,'importOnStartup')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_LDAP_EXPORT_ENABLED_CHECKBOX</td>
-	<td>//input[contains(@id,'ldapExportEnabled')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_LDAP_USE_LDAP_PASSWORD_POLICY_CHECKBOX</td>
-	<td>//input[contains(@name,'ldap--passwordPolicyEnabled')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>AUTHENTICATION_LDAP_ADD_BUTTON</td>
 	<td>//a[contains(@id,'addButton')]</td>
 	<td></td>

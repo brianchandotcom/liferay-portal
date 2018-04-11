@@ -1312,8 +1312,8 @@
 			<var name="configurationScope" value="System Scope" />
 		</execute>
 
-		<execute macro="SystemSettings#enableSetting">
-			<var name="checkboxSetting" value="SERVER_ENABLED" />
+		<execute macro="FormFields#enableCheckbox">
+			<var name="fieldName" value="serverEnabled" />
 		</execute>
 
 		<execute macro="SystemSettings#saveConfiguration" />
@@ -1401,7 +1401,7 @@
 	</command>
 
 	<command name="AssetPublisherSiteAndGlobalScopeAccessibility" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="quarantine" />
 		<property name="test.name.skip.portal.instance" value="WebcontentpublicationUsecase#AssetPublisherSiteAndGlobalScopeAccessibility" />
 
 		<execute macro="ProductMenu#gotoPortlet">

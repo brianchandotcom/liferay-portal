@@ -222,8 +222,8 @@
 			<var name="configurationScope" value="System Scope" />
 		</execute>
 
-		<execute macro="SystemSettings#enableSetting">
-			<var name="checkboxSetting" value="SHOW_INACTIVE_REQUEST_MESSAGE" />
+		<execute macro="FormFields#enableCheckbox">
+			<var name="fieldName" value="show.inactive.request.message" />
 		</execute>
 
 		<execute macro="SystemSettings#saveConfiguration" />
@@ -466,8 +466,8 @@
 			<var name="configurationScope" value="Virtual Instance Scope" />
 		</execute>
 
-		<execute macro="SystemSettings#enableSetting">
-			<var name="checkboxSetting" value="ENABLED_CHECKBOX" />
+		<execute macro="FormFields#enableCheckbox">
+			<var name="fieldName" value="enabled" />
 		</execute>
 
 		<execute macro="SystemSettings#saveConfiguration" />
@@ -500,8 +500,8 @@
 
 		<execute macro="PortalSettingsNavigator#gotoLDAP" />
 
-		<execute macro="PortalSettings#viewEnabledLDAPSetting">
-			<var name="enableCheckboxKey" value="ENABLED" />
+		<execute macro="FormFields#viewCheckboxChecked">
+			<var name="fieldName" value="ldap--enabled" />
 		</execute>
 	</command>
 </definition>

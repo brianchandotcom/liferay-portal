@@ -356,8 +356,8 @@
 			<var name="configurationScope" value="System Scope" />
 		</execute>
 
-		<execute macro="SystemSettings#enableSetting">
-			<var name="checkboxSetting" value="ENABLED_CHECKBOX" />
+		<execute macro="FormFields#enableCheckbox">
+			<var name="fieldName" value="enabled" />
 		</execute>
 
 		<execute macro="PortletEntry#save" />

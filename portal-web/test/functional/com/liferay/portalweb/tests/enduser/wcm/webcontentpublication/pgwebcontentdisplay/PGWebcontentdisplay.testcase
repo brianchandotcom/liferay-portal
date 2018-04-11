@@ -139,7 +139,7 @@
 	</command>
 
 	<command name="AddWebContent" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="quarantine" />
 		<property name="testray.component.names" value="Web Content Display" />
 
 		<execute macro="Navigator#gotoPage">
@@ -634,7 +634,7 @@
 	</command>
 
 	<command name="SelectWebContent" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="quarantine" />
 		<property name="testray.component.names" value="Web Content Display,Training" />
 
 		<execute macro="Navigator#openURL" />
@@ -755,8 +755,8 @@
 			<var name="configurationScope" value="System Scope" />
 		</execute>
 
-		<execute macro="SystemSettings#enableSetting">
-			<var name="checkboxSetting" value="SERVER_ENABLED" />
+		<execute macro="FormFields#enableCheckbox">
+			<var name="fieldName" value="serverEnabled" />
 		</execute>
 
 		<execute macro="SystemSettings#saveConfiguration" />

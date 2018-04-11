@@ -39,10 +39,6 @@
 		</execute>
 	</command>
 
-	<command name="enableSetting">
-		<execute function="Check" locator1="SystemSettings#${checkboxSetting}" />
-	</command>
-
 	<command name="exitEditConfiguration">
 		<execute function="Click" locator1="Icon#ANGLE_LEFT_BACK" />
 	</command>
@@ -83,23 +79,6 @@
 
 				<execute macro="Alert#viewSuccessMessage" />
 			</else>
-		</if>
-	</command>
-
-	<command name="viewConfiguration">
-		<if>
-			<equals arg1="${configurationName}" arg2="LDAP Auth" />
-			<then>
-				<if>
-					<equals arg1="${enableLDAP}" arg2="true" />
-					<then>
-						<execute function="AssertChecked" locator1="SystemSettings#ENABLED_CHECKBOX" />
-					</then>
-					<else>
-						<execute function="AssertNotChecked" locator1="SystemSettings#ENABLED_CHECKBOX" />
-					</else>
-				</if>
-			</then>
 		</if>
 	</command>
 </definition>

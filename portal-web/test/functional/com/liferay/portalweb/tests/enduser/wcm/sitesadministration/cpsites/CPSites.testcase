@@ -39,8 +39,8 @@
 			<var name="configurationScope" value="System Scope" />
 		</execute>
 
-		<execute macro="SystemSettings#enableSetting">
-			<var name="checkboxSetting" value="SHOW_INACTIVE_REQUEST_MESSAGE" />
+		<execute macro="FormFields#enableCheckbox">
+			<var name="fieldName" value="show.inactive.request.message" />
 		</execute>
 
 		<execute macro="SystemSettings#saveConfiguration" />

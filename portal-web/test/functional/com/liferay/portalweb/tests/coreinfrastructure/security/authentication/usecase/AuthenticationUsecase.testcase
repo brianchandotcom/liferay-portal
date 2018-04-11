@@ -48,7 +48,7 @@
 			<var name="portlet" value="Instance Settings" />
 		</execute>
 
-		<for list="ENABLED,IMPORT_ENABLED,IMPORT_ON_STARTUP_ENABLED,USE_LDAP_PASSWORD_POLICY" param="enableCheckboxKey">
+		<for list="ldap--enabled,ldapImportEnabled,importOnStartup,ldap--passwordPolicyEnabled" param="enableCheckboxKey">
 			<execute macro="PortalSettingsNavigator#gotoLDAP" />
 
 			<execute macro="PortalSettings#enableLDAPSetting">
@@ -57,8 +57,8 @@
 
 			<execute macro="PortalSettingsNavigator#gotoLDAP" />
 
-			<execute macro="PortalSettings#viewEnabledLDAPSetting">
-				<var name="enableCheckboxKey" value="${enableCheckboxKey}" />
+			<execute macro="FormFields#viewCheckboxChecked">
+				<var name="fieldName" value="${enableCheckboxKey}" />
 			</execute>
 		</for>
 
@@ -84,8 +84,8 @@
 			<var name="configurationScope" value="Virtual Instance Scope" />
 		</execute>
 
-		<execute macro="SystemSettings#enableSetting">
-			<var name="checkboxSetting" value="IMPORT_ENABLED_CHECKBOX" />
+		<execute macro="FormFields#enableCheckbox">
+			<var name="fieldName" value="importEnabled" />
 		</execute>
 
 		<execute macro="SystemSettings#saveConfiguration" />
@@ -163,8 +163,8 @@
 
 			<execute macro="PortalSettingsNavigator#gotoLDAP" />
 
-			<execute macro="PortalSettings#viewEnabledLDAPSetting">
-				<var name="enableCheckboxKey" value="${enableCheckboxKey}" />
+			<execute macro="FormFields#viewCheckboxChecked">
+				<var name="fieldName" value="ldap--enabled" />
 			</execute>
 		</for>
 

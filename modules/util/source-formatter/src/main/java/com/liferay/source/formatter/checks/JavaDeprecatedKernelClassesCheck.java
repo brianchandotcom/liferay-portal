@@ -31,7 +31,7 @@ public class JavaDeprecatedKernelClassesCheck extends BaseFileCheck {
 		String fileName, String absolutePath, String content) {
 
 		return StringUtil.replace(
-			content, "com.liferay.petra.string.StringPool",
+			content, "com.liferay.portal.kernel.util.StringPool",
 			"com.liferay.petra.string.StringPool");
 	}
 

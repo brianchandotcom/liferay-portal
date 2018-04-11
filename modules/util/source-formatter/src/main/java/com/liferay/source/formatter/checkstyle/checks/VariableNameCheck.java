@@ -119,6 +119,10 @@ public class VariableNameCheck extends BaseCheck {
 
 		String typeName = firstChildAST.getText();
 
+		if (typeName.contains(StringPool.UNDERLINE)) {
+			return;
+		}
+
 		String s1 = StringUtil.toLowerCase(_trimTrailingDigits(typeName));
 
 		String originalName = name;

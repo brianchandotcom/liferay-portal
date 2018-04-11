@@ -18,11 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceRegion;
-import com.liferay.commerce.model.CommerceTaxCategory;
 import com.liferay.commerce.model.CommerceTaxMethod;
+import com.liferay.commerce.product.model.CPTaxCategory;
+import com.liferay.commerce.product.service.CPTaxCategoryLocalServiceUtil;
 import com.liferay.commerce.service.CommerceCountryLocalServiceUtil;
 import com.liferay.commerce.service.CommerceRegionLocalServiceUtil;
-import com.liferay.commerce.service.CommerceTaxCategoryLocalServiceUtil;
 import com.liferay.commerce.service.CommerceTaxMethodLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -57,12 +57,6 @@ public class CommerceTaxFixedRateAddressRelImpl
 	}
 
 	@Override
-	public CommerceTaxCategory getCommerceTaxCategory() throws PortalException {
-		return CommerceTaxCategoryLocalServiceUtil.getCommerceTaxCategory(
-			getCommerceTaxCategoryId());
-	}
-
-	@Override
 	public CommerceTaxMethod getCommerceTaxMethod() throws PortalException {
 		if (getCommerceTaxMethodId() > 0) {
 			return CommerceTaxMethodLocalServiceUtil.getCommerceTaxMethod(
@@ -70,6 +64,12 @@ public class CommerceTaxFixedRateAddressRelImpl
 		}
 
 		return null;
+	}
+
+	@Override
+	public CPTaxCategory getCPTaxCategory() throws PortalException {
+		return CPTaxCategoryLocalServiceUtil.getCPTaxCategory(
+			getCPTaxCategoryId());
 	}
 
 }

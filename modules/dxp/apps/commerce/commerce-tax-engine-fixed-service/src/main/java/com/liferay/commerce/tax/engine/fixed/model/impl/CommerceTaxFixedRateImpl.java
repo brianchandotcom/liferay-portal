@@ -16,8 +16,8 @@ package com.liferay.commerce.tax.engine.fixed.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.model.CommerceTaxCategory;
-import com.liferay.commerce.service.CommerceTaxCategoryLocalServiceUtil;
+import com.liferay.commerce.product.model.CPTaxCategory;
+import com.liferay.commerce.product.service.CPTaxCategoryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
@@ -30,9 +30,9 @@ public class CommerceTaxFixedRateImpl extends CommerceTaxFixedRateBaseImpl {
 	}
 
 	@Override
-	public CommerceTaxCategory getCommerceTaxCategory() throws PortalException {
-		return CommerceTaxCategoryLocalServiceUtil.getCommerceTaxCategory(
-			getCommerceTaxCategoryId());
+	public CPTaxCategory getCPTaxCategory() throws PortalException {
+		return CPTaxCategoryLocalServiceUtil.getCPTaxCategory(
+			getCPTaxCategoryId());
 	}
 
 }

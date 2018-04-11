@@ -117,7 +117,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -300,7 +299,7 @@ public class JournalDisplayContext {
 		return journalServiceConfiguration.charactersblacklist();
 	}
 
-	public String getClearResultsURL() throws PortalException {
+	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();
 
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
@@ -623,29 +622,20 @@ public class JournalDisplayContext {
 		return _displayViews;
 	}
 
-	public DropdownItemList getFilterItemsDropdownItemList() throws Exception {
-		DropdownItemList filterNavigationDropdownItemList =
-			_getFilterNavigationDropdownItemList();
-
-		DropdownItemList filterStatusDropdownItemList =
-			_getFilterStatusDropdownItemList();
-
-		DropdownItemList orderByDropdownItemList =
-			_getOrderByDropdownItemList();
-
+	public DropdownItemList getFilterItemsDropdownItemList() {
 		return new DropdownItemList(_request) {
 			{
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItemList(
-							filterNavigationDropdownItemList);
+							_getFilterNavigationDropdownItemList());
 						dropdownGroupItem.setLabel("filter-by-navigation");
 					});
 
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItemList(
-							filterStatusDropdownItemList);
+							_getFilterStatusDropdownItemList());
 						dropdownGroupItem.setLabel("filter-by-status");
 					});
 
@@ -653,7 +643,7 @@ public class JournalDisplayContext {
 					addGroup(
 						dropdownGroupItem -> {
 							dropdownGroupItem.setDropdownItemList(
-								orderByDropdownItemList);
+								_getOrderByDropdownItemList());
 							dropdownGroupItem.setLabel("order-by");
 						});
 				}
@@ -661,7 +651,7 @@ public class JournalDisplayContext {
 		};
 	}
 
-	public JournalFolder getFolder() throws PortalException {
+	public JournalFolder getFolder() {
 		if (_folder != null) {
 			return _folder;
 		}
@@ -672,12 +662,14 @@ public class JournalDisplayContext {
 			return _folder;
 		}
 
-		_folder = ActionUtil.getFolder(_request);
+		long folderId = ParamUtil.getLong(_request, "folderId");
+
+		_folder = JournalFolderLocalServiceUtil.fetchFolder(folderId);
 
 		return _folder;
 	}
 
-	public long getFolderId() throws PortalException {
+	public long getFolderId() {
 		if (_folderId != null) {
 			return _folderId;
 		}
@@ -691,7 +683,7 @@ public class JournalDisplayContext {
 		return _folderId;
 	}
 
-	public JSONArray getFoldersJSONArray() throws Exception {
+	public JSONArray getFoldersJSONArray() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -714,7 +706,7 @@ public class JournalDisplayContext {
 		return rootJSONArray;
 	}
 
-	public String getFolderTitle() throws PortalException {
+	public String getFolderTitle() {
 		JournalFolder folder = getFolder();
 
 		if (folder != null) {
@@ -805,9 +797,7 @@ public class JournalDisplayContext {
 		return sb.toString();
 	}
 
-	public List<ManagementBarFilterItem> getManagementBarStatusFilterItems()
-		throws PortalException, PortletException {
-
+	public List<ManagementBarFilterItem> getManagementBarStatusFilterItems() {
 		List<ManagementBarFilterItem> managementBarFilterItems =
 			new ArrayList<>();
 
@@ -963,7 +953,7 @@ public class JournalDisplayContext {
 		return orderColumns;
 	}
 
-	public PortletURL getPortletURL() throws PortalException {
+	public PortletURL getPortletURL() {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
 		String navigation = ParamUtil.getString(_request, "navigation");
@@ -1037,7 +1027,7 @@ public class JournalDisplayContext {
 		return portletURL;
 	}
 
-	public int getRestrictionType() throws PortalException {
+	public int getRestrictionType() {
 		if (_restrictionType != null) {
 			return _restrictionType;
 		}
@@ -1054,7 +1044,7 @@ public class JournalDisplayContext {
 		return _restrictionType;
 	}
 
-	public String getSearchActionURL() throws PortalException {
+	public String getSearchActionURL() {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("folderId", String.valueOf(getFolderId()));
@@ -1342,7 +1332,7 @@ public class JournalDisplayContext {
 		return articleSearchContainer;
 	}
 
-	public String getSortingURL() throws Exception {
+	public String getSortingURL() {
 		PortletURL sortingURL = getPortletURL();
 
 		String orderByType = ParamUtil.getString(_request, "orderByType");
@@ -1400,7 +1390,7 @@ public class JournalDisplayContext {
 		return articleSearch.getTotal();
 	}
 
-	public ViewTypeItemList getViewTypesItemList() throws Exception {
+	public ViewTypeItemList getViewTypesItemList() {
 		return new ViewTypeItemList(
 			_request, getPortletURL(), getDisplayStyle()) {
 
@@ -1633,9 +1623,7 @@ public class JournalDisplayContext {
 		return searchContext;
 	}
 
-	protected ManagementBarFilterItem getManagementBarFilterItem(int status)
-		throws PortalException {
-
+	protected ManagementBarFilterItem getManagementBarFilterItem(int status) {
 		boolean active = false;
 
 		if (status == getStatus()) {
@@ -1679,9 +1667,7 @@ public class JournalDisplayContext {
 		};
 	}
 
-	private DropdownItemList _getFilterNavigationDropdownItemList()
-		throws Exception {
-
+	private DropdownItemList _getFilterNavigationDropdownItemList() {
 		return new DropdownItemList(_request) {
 			{
 				add(
@@ -1709,23 +1695,18 @@ public class JournalDisplayContext {
 	}
 
 	private Consumer<DropdownItem> _getFilterStatusDropdownItem(
-			final int workflowStatus)
-		throws PortalException {
-
-		PortletURL portletURL = getPortletURL();
+		final int workflowStatus) {
 
 		return dropdownItem -> {
 			dropdownItem.setActive(getStatus() == workflowStatus);
 			dropdownItem.setHref(
-				portletURL, "status", String.valueOf(workflowStatus));
+				getPortletURL(), "status", String.valueOf(workflowStatus));
 			dropdownItem.setLabel(
 				WorkflowConstants.getStatusLabel(workflowStatus));
 		};
 	}
 
-	private DropdownItemList _getFilterStatusDropdownItemList()
-		throws Exception {
-
+	private DropdownItemList _getFilterStatusDropdownItemList() {
 		return new DropdownItemList(_request) {
 			{
 				add(_getFilterStatusDropdownItem(WorkflowConstants.STATUS_ANY));
@@ -1765,9 +1746,7 @@ public class JournalDisplayContext {
 		};
 	}
 
-	private JSONArray _getFoldersJSONArray(long groupId, long folderId)
-		throws Exception {
-
+	private JSONArray _getFoldersJSONArray(long groupId, long folderId) {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		List<JournalFolder> folders = JournalFolderLocalServiceUtil.getFolders(
@@ -1798,19 +1777,16 @@ public class JournalDisplayContext {
 	}
 
 	private Consumer<DropdownItem> _getOrderByDropdownItem(
-			final String orderByCol)
-		throws PortalException {
-
-		PortletURL portletURL = getPortletURL();
+		final String orderByCol) {
 
 		return dropdownItem -> {
 			dropdownItem.setActive(orderByCol.equals(getOrderByCol()));
-			dropdownItem.setHref(portletURL, "orderByCol", orderByCol);
+			dropdownItem.setHref(getPortletURL(), "orderByCol", orderByCol);
 			dropdownItem.setLabel(orderByCol);
 		};
 	}
 
-	private DropdownItemList _getOrderByDropdownItemList() throws Exception {
+	private DropdownItemList _getOrderByDropdownItemList() {
 		return new DropdownItemList(_request) {
 			{
 				add(_getOrderByDropdownItem("display-date"));

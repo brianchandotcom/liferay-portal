@@ -132,10 +132,6 @@ public class Relationship<T extends ClassedModel> {
 	}
 
 	private Relationship() {
-		_inboundMultiRelationshipFunctions = new HashSet<>();
-		_outboundMultiRelationshipFunctions = new HashSet<>();
-		_inboundSingleRelationshipFunctions = new HashSet<>();
-		_outboundSingleRelationshipFunctions = new HashSet<>();
 	}
 
 	private Stream<? extends ClassedModel> _getInboundRelatedModelStream(
@@ -205,13 +201,13 @@ public class Relationship<T extends ClassedModel> {
 	}
 
 	private final Set<MultiRelationshipFunction<T, ? extends ClassedModel>>
-		_inboundMultiRelationshipFunctions;
+		_inboundMultiRelationshipFunctions = new HashSet<>();
 	private final Set<MultiRelationshipFunction<T, ? extends ClassedModel>>
-		_outboundMultiRelationshipFunctions;
+		_outboundMultiRelationshipFunctions = new HashSet<>();
 	private RelationshipBaseSupplier<Long, T> _relationshipBaseSupplier;
 	private final Set<Function<T, ? extends ClassedModel>>
-		_inboundSingleRelationshipFunctions;
+		_inboundSingleRelationshipFunctions = new HashSet<>();
 	private final Set<Function<T, ? extends ClassedModel>>
-		_outboundSingleRelationshipFunctions;
+		_outboundSingleRelationshipFunctions = new HashSet<>();
 
 }

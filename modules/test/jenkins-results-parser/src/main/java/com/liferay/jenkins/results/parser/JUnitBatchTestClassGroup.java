@@ -14,8 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import com.google.common.collect.Lists;
-
 import java.io.File;
 import java.io.IOException;
 
@@ -41,17 +39,17 @@ import java.util.regex.Pattern;
 public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 	protected JUnitBatchTestClassGroup(
-		String batchName, GitWorkingDirectory gitWorkingDirectory,
+		String batchName, PortalGitWorkingDirectory portalGitWorkingDirectory,
 		String testSuiteName) {
 
-		super(batchName, gitWorkingDirectory, testSuiteName);
+		super(batchName, portalGitWorkingDirectory, testSuiteName);
 
 		_setTestClassNamesExcludesRelativeGlobs();
 		_setTestClassNamesIncludesRelativeGlobs();
 
 		setTestClassFiles();
 
-		_setAxisTestClassGroups();
+		setAxisTestClassGroups();
 	}
 
 	protected List<String> getRelevantTestClassNamesRelativeGlobs(
@@ -59,16 +57,14 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		List<String> relevantTestClassNameRelativeGlobs = new ArrayList<>();
 
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			(PortalGitWorkingDirectory)gitWorkingDirectory;
-
 		List<File> moduleDirsList = null;
 
 		try {
 			moduleDirsList = portalGitWorkingDirectory.getModuleDirsList();
 		}
 		catch (IOException ioe) {
-			File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
+			File workingDirectory =
+				portalGitWorkingDirectory.getWorkingDirectory();
 
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
@@ -78,7 +74,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		List<File> modifiedFilesList =
-			gitWorkingDirectory.getModifiedFilesList();
+			portalGitWorkingDirectory.getModifiedFilesList();
 
 		for (File modifiedFile : modifiedFilesList) {
 			boolean foundModuleFile = false;
@@ -107,7 +103,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected void setTestClassFiles() {
-		File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
+		File workingDirectory = portalGitWorkingDirectory.getWorkingDirectory();
 
 		try {
 			Files.walkFileTree(
@@ -197,114 +193,26 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 	protected final List<PathMatcher> testClassNamesIncludesPathMatchers =
 		new ArrayList<>();
 
-	private int _getAxisMaxSize() {
-		String axisMaxSize = _getAxisMaxSizePropertyValue();
-
-		if (axisMaxSize != null) {
-			return Integer.parseInt(axisMaxSize);
-		}
-
-		return _DEFAULT_AXIS_MAX_SIZE;
-	}
-
-	private String _getAxisMaxSizePropertyValue() {
-		List<String> propertyNames = new ArrayList<>();
-
-		if (testSuiteName != null) {
-			propertyNames.add(
-				JenkinsResultsParserUtil.combine(
-					"test.batch.axis.max.size[", batchName, "][", testSuiteName,
-					"]"));
-
-			propertyNames.add(
-				getWildcardPropertyName(
-					portalTestProperties, "test.batch.axis.max.size",
-					testSuiteName));
-
-			propertyNames.add(
-				JenkinsResultsParserUtil.combine(
-					"test.batch.axis.max.size[", testSuiteName, "]"));
-		}
-
-		propertyNames.add(
-			JenkinsResultsParserUtil.combine(
-				"test.batch.axis.max.size[", batchName, "]"));
-
-		propertyNames.add(
-			getWildcardPropertyName(
-				portalTestProperties, "test.batch.axis.max.size"));
-
-		propertyNames.add("test.batch.axis.max.size");
-
-		return getFirstPropertyValue(portalTestProperties, propertyNames);
-	}
-
 	private String _getTestClassNamesExcludesPropertyValue() {
-		List<String> propertyNames = new ArrayList<>();
+		String propertyValue = getFirstPropertyValue(
+			"test.batch.class.names.excludes");
 
-		if (testSuiteName != null) {
-			propertyNames.add(
-				JenkinsResultsParserUtil.combine(
-					"test.batch.class.names.excludes[", batchName, "][",
-					testSuiteName, "]"));
-
-			propertyNames.add(
-				getWildcardPropertyName(
-					portalTestProperties, "test.batch.class.names.excludes",
-					testSuiteName));
-
-			propertyNames.add(
-				JenkinsResultsParserUtil.combine(
-					"test.batch.class.names.excludes[", testSuiteName, "]"));
+		if (propertyValue != null) {
+			return propertyValue;
 		}
 
-		propertyNames.add(
-			getWildcardPropertyName(
-				portalTestProperties, "test.batch.class.names.excludes"));
-
-		propertyNames.add(
-			JenkinsResultsParserUtil.combine(
-				"test.batch.class.names.excludes[", batchName, "]"));
-
-		propertyNames.add("test.batch.class.names.excludes");
-
-		propertyNames.add("test.class.names.excludes");
-
-		return getFirstPropertyValue(portalTestProperties, propertyNames);
+		return portalTestProperties.getProperty("test.class.names.excludes");
 	}
 
 	private String _getTestClassNamesIncludesPropertyValue() {
-		List<String> propertyNames = new ArrayList<>();
+		String propertyValue = getFirstPropertyValue(
+			"test.batch.class.names.includes");
 
-		if (testSuiteName != null) {
-			propertyNames.add(
-				JenkinsResultsParserUtil.combine(
-					"test.batch.class.names.includes[", batchName, "][",
-					testSuiteName, "]"));
-
-			propertyNames.add(
-				getWildcardPropertyName(
-					portalTestProperties, "test.batch.class.names.includes",
-					testSuiteName));
-
-			propertyNames.add(
-				JenkinsResultsParserUtil.combine(
-					"test.batch.class.names.includes[", testSuiteName, "]"));
+		if (propertyValue != null) {
+			return propertyValue;
 		}
 
-		propertyNames.add(
-			JenkinsResultsParserUtil.combine(
-				"test.batch.class.names.includes[", batchName, "]"));
-
-		propertyNames.add(
-			getWildcardPropertyName(
-				portalTestProperties, "test.batch.class.names.includes"));
-
-		propertyNames.add("test.batch.class.names.includes");
-
-		propertyNames.add("test.class.names.includes");
-
-		return getFirstPropertyValue(portalTestProperties, propertyNames);
+		return portalTestProperties.getProperty("test.class.names.includes");
 	}
 
 	private List<PathMatcher> _getTestClassNamesPathMatchers(
@@ -312,7 +220,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		List<PathMatcher> pathMatchers = new ArrayList<>();
 
-		File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
+		File workingDirectory = portalGitWorkingDirectory.getWorkingDirectory();
 
 		String workingDirectoryPath = workingDirectory.getAbsolutePath();
 
@@ -327,38 +235,6 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		return pathMatchers;
-	}
-
-	private void _setAxisTestClassGroups() {
-		int testClassFileCount = testClassFiles.size();
-
-		if (testClassFileCount == 0) {
-			return;
-		}
-
-		int axisMaxSize = _getAxisMaxSize();
-
-		int axisCount = (int)Math.ceil(
-			(double)testClassFileCount / axisMaxSize);
-
-		int axisSize = (int)Math.ceil((double)testClassFileCount / axisCount);
-
-		int id = 0;
-
-		for (List<File> axisTestClassFiles :
-				Lists.partition(testClassFiles, axisSize)) {
-
-			AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(
-				this, id);
-
-			axisTestClassGroups.put(id, axisTestClassGroup);
-
-			for (File axisTestClassFile : axisTestClassFiles) {
-				axisTestClassGroup.addTestClassFile(axisTestClassFile);
-			}
-
-			id++;
-		}
 	}
 
 	private void _setTestClassNamesExcludesRelativeGlobs() {
@@ -408,8 +284,6 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			_getTestClassNamesPathMatchers(
 				testClassNamesIncludesRelativeGlobs));
 	}
-
-	private static final int _DEFAULT_AXIS_MAX_SIZE = 5000;
 
 	private final Pattern _packagePathPattern = Pattern.compile(
 		".*/(?<packagePath>com/.*)");

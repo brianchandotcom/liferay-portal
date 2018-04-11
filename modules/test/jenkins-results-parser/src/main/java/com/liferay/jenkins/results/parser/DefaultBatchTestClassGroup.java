@@ -20,10 +20,10 @@ package com.liferay.jenkins.results.parser;
 public class DefaultBatchTestClassGroup extends BatchTestClassGroup {
 
 	protected DefaultBatchTestClassGroup(
-		String batchName, GitWorkingDirectory gitWorkingDirectory,
+		String batchName, PortalGitWorkingDirectory portalGitWorkingDirectory,
 		String testSuiteName) {
 
-		super(batchName, gitWorkingDirectory, testSuiteName);
+		super(batchName, portalGitWorkingDirectory, testSuiteName);
 
 		axisTestClassGroups.put(0, new AxisTestClassGroup(this, 0));
 	}

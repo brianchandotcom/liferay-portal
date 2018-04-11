@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.google.common.collect.Lists;
+
 import java.io.File;
 
 import java.util.ArrayList;
@@ -41,8 +43,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return batchName;
 	}
 
-	public GitWorkingDirectory getGitWorkingDirectory() {
-		return gitWorkingDirectory;
+	public PortalGitWorkingDirectory getPortalGitWorkingDirectory() {
+		return portalGitWorkingDirectory;
 	}
 
 	public Properties getPortalTestProperties() {
@@ -50,31 +52,56 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	protected BatchTestClassGroup(
-		String batchName, GitWorkingDirectory gitWorkingDirectory,
+		String batchName, PortalGitWorkingDirectory portalGitWorkingDirectory,
 		String testSuiteName) {
 
 		this.batchName = batchName;
-		this.gitWorkingDirectory = gitWorkingDirectory;
+		this.portalGitWorkingDirectory = portalGitWorkingDirectory;
 		this.testSuiteName = testSuiteName;
 
 		portalTestProperties = JenkinsResultsParserUtil.getProperties(
 			new File(
-				this.gitWorkingDirectory.getWorkingDirectory(),
+				this.portalGitWorkingDirectory.getWorkingDirectory(),
 				"test.properties"));
 
 		_setTestRelevantChanges();
 	}
 
-	protected String getFirstPropertyValue(
-		Properties properties, List<String> propertyNames) {
+	protected String getFirstPropertyValue(String basePropertyName) {
+		List<String> propertyNames = new ArrayList<>();
+
+		if (testSuiteName != null) {
+			propertyNames.add(
+				JenkinsResultsParserUtil.combine(
+					basePropertyName, "[", batchName, "][", testSuiteName,
+					"]"));
+
+			propertyNames.add(
+				getWildcardPropertyName(
+					portalTestProperties, basePropertyName, testSuiteName));
+
+			propertyNames.add(
+				JenkinsResultsParserUtil.combine(
+					basePropertyName, "[", testSuiteName, "]"));
+		}
+
+		propertyNames.add(
+			JenkinsResultsParserUtil.combine(
+				basePropertyName, "[", batchName, "]"));
+
+		propertyNames.add(
+			getWildcardPropertyName(portalTestProperties, basePropertyName));
+
+		propertyNames.add(basePropertyName);
 
 		for (String propertyName : propertyNames) {
 			if (propertyName == null) {
 				continue;
 			}
 
-			if (properties.containsKey(propertyName)) {
-				String propertyValue = properties.getProperty(propertyName);
+			if (portalTestProperties.containsKey(propertyName)) {
+				String propertyValue = portalTestProperties.getProperty(
+					propertyName);
 
 				if ((propertyValue != null) && !propertyValue.isEmpty()) {
 					return propertyValue;
@@ -126,27 +153,62 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return null;
 	}
 
+	protected void setAxisTestClassGroups() {
+		int testClassFileCount = testClassFiles.size();
+
+		if (testClassFileCount == 0) {
+			return;
+		}
+
+		int axisMaxSize = _getAxisMaxSize();
+
+		int axisCount = (int)Math.ceil(
+			(double)testClassFileCount / axisMaxSize);
+
+		int axisSize = (int)Math.ceil((double)testClassFileCount / axisCount);
+
+		int id = 0;
+
+		for (List<File> axisTestClassFiles :
+				Lists.partition(testClassFiles, axisSize)) {
+
+			AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(
+				this, id);
+
+			axisTestClassGroups.put(id, axisTestClassGroup);
+
+			for (File axisTestClassFile : axisTestClassFiles) {
+				axisTestClassGroup.addTestClassFile(axisTestClassFile);
+			}
+
+			id++;
+		}
+	}
+
 	protected final Map<Integer, AxisTestClassGroup> axisTestClassGroups =
 		new HashMap<>();
 	protected final String batchName;
-	protected final GitWorkingDirectory gitWorkingDirectory;
+	protected final PortalGitWorkingDirectory portalGitWorkingDirectory;
 	protected final Properties portalTestProperties;
 	protected boolean testRelevantChanges;
 	protected final String testSuiteName;
 
-	private void _setTestRelevantChanges() {
-		List<String> propertyNames = new ArrayList<>();
+	private int _getAxisMaxSize() {
+		String axisMaxSize = _getAxisMaxSizePropertyValue();
 
-		if (testSuiteName != null) {
-			propertyNames.add(
-				JenkinsResultsParserUtil.combine(
-					"test.relevant.changes[", testSuiteName, "]"));
+		if (axisMaxSize != null) {
+			return Integer.parseInt(axisMaxSize);
 		}
 
-		propertyNames.add("test.relevant.changes");
+		return _DEFAULT_AXIS_MAX_SIZE;
+	}
 
-		String propertyValue = getFirstPropertyValue(
-			portalTestProperties, propertyNames);
+	private String _getAxisMaxSizePropertyValue() {
+		return getFirstPropertyValue("test.batch.axis.max.size");
+	}
+
+	private void _setTestRelevantChanges() {
+		String propertyValue = getFirstPropertyValue("test.relevant.changes");
 
 		if (propertyValue != null) {
 			testRelevantChanges = Boolean.parseBoolean(propertyValue);
@@ -156,6 +218,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 		testRelevantChanges = _DEFAULT_TEST_RELEVANT_CHANGES;
 	}
+
+	private static final int _DEFAULT_AXIS_MAX_SIZE = 5000;
 
 	private static final boolean _DEFAULT_TEST_RELEVANT_CHANGES = false;
 

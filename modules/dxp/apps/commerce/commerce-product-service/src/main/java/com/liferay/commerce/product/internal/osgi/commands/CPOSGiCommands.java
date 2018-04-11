@@ -84,7 +84,7 @@ public class CPOSGiCommands {
 
 			_cpDefinitionLocalService.addCPDefinition(
 				titleMap, null, null, null, null, null, null, "simple", true,
-				false, false, false, 0, 0, 0, 0, 0, null, true,
+				false, false, false, 0, 0, 0, 0, 0, 0, false, false, null, true,
 				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, 0, 0, 0, 0, 0, true, true,
 				serviceContext);

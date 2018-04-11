@@ -88,6 +88,9 @@ public class CPTestUtil {
 		double height = RandomTestUtil.randomDouble();
 		double depth = RandomTestUtil.randomDouble();
 		double weight = RandomTestUtil.randomDouble();
+		long cpTaxCategoryId = 0;
+		boolean taxExempt = RandomTestUtil.randomBoolean();
+		boolean telcoOrElectronics = RandomTestUtil.randomBoolean();
 		String ddmStructureKey = null;
 		boolean published = RandomTestUtil.randomBoolean();
 
@@ -130,12 +133,12 @@ public class CPTestUtil {
 			titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
 			metaTitleMap, metaKeywordsMap, metaDescriptionMap, productTypeName,
 			ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
-			shippingExtraPrice, width, height, depth, weight, ddmStructureKey,
-			published, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, hasDefaultInstance,
-			serviceContext);
+			shippingExtraPrice, width, height, depth, weight, cpTaxCategoryId,
+			taxExempt, telcoOrElectronics, ddmStructureKey, published,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, hasDefaultInstance, serviceContext);
 	}
 
 	protected static String getJSON(

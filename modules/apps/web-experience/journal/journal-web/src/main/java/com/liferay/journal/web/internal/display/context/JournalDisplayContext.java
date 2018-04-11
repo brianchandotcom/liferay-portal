@@ -1319,7 +1319,7 @@ public class JournalDisplayContext {
 		return _tabs1;
 	}
 
-	public int getTotal() throws PortalException {
+	public int getTotalItems() throws PortalException {
 		SearchContainer articleSearch = getSearchContainer(false);
 
 		return articleSearch.getTotal();
@@ -1361,7 +1361,7 @@ public class JournalDisplayContext {
 	}
 
 	public boolean hasResults() throws PortalException {
-		if (getTotal() > 0) {
+		if (getTotalItems() > 0) {
 			return true;
 		}
 
@@ -1376,7 +1376,7 @@ public class JournalDisplayContext {
 		return false;
 	}
 
-	public boolean isDisabledManagementBar() throws PortalException {
+	public boolean isDisabled() throws PortalException {
 		if (hasResults()) {
 			return false;
 		}
@@ -1445,7 +1445,7 @@ public class JournalDisplayContext {
 		return _showEditActions;
 	}
 
-	public boolean isShowInfoPanel() {
+	public boolean isShowInfoButton() {
 		if (Validator.isNotNull(getDDMStructureKey())) {
 			return false;
 		}

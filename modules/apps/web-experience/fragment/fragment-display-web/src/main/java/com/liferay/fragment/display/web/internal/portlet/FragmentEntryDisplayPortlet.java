@@ -15,11 +15,19 @@
 package com.liferay.fragment.display.web.internal.portlet;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.fragment.display.web.internal.constants.FragmentEntryDisplayWebKeys;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
+import java.io.IOException;
+
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
@@ -28,6 +36,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
+		"com.liferay.portlet.ajaxable=false",
 		"com.liferay.portlet.css-class-wrapper=portlet-fragment-display",
 		"com.liferay.portlet.display-category=category.cms",
 		"com.liferay.portlet.display-category=category.highlighted",
@@ -51,4 +60,19 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class FragmentEntryDisplayPortlet extends MVCPortlet {
+
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(
+			FragmentEntryDisplayWebKeys.ITEM_SELECTOR, _itemSelector);
+
+		super.doDispatch(renderRequest, renderResponse);
+	}
+
+	@Reference
+	private ItemSelector _itemSelector;
+
 }

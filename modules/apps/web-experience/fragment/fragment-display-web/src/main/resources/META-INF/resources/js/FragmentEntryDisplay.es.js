@@ -119,6 +119,17 @@ FragmentEntryDisplay.STATE = {
 	),
 
 	/**
+	 * Image selector url
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEntryDisplay
+	 * @review
+	 * @type {!string}
+	 */
+
+	imageSelectorURL: Config.string().required(),
+
+	/**
 	 * Portlet namespace needed for prefixing form inputs
 	 * @default undefined
 	 * @instance

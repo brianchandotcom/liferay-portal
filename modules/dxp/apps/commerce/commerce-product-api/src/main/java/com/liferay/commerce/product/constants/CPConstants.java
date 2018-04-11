@@ -19,6 +19,9 @@ package com.liferay.commerce.product.constants;
  */
 public class CPConstants {
 
+	public static final String CP_OPTION_SERVICE_NAME =
+		"com.liferay.commerce.product.option";
+
 	public static final String SEPARATOR_ASSET_CATEGORY_URL = "/g/";
 
 	public static final String SEPARATOR_PRODUCT_URL = "/p/";

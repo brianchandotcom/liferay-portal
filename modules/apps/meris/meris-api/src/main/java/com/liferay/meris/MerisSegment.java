@@ -28,10 +28,10 @@ public interface MerisSegment {
 
 	public String getDescription(Locale locale);
 
-	public long getGroupId();
-
 	public String getMerisSegmentId();
 
 	public String getName(Locale locale);
+
+	public String getScopeId();
 
 }

@@ -38,10 +38,10 @@ public interface MerisSegmentManager
 	public S getMerisSegment(String merisSegmentId);
 
 	public List<S> getMerisSegments(
-		long groupId, int start, int end, Comparator<S> comparator);
+		String scopeId, int start, int end, Comparator<S> comparator);
 
 	public List<S> getMerisSegments(
-		long groupId, String merisProfileId, String merisSegmentId,
+		String scopeId, String merisProfileId, String merisSegmentId,
 		Map<String, Object> context, int start, int end,
 		Comparator<S> comparator);
 

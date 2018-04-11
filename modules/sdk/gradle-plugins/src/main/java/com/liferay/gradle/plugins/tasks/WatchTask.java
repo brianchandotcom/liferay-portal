@@ -188,8 +188,11 @@ public class WatchTask extends DefaultTask {
 			try (GogoShellClient gogoShellClient = new GogoShellClient()) {
 				long outputFileBundleId = _readLong(outputFile);
 
-				String bundleSymbolicName = _readBundleSymbolicName(
-					getBundleDir());
+				File manifestFile = new File(
+					getBundleDir(), "META-INF/MANIFEST.MF");
+
+				String bundleSymbolicName = FileUtil.readManifestAttribute(
+					manifestFile, Constants.BUNDLE_SYMBOLICNAME);
 
 				long installedBundleId = _getBundleId(
 					bundleSymbolicName, gogoShellClient);
@@ -335,20 +338,6 @@ public class WatchTask extends DefaultTask {
 		String symbolicName = fields[3];
 
 		return _newBundleDTO(id, state, symbolicName);
-	}
-
-	private static String _readBundleSymbolicName(File bundleDir)
-		throws IOException {
-
-		File manifestFile = new File(bundleDir, "META-INF/MANIFEST.MF");
-
-		try (InputStream inputStream = new FileInputStream(manifestFile)) {
-			Manifest manifest = new Manifest(inputStream);
-
-			Attributes attributes = manifest.getMainAttributes();
-
-			return attributes.getValue(Constants.BUNDLE_SYMBOLICNAME);
-		}
 	}
 
 	private static long _readLong(File file) throws IOException {

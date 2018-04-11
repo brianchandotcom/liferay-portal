@@ -12,21 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_1;
+package com.liferay.portal.upgrade.v7_1_x;
+
+import aQute.bnd.version.Version;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.v7_1.util.RepositoryTable;
+import com.liferay.portal.upgrade.util.CoreUpgradeProcessRegistry;
+
+import java.util.TreeMap;
 
 /**
- * @author Alec Shay
+ * @author Alberto Chaparro
  */
-public class UpgradeRepository extends UpgradeProcess {
+public class UpgradeProcessRegistry implements CoreUpgradeProcessRegistry {
 
 	@Override
-	protected void doUpgrade() throws Exception {
-		alter(
-			RepositoryTable.class,
-			new AlterColumnType("name", "VARCHAR(200) null"));
+	public void registerUpgradeProcesses(
+		TreeMap<Version, UpgradeProcess> upgradeProcesses) {
+
+		upgradeProcesses.put(new Version("1.0.0"), new UpgradeSchema());
+
+		upgradeProcesses.put(new Version("1.1.0"), new UpgradeModules());
+
+		upgradeProcesses.put(new Version("1.1.1"), new UpgradeRepository());
 	}
 
 }

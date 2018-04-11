@@ -188,84 +188,13 @@ CommerceOrganizationOrderDisplayContext commerceOrganizationOrderDisplayContext 
 			}
 		</aui:script>
 
-		<aui:script use="liferay-util-window">
+		<aui:script use="aui-base">
 			var searchContainer = A.one('#<portlet:namespace />commerceOrdersSearchContainer');
-			var transitionComments = A.one('#<portlet:namespace />transitionComments');
 
 			searchContainer.delegate(
 				'click',
 				function(event) {
-					var link = event.currentTarget;
-
-					var workflowTaskId = parseInt(link.getData('workflowTaskId'), 10);
-
-					var form = A.Node.create('<form />');
-
-					var url = '<%= editCommerceOrderURL %>';
-
-					url += '&<portlet:namespace />commerceOrderId=' + link.getData('commerceOrderId');
-					url += '&<portlet:namespace />workflowTaskId=' + workflowTaskId;
-					url += '&<portlet:namespace />transitionName=' + link.getData('transitionName');
-
-					form.setAttribute('action', url);
-					form.setAttribute('method', 'POST');
-
-					form.append(transitionComments);
-
-					if (workflowTaskId <= 0) {
-						submitForm(form);
-
-						return;
-					}
-
-					transitionComments.show();
-
-					var dialog = Liferay.Util.Window.getWindow(
-						{
-							dialog: {
-								bodyContent: form,
-								destroyOnHide: true,
-								height: 400,
-								resizable: false,
-								toolbars: {
-									footer: [
-										{
-											cssClass: 'btn-primary mr-2',
-											label: '<liferay-ui:message key="done" />',
-											on: {
-												click: function() {
-													submitForm(form);
-												}
-											}
-										},
-										{
-											cssClass: 'btn-cancel',
-											label: '<liferay-ui:message key="cancel" />',
-											on: {
-												click: function() {
-													dialog.hide();
-												}
-											}
-										}
-									],
-									header: [
-										{
-											cssClass: 'close',
-											discardDefaultButtonCssClasses: true,
-											labelHTML: '<span aria-hidden="true">&times;</span>',
-											on: {
-												click: function(event) {
-													dialog.hide();
-												}
-											}
-										}
-									]
-								},
-								width: 720
-							},
-							title: link.text()
-						}
-					);
+					<portlet:namespace />transition(event);
 				},
 				'.transition-link'
 			);

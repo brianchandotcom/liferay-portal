@@ -45,25 +45,26 @@ List<ObjectValuePair<Long, String>> transitionOVPs = commerceOrganizationOrderDi
 		</button>
 
 		<c:if test="<%= transitionOVPs.size() > 1 %>">
-			<button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary dropdown-toggle" data-toggle="dropdown" type="button">
-				<clay:icon symbol="caret-bottom" />
-			</button>
+				<button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary dropdown-toggle" data-toggle="dropdown" type="button">
+					<clay:icon symbol="caret-bottom" />
+				</button>
 
-			<div class="dropdown-menu dropdown-menu-right">
+				<div class="dropdown-menu dropdown-menu-right">
 
-				<%
-				for (int i = 1; i < transitionOVPs.size(); i++) {
-					ObjectValuePair<Long, String> transitionOVP = transitionOVPs.get(i);
+					<%
+					for (int i = 1; i < transitionOVPs.size(); i++) {
+						ObjectValuePair<Long, String> transitionOVP = transitionOVPs.get(i);
 
-					String transitionName = transitionOVP.getValue();
-				%>
+						String transitionName = transitionOVP.getValue();
+					%>
 
-					<a class="dropdown-item transition-link" data-commerceOrderId="<%= commerceOrder.getCommerceOrderId() %>" data-transitionName="<%= transitionName %>" data-workflowTaskId="<%= firstTransitionOVP.getKey() %>" href="javascript:;"><%= commerceOrganizationOrderDisplayContext.getCommerceOrderTransitionMessage(transitionName) %></a>
+						<a class="dropdown-item transition-link" data-commerceOrderId="<%= commerceOrder.getCommerceOrderId() %>" data-transitionName="<%= transitionName %>" data-workflowTaskId="<%= firstTransitionOVP.getKey() %>" href="javascript:;"><%= commerceOrganizationOrderDisplayContext.getCommerceOrderTransitionMessage(transitionName) %></a>
 
-				<%
-				}
-				%>
+					<%
+					}
+					%>
 
+				</div>
 			</div>
 		</c:if>
 	</div>

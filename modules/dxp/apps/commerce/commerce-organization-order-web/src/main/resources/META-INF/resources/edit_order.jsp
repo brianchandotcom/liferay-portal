@@ -27,18 +27,16 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 </portlet:actionURL>
 
 <div class="b2b-portlet-content-header">
-	<c:if test="<%= Validator.isNotNull(redirect) %>">
-		<liferay-ui:icon
-			cssClass="header-back-to"
-			icon="order-arrow-down"
-			id="TabsBack"
-			label="<%= false %>"
-			markupView="lexicon"
-			message="<%= LanguageUtil.get(resourceBundle, "back") %>"
-			method="get"
-			url="<%= redirect %>"
-		/>
-	</c:if>
+	<liferay-ui:icon
+		cssClass="header-back-to"
+		icon="order-arrow-down"
+		id="TabsBack"
+		label="<%= false %>"
+		markupView="lexicon"
+		message="<%= LanguageUtil.get(resourceBundle, "back") %>"
+		method="get"
+		url="<%= layout.getRegularURL(request) %>"
+	/>
 
 	<div class="autofit-float autofit-row header-title-bar">
 		<div class="autofit-col autofit-col-expand">
@@ -73,29 +71,31 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 			<liferay-util:include page="/order_notes.jsp" servletContext="<%= application %>" />
 		</div>
 
-		<div class="autofit-col">
+		<c:if test="<%= commerceOrder.isOpen() %>">
+			<div class="autofit-col">
 
-			<%
-			request.setAttribute("order_transition.jsp-commerceOrder", commerceOrder);
-			%>
+				<%
+				request.setAttribute("order_transition.jsp-commerceOrder", commerceOrder);
+				%>
 
-			<liferay-util:include page="/order_transition.jsp" servletContext="<%= application %>" />
-		</div>
+				<liferay-util:include page="/order_transition.jsp" servletContext="<%= application %>" />
+			</div>
 
-		<div class="autofit-col">
-			<liferay-ui:icon-menu direction="right" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>" triggerCssClass="component-action">
-				<portlet:actionURL name="editCommerceOrderItem" var="deleteURL">
-					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESET %>" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrder.getCommerceOrderId()) %>" />
-				</portlet:actionURL>
+			<div class="autofit-col">
+				<liferay-ui:icon-menu direction="right" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>" triggerCssClass="component-action">
+					<portlet:actionURL name="editCommerceOrderItem" var="deleteURL">
+						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESET %>" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrder.getCommerceOrderId()) %>" />
+					</portlet:actionURL>
 
-				<liferay-ui:icon-delete
-					message="delete-all"
-					url="<%= deleteURL %>"
-				/>
-			</liferay-ui:icon-menu>
-		</div>
+					<liferay-ui:icon-delete
+						message="delete-all"
+						url="<%= deleteURL %>"
+					/>
+				</liferay-ui:icon-menu>
+			</div>
+		</c:if>
 	</div>
 </div>
 
@@ -289,19 +289,21 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 			value="<%= commerceOrganizationOrderDisplayContext.getCommerceOrderItemPrice(commerceOrderItem) %>"
 		/>
 
-		<liferay-ui:search-container-column-text>
-			<portlet:actionURL name="editCommerceOrderItem" var="deleteURL">
-				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="commerceOrderItemId" value="<%= String.valueOf(commerceOrderItem.getCommerceOrderItemId()) %>" />
-			</portlet:actionURL>
+		<c:if test="<%= commerceOrder.isOpen() %>">
+			<liferay-ui:search-container-column-text>
+				<portlet:actionURL name="editCommerceOrderItem" var="deleteURL">
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="commerceOrderItemId" value="<%= String.valueOf(commerceOrderItem.getCommerceOrderItemId()) %>" />
+				</portlet:actionURL>
 
-			<liferay-ui:icon
-				icon="times"
-				markupView="lexicon"
-				url="<%= deleteURL %>"
-			/>
-		</liferay-ui:search-container-column-text>
+				<liferay-ui:icon
+					icon="times"
+					markupView="lexicon"
+					url="<%= deleteURL %>"
+				/>
+			</liferay-ui:search-container-column-text>
+		</c:if>
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator markupView="lexicon" />
@@ -319,77 +321,13 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 	}
 </aui:script>
 
-<aui:script use="liferay-util-window">
+<aui:script use="aui-base">
 	var orderTransition = A.one('#<portlet:namespace />orderTransition');
-	var transitionComments = A.one('#<portlet:namespace />transitionComments');
 
 	orderTransition.delegate(
 		'click',
 		function(event) {
-			var link = event.currentTarget;
-
-			var workflowTaskId = parseInt(link.getData('workflowTaskId'), 10);
-
-			var form = A.one('#<portlet:namespace />transitionFm');
-
-			A.one('#<portlet:namespace />commerceOrderId').val(link.getData('commerceOrderId'));
-			A.one('#<portlet:namespace />workflowTaskId').val(workflowTaskId);
-			A.one('#<portlet:namespace />transitionName').val(link.getData('transitionName'))
-
-			if (workflowTaskId <= 0) {
-				submitForm(form);
-
-				return;
-			}
-
-			transitionComments.show();
-
-			var dialog = Liferay.Util.Window.getWindow(
-				{
-					dialog: {
-						bodyContent: form,
-						destroyOnHide: true,
-						height: 400,
-						resizable: false,
-						toolbars: {
-							footer: [
-								{
-									cssClass: 'btn-primary mr-2',
-									label: '<liferay-ui:message key="done" />',
-									on: {
-										click: function() {
-											submitForm(form);
-										}
-									}
-								},
-								{
-									cssClass: 'btn-cancel',
-									label: '<liferay-ui:message key="cancel" />',
-									on: {
-										click: function() {
-											dialog.hide();
-										}
-									}
-								}
-							],
-							header: [
-								{
-									cssClass: 'close',
-									discardDefaultButtonCssClasses: true,
-									labelHTML: '<span aria-hidden="true">&times;</span>',
-									on: {
-										click: function(event) {
-											dialog.hide();
-										}
-									}
-								}
-							]
-						},
-						width: 720
-					},
-					title: link.text()
-				}
-			);
+			<portlet:namespace />transition(event);
 		},
 		'.transition-link'
 	);

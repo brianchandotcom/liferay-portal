@@ -15,7 +15,7 @@
 --%>
 
 <aui:form action="<%= editCommerceOrderURL %>" name="transitionFm" method="post">
-	<aui:input name="commerceOrderId" type="hidden" value="" />
+	<aui:input id="transitionCommerceOrderId" name="commerceOrderId" type="hidden" value="" />
 	<aui:input name="workflowTaskId" type="hidden" value="" />
 	<aui:input name="transitionName" type="hidden" value="" />
 
@@ -26,3 +26,79 @@
 		<aui:input cols="55" name="comment" placeholder="comment" rows="1" type="textarea" />
 	</div>
 </aui:form>
+
+<aui:script>
+	Liferay.provide(
+		window,
+		'<portlet:namespace />transition',
+		function(event) {
+			var link = event.currentTarget;
+
+			var workflowTaskId = parseInt(link.getData('workflowTaskId'), 10);
+
+			var form = A.one('#<portlet:namespace />transitionFm');
+
+			A.one('#<portlet:namespace />transitionCommerceOrderId').val(link.getData('commerceOrderId'));
+			A.one('#<portlet:namespace />workflowTaskId').val(workflowTaskId);
+			A.one('#<portlet:namespace />transitionName').val(link.getData('transitionName'))
+
+			if (workflowTaskId <= 0) {
+				submitForm(form);
+
+				return;
+			}
+
+			var transitionComments = A.one('#<portlet:namespace />transitionComments');
+
+			transitionComments.show();
+
+			var dialog = Liferay.Util.Window.getWindow(
+				{
+					dialog: {
+						bodyContent: form,
+						destroyOnHide: true,
+						height: 400,
+						resizable: false,
+						toolbars: {
+							footer: [
+								{
+									cssClass: 'btn-primary mr-2',
+									label: '<liferay-ui:message key="done" />',
+									on: {
+										click: function() {
+											submitForm(form);
+										}
+									}
+								},
+								{
+									cssClass: 'btn-cancel',
+									label: '<liferay-ui:message key="cancel" />',
+									on: {
+										click: function() {
+											dialog.hide();
+										}
+									}
+								}
+							],
+							header: [
+								{
+									cssClass: 'close',
+									discardDefaultButtonCssClasses: true,
+									labelHTML: '<span aria-hidden="true">&times;</span>',
+									on: {
+										click: function(event) {
+											dialog.hide();
+										}
+									}
+								}
+							]
+						},
+						width: 720
+					},
+					title: link.text()
+				}
+			);
+		},
+		['liferay-util-window']
+	);
+</aui:script>

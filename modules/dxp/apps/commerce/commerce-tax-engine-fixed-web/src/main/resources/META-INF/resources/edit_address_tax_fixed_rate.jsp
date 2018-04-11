@@ -77,17 +77,17 @@ renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 			<aui:fieldset>
 				<div class="row">
 					<div class="col-md-6">
-						<aui:select disabled="<%= commerceTaxFixedRateAddressRel != null %>" label="tax-category" name="commerceTaxCategoryId">
+						<aui:select disabled="<%= commerceTaxFixedRateAddressRel != null %>" label="tax-category" name="cpTaxCategoryId">
 
 							<%
-							List<CommerceTaxCategory> commerceTaxCategories = commerceTaxFixedRateAddressRelsDisplayContext.getAvailableCommerceTaxCategories();
+							List<CPTaxCategory> cpTaxCategories = commerceTaxFixedRateAddressRelsDisplayContext.getAvailableCPTaxCategories();
 
-							for (CommerceTaxCategory commerceTaxCategory : commerceTaxCategories) {
+							for (CPTaxCategory cpTaxCategory : cpTaxCategories) {
 							%>
 
 								<aui:option
-									label="<%= commerceTaxCategory.getName(languageId) %>"
-									value="<%= commerceTaxCategory.getCommerceTaxCategoryId() %>"
+									label="<%= cpTaxCategory.getName(languageId) %>"
+									value="<%= cpTaxCategory.getCPTaxCategoryId() %>"
 								/>
 
 							<%

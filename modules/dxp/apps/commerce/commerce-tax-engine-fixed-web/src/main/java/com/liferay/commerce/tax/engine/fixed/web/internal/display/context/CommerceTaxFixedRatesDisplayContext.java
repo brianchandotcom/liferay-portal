@@ -15,8 +15,8 @@
 package com.liferay.commerce.tax.engine.fixed.web.internal.display.context;
 
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
-import com.liferay.commerce.model.CommerceTaxCategory;
-import com.liferay.commerce.service.CommerceTaxCategoryService;
+import com.liferay.commerce.product.model.CPTaxCategory;
+import com.liferay.commerce.product.service.CPTaxCategoryService;
 import com.liferay.commerce.service.CommerceTaxMethodService;
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateService;
@@ -35,29 +35,28 @@ import javax.portlet.RenderResponse;
  * @author Marco Leo
  */
 public class CommerceTaxFixedRatesDisplayContext
-	extends BaseCommerceTaxFixedRateDisplayContext<CommerceTaxCategory> {
+	extends BaseCommerceTaxFixedRateDisplayContext<CPTaxCategory> {
 
 	public CommerceTaxFixedRatesDisplayContext(
 		CommerceCurrencyService commerceCurrencyService,
-		CommerceTaxCategoryService commerceTaxCategoryService,
 		CommerceTaxFixedRateService commerceTaxFixedRateService,
 		CommerceTaxMethodService commerceTaxMethodService,
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		CPTaxCategoryService cpTaxCategoryService, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
 		super(
 			commerceCurrencyService, commerceTaxMethodService, renderRequest,
 			renderResponse);
 
-		_commerceTaxCategoryService = commerceTaxCategoryService;
 		_commerceTaxFixedRateService = commerceTaxFixedRateService;
+		_cpTaxCategoryService = cpTaxCategoryService;
 	}
 
-	public CommerceTaxFixedRate getCommerceTaxFixedRate(
-			long commerceTaxCategoryId)
+	public CommerceTaxFixedRate getCommerceTaxFixedRate(long cpTaxCategoryId)
 		throws PortalException {
 
-		return _commerceTaxFixedRateService.fetchCommerceTaxFixedRateByCTC_CTM(
-			commerceTaxCategoryId, getCommerceTaxMethodId());
+		return _commerceTaxFixedRateService.fetchCommerceTaxFixedRateByCPTC_CTM(
+			cpTaxCategoryId, getCommerceTaxMethodId());
 	}
 
 	@Override
@@ -66,7 +65,7 @@ public class CommerceTaxFixedRatesDisplayContext
 	}
 
 	@Override
-	public SearchContainer<CommerceTaxCategory> getSearchContainer()
+	public SearchContainer<CPTaxCategory> getSearchContainer()
 		throws PortalException {
 
 		if (searchContainer != null) {
@@ -79,31 +78,30 @@ public class CommerceTaxFixedRatesDisplayContext
 
 		searchContainer.setEmptyResultsMessage("there-are-no-tax-categories");
 
-		OrderByComparator<CommerceTaxCategory> orderByComparator =
-			CommerceTaxEngineFixedUtil.getCommerceTaxCategoryOrderByComparator(
+		OrderByComparator<CPTaxCategory> orderByComparator =
+			CommerceTaxEngineFixedUtil.getCPTaxCategoryOrderByComparator(
 				getOrderByCol(), getOrderByType());
 
 		searchContainer.setOrderByCol(getOrderByCol());
 		searchContainer.setOrderByComparator(orderByComparator);
 		searchContainer.setOrderByType(getOrderByType());
 
-		int total = _commerceTaxCategoryService.getCommerceTaxCategoriesCount(
+		int total = _cpTaxCategoryService.getCPTaxCategoriesCount(
 			commerceTaxFixedRateRequestHelper.getScopeGroupId());
 
 		searchContainer.setTotal(total);
 
-		List<CommerceTaxCategory> results =
-			_commerceTaxCategoryService.getCommerceTaxCategories(
-				commerceTaxFixedRateRequestHelper.getScopeGroupId(),
-				searchContainer.getStart(), searchContainer.getEnd(),
-				orderByComparator);
+		List<CPTaxCategory> results = _cpTaxCategoryService.getCPTaxCategories(
+			commerceTaxFixedRateRequestHelper.getScopeGroupId(),
+			searchContainer.getStart(), searchContainer.getEnd(),
+			orderByComparator);
 
 		searchContainer.setResults(results);
 
 		return searchContainer;
 	}
 
-	private final CommerceTaxCategoryService _commerceTaxCategoryService;
 	private final CommerceTaxFixedRateService _commerceTaxFixedRateService;
+	private final CPTaxCategoryService _cpTaxCategoryService;
 
 }

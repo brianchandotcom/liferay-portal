@@ -28,10 +28,10 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.commerce.admin.constants.CommerceAdminWebKeys" %><%@
 page import="com.liferay.commerce.constants.CommerceActionKeys" %><%@
 page import="com.liferay.commerce.constants.CommerceConstants" %><%@
-page import="com.liferay.commerce.exception.NoSuchTaxCategoryException" %><%@
 page import="com.liferay.commerce.model.CommerceCountry" %><%@
 page import="com.liferay.commerce.model.CommerceRegion" %><%@
-page import="com.liferay.commerce.model.CommerceTaxCategory" %><%@
+page import="com.liferay.commerce.product.exception.NoSuchCPTaxCategoryException" %><%@
+page import="com.liferay.commerce.product.model.CPTaxCategory" %><%@
 page import="com.liferay.commerce.service.permission.CommercePermission" %><%@
 page import="com.liferay.commerce.tax.engine.fixed.exception.DuplicateCommerceTaxFixedRateException" %><%@
 page import="com.liferay.commerce.tax.engine.fixed.exception.NoSuchTaxFixedRateException" %><%@

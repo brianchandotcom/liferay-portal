@@ -17,16 +17,16 @@ package com.liferay.commerce.tax.engine.fixed.web.internal.display.context;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceRegion;
-import com.liferay.commerce.model.CommerceTaxCategory;
+import com.liferay.commerce.product.model.CPTaxCategory;
+import com.liferay.commerce.product.service.CPTaxCategoryService;
+import com.liferay.commerce.product.util.comparator.CPTaxCategoryCreateDateComparator;
 import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceRegionService;
-import com.liferay.commerce.service.CommerceTaxCategoryService;
 import com.liferay.commerce.service.CommerceTaxMethodService;
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateAddressRelService;
 import com.liferay.commerce.tax.engine.fixed.util.CommerceTaxEngineFixedUtil;
 import com.liferay.commerce.tax.engine.fixed.web.internal.servlet.taglib.ui.CommerceTaxMethodAddressRateRelsScreenNavigationEntry;
-import com.liferay.commerce.util.comparator.CommerceTaxCategoryCreateDateComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -50,11 +50,11 @@ public class CommerceTaxFixedRateAddressRelsDisplayContext
 		CommerceCountryService commerceCountryService,
 		CommerceCurrencyService commerceCurrencyService,
 		CommerceRegionService commerceRegionService,
-		CommerceTaxCategoryService commerceTaxCategoryService,
 		CommerceTaxMethodService commerceTaxMethodService,
 		CommerceTaxFixedRateAddressRelService
 			commerceTaxFixedRateAddressRelService,
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		CPTaxCategoryService cpTaxCategoryService, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
 		super(
 			commerceCurrencyService, commerceTaxMethodService, renderRequest,
@@ -62,16 +62,18 @@ public class CommerceTaxFixedRateAddressRelsDisplayContext
 
 		_commerceCountryService = commerceCountryService;
 		_commerceRegionService = commerceRegionService;
-		_commerceTaxCategoryService = commerceTaxCategoryService;
 		_commerceTaxFixedRateAddressRelService =
 			commerceTaxFixedRateAddressRelService;
+		_cpTaxCategoryService = cpTaxCategoryService;
 	}
 
-	public List<CommerceTaxCategory> getAvailableCommerceTaxCategories() {
-		return _commerceTaxCategoryService.getCommerceTaxCategories(
+	public List<CPTaxCategory> getAvailableCPTaxCategories()
+		throws PortalException {
+
+		return _cpTaxCategoryService.getCPTaxCategories(
 			commerceTaxFixedRateRequestHelper.getScopeGroupId(),
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new CommerceTaxCategoryCreateDateComparator());
+			new CPTaxCategoryCreateDateComparator());
 	}
 
 	public List<CommerceCountry> getCommerceCountries() {
@@ -176,8 +178,8 @@ public class CommerceTaxFixedRateAddressRelsDisplayContext
 
 	private final CommerceCountryService _commerceCountryService;
 	private final CommerceRegionService _commerceRegionService;
-	private final CommerceTaxCategoryService _commerceTaxCategoryService;
 	private final CommerceTaxFixedRateAddressRelService
 		_commerceTaxFixedRateAddressRelService;
+	private final CPTaxCategoryService _cpTaxCategoryService;
 
 }

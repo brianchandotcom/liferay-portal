@@ -19,12 +19,12 @@
 <%
 CommerceTaxFixedRatesDisplayContext commerceTaxFixedRatesDisplayContext = (CommerceTaxFixedRatesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-SearchContainer<CommerceTaxCategory> commerceTaxCategorySearchContainer = commerceTaxFixedRatesDisplayContext.getSearchContainer();
+SearchContainer<CPTaxCategory> cpTaxCategorySearchContainer = commerceTaxFixedRatesDisplayContext.getSearchContainer();
 %>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= false %>"
-	searchContainerId="commerceTaxCategories"
+	searchContainerId="cpTaxCategories"
 >
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
@@ -54,33 +54,33 @@ SearchContainer<CommerceTaxCategory> commerceTaxCategorySearchContainer = commer
 <aui:form action="<%= editCommerceTaxFixedRateActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="commerceTaxCategoryId" type="hidden" />
 	<aui:input name="commerceTaxMethodId" type="hidden" value="<%= commerceTaxFixedRatesDisplayContext.getCommerceTaxMethodId() %>" />
+	<aui:input name="cpTaxCategoryId" type="hidden" />
 	<aui:input name="rate" type="hidden" />
 
 	<liferay-ui:error exception="<%= DuplicateCommerceTaxFixedRateException.class %>" message="please-select-a-valid-tax-category" />
-	<liferay-ui:error exception="<%= NoSuchTaxCategoryException.class %>" message="the-tax-category-could-not-be-found" />
+	<liferay-ui:error exception="<%= NoSuchCPTaxCategoryException.class %>" message="the-tax-category-could-not-be-found" />
 	<liferay-ui:error exception="<%= NoSuchTaxFixedRateException.class %>" message="the-tax-fixed-rate-could-not-be-found" />
 
 	<liferay-ui:search-container
-		id="commerceTaxCategories"
-		searchContainer="<%= commerceTaxCategorySearchContainer %>"
+		id="cpTaxCategories"
+		searchContainer="<%= cpTaxCategorySearchContainer %>"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.commerce.model.CommerceTaxCategory"
-			keyProperty="commerceTaxCategoryId"
-			modelVar="commerceTaxCategory"
+			className="com.liferay.commerce.product.model.CPTaxCategory"
+			keyProperty="CPTaxCategoryId"
+			modelVar="cpTaxCategory"
 		>
 
 			<%
-			CommerceTaxFixedRate commerceTaxFixedRate = commerceTaxFixedRatesDisplayContext.getCommerceTaxFixedRate(commerceTaxCategory.getCommerceTaxCategoryId());
+			CommerceTaxFixedRate commerceTaxFixedRate = commerceTaxFixedRatesDisplayContext.getCommerceTaxFixedRate(cpTaxCategory.getCPTaxCategoryId());
 			%>
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				name="name"
 			>
-				<%= HtmlUtil.escape(commerceTaxCategory.getName(languageId)) %>
+				<%= HtmlUtil.escape(cpTaxCategory.getName(languageId)) %>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
@@ -94,7 +94,7 @@ SearchContainer<CommerceTaxCategory> commerceTaxCategorySearchContainer = commer
 						<aui:input id='<%= "rate" + index %>' label="" name="rate" suffix="<%= commerceTaxFixedRatesDisplayContext.getCommerceCurrencyCode() %>" />
 
 						<div class="input-group-item input-group-item-shrink">
-							<aui:button cssClass="btn btn-primary" name='<%= "saveButton" + index %>' onClick='<%= "javascript:"+ renderResponse.getNamespace() +"updateCommerceTaxFixedRate(" + commerceTaxCategory.getCommerceTaxCategoryId() + "," + index + ")" %>' primary="<%= true %>" value="save" />
+							<aui:button cssClass="btn btn-primary" name='<%= "saveButton" + index %>' onClick='<%= "javascript:"+ renderResponse.getNamespace() +"updateCommerceTaxFixedRate(" + cpTaxCategory.getCPTaxCategoryId() + "," + index + ")" %>' primary="<%= true %>" value="save" />
 						</div>
 					</div>
 				</div>
@@ -106,10 +106,10 @@ SearchContainer<CommerceTaxCategory> commerceTaxCategorySearchContainer = commer
 </aui:form>
 
 <aui:script>
-	function <portlet:namespace/>updateCommerceTaxFixedRate(commerceTaxCategoryId, index) {
+	function <portlet:namespace/>updateCommerceTaxFixedRate(cpTaxCategoryId, index) {
 		var form = $(document.<portlet:namespace />fm);
 
-		form.fm('commerceTaxCategoryId').val(commerceTaxCategoryId);
+		form.fm('cpTaxCategoryId').val(cpTaxCategoryId);
 
 		var rateInput = $('#<portlet:namespace />rate' + index);
 

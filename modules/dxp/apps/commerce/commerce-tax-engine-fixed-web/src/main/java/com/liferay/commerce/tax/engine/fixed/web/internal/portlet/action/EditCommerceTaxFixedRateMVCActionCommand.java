@@ -15,7 +15,7 @@
 package com.liferay.commerce.tax.engine.fixed.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
-import com.liferay.commerce.exception.NoSuchTaxCategoryException;
+import com.liferay.commerce.product.exception.NoSuchCPTaxCategoryException;
 import com.liferay.commerce.tax.engine.fixed.exception.DuplicateCommerceTaxFixedRateException;
 import com.liferay.commerce.tax.engine.fixed.exception.NoSuchTaxFixedRateException;
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate;
@@ -65,7 +65,7 @@ public class EditCommerceTaxFixedRateMVCActionCommand
 		catch (Exception e) {
 			if (e instanceof
 					DuplicateCommerceTaxFixedRateException ||
-				e instanceof NoSuchTaxCategoryException ||
+				e instanceof NoSuchCPTaxCategoryException ||
 				e instanceof NoSuchTaxFixedRateException ||
 				e instanceof PrincipalException) {
 
@@ -82,14 +82,14 @@ public class EditCommerceTaxFixedRateMVCActionCommand
 
 		long commerceTaxMethodId = ParamUtil.getLong(
 			actionRequest, "commerceTaxMethodId");
-		long commerceTaxCategoryId = ParamUtil.getLong(
-			actionRequest, "commerceTaxCategoryId");
+		long cpTaxCategoryId = ParamUtil.getLong(
+			actionRequest, "cpTaxCategoryId");
 
 		double rate = ParamUtil.getDouble(actionRequest, "rate");
 
 		CommerceTaxFixedRate commerceTaxFixedRate =
-			_commerceTaxFixedRateService.fetchCommerceTaxFixedRateByCTC_CTM(
-				commerceTaxCategoryId, commerceTaxMethodId);
+			_commerceTaxFixedRateService.fetchCommerceTaxFixedRateByCPTC_CTM(
+				cpTaxCategoryId, commerceTaxMethodId);
 
 		if (commerceTaxFixedRate != null) {
 			_commerceTaxFixedRateService.updateCommerceTaxFixedRate(
@@ -100,8 +100,7 @@ public class EditCommerceTaxFixedRateMVCActionCommand
 				CommerceTaxFixedRate.class.getName(), actionRequest);
 
 			_commerceTaxFixedRateService.addCommerceTaxFixedRate(
-				commerceTaxMethodId, commerceTaxCategoryId, rate,
-				serviceContext);
+				commerceTaxMethodId, cpTaxCategoryId, rate, serviceContext);
 		}
 	}
 

@@ -31,7 +31,7 @@ public class CommerceTaxCalculationLocalServiceImpl
 	extends CommerceTaxCalculationLocalServiceBaseImpl {
 
 	public List<CommerceTaxRate> getCommerceTaxRates(
-		long siteGroupId, long userId, long commerceTaxCategoryId) {
+		long siteGroupId, long userId, long cpTaxCategoryId) {
 
 		List<CommerceTaxRate> commerceTaxRates = new ArrayList<>();
 

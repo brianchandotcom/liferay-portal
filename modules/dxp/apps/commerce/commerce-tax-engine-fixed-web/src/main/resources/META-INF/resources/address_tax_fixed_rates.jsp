@@ -97,10 +97,10 @@ boolean hasManageCommerceTaxMethodsPermission = CommercePermission.contains(perm
 			>
 
 				<%
-				CommerceTaxCategory commerceTaxCategory = commerceTaxFixedRateAddressRel.getCommerceTaxCategory();
+				CPTaxCategory cpTaxCategory = commerceTaxFixedRateAddressRel.getCPTaxCategory();
 				%>
 
-				<%= HtmlUtil.escape(commerceTaxCategory.getName(languageId)) %>
+				<%= HtmlUtil.escape(cpTaxCategory.getName(languageId)) %>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text

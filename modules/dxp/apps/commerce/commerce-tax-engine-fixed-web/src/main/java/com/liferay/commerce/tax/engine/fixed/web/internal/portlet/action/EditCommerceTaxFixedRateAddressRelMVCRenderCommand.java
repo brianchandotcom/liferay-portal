@@ -16,9 +16,9 @@ package com.liferay.commerce.tax.engine.fixed.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.product.service.CPTaxCategoryService;
 import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceRegionService;
-import com.liferay.commerce.service.CommerceTaxCategoryService;
 import com.liferay.commerce.service.CommerceTaxMethodService;
 import com.liferay.commerce.tax.engine.fixed.exception.NoSuchTaxFixedRateAddressRelException;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateAddressRelService;
@@ -70,10 +70,9 @@ public class EditCommerceTaxFixedRateAddressRelMVCRenderCommand
 				commerceTaxFixedRateAddressRelsDisplayContext =
 					new CommerceTaxFixedRateAddressRelsDisplayContext(
 						_commerceCountryService, _commerceCurrencyService,
-						_commerceRegionService, _commerceTaxCategoryService,
-						_commerceTaxMethodService,
-						_commerceTaxFixedRateAddressRelService, renderRequest,
-						renderResponse);
+						_commerceRegionService, _commerceTaxMethodService,
+						_commerceTaxFixedRateAddressRelService,
+						_cpTaxCategoryService, renderRequest, renderResponse);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -113,14 +112,14 @@ public class EditCommerceTaxFixedRateAddressRelMVCRenderCommand
 	private CommerceRegionService _commerceRegionService;
 
 	@Reference
-	private CommerceTaxCategoryService _commerceTaxCategoryService;
-
-	@Reference
 	private CommerceTaxFixedRateAddressRelService
 		_commerceTaxFixedRateAddressRelService;
 
 	@Reference
 	private CommerceTaxMethodService _commerceTaxMethodService;
+
+	@Reference
+	private CPTaxCategoryService _cpTaxCategoryService;
 
 	@Reference
 	private Portal _portal;

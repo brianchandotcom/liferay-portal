@@ -17,9 +17,9 @@ package com.liferay.commerce.tax.engine.fixed.web.internal.servlet.taglib.ui;
 import com.liferay.commerce.constants.CommerceTaxScreenNavigationConstants;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.model.CommerceTaxMethod;
+import com.liferay.commerce.product.service.CPTaxCategoryService;
 import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceRegionService;
-import com.liferay.commerce.service.CommerceTaxCategoryService;
 import com.liferay.commerce.service.CommerceTaxMethodService;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateAddressRelService;
 import com.liferay.commerce.tax.engine.fixed.web.internal.display.context.CommerceTaxFixedRateAddressRelsDisplayContext;
@@ -111,10 +111,9 @@ public class CommerceTaxMethodAddressRateRelsScreenNavigationEntry
 			commerceTaxFixedRateAddressRelsDisplayContext =
 				new CommerceTaxFixedRateAddressRelsDisplayContext(
 					_commerceCountryService, _commerceCurrencyService,
-					_commerceRegionService, _commerceTaxCategoryService,
-					_commerceTaxMethodService,
-					_commerceTaxFixedRateAddressRelService, renderRequest,
-					renderResponse);
+					_commerceRegionService, _commerceTaxMethodService,
+					_commerceTaxFixedRateAddressRelService,
+					_cpTaxCategoryService, renderRequest, renderResponse);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -135,14 +134,14 @@ public class CommerceTaxMethodAddressRateRelsScreenNavigationEntry
 	private CommerceRegionService _commerceRegionService;
 
 	@Reference
-	private CommerceTaxCategoryService _commerceTaxCategoryService;
-
-	@Reference
 	private CommerceTaxFixedRateAddressRelService
 		_commerceTaxFixedRateAddressRelService;
 
 	@Reference
 	private CommerceTaxMethodService _commerceTaxMethodService;
+
+	@Reference
+	private CPTaxCategoryService _cpTaxCategoryService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

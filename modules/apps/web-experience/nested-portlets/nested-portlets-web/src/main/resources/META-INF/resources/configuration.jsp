@@ -20,52 +20,58 @@
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
+<liferay-frontend:edit-form
+	action="<%= configurationActionURL %>"
+	method="post"
+	name="fm"
+>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 	<aui:input name="oldLayoutTemplateId" type="hidden" value="<%= nestedPortletsDisplayContext.getLayoutTemplateId() %>" />
 
-	<div class="portlet-configuration-body-content">
-		<div class="container-fluid-1280">
-			<aui:fieldset-group markupView="lexicon">
-				<aui:fieldset cssClass="display-style-icon">
-					<h4><liferay-ui:message key="layout-template" /></h4>
+	<liferay-frontend:edit-form-body>
+		<liferay-frontend:fieldset-group>
+			<liferay-frontend:fieldset
+				cssClass="display-style-icon"
+			>
+				<h4><liferay-ui:message key="layout-template" /></h4>
 
-					<%
-					String layoutTemplateId = nestedPortletsDisplayContext.getLayoutTemplateId();
+				<%
+				String layoutTemplateId = nestedPortletsDisplayContext.getLayoutTemplateId();
 
-					for (LayoutTemplate layoutTemplate : nestedPortletsDisplayContext.getLayoutTemplates()) {
-					%>
+				for (LayoutTemplate layoutTemplate : nestedPortletsDisplayContext.getLayoutTemplates()) {
+				%>
 
-						<div class="entry-card lfr-asset-item">
-							<div class="radio radio-card radio-top-left">
-								<label>
-									<aui:input checked="<%= layoutTemplateId.equals(layoutTemplate.getLayoutTemplateId()) %>" label="" name="preferences--layoutTemplateId--" type="radio" value="<%= layoutTemplate.getLayoutTemplateId() %>" />
+					<div class="entry-card lfr-asset-item">
+						<div class="radio radio-card radio-top-left">
+							<label>
+								<aui:input checked="<%= layoutTemplateId.equals(layoutTemplate.getLayoutTemplateId()) %>" label="" name="preferences--layoutTemplateId--" type="radio" value="<%= layoutTemplate.getLayoutTemplateId() %>" />
 
-									<div class="card">
-										<div class="aspect-ratio aspect-ratio-bg-cover" style="background-image:url('<%= layoutTemplate.getStaticResourcePath() + HtmlUtil.escapeAttribute(layoutTemplate.getThumbnailPath()) %>')">
-										</div>
+								<div class="card">
+									<div class="aspect-ratio aspect-ratio-bg-cover" style="background-image:url('<%= layoutTemplate.getStaticResourcePath() + HtmlUtil.escapeAttribute(layoutTemplate.getThumbnailPath()) %>')">
+									</div>
 
-										<div class="card-row card-row-padded">
-											<div class="card-col-field">
-												<%= layoutTemplate.getName(locale) %>
-											</div>
+									<div class="card-row card-row-padded">
+										<div class="card-col-field">
+											<%= layoutTemplate.getName(locale) %>
 										</div>
 									</div>
-								</label>
-							</div>
+								</div>
+							</label>
 						</div>
+					</div>
 
-					<%
-					}
-					%>
+				<%
+				}
+				%>
 
-				</aui:fieldset>
-			</aui:fieldset-group>
-		</div>
-	</div>
+			</liferay-frontend:fieldset>
+		</liferay-frontend:fieldset-group>
+	</liferay-frontend:edit-form-body>
 
-	<aui:button-row>
+	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" />
-	</aui:button-row>
-</aui:form>
+
+		<aui:button type="cancel" />
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>

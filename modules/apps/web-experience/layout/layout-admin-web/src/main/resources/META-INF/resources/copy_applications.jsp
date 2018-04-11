@@ -39,39 +39,41 @@ renderResponse.setTitle(LanguageUtil.get(request, "copy-applications"));
 	<aui:input name="privateLayout" type="hidden" value="<%= layoutsAdminDisplayContext.isPrivateLayout() %>" />
 	<aui:input name="layoutId" type="hidden" value="<%= layoutsAdminDisplayContext.getLayoutId() %>" />
 
-	<liferay-frontend:fieldset-group>
-		<liferay-frontend:fieldset>
-			<c:if test="<%= selLayout != null %>">
-				<div class="alert alert-info">
-					<liferay-ui:message arguments="<%= HtmlUtil.escape(selLayout.getName(locale)) %>" key="the-applications-in-page-x-will-be-replaced-with-the-ones-in-the-page-you-select-below" translateArguments="<%= false %>" />
-				</div>
-			</c:if>
+	<liferay-frontend:edit-form-body>
+		<liferay-frontend:fieldset-group>
+			<liferay-frontend:fieldset>
+				<c:if test="<%= selLayout != null %>">
+					<div class="alert alert-info">
+						<liferay-ui:message arguments="<%= HtmlUtil.escape(selLayout.getName(locale)) %>" key="the-applications-in-page-x-will-be-replaced-with-the-ones-in-the-page-you-select-below" translateArguments="<%= false %>" />
+					</div>
+				</c:if>
 
-			<aui:select label="copy-from-page" name="copyLayoutId">
+				<aui:select label="copy-from-page" name="copyLayoutId">
 
-				<%
-				List<LayoutDescription> layoutDescriptions = (List<LayoutDescription>)request.getAttribute(WebKeys.LAYOUT_DESCRIPTIONS);
+					<%
+					List<LayoutDescription> layoutDescriptions = (List<LayoutDescription>)request.getAttribute(WebKeys.LAYOUT_DESCRIPTIONS);
 
-				for (LayoutDescription layoutDescription : layoutDescriptions) {
-					Layout layoutDescriptionLayout = LayoutLocalServiceUtil.fetchLayout(layoutDescription.getPlid());
+					for (LayoutDescription layoutDescription : layoutDescriptions) {
+						Layout layoutDescriptionLayout = LayoutLocalServiceUtil.fetchLayout(layoutDescription.getPlid());
 
-					if (layoutDescriptionLayout != null) {
-				%>
+						if (layoutDescriptionLayout != null) {
+					%>
 
-						<aui:option disabled="<%= (selLayout != null) && selLayout.getPlid() == layoutDescriptionLayout.getPlid() %>" label="<%= layoutDescription.getDisplayName() %>" value="<%= layoutDescriptionLayout.getLayoutId() %>" />
+							<aui:option disabled="<%= (selLayout != null) && selLayout.getPlid() == layoutDescriptionLayout.getPlid() %>" label="<%= layoutDescription.getDisplayName() %>" value="<%= layoutDescriptionLayout.getLayoutId() %>" />
 
-				<%
+					<%
+						}
 					}
-				}
-				%>
+					%>
 
-			</aui:select>
-		</liferay-frontend:fieldset>
-	</liferay-frontend:fieldset-group>
+				</aui:select>
+			</liferay-frontend:fieldset>
+		</liferay-frontend:fieldset-group>
+	</liferay-frontend:edit-form-body>
 
-	<liferay-frontend:button-row>
+	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" value="save" />
 
 		<aui:button href="<%= redirect %>" type="cancel" />
-	</liferay-frontend:button-row>
+	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>

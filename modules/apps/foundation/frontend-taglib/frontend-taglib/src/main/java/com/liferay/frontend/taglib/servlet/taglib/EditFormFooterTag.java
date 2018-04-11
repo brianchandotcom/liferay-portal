@@ -14,6 +14,9 @@
 
 package com.liferay.frontend.taglib.servlet.taglib;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.jsp.JspWriter;
@@ -34,9 +37,20 @@ public class EditFormFooterTag extends IncludeTag {
 
 	@Override
 	protected int processStartTag() throws Exception {
+		String cssClass = "sheet-footer";
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay.isStatePopUp()) {
+			cssClass = cssClass + StringPool.SPACE + "dialog-footer";
+		}
+
 		JspWriter jspWriter = pageContext.getOut();
 
-		jspWriter.write("<div class=\"sheet-footer\">");
+		jspWriter.write("<div class=\"");
+		jspWriter.write(cssClass);
+		jspWriter.write("\">");
 
 		return EVAL_BODY_INCLUDE;
 	}

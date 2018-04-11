@@ -40,10 +40,10 @@
 	.portlet-configuration-body-content,
 	.process-list,
 	.roles-selector-body {
-		> .container-fluid-1280 {
+		> .container-fluid-1280, .container-view {
 			padding-top: 20px;
 
-			> .nav-tabs-default {
+			> .nav-tabs-default, .nav-tabs-underline {
 				margin-left: -$grid-gutter-width / 2;
 				margin-right: -$grid-gutter-width / 2;
 				margin-top: -20px;
@@ -146,7 +146,7 @@
 }
 
 .dialog-with-footer {
-	.button-holder {
+	.button-holder, .sheet-footer {
 		&.dialog-footer {
 			background-color: $dialog-footer-bg;
 			border-top: 1px solid $dialog-footer-border-color;

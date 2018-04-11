@@ -20,47 +20,60 @@
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
+<liferay-frontend:edit-form
+	action="<%= configurationActionURL %>"
+	method="post"
+	name="fm"
+	onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'
+>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<div class="portlet-configuration-body-content">
-		<div class="container-fluid-1280">
-			<aui:fieldset-group markupView="lexicon">
-				<aui:fieldset>
-					<div class="display-template">
-						<liferay-ddm:template-selector
-							className="<%= LanguageEntry.class.getName() %>"
-							displayStyle="<%= languagePortletInstanceConfiguration.displayStyle() %>"
-							displayStyleGroupId="<%= siteNavigationLanguageDisplayContext.getDisplayStyleGroupId() %>"
-							refreshURL="<%= configurationRenderURL %>"
-						/>
-					</div>
-
-					<aui:input name="preferences--displayCurrentLocale--" type="toggle-switch" value="<%= languagePortletInstanceConfiguration.displayCurrentLocale() %>" />
-				</aui:fieldset>
-
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="languages">
-					<aui:input name="preferences--languageIds--" type="hidden" />
-
-					<liferay-ui:input-move-boxes
-						leftBoxName="currentLanguageIds"
-						leftList="<%= siteNavigationLanguageDisplayContext.getCurrentLanguageIdKVPs() %>"
-						leftReorder="<%= Boolean.TRUE.toString() %>"
-						leftTitle="current"
-						rightBoxName="availableLanguageIds"
-						rightList="<%= siteNavigationLanguageDisplayContext.getAvailableLanguageIdKVPs() %>"
-						rightTitle="available"
+	<liferay-frontend:edit-form-body>
+		<liferay-frontend:fieldset-group>
+			<liferay-frontend:fieldset
+				collapsed="<%= false %>"
+				collapsible="<%= true %>"
+				label="display-settings"
+			>
+				<div class="display-template">
+					<liferay-ddm:template-selector
+						className="<%= LanguageEntry.class.getName() %>"
+						displayStyle="<%= languagePortletInstanceConfiguration.displayStyle() %>"
+						displayStyleGroupId="<%= siteNavigationLanguageDisplayContext.getDisplayStyleGroupId() %>"
+						refreshURL="<%= configurationRenderURL %>"
 					/>
-				</aui:fieldset>
-			</aui:fieldset-group>
-		</div>
-	</div>
+				</div>
 
-	<aui:button-row>
+				<aui:input name="preferences--displayCurrentLocale--" type="toggle-switch" value="<%= languagePortletInstanceConfiguration.displayCurrentLocale() %>" />
+			</liferay-frontend:fieldset>
+
+			<liferay-frontend:fieldset
+				collapsed="<%= true %>"
+				collapsible="<%= true %>"
+				label="languages"
+			>
+				<aui:input name="preferences--languageIds--" type="hidden" />
+
+				<liferay-ui:input-move-boxes
+					leftBoxName="currentLanguageIds"
+					leftList="<%= siteNavigationLanguageDisplayContext.getCurrentLanguageIdKVPs() %>"
+					leftReorder="<%= Boolean.TRUE.toString() %>"
+					leftTitle="current"
+					rightBoxName="availableLanguageIds"
+					rightList="<%= siteNavigationLanguageDisplayContext.getAvailableLanguageIdKVPs() %>"
+					rightTitle="available"
+				/>
+			</liferay-frontend:fieldset>
+		</liferay-frontend:fieldset-group>
+	</liferay-frontend:edit-form-body>
+
+	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" />
-	</aui:button-row>
-</aui:form>
+
+		<aui:button type="cancel" />
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>
 
 <aui:script>
 	function <portlet:namespace />saveConfiguration() {

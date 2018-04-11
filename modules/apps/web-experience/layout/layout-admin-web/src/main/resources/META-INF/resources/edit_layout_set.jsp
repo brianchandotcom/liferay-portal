@@ -60,19 +60,21 @@ renderResponse.setTitle(selGroup.getLayoutRootNodeName(privateLayout, locale));
 	<aui:input name="layoutSetId" type="hidden" value="<%= selLayoutSet.getLayoutSetId() %>" />
 	<aui:input name="<%= PortletDataHandlerKeys.SELECTED_LAYOUTS %>" type="hidden" />
 
-	<liferay-frontend:form-navigator
-		formModelBean="<%= selLayoutSet %>"
-		id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT_SET %>"
-		showButtons="<%= false %>"
-	/>
+	<liferay-frontend:edit-form-body>
+		<liferay-frontend:form-navigator
+			formModelBean="<%= selLayoutSet %>"
+			id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT_SET %>"
+			showButtons="<%= false %>"
+		/>
+	</liferay-frontend:edit-form-body>
 
-	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, selGroup, ActionKeys.MANAGE_LAYOUTS) && SitesUtil.isLayoutSetPrototypeUpdateable(selLayoutSet) %>">
-		<liferay-frontend:button-row>
+	<liferay-frontend:edit-form-footer>
+		<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, selGroup, ActionKeys.MANAGE_LAYOUTS) && SitesUtil.isLayoutSetPrototypeUpdateable(selLayoutSet) %>">
 			<aui:button type="submit" value="save" />
 
 			<c:if test="<%= Validator.isNotNull(backURL) %>">
 				<aui:button href="<%= backURL %>" type="cancel" />
 			</c:if>
-		</liferay-frontend:button-row>
-	</c:if>
+		</c:if>
+	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>

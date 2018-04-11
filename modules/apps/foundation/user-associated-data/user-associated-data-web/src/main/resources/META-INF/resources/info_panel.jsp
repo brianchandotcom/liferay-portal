@@ -34,11 +34,48 @@ UADEntityDisplay uadEntityDisplay = (UADEntityDisplay)request.getAttribute(UADWe
 				<c:when test="<%= ListUtil.isNotEmpty(uadEntities) && (uadEntities.size() == 1) %>">
 
 					<%
-					Map<String, Object> displayValues = uadEntityDisplay.getNonanonymizableFieldValues(uadEntities.get(0));
+					UADEntity uadEntity = uadEntities.get(0);
+
+					Serializable primaryKey = uadEntity.getPrimaryKey();
+
+					Map<String, Object> displayValues = uadEntityDisplay.getNonanonymizableFieldValues(uadEntity.getEntity());
 					String identifierFieldName = uadEntityDisplay.getDisplayFieldNames()[0];
 					%>
 
 					<div class="sidebar-header">
+						<ul class="sidebar-header-actions">
+							<li>
+								<liferay-ui:icon-menu
+									direction="left-side"
+									icon="<%= StringPool.BLANK %>"
+									markupView="lexicon"
+									message="<%= StringPool.BLANK %>"
+									showWhenSingleIcon="<%= true %>"
+									triggerCssClass="component-action"
+								>
+									<portlet:actionURL name="/auto_anonymize_uad_entity" var="autoAnonymizeURL">
+										<portlet:param name="primaryKey" value="<%= String.valueOf(uadEntity.getPrimaryKey()) %>" />
+									</portlet:actionURL>
+
+									<liferay-ui:icon
+										message="anonymize"
+										onClick='<%= resourceResponse.getNamespace() + "confirmAction('viewUADEntitiesFm', '" + autoAnonymizeURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-anonymize-this-entity") + "')" %>'
+										url="javascript:;"
+									/>
+
+									<portlet:actionURL name="/delete_uad_entity" var="deleteURL">
+										<portlet:param name="primaryKey" value="<%= String.valueOf(uadEntity.getPrimaryKey()) %>" />
+									</portlet:actionURL>
+
+									<liferay-ui:icon
+										message="delete"
+										onClick='<%= resourceResponse.getNamespace() + "confirmAction('viewUADEntitiesFm', '" + deleteURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this-entity") + "')" %>'
+										url="javascript:;"
+									/>
+								</liferay-ui:icon-menu>
+							</li>
+						</ul>
+
 						<h2 class="sidebar-title"><%= StringUtil.shorten(String.valueOf(displayValues.get(identifierFieldName)), 200) %></h2>
 
 						<h4 class="sidebar-subtitle"><%= uadEntityDisplay.getTypeName() %></h4>

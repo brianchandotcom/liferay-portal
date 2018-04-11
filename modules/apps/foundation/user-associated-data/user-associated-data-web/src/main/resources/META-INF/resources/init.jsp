@@ -61,6 +61,8 @@ page import="com.liferay.user.associated.data.web.internal.search.UADExportProce
 page import="com.liferay.user.associated.data.web.internal.util.UADExportProcessUtil" %><%@
 page import="com.liferay.users.admin.constants.UsersAdminPortletKeys" %>
 
+<%@ page import="java.io.Serializable" %>
+
 <%@ page import="java.text.Format" %>
 
 <%@ page import="java.util.Date" %><%@

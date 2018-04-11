@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -96,7 +97,7 @@ public class CPDefinitionOptionsScreenNavigationEntry
 				cpDefinitionOptionRelDisplayContext =
 					new CPDefinitionOptionRelDisplayContext(
 						_actionHelper, httpServletRequest,
-						_cpDefinitionOptionRelService,
+						_configurationProvider, _cpDefinitionOptionRelService,
 						_ddmFormFieldTypeServicesTracker, _itemSelector);
 
 			httpServletRequest.setAttribute(
@@ -117,6 +118,9 @@ public class CPDefinitionOptionsScreenNavigationEntry
 
 	@Reference
 	private ActionHelper _actionHelper;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;

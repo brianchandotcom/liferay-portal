@@ -19,6 +19,7 @@ import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.options.web.internal.display.context.CPOptionDisplayContext;
 import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -55,7 +56,8 @@ public class EditCPOptionMVCRenderCommand implements MVCRenderCommand {
 
 			CPOptionDisplayContext cpOptionDisplayContext =
 				new CPOptionDisplayContext(
-					cpOption, _ddmFormFieldTypeServicesTracker);
+					_configurationProvider, cpOption,
+					_ddmFormFieldTypeServicesTracker);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, cpOptionDisplayContext);
@@ -66,6 +68,9 @@ public class EditCPOptionMVCRenderCommand implements MVCRenderCommand {
 
 		return "/edit_option.jsp";
 	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private CPOptionService _cpOptionService;

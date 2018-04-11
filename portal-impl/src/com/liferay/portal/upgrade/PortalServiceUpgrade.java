@@ -19,8 +19,8 @@ import aQute.bnd.version.Version;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.util.CoreUpgradeProcessRegistry;
-import com.liferay.portal.upgrade.v7_1.UpgradeProcessRegistry;
+import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
+import com.liferay.portal.upgrade.v7_1_x.UpgradeProcessRegistry;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -36,7 +36,7 @@ import java.util.TreeMap;
 /**
  * @author Alberto Chaparro
  */
-public class CoreServiceUpgrade extends UpgradeProcess {
+public class PortalServiceUpgrade extends UpgradeProcess {
 
 	public static Version getLatestSchemaVersion() {
 		return _upgradeProcesses.lastKey();
@@ -175,10 +175,11 @@ public class CoreServiceUpgrade extends UpgradeProcess {
 		_upgradeProcesses.put(
 			new Version(_INITIAL_SCHEMA_VERSION), new DummyUpgradeProcess());
 
-		CoreUpgradeProcessRegistry coreUpgradeProcessRegistry =
+		PortalUpgradeProcessRegistry portalUpgradeProcessRegistry =
 			new UpgradeProcessRegistry();
 
-		coreUpgradeProcessRegistry.registerUpgradeProcesses(_upgradeProcesses);
+		portalUpgradeProcessRegistry.registerUpgradeProcesses(
+			_upgradeProcesses);
 	}
 
 }

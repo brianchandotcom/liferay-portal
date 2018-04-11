@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.base.ReleaseLocalServiceBaseImpl;
-import com.liferay.portal.upgrade.CoreServiceUpgrade;
+import com.liferay.portal.upgrade.PortalServiceUpgrade;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -398,7 +398,7 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 			java.sql.Date now = new java.sql.Date(System.currentTimeMillis());
 
 			Version latestSchemaVersion =
-				CoreServiceUpgrade.getLatestSchemaVersion();
+				PortalServiceUpgrade.getLatestSchemaVersion();
 
 			ps.setDate(1, now);
 			ps.setDate(2, now);

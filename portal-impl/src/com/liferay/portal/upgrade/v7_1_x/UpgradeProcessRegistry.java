@@ -17,14 +17,14 @@ package com.liferay.portal.upgrade.v7_1_x;
 import aQute.bnd.version.Version;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.util.CoreUpgradeProcessRegistry;
+import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
 
 import java.util.TreeMap;
 
 /**
  * @author Alberto Chaparro
  */
-public class UpgradeProcessRegistry implements CoreUpgradeProcessRegistry {
+public class UpgradeProcessRegistry implements PortalUpgradeProcessRegistry {
 
 	@Override
 	public void registerUpgradeProcesses(

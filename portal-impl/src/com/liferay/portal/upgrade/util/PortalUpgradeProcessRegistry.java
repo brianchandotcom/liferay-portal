@@ -23,7 +23,7 @@ import java.util.TreeMap;
 /**
  * @author Alberto Chaparro
  */
-public interface CoreUpgradeProcessRegistry {
+public interface PortalUpgradeProcessRegistry {
 
 	public void registerUpgradeProcesses(
 		TreeMap<Version, UpgradeProcess> upgradeProcesses);

@@ -169,8 +169,8 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 		return pathMatchers;
 	}
 
-	private final PluginsGitWorkingDirectory _pluginsGitWorkingDirectory;
 	private final List<PathMatcher> _pluginNamesExcludePathMatchers;
 	private final List<PathMatcher> _pluginNamesIncludePathMatchers;
+	private final PluginsGitWorkingDirectory _pluginsGitWorkingDirectory;
 
 }

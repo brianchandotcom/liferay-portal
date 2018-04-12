@@ -27,6 +27,7 @@ import java.io.InputStream;
 
 import java.net.URI;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
 import java.util.ArrayList;
@@ -186,8 +187,6 @@ public class WatchTask extends DefaultTask {
 
 		if (outputFile.exists()) {
 			try (GogoShellClient gogoShellClient = new GogoShellClient()) {
-				long outputFileBundleId = _readLong(outputFile);
-
 				File manifestFile = new File(
 					getBundleDir(), "META-INF/MANIFEST.MF");
 
@@ -196,6 +195,13 @@ public class WatchTask extends DefaultTask {
 
 				long installedBundleId = _getBundleId(
 					bundleSymbolicName, gogoShellClient);
+
+				String outputFileBundleIdString = new String(
+					Files.readAllBytes(outputFile.toPath()),
+					StandardCharsets.UTF_8);
+
+				long outputFileBundleId = Long.parseLong(
+					outputFileBundleIdString);
 
 				if (installedBundleId == outputFileBundleId) {
 					bundleId = outputFileBundleId;
@@ -340,14 +346,6 @@ public class WatchTask extends DefaultTask {
 		return _newBundleDTO(id, state, symbolicName);
 	}
 
-	private static long _readLong(File file) throws IOException {
-		byte[] bytes = Files.readAllBytes(file.toPath());
-
-		String content = new String(bytes);
-
-		return Long.parseLong(content);
-	}
-
 	private static String _sendGogoShellCommand(
 			GogoShellClient gogoShellClient, String command)
 		throws IOException {
@@ -460,7 +458,9 @@ public class WatchTask extends DefaultTask {
 
 			String bundleIdString = Long.toString(bundleId);
 
-			Files.write(outputFile.toPath(), bundleIdString.getBytes());
+			Files.write(
+				outputFile.toPath(),
+				bundleIdString.getBytes(StandardCharsets.UTF_8));
 
 			_installedAttributes.put(bundleDir, attributes);
 

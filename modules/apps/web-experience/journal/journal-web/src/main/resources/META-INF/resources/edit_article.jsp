@@ -275,9 +275,9 @@ if (classNameId > JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
 					<aui:button data-actionname='<%= ((article == null) || Validator.isNull(article.getArticleId())) ? "addArticle" : "updateArticle" %>' name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
 				</c:if>
 			</c:if>
-		</div>
 
-		<aui:button href="<%= redirect %>" type="cancel" />
+			<aui:button href="<%= redirect %>" type="cancel" />
+		</div>
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 

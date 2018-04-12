@@ -433,23 +433,25 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		String coverImageCaption = ParamUtil.getString(
 			actionRequest, "coverImageCaption");
 
-		long oldCoverImageId = 0;
+		long oldCoverImageFileEntryId = 0;
 		String oldCoverImageURL = StringPool.BLANK;
+		long oldSmallImageFileEntryId = 0;
 		long oldSmallImageId = 0;
 		String oldSmallImageURL = StringPool.BLANK;
 
 		if (entryId != 0) {
 			BlogsEntry entry = _blogsEntryLocalService.getEntry(entryId);
 
-			oldCoverImageId = entry.getCoverImageFileEntryId();
+			oldCoverImageFileEntryId = entry.getCoverImageFileEntryId();
 			oldCoverImageURL = entry.getCoverImageURL();
+			oldSmallImageFileEntryId = entry.getSmallImageFileEntryId();
 			oldSmallImageId = entry.getSmallImageId();
 			oldSmallImageURL = entry.getSmallImageURL();
 		}
 
 		BlogsEntryImageSelectorHelper blogsEntryCoverImageSelectorHelper =
 			new BlogsEntryImageSelectorHelper(
-				coverImageFileEntryId, oldCoverImageId,
+				0, coverImageFileEntryId, oldCoverImageFileEntryId,
 				coverImageFileEntryCropRegion, coverImageURL, oldCoverImageURL);
 
 		ImageSelector coverImageImageSelector =
@@ -462,8 +464,9 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		BlogsEntryImageSelectorHelper blogsEntrySmallImageSelectorHelper =
 			new BlogsEntryImageSelectorHelper(
-				smallImageFileEntryId, oldSmallImageId, StringPool.BLANK,
-				smallImageURL, oldSmallImageURL);
+				oldSmallImageId, smallImageFileEntryId,
+				oldSmallImageFileEntryId, StringPool.BLANK, smallImageURL,
+				oldSmallImageURL);
 
 		ImageSelector smallImageImageSelector =
 			blogsEntrySmallImageSelectorHelper.getImageSelector();

@@ -1344,6 +1344,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		String smallImageURL = entry.getSmallImageURL();
 
 		long deletePreviousSmallImageFileEntryId = 0;
+		long deletePreviousSmallImageId = 0;
 
 		if (smallImageImageSelector != null) {
 			smallImageURL = smallImageImageSelector.getImageURL();
@@ -1359,6 +1360,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 			deletePreviousSmallImageFileEntryId =
 				entry.getSmallImageFileEntryId();
+
+			deletePreviousSmallImageId = entry.getSmallImageId();
 		}
 
 		validate(smallImageFileEntryId);
@@ -1406,6 +1409,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		if (deletePreviousSmallImageFileEntryId != 0) {
 			PortletFileRepositoryUtil.deletePortletFileEntry(
 				deletePreviousSmallImageFileEntryId);
+		}
+
+		if (deletePreviousSmallImageId != 0) {
+			imageLocalService.deleteImage(deletePreviousSmallImageId);
 		}
 
 		return entry;

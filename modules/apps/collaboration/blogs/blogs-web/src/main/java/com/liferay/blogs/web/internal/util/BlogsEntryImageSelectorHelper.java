@@ -29,9 +29,10 @@ import com.liferay.portal.kernel.util.FileUtil;
 public class BlogsEntryImageSelectorHelper {
 
 	public BlogsEntryImageSelectorHelper(
-		long imageFileEntryId, long oldImageFileEntryId, String imageCropRegion,
-		String imageURL, String oldImageURL) {
+		long oldSmallImageId, long imageFileEntryId, long oldImageFileEntryId,
+		String imageCropRegion, String imageURL, String oldImageURL) {
 
+		_oldSmallImageId = oldSmallImageId;
 		_imageFileEntryId = imageFileEntryId;
 		_oldImageFileEntryId = oldImageFileEntryId;
 		_imageCropRegion = imageCropRegion;
@@ -40,7 +41,9 @@ public class BlogsEntryImageSelectorHelper {
 	}
 
 	public ImageSelector getImageSelector() throws Exception {
-		if (_imageFileEntryId != _oldImageFileEntryId) {
+		if ((_oldSmallImageId != 0) ||
+			(_imageFileEntryId != _oldImageFileEntryId)) {
+
 			if (_imageFileEntryId != 0) {
 				FileEntry fileEntry =
 					PortletFileRepositoryUtil.getPortletFileEntry(
@@ -107,5 +110,6 @@ public class BlogsEntryImageSelectorHelper {
 	private final String _imageURL;
 	private final long _oldImageFileEntryId;
 	private final String _oldImageURL;
+	private final long _oldSmallImageId;
 
 }

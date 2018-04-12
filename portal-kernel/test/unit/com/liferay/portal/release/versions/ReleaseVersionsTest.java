@@ -165,9 +165,7 @@ public class ReleaseVersionsTest {
 		Version masterVersion = masterVersionPair.getKey();
 		Version releaseVersion = releaseVersionPair.getKey();
 
-		Version newReleaseVersion = new Version(releaseVersion.getMajor() + 1);
-
-		if (!masterVersion.equals(newReleaseVersion)) {
+		if (masterVersion.getMajor() != (releaseVersion.getMajor() + 1)) {
 			StringBundler sb = new StringBundler(22);
 
 			sb.append("The ");
@@ -231,7 +229,7 @@ public class ReleaseVersionsTest {
 			sb.append(" \"");
 			sb.append(Constants.BUNDLE_VERSION);
 			sb.append(updateVersionSeparator);
-			sb.append(newReleaseVersion);
+			sb.append(new Version(releaseVersion.getMajor() + 1));
 			sb.append("\" in ");
 			sb.append(_portalPath.relativize(updateVersionPath));
 			sb.append(" for the 'master' branch.");

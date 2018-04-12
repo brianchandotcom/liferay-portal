@@ -49,8 +49,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>WIZARD_METHOD</td>
-	<td>//div[contains (@class,'commerce-wizard-method')]//h4[contains (.,'${key_wizardMethod}')]//..//a</td>
 	<td></td>
 </tr>
 <tr>

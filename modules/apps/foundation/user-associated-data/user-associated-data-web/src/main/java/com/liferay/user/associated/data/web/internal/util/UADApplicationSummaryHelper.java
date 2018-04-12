@@ -187,11 +187,22 @@ public class UADApplicationSummaryHelper {
 	public UADApplicationSummaryDisplay getUADApplicationSummaryDisplay(
 		PortletRequest portletRequest, String applicationName, long userId) {
 
-		return new UADApplicationSummaryDisplay(
-			getReviewableUADEntitiesCount(
-				getApplicationUADEntityDisplayStream(applicationName), userId),
-			applicationName,
-			getViewURL(portletRequest, applicationName, userId));
+		UADApplicationSummaryDisplay uadApplicationSummaryDisplay =
+			new UADApplicationSummaryDisplay();
+
+		int count = getReviewableUADEntitiesCount(
+			getApplicationUADEntityDisplayStream(applicationName), userId);
+
+		uadApplicationSummaryDisplay.setCount(count);
+
+		uadApplicationSummaryDisplay.setName(applicationName);
+
+		if (count > 0) {
+			uadApplicationSummaryDisplay.setViewURL(
+				getViewURL(portletRequest, applicationName, userId));
+		}
+
+		return uadApplicationSummaryDisplay;
 	}
 
 	public Stream<UADApplicationSummaryDisplay>

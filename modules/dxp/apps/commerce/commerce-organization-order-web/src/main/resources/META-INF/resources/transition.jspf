@@ -32,6 +32,8 @@
 		window,
 		'<portlet:namespace />transition',
 		function(event) {
+			var A = AUI();
+
 			var link = event.currentTarget;
 
 			var workflowTaskId = parseInt(link.getData('workflowTaskId'), 10);
@@ -99,6 +101,6 @@
 				}
 			);
 		},
-		['liferay-util-window']
+		['aui-base', 'liferay-util-window']
 	);
 </aui:script>

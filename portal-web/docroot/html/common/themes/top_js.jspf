@@ -190,6 +190,14 @@
 			getBCP47LanguageId: function() {
 				return '<%= LanguageUtil.getBCP47LanguageId(request) %>';
 			},
+			getCanonicalURL: function() {
+
+				<%
+				String completeURL = PortalUtil.getCurrentCompleteURL(request);
+				%>
+
+				return '<%= PortalUtil.getCanonicalURL(completeURL, themeDisplay, layout, true, false) %>';
+			},
 			getCDNBaseURL: function() {
 				return '<%= themeDisplay.getCDNBaseURL() %>';
 			},

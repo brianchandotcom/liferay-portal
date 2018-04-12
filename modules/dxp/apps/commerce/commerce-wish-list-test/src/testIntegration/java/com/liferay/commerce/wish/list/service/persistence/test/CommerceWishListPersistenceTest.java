@@ -220,6 +220,14 @@ public class CommerceWishListPersistenceTest {
 	}
 
 	@Test
+	public void testCountByU_LtC() throws Exception {
+		_persistence.countByU_LtC(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextDate());
+
+		_persistence.countByU_LtC(0L, RandomTestUtil.nextDate());
+	}
+
+	@Test
 	public void testCountByG_U_D() throws Exception {
 		_persistence.countByG_U_D(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());

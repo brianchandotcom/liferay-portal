@@ -47,6 +47,8 @@ import java.io.Serializable;
 
 import java.lang.reflect.Field;
 
+import java.sql.Timestamp;
+
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -3047,6 +3049,572 @@ public class CommerceWishListPersistenceImpl extends BasePersistenceImpl<Commerc
 
 	private static final String _FINDER_COLUMN_G_U_GROUPID_2 = "commerceWishList.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_U_USERID_2 = "commerceWishList.userId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_U_LTC = new FinderPath(CommerceWishListModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceWishListModelImpl.FINDER_CACHE_ENABLED,
+			CommerceWishListImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByU_LtC",
+			new String[] {
+				Long.class.getName(), Date.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_U_LTC = new FinderPath(CommerceWishListModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceWishListModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByU_LtC",
+			new String[] { Long.class.getName(), Date.class.getName() });
+
+	/**
+	 * Returns all the commerce wish lists where userId = &#63; and createDate &lt; &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param createDate the create date
+	 * @return the matching commerce wish lists
+	 */
+	@Override
+	public List<CommerceWishList> findByU_LtC(long userId, Date createDate) {
+		return findByU_LtC(userId, createDate, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce wish lists where userId = &#63; and createDate &lt; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceWishListModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param createDate the create date
+	 * @param start the lower bound of the range of commerce wish lists
+	 * @param end the upper bound of the range of commerce wish lists (not inclusive)
+	 * @return the range of matching commerce wish lists
+	 */
+	@Override
+	public List<CommerceWishList> findByU_LtC(long userId, Date createDate,
+		int start, int end) {
+		return findByU_LtC(userId, createDate, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce wish lists where userId = &#63; and createDate &lt; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceWishListModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param createDate the create date
+	 * @param start the lower bound of the range of commerce wish lists
+	 * @param end the upper bound of the range of commerce wish lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce wish lists
+	 */
+	@Override
+	public List<CommerceWishList> findByU_LtC(long userId, Date createDate,
+		int start, int end,
+		OrderByComparator<CommerceWishList> orderByComparator) {
+		return findByU_LtC(userId, createDate, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce wish lists where userId = &#63; and createDate &lt; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceWishListModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param createDate the create date
+	 * @param start the lower bound of the range of commerce wish lists
+	 * @param end the upper bound of the range of commerce wish lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching commerce wish lists
+	 */
+	@Override
+	public List<CommerceWishList> findByU_LtC(long userId, Date createDate,
+		int start, int end,
+		OrderByComparator<CommerceWishList> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_U_LTC;
+		finderArgs = new Object[] {
+				userId, createDate,
+				
+				start, end, orderByComparator
+			};
+
+		List<CommerceWishList> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<CommerceWishList>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CommerceWishList commerceWishList : list) {
+					if ((userId != commerceWishList.getUserId()) ||
+							(createDate.getTime() <= commerceWishList.getCreateDate()
+																		 .getTime())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_COMMERCEWISHLIST_WHERE);
+
+			query.append(_FINDER_COLUMN_U_LTC_USERID_2);
+
+			boolean bindCreateDate = false;
+
+			if (createDate == null) {
+				query.append(_FINDER_COLUMN_U_LTC_CREATEDATE_1);
+			}
+			else {
+				bindCreateDate = true;
+
+				query.append(_FINDER_COLUMN_U_LTC_CREATEDATE_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CommerceWishListModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userId);
+
+				if (bindCreateDate) {
+					qPos.add(new Timestamp(createDate.getTime()));
+				}
+
+				if (!pagination) {
+					list = (List<CommerceWishList>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<CommerceWishList>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first commerce wish list in the ordered set where userId = &#63; and createDate &lt; &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param createDate the create date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce wish list
+	 * @throws NoSuchWishListException if a matching commerce wish list could not be found
+	 */
+	@Override
+	public CommerceWishList findByU_LtC_First(long userId, Date createDate,
+		OrderByComparator<CommerceWishList> orderByComparator)
+		throws NoSuchWishListException {
+		CommerceWishList commerceWishList = fetchByU_LtC_First(userId,
+				createDate, orderByComparator);
+
+		if (commerceWishList != null) {
+			return commerceWishList;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append(", createDate=");
+		msg.append(createDate);
+
+		msg.append("}");
+
+		throw new NoSuchWishListException(msg.toString());
+	}
+
+	/**
+	 * Returns the first commerce wish list in the ordered set where userId = &#63; and createDate &lt; &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param createDate the create date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce wish list, or <code>null</code> if a matching commerce wish list could not be found
+	 */
+	@Override
+	public CommerceWishList fetchByU_LtC_First(long userId, Date createDate,
+		OrderByComparator<CommerceWishList> orderByComparator) {
+		List<CommerceWishList> list = findByU_LtC(userId, createDate, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last commerce wish list in the ordered set where userId = &#63; and createDate &lt; &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param createDate the create date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce wish list
+	 * @throws NoSuchWishListException if a matching commerce wish list could not be found
+	 */
+	@Override
+	public CommerceWishList findByU_LtC_Last(long userId, Date createDate,
+		OrderByComparator<CommerceWishList> orderByComparator)
+		throws NoSuchWishListException {
+		CommerceWishList commerceWishList = fetchByU_LtC_Last(userId,
+				createDate, orderByComparator);
+
+		if (commerceWishList != null) {
+			return commerceWishList;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append(", createDate=");
+		msg.append(createDate);
+
+		msg.append("}");
+
+		throw new NoSuchWishListException(msg.toString());
+	}
+
+	/**
+	 * Returns the last commerce wish list in the ordered set where userId = &#63; and createDate &lt; &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param createDate the create date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce wish list, or <code>null</code> if a matching commerce wish list could not be found
+	 */
+	@Override
+	public CommerceWishList fetchByU_LtC_Last(long userId, Date createDate,
+		OrderByComparator<CommerceWishList> orderByComparator) {
+		int count = countByU_LtC(userId, createDate);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CommerceWishList> list = findByU_LtC(userId, createDate,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the commerce wish lists before and after the current commerce wish list in the ordered set where userId = &#63; and createDate &lt; &#63;.
+	 *
+	 * @param commerceWishListId the primary key of the current commerce wish list
+	 * @param userId the user ID
+	 * @param createDate the create date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce wish list
+	 * @throws NoSuchWishListException if a commerce wish list with the primary key could not be found
+	 */
+	@Override
+	public CommerceWishList[] findByU_LtC_PrevAndNext(long commerceWishListId,
+		long userId, Date createDate,
+		OrderByComparator<CommerceWishList> orderByComparator)
+		throws NoSuchWishListException {
+		CommerceWishList commerceWishList = findByPrimaryKey(commerceWishListId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceWishList[] array = new CommerceWishListImpl[3];
+
+			array[0] = getByU_LtC_PrevAndNext(session, commerceWishList,
+					userId, createDate, orderByComparator, true);
+
+			array[1] = commerceWishList;
+
+			array[2] = getByU_LtC_PrevAndNext(session, commerceWishList,
+					userId, createDate, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceWishList getByU_LtC_PrevAndNext(Session session,
+		CommerceWishList commerceWishList, long userId, Date createDate,
+		OrderByComparator<CommerceWishList> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		query.append(_SQL_SELECT_COMMERCEWISHLIST_WHERE);
+
+		query.append(_FINDER_COLUMN_U_LTC_USERID_2);
+
+		boolean bindCreateDate = false;
+
+		if (createDate == null) {
+			query.append(_FINDER_COLUMN_U_LTC_CREATEDATE_1);
+		}
+		else {
+			bindCreateDate = true;
+
+			query.append(_FINDER_COLUMN_U_LTC_CREATEDATE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CommerceWishListModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(userId);
+
+		if (bindCreateDate) {
+			qPos.add(new Timestamp(createDate.getTime()));
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(commerceWishList);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CommerceWishList> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the commerce wish lists where userId = &#63; and createDate &lt; &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 * @param createDate the create date
+	 */
+	@Override
+	public void removeByU_LtC(long userId, Date createDate) {
+		for (CommerceWishList commerceWishList : findByU_LtC(userId,
+				createDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(commerceWishList);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce wish lists where userId = &#63; and createDate &lt; &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param createDate the create date
+	 * @return the number of matching commerce wish lists
+	 */
+	@Override
+	public int countByU_LtC(long userId, Date createDate) {
+		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_U_LTC;
+
+		Object[] finderArgs = new Object[] { userId, createDate };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_COMMERCEWISHLIST_WHERE);
+
+			query.append(_FINDER_COLUMN_U_LTC_USERID_2);
+
+			boolean bindCreateDate = false;
+
+			if (createDate == null) {
+				query.append(_FINDER_COLUMN_U_LTC_CREATEDATE_1);
+			}
+			else {
+				bindCreateDate = true;
+
+				query.append(_FINDER_COLUMN_U_LTC_CREATEDATE_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userId);
+
+				if (bindCreateDate) {
+					qPos.add(new Timestamp(createDate.getTime()));
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_U_LTC_USERID_2 = "commerceWishList.userId = ? AND ";
+	private static final String _FINDER_COLUMN_U_LTC_CREATEDATE_1 = "commerceWishList.createDate IS NULL";
+	private static final String _FINDER_COLUMN_U_LTC_CREATEDATE_2 = "commerceWishList.createDate < ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_U_D = new FinderPath(CommerceWishListModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceWishListModelImpl.FINDER_CACHE_ENABLED,
 			CommerceWishListImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,

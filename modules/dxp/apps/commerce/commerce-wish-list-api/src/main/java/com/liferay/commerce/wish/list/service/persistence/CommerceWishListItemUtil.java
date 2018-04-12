@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.wish.list.model.CommerceWishListItem;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -781,6 +782,17 @@ public class CommerceWishListItemUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CommerceWishListItemPersistence, CommerceWishListItemPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(CommerceWishListItemPersistence.class);
+	private static ServiceTracker<CommerceWishListItemPersistence, CommerceWishListItemPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CommerceWishListItemPersistence.class);
+
+		ServiceTracker<CommerceWishListItemPersistence, CommerceWishListItemPersistence> serviceTracker =
+			new ServiceTracker<CommerceWishListItemPersistence, CommerceWishListItemPersistence>(bundle.getBundleContext(),
+				CommerceWishListItemPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

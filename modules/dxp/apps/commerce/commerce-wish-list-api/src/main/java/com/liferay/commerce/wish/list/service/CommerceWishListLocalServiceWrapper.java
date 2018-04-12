@@ -94,6 +94,11 @@ public class CommerceWishListLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteCommerceWishLists(long userId, java.util.Date date) {
+		_commerceWishListLocalService.deleteCommerceWishLists(userId, date);
+	}
+
+	@Override
 	public void deleteCommerceWishListsByGroupId(long groupId) {
 		_commerceWishListLocalService.deleteCommerceWishListsByGroupId(groupId);
 	}

@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -108,6 +109,8 @@ public interface CommerceWishListLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public CommerceWishList deleteCommerceWishList(long commerceWishListId)
 		throws PortalException;
+
+	public void deleteCommerceWishLists(long userId, Date date);
 
 	public void deleteCommerceWishListsByGroupId(long groupId);
 

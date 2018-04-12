@@ -115,11 +115,12 @@ public class CommerceWishListModelImpl extends BaseModelImpl<CommerceWishList>
 				"value.object.column.bitmask.enabled.com.liferay.commerce.wish.list.model.CommerceWishList"),
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-	public static final long DEFAULTWISHLIST_COLUMN_BITMASK = 2L;
-	public static final long GROUPID_COLUMN_BITMASK = 4L;
-	public static final long USERID_COLUMN_BITMASK = 8L;
-	public static final long UUID_COLUMN_BITMASK = 16L;
-	public static final long NAME_COLUMN_BITMASK = 32L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 2L;
+	public static final long DEFAULTWISHLIST_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
+	public static final long USERID_COLUMN_BITMASK = 16L;
+	public static final long UUID_COLUMN_BITMASK = 32L;
+	public static final long NAME_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -433,7 +434,17 @@ public class CommerceWishListModelImpl extends BaseModelImpl<CommerceWishList>
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		_columnBitmask |= CREATEDATE_COLUMN_BITMASK;
+
+		if (_originalCreateDate == null) {
+			_originalCreateDate = _createDate;
+		}
+
 		_createDate = createDate;
+	}
+
+	public Date getOriginalCreateDate() {
+		return _originalCreateDate;
 	}
 
 	@JSON
@@ -621,6 +632,8 @@ public class CommerceWishListModelImpl extends BaseModelImpl<CommerceWishList>
 
 		commerceWishListModelImpl._setOriginalUserId = false;
 
+		commerceWishListModelImpl._originalCreateDate = commerceWishListModelImpl._createDate;
+
 		commerceWishListModelImpl._setModifiedDate = false;
 
 		commerceWishListModelImpl._originalDefaultWishList = commerceWishListModelImpl._defaultWishList;
@@ -790,6 +803,7 @@ public class CommerceWishListModelImpl extends BaseModelImpl<CommerceWishList>
 	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
+	private Date _originalCreateDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _name;

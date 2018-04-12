@@ -18,14 +18,16 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.wish.list.model.CommerceWishList;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
 import org.osgi.util.tracker.ServiceTracker;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -996,6 +998,182 @@ public class CommerceWishListUtil {
 	}
 
 	/**
+	* Returns all the commerce wish lists where userId = &#63; and createDate &lt; &#63;.
+	*
+	* @param userId the user ID
+	* @param createDate the create date
+	* @return the matching commerce wish lists
+	*/
+	public static List<CommerceWishList> findByU_LtC(long userId,
+		Date createDate) {
+		return getPersistence().findByU_LtC(userId, createDate);
+	}
+
+	/**
+	* Returns a range of all the commerce wish lists where userId = &#63; and createDate &lt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceWishListModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param createDate the create date
+	* @param start the lower bound of the range of commerce wish lists
+	* @param end the upper bound of the range of commerce wish lists (not inclusive)
+	* @return the range of matching commerce wish lists
+	*/
+	public static List<CommerceWishList> findByU_LtC(long userId,
+		Date createDate, int start, int end) {
+		return getPersistence().findByU_LtC(userId, createDate, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the commerce wish lists where userId = &#63; and createDate &lt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceWishListModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param createDate the create date
+	* @param start the lower bound of the range of commerce wish lists
+	* @param end the upper bound of the range of commerce wish lists (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching commerce wish lists
+	*/
+	public static List<CommerceWishList> findByU_LtC(long userId,
+		Date createDate, int start, int end,
+		OrderByComparator<CommerceWishList> orderByComparator) {
+		return getPersistence()
+				   .findByU_LtC(userId, createDate, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the commerce wish lists where userId = &#63; and createDate &lt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceWishListModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param createDate the create date
+	* @param start the lower bound of the range of commerce wish lists
+	* @param end the upper bound of the range of commerce wish lists (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching commerce wish lists
+	*/
+	public static List<CommerceWishList> findByU_LtC(long userId,
+		Date createDate, int start, int end,
+		OrderByComparator<CommerceWishList> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByU_LtC(userId, createDate, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first commerce wish list in the ordered set where userId = &#63; and createDate &lt; &#63;.
+	*
+	* @param userId the user ID
+	* @param createDate the create date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce wish list
+	* @throws NoSuchWishListException if a matching commerce wish list could not be found
+	*/
+	public static CommerceWishList findByU_LtC_First(long userId,
+		Date createDate, OrderByComparator<CommerceWishList> orderByComparator)
+		throws com.liferay.commerce.wish.list.exception.NoSuchWishListException {
+		return getPersistence()
+				   .findByU_LtC_First(userId, createDate, orderByComparator);
+	}
+
+	/**
+	* Returns the first commerce wish list in the ordered set where userId = &#63; and createDate &lt; &#63;.
+	*
+	* @param userId the user ID
+	* @param createDate the create date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce wish list, or <code>null</code> if a matching commerce wish list could not be found
+	*/
+	public static CommerceWishList fetchByU_LtC_First(long userId,
+		Date createDate, OrderByComparator<CommerceWishList> orderByComparator) {
+		return getPersistence()
+				   .fetchByU_LtC_First(userId, createDate, orderByComparator);
+	}
+
+	/**
+	* Returns the last commerce wish list in the ordered set where userId = &#63; and createDate &lt; &#63;.
+	*
+	* @param userId the user ID
+	* @param createDate the create date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce wish list
+	* @throws NoSuchWishListException if a matching commerce wish list could not be found
+	*/
+	public static CommerceWishList findByU_LtC_Last(long userId,
+		Date createDate, OrderByComparator<CommerceWishList> orderByComparator)
+		throws com.liferay.commerce.wish.list.exception.NoSuchWishListException {
+		return getPersistence()
+				   .findByU_LtC_Last(userId, createDate, orderByComparator);
+	}
+
+	/**
+	* Returns the last commerce wish list in the ordered set where userId = &#63; and createDate &lt; &#63;.
+	*
+	* @param userId the user ID
+	* @param createDate the create date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce wish list, or <code>null</code> if a matching commerce wish list could not be found
+	*/
+	public static CommerceWishList fetchByU_LtC_Last(long userId,
+		Date createDate, OrderByComparator<CommerceWishList> orderByComparator) {
+		return getPersistence()
+				   .fetchByU_LtC_Last(userId, createDate, orderByComparator);
+	}
+
+	/**
+	* Returns the commerce wish lists before and after the current commerce wish list in the ordered set where userId = &#63; and createDate &lt; &#63;.
+	*
+	* @param commerceWishListId the primary key of the current commerce wish list
+	* @param userId the user ID
+	* @param createDate the create date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next commerce wish list
+	* @throws NoSuchWishListException if a commerce wish list with the primary key could not be found
+	*/
+	public static CommerceWishList[] findByU_LtC_PrevAndNext(
+		long commerceWishListId, long userId, Date createDate,
+		OrderByComparator<CommerceWishList> orderByComparator)
+		throws com.liferay.commerce.wish.list.exception.NoSuchWishListException {
+		return getPersistence()
+				   .findByU_LtC_PrevAndNext(commerceWishListId, userId,
+			createDate, orderByComparator);
+	}
+
+	/**
+	* Removes all the commerce wish lists where userId = &#63; and createDate &lt; &#63; from the database.
+	*
+	* @param userId the user ID
+	* @param createDate the create date
+	*/
+	public static void removeByU_LtC(long userId, Date createDate) {
+		getPersistence().removeByU_LtC(userId, createDate);
+	}
+
+	/**
+	* Returns the number of commerce wish lists where userId = &#63; and createDate &lt; &#63;.
+	*
+	* @param userId the user ID
+	* @param createDate the create date
+	* @return the number of matching commerce wish lists
+	*/
+	public static int countByU_LtC(long userId, Date createDate) {
+		return getPersistence().countByU_LtC(userId, createDate);
+	}
+
+	/**
 	* Returns all the commerce wish lists where groupId = &#63; and userId = &#63; and defaultWishList = &#63;.
 	*
 	* @param groupId the group ID
@@ -1350,6 +1528,17 @@ public class CommerceWishListUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CommerceWishListPersistence, CommerceWishListPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(CommerceWishListPersistence.class);
+	private static ServiceTracker<CommerceWishListPersistence, CommerceWishListPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CommerceWishListPersistence.class);
+
+		ServiceTracker<CommerceWishListPersistence, CommerceWishListPersistence> serviceTracker =
+			new ServiceTracker<CommerceWishListPersistence, CommerceWishListPersistence>(bundle.getBundleContext(),
+				CommerceWishListPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

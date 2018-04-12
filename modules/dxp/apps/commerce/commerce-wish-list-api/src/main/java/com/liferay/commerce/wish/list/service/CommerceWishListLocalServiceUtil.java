@@ -16,7 +16,8 @@ package com.liferay.commerce.wish.list.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -94,6 +95,10 @@ public class CommerceWishListLocalServiceUtil {
 		long commerceWishListId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteCommerceWishList(commerceWishListId);
+	}
+
+	public static void deleteCommerceWishLists(long userId, java.util.Date date) {
+		getService().deleteCommerceWishLists(userId, date);
 	}
 
 	public static void deleteCommerceWishListsByGroupId(long groupId) {
@@ -372,6 +377,17 @@ public class CommerceWishListLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CommerceWishListLocalService, CommerceWishListLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(CommerceWishListLocalService.class);
+	private static ServiceTracker<CommerceWishListLocalService, CommerceWishListLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CommerceWishListLocalService.class);
+
+		ServiceTracker<CommerceWishListLocalService, CommerceWishListLocalService> serviceTracker =
+			new ServiceTracker<CommerceWishListLocalService, CommerceWishListLocalService>(bundle.getBundleContext(),
+				CommerceWishListLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

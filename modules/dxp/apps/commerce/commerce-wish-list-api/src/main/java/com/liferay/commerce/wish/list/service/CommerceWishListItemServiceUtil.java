@@ -16,7 +16,8 @@ package com.liferay.commerce.wish.list.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -89,6 +90,17 @@ public class CommerceWishListItemServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CommerceWishListItemService, CommerceWishListItemService> _serviceTracker =
-		ServiceTrackerFactory.open(CommerceWishListItemService.class);
+	private static ServiceTracker<CommerceWishListItemService, CommerceWishListItemService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CommerceWishListItemService.class);
+
+		ServiceTracker<CommerceWishListItemService, CommerceWishListItemService> serviceTracker =
+			new ServiceTracker<CommerceWishListItemService, CommerceWishListItemService>(bundle.getBundleContext(),
+				CommerceWishListItemService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

@@ -685,9 +685,10 @@ public class JenkinsResultsParserUtil {
 					throws IOException {
 
 					for (PathMatcher pathMatcher : pathMatchers) {
-						URI uri = filePath.toUri();
 
 						if (pathMatcher.matches(filePath)) {
+							URI uri = filePath.toUri();
+
 							filePaths.add(uri.toURL());
 
 							break;

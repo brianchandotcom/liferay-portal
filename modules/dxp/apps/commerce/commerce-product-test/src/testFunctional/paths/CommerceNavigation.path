@@ -49,11 +49,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td></td>
-</tr>
-<tr>
-	<td>WIZARD_STARTER</td>
-	<td>//div[contains (@class,'commerce-starter')]//h3[contains (.,'${key_wizardStarter}')]</td>
+	<td>IGNORE_SKU_COTRIBUTIONS_TOGGLE_SWITCHER</td>
+	<td>//div/label/input[@type='checkbox']/../span[@class='toggle-switch-bar']</td>
 	<td></td>
 </tr>
 <tr>

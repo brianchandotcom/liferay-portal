@@ -15,6 +15,10 @@
 		a svg {
 			margin-right: 8px;
 		}
+
+		.rating-element * {
+			pointer-events: none;
+		}
 	}
 
 	.rating-input-container {

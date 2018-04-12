@@ -1,9 +1,11 @@
 /* jshint ignore:start */
 import Component from 'metal-component';
 import Soy from 'metal-soy';
+
 var templates;
 goog.loadModule(function(exports) {
-
+var soy = goog.require('soy');
+var soydata = goog.require('soydata');
 // This file was automatically generated from data-provider-parameter.soy.
 // Please don't edit this file by hand.
 
@@ -14,119 +16,126 @@ goog.loadModule(function(exports) {
 
 goog.module('DDMDataProviderParameter.incrementaldom');
 
-/** @suppress {extraRequire} */
-var soy = goog.require('soy');
-/** @suppress {extraRequire} */
-var soydata = goog.require('soydata');
-/** @suppress {extraRequire} */
-goog.require('goog.asserts');
-/** @suppress {extraRequire} */
+goog.require('goog.soy.data.SanitizedContent');
+var incrementalDom = goog.require('incrementaldom');
 goog.require('soy.asserts');
-/** @suppress {extraRequire} */
-goog.require('goog.i18n.bidi');
-/** @suppress {extraRequire} */
-goog.require('goog.string');
-var IncrementalDom = goog.require('incrementaldom');
-var ie_open = IncrementalDom.elementOpen;
-var ie_close = IncrementalDom.elementClose;
-var ie_void = IncrementalDom.elementVoid;
-var ie_open_start = IncrementalDom.elementOpenStart;
-var ie_open_end = IncrementalDom.elementOpenEnd;
-var itext = IncrementalDom.text;
-var iattr = IncrementalDom.attr;
+var soyIdom = goog.require('soy.idom');
 
 
 /**
  * @param {{
- *    hasInputs: boolean,
- *    hasRequiredInputs: boolean,
- *    pathThemeImages: string,
- *    strings: {dataProviderParameterInput: string, dataProviderParameterInputDescription: string, dataProviderParameterOutput: string, dataProviderParameterOutputDescription: string, requiredField: string}
+ *  hasInputs: boolean,
+ *  hasRequiredInputs: boolean,
+ *  pathThemeImages: (!goog.soy.data.SanitizedContent|string),
+ *  strings: {dataProviderParameterInput: (!goog.soy.data.SanitizedContent|string), dataProviderParameterInputDescription: (!goog.soy.data.SanitizedContent|string), dataProviderParameterOutput: (!goog.soy.data.SanitizedContent|string), dataProviderParameterOutputDescription: (!goog.soy.data.SanitizedContent|string), requiredField: (!goog.soy.data.SanitizedContent|string)}
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $render(opt_data, opt_ignored, opt_ijData) {
-  soy.asserts.assertType(goog.isBoolean(opt_data.hasInputs) || opt_data.hasInputs === 1 || opt_data.hasInputs === 0, 'hasInputs', opt_data.hasInputs, 'boolean');
-  var hasInputs = /** @type {boolean} */ (!!opt_data.hasInputs);
-  soy.asserts.assertType(goog.isBoolean(opt_data.hasRequiredInputs) || opt_data.hasRequiredInputs === 1 || opt_data.hasRequiredInputs === 0, 'hasRequiredInputs', opt_data.hasRequiredInputs, 'boolean');
-  var hasRequiredInputs = /** @type {boolean} */ (!!opt_data.hasRequiredInputs);
-  soy.asserts.assertType(goog.isString(opt_data.pathThemeImages) || (opt_data.pathThemeImages instanceof goog.soy.data.SanitizedContent), 'pathThemeImages', opt_data.pathThemeImages, 'string|goog.soy.data.SanitizedContent');
-  var pathThemeImages = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.pathThemeImages);
-  var strings = goog.asserts.assertObject(opt_data.strings, "expected parameter 'strings' of type [dataProviderParameterInput: string, dataProviderParameterInputDescription: string, dataProviderParameterOutput: string, dataProviderParameterOutputDescription: string, requiredField: string].");
-  ie_open('div');
+function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {boolean} */
+  var hasInputs = soy.asserts.assertType(goog.isBoolean(opt_data.hasInputs) || opt_data.hasInputs === 1 || opt_data.hasInputs === 0, 'hasInputs', opt_data.hasInputs, 'boolean');
+  /** @type {boolean} */
+  var hasRequiredInputs = soy.asserts.assertType(goog.isBoolean(opt_data.hasRequiredInputs) || opt_data.hasRequiredInputs === 1 || opt_data.hasRequiredInputs === 0, 'hasRequiredInputs', opt_data.hasRequiredInputs, 'boolean');
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var pathThemeImages = soy.asserts.assertType(goog.isString(opt_data.pathThemeImages) || opt_data.pathThemeImages instanceof goog.soy.data.SanitizedContent, 'pathThemeImages', opt_data.pathThemeImages, '!goog.soy.data.SanitizedContent|string');
+  /** @type {{dataProviderParameterInput: (!goog.soy.data.SanitizedContent|string), dataProviderParameterInputDescription: (!goog.soy.data.SanitizedContent|string), dataProviderParameterOutput: (!goog.soy.data.SanitizedContent|string), dataProviderParameterOutputDescription: (!goog.soy.data.SanitizedContent|string), requiredField: (!goog.soy.data.SanitizedContent|string)}} */
+  var strings = soy.asserts.assertType(goog.isObject(opt_data.strings), 'strings', opt_data.strings, '{dataProviderParameterInput: (!goog.soy.data.SanitizedContent|string), dataProviderParameterInputDescription: (!goog.soy.data.SanitizedContent|string), dataProviderParameterOutput: (!goog.soy.data.SanitizedContent|string), dataProviderParameterOutputDescription: (!goog.soy.data.SanitizedContent|string), requiredField: (!goog.soy.data.SanitizedContent|string)}');
+  incrementalDom.elementOpen('div');
     if (hasInputs) {
-      ie_open('div', null, null,
-          'class', 'data-provider-parameter-input-container');
+      incrementalDom.elementOpenStart('div');
+          incrementalDom.attr('class', 'data-provider-parameter-input-container');
+      incrementalDom.elementOpenEnd();
         if (hasRequiredInputs) {
-          ie_open('div', null, null,
-              'class', 'data-provider-label-container');
-            ie_open('label');
-              ie_open('p', null, null,
-                  'class', 'data-provider-parameter-input-required-field');
-                var dyn3 = strings.requiredField;
-                if (typeof dyn3 == 'function') dyn3(); else if (dyn3 != null) itext(dyn3);
-              ie_close('p');
-              itext(' ');
-              ie_open('svg', null, null,
-                  'aria-hidden', 'true',
-                  'class', 'lexicon-icon lexicon-icon-asterisk reference-mark');
-                ie_void('use', null, null,
-                    'xlink:href', pathThemeImages + '/lexicon/icons.svg#asterisk');
-              ie_close('svg');
-            ie_close('label');
-          ie_close('div');
+          incrementalDom.elementOpenStart('div');
+              incrementalDom.attr('class', 'data-provider-label-container');
+          incrementalDom.elementOpenEnd();
+            incrementalDom.elementOpen('label');
+              incrementalDom.elementOpenStart('p');
+                  incrementalDom.attr('class', 'data-provider-parameter-input-required-field');
+              incrementalDom.elementOpenEnd();
+                soyIdom.print(strings.requiredField);
+              incrementalDom.elementClose('p');
+              incrementalDom.text(' ');
+              incrementalDom.elementOpenStart('svg');
+                  incrementalDom.attr('aria-hidden', 'true');
+                  incrementalDom.attr('class', 'lexicon-icon lexicon-icon-asterisk reference-mark');
+              incrementalDom.elementOpenEnd();
+                incrementalDom.elementOpenStart('use');
+                    incrementalDom.attr('xlink:href', pathThemeImages + '/lexicon/icons.svg#asterisk');
+                incrementalDom.elementOpenEnd();
+                incrementalDom.elementClose('use');
+              incrementalDom.elementClose('svg');
+            incrementalDom.elementClose('label');
+          incrementalDom.elementClose('div');
         }
-        ie_open('div', null, null,
-            'class', 'data-provider-label-container');
-          ie_open('p', null, null,
-              'class', 'data-provider-parameter-input');
-            ie_open('b');
-              var dyn4 = strings.dataProviderParameterInput;
-              if (typeof dyn4 == 'function') dyn4(); else if (dyn4 != null) itext(dyn4);
-            ie_close('b');
-          ie_close('p');
-          ie_open('p', null, null,
-              'class', 'data-provider-parameter-input-description');
-            var dyn5 = strings.dataProviderParameterInputDescription;
-            if (typeof dyn5 == 'function') dyn5(); else if (dyn5 != null) itext(dyn5);
-          ie_close('p');
-        ie_close('div');
-        ie_void('div', null, null,
-            'class', 'data-provider-parameter-input-list row');
-      ie_close('div');
+        incrementalDom.elementOpenStart('div');
+            incrementalDom.attr('class', 'data-provider-label-container');
+        incrementalDom.elementOpenEnd();
+          incrementalDom.elementOpenStart('p');
+              incrementalDom.attr('class', 'data-provider-parameter-input');
+          incrementalDom.elementOpenEnd();
+            incrementalDom.elementOpen('b');
+              soyIdom.print(strings.dataProviderParameterInput);
+            incrementalDom.elementClose('b');
+          incrementalDom.elementClose('p');
+          incrementalDom.elementOpenStart('p');
+              incrementalDom.attr('class', 'data-provider-parameter-input-description');
+          incrementalDom.elementOpenEnd();
+            soyIdom.print(strings.dataProviderParameterInputDescription);
+          incrementalDom.elementClose('p');
+        incrementalDom.elementClose('div');
+        incrementalDom.elementOpenStart('div');
+            incrementalDom.attr('class', 'data-provider-parameter-input-list row');
+        incrementalDom.elementOpenEnd();
+        incrementalDom.elementClose('div');
+      incrementalDom.elementClose('div');
     }
-    ie_open('div', null, null,
-        'class', 'data-provider-parameter-output-container');
-      ie_open('div', null, null,
-          'class', 'data-provider-label-container');
-        ie_open('p', null, null,
-            'class', 'data-provider-parameter-output');
-          ie_open('b');
-            var dyn6 = strings.dataProviderParameterOutput;
-            if (typeof dyn6 == 'function') dyn6(); else if (dyn6 != null) itext(dyn6);
-          ie_close('b');
-        ie_close('p');
-        ie_open('p', null, null,
-            'class', 'data-provider-parameter-output-description');
-          var dyn7 = strings.dataProviderParameterOutputDescription;
-          if (typeof dyn7 == 'function') dyn7(); else if (dyn7 != null) itext(dyn7);
-        ie_close('p');
-      ie_close('div');
-      ie_void('div', null, null,
-          'class', 'data-provider-parameter-output-list row');
-    ie_close('div');
-  ie_close('div');
+    incrementalDom.elementOpenStart('div');
+        incrementalDom.attr('class', 'data-provider-parameter-output-container');
+    incrementalDom.elementOpenEnd();
+      incrementalDom.elementOpenStart('div');
+          incrementalDom.attr('class', 'data-provider-label-container');
+      incrementalDom.elementOpenEnd();
+        incrementalDom.elementOpenStart('p');
+            incrementalDom.attr('class', 'data-provider-parameter-output');
+        incrementalDom.elementOpenEnd();
+          incrementalDom.elementOpen('b');
+            soyIdom.print(strings.dataProviderParameterOutput);
+          incrementalDom.elementClose('b');
+        incrementalDom.elementClose('p');
+        incrementalDom.elementOpenStart('p');
+            incrementalDom.attr('class', 'data-provider-parameter-output-description');
+        incrementalDom.elementOpenEnd();
+          soyIdom.print(strings.dataProviderParameterOutputDescription);
+        incrementalDom.elementClose('p');
+      incrementalDom.elementClose('div');
+      incrementalDom.elementOpenStart('div');
+          incrementalDom.attr('class', 'data-provider-parameter-output-list row');
+      incrementalDom.elementOpenEnd();
+      incrementalDom.elementClose('div');
+    incrementalDom.elementClose('div');
+  incrementalDom.elementClose('div');
 }
 exports.render = $render;
+/**
+ * @typedef {{
+ *  hasInputs: boolean,
+ *  hasRequiredInputs: boolean,
+ *  pathThemeImages: (!goog.soy.data.SanitizedContent|string),
+ *  strings: {dataProviderParameterInput: (!goog.soy.data.SanitizedContent|string), dataProviderParameterInputDescription: (!goog.soy.data.SanitizedContent|string), dataProviderParameterOutput: (!goog.soy.data.SanitizedContent|string), dataProviderParameterOutputDescription: (!goog.soy.data.SanitizedContent|string), requiredField: (!goog.soy.data.SanitizedContent|string)}
+ * }}
+ */
+$render.Params;
 if (goog.DEBUG) {
   $render.soyTemplateName = 'DDMDataProviderParameter.render';
 }
 
-exports.render.params = ["hasInputs","hasRequiredInputs","pathThemeImages"];
-exports.render.types = {"hasInputs":"bool","hasRequiredInputs":"bool","pathThemeImages":"string"};
+exports.render.params = ["hasInputs","hasRequiredInputs","pathThemeImages","strings"];
+exports.render.types = {"hasInputs":"bool","hasRequiredInputs":"bool","pathThemeImages":"string","strings":"[requiredField: string, dataProviderParameterInput: string, dataProviderParameterInputDescription: string, dataProviderParameterOutput: string, dataProviderParameterOutputDescription: string]"};
 templates = exports;
 return exports;
 

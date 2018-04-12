@@ -1,9 +1,11 @@
 /* jshint ignore:start */
 import Component from 'metal-component';
 import Soy from 'metal-soy';
+
 var templates;
 goog.loadModule(function(exports) {
-
+var soy = goog.require('soy');
+var soydata = goog.require('soydata');
 // This file was automatically generated from field-options-toolbar.soy.
 // Please don't edit this file by hand.
 
@@ -14,59 +16,53 @@ goog.loadModule(function(exports) {
 
 goog.module('DDMFieldSettingsToolbar.incrementaldom');
 
-/** @suppress {extraRequire} */
-var soy = goog.require('soy');
-/** @suppress {extraRequire} */
-var soydata = goog.require('soydata');
-/** @suppress {extraRequire} */
-goog.require('goog.asserts');
-/** @suppress {extraRequire} */
+goog.require('goog.soy.data.SanitizedContent');
+var incrementalDom = goog.require('incrementaldom');
 goog.require('soy.asserts');
-/** @suppress {extraRequire} */
-goog.require('goog.i18n.bidi');
-/** @suppress {extraRequire} */
-goog.require('goog.string');
-var IncrementalDom = goog.require('incrementaldom');
-var ie_open = IncrementalDom.elementOpen;
-var ie_close = IncrementalDom.elementClose;
-var ie_void = IncrementalDom.elementVoid;
-var ie_open_start = IncrementalDom.elementOpenStart;
-var ie_open_end = IncrementalDom.elementOpenEnd;
-var itext = IncrementalDom.text;
-var iattr = IncrementalDom.attr;
+var soyIdom = goog.require('soy.idom');
 
 
 /**
  * @param {{
- *    toolbarButtonIcon: (!soydata.SanitizedHtml|string),
- *    toolbarTemplateContext: (null|undefined|{options: !Array<{buttonClass: string, handler: string, label: string}>})
+ *  toolbarButtonIcon: function(),
+ *  toolbarTemplateContext: (null|undefined|{options: !Array<{buttonClass: (!goog.soy.data.SanitizedContent|string), handler: (!goog.soy.data.SanitizedContent|string), label: (!goog.soy.data.SanitizedContent|string)}>})
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $render(opt_data, opt_ignored, opt_ijData) {
-  soy.asserts.assertType((opt_data.toolbarButtonIcon instanceof Function) || (opt_data.toolbarButtonIcon instanceof soydata.UnsanitizedText) || goog.isString(opt_data.toolbarButtonIcon), 'toolbarButtonIcon', opt_data.toolbarButtonIcon, 'Function');
-  var toolbarButtonIcon = /** @type {Function} */ (opt_data.toolbarButtonIcon);
-  soy.asserts.assertType(opt_data.toolbarTemplateContext == null || goog.isObject(opt_data.toolbarTemplateContext), 'toolbarTemplateContext', opt_data.toolbarTemplateContext, 'null|undefined|{options: !Array<{buttonClass: string, handler: string, label: string}>}');
-  var toolbarTemplateContext = /** @type {null|undefined|{options: !Array<{buttonClass: string, handler: string, label: string}>}} */ (opt_data.toolbarTemplateContext);
-  ie_open('div', null, null,
-      'class', 'dropdown dropdown-action show');
-    ie_open('a', null, null,
-        'aria-expanded', 'false',
-        'aria-haspopup', 'true',
-        'class', 'dropdown-toggle nav-link nav-link-monospaced sidebar-link',
-        'data-toggle', 'dropdown',
-        'href', 'javascript:;',
-        'id', 'dropdownFieldToolbar',
-        'role', 'button');
+function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {function()} */
+  var toolbarButtonIcon = soy.asserts.assertType(goog.isFunction(opt_data.toolbarButtonIcon), 'toolbarButtonIcon', opt_data.toolbarButtonIcon, 'function()');
+  /** @type {null|undefined|{options: !Array<{buttonClass: (!goog.soy.data.SanitizedContent|string), handler: (!goog.soy.data.SanitizedContent|string), label: (!goog.soy.data.SanitizedContent|string)}>}} */
+  var toolbarTemplateContext = soy.asserts.assertType(opt_data.toolbarTemplateContext == null || goog.isObject(opt_data.toolbarTemplateContext), 'toolbarTemplateContext', opt_data.toolbarTemplateContext, 'null|undefined|{options: !Array<{buttonClass: (!goog.soy.data.SanitizedContent|string), handler: (!goog.soy.data.SanitizedContent|string), label: (!goog.soy.data.SanitizedContent|string)}>}');
+  incrementalDom.elementOpenStart('div');
+      incrementalDom.attr('class', 'dropdown dropdown-action show');
+  incrementalDom.elementOpenEnd();
+    incrementalDom.elementOpenStart('a');
+        incrementalDom.attr('aria-expanded', 'false');
+        incrementalDom.attr('aria-haspopup', 'true');
+        incrementalDom.attr('class', 'dropdown-toggle nav-link nav-link-monospaced sidebar-link');
+        incrementalDom.attr('data-toggle', 'dropdown');
+        incrementalDom.attr('href', 'javascript:;');
+        incrementalDom.attr('id', 'dropdownFieldToolbar');
+        incrementalDom.attr('role', 'button');
+    incrementalDom.elementOpenEnd();
       toolbarButtonIcon();
-    ie_close('a');
+    incrementalDom.elementClose('a');
     $field_settings_toolbar_list({options: toolbarTemplateContext.options}, null, opt_ijData);
-  ie_close('div');
+  incrementalDom.elementClose('div');
 }
 exports.render = $render;
+/**
+ * @typedef {{
+ *  toolbarButtonIcon: function(),
+ *  toolbarTemplateContext: (null|undefined|{options: !Array<{buttonClass: (!goog.soy.data.SanitizedContent|string), handler: (!goog.soy.data.SanitizedContent|string), label: (!goog.soy.data.SanitizedContent|string)}>})
+ * }}
+ */
+$render.Params;
 if (goog.DEBUG) {
   $render.soyTemplateName = 'DDMFieldSettingsToolbar.render';
 }
@@ -74,27 +70,36 @@ if (goog.DEBUG) {
 
 /**
  * @param {{
- *    options: !Array<{buttonClass: string, handler: string, label: string}>
+ *  options: !Array<{buttonClass: (!goog.soy.data.SanitizedContent|string), handler: (!goog.soy.data.SanitizedContent|string), label: (!goog.soy.data.SanitizedContent|string)}>
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $field_settings_toolbar_list(opt_data, opt_ignored, opt_ijData) {
-  var options = goog.asserts.assertArray(opt_data.options, "expected parameter 'options' of type list<[buttonClass: string, handler: string, label: string]>.");
-  ie_open('div', null, null,
-      'aria-labelledby', 'dropdownFieldToolbar',
-      'class', 'dropdown-menu dropdown-menu-right');
-    var optionList61 = options;
-    var optionListLen61 = optionList61.length;
-    for (var optionIndex61 = 0; optionIndex61 < optionListLen61; optionIndex61++) {
-      var optionData61 = optionList61[optionIndex61];
-      $field_settings_toolbar_item({option: optionData61}, null, opt_ijData);
-    }
-  ie_close('div');
+function $field_settings_toolbar_list(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {!Array<{buttonClass: (!goog.soy.data.SanitizedContent|string), handler: (!goog.soy.data.SanitizedContent|string), label: (!goog.soy.data.SanitizedContent|string)}>} */
+  var options = soy.asserts.assertType(goog.isArray(opt_data.options), 'options', opt_data.options, '!Array<{buttonClass: (!goog.soy.data.SanitizedContent|string), handler: (!goog.soy.data.SanitizedContent|string), label: (!goog.soy.data.SanitizedContent|string)}>');
+  incrementalDom.elementOpenStart('div');
+      incrementalDom.attr('aria-labelledby', 'dropdownFieldToolbar');
+      incrementalDom.attr('class', 'dropdown-menu dropdown-menu-right');
+  incrementalDom.elementOpenEnd();
+    var option659List = options;
+    var option659ListLen = option659List.length;
+    for (var option659Index = 0; option659Index < option659ListLen; option659Index++) {
+        var option659Data = option659List[option659Index];
+        $field_settings_toolbar_item({option: option659Data}, null, opt_ijData);
+      }
+  incrementalDom.elementClose('div');
 }
 exports.field_settings_toolbar_list = $field_settings_toolbar_list;
+/**
+ * @typedef {{
+ *  options: !Array<{buttonClass: (!goog.soy.data.SanitizedContent|string), handler: (!goog.soy.data.SanitizedContent|string), label: (!goog.soy.data.SanitizedContent|string)}>
+ * }}
+ */
+$field_settings_toolbar_list.Params;
 if (goog.DEBUG) {
   $field_settings_toolbar_list.soyTemplateName = 'DDMFieldSettingsToolbar.field_settings_toolbar_list';
 }
@@ -102,35 +107,43 @@ if (goog.DEBUG) {
 
 /**
  * @param {{
- *    option: {buttonClass: string, handler: string, label: string}
+ *  option: {buttonClass: (!goog.soy.data.SanitizedContent|string), handler: (!goog.soy.data.SanitizedContent|string), label: (!goog.soy.data.SanitizedContent|string)}
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $field_settings_toolbar_item(opt_data, opt_ignored, opt_ijData) {
-  var option = goog.asserts.assertObject(opt_data.option, "expected parameter 'option' of type [buttonClass: string, handler: string, label: string].");
-  ie_open('a', null, null,
-      'class', 'dropdown-item ' + (option.buttonClass || ''),
-      'data-handler', option.handler,
-      'href', 'javascript:;',
-      'title', option.label);
-    var dyn8 = option.label;
-    if (typeof dyn8 == 'function') dyn8(); else if (dyn8 != null) itext(dyn8);
-  ie_close('a');
+function $field_settings_toolbar_item(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {{buttonClass: (!goog.soy.data.SanitizedContent|string), handler: (!goog.soy.data.SanitizedContent|string), label: (!goog.soy.data.SanitizedContent|string)}} */
+  var option = soy.asserts.assertType(goog.isObject(opt_data.option), 'option', opt_data.option, '{buttonClass: (!goog.soy.data.SanitizedContent|string), handler: (!goog.soy.data.SanitizedContent|string), label: (!goog.soy.data.SanitizedContent|string)}');
+  incrementalDom.elementOpenStart('a');
+      incrementalDom.attr('class', 'dropdown-item ' + (option.buttonClass || ''));
+      incrementalDom.attr('data-handler', option.handler);
+      incrementalDom.attr('href', 'javascript:;');
+      incrementalDom.attr('title', option.label);
+  incrementalDom.elementOpenEnd();
+    soyIdom.print(option.label);
+  incrementalDom.elementClose('a');
 }
 exports.field_settings_toolbar_item = $field_settings_toolbar_item;
+/**
+ * @typedef {{
+ *  option: {buttonClass: (!goog.soy.data.SanitizedContent|string), handler: (!goog.soy.data.SanitizedContent|string), label: (!goog.soy.data.SanitizedContent|string)}
+ * }}
+ */
+$field_settings_toolbar_item.Params;
 if (goog.DEBUG) {
   $field_settings_toolbar_item.soyTemplateName = 'DDMFieldSettingsToolbar.field_settings_toolbar_item';
 }
 
-exports.render.params = ["toolbarButtonIcon"];
-exports.render.types = {"toolbarButtonIcon":"html"};
-exports.field_settings_toolbar_list.params = [];
-exports.field_settings_toolbar_list.types = {};
-exports.field_settings_toolbar_item.params = [];
-exports.field_settings_toolbar_item.types = {};
+exports.render.params = ["toolbarButtonIcon","toolbarTemplateContext"];
+exports.render.types = {"toolbarButtonIcon":"html","toolbarTemplateContext":"[options: list<[buttonClass: string, handler: string, label: string]>]"};
+exports.field_settings_toolbar_list.params = ["options"];
+exports.field_settings_toolbar_list.types = {"options":"list<[buttonClass: string, handler: string, label: string]>"};
+exports.field_settings_toolbar_item.params = ["option"];
+exports.field_settings_toolbar_item.types = {"option":"[buttonClass: string, handler: string, label: string]"};
 templates = exports;
 return exports;
 

@@ -1,9 +1,11 @@
 /* jshint ignore:start */
 import Component from 'metal-component';
 import Soy from 'metal-soy';
+
 var templates;
 goog.loadModule(function(exports) {
-
+var soy = goog.require('soy');
+var soydata = goog.require('soydata');
 // This file was automatically generated from form.soy.
 // Please don't edit this file by hand.
 
@@ -16,36 +18,23 @@ goog.loadModule(function(exports) {
 
 goog.module('ddm.incrementaldom');
 
-/** @suppress {extraRequire} */
-var soy = goog.require('soy');
-/** @suppress {extraRequire} */
-var soydata = goog.require('soydata');
-/** @suppress {extraRequire} */
 goog.require('goog.asserts');
-/** @suppress {extraRequire} */
+goog.require('goog.soy.data.SanitizedContent');
+var incrementalDom = goog.require('incrementaldom');
+goog.require('soy');
 goog.require('soy.asserts');
-/** @suppress {extraRequire} */
-goog.require('goog.i18n.bidi');
-/** @suppress {extraRequire} */
-goog.require('goog.string');
-var IncrementalDom = goog.require('incrementaldom');
-var ie_open = IncrementalDom.elementOpen;
-var ie_close = IncrementalDom.elementClose;
-var ie_void = IncrementalDom.elementVoid;
-var ie_open_start = IncrementalDom.elementOpenStart;
-var ie_open_end = IncrementalDom.elementOpenEnd;
-var itext = IncrementalDom.text;
-var iattr = IncrementalDom.attr;
+var soyIdom = goog.require('soy.idom');
 
 
 /**
  * @param {Object<string, *>=} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function __deltemplate_s2_86478705(opt_data, opt_ignored, opt_ijData) {
+function __deltemplate_s2_86478705(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
 }
 exports.__deltemplate_s2_86478705 = __deltemplate_s2_86478705;
 if (goog.DEBUG) {
@@ -56,27 +45,36 @@ soy.$$registerDelegateFn(soy.$$getDelTemplateId('ddm.field.idom'), '', 0, __delt
 
 /**
  * @param {{
- *    fields: !Array<(?)>
+ *  fields: !Array<?>
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $fields(opt_data, opt_ignored, opt_ijData) {
-  var fields = goog.asserts.assertArray(opt_data.fields, "expected parameter 'fields' of type list<?>.");
-  var fieldList12 = fields;
-  var fieldListLen12 = fieldList12.length;
-  for (var fieldIndex12 = 0; fieldIndex12 < fieldListLen12; fieldIndex12++) {
-    var fieldData12 = fieldList12[fieldIndex12];
-    var variant__soy4 = fieldData12.type;
-    ie_open('div', null, null,
-        'class', 'clearfix ' + ((! fieldData12.visible) ? 'hide' : '') + ' lfr-ddm-form-field-container');
-      soy.$$getDelegateFn(soy.$$getDelTemplateId('ddm.field.idom'), variant__soy4, false)(fieldData12, null, opt_ijData);
-    ie_close('div');
-  }
+function $fields(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {!Array<?>} */
+  var fields = soy.asserts.assertType(goog.isArray(opt_data.fields), 'fields', opt_data.fields, '!Array<?>');
+  var field16List = fields;
+  var field16ListLen = field16List.length;
+  for (var field16Index = 0; field16Index < field16ListLen; field16Index++) {
+      var field16Data = field16List[field16Index];
+      var variant__soy8 = field16Data.type;
+      incrementalDom.elementOpenStart('div');
+          incrementalDom.attr('class', 'clearfix ' + (!field16Data.visible ? 'hide' : '') + ' lfr-ddm-form-field-container');
+      incrementalDom.elementOpenEnd();
+        soy.$$getDelegateFn(soy.$$getDelTemplateId('ddm.field.idom'), variant__soy8, false)(field16Data, null, opt_ijData);
+      incrementalDom.elementClose('div');
+    }
 }
 exports.fields = $fields;
+/**
+ * @typedef {{
+ *  fields: !Array<?>
+ * }}
+ */
+$fields.Params;
 if (goog.DEBUG) {
   $fields.soyTemplateName = 'ddm.fields';
 }
@@ -84,43 +82,58 @@ if (goog.DEBUG) {
 
 /**
  * @param {{
- *    containerId: string,
- *    context: (?),
- *    evaluatorURL: string,
- *    fieldTypes: string,
- *    portletNamespace: string,
- *    readOnly: boolean
+ *  containerId: (!goog.soy.data.SanitizedContent|string),
+ *  context: (?),
+ *  evaluatorURL: (!goog.soy.data.SanitizedContent|string),
+ *  fieldTypes: (!goog.soy.data.SanitizedContent|string),
+ *  portletNamespace: (!goog.soy.data.SanitizedContent|string),
+ *  readOnly: boolean
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $form_renderer_js(opt_data, opt_ignored, opt_ijData) {
-  soy.asserts.assertType(goog.isString(opt_data.containerId) || (opt_data.containerId instanceof goog.soy.data.SanitizedContent), 'containerId', opt_data.containerId, 'string|goog.soy.data.SanitizedContent');
-  var containerId = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.containerId);
-  soy.asserts.assertType(goog.isString(opt_data.evaluatorURL) || (opt_data.evaluatorURL instanceof goog.soy.data.SanitizedContent), 'evaluatorURL', opt_data.evaluatorURL, 'string|goog.soy.data.SanitizedContent');
-  var evaluatorURL = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.evaluatorURL);
-  soy.asserts.assertType(goog.isString(opt_data.fieldTypes) || (opt_data.fieldTypes instanceof goog.soy.data.SanitizedContent), 'fieldTypes', opt_data.fieldTypes, 'string|goog.soy.data.SanitizedContent');
-  var fieldTypes = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.fieldTypes);
-  soy.asserts.assertType(goog.isString(opt_data.portletNamespace) || (opt_data.portletNamespace instanceof goog.soy.data.SanitizedContent), 'portletNamespace', opt_data.portletNamespace, 'string|goog.soy.data.SanitizedContent');
-  var portletNamespace = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.portletNamespace);
-  soy.asserts.assertType(goog.isBoolean(opt_data.readOnly) || opt_data.readOnly === 1 || opt_data.readOnly === 0, 'readOnly', opt_data.readOnly, 'boolean');
-  var readOnly = /** @type {boolean} */ (!!opt_data.readOnly);
-  ie_open('script', null, null,
-      'type', 'text/javascript');
-    itext('AUI().use( \'liferay-ddm-form-renderer\', \'liferay-ddm-form-renderer-field\', \'liferay-ddm-soy-template-util\', function(A) {var SoyTemplateUtil = Liferay.DDM.SoyTemplateUtil; SoyTemplateUtil.loadModules( function() {Liferay.DDM.Renderer.FieldTypes.register(');
-    var dyn0 = fieldTypes;
-    if (typeof dyn0 == 'function') dyn0(); else if (dyn0 != null) itext(dyn0);
-    itext(');');
-    itext((goog.asserts.assert(($render_form(opt_data, null, opt_ijData)) != null), $render_form(opt_data, null, opt_ijData)));
-    itext('}); var destroyFormHandle = function(event) {var form = Liferay.component(\'');
-    var dyn1 = containerId;
-    if (typeof dyn1 == 'function') dyn1(); else if (dyn1 != null) itext(dyn1);
-    itext('DDMForm\'); var portlet = event.portlet; if (portlet && portlet.contains(form.get(\'container\'))) {form.destroy(); Liferay.detach(\'destroyPortlet\', destroyFormHandle);}}; Liferay.on(\'destroyPortlet\', destroyFormHandle);});');
-  ie_close('script');
+function $form_renderer_js(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var containerId = soy.asserts.assertType(goog.isString(opt_data.containerId) || opt_data.containerId instanceof goog.soy.data.SanitizedContent, 'containerId', opt_data.containerId, '!goog.soy.data.SanitizedContent|string');
+  /** @type {?} */
+  var context = opt_data.context;
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var evaluatorURL = soy.asserts.assertType(goog.isString(opt_data.evaluatorURL) || opt_data.evaluatorURL instanceof goog.soy.data.SanitizedContent, 'evaluatorURL', opt_data.evaluatorURL, '!goog.soy.data.SanitizedContent|string');
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var fieldTypes = soy.asserts.assertType(goog.isString(opt_data.fieldTypes) || opt_data.fieldTypes instanceof goog.soy.data.SanitizedContent, 'fieldTypes', opt_data.fieldTypes, '!goog.soy.data.SanitizedContent|string');
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var portletNamespace = soy.asserts.assertType(goog.isString(opt_data.portletNamespace) || opt_data.portletNamespace instanceof goog.soy.data.SanitizedContent, 'portletNamespace', opt_data.portletNamespace, '!goog.soy.data.SanitizedContent|string');
+  /** @type {boolean} */
+  var readOnly = soy.asserts.assertType(goog.isBoolean(opt_data.readOnly) || opt_data.readOnly === 1 || opt_data.readOnly === 0, 'readOnly', opt_data.readOnly, 'boolean');
+  incrementalDom.elementOpenStart('script');
+      incrementalDom.attr('type', 'text/javascript');
+  incrementalDom.elementOpenEnd();
+    incrementalDom.text('AUI().use( \'liferay-ddm-form-renderer\', \'liferay-ddm-form-renderer-field\', \'liferay-ddm-soy-template-util\', function(A) {var SoyTemplateUtil = Liferay.DDM.SoyTemplateUtil; SoyTemplateUtil.loadModules( function() {Liferay.DDM.Renderer.FieldTypes.register(');
+    soyIdom.print(fieldTypes);
+    incrementalDom.text(');');
+    var $tmp = $render_form(opt_data, null, opt_ijData);
+    goog.asserts.assert($tmp != null);
+    incrementalDom.text($tmp);
+    incrementalDom.text('}); var destroyFormHandle = function(event) {var form = Liferay.component(\'');
+    soyIdom.print(containerId);
+    incrementalDom.text('DDMForm\'); var portlet = event.portlet; if (portlet && portlet.contains(form.get(\'container\'))) {form.destroy(); Liferay.detach(\'destroyPortlet\', destroyFormHandle);}}; Liferay.on(\'destroyPortlet\', destroyFormHandle);});');
+  incrementalDom.elementClose('script');
 }
 exports.form_renderer_js = $form_renderer_js;
+/**
+ * @typedef {{
+ *  containerId: (!goog.soy.data.SanitizedContent|string),
+ *  context: (?),
+ *  evaluatorURL: (!goog.soy.data.SanitizedContent|string),
+ *  fieldTypes: (!goog.soy.data.SanitizedContent|string),
+ *  portletNamespace: (!goog.soy.data.SanitizedContent|string),
+ *  readOnly: boolean
+ * }}
+ */
+$form_renderer_js.Params;
 if (goog.DEBUG) {
   $form_renderer_js.soyTemplateName = 'ddm.form_renderer_js';
 }
@@ -128,45 +141,58 @@ if (goog.DEBUG) {
 
 /**
  * @param {{
- *    containerId: string,
- *    context: (?),
- *    evaluatorURL: string,
- *    portletNamespace: string,
- *    readOnly: boolean
+ *  containerId: (!goog.soy.data.SanitizedContent|string),
+ *  context: (?),
+ *  evaluatorURL: (!goog.soy.data.SanitizedContent|string),
+ *  portletNamespace: (!goog.soy.data.SanitizedContent|string),
+ *  readOnly: boolean
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $render_form(opt_data, opt_ignored, opt_ijData) {
+function $render_form(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
   var output = '';
-  soy.asserts.assertType(goog.isString(opt_data.containerId) || (opt_data.containerId instanceof goog.soy.data.SanitizedContent), 'containerId', opt_data.containerId, 'string|goog.soy.data.SanitizedContent');
-  var containerId = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.containerId);
-  soy.asserts.assertType(goog.isString(opt_data.evaluatorURL) || (opt_data.evaluatorURL instanceof goog.soy.data.SanitizedContent), 'evaluatorURL', opt_data.evaluatorURL, 'string|goog.soy.data.SanitizedContent');
-  var evaluatorURL = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.evaluatorURL);
-  soy.asserts.assertType(goog.isString(opt_data.portletNamespace) || (opt_data.portletNamespace instanceof goog.soy.data.SanitizedContent), 'portletNamespace', opt_data.portletNamespace, 'string|goog.soy.data.SanitizedContent');
-  var portletNamespace = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.portletNamespace);
-  soy.asserts.assertType(goog.isBoolean(opt_data.readOnly) || opt_data.readOnly === 1 || opt_data.readOnly === 0, 'readOnly', opt_data.readOnly, 'boolean');
-  var readOnly = /** @type {boolean} */ (!!opt_data.readOnly);
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var containerId = soy.asserts.assertType(goog.isString(opt_data.containerId) || opt_data.containerId instanceof goog.soy.data.SanitizedContent, 'containerId', opt_data.containerId, '!goog.soy.data.SanitizedContent|string');
+  /** @type {?} */
+  var context = opt_data.context;
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var evaluatorURL = soy.asserts.assertType(goog.isString(opt_data.evaluatorURL) || opt_data.evaluatorURL instanceof goog.soy.data.SanitizedContent, 'evaluatorURL', opt_data.evaluatorURL, '!goog.soy.data.SanitizedContent|string');
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var portletNamespace = soy.asserts.assertType(goog.isString(opt_data.portletNamespace) || opt_data.portletNamespace instanceof goog.soy.data.SanitizedContent, 'portletNamespace', opt_data.portletNamespace, '!goog.soy.data.SanitizedContent|string');
+  /** @type {boolean} */
+  var readOnly = soy.asserts.assertType(goog.isBoolean(opt_data.readOnly) || opt_data.readOnly === 1 || opt_data.readOnly === 0, 'readOnly', opt_data.readOnly, 'boolean');
   output += 'var form = Liferay.component( \'';
   output += containerId;
   output += 'DDMForm\', new Liferay.DDM.Renderer.Form({container: \'#';
   output += containerId;
   output += '\', context: ';
-  output += opt_data.context;
+  output += context;
   output += ', evaluatorURL: \'';
   output += evaluatorURL;
   output += '\', portletNamespace: \'';
   output += portletNamespace;
   output += '\', readOnly: ';
-  output += (readOnly) ? 'true' : 'false';
+  output += readOnly ? 'true' : 'false';
   output += '}).render() ); Liferay.fire( \'';
   output += containerId;
   output += 'DDMForm:render\',{form: form});';
   return output;
 }
 exports.render_form = $render_form;
+/**
+ * @typedef {{
+ *  containerId: (!goog.soy.data.SanitizedContent|string),
+ *  context: (?),
+ *  evaluatorURL: (!goog.soy.data.SanitizedContent|string),
+ *  portletNamespace: (!goog.soy.data.SanitizedContent|string),
+ *  readOnly: boolean
+ * }}
+ */
+$render_form.Params;
 if (goog.DEBUG) {
   $render_form.soyTemplateName = 'ddm.render_form';
 }
@@ -174,26 +200,35 @@ if (goog.DEBUG) {
 
 /**
  * @param {{
- *    rows: !Array<{columns: !Array<{fields: !Array<(?)>, size: number}>}>
+ *  rows: !Array<{columns: !Array<{fields: !Array<?>, size: number}>}>
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $form_rows(opt_data, opt_ignored, opt_ijData) {
-  var rows = goog.asserts.assertArray(opt_data.rows, "expected parameter 'rows' of type list<[columns: list<[fields: list<?>, size: int]>]>.");
-  var rowList47 = rows;
-  var rowListLen47 = rowList47.length;
-  for (var rowIndex47 = 0; rowIndex47 < rowListLen47; rowIndex47++) {
-    var rowData47 = rowList47[rowIndex47];
-    ie_open('div', null, null,
-        'class', 'row');
-      $form_row_columns(soy.$$assignDefaults({columns: rowData47.columns}, opt_data), null, opt_ijData);
-    ie_close('div');
-  }
+function $form_rows(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {!Array<{columns: !Array<{fields: !Array<?>, size: number}>}>} */
+  var rows = soy.asserts.assertType(goog.isArray(opt_data.rows), 'rows', opt_data.rows, '!Array<{columns: !Array<{fields: !Array<?>, size: number}>}>');
+  var row67List = rows;
+  var row67ListLen = row67List.length;
+  for (var row67Index = 0; row67Index < row67ListLen; row67Index++) {
+      var row67Data = row67List[row67Index];
+      incrementalDom.elementOpenStart('div');
+          incrementalDom.attr('class', 'row');
+      incrementalDom.elementOpenEnd();
+        $form_row_columns(soy.$$assignDefaults({columns: row67Data.columns}, opt_data), null, opt_ijData);
+      incrementalDom.elementClose('div');
+    }
 }
 exports.form_rows = $form_rows;
+/**
+ * @typedef {{
+ *  rows: !Array<{columns: !Array<{fields: !Array<?>, size: number}>}>
+ * }}
+ */
+$form_rows.Params;
 if (goog.DEBUG) {
   $form_rows.soyTemplateName = 'ddm.form_rows';
 }
@@ -201,21 +236,30 @@ if (goog.DEBUG) {
 
 /**
  * @param {{
- *    column: {fields: !Array<(?)>, size: number}
+ *  column: {fields: !Array<?>, size: number}
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $form_row_column(opt_data, opt_ignored, opt_ijData) {
-  var column = goog.asserts.assertObject(opt_data.column, "expected parameter 'column' of type [fields: list<?>, size: int].");
-  ie_open('div', null, null,
-      'class', 'col-md-' + column.size);
+function $form_row_column(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {{fields: !Array<?>, size: number}} */
+  var column = soy.asserts.assertType(goog.isObject(opt_data.column), 'column', opt_data.column, '{fields: !Array<?>, size: number}');
+  incrementalDom.elementOpenStart('div');
+      incrementalDom.attr('class', 'col-md-' + column.size);
+  incrementalDom.elementOpenEnd();
     $fields(soy.$$assignDefaults({fields: column.fields}, opt_data), null, opt_ijData);
-  ie_close('div');
+  incrementalDom.elementClose('div');
 }
 exports.form_row_column = $form_row_column;
+/**
+ * @typedef {{
+ *  column: {fields: !Array<?>, size: number}
+ * }}
+ */
+$form_row_column.Params;
 if (goog.DEBUG) {
   $form_row_column.soyTemplateName = 'ddm.form_row_column';
 }
@@ -223,23 +267,31 @@ if (goog.DEBUG) {
 
 /**
  * @param {{
- *    columns: !Array<{fields: !Array<(?)>, size: number}>
+ *  columns: !Array<{fields: !Array<?>, size: number}>
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $form_row_columns(opt_data, opt_ignored, opt_ijData) {
-  var columns = goog.asserts.assertArray(opt_data.columns, "expected parameter 'columns' of type list<[fields: list<?>, size: int]>.");
-  var columnList59 = columns;
-  var columnListLen59 = columnList59.length;
-  for (var columnIndex59 = 0; columnIndex59 < columnListLen59; columnIndex59++) {
-    var columnData59 = columnList59[columnIndex59];
-    $form_row_column(soy.$$assignDefaults({column: columnData59}, opt_data), null, opt_ijData);
-  }
+function $form_row_columns(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {!Array<{fields: !Array<?>, size: number}>} */
+  var columns = soy.asserts.assertType(goog.isArray(opt_data.columns), 'columns', opt_data.columns, '!Array<{fields: !Array<?>, size: number}>');
+  var column86List = columns;
+  var column86ListLen = column86List.length;
+  for (var column86Index = 0; column86Index < column86ListLen; column86Index++) {
+      var column86Data = column86List[column86Index];
+      $form_row_column(soy.$$assignDefaults({column: column86Data}, opt_data), null, opt_ijData);
+    }
 }
 exports.form_row_columns = $form_row_columns;
+/**
+ * @typedef {{
+ *  columns: !Array<{fields: !Array<?>, size: number}>
+ * }}
+ */
+$form_row_columns.Params;
 if (goog.DEBUG) {
   $form_row_columns.soyTemplateName = 'ddm.form_row_columns';
 }
@@ -247,24 +299,32 @@ if (goog.DEBUG) {
 
 /**
  * @param {{
- *    showRequiredFieldsWarning: boolean,
- *    requiredFieldsWarningMessageHTML: (!soydata.SanitizedHtml|string)
+ *  showRequiredFieldsWarning: boolean,
+ *  requiredFieldsWarningMessageHTML: function()
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $required_warning_message(opt_data, opt_ignored, opt_ijData) {
-  soy.asserts.assertType(goog.isBoolean(opt_data.showRequiredFieldsWarning) || opt_data.showRequiredFieldsWarning === 1 || opt_data.showRequiredFieldsWarning === 0, 'showRequiredFieldsWarning', opt_data.showRequiredFieldsWarning, 'boolean');
-  var showRequiredFieldsWarning = /** @type {boolean} */ (!!opt_data.showRequiredFieldsWarning);
-  soy.asserts.assertType((opt_data.requiredFieldsWarningMessageHTML instanceof Function) || (opt_data.requiredFieldsWarningMessageHTML instanceof soydata.UnsanitizedText) || goog.isString(opt_data.requiredFieldsWarningMessageHTML), 'requiredFieldsWarningMessageHTML', opt_data.requiredFieldsWarningMessageHTML, 'Function');
-  var requiredFieldsWarningMessageHTML = /** @type {Function} */ (opt_data.requiredFieldsWarningMessageHTML);
+function $required_warning_message(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {boolean} */
+  var showRequiredFieldsWarning = soy.asserts.assertType(goog.isBoolean(opt_data.showRequiredFieldsWarning) || opt_data.showRequiredFieldsWarning === 1 || opt_data.showRequiredFieldsWarning === 0, 'showRequiredFieldsWarning', opt_data.showRequiredFieldsWarning, 'boolean');
+  /** @type {function()} */
+  var requiredFieldsWarningMessageHTML = soy.asserts.assertType(goog.isFunction(opt_data.requiredFieldsWarningMessageHTML), 'requiredFieldsWarningMessageHTML', opt_data.requiredFieldsWarningMessageHTML, 'function()');
   if (showRequiredFieldsWarning) {
     requiredFieldsWarningMessageHTML();
   }
 }
 exports.required_warning_message = $required_warning_message;
+/**
+ * @typedef {{
+ *  showRequiredFieldsWarning: boolean,
+ *  requiredFieldsWarningMessageHTML: function()
+ * }}
+ */
+$required_warning_message.Params;
 if (goog.DEBUG) {
   $required_warning_message.soyTemplateName = 'ddm.required_warning_message';
 }
@@ -272,126 +332,153 @@ if (goog.DEBUG) {
 
 /**
  * @param {{
- *    containerId: string,
- *    pages: !Array<{description: string, rows: !Array<{columns: !Array<{fields: !Array<(?)>, size: number}>}>, showRequiredFieldsWarning: boolean, title: string}>,
- *    requiredFieldsWarningMessageHTML: (!soydata.SanitizedHtml|string),
- *    submitLabel: string,
- *    showSubmitButton: boolean,
- *    strings: {next: string, previous: string}
+ *  containerId: (!goog.soy.data.SanitizedContent|string),
+ *  pages: !Array<{description: (!goog.soy.data.SanitizedContent|string), rows: !Array<{columns: !Array<{fields: !Array<?>, size: number}>}>, showRequiredFieldsWarning: boolean, title: (!goog.soy.data.SanitizedContent|string)}>,
+ *  requiredFieldsWarningMessageHTML: function(),
+ *  submitLabel: (!goog.soy.data.SanitizedContent|string),
+ *  showSubmitButton: boolean,
+ *  strings: {next: (!goog.soy.data.SanitizedContent|string), previous: (!goog.soy.data.SanitizedContent|string)}
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $wizard_form(opt_data, opt_ignored, opt_ijData) {
-  soy.asserts.assertType(goog.isString(opt_data.containerId) || (opt_data.containerId instanceof goog.soy.data.SanitizedContent), 'containerId', opt_data.containerId, 'string|goog.soy.data.SanitizedContent');
-  var containerId = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.containerId);
-  var pages = goog.asserts.assertArray(opt_data.pages, "expected parameter 'pages' of type list<[description: string, rows: list<[columns: list<[fields: list<?>, size: int]>]>, showRequiredFieldsWarning: bool, title: string]>.");
-  soy.asserts.assertType((opt_data.requiredFieldsWarningMessageHTML instanceof Function) || (opt_data.requiredFieldsWarningMessageHTML instanceof soydata.UnsanitizedText) || goog.isString(opt_data.requiredFieldsWarningMessageHTML), 'requiredFieldsWarningMessageHTML', opt_data.requiredFieldsWarningMessageHTML, 'Function');
-  var requiredFieldsWarningMessageHTML = /** @type {Function} */ (opt_data.requiredFieldsWarningMessageHTML);
-  soy.asserts.assertType(goog.isString(opt_data.submitLabel) || (opt_data.submitLabel instanceof goog.soy.data.SanitizedContent), 'submitLabel', opt_data.submitLabel, 'string|goog.soy.data.SanitizedContent');
-  var submitLabel = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.submitLabel);
-  soy.asserts.assertType(goog.isBoolean(opt_data.showSubmitButton) || opt_data.showSubmitButton === 1 || opt_data.showSubmitButton === 0, 'showSubmitButton', opt_data.showSubmitButton, 'boolean');
-  var showSubmitButton = /** @type {boolean} */ (!!opt_data.showSubmitButton);
-  var strings = goog.asserts.assertObject(opt_data.strings, "expected parameter 'strings' of type [next: string, previous: string].");
-  ie_open('div', null, null,
-      'class', 'lfr-ddm-form-container',
-      'id', containerId);
-    ie_open('div', null, null,
-        'class', 'lfr-ddm-form-content');
-      if (pages.length > 1) {
-        ie_open('div', null, null,
-            'class', 'lfr-ddm-form-wizard');
-          ie_open('ul', null, null,
-              'class', 'multi-step-progress-bar multi-step-progress-bar-collapse');
-            var pageList81 = pages;
-            var pageListLen81 = pageList81.length;
-            for (var pageIndex81 = 0; pageIndex81 < pageListLen81; pageIndex81++) {
-              var pageData81 = pageList81[pageIndex81];
-              ie_open_start('li');
-                  if (pageIndex81 == 0) {
-                    iattr('class', 'active');
-                  }
-              ie_open_end();
-                ie_open('div', null, null,
-                    'class', 'progress-bar-title');
-                  var dyn2 = pageData81.title;
-                  if (typeof dyn2 == 'function') dyn2(); else if (dyn2 != null) itext(dyn2);
-                ie_close('div');
-                ie_void('div', null, null,
-                    'class', 'divider');
-                ie_open('div', null, null,
-                    'class', 'progress-bar-step');
-                  var dyn3 = pageIndex81 + 1;
-                  if (typeof dyn3 == 'function') dyn3(); else if (dyn3 != null) itext(dyn3);
-                ie_close('div');
-              ie_close('li');
-            }
-          ie_close('ul');
-        ie_close('div');
+function $wizard_form(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var containerId = soy.asserts.assertType(goog.isString(opt_data.containerId) || opt_data.containerId instanceof goog.soy.data.SanitizedContent, 'containerId', opt_data.containerId, '!goog.soy.data.SanitizedContent|string');
+  /** @type {!Array<{description: (!goog.soy.data.SanitizedContent|string), rows: !Array<{columns: !Array<{fields: !Array<?>, size: number}>}>, showRequiredFieldsWarning: boolean, title: (!goog.soy.data.SanitizedContent|string)}>} */
+  var pages = soy.asserts.assertType(goog.isArray(opt_data.pages), 'pages', opt_data.pages, '!Array<{description: (!goog.soy.data.SanitizedContent|string), rows: !Array<{columns: !Array<{fields: !Array<?>, size: number}>}>, showRequiredFieldsWarning: boolean, title: (!goog.soy.data.SanitizedContent|string)}>');
+  /** @type {function()} */
+  var requiredFieldsWarningMessageHTML = soy.asserts.assertType(goog.isFunction(opt_data.requiredFieldsWarningMessageHTML), 'requiredFieldsWarningMessageHTML', opt_data.requiredFieldsWarningMessageHTML, 'function()');
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var submitLabel = soy.asserts.assertType(goog.isString(opt_data.submitLabel) || opt_data.submitLabel instanceof goog.soy.data.SanitizedContent, 'submitLabel', opt_data.submitLabel, '!goog.soy.data.SanitizedContent|string');
+  /** @type {boolean} */
+  var showSubmitButton = soy.asserts.assertType(goog.isBoolean(opt_data.showSubmitButton) || opt_data.showSubmitButton === 1 || opt_data.showSubmitButton === 0, 'showSubmitButton', opt_data.showSubmitButton, 'boolean');
+  /** @type {{next: (!goog.soy.data.SanitizedContent|string), previous: (!goog.soy.data.SanitizedContent|string)}} */
+  var strings = soy.asserts.assertType(goog.isObject(opt_data.strings), 'strings', opt_data.strings, '{next: (!goog.soy.data.SanitizedContent|string), previous: (!goog.soy.data.SanitizedContent|string)}');
+  incrementalDom.elementOpenStart('div');
+      incrementalDom.attr('class', 'lfr-ddm-form-container');
+      incrementalDom.attr('id', containerId);
+  incrementalDom.elementOpenEnd();
+    incrementalDom.elementOpenStart('div');
+        incrementalDom.attr('class', 'lfr-ddm-form-content');
+    incrementalDom.elementOpenEnd();
+      if ((pages.length) > 1) {
+        incrementalDom.elementOpenStart('div');
+            incrementalDom.attr('class', 'lfr-ddm-form-wizard');
+        incrementalDom.elementOpenEnd();
+          incrementalDom.elementOpenStart('ul');
+              incrementalDom.attr('class', 'multi-step-progress-bar multi-step-progress-bar-collapse');
+          incrementalDom.elementOpenEnd();
+            var page122List = pages;
+            var page122ListLen = page122List.length;
+            for (var page122Index = 0; page122Index < page122ListLen; page122Index++) {
+                var page122Data = page122List[page122Index];
+                incrementalDom.elementOpenStart('li');
+                    if (page122Index == 0) {
+                      incrementalDom.attr('class', 'active');
+                    }
+                incrementalDom.elementOpenEnd();
+                  incrementalDom.elementOpenStart('div');
+                      incrementalDom.attr('class', 'progress-bar-title');
+                  incrementalDom.elementOpenEnd();
+                    soyIdom.print(page122Data.title);
+                  incrementalDom.elementClose('div');
+                  incrementalDom.elementOpenStart('div');
+                      incrementalDom.attr('class', 'divider');
+                  incrementalDom.elementOpenEnd();
+                  incrementalDom.elementClose('div');
+                  incrementalDom.elementOpenStart('div');
+                      incrementalDom.attr('class', 'progress-bar-step');
+                  incrementalDom.elementOpenEnd();
+                    soyIdom.print(page122Index + 1);
+                  incrementalDom.elementClose('div');
+                incrementalDom.elementClose('li');
+              }
+          incrementalDom.elementClose('ul');
+        incrementalDom.elementClose('div');
       }
-      ie_open('div', null, null,
-          'class', 'lfr-ddm-form-pages');
-        var pageList106 = pages;
-        var pageListLen106 = pageList106.length;
-        for (var pageIndex106 = 0; pageIndex106 < pageListLen106; pageIndex106++) {
-          var pageData106 = pageList106[pageIndex106];
-          ie_open('div', null, null,
-              'class', ((pageIndex106 == 0) ? 'active' : '') + ' lfr-ddm-form-page');
-            if (pageData106.title) {
-              ie_open('h3', null, null,
-                  'class', 'lfr-ddm-form-page-title');
-                var dyn4 = pageData106.title;
-                if (typeof dyn4 == 'function') dyn4(); else if (dyn4 != null) itext(dyn4);
-              ie_close('h3');
-            }
-            if (pageData106.description) {
-              ie_open('h4', null, null,
-                  'class', 'lfr-ddm-form-page-description');
-                var dyn5 = pageData106.description;
-                if (typeof dyn5 == 'function') dyn5(); else if (dyn5 != null) itext(dyn5);
-              ie_close('h4');
-            }
-            $required_warning_message(soy.$$assignDefaults({showRequiredFieldsWarning: pageData106.showRequiredFieldsWarning, requiredFieldsWarningMessageHTML: requiredFieldsWarningMessageHTML}, opt_data), null, opt_ijData);
-            $form_rows(soy.$$assignDefaults({rows: pageData106.rows}, opt_data), null, opt_ijData);
-          ie_close('div');
-        }
-      ie_close('div');
-    ie_close('div');
-    ie_open('div', null, null,
-        'class', 'lfr-ddm-form-pagination-controls');
-      ie_open('button', null, null,
-          'class', 'btn btn-primary hide lfr-ddm-form-pagination-prev',
-          'type', 'button');
-        ie_void('i', null, null,
-            'class', 'icon-angle-left');
-        itext(' ');
-        var dyn6 = strings.previous;
-        if (typeof dyn6 == 'function') dyn6(); else if (dyn6 != null) itext(dyn6);
-      ie_close('button');
-      ie_open('button', null, null,
-          'class', 'btn btn-primary' + ((pages.length == 1) ? ' hide' : '') + ' lfr-ddm-form-pagination-next pull-right',
-          'type', 'button');
-        var dyn7 = strings.next;
-        if (typeof dyn7 == 'function') dyn7(); else if (dyn7 != null) itext(dyn7);
-        itext(' ');
-        ie_void('i', null, null,
-            'class', 'icon-angle-right');
-      ie_close('button');
+      incrementalDom.elementOpenStart('div');
+          incrementalDom.attr('class', 'lfr-ddm-form-pages');
+      incrementalDom.elementOpenEnd();
+        var page150List = pages;
+        var page150ListLen = page150List.length;
+        for (var page150Index = 0; page150Index < page150ListLen; page150Index++) {
+            var page150Data = page150List[page150Index];
+            incrementalDom.elementOpenStart('div');
+                incrementalDom.attr('class', (page150Index == 0 ? 'active' : '') + ' lfr-ddm-form-page');
+            incrementalDom.elementOpenEnd();
+              if (page150Data.title) {
+                incrementalDom.elementOpenStart('h3');
+                    incrementalDom.attr('class', 'lfr-ddm-form-page-title');
+                incrementalDom.elementOpenEnd();
+                  soyIdom.print(page150Data.title);
+                incrementalDom.elementClose('h3');
+              }
+              if (page150Data.description) {
+                incrementalDom.elementOpenStart('h4');
+                    incrementalDom.attr('class', 'lfr-ddm-form-page-description');
+                incrementalDom.elementOpenEnd();
+                  soyIdom.print(page150Data.description);
+                incrementalDom.elementClose('h4');
+              }
+              $required_warning_message(soy.$$assignDefaults({showRequiredFieldsWarning: page150Data.showRequiredFieldsWarning, requiredFieldsWarningMessageHTML: requiredFieldsWarningMessageHTML}, opt_data), null, opt_ijData);
+              $form_rows(soy.$$assignDefaults({rows: page150Data.rows}, opt_data), null, opt_ijData);
+            incrementalDom.elementClose('div');
+          }
+      incrementalDom.elementClose('div');
+    incrementalDom.elementClose('div');
+    incrementalDom.elementOpenStart('div');
+        incrementalDom.attr('class', 'lfr-ddm-form-pagination-controls');
+    incrementalDom.elementOpenEnd();
+      incrementalDom.elementOpenStart('button');
+          incrementalDom.attr('class', 'btn btn-primary hide lfr-ddm-form-pagination-prev');
+          incrementalDom.attr('type', 'button');
+      incrementalDom.elementOpenEnd();
+        incrementalDom.elementOpenStart('i');
+            incrementalDom.attr('class', 'icon-angle-left');
+        incrementalDom.elementOpenEnd();
+        incrementalDom.elementClose('i');
+        incrementalDom.text(' ');
+        soyIdom.print(strings.previous);
+      incrementalDom.elementClose('button');
+      incrementalDom.elementOpenStart('button');
+          incrementalDom.attr('class', 'btn btn-primary' + ((pages.length) == 1 ? ' hide' : '') + ' lfr-ddm-form-pagination-next pull-right');
+          incrementalDom.attr('type', 'button');
+      incrementalDom.elementOpenEnd();
+        soyIdom.print(strings.next);
+        incrementalDom.text(' ');
+        incrementalDom.elementOpenStart('i');
+            incrementalDom.attr('class', 'icon-angle-right');
+        incrementalDom.elementOpenEnd();
+        incrementalDom.elementClose('i');
+      incrementalDom.elementClose('button');
       if (showSubmitButton) {
-        ie_open('button', null, null,
-            'class', 'btn btn-primary' + ((pages.length > 1) ? ' hide' : '') + ' lfr-ddm-form-submit pull-right',
-            'disabled', '',
-            'type', 'submit');
-          var dyn8 = submitLabel;
-          if (typeof dyn8 == 'function') dyn8(); else if (dyn8 != null) itext(dyn8);
-        ie_close('button');
+        incrementalDom.elementOpenStart('button');
+            incrementalDom.attr('class', 'btn btn-primary' + ((pages.length) > 1 ? ' hide' : '') + ' lfr-ddm-form-submit pull-right');
+            incrementalDom.attr('disabled', '');
+            incrementalDom.attr('type', 'submit');
+        incrementalDom.elementOpenEnd();
+          soyIdom.print(submitLabel);
+        incrementalDom.elementClose('button');
       }
-    ie_close('div');
-  ie_close('div');
+    incrementalDom.elementClose('div');
+  incrementalDom.elementClose('div');
 }
 exports.wizard_form = $wizard_form;
+/**
+ * @typedef {{
+ *  containerId: (!goog.soy.data.SanitizedContent|string),
+ *  pages: !Array<{description: (!goog.soy.data.SanitizedContent|string), rows: !Array<{columns: !Array<{fields: !Array<?>, size: number}>}>, showRequiredFieldsWarning: boolean, title: (!goog.soy.data.SanitizedContent|string)}>,
+ *  requiredFieldsWarningMessageHTML: function(),
+ *  submitLabel: (!goog.soy.data.SanitizedContent|string),
+ *  showSubmitButton: boolean,
+ *  strings: {next: (!goog.soy.data.SanitizedContent|string), previous: (!goog.soy.data.SanitizedContent|string)}
+ * }}
+ */
+$wizard_form.Params;
 if (goog.DEBUG) {
   $wizard_form.soyTemplateName = 'ddm.wizard_form';
 }
@@ -399,119 +486,144 @@ if (goog.DEBUG) {
 
 /**
  * @param {{
- *    containerId: string,
- *    pages: !Array<{description: string, rows: !Array<{columns: !Array<{fields: !Array<(?)>, size: number}>}>, showRequiredFieldsWarning: boolean, title: string}>,
- *    requiredFieldsWarningMessageHTML: (!soydata.SanitizedHtml|string),
- *    showSubmitButton: boolean,
- *    strings: {next: string, previous: string},
- *    submitLabel: string
+ *  containerId: (!goog.soy.data.SanitizedContent|string),
+ *  pages: !Array<{description: (!goog.soy.data.SanitizedContent|string), rows: !Array<{columns: !Array<{fields: !Array<?>, size: number}>}>, showRequiredFieldsWarning: boolean, title: (!goog.soy.data.SanitizedContent|string)}>,
+ *  requiredFieldsWarningMessageHTML: function(),
+ *  showSubmitButton: boolean,
+ *  strings: {next: (!goog.soy.data.SanitizedContent|string), previous: (!goog.soy.data.SanitizedContent|string)},
+ *  submitLabel: (!goog.soy.data.SanitizedContent|string)
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $paginated_form(opt_data, opt_ignored, opt_ijData) {
-  soy.asserts.assertType(goog.isString(opt_data.containerId) || (opt_data.containerId instanceof goog.soy.data.SanitizedContent), 'containerId', opt_data.containerId, 'string|goog.soy.data.SanitizedContent');
-  var containerId = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.containerId);
-  var pages = goog.asserts.assertArray(opt_data.pages, "expected parameter 'pages' of type list<[description: string, rows: list<[columns: list<[fields: list<?>, size: int]>]>, showRequiredFieldsWarning: bool, title: string]>.");
-  soy.asserts.assertType((opt_data.requiredFieldsWarningMessageHTML instanceof Function) || (opt_data.requiredFieldsWarningMessageHTML instanceof soydata.UnsanitizedText) || goog.isString(opt_data.requiredFieldsWarningMessageHTML), 'requiredFieldsWarningMessageHTML', opt_data.requiredFieldsWarningMessageHTML, 'Function');
-  var requiredFieldsWarningMessageHTML = /** @type {Function} */ (opt_data.requiredFieldsWarningMessageHTML);
-  soy.asserts.assertType(goog.isBoolean(opt_data.showSubmitButton) || opt_data.showSubmitButton === 1 || opt_data.showSubmitButton === 0, 'showSubmitButton', opt_data.showSubmitButton, 'boolean');
-  var showSubmitButton = /** @type {boolean} */ (!!opt_data.showSubmitButton);
-  var strings = goog.asserts.assertObject(opt_data.strings, "expected parameter 'strings' of type [next: string, previous: string].");
-  soy.asserts.assertType(goog.isString(opt_data.submitLabel) || (opt_data.submitLabel instanceof goog.soy.data.SanitizedContent), 'submitLabel', opt_data.submitLabel, 'string|goog.soy.data.SanitizedContent');
-  var submitLabel = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.submitLabel);
-  ie_open('div', null, null,
-      'class', 'lfr-ddm-form-container',
-      'id', containerId);
-    ie_open('div', null, null,
-        'class', 'lfr-ddm-form-content');
-      ie_open('div', null, null,
-          'class', 'lfr-ddm-form-pages');
-        var pageList152 = pages;
-        var pageListLen152 = pageList152.length;
-        for (var pageIndex152 = 0; pageIndex152 < pageListLen152; pageIndex152++) {
-          var pageData152 = pageList152[pageIndex152];
-          ie_open('div', null, null,
-              'class', ((pageIndex152 == 0) ? 'active' : '') + ' lfr-ddm-form-page');
-            if (pageData152.title) {
-              ie_open('h3', null, null,
-                  'class', 'lfr-ddm-form-page-title');
-                var dyn9 = pageData152.title;
-                if (typeof dyn9 == 'function') dyn9(); else if (dyn9 != null) itext(dyn9);
-              ie_close('h3');
-            }
-            if (pageData152.description) {
-              ie_open('h4', null, null,
-                  'class', 'lfr-ddm-form-page-description');
-                var dyn10 = pageData152.description;
-                if (typeof dyn10 == 'function') dyn10(); else if (dyn10 != null) itext(dyn10);
-              ie_close('h4');
-            }
-            $required_warning_message(soy.$$assignDefaults({showRequiredFieldsWarning: pageData152.showRequiredFieldsWarning, requiredFieldsWarningMessageHTML: requiredFieldsWarningMessageHTML}, opt_data), null, opt_ijData);
-            $form_rows(soy.$$assignDefaults({rows: pageData152.rows}, opt_data), null, opt_ijData);
-          ie_close('div');
-        }
-      ie_close('div');
-      if (pages.length > 1) {
-        ie_open('div', null, null,
-            'class', 'lfr-ddm-form-paginated');
-          ie_open('ul', null, null,
-              'class', 'pagination pagination-content');
-            var pageList165 = pages;
-            var pageListLen165 = pageList165.length;
-            for (var pageIndex165 = 0; pageIndex165 < pageListLen165; pageIndex165++) {
-              var pageData165 = pageList165[pageIndex165];
-              ie_open_start('li');
-                  if (pageIndex165 == 0) {
-                    iattr('class', 'active');
-                  }
-              ie_open_end();
-                ie_open('a', null, null,
-                    'href', '#');
-                  var dyn11 = pageIndex165 + 1;
-                  if (typeof dyn11 == 'function') dyn11(); else if (dyn11 != null) itext(dyn11);
-                ie_close('a');
-              ie_close('li');
-            }
-          ie_close('ul');
-        ie_close('div');
+function $paginated_form(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var containerId = soy.asserts.assertType(goog.isString(opt_data.containerId) || opt_data.containerId instanceof goog.soy.data.SanitizedContent, 'containerId', opt_data.containerId, '!goog.soy.data.SanitizedContent|string');
+  /** @type {!Array<{description: (!goog.soy.data.SanitizedContent|string), rows: !Array<{columns: !Array<{fields: !Array<?>, size: number}>}>, showRequiredFieldsWarning: boolean, title: (!goog.soy.data.SanitizedContent|string)}>} */
+  var pages = soy.asserts.assertType(goog.isArray(opt_data.pages), 'pages', opt_data.pages, '!Array<{description: (!goog.soy.data.SanitizedContent|string), rows: !Array<{columns: !Array<{fields: !Array<?>, size: number}>}>, showRequiredFieldsWarning: boolean, title: (!goog.soy.data.SanitizedContent|string)}>');
+  /** @type {function()} */
+  var requiredFieldsWarningMessageHTML = soy.asserts.assertType(goog.isFunction(opt_data.requiredFieldsWarningMessageHTML), 'requiredFieldsWarningMessageHTML', opt_data.requiredFieldsWarningMessageHTML, 'function()');
+  /** @type {boolean} */
+  var showSubmitButton = soy.asserts.assertType(goog.isBoolean(opt_data.showSubmitButton) || opt_data.showSubmitButton === 1 || opt_data.showSubmitButton === 0, 'showSubmitButton', opt_data.showSubmitButton, 'boolean');
+  /** @type {{next: (!goog.soy.data.SanitizedContent|string), previous: (!goog.soy.data.SanitizedContent|string)}} */
+  var strings = soy.asserts.assertType(goog.isObject(opt_data.strings), 'strings', opt_data.strings, '{next: (!goog.soy.data.SanitizedContent|string), previous: (!goog.soy.data.SanitizedContent|string)}');
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var submitLabel = soy.asserts.assertType(goog.isString(opt_data.submitLabel) || opt_data.submitLabel instanceof goog.soy.data.SanitizedContent, 'submitLabel', opt_data.submitLabel, '!goog.soy.data.SanitizedContent|string');
+  incrementalDom.elementOpenStart('div');
+      incrementalDom.attr('class', 'lfr-ddm-form-container');
+      incrementalDom.attr('id', containerId);
+  incrementalDom.elementOpenEnd();
+    incrementalDom.elementOpenStart('div');
+        incrementalDom.attr('class', 'lfr-ddm-form-content');
+    incrementalDom.elementOpenEnd();
+      incrementalDom.elementOpenStart('div');
+          incrementalDom.attr('class', 'lfr-ddm-form-pages');
+      incrementalDom.elementOpenEnd();
+        var page206List = pages;
+        var page206ListLen = page206List.length;
+        for (var page206Index = 0; page206Index < page206ListLen; page206Index++) {
+            var page206Data = page206List[page206Index];
+            incrementalDom.elementOpenStart('div');
+                incrementalDom.attr('class', (page206Index == 0 ? 'active' : '') + ' lfr-ddm-form-page');
+            incrementalDom.elementOpenEnd();
+              if (page206Data.title) {
+                incrementalDom.elementOpenStart('h3');
+                    incrementalDom.attr('class', 'lfr-ddm-form-page-title');
+                incrementalDom.elementOpenEnd();
+                  soyIdom.print(page206Data.title);
+                incrementalDom.elementClose('h3');
+              }
+              if (page206Data.description) {
+                incrementalDom.elementOpenStart('h4');
+                    incrementalDom.attr('class', 'lfr-ddm-form-page-description');
+                incrementalDom.elementOpenEnd();
+                  soyIdom.print(page206Data.description);
+                incrementalDom.elementClose('h4');
+              }
+              $required_warning_message(soy.$$assignDefaults({showRequiredFieldsWarning: page206Data.showRequiredFieldsWarning, requiredFieldsWarningMessageHTML: requiredFieldsWarningMessageHTML}, opt_data), null, opt_ijData);
+              $form_rows(soy.$$assignDefaults({rows: page206Data.rows}, opt_data), null, opt_ijData);
+            incrementalDom.elementClose('div');
+          }
+      incrementalDom.elementClose('div');
+      if ((pages.length) > 1) {
+        incrementalDom.elementOpenStart('div');
+            incrementalDom.attr('class', 'lfr-ddm-form-paginated');
+        incrementalDom.elementOpenEnd();
+          incrementalDom.elementOpenStart('ul');
+              incrementalDom.attr('class', 'pagination pagination-content');
+          incrementalDom.elementOpenEnd();
+            var page219List = pages;
+            var page219ListLen = page219List.length;
+            for (var page219Index = 0; page219Index < page219ListLen; page219Index++) {
+                var page219Data = page219List[page219Index];
+                incrementalDom.elementOpenStart('li');
+                    if (page219Index == 0) {
+                      incrementalDom.attr('class', 'active');
+                    }
+                incrementalDom.elementOpenEnd();
+                  incrementalDom.elementOpenStart('a');
+                      incrementalDom.attr('href', '#');
+                  incrementalDom.elementOpenEnd();
+                    soyIdom.print(page219Index + 1);
+                  incrementalDom.elementClose('a');
+                incrementalDom.elementClose('li');
+              }
+          incrementalDom.elementClose('ul');
+        incrementalDom.elementClose('div');
       }
-    ie_close('div');
-    ie_open('div', null, null,
-        'class', 'lfr-ddm-form-pagination-controls');
-      ie_open('button', null, null,
-          'class', 'btn btn-primary hide lfr-ddm-form-pagination-prev',
-          'type', 'button');
-        ie_void('i', null, null,
-            'class', 'icon-angle-left');
-        itext(' ');
-        var dyn12 = strings.previous;
-        if (typeof dyn12 == 'function') dyn12(); else if (dyn12 != null) itext(dyn12);
-      ie_close('button');
-      ie_open('button', null, null,
-          'class', 'btn btn-primary' + ((pages.length == 1) ? ' hide' : '') + ' lfr-ddm-form-pagination-next pull-right',
-          'type', 'button');
-        var dyn13 = strings.next;
-        if (typeof dyn13 == 'function') dyn13(); else if (dyn13 != null) itext(dyn13);
-        itext(' ');
-        ie_void('i', null, null,
-            'class', 'icon-angle-right');
-      ie_close('button');
+    incrementalDom.elementClose('div');
+    incrementalDom.elementOpenStart('div');
+        incrementalDom.attr('class', 'lfr-ddm-form-pagination-controls');
+    incrementalDom.elementOpenEnd();
+      incrementalDom.elementOpenStart('button');
+          incrementalDom.attr('class', 'btn btn-primary hide lfr-ddm-form-pagination-prev');
+          incrementalDom.attr('type', 'button');
+      incrementalDom.elementOpenEnd();
+        incrementalDom.elementOpenStart('i');
+            incrementalDom.attr('class', 'icon-angle-left');
+        incrementalDom.elementOpenEnd();
+        incrementalDom.elementClose('i');
+        incrementalDom.text(' ');
+        soyIdom.print(strings.previous);
+      incrementalDom.elementClose('button');
+      incrementalDom.elementOpenStart('button');
+          incrementalDom.attr('class', 'btn btn-primary' + ((pages.length) == 1 ? ' hide' : '') + ' lfr-ddm-form-pagination-next pull-right');
+          incrementalDom.attr('type', 'button');
+      incrementalDom.elementOpenEnd();
+        soyIdom.print(strings.next);
+        incrementalDom.text(' ');
+        incrementalDom.elementOpenStart('i');
+            incrementalDom.attr('class', 'icon-angle-right');
+        incrementalDom.elementOpenEnd();
+        incrementalDom.elementClose('i');
+      incrementalDom.elementClose('button');
       if (showSubmitButton) {
-        ie_open('button', null, null,
-            'class', 'btn btn-primary' + ((pages.length > 1) ? ' hide' : '') + ' lfr-ddm-form-submit pull-right',
-            'disabled', '',
-            'type', 'submit');
-          var dyn14 = submitLabel;
-          if (typeof dyn14 == 'function') dyn14(); else if (dyn14 != null) itext(dyn14);
-        ie_close('button');
+        incrementalDom.elementOpenStart('button');
+            incrementalDom.attr('class', 'btn btn-primary' + ((pages.length) > 1 ? ' hide' : '') + ' lfr-ddm-form-submit pull-right');
+            incrementalDom.attr('disabled', '');
+            incrementalDom.attr('type', 'submit');
+        incrementalDom.elementOpenEnd();
+          soyIdom.print(submitLabel);
+        incrementalDom.elementClose('button');
       }
-    ie_close('div');
-  ie_close('div');
+    incrementalDom.elementClose('div');
+  incrementalDom.elementClose('div');
 }
 exports.paginated_form = $paginated_form;
+/**
+ * @typedef {{
+ *  containerId: (!goog.soy.data.SanitizedContent|string),
+ *  pages: !Array<{description: (!goog.soy.data.SanitizedContent|string), rows: !Array<{columns: !Array<{fields: !Array<?>, size: number}>}>, showRequiredFieldsWarning: boolean, title: (!goog.soy.data.SanitizedContent|string)}>,
+ *  requiredFieldsWarningMessageHTML: function(),
+ *  showSubmitButton: boolean,
+ *  strings: {next: (!goog.soy.data.SanitizedContent|string), previous: (!goog.soy.data.SanitizedContent|string)},
+ *  submitLabel: (!goog.soy.data.SanitizedContent|string)
+ * }}
+ */
+$paginated_form.Params;
 if (goog.DEBUG) {
   $paginated_form.soyTemplateName = 'ddm.paginated_form';
 }
@@ -519,37 +631,49 @@ if (goog.DEBUG) {
 
 /**
  * @param {{
- *    containerId: string,
- *    pages: !Array<{description: string, rows: !Array<{columns: !Array<{fields: !Array<(?)>, size: number}>}>, showRequiredFieldsWarning: boolean, title: string}>,
- *    requiredFieldsWarningMessageHTML: (!soydata.SanitizedHtml|string)
+ *  containerId: (!goog.soy.data.SanitizedContent|string),
+ *  pages: !Array<{description: (!goog.soy.data.SanitizedContent|string), rows: !Array<{columns: !Array<{fields: !Array<?>, size: number}>}>, showRequiredFieldsWarning: boolean, title: (!goog.soy.data.SanitizedContent|string)}>,
+ *  requiredFieldsWarningMessageHTML: function()
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $simple_form(opt_data, opt_ignored, opt_ijData) {
-  soy.asserts.assertType(goog.isString(opt_data.containerId) || (opt_data.containerId instanceof goog.soy.data.SanitizedContent), 'containerId', opt_data.containerId, 'string|goog.soy.data.SanitizedContent');
-  var containerId = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.containerId);
-  var pages = goog.asserts.assertArray(opt_data.pages, "expected parameter 'pages' of type list<[description: string, rows: list<[columns: list<[fields: list<?>, size: int]>]>, showRequiredFieldsWarning: bool, title: string]>.");
-  soy.asserts.assertType((opt_data.requiredFieldsWarningMessageHTML instanceof Function) || (opt_data.requiredFieldsWarningMessageHTML instanceof soydata.UnsanitizedText) || goog.isString(opt_data.requiredFieldsWarningMessageHTML), 'requiredFieldsWarningMessageHTML', opt_data.requiredFieldsWarningMessageHTML, 'Function');
-  var requiredFieldsWarningMessageHTML = /** @type {Function} */ (opt_data.requiredFieldsWarningMessageHTML);
-  ie_open('div', null, null,
-      'class', 'lfr-ddm-form-container',
-      'id', containerId);
-    ie_open('div', null, null,
-        'class', 'lfr-ddm-form-fields');
-      var pageList196 = pages;
-      var pageListLen196 = pageList196.length;
-      for (var pageIndex196 = 0; pageIndex196 < pageListLen196; pageIndex196++) {
-        var pageData196 = pageList196[pageIndex196];
-        $required_warning_message(soy.$$assignDefaults({showRequiredFieldsWarning: pageData196.showRequiredFieldsWarning, requiredFieldsWarningMessageHTML: requiredFieldsWarningMessageHTML}, opt_data), null, opt_ijData);
-        $form_rows(soy.$$assignDefaults({rows: pageData196.rows}, opt_data), null, opt_ijData);
-      }
-    ie_close('div');
-  ie_close('div');
+function $simple_form(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var containerId = soy.asserts.assertType(goog.isString(opt_data.containerId) || opt_data.containerId instanceof goog.soy.data.SanitizedContent, 'containerId', opt_data.containerId, '!goog.soy.data.SanitizedContent|string');
+  /** @type {!Array<{description: (!goog.soy.data.SanitizedContent|string), rows: !Array<{columns: !Array<{fields: !Array<?>, size: number}>}>, showRequiredFieldsWarning: boolean, title: (!goog.soy.data.SanitizedContent|string)}>} */
+  var pages = soy.asserts.assertType(goog.isArray(opt_data.pages), 'pages', opt_data.pages, '!Array<{description: (!goog.soy.data.SanitizedContent|string), rows: !Array<{columns: !Array<{fields: !Array<?>, size: number}>}>, showRequiredFieldsWarning: boolean, title: (!goog.soy.data.SanitizedContent|string)}>');
+  /** @type {function()} */
+  var requiredFieldsWarningMessageHTML = soy.asserts.assertType(goog.isFunction(opt_data.requiredFieldsWarningMessageHTML), 'requiredFieldsWarningMessageHTML', opt_data.requiredFieldsWarningMessageHTML, 'function()');
+  incrementalDom.elementOpenStart('div');
+      incrementalDom.attr('class', 'lfr-ddm-form-container');
+      incrementalDom.attr('id', containerId);
+  incrementalDom.elementOpenEnd();
+    incrementalDom.elementOpenStart('div');
+        incrementalDom.attr('class', 'lfr-ddm-form-fields');
+    incrementalDom.elementOpenEnd();
+      var page257List = pages;
+      var page257ListLen = page257List.length;
+      for (var page257Index = 0; page257Index < page257ListLen; page257Index++) {
+          var page257Data = page257List[page257Index];
+          $required_warning_message(soy.$$assignDefaults({showRequiredFieldsWarning: page257Data.showRequiredFieldsWarning, requiredFieldsWarningMessageHTML: requiredFieldsWarningMessageHTML}, opt_data), null, opt_ijData);
+          $form_rows(soy.$$assignDefaults({rows: page257Data.rows}, opt_data), null, opt_ijData);
+        }
+    incrementalDom.elementClose('div');
+  incrementalDom.elementClose('div');
 }
 exports.simple_form = $simple_form;
+/**
+ * @typedef {{
+ *  containerId: (!goog.soy.data.SanitizedContent|string),
+ *  pages: !Array<{description: (!goog.soy.data.SanitizedContent|string), rows: !Array<{columns: !Array<{fields: !Array<?>, size: number}>}>, showRequiredFieldsWarning: boolean, title: (!goog.soy.data.SanitizedContent|string)}>,
+ *  requiredFieldsWarningMessageHTML: function()
+ * }}
+ */
+$simple_form.Params;
 if (goog.DEBUG) {
   $simple_form.soyTemplateName = 'ddm.simple_form';
 }
@@ -557,58 +681,73 @@ if (goog.DEBUG) {
 
 /**
  * @param {{
- *    containerId: string,
- *    pages: !Array<{description: string, rows: !Array<{columns: !Array<{fields: !Array<(?)>, size: number}>}>, showRequiredFieldsWarning: boolean, title: string}>,
- *    requiredFieldsWarningMessageHTML: (!soydata.SanitizedHtml|string)
+ *  containerId: (!goog.soy.data.SanitizedContent|string),
+ *  pages: !Array<{description: (!goog.soy.data.SanitizedContent|string), rows: !Array<{columns: !Array<{fields: !Array<?>, size: number}>}>, showRequiredFieldsWarning: boolean, title: (!goog.soy.data.SanitizedContent|string)}>,
+ *  requiredFieldsWarningMessageHTML: function()
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $tabbed_form(opt_data, opt_ignored, opt_ijData) {
-  soy.asserts.assertType(goog.isString(opt_data.containerId) || (opt_data.containerId instanceof goog.soy.data.SanitizedContent), 'containerId', opt_data.containerId, 'string|goog.soy.data.SanitizedContent');
-  var containerId = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.containerId);
-  var pages = goog.asserts.assertArray(opt_data.pages, "expected parameter 'pages' of type list<[description: string, rows: list<[columns: list<[fields: list<?>, size: int]>]>, showRequiredFieldsWarning: bool, title: string]>.");
-  soy.asserts.assertType((opt_data.requiredFieldsWarningMessageHTML instanceof Function) || (opt_data.requiredFieldsWarningMessageHTML instanceof soydata.UnsanitizedText) || goog.isString(opt_data.requiredFieldsWarningMessageHTML), 'requiredFieldsWarningMessageHTML', opt_data.requiredFieldsWarningMessageHTML, 'Function');
-  var requiredFieldsWarningMessageHTML = /** @type {Function} */ (opt_data.requiredFieldsWarningMessageHTML);
-  ie_open('div', null, null,
-      'class', 'lfr-ddm-form-container',
-      'id', containerId);
-    ie_open('div', null, null,
-        'class', 'lfr-ddm-form-tabs');
-      ie_open('ul', null, null,
-          'class', 'nav navbar-nav');
-        var pageList206 = pages;
-        var pageListLen206 = pageList206.length;
-        for (var pageIndex206 = 0; pageIndex206 < pageListLen206; pageIndex206++) {
-          var pageData206 = pageList206[pageIndex206];
-          ie_open('li');
-            ie_open('a', null, null,
-                'href', 'javascript:;');
-              var dyn15 = pageData206.title;
-              if (typeof dyn15 == 'function') dyn15(); else if (dyn15 != null) itext(dyn15);
-            ie_close('a');
-          ie_close('li');
-        }
-      ie_close('ul');
-      ie_open('div', null, null,
-          'class', 'tab-content lfr-ddm-form-tabs-content');
-        var pageList220 = pages;
-        var pageListLen220 = pageList220.length;
-        for (var pageIndex220 = 0; pageIndex220 < pageListLen220; pageIndex220++) {
-          var pageData220 = pageList220[pageIndex220];
-          ie_open('div', null, null,
-              'class', 'lfr-ddm-form-page tab-pane ' + ((pageIndex220 == 0) ? 'active' : ''));
-            $required_warning_message(soy.$$assignDefaults({showRequiredFieldsWarning: pageData220.showRequiredFieldsWarning, requiredFieldsWarningMessageHTML: requiredFieldsWarningMessageHTML}, opt_data), null, opt_ijData);
-            $form_rows(soy.$$assignDefaults({rows: pageData220.rows}, opt_data), null, opt_ijData);
-          ie_close('div');
-        }
-      ie_close('div');
-    ie_close('div');
-  ie_close('div');
+function $tabbed_form(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var containerId = soy.asserts.assertType(goog.isString(opt_data.containerId) || opt_data.containerId instanceof goog.soy.data.SanitizedContent, 'containerId', opt_data.containerId, '!goog.soy.data.SanitizedContent|string');
+  /** @type {!Array<{description: (!goog.soy.data.SanitizedContent|string), rows: !Array<{columns: !Array<{fields: !Array<?>, size: number}>}>, showRequiredFieldsWarning: boolean, title: (!goog.soy.data.SanitizedContent|string)}>} */
+  var pages = soy.asserts.assertType(goog.isArray(opt_data.pages), 'pages', opt_data.pages, '!Array<{description: (!goog.soy.data.SanitizedContent|string), rows: !Array<{columns: !Array<{fields: !Array<?>, size: number}>}>, showRequiredFieldsWarning: boolean, title: (!goog.soy.data.SanitizedContent|string)}>');
+  /** @type {function()} */
+  var requiredFieldsWarningMessageHTML = soy.asserts.assertType(goog.isFunction(opt_data.requiredFieldsWarningMessageHTML), 'requiredFieldsWarningMessageHTML', opt_data.requiredFieldsWarningMessageHTML, 'function()');
+  incrementalDom.elementOpenStart('div');
+      incrementalDom.attr('class', 'lfr-ddm-form-container');
+      incrementalDom.attr('id', containerId);
+  incrementalDom.elementOpenEnd();
+    incrementalDom.elementOpenStart('div');
+        incrementalDom.attr('class', 'lfr-ddm-form-tabs');
+    incrementalDom.elementOpenEnd();
+      incrementalDom.elementOpenStart('ul');
+          incrementalDom.attr('class', 'nav navbar-nav');
+      incrementalDom.elementOpenEnd();
+        var page271List = pages;
+        var page271ListLen = page271List.length;
+        for (var page271Index = 0; page271Index < page271ListLen; page271Index++) {
+            var page271Data = page271List[page271Index];
+            incrementalDom.elementOpen('li');
+              incrementalDom.elementOpenStart('a');
+                  incrementalDom.attr('href', 'javascript:;');
+              incrementalDom.elementOpenEnd();
+                soyIdom.print(page271Data.title);
+              incrementalDom.elementClose('a');
+            incrementalDom.elementClose('li');
+          }
+      incrementalDom.elementClose('ul');
+      incrementalDom.elementOpenStart('div');
+          incrementalDom.attr('class', 'tab-content lfr-ddm-form-tabs-content');
+      incrementalDom.elementOpenEnd();
+        var page286List = pages;
+        var page286ListLen = page286List.length;
+        for (var page286Index = 0; page286Index < page286ListLen; page286Index++) {
+            var page286Data = page286List[page286Index];
+            incrementalDom.elementOpenStart('div');
+                incrementalDom.attr('class', 'lfr-ddm-form-page tab-pane ' + (page286Index == 0 ? 'active' : ''));
+            incrementalDom.elementOpenEnd();
+              $required_warning_message(soy.$$assignDefaults({showRequiredFieldsWarning: page286Data.showRequiredFieldsWarning, requiredFieldsWarningMessageHTML: requiredFieldsWarningMessageHTML}, opt_data), null, opt_ijData);
+              $form_rows(soy.$$assignDefaults({rows: page286Data.rows}, opt_data), null, opt_ijData);
+            incrementalDom.elementClose('div');
+          }
+      incrementalDom.elementClose('div');
+    incrementalDom.elementClose('div');
+  incrementalDom.elementClose('div');
 }
 exports.tabbed_form = $tabbed_form;
+/**
+ * @typedef {{
+ *  containerId: (!goog.soy.data.SanitizedContent|string),
+ *  pages: !Array<{description: (!goog.soy.data.SanitizedContent|string), rows: !Array<{columns: !Array<{fields: !Array<?>, size: number}>}>, showRequiredFieldsWarning: boolean, title: (!goog.soy.data.SanitizedContent|string)}>,
+ *  requiredFieldsWarningMessageHTML: function()
+ * }}
+ */
+$tabbed_form.Params;
 if (goog.DEBUG) {
   $tabbed_form.soyTemplateName = 'ddm.tabbed_form';
 }
@@ -616,19 +755,30 @@ if (goog.DEBUG) {
 
 /**
  * @param {{
- *    active: (?)
+ *  active: (?)
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $tabbed_form_frame(opt_data, opt_ignored, opt_ijData) {
+function $tabbed_form_frame(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
   opt_data = opt_data || {};
-  ie_void('div', null, null,
-      'class', 'lfr-ddm-form-page tab-pane ' + ((opt_data.active) ? 'active' : ''));
+  /** @type {?} */
+  var active = opt_data.active;
+  incrementalDom.elementOpenStart('div');
+      incrementalDom.attr('class', 'lfr-ddm-form-page tab-pane ' + (active ? 'active' : ''));
+  incrementalDom.elementOpenEnd();
+  incrementalDom.elementClose('div');
 }
 exports.tabbed_form_frame = $tabbed_form_frame;
+/**
+ * @typedef {{
+ *  active: (?)
+ * }}
+ */
+$tabbed_form_frame.Params;
 if (goog.DEBUG) {
   $tabbed_form_frame.soyTemplateName = 'ddm.tabbed_form_frame';
 }
@@ -636,36 +786,48 @@ if (goog.DEBUG) {
 
 /**
  * @param {{
- *    containerId: string,
- *    pages: !Array<{description: string, rows: !Array<{columns: !Array<{fields: !Array<(?)>, size: number}>}>, showRequiredFieldsWarning: boolean, title: string}>
+ *  containerId: (!goog.soy.data.SanitizedContent|string),
+ *  pages: !Array<{description: (!goog.soy.data.SanitizedContent|string), rows: !Array<{columns: !Array<{fields: !Array<?>, size: number}>}>, showRequiredFieldsWarning: boolean, title: (!goog.soy.data.SanitizedContent|string)}>
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $settings_form(opt_data, opt_ignored, opt_ijData) {
-  soy.asserts.assertType(goog.isString(opt_data.containerId) || (opt_data.containerId instanceof goog.soy.data.SanitizedContent), 'containerId', opt_data.containerId, 'string|goog.soy.data.SanitizedContent');
-  var containerId = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.containerId);
-  var pages = goog.asserts.assertArray(opt_data.pages, "expected parameter 'pages' of type list<[description: string, rows: list<[columns: list<[fields: list<?>, size: int]>]>, showRequiredFieldsWarning: bool, title: string]>.");
-  ie_open('div', null, null,
-      'class', 'lfr-ddm-form-container',
-      'id', containerId);
-    ie_open('div', null, null,
-        'class', 'lfr-ddm-settings-form');
-      var pageList244 = pages;
-      var pageListLen244 = pageList244.length;
-      for (var pageIndex244 = 0; pageIndex244 < pageListLen244; pageIndex244++) {
-        var pageData244 = pageList244[pageIndex244];
-        ie_open('div', null, null,
-            'class', 'lfr-ddm-form-page' + ((pageIndex244 == 0) ? ' active basic' : '') + ((pageIndex244 == pageListLen244 - 1) ? ' advanced' : ''));
-          $form_rows(soy.$$assignDefaults({rows: pageData244.rows}, opt_data), null, opt_ijData);
-        ie_close('div');
-      }
-    ie_close('div');
-  ie_close('div');
+function $settings_form(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var containerId = soy.asserts.assertType(goog.isString(opt_data.containerId) || opt_data.containerId instanceof goog.soy.data.SanitizedContent, 'containerId', opt_data.containerId, '!goog.soy.data.SanitizedContent|string');
+  /** @type {!Array<{description: (!goog.soy.data.SanitizedContent|string), rows: !Array<{columns: !Array<{fields: !Array<?>, size: number}>}>, showRequiredFieldsWarning: boolean, title: (!goog.soy.data.SanitizedContent|string)}>} */
+  var pages = soy.asserts.assertType(goog.isArray(opt_data.pages), 'pages', opt_data.pages, '!Array<{description: (!goog.soy.data.SanitizedContent|string), rows: !Array<{columns: !Array<{fields: !Array<?>, size: number}>}>, showRequiredFieldsWarning: boolean, title: (!goog.soy.data.SanitizedContent|string)}>');
+  incrementalDom.elementOpenStart('div');
+      incrementalDom.attr('class', 'lfr-ddm-form-container');
+      incrementalDom.attr('id', containerId);
+  incrementalDom.elementOpenEnd();
+    incrementalDom.elementOpenStart('div');
+        incrementalDom.attr('class', 'lfr-ddm-settings-form');
+    incrementalDom.elementOpenEnd();
+      var page315List = pages;
+      var page315ListLen = page315List.length;
+      for (var page315Index = 0; page315Index < page315ListLen; page315Index++) {
+          var page315Data = page315List[page315Index];
+          incrementalDom.elementOpenStart('div');
+              incrementalDom.attr('class', 'lfr-ddm-form-page' + (page315Index == 0 ? ' active basic' : '') + (page315Index == page315ListLen - 1 ? ' advanced' : ''));
+          incrementalDom.elementOpenEnd();
+            $form_rows(soy.$$assignDefaults({rows: page315Data.rows}, opt_data), null, opt_ijData);
+          incrementalDom.elementClose('div');
+        }
+    incrementalDom.elementClose('div');
+  incrementalDom.elementClose('div');
 }
 exports.settings_form = $settings_form;
+/**
+ * @typedef {{
+ *  containerId: (!goog.soy.data.SanitizedContent|string),
+ *  pages: !Array<{description: (!goog.soy.data.SanitizedContent|string), rows: !Array<{columns: !Array<{fields: !Array<?>, size: number}>}>, showRequiredFieldsWarning: boolean, title: (!goog.soy.data.SanitizedContent|string)}>
+ * }}
+ */
+$settings_form.Params;
 if (goog.DEBUG) {
   $settings_form.soyTemplateName = 'ddm.settings_form';
 }
@@ -676,26 +838,26 @@ exports.form_renderer_js.params = ["containerId","context","evaluatorURL","field
 exports.form_renderer_js.types = {"containerId":"string","context":"?","evaluatorURL":"string","fieldTypes":"string","portletNamespace":"string","readOnly":"bool"};
 exports.render_form.params = ["containerId","context","evaluatorURL","portletNamespace","readOnly"];
 exports.render_form.types = {"containerId":"string","context":"?","evaluatorURL":"string","portletNamespace":"string","readOnly":"bool"};
-exports.form_rows.params = [];
-exports.form_rows.types = {};
-exports.form_row_column.params = [];
-exports.form_row_column.types = {};
-exports.form_row_columns.params = [];
-exports.form_row_columns.types = {};
+exports.form_rows.params = ["rows"];
+exports.form_rows.types = {"rows":"list<[columns: list<[size: int, fields: list<?>]>]>"};
+exports.form_row_column.params = ["column"];
+exports.form_row_column.types = {"column":"[size: int, fields: list<?>]"};
+exports.form_row_columns.params = ["columns"];
+exports.form_row_columns.types = {"columns":"list<[size: int, fields: list<?>]>"};
 exports.required_warning_message.params = ["showRequiredFieldsWarning","requiredFieldsWarningMessageHTML"];
 exports.required_warning_message.types = {"showRequiredFieldsWarning":"bool","requiredFieldsWarningMessageHTML":"html"};
-exports.wizard_form.params = ["containerId","requiredFieldsWarningMessageHTML","submitLabel","showSubmitButton"];
-exports.wizard_form.types = {"containerId":"string","requiredFieldsWarningMessageHTML":"html","submitLabel":"string","showSubmitButton":"bool"};
-exports.paginated_form.params = ["containerId","requiredFieldsWarningMessageHTML","showSubmitButton","submitLabel"];
-exports.paginated_form.types = {"containerId":"string","requiredFieldsWarningMessageHTML":"html","showSubmitButton":"bool","submitLabel":"string"};
-exports.simple_form.params = ["containerId","requiredFieldsWarningMessageHTML"];
-exports.simple_form.types = {"containerId":"string","requiredFieldsWarningMessageHTML":"html"};
-exports.tabbed_form.params = ["containerId","requiredFieldsWarningMessageHTML"];
-exports.tabbed_form.types = {"containerId":"string","requiredFieldsWarningMessageHTML":"html"};
+exports.wizard_form.params = ["containerId","pages","requiredFieldsWarningMessageHTML","submitLabel","showSubmitButton","strings"];
+exports.wizard_form.types = {"containerId":"string","pages":"list<[\n\t\ttitle: string,\n\t\tdescription: string,\n\t\tshowRequiredFieldsWarning: bool,\n\t\trows: list<[columns: list<[size: int, fields: list<?>]>]>\n\t]>","requiredFieldsWarningMessageHTML":"html","submitLabel":"string","showSubmitButton":"bool","strings":"[previous: string, next: string]"};
+exports.paginated_form.params = ["containerId","pages","requiredFieldsWarningMessageHTML","showSubmitButton","strings","submitLabel"];
+exports.paginated_form.types = {"containerId":"string","pages":"list<[\n\t\ttitle: string,\n\t\tdescription: string,\n\t\tshowRequiredFieldsWarning: bool,\n\t\trows: list<[columns: list<[size: int, fields: list<?>]>]>\n\t]>","requiredFieldsWarningMessageHTML":"html","showSubmitButton":"bool","strings":"[previous: string, next: string]","submitLabel":"string"};
+exports.simple_form.params = ["containerId","pages","requiredFieldsWarningMessageHTML"];
+exports.simple_form.types = {"containerId":"string","pages":"list<[\n\t\ttitle: string,\n\t\tdescription: string,\n\t\tshowRequiredFieldsWarning: bool,\n\t\trows: list<[columns: list<[size: int, fields: list<?>]>]>\n\t]>","requiredFieldsWarningMessageHTML":"html"};
+exports.tabbed_form.params = ["containerId","pages","requiredFieldsWarningMessageHTML"];
+exports.tabbed_form.types = {"containerId":"string","pages":"list<[\n\t\ttitle: string,\n\t\tdescription: string,\n\t\tshowRequiredFieldsWarning: bool,\n\t\trows: list<[columns: list<[size: int, fields: list<?>]>]>\n\t]>","requiredFieldsWarningMessageHTML":"html"};
 exports.tabbed_form_frame.params = ["active"];
 exports.tabbed_form_frame.types = {"active":"?"};
-exports.settings_form.params = ["containerId"];
-exports.settings_form.types = {"containerId":"string"};
+exports.settings_form.params = ["containerId","pages"];
+exports.settings_form.types = {"containerId":"string","pages":"list<[\n\t\ttitle: string,\n\t\tdescription: string,\n\t\tshowRequiredFieldsWarning: bool,\n\t\trows: list<[columns: list<[size: int, fields: list<?>]>]>\n\t]>"};
 templates = exports;
 return exports;
 

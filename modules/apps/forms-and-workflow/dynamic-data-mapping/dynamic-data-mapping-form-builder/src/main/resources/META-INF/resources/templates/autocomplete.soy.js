@@ -1,9 +1,11 @@
 /* jshint ignore:start */
 import Component from 'metal-component';
 import Soy from 'metal-soy';
+
 var templates;
 goog.loadModule(function(exports) {
-
+var soy = goog.require('soy');
+var soydata = goog.require('soydata');
 // This file was automatically generated from autocomplete.soy.
 // Please don't edit this file by hand.
 
@@ -14,62 +16,58 @@ goog.loadModule(function(exports) {
 
 goog.module('DDMAutoComplete.incrementaldom');
 
-/** @suppress {extraRequire} */
-var soy = goog.require('soy');
-/** @suppress {extraRequire} */
-var soydata = goog.require('soydata');
-/** @suppress {extraRequire} */
-goog.require('goog.asserts');
-/** @suppress {extraRequire} */
+var incrementalDom = goog.require('incrementaldom');
 goog.require('soy.asserts');
-/** @suppress {extraRequire} */
-goog.require('goog.i18n.bidi');
-/** @suppress {extraRequire} */
-goog.require('goog.string');
-var IncrementalDom = goog.require('incrementaldom');
-var ie_open = IncrementalDom.elementOpen;
-var ie_close = IncrementalDom.elementClose;
-var ie_void = IncrementalDom.elementVoid;
-var ie_open_start = IncrementalDom.elementOpenStart;
-var ie_open_end = IncrementalDom.elementOpenEnd;
-var itext = IncrementalDom.text;
-var iattr = IncrementalDom.attr;
+var soyIdom = goog.require('soy.idom');
 
 
 /**
  * @param {{
- *    addAutoCompleteButton: (!soydata.SanitizedHtml|string),
- *    label: (!soydata.SanitizedHtml|string)
+ *  addAutoCompleteButton: function(),
+ *  label: function()
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $actionPanel(opt_data, opt_ignored, opt_ijData) {
-  soy.asserts.assertType((opt_data.addAutoCompleteButton instanceof Function) || (opt_data.addAutoCompleteButton instanceof soydata.UnsanitizedText) || goog.isString(opt_data.addAutoCompleteButton), 'addAutoCompleteButton', opt_data.addAutoCompleteButton, 'Function');
-  var addAutoCompleteButton = /** @type {Function} */ (opt_data.addAutoCompleteButton);
-  soy.asserts.assertType((opt_data.label instanceof Function) || (opt_data.label instanceof soydata.UnsanitizedText) || goog.isString(opt_data.label), 'label', opt_data.label, 'Function');
-  var label = /** @type {Function} */ (opt_data.label);
-  ie_open('div', null, null,
-      'class', 'row');
-    ie_open('div', null, null,
-        'class', 'col-md-12');
-      ie_open('div', null, null,
-          'class', 'autocomplete-action-panel cursor-pointer panel panel-default');
-        ie_open('div', null, null,
-            'class', 'panel-body');
+function $actionPanel(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {function()} */
+  var addAutoCompleteButton = soy.asserts.assertType(goog.isFunction(opt_data.addAutoCompleteButton), 'addAutoCompleteButton', opt_data.addAutoCompleteButton, 'function()');
+  /** @type {function()} */
+  var label = soy.asserts.assertType(goog.isFunction(opt_data.label), 'label', opt_data.label, 'function()');
+  incrementalDom.elementOpenStart('div');
+      incrementalDom.attr('class', 'row');
+  incrementalDom.elementOpenEnd();
+    incrementalDom.elementOpenStart('div');
+        incrementalDom.attr('class', 'col-md-12');
+    incrementalDom.elementOpenEnd();
+      incrementalDom.elementOpenStart('div');
+          incrementalDom.attr('class', 'autocomplete-action-panel cursor-pointer panel panel-default');
+      incrementalDom.elementOpenEnd();
+        incrementalDom.elementOpenStart('div');
+            incrementalDom.attr('class', 'panel-body');
+        incrementalDom.elementOpenEnd();
           label();
-          ie_open('span', null, null,
-              'class', 'pull-right');
+          incrementalDom.elementOpenStart('span');
+              incrementalDom.attr('class', 'pull-right');
+          incrementalDom.elementOpenEnd();
             addAutoCompleteButton();
-          ie_close('span');
-        ie_close('div');
-      ie_close('div');
-    ie_close('div');
-  ie_close('div');
+          incrementalDom.elementClose('span');
+        incrementalDom.elementClose('div');
+      incrementalDom.elementClose('div');
+    incrementalDom.elementClose('div');
+  incrementalDom.elementClose('div');
 }
 exports.actionPanel = $actionPanel;
+/**
+ * @typedef {{
+ *  addAutoCompleteButton: function(),
+ *  label: function()
+ * }}
+ */
+$actionPanel.Params;
 if (goog.DEBUG) {
   $actionPanel.soyTemplateName = 'DDMAutoComplete.actionPanel';
 }
@@ -77,47 +75,64 @@ if (goog.DEBUG) {
 
 /**
  * @param {{
- *    backButton: (!soydata.SanitizedHtml|string),
- *    label: (!soydata.SanitizedHtml|string)
+ *  backButton: function(),
+ *  label: function()
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $container(opt_data, opt_ignored, opt_ijData) {
-  soy.asserts.assertType((opt_data.backButton instanceof Function) || (opt_data.backButton instanceof soydata.UnsanitizedText) || goog.isString(opt_data.backButton), 'backButton', opt_data.backButton, 'Function');
-  var backButton = /** @type {Function} */ (opt_data.backButton);
-  soy.asserts.assertType((opt_data.label instanceof Function) || (opt_data.label instanceof soydata.UnsanitizedText) || goog.isString(opt_data.label), 'label', opt_data.label, 'Function');
-  var label = /** @type {Function} */ (opt_data.label);
-  ie_open('div', null, null,
-      'class', 'autocomplete-container');
-    ie_open('header', null, null,
-        'class', 'header-toolbar');
-      ie_open('div', null, null,
-          'class', 'toolbar-group');
-        ie_open('div', null, null,
-            'class', 'toolbar-group-content');
-          ie_open('a', null, null,
-              'class', 'autocomplete-header-back',
-              'href', 'javascript:;');
+function $container(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {function()} */
+  var backButton = soy.asserts.assertType(goog.isFunction(opt_data.backButton), 'backButton', opt_data.backButton, 'function()');
+  /** @type {function()} */
+  var label = soy.asserts.assertType(goog.isFunction(opt_data.label), 'label', opt_data.label, 'function()');
+  incrementalDom.elementOpenStart('div');
+      incrementalDom.attr('class', 'autocomplete-container');
+  incrementalDom.elementOpenEnd();
+    incrementalDom.elementOpenStart('header');
+        incrementalDom.attr('class', 'header-toolbar');
+    incrementalDom.elementOpenEnd();
+      incrementalDom.elementOpenStart('div');
+          incrementalDom.attr('class', 'toolbar-group');
+      incrementalDom.elementOpenEnd();
+        incrementalDom.elementOpenStart('div');
+            incrementalDom.attr('class', 'toolbar-group-content');
+        incrementalDom.elementOpenEnd();
+          incrementalDom.elementOpenStart('a');
+              incrementalDom.attr('class', 'autocomplete-header-back');
+              incrementalDom.attr('href', 'javascript:;');
+          incrementalDom.elementOpenEnd();
             backButton();
-          ie_close('a');
-        ie_close('div');
-      ie_close('div');
-      ie_open('div', null, null,
-          'class', 'toolbar-group-expand-text');
-        ie_open('span', null, null,
-            'title', 'Autocomplete');
+          incrementalDom.elementClose('a');
+        incrementalDom.elementClose('div');
+      incrementalDom.elementClose('div');
+      incrementalDom.elementOpenStart('div');
+          incrementalDom.attr('class', 'toolbar-group-expand-text');
+      incrementalDom.elementOpenEnd();
+        incrementalDom.elementOpenStart('span');
+            incrementalDom.attr('title', 'Autocomplete');
+        incrementalDom.elementOpenEnd();
           label();
-        ie_close('span');
-      ie_close('div');
-    ie_close('header');
-    ie_void('div', null, null,
-        'class', 'autocomplete-body');
-  ie_close('div');
+        incrementalDom.elementClose('span');
+      incrementalDom.elementClose('div');
+    incrementalDom.elementClose('header');
+    incrementalDom.elementOpenStart('div');
+        incrementalDom.attr('class', 'autocomplete-body');
+    incrementalDom.elementOpenEnd();
+    incrementalDom.elementClose('div');
+  incrementalDom.elementClose('div');
 }
 exports.container = $container;
+/**
+ * @typedef {{
+ *  backButton: function(),
+ *  label: function()
+ * }}
+ */
+$container.Params;
 if (goog.DEBUG) {
   $container.soyTemplateName = 'DDMAutoComplete.container';
 }

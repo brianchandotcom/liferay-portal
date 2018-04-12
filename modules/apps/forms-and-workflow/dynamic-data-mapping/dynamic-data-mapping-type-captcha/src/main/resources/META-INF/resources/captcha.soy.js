@@ -1,9 +1,11 @@
 /* jshint ignore:start */
 import Component from 'metal-component';
 import Soy from 'metal-soy';
+
 var templates;
 goog.loadModule(function(exports) {
-
+var soy = goog.require('soy');
+var soydata = goog.require('soydata');
 // This file was automatically generated from captcha.soy.
 // Please don't edit this file by hand.
 
@@ -15,36 +17,22 @@ goog.loadModule(function(exports) {
 
 goog.module('DDMCaptcha.incrementaldom');
 
-/** @suppress {extraRequire} */
-var soy = goog.require('soy');
-/** @suppress {extraRequire} */
-var soydata = goog.require('soydata');
-/** @suppress {extraRequire} */
-goog.require('goog.asserts');
-/** @suppress {extraRequire} */
+goog.require('goog.soy.data.SanitizedContent');
+var incrementalDom = goog.require('incrementaldom');
+goog.require('soy');
 goog.require('soy.asserts');
-/** @suppress {extraRequire} */
-goog.require('goog.i18n.bidi');
-/** @suppress {extraRequire} */
-goog.require('goog.string');
-var IncrementalDom = goog.require('incrementaldom');
-var ie_open = IncrementalDom.elementOpen;
-var ie_close = IncrementalDom.elementClose;
-var ie_void = IncrementalDom.elementVoid;
-var ie_open_start = IncrementalDom.elementOpenStart;
-var ie_open_end = IncrementalDom.elementOpenEnd;
-var itext = IncrementalDom.text;
-var iattr = IncrementalDom.attr;
+var soyIdom = goog.require('soy.idom');
 
 
 /**
  * @param {Object<string, *>=} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function __deltemplate_s2_ffe4bfd9(opt_data, opt_ignored, opt_ijData) {
+function __deltemplate_s2_ffe4bfd9(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
   opt_data = opt_data || {};
   $render(opt_data, null, opt_ijData);
 }
@@ -57,33 +45,44 @@ soy.$$registerDelegateFn(soy.$$getDelTemplateId('ddm.field.idom'), 'captcha', 0,
 
 /**
  * @param {{
- *    html: (!soydata.SanitizedHtml|string),
- *    name: string,
- *    visible: boolean
+ *  html: function(),
+ *  name: (!goog.soy.data.SanitizedContent|string),
+ *  visible: boolean
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $render(opt_data, opt_ignored, opt_ijData) {
-  soy.asserts.assertType((opt_data.html instanceof Function) || (opt_data.html instanceof soydata.UnsanitizedText) || goog.isString(opt_data.html), 'html', opt_data.html, 'Function');
-  var html = /** @type {Function} */ (opt_data.html);
-  soy.asserts.assertType(goog.isString(opt_data.name) || (opt_data.name instanceof goog.soy.data.SanitizedContent), 'name', opt_data.name, 'string|goog.soy.data.SanitizedContent');
-  var name = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.name);
-  soy.asserts.assertType(goog.isBoolean(opt_data.visible) || opt_data.visible === 1 || opt_data.visible === 0, 'visible', opt_data.visible, 'boolean');
-  var visible = /** @type {boolean} */ (!!opt_data.visible);
-  ie_open('div', null, null,
-      'class', 'form-group' + (visible ? '' : ' hide') + ' liferay-ddm-form-field-captcha',
-      'data-fieldname', name);
+function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {function()} */
+  var html = soy.asserts.assertType(goog.isFunction(opt_data.html), 'html', opt_data.html, 'function()');
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var name = soy.asserts.assertType(goog.isString(opt_data.name) || opt_data.name instanceof goog.soy.data.SanitizedContent, 'name', opt_data.name, '!goog.soy.data.SanitizedContent|string');
+  /** @type {boolean} */
+  var visible = soy.asserts.assertType(goog.isBoolean(opt_data.visible) || opt_data.visible === 1 || opt_data.visible === 0, 'visible', opt_data.visible, 'boolean');
+  incrementalDom.elementOpenStart('div');
+      incrementalDom.attr('class', 'form-group' + (visible ? '' : ' hide') + ' liferay-ddm-form-field-captcha');
+      incrementalDom.attr('data-fieldname', name);
+  incrementalDom.elementOpenEnd();
     html();
-    ie_open('input', null, null,
-        'id', name,
-        'type', 'hidden');
-    ie_close('input');
-  ie_close('div');
+    incrementalDom.elementOpenStart('input');
+        incrementalDom.attr('id', name);
+        incrementalDom.attr('type', 'hidden');
+    incrementalDom.elementOpenEnd();
+    incrementalDom.elementClose('input');
+  incrementalDom.elementClose('div');
 }
 exports.render = $render;
+/**
+ * @typedef {{
+ *  html: function(),
+ *  name: (!goog.soy.data.SanitizedContent|string),
+ *  visible: boolean
+ * }}
+ */
+$render.Params;
 if (goog.DEBUG) {
   $render.soyTemplateName = 'DDMCaptcha.render';
 }

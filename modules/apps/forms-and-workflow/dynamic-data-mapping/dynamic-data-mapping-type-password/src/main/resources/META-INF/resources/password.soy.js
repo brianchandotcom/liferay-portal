@@ -1,9 +1,11 @@
 /* jshint ignore:start */
 import Component from 'metal-component';
 import Soy from 'metal-soy';
+
 var templates;
 goog.loadModule(function(exports) {
-
+var soy = goog.require('soy');
+var soydata = goog.require('soydata');
 // This file was automatically generated from password.soy.
 // Please don't edit this file by hand.
 
@@ -15,36 +17,22 @@ goog.loadModule(function(exports) {
 
 goog.module('DDMPassword.incrementaldom');
 
-/** @suppress {extraRequire} */
-var soy = goog.require('soy');
-/** @suppress {extraRequire} */
-var soydata = goog.require('soydata');
-/** @suppress {extraRequire} */
-goog.require('goog.asserts');
-/** @suppress {extraRequire} */
+goog.require('goog.soy.data.SanitizedContent');
+var incrementalDom = goog.require('incrementaldom');
+goog.require('soy');
 goog.require('soy.asserts');
-/** @suppress {extraRequire} */
-goog.require('goog.i18n.bidi');
-/** @suppress {extraRequire} */
-goog.require('goog.string');
-var IncrementalDom = goog.require('incrementaldom');
-var ie_open = IncrementalDom.elementOpen;
-var ie_close = IncrementalDom.elementClose;
-var ie_void = IncrementalDom.elementVoid;
-var ie_open_start = IncrementalDom.elementOpenStart;
-var ie_open_end = IncrementalDom.elementOpenEnd;
-var itext = IncrementalDom.text;
-var iattr = IncrementalDom.attr;
+var soyIdom = goog.require('soy.idom');
 
 
 /**
  * @param {Object<string, *>=} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function __deltemplate_s2_316d888b(opt_data, opt_ignored, opt_ijData) {
+function __deltemplate_s2_316d888b(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
   opt_data = opt_data || {};
   $render(opt_data, null, opt_ijData);
 }
@@ -57,116 +45,145 @@ soy.$$registerDelegateFn(soy.$$getDelTemplateId('ddm.field.idom'), 'password', 0
 
 /**
  * @param {{
- *    name: string,
- *    pathThemeImages: string,
- *    placeholder: string,
- *    readOnly: boolean,
- *    required: boolean,
- *    showLabel: boolean,
- *    value: string,
- *    visible: boolean,
- *    dir: (null|string|undefined),
- *    label: (null|string|undefined),
- *    tip: (null|string|undefined),
- *    tooltip: (null|string|undefined)
+ *  name: (!goog.soy.data.SanitizedContent|string),
+ *  pathThemeImages: (!goog.soy.data.SanitizedContent|string),
+ *  placeholder: (!goog.soy.data.SanitizedContent|string),
+ *  readOnly: boolean,
+ *  required: boolean,
+ *  showLabel: boolean,
+ *  value: (!goog.soy.data.SanitizedContent|string),
+ *  visible: boolean,
+ *  dir: (!goog.soy.data.SanitizedContent|null|string|undefined),
+ *  label: (!goog.soy.data.SanitizedContent|null|string|undefined),
+ *  tip: (!goog.soy.data.SanitizedContent|null|string|undefined),
+ *  tooltip: (!goog.soy.data.SanitizedContent|null|string|undefined)
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $render(opt_data, opt_ignored, opt_ijData) {
-  soy.asserts.assertType(goog.isString(opt_data.name) || (opt_data.name instanceof goog.soy.data.SanitizedContent), 'name', opt_data.name, 'string|goog.soy.data.SanitizedContent');
-  var name = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.name);
-  soy.asserts.assertType(goog.isString(opt_data.pathThemeImages) || (opt_data.pathThemeImages instanceof goog.soy.data.SanitizedContent), 'pathThemeImages', opt_data.pathThemeImages, 'string|goog.soy.data.SanitizedContent');
-  var pathThemeImages = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.pathThemeImages);
-  soy.asserts.assertType(goog.isString(opt_data.placeholder) || (opt_data.placeholder instanceof goog.soy.data.SanitizedContent), 'placeholder', opt_data.placeholder, 'string|goog.soy.data.SanitizedContent');
-  var placeholder = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.placeholder);
-  soy.asserts.assertType(goog.isBoolean(opt_data.readOnly) || opt_data.readOnly === 1 || opt_data.readOnly === 0, 'readOnly', opt_data.readOnly, 'boolean');
-  var readOnly = /** @type {boolean} */ (!!opt_data.readOnly);
-  soy.asserts.assertType(goog.isBoolean(opt_data.required) || opt_data.required === 1 || opt_data.required === 0, 'required', opt_data.required, 'boolean');
-  var required = /** @type {boolean} */ (!!opt_data.required);
-  soy.asserts.assertType(goog.isBoolean(opt_data.showLabel) || opt_data.showLabel === 1 || opt_data.showLabel === 0, 'showLabel', opt_data.showLabel, 'boolean');
-  var showLabel = /** @type {boolean} */ (!!opt_data.showLabel);
-  soy.asserts.assertType(goog.isString(opt_data.value) || (opt_data.value instanceof goog.soy.data.SanitizedContent), 'value', opt_data.value, 'string|goog.soy.data.SanitizedContent');
-  var value = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.value);
-  soy.asserts.assertType(goog.isBoolean(opt_data.visible) || opt_data.visible === 1 || opt_data.visible === 0, 'visible', opt_data.visible, 'boolean');
-  var visible = /** @type {boolean} */ (!!opt_data.visible);
-  soy.asserts.assertType(opt_data.dir == null || (opt_data.dir instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.dir), 'dir', opt_data.dir, 'null|string|undefined');
-  var dir = /** @type {null|string|undefined} */ (opt_data.dir);
-  soy.asserts.assertType(opt_data.label == null || (opt_data.label instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.label), 'label', opt_data.label, 'null|string|undefined');
-  var label = /** @type {null|string|undefined} */ (opt_data.label);
-  soy.asserts.assertType(opt_data.tip == null || (opt_data.tip instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.tip), 'tip', opt_data.tip, 'null|string|undefined');
-  var tip = /** @type {null|string|undefined} */ (opt_data.tip);
-  soy.asserts.assertType(opt_data.tooltip == null || (opt_data.tooltip instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.tooltip), 'tooltip', opt_data.tooltip, 'null|string|undefined');
-  var tooltip = /** @type {null|string|undefined} */ (opt_data.tooltip);
-  ie_open('div', null, null,
-      'class', 'form-group' + (visible ? '' : ' hide') + ' liferay-ddm-form-field-password',
-      'data-fieldname', name);
+function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var name = soy.asserts.assertType(goog.isString(opt_data.name) || opt_data.name instanceof goog.soy.data.SanitizedContent, 'name', opt_data.name, '!goog.soy.data.SanitizedContent|string');
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var pathThemeImages = soy.asserts.assertType(goog.isString(opt_data.pathThemeImages) || opt_data.pathThemeImages instanceof goog.soy.data.SanitizedContent, 'pathThemeImages', opt_data.pathThemeImages, '!goog.soy.data.SanitizedContent|string');
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var placeholder = soy.asserts.assertType(goog.isString(opt_data.placeholder) || opt_data.placeholder instanceof goog.soy.data.SanitizedContent, 'placeholder', opt_data.placeholder, '!goog.soy.data.SanitizedContent|string');
+  /** @type {boolean} */
+  var readOnly = soy.asserts.assertType(goog.isBoolean(opt_data.readOnly) || opt_data.readOnly === 1 || opt_data.readOnly === 0, 'readOnly', opt_data.readOnly, 'boolean');
+  /** @type {boolean} */
+  var required = soy.asserts.assertType(goog.isBoolean(opt_data.required) || opt_data.required === 1 || opt_data.required === 0, 'required', opt_data.required, 'boolean');
+  /** @type {boolean} */
+  var showLabel = soy.asserts.assertType(goog.isBoolean(opt_data.showLabel) || opt_data.showLabel === 1 || opt_data.showLabel === 0, 'showLabel', opt_data.showLabel, 'boolean');
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var value = soy.asserts.assertType(goog.isString(opt_data.value) || opt_data.value instanceof goog.soy.data.SanitizedContent, 'value', opt_data.value, '!goog.soy.data.SanitizedContent|string');
+  /** @type {boolean} */
+  var visible = soy.asserts.assertType(goog.isBoolean(opt_data.visible) || opt_data.visible === 1 || opt_data.visible === 0, 'visible', opt_data.visible, 'boolean');
+  /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
+  var dir = soy.asserts.assertType(opt_data.dir == null || (goog.isString(opt_data.dir) || opt_data.dir instanceof goog.soy.data.SanitizedContent), 'dir', opt_data.dir, '!goog.soy.data.SanitizedContent|null|string|undefined');
+  /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
+  var label = soy.asserts.assertType(opt_data.label == null || (goog.isString(opt_data.label) || opt_data.label instanceof goog.soy.data.SanitizedContent), 'label', opt_data.label, '!goog.soy.data.SanitizedContent|null|string|undefined');
+  /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
+  var tip = soy.asserts.assertType(opt_data.tip == null || (goog.isString(opt_data.tip) || opt_data.tip instanceof goog.soy.data.SanitizedContent), 'tip', opt_data.tip, '!goog.soy.data.SanitizedContent|null|string|undefined');
+  /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
+  var tooltip = soy.asserts.assertType(opt_data.tooltip == null || (goog.isString(opt_data.tooltip) || opt_data.tooltip instanceof goog.soy.data.SanitizedContent), 'tooltip', opt_data.tooltip, '!goog.soy.data.SanitizedContent|null|string|undefined');
+  incrementalDom.elementOpenStart('div');
+      incrementalDom.attr('class', 'form-group' + (visible ? '' : ' hide') + ' liferay-ddm-form-field-password');
+      incrementalDom.attr('data-fieldname', name);
+  incrementalDom.elementOpenEnd();
     if (showLabel) {
-      ie_open('label', null, null,
-          'for', name);
-        var dyn0 = label;
-        if (typeof dyn0 == 'function') dyn0(); else if (dyn0 != null) itext(dyn0);
-        itext(' ');
+      incrementalDom.elementOpenStart('label');
+          incrementalDom.attr('for', name);
+      incrementalDom.elementOpenEnd();
+        soyIdom.print(label);
+        incrementalDom.text(' ');
         if (required) {
-          ie_open('svg', null, null,
-              'aria-hidden', 'true',
-              'class', 'lexicon-icon lexicon-icon-asterisk reference-mark');
-            ie_void('use', null, null,
-                'xlink:href', pathThemeImages + '/lexicon/icons.svg#asterisk');
-          ie_close('svg');
+          incrementalDom.elementOpenStart('svg');
+              incrementalDom.attr('aria-hidden', 'true');
+              incrementalDom.attr('class', 'lexicon-icon lexicon-icon-asterisk reference-mark');
+          incrementalDom.elementOpenEnd();
+            incrementalDom.elementOpenStart('use');
+                incrementalDom.attr('xlink:href', pathThemeImages + '/lexicon/icons.svg#asterisk');
+            incrementalDom.elementOpenEnd();
+            incrementalDom.elementClose('use');
+          incrementalDom.elementClose('svg');
         }
-      ie_close('label');
+      incrementalDom.elementClose('label');
       if (tip) {
-        ie_open('span', null, null,
-            'class', 'form-text');
-          var dyn1 = tip;
-          if (typeof dyn1 == 'function') dyn1(); else if (dyn1 != null) itext(dyn1);
-        ie_close('span');
+        incrementalDom.elementOpenStart('span');
+            incrementalDom.attr('class', 'form-text');
+        incrementalDom.elementOpenEnd();
+          soyIdom.print(tip);
+        incrementalDom.elementClose('span');
       }
     }
-    ie_open('div', null, null,
-        'class', 'input-group');
-      ie_open('div', null, null,
-          'class', 'input-group-item');
-        ie_open_start('input');
-            iattr('class', 'field form-control');
+    incrementalDom.elementOpenStart('div');
+        incrementalDom.attr('class', 'input-group');
+    incrementalDom.elementOpenEnd();
+      incrementalDom.elementOpenStart('div');
+          incrementalDom.attr('class', 'input-group-item');
+      incrementalDom.elementOpenEnd();
+        incrementalDom.elementOpenStart('input');
+            incrementalDom.attr('class', 'field form-control');
             if (dir) {
-              iattr('dir', dir);
+              incrementalDom.attr('dir', dir);
             }
             if (readOnly) {
-              iattr('disabled', '');
+              incrementalDom.attr('disabled', '');
             }
-            iattr('id', name);
-            iattr('name', name);
-            iattr('placeholder', placeholder);
-            iattr('type', 'password');
-            iattr('value', value);
-        ie_open_end();
-        ie_close('input');
-      ie_close('div');
+            incrementalDom.attr('id', name);
+            incrementalDom.attr('name', name);
+            incrementalDom.attr('placeholder', placeholder);
+            incrementalDom.attr('type', 'password');
+            incrementalDom.attr('value', value);
+        incrementalDom.elementOpenEnd();
+        incrementalDom.elementClose('input');
+      incrementalDom.elementClose('div');
       if (tooltip) {
-        ie_open('div', null, null,
-            'class', 'input-group-item input-group-item-shrink');
-          ie_open('button', null, null,
-              'class', 'btn btn-monospaced btn-unstyled trigger-tooltip',
-              'data-original-title', tooltip,
-              'data-toggle', 'popover',
-              'title', tooltip,
-              'type', 'button');
-            ie_open('span', null, null,
-                'class', 'help-icon rounded-circle sticker sticker-secondary');
-              ie_void('span', null, null,
-                  'class', 'icon-question');
-            ie_close('span');
-          ie_close('button');
-        ie_close('div');
+        incrementalDom.elementOpenStart('div');
+            incrementalDom.attr('class', 'input-group-item input-group-item-shrink');
+        incrementalDom.elementOpenEnd();
+          incrementalDom.elementOpenStart('button');
+              incrementalDom.attr('class', 'btn btn-monospaced btn-unstyled trigger-tooltip');
+              incrementalDom.attr('data-original-title', tooltip);
+              incrementalDom.attr('data-toggle', 'popover');
+              incrementalDom.attr('title', tooltip);
+              incrementalDom.attr('type', 'button');
+          incrementalDom.elementOpenEnd();
+            incrementalDom.elementOpenStart('span');
+                incrementalDom.attr('class', 'help-icon rounded-circle sticker sticker-secondary');
+            incrementalDom.elementOpenEnd();
+              incrementalDom.elementOpenStart('span');
+                  incrementalDom.attr('class', 'icon-question');
+              incrementalDom.elementOpenEnd();
+              incrementalDom.elementClose('span');
+            incrementalDom.elementClose('span');
+          incrementalDom.elementClose('button');
+        incrementalDom.elementClose('div');
       }
-    ie_close('div');
-  ie_close('div');
+    incrementalDom.elementClose('div');
+  incrementalDom.elementClose('div');
 }
 exports.render = $render;
+/**
+ * @typedef {{
+ *  name: (!goog.soy.data.SanitizedContent|string),
+ *  pathThemeImages: (!goog.soy.data.SanitizedContent|string),
+ *  placeholder: (!goog.soy.data.SanitizedContent|string),
+ *  readOnly: boolean,
+ *  required: boolean,
+ *  showLabel: boolean,
+ *  value: (!goog.soy.data.SanitizedContent|string),
+ *  visible: boolean,
+ *  dir: (!goog.soy.data.SanitizedContent|null|string|undefined),
+ *  label: (!goog.soy.data.SanitizedContent|null|string|undefined),
+ *  tip: (!goog.soy.data.SanitizedContent|null|string|undefined),
+ *  tooltip: (!goog.soy.data.SanitizedContent|null|string|undefined)
+ * }}
+ */
+$render.Params;
 if (goog.DEBUG) {
   $render.soyTemplateName = 'DDMPassword.render';
 }

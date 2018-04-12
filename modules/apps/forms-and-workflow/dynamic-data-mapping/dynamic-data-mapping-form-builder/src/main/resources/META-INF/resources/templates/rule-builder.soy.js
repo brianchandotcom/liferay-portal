@@ -1,9 +1,11 @@
 /* jshint ignore:start */
 import Component from 'metal-component';
 import Soy from 'metal-soy';
+
 var templates;
 goog.loadModule(function(exports) {
-
+var soy = goog.require('soy');
+var soydata = goog.require('soydata');
 // This file was automatically generated from rule-builder.soy.
 // Please don't edit this file by hand.
 
@@ -16,51 +18,48 @@ goog.loadModule(function(exports) {
 
 goog.module('DDMRuleBuilder.incrementaldom');
 
-/** @suppress {extraRequire} */
-var soy = goog.require('soy');
-/** @suppress {extraRequire} */
-var soydata = goog.require('soydata');
-/** @suppress {extraRequire} */
-goog.require('goog.asserts');
-/** @suppress {extraRequire} */
-goog.require('soy.asserts');
-/** @suppress {extraRequire} */
-goog.require('goog.i18n.bidi');
-/** @suppress {extraRequire} */
+goog.require('goog.soy.data.SanitizedContent');
 goog.require('goog.string');
-var IncrementalDom = goog.require('incrementaldom');
-var ie_open = IncrementalDom.elementOpen;
-var ie_close = IncrementalDom.elementClose;
-var ie_void = IncrementalDom.elementVoid;
-var ie_open_start = IncrementalDom.elementOpenStart;
-var ie_open_end = IncrementalDom.elementOpenEnd;
-var itext = IncrementalDom.text;
-var iattr = IncrementalDom.attr;
+var incrementalDom = goog.require('incrementaldom');
+goog.require('soy');
+goog.require('soy.asserts');
+var soyIdom = goog.require('soy.idom');
 
 
 /**
  * @param {{
- *    strings: {ruleBuilder: string}
+ *  strings: {ruleBuilder: (!goog.soy.data.SanitizedContent|string)}
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $render(opt_data, opt_ignored, opt_ijData) {
-  var strings = goog.asserts.assertObject(opt_data.strings, "expected parameter 'strings' of type [ruleBuilder: string].");
-  ie_open('div', null, null,
-      'class', 'form-builder-rule-builder-container');
-    ie_open('h1', null, null,
-        'class', 'form-builder-section-title text-default');
-      var dyn16 = strings.ruleBuilder;
-      if (typeof dyn16 == 'function') dyn16(); else if (dyn16 != null) itext(dyn16);
-    ie_close('h1');
-    ie_void('div', null, null,
-        'class', 'liferay-ddm-form-rule-rules-list-container');
-  ie_close('div');
+function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {{ruleBuilder: (!goog.soy.data.SanitizedContent|string)}} */
+  var strings = soy.asserts.assertType(goog.isObject(opt_data.strings), 'strings', opt_data.strings, '{ruleBuilder: (!goog.soy.data.SanitizedContent|string)}');
+  incrementalDom.elementOpenStart('div');
+      incrementalDom.attr('class', 'form-builder-rule-builder-container');
+  incrementalDom.elementOpenEnd();
+    incrementalDom.elementOpenStart('h1');
+        incrementalDom.attr('class', 'form-builder-section-title text-default');
+    incrementalDom.elementOpenEnd();
+      soyIdom.print(strings.ruleBuilder);
+    incrementalDom.elementClose('h1');
+    incrementalDom.elementOpenStart('div');
+        incrementalDom.attr('class', 'liferay-ddm-form-rule-rules-list-container');
+    incrementalDom.elementOpenEnd();
+    incrementalDom.elementClose('div');
+  incrementalDom.elementClose('div');
 }
 exports.render = $render;
+/**
+ * @typedef {{
+ *  strings: {ruleBuilder: (!goog.soy.data.SanitizedContent|string)}
+ * }}
+ */
+$render.Params;
 if (goog.DEBUG) {
   $render.soyTemplateName = 'DDMRuleBuilder.render';
 }
@@ -68,132 +67,152 @@ if (goog.DEBUG) {
 
 /**
  * @param {{
- *    kebab: (!soydata.SanitizedHtml|string),
- *    rules: !Array<{actions: !Array<(?)>, conditions: !Array<{operandType: string, operandValue: string, operands: !Array<{label: string, type: string, value: string}>, operator: string, strings: *}>, logicOperator: string}>,
- *    strings: (?)
+ *  kebab: function(),
+ *  rules: !Array<{actions: !Array<?>, conditions: !Array<{operandType: (!goog.soy.data.SanitizedContent|string), operandValue: (!goog.soy.data.SanitizedContent|string), operands: !Array<{label: (!goog.soy.data.SanitizedContent|string), type: (!goog.soy.data.SanitizedContent|string), value: (!goog.soy.data.SanitizedContent|string)}>, operator: (!goog.soy.data.SanitizedContent|string), strings: *}>, logicOperator: (!goog.soy.data.SanitizedContent|string)}>,
+ *  strings: (?)
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $rule_list(opt_data, opt_ignored, opt_ijData) {
-  soy.asserts.assertType((opt_data.kebab instanceof Function) || (opt_data.kebab instanceof soydata.UnsanitizedText) || goog.isString(opt_data.kebab), 'kebab', opt_data.kebab, 'Function');
-  var kebab = /** @type {Function} */ (opt_data.kebab);
-  var rules = goog.asserts.assertArray(opt_data.rules, "expected parameter 'rules' of type list<[actions: list<?>, conditions: list<[operandType: string, operandValue: string, operands: list<[label: string, type: string, value: string]>, operator: string, strings: any]>, logicOperator: string]>.");
-  ie_open('div');
-    if (rules.length > 0) {
-      ie_open('ul', null, null,
-          'class', 'ddm-form-body-content form-builder-rule-builder-rules-list tabular-list-group');
-        var ruleList216 = rules;
-        var ruleListLen216 = ruleList216.length;
-        for (var ruleIndex216 = 0; ruleIndex216 < ruleListLen216; ruleIndex216++) {
-          var ruleData216 = ruleList216[ruleIndex216];
-          ie_open('li', null, null,
-              'class', 'list-group-item');
-            ie_open('div', null, null,
-                'class', 'clamp-horizontal list-group-item-content');
-              ie_open('p', null, null,
-                  'class', 'form-builder-rule-builder-rule-description text-default');
-                ie_open('b');
-                  var dyn17 = opt_data.strings['if'];
-                  if (typeof dyn17 == 'function') dyn17(); else if (dyn17 != null) itext(dyn17);
-                  itext(' ');
-                ie_close('b');
-                var conditionList193 = ruleData216.conditions;
-                var conditionListLen193 = conditionList193.length;
-                for (var conditionIndex193 = 0; conditionIndex193 < conditionListLen193; conditionIndex193++) {
-                  var conditionData193 = conditionList193[conditionIndex193];
-                  $condition({operandType: conditionData193.operands[0].type, operandValue: conditionData193.operands[0].label, strings: opt_data.strings}, null, opt_ijData);
-                  ie_open('b', null, null,
-                      'class', 'text-lowercase');
-                    ie_open('em');
-                      itext(' ');
-                      var dyn18 = opt_data.strings[conditionData193.operator];
-                      if (typeof dyn18 == 'function') dyn18(); else if (dyn18 != null) itext(dyn18);
-                      itext(' ');
-                    ie_close('em');
-                  ie_close('b');
-                  if (conditionData193.operands[1]) {
-                    $condition({operandType: conditionData193.operands[1].type, operandValue: conditionData193.operands[1].label != null ? conditionData193.operands[1].label : conditionData193.operands[1].value, strings: opt_data.strings}, null, opt_ijData);
-                  }
-                  if (! (conditionIndex193 == conditionListLen193 - 1)) {
-                    ie_open('br');
-                    ie_close('br');
-                    ie_open('b');
-                      itext(' ');
-                      var dyn19 = opt_data.strings[ruleData216.logicOperator];
-                      if (typeof dyn19 == 'function') dyn19(); else if (dyn19 != null) itext(dyn19);
-                      itext(' ');
-                    ie_close('b');
-                  }
-                }
-                ie_open('br');
-                ie_close('br');
-                var actionList203 = ruleData216.actions;
-                var actionListLen203 = actionList203.length;
-                for (var actionIndex203 = 0; actionIndex203 < actionListLen203; actionIndex203++) {
-                  var actionData203 = actionList203[actionIndex203];
-                  soy.$$getDelegateFn(soy.$$getDelTemplateId('DDMRuleBuilder.action.idom'), actionData203.type, false)({action: actionData203}, null, opt_ijData);
-                  if (! (actionIndex203 == actionListLen203 - 1)) {
-                    itext(', ');
-                    ie_open('br');
-                    ie_close('br');
-                    ie_open('b');
-                      itext(' ');
-                      var dyn20 = opt_data.strings['and'];
-                      if (typeof dyn20 == 'function') dyn20(); else if (dyn20 != null) itext(dyn20);
-                      itext(' ');
-                    ie_close('b');
-                  }
-                }
-              ie_close('p');
-            ie_close('div');
-            ie_open('div', null, null,
-                'class', 'list-group-item-field');
-              ie_open('div', null, null,
-                  'class', 'card-col-field');
-                ie_open('div', null, null,
-                    'class', 'dropdown dropdown-action');
-                  ie_open('ul', null, null,
-                      'class', 'dropdown-menu dropdown-menu-right');
-                    ie_open('li', null, null,
-                        'class', 'rule-card-edit',
-                        'data-card-id', ruleIndex216);
-                      ie_open('a', null, null,
-                          'href', 'javascript:;');
-                        var dyn21 = opt_data.strings.edit;
-                        if (typeof dyn21 == 'function') dyn21(); else if (dyn21 != null) itext(dyn21);
-                      ie_close('a');
-                    ie_close('li');
-                    ie_open('li', null, null,
-                        'class', 'rule-card-delete',
-                        'data-card-id', ruleIndex216);
-                      ie_open('a', null, null,
-                          'href', 'javascript:;');
-                        var dyn22 = opt_data.strings['delete'];
-                        if (typeof dyn22 == 'function') dyn22(); else if (dyn22 != null) itext(dyn22);
-                      ie_close('a');
-                    ie_close('li');
-                  ie_close('ul');
-                  ie_open('a', null, null,
-                      'class', 'dropdown-toggle icon-monospaced',
-                      'data-toggle', 'dropdown',
-                      'href', '#1');
-                    kebab();
-                  ie_close('a');
-                ie_close('div');
-              ie_close('div');
-            ie_close('div');
-          ie_close('li');
-        }
-      ie_close('ul');
+function $rule_list(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {function()} */
+  var kebab = soy.asserts.assertType(goog.isFunction(opt_data.kebab), 'kebab', opt_data.kebab, 'function()');
+  /** @type {!Array<{actions: !Array<?>, conditions: !Array<{operandType: (!goog.soy.data.SanitizedContent|string), operandValue: (!goog.soy.data.SanitizedContent|string), operands: !Array<{label: (!goog.soy.data.SanitizedContent|string), type: (!goog.soy.data.SanitizedContent|string), value: (!goog.soy.data.SanitizedContent|string)}>, operator: (!goog.soy.data.SanitizedContent|string), strings: *}>, logicOperator: (!goog.soy.data.SanitizedContent|string)}>} */
+  var rules = soy.asserts.assertType(goog.isArray(opt_data.rules), 'rules', opt_data.rules, '!Array<{actions: !Array<?>, conditions: !Array<{operandType: (!goog.soy.data.SanitizedContent|string), operandValue: (!goog.soy.data.SanitizedContent|string), operands: !Array<{label: (!goog.soy.data.SanitizedContent|string), type: (!goog.soy.data.SanitizedContent|string), value: (!goog.soy.data.SanitizedContent|string)}>, operator: (!goog.soy.data.SanitizedContent|string), strings: *}>, logicOperator: (!goog.soy.data.SanitizedContent|string)}>');
+  /** @type {?} */
+  var strings = opt_data.strings;
+  incrementalDom.elementOpen('div');
+    if ((rules.length) > 0) {
+      incrementalDom.elementOpenStart('ul');
+          incrementalDom.attr('class', 'ddm-form-body-content form-builder-rule-builder-rules-list tabular-list-group');
+      incrementalDom.elementOpenEnd();
+        var rule1187List = rules;
+        var rule1187ListLen = rule1187List.length;
+        for (var rule1187Index = 0; rule1187Index < rule1187ListLen; rule1187Index++) {
+            var rule1187Data = rule1187List[rule1187Index];
+            incrementalDom.elementOpenStart('li');
+                incrementalDom.attr('class', 'list-group-item');
+            incrementalDom.elementOpenEnd();
+              incrementalDom.elementOpenStart('div');
+                  incrementalDom.attr('class', 'clamp-horizontal list-group-item-content');
+              incrementalDom.elementOpenEnd();
+                incrementalDom.elementOpenStart('p');
+                    incrementalDom.attr('class', 'form-builder-rule-builder-rule-description text-default');
+                incrementalDom.elementOpenEnd();
+                  incrementalDom.elementOpen('b');
+                    soyIdom.print(strings.if);
+                    incrementalDom.text(' ');
+                  incrementalDom.elementClose('b');
+                  var condition1161List = rule1187Data.conditions;
+                  var condition1161ListLen = condition1161List.length;
+                  for (var condition1161Index = 0; condition1161Index < condition1161ListLen; condition1161Index++) {
+                      var condition1161Data = condition1161List[condition1161Index];
+                      $condition({operandType: condition1161Data.operands[0].type, operandValue: condition1161Data.operands[0].label, strings: strings}, null, opt_ijData);
+                      incrementalDom.elementOpenStart('b');
+                          incrementalDom.attr('class', 'text-lowercase');
+                      incrementalDom.elementOpenEnd();
+                        incrementalDom.elementOpen('em');
+                          incrementalDom.text(' ');
+                          soyIdom.print(strings[condition1161Data.operator]);
+                          incrementalDom.text(' ');
+                        incrementalDom.elementClose('em');
+                      incrementalDom.elementClose('b');
+                      if (condition1161Data.operands[1]) {
+                        $condition({operandType: condition1161Data.operands[1].type, operandValue: (condition1161Data.operands[1].label != null) ? condition1161Data.operands[1].label : condition1161Data.operands[1].value, strings: strings}, null, opt_ijData);
+                      }
+                      if (!(condition1161Index == condition1161ListLen - 1)) {
+                        incrementalDom.elementOpen('br');
+                        incrementalDom.elementClose('br');
+                        incrementalDom.elementOpen('b');
+                          incrementalDom.text(' ');
+                          soyIdom.print(strings[rule1187Data.logicOperator]);
+                          incrementalDom.text(' ');
+                        incrementalDom.elementClose('b');
+                      }
+                    }
+                  incrementalDom.elementOpen('br');
+                  incrementalDom.elementClose('br');
+                  var action1174List = rule1187Data.actions;
+                  var action1174ListLen = action1174List.length;
+                  for (var action1174Index = 0; action1174Index < action1174ListLen; action1174Index++) {
+                      var action1174Data = action1174List[action1174Index];
+                      soy.$$getDelegateFn(soy.$$getDelTemplateId('DDMRuleBuilder.action.idom'), action1174Data.type, false)({action: action1174Data}, null, opt_ijData);
+                      if (!(action1174Index == action1174ListLen - 1)) {
+                        incrementalDom.text(', ');
+                        incrementalDom.elementOpen('br');
+                        incrementalDom.elementClose('br');
+                        incrementalDom.elementOpen('b');
+                          incrementalDom.text(' ');
+                          soyIdom.print(strings['and']);
+                          incrementalDom.text(' ');
+                        incrementalDom.elementClose('b');
+                      }
+                    }
+                incrementalDom.elementClose('p');
+              incrementalDom.elementClose('div');
+              incrementalDom.elementOpenStart('div');
+                  incrementalDom.attr('class', 'list-group-item-field');
+              incrementalDom.elementOpenEnd();
+                incrementalDom.elementOpenStart('div');
+                    incrementalDom.attr('class', 'card-col-field');
+                incrementalDom.elementOpenEnd();
+                  incrementalDom.elementOpenStart('div');
+                      incrementalDom.attr('class', 'dropdown dropdown-action');
+                  incrementalDom.elementOpenEnd();
+                    incrementalDom.elementOpenStart('ul');
+                        incrementalDom.attr('class', 'dropdown-menu dropdown-menu-right');
+                    incrementalDom.elementOpenEnd();
+                      incrementalDom.elementOpenStart('li');
+                          incrementalDom.attr('class', 'rule-card-edit');
+                          incrementalDom.attr('data-card-id', rule1187Index);
+                      incrementalDom.elementOpenEnd();
+                        incrementalDom.elementOpenStart('a');
+                            incrementalDom.attr('href', 'javascript:;');
+                        incrementalDom.elementOpenEnd();
+                          soyIdom.print(strings.edit);
+                        incrementalDom.elementClose('a');
+                      incrementalDom.elementClose('li');
+                      incrementalDom.elementOpenStart('li');
+                          incrementalDom.attr('class', 'rule-card-delete');
+                          incrementalDom.attr('data-card-id', rule1187Index);
+                      incrementalDom.elementOpenEnd();
+                        incrementalDom.elementOpenStart('a');
+                            incrementalDom.attr('href', 'javascript:;');
+                        incrementalDom.elementOpenEnd();
+                          soyIdom.print(strings.delete);
+                        incrementalDom.elementClose('a');
+                      incrementalDom.elementClose('li');
+                    incrementalDom.elementClose('ul');
+                    incrementalDom.elementOpenStart('a');
+                        incrementalDom.attr('class', 'dropdown-toggle icon-monospaced');
+                        incrementalDom.attr('data-toggle', 'dropdown');
+                        incrementalDom.attr('href', '#1');
+                    incrementalDom.elementOpenEnd();
+                      kebab();
+                    incrementalDom.elementClose('a');
+                  incrementalDom.elementClose('div');
+                incrementalDom.elementClose('div');
+              incrementalDom.elementClose('div');
+            incrementalDom.elementClose('li');
+          }
+      incrementalDom.elementClose('ul');
     } else {
-      $empty_list({message: opt_data.strings.emptyListText}, null, opt_ijData);
+      $empty_list({message: strings.emptyListText}, null, opt_ijData);
     }
-  ie_close('div');
+  incrementalDom.elementClose('div');
 }
 exports.rule_list = $rule_list;
+/**
+ * @typedef {{
+ *  kebab: function(),
+ *  rules: !Array<{actions: !Array<?>, conditions: !Array<{operandType: (!goog.soy.data.SanitizedContent|string), operandValue: (!goog.soy.data.SanitizedContent|string), operands: !Array<{label: (!goog.soy.data.SanitizedContent|string), type: (!goog.soy.data.SanitizedContent|string), value: (!goog.soy.data.SanitizedContent|string)}>, operator: (!goog.soy.data.SanitizedContent|string), strings: *}>, logicOperator: (!goog.soy.data.SanitizedContent|string)}>,
+ *  strings: (?)
+ * }}
+ */
+$rule_list.Params;
 if (goog.DEBUG) {
   $rule_list.soyTemplateName = 'DDMRuleBuilder.rule_list';
 }
@@ -201,40 +220,53 @@ if (goog.DEBUG) {
 
 /**
  * @param {{
- *    message: (null|string|undefined)
+ *  message: (!goog.soy.data.SanitizedContent|null|string|undefined)
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $empty_list(opt_data, opt_ignored, opt_ijData) {
+function $empty_list(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
   opt_data = opt_data || {};
-  soy.asserts.assertType(opt_data.message == null || (opt_data.message instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.message), 'message', opt_data.message, 'null|string|undefined');
-  var message = /** @type {null|string|undefined} */ (opt_data.message);
-  ie_open('div', null, null,
-      'class', 'main-content-body');
-    ie_open('div', null, null,
-        'class', 'card main-content-card taglib-empty-result-message');
-      ie_open('div', null, null,
-          'class', 'card-row card-row-padded');
-        ie_void('div', null, null,
-            'class', 'taglib-empty-result-message-header-has-plus-btn');
+  /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
+  var message = soy.asserts.assertType(opt_data.message == null || (goog.isString(opt_data.message) || opt_data.message instanceof goog.soy.data.SanitizedContent), 'message', opt_data.message, '!goog.soy.data.SanitizedContent|null|string|undefined');
+  incrementalDom.elementOpenStart('div');
+      incrementalDom.attr('class', 'main-content-body');
+  incrementalDom.elementOpenEnd();
+    incrementalDom.elementOpenStart('div');
+        incrementalDom.attr('class', 'card main-content-card taglib-empty-result-message');
+    incrementalDom.elementOpenEnd();
+      incrementalDom.elementOpenStart('div');
+          incrementalDom.attr('class', 'card-row card-row-padded');
+      incrementalDom.elementOpenEnd();
+        incrementalDom.elementOpenStart('div');
+            incrementalDom.attr('class', 'taglib-empty-result-message-header-has-plus-btn');
+        incrementalDom.elementOpenEnd();
+        incrementalDom.elementClose('div');
         if (message) {
-          ie_open('div', null, null,
-              'class', 'text-center text-muted');
-            ie_open('p', null, null,
-                'class', 'text-default');
-              var dyn23 = message;
-              if (typeof dyn23 == 'function') dyn23(); else if (dyn23 != null) itext(dyn23);
-            ie_close('p');
-          ie_close('div');
+          incrementalDom.elementOpenStart('div');
+              incrementalDom.attr('class', 'text-center text-muted');
+          incrementalDom.elementOpenEnd();
+            incrementalDom.elementOpenStart('p');
+                incrementalDom.attr('class', 'text-default');
+            incrementalDom.elementOpenEnd();
+              soyIdom.print(message);
+            incrementalDom.elementClose('p');
+          incrementalDom.elementClose('div');
         }
-      ie_close('div');
-    ie_close('div');
-  ie_close('div');
+      incrementalDom.elementClose('div');
+    incrementalDom.elementClose('div');
+  incrementalDom.elementClose('div');
 }
 exports.empty_list = $empty_list;
+/**
+ * @typedef {{
+ *  message: (!goog.soy.data.SanitizedContent|null|string|undefined)
+ * }}
+ */
+$empty_list.Params;
 if (goog.DEBUG) {
   $empty_list.soyTemplateName = 'DDMRuleBuilder.empty_list';
 }
@@ -242,40 +274,49 @@ if (goog.DEBUG) {
 
 /**
  * @param {{
- *    strings: {enableDisable: string, require: string, showHide: string}
+ *  strings: {enableDisable: (!goog.soy.data.SanitizedContent|string), require: (!goog.soy.data.SanitizedContent|string), showHide: (!goog.soy.data.SanitizedContent|string)}
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $rule_types(opt_data, opt_ignored, opt_ijData) {
-  var strings = goog.asserts.assertObject(opt_data.strings, "expected parameter 'strings' of type [enableDisable: string, require: string, showHide: string].");
-  ie_open('ul', null, null,
-      'class', 'dropdown-menu');
-    ie_open('li');
-      ie_open('a', null, null,
-          'data-rule-type', 'visibility',
-          'href', 'javascript:;');
-        var dyn24 = strings.showHide;
-        if (typeof dyn24 == 'function') dyn24(); else if (dyn24 != null) itext(dyn24);
-      ie_close('a');
-      ie_open('a', null, null,
-          'data-rule-type', 'readonly',
-          'href', 'javascript:;');
-        var dyn25 = strings.enableDisable;
-        if (typeof dyn25 == 'function') dyn25(); else if (dyn25 != null) itext(dyn25);
-      ie_close('a');
-      ie_open('a', null, null,
-          'data-rule-type', 'require',
-          'href', 'javascript:;');
-        var dyn26 = strings.require;
-        if (typeof dyn26 == 'function') dyn26(); else if (dyn26 != null) itext(dyn26);
-      ie_close('a');
-    ie_close('li');
-  ie_close('ul');
+function $rule_types(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {{enableDisable: (!goog.soy.data.SanitizedContent|string), require: (!goog.soy.data.SanitizedContent|string), showHide: (!goog.soy.data.SanitizedContent|string)}} */
+  var strings = soy.asserts.assertType(goog.isObject(opt_data.strings), 'strings', opt_data.strings, '{enableDisable: (!goog.soy.data.SanitizedContent|string), require: (!goog.soy.data.SanitizedContent|string), showHide: (!goog.soy.data.SanitizedContent|string)}');
+  incrementalDom.elementOpenStart('ul');
+      incrementalDom.attr('class', 'dropdown-menu');
+  incrementalDom.elementOpenEnd();
+    incrementalDom.elementOpen('li');
+      incrementalDom.elementOpenStart('a');
+          incrementalDom.attr('data-rule-type', 'visibility');
+          incrementalDom.attr('href', 'javascript:;');
+      incrementalDom.elementOpenEnd();
+        soyIdom.print(strings.showHide);
+      incrementalDom.elementClose('a');
+      incrementalDom.elementOpenStart('a');
+          incrementalDom.attr('data-rule-type', 'readonly');
+          incrementalDom.attr('href', 'javascript:;');
+      incrementalDom.elementOpenEnd();
+        soyIdom.print(strings.enableDisable);
+      incrementalDom.elementClose('a');
+      incrementalDom.elementOpenStart('a');
+          incrementalDom.attr('data-rule-type', 'require');
+          incrementalDom.attr('href', 'javascript:;');
+      incrementalDom.elementOpenEnd();
+        soyIdom.print(strings.require);
+      incrementalDom.elementClose('a');
+    incrementalDom.elementClose('li');
+  incrementalDom.elementClose('ul');
 }
 exports.rule_types = $rule_types;
+/**
+ * @typedef {{
+ *  strings: {enableDisable: (!goog.soy.data.SanitizedContent|string), require: (!goog.soy.data.SanitizedContent|string), showHide: (!goog.soy.data.SanitizedContent|string)}
+ * }}
+ */
+$rule_types.Params;
 if (goog.DEBUG) {
   $rule_types.soyTemplateName = 'DDMRuleBuilder.rule_types';
 }
@@ -283,24 +324,31 @@ if (goog.DEBUG) {
 
 /**
  * @param {{
- *    content: (null|string|undefined)
+ *  content: (!goog.soy.data.SanitizedContent|null|string|undefined)
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $badge(opt_data, opt_ignored, opt_ijData) {
+function $badge(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
   opt_data = opt_data || {};
-  soy.asserts.assertType(opt_data.content == null || (opt_data.content instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.content), 'content', opt_data.content, 'null|string|undefined');
-  var content = /** @type {null|string|undefined} */ (opt_data.content);
-  ie_open('span', null, null,
-      'class', 'badge badge-default badge-sm');
-    var dyn27 = content;
-    if (typeof dyn27 == 'function') dyn27(); else if (dyn27 != null) itext(dyn27);
-  ie_close('span');
+  /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
+  var content = soy.asserts.assertType(opt_data.content == null || (goog.isString(opt_data.content) || opt_data.content instanceof goog.soy.data.SanitizedContent), 'content', opt_data.content, '!goog.soy.data.SanitizedContent|null|string|undefined');
+  incrementalDom.elementOpenStart('span');
+      incrementalDom.attr('class', 'badge badge-default badge-sm');
+  incrementalDom.elementOpenEnd();
+    soyIdom.print(content);
+  incrementalDom.elementClose('span');
 }
 exports.badge = $badge;
+/**
+ * @typedef {{
+ *  content: (!goog.soy.data.SanitizedContent|null|string|undefined)
+ * }}
+ */
+$badge.Params;
 if (goog.DEBUG) {
   $badge.soyTemplateName = 'DDMRuleBuilder.badge';
 }
@@ -308,38 +356,47 @@ if (goog.DEBUG) {
 
 /**
  * @param {{
- *    operandType: string,
- *    operandValue: string,
- *    strings: (?)
+ *  operandType: (!goog.soy.data.SanitizedContent|string),
+ *  operandValue: (!goog.soy.data.SanitizedContent|string),
+ *  strings: (?)
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $condition(opt_data, opt_ignored, opt_ijData) {
-  soy.asserts.assertType(goog.isString(opt_data.operandType) || (opt_data.operandType instanceof goog.soy.data.SanitizedContent), 'operandType', opt_data.operandType, 'string|goog.soy.data.SanitizedContent');
-  var operandType = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.operandType);
-  soy.asserts.assertType(goog.isString(opt_data.operandValue) || (opt_data.operandValue instanceof goog.soy.data.SanitizedContent), 'operandValue', opt_data.operandValue, 'string|goog.soy.data.SanitizedContent');
-  var operandValue = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.operandValue);
+function $condition(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var operandType = soy.asserts.assertType(goog.isString(opt_data.operandType) || opt_data.operandType instanceof goog.soy.data.SanitizedContent, 'operandType', opt_data.operandType, '!goog.soy.data.SanitizedContent|string');
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var operandValue = soy.asserts.assertType(goog.isString(opt_data.operandValue) || opt_data.operandValue instanceof goog.soy.data.SanitizedContent, 'operandValue', opt_data.operandValue, '!goog.soy.data.SanitizedContent|string');
+  /** @type {?} */
+  var strings = opt_data.strings;
   if (operandType == 'double' || operandType == 'integer' || operandType == 'string') {
-    ie_open('span');
-      var dyn28 = opt_data.strings.value;
-      if (typeof dyn28 == 'function') dyn28(); else if (dyn28 != null) itext(dyn28);
-      itext(' ');
-    ie_close('span');
+    incrementalDom.elementOpen('span');
+      soyIdom.print(strings.value);
+      incrementalDom.text(' ');
+    incrementalDom.elementClose('span');
   } else {
     if (operandType != 'user' && operandType != 'list') {
-      ie_open('span');
-        var dyn29 = opt_data.strings[operandType];
-        if (typeof dyn29 == 'function') dyn29(); else if (dyn29 != null) itext(dyn29);
-        itext(' ');
-      ie_close('span');
+      incrementalDom.elementOpen('span');
+        soyIdom.print(strings[operandType]);
+        incrementalDom.text(' ');
+      incrementalDom.elementClose('span');
     }
   }
   $badge({content: operandValue}, null, opt_ijData);
 }
 exports.condition = $condition;
+/**
+ * @typedef {{
+ *  operandType: (!goog.soy.data.SanitizedContent|string),
+ *  operandValue: (!goog.soy.data.SanitizedContent|string),
+ *  strings: (?)
+ * }}
+ */
+$condition.Params;
 if (goog.DEBUG) {
   $condition.soyTemplateName = 'DDMRuleBuilder.condition';
 }
@@ -347,26 +404,34 @@ if (goog.DEBUG) {
 
 /**
  * @param {{
- *    outputs: !Array<(?)>
+ *  outputs: !Array<?>
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $autofill_outputs(opt_data, opt_ignored, opt_ijData) {
-  var outputs = goog.asserts.assertArray(opt_data.outputs, "expected parameter 'outputs' of type list<?>.");
-  var outputList263 = outputs;
-  var outputListLen263 = outputList263.length;
-  for (var outputIndex263 = 0; outputIndex263 < outputListLen263; outputIndex263++) {
-    var outputData263 = outputList263[outputIndex263];
-    $badge({content: outputData263}, null, opt_ijData);
-    if (! (outputIndex263 == outputListLen263 - 1)) {
-      itext(',');
+function $autofill_outputs(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {!Array<?>} */
+  var outputs = soy.asserts.assertType(goog.isArray(opt_data.outputs), 'outputs', opt_data.outputs, '!Array<?>');
+  var output1255List = outputs;
+  var output1255ListLen = output1255List.length;
+  for (var output1255Index = 0; output1255Index < output1255ListLen; output1255Index++) {
+      var output1255Data = output1255List[output1255Index];
+      $badge({content: output1255Data}, null, opt_ijData);
+      if (!(output1255Index == output1255ListLen - 1)) {
+        incrementalDom.text(',');
+      }
     }
-  }
 }
 exports.autofill_outputs = $autofill_outputs;
+/**
+ * @typedef {{
+ *  outputs: !Array<?>
+ * }}
+ */
+$autofill_outputs.Params;
 if (goog.DEBUG) {
   $autofill_outputs.soyTemplateName = 'DDMRuleBuilder.autofill_outputs';
 }
@@ -374,229 +439,269 @@ if (goog.DEBUG) {
 
 /**
  * @param {{
- *    action: (?)
+ *  action: (?)
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function __deltemplate_s265_e38e35bf(opt_data, opt_ignored, opt_ijData) {
-  ie_open('b');
+function __deltemplate_s1258_e38e35bf(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {?} */
+  var action = opt_data.action;
+  incrementalDom.elementOpen('b');
     /** @desc show-x */
-    var MSG_EXTERNAL_6763821615557154 = goog.getMsg(
-        'show-{$xxx}',
-        {'xxx': '\u00010\u0001'});
-    var lastIndex_267 = 0, partRe_267 = /\x01\d+\x01/g, match_267;
+    var MSG_EXTERNAL_6763821615557154 = goog.getMsg('show-{$xxx}', {'xxx': '\u00010\u0001'});
+    var lastIndex_1262 = 0, partRe_1262 = /\x01\d+\x01/g, match_1262;
     do {
-      match_267 = partRe_267.exec(MSG_EXTERNAL_6763821615557154) || undefined;
-      itext(goog.string.unescapeEntities(MSG_EXTERNAL_6763821615557154.substring(lastIndex_267, match_267 && match_267.index)));
-      lastIndex_267 = partRe_267.lastIndex;
-      switch (match_267 && match_267[0]) {
+      match_1262 = partRe_1262.exec(MSG_EXTERNAL_6763821615557154) || undefined;
+      incrementalDom.text(goog.string.unescapeEntities(MSG_EXTERNAL_6763821615557154.substring(lastIndex_1262, match_1262 && match_1262.index)));
+      lastIndex_1262 = partRe_1262.lastIndex;
+      switch (match_1262 && match_1262[0]) {
         case '\u00010\u0001':
-          $badge({content: opt_data.action.param0}, null, opt_ijData);
+          $badge({content: action.param0}, null, opt_ijData);
           break;
       }
-    } while (match_267);
-  ie_close('b');
+    } while (match_1262);
+  incrementalDom.elementClose('b');
 }
-exports.__deltemplate_s265_e38e35bf = __deltemplate_s265_e38e35bf;
+exports.__deltemplate_s1258_e38e35bf = __deltemplate_s1258_e38e35bf;
+/**
+ * @typedef {{
+ *  action: (?)
+ * }}
+ */
+__deltemplate_s1258_e38e35bf.Params;
 if (goog.DEBUG) {
-  __deltemplate_s265_e38e35bf.soyTemplateName = 'DDMRuleBuilder.__deltemplate_s265_e38e35bf';
+  __deltemplate_s1258_e38e35bf.soyTemplateName = 'DDMRuleBuilder.__deltemplate_s1258_e38e35bf';
 }
-soy.$$registerDelegateFn(soy.$$getDelTemplateId('DDMRuleBuilder.action.idom'), 'show', 0, __deltemplate_s265_e38e35bf);
+soy.$$registerDelegateFn(soy.$$getDelTemplateId('DDMRuleBuilder.action.idom'), 'show', 0, __deltemplate_s1258_e38e35bf);
 
 
 /**
  * @param {{
- *    action: (?)
+ *  action: (?)
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function __deltemplate_s274_b56ff7a3(opt_data, opt_ignored, opt_ijData) {
-  ie_open('b');
+function __deltemplate_s1271_b56ff7a3(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {?} */
+  var action = opt_data.action;
+  incrementalDom.elementOpen('b');
     /** @desc enable-x */
-    var MSG_EXTERNAL_1991085455776803984 = goog.getMsg(
-        'enable-{$xxx}',
-        {'xxx': '\u00010\u0001'});
-    var lastIndex_276 = 0, partRe_276 = /\x01\d+\x01/g, match_276;
+    var MSG_EXTERNAL_1991085455776803984 = goog.getMsg('enable-{$xxx}', {'xxx': '\u00010\u0001'});
+    var lastIndex_1275 = 0, partRe_1275 = /\x01\d+\x01/g, match_1275;
     do {
-      match_276 = partRe_276.exec(MSG_EXTERNAL_1991085455776803984) || undefined;
-      itext(goog.string.unescapeEntities(MSG_EXTERNAL_1991085455776803984.substring(lastIndex_276, match_276 && match_276.index)));
-      lastIndex_276 = partRe_276.lastIndex;
-      switch (match_276 && match_276[0]) {
+      match_1275 = partRe_1275.exec(MSG_EXTERNAL_1991085455776803984) || undefined;
+      incrementalDom.text(goog.string.unescapeEntities(MSG_EXTERNAL_1991085455776803984.substring(lastIndex_1275, match_1275 && match_1275.index)));
+      lastIndex_1275 = partRe_1275.lastIndex;
+      switch (match_1275 && match_1275[0]) {
         case '\u00010\u0001':
-          $badge({content: opt_data.action.param0}, null, opt_ijData);
+          $badge({content: action.param0}, null, opt_ijData);
           break;
       }
-    } while (match_276);
-  ie_close('b');
+    } while (match_1275);
+  incrementalDom.elementClose('b');
 }
-exports.__deltemplate_s274_b56ff7a3 = __deltemplate_s274_b56ff7a3;
+exports.__deltemplate_s1271_b56ff7a3 = __deltemplate_s1271_b56ff7a3;
+/**
+ * @typedef {{
+ *  action: (?)
+ * }}
+ */
+__deltemplate_s1271_b56ff7a3.Params;
 if (goog.DEBUG) {
-  __deltemplate_s274_b56ff7a3.soyTemplateName = 'DDMRuleBuilder.__deltemplate_s274_b56ff7a3';
+  __deltemplate_s1271_b56ff7a3.soyTemplateName = 'DDMRuleBuilder.__deltemplate_s1271_b56ff7a3';
 }
-soy.$$registerDelegateFn(soy.$$getDelTemplateId('DDMRuleBuilder.action.idom'), 'enable', 0, __deltemplate_s274_b56ff7a3);
+soy.$$registerDelegateFn(soy.$$getDelTemplateId('DDMRuleBuilder.action.idom'), 'enable', 0, __deltemplate_s1271_b56ff7a3);
 
 
 /**
  * @param {{
- *    action: (?)
+ *  action: (?)
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function __deltemplate_s283_a5108aa8(opt_data, opt_ignored, opt_ijData) {
-  ie_open('b');
+function __deltemplate_s1284_a5108aa8(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {?} */
+  var action = opt_data.action;
+  incrementalDom.elementOpen('b');
     /** @desc calculate-field-x-as-x */
-    var MSG_EXTERNAL_5511274467569914026 = goog.getMsg(
-        'calculate-field-{$xxx_1}-as-{$xxx_2}',
-        {'xxx_1': '\u00010\u0001',
-         'xxx_2': '\u00011\u0001'});
-    var lastIndex_285 = 0, partRe_285 = /\x01\d+\x01/g, match_285;
+    var MSG_EXTERNAL_5511274467569914026 = goog.getMsg('calculate-field-{$xxx_1}-as-{$xxx_2}', {'xxx_1': '\u00010\u0001', 'xxx_2': '\u00011\u0001'});
+    var lastIndex_1288 = 0, partRe_1288 = /\x01\d+\x01/g, match_1288;
     do {
-      match_285 = partRe_285.exec(MSG_EXTERNAL_5511274467569914026) || undefined;
-      itext(goog.string.unescapeEntities(MSG_EXTERNAL_5511274467569914026.substring(lastIndex_285, match_285 && match_285.index)));
-      lastIndex_285 = partRe_285.lastIndex;
-      switch (match_285 && match_285[0]) {
+      match_1288 = partRe_1288.exec(MSG_EXTERNAL_5511274467569914026) || undefined;
+      incrementalDom.text(goog.string.unescapeEntities(MSG_EXTERNAL_5511274467569914026.substring(lastIndex_1288, match_1288 && match_1288.index)));
+      lastIndex_1288 = partRe_1288.lastIndex;
+      switch (match_1288 && match_1288[0]) {
         case '\u00011\u0001':
-          $badge({content: opt_data.action.param1}, null, opt_ijData);
+          $badge({content: action.param1}, null, opt_ijData);
           break;
         case '\u00010\u0001':
-          $badge({content: opt_data.action.param0}, null, opt_ijData);
+          $badge({content: action.param0}, null, opt_ijData);
           break;
       }
-    } while (match_285);
-  ie_close('b');
+    } while (match_1288);
+  incrementalDom.elementClose('b');
 }
-exports.__deltemplate_s283_a5108aa8 = __deltemplate_s283_a5108aa8;
+exports.__deltemplate_s1284_a5108aa8 = __deltemplate_s1284_a5108aa8;
+/**
+ * @typedef {{
+ *  action: (?)
+ * }}
+ */
+__deltemplate_s1284_a5108aa8.Params;
 if (goog.DEBUG) {
-  __deltemplate_s283_a5108aa8.soyTemplateName = 'DDMRuleBuilder.__deltemplate_s283_a5108aa8';
+  __deltemplate_s1284_a5108aa8.soyTemplateName = 'DDMRuleBuilder.__deltemplate_s1284_a5108aa8';
 }
-soy.$$registerDelegateFn(soy.$$getDelTemplateId('DDMRuleBuilder.action.idom'), 'calculate', 0, __deltemplate_s283_a5108aa8);
+soy.$$registerDelegateFn(soy.$$getDelTemplateId('DDMRuleBuilder.action.idom'), 'calculate', 0, __deltemplate_s1284_a5108aa8);
 
 
 /**
  * @param {{
- *    action: (?)
+ *  action: (?)
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function __deltemplate_s296_f2670823(opt_data, opt_ignored, opt_ijData) {
-  ie_open('b');
+function __deltemplate_s1301_f2670823(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {?} */
+  var action = opt_data.action;
+  incrementalDom.elementOpen('b');
     /** @desc autofill-x-from-data-provider-x */
-    var MSG_EXTERNAL_7333391118384881260 = goog.getMsg(
-        'autofill-{$xxx_1}-from-data-provider-{$xxx_2}',
-        {'xxx_1': '\u00010\u0001',
-         'xxx_2': '\u00011\u0001'});
-    var lastIndex_298 = 0, partRe_298 = /\x01\d+\x01/g, match_298;
+    var MSG_EXTERNAL_7333391118384881260 = goog.getMsg('autofill-{$xxx_1}-from-data-provider-{$xxx_2}', {'xxx_1': '\u00010\u0001', 'xxx_2': '\u00011\u0001'});
+    var lastIndex_1305 = 0, partRe_1305 = /\x01\d+\x01/g, match_1305;
     do {
-      match_298 = partRe_298.exec(MSG_EXTERNAL_7333391118384881260) || undefined;
-      itext(goog.string.unescapeEntities(MSG_EXTERNAL_7333391118384881260.substring(lastIndex_298, match_298 && match_298.index)));
-      lastIndex_298 = partRe_298.lastIndex;
-      switch (match_298 && match_298[0]) {
+      match_1305 = partRe_1305.exec(MSG_EXTERNAL_7333391118384881260) || undefined;
+      incrementalDom.text(goog.string.unescapeEntities(MSG_EXTERNAL_7333391118384881260.substring(lastIndex_1305, match_1305 && match_1305.index)));
+      lastIndex_1305 = partRe_1305.lastIndex;
+      switch (match_1305 && match_1305[0]) {
         case '\u00011\u0001':
-          $badge({content: opt_data.action.param1}, null, opt_ijData);
+          $badge({content: action.param1}, null, opt_ijData);
           break;
         case '\u00010\u0001':
-          $autofill_outputs({outputs: opt_data.action.param0}, null, opt_ijData);
+          $autofill_outputs({outputs: action.param0}, null, opt_ijData);
           break;
       }
-    } while (match_298);
-  ie_close('b');
+    } while (match_1305);
+  incrementalDom.elementClose('b');
 }
-exports.__deltemplate_s296_f2670823 = __deltemplate_s296_f2670823;
+exports.__deltemplate_s1301_f2670823 = __deltemplate_s1301_f2670823;
+/**
+ * @typedef {{
+ *  action: (?)
+ * }}
+ */
+__deltemplate_s1301_f2670823.Params;
 if (goog.DEBUG) {
-  __deltemplate_s296_f2670823.soyTemplateName = 'DDMRuleBuilder.__deltemplate_s296_f2670823';
+  __deltemplate_s1301_f2670823.soyTemplateName = 'DDMRuleBuilder.__deltemplate_s1301_f2670823';
 }
-soy.$$registerDelegateFn(soy.$$getDelTemplateId('DDMRuleBuilder.action.idom'), 'autofill', 0, __deltemplate_s296_f2670823);
+soy.$$registerDelegateFn(soy.$$getDelTemplateId('DDMRuleBuilder.action.idom'), 'autofill', 0, __deltemplate_s1301_f2670823);
 
 
 /**
  * @param {{
- *    action: (?)
+ *  action: (?)
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function __deltemplate_s309_9bf2c8a4(opt_data, opt_ignored, opt_ijData) {
-  ie_open('b');
+function __deltemplate_s1318_9bf2c8a4(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {?} */
+  var action = opt_data.action;
+  incrementalDom.elementOpen('b');
     /** @desc jump-to-page-x */
-    var MSG_EXTERNAL_7070892870969211427 = goog.getMsg(
-        'jump-to-page-{$xxx}',
-        {'xxx': '\u00010\u0001'});
-    var lastIndex_311 = 0, partRe_311 = /\x01\d+\x01/g, match_311;
+    var MSG_EXTERNAL_7070892870969211427 = goog.getMsg('jump-to-page-{$xxx}', {'xxx': '\u00010\u0001'});
+    var lastIndex_1322 = 0, partRe_1322 = /\x01\d+\x01/g, match_1322;
     do {
-      match_311 = partRe_311.exec(MSG_EXTERNAL_7070892870969211427) || undefined;
-      itext(goog.string.unescapeEntities(MSG_EXTERNAL_7070892870969211427.substring(lastIndex_311, match_311 && match_311.index)));
-      lastIndex_311 = partRe_311.lastIndex;
-      switch (match_311 && match_311[0]) {
+      match_1322 = partRe_1322.exec(MSG_EXTERNAL_7070892870969211427) || undefined;
+      incrementalDom.text(goog.string.unescapeEntities(MSG_EXTERNAL_7070892870969211427.substring(lastIndex_1322, match_1322 && match_1322.index)));
+      lastIndex_1322 = partRe_1322.lastIndex;
+      switch (match_1322 && match_1322[0]) {
         case '\u00010\u0001':
-          $badge({content: opt_data.action.param0}, null, opt_ijData);
+          $badge({content: action.param0}, null, opt_ijData);
           break;
       }
-    } while (match_311);
-  ie_close('b');
+    } while (match_1322);
+  incrementalDom.elementClose('b');
 }
-exports.__deltemplate_s309_9bf2c8a4 = __deltemplate_s309_9bf2c8a4;
+exports.__deltemplate_s1318_9bf2c8a4 = __deltemplate_s1318_9bf2c8a4;
+/**
+ * @typedef {{
+ *  action: (?)
+ * }}
+ */
+__deltemplate_s1318_9bf2c8a4.Params;
 if (goog.DEBUG) {
-  __deltemplate_s309_9bf2c8a4.soyTemplateName = 'DDMRuleBuilder.__deltemplate_s309_9bf2c8a4';
+  __deltemplate_s1318_9bf2c8a4.soyTemplateName = 'DDMRuleBuilder.__deltemplate_s1318_9bf2c8a4';
 }
-soy.$$registerDelegateFn(soy.$$getDelTemplateId('DDMRuleBuilder.action.idom'), 'jumptopage', 0, __deltemplate_s309_9bf2c8a4);
+soy.$$registerDelegateFn(soy.$$getDelTemplateId('DDMRuleBuilder.action.idom'), 'jumptopage', 0, __deltemplate_s1318_9bf2c8a4);
 
 
 /**
  * @param {{
- *    action: (?)
+ *  action: (?)
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function __deltemplate_s318_831406f5(opt_data, opt_ignored, opt_ijData) {
-  ie_open('b');
+function __deltemplate_s1331_831406f5(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {?} */
+  var action = opt_data.action;
+  incrementalDom.elementOpen('b');
     /** @desc require-x */
-    var MSG_EXTERNAL_3017347163412966732 = goog.getMsg(
-        'require-{$xxx}',
-        {'xxx': '\u00010\u0001'});
-    var lastIndex_320 = 0, partRe_320 = /\x01\d+\x01/g, match_320;
+    var MSG_EXTERNAL_3017347163412966732 = goog.getMsg('require-{$xxx}', {'xxx': '\u00010\u0001'});
+    var lastIndex_1335 = 0, partRe_1335 = /\x01\d+\x01/g, match_1335;
     do {
-      match_320 = partRe_320.exec(MSG_EXTERNAL_3017347163412966732) || undefined;
-      itext(goog.string.unescapeEntities(MSG_EXTERNAL_3017347163412966732.substring(lastIndex_320, match_320 && match_320.index)));
-      lastIndex_320 = partRe_320.lastIndex;
-      switch (match_320 && match_320[0]) {
+      match_1335 = partRe_1335.exec(MSG_EXTERNAL_3017347163412966732) || undefined;
+      incrementalDom.text(goog.string.unescapeEntities(MSG_EXTERNAL_3017347163412966732.substring(lastIndex_1335, match_1335 && match_1335.index)));
+      lastIndex_1335 = partRe_1335.lastIndex;
+      switch (match_1335 && match_1335[0]) {
         case '\u00010\u0001':
-          $badge({content: opt_data.action.param0}, null, opt_ijData);
+          $badge({content: action.param0}, null, opt_ijData);
           break;
       }
-    } while (match_320);
-  ie_close('b');
+    } while (match_1335);
+  incrementalDom.elementClose('b');
 }
-exports.__deltemplate_s318_831406f5 = __deltemplate_s318_831406f5;
+exports.__deltemplate_s1331_831406f5 = __deltemplate_s1331_831406f5;
+/**
+ * @typedef {{
+ *  action: (?)
+ * }}
+ */
+__deltemplate_s1331_831406f5.Params;
 if (goog.DEBUG) {
-  __deltemplate_s318_831406f5.soyTemplateName = 'DDMRuleBuilder.__deltemplate_s318_831406f5';
+  __deltemplate_s1331_831406f5.soyTemplateName = 'DDMRuleBuilder.__deltemplate_s1331_831406f5';
 }
-soy.$$registerDelegateFn(soy.$$getDelTemplateId('DDMRuleBuilder.action.idom'), 'require', 0, __deltemplate_s318_831406f5);
+soy.$$registerDelegateFn(soy.$$getDelTemplateId('DDMRuleBuilder.action.idom'), 'require', 0, __deltemplate_s1331_831406f5);
 
-exports.render.params = [];
-exports.render.types = {};
-exports.rule_list.params = ["kebab","strings"];
-exports.rule_list.types = {"kebab":"html","strings":"?"};
+exports.render.params = ["strings"];
+exports.render.types = {"strings":"[ruleBuilder: string]"};
+exports.rule_list.params = ["kebab","rules","strings"];
+exports.rule_list.types = {"kebab":"html","rules":"list<[conditions: list<[operandType: string, operandValue: string, strings: any, operator: string, operands: list<[type: string, label: string, value: string]>]>, actions: list<?>, logicOperator: string]>","strings":"?"};
 exports.empty_list.params = ["message"];
 exports.empty_list.types = {"message":"string"};
-exports.rule_types.params = [];
-exports.rule_types.types = {};
+exports.rule_types.params = ["strings"];
+exports.rule_types.types = {"strings":"[showHide: string, enableDisable: string, require: string]"};
 exports.badge.params = ["content"];
 exports.badge.types = {"content":"string"};
 exports.condition.params = ["operandType","operandValue","strings"];

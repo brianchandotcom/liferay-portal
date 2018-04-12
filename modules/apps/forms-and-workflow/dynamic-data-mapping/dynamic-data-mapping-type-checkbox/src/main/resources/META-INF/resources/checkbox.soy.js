@@ -1,9 +1,11 @@
 /* jshint ignore:start */
 import Component from 'metal-component';
 import Soy from 'metal-soy';
+
 var templates;
 goog.loadModule(function(exports) {
-
+var soy = goog.require('soy');
+var soydata = goog.require('soydata');
 // This file was automatically generated from checkbox.soy.
 // Please don't edit this file by hand.
 
@@ -15,36 +17,22 @@ goog.loadModule(function(exports) {
 
 goog.module('DDMCheckbox.incrementaldom');
 
-/** @suppress {extraRequire} */
-var soy = goog.require('soy');
-/** @suppress {extraRequire} */
-var soydata = goog.require('soydata');
-/** @suppress {extraRequire} */
-goog.require('goog.asserts');
-/** @suppress {extraRequire} */
+goog.require('goog.soy.data.SanitizedContent');
+var incrementalDom = goog.require('incrementaldom');
+goog.require('soy');
 goog.require('soy.asserts');
-/** @suppress {extraRequire} */
-goog.require('goog.i18n.bidi');
-/** @suppress {extraRequire} */
-goog.require('goog.string');
-var IncrementalDom = goog.require('incrementaldom');
-var ie_open = IncrementalDom.elementOpen;
-var ie_close = IncrementalDom.elementClose;
-var ie_void = IncrementalDom.elementVoid;
-var ie_open_start = IncrementalDom.elementOpenStart;
-var ie_open_end = IncrementalDom.elementOpenEnd;
-var itext = IncrementalDom.text;
-var iattr = IncrementalDom.attr;
+var soyIdom = goog.require('soy.idom');
 
 
 /**
  * @param {Object<string, *>=} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function __deltemplate_s2_560e40fa(opt_data, opt_ignored, opt_ijData) {
+function __deltemplate_s2_560e40fa(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
   opt_data = opt_data || {};
   $render(opt_data, null, opt_ijData);
 }
@@ -57,156 +45,235 @@ soy.$$registerDelegateFn(soy.$$getDelTemplateId('ddm.field.idom'), 'checkbox', 0
 
 /**
  * @param {{
- *    label: string,
- *    name: string,
- *    pathThemeImages: string,
- *    readOnly: boolean,
- *    required: boolean,
- *    showAsSwitcher: boolean,
- *    showLabel: boolean,
- *    value: (?),
- *    visible: boolean,
- *    tip: (null|string|undefined)
+ *  label: (!goog.soy.data.SanitizedContent|string),
+ *  name: (!goog.soy.data.SanitizedContent|string),
+ *  pathThemeImages: (!goog.soy.data.SanitizedContent|string),
+ *  predefinedValue: boolean,
+ *  readOnly: boolean,
+ *  showAsSwitcher: boolean,
+ *  showLabel: boolean,
+ *  value: boolean,
+ *  visible: boolean,
+ *  required: (boolean|null|undefined),
+ *  tip: (!goog.soy.data.SanitizedContent|null|string|undefined)
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $render(opt_data, opt_ignored, opt_ijData) {
-  soy.asserts.assertType(goog.isString(opt_data.label) || (opt_data.label instanceof goog.soy.data.SanitizedContent), 'label', opt_data.label, 'string|goog.soy.data.SanitizedContent');
-  var label = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.label);
-  soy.asserts.assertType(goog.isString(opt_data.name) || (opt_data.name instanceof goog.soy.data.SanitizedContent), 'name', opt_data.name, 'string|goog.soy.data.SanitizedContent');
-  var name = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.name);
-  soy.asserts.assertType(goog.isString(opt_data.pathThemeImages) || (opt_data.pathThemeImages instanceof goog.soy.data.SanitizedContent), 'pathThemeImages', opt_data.pathThemeImages, 'string|goog.soy.data.SanitizedContent');
-  var pathThemeImages = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.pathThemeImages);
-  soy.asserts.assertType(goog.isBoolean(opt_data.readOnly) || opt_data.readOnly === 1 || opt_data.readOnly === 0, 'readOnly', opt_data.readOnly, 'boolean');
-  var readOnly = /** @type {boolean} */ (!!opt_data.readOnly);
-  soy.asserts.assertType(goog.isBoolean(opt_data.required) || opt_data.required === 1 || opt_data.required === 0, 'required', opt_data.required, 'boolean');
-  var required = /** @type {boolean} */ (!!opt_data.required);
-  soy.asserts.assertType(goog.isBoolean(opt_data.showAsSwitcher) || opt_data.showAsSwitcher === 1 || opt_data.showAsSwitcher === 0, 'showAsSwitcher', opt_data.showAsSwitcher, 'boolean');
-  var showAsSwitcher = /** @type {boolean} */ (!!opt_data.showAsSwitcher);
-  soy.asserts.assertType(goog.isBoolean(opt_data.showLabel) || opt_data.showLabel === 1 || opt_data.showLabel === 0, 'showLabel', opt_data.showLabel, 'boolean');
-  var showLabel = /** @type {boolean} */ (!!opt_data.showLabel);
-  soy.asserts.assertType(goog.isBoolean(opt_data.visible) || opt_data.visible === 1 || opt_data.visible === 0, 'visible', opt_data.visible, 'boolean');
-  var visible = /** @type {boolean} */ (!!opt_data.visible);
-  soy.asserts.assertType(opt_data.tip == null || (opt_data.tip instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.tip), 'tip', opt_data.tip, 'null|string|undefined');
-  var tip = /** @type {null|string|undefined} */ (opt_data.tip);
-  ie_open('div', null, null,
-      'class', 'form-group' + (visible ? '' : ' hide') + ' liferay-ddm-form-field-checkbox',
-      'data-fieldname', name);
+function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var label = soy.asserts.assertType(goog.isString(opt_data.label) || opt_data.label instanceof goog.soy.data.SanitizedContent, 'label', opt_data.label, '!goog.soy.data.SanitizedContent|string');
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var name = soy.asserts.assertType(goog.isString(opt_data.name) || opt_data.name instanceof goog.soy.data.SanitizedContent, 'name', opt_data.name, '!goog.soy.data.SanitizedContent|string');
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var pathThemeImages = soy.asserts.assertType(goog.isString(opt_data.pathThemeImages) || opt_data.pathThemeImages instanceof goog.soy.data.SanitizedContent, 'pathThemeImages', opt_data.pathThemeImages, '!goog.soy.data.SanitizedContent|string');
+  /** @type {boolean} */
+  var predefinedValue = soy.asserts.assertType(goog.isBoolean(opt_data.predefinedValue) || opt_data.predefinedValue === 1 || opt_data.predefinedValue === 0, 'predefinedValue', opt_data.predefinedValue, 'boolean');
+  /** @type {boolean} */
+  var readOnly = soy.asserts.assertType(goog.isBoolean(opt_data.readOnly) || opt_data.readOnly === 1 || opt_data.readOnly === 0, 'readOnly', opt_data.readOnly, 'boolean');
+  /** @type {boolean} */
+  var showAsSwitcher = soy.asserts.assertType(goog.isBoolean(opt_data.showAsSwitcher) || opt_data.showAsSwitcher === 1 || opt_data.showAsSwitcher === 0, 'showAsSwitcher', opt_data.showAsSwitcher, 'boolean');
+  /** @type {boolean} */
+  var showLabel = soy.asserts.assertType(goog.isBoolean(opt_data.showLabel) || opt_data.showLabel === 1 || opt_data.showLabel === 0, 'showLabel', opt_data.showLabel, 'boolean');
+  /** @type {boolean} */
+  var value = soy.asserts.assertType(goog.isBoolean(opt_data.value) || opt_data.value === 1 || opt_data.value === 0, 'value', opt_data.value, 'boolean');
+  /** @type {boolean} */
+  var visible = soy.asserts.assertType(goog.isBoolean(opt_data.visible) || opt_data.visible === 1 || opt_data.visible === 0, 'visible', opt_data.visible, 'boolean');
+  /** @type {boolean|null|undefined} */
+  var required = soy.asserts.assertType(opt_data.required == null || (goog.isBoolean(opt_data.required) || opt_data.required === 1 || opt_data.required === 0), 'required', opt_data.required, 'boolean|null|undefined');
+  /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
+  var tip = soy.asserts.assertType(opt_data.tip == null || (goog.isString(opt_data.tip) || opt_data.tip instanceof goog.soy.data.SanitizedContent), 'tip', opt_data.tip, '!goog.soy.data.SanitizedContent|null|string|undefined');
+  var displayValue__soy19 = value ? value : predefinedValue;
+  incrementalDom.elementOpenStart('div');
+      incrementalDom.attr('class', 'form-group' + (visible ? '' : ' hide') + ' liferay-ddm-form-field-checkbox');
+      incrementalDom.attr('data-fieldname', name);
+  incrementalDom.elementOpenEnd();
     if (showAsSwitcher) {
-      ie_open('label', null, null,
-          'aria-checked', opt_data.value ? 'true' : 'false',
-          'for', name,
-          'role', 'checkbox');
-        ie_open_start('input');
-            iattr('class', 'toggle-switch');
-            if (opt_data.value) {
-              iattr('checked', '');
+      incrementalDom.elementOpenStart('label');
+          incrementalDom.attr('aria-checked', displayValue__soy19 ? 'true' : 'false');
+          incrementalDom.attr('for', name);
+          incrementalDom.attr('role', 'checkbox');
+      incrementalDom.elementOpenEnd();
+        incrementalDom.elementOpenStart('input');
+            incrementalDom.attr('class', 'toggle-switch');
+            if (displayValue__soy19) {
+              incrementalDom.attr('checked', '');
             }
             if (readOnly) {
-              iattr('disabled', '');
+              incrementalDom.attr('disabled', '');
             }
-            iattr('id', name);
-            iattr('name', name);
-            iattr('type', 'checkbox');
-            iattr('value', 'true');
-        ie_open_end();
-        ie_close('input');
-        ie_open('span', null, null,
-            'aria-hidden', 'true',
-            'class', 'toggle-switch-bar');
-          ie_void('span', null, null,
-              'class', 'toggle-switch-handle');
-        ie_close('span');
-        ie_open('span', null, null,
-            'class', 'toggle-switch-text toggle-switch-text-right');
+            incrementalDom.attr('id', name);
+            incrementalDom.attr('name', name);
+            incrementalDom.attr('type', 'checkbox');
+            incrementalDom.attr('value', 'true');
+        incrementalDom.elementOpenEnd();
+        incrementalDom.elementClose('input');
+        incrementalDom.elementOpenStart('span');
+            incrementalDom.attr('aria-hidden', 'true');
+            incrementalDom.attr('class', 'toggle-switch-bar');
+        incrementalDom.elementOpenEnd();
+          incrementalDom.elementOpenStart('span');
+              incrementalDom.attr('class', 'toggle-switch-handle');
+          incrementalDom.elementOpenEnd();
+          incrementalDom.elementClose('span');
+        incrementalDom.elementClose('span');
+        incrementalDom.elementOpenStart('span');
+            incrementalDom.attr('class', 'toggle-switch-text toggle-switch-text-right');
+        incrementalDom.elementOpenEnd();
           if (showLabel) {
-            var dyn0 = label;
-            if (typeof dyn0 == 'function') dyn0(); else if (dyn0 != null) itext(dyn0);
-            itext(' ');
+            soyIdom.print(label);
+            incrementalDom.text(' ');
           }
           if (required) {
-            ie_open('svg', null, null,
-                'aria-hidden', 'true',
-                'class', 'lexicon-icon lexicon-icon-asterisk reference-mark');
-              ie_void('use', null, null,
-                  'xlink:href', pathThemeImages + '/lexicon/icons.svg#asterisk');
-            ie_close('svg');
+            incrementalDom.elementOpenStart('svg');
+                incrementalDom.attr('aria-hidden', 'true');
+                incrementalDom.attr('class', 'lexicon-icon lexicon-icon-asterisk reference-mark');
+            incrementalDom.elementOpenEnd();
+              incrementalDom.elementOpenStart('use');
+                  incrementalDom.attr('xlink:href', pathThemeImages + '/lexicon/icons.svg#asterisk');
+              incrementalDom.elementOpenEnd();
+              incrementalDom.elementClose('use');
+            incrementalDom.elementClose('svg');
           }
-        ie_close('span');
-      ie_close('label');
+        incrementalDom.elementClose('span');
+      incrementalDom.elementClose('label');
       if (tip) {
-        ie_open('span', null, null,
-            'class', 'form-text');
-          var dyn1 = tip;
-          if (typeof dyn1 == 'function') dyn1(); else if (dyn1 != null) itext(dyn1);
-        ie_close('span');
+        incrementalDom.elementOpenStart('span');
+            incrementalDom.attr('class', 'form-text');
+        incrementalDom.elementOpenEnd();
+          soyIdom.print(tip);
+        incrementalDom.elementClose('span');
       }
     } else {
-      ie_open('div', null, null,
-          'class', 'custom-control custom-checkbox');
-        if (showLabel) {
-          ie_open('label', null, null,
-              'for', name);
+      incrementalDom.elementOpenStart('div');
+          incrementalDom.attr('class', 'custom-control custom-checkbox');
+      incrementalDom.elementOpenEnd();
+          if (showLabel) {
+            incrementalDom.elementOpenStart('label');
+              incrementalDom.attr('for', name);
+          incrementalDom.elementOpenEnd();
           }
-          ie_open_start('input');
-              if (opt_data.value) {
-                iattr('checked', '');
+          incrementalDom.elementOpenStart('input');
+              if (displayValue__soy19) {
+                incrementalDom.attr('checked', '');
               }
               if (readOnly) {
-                iattr('disabled', '');
+                incrementalDom.attr('disabled', '');
               }
-              iattr('class', 'custom-control-input');
-              iattr('id', name);
-              iattr('name', name);
-              iattr('type', 'checkbox');
-              iattr('value', 'true');
-          ie_open_end();
-          ie_close('input');
+              incrementalDom.attr('class', 'custom-control-input');
+              incrementalDom.attr('id', name);
+              incrementalDom.attr('name', name);
+              incrementalDom.attr('type', 'checkbox');
+              incrementalDom.attr('value', 'true');
+          incrementalDom.elementOpenEnd();
+          incrementalDom.elementClose('input');
           if (showLabel) {
-            ie_open('span', null, null,
-                'class', 'custom-control-label');
-              ie_open('span', null, null,
-                  'class', 'custom-control-label-text');
-                var dyn2 = label;
-                if (typeof dyn2 == 'function') dyn2(); else if (dyn2 != null) itext(dyn2);
-                itext(' ');
-              ie_close('span');
-            ie_close('span');
+            incrementalDom.elementOpenStart('span');
+                incrementalDom.attr('class', 'custom-control-label');
+            incrementalDom.elementOpenEnd();
+              incrementalDom.elementOpenStart('span');
+                  incrementalDom.attr('class', 'custom-control-label-text');
+              incrementalDom.elementOpenEnd();
+                soyIdom.print(label);
+                incrementalDom.text(' ');
+              incrementalDom.elementClose('span');
+            incrementalDom.elementClose('span');
           }
-          if (showLabel) {
-            if (required) {
-              ie_open('svg', null, null,
-                  'aria-hidden', 'true',
-                  'class', 'lexicon-icon lexicon-icon-asterisk reference-mark');
-                ie_void('use', null, null,
-                    'xlink:href', pathThemeImages + '/lexicon/icons.svg#asterisk');
-              ie_close('svg');
+        if (showLabel) {
+          if (required) {
+              incrementalDom.elementOpenStart('svg');
+                  incrementalDom.attr('aria-hidden', 'true');
+                  incrementalDom.attr('class', 'lexicon-icon lexicon-icon-asterisk reference-mark');
+              incrementalDom.elementOpenEnd();
+                incrementalDom.elementOpenStart('use');
+                    incrementalDom.attr('xlink:href', pathThemeImages + '/lexicon/icons.svg#asterisk');
+                incrementalDom.elementOpenEnd();
+                incrementalDom.elementClose('use');
+              incrementalDom.elementClose('svg');
             }
-          ie_close('label');
+          incrementalDom.elementClose('label');
         }
-      ie_close('div');
+      incrementalDom.elementClose('div');
       if (showLabel) {
         if (tip) {
-          ie_open('span', null, null,
-              'class', 'form-text');
-            var dyn3 = tip;
-            if (typeof dyn3 == 'function') dyn3(); else if (dyn3 != null) itext(dyn3);
-          ie_close('span');
+          incrementalDom.elementOpenStart('span');
+              incrementalDom.attr('class', 'form-text');
+          incrementalDom.elementOpenEnd();
+            soyIdom.print(tip);
+          incrementalDom.elementClose('span');
         }
       }
     }
-  ie_close('div');
+    if (!displayValue__soy19) {
+      $hidden_input({displayValue: displayValue__soy19, name: name}, null, opt_ijData);
+    }
+  incrementalDom.elementClose('div');
 }
 exports.render = $render;
+/**
+ * @typedef {{
+ *  label: (!goog.soy.data.SanitizedContent|string),
+ *  name: (!goog.soy.data.SanitizedContent|string),
+ *  pathThemeImages: (!goog.soy.data.SanitizedContent|string),
+ *  predefinedValue: boolean,
+ *  readOnly: boolean,
+ *  showAsSwitcher: boolean,
+ *  showLabel: boolean,
+ *  value: boolean,
+ *  visible: boolean,
+ *  required: (boolean|null|undefined),
+ *  tip: (!goog.soy.data.SanitizedContent|null|string|undefined)
+ * }}
+ */
+$render.Params;
 if (goog.DEBUG) {
   $render.soyTemplateName = 'DDMCheckbox.render';
 }
 
-exports.render.params = ["label","name","pathThemeImages","readOnly","required","showAsSwitcher","showLabel","value","visible","tip"];
-exports.render.types = {"label":"string","name":"string","pathThemeImages":"string","readOnly":"bool","required":"bool","showAsSwitcher":"bool","showLabel":"bool","value":"?","visible":"bool","tip":"string"};
+
+/**
+ * @param {{
+ *  name: (!goog.soy.data.SanitizedContent|string),
+ *  displayValue: boolean
+ * }} opt_data
+ * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
+ * @return {void}
+ * @suppress {checkTypes}
+ */
+function $hidden_input(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var name = soy.asserts.assertType(goog.isString(opt_data.name) || opt_data.name instanceof goog.soy.data.SanitizedContent, 'name', opt_data.name, '!goog.soy.data.SanitizedContent|string');
+  /** @type {boolean} */
+  var displayValue = soy.asserts.assertType(goog.isBoolean(opt_data.displayValue) || opt_data.displayValue === 1 || opt_data.displayValue === 0, 'displayValue', opt_data.displayValue, 'boolean');
+  incrementalDom.elementOpenStart('input');
+      incrementalDom.attr('id', name);
+      incrementalDom.attr('name', name);
+      incrementalDom.attr('type', 'hidden');
+      incrementalDom.attr('value', displayValue ? 'true' : 'false');
+  incrementalDom.elementOpenEnd();
+  incrementalDom.elementClose('input');
+}
+exports.hidden_input = $hidden_input;
+/**
+ * @typedef {{
+ *  name: (!goog.soy.data.SanitizedContent|string),
+ *  displayValue: boolean
+ * }}
+ */
+$hidden_input.Params;
+if (goog.DEBUG) {
+  $hidden_input.soyTemplateName = 'DDMCheckbox.hidden_input';
+}
+
+exports.render.params = ["label","name","pathThemeImages","predefinedValue","readOnly","showAsSwitcher","showLabel","value","visible","required","tip"];
+exports.render.types = {"label":"string","name":"string","pathThemeImages":"string","predefinedValue":"bool","readOnly":"bool","showAsSwitcher":"bool","showLabel":"bool","value":"bool","visible":"bool","required":"bool","tip":"string"};
+exports.hidden_input.params = ["name","displayValue"];
+exports.hidden_input.types = {"name":"string","displayValue":"bool"};
 templates = exports;
 return exports;
 

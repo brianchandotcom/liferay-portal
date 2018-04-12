@@ -1,9 +1,11 @@
 /* jshint ignore:start */
 import Component from 'metal-component';
 import Soy from 'metal-soy';
+
 var templates;
 goog.loadModule(function(exports) {
-
+var soy = goog.require('soy');
+var soydata = goog.require('soydata');
 // This file was automatically generated from fieldset.soy.
 // Please don't edit this file by hand.
 
@@ -16,36 +18,22 @@ goog.loadModule(function(exports) {
 
 goog.module('DDMFieldset.incrementaldom');
 
-/** @suppress {extraRequire} */
-var soy = goog.require('soy');
-/** @suppress {extraRequire} */
-var soydata = goog.require('soydata');
-/** @suppress {extraRequire} */
-goog.require('goog.asserts');
-/** @suppress {extraRequire} */
+goog.require('goog.soy.data.SanitizedContent');
+var incrementalDom = goog.require('incrementaldom');
+goog.require('soy');
 goog.require('soy.asserts');
-/** @suppress {extraRequire} */
-goog.require('goog.i18n.bidi');
-/** @suppress {extraRequire} */
-goog.require('goog.string');
-var IncrementalDom = goog.require('incrementaldom');
-var ie_open = IncrementalDom.elementOpen;
-var ie_close = IncrementalDom.elementClose;
-var ie_void = IncrementalDom.elementVoid;
-var ie_open_start = IncrementalDom.elementOpenStart;
-var ie_open_end = IncrementalDom.elementOpenEnd;
-var itext = IncrementalDom.text;
-var iattr = IncrementalDom.attr;
+var soyIdom = goog.require('soy.idom');
 
 
 /**
  * @param {Object<string, *>=} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function __deltemplate_s2_95ba1b96(opt_data, opt_ignored, opt_ijData) {
+function __deltemplate_s2_95ba1b96(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
   opt_data = opt_data || {};
   $render(opt_data, null, opt_ijData);
 }
@@ -58,26 +46,39 @@ soy.$$registerDelegateFn(soy.$$getDelTemplateId('ddm.field.idom'), 'fieldset', 0
 
 /**
  * @param {{
- *    columnSize: number,
- *    field: (?)
+ *  columnSize: number,
+ *  field: (?)
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $fieldset_column(opt_data, opt_ignored, opt_ijData) {
-  var columnSize = goog.asserts.assertNumber(opt_data.columnSize, "expected parameter 'columnSize' of type int.");
-  ie_open('div', null, null,
-      'class', 'form-group-item col-md-' + columnSize);
-    ie_open('div', null, null,
-        'class', 'clearfix ' + ((! opt_data.field.visible) ? 'hide' : '') + ' lfr-ddm-form-field-container');
-      var variant__soy12 = opt_data.field.type;
-      soy.$$getDelegateFn(soy.$$getDelTemplateId('ddm.field.idom'), variant__soy12, false)(opt_data.field, null, opt_ijData);
-    ie_close('div');
-  ie_close('div');
+function $fieldset_column(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {number} */
+  var columnSize = soy.asserts.assertType(goog.isNumber(opt_data.columnSize), 'columnSize', opt_data.columnSize, 'number');
+  /** @type {?} */
+  var field = opt_data.field;
+  incrementalDom.elementOpenStart('div');
+      incrementalDom.attr('class', 'form-group-item col-md-' + columnSize);
+  incrementalDom.elementOpenEnd();
+    incrementalDom.elementOpenStart('div');
+        incrementalDom.attr('class', 'clearfix ' + (!field.visible ? 'hide' : '') + ' lfr-ddm-form-field-container');
+    incrementalDom.elementOpenEnd();
+      var variant__soy17 = field.type;
+      soy.$$getDelegateFn(soy.$$getDelTemplateId('ddm.field.idom'), variant__soy17, false)(field, null, opt_ijData);
+    incrementalDom.elementClose('div');
+  incrementalDom.elementClose('div');
 }
 exports.fieldset_column = $fieldset_column;
+/**
+ * @typedef {{
+ *  columnSize: number,
+ *  field: (?)
+ * }}
+ */
+$fieldset_column.Params;
 if (goog.DEBUG) {
   $fieldset_column.soyTemplateName = 'DDMFieldset.fieldset_column';
 }
@@ -85,25 +86,35 @@ if (goog.DEBUG) {
 
 /**
  * @param {{
- *    columnSize: number,
- *    fields: !Array<(?)>
+ *  columnSize: number,
+ *  fields: !Array<?>
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $fieldset_columns(opt_data, opt_ignored, opt_ijData) {
-  var columnSize = goog.asserts.assertNumber(opt_data.columnSize, "expected parameter 'columnSize' of type int.");
-  var fields = goog.asserts.assertArray(opt_data.fields, "expected parameter 'fields' of type list<?>.");
-  var fieldList19 = fields;
-  var fieldListLen19 = fieldList19.length;
-  for (var fieldIndex19 = 0; fieldIndex19 < fieldListLen19; fieldIndex19++) {
-    var fieldData19 = fieldList19[fieldIndex19];
-    $fieldset_column(soy.$$assignDefaults({columnSize: columnSize, field: fieldData19}, opt_data), null, opt_ijData);
-  }
+function $fieldset_columns(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {number} */
+  var columnSize = soy.asserts.assertType(goog.isNumber(opt_data.columnSize), 'columnSize', opt_data.columnSize, 'number');
+  /** @type {!Array<?>} */
+  var fields = soy.asserts.assertType(goog.isArray(opt_data.fields), 'fields', opt_data.fields, '!Array<?>');
+  var field30List = fields;
+  var field30ListLen = field30List.length;
+  for (var field30Index = 0; field30Index < field30ListLen; field30Index++) {
+      var field30Data = field30List[field30Index];
+      $fieldset_column(soy.$$assignDefaults({columnSize: columnSize, field: field30Data}, opt_data), null, opt_ijData);
+    }
 }
 exports.fieldset_columns = $fieldset_columns;
+/**
+ * @typedef {{
+ *  columnSize: number,
+ *  fields: !Array<?>
+ * }}
+ */
+$fieldset_columns.Params;
 if (goog.DEBUG) {
   $fieldset_columns.soyTemplateName = 'DDMFieldset.fieldset_columns';
 }
@@ -111,64 +122,83 @@ if (goog.DEBUG) {
 
 /**
  * @param {{
- *    columnSize: number,
- *    name: string,
- *    nestedFields: !Array<(?)>,
- *    visible: boolean,
- *    label: (null|string|undefined),
- *    showBorderBottom: (boolean|null|undefined),
- *    showBorderTop: (boolean|null|undefined),
- *    showLabel: (boolean|null|undefined),
- *    tip: (null|string|undefined)
+ *  columnSize: number,
+ *  name: (!goog.soy.data.SanitizedContent|string),
+ *  nestedFields: !Array<?>,
+ *  visible: boolean,
+ *  label: (!goog.soy.data.SanitizedContent|null|string|undefined),
+ *  showBorderBottom: (boolean|null|undefined),
+ *  showBorderTop: (boolean|null|undefined),
+ *  showLabel: (boolean|null|undefined),
+ *  tip: (!goog.soy.data.SanitizedContent|null|string|undefined)
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $render(opt_data, opt_ignored, opt_ijData) {
-  var columnSize = goog.asserts.assertNumber(opt_data.columnSize, "expected parameter 'columnSize' of type int.");
-  soy.asserts.assertType(goog.isString(opt_data.name) || (opt_data.name instanceof goog.soy.data.SanitizedContent), 'name', opt_data.name, 'string|goog.soy.data.SanitizedContent');
-  var name = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.name);
-  var nestedFields = goog.asserts.assertArray(opt_data.nestedFields, "expected parameter 'nestedFields' of type list<?>.");
-  soy.asserts.assertType(goog.isBoolean(opt_data.visible) || opt_data.visible === 1 || opt_data.visible === 0, 'visible', opt_data.visible, 'boolean');
-  var visible = /** @type {boolean} */ (!!opt_data.visible);
-  soy.asserts.assertType(opt_data.label == null || (opt_data.label instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.label), 'label', opt_data.label, 'null|string|undefined');
-  var label = /** @type {null|string|undefined} */ (opt_data.label);
-  soy.asserts.assertType(opt_data.showBorderBottom == null || goog.isBoolean(opt_data.showBorderBottom) || opt_data.showBorderBottom === 1 || opt_data.showBorderBottom === 0, 'showBorderBottom', opt_data.showBorderBottom, 'boolean|null|undefined');
-  var showBorderBottom = /** @type {boolean|null|undefined} */ (opt_data.showBorderBottom);
-  soy.asserts.assertType(opt_data.showBorderTop == null || goog.isBoolean(opt_data.showBorderTop) || opt_data.showBorderTop === 1 || opt_data.showBorderTop === 0, 'showBorderTop', opt_data.showBorderTop, 'boolean|null|undefined');
-  var showBorderTop = /** @type {boolean|null|undefined} */ (opt_data.showBorderTop);
-  soy.asserts.assertType(opt_data.showLabel == null || goog.isBoolean(opt_data.showLabel) || opt_data.showLabel === 1 || opt_data.showLabel === 0, 'showLabel', opt_data.showLabel, 'boolean|null|undefined');
-  var showLabel = /** @type {boolean|null|undefined} */ (opt_data.showLabel);
-  soy.asserts.assertType(opt_data.tip == null || (opt_data.tip instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.tip), 'tip', opt_data.tip, 'null|string|undefined');
-  var tip = /** @type {null|string|undefined} */ (opt_data.tip);
-  ie_open('div', null, null,
-      'class', 'form-group' + (visible ? '' : ' hide') + ' liferay-ddm-form-field-fieldset' + (showBorderBottom ? ' border-bottom' : ''),
-      'data-fieldname', name);
+function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {number} */
+  var columnSize = soy.asserts.assertType(goog.isNumber(opt_data.columnSize), 'columnSize', opt_data.columnSize, 'number');
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var name = soy.asserts.assertType(goog.isString(opt_data.name) || opt_data.name instanceof goog.soy.data.SanitizedContent, 'name', opt_data.name, '!goog.soy.data.SanitizedContent|string');
+  /** @type {!Array<?>} */
+  var nestedFields = soy.asserts.assertType(goog.isArray(opt_data.nestedFields), 'nestedFields', opt_data.nestedFields, '!Array<?>');
+  /** @type {boolean} */
+  var visible = soy.asserts.assertType(goog.isBoolean(opt_data.visible) || opt_data.visible === 1 || opt_data.visible === 0, 'visible', opt_data.visible, 'boolean');
+  /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
+  var label = soy.asserts.assertType(opt_data.label == null || (goog.isString(opt_data.label) || opt_data.label instanceof goog.soy.data.SanitizedContent), 'label', opt_data.label, '!goog.soy.data.SanitizedContent|null|string|undefined');
+  /** @type {boolean|null|undefined} */
+  var showBorderBottom = soy.asserts.assertType(opt_data.showBorderBottom == null || (goog.isBoolean(opt_data.showBorderBottom) || opt_data.showBorderBottom === 1 || opt_data.showBorderBottom === 0), 'showBorderBottom', opt_data.showBorderBottom, 'boolean|null|undefined');
+  /** @type {boolean|null|undefined} */
+  var showBorderTop = soy.asserts.assertType(opt_data.showBorderTop == null || (goog.isBoolean(opt_data.showBorderTop) || opt_data.showBorderTop === 1 || opt_data.showBorderTop === 0), 'showBorderTop', opt_data.showBorderTop, 'boolean|null|undefined');
+  /** @type {boolean|null|undefined} */
+  var showLabel = soy.asserts.assertType(opt_data.showLabel == null || (goog.isBoolean(opt_data.showLabel) || opt_data.showLabel === 1 || opt_data.showLabel === 0), 'showLabel', opt_data.showLabel, 'boolean|null|undefined');
+  /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
+  var tip = soy.asserts.assertType(opt_data.tip == null || (goog.isString(opt_data.tip) || opt_data.tip instanceof goog.soy.data.SanitizedContent), 'tip', opt_data.tip, '!goog.soy.data.SanitizedContent|null|string|undefined');
+  incrementalDom.elementOpenStart('div');
+      incrementalDom.attr('class', 'form-group' + (visible ? '' : ' hide') + ' liferay-ddm-form-field-fieldset' + (showBorderBottom ? ' border-bottom' : ''));
+      incrementalDom.attr('data-fieldname', name);
+  incrementalDom.elementOpenEnd();
     if (tip) {
-      ie_open('p', null, null,
-          'class', 'liferay-ddm-form-field-tip');
-        var dyn0 = tip;
-        if (typeof dyn0 == 'function') dyn0(); else if (dyn0 != null) itext(dyn0);
-      ie_close('p');
+      incrementalDom.elementOpenStart('p');
+          incrementalDom.attr('class', 'liferay-ddm-form-field-tip');
+      incrementalDom.elementOpenEnd();
+        soyIdom.print(tip);
+      incrementalDom.elementClose('p');
     }
-    ie_open('fieldset', null, null,
-        'class', showBorderTop ? ' border-top' : '');
+    incrementalDom.elementOpenStart('fieldset');
+        incrementalDom.attr('class', showBorderTop ? ' border-top' : '');
+    incrementalDom.elementOpenEnd();
       if (showLabel) {
-        ie_open('legend');
-          var dyn1 = label;
-          if (typeof dyn1 == 'function') dyn1(); else if (dyn1 != null) itext(dyn1);
-        ie_close('legend');
+        incrementalDom.elementOpen('legend');
+          soyIdom.print(label);
+        incrementalDom.elementClose('legend');
       }
-      ie_open('div', null, null,
-          'class', 'form-group-autofit');
+      incrementalDom.elementOpenStart('div');
+          incrementalDom.attr('class', 'form-group-autofit');
+      incrementalDom.elementOpenEnd();
         $fieldset_columns(soy.$$assignDefaults({columnSize: columnSize, fields: nestedFields}, opt_data), null, opt_ijData);
-      ie_close('div');
-    ie_close('fieldset');
-  ie_close('div');
+      incrementalDom.elementClose('div');
+    incrementalDom.elementClose('fieldset');
+  incrementalDom.elementClose('div');
 }
 exports.render = $render;
+/**
+ * @typedef {{
+ *  columnSize: number,
+ *  name: (!goog.soy.data.SanitizedContent|string),
+ *  nestedFields: !Array<?>,
+ *  visible: boolean,
+ *  label: (!goog.soy.data.SanitizedContent|null|string|undefined),
+ *  showBorderBottom: (boolean|null|undefined),
+ *  showBorderTop: (boolean|null|undefined),
+ *  showLabel: (boolean|null|undefined),
+ *  tip: (!goog.soy.data.SanitizedContent|null|string|undefined)
+ * }}
+ */
+$render.Params;
 if (goog.DEBUG) {
   $render.soyTemplateName = 'DDMFieldset.render';
 }

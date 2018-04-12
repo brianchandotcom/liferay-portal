@@ -1,9 +1,11 @@
 /* jshint ignore:start */
 import Component from 'metal-component';
 import Soy from 'metal-soy';
+
 var templates;
 goog.loadModule(function(exports) {
-
+var soy = goog.require('soy');
+var soydata = goog.require('soydata');
 // This file was automatically generated from calculate.soy.
 // Please don't edit this file by hand.
 
@@ -14,41 +16,31 @@ goog.loadModule(function(exports) {
 
 goog.module('DDMCalculate.incrementaldom');
 
-/** @suppress {extraRequire} */
-var soy = goog.require('soy');
-/** @suppress {extraRequire} */
-var soydata = goog.require('soydata');
-/** @suppress {extraRequire} */
-goog.require('goog.i18n.bidi');
-/** @suppress {extraRequire} */
-goog.require('goog.asserts');
-/** @suppress {extraRequire} */
-goog.require('goog.string');
-var IncrementalDom = goog.require('incrementaldom');
-var ie_open = IncrementalDom.elementOpen;
-var ie_close = IncrementalDom.elementClose;
-var ie_void = IncrementalDom.elementVoid;
-var ie_open_start = IncrementalDom.elementOpenStart;
-var ie_open_end = IncrementalDom.elementOpenEnd;
-var itext = IncrementalDom.text;
-var iattr = IncrementalDom.attr;
+var incrementalDom = goog.require('incrementaldom');
+var soyIdom = goog.require('soy.idom');
 
 
 /**
  * @param {Object<string, *>=} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $render(opt_data, opt_ignored, opt_ijData) {
-  ie_open('div', null, null,
-      'class', 'calculate-container');
-    ie_void('div', null, null,
-        'class', 'calculate-container-calculator-component col-md-3');
-    ie_void('div', null, null,
-        'class', 'calculate-container-fields col-md-9');
-  ie_close('div');
+function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  incrementalDom.elementOpenStart('div');
+      incrementalDom.attr('class', 'calculate-container');
+  incrementalDom.elementOpenEnd();
+    incrementalDom.elementOpenStart('div');
+        incrementalDom.attr('class', 'calculate-container-calculator-component col-md-3');
+    incrementalDom.elementOpenEnd();
+    incrementalDom.elementClose('div');
+    incrementalDom.elementOpenStart('div');
+        incrementalDom.attr('class', 'calculate-container-fields col-md-9');
+    incrementalDom.elementOpenEnd();
+    incrementalDom.elementClose('div');
+  incrementalDom.elementClose('div');
 }
 exports.render = $render;
 if (goog.DEBUG) {

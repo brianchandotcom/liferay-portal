@@ -1,9 +1,11 @@
 /* jshint ignore:start */
 import Component from 'metal-component';
 import Soy from 'metal-soy';
+
 var templates;
 goog.loadModule(function(exports) {
-
+var soy = goog.require('soy');
+var soydata = goog.require('soydata');
 // This file was automatically generated from editor.soy.
 // Please don't edit this file by hand.
 
@@ -15,36 +17,22 @@ goog.loadModule(function(exports) {
 
 goog.module('DDMEditor.incrementaldom');
 
-/** @suppress {extraRequire} */
-var soy = goog.require('soy');
-/** @suppress {extraRequire} */
-var soydata = goog.require('soydata');
-/** @suppress {extraRequire} */
-goog.require('goog.asserts');
-/** @suppress {extraRequire} */
+goog.require('goog.soy.data.SanitizedContent');
+var incrementalDom = goog.require('incrementaldom');
+goog.require('soy');
 goog.require('soy.asserts');
-/** @suppress {extraRequire} */
-goog.require('goog.i18n.bidi');
-/** @suppress {extraRequire} */
-goog.require('goog.string');
-var IncrementalDom = goog.require('incrementaldom');
-var ie_open = IncrementalDom.elementOpen;
-var ie_close = IncrementalDom.elementClose;
-var ie_void = IncrementalDom.elementVoid;
-var ie_open_start = IncrementalDom.elementOpenStart;
-var ie_open_end = IncrementalDom.elementOpenEnd;
-var itext = IncrementalDom.text;
-var iattr = IncrementalDom.attr;
+var soyIdom = goog.require('soy.idom');
 
 
 /**
  * @param {Object<string, *>=} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function __deltemplate_s2_262ebc73(opt_data, opt_ignored, opt_ijData) {
+function __deltemplate_s2_262ebc73(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
   opt_data = opt_data || {};
   $render(opt_data, null, opt_ijData);
 }
@@ -57,90 +45,112 @@ soy.$$registerDelegateFn(soy.$$getDelTemplateId('ddm.field.idom'), 'editor', 0, 
 
 /**
  * @param {{
- *    label: string,
- *    name: string,
- *    pathThemeImages: string,
- *    placeholder: string,
- *    required: boolean,
- *    showLabel: boolean,
- *    value: string,
- *    visible: boolean,
- *    tip: (null|string|undefined)
+ *  label: (!goog.soy.data.SanitizedContent|string),
+ *  name: (!goog.soy.data.SanitizedContent|string),
+ *  pathThemeImages: (!goog.soy.data.SanitizedContent|string),
+ *  placeholder: (!goog.soy.data.SanitizedContent|string),
+ *  required: boolean,
+ *  showLabel: boolean,
+ *  value: (!goog.soy.data.SanitizedContent|string),
+ *  visible: boolean,
+ *  tip: (!goog.soy.data.SanitizedContent|null|string|undefined)
  * }} opt_data
- * @param {(null|undefined)=} opt_ignored
  * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $render(opt_data, opt_ignored, opt_ijData) {
-  soy.asserts.assertType(goog.isString(opt_data.label) || (opt_data.label instanceof goog.soy.data.SanitizedContent), 'label', opt_data.label, 'string|goog.soy.data.SanitizedContent');
-  var label = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.label);
-  soy.asserts.assertType(goog.isString(opt_data.name) || (opt_data.name instanceof goog.soy.data.SanitizedContent), 'name', opt_data.name, 'string|goog.soy.data.SanitizedContent');
-  var name = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.name);
-  soy.asserts.assertType(goog.isString(opt_data.pathThemeImages) || (opt_data.pathThemeImages instanceof goog.soy.data.SanitizedContent), 'pathThemeImages', opt_data.pathThemeImages, 'string|goog.soy.data.SanitizedContent');
-  var pathThemeImages = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.pathThemeImages);
-  soy.asserts.assertType(goog.isString(opt_data.placeholder) || (opt_data.placeholder instanceof goog.soy.data.SanitizedContent), 'placeholder', opt_data.placeholder, 'string|goog.soy.data.SanitizedContent');
-  var placeholder = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.placeholder);
-  soy.asserts.assertType(goog.isBoolean(opt_data.required) || opt_data.required === 1 || opt_data.required === 0, 'required', opt_data.required, 'boolean');
-  var required = /** @type {boolean} */ (!!opt_data.required);
-  soy.asserts.assertType(goog.isBoolean(opt_data.showLabel) || opt_data.showLabel === 1 || opt_data.showLabel === 0, 'showLabel', opt_data.showLabel, 'boolean');
-  var showLabel = /** @type {boolean} */ (!!opt_data.showLabel);
-  soy.asserts.assertType(goog.isString(opt_data.value) || (opt_data.value instanceof goog.soy.data.SanitizedContent), 'value', opt_data.value, 'string|goog.soy.data.SanitizedContent');
-  var value = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.value);
-  soy.asserts.assertType(goog.isBoolean(opt_data.visible) || opt_data.visible === 1 || opt_data.visible === 0, 'visible', opt_data.visible, 'boolean');
-  var visible = /** @type {boolean} */ (!!opt_data.visible);
-  soy.asserts.assertType(opt_data.tip == null || (opt_data.tip instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.tip), 'tip', opt_data.tip, 'null|string|undefined');
-  var tip = /** @type {null|string|undefined} */ (opt_data.tip);
-  ie_open('div', null, null,
-      'class', 'form-group' + (visible ? '' : ' hide') + ' liferay-ddm-form-field-editor',
-      'data-fieldname', name);
+function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var label = soy.asserts.assertType(goog.isString(opt_data.label) || opt_data.label instanceof goog.soy.data.SanitizedContent, 'label', opt_data.label, '!goog.soy.data.SanitizedContent|string');
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var name = soy.asserts.assertType(goog.isString(opt_data.name) || opt_data.name instanceof goog.soy.data.SanitizedContent, 'name', opt_data.name, '!goog.soy.data.SanitizedContent|string');
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var pathThemeImages = soy.asserts.assertType(goog.isString(opt_data.pathThemeImages) || opt_data.pathThemeImages instanceof goog.soy.data.SanitizedContent, 'pathThemeImages', opt_data.pathThemeImages, '!goog.soy.data.SanitizedContent|string');
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var placeholder = soy.asserts.assertType(goog.isString(opt_data.placeholder) || opt_data.placeholder instanceof goog.soy.data.SanitizedContent, 'placeholder', opt_data.placeholder, '!goog.soy.data.SanitizedContent|string');
+  /** @type {boolean} */
+  var required = soy.asserts.assertType(goog.isBoolean(opt_data.required) || opt_data.required === 1 || opt_data.required === 0, 'required', opt_data.required, 'boolean');
+  /** @type {boolean} */
+  var showLabel = soy.asserts.assertType(goog.isBoolean(opt_data.showLabel) || opt_data.showLabel === 1 || opt_data.showLabel === 0, 'showLabel', opt_data.showLabel, 'boolean');
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var value = soy.asserts.assertType(goog.isString(opt_data.value) || opt_data.value instanceof goog.soy.data.SanitizedContent, 'value', opt_data.value, '!goog.soy.data.SanitizedContent|string');
+  /** @type {boolean} */
+  var visible = soy.asserts.assertType(goog.isBoolean(opt_data.visible) || opt_data.visible === 1 || opt_data.visible === 0, 'visible', opt_data.visible, 'boolean');
+  /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
+  var tip = soy.asserts.assertType(opt_data.tip == null || (goog.isString(opt_data.tip) || opt_data.tip instanceof goog.soy.data.SanitizedContent), 'tip', opt_data.tip, '!goog.soy.data.SanitizedContent|null|string|undefined');
+  incrementalDom.elementOpenStart('div');
+      incrementalDom.attr('class', 'form-group' + (visible ? '' : ' hide') + ' liferay-ddm-form-field-editor');
+      incrementalDom.attr('data-fieldname', name);
+  incrementalDom.elementOpenEnd();
     if (showLabel) {
-      ie_open('label', null, null,
-          'class', 'control-label',
-          'for', name);
-        var dyn0 = label;
-        if (typeof dyn0 == 'function') dyn0(); else if (dyn0 != null) itext(dyn0);
-        itext(' ');
+      incrementalDom.elementOpenStart('label');
+          incrementalDom.attr('class', 'control-label');
+          incrementalDom.attr('for', name);
+      incrementalDom.elementOpenEnd();
+        soyIdom.print(label);
+        incrementalDom.text(' ');
         if (required) {
-          ie_open('svg', null, null,
-              'aria-hidden', 'true',
-              'class', 'lexicon-icon lexicon-icon-asterisk reference-mark');
-            ie_void('use', null, null,
-                'xlink:href', pathThemeImages + '/lexicon/icons.svg#asterisk');
-          ie_close('svg');
+          incrementalDom.elementOpenStart('svg');
+              incrementalDom.attr('aria-hidden', 'true');
+              incrementalDom.attr('class', 'lexicon-icon lexicon-icon-asterisk reference-mark');
+          incrementalDom.elementOpenEnd();
+            incrementalDom.elementOpenStart('use');
+                incrementalDom.attr('xlink:href', pathThemeImages + '/lexicon/icons.svg#asterisk');
+            incrementalDom.elementOpenEnd();
+            incrementalDom.elementClose('use');
+          incrementalDom.elementClose('svg');
         }
-      ie_close('label');
-      ie_open('p', null, null,
-          'class', 'liferay-ddm-form-field-tip');
-        var dyn1 = tip ? tip : '';
-        if (typeof dyn1 == 'function') dyn1(); else if (dyn1 != null) itext(dyn1);
-      ie_close('p');
+      incrementalDom.elementClose('label');
+      incrementalDom.elementOpenStart('p');
+          incrementalDom.attr('class', 'liferay-ddm-form-field-tip');
+      incrementalDom.elementOpenEnd();
+        soyIdom.print(tip ? tip : '');
+      incrementalDom.elementClose('p');
     }
-    ie_open('div', null, null,
-        'class', 'form-control input-group-container');
-      ie_open('div', null, null,
-          'class', 'alloy-editor-container input-group',
-          'id', name + 'Container');
-        ie_open('div', null, null,
-            'class', 'alloy-editor alloy-editor-placeholder',
-            'contenteditable', 'false',
-            'data-placeholder', placeholder,
-            'id', name + 'Editor',
-            'name', name + 'Editor');
-          var dyn2 = value;
-          if (typeof dyn2 == 'function') dyn2(); else if (dyn2 != null) itext(dyn2);
-        ie_close('div');
-      ie_close('div');
-      ie_open('input', null, null,
-          'id', name,
-          'name', name,
-          'type', 'hidden',
-          'value', value);
-      ie_close('input');
-    ie_close('div');
-  ie_close('div');
+    incrementalDom.elementOpenStart('div');
+        incrementalDom.attr('class', 'form-control input-group-container');
+    incrementalDom.elementOpenEnd();
+      incrementalDom.elementOpenStart('div');
+          incrementalDom.attr('class', 'alloy-editor-container input-group');
+          incrementalDom.attr('id', name + 'Container');
+      incrementalDom.elementOpenEnd();
+        incrementalDom.elementOpenStart('div');
+            incrementalDom.attr('class', 'alloy-editor alloy-editor-placeholder');
+            incrementalDom.attr('contenteditable', 'false');
+            incrementalDom.attr('data-placeholder', placeholder);
+            incrementalDom.attr('id', name + 'Editor');
+            incrementalDom.attr('name', name + 'Editor');
+        incrementalDom.elementOpenEnd();
+          soyIdom.print(value);
+        incrementalDom.elementClose('div');
+      incrementalDom.elementClose('div');
+      incrementalDom.elementOpenStart('input');
+          incrementalDom.attr('id', name);
+          incrementalDom.attr('name', name);
+          incrementalDom.attr('type', 'hidden');
+          incrementalDom.attr('value', value);
+      incrementalDom.elementOpenEnd();
+      incrementalDom.elementClose('input');
+    incrementalDom.elementClose('div');
+  incrementalDom.elementClose('div');
 }
 exports.render = $render;
+/**
+ * @typedef {{
+ *  label: (!goog.soy.data.SanitizedContent|string),
+ *  name: (!goog.soy.data.SanitizedContent|string),
+ *  pathThemeImages: (!goog.soy.data.SanitizedContent|string),
+ *  placeholder: (!goog.soy.data.SanitizedContent|string),
+ *  required: boolean,
+ *  showLabel: boolean,
+ *  value: (!goog.soy.data.SanitizedContent|string),
+ *  visible: boolean,
+ *  tip: (!goog.soy.data.SanitizedContent|null|string|undefined)
+ * }}
+ */
+$render.Params;
 if (goog.DEBUG) {
   $render.soyTemplateName = 'DDMEditor.render';
 }

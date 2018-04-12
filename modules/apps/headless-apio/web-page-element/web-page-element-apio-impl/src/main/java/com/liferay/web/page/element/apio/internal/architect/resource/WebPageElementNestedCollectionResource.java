@@ -128,8 +128,8 @@ public class WebPageElementNestedCollectionResource
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setScopeGroupId(webSiteId);
 
-		Try<JournalArticle> journalArticleTry = Try.fromFallible(() ->
-			_journalArticleService.addArticle(
+		Try<JournalArticle> journalArticleTry = Try.fromFallible(
+			() -> _journalArticleService.addArticle(
 				webSiteId, webPageElementCreatorForm.getFolder(), 0, 0, null,
 				true, webPageElementCreatorForm.getTitleMap(),
 				webPageElementCreatorForm.getDescriptionMap(),
@@ -201,8 +201,8 @@ public class WebPageElementNestedCollectionResource
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setScopeGroupId(webPageElementUpdaterForm.getGroup());
 
-		Try<JournalArticle> journalArticleTry = Try.fromFallible(() ->
-			_journalArticleService.updateArticle(
+		Try<JournalArticle> journalArticleTry = Try.fromFallible(
+			() -> _journalArticleService.updateArticle(
 				webPageElementUpdaterForm.getUser(),
 				webPageElementUpdaterForm.getGroup(),
 				webPageElementUpdaterForm.getFolder(),

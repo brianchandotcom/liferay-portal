@@ -478,9 +478,10 @@ public class AMImageFinderImplTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetMediaAttributesWithNonBuilderQuery() throws Exception {
-		_amImageFinderImpl.getAdaptiveMediaStream(amImageQueryBuilder ->
-			new AMQuery<FileVersion, AMImageProcessor>() {
-			});
+		_amImageFinderImpl.getAdaptiveMediaStream(
+			amImageQueryBuilder ->
+				new AMQuery<FileVersion, AMImageProcessor>() {
+				});
 	}
 
 	@Test(expected = IllegalArgumentException.class)

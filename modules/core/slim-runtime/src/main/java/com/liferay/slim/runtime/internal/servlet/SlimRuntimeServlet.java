@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.tools.DBUpgrader;
-import com.liferay.portal.upgrade.PortalServiceUpgrade;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;

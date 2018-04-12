@@ -118,14 +118,14 @@ public class EditCPDefinitionInventoryMVCActionCommand
 			CPDefinitionInventory.class.getName(), actionRequest);
 
 		if (cpDefinitionInventoryId <= 0) {
-			_cpDefintionInventoryService.addCPDefinitionInventory(
+			_cpDefinitionInventoryService.addCPDefinitionInventory(
 				cpDefinitionId, cpDefinitionInventoryEngine, lowStockActivity,
 				displayAvailability, displayStockQuantity, minStockQuantity,
 				backOrders, minOrderQuantity, maxOrderQuantity,
 				allowedOrderQuantities, multipleOrderQuantity, serviceContext);
 		}
 		else {
-			_cpDefintionInventoryService.updateCPDefinitionInventory(
+			_cpDefinitionInventoryService.updateCPDefinitionInventory(
 				cpDefinitionInventoryId, cpDefinitionInventoryEngine,
 				lowStockActivity, displayAvailability, displayStockQuantity,
 				minStockQuantity, backOrders, minOrderQuantity,
@@ -144,6 +144,6 @@ public class EditCPDefinitionInventoryMVCActionCommand
 		_cpDefinitionAvailabilityRangeService;
 
 	@Reference
-	private CPDefinitionInventoryService _cpDefintionInventoryService;
+	private CPDefinitionInventoryService _cpDefinitionInventoryService;
 
 }

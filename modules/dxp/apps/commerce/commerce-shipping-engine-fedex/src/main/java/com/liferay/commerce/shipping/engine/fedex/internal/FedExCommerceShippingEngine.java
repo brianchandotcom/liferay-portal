@@ -78,7 +78,7 @@ public class FedExCommerceShippingEngine implements CommerceShippingEngine {
 			}
 
 			FedExCommerceShippingOptionHelper
-				fedExCommerceShippingOptionsHelper =
+				fedExCommerceShippingOptionHelper =
 					new FedExCommerceShippingOptionHelper(
 						commerceOrder, _commerceCurrencyLocalService,
 						_commercePriceCalculationLocalService,
@@ -88,7 +88,7 @@ public class FedExCommerceShippingEngine implements CommerceShippingEngine {
 						_getResourceBundle(locale));
 
 			return
-				fedExCommerceShippingOptionsHelper.getCommerceShippingOptions();
+				fedExCommerceShippingOptionHelper.getCommerceShippingOptions();
 		}
 		catch (CommerceShippingEngineException csee) {
 			throw csee;

@@ -134,9 +134,9 @@ public class CPAttachmentFileEntryIndexer
 			String[] fieldValues = (String[])searchContext.getAttribute(
 				fieldName);
 
-			TermsFilter termFilter = new TermsFilter(fieldName);
+			TermsFilter termsFilter = new TermsFilter(fieldName);
 
-			termFilter.addValues(fieldValues);
+			termsFilter.addValues(fieldValues);
 
 			Filter existFilter = new ExistsFilter(fieldName);
 
@@ -148,7 +148,7 @@ public class CPAttachmentFileEntryIndexer
 
 			fieldBooleanFilter.add(
 				existBooleanFilter, BooleanClauseOccur.SHOULD);
-			fieldBooleanFilter.add(termFilter, BooleanClauseOccur.SHOULD);
+			fieldBooleanFilter.add(termsFilter, BooleanClauseOccur.SHOULD);
 
 			contextBooleanFilter.add(
 				fieldBooleanFilter, BooleanClauseOccur.MUST);

@@ -50,9 +50,9 @@ public class FacetImpl extends BaseFacet implements Facet {
 		BooleanFilter booleanFilter = new BooleanFilter();
 
 		for (String selection : _selections) {
-			TermFilter termsFilter = new TermFilter(getFieldName(), selection);
+			TermFilter termFilter = new TermFilter(getFieldName(), selection);
 
-			booleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
+			booleanFilter.add(termFilter, BooleanClauseOccur.MUST);
 		}
 
 		return new BooleanClauseImpl<>(booleanFilter, BooleanClauseOccur.MUST);

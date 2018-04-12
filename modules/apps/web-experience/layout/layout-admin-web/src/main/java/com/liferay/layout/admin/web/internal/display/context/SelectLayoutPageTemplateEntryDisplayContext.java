@@ -239,7 +239,6 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 	private Long _layoutPageTemplateCollectionId;
 	private List<LayoutPrototype> _layoutPrototypes;
 	private final LayoutsAdminDisplayContext _layoutsAdminDisplayContext;
-	private String _redirect;
 	private final HttpServletRequest _request;
 	private String _selectedTab;
 	private final ThemeDisplay _themeDisplay;

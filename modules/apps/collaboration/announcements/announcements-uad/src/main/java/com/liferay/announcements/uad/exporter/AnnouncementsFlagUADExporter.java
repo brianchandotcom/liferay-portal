@@ -18,8 +18,8 @@ import com.liferay.announcements.kernel.model.AnnouncementsFlag;
 import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.user.associated.data.exporter.DynamicQueryUADEntityExporter;
-import com.liferay.user.associated.data.exporter.UADEntityExporter;
+import com.liferay.user.associated.data.exporter.DynamicQueryUADExporter;
+import com.liferay.user.associated.data.exporter.UADExporter;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,10 +30,10 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_FLAG,
-	service = UADEntityExporter.class
+	service = UADExporter.class
 )
-public class AnnouncementsFlagUADEntityExporter
-	extends DynamicQueryUADEntityExporter<AnnouncementsFlag> {
+public class AnnouncementsFlagUADExporter
+	extends DynamicQueryUADExporter<AnnouncementsFlag> {
 
 	@Override
 	protected ActionableDynamicQuery doGetActionableDynamicQuery() {

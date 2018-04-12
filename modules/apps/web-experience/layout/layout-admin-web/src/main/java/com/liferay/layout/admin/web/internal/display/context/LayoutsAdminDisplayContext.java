@@ -552,11 +552,8 @@ public class LayoutsAdminDisplayContext {
 			return _redirect;
 		}
 
-		_redirect = ParamUtil.getString(_liferayPortletRequest, "redirect");
-
-		if (Validator.isNull(_redirect)) {
-			return _themeDisplay.getURLCurrent();
-		}
+		_redirect = ParamUtil.getString(
+			_liferayPortletRequest, "redirect", _themeDisplay.getURLCurrent());
 
 		return _redirect;
 	}

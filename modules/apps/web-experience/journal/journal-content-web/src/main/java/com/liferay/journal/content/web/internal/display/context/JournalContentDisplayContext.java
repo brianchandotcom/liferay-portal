@@ -896,8 +896,6 @@ public class JournalContentDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		try {
 			_showEditTemplateIcon =
 				_ddmTemplateModelResourcePermission.contains(

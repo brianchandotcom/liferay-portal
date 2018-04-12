@@ -20,20 +20,15 @@ package com.liferay.user.associated.data.web.internal.display;
 public class UADApplicationSummaryDisplay {
 
 	public UADApplicationSummaryDisplay(
-		int count, String name, String defaultUADRegistryKey, String viewURL) {
+		int count, String name, String viewURL) {
 
 		_count = count;
 		_name = name;
-		_defaultUADRegistryKey = defaultUADRegistryKey;
 		_viewURL = viewURL;
 	}
 
 	public int getCount() {
 		return _count;
-	}
-
-	public String getDefaultUADRegistryKey() {
-		return _defaultUADRegistryKey;
 	}
 
 	public String getName() {
@@ -45,7 +40,6 @@ public class UADApplicationSummaryDisplay {
 	}
 
 	private final int _count;
-	private final String _defaultUADRegistryKey;
 	private final String _name;
 	private final String _viewURL;
 

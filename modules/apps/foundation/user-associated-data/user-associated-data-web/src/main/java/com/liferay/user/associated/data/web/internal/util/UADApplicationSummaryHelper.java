@@ -190,7 +190,7 @@ public class UADApplicationSummaryHelper {
 		return new UADApplicationSummaryDisplay(
 			getReviewableUADEntitiesCount(
 				getApplicationUADEntityDisplayStream(applicationName), userId),
-			applicationName, getDefaultUADRegistryKey(applicationName),
+			applicationName,
 			getViewURL(portletRequest, applicationName, userId));
 	}
 

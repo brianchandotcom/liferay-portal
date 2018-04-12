@@ -24,18 +24,20 @@
 			/>
 
 			<#if isIgnoreSKUCombinations>
-				<#assign
-				cpInstance =  cpSearchResultsDisplayContext.getDefaultCPInstance(curDocument)
-				/>
-
-				<#if cpInstance??>
+				<#if cpSearchResultsDisplayContext.getDefaultCPInstance(curDocument)??>
 					<#assign
-					cpInstanceId =  cpInstance.getCPInstanceId()
-
-					gtin = cpInstance.getGtin()
-					modelNumber = cpInstance.getManufacturerPartNumber()
-					sku = cpInstance.getSku()
+					cpInstance =  cpSearchResultsDisplayContext.getDefaultCPInstance(curDocument)
 					/>
+
+					<#if cpInstance??>
+						<#assign
+						cpInstanceId =  cpInstance.getCPInstanceId()
+
+						gtin = cpInstance.getGtin()
+						modelNumber = cpInstance.getManufacturerPartNumber()
+						sku = cpInstance.getSku()
+						/>
+					</#if>
 				</#if>
 			</#if>
 

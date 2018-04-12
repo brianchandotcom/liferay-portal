@@ -20,16 +20,18 @@
 	categories = simpleCPTypeDisplayContext.getAssetCategories()
 />
 <#if isIgnoreSKUCombinations>
-	<#assign
-		cpInstance =  simpleCPTypeDisplayContext.getDefaultCPInstance()
-	/>
-	<#if cpInstance??>
+	<#if simpleCPTypeDisplayContext.getDefaultCPInstance()??>
 		<#assign
-			cpInstanceId =  cpInstance.getCPInstanceId()
-			gtin = cpInstance.getGtin()
-			modelNumber = cpInstance.getManufacturerPartNumber()
-			sku = cpInstance.getSku()
+			cpInstance =  simpleCPTypeDisplayContext.getDefaultCPInstance()
 		/>
+		<#if cpInstance??>
+			<#assign
+				cpInstanceId =  cpInstance.getCPInstanceId()
+				gtin = cpInstance.getGtin()
+				modelNumber = cpInstance.getManufacturerPartNumber()
+				sku = cpInstance.getSku()
+			/>
+		</#if>
 	</#if>
 </#if>
 

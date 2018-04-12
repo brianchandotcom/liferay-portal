@@ -20,16 +20,18 @@
 				/>
 
 				<#if isIgnoreSKUCombinations>
-					<#assign
-					cpInstance =  cpSearchResultsDisplayContext.getDefaultCPInstance(curDocument)
-					/>
-
-					<#if cpInstance??>
+					<#if cpSearchResultsDisplayContext.getDefaultCPInstance(curDocument)??>
 						<#assign
-						cpInstanceId =  cpInstance.getCPInstanceId()
-
-						sku = cpInstance.getSku()
+						cpInstance =  cpSearchResultsDisplayContext.getDefaultCPInstance(curDocument)
 						/>
+
+						<#if cpInstance??>
+							<#assign
+							cpInstanceId =  cpInstance.getCPInstanceId()
+
+							sku = cpInstance.getSku()
+							/>
+						</#if>
 					</#if>
 				</#if>
 

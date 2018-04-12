@@ -64,22 +64,91 @@
 
 <div class="container-fluid-1280 contextual-sidebar-content">
 	<div class="site-navigation-menu-container">
-		<div class="hide" data-site-navigation-menu-item-id="0"></div>
 
 		<%
 		List<SiteNavigationMenuItem> siteNavigationMenuItems = SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(siteNavigationAdminDisplayContext.getSiteNavigationMenuId(), 0);
-
-		for (SiteNavigationMenuItem siteNavigationMenuItem : siteNavigationMenuItems) {
 		%>
 
-			<liferay-util:include page="/view_site_navigation_menu_item.jsp" servletContext="<%= application %>">
-				<liferay-util:param name="siteNavigationMenuItemId" value="<%= String.valueOf(siteNavigationMenuItem.getSiteNavigationMenuItemId()) %>" />
-			</liferay-util:include>
+		<c:choose>
+			<c:when test="<%= siteNavigationMenuItems.size() > 0 %>">
+				<div class="hide" data-site-navigation-menu-item-id="0"></div>
 
-		<%
-		}
-		%>
+				<%
+				for (SiteNavigationMenuItem siteNavigationMenuItem : siteNavigationMenuItems) {
+				%>
 
+					<liferay-util:include page="/view_site_navigation_menu_item.jsp" servletContext="<%= application %>">
+						<liferay-util:param name="siteNavigationMenuItemId" value="<%= String.valueOf(siteNavigationMenuItem.getSiteNavigationMenuItemId()) %>" />
+					</liferay-util:include>
+
+				<%
+				}
+				%>
+
+			</c:when>
+			<c:otherwise>
+				<aui:fieldset-group markupView="lexicon">
+					<aui:fieldset>
+						<div class="text-center">
+							<div>
+								<liferay-ui:message key="this-menu-is-empty" />
+							</div>
+
+							<div>
+								<liferay-ui:message key="please-add-elements" />
+							</div>
+						</div>
+
+						<div class="row" id="<portlet:namespace/>siteNavigationMenuItemTypes">
+
+							<%
+							for (SiteNavigationMenuItemType siteNavigationMenuItemType : siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemTypes()) {
+							%>
+
+								<div class="col-md-2">
+									<div class="card card-type-asset">
+										<div class="aspect-ratio card-item-first">
+											<div class="aspect-ratio-item-center-middle aspect-ratio-item-fluid">
+												<liferay-ui:icon
+													icon="<%= siteNavigationMenuItemType.getIcon() %>"
+													markupView="lexicon"
+												/>
+											</div>
+										</div>
+
+										<div class="card-body">
+											<div class="card-row">
+												<div class="flex-col flex-col-expand">
+													<div class="card-title text-center text-truncate">
+														<portlet:renderURL var="addSiteNavigationMenuItemRedirectURL">
+															<portlet:param name="mvcPath" value="/add_site_navigation_menu_item_redirect.jsp" />
+															<portlet:param name="portletResource" value="<%= portletDisplay.getId() %>" />
+														</portlet:renderURL>
+
+														<liferay-portlet:renderURL var="addURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+															<portlet:param name="mvcPath" value="/add_site_navigation_menu_item.jsp" />
+															<portlet:param name="redirect" value="<%= addSiteNavigationMenuItemRedirectURL %>" />
+															<portlet:param name="siteNavigationMenuId" value="<%= String.valueOf(siteNavigationAdminDisplayContext.getSiteNavigationMenuId()) %>" />
+															<portlet:param name="type" value="<%= siteNavigationMenuItemType.getType() %>" />
+														</liferay-portlet:renderURL>
+
+														<aui:a cssClass="add-menu-item-link" href="<%= addURL %>" label="<%= siteNavigationMenuItemType.getLabel(locale) %>" title="<%= siteNavigationMenuItemType.getLabel(locale) %>" />
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							<%
+							}
+							%>
+
+						</div>
+					</aui:fieldset>
+				</aui:fieldset-group>
+			</c:otherwise>
+		</c:choose>
 	</div>
 </div>
 

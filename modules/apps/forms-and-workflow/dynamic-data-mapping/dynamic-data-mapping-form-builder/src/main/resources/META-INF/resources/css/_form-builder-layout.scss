@@ -103,7 +103,14 @@
 	}
 }
 
-#deleteFieldDialog {
+#cancelFieldChangesDialog, #deleteFieldDialog, #leaveFormDialog {
+	.modal-full-screen-content .modal-body {
+		overflow: visible;
+		padding: 1rem 1.5rem;
+	}
+}
+
+#cancelFieldChangesDialog, #deleteFieldDialog {
 	.btn {
 		border: 1px solid transparent;
 		border-radius: 0.25rem;
@@ -129,10 +136,5 @@
 		&:hover {
 			text-decoration: none;
 		}
-	}
-
-	.modal-full-screen-content .modal-body {
-		overflow: visible;
-		padding: 1rem 1.5rem;
 	}
 }

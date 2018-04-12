@@ -165,7 +165,9 @@ public class ReleaseVersionsTest {
 		Version masterVersion = masterVersionPair.getKey();
 		Version releaseVersion = releaseVersionPair.getKey();
 
-		if (masterVersion.getMajor() != (releaseVersion.getMajor() + 1)) {
+		if (!releaseVersion.equals(Version.ONE) &&
+			(masterVersion.getMajor() != (releaseVersion.getMajor() + 1))) {
+
 			StringBundler sb = new StringBundler(22);
 
 			sb.append("The ");

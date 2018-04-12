@@ -35,7 +35,7 @@ public class BearerTokenProviderAccessorImpl
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
-		_scopedBearerTokenProvider = _scopedServiceTrackerMapFactory.create(
+		_scopedServiceTrackerMap = _scopedServiceTrackerMapFactory.create(
 			bundleContext, BearerTokenProvider.class,
 			"liferay.oauth2.client.id", () -> _defaultBearerTokenProvider);
 	}
@@ -44,7 +44,7 @@ public class BearerTokenProviderAccessorImpl
 	public BearerTokenProvider getBearerTokenProvider(
 		long companyId, String clientId) {
 
-		return _scopedBearerTokenProvider.getService(companyId, clientId);
+		return _scopedServiceTrackerMap.getService(companyId, clientId);
 	}
 
 	@Reference(
@@ -54,7 +54,7 @@ public class BearerTokenProviderAccessorImpl
 	private volatile BearerTokenProvider _defaultBearerTokenProvider;
 
 	private ScopedServiceTrackerMap<BearerTokenProvider>
-		_scopedBearerTokenProvider;
+		_scopedServiceTrackerMap;
 
 	@Reference
 	private ScopedServiceTrackerMapFactory _scopedServiceTrackerMapFactory;

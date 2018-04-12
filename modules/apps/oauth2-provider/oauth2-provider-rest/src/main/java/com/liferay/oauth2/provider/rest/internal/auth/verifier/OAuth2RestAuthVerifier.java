@@ -110,7 +110,7 @@ public class OAuth2RestAuthVerifier implements AuthVerifier {
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("OAuth2 Access Token validation failed", e);
+				_log.debug("Unable to verify OAuth2 access token", e);
 			}
 
 			return authVerifierResult;

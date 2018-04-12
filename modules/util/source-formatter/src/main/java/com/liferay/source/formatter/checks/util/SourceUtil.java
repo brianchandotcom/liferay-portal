@@ -50,8 +50,27 @@ public class SourceUtil {
 			filePath.toString(), CharPool.BACK_SLASH, CharPool.SLASH);
 	}
 
+	public static String getAbsolutePath(Path filePath, boolean print) {
+		System.out.println("filePath: " + filePath.toString());
+
+		filePath = filePath.toAbsolutePath();
+
+		System.out.println("filePathAbsolutePath: " + filePath.toString());
+
+		filePath = filePath.normalize();
+
+		System.out.println("filePathNormalized: " + filePath.toString());
+
+		return StringUtil.replace(
+			filePath.toString(), CharPool.BACK_SLASH, CharPool.SLASH);
+	}
+
 	public static String getAbsolutePath(String fileName) {
 		return getAbsolutePath(Paths.get(fileName));
+	}
+
+	public static String getAbsolutePath(String fileName, boolean print) {
+		return getAbsolutePath(Paths.get(fileName), print);
 	}
 
 	public static String getIndent(String s) {

@@ -127,7 +127,16 @@ public class SourceFormatterUtil {
 
 		outerLoop:
 		for (String fileName : allFileNames) {
-			String encodedFileName = SourceUtil.getAbsolutePath(fileName);
+			System.out.println("fileName: " + fileName);
+
+			String absolutePath = SourceUtil.getAbsolutePath(fileName, true);
+
+			System.out.println("absolutePath: " + absolutePath);
+
+			String encodedFileName = StringUtil.replace(
+				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
+
+			System.out.println("encodedFileName: " + encodedFileName);
 
 			for (String includeRegex : includeRegexList) {
 				if (encodedFileName.matches(includeRegex)) {

@@ -102,7 +102,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 					group = group.getStagingGroup();
 				}
 
-				String groupDescriptiveName = HtmlUtil.escape(group.getDescriptiveName(locale));
+				String groupDescriptiveName = group.getDescriptiveName(locale);
 
 				if (group.isUser()) {
 					groupDescriptiveName = LanguageUtil.get(request, "my-site");
@@ -111,7 +111,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 
 				<liferay-ui:search-container-column-text
 					name="name"
-					value="<%= groupDescriptiveName %>"
+					value="<%= HtmlUtil.escape(groupDescriptiveName) %>"
 				/>
 
 				<liferay-ui:search-container-column-text

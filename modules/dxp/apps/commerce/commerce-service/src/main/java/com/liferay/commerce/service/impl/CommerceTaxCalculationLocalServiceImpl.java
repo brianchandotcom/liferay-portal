@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.service.impl;
 
-import com.liferay.commerce.model.CommerceTaxEngine;
-import com.liferay.commerce.model.CommerceTaxMethod;
 import com.liferay.commerce.model.CommerceTaxRate;
 import com.liferay.commerce.service.base.CommerceTaxCalculationLocalServiceBaseImpl;
 import com.liferay.commerce.util.CommerceTaxEngineRegistry;
@@ -33,21 +31,7 @@ public class CommerceTaxCalculationLocalServiceImpl
 	public List<CommerceTaxRate> getCommerceTaxRates(
 		long siteGroupId, long userId, long cpTaxCategoryId) {
 
-		List<CommerceTaxRate> commerceTaxRates = new ArrayList<>();
-
-		List<CommerceTaxMethod> commerceTaxMethods =
-			commerceTaxMethodLocalService.getCommerceTaxMethods(
-				siteGroupId, true);
-
-		for (CommerceTaxMethod commerceTaxMethod : commerceTaxMethods) {
-			CommerceTaxEngine commerceTaxEngine =
-				_commerceTaxEngineRegistry.getCommerceTaxEngine(
-					commerceTaxMethod.getEngineKey());
-
-			//commerceTaxEngine.getCommerceTaxRates();
-		}
-
-		return commerceTaxRates;
+		return new ArrayList<>();
 	}
 
 	@ServiceReference(type = CommerceTaxEngineRegistry.class)

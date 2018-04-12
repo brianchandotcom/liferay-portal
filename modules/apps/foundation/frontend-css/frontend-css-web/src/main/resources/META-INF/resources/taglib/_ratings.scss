@@ -11,6 +11,12 @@
 		}
 	}
 
+	&.like, &.thumbs {
+		.rating-element * {
+			pointer-events: none;
+		}
+	}
+
 	.rating-input-container {
 		display: none;
 

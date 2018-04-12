@@ -19,7 +19,11 @@ import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPSpecificationOptionService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
@@ -29,6 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
 public class CPSpecificationOptionItemSelectorViewDisplayContext
 	extends BaseCPItemSelectorViewDisplayContext<CPSpecificationOption> {
@@ -53,6 +58,10 @@ public class CPSpecificationOptionItemSelectorViewDisplayContext
 			return searchContainer;
 		}
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		searchContainer = new SearchContainer<>(
 			liferayPortletRequest, getPortletURL(), null, null);
 
@@ -67,18 +76,36 @@ public class CPSpecificationOptionItemSelectorViewDisplayContext
 		searchContainer.setOrderByType(getOrderByType());
 		searchContainer.setRowChecker(getRowChecker());
 
-		int total =
-			_cpSpecificationOptionService.getCPSpecificationOptionsCount(
-				getScopeGroupId());
+		if (isSearch()) {
+			Sort sort = CPItemSelectorViewUtil.getCPSpecificationOptionSort(
+				getOrderByCol(), getOrderByType());
 
-		searchContainer.setTotal(total);
+			BaseModelSearchResult<CPSpecificationOption>
+				cpSpecificationOptionBaseModelSearchResult =
+					_cpSpecificationOptionService.searchCPSpecificationOptions(
+						themeDisplay.getCompanyId(), getScopeGroupId(),
+						getKeywords(), searchContainer.getStart(),
+						searchContainer.getEnd(), sort);
 
-		List<CPSpecificationOption> results =
-			_cpSpecificationOptionService.getCPSpecificationOptions(
-				getScopeGroupId(), searchContainer.getStart(),
-				searchContainer.getEnd(), orderByComparator);
+			searchContainer.setTotal(
+				cpSpecificationOptionBaseModelSearchResult.getLength());
+			searchContainer.setResults(
+				cpSpecificationOptionBaseModelSearchResult.getBaseModels());
+		}
+		else {
+			int total =
+				_cpSpecificationOptionService.getCPSpecificationOptionsCount(
+					getScopeGroupId());
 
-		searchContainer.setResults(results);
+			searchContainer.setTotal(total);
+
+			List<CPSpecificationOption> results =
+				_cpSpecificationOptionService.getCPSpecificationOptions(
+					getScopeGroupId(), searchContainer.getStart(),
+					searchContainer.getEnd(), orderByComparator);
+
+			searchContainer.setResults(results);
+		}
 
 		return searchContainer;
 	}

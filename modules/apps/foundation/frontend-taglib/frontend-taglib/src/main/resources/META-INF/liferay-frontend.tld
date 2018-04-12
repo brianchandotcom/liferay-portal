@@ -390,6 +390,11 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>empty-result-message</name>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.EmptyResultMessageTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	<tag>
 		<description>Creates a <![CDATA[<code>&lt;div&gt;</code>]]> tag to group related form elements and offer additional styling.</description>
 		<name>fieldset</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.FieldsetTag</tag-class>

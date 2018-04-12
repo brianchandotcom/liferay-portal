@@ -78,57 +78,28 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 </liferay-frontend:management-bar>
 
 <aui:form cssClass="container-fluid-1280">
-	<liferay-ui:search-container
-		searchContainer="<%= uadExportProcessDisplayContext.getSearchContainer() %>"
-	>
-		<liferay-ui:search-container-row
-			className="com.liferay.portal.kernel.backgroundtask.BackgroundTask"
-			keyProperty="backgroundTaskId"
-			modelVar="backgroundTask"
-		>
-			<liferay-ui:search-container-column-text
-				cssClass="autofit-col-expand"
-			>
-				<div>
-					<h5>
-						<liferay-ui:message key="<%= backgroundTask.getName() %>" />
-					</h5>
+	<div id="<portlet:namespace />exportProcesses">
 
-					<clay:label
-						label="<%= LanguageUtil.get(request, backgroundTask.getStatusLabel()) %>"
-						style="<%= UADExportProcessUtil.getStatusStyle(backgroundTask.getStatus()) %>"
-					/>
-				</div>
-			</liferay-ui:search-container-column-text>
+		<%
+		request.setAttribute("UADExportProcessDisplayContext", uadExportProcessDisplayContext);
+		%>
 
-			<%
-			Format dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("yyyy.MM.dd - hh:mm a", locale, themeDisplay.getTimeZone());
-			%>
-
-			<liferay-ui:search-container-column-text
-				cssClass="autofit-col-expand"
-			>
-				<%= LanguageUtil.get(request, "create-date") + StringPool.COLON + dateFormat.format(backgroundTask.getCreateDate()) %>
-			</liferay-ui:search-container-column-text>
-
-			<c:if test="<%= backgroundTask.isCompleted() %>">
-				<liferay-ui:search-container-column-text
-					cssClass="autofit-col-expand"
-				>
-					<%= LanguageUtil.get(request, "completion-date") + StringPool.COLON + dateFormat.format(backgroundTask.getCompletionDate()) %>
-				</liferay-ui:search-container-column-text>
-			</c:if>
-
-			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action-column"
-				path="/export_process_action.jsp"
-			/>
-		</liferay-ui:search-container-row>
-
-		<liferay-ui:search-iterator
-			displayStyle="descriptive"
-			markupView="lexicon"
-			resultRowSplitter="<%= new UADExportProcessResultRowSplitter() %>"
-		/>
-	</liferay-ui:search-container>
+		<liferay-util:include page="/export_processes.jsp" servletContext="<%= application %>" />
+	</div>
 </aui:form>
+
+<aui:script use="liferay-uad-export">
+	<portlet:resourceURL id="/get_export_processes" var="exportProcessesURL">
+		<portlet:param name="p_u_i_d" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
+		<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
+		<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
+	</portlet:resourceURL>
+
+	var uadExport = new Liferay.UADExport(
+		{
+			namespace: '<portlet:namespace />',
+			exportProcessesNode: '#exportProcesses',
+			exportProcessesResourceURL: '<%= exportProcessesURL.toString() %>'
+		}
+	);
+</aui:script>

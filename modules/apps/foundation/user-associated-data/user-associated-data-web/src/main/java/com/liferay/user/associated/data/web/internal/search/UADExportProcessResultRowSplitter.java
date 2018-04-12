@@ -44,14 +44,25 @@ public class UADExportProcessResultRowSplitter implements ResultRowSplitter {
 			if (backgroundTask.getStatus() ==
 					BackgroundTaskConstants.STATUS_FAILED) {
 
+				resultRow.setCssClass(
+					resultRow.getCssClass() + "export-process-status-failed");
+
 				failedProcesses.add(resultRow);
 			}
 			else if (backgroundTask.getStatus() ==
 						BackgroundTaskConstants.STATUS_SUCCESSFUL) {
 
+				resultRow.setCssClass(
+					resultRow.getCssClass() +
+						"export-process-status-successful");
+
 				successfulProcesses.add(resultRow);
 			}
 			else {
+				resultRow.setCssClass(
+					resultRow.getCssClass() +
+						"export-process-status-in-progress");
+
 				inProgressProcesses.add(resultRow);
 			}
 		}

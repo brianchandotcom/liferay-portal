@@ -19,20 +19,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Noah Sherrill
  */
-public class UADEntityExporterException extends PortalException {
+public class UADExporterException extends PortalException {
 
-	public UADEntityExporterException() {
+	public UADExporterException() {
 	}
 
-	public UADEntityExporterException(String msg) {
+	public UADExporterException(String msg) {
 		super(msg);
 	}
 
-	public UADEntityExporterException(String msg, Throwable cause) {
+	public UADExporterException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public UADEntityExporterException(Throwable cause) {
+	public UADExporterException(Throwable cause) {
 		super(cause);
 	}
 

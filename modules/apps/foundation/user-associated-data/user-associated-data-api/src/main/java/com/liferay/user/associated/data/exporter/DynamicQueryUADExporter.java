@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
-import com.liferay.user.associated.data.exception.UADEntityExporterException;
+import com.liferay.user.associated.data.exception.UADExporterException;
 import com.liferay.user.associated.data.util.UADDynamicQueryUtil;
 
 import java.io.File;
@@ -38,8 +38,8 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * @author William Newbury
  */
-public abstract class DynamicQueryUADEntityExporter<T extends BaseModel>
-	implements UADEntityExporter<T> {
+public abstract class DynamicQueryUADExporter<T extends BaseModel>
+	implements UADExporter<T> {
 
 	@Override
 	public long count(long userId) throws PortalException {
@@ -56,7 +56,7 @@ public abstract class DynamicQueryUADEntityExporter<T extends BaseModel>
 			return xml.getBytes(StringPool.UTF8);
 		}
 		catch (UnsupportedEncodingException uee) {
-			throw new UADEntityExporterException(uee);
+			throw new UADExporterException(uee);
 		}
 	}
 
@@ -137,6 +137,6 @@ public abstract class DynamicQueryUADEntityExporter<T extends BaseModel>
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DynamicQueryUADEntityExporter.class);
+		DynamicQueryUADExporter.class);
 
 }

@@ -12,13 +12,10 @@
  * details.
  */
 
-import java.nio.file.Files
-import java.nio.file.Paths
+import java.nio.file.*
 
-def projectDir = Paths.get(request.getOutputDirectory(), request.getArtifactId())
+Path projectPath = Paths.get(request.outputDirectory, request.artifactId)
 
-def buildGradleFile = projectDir.resolve('build.gradle')
+Path buildGradlePath = projectPath.resolve('build.gradle')
 
-if (Files.exists(buildGradleFile)) {
-	Files.delete(buildGradleFile)
-}
+Files.deleteIfExists(buildGradlePath)

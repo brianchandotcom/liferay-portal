@@ -12,14 +12,17 @@
  * details.
  */
 
-import groovy.io.FileType
-import java.nio.file.Files
-import java.nio.file.Paths
+import java.nio.file.*
 
-def projectDir = Paths.get(request.getOutputDirectory(), request.getArtifactId())
+Path projectPath = Paths.get(request.outputDirectory, request.artifactId)
 
-projectDir.toFile().eachFileRecurse (FileType.FILES) { file ->
-	if (file.getName().equals("build.gradle")) {
-		file.delete()
-	}
-}
+Path apiPath = projectPath.resolve(request.artifactId + '-api')
+Path buildGradlePath = projectPath.resolve('build.gradle')
+Path servicePath = projectPath.resolve(request.artifactId + '-service')
+
+Path apiBuildGradlePath = apiPath.resolve('build.gradle')
+Path serviceBuildGradlePath = servicePath.resolve('build.gradle')
+
+Files.deleteIfExists(apiBuildGradlePath)
+Files.deleteIfExists(buildGradlePath)
+Files.deleteIfExists(serviceBuildGradlePath)

@@ -12,28 +12,22 @@
  * details.
  */
 
-import groovy.io.FileType
-import java.nio.file.Files
-import java.nio.file.Paths
+import java.nio.file.*
 
-def projectDir = Paths.get(request.getOutputDirectory(), request.getArtifactId())
+Path projectPath = Paths.get(request.outputDirectory, request.artifactId)
 
-def buildGradleFile = projectDir.resolve('build.gradle')
+Path buildGradlePath = projectPath.resolve('build.gradle')
 
-if (Files.exists(buildGradleFile)) {
-	Files.delete(buildGradleFile)
-}
+Files.deleteIfExists(buildGradlePath)
 
-def properties = request.getProperties()
+String liferayVersion = request.properties.get('liferayVersion')
 
-def className = properties.get("className")
-def liferayVersion = properties.get("liferayVersion")
-
-if (!liferayVersion.equals("7.1")) {
-
-	projectDir.toFile().eachFileRecurse (FileType.FILES) { file ->
-		if (file.getName().equals(className + 'WebKeys.java')) {
-			file.delete()
-		}
-	}
+if (liferayVersion != '7.1') {
+	String className = properties.get('className')
+	
+	Path resourcePath = Paths.get('src', 'main', 'java', 'constants', className + 'WebKeys.java')
+	
+	Path resourceFullPath = projectPath.resolve(resourcePath)
+	
+	Files.deleteIfExists(resourceFullPath)
 }

@@ -19,6 +19,7 @@ import com.liferay.gradle.util.ArrayUtil;
 import groovy.lang.Closure;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -26,6 +27,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -39,6 +42,18 @@ import org.gradle.api.logging.Logging;
  * @author Andrea Di Giorgi
  */
 public class FileUtil extends com.liferay.gradle.util.FileUtil {
+
+	public static String getExtension(File file) {
+		String name = file.getName();
+
+		int pos = name.indexOf('.');
+
+		if (pos != -1) {
+			name = name.substring(pos);
+		}
+
+		return name.toLowerCase();
+	}
 
 	public static FileTree getJarsFileTree(
 		Project project, File dir, String... excludes) {
@@ -64,6 +79,18 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 		}
 
 		return relativePath;
+	}
+
+	public static String readManifestAttribute(File file, String key)
+		throws IOException {
+
+		try (InputStream inputStream = new FileInputStream(file)) {
+			Manifest manifest = new Manifest(inputStream);
+
+			Attributes attributes = manifest.getMainAttributes();
+
+			return attributes.getValue(key);
+		}
 	}
 
 	public static Properties readPropertiesFromZipFile(File file, String name)

@@ -34,9 +34,12 @@ import com.liferay.gradle.plugins.internal.TLDFormatterDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.TestIntegrationDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.UpgradeTableBuilderDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.WSDDBuilderDefaultsPlugin;
+import com.liferay.gradle.plugins.internal.WatchOSGiPlugin;
 import com.liferay.gradle.plugins.internal.XMLFormatterDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.util.FileUtil;
+import com.liferay.gradle.plugins.internal.util.GradlePluginsUtil;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.internal.util.IncludeResourceCompileIncludeInstruction;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.javadoc.formatter.JavadocFormatterPlugin;
 import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGeneratorPlugin;
@@ -589,7 +592,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 						LiferayOSGiExtension.
 							BUNDLE_DEFAULT_INSTRUCTION_LIFERAY_SERVICE_XML);
 
-					String bundleName = _getBundleInstruction(
+					String bundleName = GradlePluginsUtil.getBundleInstruction(
 						project, Constants.BUNDLE_NAME);
 
 					if (Validator.isNotNull(bundleName)) {
@@ -598,8 +601,9 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 							bundleName + " WSDD descriptors");
 					}
 
-					String bundleSymbolicName = _getBundleInstruction(
-						project, Constants.BUNDLE_SYMBOLICNAME);
+					String bundleSymbolicName =
+						GradlePluginsUtil.getBundleInstruction(
+							project, Constants.BUNDLE_SYMBOLICNAME);
 
 					properties.put(
 						Constants.BUNDLE_SYMBOLICNAME,
@@ -711,6 +715,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		TestIntegrationDefaultsPlugin.INSTANCE.apply(project);
 		UpgradeTableBuilderDefaultsPlugin.INSTANCE.apply(project);
 		WSDDBuilderDefaultsPlugin.INSTANCE.apply(project);
+		WatchOSGiPlugin.INSTANCE.apply(project);
 		XMLFormatterDefaultsPlugin.INSTANCE.apply(project);
 	}
 
@@ -719,7 +724,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			GradleUtil.getConvention(
 				project, ApplicationPluginConvention.class);
 
-		String mainClassName = _getBundleInstruction(project, "Main-Class");
+		String mainClassName = GradlePluginsUtil.getBundleInstruction(
+			project, "Main-Class");
 
 		if (Validator.isNotNull(mainClassName)) {
 			applicationPluginConvention.setMainClassName(mainClassName);
@@ -730,7 +736,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
 			project, BasePluginConvention.class);
 
-		String bundleSymbolicName = _getBundleInstruction(
+		String bundleSymbolicName = GradlePluginsUtil.getBundleInstruction(
 			project, Constants.BUNDLE_SYMBOLICNAME);
 
 		if (Validator.isNull(bundleSymbolicName)) {
@@ -759,8 +765,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		File file = project.file("bnd.bnd");
 
 		if (file.exists()) {
-			Map<String, Object> bundleInstructions = _getBundleInstructions(
-				bundleExtension);
+			Map<String, Object> bundleInstructions =
+				GradlePluginsUtil.getBundleInstructions(bundleExtension);
 
 			Properties properties = GUtil.loadProperties(file);
 
@@ -780,44 +786,34 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		Project project, final LiferayOSGiExtension liferayOSGiExtension,
 		final Configuration compileIncludeConfiguration) {
 
-		Map<String, Object> bundleInstructions = _getBundleInstructions(
-			project);
+		Map<String, Object> bundleInstructions =
+			GradlePluginsUtil.getBundleInstructions(project);
+
+		IncludeResourceCompileIncludeInstruction
+			includeResourceCompileIncludeInstruction =
+				new IncludeResourceCompileIncludeInstruction(
+					new Callable<Iterable<File>>() {
+
+						@Override
+						public Iterable<File> call() throws Exception {
+							return compileIncludeConfiguration;
+						}
+
+					},
+					new Callable<Boolean>() {
+
+						@Override
+						public Boolean call() throws Exception {
+							return
+								liferayOSGiExtension.isExpandCompileInclude();
+						}
+
+					});
 
 		bundleInstructions.put(
 			Constants.INCLUDERESOURCE + "." +
 				compileIncludeConfiguration.getName(),
-			new Object() {
-
-				@Override
-				public String toString() {
-					boolean expandCompileInclude =
-						liferayOSGiExtension.isExpandCompileInclude();
-
-					StringBuilder sb = new StringBuilder();
-
-					for (File file : compileIncludeConfiguration) {
-						if (sb.length() > 0) {
-							sb.append(',');
-						}
-
-						if (expandCompileInclude) {
-							sb.append('@');
-						}
-						else {
-							sb.append("lib/=");
-						}
-
-						sb.append(file.getAbsolutePath());
-
-						if (!expandCompileInclude) {
-							sb.append(";lib:=true");
-						}
-					}
-
-					return sb.toString();
-				}
-
-			});
+			includeResourceCompileIncludeInstruction);
 
 		Map<String, String> bundleDefaultInstructions =
 			liferayOSGiExtension.getBundleDefaultInstructions();
@@ -834,11 +830,12 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	}
 
 	private void _configureDescription(Project project) {
-		String description = _getBundleInstruction(
+		String description = GradlePluginsUtil.getBundleInstruction(
 			project, Constants.BUNDLE_DESCRIPTION);
 
 		if (Validator.isNull(description)) {
-			description = _getBundleInstruction(project, Constants.BUNDLE_NAME);
+			description = GradlePluginsUtil.getBundleInstruction(
+				project, Constants.BUNDLE_NAME);
 		}
 
 		if (Validator.isNotNull(description)) {
@@ -994,9 +991,9 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskJavadoc(Project project) {
-		String bundleName = _getBundleInstruction(
+		String bundleName = GradlePluginsUtil.getBundleInstruction(
 			project, Constants.BUNDLE_NAME);
-		String bundleVersion = _getBundleInstruction(
+		String bundleVersion = GradlePluginsUtil.getBundleInstruction(
 			project, Constants.BUNDLE_VERSION);
 
 		if (Validator.isNull(bundleName) || Validator.isNull(bundleVersion)) {
@@ -1086,32 +1083,12 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	}
 
 	private void _configureVersion(Project project) {
-		String bundleVersion = _getBundleInstruction(
+		String bundleVersion = GradlePluginsUtil.getBundleInstruction(
 			project, Constants.BUNDLE_VERSION);
 
 		if (Validator.isNotNull(bundleVersion)) {
 			project.setVersion(bundleVersion);
 		}
-	}
-
-	private String _getBundleInstruction(Project project, String key) {
-		Map<String, Object> bundleInstructions = _getBundleInstructions(
-			project);
-
-		return GradleUtil.toString(bundleInstructions.get(key));
-	}
-
-	private Map<String, Object> _getBundleInstructions(
-		BundleExtension bundleExtension) {
-
-		return (Map<String, Object>)bundleExtension.getInstructions();
-	}
-
-	private Map<String, Object> _getBundleInstructions(Project project) {
-		BundleExtension bundleExtension = GradleUtil.getExtension(
-			project, BundleExtension.class);
-
-		return _getBundleInstructions(bundleExtension);
 	}
 
 	private void _replaceJarBuilderFactory(Project project) {

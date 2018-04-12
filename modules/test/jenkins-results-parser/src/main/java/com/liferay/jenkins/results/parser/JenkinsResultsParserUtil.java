@@ -664,7 +664,7 @@ public class JenkinsResultsParserUtil {
 			pathMatchers.add(fileSystem.getPathMatcher("glob:" + includeGlob));
 		}
 
-		final List<URL> filePaths = new ArrayList<>();
+		final List<URL> resourceURLs = new ArrayList<>();
 
 		Path path = file.toPath();
 
@@ -672,7 +672,7 @@ public class JenkinsResultsParserUtil {
 			System.out.println(
 				"Directory " + path.toString() + " does not exist.");
 
-			return filePaths;
+			return resourceURLs;
 		}
 
 		Files.walkFileTree(
@@ -685,11 +685,10 @@ public class JenkinsResultsParserUtil {
 					throws IOException {
 
 					for (PathMatcher pathMatcher : pathMatchers) {
-
 						if (pathMatcher.matches(filePath)) {
 							URI uri = filePath.toUri();
 
-							filePaths.add(uri.toURL());
+							resourceURLs.add(uri.toURL());
 
 							break;
 						}
@@ -700,7 +699,7 @@ public class JenkinsResultsParserUtil {
 
 			});
 
-		return filePaths;
+		return resourceURLs;
 	}
 
 	public static float getJavaVersionNumber() {

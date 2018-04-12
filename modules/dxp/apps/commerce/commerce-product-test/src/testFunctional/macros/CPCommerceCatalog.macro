@@ -46,7 +46,7 @@
 		<execute function="AssertElementPresent" locator1="CommerceNavigation#EMPTY_SEARCH_CONTAINER" />
 	</command>
 
-	<command name="newOptionsEntry">
+	<command name="newOptionTemplatesEntry">
 		<if>
 			<condition function="IsElementPresent" locator1="Button#DELETE" />
 			<then>

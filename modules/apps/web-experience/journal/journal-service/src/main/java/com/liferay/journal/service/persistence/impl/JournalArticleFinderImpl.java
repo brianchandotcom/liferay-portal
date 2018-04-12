@@ -21,7 +21,7 @@ import com.liferay.journal.model.impl.JournalArticleImpl;
 import com.liferay.journal.service.persistence.JournalArticleFinder;
 import com.liferay.journal.service.persistence.JournalArticleUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.sql.Timestamp;
 
@@ -109,19 +110,17 @@ public class JournalArticleFinderImpl
 		String[] titles = null;
 		String[] descriptions = null;
 		String[] contents = null;
-		String[] ddmStructureKeys = CustomSQLUtil.keywords(
-			ddmStructureKey, false);
-		String[] ddmTemplateKeys = CustomSQLUtil.keywords(
-			ddmTemplateKey, false);
+		String[] ddmStructureKeys = _customSQL.keywords(ddmStructureKey, false);
+		String[] ddmTemplateKeys = _customSQL.keywords(ddmTemplateKey, false);
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			articleIds = CustomSQLUtil.keywords(keywords, false);
-			titles = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			articleIds = _customSQL.keywords(keywords, false);
+			titles = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
 
 			if (isdatabaseContentKeywordSearchEnabled(companyId)) {
-				contents = CustomSQLUtil.keywords(keywords, false);
+				contents = _customSQL.keywords(keywords, false);
 			}
 		}
 		else {
@@ -173,10 +172,8 @@ public class JournalArticleFinderImpl
 		Date displayDateGT, Date displayDateLT, Date reviewDate,
 		boolean andOperator, QueryDefinition<JournalArticle> queryDefinition) {
 
-		String[] ddmStructureKeys = CustomSQLUtil.keywords(
-			ddmStructureKey, false);
-		String[] ddmTemplateKeys = CustomSQLUtil.keywords(
-			ddmTemplateKey, false);
+		String[] ddmStructureKeys = _customSQL.keywords(ddmStructureKey, false);
+		String[] ddmTemplateKeys = _customSQL.keywords(ddmTemplateKey, false);
 
 		return countByC_G_F_C_A_V_T_D_C_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleId, version,
@@ -193,10 +190,10 @@ public class JournalArticleFinderImpl
 		Date displayDateGT, Date displayDateLT, Date reviewDate,
 		boolean andOperator, QueryDefinition<JournalArticle> queryDefinition) {
 
-		String[] articleIds = CustomSQLUtil.keywords(articleId, false);
-		String[] titles = CustomSQLUtil.keywords(title);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
-		String[] contents = CustomSQLUtil.keywords(content, false);
+		String[] articleIds = _customSQL.keywords(articleId, false);
+		String[] titles = _customSQL.keywords(title);
+		String[] descriptions = _customSQL.keywords(description, false);
+		String[] contents = _customSQL.keywords(content, false);
 
 		return countByC_G_F_C_A_V_T_D_C_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleIds, version,
@@ -232,19 +229,17 @@ public class JournalArticleFinderImpl
 		String[] titles = null;
 		String[] descriptions = null;
 		String[] contents = null;
-		String[] ddmStructureKeys = CustomSQLUtil.keywords(
-			ddmStructureKey, false);
-		String[] ddmTemplateKeys = CustomSQLUtil.keywords(
-			ddmTemplateKey, false);
+		String[] ddmStructureKeys = _customSQL.keywords(ddmStructureKey, false);
+		String[] ddmTemplateKeys = _customSQL.keywords(ddmTemplateKey, false);
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			articleIds = CustomSQLUtil.keywords(keywords, false);
-			titles = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			articleIds = _customSQL.keywords(keywords, false);
+			titles = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
 
 			if (isdatabaseContentKeywordSearchEnabled(companyId)) {
-				contents = CustomSQLUtil.keywords(keywords, false);
+				contents = _customSQL.keywords(keywords, false);
 			}
 		}
 		else {
@@ -296,10 +291,8 @@ public class JournalArticleFinderImpl
 		Date displayDateGT, Date displayDateLT, Date reviewDate,
 		boolean andOperator, QueryDefinition<JournalArticle> queryDefinition) {
 
-		String[] ddmStructureKeys = CustomSQLUtil.keywords(
-			ddmStructureKey, false);
-		String[] ddmTemplateKeys = CustomSQLUtil.keywords(
-			ddmTemplateKey, false);
+		String[] ddmStructureKeys = _customSQL.keywords(ddmStructureKey, false);
+		String[] ddmTemplateKeys = _customSQL.keywords(ddmTemplateKey, false);
 
 		return filterCountByC_G_F_C_A_V_T_D_C_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleId, version,
@@ -316,10 +309,10 @@ public class JournalArticleFinderImpl
 		Date displayDateGT, Date displayDateLT, Date reviewDate,
 		boolean andOperator, QueryDefinition<JournalArticle> queryDefinition) {
 
-		String[] articleIds = CustomSQLUtil.keywords(articleId, false);
-		String[] titles = CustomSQLUtil.keywords(title);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
-		String[] contents = CustomSQLUtil.keywords(content, false);
+		String[] articleIds = _customSQL.keywords(articleId, false);
+		String[] titles = _customSQL.keywords(title);
+		String[] descriptions = _customSQL.keywords(description, false);
+		String[] contents = _customSQL.keywords(content, false);
 
 		return filterCountByC_G_F_C_A_V_T_D_C_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleIds, version,
@@ -356,19 +349,17 @@ public class JournalArticleFinderImpl
 		String[] titles = null;
 		String[] descriptions = null;
 		String[] contents = null;
-		String[] ddmStructureKeys = CustomSQLUtil.keywords(
-			ddmStructureKey, false);
-		String[] ddmTemplateKeys = CustomSQLUtil.keywords(
-			ddmTemplateKey, false);
+		String[] ddmStructureKeys = _customSQL.keywords(ddmStructureKey, false);
+		String[] ddmTemplateKeys = _customSQL.keywords(ddmTemplateKey, false);
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			articleIds = CustomSQLUtil.keywords(keywords, false);
-			titles = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			articleIds = _customSQL.keywords(keywords, false);
+			titles = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
 
 			if (isdatabaseContentKeywordSearchEnabled(companyId)) {
-				contents = CustomSQLUtil.keywords(keywords, false);
+				contents = _customSQL.keywords(keywords, false);
 			}
 		}
 		else {
@@ -429,10 +420,8 @@ public class JournalArticleFinderImpl
 		Date displayDateGT, Date displayDateLT, Date reviewDate,
 		boolean andOperator, QueryDefinition<JournalArticle> queryDefinition) {
 
-		String[] ddmStructureKeys = CustomSQLUtil.keywords(
-			ddmStructureKey, false);
-		String[] ddmTemplateKeys = CustomSQLUtil.keywords(
-			ddmTemplateKey, false);
+		String[] ddmStructureKeys = _customSQL.keywords(ddmStructureKey, false);
+		String[] ddmTemplateKeys = _customSQL.keywords(ddmTemplateKey, false);
 
 		return filterFindByC_G_F_C_A_V_T_D_C_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleId, version,
@@ -449,10 +438,10 @@ public class JournalArticleFinderImpl
 		Date displayDateGT, Date displayDateLT, Date reviewDate,
 		boolean andOperator, QueryDefinition<JournalArticle> queryDefinition) {
 
-		String[] articleIds = CustomSQLUtil.keywords(articleId, false);
-		String[] titles = CustomSQLUtil.keywords(title);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
-		String[] contents = CustomSQLUtil.keywords(content, false);
+		String[] articleIds = _customSQL.keywords(articleId, false);
+		String[] titles = _customSQL.keywords(title);
+		String[] descriptions = _customSQL.keywords(description, false);
+		String[] contents = _customSQL.keywords(content, false);
 
 		return filterFindByC_G_F_C_A_V_T_D_C_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleIds, version,
@@ -490,7 +479,7 @@ public class JournalArticleFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(
+			String sql = _customSQL.get(
 				getClass(), FIND_BY_EXPIRATION_DATE, queryDefinition);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -526,19 +515,17 @@ public class JournalArticleFinderImpl
 		String[] titles = null;
 		String[] descriptions = null;
 		String[] contents = null;
-		String[] ddmStructureKeys = CustomSQLUtil.keywords(
-			ddmStructureKey, false);
-		String[] ddmTemplateKeys = CustomSQLUtil.keywords(
-			ddmTemplateKey, false);
+		String[] ddmStructureKeys = _customSQL.keywords(ddmStructureKey, false);
+		String[] ddmTemplateKeys = _customSQL.keywords(ddmTemplateKey, false);
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			articleIds = CustomSQLUtil.keywords(keywords, false);
-			titles = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			articleIds = _customSQL.keywords(keywords, false);
+			titles = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
 
 			if (isdatabaseContentKeywordSearchEnabled(companyId)) {
-				contents = CustomSQLUtil.keywords(keywords, false);
+				contents = _customSQL.keywords(keywords, false);
 			}
 		}
 		else {
@@ -562,7 +549,7 @@ public class JournalArticleFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_NO_ASSETS);
+			String sql = _customSQL.get(getClass(), FIND_BY_NO_ASSETS);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -589,7 +576,7 @@ public class JournalArticleFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_NO_PERMISSIONS);
+			String sql = _customSQL.get(getClass(), FIND_BY_NO_PERMISSIONS);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -621,7 +608,7 @@ public class JournalArticleFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_REVIEW_DATE);
+			String sql = _customSQL.get(getClass(), FIND_BY_REVIEW_DATE);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -655,7 +642,7 @@ public class JournalArticleFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_R_D);
+			String sql = _customSQL.get(getClass(), FIND_BY_R_D);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -735,14 +722,12 @@ public class JournalArticleFinderImpl
 		Date displayDateGT, Date displayDateLT, Date reviewDate,
 		boolean andOperator, QueryDefinition<JournalArticle> queryDefinition) {
 
-		String[] articleIds = CustomSQLUtil.keywords(articleId, false);
-		String[] titles = CustomSQLUtil.keywords(title);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
-		String[] contents = CustomSQLUtil.keywords(content, false);
-		String[] ddmStructureKeys = CustomSQLUtil.keywords(
-			ddmStructureKey, false);
-		String[] ddmTemplateKeys = CustomSQLUtil.keywords(
-			ddmTemplateKey, false);
+		String[] articleIds = _customSQL.keywords(articleId, false);
+		String[] titles = _customSQL.keywords(title);
+		String[] descriptions = _customSQL.keywords(description, false);
+		String[] contents = _customSQL.keywords(content, false);
+		String[] ddmStructureKeys = _customSQL.keywords(ddmStructureKey, false);
+		String[] ddmTemplateKeys = _customSQL.keywords(ddmTemplateKey, false);
 
 		return findByC_G_F_C_A_V_T_D_C_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleIds, version,
@@ -759,10 +744,10 @@ public class JournalArticleFinderImpl
 		Date displayDateGT, Date displayDateLT, Date reviewDate,
 		boolean andOperator, QueryDefinition<JournalArticle> queryDefinition) {
 
-		String[] articleIds = CustomSQLUtil.keywords(articleId, false);
-		String[] titles = CustomSQLUtil.keywords(title);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
-		String[] contents = CustomSQLUtil.keywords(content, false);
+		String[] articleIds = _customSQL.keywords(articleId, false);
+		String[] titles = _customSQL.keywords(title);
+		String[] descriptions = _customSQL.keywords(description, false);
+		String[] contents = _customSQL.keywords(content, false);
 
 		return findByC_G_F_C_A_V_T_D_C_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleIds, version,
@@ -797,7 +782,7 @@ public class JournalArticleFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(
+			String sql = _customSQL.get(
 				getClass(), COUNT_BY_G_F, queryDefinition, "JournalArticle");
 
 			sql = replaceStatusJoin(sql, queryDefinition);
@@ -855,7 +840,7 @@ public class JournalArticleFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(
+			String sql = _customSQL.get(
 				getClass(), COUNT_BY_G_C_S, queryDefinition, "JournalArticle");
 
 			sql = replaceStatusJoin(sql, queryDefinition);
@@ -920,7 +905,7 @@ public class JournalArticleFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(
+			String sql = _customSQL.get(
 				getClass(), COUNT_BY_G_U_F_C, queryDefinition,
 				"JournalArticle");
 
@@ -994,12 +979,12 @@ public class JournalArticleFinderImpl
 		QueryDefinition<JournalArticle> queryDefinition,
 		boolean inlineSQLHelper) {
 
-		articleIds = CustomSQLUtil.keywords(articleIds, false);
-		titles = CustomSQLUtil.keywords(titles);
-		descriptions = CustomSQLUtil.keywords(descriptions, false);
-		contents = CustomSQLUtil.keywords(contents, false);
-		ddmStructureKeys = CustomSQLUtil.keywords(ddmStructureKeys, false);
-		ddmTemplateKeys = CustomSQLUtil.keywords(ddmTemplateKeys, false);
+		articleIds = _customSQL.keywords(articleIds, false);
+		titles = _customSQL.keywords(titles);
+		descriptions = _customSQL.keywords(descriptions, false);
+		contents = _customSQL.keywords(contents, false);
+		ddmStructureKeys = _customSQL.keywords(ddmStructureKeys, false);
+		ddmTemplateKeys = _customSQL.keywords(ddmTemplateKeys, false);
 		Timestamp displayDateGT_TS = CalendarUtil.getTimestamp(displayDateGT);
 		Timestamp displayDateLT_TS = CalendarUtil.getTimestamp(displayDateLT);
 		Timestamp reviewDate_TS = CalendarUtil.getTimestamp(reviewDate);
@@ -1009,7 +994,7 @@ public class JournalArticleFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(
+			String sql = _customSQL.get(
 				getClass(), COUNT_BY_C_G_F_C_A_V_T_D_C_S_T_D_R, queryDefinition,
 				"JournalArticle");
 
@@ -1030,7 +1015,7 @@ public class JournalArticleFinderImpl
 					getFolderIds(folderIds, JournalArticleImpl.TABLE_NAME));
 			}
 
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "JournalArticle.articleId", StringPool.LIKE, false,
 				articleIds);
 
@@ -1040,13 +1025,13 @@ public class JournalArticleFinderImpl
 					StringPool.BLANK);
 			}
 
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "LOWER(JournalArticleLocalization.title)", StringPool.LIKE,
 				false, titles);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "JournalArticleLocalization.description", StringPool.LIKE,
 				false, descriptions);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "JournalArticle.content", StringPool.LIKE, false,
 				contents);
 
@@ -1054,18 +1039,18 @@ public class JournalArticleFinderImpl
 				sql, ddmStructureKeys, ddmTemplateKeys);
 
 			if (!isNullArray(ddmStructureKeys)) {
-				sql = CustomSQLUtil.replaceKeywords(
+				sql = _customSQL.replaceKeywords(
 					sql, "JournalArticle.DDMStructureKey", StringPool.LIKE,
 					false, ddmStructureKeys);
 			}
 
 			if (!isNullArray(ddmTemplateKeys)) {
-				sql = CustomSQLUtil.replaceKeywords(
+				sql = _customSQL.replaceKeywords(
 					sql, "JournalArticle.DDMTemplateKey", StringPool.LIKE,
 					false, ddmTemplateKeys);
 			}
 
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -1149,12 +1134,12 @@ public class JournalArticleFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(
+			String sql = _customSQL.get(
 				getClass(), FIND_BY_G_F, queryDefinition, "JournalArticle");
 
 			sql = replaceStatusJoin(sql, queryDefinition);
 
-			sql = CustomSQLUtil.replaceOrderBy(
+			sql = _customSQL.replaceOrderBy(
 				sql, queryDefinition.getOrderByComparator());
 
 			if (inlineSQLHelper) {
@@ -1203,12 +1188,12 @@ public class JournalArticleFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(
+			String sql = _customSQL.get(
 				getClass(), FIND_BY_G_C_S, queryDefinition, "JournalArticle");
 
 			sql = replaceStatusJoin(sql, queryDefinition);
 
-			sql = CustomSQLUtil.replaceOrderBy(
+			sql = _customSQL.replaceOrderBy(
 				sql, queryDefinition.getOrderByComparator());
 
 			if (groupId <= 0) {
@@ -1264,12 +1249,12 @@ public class JournalArticleFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(
+			String sql = _customSQL.get(
 				getClass(), FIND_BY_G_U_F_C, queryDefinition, "JournalArticle");
 
 			sql = replaceStatusJoin(sql, queryDefinition);
 
-			sql = CustomSQLUtil.replaceOrderBy(
+			sql = _customSQL.replaceOrderBy(
 				sql, queryDefinition.getOrderByComparator());
 
 			if (folderIds.isEmpty()) {
@@ -1333,12 +1318,12 @@ public class JournalArticleFinderImpl
 		QueryDefinition<JournalArticle> queryDefinition,
 		boolean inlineSQLHelper) {
 
-		articleIds = CustomSQLUtil.keywords(articleIds, false);
-		titles = CustomSQLUtil.keywords(titles);
-		descriptions = CustomSQLUtil.keywords(descriptions, false);
-		contents = CustomSQLUtil.keywords(contents, false);
-		ddmStructureKeys = CustomSQLUtil.keywords(ddmStructureKeys, false);
-		ddmTemplateKeys = CustomSQLUtil.keywords(ddmTemplateKeys, false);
+		articleIds = _customSQL.keywords(articleIds, false);
+		titles = _customSQL.keywords(titles);
+		descriptions = _customSQL.keywords(descriptions, false);
+		contents = _customSQL.keywords(contents, false);
+		ddmStructureKeys = _customSQL.keywords(ddmStructureKeys, false);
+		ddmTemplateKeys = _customSQL.keywords(ddmTemplateKeys, false);
 		Timestamp displayDateGT_TS = CalendarUtil.getTimestamp(displayDateGT);
 		Timestamp displayDateLT_TS = CalendarUtil.getTimestamp(displayDateLT);
 		Timestamp reviewDate_TS = CalendarUtil.getTimestamp(reviewDate);
@@ -1348,7 +1333,7 @@ public class JournalArticleFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(
+			String sql = _customSQL.get(
 				getClass(), FIND_BY_C_G_F_C_A_V_T_D_C_S_T_D_R, queryDefinition,
 				"JournalArticle");
 
@@ -1369,7 +1354,7 @@ public class JournalArticleFinderImpl
 					getFolderIds(folderIds, JournalArticleImpl.TABLE_NAME));
 			}
 
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "JournalArticle.articleId", StringPool.LIKE, false,
 				articleIds);
 
@@ -1379,23 +1364,23 @@ public class JournalArticleFinderImpl
 					StringPool.BLANK);
 			}
 
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "LOWER(JournalArticleLocalization.title)", StringPool.LIKE,
 				false, titles);
 
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "JournalArticleLocalization.description", StringPool.LIKE,
 				true, descriptions);
 
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "JournalArticle.content", StringPool.LIKE, false,
 				contents);
 
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "LOWER(tempJournalArticleLocalization.title)",
 				StringPool.LIKE, false, titles);
 
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "tempJournalArticleLocalization.description",
 				StringPool.LIKE, false, descriptions);
 
@@ -1403,19 +1388,19 @@ public class JournalArticleFinderImpl
 				sql, ddmStructureKeys, ddmTemplateKeys);
 
 			if (!isNullArray(ddmStructureKeys)) {
-				sql = CustomSQLUtil.replaceKeywords(
+				sql = _customSQL.replaceKeywords(
 					sql, "JournalArticle.DDMStructureKey", StringPool.LIKE,
 					false, ddmStructureKeys);
 			}
 
 			if (!isNullArray(ddmTemplateKeys)) {
-				sql = CustomSQLUtil.replaceKeywords(
+				sql = _customSQL.replaceKeywords(
 					sql, "JournalArticle.DDMTemplateKey", StringPool.LIKE,
 					false, ddmTemplateKeys);
 			}
 
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
-			sql = CustomSQLUtil.replaceOrderBy(
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceOrderBy(
 				sql, queryDefinition.getOrderByComparator());
 
 			if (inlineSQLHelper) {
@@ -1674,5 +1659,8 @@ public class JournalArticleFinderImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleFinderImpl.class);
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

@@ -18,7 +18,7 @@ import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.base.FragmentCollectionServiceBaseImpl;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
 
@@ -136,8 +137,8 @@ public class FragmentCollectionServiceImpl
 		OrderByComparator<FragmentCollection> orderByComparator) {
 
 		return fragmentCollectionPersistence.filterFindByG_LikeN(
-			groupId, CustomSQLUtil.keywords(name, WildcardMode.SURROUND)[0],
-			start, end, orderByComparator);
+			groupId, _customSQL.keywords(name, WildcardMode.SURROUND)[0], start,
+			end, orderByComparator);
 	}
 
 	@Override
@@ -148,7 +149,7 @@ public class FragmentCollectionServiceImpl
 	@Override
 	public int getFragmentCollectionsCount(long groupId, String name) {
 		return fragmentCollectionPersistence.filterCountByG_LikeN(
-			groupId, CustomSQLUtil.keywords(name, WildcardMode.SURROUND)[0]);
+			groupId, _customSQL.keywords(name, WildcardMode.SURROUND)[0]);
 	}
 
 	@Override
@@ -186,5 +187,8 @@ public class FragmentCollectionServiceImpl
 			PortletResourcePermissionFactory.getInstance(
 				FragmentCollectionServiceImpl.class,
 				"_portletResourcePermission", FragmentConstants.RESOURCE_NAME);
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

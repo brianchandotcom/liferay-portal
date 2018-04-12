@@ -15,7 +15,7 @@
 package com.liferay.shopping.service.persistence.impl;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.shopping.model.ShoppingOrder;
 import com.liferay.shopping.model.ShoppingOrderConstants;
 import com.liferay.shopping.model.impl.ShoppingOrderImpl;
@@ -60,7 +61,7 @@ public class ShoppingOrderFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_C_U_N_PPPS);
+			String sql = _customSQL.get(getClass(), COUNT_BY_G_C_U_N_PPPS);
 
 			if (userId <= 0) {
 				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
@@ -73,7 +74,7 @@ public class ShoppingOrderFinderImpl
 				ppPaymentStatus = ShoppingOrderConstants.STATUS_LATEST;
 			}
 
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -140,7 +141,7 @@ public class ShoppingOrderFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_C_U_N_PPPS);
+			String sql = _customSQL.get(getClass(), FIND_BY_G_C_U_N_PPPS);
 
 			if (userId <= 0) {
 				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
@@ -153,8 +154,8 @@ public class ShoppingOrderFinderImpl
 				ppPaymentStatus = ShoppingOrderConstants.STATUS_LATEST;
 			}
 
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
-			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceOrderBy(sql, obc);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -197,5 +198,8 @@ public class ShoppingOrderFinderImpl
 	}
 
 	private static final String _USER_ID_SQL = "(userId = ?) AND";
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

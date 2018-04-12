@@ -58,7 +58,7 @@ import com.liferay.calendar.web.internal.util.CalendarUtil;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -1451,7 +1451,7 @@ public class CalendarPortlet extends MVCPortlet {
 		}
 
 		String name = StringUtil.merge(
-			CustomSQLUtil.keywords(keywords), StringPool.BLANK);
+			_customSQL.keywords(keywords), StringPool.BLANK);
 
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
@@ -1841,6 +1841,10 @@ public class CalendarPortlet extends MVCPortlet {
 		_calendarNotificationTemplateService;
 	private CalendarResourceService _calendarResourceService;
 	private CalendarService _calendarService;
+
+	@Reference
+	private CustomSQL _customSQL;
+
 	private GroupLocalService _groupLocalService;
 
 	@Reference

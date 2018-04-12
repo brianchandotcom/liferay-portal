@@ -26,7 +26,7 @@ dependencies {
 	compileOnly project(":apps:foundation:mobile-device-rules:mobile-device-rules-api")
 	compileOnly project(":apps:foundation:petra:petra-xml")
 	compileOnly project(":apps:foundation:portal-search:portal-search-api")
-	compileOnly project(":apps:foundation:portal:portal-dao-orm-custom-sql")
+	compileOnly project(":apps:foundation:portal:portal-dao-orm-custom-sql-api")
 	compileOnly project(":apps:foundation:portal:portal-instance-lifecycle-api")
 	compileOnly project(":apps:foundation:portal:portal-spring-extender-api")
 	compileOnly project(":apps:foundation:portal:portal-upgrade-api")

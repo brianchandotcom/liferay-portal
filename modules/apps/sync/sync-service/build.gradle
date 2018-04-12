@@ -22,7 +22,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	compileOnly project(":apps:collaboration:document-library:document-library-sync-api")
 	compileOnly project(":apps:foundation:petra:petra-io-delta")
-	compileOnly project(":apps:foundation:portal:portal-dao-orm-custom-sql")
+	compileOnly project(":apps:foundation:portal:portal-dao-orm-custom-sql-api")
 	compileOnly project(":apps:foundation:portal:portal-instance-lifecycle-api")
 	compileOnly project(":apps:foundation:portal:portal-spring-extender-api")
 	compileOnly project(":apps:foundation:portal:portal-upgrade-api")

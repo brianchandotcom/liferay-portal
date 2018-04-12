@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.dao.orm.custom.sql;
+package com.liferay.portal.dao.orm.custom.sql.internal;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
@@ -26,7 +27,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -55,6 +56,9 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.SynchronousBundleListener;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -62,7 +66,8 @@ import org.osgi.framework.SynchronousBundleListener;
  * @author Raymond Augé
  * @see    com.liferay.util.dao.orm.CustomSQL
  */
-public class CustomSQL {
+@Component
+public class CustomSQLImpl implements CustomSQL {
 
 	public static final String DB2_FUNCTION_IS_NOT_NULL =
 		"CAST(? AS VARCHAR(32672)) IS NOT NULL";
@@ -86,749 +91,14 @@ public class CustomSQL {
 	public static final String SYBASE_FUNCTION_IS_NULL =
 		"CONVERT(VARCHAR,?) IS NULL";
 
-	public CustomSQL() throws SQLException {
-		_reloadCustomSQL();
-	}
-
-	/**
-	 * @deprecated As of 1.0.0, with no direct replacement
-	 */
-	@Deprecated
-	public CustomSQL(Class<?> clazz) throws SQLException {
-		_reloadCustomSQL();
-	}
-
-	public String appendCriteria(String sql, String criteria) {
-		if (Validator.isNull(criteria)) {
-			return sql;
-		}
-
-		if (!criteria.startsWith(StringPool.SPACE)) {
-			criteria = StringPool.SPACE.concat(criteria);
-		}
-
-		if (!criteria.endsWith(StringPool.SPACE)) {
-			criteria = criteria.concat(StringPool.SPACE);
-		}
-
-		int pos = sql.indexOf(_GROUP_BY_CLAUSE);
-
-		if (pos != -1) {
-			return sql.substring(0, pos + 1).concat(criteria).concat(
-				sql.substring(pos + 1));
-		}
-
-		pos = sql.indexOf(_ORDER_BY_CLAUSE);
-
-		if (pos != -1) {
-			return sql.substring(0, pos + 1).concat(criteria).concat(
-				sql.substring(pos + 1));
-		}
-
-		return sql.concat(criteria);
-	}
-
-	public String get(Class<?> clazz, String id) {
-		Map<String, String> sqls = _sqlPool.get(FrameworkUtil.getBundle(clazz));
-
-		if (sqls == null) {
-			sqls = _loadCustomSQL(clazz);
-		}
-
-		return sqls.get(id);
-	}
-
-	public String get(
-		Class<?> clazz, String id, QueryDefinition<?> queryDefinition) {
-
-		return get(clazz, id, queryDefinition, StringPool.BLANK);
-	}
-
-	public String get(
-		Class<?> clazz, String id, QueryDefinition<?> queryDefinition,
-		String tableName) {
-
-		String sql = get(clazz, id);
-
-		if (!Validator.isBlank(tableName) &&
-			!tableName.endsWith(StringPool.PERIOD)) {
-
-			tableName = tableName.concat(StringPool.PERIOD);
-		}
-
-		if (queryDefinition.getStatus() == WorkflowConstants.STATUS_ANY) {
-			sql = sql.replace(_STATUS_KEYWORD, _STATUS_CONDITION_EMPTY);
-		}
-		else {
-			if (queryDefinition.isExcludeStatus()) {
-				sql = sql.replace(
-					_STATUS_KEYWORD,
-					tableName.concat(_STATUS_CONDITION_INVERSE));
-			}
-			else {
-				sql = sql.replace(
-					_STATUS_KEYWORD,
-					tableName.concat(_STATUS_CONDITION_DEFAULT));
-			}
-		}
-
-		if (queryDefinition.getOwnerUserId() > 0) {
-			if (queryDefinition.isIncludeOwner()) {
-				StringBundler sb = new StringBundler(7);
-
-				sb.append(StringPool.OPEN_PARENTHESIS);
-				sb.append(tableName);
-				sb.append(_OWNER_USER_ID_CONDITION_DEFAULT);
-				sb.append(" AND ");
-				sb.append(tableName);
-				sb.append(_STATUS_CONDITION_INVERSE);
-				sb.append(StringPool.CLOSE_PARENTHESIS);
-
-				sql = sql.replace(_OWNER_USER_ID_KEYWORD, sb.toString());
-
-				sql = sql.replace(_OWNER_USER_ID_AND_OR_CONNECTOR, " OR ");
-			}
-			else {
-				sql = sql.replace(
-					_OWNER_USER_ID_KEYWORD,
-					tableName.concat(_OWNER_USER_ID_CONDITION_DEFAULT));
-
-				sql = sql.replace(_OWNER_USER_ID_AND_OR_CONNECTOR, " AND ");
-			}
-		}
-		else {
-			sql = sql.replace(_OWNER_USER_ID_KEYWORD, StringPool.BLANK);
-
-			sql = sql.replace(
-				_OWNER_USER_ID_AND_OR_CONNECTOR, StringPool.BLANK);
-		}
-
-		return sql;
-	}
-
-	/**
-	 * @deprecated As of 1.0.0, with no direct replacement
-	 */
-	@Deprecated
-	public String get(String id) {
-		for (Map<String, String> sqls : _sqlPool.values()) {
-			String sql = sqls.get(id);
-
-			if (sql != null) {
-				return sql;
-			}
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns <code>true</code> if Hibernate is connecting to a DB2 database.
-	 *
-	 * @return <code>true</code> if Hibernate is connecting to a DB2 database
-	 */
-	public boolean isVendorDB2() {
-		return _vendorDB2;
-	}
-
-	/**
-	 * Returns <code>true</code> if Hibernate is connecting to a Hypersonic
-	 * database.
-	 *
-	 * @return <code>true</code> if Hibernate is connecting to a Hypersonic
-	 *         database
-	 */
-	public boolean isVendorHSQL() {
-		return _vendorHSQL;
-	}
-
-	/**
-	 * Returns <code>true</code> if Hibernate is connecting to an Informix
-	 * database.
-	 *
-	 * @return <code>true</code> if Hibernate is connecting to an Informix
-	 *         database
-	 */
-	public boolean isVendorInformix() {
-		return _vendorInformix;
-	}
-
-	/**
-	 * Returns <code>true</code> if Hibernate is connecting to a MySQL database.
-	 *
-	 * @return <code>true</code> if Hibernate is connecting to a MySQL database
-	 */
-	public boolean isVendorMySQL() {
-		return _vendorMySQL;
-	}
-
-	/**
-	 * Returns <code>true</code> if Hibernate is connecting to an Oracle
-	 * database. Oracle has a nasty bug where it treats '' as a
-	 * <code>NULL</code> value. See
-	 * http://thedailywtf.com/forums/thread/26879.aspx for more information on
-	 * this nasty bug.
-	 *
-	 * @return <code>true</code> if Hibernate is connecting to an Oracle
-	 *         database
-	 */
-	public boolean isVendorOracle() {
-		return _vendorOracle;
-	}
-
-	/**
-	 * Returns <code>true</code> if Hibernate is connecting to a PostgreSQL
-	 * database.
-	 *
-	 * @return <code>true</code> if Hibernate is connecting to a PostgreSQL
-	 *         database
-	 */
-	public boolean isVendorPostgreSQL() {
-		return _vendorPostgreSQL;
-	}
-
-	/**
-	 * Returns <code>true</code> if Hibernate is connecting to a Sybase
-	 * database.
-	 *
-	 * @return <code>true</code> if Hibernate is connecting to a Sybase database
-	 */
-	public boolean isVendorSybase() {
-		return _vendorSybase;
-	}
-
-	public String[] keywords(String keywords) {
-		return keywords(keywords, true, WildcardMode.SURROUND);
-	}
-
-	public String[] keywords(String keywords, boolean lowerCase) {
-		return keywords(keywords, lowerCase, WildcardMode.SURROUND);
-	}
-
-	public String[] keywords(
-		String keywords, boolean lowerCase, WildcardMode wildcardMode) {
-
-		if (Validator.isNull(keywords)) {
-			return new String[] {null};
-		}
-
-		if (_CUSTOM_SQL_AUTO_ESCAPE_WILDCARDS_ENABLED) {
-			keywords = _escapeWildCards(keywords);
-		}
-
-		if (lowerCase) {
-			keywords = StringUtil.toLowerCase(keywords);
-		}
-
-		keywords = keywords.trim();
-
-		List<String> keywordsList = new ArrayList<>();
-
-		for (int i = 0; i < keywords.length(); i++) {
-			char c = keywords.charAt(i);
-
-			if (c == CharPool.QUOTE) {
-				int pos = i + 1;
-
-				i = keywords.indexOf(CharPool.QUOTE, pos);
-
-				if (i == -1) {
-					i = keywords.length();
-				}
-
-				if (i > pos) {
-					String keyword = keywords.substring(pos, i);
-
-					keywordsList.add(insertWildcard(keyword, wildcardMode));
-				}
-			}
-			else {
-				while (Character.isWhitespace(c)) {
-					i++;
-
-					c = keywords.charAt(i);
-				}
-
-				int pos = i;
-
-				while (!Character.isWhitespace(c)) {
-					i++;
-
-					if (i == keywords.length()) {
-						break;
-					}
-
-					c = keywords.charAt(i);
-				}
-
-				String keyword = keywords.substring(pos, i);
-
-				keywordsList.add(insertWildcard(keyword, wildcardMode));
-			}
-		}
-
-		return keywordsList.toArray(new String[keywordsList.size()]);
-	}
-
-	public String[] keywords(String keywords, WildcardMode wildcardMode) {
-		return keywords(keywords, true, wildcardMode);
-	}
-
-	public String[] keywords(String[] keywordsArray) {
-		return keywords(keywordsArray, true);
-	}
-
-	public String[] keywords(String[] keywordsArray, boolean lowerCase) {
-		if (ArrayUtil.isEmpty(keywordsArray)) {
-			return new String[] {null};
-		}
-
-		if (lowerCase) {
-			for (int i = 0; i < keywordsArray.length; i++) {
-				keywordsArray[i] = StringUtil.lowerCase(keywordsArray[i]);
-			}
-		}
-
-		return keywordsArray;
-	}
-
-	/**
-	 * @deprecated As of 1.0.0, with no direct replacement
-	 */
-	@Deprecated
-	public void reloadCustomSQL(Class<?> clazz) throws SQLException {
-		_reloadCustomSQL();
-	}
-
-	public String removeGroupBy(String sql) {
-		int x = sql.indexOf(_GROUP_BY_CLAUSE);
-
-		if (x != -1) {
-			int y = sql.indexOf(_ORDER_BY_CLAUSE);
-
-			if (y == -1) {
-				sql = sql.substring(0, x);
-			}
-			else {
-				sql = sql.substring(0, x) + sql.substring(y);
-			}
-		}
-
-		return sql;
-	}
-
-	public String removeOrderBy(String sql) {
-		int pos = sql.indexOf(_ORDER_BY_CLAUSE);
-
-		if (pos != -1) {
-			sql = sql.substring(0, pos);
-		}
-
-		return sql;
-	}
-
-	public String replaceAndOperator(String sql, boolean andOperator) {
-		String andOrConnector = "OR";
-		String andOrNullCheck = "AND ? IS NOT NULL";
-
-		if (andOperator) {
-			andOrConnector = "AND";
-			andOrNullCheck = "OR ? IS NULL";
-		}
-
-		sql = StringUtil.replace(
-			sql, new String[] {"[$AND_OR_CONNECTOR$]", "[$AND_OR_NULL_CHECK$]"},
-			new String[] {andOrConnector, andOrNullCheck});
-
-		if (_vendorPostgreSQL) {
-			sql = StringUtil.replace(
-				sql,
-				new String[] {
-					"Date >= ? AND ? IS NOT NULL",
-					"Date <= ? AND ? IS NOT NULL", "Date >= ? OR ? IS NULL",
-					"Date <= ? OR ? IS NULL"
-				},
-				new String[] {
-					"Date >= ? AND CAST(? AS TIMESTAMP) IS NOT NULL",
-					"Date <= ? AND CAST(? AS TIMESTAMP) IS NOT NULL",
-					"Date >= ? OR CAST(? AS TIMESTAMP) IS NULL",
-					"Date <= ? OR CAST(? AS TIMESTAMP) IS NULL"
-				});
-		}
-
-		sql = replaceIsNull(sql);
-
-		return sql;
-	}
-
-	public String replaceGroupBy(String sql, String groupBy) {
-		if (groupBy == null) {
-			return sql;
-		}
-
-		int x = sql.indexOf(_GROUP_BY_CLAUSE);
-
-		if (x != -1) {
-			int y = sql.indexOf(_ORDER_BY_CLAUSE);
-
-			if (y == -1) {
-				sql = sql.substring(0, x + _GROUP_BY_CLAUSE.length()).concat(
-					groupBy);
-			}
-			else {
-				sql = sql.substring(0, x + _GROUP_BY_CLAUSE.length()).concat(
-					groupBy).concat(sql.substring(y));
-			}
-		}
-		else {
-			int y = sql.indexOf(_ORDER_BY_CLAUSE);
-
-			if (y == -1) {
-				sql = sql.concat(_GROUP_BY_CLAUSE).concat(groupBy);
-			}
-			else {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(sql.substring(0, y));
-				sb.append(_GROUP_BY_CLAUSE);
-				sb.append(groupBy);
-				sb.append(sql.substring(y));
-
-				sql = sb.toString();
-			}
-		}
-
-		return sql;
-	}
-
-	public String replaceIsNull(String sql) {
-		if (Validator.isNotNull(_functionIsNull)) {
-			sql = StringUtil.replace(
-				sql, new String[] {"? IS NULL", "? IS NOT NULL"},
-				new String[] {_functionIsNull, _functionIsNotNull});
-		}
-
-		return sql;
-	}
-
-	public String replaceKeywords(
-		String sql, String field, boolean last, int[] values) {
-
-		if ((values != null) && (values.length == 1)) {
-			return sql;
-		}
-
-		StringBundler oldSqlSB = new StringBundler(4);
-
-		oldSqlSB.append(StringPool.OPEN_PARENTHESIS);
-		oldSqlSB.append(field);
-		oldSqlSB.append(" = ?)");
-
-		if (!last) {
-			oldSqlSB.append(" [$AND_OR_CONNECTOR$]");
-		}
-
-		if (ArrayUtil.isEmpty(values)) {
-			return StringUtil.replace(
-				sql, oldSqlSB.toString(), StringPool.BLANK);
-		}
-
-		StringBundler newSqlSB = new StringBundler(values.length * 4 + 3);
-
-		newSqlSB.append(StringPool.OPEN_PARENTHESIS);
-
-		for (int i = 0; i < values.length; i++) {
-			if (i > 0) {
-				newSqlSB.append(" OR ");
-			}
-
-			newSqlSB.append(StringPool.OPEN_PARENTHESIS);
-			newSqlSB.append(field);
-			newSqlSB.append(" = ?)");
-		}
-
-		newSqlSB.append(StringPool.CLOSE_PARENTHESIS);
-
-		if (!last) {
-			newSqlSB.append(" [$AND_OR_CONNECTOR$]");
-		}
-
-		return StringUtil.replace(
-			sql, oldSqlSB.toString(), newSqlSB.toString());
-	}
-
-	public String replaceKeywords(
-		String sql, String field, boolean last, long[] values) {
-
-		if ((values != null) && (values.length == 1)) {
-			return sql;
-		}
-
-		StringBundler oldSqlSB = new StringBundler(4);
-
-		oldSqlSB.append(StringPool.OPEN_PARENTHESIS);
-		oldSqlSB.append(field);
-		oldSqlSB.append(" = ?)");
-
-		if (!last) {
-			oldSqlSB.append(" [$AND_OR_CONNECTOR$]");
-		}
-
-		if (ArrayUtil.isEmpty(values)) {
-			return StringUtil.replace(
-				sql, oldSqlSB.toString(), StringPool.BLANK);
-		}
-
-		StringBundler newSqlSB = new StringBundler(values.length * 4 + 3);
-
-		newSqlSB.append(StringPool.OPEN_PARENTHESIS);
-
-		for (int i = 0; i < values.length; i++) {
-			if (i > 0) {
-				newSqlSB.append(" OR ");
-			}
-
-			newSqlSB.append(StringPool.OPEN_PARENTHESIS);
-			newSqlSB.append(field);
-			newSqlSB.append(" = ?)");
-		}
-
-		newSqlSB.append(StringPool.CLOSE_PARENTHESIS);
-
-		if (!last) {
-			newSqlSB.append(" [$AND_OR_CONNECTOR$]");
-		}
-
-		return StringUtil.replace(
-			sql, oldSqlSB.toString(), newSqlSB.toString());
-	}
-
-	public String replaceKeywords(
-		String sql, String field, String operator, boolean last,
-		String[] values) {
-
-		if ((values != null) && (values.length <= 1)) {
-			return sql;
-		}
-
-		StringBundler oldSqlSB = new StringBundler(6);
-
-		oldSqlSB.append(StringPool.OPEN_PARENTHESIS);
-		oldSqlSB.append(field);
-		oldSqlSB.append(" ");
-		oldSqlSB.append(operator);
-		oldSqlSB.append(" ? [$AND_OR_NULL_CHECK$])");
-
-		if (!last) {
-			oldSqlSB.append(" [$AND_OR_CONNECTOR$]");
-		}
-
-		StringBundler newSqlSB = new StringBundler(values.length * 6 + 2);
-
-		newSqlSB.append(StringPool.OPEN_PARENTHESIS);
-
-		for (int i = 0; i < values.length; i++) {
-			if (i > 0) {
-				newSqlSB.append(" OR ");
-			}
-
-			newSqlSB.append(StringPool.OPEN_PARENTHESIS);
-			newSqlSB.append(field);
-			newSqlSB.append(" ");
-			newSqlSB.append(operator);
-			newSqlSB.append(" ? [$AND_OR_NULL_CHECK$])");
-		}
-
-		newSqlSB.append(StringPool.CLOSE_PARENTHESIS);
-
-		if (!last) {
-			newSqlSB.append(" [$AND_OR_CONNECTOR$]");
-		}
-
-		return StringUtil.replace(
-			sql, oldSqlSB.toString(), newSqlSB.toString());
-	}
-
-	public String replaceOrderBy(String sql, OrderByComparator<?> obc) {
-		if (obc == null) {
-			return sql;
-		}
-
-		String orderBy = obc.getOrderBy();
-
-		int pos = sql.indexOf(_ORDER_BY_CLAUSE);
-
-		if ((pos != -1) && (pos < sql.length())) {
-			sql = sql.substring(0, pos + _ORDER_BY_CLAUSE.length()).concat(
-				orderBy);
-		}
-		else {
-			sql = sql.concat(_ORDER_BY_CLAUSE).concat(orderBy);
-		}
-
-		return sql;
-	}
-
-	/**
-	 * @deprecated As of 1.0.0, with no direct replacement
-	 */
-	@Deprecated
-	protected String[] getConfigs() {
-		return new String[] {
-			"custom-sql/default.xml", "META-INF/custom-sql/default.xml"
-		};
-	}
-
-	protected String insertWildcard(String keyword, WildcardMode wildcardMode) {
-		if (wildcardMode == WildcardMode.LEADING) {
-			return StringPool.PERCENT.concat(keyword);
-		}
-		else if (wildcardMode == WildcardMode.SURROUND) {
-			return StringUtil.quote(keyword, StringPool.PERCENT);
-		}
-		else if (wildcardMode == WildcardMode.TRAILING) {
-			return keyword.concat(StringPool.PERCENT);
-		}
-		else {
-			throw new IllegalArgumentException(
-				"Invalid wildcard mode " + wildcardMode);
-		}
-	}
-
-	/**
-	 * @deprecated As of 1.0.0, with no direct replacement
-	 */
-	@Deprecated
-	protected void read(
-			BundleContext bundleContext, ClassLoader classLoader, String source)
-		throws Exception {
-
-		Map<String, String> sqls = new HashMap<>();
-
-		_read(classLoader, source, sqls);
-
-		_sqlPool.put(bundleContext.getBundle(), sqls);
-	}
-
-	protected String transform(String sql) {
-		sql = PortalUtil.transformCustomSQL(sql);
-
-		StringBundler sb = new StringBundler();
-
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(sql))) {
-
-			String line = null;
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				line = line.trim();
-
-				if (line.startsWith(StringPool.CLOSE_PARENTHESIS)) {
-					sb.setIndex(sb.index() - 1);
-				}
-
-				sb.append(line);
-
-				if (!line.endsWith(StringPool.OPEN_PARENTHESIS)) {
-					sb.append(StringPool.SPACE);
-				}
-			}
-		}
-		catch (IOException ioe) {
-			return sql;
-		}
-
-		return sb.toString();
-	}
-
-	private String _escapeWildCards(String keywords) {
-		if (!isVendorMySQL() && !isVendorOracle()) {
-			return keywords;
-		}
-
-		StringBuilder sb = new StringBuilder(keywords);
-
-		for (int i = 0; i < sb.length(); ++i) {
-			char c = sb.charAt(i);
-
-			if (c == CharPool.BACK_SLASH) {
-				i++;
-
-				continue;
-			}
-
-			if ((c == CharPool.UNDERLINE) || (c == CharPool.PERCENT)) {
-				sb.insert(i, CharPool.BACK_SLASH);
-
-				i++;
-
-				continue;
-			}
-		}
-
-		return sb.toString();
-	}
-
-	private Map<String, String> _loadCustomSQL(Class<?> clazz) {
-		Map<String, String> sqls = new HashMap<>();
-
-		try {
-			ClassLoader classLoader = clazz.getClassLoader();
-
-			_read(classLoader, "custom-sql/default.xml", sqls);
-			_read(classLoader, "META-INF/custom-sql/default.xml", sqls);
-
-			_sqlPool.put(FrameworkUtil.getBundle(clazz), sqls);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return sqls;
-	}
-
-	private void _read(
-			ClassLoader classLoader, String source, Map<String, String> sqls)
-		throws Exception {
-
-		try (InputStream is = classLoader.getResourceAsStream(source)) {
-			if (is == null) {
-				return;
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Loading " + source);
-			}
-
-			Document document = UnsecureSAXReaderUtil.read(is);
-
-			Element rootElement = document.getRootElement();
-
-			for (Element sqlElement : rootElement.elements("sql")) {
-				String file = sqlElement.attributeValue("file");
-
-				if (Validator.isNotNull(file)) {
-					_read(classLoader, file, sqls);
-				}
-				else {
-					String id = sqlElement.attributeValue("id");
-					String content = transform(sqlElement.getText());
-
-					content = replaceIsNull(content);
-
-					sqls.put(id, content);
-				}
-			}
-		}
-	}
-
-	private void _reloadCustomSQL() throws SQLException {
-		PortalUtil.initCustomSQL();
+	@Activate
+	public void activate() throws SQLException {
+		_portal.initCustomSQL();
 
 		Connection con = DataAccess.getConnection();
 
-		String functionIsNull = PortalUtil.getCustomSQLFunctionIsNull();
-		String functionIsNotNull = PortalUtil.getCustomSQLFunctionIsNotNull();
+		String functionIsNull = _portal.getCustomSQLFunctionIsNull();
+		String functionIsNotNull = _portal.getCustomSQLFunctionIsNotNull();
 
 		try {
 			if (Validator.isNotNull(functionIsNull) &&
@@ -949,6 +219,700 @@ public class CustomSQL {
 			});
 	}
 
+	@Override
+	public String appendCriteria(String sql, String criteria) {
+		if (Validator.isNull(criteria)) {
+			return sql;
+		}
+
+		if (!criteria.startsWith(StringPool.SPACE)) {
+			criteria = StringPool.SPACE.concat(criteria);
+		}
+
+		if (!criteria.endsWith(StringPool.SPACE)) {
+			criteria = criteria.concat(StringPool.SPACE);
+		}
+
+		int pos = sql.indexOf(_GROUP_BY_CLAUSE);
+
+		if (pos != -1) {
+			return sql.substring(0, pos + 1).concat(criteria).concat(
+				sql.substring(pos + 1));
+		}
+
+		pos = sql.indexOf(_ORDER_BY_CLAUSE);
+
+		if (pos != -1) {
+			return sql.substring(0, pos + 1).concat(criteria).concat(
+				sql.substring(pos + 1));
+		}
+
+		return sql.concat(criteria);
+	}
+
+	@Override
+	public String get(Class<?> clazz, String id) {
+		Map<String, String> sqls = _sqlPool.get(FrameworkUtil.getBundle(clazz));
+
+		if (sqls == null) {
+			sqls = _loadCustomSQL(clazz);
+		}
+
+		return sqls.get(id);
+	}
+
+	@Override
+	public String get(
+		Class<?> clazz, String id, QueryDefinition<?> queryDefinition) {
+
+		return get(clazz, id, queryDefinition, StringPool.BLANK);
+	}
+
+	@Override
+	public String get(
+		Class<?> clazz, String id, QueryDefinition<?> queryDefinition,
+		String tableName) {
+
+		String sql = get(clazz, id);
+
+		if (!Validator.isBlank(tableName) &&
+			!tableName.endsWith(StringPool.PERIOD)) {
+
+			tableName = tableName.concat(StringPool.PERIOD);
+		}
+
+		if (queryDefinition.getStatus() == WorkflowConstants.STATUS_ANY) {
+			sql = sql.replace(_STATUS_KEYWORD, _STATUS_CONDITION_EMPTY);
+		}
+		else {
+			if (queryDefinition.isExcludeStatus()) {
+				sql = sql.replace(
+					_STATUS_KEYWORD,
+					tableName.concat(_STATUS_CONDITION_INVERSE));
+			}
+			else {
+				sql = sql.replace(
+					_STATUS_KEYWORD,
+					tableName.concat(_STATUS_CONDITION_DEFAULT));
+			}
+		}
+
+		if (queryDefinition.getOwnerUserId() > 0) {
+			if (queryDefinition.isIncludeOwner()) {
+				StringBundler sb = new StringBundler(7);
+
+				sb.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(tableName);
+				sb.append(_OWNER_USER_ID_CONDITION_DEFAULT);
+				sb.append(" AND ");
+				sb.append(tableName);
+				sb.append(_STATUS_CONDITION_INVERSE);
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+
+				sql = sql.replace(_OWNER_USER_ID_KEYWORD, sb.toString());
+
+				sql = sql.replace(_OWNER_USER_ID_AND_OR_CONNECTOR, " OR ");
+			}
+			else {
+				sql = sql.replace(
+					_OWNER_USER_ID_KEYWORD,
+					tableName.concat(_OWNER_USER_ID_CONDITION_DEFAULT));
+
+				sql = sql.replace(_OWNER_USER_ID_AND_OR_CONNECTOR, " AND ");
+			}
+		}
+		else {
+			sql = sql.replace(_OWNER_USER_ID_KEYWORD, StringPool.BLANK);
+
+			sql = sql.replace(
+				_OWNER_USER_ID_AND_OR_CONNECTOR, StringPool.BLANK);
+		}
+
+		return sql;
+	}
+
+	/**
+	 * Returns <code>true</code> if Hibernate is connecting to a DB2 database.
+	 *
+	 * @return <code>true</code> if Hibernate is connecting to a DB2 database
+	 */
+	public boolean isVendorDB2() {
+		return _vendorDB2;
+	}
+
+	/**
+	 * Returns <code>true</code> if Hibernate is connecting to a Hypersonic
+	 * database.
+	 *
+	 * @return <code>true</code> if Hibernate is connecting to a Hypersonic
+	 *         database
+	 */
+	public boolean isVendorHSQL() {
+		return _vendorHSQL;
+	}
+
+	/**
+	 * Returns <code>true</code> if Hibernate is connecting to an Informix
+	 * database.
+	 *
+	 * @return <code>true</code> if Hibernate is connecting to an Informix
+	 *         database
+	 */
+	public boolean isVendorInformix() {
+		return _vendorInformix;
+	}
+
+	/**
+	 * Returns <code>true</code> if Hibernate is connecting to a MySQL database.
+	 *
+	 * @return <code>true</code> if Hibernate is connecting to a MySQL database
+	 */
+	public boolean isVendorMySQL() {
+		return _vendorMySQL;
+	}
+
+	/**
+	 * Returns <code>true</code> if Hibernate is connecting to an Oracle
+	 * database. Oracle has a nasty bug where it treats '' as a
+	 * <code>NULL</code> value. See
+	 * http://thedailywtf.com/forums/thread/26879.aspx for more information on
+	 * this nasty bug.
+	 *
+	 * @return <code>true</code> if Hibernate is connecting to an Oracle
+	 *         database
+	 */
+	public boolean isVendorOracle() {
+		return _vendorOracle;
+	}
+
+	/**
+	 * Returns <code>true</code> if Hibernate is connecting to a PostgreSQL
+	 * database.
+	 *
+	 * @return <code>true</code> if Hibernate is connecting to a PostgreSQL
+	 *         database
+	 */
+	public boolean isVendorPostgreSQL() {
+		return _vendorPostgreSQL;
+	}
+
+	/**
+	 * Returns <code>true</code> if Hibernate is connecting to a Sybase
+	 * database.
+	 *
+	 * @return <code>true</code> if Hibernate is connecting to a Sybase database
+	 */
+	public boolean isVendorSybase() {
+		return _vendorSybase;
+	}
+
+	@Override
+	public String[] keywords(String keywords) {
+		return keywords(keywords, true, WildcardMode.SURROUND);
+	}
+
+	@Override
+	public String[] keywords(String keywords, boolean lowerCase) {
+		return keywords(keywords, lowerCase, WildcardMode.SURROUND);
+	}
+
+	@Override
+	public String[] keywords(
+		String keywords, boolean lowerCase, WildcardMode wildcardMode) {
+
+		if (Validator.isNull(keywords)) {
+			return new String[] {null};
+		}
+
+		if (_CUSTOM_SQL_AUTO_ESCAPE_WILDCARDS_ENABLED) {
+			keywords = _escapeWildCards(keywords);
+		}
+
+		if (lowerCase) {
+			keywords = StringUtil.toLowerCase(keywords);
+		}
+
+		keywords = keywords.trim();
+
+		List<String> keywordsList = new ArrayList<>();
+
+		for (int i = 0; i < keywords.length(); i++) {
+			char c = keywords.charAt(i);
+
+			if (c == CharPool.QUOTE) {
+				int pos = i + 1;
+
+				i = keywords.indexOf(CharPool.QUOTE, pos);
+
+				if (i == -1) {
+					i = keywords.length();
+				}
+
+				if (i > pos) {
+					String keyword = keywords.substring(pos, i);
+
+					keywordsList.add(insertWildcard(keyword, wildcardMode));
+				}
+			}
+			else {
+				while (Character.isWhitespace(c)) {
+					i++;
+
+					c = keywords.charAt(i);
+				}
+
+				int pos = i;
+
+				while (!Character.isWhitespace(c)) {
+					i++;
+
+					if (i == keywords.length()) {
+						break;
+					}
+
+					c = keywords.charAt(i);
+				}
+
+				String keyword = keywords.substring(pos, i);
+
+				keywordsList.add(insertWildcard(keyword, wildcardMode));
+			}
+		}
+
+		return keywordsList.toArray(new String[keywordsList.size()]);
+	}
+
+	@Override
+	public String[] keywords(String keywords, WildcardMode wildcardMode) {
+		return keywords(keywords, true, wildcardMode);
+	}
+
+	@Override
+	public String[] keywords(String[] keywordsArray) {
+		return keywords(keywordsArray, true);
+	}
+
+	@Override
+	public String[] keywords(String[] keywordsArray, boolean lowerCase) {
+		if (ArrayUtil.isEmpty(keywordsArray)) {
+			return new String[] {null};
+		}
+
+		if (lowerCase) {
+			for (int i = 0; i < keywordsArray.length; i++) {
+				keywordsArray[i] = StringUtil.lowerCase(keywordsArray[i]);
+			}
+		}
+
+		return keywordsArray;
+	}
+
+	@Override
+	public String removeGroupBy(String sql) {
+		int x = sql.indexOf(_GROUP_BY_CLAUSE);
+
+		if (x != -1) {
+			int y = sql.indexOf(_ORDER_BY_CLAUSE);
+
+			if (y == -1) {
+				sql = sql.substring(0, x);
+			}
+			else {
+				sql = sql.substring(0, x) + sql.substring(y);
+			}
+		}
+
+		return sql;
+	}
+
+	@Override
+	public String removeOrderBy(String sql) {
+		int pos = sql.indexOf(_ORDER_BY_CLAUSE);
+
+		if (pos != -1) {
+			sql = sql.substring(0, pos);
+		}
+
+		return sql;
+	}
+
+	@Override
+	public String replaceAndOperator(String sql, boolean andOperator) {
+		String andOrConnector = "OR";
+		String andOrNullCheck = "AND ? IS NOT NULL";
+
+		if (andOperator) {
+			andOrConnector = "AND";
+			andOrNullCheck = "OR ? IS NULL";
+		}
+
+		sql = StringUtil.replace(
+			sql, new String[] {"[$AND_OR_CONNECTOR$]", "[$AND_OR_NULL_CHECK$]"},
+			new String[] {andOrConnector, andOrNullCheck});
+
+		if (_vendorPostgreSQL) {
+			sql = StringUtil.replace(
+				sql,
+				new String[] {
+					"Date >= ? AND ? IS NOT NULL",
+					"Date <= ? AND ? IS NOT NULL", "Date >= ? OR ? IS NULL",
+					"Date <= ? OR ? IS NULL"
+				},
+				new String[] {
+					"Date >= ? AND CAST(? AS TIMESTAMP) IS NOT NULL",
+					"Date <= ? AND CAST(? AS TIMESTAMP) IS NOT NULL",
+					"Date >= ? OR CAST(? AS TIMESTAMP) IS NULL",
+					"Date <= ? OR CAST(? AS TIMESTAMP) IS NULL"
+				});
+		}
+
+		sql = replaceIsNull(sql);
+
+		return sql;
+	}
+
+	@Override
+	public String replaceGroupBy(String sql, String groupBy) {
+		if (groupBy == null) {
+			return sql;
+		}
+
+		int x = sql.indexOf(_GROUP_BY_CLAUSE);
+
+		if (x != -1) {
+			int y = sql.indexOf(_ORDER_BY_CLAUSE);
+
+			if (y == -1) {
+				sql = sql.substring(0, x + _GROUP_BY_CLAUSE.length()).concat(
+					groupBy);
+			}
+			else {
+				sql = sql.substring(0, x + _GROUP_BY_CLAUSE.length()).concat(
+					groupBy).concat(sql.substring(y));
+			}
+		}
+		else {
+			int y = sql.indexOf(_ORDER_BY_CLAUSE);
+
+			if (y == -1) {
+				sql = sql.concat(_GROUP_BY_CLAUSE).concat(groupBy);
+			}
+			else {
+				StringBundler sb = new StringBundler(4);
+
+				sb.append(sql.substring(0, y));
+				sb.append(_GROUP_BY_CLAUSE);
+				sb.append(groupBy);
+				sb.append(sql.substring(y));
+
+				sql = sb.toString();
+			}
+		}
+
+		return sql;
+	}
+
+	@Override
+	public String replaceIsNull(String sql) {
+		if (Validator.isNotNull(_functionIsNull)) {
+			sql = StringUtil.replace(
+				sql, new String[] {"? IS NULL", "? IS NOT NULL"},
+				new String[] {_functionIsNull, _functionIsNotNull});
+		}
+
+		return sql;
+	}
+
+	@Override
+	public String replaceKeywords(
+		String sql, String field, boolean last, int[] values) {
+
+		if ((values != null) && (values.length == 1)) {
+			return sql;
+		}
+
+		StringBundler oldSqlSB = new StringBundler(4);
+
+		oldSqlSB.append(StringPool.OPEN_PARENTHESIS);
+		oldSqlSB.append(field);
+		oldSqlSB.append(" = ?)");
+
+		if (!last) {
+			oldSqlSB.append(" [$AND_OR_CONNECTOR$]");
+		}
+
+		if (ArrayUtil.isEmpty(values)) {
+			return StringUtil.replace(
+				sql, oldSqlSB.toString(), StringPool.BLANK);
+		}
+
+		StringBundler newSqlSB = new StringBundler(values.length * 4 + 3);
+
+		newSqlSB.append(StringPool.OPEN_PARENTHESIS);
+
+		for (int i = 0; i < values.length; i++) {
+			if (i > 0) {
+				newSqlSB.append(" OR ");
+			}
+
+			newSqlSB.append(StringPool.OPEN_PARENTHESIS);
+			newSqlSB.append(field);
+			newSqlSB.append(" = ?)");
+		}
+
+		newSqlSB.append(StringPool.CLOSE_PARENTHESIS);
+
+		if (!last) {
+			newSqlSB.append(" [$AND_OR_CONNECTOR$]");
+		}
+
+		return StringUtil.replace(
+			sql, oldSqlSB.toString(), newSqlSB.toString());
+	}
+
+	@Override
+	public String replaceKeywords(
+		String sql, String field, boolean last, long[] values) {
+
+		if ((values != null) && (values.length == 1)) {
+			return sql;
+		}
+
+		StringBundler oldSqlSB = new StringBundler(4);
+
+		oldSqlSB.append(StringPool.OPEN_PARENTHESIS);
+		oldSqlSB.append(field);
+		oldSqlSB.append(" = ?)");
+
+		if (!last) {
+			oldSqlSB.append(" [$AND_OR_CONNECTOR$]");
+		}
+
+		if (ArrayUtil.isEmpty(values)) {
+			return StringUtil.replace(
+				sql, oldSqlSB.toString(), StringPool.BLANK);
+		}
+
+		StringBundler newSqlSB = new StringBundler(values.length * 4 + 3);
+
+		newSqlSB.append(StringPool.OPEN_PARENTHESIS);
+
+		for (int i = 0; i < values.length; i++) {
+			if (i > 0) {
+				newSqlSB.append(" OR ");
+			}
+
+			newSqlSB.append(StringPool.OPEN_PARENTHESIS);
+			newSqlSB.append(field);
+			newSqlSB.append(" = ?)");
+		}
+
+		newSqlSB.append(StringPool.CLOSE_PARENTHESIS);
+
+		if (!last) {
+			newSqlSB.append(" [$AND_OR_CONNECTOR$]");
+		}
+
+		return StringUtil.replace(
+			sql, oldSqlSB.toString(), newSqlSB.toString());
+	}
+
+	@Override
+	public String replaceKeywords(
+		String sql, String field, String operator, boolean last,
+		String[] values) {
+
+		if ((values != null) && (values.length <= 1)) {
+			return sql;
+		}
+
+		StringBundler oldSqlSB = new StringBundler(6);
+
+		oldSqlSB.append(StringPool.OPEN_PARENTHESIS);
+		oldSqlSB.append(field);
+		oldSqlSB.append(" ");
+		oldSqlSB.append(operator);
+		oldSqlSB.append(" ? [$AND_OR_NULL_CHECK$])");
+
+		if (!last) {
+			oldSqlSB.append(" [$AND_OR_CONNECTOR$]");
+		}
+
+		StringBundler newSqlSB = new StringBundler(values.length * 6 + 2);
+
+		newSqlSB.append(StringPool.OPEN_PARENTHESIS);
+
+		for (int i = 0; i < values.length; i++) {
+			if (i > 0) {
+				newSqlSB.append(" OR ");
+			}
+
+			newSqlSB.append(StringPool.OPEN_PARENTHESIS);
+			newSqlSB.append(field);
+			newSqlSB.append(" ");
+			newSqlSB.append(operator);
+			newSqlSB.append(" ? [$AND_OR_NULL_CHECK$])");
+		}
+
+		newSqlSB.append(StringPool.CLOSE_PARENTHESIS);
+
+		if (!last) {
+			newSqlSB.append(" [$AND_OR_CONNECTOR$]");
+		}
+
+		return StringUtil.replace(
+			sql, oldSqlSB.toString(), newSqlSB.toString());
+	}
+
+	@Override
+	public String replaceOrderBy(String sql, OrderByComparator<?> obc) {
+		if (obc == null) {
+			return sql;
+		}
+
+		String orderBy = obc.getOrderBy();
+
+		int pos = sql.indexOf(_ORDER_BY_CLAUSE);
+
+		if ((pos != -1) && (pos < sql.length())) {
+			sql = sql.substring(0, pos + _ORDER_BY_CLAUSE.length()).concat(
+				orderBy);
+		}
+		else {
+			sql = sql.concat(_ORDER_BY_CLAUSE).concat(orderBy);
+		}
+
+		return sql;
+	}
+
+	protected String insertWildcard(String keyword, WildcardMode wildcardMode) {
+		if (wildcardMode == WildcardMode.LEADING) {
+			return StringPool.PERCENT.concat(keyword);
+		}
+		else if (wildcardMode == WildcardMode.SURROUND) {
+			return StringUtil.quote(keyword, StringPool.PERCENT);
+		}
+		else if (wildcardMode == WildcardMode.TRAILING) {
+			return keyword.concat(StringPool.PERCENT);
+		}
+		else {
+			throw new IllegalArgumentException(
+				"Invalid wildcard mode " + wildcardMode);
+		}
+	}
+
+	protected String transform(String sql) {
+		sql = _portal.transformCustomSQL(sql);
+
+		StringBundler sb = new StringBundler();
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(sql))) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				line = line.trim();
+
+				if (line.startsWith(StringPool.CLOSE_PARENTHESIS)) {
+					sb.setIndex(sb.index() - 1);
+				}
+
+				sb.append(line);
+
+				if (!line.endsWith(StringPool.OPEN_PARENTHESIS)) {
+					sb.append(StringPool.SPACE);
+				}
+			}
+		}
+		catch (IOException ioe) {
+			return sql;
+		}
+
+		return sb.toString();
+	}
+
+	private String _escapeWildCards(String keywords) {
+		if (!isVendorMySQL() && !isVendorOracle()) {
+			return keywords;
+		}
+
+		StringBuilder sb = new StringBuilder(keywords);
+
+		for (int i = 0; i < sb.length(); ++i) {
+			char c = sb.charAt(i);
+
+			if (c == CharPool.BACK_SLASH) {
+				i++;
+
+				continue;
+			}
+
+			if ((c == CharPool.UNDERLINE) || (c == CharPool.PERCENT)) {
+				sb.insert(i, CharPool.BACK_SLASH);
+
+				i++;
+
+				continue;
+			}
+		}
+
+		return sb.toString();
+	}
+
+	private Map<String, String> _loadCustomSQL(Class<?> clazz) {
+		Map<String, String> sqls = new HashMap<>();
+
+		try {
+			ClassLoader classLoader = clazz.getClassLoader();
+
+			_read(classLoader, "custom-sql/default.xml", sqls);
+			_read(classLoader, "META-INF/custom-sql/default.xml", sqls);
+
+			_sqlPool.put(FrameworkUtil.getBundle(clazz), sqls);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return sqls;
+	}
+
+	private void _read(
+			ClassLoader classLoader, String source, Map<String, String> sqls)
+		throws Exception {
+
+		try (InputStream is = classLoader.getResourceAsStream(source)) {
+			if (is == null) {
+				return;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Loading " + source);
+			}
+
+			Document document = UnsecureSAXReaderUtil.read(is);
+
+			Element rootElement = document.getRootElement();
+
+			for (Element sqlElement : rootElement.elements("sql")) {
+				String file = sqlElement.attributeValue("file");
+
+				if (Validator.isNotNull(file)) {
+					_read(classLoader, file, sqls);
+				}
+				else {
+					String id = sqlElement.attributeValue("id");
+					String content = transform(sqlElement.getText());
+
+					content = replaceIsNull(content);
+
+					sqls.put(id, content);
+				}
+			}
+		}
+	}
+
 	private static final boolean _CUSTOM_SQL_AUTO_ESCAPE_WILDCARDS_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.CUSTOM_SQL_AUTO_ESCAPE_WILDCARDS_ENABLED));
@@ -973,10 +937,14 @@ public class CustomSQL {
 
 	private static final String _STATUS_KEYWORD = "[$STATUS$]";
 
-	private static final Log _log = LogFactoryUtil.getLog(CustomSQL.class);
+	private static final Log _log = LogFactoryUtil.getLog(CustomSQLImpl.class);
 
 	private String _functionIsNotNull;
 	private String _functionIsNull;
+
+	@Reference
+	private Portal _portal;
+
 	private final Map<Bundle, Map<String, String>> _sqlPool =
 		new ConcurrentHashMap<>();
 	private boolean _vendorDB2;

@@ -18,7 +18,7 @@
 package com.liferay.tasks.service.persistence.impl;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.tasks.model.TasksEntry;
 import com.liferay.tasks.model.TasksEntryConstants;
 import com.liferay.tasks.model.impl.TasksEntryImpl;
@@ -77,7 +78,7 @@ public class TasksEntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_U_P_A_S_T_N);
+			String sql = _customSQL.get(getClass(), COUNT_BY_G_U_P_A_S_T_N);
 
 			sql = StringUtil.replace(
 				sql, "[$JOIN$]", getJoin(assetTagIds, notAssetTagIds));
@@ -175,7 +176,7 @@ public class TasksEntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_U_P_A_S_T_N);
+			String sql = _customSQL.get(getClass(), FIND_BY_G_U_P_A_S_T_N);
 
 			sql = StringUtil.replace(
 				sql, "[$JOIN$]", getJoin(assetTagIds, notAssetTagIds));
@@ -383,11 +384,11 @@ public class TasksEntryFinderImpl
 
 	protected String getJoin(long[] assetTagIds, long[] notAssetTagIds) {
 		if ((assetTagIds != null) && (assetTagIds.length > 0)) {
-			return CustomSQLUtil.get(getClass(), JOIN_BY_ASSET_TAGS);
+			return _customSQL.get(getClass(), JOIN_BY_ASSET_TAGS);
 		}
 
 		if ((notAssetTagIds != null) && (notAssetTagIds.length > 0)) {
-			return CustomSQLUtil.get(getClass(), JOIN_BY_NOT_ASSET_TAGS);
+			return _customSQL.get(getClass(), JOIN_BY_NOT_ASSET_TAGS);
 		}
 
 		return StringPool.BLANK;
@@ -453,5 +454,8 @@ public class TasksEntryFinderImpl
 
 	private static final int[] _RESOLVED_STATUS_ARRAY =
 		{TasksEntryConstants.STATUS_RESOLVED};
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

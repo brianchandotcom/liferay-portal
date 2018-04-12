@@ -18,7 +18,7 @@ import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.model.impl.JournalFeedImpl;
 import com.liferay.journal.service.persistence.JournalFeedFinder;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Iterator;
 import java.util.List;
@@ -53,9 +54,9 @@ public class JournalFeedFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			feedIds = CustomSQLUtil.keywords(keywords, false);
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords);
+			feedIds = _customSQL.keywords(keywords, false);
+			names = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords);
 		}
 		else {
 			andOperator = true;
@@ -70,9 +71,9 @@ public class JournalFeedFinderImpl
 		long companyId, long groupId, String feedId, String name,
 		String description, boolean andOperator) {
 
-		String[] feedIds = CustomSQLUtil.keywords(feedId, false);
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description);
+		String[] feedIds = _customSQL.keywords(feedId, false);
+		String[] names = _customSQL.keywords(name);
+		String[] descriptions = _customSQL.keywords(description);
 
 		return countByC_G_F_N_D(
 			companyId, groupId, feedIds, names, descriptions, andOperator);
@@ -83,30 +84,30 @@ public class JournalFeedFinderImpl
 		long companyId, long groupId, String[] feedIds, String[] names,
 		String[] descriptions, boolean andOperator) {
 
-		feedIds = CustomSQLUtil.keywords(feedIds, false);
-		names = CustomSQLUtil.keywords(names);
-		descriptions = CustomSQLUtil.keywords(descriptions);
+		feedIds = _customSQL.keywords(feedIds, false);
+		names = _customSQL.keywords(names);
+		descriptions = _customSQL.keywords(descriptions);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_C_G_F_N_D);
+			String sql = _customSQL.get(getClass(), COUNT_BY_C_G_F_N_D);
 
 			if (groupId <= 0) {
 				sql = StringUtil.replace(
 					sql, "(groupId = ?) AND", StringPool.BLANK);
 			}
 
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "feedId", StringPool.LIKE, false, feedIds);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(name)", StringPool.LIKE, false, names);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(description)", StringPool.LIKE, true, descriptions);
 
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -155,9 +156,9 @@ public class JournalFeedFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			feedIds = CustomSQLUtil.keywords(keywords, false);
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords);
+			feedIds = _customSQL.keywords(keywords, false);
+			names = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords);
 		}
 		else {
 			andOperator = true;
@@ -174,9 +175,9 @@ public class JournalFeedFinderImpl
 		String description, boolean andOperator, int start, int end,
 		OrderByComparator<JournalFeed> obc) {
 
-		String[] feedIds = CustomSQLUtil.keywords(feedId, false);
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description);
+		String[] feedIds = _customSQL.keywords(feedId, false);
+		String[] names = _customSQL.keywords(name);
+		String[] descriptions = _customSQL.keywords(description);
 
 		return findByC_G_F_N_D(
 			companyId, groupId, feedIds, names, descriptions, andOperator,
@@ -189,31 +190,31 @@ public class JournalFeedFinderImpl
 		String[] descriptions, boolean andOperator, int start, int end,
 		OrderByComparator<JournalFeed> obc) {
 
-		feedIds = CustomSQLUtil.keywords(feedIds, false);
-		names = CustomSQLUtil.keywords(names);
-		descriptions = CustomSQLUtil.keywords(descriptions);
+		feedIds = _customSQL.keywords(feedIds, false);
+		names = _customSQL.keywords(names);
+		descriptions = _customSQL.keywords(descriptions);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_C_G_F_N_D);
+			String sql = _customSQL.get(getClass(), FIND_BY_C_G_F_N_D);
 
 			if (groupId <= 0) {
 				sql = StringUtil.replace(
 					sql, "(groupId = ?) AND", StringPool.BLANK);
 			}
 
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "feedId", StringPool.LIKE, false, feedIds);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(name)", StringPool.LIKE, false, names);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(description)", StringPool.LIKE, true, descriptions);
 
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
-			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceOrderBy(sql, obc);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -241,5 +242,8 @@ public class JournalFeedFinderImpl
 			closeSession(session);
 		}
 	}
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

@@ -15,7 +15,7 @@
 package com.liferay.shopping.service.persistence.impl;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.shopping.model.ShoppingCategory;
 import com.liferay.shopping.model.ShoppingItem;
 import com.liferay.shopping.service.ShoppingCategoryLocalServiceUtil;
@@ -89,7 +90,7 @@ public class ShoppingCategoryFinderImpl
 
 			sb.append(StringPool.OPEN_PARENTHESIS);
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_C_BY_G_C);
+			String sql = _customSQL.get(getClass(), COUNT_C_BY_G_C);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -100,7 +101,7 @@ public class ShoppingCategoryFinderImpl
 			sb.append(sql);
 			sb.append(") UNION ALL (");
 
-			sql = CustomSQLUtil.get(getClass(), COUNT_I_BY_G_C);
+			sql = _customSQL.get(getClass(), COUNT_I_BY_G_C);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -157,7 +158,7 @@ public class ShoppingCategoryFinderImpl
 
 			sb.append(StringPool.OPEN_PARENTHESIS);
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_C_BY_G_C);
+			String sql = _customSQL.get(getClass(), FIND_C_BY_G_C);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -168,7 +169,7 @@ public class ShoppingCategoryFinderImpl
 			sb.append(sql);
 			sb.append(") UNION ALL (");
 
-			sql = CustomSQLUtil.get(getClass(), FIND_I_BY_G_C);
+			sql = _customSQL.get(getClass(), FIND_I_BY_G_C);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -181,7 +182,7 @@ public class ShoppingCategoryFinderImpl
 
 			sql = sb.toString();
 
-			sql = CustomSQLUtil.replaceOrderBy(
+			sql = _customSQL.replaceOrderBy(
 				sql, queryDefinition.getOrderByComparator());
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -235,5 +236,8 @@ public class ShoppingCategoryFinderImpl
 			closeSession(session);
 		}
 	}
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

@@ -15,7 +15,7 @@
 package com.liferay.shopping.service.persistence.impl;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.shopping.model.ShoppingItem;
 import com.liferay.shopping.model.impl.ShoppingItemImpl;
 import com.liferay.shopping.service.persistence.ShoppingItemFinder;
@@ -148,7 +149,7 @@ public class ShoppingItemFinderImpl
 			sb.append("(ShoppingItem.name LIKE ? OR ShoppingItem.description ");
 			sb.append("LIKE ? OR ShoppingItem.properties LIKE ?))");
 
-			String sql = CustomSQLUtil.replaceOrderBy(sb.toString(), obc);
+			String sql = _customSQL.replaceOrderBy(sb.toString(), obc);
 
 			keywords = '%' + keywords + '%';
 
@@ -365,7 +366,7 @@ public class ShoppingItemFinderImpl
 			sb.append("(ShoppingItem.name LIKE ? OR ShoppingItem.description ");
 			sb.append("LIKE ? OR ShoppingItem.properties LIKE ?))");
 
-			String sql = CustomSQLUtil.replaceOrderBy(sb.toString(), obc);
+			String sql = _customSQL.replaceOrderBy(sb.toString(), obc);
 
 			keywords = '%' + keywords + '%';
 
@@ -466,7 +467,7 @@ public class ShoppingItemFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_C);
+			String sql = _customSQL.get(getClass(), COUNT_BY_G_C);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -526,5 +527,8 @@ public class ShoppingItemFinderImpl
 
 		return sb.toString();
 	}
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

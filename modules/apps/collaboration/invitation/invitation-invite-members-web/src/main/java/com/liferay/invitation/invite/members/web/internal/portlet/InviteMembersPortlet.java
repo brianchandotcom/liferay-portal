@@ -16,7 +16,7 @@ package com.liferay.invitation.invite.members.web.internal.portlet;
 
 import com.liferay.invitation.invite.members.constants.InviteMembersPortletKeys;
 import com.liferay.invitation.invite.members.service.MemberRequestLocalService;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.CustomSQLParam;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -283,7 +283,7 @@ public class InviteMembersPortlet extends MVCPortlet {
 		usersParams.put(
 			"usersInvited",
 			new CustomSQLParam(
-				CustomSQLUtil.get(
+				_customSQL.get(
 					getClass(),
 					"com.liferay.portal.service.persistence.UserFinder." +
 						"filterByUsersGroupsGroupId"),
@@ -303,7 +303,7 @@ public class InviteMembersPortlet extends MVCPortlet {
 		usersParams.put(
 			"usersInvited",
 			new CustomSQLParam(
-				CustomSQLUtil.get(
+				_customSQL.get(
 					getClass(),
 					"com.liferay.portal.service.persistence.UserFinder." +
 						"filterByUsersGroupsGroupId"),
@@ -316,6 +316,9 @@ public class InviteMembersPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		InviteMembersPortlet.class);
+
+	@Reference
+	private CustomSQL _customSQL;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

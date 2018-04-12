@@ -22,7 +22,7 @@ import com.liferay.journal.service.persistence.JournalArticleUtil;
 import com.liferay.journal.service.persistence.JournalFolderFinder;
 import com.liferay.journal.service.persistence.JournalFolderUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -114,7 +115,7 @@ public class JournalFolderFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_F_BY_NO_ASSETS);
+			String sql = _customSQL.get(getClass(), FIND_F_BY_NO_ASSETS);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -230,7 +231,7 @@ public class JournalFolderFinderImpl
 
 			String sql = updateSQL(sb.toString(), folderId);
 
-			sql = CustomSQLUtil.replaceOrderBy(
+			sql = _customSQL.replaceOrderBy(
 				sql, queryDefinition.getOrderByComparator());
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -325,7 +326,7 @@ public class JournalFolderFinderImpl
 
 			String sql = updateSQL(sb.toString(), folderId);
 
-			sql = CustomSQLUtil.replaceOrderBy(
+			sql = _customSQL.replaceOrderBy(
 				sql, queryDefinition.getOrderByComparator());
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -401,7 +402,7 @@ public class JournalFolderFinderImpl
 		String id, long groupId, QueryDefinition<?> queryDefinition,
 		boolean inlineSQLHelper) {
 
-		String sql = CustomSQLUtil.get(
+		String sql = _customSQL.get(
 			getClass(), id, queryDefinition, JournalArticleImpl.TABLE_NAME);
 
 		if (inlineSQLHelper) {
@@ -440,7 +441,7 @@ public class JournalFolderFinderImpl
 		String id, long groupId, QueryDefinition<?> queryDefinition,
 		boolean inlineSQLHelper) {
 
-		String sql = CustomSQLUtil.get(
+		String sql = _customSQL.get(
 			getClass(), id, queryDefinition, JournalFolderImpl.TABLE_NAME);
 
 		if (inlineSQLHelper) {
@@ -465,5 +466,8 @@ public class JournalFolderFinderImpl
 
 		return sql;
 	}
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

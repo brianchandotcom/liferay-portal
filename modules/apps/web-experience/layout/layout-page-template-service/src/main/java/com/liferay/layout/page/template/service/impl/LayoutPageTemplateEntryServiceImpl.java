@@ -20,7 +20,7 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryServiceBaseImpl;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -177,7 +177,7 @@ public class LayoutPageTemplateEntryServiceImpl
 
 		return layoutPageTemplateEntryPersistence.filterFindByG_L_LikeN(
 			groupId, layoutPageTemplateCollectionId,
-			CustomSQLUtil.keywords(name, WildcardMode.SURROUND)[0], start, end,
+			_customSQL.keywords(name, WildcardMode.SURROUND)[0], start, end,
 			orderByComparator);
 	}
 
@@ -195,7 +195,7 @@ public class LayoutPageTemplateEntryServiceImpl
 
 		return layoutPageTemplateEntryPersistence.filterCountByG_L_LikeN(
 			groupId, layoutPageTemplateFolder,
-			CustomSQLUtil.keywords(name, WildcardMode.SURROUND)[0]);
+			_customSQL.keywords(name, WildcardMode.SURROUND)[0]);
 	}
 
 	@Override
@@ -271,6 +271,9 @@ public class LayoutPageTemplateEntryServiceImpl
 				LayoutPageTemplateEntryServiceImpl.class,
 				"_portletResourcePermission",
 				LayoutPageTemplateConstants.RESOURCE_NAME);
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 	@ServiceReference(type = FragmentEntryService.class)
 	private FragmentEntryService _fragmentEntryService;

@@ -17,12 +17,13 @@ package com.liferay.oauth2.provider.service.persistence.impl;
 import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
 import com.liferay.oauth2.provider.model.impl.OAuth2ScopeGrantImpl;
 import com.liferay.oauth2.provider.service.persistence.OAuth2ScopeGrantFinder;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Collection;
 import java.util.List;
@@ -46,7 +47,7 @@ public class OAuth2ScopeGrantFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_C_A_B_A);
+			String sql = _customSQL.get(getClass(), FIND_BY_C_A_B_A);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -69,5 +70,8 @@ public class OAuth2ScopeGrantFinderImpl
 			closeSession(session);
 		}
 	}
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

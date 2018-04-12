@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -94,8 +95,8 @@ public class MBMessageLocalServiceTest {
 			subject, body, "html", inputStreamOVPs, false, 0.0, false,
 			serviceContext);
 
-		Assert.assertEquals("<u>subject</u>", message.getSubject());
-		Assert.assertEquals("&lt;u&gt;subject&lt;/u&gt;", message.getBody());
+		Assert.assertEquals(subject, message.getSubject());
+		Assert.assertEquals(HtmlUtil.escape(subject), message.getBody());
 	}
 
 	@Test
@@ -155,7 +156,7 @@ public class MBMessageLocalServiceTest {
 			serviceContext);
 
 		Assert.assertEquals(subject, message.getSubject());
-		Assert.assertEquals(StringPool.BLANK, message.getBody());
+		Assert.assertEquals(HtmlUtil.escape(subject), message.getBody());
 	}
 
 	@Test

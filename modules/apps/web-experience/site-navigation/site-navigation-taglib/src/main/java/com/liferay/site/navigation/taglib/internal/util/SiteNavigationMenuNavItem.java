@@ -53,6 +53,11 @@ public class SiteNavigationMenuNavItem extends NavItem {
 	}
 
 	@Override
+	public boolean equals(Object obj) {
+		return _siteNavigationMenuItem.equals(obj);
+	}
+
+	@Override
 	public List<NavItem> getChildren() {
 		List<NavItem> navItems = new ArrayList<>();
 

@@ -653,15 +653,21 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static List<URL> getIncludedResourceURLs(
-			String[] includeGlobs, File file)
+			String[] resourceIncludesRelativeGlobs, File file)
 		throws IOException {
 
 		final List<PathMatcher> pathMatchers = new ArrayList<>();
 
 		FileSystem fileSystem = FileSystems.getDefault();
 
-		for (String includeGlob : includeGlobs) {
-			pathMatchers.add(fileSystem.getPathMatcher("glob:" + includeGlob));
+		for (String resourceIncludesRelativeGlob :
+				resourceIncludesRelativeGlobs) {
+
+			pathMatchers.add(
+				fileSystem.getPathMatcher(
+					combine(
+						"glob:", file.getAbsolutePath(), File.separator,
+						resourceIncludesRelativeGlob)));
 		}
 
 		final List<URL> resourceURLs = new ArrayList<>();

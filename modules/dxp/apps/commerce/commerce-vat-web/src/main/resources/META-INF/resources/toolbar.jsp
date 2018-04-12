@@ -49,14 +49,20 @@ CommerceVatNumberDisplayContext commerceVatNumberDisplayContext = (CommerceVatNu
 
 		<li>
 			<aui:form action="<%= String.valueOf(commerceVatNumberDisplayContext.getPortletURL()) %>" name="searchFm">
-				<liferay-ui:input-search markupView="lexicon" />
+				<liferay-ui:input-search
+					markupView="lexicon"
+				/>
 			</aui:form>
 		</li>
 	</liferay-frontend:management-bar-filters>
 
 	<c:if test="<%= hasManageCommerceVatNumbersPermission %>">
 		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceVatNumbers();" %>' icon="times" label="delete" />
+			<liferay-frontend:management-bar-button
+				href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceVatNumbers();" %>'
+				icon="times"
+				label="delete"
+			/>
 		</liferay-frontend:management-bar-action-buttons>
 	</c:if>
 </liferay-frontend:management-bar>

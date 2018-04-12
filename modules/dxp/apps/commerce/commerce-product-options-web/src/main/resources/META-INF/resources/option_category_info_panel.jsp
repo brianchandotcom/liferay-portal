@@ -36,10 +36,7 @@ if (cpOptionCategories == null) {
 		<div class="sidebar-header">
 			<ul class="sidebar-header-actions">
 				<li>
-					<liferay-util:include
-						page="/option_category_action.jsp"
-						servletContext="<%= application %>"
-					/>
+					<liferay-util:include page="/option_category_action.jsp" servletContext="<%= application %>" />
 				</li>
 			</ul>
 

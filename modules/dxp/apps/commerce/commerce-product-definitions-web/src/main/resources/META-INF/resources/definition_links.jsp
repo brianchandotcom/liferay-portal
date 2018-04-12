@@ -59,8 +59,14 @@ PortletURL portletURL = cpDefinitionLinkDisplayContext.getPortletURL();
 			<aui:input name="type" type="hidden" value="<%= type %>" />
 		</aui:form>
 
-		<liferay-frontend:add-menu inline="<%= true %>">
-			<liferay-frontend:add-menu-item id="addCommerceProductDefinition" title="<%= LanguageUtil.format(request, "add-x-product", type, true) %>" url="javascript:;" />
+		<liferay-frontend:add-menu
+			inline="<%= true %>"
+		>
+			<liferay-frontend:add-menu-item
+				id="addCommerceProductDefinition"
+				title='<%= LanguageUtil.format(request, "add-x-product", type, true) %>'
+				url="javascript:;"
+			/>
 		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
@@ -86,18 +92,18 @@ PortletURL portletURL = cpDefinitionLinkDisplayContext.getPortletURL();
 			/>
 		</c:if>
 
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCPDefinitionLinks();" %>' icon="times" label="delete" />
+		<liferay-frontend:management-bar-button
+			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCPDefinitionLinks();" %>'
+			icon="times"
+			label="delete"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
 <div id="<portlet:namespace />productDefinitionLinksContainer">
 	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 		<c:if test="<%= cpDefinitionLinkDisplayContext.isShowInfoPanel() %>">
-			<liferay-portlet:resourceURL
-				copyCurrentRenderParameters="<%= false %>"
-				id="cpDefinitionLinkInfoPanel"
-				var="sidebarPanelURL"
-			/>
+			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="cpDefinitionLinkInfoPanel" var="sidebarPanelURL" />
 
 			<liferay-frontend:sidebar-panel
 				resourceURL="<%= sidebarPanelURL %>"
@@ -162,7 +168,10 @@ PortletURL portletURL = cpDefinitionLinkDisplayContext.getPortletURL();
 							/>
 						</liferay-ui:search-container-row>
 
-						<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= cpDefinitionLinkSearchContainer %>" />
+						<liferay-ui:search-iterator
+							markupView="lexicon"
+							searchContainer="<%= cpDefinitionLinkSearchContainer %>"
+						/>
 					</liferay-ui:search-container>
 				</div>
 			</aui:form>

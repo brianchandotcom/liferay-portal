@@ -50,6 +50,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 	containerCssClass="col-md-10"
 	key="<%= CommerceTaxScreenNavigationConstants.SCREEN_NAVIGATION_KEY_COMMERCE_TAX_METHOD %>"
 	modelBean="<%= commerceTaxMethod %>"
-	portletURL="<%= currentURLObj %>"
 	navCssClass="col-md-2"
+	portletURL="<%= currentURLObj %>"
 />

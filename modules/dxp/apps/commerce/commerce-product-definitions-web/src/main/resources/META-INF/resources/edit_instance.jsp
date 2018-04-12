@@ -50,6 +50,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 	containerCssClass="col-md-10"
 	key="<%= CPInstanceScreenNavigationConstants.SCREEN_NAVIGATION_KEY_CP_INSTANCE_GENERAL %>"
 	modelBean="<%= cpInstance %>"
-	portletURL="<%= currentURLObj %>"
 	navCssClass="col-md-2"
+	portletURL="<%= currentURLObj %>"
 />

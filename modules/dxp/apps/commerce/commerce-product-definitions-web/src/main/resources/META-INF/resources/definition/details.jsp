@@ -45,7 +45,10 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
+			<liferay-ui:error-marker
+				key="<%= WebKeys.ERROR_SECTION %>"
+				value="details"
+			/>
 
 			<aui:model-context bean="<%= cpDefinition %>" model="<%= CPDefinition.class %>" />
 
@@ -60,14 +63,7 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 
 			<c:if test="<%= (cpDefinition != null) && !cpDefinition.isNew() %>">
 				<liferay-frontend:info-bar>
-					<aui:workflow-status
-						id="<%= String.valueOf(cpDefinitionId) %>"
-						markupView="lexicon"
-						showHelpMessage="<%= false %>"
-						showIcon="<%= false %>"
-						showLabel="<%= false %>"
-						status="<%= cpDefinition.getStatus() %>"
-					/>
+					<aui:workflow-status id="<%= String.valueOf(cpDefinitionId) %>" markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= cpDefinition.getStatus() %>" />
 				</liferay-frontend:info-bar>
 			</c:if>
 
@@ -87,7 +83,12 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 
 			<aui:field-wrapper label="full-description">
 				<div class="entry-content form-group">
-					<liferay-ui:input-localized editorName="alloyeditor" name="descriptionMapAsXML" type="editor" xml="<%= descriptionMapAsXML %>" />
+					<liferay-ui:input-localized
+						editorName="alloyeditor"
+						name="descriptionMapAsXML"
+						type="editor"
+						xml="<%= descriptionMapAsXML %>"
+					/>
 				</div>
 			</aui:field-wrapper>
 		</aui:fieldset>
@@ -101,7 +102,12 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 						<span class="input-group-constrain"><liferay-ui:message key="<%= StringUtil.shorten(friendlyURLBase.toString(), 40) %>" /></span>
 					</span>
 
-					<liferay-ui:input-localized cssClass="form-control" defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="urlTitleMapAsXML" xml="<%= HttpUtil.decodeURL(cpDefinitionsDisplayContext.getUrlTitleMapAsXML()) %>" />
+					<liferay-ui:input-localized
+						cssClass="form-control"
+						defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>"
+						name="urlTitleMapAsXML"
+						xml="<%= HttpUtil.decodeURL(cpDefinitionsDisplayContext.getUrlTitleMapAsXML()) %>"
+					/>
 				</div>
 			</div>
 

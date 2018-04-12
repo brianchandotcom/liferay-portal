@@ -115,7 +115,12 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" paginate="<%= false %>" searchContainer="<%= commerceOrderItemSearchContainer %>" />
+			<liferay-ui:search-iterator
+				displayStyle="descriptive"
+				markupView="lexicon"
+				paginate="<%= false %>"
+				searchContainer="<%= commerceOrderItemSearchContainer %>"
+			/>
 		</liferay-ui:search-container>
 	</div>
 

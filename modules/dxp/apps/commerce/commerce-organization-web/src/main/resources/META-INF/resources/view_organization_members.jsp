@@ -28,7 +28,12 @@ Organization organization = commerceOrganizationMembersDisplayContext.getCurrent
 		searchContainerId="users"
 	>
 		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "toggleFilter(false);" %>' iconCssClass="icon-filter" id="filterButton" label="filter" />
+			<liferay-frontend:management-bar-button
+				href='<%= "javascript:" + renderResponse.getNamespace() + "toggleFilter(false);" %>'
+				iconCssClass="icon-filter"
+				id="filterButton"
+				label="filter"
+			/>
 
 			<liferay-portlet:renderURL var="addOrganizationURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 				<portlet:param name="mvcRenderCommandName" value="addBranch" />
@@ -36,8 +41,14 @@ Organization organization = commerceOrganizationMembersDisplayContext.getCurrent
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 			</liferay-portlet:renderURL>
 
-			<liferay-frontend:add-menu inline="<%= true %>">
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "invite-user") %>' type="<%= AddMenuKeys.AddMenuType.PRIMARY %>" url="<%= commerceOrganizationMembersDisplayContext.getInviteUserHref() %>" />
+			<liferay-frontend:add-menu
+				inline="<%= true %>"
+			>
+				<liferay-frontend:add-menu-item
+					title='<%= LanguageUtil.get(request, "invite-user") %>'
+					type="<%= AddMenuKeys.AddMenuType.PRIMARY %>"
+					url="<%= commerceOrganizationMembersDisplayContext.getInviteUserHref() %>"
+				/>
 			</liferay-frontend:add-menu>
 		</liferay-frontend:management-bar-buttons>
 
@@ -45,12 +56,18 @@ Organization organization = commerceOrganizationMembersDisplayContext.getCurrent
 			<li>
 				<liferay-portlet:renderURLParams varImpl="searchURL" />
 
-				<liferay-ui:input-search markupView="lexicon" />
+				<liferay-ui:input-search
+					markupView="lexicon"
+				/>
 			</li>
 		</liferay-frontend:management-bar-filters>
 
 		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "removeUsers();" %>' icon="times" label="delete" />
+			<liferay-frontend:management-bar-button
+				href='<%= "javascript:" + renderResponse.getNamespace() + "removeUsers();" %>'
+				icon="times"
+				label="delete"
+			/>
 		</liferay-frontend:management-bar-action-buttons>
 	</liferay-frontend:management-bar>
 
@@ -108,7 +125,9 @@ Organization organization = commerceOrganizationMembersDisplayContext.getCurrent
 				/>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator markupView="lexicon" />
+			<liferay-ui:search-iterator
+				markupView="lexicon"
+			/>
 		</liferay-ui:search-container>
 	</div>
 </aui:form>

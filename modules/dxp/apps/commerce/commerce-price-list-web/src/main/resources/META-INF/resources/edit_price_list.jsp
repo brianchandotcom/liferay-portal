@@ -36,14 +36,7 @@ long commercePriceListId = commercePriceListDisplayContext.getCommercePriceListI
 
 	<c:if test="<%= (commercePriceList != null) && !commercePriceList.isNew() %>">
 		<liferay-frontend:info-bar>
-			<aui:workflow-status
-				id="<%= String.valueOf(commercePriceListId) %>"
-				markupView="lexicon"
-				showHelpMessage="<%= false %>"
-				showIcon="<%= false %>"
-				showLabel="<%= false %>"
-				status="<%= commercePriceList.getStatus() %>"
-			/>
+			<aui:workflow-status id="<%= String.valueOf(commercePriceListId) %>" markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= commercePriceList.getStatus() %>" />
 		</liferay-frontend:info-bar>
 	</c:if>
 

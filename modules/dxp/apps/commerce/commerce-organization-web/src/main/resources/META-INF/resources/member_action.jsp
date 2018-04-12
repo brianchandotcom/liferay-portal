@@ -28,7 +28,13 @@ User organizationUser = (User)row.getObject();
 String editURL = commerceOrganizationMembersDisplayContext.getEditURL(organizationUser);
 %>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
 	<c:if test="<%= Validator.isNotNull(editURL) %>">
 		<liferay-ui:icon
 			message="edit"

@@ -36,10 +36,7 @@ if (commercePriceLists == null) {
 		<div class="sidebar-header">
 			<ul class="sidebar-header-actions">
 				<li>
-					<liferay-util:include
-						page="/price_list_action.jsp"
-						servletContext="<%= application %>"
-					/>
+					<liferay-util:include page="/price_list_action.jsp" servletContext="<%= application %>" />
 				</li>
 			</ul>
 

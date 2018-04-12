@@ -41,7 +41,9 @@ List<ObjectValuePair<Long, String>> transitionOVPs = commerceOrderListDisplayCon
 
 	<c:if test="<%= transitionOVPs.size() > 1 %>">
 		<button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary dropdown-toggle" data-toggle="dropdown" type="button">
-			<clay:icon symbol="caret-bottom" />
+			<clay:icon
+				symbol="caret-bottom"
+			/>
 		</button>
 
 		<div class="dropdown-menu dropdown-menu-right">

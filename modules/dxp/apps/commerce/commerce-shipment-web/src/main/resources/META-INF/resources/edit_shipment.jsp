@@ -47,11 +47,7 @@ portletDisplay.setURLBack(shipmentsURL);
 		for (User curUser : users) {
 		%>
 
-			<aui:option
-				label="<%= curUser.getFullName() %>"
-				selected="<%= (commerceShipment != null) && (commerceShipment.getShipmentUserId() == curUser.getUserId()) %>"
-				value="<%= curUser.getUserId() %>"
-			/>
+			<aui:option label="<%= curUser.getFullName() %>" selected="<%= (commerceShipment != null) && (commerceShipment.getShipmentUserId() == curUser.getUserId()) %>" value="<%= curUser.getUserId() %>" />
 
 		<%
 		}
@@ -67,11 +63,7 @@ portletDisplay.setURLBack(shipmentsURL);
 		for (CommerceAddress commerceAddress : commerceAddresses) {
 		%>
 
-			<aui:option
-				label="<%= commerceAddress.getName() %>"
-				selected="<%= (commerceShipment != null) && (commerceShipment.getCommerceAddressId() == commerceAddress.getCommerceAddressId()) %>"
-				value="<%= commerceAddress.getCommerceAddressId() %>"
-			/>
+			<aui:option label="<%= commerceAddress.getName() %>" selected="<%= (commerceShipment != null) && (commerceShipment.getCommerceAddressId() == commerceAddress.getCommerceAddressId()) %>" value="<%= commerceAddress.getCommerceAddressId() %>" />
 
 		<%
 		}
@@ -87,11 +79,7 @@ portletDisplay.setURLBack(shipmentsURL);
 		for (CommerceShippingMethod commerceShippingMethod : commerceShippingMethods) {
 		%>
 
-			<aui:option
-				label="<%= commerceShippingMethod.getName() %>"
-				selected="<%= (commerceShipment != null) && (commerceShipment.getCommerceShippingMethodId() == commerceShippingMethod.getCommerceShippingMethodId()) %>"
-				value="<%= commerceShippingMethod.getCommerceShippingMethodId() %>"
-			/>
+			<aui:option label="<%= commerceShippingMethod.getName() %>" selected="<%= (commerceShipment != null) && (commerceShipment.getCommerceShippingMethodId() == commerceShippingMethod.getCommerceShippingMethodId()) %>" value="<%= commerceShippingMethod.getCommerceShippingMethodId() %>" />
 
 		<%
 		}
@@ -107,11 +95,7 @@ portletDisplay.setURLBack(shipmentsURL);
 		for (CommerceWarehouse commerceWarehouse : commerceWarehouses) {
 		%>
 
-			<aui:option
-				label="<%= commerceWarehouse.getName() %>"
-				selected="<%= (commerceShipment != null) && (commerceShipment.getCommerceWarehouseId() == commerceWarehouse.getCommerceWarehouseId()) %>"
-				value="<%= commerceWarehouse.getCommerceWarehouseId() %>"
-			/>
+			<aui:option label="<%= commerceWarehouse.getName() %>" selected="<%= (commerceShipment != null) && (commerceShipment.getCommerceWarehouseId() == commerceWarehouse.getCommerceWarehouseId()) %>" value="<%= commerceWarehouse.getCommerceWarehouseId() %>" />
 
 		<%
 		}

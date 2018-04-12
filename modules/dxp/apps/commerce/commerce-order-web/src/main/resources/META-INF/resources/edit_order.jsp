@@ -41,8 +41,8 @@ renderResponse.setTitle(title);
 		containerCssClass="col-md-10"
 		key="<%= CommerceOrderScreenNavigationConstants.SCREEN_NAVIGATION_KEY_COMMERCE_ORDER_GENERAL %>"
 		modelBean="<%= commerceOrder %>"
-		portletURL="<%= currentURLObj %>"
 		navCssClass="col-md-2"
+		portletURL="<%= currentURLObj %>"
 	/>
 </div>
 

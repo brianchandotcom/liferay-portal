@@ -25,7 +25,10 @@ long cpOptionCategoryId = BeanParamUtil.getLong(cpSpecificationOption, request, 
 List<CPOptionCategory> cpOptionCategories = cpSpecificationOptionDisplayContext.getCPOptionCategories();
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="details"
+/>
 
 <aui:model-context bean="<%= cpSpecificationOption %>" model="<%= CPSpecificationOption.class %>" />
 

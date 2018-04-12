@@ -194,11 +194,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 							for (CommerceShippingMethod commerceShippingMethod : commerceShippingMethods) {
 							%>
 
-								<aui:option
-									label="<%= commerceShippingMethod.getName() %>"
-									selected="<%= (commerceShipment != null) && (commerceShipment.getCommerceShippingMethodId() == commerceShippingMethod.getCommerceShippingMethodId()) %>"
-									value="<%= commerceShippingMethod.getCommerceShippingMethodId() %>"
-								/>
+								<aui:option label="<%= commerceShippingMethod.getName() %>" selected="<%= (commerceShipment != null) && (commerceShipment.getCommerceShippingMethodId() == commerceShippingMethod.getCommerceShippingMethodId()) %>" value="<%= commerceShippingMethod.getCommerceShippingMethodId() %>" />
 
 							<%
 							}
@@ -258,8 +254,14 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			<aui:input name="commerceOrderItemIds" type="hidden" value="" />
 		</aui:form>
 
-		<liferay-frontend:add-menu inline="<%= true %>">
-			<liferay-frontend:add-menu-item id="addCommerceShipmentItem" title='<%= LanguageUtil.get(request, "add-shipment-item") %>' url="javascript:;" />
+		<liferay-frontend:add-menu
+			inline="<%= true %>"
+		>
+			<liferay-frontend:add-menu-item
+				id="addCommerceShipmentItem"
+				title='<%= LanguageUtil.get(request, "add-shipment-item") %>'
+				url="javascript:;"
+			/>
 		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
@@ -320,7 +322,11 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 					/>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator displayStyle="<%= commerceShipmentItemDisplayContext.getDisplayStyle() %>" markupView="lexicon" searchContainer="<%= commerceShipmentItemSearchContainer %>" />
+				<liferay-ui:search-iterator
+					displayStyle="<%= commerceShipmentItemDisplayContext.getDisplayStyle() %>"
+					markupView="lexicon"
+					searchContainer="<%= commerceShipmentItemSearchContainer %>"
+				/>
 			</liferay-ui:search-container>
 		</div>
 	</aui:form>

@@ -39,7 +39,10 @@ boolean hasCustomAttributesAvailable = CustomAttributesUtil.hasCustomAttributes(
 		List<DDMFormFieldType> ddmFormFieldTypes = cpOptionDisplayContext.getDDMFormFieldTypes();
 		%>
 
-		<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="product-option-details" />
+		<liferay-ui:error-marker
+			key="<%= WebKeys.ERROR_SECTION %>"
+			value="product-option-details"
+		/>
 
 		<aui:model-context bean="<%= cpOption %>" model="<%= CPOption.class %>" />
 
@@ -56,11 +59,7 @@ boolean hasCustomAttributesAvailable = CustomAttributesUtil.hasCustomAttributes(
 				for (DDMFormFieldType ddmFormFieldType : ddmFormFieldTypes) {
 				%>
 
-					<aui:option
-						label="<%= ddmFormFieldType.getName() %>"
-						selected="<%= (cpOption != null) && cpOption.getDDMFormFieldTypeName().equals(ddmFormFieldType.getName()) %>"
-						value="<%= ddmFormFieldType.getName() %>"
-					/>
+					<aui:option label="<%= ddmFormFieldType.getName() %>" selected="<%= (cpOption != null) && cpOption.getDDMFormFieldTypeName().equals(ddmFormFieldType.getName()) %>" value="<%= ddmFormFieldType.getName() %>" />
 
 				<%
 				}

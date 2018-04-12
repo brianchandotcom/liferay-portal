@@ -40,7 +40,9 @@ CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayC
 			selectedDisplayStyle="<%= cpDefinitionsDisplayContext.getDisplayStyle() %>"
 		/>
 
-		<liferay-frontend:add-menu inline="<%= true %>">
+		<liferay-frontend:add-menu
+			inline="<%= true %>"
+		>
 
 			<%
 			for (CPType curCPType : cpDefinitionsDisplayContext.getCPTypes()) {
@@ -54,7 +56,10 @@ CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayC
 					<portlet:param name="toolbarItem" value="view-product-definition-details" />
 				</liferay-portlet:renderURL>
 
-				<liferay-frontend:add-menu-item title="<%= curCPType.getLabel(locale) %>" url="<%= addProductDefinitionURL.toString() %>" />
+				<liferay-frontend:add-menu-item
+					title="<%= curCPType.getLabel(locale) %>"
+					url="<%= addProductDefinitionURL.toString() %>"
+				/>
 
 			<%
 			}
@@ -73,7 +78,9 @@ CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayC
 
 		<li>
 			<aui:form action="<%= String.valueOf(cpDefinitionsDisplayContext.getPortletURL()) %>" name="searchFm">
-				<liferay-ui:input-search markupView="lexicon" />
+				<liferay-ui:input-search
+					markupView="lexicon"
+				/>
 			</aui:form>
 		</li>
 	</liferay-frontend:management-bar-filters>
@@ -84,7 +91,11 @@ CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayC
 			label="info"
 		/>
 
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCPDefinitions();" %>' icon='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "trash" : "times" %>' label='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>' />
+		<liferay-frontend:management-bar-button
+			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCPDefinitions();" %>'
+			icon='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "trash" : "times" %>'
+			label='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>'
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 

@@ -925,7 +925,7 @@
 		</finder>
 		<finder name="C_M2" return-type="Collection">
 			<finder-column name="commercePriceEntryId" />
-			<finder-column comparator="&lt;="  name="minQuantity" />
+			<finder-column comparator="&lt;=" name="minQuantity" />
 		</finder>
 
 		<!-- References -->

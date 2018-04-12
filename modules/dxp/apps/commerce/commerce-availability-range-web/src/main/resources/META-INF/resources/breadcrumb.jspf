@@ -18,7 +18,12 @@
 	<div class="container-fluid-1280">
 		<div class="col-md-12">
 			<div>
-				<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
+				<liferay-ui:breadcrumb
+					showCurrentGroup="<%= false %>"
+					showGuestGroup="<%= false %>"
+					showLayout="<%= false %>"
+					showPortletBreadcrumb="<%= true %>"
+				/>
 			</div>
 
 			<div class="product-title">

@@ -49,11 +49,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 <div class="product-definitions-container" id="<portlet:namespace />productDefinitionsContainer">
 	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-		<liferay-portlet:resourceURL
-			copyCurrentRenderParameters="<%= false %>"
-			id="cpDefinitionInfoPanel"
-			var="sidebarPanelURL"
-		/>
+		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="cpDefinitionInfoPanel" var="sidebarPanelURL" />
 
 		<liferay-frontend:sidebar-panel
 			resourceURL="<%= sidebarPanelURL %>"
@@ -141,7 +137,11 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 							</c:choose>
 						</liferay-ui:search-container-row>
 
-						<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" searchContainer="<%= productDefinitionSearchContainer %>" />
+						<liferay-ui:search-iterator
+							displayStyle="<%= displayStyle %>"
+							markupView="lexicon"
+							searchContainer="<%= productDefinitionSearchContainer %>"
+						/>
 					</liferay-ui:search-container>
 				</div>
 			</aui:form>

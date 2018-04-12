@@ -22,7 +22,9 @@ CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.CP_DEFI
 Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
 %>
 
-<liferay-util:html-top outputKey="commerce_product_definitions_main_css">
+<liferay-util:html-top
+	outputKey="commerce_product_definitions_main_css"
+>
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css", portlet.getTimestamp()) %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
@@ -39,13 +41,14 @@ Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(),
 			</div>
 		</c:if>
 
-		<liferay-expando:custom-attributes-available className="<%= CPDefinition.class.getName() %>">
+		<liferay-expando:custom-attributes-available
+			className="<%= CPDefinition.class.getName() %>"
+		>
 			<liferay-expando:custom-attribute-list
 				className="<%= CPDefinition.class.getName() %>"
 				classPK="<%= (cpDefinition != null) ? cpDefinition.getCPDefinitionId() : 0 %>"
 				editable="<%= false %>"
 				label="<%= true %>"
-
 			/>
 		</liferay-expando:custom-attributes-available>
 	</div>

@@ -1,5 +1,5 @@
 <definition>
-	<command name="assignOptionToProductsEntry" >
+	<command name="assignOptionToProductsEntry">
 		<execute function="Click" locator1="CommerceEntry#ADD_BUTTON" />
 
 		<execute function="WaitForSPARefresh" />

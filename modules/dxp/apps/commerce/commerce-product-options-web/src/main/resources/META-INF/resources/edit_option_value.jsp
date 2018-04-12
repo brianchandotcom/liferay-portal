@@ -48,7 +48,10 @@ boolean hasCustomAttributesAvailable = CustomAttributesUtil.hasCustomAttributes(
 	<aui:input name="cpOptionValueId" type="hidden" value="<%= cpOptionValueId %>" />
 
 	<div class="lfr-form-content">
-		<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="product-option-value-details" />
+		<liferay-ui:error-marker
+			key="<%= WebKeys.ERROR_SECTION %>"
+			value="product-option-value-details"
+		/>
 
 		<aui:model-context bean="<%= cpOptionValue %>" model="<%= CPOptionValue.class %>" />
 

@@ -97,11 +97,7 @@ long commercePaymentMethodId = BeanParamUtil.getLong(commerceOrder, request, "co
 							for (int curPaymentStatus : CommerceOrderConstants.PAYMENT_STATUSES) {
 							%>
 
-								<aui:option
-									label="<%= CommerceOrderConstants.getPaymentStatusLabel(curPaymentStatus) %>"
-									selected="<%= curPaymentStatus == paymentStatus %>"
-									value="<%= curPaymentStatus %>"
-								/>
+								<aui:option label="<%= CommerceOrderConstants.getPaymentStatusLabel(curPaymentStatus) %>" selected="<%= curPaymentStatus == paymentStatus %>" value="<%= curPaymentStatus %>" />
 
 							<%
 							}
@@ -116,12 +112,7 @@ long commercePaymentMethodId = BeanParamUtil.getLong(commerceOrder, request, "co
 								long curCommercePaymentMethodId = commercePaymentMethod.getCommercePaymentMethodId();
 							%>
 
-								<aui:option
-									label="<%= commerceOrderEditDisplayContext.getCommercePaymentMethodLabel(commercePaymentMethod) %>"
-									localizeLabel="<%= false %>"
-									selected="<%= curCommercePaymentMethodId == commercePaymentMethodId %>"
-									value="<%= curCommercePaymentMethodId %>"
-								/>
+								<aui:option label="<%= commerceOrderEditDisplayContext.getCommercePaymentMethodLabel(commercePaymentMethod) %>" localizeLabel="<%= false %>" selected="<%= curCommercePaymentMethodId == commercePaymentMethodId %>" value="<%= curCommercePaymentMethodId %>" />
 
 							<%
 							}

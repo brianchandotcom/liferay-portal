@@ -75,9 +75,7 @@ PortletURL portletURL = cpDefinitionItemSelectorViewDisplayContext.getPortletURL
 				cssClass="table-cell-content"
 				name="title"
 			>
-				<div class="commerce-product-definition-title"
-					data-id="<%= cpDefinition.getCPDefinitionId() %>">
-
+				<div class="commerce-product-definition-title" data-id="<%= cpDefinition.getCPDefinitionId() %>">
 					<%= HtmlUtil.escape(cpDefinition.getTitle(themeDisplay.getLanguageId())) %>
 				</div>
 			</liferay-ui:search-container-column-text>
@@ -114,9 +112,15 @@ PortletURL portletURL = cpDefinitionItemSelectorViewDisplayContext.getPortletURL
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" searchContainer="<%= cpDefinitionSearchContainer %>" />
+		<liferay-ui:search-iterator
+			displayStyle="<%= displayStyle %>"
+			markupView="lexicon"
+			searchContainer="<%= cpDefinitionSearchContainer %>"
+		/>
 
-		<liferay-ui:search-paginator searchContainer="<%= cpDefinitionSearchContainer %>" />
+		<liferay-ui:search-paginator
+			searchContainer="<%= cpDefinitionSearchContainer %>"
+		/>
 	</liferay-ui:search-container>
 </div>
 

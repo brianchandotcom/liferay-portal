@@ -77,7 +77,7 @@
 			<var name="menuTab" value="SKUs" />
 		</execute>
 
-		<execute macro="CommerceSKUs#addSKU" >
+		<execute macro="CommerceSKUs#addSKU">
 			<var name="optionValuesList" value="Black:10.0,Blue:20.0,White:30.0" />
 		</execute>
 

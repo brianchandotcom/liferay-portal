@@ -74,11 +74,7 @@ int orderStatus = BeanParamUtil.getInteger(commerceOrder, request, "orderStatus"
 							for (int availableOrderStatus : availableOrderStatuses) {
 							%>
 
-								<aui:option
-									label="<%= CommerceOrderConstants.getOrderStatusLabel(availableOrderStatus) %>"
-									selected="<%= availableOrderStatus == orderStatus %>"
-									value="<%= availableOrderStatus %>"
-								/>
+								<aui:option label="<%= CommerceOrderConstants.getOrderStatusLabel(availableOrderStatus) %>" selected="<%= availableOrderStatus == orderStatus %>" value="<%= availableOrderStatus %>" />
 
 							<%
 							}

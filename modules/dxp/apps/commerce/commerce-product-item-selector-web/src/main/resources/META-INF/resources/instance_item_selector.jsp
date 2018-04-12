@@ -55,7 +55,9 @@ PortletURL portletURL = cpInstanceItemSelectorViewDisplayContext.getPortletURL()
 
 		<li>
 			<aui:form action="<%= String.valueOf(portletURL) %>" name="searchFm">
-				<liferay-ui:input-search markupView="lexicon" />
+				<liferay-ui:input-search
+					markupView="lexicon"
+				/>
 			</aui:form>
 		</li>
 	</liferay-frontend:management-bar-filters>
@@ -81,9 +83,7 @@ PortletURL portletURL = cpInstanceItemSelectorViewDisplayContext.getPortletURL()
 				cssClass="table-cell-content"
 				name="title"
 			>
-				<div class="commerce-product-definition-title"
-					data-id="<%= cpDefinition.getCPDefinitionId() %>">
-
+				<div class="commerce-product-definition-title" data-id="<%= cpDefinition.getCPDefinitionId() %>">
 					<%= HtmlUtil.escape(cpDefinition.getTitle(themeDisplay.getLanguageId())) %>
 				</div>
 			</liferay-ui:search-container-column-text>
@@ -100,9 +100,15 @@ PortletURL portletURL = cpInstanceItemSelectorViewDisplayContext.getPortletURL()
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" searchContainer="<%= cpInstanceSearchContainer %>" />
+		<liferay-ui:search-iterator
+			displayStyle="<%= displayStyle %>"
+			markupView="lexicon"
+			searchContainer="<%= cpInstanceSearchContainer %>"
+		/>
 
-		<liferay-ui:search-paginator searchContainer="<%= cpInstanceSearchContainer %>" />
+		<liferay-ui:search-paginator
+			searchContainer="<%= cpInstanceSearchContainer %>"
+		/>
 	</liferay-ui:search-container>
 </div>
 

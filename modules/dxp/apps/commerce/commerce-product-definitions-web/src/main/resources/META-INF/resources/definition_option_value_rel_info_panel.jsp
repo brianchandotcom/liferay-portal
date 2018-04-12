@@ -36,10 +36,7 @@ if (cpDefinitionOptionValueRels == null) {
 		<div class="sidebar-header">
 			<ul class="sidebar-header-actions">
 				<li>
-					<liferay-util:include
-						page="/definition_option_value_rel_action.jsp"
-						servletContext="<%= application %>"
-					/>
+					<liferay-util:include page="/definition_option_value_rel_action.jsp" servletContext="<%= application %>" />
 				</li>
 			</ul>
 

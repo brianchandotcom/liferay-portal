@@ -55,17 +55,30 @@ boolean hasManageCommerceCurrenciesPermission = CommerceCurrencyPermission.conta
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 			</portlet:renderURL>
 
-			<liferay-frontend:add-menu inline="<%= true %>">
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-currency") %>' url="<%= addCommerceCurrencyURL.toString() %>" />
+			<liferay-frontend:add-menu
+				inline="<%= true %>"
+			>
+				<liferay-frontend:add-menu-item
+					title='<%= LanguageUtil.get(request, "add-currency") %>'
+					url="<%= addCommerceCurrencyURL.toString() %>"
+				/>
 			</liferay-frontend:add-menu>
 		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<c:if test="<%= hasManageCommerceCurrenciesPermission %>">
 		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button cssClass="btn-update-exchange-rates" href='<%= "javascript:" + renderResponse.getNamespace() + "updateExchangeRates();" %>' label="update-exchange-rates" />
+			<liferay-frontend:management-bar-button
+				cssClass="btn-update-exchange-rates"
+				href='<%= "javascript:" + renderResponse.getNamespace() + "updateExchangeRates();" %>'
+				label="update-exchange-rates"
+			/>
 
-			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceCurrencies();" %>' icon="times" label="delete" />
+			<liferay-frontend:management-bar-button
+				href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceCurrencies();" %>'
+				icon="times"
+				label="delete"
+			/>
 		</liferay-frontend:management-bar-action-buttons>
 	</c:if>
 </liferay-frontend:management-bar>
@@ -160,7 +173,9 @@ boolean hasManageCommerceCurrenciesPermission = CommerceCurrencyPermission.conta
 				/>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator markupView="lexicon" />
+			<liferay-ui:search-iterator
+				markupView="lexicon"
+			/>
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

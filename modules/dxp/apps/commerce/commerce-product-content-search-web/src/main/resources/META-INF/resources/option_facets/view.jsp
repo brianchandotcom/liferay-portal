@@ -35,8 +35,18 @@ List<Facet> facets = cpOptionFacetsDisplayContext.getFacets();
 		for (Facet facet : facets) {
 		%>
 
-		<liferay-ui:panel-container extended="<%= true %>" markupView="lexicon" persistState="<%= true %>">
-			<liferay-ui:panel collapsible="<%= true %>" cssClass="search-facet" markupView="lexicon" persistState="<%= true %>" title="<%= cpOptionFacetsDisplayContext.getCPOptionTitle(scopeGroupId, facet.getFieldName()) %>">
+		<liferay-ui:panel-container
+			extended="<%= true %>"
+			markupView="lexicon"
+			persistState="<%= true %>"
+		>
+			<liferay-ui:panel
+				collapsible="<%= true %>"
+				cssClass="search-facet"
+				markupView="lexicon"
+				persistState="<%= true %>"
+				title="<%= cpOptionFacetsDisplayContext.getCPOptionTitle(scopeGroupId, facet.getFieldName()) %>"
+			>
 				<aui:form method="post" name='<%= "assetEntriesFacetForm_" + facet.getFieldName() %>'>
 					<aui:input cssClass="facet-parameter-name" name="facet-parameter-name" type="hidden" value="<%= cpOptionFacetsDisplayContext.getCPOptionKey(scopeGroupId, facet.getFieldName()) %>" />
 

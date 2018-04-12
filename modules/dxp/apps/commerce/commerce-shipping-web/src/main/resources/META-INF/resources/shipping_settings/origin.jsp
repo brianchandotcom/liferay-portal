@@ -40,15 +40,7 @@ Map<String, CommerceShippingOriginLocator> commerceShippingOriginLocators = comm
 		}
 	%>
 
-		<aui:input
-			checked="<%= checked %>"
-			helpMessage="<%= commerceShippingOriginLocator.getDescription(locale) %>"
-			id='<%= key + "Origin" %>'
-			label="<%= commerceShippingOriginLocator.getName(locale) %>"
-			name="commerceShippingOriginLocatorKey"
-			type="radio"
-			value="<%= key %>"
-		/>
+		<aui:input checked="<%= checked %>" helpMessage="<%= commerceShippingOriginLocator.getDescription(locale) %>" id='<%= key + "Origin" %>' label="<%= commerceShippingOriginLocator.getName(locale) %>" name="commerceShippingOriginLocatorKey" type="radio" value="<%= key %>" />
 
 		<div class="<%= checked ? StringPool.BLANK : "hide" %>" id="<portlet:namespace /><%= key %>OriginOptions">
 

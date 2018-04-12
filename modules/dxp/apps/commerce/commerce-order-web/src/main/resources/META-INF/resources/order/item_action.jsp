@@ -22,7 +22,13 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 CommerceOrderItem commerceOrderItem = (CommerceOrderItem)row.getObject();
 %>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
 	<liferay-portlet:renderURL var="editURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 		<portlet:param name="mvcRenderCommandName" value="editCommerceOrderItem" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -39,9 +45,9 @@ CommerceOrderItem commerceOrderItem = (CommerceOrderItem)row.getObject();
 
 	<liferay-ui:icon
 		data="<%= data %>"
-		useDialog="<%= true %>"
 		message="edit"
 		url="<%= editURL %>"
+		useDialog="<%= true %>"
 	/>
 
 	<portlet:actionURL name="editCommerceOrderItem" var="deleteURL">

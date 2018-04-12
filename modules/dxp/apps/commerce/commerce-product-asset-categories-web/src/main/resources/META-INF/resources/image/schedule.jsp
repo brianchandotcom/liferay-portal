@@ -28,7 +28,10 @@ if ((cpAttachmentFileEntry != null) && (cpAttachmentFileEntry.getExpirationDate(
 }
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="details"
+/>
 
 <aui:model-context bean="<%= cpAttachmentFileEntry %>" model="<%= CPAttachmentFileEntry.class %>" />
 

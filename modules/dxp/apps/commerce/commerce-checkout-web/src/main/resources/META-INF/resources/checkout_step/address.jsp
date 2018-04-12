@@ -40,7 +40,7 @@ long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 		for (CommerceAddress commerceAddress : commerceAddresses) {
 		%>
 
-			<aui:option selected="<%= commerceAddressId == commerceAddress.getCommerceAddressId() %>" data-city="<%= HtmlUtil.escapeAttribute(commerceAddress.getCity()) %>" data-country="<%= HtmlUtil.escapeAttribute(String.valueOf(commerceAddress.getCommerceCountryId())) %>" data-name="<%= HtmlUtil.escapeAttribute(commerceAddress.getName()) %>" data-phone-number="<%= HtmlUtil.escapeAttribute(commerceAddress.getPhoneNumber()) %>" data-region="" data-street-1="<%= HtmlUtil.escapeAttribute(commerceAddress.getStreet1()) %>" data-street-2="<%= Validator.isNotNull(commerceAddress.getStreet2()) ? HtmlUtil.escapeAttribute(commerceAddress.getStreet2()) : StringPool.BLANK %>" data-street-3="<%= Validator.isNotNull(commerceAddress.getStreet3()) ? HtmlUtil.escapeAttribute(commerceAddress.getStreet3()) : StringPool.BLANK %>" data-zip="<%= HtmlUtil.escapeAttribute(commerceAddress.getZip()) %>" label="<%= commerceAddress.getName() %>" value="<%= commerceAddress.getCommerceAddressId() %>" />
+			<aui:option data-city="<%= HtmlUtil.escapeAttribute(commerceAddress.getCity()) %>" data-country="<%= HtmlUtil.escapeAttribute(String.valueOf(commerceAddress.getCommerceCountryId())) %>" data-name="<%= HtmlUtil.escapeAttribute(commerceAddress.getName()) %>" data-phone-number="<%= HtmlUtil.escapeAttribute(commerceAddress.getPhoneNumber()) %>" data-region="" data-street-1="<%= HtmlUtil.escapeAttribute(commerceAddress.getStreet1()) %>" data-street-2="<%= Validator.isNotNull(commerceAddress.getStreet2()) ? HtmlUtil.escapeAttribute(commerceAddress.getStreet2()) : StringPool.BLANK %>" data-street-3="<%= Validator.isNotNull(commerceAddress.getStreet3()) ? HtmlUtil.escapeAttribute(commerceAddress.getStreet3()) : StringPool.BLANK %>" data-zip="<%= HtmlUtil.escapeAttribute(commerceAddress.getZip()) %>" label="<%= commerceAddress.getName() %>" selected="<%= commerceAddressId == commerceAddress.getCommerceAddressId() %>" value="<%= commerceAddress.getCommerceAddressId() %>" />
 
 		<%
 		}
@@ -60,37 +60,37 @@ long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 <liferay-ui:error exception="<%= CommerceOrderBillingAddressException.class %>" message="please-enter-a-valid-address" />
 <liferay-ui:error exception="<%= CommerceOrderShippingAddressException.class %>" message="please-enter-a-valid-address" />
 
-<aui:model-context model="<%= CommerceAddress.class %>" bean="<%= baseAddressCheckoutStepDisplayContext.getCommerceAddress(commerceAddressId) %>" />
+<aui:model-context bean="<%= baseAddressCheckoutStepDisplayContext.getCommerceAddress(commerceAddressId) %>" model="<%= CommerceAddress.class %>" />
 
 <div class="address-fields">
 	<div class="form-group-autofit">
-		<aui:input label="" name="name" placeholder="name" wrapperCssClass="form-group-item" disabled="<%= (commerceAddressId > 0) %>" />
+		<aui:input disabled="<%= (commerceAddressId > 0) %>" label="" name="name" placeholder="name" wrapperCssClass="form-group-item" />
 
-		<aui:input label="" name="phoneNumber" placeholder="phone-number" wrapperCssClass="form-group-item" disabled="<%= (commerceAddressId > 0) %>" />
+		<aui:input disabled="<%= (commerceAddressId > 0) %>" label="" name="phoneNumber" placeholder="phone-number" wrapperCssClass="form-group-item" />
 	</div>
 
 	<div class="form-group-autofit">
-		<aui:input label="" name="street1" placeholder="shipping-address" wrapperCssClass="form-group-item" disabled="<%= (commerceAddressId > 0) %>" />
+		<aui:input disabled="<%= (commerceAddressId > 0) %>" label="" name="street1" placeholder="shipping-address" wrapperCssClass="form-group-item" />
 
-		<aui:select label="" name="commerceCountryId" placeholder="country" wrapperCssClass="form-group-item" disabled="<%= (commerceAddressId > 0) %>" />
+		<aui:select disabled="<%= (commerceAddressId > 0) %>" label="" name="commerceCountryId" placeholder="country" wrapperCssClass="form-group-item" />
 	</div>
 
-	<div class="form-group-autofit add-street-link">
-		<aui:a cssClass="form-group-item" href="javascript:;" label="+-add-address-line" disabled="<%= (commerceAddressId > 0) %>" onClick='<%= renderResponse.getNamespace() + "addStreetAddress();" %>' />
+	<div class="add-street-link form-group-autofit">
+		<aui:a cssClass="form-group-item" disabled="<%= (commerceAddressId > 0) %>" href="javascript:;" label="+-add-address-line" onClick='<%= renderResponse.getNamespace() + "addStreetAddress();" %>' />
 	</div>
 
 	<div class="add-street-fields form-group-autofit hide">
-		<aui:input label="" name="street2" placeholder="shipping-address-2" wrapperCssClass="form-group-item" disabled="<%= (commerceAddressId > 0) %>" />
+		<aui:input disabled="<%= (commerceAddressId > 0) %>" label="" name="street2" placeholder="shipping-address-2" wrapperCssClass="form-group-item" />
 
-		<aui:input label="" name="street3" placeholder="shipping-address-3" wrapperCssClass="form-group-item" disabled="<%= (commerceAddressId > 0) %>" />
+		<aui:input disabled="<%= (commerceAddressId > 0) %>" label="" name="street3" placeholder="shipping-address-3" wrapperCssClass="form-group-item" />
 	</div>
 
 	<div class="form-group-autofit">
-		<aui:input label="" name="zip" placeholder="zip" wrapperCssClass="form-group-item" disabled="<%= (commerceAddressId > 0) %>" />
+		<aui:input disabled="<%= (commerceAddressId > 0) %>" label="" name="zip" placeholder="zip" wrapperCssClass="form-group-item" />
 
-		<aui:input label="" name="city" placeholder="city" wrapperCssClass="form-group-item" disabled="<%= (commerceAddressId > 0) %>" />
+		<aui:input disabled="<%= (commerceAddressId > 0) %>" label="" name="city" placeholder="city" wrapperCssClass="form-group-item" />
 
-		<aui:select label="" name="commerceRegionId" placeholder="region" wrapperCssClass="form-group-item" disabled="<%= (commerceAddressId > 0) %>" />
+		<aui:select disabled="<%= (commerceAddressId > 0) %>" label="" name="commerceRegionId" placeholder="region" wrapperCssClass="form-group-item" />
 	</div>
 </div>
 

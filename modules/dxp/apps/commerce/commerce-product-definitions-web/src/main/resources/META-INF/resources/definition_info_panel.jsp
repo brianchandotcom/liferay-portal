@@ -56,7 +56,12 @@ if (cpDefinitions == null) {
 							<p><liferay-ui:message arguments="<%= new Object[] {carouselItemsCount, cpDefinitions.size()} %>" key="product-x-of-x" /></p>
 						</div>
 
-						<liferay-ui:tabs names="details,specs,skus" param="<%= String.valueOf(cpDefinition.getCPDefinitionId()) %>" refresh="<%= false %>" type="tabs nav-tabs-default">
+						<liferay-ui:tabs
+							names="details,specs,skus"
+							param="<%= String.valueOf(cpDefinition.getCPDefinitionId()) %>"
+							refresh="<%= false %>"
+							type="tabs nav-tabs-default"
+						>
 							<liferay-ui:section>
 								<div class="sidebar-body">
 									<dl class="sidebar-block">

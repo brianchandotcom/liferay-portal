@@ -56,7 +56,9 @@ Organization organization = commerceOrganizationMembersDisplayContext.getCurrent
 	</aui:button-row>
 </aui:form>
 
-<liferay-util:buffer var="removeUserEmailAddressIcon">
+<liferay-util:buffer
+	var="removeUserEmailAddressIcon"
+>
 	<liferay-ui:icon
 		icon="times"
 		markupView="lexicon"

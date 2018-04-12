@@ -82,5 +82,9 @@ List<Document> results = searchContainer.getResults();
 </liferay-ddm:template-renderer>
 
 <aui:form useNamespace="<%= false %>">
-	<liferay-ui:search-paginator markupView="lexicon" searchContainer="<%= searchContainer %>" type="more" />
+	<liferay-ui:search-paginator
+		markupView="lexicon"
+		searchContainer="<%= searchContainer %>"
+		type="more"
+	/>
 </aui:form>

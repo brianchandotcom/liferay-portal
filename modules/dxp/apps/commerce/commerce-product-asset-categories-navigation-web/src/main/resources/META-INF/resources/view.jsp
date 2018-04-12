@@ -33,8 +33,19 @@ contextObjects.put("cpAssetCategoriesNavigationDisplayContext", cpAssetCategorie
 	displayStyleGroupId="<%= cpAssetCategoriesNavigationDisplayContext.getDisplayStyleGroupId() %>"
 	entries="<%= assetCategories %>"
 >
-	<liferay-ui:panel-container cssClass="taglib-asset-categories-navigation" extended="<%= true %>" id='<%= renderResponse.getNamespace() + "taglibAssetCategoriesNavigationPanel" %>' persistState="<%= true %>">
-		<liferay-ui:panel collapsible="<%= false %>" extended="<%= true %>" markupView="lexicon" persistState="<%= true %>" title="<%= HtmlUtil.escape(assetVocabulary.getTitle(locale)) %>">
+	<liferay-ui:panel-container
+		cssClass="taglib-asset-categories-navigation"
+		extended="<%= true %>"
+		id='<%= renderResponse.getNamespace() + "taglibAssetCategoriesNavigationPanel" %>'
+		persistState="<%= true %>"
+	>
+		<liferay-ui:panel
+			collapsible="<%= false %>"
+			extended="<%= true %>"
+			markupView="lexicon"
+			persistState="<%= true %>"
+			title="<%= HtmlUtil.escape(assetVocabulary.getTitle(locale)) %>"
+		>
 			<%= vocabularyNavigation %>
 		</liferay-ui:panel>
 	</liferay-ui:panel-container>

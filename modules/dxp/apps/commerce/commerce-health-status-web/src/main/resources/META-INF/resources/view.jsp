@@ -86,6 +86,8 @@ SearchContainer<CommerceHealthStatus> commerceHealthStatusSearchContainer = comm
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </div>

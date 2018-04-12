@@ -37,11 +37,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 <div id="<portlet:namespace />priceListsContainer">
 	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 		<c:if test="<%= commercePriceListDisplayContext.isShowInfoPanel() %>">
-			<liferay-portlet:resourceURL
-				copyCurrentRenderParameters="<%= false %>"
-				id="commercePriceListInfoPanel"
-				var="sidebarPanelURL"
-			/>
+			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="commercePriceListInfoPanel" var="sidebarPanelURL" />
 
 			<liferay-frontend:sidebar-panel
 				resourceURL="<%= sidebarPanelURL %>"
@@ -118,7 +114,11 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 							/>
 						</liferay-ui:search-container-row>
 
-						<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" searchContainer="<%= commercePriceListSearchContainer %>" />
+						<liferay-ui:search-iterator
+							displayStyle="list"
+							markupView="lexicon"
+							searchContainer="<%= commercePriceListSearchContainer %>"
+						/>
 					</liferay-ui:search-container>
 				</div>
 			</aui:form>

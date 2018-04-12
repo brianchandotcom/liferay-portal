@@ -102,7 +102,7 @@ List<CPDefinition> cpDefinitions = cpCompareContentMiniDisplayContext.getCPDefin
 
 					<c:if test="<%= (cpDefinitions.size() < cpCompareContentMiniDisplayContext.getProductsLimit()) %>">
 						<li class="card-page-item card-page-item-shrink compare-add-more">
-							<button class="btn btn-secondary btn-lg btn-monospaced">
+							<button class="btn btn-lg btn-monospaced btn-secondary">
 								<liferay-ui:icon
 									icon="plus"
 									localizeMessage="<%= true %>"

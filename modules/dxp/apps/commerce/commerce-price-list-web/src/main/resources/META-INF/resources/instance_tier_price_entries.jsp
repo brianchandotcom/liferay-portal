@@ -86,8 +86,13 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 			<portlet:param name="cpInstanceId" value="<%= String.valueOf(cpInstanceId) %>" />
 		</liferay-portlet:renderURL>
 
-		<liferay-frontend:add-menu inline="<%= true %>">
-			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-tier-price-entry") %>' url="<%= addCommerceTierPriceEntryURL.toString() %>" />
+		<liferay-frontend:add-menu
+			inline="<%= true %>"
+		>
+			<liferay-frontend:add-menu-item
+				title='<%= LanguageUtil.get(request, "add-tier-price-entry") %>'
+				url="<%= addCommerceTierPriceEntryURL.toString() %>"
+			/>
 		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
@@ -106,7 +111,11 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceTierPriceEntries();" %>' icon="times" label="delete" />
+		<liferay-frontend:management-bar-button
+			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceTierPriceEntries();" %>'
+			icon="times"
+			label="delete"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -181,7 +190,10 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 					/>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= commerceTierPriceEntriesSearchContainer %>" />
+				<liferay-ui:search-iterator
+					markupView="lexicon"
+					searchContainer="<%= commerceTierPriceEntriesSearchContainer %>"
+				/>
 			</liferay-ui:search-container>
 		</div>
 	</aui:form>

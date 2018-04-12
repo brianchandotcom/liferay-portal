@@ -51,8 +51,13 @@ cpAttachmentFileEntrySearchContainer.setResults(cpAttachmentFileEntries);
 			<portlet:param name="assetCategoryId" value="<%= String.valueOf(assetCategory.getCategoryId()) %>" />
 		</liferay-portlet:renderURL>
 
-		<liferay-frontend:add-menu inline="<%= true %>">
-			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-image") %>' url="<%= addAttachmentFileEntryURL.toString() %>" />
+		<liferay-frontend:add-menu
+			inline="<%= true %>"
+		>
+			<liferay-frontend:add-menu-item
+				title='<%= LanguageUtil.get(request, "add-image") %>'
+				url="<%= addAttachmentFileEntryURL.toString() %>"
+			/>
 		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
@@ -140,7 +145,9 @@ cpAttachmentFileEntrySearchContainer.setResults(cpAttachmentFileEntries);
 				/>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator markupView="lexicon" />
+			<liferay-ui:search-iterator
+				markupView="lexicon"
+			/>
 		</liferay-ui:search-container>
 	</div>
 </div>

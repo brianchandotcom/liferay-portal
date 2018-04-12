@@ -75,14 +75,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 
 		<c:if test="<%= (cpAttachmentFileEntry != null) && !cpAttachmentFileEntry.isNew() %>">
 			<liferay-frontend:info-bar>
-				<aui:workflow-status
-					id="<%= String.valueOf(cpAttachmentFileEntryId) %>"
-					markupView="lexicon"
-					showHelpMessage="<%= false %>"
-					showIcon="<%= false %>"
-					showLabel="<%= false %>"
-					status="<%= cpAttachmentFileEntry.getStatus() %>"
-				/>
+				<aui:workflow-status id="<%= String.valueOf(cpAttachmentFileEntryId) %>" markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= cpAttachmentFileEntry.getStatus() %>" />
 			</liferay-frontend:info-bar>
 		</c:if>
 

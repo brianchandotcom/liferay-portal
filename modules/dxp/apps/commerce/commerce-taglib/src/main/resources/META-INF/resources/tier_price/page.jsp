@@ -34,7 +34,7 @@ String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 		<div class="form-group-item">
 			<button class="btn commerce-custom-control-button" onclick="<%= randomNamespace %>setQuantity('<%= commerceTierPriceEntry.getMinQuantity() %>')" type="button"></button>
 			<div class="input-group">
-				<div class="input-group-item input-group-prepend input-group-item-shrink">
+				<div class="input-group-item input-group-item-shrink input-group-prepend">
 					<span class="input-group-text input-group-text-secondary">x<%= commerceTierPriceEntry.getMinQuantity() %></span>
 				</div>
 

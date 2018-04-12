@@ -26,11 +26,21 @@ CommerceOrganizationAddressesDisplayContext commerceOrganizationAddressesDisplay
 		searchContainerId="commerceAddresses"
 	>
 		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "toggleFilter(false);" %>' iconCssClass="icon-filter" id="filterButton" label="filter" />
+			<liferay-frontend:management-bar-button
+				href='<%= "javascript:" + renderResponse.getNamespace() + "toggleFilter(false);" %>'
+				iconCssClass="icon-filter"
+				id="filterButton"
+				label="filter"
+			/>
 
 			<c:if test="<%= commerceOrganizationAddressesDisplayContext.hasManageCommerceAddressPermission() %>">
-				<liferay-frontend:add-menu inline="<%= true %>">
-					<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-address") %>' url="<%= commerceOrganizationAddressesDisplayContext.getAddCommerceAddressHref() %>" />
+				<liferay-frontend:add-menu
+					inline="<%= true %>"
+				>
+					<liferay-frontend:add-menu-item
+						title='<%= LanguageUtil.get(request, "add-address") %>'
+						url="<%= commerceOrganizationAddressesDisplayContext.getAddCommerceAddressHref() %>"
+					/>
 				</liferay-frontend:add-menu>
 			</c:if>
 		</liferay-frontend:management-bar-buttons>
@@ -39,12 +49,18 @@ CommerceOrganizationAddressesDisplayContext commerceOrganizationAddressesDisplay
 			<li>
 				<liferay-portlet:renderURLParams varImpl="searchURL" />
 
-				<liferay-ui:input-search markupView="lexicon" />
+				<liferay-ui:input-search
+					markupView="lexicon"
+				/>
 			</li>
 		</liferay-frontend:management-bar-filters>
 
 		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceAddresses();" %>' icon="times" label="delete" />
+			<liferay-frontend:management-bar-button
+				href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceAddresses();" %>'
+				icon="times"
+				label="delete"
+			/>
 		</liferay-frontend:management-bar-action-buttons>
 	</liferay-frontend:management-bar>
 
@@ -100,7 +116,10 @@ CommerceOrganizationAddressesDisplayContext commerceOrganizationAddressesDisplay
 				/>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= commerceOrganizationAddressesDisplayContext.getSearchContainer() %>" />
+			<liferay-ui:search-iterator
+				markupView="lexicon"
+				searchContainer="<%= commerceOrganizationAddressesDisplayContext.getSearchContainer() %>"
+			/>
 		</liferay-ui:search-container>
 	</div>
 </aui:form>

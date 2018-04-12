@@ -24,7 +24,14 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 CommerceOrder commerceOrder = (CommerceOrder)row.getObject();
 %>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>" triggerCssClass="component-action">
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+	triggerCssClass="component-action"
+>
 	<c:if test="<%= commerceOrder.isOpen() && !commerceOrganizationOrderDisplayContext.isCurrentCommerceOrder(commerceOrder) %>">
 		<portlet:actionURL name="editCommerceOrder" var="setCurrentURL">
 			<portlet:param name="<%= Constants.CMD %>" value="setCurrent" />

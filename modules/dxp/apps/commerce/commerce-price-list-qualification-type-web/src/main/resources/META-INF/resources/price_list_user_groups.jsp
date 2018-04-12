@@ -63,8 +63,14 @@ renderResponse.setTitle(commercePriceList.getName() + " - " + commercePriceListQ
 			<aui:input name="commercePriceListQualificationTypeRelId" type="hidden" value="<%= commercePriceListQualificationTypeRelId %>" />
 		</aui:form>
 
-		<liferay-frontend:add-menu inline="<%= true %>">
-			<liferay-frontend:add-menu-item id="addCommercePriceListUserRel" title='<%= LanguageUtil.get(request, "add-user-group") %>' url="javascript:;" />
+		<liferay-frontend:add-menu
+			inline="<%= true %>"
+		>
+			<liferay-frontend:add-menu-item
+				id="addCommercePriceListUserRel"
+				title='<%= LanguageUtil.get(request, "add-user-group") %>'
+				url="javascript:;"
+			/>
 		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
@@ -83,7 +89,11 @@ renderResponse.setTitle(commercePriceList.getName() + " - " + commercePriceListQ
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommercePriceListUserRels();" %>' icon="times" label="delete" />
+		<liferay-frontend:management-bar-button
+			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommercePriceListUserRels();" %>'
+			icon="times"
+			label="delete"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -120,7 +130,13 @@ renderResponse.setTitle(commercePriceList.getName() + " - " + commercePriceListQ
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-content"
 					>
-						<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+						<liferay-ui:icon-menu
+							direction="left-side"
+							icon="<%= StringPool.BLANK %>"
+							markupView="lexicon"
+							message="<%= StringPool.BLANK %>"
+							showWhenSingleIcon="<%= true %>"
+						>
 							<portlet:actionURL name="editCommercePriceListUserRel" var="deleteURL">
 								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 								<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -137,7 +153,10 @@ renderResponse.setTitle(commercePriceList.getName() + " - " + commercePriceListQ
 					</liferay-ui:search-container-column-text>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= userGroupSearchContainer %>" />
+				<liferay-ui:search-iterator
+					markupView="lexicon"
+					searchContainer="<%= userGroupSearchContainer %>"
+				/>
 			</liferay-ui:search-container>
 		</div>
 	</aui:form>

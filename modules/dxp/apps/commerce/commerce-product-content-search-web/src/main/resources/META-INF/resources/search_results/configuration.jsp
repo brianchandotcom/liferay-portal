@@ -47,21 +47,13 @@ CPSearchResultsDisplayContext cpSearchResultsDisplayContext = (CPSearchResultsDi
 					%>
 
 					<aui:select id="configurationMethod" name="preferences--configurationMethod--" showEmptyOption="<%= true %>">
-						<aui:option
-							label="<%= CPSearchResultsConfigurationConstants.SELECT_CATEGORIES %>"
-							selected="<%= configurationMethod.equals(CPSearchResultsConfigurationConstants.SELECT_CATEGORIES) %>"
-							value="<%= CPSearchResultsConfigurationConstants.SELECT_CATEGORIES %>"
-						/>
+						<aui:option label="<%= CPSearchResultsConfigurationConstants.SELECT_CATEGORIES %>" selected="<%= configurationMethod.equals(CPSearchResultsConfigurationConstants.SELECT_CATEGORIES) %>" value="<%= CPSearchResultsConfigurationConstants.SELECT_CATEGORIES %>" />
 
 						<%
 						for (String type : cpSearchResultsDisplayContext.getCPDefinitionLinkTypes()) {
 						%>
 
-							<aui:option
-								label="<%= type %>"
-								selected="<%= configurationMethod.equals(type) %>"
-								value="<%= type %>"
-							/>
+							<aui:option label="<%= type %>" selected="<%= configurationMethod.equals(type) %>" value="<%= type %>" />
 
 						<%
 						}

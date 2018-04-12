@@ -46,8 +46,13 @@ CommercePriceListDisplayContext commercePriceListDisplayContext = (CommercePrice
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</liferay-portlet:renderURL>
 
-		<liferay-frontend:add-menu inline="<%= true %>">
-			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-price-list") %>' url="<%= addProductDefinitionURL.toString() %>" />
+		<liferay-frontend:add-menu
+			inline="<%= true %>"
+		>
+			<liferay-frontend:add-menu-item
+				title='<%= LanguageUtil.get(request, "add-price-list") %>'
+				url="<%= addProductDefinitionURL.toString() %>"
+			/>
 		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
@@ -66,7 +71,9 @@ CommercePriceListDisplayContext commercePriceListDisplayContext = (CommercePrice
 
 		<li>
 			<aui:form action="<%= String.valueOf(commercePriceListDisplayContext.getPortletURL()) %>" name="searchFm">
-				<liferay-ui:input-search markupView="lexicon" />
+				<liferay-ui:input-search
+					markupView="lexicon"
+				/>
 			</aui:form>
 		</li>
 	</liferay-frontend:management-bar-filters>
@@ -79,7 +86,11 @@ CommercePriceListDisplayContext commercePriceListDisplayContext = (CommercePrice
 			/>
 		</c:if>
 
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommercePriceLists();" %>' icon="times" label="delete" />
+		<liferay-frontend:management-bar-button
+			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommercePriceLists();" %>'
+			icon="times"
+			label="delete"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 

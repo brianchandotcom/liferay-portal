@@ -57,8 +57,14 @@ String displayStyle = cpInstanceDisplayContext.getDisplayStyle();
 			<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
 		</liferay-portlet:renderURL>
 
-		<liferay-frontend:add-menu inline="<%= true %>">
-			<liferay-frontend:add-menu-item id="addSkuButton" title='<%= LanguageUtil.get(request, "add-sku") %>' url="<%= addProductInstanceURL.toString() %>" />
+		<liferay-frontend:add-menu
+			inline="<%= true %>"
+		>
+			<liferay-frontend:add-menu-item
+				id="addSkuButton"
+				title='<%= LanguageUtil.get(request, "add-sku") %>'
+				url="<%= addProductInstanceURL.toString() %>"
+			/>
 
 			<c:if test="<%= !cpDefinition.isIgnoreSKUCombinations() %>">
 				<liferay-portlet:actionURL name="editProductInstance" var="addProductInstancesURL">
@@ -67,7 +73,10 @@ String displayStyle = cpInstanceDisplayContext.getDisplayStyle();
 					<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
 				</liferay-portlet:actionURL>
 
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "generate-all-sku-combinations") %>' url="<%= addProductInstancesURL.toString() %>" />
+				<liferay-frontend:add-menu-item
+					title='<%= LanguageUtil.get(request, "generate-all-sku-combinations") %>'
+					url="<%= addProductInstancesURL.toString() %>"
+				/>
 			</c:if>
 		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
@@ -93,7 +102,9 @@ String displayStyle = cpInstanceDisplayContext.getDisplayStyle();
 
 		<li>
 			<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-				<liferay-ui:input-search markupView="lexicon" />
+				<liferay-ui:input-search
+					markupView="lexicon"
+				/>
 			</aui:form>
 		</li>
 	</liferay-frontend:management-bar-filters>
@@ -106,7 +117,11 @@ String displayStyle = cpInstanceDisplayContext.getDisplayStyle();
 			/>
 		</c:if>
 
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCPInstances();" %>' icon="times" label="delete" />
+		<liferay-frontend:management-bar-button
+			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCPInstances();" %>'
+			icon="times"
+			label="delete"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -125,11 +140,7 @@ String displayStyle = cpInstanceDisplayContext.getDisplayStyle();
 <div id="<portlet:namespace />productInstancesContainer">
 	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 		<c:if test="<%= cpInstanceDisplayContext.isShowInfoPanel() %>">
-			<liferay-portlet:resourceURL
-				copyCurrentRenderParameters="<%= false %>"
-				id="cpInstanceInfoPanel"
-				var="sidebarPanelURL"
-			/>
+			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="cpInstanceInfoPanel" var="sidebarPanelURL" />
 
 			<liferay-frontend:sidebar-panel
 				resourceURL="<%= sidebarPanelURL %>"
@@ -200,7 +211,11 @@ String displayStyle = cpInstanceDisplayContext.getDisplayStyle();
 							</c:choose>
 						</liferay-ui:search-container-row>
 
-						<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" searchContainer="<%= cpInstanceSearchContainer %>" />
+						<liferay-ui:search-iterator
+							displayStyle="<%= displayStyle %>"
+							markupView="lexicon"
+							searchContainer="<%= cpInstanceSearchContainer %>"
+						/>
 					</liferay-ui:search-container>
 				</div>
 			</aui:form>

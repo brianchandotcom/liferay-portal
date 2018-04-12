@@ -58,13 +58,23 @@ PortletURL portletURL = commerceOrderEditDisplayContext.getCommerceOrderItemsPor
 			<aui:input name="cpInstanceIds" type="hidden" value="" />
 		</aui:form>
 
-		<liferay-frontend:add-menu inline="<%= true %>">
-			<liferay-frontend:add-menu-item id="addCommerceOrderItem" title='<%= LanguageUtil.get(request, "add-item") %>' url="javascript:;" />
+		<liferay-frontend:add-menu
+			inline="<%= true %>"
+		>
+			<liferay-frontend:add-menu-item
+				id="addCommerceOrderItem"
+				title='<%= LanguageUtil.get(request, "add-item") %>'
+				url="javascript:;"
+			/>
 		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceOrderItems();" %>' icon="times" label="delete" />
+		<liferay-frontend:management-bar-button
+			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceOrderItems();" %>'
+			icon="times"
+			label="delete"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -117,7 +127,9 @@ PortletURL portletURL = commerceOrderEditDisplayContext.getCommerceOrderItemsPor
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </div>
 

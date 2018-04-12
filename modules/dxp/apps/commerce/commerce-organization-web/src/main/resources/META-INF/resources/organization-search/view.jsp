@@ -26,13 +26,7 @@ CommerceOrganizationSearchDisplayContext commerceOrganizationSearchDisplayContex
 	<aui:form action="<%= String.valueOf(commerceOrganizationSearchDisplayContext.getPortletURL()) %>" name="searchFm">
 		<div class="input-group">
 			<div class="input-group-item">
-				<input class="form-control input-group-inset input-group-inset-after"
-					id="<portlet:namespace />keywords"
-					name="<portlet:namespace />keywords"
-					placeholder="<%= LanguageUtil.get(resourceBundle, "search") %>"
-					title="<%= LanguageUtil.get(resourceBundle, "search") %>"
-					type="text"
-					value="<%= HtmlUtil.escapeAttribute(commerceOrganizationSearchDisplayContext.getKeywords()) %>">
+				<input class="form-control input-group-inset input-group-inset-after" id="<portlet:namespace />keywords" name="<portlet:namespace />keywords" placeholder="<%= LanguageUtil.get(resourceBundle, "search") %>" title="<%= LanguageUtil.get(resourceBundle, "search") %>" type="text" value="<%= HtmlUtil.escapeAttribute(commerceOrganizationSearchDisplayContext.getKeywords()) %>">
 
 				<div class="input-group-inset-item input-group-inset-item-after">
 					<button class="btn btn-unstyled d-md-inline-block d-none" type="submit">
@@ -64,7 +58,9 @@ CommerceOrganizationSearchDisplayContext commerceOrganizationSearchDisplayContex
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 
 	<aui:script>

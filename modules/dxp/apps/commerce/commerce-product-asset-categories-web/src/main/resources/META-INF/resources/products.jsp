@@ -121,7 +121,10 @@ cpDefinitionSearchContainer.setResults(cpDefinitions);
 				/>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= cpDefinitionSearchContainer %>" />
+			<liferay-ui:search-iterator
+				markupView="lexicon"
+				searchContainer="<%= cpDefinitionSearchContainer %>"
+			/>
 		</liferay-ui:search-container>
 	</div>
 </div>

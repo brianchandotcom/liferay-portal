@@ -30,7 +30,10 @@ if (commercePriceEntry != null) {
 }
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="details"
+/>
 
 <aui:model-context bean="<%= commercePriceEntry %>" model="<%= CommercePriceEntry.class %>" />
 

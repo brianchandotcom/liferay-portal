@@ -59,15 +59,24 @@ boolean hasManageCommerceShippingMethodsPermission = CommercePermission.contains
 			String url = commerceShippingFixedOptionsDisplayContext.getEditURL("editCommerceShippingFixedOption", true, addCommerceShippingFixedOptionURL);
 			%>
 
-			<liferay-frontend:add-menu inline="<%= true %>">
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(resourceBundle, "add-shipping-option") %>' url="<%= url %>" />
+			<liferay-frontend:add-menu
+				inline="<%= true %>"
+			>
+				<liferay-frontend:add-menu-item
+					title='<%= LanguageUtil.get(resourceBundle, "add-shipping-option") %>'
+					url="<%= url %>"
+				/>
 			</liferay-frontend:add-menu>
 		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<c:if test="<%= hasManageCommerceShippingMethodsPermission %>">
 		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceShippingFixedOptions();" %>' icon="times" label="delete" />
+			<liferay-frontend:management-bar-button
+				href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceShippingFixedOptions();" %>'
+				icon="times"
+				label="delete"
+			/>
 		</liferay-frontend:management-bar-action-buttons>
 	</c:if>
 </liferay-frontend:management-bar>
@@ -126,7 +135,9 @@ boolean hasManageCommerceShippingMethodsPermission = CommercePermission.contains
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </aui:form>
 

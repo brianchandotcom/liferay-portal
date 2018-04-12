@@ -110,6 +110,8 @@ SearchContainer<CommercePaymentMethod> commercePaymentMethodSearchContainer = co
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </div>

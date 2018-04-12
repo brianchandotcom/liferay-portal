@@ -35,31 +35,17 @@ boolean autoUpdate = exchangeRateProviderGroupServiceConfiguration.autoUpdate();
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
 				<div class="exchange-rate-update-header">
-					<aui:input
-						id="exchangeRateConfiguration--autoUpdate--"
-						name="exchangeRateConfiguration--autoUpdate--"
-						type="checkbox"
-						value="<%= autoUpdate %>"
-					/>
+					<aui:input id="exchangeRateConfiguration--autoUpdate--" name="exchangeRateConfiguration--autoUpdate--" type="checkbox" value="<%= autoUpdate %>" />
 				</div>
 
 				<div class="exchange-rate-update-content">
-					<aui:select
-						id="exchangeRateConfiguration--defaultExchangeRateProviderKey--"
-						label="exchange-rate-provider"
-						name="exchangeRateConfiguration--defaultExchangeRateProviderKey--"
-						showEmptyOption="<%= true %>"
-					>
+					<aui:select id="exchangeRateConfiguration--defaultExchangeRateProviderKey--" label="exchange-rate-provider" name="exchangeRateConfiguration--defaultExchangeRateProviderKey--" showEmptyOption="<%= true %>">
 
 						<%
 						for (String exchangeRateProviderKey : commerceCurrenciesDisplayContext.getExchangeRateProviderKeys()) {
 						%>
 
-							<aui:option
-								label="<%= LanguageUtil.get(request, exchangeRateProviderKey) %>"
-								selected="<%= exchangeRateProviderKey.equals(exchangeRateProviderGroupServiceConfiguration.defaultExchangeRateProviderKey()) %>"
-								value="<%= exchangeRateProviderKey %>"
-							/>
+							<aui:option label="<%= LanguageUtil.get(request, exchangeRateProviderKey) %>" selected="<%= exchangeRateProviderKey.equals(exchangeRateProviderGroupServiceConfiguration.defaultExchangeRateProviderKey()) %>" value="<%= exchangeRateProviderKey %>" />
 
 						<%
 						}

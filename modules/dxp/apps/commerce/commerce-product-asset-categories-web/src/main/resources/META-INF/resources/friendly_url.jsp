@@ -63,7 +63,12 @@ renderResponse.setTitle(category.getTitle(locale));
 						<span class="input-group-constrain"><liferay-ui:message key="<%= StringUtil.shorten(friendlyURLBase.toString(), 40) %>" /></span>
 					</span>
 
-					<liferay-ui:input-localized cssClass="form-control" defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="urlTitleMapAsXML" xml="<%= HttpUtil.decodeURL(titleMapAsXML) %>" />
+					<liferay-ui:input-localized
+						cssClass="form-control"
+						defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>"
+						name="urlTitleMapAsXML"
+						xml="<%= HttpUtil.decodeURL(titleMapAsXML) %>"
+					/>
 				</div>
 			</div>
 

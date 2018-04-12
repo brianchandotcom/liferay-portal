@@ -24,7 +24,13 @@ CommercePaymentMethod commercePaymentMethod = (CommercePaymentMethod)row.getObje
 long commercePaymentMethodId = commercePaymentMethod.getCommercePaymentMethodId();
 %>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+>
 	<c:if test="<%= CommercePermission.contains(permissionChecker, scopeGroupId, CommerceActionKeys.MANAGE_COMMERCE_PAYMENT_METHODS) %>">
 		<portlet:actionURL name="editCommercePaymentMethod" var="editURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EDIT %>" />

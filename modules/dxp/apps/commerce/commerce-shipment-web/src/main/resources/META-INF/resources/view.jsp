@@ -46,8 +46,13 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 			</portlet:renderURL>
 
-			<liferay-frontend:add-menu inline="<%= true %>">
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-shipment") %>' url="<%= addCommerceShipmentURL.toString() %>" />
+			<liferay-frontend:add-menu
+				inline="<%= true %>"
+			>
+				<liferay-frontend:add-menu-item
+					title='<%= LanguageUtil.get(request, "add-shipment") %>'
+					url="<%= addCommerceShipmentURL.toString() %>"
+				/>
 			</liferay-frontend:add-menu>
 		</liferay-frontend:management-bar-buttons>
 
@@ -135,7 +140,11 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						/>
 					</liferay-ui:search-container-row>
 
-					<liferay-ui:search-iterator displayStyle="<%= commerceShipmentDisplayContext.getDisplayStyle() %>" markupView="lexicon" searchContainer="<%= commerceShipmentSearchContainer %>" />
+					<liferay-ui:search-iterator
+						displayStyle="<%= commerceShipmentDisplayContext.getDisplayStyle() %>"
+						markupView="lexicon"
+						searchContainer="<%= commerceShipmentSearchContainer %>"
+					/>
 				</liferay-ui:search-container>
 			</div>
 		</aui:form>

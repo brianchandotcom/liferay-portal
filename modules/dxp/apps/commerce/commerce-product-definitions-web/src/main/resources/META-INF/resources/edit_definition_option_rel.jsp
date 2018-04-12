@@ -36,7 +36,10 @@ List<DDMFormFieldType> ddmFormFieldTypes = cpDefinitionOptionRelDisplayContext.g
 	<aui:input name="cpOptionId" type="hidden" value="<%= cpDefinitionOptionRel.getCPOptionId() %>" />
 
 	<div class="lfr-form-content">
-		<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
+		<liferay-ui:error-marker
+			key="<%= WebKeys.ERROR_SECTION %>"
+			value="details"
+		/>
 
 		<aui:model-context bean="<%= cpDefinitionOptionRel %>" model="<%= CPDefinitionOptionRel.class %>" />
 
@@ -45,21 +48,13 @@ List<DDMFormFieldType> ddmFormFieldTypes = cpDefinitionOptionRelDisplayContext.g
 
 			<aui:input name="description" />
 
-			<aui:select
-				label="field-type"
-				name="DDMFormFieldTypeName"
-				showEmptyOption="<%= true %>"
-			>
+			<aui:select label="field-type" name="DDMFormFieldTypeName" showEmptyOption="<%= true %>">
 
 				<%
 				for (DDMFormFieldType ddmFormFieldType : ddmFormFieldTypes) {
 				%>
 
-					<aui:option
-						label="<%= ddmFormFieldType.getName() %>"
-						selected="<%= (cpDefinitionOptionRel != null) && cpDefinitionOptionRel.getDDMFormFieldTypeName().equals(ddmFormFieldType.getName()) %>"
-						value="<%= ddmFormFieldType.getName() %>"
-					/>
+					<aui:option label="<%= ddmFormFieldType.getName() %>" selected="<%= (cpDefinitionOptionRel != null) && cpDefinitionOptionRel.getDDMFormFieldTypeName().equals(ddmFormFieldType.getName()) %>" value="<%= ddmFormFieldType.getName() %>" />
 
 				<%
 				}
@@ -75,7 +70,10 @@ List<DDMFormFieldType> ddmFormFieldTypes = cpDefinitionOptionRelDisplayContext.g
 
 			<aui:input name="priority" />
 
-			<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="custom-fields" />
+			<liferay-ui:error-marker
+				key="<%= WebKeys.ERROR_SECTION %>"
+				value="custom-fields"
+			/>
 
 			<aui:model-context bean="<%= cpDefinitionOptionRel %>" model="<%= CPDefinitionOptionRel.class %>" />
 

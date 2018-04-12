@@ -46,7 +46,10 @@ else {
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="userId" type="hidden" value="<%= selUser.getUserId() %>" />
 
-	<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="password" />
+	<liferay-ui:error-marker
+		key="<%= WebKeys.ERROR_SECTION %>"
+		value="password"
+	/>
 
 	<aui:model-context bean="<%= selUser %>" model="<%= User.class %>" />
 

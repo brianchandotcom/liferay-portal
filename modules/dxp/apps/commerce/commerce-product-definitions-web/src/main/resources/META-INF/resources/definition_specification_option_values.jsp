@@ -55,8 +55,14 @@ PortletURL portletURL = cpDefinitionSpecificationOptionValueDisplayContext.getPo
 			<aui:input name="cpSpecificationOptionIds" type="hidden" value="" />
 		</aui:form>
 
-		<liferay-frontend:add-menu inline="<%= true %>">
-			<liferay-frontend:add-menu-item id="addCommerceProductDefinitionSpecificationOptionValue" title='<%= LanguageUtil.get(request, "add-specification") %>' url="javascript:;" />
+		<liferay-frontend:add-menu
+			inline="<%= true %>"
+		>
+			<liferay-frontend:add-menu-item
+				id="addCommerceProductDefinitionSpecificationOptionValue"
+				title='<%= LanguageUtil.get(request, "add-specification") %>'
+				url="javascript:;"
+			/>
 		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
@@ -82,18 +88,18 @@ PortletURL portletURL = cpDefinitionSpecificationOptionValueDisplayContext.getPo
 			/>
 		</c:if>
 
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCPDefinitionSpecificationOptionValues();" %>' icon="times" label="delete" />
+		<liferay-frontend:management-bar-button
+			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCPDefinitionSpecificationOptionValues();" %>'
+			icon="times"
+			label="delete"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
 <div id="<portlet:namespace />productDefinitionSpecificationOptionValuesContainer">
 	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 		<c:if test="<%= cpDefinitionSpecificationOptionValueDisplayContext.isShowInfoPanel() %>">
-			<liferay-portlet:resourceURL
-				copyCurrentRenderParameters="<%= false %>"
-				id="cpDefinitionSpecificationOptionValueInfoPanel"
-				var="sidebarPanelURL"
-			/>
+			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="cpDefinitionSpecificationOptionValueInfoPanel" var="sidebarPanelURL" />
 
 			<liferay-frontend:sidebar-panel
 				resourceURL="<%= sidebarPanelURL %>"
@@ -162,7 +168,10 @@ PortletURL portletURL = cpDefinitionSpecificationOptionValueDisplayContext.getPo
 							/>
 						</liferay-ui:search-container-row>
 
-						<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= cpDefinitionSpecificationOptionValueSearchContainer %>" />
+						<liferay-ui:search-iterator
+							markupView="lexicon"
+							searchContainer="<%= cpDefinitionSpecificationOptionValueSearchContainer %>"
+						/>
 					</liferay-ui:search-container>
 				</div>
 			</aui:form>

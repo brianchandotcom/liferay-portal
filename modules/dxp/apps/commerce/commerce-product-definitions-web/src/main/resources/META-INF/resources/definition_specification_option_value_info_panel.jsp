@@ -38,10 +38,7 @@ if (cpDefinitionSpecificationOptionValues == null) {
 		<div class="sidebar-header">
 			<ul class="sidebar-header-actions">
 				<li>
-					<liferay-util:include
-						page="/definition_specification_option_value_action.jsp"
-						servletContext="<%= application %>"
-					/>
+					<liferay-util:include page="/definition_specification_option_value_action.jsp" servletContext="<%= application %>" />
 				</li>
 			</ul>
 

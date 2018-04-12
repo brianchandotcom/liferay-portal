@@ -20,7 +20,10 @@
 CommercePriceEntry commercePriceEntry = (CommercePriceEntry)request.getAttribute(CommerceWebKeys.COMMERCE_PRICE_ENTRY);
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="custom-fields" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="custom-fields"
+/>
 
 <aui:model-context bean="<%= commercePriceEntry %>" model="<%= CommercePriceEntry.class %>" />
 

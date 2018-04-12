@@ -27,8 +27,15 @@ CommerceOrganizationBranchesDisplayContext commerceOrganizationBranchesDisplayCo
 	>
 		<liferay-frontend:management-bar-buttons>
 			<c:if test="<%= commerceOrganizationBranchesDisplayContext.hasManageBranchesPermission() %>">
-				<liferay-frontend:add-menu inline="<%= true %>">
-					<liferay-frontend:add-menu-item cssClass="add-branch-action" title='<%= LanguageUtil.get(request, "add-branch") %>' type="<%= AddMenuKeys.AddMenuType.PRIMARY %>" url='#' />
+				<liferay-frontend:add-menu
+					inline="<%= true %>"
+				>
+					<liferay-frontend:add-menu-item
+						cssClass="add-branch-action"
+						title='<%= LanguageUtil.get(request, "add-branch") %>'
+						type="<%= AddMenuKeys.AddMenuType.PRIMARY %>"
+						url="#"
+					/>
 				</liferay-frontend:add-menu>
 			</c:if>
 		</liferay-frontend:management-bar-buttons>
@@ -37,7 +44,9 @@ CommerceOrganizationBranchesDisplayContext commerceOrganizationBranchesDisplayCo
 			<li>
 				<liferay-portlet:renderURLParams varImpl="searchURL" />
 
-				<liferay-ui:input-search markupView="lexicon" />
+				<liferay-ui:input-search
+					markupView="lexicon"
+				/>
 			</li>
 		</liferay-frontend:management-bar-filters>
 	</liferay-frontend:management-bar>
@@ -73,7 +82,9 @@ CommerceOrganizationBranchesDisplayContext commerceOrganizationBranchesDisplayCo
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </div>
 

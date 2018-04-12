@@ -28,7 +28,10 @@ if ((cpDefinitionVirtualSetting != null) && (cpDefinitionVirtualSetting.getDurat
 }
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="base-information" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="base-information"
+/>
 
 <aui:model-context bean="<%= cpDefinitionVirtualSetting %>" model="<%= CPDefinitionVirtualSetting.class %>" />
 

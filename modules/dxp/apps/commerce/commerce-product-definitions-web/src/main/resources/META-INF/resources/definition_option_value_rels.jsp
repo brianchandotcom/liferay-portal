@@ -63,8 +63,13 @@ productOptionRelsURL.setParameter("screenNavigationCategoryKey", cpDefinitionOpt
 			<portlet:param name="cpDefinitionOptionRelId" value="<%= String.valueOf(cpDefinitionOptionRelId) %>" />
 		</liferay-portlet:renderURL>
 
-		<liferay-frontend:add-menu inline="<%= true %>">
-			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-option-value") %>' url="<%= addProductDefinitionOptionValueRelURL.toString() %>" />
+		<liferay-frontend:add-menu
+			inline="<%= true %>"
+		>
+			<liferay-frontend:add-menu-item
+				title='<%= LanguageUtil.get(request, "add-option-value") %>'
+				url="<%= addProductDefinitionOptionValueRelURL.toString() %>"
+			/>
 		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
@@ -90,18 +95,18 @@ productOptionRelsURL.setParameter("screenNavigationCategoryKey", cpDefinitionOpt
 			/>
 		</c:if>
 
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCPDefinitionOptionValueRels();" %>' icon="times" label="delete" />
+		<liferay-frontend:management-bar-button
+			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCPDefinitionOptionValueRels();" %>'
+			icon="times"
+			label="delete"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
 <div id="<portlet:namespace />productDefinitionOptionRelsContainer">
 	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 		<c:if test="<%= cpDefinitionOptionValueRelDisplayContext.isShowInfoPanel() %>">
-			<liferay-portlet:resourceURL
-				copyCurrentRenderParameters="<%= false %>"
-				id="cpDefinitionOptionValueRelInfoPanel"
-				var="sidebarPanelURL"
-			/>
+			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="cpDefinitionOptionValueRelInfoPanel" var="sidebarPanelURL" />
 
 			<liferay-frontend:sidebar-panel
 				resourceURL="<%= sidebarPanelURL %>"
@@ -161,7 +166,10 @@ productOptionRelsURL.setParameter("screenNavigationCategoryKey", cpDefinitionOpt
 							/>
 						</liferay-ui:search-container-row>
 
-						<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= cpDefinitionOptionValueRelSearchContainer %>" />
+						<liferay-ui:search-iterator
+							markupView="lexicon"
+							searchContainer="<%= cpDefinitionOptionValueRelSearchContainer %>"
+						/>
 					</liferay-ui:search-container>
 				</div>
 			</aui:form>

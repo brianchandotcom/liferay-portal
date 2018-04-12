@@ -42,19 +42,31 @@ pageContext.setAttribute("searchURL", searchURL);
 		searchContainerId="commerceOrders"
 	>
 		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-button cssClass='<%= showFilter ? "active" : StringPool.BLANK %>' href='<%= "javascript:" + renderResponse.getNamespace() + "toggleFilter();" %>' iconCssClass="icon-filter" id="filterButton" label="filter" />
+			<liferay-frontend:management-bar-button
+				cssClass='<%= showFilter ? "active" : StringPool.BLANK %>'
+				href='<%= "javascript:" + renderResponse.getNamespace() + "toggleFilter();" %>'
+				iconCssClass="icon-filter"
+				id="filterButton"
+				label="filter"
+			/>
 		</liferay-frontend:management-bar-buttons>
 
 		<liferay-frontend:management-bar-filters>
 			<li>
 				<liferay-portlet:renderURLParams varImpl="searchURL" />
 
-				<liferay-ui:input-search markupView="lexicon" />
+				<liferay-ui:input-search
+					markupView="lexicon"
+				/>
 			</li>
 		</liferay-frontend:management-bar-filters>
 
 		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceOrders();" %>' icon="times" label="delete" />
+			<liferay-frontend:management-bar-button
+				href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceOrders();" %>'
+				icon="times"
+				label="delete"
+			/>
 		</liferay-frontend:management-bar-action-buttons>
 	</liferay-frontend:management-bar>
 

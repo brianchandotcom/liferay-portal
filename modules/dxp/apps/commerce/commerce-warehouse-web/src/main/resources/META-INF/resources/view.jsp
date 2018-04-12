@@ -56,7 +56,9 @@ for (ManagementBarFilterItem managementBarFilterItem : managementBarFilterItems)
 
 		<li>
 			<aui:form action="<%= String.valueOf(commerceWarehousesDisplayContext.getPortletURL()) %>" name="searchFm">
-				<liferay-ui:input-search markupView="lexicon" />
+				<liferay-ui:input-search
+					markupView="lexicon"
+				/>
 			</aui:form>
 		</li>
 	</liferay-frontend:management-bar-filters>
@@ -75,8 +77,13 @@ for (ManagementBarFilterItem managementBarFilterItem : managementBarFilterItems)
 				<portlet:param name="commerceCountryId" value="<%= String.valueOf(commerceCountryId) %>" />
 			</portlet:renderURL>
 
-			<liferay-frontend:add-menu inline="<%= true %>">
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-warehouse") %>' url="<%= addCommerceWarehouseURL.toString() %>" />
+			<liferay-frontend:add-menu
+				inline="<%= true %>"
+			>
+				<liferay-frontend:add-menu-item
+					title='<%= LanguageUtil.get(request, "add-warehouse") %>'
+					url="<%= addCommerceWarehouseURL.toString() %>"
+				/>
 			</liferay-frontend:add-menu>
 		</c:if>
 	</liferay-frontend:management-bar-buttons>
@@ -124,6 +131,8 @@ for (ManagementBarFilterItem managementBarFilterItem : managementBarFilterItems)
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </div>

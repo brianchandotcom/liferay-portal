@@ -24,11 +24,16 @@ CommercePriceList commercePriceList = commercePriceListDisplayContext.getCommerc
 List<CommercePriceListQualificationTypeRel> commercePriceListQualificationTypeRels = commercePriceListDisplayContext.getCommercePriceListQualificationTypeRels();
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="details"
+/>
 
 <aui:model-context bean="<%= commercePriceList %>" model="<%= CommercePriceList.class %>" />
 
-<liferay-util:buffer var="removeCommercePriceListQualificationTypeIcon">
+<liferay-util:buffer
+	var="removeCommercePriceListQualificationTypeIcon"
+>
 	<liferay-ui:icon
 		icon="times"
 		markupView="lexicon"
@@ -47,11 +52,7 @@ List<CommercePriceListQualificationTypeRel> commercePriceListQualificationTypeRe
 		for (CommerceCurrency commerceCurrency : commerceCurrencies) {
 		%>
 
-			<aui:option
-				label="<%= commerceCurrency.getCode() %>"
-				selected="<%= (commercePriceList != null) && (commercePriceList.getCommerceCurrencyId() == commerceCurrency.getCommerceCurrencyId()) %>"
-				value="<%= commerceCurrency.getCommerceCurrencyId() %>"
-			/>
+			<aui:option label="<%= commerceCurrency.getCode() %>" selected="<%= (commercePriceList != null) && (commercePriceList.getCommerceCurrencyId() == commerceCurrency.getCommerceCurrencyId()) %>" value="<%= commerceCurrency.getCommerceCurrencyId() %>" />
 
 		<%
 		}
@@ -96,7 +97,9 @@ List<CommercePriceListQualificationTypeRel> commercePriceListQualificationTypeRe
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator markupView="lexicon" />
+	<liferay-ui:search-iterator
+		markupView="lexicon"
+	/>
 </liferay-ui:search-container>
 
 <aui:button name="selectCommercePriceListQualificationType" value="select" />

@@ -34,7 +34,7 @@ CommerceOrderNote commerceOrderNote = commerceOrganizationOrderDisplayContext.ge
 			id="TabsBack"
 			label="<%= false %>"
 			markupView="lexicon"
-			message="<%= LanguageUtil.get(resourceBundle, "back") %>"
+			message='<%= LanguageUtil.get(resourceBundle, "back") %>'
 			method="get"
 			url="<%= redirect %>"
 		/>
@@ -45,7 +45,7 @@ CommerceOrderNote commerceOrderNote = commerceOrganizationOrderDisplayContext.ge
 			<liferay-ui:header
 				backURL="<%= redirect %>"
 				showBackURL="<%= false %>"
-				title='edit-note'
+				title="edit-note"
 			/>
 		</div>
 	</div>

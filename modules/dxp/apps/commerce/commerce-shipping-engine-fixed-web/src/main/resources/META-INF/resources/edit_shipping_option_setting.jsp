@@ -89,10 +89,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 							for (CommerceShippingFixedOption commerceShippingFixedOption : commerceShippingFixedOptions) {
 							%>
 
-								<aui:option
-									label="<%= commerceShippingFixedOption.getName(languageId) %>"
-									value="<%= commerceShippingFixedOption.getCommerceShippingFixedOptionId() %>"
-								/>
+								<aui:option label="<%= commerceShippingFixedOption.getName(languageId) %>" value="<%= commerceShippingFixedOption.getCommerceShippingFixedOptionId() %>" />
 
 							<%
 							}
@@ -110,10 +107,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 							for (CommerceWarehouse commerceWarehouse : commerceWarehouses) {
 							%>
 
-								<aui:option
-									label="<%= commerceWarehouse.getName() %>"
-									value="<%= commerceWarehouse.getCommerceWarehouseId() %>"
-								/>
+								<aui:option label="<%= commerceWarehouse.getName() %>" value="<%= commerceWarehouse.getCommerceWarehouseId() %>" />
 
 							<%
 							}
@@ -133,11 +127,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 							for (CommerceCountry commerceCountry : commerceCountries) {
 							%>
 
-								<aui:option
-									label="<%= commerceCountry.getName(languageId) %>"
-									selected="<%= (commerceShippingFixedOptionRel != null) && (commerceShippingFixedOptionRel.getCommerceCountryId() == commerceCountry.getCommerceCountryId()) %>"
-									value="<%= commerceCountry.getCommerceCountryId() %>"
-								/>
+								<aui:option label="<%= commerceCountry.getName(languageId) %>" selected="<%= (commerceShippingFixedOptionRel != null) && (commerceShippingFixedOptionRel.getCommerceCountryId() == commerceCountry.getCommerceCountryId()) %>" value="<%= commerceCountry.getCommerceCountryId() %>" />
 
 							<%
 							}
@@ -155,11 +145,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 							for (CommerceRegion commerceRegion : commerceRegions) {
 							%>
 
-								<aui:option
-									label="<%= commerceRegion.getName() %>"
-									selected="<%= (commerceShippingFixedOptionRel != null) && (commerceShippingFixedOptionRel.getCommerceRegionId() == commerceRegion.getCommerceRegionId()) %>"
-									value="<%= commerceRegion.getCommerceRegionId() %>"
-								/>
+								<aui:option label="<%= commerceRegion.getName() %>" selected="<%= (commerceShippingFixedOptionRel != null) && (commerceShippingFixedOptionRel.getCommerceRegionId() == commerceRegion.getCommerceRegionId()) %>" value="<%= commerceRegion.getCommerceRegionId() %>" />
 
 							<%
 							}

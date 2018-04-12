@@ -29,7 +29,10 @@ User selUser = commerceUserDetailDisplayContext.getSelectedUser();
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="userId" type="hidden" value="<%= selUser.getUserId() %>" />
 
-	<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
+	<liferay-ui:error-marker
+		key="<%= WebKeys.ERROR_SECTION %>"
+		value="details"
+	/>
 
 	<aui:model-context bean="<%= selUser %>" model="<%= User.class %>" />
 
@@ -139,7 +142,10 @@ User selUser = commerceUserDetailDisplayContext.getSelectedUser();
 				</c:otherwise>
 			</c:choose>
 
-			<liferay-ui:user-name-fields contact="<%= selUser.getContact() %>" user="<%= selUser %>" />
+			<liferay-ui:user-name-fields
+				contact="<%= selUser.getContact() %>"
+				user="<%= selUser %>"
+			/>
 		</aui:fieldset>
 
 		<aui:fieldset cssClass="col-md-5">

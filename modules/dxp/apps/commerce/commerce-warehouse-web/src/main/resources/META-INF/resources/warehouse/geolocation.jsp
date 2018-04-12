@@ -22,7 +22,10 @@ CommerceWarehousesDisplayContext commerceWarehousesDisplayContext = (CommerceWar
 CommerceWarehouse commerceWarehouse = commerceWarehousesDisplayContext.getCommerceWarehouse();
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="geolocation" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="geolocation"
+/>
 
 <aui:model-context bean="<%= commerceWarehouse %>" model="<%= CommerceWarehouse.class %>" />
 

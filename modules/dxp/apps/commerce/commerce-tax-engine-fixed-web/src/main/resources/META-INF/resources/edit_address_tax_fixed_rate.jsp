@@ -85,10 +85,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 							for (CPTaxCategory cpTaxCategory : cpTaxCategories) {
 							%>
 
-								<aui:option
-									label="<%= cpTaxCategory.getName(languageId) %>"
-									value="<%= cpTaxCategory.getCPTaxCategoryId() %>"
-								/>
+								<aui:option label="<%= cpTaxCategory.getName(languageId) %>" value="<%= cpTaxCategory.getCPTaxCategoryId() %>" />
 
 							<%
 							}
@@ -119,11 +116,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 							for (CommerceCountry commerceCountry : commerceCountries) {
 							%>
 
-								<aui:option
-									label="<%= commerceCountry.getName(languageId) %>"
-									selected="<%= (commerceTaxFixedRateAddressRel != null) && (commerceTaxFixedRateAddressRel.getCommerceCountryId() == commerceCountry.getCommerceCountryId()) %>"
-									value="<%= commerceCountry.getCommerceCountryId() %>"
-								/>
+								<aui:option label="<%= commerceCountry.getName(languageId) %>" selected="<%= (commerceTaxFixedRateAddressRel != null) && (commerceTaxFixedRateAddressRel.getCommerceCountryId() == commerceCountry.getCommerceCountryId()) %>" value="<%= commerceCountry.getCommerceCountryId() %>" />
 
 							<%
 							}
@@ -141,11 +134,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 							for (CommerceRegion commerceRegion : commerceRegions) {
 							%>
 
-								<aui:option
-									label="<%= commerceRegion.getName() %>"
-									selected="<%= (commerceTaxFixedRateAddressRel != null) && (commerceTaxFixedRateAddressRel.getCommerceRegionId() == commerceRegion.getCommerceRegionId()) %>"
-									value="<%= commerceRegion.getCommerceRegionId() %>"
-								/>
+								<aui:option label="<%= commerceRegion.getName() %>" selected="<%= (commerceTaxFixedRateAddressRel != null) && (commerceTaxFixedRateAddressRel.getCommerceRegionId() == commerceRegion.getCommerceRegionId()) %>" value="<%= commerceRegion.getCommerceRegionId() %>" />
 
 							<%
 							}

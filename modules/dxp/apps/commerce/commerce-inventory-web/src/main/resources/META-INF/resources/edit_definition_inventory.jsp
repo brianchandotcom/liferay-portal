@@ -51,11 +51,7 @@ long cpDefinitionId = cpDefinitionInventoryDisplayContext.getCPDefinitionId();
 						String cpDefinitionInventoryEngineName = cpDefinitionInventoryEngine.getKey();
 					%>
 
-						<aui:option
-							label="<%= cpDefinitionInventoryEngine.getLabel(locale) %>"
-							selected="<%= (cpDefinitionInventory != null) && cpDefinitionInventoryEngineName.equals(cpDefinitionInventory.getCPDefinitionInventoryEngine()) %>"
-							value="<%= cpDefinitionInventoryEngineName %>"
-						/>
+						<aui:option label="<%= cpDefinitionInventoryEngine.getLabel(locale) %>" selected="<%= (cpDefinitionInventory != null) && cpDefinitionInventoryEngineName.equals(cpDefinitionInventory.getCPDefinitionInventoryEngine()) %>" value="<%= cpDefinitionInventoryEngineName %>" />
 
 					<%
 					}
@@ -72,11 +68,7 @@ long cpDefinitionId = cpDefinitionInventoryDisplayContext.getCPDefinitionId();
 						String commerceLowStockActivityName = commerceLowStockActivity.getKey();
 					%>
 
-						<aui:option
-							label="<%= commerceLowStockActivity.getLabel(locale) %>"
-							selected="<%= (cpDefinitionInventory != null) && commerceLowStockActivityName.equals(cpDefinitionInventory.getLowStockActivity()) %>"
-							value="<%= commerceLowStockActivityName %>"
-						/>
+						<aui:option label="<%= commerceLowStockActivity.getLabel(locale) %>" selected="<%= (cpDefinitionInventory != null) && commerceLowStockActivityName.equals(cpDefinitionInventory.getLowStockActivity()) %>" value="<%= commerceLowStockActivityName %>" />
 
 					<%
 					}
@@ -92,11 +84,7 @@ long cpDefinitionId = cpDefinitionInventoryDisplayContext.getCPDefinitionId();
 					for (CommerceAvailabilityRange commerceAvailabilityRange : commerceAvailabilityRanges) {
 					%>
 
-						<aui:option
-							label="<%= commerceAvailabilityRange.getTitle(languageId) %>"
-							selected="<%= (cpDefinitionAvailabilityRange != null) && (commerceAvailabilityRange.getCommerceAvailabilityRangeId() == cpDefinitionAvailabilityRange.getCommerceAvailabilityRangeId()) %>"
-							value="<%= commerceAvailabilityRange.getCommerceAvailabilityRangeId() %>"
-						/>
+						<aui:option label="<%= commerceAvailabilityRange.getTitle(languageId) %>" selected="<%= (cpDefinitionAvailabilityRange != null) && (commerceAvailabilityRange.getCommerceAvailabilityRangeId() == cpDefinitionAvailabilityRange.getCommerceAvailabilityRangeId()) %>" value="<%= commerceAvailabilityRange.getCommerceAvailabilityRangeId() %>" />
 
 					<%
 					}

@@ -22,7 +22,10 @@ CommercePaymentMethodsDisplayContext commercePaymentMethodsDisplayContext = (Com
 CommercePaymentMethod commercePaymentMethod = commercePaymentMethodsDisplayContext.getCommercePaymentMethod();
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="details"
+/>
 
 <liferay-ui:error exception="<%= CommercePaymentMethodNameException.class %>" message="please-enter-a-valid-name" />
 

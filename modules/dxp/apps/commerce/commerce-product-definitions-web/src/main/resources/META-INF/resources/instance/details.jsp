@@ -50,7 +50,10 @@ productSkusURL.setParameter("screenNavigationCategoryKey", cpInstanceDisplayCont
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
 	<div class="lfr-form-content">
-		<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
+		<liferay-ui:error-marker
+			key="<%= WebKeys.ERROR_SECTION %>"
+			value="details"
+		/>
 
 		<aui:model-context bean="<%= cpInstance %>" model="<%= CPInstance.class %>" />
 

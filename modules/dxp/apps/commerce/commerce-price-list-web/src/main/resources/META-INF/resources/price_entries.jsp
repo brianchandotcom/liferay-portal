@@ -55,8 +55,14 @@ PortletURL portletURL = commercePriceEntryDisplayContext.getPortletURL();
 			<aui:input name="cpInstanceIds" type="hidden" value="" />
 		</aui:form>
 
-		<liferay-frontend:add-menu inline="<%= true %>">
-			<liferay-frontend:add-menu-item id="addCommercePriceEntry" title='<%= LanguageUtil.get(request, "add-entry") %>' url="javascript:;" />
+		<liferay-frontend:add-menu
+			inline="<%= true %>"
+		>
+			<liferay-frontend:add-menu-item
+				id="addCommercePriceEntry"
+				title='<%= LanguageUtil.get(request, "add-entry") %>'
+				url="javascript:;"
+			/>
 		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
@@ -82,18 +88,18 @@ PortletURL portletURL = commercePriceEntryDisplayContext.getPortletURL();
 			/>
 		</c:if>
 
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommercePriceEntries();" %>' icon="times" label="delete" />
+		<liferay-frontend:management-bar-button
+			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommercePriceEntries();" %>'
+			icon="times"
+			label="delete"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
 <div id="<portlet:namespace />priceEntriesContainer">
 	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 		<c:if test="<%= commercePriceEntryDisplayContext.isShowInfoPanel() %>">
-			<liferay-portlet:resourceURL
-				copyCurrentRenderParameters="<%= false %>"
-				id="commercePriceEntryInfoPanel"
-				var="sidebarPanelURL"
-			/>
+			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="commercePriceEntryInfoPanel" var="sidebarPanelURL" />
 
 			<liferay-frontend:sidebar-panel
 				resourceURL="<%= sidebarPanelURL %>"
@@ -172,7 +178,10 @@ PortletURL portletURL = commercePriceEntryDisplayContext.getPortletURL();
 							/>
 						</liferay-ui:search-container-row>
 
-						<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= commercePriceEntriesSearchContainer %>" />
+						<liferay-ui:search-iterator
+							markupView="lexicon"
+							searchContainer="<%= commercePriceEntriesSearchContainer %>"
+						/>
 					</liferay-ui:search-container>
 				</div>
 			</aui:form>

@@ -28,7 +28,12 @@ commerceOrganizationDetailDisplayContext.setBreadcrumbs(organization);
 	<div class="container-fluid-1280">
 		<div class="col-md-12">
 			<div>
-				<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
+				<liferay-ui:breadcrumb
+					showCurrentGroup="<%= false %>"
+					showGuestGroup="<%= false %>"
+					showLayout="<%= false %>"
+					showPortletBreadcrumb="<%= true %>"
+				/>
 			</div>
 		</div>
 	</div>
@@ -51,8 +56,8 @@ commerceOrganizationDetailDisplayContext.setBreadcrumbs(organization);
 			containerCssClass="col-md-10"
 			context="<%= commerceOrganizationDetailDisplayContext.getCurrentOrganization() %>"
 			key="<%= CommerceOrganizationScreenNavigationConstants.SCREEN_NAVIGATION_KEY %>"
-			portletURL="<%= currentURLObj %>"
 			navCssClass="col-md-2"
+			portletURL="<%= currentURLObj %>"
 		/>
 	</c:otherwise>
 </c:choose>

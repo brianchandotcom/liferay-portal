@@ -59,8 +59,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 			<portlet:param name="mvcRenderCommandName" value="editProductOptionCategory" />
 		</liferay-portlet:renderURL>
 
-		<liferay-frontend:add-menu inline="<%= true %>">
-			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-specification-group") %>' url="<%= addProductOptionCategoryURL.toString() %>" />
+		<liferay-frontend:add-menu
+			inline="<%= true %>"
+		>
+			<liferay-frontend:add-menu-item
+				title='<%= LanguageUtil.get(request, "add-specification-group") %>'
+				url="<%= addProductOptionCategoryURL.toString() %>"
+			/>
 		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
@@ -86,18 +91,18 @@ renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 			/>
 		</c:if>
 
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCPOptionCategories();" %>' icon="times" label="delete" />
+		<liferay-frontend:management-bar-button
+			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCPOptionCategories();" %>'
+			icon="times"
+			label="delete"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
 <div id="<portlet:namespace />productOptionCategoriesContainer">
 	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 		<c:if test="<%= cpOptionCategoryDisplayContext.isShowInfoPanel() %>">
-			<liferay-portlet:resourceURL
-				copyCurrentRenderParameters="<%= false %>"
-				id="cpOptionCategoryInfoPanel"
-				var="sidebarPanelURL"
-			/>
+			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="cpOptionCategoryInfoPanel" var="sidebarPanelURL" />
 
 			<liferay-frontend:sidebar-panel
 				resourceURL="<%= sidebarPanelURL %>"
@@ -169,7 +174,11 @@ renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 							/>
 						</liferay-ui:search-container-row>
 
-						<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" searchContainer="<%= cpOptionCategorySearchContainer %>" />
+						<liferay-ui:search-iterator
+							displayStyle="<%= displayStyle %>"
+							markupView="lexicon"
+							searchContainer="<%= cpOptionCategorySearchContainer %>"
+						/>
 					</liferay-ui:search-container>
 				</div>
 			</aui:form>

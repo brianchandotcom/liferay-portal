@@ -92,9 +92,15 @@ PortletURL portletURL = commercePriceListItemSelectorViewDisplayContext.getPortl
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" searchContainer="<%= commercePriceListItemSelectorViewDisplayContext.getSearchContainer() %>" />
+		<liferay-ui:search-iterator
+			displayStyle="list"
+			markupView="lexicon"
+			searchContainer="<%= commercePriceListItemSelectorViewDisplayContext.getSearchContainer() %>"
+		/>
 
-		<liferay-ui:search-paginator searchContainer="<%= commercePriceListItemSelectorViewDisplayContext.getSearchContainer() %>" />
+		<liferay-ui:search-paginator
+			searchContainer="<%= commercePriceListItemSelectorViewDisplayContext.getSearchContainer() %>"
+		/>
 	</liferay-ui:search-container>
 </div>
 

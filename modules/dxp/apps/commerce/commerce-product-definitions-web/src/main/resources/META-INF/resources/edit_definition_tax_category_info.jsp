@@ -42,11 +42,7 @@ List<CPTaxCategory> cpTaxCategories = cpDefinitionTaxCategoryDisplayContext.getC
 					for (CPTaxCategory cpTaxCategory : cpTaxCategories) {
 					%>
 
-						<aui:option
-							label="<%= cpTaxCategory.getName(locale) %>"
-							selected="<%= (cpDefinition != null) && (cpDefinition.getCPTaxCategoryId() == cpTaxCategory.getCPTaxCategoryId()) %>"
-							value="<%= cpTaxCategory.getCPTaxCategoryId() %>"
-						/>
+						<aui:option label="<%= cpTaxCategory.getName(locale) %>" selected="<%= (cpDefinition != null) && (cpDefinition.getCPTaxCategoryId() == cpTaxCategory.getCPTaxCategoryId()) %>" value="<%= cpTaxCategory.getCPTaxCategoryId() %>" />
 
 					<%
 					}

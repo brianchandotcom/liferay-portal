@@ -51,7 +51,11 @@ PortletURL portletURL = commerceWishListDisplayContext.getPortletURL();
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceWishListItems();" %>' icon="times" label="delete" />
+		<liferay-frontend:management-bar-button
+			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceWishListItems();" %>'
+			icon="times"
+			label="delete"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -62,7 +66,9 @@ PortletURL portletURL = commerceWishListDisplayContext.getPortletURL();
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="deleteCommerceWishListItemIds" type="hidden" />
 
-	<liferay-ui:search-container searchContainer="<%= commerceWishListItemsSearchContainer %>">
+	<liferay-ui:search-container
+		searchContainer="<%= commerceWishListItemsSearchContainer %>"
+	>
 		<liferay-ui:search-container-row
 			className="com.liferay.commerce.wish.list.model.CommerceWishListItem"
 			keyProperty="CommerceWishListItemId"
@@ -115,7 +121,9 @@ PortletURL portletURL = commerceWishListDisplayContext.getPortletURL();
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </aui:form>
 

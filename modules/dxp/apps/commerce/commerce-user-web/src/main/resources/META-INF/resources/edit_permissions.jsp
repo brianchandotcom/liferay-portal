@@ -54,14 +54,7 @@ long[] userRoleIds = selUser.getRoleIds();
 					}
 				%>
 
-					<aui:input
-						checked="<%= checked %>"
-						label="<%= role.getTitle(locale) %>"
-						multiple="<%= true %>"
-						name="roleIds"
-						type="checkbox"
-						value="<%= role.getRoleId() %>"
-					/>
+					<aui:input checked="<%= checked %>" label="<%= role.getTitle(locale) %>" multiple="<%= true %>" name="roleIds" type="checkbox" value="<%= role.getRoleId() %>" />
 
 				<%
 				}

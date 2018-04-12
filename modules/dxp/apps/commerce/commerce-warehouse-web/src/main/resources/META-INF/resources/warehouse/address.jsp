@@ -25,7 +25,10 @@ long commerceCountryId = BeanParamUtil.getLong(commerceWarehouse, request, "comm
 long commerceRegionId = BeanParamUtil.getLong(commerceWarehouse, request, "commerceRegionId");
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="address" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="address"
+/>
 
 <liferay-ui:error exception="<%= CommerceWarehouseCommerceRegionIdException.class %>" message="please-enter-a-valid-region" />
 

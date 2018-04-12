@@ -130,7 +130,13 @@ long commerceOrderId = commerceOrderEditDisplayContext.getCommerceOrderId();
 								</div>
 
 								<div class="card-col-field">
-									<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+									<liferay-ui:icon-menu
+										direction="left-side"
+										icon="<%= StringPool.BLANK %>"
+										markupView="lexicon"
+										message="<%= StringPool.BLANK %>"
+										showWhenSingleIcon="<%= true %>"
+									>
 										<portlet:renderURL var="editURL">
 											<portlet:param name="mvcRenderCommandName" value="editCommerceOrderNote" />
 											<portlet:param name="redirect" value="<%= currentURL %>" />

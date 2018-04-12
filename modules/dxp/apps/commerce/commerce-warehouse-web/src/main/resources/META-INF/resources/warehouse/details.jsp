@@ -22,7 +22,10 @@ CommerceWarehousesDisplayContext commerceWarehousesDisplayContext = (CommerceWar
 CommerceWarehouse commerceWarehouse = commerceWarehousesDisplayContext.getCommerceWarehouse();
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="details"
+/>
 
 <liferay-ui:error exception="<%= CommerceWarehouseActiveException.class %>" message="please-geolocate-warehouse-to-set-as-active" />
 <liferay-ui:error exception="<%= CommerceWarehouseNameException.class %>" message="please-enter-a-valid-name" />

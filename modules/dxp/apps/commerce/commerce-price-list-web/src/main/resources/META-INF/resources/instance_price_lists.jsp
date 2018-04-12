@@ -55,8 +55,14 @@ productSkusURL.setParameter("screenNavigationCategoryKey", "skus");
 			<aui:input name="commercePriceListIds" type="hidden" value="" />
 		</aui:form>
 
-		<liferay-frontend:add-menu inline="<%= true %>">
-			<liferay-frontend:add-menu-item id="addCommercePriceEntry" title='<%= LanguageUtil.format(request, "add-x-to-price-list", cpInstance.getSku(), false) %>' url="javascript:;" />
+		<liferay-frontend:add-menu
+			inline="<%= true %>"
+		>
+			<liferay-frontend:add-menu-item
+				id="addCommercePriceEntry"
+				title='<%= LanguageUtil.format(request, "add-x-to-price-list", cpInstance.getSku(), false) %>'
+				url="javascript:;"
+			/>
 		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
@@ -75,7 +81,11 @@ productSkusURL.setParameter("screenNavigationCategoryKey", "skus");
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommercePriceEntries();" %>' icon="times" label="delete" />
+		<liferay-frontend:management-bar-button
+			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommercePriceEntries();" %>'
+			icon="times"
+			label="delete"
+		/>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -136,7 +146,10 @@ productSkusURL.setParameter("screenNavigationCategoryKey", "skus");
 					/>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= commercePriceEntriesSearchContainer %>" />
+				<liferay-ui:search-iterator
+					markupView="lexicon"
+					searchContainer="<%= commercePriceEntriesSearchContainer %>"
+				/>
 			</liferay-ui:search-container>
 		</div>
 	</aui:form>

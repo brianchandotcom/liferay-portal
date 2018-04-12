@@ -52,7 +52,10 @@ EmailAddress emailAddress = commerceOrganizationDetailDisplayContext.getOrganiza
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="organizationId" type="hidden" value="<%= organization.getOrganizationId() %>" />
 
-	<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
+	<liferay-ui:error-marker
+		key="<%= WebKeys.ERROR_SECTION %>"
+		value="details"
+	/>
 
 	<aui:model-context bean="<%= organization %>" model="<%= Organization.class %>" />
 

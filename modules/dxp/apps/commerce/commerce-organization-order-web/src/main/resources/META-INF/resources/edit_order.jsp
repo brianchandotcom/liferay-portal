@@ -33,7 +33,7 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 		id="TabsBack"
 		label="<%= false %>"
 		markupView="lexicon"
-		message="<%= LanguageUtil.get(resourceBundle, "back") %>"
+		message='<%= LanguageUtil.get(resourceBundle, "back") %>'
 		method="get"
 		url="<%= layout.getRegularURL(request) %>"
 	/>
@@ -53,7 +53,7 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 				icon="print"
 				iconCssClass="inline-item inline-item-after"
 				label="<%= true %>"
-				linkCssClass="link-outline link-outline-borderless link-outline-secondary lfr-icon-item-reverse"
+				linkCssClass="lfr-icon-item-reverse link-outline link-outline-borderless link-outline-secondary"
 				markupView="lexicon"
 				message="print"
 				method="get"
@@ -82,7 +82,14 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 			</div>
 
 			<div class="autofit-col">
-				<liferay-ui:icon-menu direction="right" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>" triggerCssClass="component-action">
+				<liferay-ui:icon-menu
+					direction="right"
+					icon="<%= StringPool.BLANK %>"
+					markupView="lexicon"
+					message="<%= StringPool.BLANK %>"
+					showWhenSingleIcon="<%= true %>"
+					triggerCssClass="component-action"
+				>
 					<portlet:actionURL name="editCommerceOrderItem" var="deleteURL">
 						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESET %>" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -253,8 +260,8 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 		<c:choose>
 			<c:when test="<%= commerceOrder.isOpen() && CommerceOrderPermission.contains(permissionChecker, commerceOrder, ActionKeys.UPDATE) %>">
 				<liferay-ui:search-container-column-text
-					name="quantity"
 					cssClass="order-item-quantity"
+					name="quantity"
 				>
 					<aui:form action="<%= editCommerceOrderItemURL %>" method="post" name='<%= commerceOrderItem.getCommerceOrderItemId() + "fm" %>'>
 						<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
@@ -270,7 +277,11 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 								</div>
 
 								<div class="input-group-append input-group-item input-group-item-shrink">
-									<clay:button type="submit" label='<%= LanguageUtil.get(resourceBundle, "update") %>' style="secondary" />
+									<clay:button
+										label='<%= LanguageUtil.get(resourceBundle, "update") %>'
+										style="secondary"
+										type="submit"
+									/>
 								</div>
 							</div>
 						</div>
@@ -306,7 +317,9 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 		</c:if>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator markupView="lexicon" />
+	<liferay-ui:search-iterator
+		markupView="lexicon"
+	/>
 </liferay-ui:search-container>
 
 <portlet:actionURL name="editCommerceOrder" var="editCommerceOrderURL" />

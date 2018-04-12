@@ -90,7 +90,10 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						/>
 					</liferay-ui:search-container-row>
 
-					<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
+					<liferay-ui:search-iterator
+						displayStyle="list"
+						markupView="lexicon"
+					/>
 				</liferay-ui:search-container>
 			</div>
 		</aui:form>

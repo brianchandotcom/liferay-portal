@@ -56,15 +56,24 @@ boolean hasManageCommerceTaxMethodsPermission = CommercePermission.contains(perm
 				<portlet:param name="commerceTaxMethodId" value="<%= String.valueOf(commerceTaxFixedRateAddressRelsDisplayContext.getCommerceTaxMethodId()) %>" />
 			</portlet:renderURL>
 
-			<liferay-frontend:add-menu inline="<%= true %>">
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(resourceBundle, "add-tax-rate-setting") %>' url="<%= addCommerceTaxFixedRateAddressRelURL.toString() %>" />
+			<liferay-frontend:add-menu
+				inline="<%= true %>"
+			>
+				<liferay-frontend:add-menu-item
+					title='<%= LanguageUtil.get(resourceBundle, "add-tax-rate-setting") %>'
+					url="<%= addCommerceTaxFixedRateAddressRelURL.toString() %>"
+				/>
 			</liferay-frontend:add-menu>
 		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<c:if test="<%= hasManageCommerceTaxMethodsPermission %>">
 		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceTaxFixedRateAddressRels();" %>' icon="times" label="delete" />
+			<liferay-frontend:management-bar-button
+				href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceTaxFixedRateAddressRels();" %>'
+				icon="times"
+				label="delete"
+			/>
 		</liferay-frontend:management-bar-action-buttons>
 	</c:if>
 </liferay-frontend:management-bar>
@@ -135,7 +144,9 @@ boolean hasManageCommerceTaxMethodsPermission = CommercePermission.contains(perm
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </aui:form>
 

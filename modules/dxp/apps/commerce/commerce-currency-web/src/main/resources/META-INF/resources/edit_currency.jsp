@@ -79,11 +79,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 						String curRoundingTypeName = roundingType.getName();
 					%>
 
-						<aui:option
-							label="<%= roundingType.getLabel(locale) %>"
-							selected="<%= curRoundingTypeName.equals(roundingTypeName) %>"
-							value="<%= curRoundingTypeName %>"
-						/>
+						<aui:option label="<%= roundingType.getLabel(locale) %>" selected="<%= curRoundingTypeName.equals(roundingTypeName) %>" value="<%= curRoundingTypeName %>" />
 
 					<%
 					}

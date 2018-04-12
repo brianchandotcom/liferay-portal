@@ -75,15 +75,25 @@ renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 					<aui:input name="commerceCountryIds" type="hidden" value="" />
 				</aui:form>
 
-				<liferay-frontend:add-menu inline="<%= true %>">
-					<liferay-frontend:add-menu-item id="addCommerceAddressRestriction" title='<%= LanguageUtil.get(request, "add-restriction") %>' url="javascript:;" />
+				<liferay-frontend:add-menu
+					inline="<%= true %>"
+				>
+					<liferay-frontend:add-menu-item
+						id="addCommerceAddressRestriction"
+						title='<%= LanguageUtil.get(request, "add-restriction") %>'
+						url="javascript:;"
+					/>
 				</liferay-frontend:add-menu>
 			</c:if>
 		</liferay-frontend:management-bar-buttons>
 
 		<c:if test="<%= hasManageCommercePaymentMethodsPermission %>">
 			<liferay-frontend:management-bar-action-buttons>
-				<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceAddressRestrictions();" %>' icon="times" label="delete" />
+				<liferay-frontend:management-bar-button
+					href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceAddressRestrictions();" %>'
+					icon="times"
+					label="delete"
+				/>
 			</liferay-frontend:management-bar-action-buttons>
 		</c:if>
 	</liferay-frontend:management-bar>
@@ -141,7 +151,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 				/>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator markupView="lexicon" />
+			<liferay-ui:search-iterator
+				markupView="lexicon"
+			/>
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

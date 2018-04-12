@@ -20,7 +20,10 @@
 CPSpecificationOption cpSpecificationOption = (CPSpecificationOption)request.getAttribute(CPWebKeys.CP_OPTION);
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="custom-fields" />
+<liferay-ui:error-marker
+	key="<%= WebKeys.ERROR_SECTION %>"
+	value="custom-fields"
+/>
 
 <aui:model-context bean="<%= cpSpecificationOption %>" model="<%= CPSpecificationOption.class %>" />
 

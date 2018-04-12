@@ -82,7 +82,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"group.initializer.key=" + LotusGroupInitializer.KEY},
+	property = "group.initializer.key=" + LotusGroupInitializer.KEY,
 	service = GroupInitializer.class
 )
 public class LotusGroupInitializer implements GroupInitializer {

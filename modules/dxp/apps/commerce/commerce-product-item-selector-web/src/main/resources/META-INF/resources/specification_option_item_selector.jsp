@@ -65,9 +65,7 @@ PortletURL portletURL = cpSpecificationOptionItemSelectorViewDisplayContext.getP
 				cssClass="table-cell-content"
 				name="title"
 			>
-				<div class="commerce-product-option-title"
-					data-id="<%= cpSpecificationOption.getCPSpecificationOptionId() %>">
-
+				<div class="commerce-product-option-title" data-id="<%= cpSpecificationOption.getCPSpecificationOptionId() %>">
 					<%= HtmlUtil.escape(cpSpecificationOption.getTitle(themeDisplay.getLanguageId())) %>
 				</div>
 			</liferay-ui:search-container-column-text>
@@ -97,9 +95,15 @@ PortletURL portletURL = cpSpecificationOptionItemSelectorViewDisplayContext.getP
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" searchContainer="<%= cpSpecificationOptionSearchContainer %>" />
+		<liferay-ui:search-iterator
+			displayStyle="<%= displayStyle %>"
+			markupView="lexicon"
+			searchContainer="<%= cpSpecificationOptionSearchContainer %>"
+		/>
 
-		<liferay-ui:search-paginator searchContainer="<%= cpSpecificationOptionSearchContainer %>" />
+		<liferay-ui:search-paginator
+			searchContainer="<%= cpSpecificationOptionSearchContainer %>"
+		/>
 	</liferay-ui:search-container>
 </div>
 

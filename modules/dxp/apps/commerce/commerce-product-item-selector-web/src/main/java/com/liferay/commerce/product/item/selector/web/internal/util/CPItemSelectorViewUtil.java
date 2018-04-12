@@ -25,7 +25,9 @@ import com.liferay.commerce.product.util.comparator.CPDefinitionTitleComparator;
 import com.liferay.commerce.product.util.comparator.CPInstanceCreateDateComparator;
 import com.liferay.commerce.product.util.comparator.CPInstanceDisplayDateComparator;
 import com.liferay.commerce.product.util.comparator.CPInstanceSkuComparator;
+import com.liferay.commerce.product.util.comparator.CPOptionModifiedDateComparator;
 import com.liferay.commerce.product.util.comparator.CPOptionTitleComparator;
+import com.liferay.commerce.product.util.comparator.CPSpecificationOptionModifiedDateComparator;
 import com.liferay.commerce.product.util.comparator.CPSpecificationOptionTitleComparator;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -151,6 +153,10 @@ public class CPItemSelectorViewUtil {
 
 		OrderByComparator<CPOption> orderByComparator = null;
 
+		if (orderByCol.equals("modified-date")) {
+			orderByComparator = new CPOptionModifiedDateComparator(orderByAsc);
+		}
+
 		if (orderByCol.equals("title")) {
 			orderByComparator = new CPOptionTitleComparator(orderByAsc);
 		}
@@ -159,17 +165,21 @@ public class CPItemSelectorViewUtil {
 	}
 
 	public static Sort getCPOptionSort(String orderByCol, String orderByType) {
-		boolean orderByAsc = false;
+		boolean reverse = true;
 
-		if (Objects.equals(orderByType, "asc")) {
-			orderByAsc = true;
+		if (orderByType.equals("asc")) {
+			reverse = false;
 		}
 
 		Sort sort = null;
 
-		if (Objects.equals(orderByCol, "title")) {
+		if (Objects.equals(orderByCol, "modified-date")) {
 			sort = SortFactoryUtil.create(
-				"title", Sort.STRING_TYPE, orderByAsc);
+				Field.MODIFIED_DATE + "_sortable", reverse);
+		}
+		else if (Objects.equals(orderByCol, "title")) {
+			sort = SortFactoryUtil.create(
+				Field.TITLE, Sort.STRING_TYPE, reverse);
 		}
 
 		return sort;
@@ -187,12 +197,39 @@ public class CPItemSelectorViewUtil {
 
 		OrderByComparator<CPSpecificationOption> orderByComparator = null;
 
-		if (orderByCol.equals("title")) {
+		if (orderByCol.equals("modified-date")) {
+			orderByComparator = new CPSpecificationOptionModifiedDateComparator(
+				orderByAsc);
+		}
+		else if (orderByCol.equals("title")) {
 			orderByComparator = new CPSpecificationOptionTitleComparator(
 				orderByAsc);
 		}
 
 		return orderByComparator;
+	}
+
+	public static Sort getCPSpecificationOptionSort(
+		String orderByCol, String orderByType) {
+
+		boolean reverse = true;
+
+		if (orderByType.equals("asc")) {
+			reverse = false;
+		}
+
+		Sort sort = null;
+
+		if (Objects.equals(orderByCol, "modified-date")) {
+			sort = SortFactoryUtil.create(
+				Field.MODIFIED_DATE + "_sortable", reverse);
+		}
+		else if (Objects.equals(orderByCol, "title")) {
+			sort = SortFactoryUtil.create(
+				Field.TITLE, Sort.STRING_TYPE, reverse);
+		}
+
+		return sort;
 	}
 
 }

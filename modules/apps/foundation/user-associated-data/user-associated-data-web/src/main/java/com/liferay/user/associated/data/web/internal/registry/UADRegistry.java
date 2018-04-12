@@ -19,7 +19,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
-import com.liferay.user.associated.data.exporter.UADEntityExporter;
+import com.liferay.user.associated.data.exporter.UADExporter;
 
 import java.util.Collection;
 import java.util.Set;
@@ -76,16 +76,16 @@ public class UADRegistry {
 		return getUADEntityDisplays().stream();
 	}
 
-	public UADEntityExporter getUADEntityExporter(String key) {
-		return _uadEntityExporterServiceTrackerMap.getService(key);
+	public UADExporter getUADExporter(String key) {
+		return _uadExporterServiceTrackerMap.getService(key);
 	}
 
-	public Set<String> getUADEntityExporterKeySet() {
-		return _uadEntityExporterServiceTrackerMap.keySet();
+	public Set<String> getUADExporterKeySet() {
+		return _uadExporterServiceTrackerMap.keySet();
 	}
 
-	public Collection<UADEntityExporter> getUADEntityExporters() {
-		return _uadEntityExporterServiceTrackerMap.values();
+	public Collection<UADExporter> getUADExporters() {
+		return _uadExporterServiceTrackerMap.values();
 	}
 
 	@Activate
@@ -99,9 +99,9 @@ public class UADRegistry {
 		_uadEntityDisplayServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, UADEntityDisplay.class, "model.class.name");
-		_uadEntityExporterServiceTrackerMap =
+		_uadExporterServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, UADEntityExporter.class, "model.class.name");
+				bundleContext, UADExporter.class, "model.class.name");
 	}
 
 	@Deactivate
@@ -109,7 +109,7 @@ public class UADRegistry {
 		_uadAggregatorServiceTrackerMap.close();
 		_uadAnonymizerServiceTrackerMap.close();
 		_uadEntityDisplayServiceTrackerMap.close();
-		_uadEntityExporterServiceTrackerMap.close();
+		_uadExporterServiceTrackerMap.close();
 	}
 
 	private ServiceTrackerMap<String, UADAggregator>
@@ -118,7 +118,7 @@ public class UADRegistry {
 		_uadAnonymizerServiceTrackerMap;
 	private ServiceTrackerMap<String, UADEntityDisplay>
 		_uadEntityDisplayServiceTrackerMap;
-	private ServiceTrackerMap<String, UADEntityExporter>
-		_uadEntityExporterServiceTrackerMap;
+	private ServiceTrackerMap<String, UADExporter>
+		_uadExporterServiceTrackerMap;
 
 }

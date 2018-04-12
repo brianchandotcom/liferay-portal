@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.aggregator.UADAggregator;
-import com.liferay.user.associated.data.exporter.UADEntityExporter;
+import com.liferay.user.associated.data.exporter.UADExporter;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -48,7 +48,7 @@ import org.junit.runner.RunWith;
  * @author Noah Sherrill
  */
 @RunWith(Arquillian.class)
-public class AnnouncementsEntryUADEntityExporterTest
+public class AnnouncementsEntryUADExporterTest
 	extends BaseAnnouncementsEntryUADEntityTestCase {
 
 	@ClassRule
@@ -74,7 +74,7 @@ public class AnnouncementsEntryUADEntityExporterTest
 
 		AnnouncementsEntry announcementsEntry1 = announcementsEntries.get(0);
 
-		byte[] bytes = _uadEntityExporter.export(announcementsEntry1);
+		byte[] bytes = _uadExporter.export(announcementsEntry1);
 
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
 			bytes);
@@ -97,7 +97,7 @@ public class AnnouncementsEntryUADEntityExporterTest
 	public void testExportAll() throws Exception {
 		addAnnouncementsEntry(_user.getUserId());
 
-		File file = _uadEntityExporter.exportAll(_user.getUserId());
+		File file = _uadExporter.exportAll(_user.getUserId());
 
 		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
 
@@ -114,7 +114,7 @@ public class AnnouncementsEntryUADEntityExporterTest
 	@Inject(
 		filter = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_ENTRY
 	)
-	private UADEntityExporter _uadEntityExporter;
+	private UADExporter _uadExporter;
 
 	@DeleteAfterTestRun
 	private User _user;

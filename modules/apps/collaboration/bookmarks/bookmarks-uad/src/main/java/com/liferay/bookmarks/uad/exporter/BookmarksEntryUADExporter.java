@@ -18,8 +18,8 @@ import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.service.BookmarksEntryLocalService;
 import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.user.associated.data.exporter.DynamicQueryUADEntityExporter;
-import com.liferay.user.associated.data.exporter.UADEntityExporter;
+import com.liferay.user.associated.data.exporter.DynamicQueryUADExporter;
+import com.liferay.user.associated.data.exporter.UADExporter;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,10 +30,10 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = "model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY,
-	service = UADEntityExporter.class
+	service = UADExporter.class
 )
-public class BookmarksEntryUADEntityExporter
-	extends DynamicQueryUADEntityExporter<BookmarksEntry> {
+public class BookmarksEntryUADExporter
+	extends DynamicQueryUADExporter<BookmarksEntry> {
 
 	@Override
 	protected ActionableDynamicQuery doGetActionableDynamicQuery() {

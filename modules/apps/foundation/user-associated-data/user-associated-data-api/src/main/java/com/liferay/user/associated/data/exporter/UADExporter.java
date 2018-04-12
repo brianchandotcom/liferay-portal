@@ -24,7 +24,7 @@ import java.io.File;
  * @author William Newbury
  */
 @ProviderType
-public interface UADEntityExporter<T> {
+public interface UADExporter<T> {
 
 	public long count(long userId) throws PortalException;
 

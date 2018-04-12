@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
-import com.liferay.user.associated.data.exporter.UADEntityExporter;
+import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.web.internal.export.background.task.UADExportBackgroundTaskStatusMessageSender;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
@@ -69,10 +69,10 @@ public class UADApplicationExportController {
 		for (String uadRegistryKey :
 				_getApplicationUADEntityRegistryKeys(applicationName)) {
 
-			UADEntityExporter uadEntityExporter =
-				_uadRegistry.getUADEntityExporter(uadRegistryKey);
+			UADExporter uadExporter = _uadRegistry.getUADExporter(
+				uadRegistryKey);
 
-			File file = uadEntityExporter.exportAll(userId);
+			File file = uadExporter.exportAll(userId);
 
 			if (file.exists()) {
 				try {
@@ -107,10 +107,10 @@ public class UADApplicationExportController {
 		for (String uadRegistryKey :
 				_getApplicationUADEntityRegistryKeys(applicationName)) {
 
-			UADEntityExporter uadEntityExporter =
-				_uadRegistry.getUADEntityExporter(uadRegistryKey);
+			UADExporter uadExporter = _uadRegistry.getUADExporter(
+				uadRegistryKey);
 
-			totalCount += uadEntityExporter.count(userId);
+			totalCount += uadExporter.count(userId);
 		}
 
 		return totalCount;

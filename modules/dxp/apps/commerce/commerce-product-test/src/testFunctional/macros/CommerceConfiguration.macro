@@ -8,7 +8,7 @@
 			<var name="navItem" value="Health Status" />
 		</execute>
 
-		<for list="1,2,3,4" param="buttonRowNumber">
+		<for list="1,2,3,4,5" param="buttonRowNumber">
 			<if>
 				<not>
 					<condition function="IsElementPresent" locator1="CommerceEntry#FIX_ISSUE_BUTTON">

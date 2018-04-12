@@ -916,11 +916,16 @@ message.
 			</mapper>
 		</unzip>
 
-		<touch>
-			<fileset
-				dir="${liferay.home}/work"
-			/>
-		</touch>
+		<if>
+			<available file="${liferay.home}/work" />
+			<then>
+				<touch>
+					<fileset
+						dir="${liferay.home}/work"
+					/>
+				</touch>
+			</then>
+		</if>
 	</target>
 
 	<target name="prepare-generated-files">

@@ -88,12 +88,14 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 				>
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-expand table-list-title"
+						href="<%= uadApplicationSummaryDisplay.getViewURL() %>"
 						name="name"
 						property="name"
 					/>
 
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-expand"
+						href="<%= uadApplicationSummaryDisplay.getViewURL() %>"
 						name="items"
 						property="count"
 					/>

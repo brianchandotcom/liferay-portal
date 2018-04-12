@@ -428,7 +428,7 @@ public class CommerceOrderLocalServiceImpl
 		throws PortalException {
 
 		if (commerceOrderId <= 0) {
-			return _AVAILABLE_ORDER_STATUSES;
+			return AVAILABLE_ORDER_STATUSES;
 		}
 
 		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
@@ -436,9 +436,9 @@ public class CommerceOrderLocalServiceImpl
 
 		if (!commerceOrder.isPending() &&
 			ArrayUtil.contains(
-				_AVAILABLE_ORDER_STATUSES, commerceOrder.getOrderStatus())) {
+				AVAILABLE_ORDER_STATUSES, commerceOrder.getOrderStatus())) {
 
-			return _AVAILABLE_ORDER_STATUSES;
+			return AVAILABLE_ORDER_STATUSES;
 		}
 
 		return new int[] {commerceOrder.getOrderStatus()};
@@ -1210,7 +1210,7 @@ public class CommerceOrderLocalServiceImpl
 		}
 	}
 
-	private static final int[] _AVAILABLE_ORDER_STATUSES = {
+	protected static final int[] AVAILABLE_ORDER_STATUSES = {
 		CommerceOrderConstants.ORDER_STATUS_TO_TRANSMIT,
 		CommerceOrderConstants.ORDER_STATUS_TRANSMITTED,
 		CommerceOrderConstants.ORDER_STATUS_AWAITING_FULFILLMENT,

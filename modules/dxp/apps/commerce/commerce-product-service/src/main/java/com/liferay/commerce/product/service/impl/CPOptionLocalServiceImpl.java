@@ -16,6 +16,7 @@ package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.exception.CPOptionKeyException;
 import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.search.CPOptionIndexer;
 import com.liferay.commerce.product.service.base.CPOptionLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -284,7 +285,7 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 		attributes.put(Field.TITLE, keywords);
 		attributes.put(Field.DESCRIPTION, keywords);
 		attributes.put(Field.CONTENT, keywords);
-		attributes.put(_FIELD_KEY, keywords);
+		attributes.put(CPOptionIndexer.FIELD_KEY, keywords);
 		attributes.put("params", params);
 
 		searchContext.setAttributes(attributes);
@@ -370,8 +371,6 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 			throw new CPOptionKeyException();
 		}
 	}
-
-	private static final String _FIELD_KEY = "key";
 
 	private static final String[] _SELECTED_FIELD_NAMES =
 		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};

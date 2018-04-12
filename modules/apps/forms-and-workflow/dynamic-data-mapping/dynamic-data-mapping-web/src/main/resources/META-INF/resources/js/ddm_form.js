@@ -789,8 +789,10 @@ AUI.add(
 
 						var value = instance.getValue();
 
-						if (AObject.keys(localizationMap).length != 0) {
-							this.removeNotAvailableLocales(localizationMap);
+						if (typeof localizationMap === 'object') {
+							if (AObject.keys(localizationMap).length != 0) {
+								this.removeNotAvailableLocales(localizationMap);
+							}
 						}
 
 						if (instance.get('localizable')) {

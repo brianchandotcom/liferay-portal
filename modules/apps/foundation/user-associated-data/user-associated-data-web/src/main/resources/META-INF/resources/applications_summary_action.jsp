@@ -31,16 +31,9 @@ UADApplicationSummaryDisplay uadApplicationSummaryDisplay = (UADApplicationSumma
 	showWhenSingleIcon="<%= true %>"
 	triggerCssClass='<%= uadApplicationSummaryDisplay.getCount() <= 0 ? "component-action disabled" : "component-action" %>'
 >
-	<portlet:renderURL var="viewUADEntitiesURL">
-		<portlet:param name="mvcRenderCommandName" value="/view_uad_entities" />
-		<portlet:param name="p_u_i_d" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
-		<portlet:param name="applicationName" value="<%= uadApplicationSummaryDisplay.getName() %>" />
-		<portlet:param name="uadRegistryKey" value="<%= uadApplicationSummaryDisplay.getDefaultUADRegistryKey() %>" />
-	</portlet:renderURL>
-
 	<liferay-ui:icon
-		message="edit"
-		url="<%= viewUADEntitiesURL.toString() %>"
+		message="view"
+		url="<%= uadApplicationSummaryDisplay.getViewURL() %>"
 	/>
 
 	<portlet:actionURL name="/anonymize_application_uad_entities" var="anonymizeUADEntitiesURL">

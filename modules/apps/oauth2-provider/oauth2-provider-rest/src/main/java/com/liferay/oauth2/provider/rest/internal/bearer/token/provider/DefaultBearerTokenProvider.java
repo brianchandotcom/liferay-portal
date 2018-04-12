@@ -78,8 +78,7 @@ public class DefaultBearerTokenProvider implements BearerTokenProvider {
 
 	protected String generateTokenKey(int size) {
 		if (size < 0) {
-			throw new IllegalArgumentException(
-				"Token key size must be positive number!");
+			throw new IllegalArgumentException("Token key size is less than 0");
 		}
 
 		int count = (int)Math.ceil((double)size / 8);

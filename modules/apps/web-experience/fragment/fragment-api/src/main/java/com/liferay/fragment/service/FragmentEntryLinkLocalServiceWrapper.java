@@ -48,23 +48,27 @@ public class FragmentEntryLinkLocalServiceWrapper
 
 	@Override
 	public com.liferay.fragment.model.FragmentEntryLink addFragmentEntryLink(
-		long groupId, long originalFragmentEntryLinkId, long fragmentEntryId,
-		long classNameId, long classPK, java.lang.String css,
-		java.lang.String html, java.lang.String js,
-		java.lang.String editableValues, int position) {
-		return _fragmentEntryLinkLocalService.addFragmentEntryLink(groupId,
-			originalFragmentEntryLinkId, fragmentEntryId, classNameId, classPK,
-			css, html, js, editableValues, position);
+		long userId, long groupId, long originalFragmentEntryLinkId,
+		long fragmentEntryId, long classNameId, long classPK,
+		java.lang.String css, java.lang.String html, java.lang.String js,
+		java.lang.String editableValues, int position,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _fragmentEntryLinkLocalService.addFragmentEntryLink(userId,
+			groupId, originalFragmentEntryLinkId, fragmentEntryId, classNameId,
+			classPK, css, html, js, editableValues, position, serviceContext);
 	}
 
 	@Override
 	public com.liferay.fragment.model.FragmentEntryLink addFragmentEntryLink(
-		long groupId, long fragmentEntryId, long classNameId, long classPK,
-		java.lang.String css, java.lang.String html, java.lang.String js,
-		java.lang.String editableValues, int position) {
-		return _fragmentEntryLinkLocalService.addFragmentEntryLink(groupId,
-			fragmentEntryId, classNameId, classPK, css, html, js,
-			editableValues, position);
+		long userId, long groupId, long fragmentEntryId, long classNameId,
+		long classPK, java.lang.String css, java.lang.String html,
+		java.lang.String js, java.lang.String editableValues, int position,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _fragmentEntryLinkLocalService.addFragmentEntryLink(userId,
+			groupId, fragmentEntryId, classNameId, classPK, css, html, js,
+			editableValues, position, serviceContext);
 	}
 
 	/**
@@ -103,6 +107,11 @@ public class FragmentEntryLinkLocalServiceWrapper
 		long fragmentEntryLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentEntryLinkLocalService.deleteFragmentEntryLink(fragmentEntryLinkId);
+	}
+
+	@Override
+	public void deleteFragmentEntryLinks(long groupId) {
+		_fragmentEntryLinkLocalService.deleteFragmentEntryLinks(groupId);
 	}
 
 	@Override
@@ -214,9 +223,29 @@ public class FragmentEntryLinkLocalServiceWrapper
 		return _fragmentEntryLinkLocalService.fetchFragmentEntryLink(fragmentEntryLinkId);
 	}
 
+	/**
+	* Returns the fragment entry link matching the UUID and group.
+	*
+	* @param uuid the fragment entry link's UUID
+	* @param groupId the primary key of the group
+	* @return the matching fragment entry link, or <code>null</code> if a matching fragment entry link could not be found
+	*/
+	@Override
+	public com.liferay.fragment.model.FragmentEntryLink fetchFragmentEntryLinkByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return _fragmentEntryLinkLocalService.fetchFragmentEntryLinkByUuidAndGroupId(uuid,
+			groupId);
+	}
+
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _fragmentEntryLinkLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _fragmentEntryLinkLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	/**
@@ -231,6 +260,22 @@ public class FragmentEntryLinkLocalServiceWrapper
 		long fragmentEntryLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentEntryLinkLocalService.getFragmentEntryLink(fragmentEntryLinkId);
+	}
+
+	/**
+	* Returns the fragment entry link matching the UUID and group.
+	*
+	* @param uuid the fragment entry link's UUID
+	* @param groupId the primary key of the group
+	* @return the matching fragment entry link
+	* @throws PortalException if a matching fragment entry link could not be found
+	*/
+	@Override
+	public com.liferay.fragment.model.FragmentEntryLink getFragmentEntryLinkByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _fragmentEntryLinkLocalService.getFragmentEntryLinkByUuidAndGroupId(uuid,
+			groupId);
 	}
 
 	/**
@@ -255,6 +300,38 @@ public class FragmentEntryLinkLocalServiceWrapper
 		long groupId, long classNameId, long classPK) {
 		return _fragmentEntryLinkLocalService.getFragmentEntryLinks(groupId,
 			classNameId, classPK);
+	}
+
+	/**
+	* Returns all the fragment entry links matching the UUID and company.
+	*
+	* @param uuid the UUID of the fragment entry links
+	* @param companyId the primary key of the company
+	* @return the matching fragment entry links, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.fragment.model.FragmentEntryLink> getFragmentEntryLinksByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return _fragmentEntryLinkLocalService.getFragmentEntryLinksByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns a range of fragment entry links matching the UUID and company.
+	*
+	* @param uuid the UUID of the fragment entry links
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of fragment entry links
+	* @param end the upper bound of the range of fragment entry links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching fragment entry links, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.fragment.model.FragmentEntryLink> getFragmentEntryLinksByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentEntryLink> orderByComparator) {
+		return _fragmentEntryLinkLocalService.getFragmentEntryLinksByUuidAndCompanyId(uuid,
+			companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -310,17 +387,35 @@ public class FragmentEntryLinkLocalServiceWrapper
 
 	@Override
 	public com.liferay.fragment.model.FragmentEntryLink updateFragmentEntryLink(
+		long userId, long fragmentEntryLinkId,
+		long originalFragmentEntryLinkId, long fragmentEntryId,
+		long classNameId, long classPK, java.lang.String css,
+		java.lang.String html, java.lang.String js,
+		java.lang.String editableValues, int position,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _fragmentEntryLinkLocalService.updateFragmentEntryLink(userId,
+			fragmentEntryLinkId, originalFragmentEntryLinkId, fragmentEntryId,
+			classNameId, classPK, css, html, js, editableValues, position,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.fragment.model.FragmentEntryLink updateFragmentEntryLink(
 		long fragmentEntryLinkId, java.lang.String editableValues) {
 		return _fragmentEntryLinkLocalService.updateFragmentEntryLink(fragmentEntryLinkId,
 			editableValues);
 	}
 
 	@Override
-	public void updateFragmentEntryLinks(long groupId, long classNameId,
-		long classPK, long[] fragmentEntryIds, java.lang.String editableValues)
-		throws com.liferay.portal.kernel.json.JSONException {
-		_fragmentEntryLinkLocalService.updateFragmentEntryLinks(groupId,
-			classNameId, classPK, fragmentEntryIds, editableValues);
+	public void updateFragmentEntryLinks(long userId, long groupId,
+		long classNameId, long classPK, long[] fragmentEntryIds,
+		java.lang.String editableValues,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_fragmentEntryLinkLocalService.updateFragmentEntryLinks(userId,
+			groupId, classNameId, classPK, fragmentEntryIds, editableValues,
+			serviceContext);
 	}
 
 	@Override

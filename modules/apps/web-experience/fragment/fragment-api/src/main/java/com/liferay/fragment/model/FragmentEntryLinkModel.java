@@ -22,9 +22,14 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedAuditedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
+
+import java.util.Date;
 
 /**
  * The base model interface for the FragmentEntryLink service. Represents a row in the &quot;FragmentEntryLink&quot; database table, with each column mapped to a property of this class.
@@ -41,7 +46,7 @@ import java.io.Serializable;
  */
 @ProviderType
 public interface FragmentEntryLinkModel extends AttachedModel,
-	BaseModel<FragmentEntryLink> {
+	BaseModel<FragmentEntryLink>, GroupedModel, ShardedModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -63,6 +68,23 @@ public interface FragmentEntryLinkModel extends AttachedModel,
 	public void setPrimaryKey(long primaryKey);
 
 	/**
+	 * Returns the uuid of this fragment entry link.
+	 *
+	 * @return the uuid of this fragment entry link
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this fragment entry link.
+	 *
+	 * @param uuid the uuid of this fragment entry link
+	 */
+	@Override
+	public void setUuid(String uuid);
+
+	/**
 	 * Returns the fragment entry link ID of this fragment entry link.
 	 *
 	 * @return the fragment entry link ID of this fragment entry link
@@ -81,6 +103,7 @@ public interface FragmentEntryLinkModel extends AttachedModel,
 	 *
 	 * @return the group ID of this fragment entry link
 	 */
+	@Override
 	public long getGroupId();
 
 	/**
@@ -88,7 +111,105 @@ public interface FragmentEntryLinkModel extends AttachedModel,
 	 *
 	 * @param groupId the group ID of this fragment entry link
 	 */
+	@Override
 	public void setGroupId(long groupId);
+
+	/**
+	 * Returns the company ID of this fragment entry link.
+	 *
+	 * @return the company ID of this fragment entry link
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this fragment entry link.
+	 *
+	 * @param companyId the company ID of this fragment entry link
+	 */
+	@Override
+	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the user ID of this fragment entry link.
+	 *
+	 * @return the user ID of this fragment entry link
+	 */
+	@Override
+	public long getUserId();
+
+	/**
+	 * Sets the user ID of this fragment entry link.
+	 *
+	 * @param userId the user ID of this fragment entry link
+	 */
+	@Override
+	public void setUserId(long userId);
+
+	/**
+	 * Returns the user uuid of this fragment entry link.
+	 *
+	 * @return the user uuid of this fragment entry link
+	 */
+	@Override
+	public String getUserUuid();
+
+	/**
+	 * Sets the user uuid of this fragment entry link.
+	 *
+	 * @param userUuid the user uuid of this fragment entry link
+	 */
+	@Override
+	public void setUserUuid(String userUuid);
+
+	/**
+	 * Returns the user name of this fragment entry link.
+	 *
+	 * @return the user name of this fragment entry link
+	 */
+	@AutoEscape
+	@Override
+	public String getUserName();
+
+	/**
+	 * Sets the user name of this fragment entry link.
+	 *
+	 * @param userName the user name of this fragment entry link
+	 */
+	@Override
+	public void setUserName(String userName);
+
+	/**
+	 * Returns the create date of this fragment entry link.
+	 *
+	 * @return the create date of this fragment entry link
+	 */
+	@Override
+	public Date getCreateDate();
+
+	/**
+	 * Sets the create date of this fragment entry link.
+	 *
+	 * @param createDate the create date of this fragment entry link
+	 */
+	@Override
+	public void setCreateDate(Date createDate);
+
+	/**
+	 * Returns the modified date of this fragment entry link.
+	 *
+	 * @return the modified date of this fragment entry link
+	 */
+	@Override
+	public Date getModifiedDate();
+
+	/**
+	 * Sets the modified date of this fragment entry link.
+	 *
+	 * @param modifiedDate the modified date of this fragment entry link
+	 */
+	@Override
+	public void setModifiedDate(Date modifiedDate);
 
 	/**
 	 * Returns the original fragment entry link ID of this fragment entry link.

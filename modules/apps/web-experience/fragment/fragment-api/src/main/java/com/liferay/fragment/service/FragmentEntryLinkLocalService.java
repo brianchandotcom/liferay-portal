@@ -16,20 +16,25 @@ package com.liferay.fragment.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+
 import com.liferay.fragment.model.FragmentEntryLink;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -72,16 +77,18 @@ public interface FragmentEntryLinkLocalService extends BaseLocalService,
 	public FragmentEntryLink addFragmentEntryLink(
 		FragmentEntryLink fragmentEntryLink);
 
-	public FragmentEntryLink addFragmentEntryLink(long groupId,
+	public FragmentEntryLink addFragmentEntryLink(long userId, long groupId,
 		long originalFragmentEntryLinkId, long fragmentEntryId,
 		long classNameId, long classPK, java.lang.String css,
 		java.lang.String html, java.lang.String js,
-		java.lang.String editableValues, int position);
+		java.lang.String editableValues, int position,
+		ServiceContext serviceContext) throws PortalException;
 
-	public FragmentEntryLink addFragmentEntryLink(long groupId,
+	public FragmentEntryLink addFragmentEntryLink(long userId, long groupId,
 		long fragmentEntryId, long classNameId, long classPK,
 		java.lang.String css, java.lang.String html, java.lang.String js,
-		java.lang.String editableValues, int position);
+		java.lang.String editableValues, int position,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new fragment entry link with the primary key. Does not add the fragment entry link to the database.
@@ -98,6 +105,7 @@ public interface FragmentEntryLinkLocalService extends BaseLocalService,
 	* @return the fragment entry link that was removed
 	*/
 	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public FragmentEntryLink deleteFragmentEntryLink(
 		FragmentEntryLink fragmentEntryLink);
 
@@ -111,6 +119,8 @@ public interface FragmentEntryLinkLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public FragmentEntryLink deleteFragmentEntryLink(long fragmentEntryLinkId)
 		throws PortalException;
+
+	public void deleteFragmentEntryLinks(long groupId);
 
 	public List<FragmentEntryLink> deleteLayoutPageTemplateEntryFragmentEntryLinks(
 		long groupId, long classNameId, long classPK);
@@ -184,8 +194,23 @@ public interface FragmentEntryLinkLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FragmentEntryLink fetchFragmentEntryLink(long fragmentEntryLinkId);
 
+	/**
+	* Returns the fragment entry link matching the UUID and group.
+	*
+	* @param uuid the fragment entry link's UUID
+	* @param groupId the primary key of the group
+	* @return the matching fragment entry link, or <code>null</code> if a matching fragment entry link could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FragmentEntryLink fetchFragmentEntryLinkByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	/**
 	* Returns the fragment entry link with the primary key.
@@ -197,6 +222,18 @@ public interface FragmentEntryLinkLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FragmentEntryLink getFragmentEntryLink(long fragmentEntryLinkId)
 		throws PortalException;
+
+	/**
+	* Returns the fragment entry link matching the UUID and group.
+	*
+	* @param uuid the fragment entry link's UUID
+	* @param groupId the primary key of the group
+	* @return the matching fragment entry link
+	* @throws PortalException if a matching fragment entry link could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FragmentEntryLink getFragmentEntryLinkByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the fragment entry links.
@@ -215,6 +252,32 @@ public interface FragmentEntryLinkLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentEntryLink> getFragmentEntryLinks(long groupId,
 		long classNameId, long classPK);
+
+	/**
+	* Returns all the fragment entry links matching the UUID and company.
+	*
+	* @param uuid the UUID of the fragment entry links
+	* @param companyId the primary key of the company
+	* @return the matching fragment entry links, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentEntryLink> getFragmentEntryLinksByUuidAndCompanyId(
+		java.lang.String uuid, long companyId);
+
+	/**
+	* Returns a range of fragment entry links matching the UUID and company.
+	*
+	* @param uuid the UUID of the fragment entry links
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of fragment entry links
+	* @param end the upper bound of the range of fragment entry links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching fragment entry links, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentEntryLink> getFragmentEntryLinksByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		OrderByComparator<FragmentEntryLink> orderByComparator);
 
 	/**
 	* Returns the number of fragment entry links.
@@ -252,10 +315,18 @@ public interface FragmentEntryLinkLocalService extends BaseLocalService,
 	public FragmentEntryLink updateFragmentEntryLink(long fragmentEntryLinkId,
 		int position);
 
+	public FragmentEntryLink updateFragmentEntryLink(long userId,
+		long fragmentEntryLinkId, long originalFragmentEntryLinkId,
+		long fragmentEntryId, long classNameId, long classPK,
+		java.lang.String css, java.lang.String html, java.lang.String js,
+		java.lang.String editableValues, int position,
+		ServiceContext serviceContext) throws PortalException;
+
 	public FragmentEntryLink updateFragmentEntryLink(long fragmentEntryLinkId,
 		java.lang.String editableValues);
 
-	public void updateFragmentEntryLinks(long groupId, long classNameId,
-		long classPK, long[] fragmentEntryIds, java.lang.String editableValues)
-		throws JSONException;
+	public void updateFragmentEntryLinks(long userId, long groupId,
+		long classNameId, long classPK, long[] fragmentEntryIds,
+		java.lang.String editableValues, ServiceContext serviceContext)
+		throws PortalException;
 }

@@ -28,12 +28,14 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -54,6 +56,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -121,7 +124,19 @@ public class FragmentEntryLinkPersistenceTest {
 
 		FragmentEntryLink newFragmentEntryLink = _persistence.create(pk);
 
+		newFragmentEntryLink.setUuid(RandomTestUtil.randomString());
+
 		newFragmentEntryLink.setGroupId(RandomTestUtil.nextLong());
+
+		newFragmentEntryLink.setCompanyId(RandomTestUtil.nextLong());
+
+		newFragmentEntryLink.setUserId(RandomTestUtil.nextLong());
+
+		newFragmentEntryLink.setUserName(RandomTestUtil.randomString());
+
+		newFragmentEntryLink.setCreateDate(RandomTestUtil.nextDate());
+
+		newFragmentEntryLink.setModifiedDate(RandomTestUtil.nextDate());
 
 		newFragmentEntryLink.setOriginalFragmentEntryLinkId(RandomTestUtil.nextLong());
 
@@ -145,10 +160,24 @@ public class FragmentEntryLinkPersistenceTest {
 
 		FragmentEntryLink existingFragmentEntryLink = _persistence.findByPrimaryKey(newFragmentEntryLink.getPrimaryKey());
 
+		Assert.assertEquals(existingFragmentEntryLink.getUuid(),
+			newFragmentEntryLink.getUuid());
 		Assert.assertEquals(existingFragmentEntryLink.getFragmentEntryLinkId(),
 			newFragmentEntryLink.getFragmentEntryLinkId());
 		Assert.assertEquals(existingFragmentEntryLink.getGroupId(),
 			newFragmentEntryLink.getGroupId());
+		Assert.assertEquals(existingFragmentEntryLink.getCompanyId(),
+			newFragmentEntryLink.getCompanyId());
+		Assert.assertEquals(existingFragmentEntryLink.getUserId(),
+			newFragmentEntryLink.getUserId());
+		Assert.assertEquals(existingFragmentEntryLink.getUserName(),
+			newFragmentEntryLink.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingFragmentEntryLink.getCreateDate()),
+			Time.getShortTimestamp(newFragmentEntryLink.getCreateDate()));
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingFragmentEntryLink.getModifiedDate()),
+			Time.getShortTimestamp(newFragmentEntryLink.getModifiedDate()));
 		Assert.assertEquals(existingFragmentEntryLink.getOriginalFragmentEntryLinkId(),
 			newFragmentEntryLink.getOriginalFragmentEntryLinkId());
 		Assert.assertEquals(existingFragmentEntryLink.getFragmentEntryId(),
@@ -167,6 +196,33 @@ public class FragmentEntryLinkPersistenceTest {
 			newFragmentEntryLink.getEditableValues());
 		Assert.assertEquals(existingFragmentEntryLink.getPosition(),
 			newFragmentEntryLink.getPosition());
+	}
+
+	@Test
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid("");
+
+		_persistence.countByUuid("null");
+
+		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUUID_G() throws Exception {
+		_persistence.countByUUID_G("", RandomTestUtil.nextLong());
+
+		_persistence.countByUUID_G("null", 0L);
+
+		_persistence.countByUUID_G((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C("null", 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -215,11 +271,13 @@ public class FragmentEntryLinkPersistenceTest {
 	}
 
 	protected OrderByComparator<FragmentEntryLink> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("FragmentEntryLink",
-			"fragmentEntryLinkId", true, "groupId", true,
-			"originalFragmentEntryLinkId", true, "fragmentEntryId", true,
-			"classNameId", true, "classPK", true, "css", true, "html", true,
-			"js", true, "editableValues", true, "position", true);
+		return OrderByComparatorFactoryUtil.create("FragmentEntryLink", "uuid",
+			true, "fragmentEntryLinkId", true, "groupId", true, "companyId",
+			true, "userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "originalFragmentEntryLinkId", true,
+			"fragmentEntryId", true, "classNameId", true, "classPK", true,
+			"css", true, "html", true, "js", true, "editableValues", true,
+			"position", true);
 	}
 
 	@Test
@@ -416,13 +474,41 @@ public class FragmentEntryLinkPersistenceTest {
 		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		FragmentEntryLink newFragmentEntryLink = addFragmentEntryLink();
+
+		_persistence.clearCache();
+
+		FragmentEntryLink existingFragmentEntryLink = _persistence.findByPrimaryKey(newFragmentEntryLink.getPrimaryKey());
+
+		Assert.assertTrue(Objects.equals(existingFragmentEntryLink.getUuid(),
+				ReflectionTestUtil.invoke(existingFragmentEntryLink,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingFragmentEntryLink.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingFragmentEntryLink,
+				"getOriginalGroupId", new Class<?>[0]));
+	}
+
 	protected FragmentEntryLink addFragmentEntryLink()
 		throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		FragmentEntryLink fragmentEntryLink = _persistence.create(pk);
 
+		fragmentEntryLink.setUuid(RandomTestUtil.randomString());
+
 		fragmentEntryLink.setGroupId(RandomTestUtil.nextLong());
+
+		fragmentEntryLink.setCompanyId(RandomTestUtil.nextLong());
+
+		fragmentEntryLink.setUserId(RandomTestUtil.nextLong());
+
+		fragmentEntryLink.setUserName(RandomTestUtil.randomString());
+
+		fragmentEntryLink.setCreateDate(RandomTestUtil.nextDate());
+
+		fragmentEntryLink.setModifiedDate(RandomTestUtil.nextDate());
 
 		fragmentEntryLink.setOriginalFragmentEntryLinkId(RandomTestUtil.nextLong());
 

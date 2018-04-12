@@ -68,10 +68,11 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 		if (fragmentEntry != null) {
 			FragmentEntryLink fragmentEntryLink =
 				_fragmentEntryLinkLocalService.addFragmentEntryLink(
+					serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(), fragmentEntryId,
 					classNameId, classPK, fragmentEntry.getCss(),
 					fragmentEntry.getHtml(), fragmentEntry.getJs(), null,
-					position);
+					position, serviceContext);
 
 			jsonObject.put(
 				"fragmentEntryLinkId",

@@ -61,9 +61,9 @@ public class EditLayoutFragmentsMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest);
 
 		_fragmentEntryLinkLocalService.updateFragmentEntryLinks(
-			serviceContext.getScopeGroupId(),
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			_portal.getClassNameId(Layout.class), plid, fragmentIds,
-			editableValues);
+			editableValues, serviceContext);
 
 		hideDefaultSuccessMessage(actionRequest);
 

@@ -64,13 +64,22 @@ else {
 	}
 </style>
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-filters>
-		<li>
-			<liferay-item-selector:search />
-		</li>
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
+<%
+PortletURL searchBaseURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
+
+searchBaseURL.setParameter("resetCur", Boolean.TRUE.toString());
+
+String searchURL = HttpUtil.removeParameter(searchBaseURL.toString(), liferayPortletResponse.getNamespace() + "keywords");
+%>
+
+<clay:management-toolbar
+	clearResultsURL="<%= searchURL %>"
+	namespace="<%= renderResponse.getNamespace() %>"
+	searchActionURL="<%= searchURL %>"
+	selectable="<%= false %>"
+	showCreationMenu="<%= false %>"
+	totalItems="<%= wikiPagesSearchContainer.getTotal() %>"
+/>
 
 <div class="container-fluid-1280 lfr-item-viewer" id="<portlet:namespace />wikiPagesSelectorContainer">
 	<liferay-ui:search-container

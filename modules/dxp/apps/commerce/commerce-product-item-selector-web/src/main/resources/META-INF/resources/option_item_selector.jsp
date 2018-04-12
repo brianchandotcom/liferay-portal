@@ -44,9 +44,17 @@ PortletURL portletURL = cpOptionItemSelectorViewDisplayContext.getPortletURL();
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= cpOptionItemSelectorViewDisplayContext.getOrderByCol() %>"
 			orderByType="<%= cpOptionItemSelectorViewDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"title"} %>'
+			orderColumns='<%= new String[] {"modified-date", "title"} %>'
 			portletURL="<%= portletURL %>"
 		/>
+
+		<li>
+			<aui:form action="<%= String.valueOf(portletURL) %>" name="searchFm">
+				<liferay-ui:input-search
+					markupView="lexicon"
+				/>
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 
@@ -70,35 +78,6 @@ PortletURL portletURL = cpOptionItemSelectorViewDisplayContext.getPortletURL();
 				</div>
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="author"
-				property="userName"
-			/>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="use-in-faceted-navigation"
-				property="facetable"
-			/>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				property="required"
-			/>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="sku-contributor"
-				property="skuContributor"
-			/>
-
-			<liferay-ui:search-container-column-date
-				cssClass="table-cell-content"
-				name="create-date"
-				property="createDate"
-			/>
-
 			<liferay-ui:search-container-column-date
 				cssClass="table-cell-content"
 				name="modified-date"
@@ -109,11 +88,6 @@ PortletURL portletURL = cpOptionItemSelectorViewDisplayContext.getPortletURL();
 		<liferay-ui:search-iterator
 			displayStyle="<%= displayStyle %>"
 			markupView="lexicon"
-			searchContainer="<%= cpOptionSearchContainer %>"
-		/>
-
-		<liferay-ui:search-paginator
-			searchContainer="<%= cpOptionSearchContainer %>"
 		/>
 	</liferay-ui:search-container>
 </div>

@@ -25,8 +25,8 @@ UADEntityDisplay uadEntityDisplay = (UADEntityDisplay)request.getAttribute(UADWe
 	<c:choose>
 		<c:when test="<%= ListUtil.isEmpty(uadEntities) %>">
 			<div class="sidebar-header">
-				<h2 class="sidebar-title"><%= uadEntityDisplay.getTypeName() %></h2>
-				<h4 class="sidebar-subtitle"><%= uadEntityDisplay.getApplicationName() %></h4>
+				<h3 class="sidebar-title"><%= uadEntityDisplay.getTypeName() %></h3>
+				<h5 class="sidebar-subtitle"><%= uadEntityDisplay.getApplicationName() %></h5>
 			</div>
 		</c:when>
 		<c:when test="<%= ListUtil.isNotEmpty(uadEntities) && (uadEntities.size() == 1) %>">
@@ -47,13 +47,13 @@ UADEntityDisplay uadEntityDisplay = (UADEntityDisplay)request.getAttribute(UADWe
 					</li>
 				</ul>
 
-				<h2 class="sidebar-title"><%= StringUtil.shorten(String.valueOf(displayValues.get(identifierFieldName)), 200) %></h2>
+				<h3 class="sidebar-title"><%= StringUtil.shorten(String.valueOf(displayValues.get(identifierFieldName)), 200) %></h3>
 
-				<h4 class="sidebar-subtitle"><%= uadEntityDisplay.getTypeName() %></h4>
+				<h5 class="sidebar-subtitle"><%= uadEntityDisplay.getTypeName() %></h5>
 			</div>
 
 			<div class="sidebar-body">
-				<dl class="sidebar-dl sidebar-section sidebar-block">
+				<dl class="sidebar-block sidebar-dl sidebar-section">
 
 					<%
 					for (Map.Entry<String, Object> entry : displayValues.entrySet()) {
@@ -74,8 +74,8 @@ UADEntityDisplay uadEntityDisplay = (UADEntityDisplay)request.getAttribute(UADWe
 		</c:when>
 		<c:when test="<%= ListUtil.isNotEmpty(uadEntities) && (uadEntities.size() > 1) %>">
 			<div class="sidebar-header">
-				<h2 class="sidebar-title"><%= uadEntityDisplay.getTypeName() %></h2>
-				<h4 class="sidebar-subtitle"><%= uadEntities.size() %> items are selected.</h4>
+				<h3 class="sidebar-title"><%= uadEntityDisplay.getTypeName() %></h3>
+				<h5 class="sidebar-subtitle"><%= uadEntities.size() %> items are selected.</h5>
 			</div>
 		</c:when>
 	</c:choose>

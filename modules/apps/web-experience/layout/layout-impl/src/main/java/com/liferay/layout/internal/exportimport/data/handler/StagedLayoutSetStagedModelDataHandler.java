@@ -323,6 +323,10 @@ public class StagedLayoutSetStagedModelDataHandler
 
 		updateShowSiteName(portletDataContext, importedStagedLayoutSet);
 
+		// Show search header
+
+		updateShowSearchHeader(portletDataContext, importedStagedLayoutSet);
+
 		// Last merge time
 
 		updateLastMergeTime(portletDataContext, modifiedLayouts);
@@ -697,6 +701,37 @@ public class StagedLayoutSetStagedModelDataHandler
 			}
 
 			_layoutLocalService.updateLayout(layout);
+		}
+	}
+
+	protected void updateShowSearchHeader(
+			PortletDataContext portletDataContext,
+			StagedLayoutSet importedLayoutSet)
+		throws PortalException {
+
+		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
+			portletDataContext.getGroupId(),
+			portletDataContext.isPrivateLayout());
+
+		UnicodeProperties importedSettingsProperties =
+			importedLayoutSet.getSettingsProperties();
+
+		boolean showSearchHeader = GetterUtil.getBoolean(
+			importedSettingsProperties.getProperty(
+				"lfr-theme:regular:show-header-search"));
+
+		UnicodeProperties settingsProperties =
+			layoutSet.getSettingsProperties();
+
+		String mergeFailFriendlyURLLayouts = settingsProperties.getProperty(
+			Sites.MERGE_FAIL_FRIENDLY_URL_LAYOUTS);
+
+		if (Validator.isNull(mergeFailFriendlyURLLayouts)) {
+			settingsProperties.setProperty(
+				"lfr-theme:regular:show-header-search",
+				String.valueOf(showSearchHeader));
+
+			_layoutSetLocalService.updateLayoutSet(layoutSet);
 		}
 	}
 

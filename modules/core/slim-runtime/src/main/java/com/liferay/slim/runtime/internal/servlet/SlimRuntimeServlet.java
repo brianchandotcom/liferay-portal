@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.PortalServiceUpgrade;
+import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
@@ -155,13 +156,13 @@ public class SlimRuntimeServlet extends HttpServlet {
 
 		DBUpgrader.checkRequiredBuildNumber(ReleaseInfo.getParentBuildNumber());
 
-		if (!PortalServiceUpgrade.isInRequiredSchemaVersion(
+		if (!PortalUpgradeProcess.isInRequiredSchemaVersion(
 				DataAccess.getConnection())) {
 
 			String msg =
 				"You must first upgrade the portal to the required schema " +
 					"version " +
-						PortalServiceUpgrade.getRequiredSchemaVersion();
+						PortalUpgradeProcess.getRequiredSchemaVersion();
 
 			System.out.println(msg);
 

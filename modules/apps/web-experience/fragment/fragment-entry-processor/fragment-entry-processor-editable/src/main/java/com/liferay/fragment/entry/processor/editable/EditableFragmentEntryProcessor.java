@@ -124,6 +124,24 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		return document;
 	}
 
+	private void _validateAttribute(Element element, String attribute)
+		throws FragmentEntryContentException {
+
+		if (element.hasAttr(attribute)) {
+			return;
+		}
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", getClass());
+
+		throw new FragmentEntryContentException(
+			LanguageUtil.format(
+				resourceBundle,
+				"you-must-define-all-require-attributes-x-for-each-editable-" +
+					"element",
+				String.join(StringPool.COMMA, _REQUIRED_ATTRIBUTES)));
+	}
+
 	private void _validateDuplicatedIds(String html)
 		throws FragmentEntryContentException {
 
@@ -161,19 +179,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		for (Element element : document.getElementsByTag("lfr-editable")) {
 			for (String attribute : _REQUIRED_ATTRIBUTES) {
-				if (element.hasAttr(attribute)) {
-					continue;
-				}
-
-				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-					"content.Language", getClass());
-
-				throw new FragmentEntryContentException(
-					LanguageUtil.format(
-						resourceBundle,
-						"you-must-define-all-require-attributes-x-for-each-" +
-							"editable-element",
-						String.join(StringPool.COMMA, _REQUIRED_ATTRIBUTES)));
+				_validateAttribute(element, attribute);
 			}
 		}
 	}

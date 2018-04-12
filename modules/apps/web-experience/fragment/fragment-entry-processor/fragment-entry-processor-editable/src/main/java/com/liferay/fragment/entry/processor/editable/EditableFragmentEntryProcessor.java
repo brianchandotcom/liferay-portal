@@ -181,7 +181,28 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			for (String attribute : _REQUIRED_ATTRIBUTES) {
 				_validateAttribute(element, attribute);
 			}
+
+			_validateValidType(element);
 		}
+	}
+
+	private void _validateValidType(Element element)
+		throws FragmentEntryContentException {
+
+		EditableElementParser editableElementParser =
+			_editableElementParsers.get(element.attr("type"));
+
+		if (editableElementParser != null) {
+			return;
+		}
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", getClass());
+
+		throw new FragmentEntryContentException(
+			LanguageUtil.get(
+				resourceBundle,
+				"you-must-define-a-valid-type-for-each-editable-element"));
 	}
 
 	private static final String[] _REQUIRED_ATTRIBUTES = {"id", "type"};

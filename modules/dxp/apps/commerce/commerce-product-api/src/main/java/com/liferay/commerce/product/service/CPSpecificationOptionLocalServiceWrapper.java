@@ -344,6 +344,21 @@ public class CPSpecificationOptionLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.search.Hits search(
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return _cpSpecificationOptionLocalService.search(searchContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPSpecificationOption> searchCPSpecificationOptions(
+		long companyId, long groupId, java.lang.String keywords, int start,
+		int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpSpecificationOptionLocalService.searchCPSpecificationOptions(companyId,
+			groupId, keywords, start, end, sort);
+	}
+
+	@Override
 	public com.liferay.commerce.product.model.CPSpecificationOption updateCPOptionCategoryId(
 		long cpSpecificationOptionId, long cpOptionCategoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {

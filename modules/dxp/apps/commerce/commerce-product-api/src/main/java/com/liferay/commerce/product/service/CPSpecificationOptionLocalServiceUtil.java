@@ -325,6 +325,20 @@ public class CPSpecificationOptionLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static com.liferay.portal.kernel.search.Hits search(
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return getService().search(searchContext);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPSpecificationOption> searchCPSpecificationOptions(
+		long companyId, long groupId, java.lang.String keywords, int start,
+		int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchCPSpecificationOptions(companyId, groupId, keywords,
+			start, end, sort);
+	}
+
 	public static com.liferay.commerce.product.model.CPSpecificationOption updateCPOptionCategoryId(
 		long cpSpecificationOptionId, long cpOptionCategoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {

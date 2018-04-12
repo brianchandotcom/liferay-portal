@@ -87,6 +87,15 @@ public class CPSpecificationOptionServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPSpecificationOption> searchCPSpecificationOptions(
+		long companyId, long groupId, java.lang.String keywords, int start,
+		int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchCPSpecificationOptions(companyId, groupId, keywords,
+			start, end, sort);
+	}
+
 	public static com.liferay.commerce.product.model.CPSpecificationOption updateCPSpecificationOption(
 		long cpSpecificationOptionId, long cpOptionCategoryId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,

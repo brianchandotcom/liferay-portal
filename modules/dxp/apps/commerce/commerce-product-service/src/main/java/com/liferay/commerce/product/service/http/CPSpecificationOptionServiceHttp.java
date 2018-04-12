@@ -93,13 +93,48 @@ public class CPSpecificationOptionServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPSpecificationOption> searchCPSpecificationOptions(
+		HttpPrincipal httpPrincipal, long companyId, long groupId,
+		java.lang.String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CPSpecificationOptionServiceUtil.class,
+					"searchCPSpecificationOptions",
+					_searchCPSpecificationOptionsParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					companyId, groupId, keywords, start, end, sort);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPSpecificationOption>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static void deleteCPSpecificationOption(
 		HttpPrincipal httpPrincipal, long cpSpecificationOptionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPSpecificationOptionServiceUtil.class,
 					"deleteCPSpecificationOption",
-					_deleteCPSpecificationOptionParameterTypes1);
+					_deleteCPSpecificationOptionParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpSpecificationOptionId);
@@ -128,7 +163,7 @@ public class CPSpecificationOptionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CPSpecificationOptionServiceUtil.class,
 					"getCPSpecificationOption",
-					_getCPSpecificationOptionParameterTypes2);
+					_getCPSpecificationOptionParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpSpecificationOptionId);
@@ -162,7 +197,7 @@ public class CPSpecificationOptionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CPSpecificationOptionServiceUtil.class,
 					"getCPSpecificationOptions",
-					_getCPSpecificationOptionsParameterTypes3);
+					_getCPSpecificationOptionsParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					start, end, orderByComparator);
@@ -194,7 +229,7 @@ public class CPSpecificationOptionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CPSpecificationOptionServiceUtil.class,
 					"getCPSpecificationOptionsCount",
-					_getCPSpecificationOptionsCountParameterTypes4);
+					_getCPSpecificationOptionsCountParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -227,7 +262,7 @@ public class CPSpecificationOptionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CPSpecificationOptionServiceUtil.class,
 					"updateCPSpecificationOption",
-					_updateCPSpecificationOptionParameterTypes5);
+					_updateCPSpecificationOptionParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpSpecificationOptionId, cpOptionCategoryId, titleMap,
@@ -261,19 +296,24 @@ public class CPSpecificationOptionServiceHttp {
 			java.lang.String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _deleteCPSpecificationOptionParameterTypes1 = new Class[] {
+	private static final Class<?>[] _searchCPSpecificationOptionsParameterTypes1 =
+		new Class[] {
+			long.class, long.class, java.lang.String.class, int.class, int.class,
+			com.liferay.portal.kernel.search.Sort.class
+		};
+	private static final Class<?>[] _deleteCPSpecificationOptionParameterTypes2 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCPSpecificationOptionParameterTypes2 = new Class[] {
+	private static final Class<?>[] _getCPSpecificationOptionParameterTypes3 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCPSpecificationOptionsParameterTypes3 = new Class[] {
+	private static final Class<?>[] _getCPSpecificationOptionsParameterTypes4 = new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getCPSpecificationOptionsCountParameterTypes4 =
+	private static final Class<?>[] _getCPSpecificationOptionsCountParameterTypes5 =
 		new Class[] { long.class };
-	private static final Class<?>[] _updateCPSpecificationOptionParameterTypes5 = new Class[] {
+	private static final Class<?>[] _updateCPSpecificationOptionParameterTypes6 = new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
 			boolean.class, java.lang.String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class

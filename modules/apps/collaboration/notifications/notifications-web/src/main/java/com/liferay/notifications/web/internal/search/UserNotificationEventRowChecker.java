@@ -33,7 +33,7 @@ public class UserNotificationEventRowChecker extends EmptyOnClickRowChecker {
 		UserNotificationEvent userNotificationEvent =
 			(UserNotificationEvent)obj;
 
-		if (!userNotificationEvent.isArchived()) {
+		if (userNotificationEvent.getActionRequired()) {
 			return true;
 		}
 

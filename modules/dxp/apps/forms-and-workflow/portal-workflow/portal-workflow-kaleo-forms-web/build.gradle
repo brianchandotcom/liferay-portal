@@ -10,8 +10,6 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	compileOnly project(":apps:forms-and-workflow:dynamic-data-lists:dynamic-data-lists-api")
 	compileOnly project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
-	compileOnly project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-io")
-	compileOnly project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-service")
 	compileOnly project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-taglib")
 	compileOnly project(":apps:forms-and-workflow:portal-workflow:portal-workflow-kaleo-api")
 	compileOnly project(":apps:forms-and-workflow:portal-workflow:portal-workflow-kaleo-definition-api")

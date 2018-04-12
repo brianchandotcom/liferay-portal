@@ -547,7 +547,7 @@ AUI.add(
 							id: 'cancelFieldChangesDialog',
 							labelHTML: Liferay.Language.get('yes-cancel'),
 							title: Liferay.Language.get('cancel-field-changes-question'),
-							width: 300
+							width: 320
 						};
 
 						FormBuilderConfirmDialog.open(config);
@@ -562,7 +562,7 @@ AUI.add(
 							id: 'deleteFieldDialog',
 							labelHTML: Liferay.Language.get('yes-delete'),
 							title: Liferay.Language.get('delete-field-dialog-title'),
-							width: 300
+							width: 320
 						};
 
 						FormBuilderConfirmDialog.open(config);

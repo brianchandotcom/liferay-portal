@@ -42,4 +42,22 @@
 		max-width: 210px;
 		padding-top: 232px;
 	}
+
+	.taglib-empty-state {
+		background-image: url(@theme_image_path@/states/empty_state.gif);
+		max-width: 250px;
+		padding-top: 280px;
+	}
+
+	.taglib-success-state {
+		background-image: url(@theme_image_path@/states/success_state.gif);
+		max-width: 250px;
+		padding-top: 280px;
+	}
+
+	.taglib-search-state {
+		background-image: url(@theme_image_path@/states/search_state.gif);
+		max-width: 250px;
+		padding-top: 280px;
+	}
 }

@@ -182,7 +182,7 @@ public class ReleaseVersionsTest {
 
 			sb.append(masterVersionPath.getFileName());
 
-			sb.append(") must be a major version greater than the 'release' ");
+			sb.append(") must be 1 major version greater than the 'release' ");
 			sb.append("branch (");
 			sb.append(releaseVersion);
 			sb.append(", defined in ");

@@ -31,16 +31,14 @@ UADExportProcessDisplayContext uadExportProcessDisplayContext = new UADExportPro
 		<liferay-ui:search-container-column-text
 			cssClass="autofit-col-expand"
 		>
-			<div>
-				<h5>
-					<liferay-ui:message key="<%= backgroundTask.getName() %>" />
-				</h5>
+			<h5>
+				<liferay-ui:message key="<%= backgroundTask.getName() %>" />
+			</h5>
 
-				<clay:label
-					label="<%= LanguageUtil.get(request, backgroundTask.getStatusLabel()) %>"
-					style="<%= UADExportProcessUtil.getStatusStyle(backgroundTask.getStatus()) %>"
-				/>
-			</div>
+			<clay:label
+				label="<%= LanguageUtil.get(request, backgroundTask.getStatusLabel()) %>"
+				style="<%= UADExportProcessUtil.getStatusStyle(backgroundTask.getStatus()) %>"
+			/>
 		</liferay-ui:search-container-column-text>
 
 		<%

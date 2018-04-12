@@ -559,7 +559,7 @@ AUI.add(
 
 								ratingThumbDown.attr('title', thumbDownMessage);
 
-								ratingThumbDown.html(Liferay.Util.getLexiconIconTpl('thumbs-down') + thumbScore.negativeVotes);
+								ratingThumbDown.one('.votes').html(thumbScore.negativeVotes);
 							}
 
 							if (ratingThumbDown && ratingThumbUpCssClassOn) {
@@ -578,7 +578,7 @@ AUI.add(
 							if (ratingThumbUp) {
 								ratingThumbUp.attr('title', thumbUpMessage);
 
-								ratingThumbUp.html(Liferay.Util.getLexiconIconTpl('thumbs-up') + thumbScore.positiveVotes);
+								ratingThumbUp.one('.votes').html(thumbScore.positiveVotes);
 							}
 						}
 					}

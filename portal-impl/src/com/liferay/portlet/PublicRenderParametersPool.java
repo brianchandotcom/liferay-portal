@@ -35,17 +35,6 @@ import javax.servlet.http.HttpSession;
  */
 public class PublicRenderParametersPool {
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #get(HttpServletRequest,
-	 *             long)}
-	 */
-	@Deprecated
-	public static Map<String, String[]> get(
-		HttpServletRequest request, long plid, boolean warFile) {
-
-		return get(request, plid);
-	}
-
 	protected static Map<String, String[]> get(
 		HttpServletRequest request, long plid) {
 

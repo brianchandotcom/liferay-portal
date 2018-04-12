@@ -689,18 +689,6 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 		setPlid(portletRequestImpl.getPlid());
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #init(PortletRequestImpl,
-	 *             HttpServletResponse)}
-	 */
-	@Deprecated
-	protected void init(
-		PortletRequestImpl portletRequestImpl, HttpServletResponse response,
-		String portletName, long companyId, long plid) {
-
-		init(portletRequestImpl, response);
-	}
-
 	protected String portletName;
 	protected PortletRequestImpl portletRequestImpl;
 	protected HttpServletResponse response;

@@ -91,7 +91,7 @@ public class PortletServletResponse extends HttpServletResponseWrapper {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 7.0.0, due to deprecation in Servlet API 2.1
 	 */
 	@Deprecated
 	@Override
@@ -105,7 +105,7 @@ public class PortletServletResponse extends HttpServletResponseWrapper {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 7.0.0, due to deprecation in Servlet API 2.1
 	 */
 	@Deprecated
 	@Override
@@ -377,7 +377,7 @@ public class PortletServletResponse extends HttpServletResponseWrapper {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 7.0.0, due to deprecation in Servlet API 2.1
 	 */
 	@Deprecated
 	@Override

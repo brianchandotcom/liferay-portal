@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import java.io.Serializable;
 
-import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
 
@@ -78,22 +77,6 @@ public interface LiferayPortletURL
 	public String getPortletId();
 
 	public Set<String> getRemovedParameterNames();
-
-	/**
-	 * Returns the map of reserved parameters for this URL.
-	 *
-	 * <p>
-	 * This method is only used internally. Reserved parameters contain special,
-	 * Liferay specific information, such as <code>p_p_id</code> and
-	 * <code>p_p_lifecycle</code>.
-	 * </p>
-	 *
-	 * @return     the reserved parameter names and values in a read-only map
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #visitReservedParameters(BiConsumer)}
-	 */
-	@Deprecated
-	public Map<String, String> getReservedParameterMap();
 
 	/**
 	 * Returns the ID of this URL's target resource.

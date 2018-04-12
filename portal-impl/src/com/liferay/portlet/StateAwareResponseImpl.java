@@ -277,20 +277,6 @@ public abstract class StateAwareResponseImpl
 		_calledSetRenderParameter = true;
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #init(PortletRequestImpl,
-	 *             HttpServletResponse, User, Layout)}
-	 */
-	@Deprecated
-	protected void init(
-			PortletRequestImpl portletRequestImpl, HttpServletResponse response,
-			String portletName, User user, Layout layout,
-			WindowState windowState, PortletMode portletMode)
-		throws PortletModeException, WindowStateException {
-
-		init(portletRequestImpl, response, user, layout, true);
-	}
-
 	protected void init(
 			PortletRequestImpl portletRequestImpl, HttpServletResponse response,
 			User user, Layout layout, boolean setWindowStateAndPortletMode)

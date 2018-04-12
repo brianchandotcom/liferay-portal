@@ -653,23 +653,20 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static List<URL> getIncludedResourceURLs(
-			FileSystem fileSystem, String[] includes, File file)
-		throws IOException {
-
-		return getIncludedResourceURLs(fileSystem, includes, file.toPath());
-	}
-
-	public static List<URL> getIncludedResourceURLs(
-			FileSystem fileSystem, String[] includes, Path path)
+			String[] includes, File file)
 		throws IOException {
 
 		final List<PathMatcher> pathMatchers = new ArrayList<>();
+
+		FileSystem fileSystem = FileSystems.getDefault();
 
 		for (String include : includes) {
 			pathMatchers.add(fileSystem.getPathMatcher("glob:" + include));
 		}
 
 		final List<URL> filePaths = new ArrayList<>();
+
+		Path path = file.toPath();
 
 		if (!Files.exists(path)) {
 			System.out.println(
@@ -703,22 +700,6 @@ public class JenkinsResultsParserUtil {
 			});
 
 		return filePaths;
-	}
-
-	public static List<URL> getIncludedResourceURLs(
-			String[] includes, File file)
-		throws IOException {
-
-		return getIncludedResourceURLs(
-			FileSystems.getDefault(), includes, file.toPath());
-	}
-
-	public static List<URL> getIncludedResourceURLs(
-			String[] includes, Path path)
-		throws IOException {
-
-		return getIncludedResourceURLs(
-			FileSystems.getDefault(), includes, path);
 	}
 
 	public static float getJavaVersionNumber() {

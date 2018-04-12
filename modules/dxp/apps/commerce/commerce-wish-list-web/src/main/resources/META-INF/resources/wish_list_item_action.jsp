@@ -29,6 +29,6 @@ CommerceWishListItem commerceWishListItem = (CommerceWishListItem)row.getObject(
 		<aui:button cssClass="btn-lg" value="add-to-cart" />
 	</c:when>
 	<c:otherwise>
-		<aui:button cssClass="btn-primary" href="<%= commerceWishListDisplayContext.getCPDefinitionURL(commerceWishListItem.getCPDefinitionId(), themeDisplay) %>" name="selectOptions" type="button" value="select-options" />
+		<aui:button cssClass="btn-primary" href="<%= commerceWishListDisplayContext.getCPDefinitionURL(commerceWishListItem.getCPDefinitionId(), themeDisplay) %>" name="selectOptions" value="select-options" />
 	</c:otherwise>
 </c:choose>

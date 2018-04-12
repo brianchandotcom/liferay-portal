@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.transaction.TransactionsUtil;
+import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PortalClassPathUtil;
 import com.liferay.portal.util.PropsValues;
@@ -135,6 +136,12 @@ public class DBUpgrader {
 		// Check required build number
 
 		checkRequiredBuildNumber(ReleaseInfo.RELEASE_6_1_0_BUILD_NUMBER);
+
+		if (PortalUpgradeProcess.isInLatestSchemaVersion(
+				DataAccess.getConnection())) {
+
+			return;
+		}
 
 		// Upgrade
 
@@ -279,10 +286,11 @@ public class DBUpgrader {
 			verified = true;
 		}
 
-		release = ReleaseLocalServiceUtil.updateRelease(
-			release.getReleaseId(), ReleaseInfo.getVersion(),
-			ReleaseInfo.getParentBuildNumber(), ReleaseInfo.getBuildDate(),
-			verified);
+		release.setBuildNumber(ReleaseInfo.getParentBuildNumber());
+		release.setBuildDate(ReleaseInfo.getBuildDate());
+		release.setVerified(verified);
+
+		release = ReleaseLocalServiceUtil.updateRelease(release);
 
 		// Enable database caching after verify
 

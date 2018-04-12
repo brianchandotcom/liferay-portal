@@ -41,6 +41,7 @@ import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.expando.kernel.util.ExpandoBridgeUtil;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessorRegistryUtil;
+import com.liferay.exportimport.kernel.exception.ExportImportContentValidationException;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
@@ -391,9 +392,17 @@ public class JournalArticleLocalServiceImpl
 				ddmTemplateKey, displayDate, expirationDate, smallImage,
 				smallImageURL, smallImageFile, smallImageBytes, serviceContext);
 
-			validateReferences(
-				groupId, ddmStructureKey, ddmTemplateKey, layoutUuid,
-				smallImage, smallImageURL, smallImageBytes, 0, content);
+			try {
+				validateReferences(
+					groupId, ddmStructureKey, ddmTemplateKey, layoutUuid,
+					smallImage, smallImageURL, smallImageBytes, 0, content);
+			}
+			catch (ExportImportContentValidationException eicve) {
+				eicve.setStagedModelClassName(JournalArticle.class.getName());
+				eicve.setStagedModelClassPK(Long.valueOf(articleId));
+
+				throw eicve;
+			}
 		}
 
 		serviceContext.setAttribute("articleId", articleId);
@@ -5514,10 +5523,18 @@ public class JournalArticleLocalServiceImpl
 				expirationDate, smallImage, smallImageURL, smallImageFile,
 				smallImageBytes, serviceContext);
 
-			validateReferences(
-				groupId, ddmStructureKey, ddmTemplateKey, layoutUuid,
-				smallImage, smallImageURL, smallImageBytes,
-				latestArticle.getSmallImageId(), content);
+			try {
+				validateReferences(
+					groupId, ddmStructureKey, ddmTemplateKey, layoutUuid,
+					smallImage, smallImageURL, smallImageBytes,
+					latestArticle.getSmallImageId(), content);
+			}
+			catch (ExportImportContentValidationException eicve) {
+				eicve.setStagedModelClassName(JournalArticle.class.getName());
+				eicve.setStagedModelClassPK(Long.valueOf(articleId));
+
+				throw eicve;
+			}
 		}
 
 		if (addNewVersion) {

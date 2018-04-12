@@ -16,6 +16,8 @@ package com.liferay.exportimport.internal.content.processor;
 
 import com.liferay.exportimport.configuration.ExportImportServiceConfiguration;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
+import com.liferay.exportimport.kernel.exception.ExportImportContentProcessorException;
+import com.liferay.exportimport.kernel.exception.ExportImportContentValidationException;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -484,19 +486,23 @@ public class LayoutReferencesExportImportContentProcessor
 					continue;
 				}
 
+				StringBundler exceptionSB = new StringBundler(6);
+
+				exceptionSB.append("Unable to process layout URL ");
+				exceptionSB.append(url);
+				exceptionSB.append(" for staged model ");
+				exceptionSB.append(stagedModel.getModelClassName());
+				exceptionSB.append(" with primary key ");
+				exceptionSB.append(stagedModel.getPrimaryKeyObj());
+
+				ExportImportContentProcessorException eicpe =
+					new ExportImportContentProcessorException(
+						exceptionSB.toString(), e);
+
 				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
+					_log.debug(exceptionSB.toString(), eicpe);
 				}
 				else if (_log.isWarnEnabled()) {
-					StringBundler exceptionSB = new StringBundler(6);
-
-					exceptionSB.append("Unable to process layout URL ");
-					exceptionSB.append(url);
-					exceptionSB.append(" for staged model ");
-					exceptionSB.append(stagedModel.getModelClassName());
-					exceptionSB.append(" with primary key ");
-					exceptionSB.append(stagedModel.getPrimaryKeyObj());
-
 					_log.warn(exceptionSB.toString());
 				}
 			}
@@ -854,9 +860,18 @@ public class LayoutReferencesExportImportContentProcessor
 				group.getCompanyId(), groupFriendlyURL);
 
 			if (urlGroup == null) {
-				throw new NoSuchLayoutException(
-					"Unable validate referenced page because it cannot be " +
-						"found with url: " + url);
+				ExportImportContentValidationException eicve =
+					new ExportImportContentValidationException(
+						LayoutReferencesExportImportContentProcessor.class.
+							getName());
+
+				eicve.setGroupFriendlyURL(groupFriendlyURL);
+				eicve.setLayoutURL(url);
+				eicve.setType(
+					ExportImportContentValidationException.
+						LAYOUT_GROUP_NOT_FOUND);
+
+				throw eicve;
 			}
 
 			if (pos == -1) {
@@ -866,14 +881,22 @@ public class LayoutReferencesExportImportContentProcessor
 			url = url.substring(pos);
 
 			try {
-				layout = _layoutLocalService.getFriendlyURLLayout(
+				_layoutLocalService.getFriendlyURLLayout(
 					urlGroup.getGroupId(), privateLayout, url);
 			}
 			catch (NoSuchLayoutException nsle) {
-				throw new NoSuchLayoutException(
-					"Unable to validate referenced page because the page " +
-						"group cannot be found: " + groupId,
-					nsle);
+				ExportImportContentValidationException eicve =
+					new ExportImportContentValidationException(
+						LayoutReferencesExportImportContentProcessor.class.
+							getName(),
+						nsle);
+
+				eicve.setLayoutURL(url);
+				eicve.setType(
+					ExportImportContentValidationException.
+						LAYOUT_WITH_URL_NOT_FOUND);
+
+				throw eicve;
 			}
 		}
 	}

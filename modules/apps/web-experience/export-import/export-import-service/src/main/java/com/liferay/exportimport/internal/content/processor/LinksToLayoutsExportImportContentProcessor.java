@@ -15,10 +15,11 @@
 package com.liferay.exportimport.internal.content.processor;
 
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
+import com.liferay.exportimport.kernel.exception.ExportImportContentProcessorException;
+import com.liferay.exportimport.kernel.exception.ExportImportContentValidationException;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -128,8 +130,11 @@ public class LinksToLayoutsExportImportContentProcessor
 						String.valueOf(layoutId), " in group ",
 						String.valueOf(portletDataContext.getScopeGroupId()));
 
+					ExportImportContentProcessorException eicpe =
+						new ExportImportContentProcessorException(message, e);
+
 					if (_log.isDebugEnabled()) {
-						_log.debug(message, e);
+						_log.debug(message, eicpe);
 					}
 					else {
 						_log.warn(message);
@@ -239,18 +244,25 @@ public class LinksToLayoutsExportImportContentProcessor
 				groupId, privateLayout, layoutId);
 
 			if (layout == null) {
-				StringBundler sb = new StringBundler(8);
+				ExportImportContentValidationException eicve =
+					new ExportImportContentValidationException(
+						LinksToLayoutsExportImportContentProcessor.class.
+							getName());
 
-				sb.append("Unable to validate referenced page because it ");
-				sb.append("cannot be found with the following parameters: ");
-				sb.append("groupId ");
-				sb.append(groupId);
-				sb.append(", layoutId ");
-				sb.append(layoutId);
-				sb.append(", privateLayout ");
-				sb.append(privateLayout);
+				Map<String, String> layoutReferenceParameters = new HashMap<>();
 
-				throw new NoSuchLayoutException(sb.toString());
+				layoutReferenceParameters.put(
+					"groupId", String.valueOf(groupId));
+				layoutReferenceParameters.put(
+					"layoutId", String.valueOf(layoutId));
+				layoutReferenceParameters.put(
+					"privateLayout", String.valueOf(privateLayout));
+
+				eicve.setLayoutReferenceParameters(layoutReferenceParameters);
+				eicve.setType(
+					ExportImportContentValidationException.LAYOUT_NOT_FOUND);
+
+				throw eicve;
 			}
 		}
 	}

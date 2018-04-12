@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.comment.DiscussionStagingHandler;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -140,6 +141,12 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext),
 				new TransientValue<T>(stagedModel), t);
+
+			if ((t instanceof SystemException) &&
+				(t.getCause() instanceof PortletDataException)) {
+
+				throw (PortletDataException)t.getCause();
+			}
 
 			PortletDataException pde = new PortletDataException(t);
 
@@ -418,6 +425,12 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext),
 				new TransientValue<T>(stagedModel), t);
+
+			if ((t instanceof SystemException) &&
+				(t.getCause() instanceof PortletDataException)) {
+
+				throw (PortletDataException)t.getCause();
+			}
 
 			throw new PortletDataException(t);
 		}

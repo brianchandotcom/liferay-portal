@@ -35,6 +35,7 @@ import com.liferay.exportimport.constants.ExportImportConstants;
 import com.liferay.exportimport.controller.PortletImportController;
 import com.liferay.exportimport.internal.lar.DeletionSystemEventImporter;
 import com.liferay.exportimport.kernel.controller.ExportImportController;
+import com.liferay.exportimport.kernel.exception.ExportImportDocumentException;
 import com.liferay.exportimport.kernel.exception.LARFileException;
 import com.liferay.exportimport.kernel.exception.LARTypeException;
 import com.liferay.exportimport.kernel.exception.LayoutImportException;
@@ -68,7 +69,6 @@ import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.NoSuchPortletPreferencesException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PortletIdException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.log.Log;
@@ -478,11 +478,15 @@ public class PortletImportControllerImpl implements PortletImportController {
 					element = preferencesDocument.getRootElement();
 				}
 				catch (DocumentException de) {
-					throw new SystemException(
-						"Unable to parse XML portlet preferences for portlet " +
-							portletDataContext.getPortletId() +
-								" while importing portlet preferences",
-						de);
+					ExportImportDocumentException eide =
+						new ExportImportDocumentException(de);
+
+					eide.setPortletId(portletDataContext.getPortletId());
+					eide.setType(
+						ExportImportDocumentException.
+							PORTLET_PREFERENCES_IMPORT);
+
+					throw eide;
 				}
 
 				long ownerId = GetterUtil.getLong(
@@ -1007,10 +1011,13 @@ public class PortletImportControllerImpl implements PortletImportController {
 			portletElement = portletDocument.getRootElement();
 		}
 		catch (DocumentException de) {
-			throw new SystemException(
-				"Unable to parse XML document for portlet " +
-					portletDataContext.getPortletId() + " during import",
-				de);
+			ExportImportDocumentException eide =
+				new ExportImportDocumentException(de);
+
+			eide.setPortletId(portletDataContext.getPortletId());
+			eide.setType(ExportImportDocumentException.PORTLET_DATA_IMPORT);
+
+			throw eide;
 		}
 
 		_permissionImporter.clearCache();
@@ -1137,10 +1144,14 @@ public class PortletImportControllerImpl implements PortletImportController {
 				}
 			}
 			catch (DocumentException de) {
-				throw new SystemException(
-					"Unable to parse XML service information for portlet " +
-						portletDataContext.getPortletId() + " during import",
-					de);
+				ExportImportDocumentException eide =
+					new ExportImportDocumentException(de);
+
+				eide.setPortletId(portletDataContext.getPortletId());
+				eide.setType(
+					ExportImportDocumentException.PORTLET_SERVICE_IMPORT);
+
+				throw eide;
 			}
 			catch (PortalException pe) {
 				throw new PortletDataException(

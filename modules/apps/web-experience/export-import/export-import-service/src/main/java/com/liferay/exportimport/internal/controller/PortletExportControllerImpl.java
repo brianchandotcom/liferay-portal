@@ -32,6 +32,7 @@ import com.liferay.exportimport.controller.PortletExportController;
 import com.liferay.exportimport.internal.lar.DeletionSystemEventExporter;
 import com.liferay.exportimport.internal.lar.PermissionExporter;
 import com.liferay.exportimport.kernel.controller.ExportImportController;
+import com.liferay.exportimport.kernel.exception.ExportImportIOException;
 import com.liferay.exportimport.kernel.exception.LayoutImportException;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
@@ -58,7 +59,6 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchPortletPreferencesException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.log.Log;
@@ -958,10 +958,13 @@ public class PortletExportControllerImpl implements PortletExportController {
 				"/manifest.xml", document.formattedString());
 		}
 		catch (IOException ioe) {
-			throw new SystemException(
-				"Unable to create the export LAR manifest file for portlet " +
-					portletDataContext.getPortletId(),
-				ioe);
+			ExportImportIOException eiioe = new ExportImportIOException(
+				PortletExportControllerImpl.class.getName(), ioe);
+
+			eiioe.setPortletId(portletDataContext.getPortletId());
+			eiioe.setType(ExportImportIOException.PORTLET_EXPORT);
+
+			throw eiioe;
 		}
 
 		ZipWriter zipWriter = portletDataContext.getZipWriter();

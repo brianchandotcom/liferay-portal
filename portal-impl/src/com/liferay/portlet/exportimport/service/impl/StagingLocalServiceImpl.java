@@ -21,6 +21,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelTitleComparator;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactory;
+import com.liferay.exportimport.kernel.exception.ExportImportIOException;
 import com.liferay.exportimport.kernel.exception.RemoteExportException;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
@@ -526,10 +527,13 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			return missingReferences;
 		}
 		catch (IOException ioe) {
-			throw new SystemException(
-				"Unable to complete remote staging publication request " +
-					stagingRequestId + " due to a file system error",
-				ioe);
+			ExportImportIOException eiioe = new ExportImportIOException(
+				StagingLocalServiceImpl.class.getName(), ioe);
+
+			eiioe.setStagingRequestId(stagingRequestId);
+			eiioe.setType(ExportImportIOException.PUBLISH_STAGING_REQUEST);
+
+			throw eiioe;
 		}
 		finally {
 			if (exportImportConfiguration.getType() ==
@@ -971,10 +975,13 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			String checksum = FileUtil.getMD5Checksum(tempFile);
 
 			if (!checksum.equals(folder.getName())) {
-				throw new SystemException(
-					"Unable to process LAR file pieces for remote staging " +
-						"publication because LAR file checksum is not " +
-							checksum);
+				ExportImportIOException eiioe = new ExportImportIOException(
+					StagingLocalServiceImpl.class.getName());
+
+				eiioe.setChecksum(checksum);
+				eiioe.setType(ExportImportIOException.STAGING_REQUEST_CHECKSUM);
+
+				throw eiioe;
 			}
 
 			PortletFileRepositoryUtil.addPortletFileEntry(
@@ -988,18 +995,20 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 				stagingRequestId, folder);
 
 			if (stagingRequestFileEntry == null) {
-				throw new SystemException(
-					"Unable to assemble LAR file for remote staging " +
-						"publication request " + stagingRequestId);
+				throw new IOException();
 			}
 
 			return stagingRequestFileEntry;
 		}
 		catch (IOException ioe) {
-			throw new SystemException(
-				"Unable to reassemble LAR file for remote staging " +
-					"publication request " + stagingRequestId,
-				ioe);
+			ExportImportIOException eiioe = new ExportImportIOException(
+				StagingLocalServiceImpl.class.getName(), ioe);
+
+			eiioe.setStagingRequestId(stagingRequestId);
+			eiioe.setType(
+				ExportImportIOException.STAGING_REQUEST_REASSEMBLE_FILE);
+
+			throw eiioe;
 		}
 		finally {
 			IndexStatusManagerThreadLocal.setIndexReadOnly(indexReadOnly);

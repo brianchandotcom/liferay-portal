@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 
 import java.io.File;
@@ -118,13 +116,6 @@ public class PortletStagingBackgroundTaskExecutor
 					exportImportConfiguration.getExportImportConfigurationId()),
 				exportImportConfiguration);
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(t, t);
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("Unable to publish portlet: " + t.getMessage());
-			}
-
 			deleteTempLarOnFailure(file);
 
 			throw new SystemException(t);
@@ -142,9 +133,6 @@ public class PortletStagingBackgroundTaskExecutor
 
 		return new PortletExportImportBackgroundTaskDisplay(backgroundTask);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		PortletStagingBackgroundTaskExecutor.class);
 
 	private class PortletStagingCallable
 		implements Callable<MissingReferences> {

@@ -14,12 +14,13 @@
 
 package com.liferay.exportimport.internal.content.processor;
 
-import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
+import com.liferay.exportimport.kernel.exception.ExportImportContentProcessorException;
+import com.liferay.exportimport.kernel.exception.ExportImportContentValidationException;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
@@ -370,19 +371,23 @@ public class DLReferencesExportImportContentProcessor
 				deleteTimestampParameters(sb, deleteTimestampParametersOffset);
 			}
 			catch (Exception e) {
+				StringBundler exceptionSB = new StringBundler(6);
+
+				exceptionSB.append("Unable to process file entry ");
+				exceptionSB.append(fileEntry.getFileEntryId());
+				exceptionSB.append(" for staged model ");
+				exceptionSB.append(stagedModel.getModelClassName());
+				exceptionSB.append(" with primary key ");
+				exceptionSB.append(stagedModel.getPrimaryKeyObj());
+
+				ExportImportContentProcessorException eicpe =
+					new ExportImportContentProcessorException(
+						exceptionSB.toString(), e);
+
 				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
+					_log.debug(exceptionSB.toString(), eicpe);
 				}
 				else if (_log.isWarnEnabled()) {
-					StringBundler exceptionSB = new StringBundler(6);
-
-					exceptionSB.append("Unable to process file entry ");
-					exceptionSB.append(fileEntry.getFileEntryId());
-					exceptionSB.append(" for staged model ");
-					exceptionSB.append(stagedModel.getModelClassName());
-					exceptionSB.append(" with primary key ");
-					exceptionSB.append(stagedModel.getPrimaryKeyObj());
-
 					_log.warn(exceptionSB.toString());
 				}
 			}
@@ -437,20 +442,24 @@ public class DLReferencesExportImportContentProcessor
 					classPK);
 			}
 			catch (Exception e) {
+				StringBundler exceptionSB = new StringBundler(6);
+
+				exceptionSB.append("Unable to process file entry ");
+				exceptionSB.append(classPK);
+				exceptionSB.append(" for ");
+				exceptionSB.append(stagedModel.getModelClassName());
+				exceptionSB.append(" with primary key ");
+				exceptionSB.append(stagedModel.getPrimaryKeyObj());
+
+				ExportImportContentProcessorException eicpe =
+					new ExportImportContentProcessorException(
+						exceptionSB.toString(), e);
+
 				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
+					_log.debug(exceptionSB.toString(), eicpe);
 				}
 				else if (_log.isWarnEnabled()) {
-					StringBundler sb = new StringBundler(6);
-
-					sb.append("Unable to process file entry ");
-					sb.append(classPK);
-					sb.append(" for ");
-					sb.append(stagedModel.getModelClassName());
-					sb.append(" with primary key ");
-					sb.append(stagedModel.getPrimaryKeyObj());
-
-					_log.warn(sb.toString());
+					_log.warn(exceptionSB.toString());
 				}
 			}
 
@@ -578,14 +587,17 @@ public class DLReferencesExportImportContentProcessor
 				FileEntry fileEntry = getFileEntry(dlReferenceParameters);
 
 				if (fileEntry == null) {
-					StringBundler sb = new StringBundler(4);
+					ExportImportContentValidationException eicve =
+						new ExportImportContentValidationException(
+							DLReferencesExportImportContentProcessor.class.
+								getName());
 
-					sb.append("Validation failed for a referenced file entry ");
-					sb.append("because a file entry could not be found with ");
-					sb.append("the following parameters: ");
-					sb.append(dlReferenceParameters);
+					eicve.setDlReferenceParameters(dlReferenceParameters);
+					eicve.setType(
+						ExportImportContentValidationException.
+							FILE_ENTRY_NOT_FOUND);
 
-					throw new NoSuchFileEntryException(sb.toString());
+					throw eicve;
 				}
 
 				endPos = beginPos - 1;

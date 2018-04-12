@@ -232,13 +232,6 @@ public class LayoutStagingBackgroundTaskExecutor
 					exportImportConfiguration.getExportImportConfigurationId()),
 				exportImportConfiguration, t);
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(t, t);
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("Unable to publish layout: " + t.getMessage());
-			}
-
 			Group sourceGroup = GroupLocalServiceUtil.getGroup(sourceGroupId);
 
 			if (sourceGroup.hasStagingGroup()) {

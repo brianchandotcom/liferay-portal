@@ -28,12 +28,14 @@ import com.liferay.exportimport.internal.util.ExportImportPermissionUtil;
 import com.liferay.exportimport.internal.xstream.ConverterAdapter;
 import com.liferay.exportimport.internal.xstream.XStreamStagedModelTypeHierarchyPermission;
 import com.liferay.exportimport.internal.xstream.converter.TimestampConverter;
+import com.liferay.exportimport.kernel.exception.ExportImportIOException;
 import com.liferay.exportimport.kernel.lar.ExportImportClassedModelUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataContextListener;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
@@ -556,9 +558,13 @@ public class PortletDataContextImpl implements PortletDataContext {
 			zipWriter.addEntry(path, bytes);
 		}
 		catch (IOException ioe) {
-			throw new SystemException(
-				"Unable to add data bytes to the LAR file with path: " + path,
-				ioe);
+			ExportImportIOException eiioe = new ExportImportIOException(
+				PortletDataContextImpl.class.getName(), ioe);
+
+			eiioe.setFileName(path);
+			eiioe.setType(ExportImportIOException.ADD_ZIP_ENTRY_BYTES);
+
+			throw new SystemException(eiioe);
 		}
 	}
 
@@ -574,9 +580,13 @@ public class PortletDataContextImpl implements PortletDataContext {
 			zipWriter.addEntry(path, is);
 		}
 		catch (IOException ioe) {
-			throw new SystemException(
-				"Unable to add data stream to the LAR file with path: " + path,
-				ioe);
+			ExportImportIOException eiioe = new ExportImportIOException(
+				PortletDataContextImpl.class.getName(), ioe);
+
+			eiioe.setFileName(path);
+			eiioe.setType(ExportImportIOException.ADD_ZIP_ENTRY_STREAM);
+
+			throw new SystemException(eiioe);
 		}
 	}
 
@@ -597,9 +607,13 @@ public class PortletDataContextImpl implements PortletDataContext {
 			zipWriter.addEntry(path, s);
 		}
 		catch (IOException ioe) {
-			throw new SystemException(
-				"Unable to add data string to the LAR file with path: " + path,
-				ioe);
+			ExportImportIOException eiioe = new ExportImportIOException(
+				PortletDataContextImpl.class.getName(), ioe);
+
+			eiioe.setFileName(path);
+			eiioe.setType(ExportImportIOException.ADD_ZIP_ENTRY_STRING);
+
+			throw new SystemException(eiioe);
 		}
 	}
 
@@ -2461,9 +2475,12 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	protected Element getExportDataGroupElement(String name) {
 		if (_exportDataRootElement == null) {
-			throw new IllegalStateException(
-				"Unable to return the export data group element for group " +
-					name + " because the root data element is not initialized");
+			PortletDataException pde = new PortletDataException(
+				PortletDataException.EXPORT_DATA_GROUP_ELEMENT);
+
+			pde.setStagedModelClassName(name);
+
+			throw new SystemException(pde);
 		}
 
 		Element groupElement = _exportDataRootElement.element(name);
@@ -2477,9 +2494,12 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	protected Element getImportDataGroupElement(String name) {
 		if (_importDataRootElement == null) {
-			throw new IllegalStateException(
-				"Unable to return the import data group element for group " +
-					name + " because the root data element is not initialized");
+			PortletDataException pde = new PortletDataException(
+				PortletDataException.IMPORT_DATA_GROUP_ELEMENT);
+
+			pde.setStagedModelClassName(name);
+
+			throw new SystemException(pde);
 		}
 
 		if (Validator.isNull(name)) {

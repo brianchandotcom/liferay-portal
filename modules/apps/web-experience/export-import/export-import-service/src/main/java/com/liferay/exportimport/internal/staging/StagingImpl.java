@@ -31,6 +31,10 @@ import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactory;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactory;
+import com.liferay.exportimport.kernel.exception.ExportImportContentValidationException;
+import com.liferay.exportimport.kernel.exception.ExportImportDocumentException;
+import com.liferay.exportimport.kernel.exception.ExportImportIOException;
+import com.liferay.exportimport.kernel.exception.ExportImportRuntimeException;
 import com.liferay.exportimport.kernel.exception.LARFileException;
 import com.liferay.exportimport.kernel.exception.LARFileSizeException;
 import com.liferay.exportimport.kernel.exception.LARTypeException;
@@ -112,6 +116,8 @@ import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.upload.UploadRequestSizeException;
+import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -685,6 +691,331 @@ public class StagingImpl implements Staging {
 				locale, "please-enter-a-unique-document-name");
 			errorType = ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION;
 		}
+		else if (e instanceof ExportImportContentValidationException) {
+			ExportImportContentValidationException eicve =
+				(ExportImportContentValidationException)e;
+
+			if (eicve.getType() ==
+					ExportImportContentValidationException.
+						FILE_ENTRY_NOT_FOUND) {
+
+				if (Validator.isNotNull(eicve.getStagedModelClassName())) {
+					errorMessage = LanguageUtil.format(
+						resourceBundle,
+						"unable-to-validate-referenced-file-entry-because-it-" +
+							"cannot-be-found-with-the-following-parameters-x-" +
+								"within-the-content-of-x-with-primary-key-x",
+						new String[] {
+							MapUtil.toString(eicve.getDlReferenceParameters()),
+							eicve.getStagedModelClassName(),
+							String.valueOf(eicve.getStagedModelClassPK())
+						});
+				}
+				else {
+					errorMessage = LanguageUtil.format(
+						resourceBundle,
+						"unable-to-validate-referenced-file-entry-because-it-" +
+							"cannot-be-found-with-the-following-parameters-x",
+						eicve.getDlReferenceParameters());
+				}
+			}
+			else if (eicve.getType() ==
+						ExportImportContentValidationException.
+							LAYOUT_GROUP_NOT_FOUND) {
+
+				if (Validator.isNotNull(eicve.getStagedModelClassName())) {
+					errorMessage = LanguageUtil.format(
+						resourceBundle,
+						StringBundler.concat(
+							"unable-to-validate-referenced-page-with-url-x-",
+							"because-the-page-group-with-url-x-cannot-be-",
+							"found-within-the-content-of-x-with-primary-key-x"),
+						new String[] {
+							eicve.getLayoutURL(), eicve.getGroupFriendlyURL(),
+							eicve.getStagedModelClassName(),
+							String.valueOf(eicve.getStagedModelClassPK())
+						});
+				}
+				else {
+					errorMessage = LanguageUtil.format(
+						resourceBundle,
+						"unable-to-validate-referenced-page-with-url-x-" +
+							"because-the-page-group-with-url-x-cannot-be-found",
+						new String[] {
+							eicve.getLayoutURL(), eicve.getGroupFriendlyURL()
+						});
+				}
+			}
+			else if (eicve.getType() ==
+						ExportImportContentValidationException.
+							LAYOUT_NOT_FOUND) {
+
+				if (Validator.isNotNull(eicve.getStagedModelClassName())) {
+					errorMessage = LanguageUtil.format(
+						resourceBundle,
+						"unable-to-validate-referenced-page-because-it-" +
+							"cannot-be-found-with-the-following-parameters-x-" +
+								"within-the-content-of-x-with-primary-key-x",
+						new String[] {
+							MapUtil.toString(
+								eicve.getLayoutReferenceParameters()),
+							eicve.getStagedModelClassName(),
+							String.valueOf(eicve.getStagedModelClassPK())
+						});
+				}
+				else {
+					errorMessage = LanguageUtil.format(
+						resourceBundle,
+						"unable-to-validate-referenced-page-because-it-" +
+							"cannot-be-found-with-the-following-parameters-x",
+						eicve.getLayoutReferenceParameters());
+				}
+			}
+			else if (eicve.getType() ==
+						ExportImportContentValidationException.
+							LAYOUT_WITH_URL_NOT_FOUND) {
+
+				if (Validator.isNotNull(eicve.getStagedModelClassName())) {
+					errorMessage = LanguageUtil.format(
+						resourceBundle,
+						"unable-to-validate-referenced-page-because-it-" +
+							"cannot-be-found-with-url-x-within-the-content-" +
+								"of-x-with-primary-key-x",
+						new String[] {
+							eicve.getLayoutURL(),
+							eicve.getStagedModelClassName(),
+							String.valueOf(eicve.getStagedModelClassPK())
+						});
+				}
+				else {
+					errorMessage = LanguageUtil.format(
+						resourceBundle,
+						"unable-to-validate-referenced-page-because-it-" +
+							"cannot-be-found-with-url-x",
+						eicve.getLayoutURL());
+				}
+			}
+			else {
+				if (Validator.isNotNull(eicve.getStagedModelClassName())) {
+					errorMessage = LanguageUtil.format(
+						resourceBundle,
+						"unable-to-validate-content-of-x-with-primary-key-x-" +
+							"in-x",
+						new String[] {
+							eicve.getClassName(),
+							eicve.getStagedModelClassName(),
+							String.valueOf(eicve.getStagedModelClassPK())
+						});
+				}
+				else {
+					errorMessage = LanguageUtil.format(
+						resourceBundle, "unable-to-validate-content-in-x",
+						eicve.getClassName());
+				}
+			}
+
+			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
+		}
+		else if (e instanceof ExportImportDocumentException) {
+			ExportImportDocumentException eide =
+				(ExportImportDocumentException)e;
+
+			if (eide.getType() ==
+					ExportImportDocumentException.PORTLET_DATA_IMPORT) {
+
+				errorMessage = LanguageUtil.format(
+					resourceBundle,
+					"unable-to-parse-xml-document-for-portlet-x-during-import",
+					eide.getPortletId());
+			}
+			else if (eide.getType() ==
+						ExportImportDocumentException.
+							PORTLET_PREFERENCES_IMPORT) {
+
+				errorMessage = LanguageUtil.format(
+					resourceBundle,
+					"unable-to-parse-xml-portlet-preferences-for-portlet-x-" +
+						"while-importing-portlet-preferences",
+					eide.getPortletId());
+			}
+			else {
+				errorMessage = LanguageUtil.get(
+					resourceBundle, "unable-to-parse-xml-document");
+			}
+
+			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
+		}
+		else if (e instanceof ExportImportIOException ||
+				 (cause instanceof SystemException &&
+				  cause.getCause() instanceof ExportImportIOException)) {
+
+			ExportImportIOException eiioe = null;
+
+			if (e instanceof ExportImportIOException) {
+				eiioe = (ExportImportIOException)e;
+			}
+			else {
+				eiioe = (ExportImportIOException)cause.getCause();
+			}
+
+			if (eiioe.getType() ==
+					ExportImportIOException.ADD_ZIP_ENTRY_BYTES) {
+
+				errorMessage = LanguageUtil.format(
+					resourceBundle,
+					"unable-to-add-data-bytes-to-the-lar-file-with-path-x",
+					eiioe.getFileName());
+			}
+			else if (eiioe.getType() ==
+						ExportImportIOException.ADD_ZIP_ENTRY_STREAM) {
+
+				errorMessage = LanguageUtil.format(
+					resourceBundle,
+					"unable-to-add-data-stream-to-the-lar-file-with-path-x",
+					eiioe.getFileName());
+			}
+			else if (eiioe.getType() ==
+						ExportImportIOException.ADD_ZIP_ENTRY_STRING) {
+
+				errorMessage = LanguageUtil.format(
+					resourceBundle,
+					"unable-to-add-data-string-to-the-lar-file-with-path-x",
+					eiioe.getFileName());
+			}
+			else if (eiioe.getType() == ExportImportIOException.LAYOUT_IMPORT) {
+				errorMessage = LanguageUtil.format(
+					resourceBundle,
+					"unable-to-process-lar-file-for-layout-import-while-" +
+						"executing-x-due-to-a-file-system-error",
+					eiioe.getClassName());
+			}
+			else if (eiioe.getType() ==
+						ExportImportIOException.LAYOUT_IMPORT_FILE) {
+
+				errorMessage = LanguageUtil.format(
+					resourceBundle,
+					"unable-to-process-lar-file-x-for-layout-import-while-" +
+						"executing-x-due-to-a-file-system-error",
+					new String[] {eiioe.getFileName(), eiioe.getClassName()});
+			}
+			else if (eiioe.getType() ==
+						ExportImportIOException.LAYOUT_VALIDATE) {
+
+				errorMessage = LanguageUtil.format(
+					resourceBundle,
+					"unable-to-process-lar-file-for-layout-import-validation-" +
+						"while-executing-x-due-to-a-file-system-error",
+					eiioe.getClassName());
+			}
+			else if (eiioe.getType() ==
+						ExportImportIOException.LAYOUT_VALIDATE_FILE) {
+
+				errorMessage = LanguageUtil.format(
+					resourceBundle,
+					"unable-to-process-lar-file-x-for-layout-import-" +
+						"validation-while-executing-x-due-to-a-file-system-" +
+							"error",
+					new String[] {eiioe.getFileName(), eiioe.getClassName()});
+			}
+			else if (eiioe.getType() ==
+						ExportImportIOException.PORTLET_EXPORT) {
+
+				errorMessage = LanguageUtil.format(
+					resourceBundle,
+					"unable-to-create-the-export-lar-manifest-file-for-" +
+						"portlet-x",
+					eiioe.getPortletId());
+			}
+			else if (eiioe.getType() ==
+						ExportImportIOException.PORTLET_IMPORT) {
+
+				errorMessage = LanguageUtil.format(
+					resourceBundle,
+					"unable-to-process-lar-file-for-portlet-import-while-" +
+						"executing-x-due-to-a-file-system-error",
+					eiioe.getClassName());
+			}
+			else if (eiioe.getType() ==
+						ExportImportIOException.PORTLET_IMPORT_FILE) {
+
+				errorMessage = LanguageUtil.format(
+					resourceBundle,
+					"unable-to-process-lar-file-x-for-portlet-import-while-" +
+						"executing-x-due-to-a-file-system-error",
+					new String[] {eiioe.getFileName(), eiioe.getClassName()});
+			}
+			else if (eiioe.getType() ==
+						ExportImportIOException.PORTLET_VALIDATE) {
+
+				errorMessage = LanguageUtil.format(
+					resourceBundle,
+					"unable-to-process-lar-file-for-portlet-import-" +
+						"validation-while-executing-x-due-to-a-file-system-" +
+							"error",
+					eiioe.getClassName());
+			}
+			else if (eiioe.getType() ==
+						ExportImportIOException.PORTLET_VALIDATE_FILE) {
+
+				errorMessage = LanguageUtil.format(
+					resourceBundle,
+					"unable-to-process-lar-file-x-for-portlet-import-" +
+						"validation-while-executing-x-due-to-a-file-system-" +
+							"error",
+					new String[] {eiioe.getFileName(), eiioe.getClassName()});
+			}
+			else if (eiioe.getType() ==
+						ExportImportIOException.PUBLISH_STAGING_REQUEST) {
+
+				errorMessage = LanguageUtil.format(
+					resourceBundle,
+					"unable-to-complete-remote-staging-publication-request-x-" +
+						"due-to-a-file-system-error",
+					eiioe.getStagingRequestId());
+			}
+			else if (eiioe.getType() ==
+						ExportImportIOException.STAGING_REQUEST_CHECKSUM) {
+
+				errorMessage = LanguageUtil.format(
+					resourceBundle,
+					"unable-to-process-lar-file-pieces-for-remote-staging-" +
+						"publication-because-lar-file-checksum-is-not-x",
+					eiioe.getChecksum());
+			}
+			else if (eiioe.getType() ==
+						ExportImportIOException.
+							STAGING_REQUEST_REASSEMBLE_FILE) {
+
+				errorMessage = LanguageUtil.format(
+					resourceBundle,
+					"unable-to-reassemble-lar-file-for-remote-staging-" +
+						"publication-request-x",
+					eiioe.getStagingRequestId());
+			}
+			else {
+				errorMessage = LanguageUtil.format(
+					resourceBundle, "x-failed-due-to-a-file-system-error",
+					eiioe.getClassName());
+			}
+
+			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
+		}
+		else if (e instanceof ExportImportRuntimeException) {
+			ExportImportRuntimeException eire = (ExportImportRuntimeException)e;
+
+			if (Validator.isNull(eire.getMessage())) {
+				errorMessage = LanguageUtil.format(
+					resourceBundle, "an-unexpected-error-occurred-within-x",
+					eire.getClassName());
+			}
+			else {
+				errorMessage = LanguageUtil.format(
+					resourceBundle, "the-following-error-occurred-within-x-x",
+					new String[] {eire.getClassName(), eire.getMessage()});
+			}
+
+			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
+		}
 		else if (e instanceof FileExtensionException) {
 			errorMessage = LanguageUtil.format(
 				locale,
@@ -938,7 +1269,16 @@ public class StagingImpl implements Staging {
 			String modelResource = ResourceActionsUtil.getModelResource(
 				locale, referrerClassName);
 
-			if (pde.getType() == PortletDataException.DELETE_PORTLET_DATA) {
+			if (pde.getType() == PortletDataException.COMPANY_BEING_DELETED) {
+				errorMessage = LanguageUtil.format(
+					resourceBundle,
+					"unable-to-create-a-portlet-data-context-for-company-x-" +
+						"because-it-is-being-deleted",
+					String.valueOf(pde.getCompanyId()));
+			}
+			else if (pde.getType() ==
+						PortletDataException.DELETE_PORTLET_DATA) {
+
 				if (Validator.isNotNull(pde.getLocalizedMessage())) {
 					errorMessage = LanguageUtil.format(
 						locale,
@@ -960,6 +1300,16 @@ public class StagingImpl implements Staging {
 						},
 						false);
 				}
+			}
+			else if (pde.getType() ==
+						PortletDataException.EXPORT_DATA_GROUP_ELEMENT) {
+
+				errorMessage = LanguageUtil.format(
+					resourceBundle,
+					"unable-to-return-the-export-data-group-element-for-" +
+						"group-x-because-the-root-data-element-is-not-" +
+							"initialized",
+					pde.getStagedModelClassName());
 			}
 			else if (pde.getType() ==
 						PortletDataException.EXPORT_PORTLET_DATA) {
@@ -985,6 +1335,16 @@ public class StagingImpl implements Staging {
 						},
 						false);
 				}
+			}
+			else if (pde.getType() ==
+						PortletDataException.IMPORT_DATA_GROUP_ELEMENT) {
+
+				errorMessage = LanguageUtil.format(
+					resourceBundle,
+					"unable-to-return-the-import-data-group-element-for-" +
+						"group-x-because-the-root-data-element-is-not-" +
+							"initialized",
+					pde.getStagedModelClassName());
 			}
 			else if (pde.getType() ==
 						PortletDataException.IMPORT_PORTLET_DATA) {
@@ -1090,6 +1450,15 @@ public class StagingImpl implements Staging {
 				portlet.getDisplayName() + " Portlet");
 
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
+		}
+		else if (e instanceof UploadRequestSizeException) {
+			errorMessage = LanguageUtil.format(
+				resourceBundle,
+				"upload-request-reached-the-maximum-permitted-size-of-x-bytes",
+				String.valueOf(
+					UploadServletRequestConfigurationHelperUtil.getMaxSize()));
+
+			errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
 		}
 		else {
 			errorMessage = e.getLocalizedMessage();

@@ -16,6 +16,7 @@ package com.liferay.exportimport.internal.lar;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.exportimport.kernel.exception.ExportImportRuntimeException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -100,7 +101,15 @@ public class ExportImportProcessCallbackUtil {
 				callable.call();
 			}
 			catch (Exception e) {
-				throw new RuntimeException(e);
+				ExportImportRuntimeException eire =
+					new ExportImportRuntimeException(
+						e.getLocalizedMessage(), e);
+
+				Class<?> clazz = callable.getClass();
+
+				eire.setClassName(clazz.getName());
+
+				throw eire;
 			}
 
 			return;

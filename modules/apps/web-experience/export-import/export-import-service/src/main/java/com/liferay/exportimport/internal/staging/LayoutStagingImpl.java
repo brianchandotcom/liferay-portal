@@ -116,16 +116,8 @@ public class LayoutStagingImpl implements LayoutStaging {
 
 	@Override
 	public boolean isBranchingLayout(Layout layout) {
-		try {
-			return isBranchingLayoutSet(
-				layout.getGroup(), layout.isPrivateLayout());
-		}
-		catch (Exception e) {
-			throw new IllegalStateException(
-				"Unable to determine if layout " + layout.getPlid() +
-					" is enabled for versioning",
-				e);
-		}
+		return isBranchingLayoutSet(
+			layout.getGroup(), layout.isPrivateLayout());
 	}
 
 	@Override

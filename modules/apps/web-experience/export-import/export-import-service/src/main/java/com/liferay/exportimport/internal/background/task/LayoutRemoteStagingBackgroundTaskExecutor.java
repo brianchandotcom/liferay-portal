@@ -159,13 +159,6 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 					exportImportConfiguration.getExportImportConfigurationId()),
 				exportImportConfiguration);
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(t, t);
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("Unable to publish layout: " + t.getMessage());
-			}
-
 			deleteTempLarOnFailure(file);
 
 			throw new SystemException(t);

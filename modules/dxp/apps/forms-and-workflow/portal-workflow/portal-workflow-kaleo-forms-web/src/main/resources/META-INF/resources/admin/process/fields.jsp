@@ -86,7 +86,7 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 
 	</liferay-ui:search-container-results>
 
-	<c:if test="<%= DDMStructurePermission.containsAddStruturePermission(permissionChecker, scopeGroupId, scopeClassNameId) %>">
+	<c:if test="<%= DDMStructurePermission.containsAddStructurePermission(permissionChecker, scopeGroupId, scopeClassNameId) %>">
 		<liferay-portlet:renderURL portletName="<%= PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.EDIT) %>" var="addURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="mvcPath" value="/edit_structure.jsp" />
 			<portlet:param name="navigationStartsOn" value="<%= DDMNavigationHelper.EDIT_STRUCTURE %>" />

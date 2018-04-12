@@ -24,8 +24,6 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalService;
-import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission;
-import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceAction;
@@ -85,15 +83,15 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 	protected String getDDMStructureModelResourceName(DDMStructure ddmStructure)
 		throws PortalException {
 
-		return DDMStructurePermission.getStructureModelResourceName(
-			ddmStructure.getClassNameId());
+		return _resourceActions.getCompositeModelName(
+			ddmStructure.getClassName(), DDMStructure.class.getName());
 	}
 
 	protected String getDDMTemplateModelResourceName(DDMTemplate ddmTemplate)
 		throws PortalException {
 
-		return DDMTemplatePermission.getTemplateModelResourceName(
-			ddmTemplate.getResourceClassNameId());
+		return _resourceActions.getCompositeModelName(
+			ddmTemplate.getResourceClassName(), DDMTemplate.class.getName());
 	}
 
 	protected Long getNewDDMStructureId(long oldDDMStructureId)

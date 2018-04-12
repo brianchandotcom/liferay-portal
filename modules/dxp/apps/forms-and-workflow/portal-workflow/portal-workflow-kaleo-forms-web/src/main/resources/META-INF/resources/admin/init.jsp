@@ -28,7 +28,6 @@ page import="com.liferay.dynamic.data.mapping.model.DDMTemplateConstants" %><%@
 page import="com.liferay.dynamic.data.mapping.model.LocalizedValue" %><%@
 page import="com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil" %><%@
-page import="com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission" %><%@
 page import="com.liferay.dynamic.data.mapping.util.DDMDisplay" %><%@
 page import="com.liferay.dynamic.data.mapping.util.DDMUtil" %><%@
 page import="com.liferay.petra.string.CharPool" %><%@
@@ -65,6 +64,7 @@ page import="com.liferay.portal.workflow.kaleo.forms.service.permission.KaleoFor
 page import="com.liferay.portal.workflow.kaleo.forms.web.internal.display.context.KaleoFormsAdminDisplayContext" %><%@
 page import="com.liferay.portal.workflow.kaleo.forms.web.internal.display.context.KaleoFormsViewRecordsDisplayContext" %><%@
 page import="com.liferay.portal.workflow.kaleo.forms.web.internal.search.KaleoProcessSearch" %><%@
+page import="com.liferay.portal.workflow.kaleo.forms.web.internal.security.permission.resource.DDMStructurePermission" %><%@
 page import="com.liferay.portal.workflow.kaleo.forms.web.internal.util.KaleoFormsUtil" %><%@
 page import="com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion" %>
 

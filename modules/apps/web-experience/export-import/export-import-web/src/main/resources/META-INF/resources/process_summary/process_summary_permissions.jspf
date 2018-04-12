@@ -15,7 +15,9 @@
 --%>
 
 <%
-boolean global = scopeGroup.isCompany();
+Group currentScopeGroup = GroupLocalServiceUtil.fetchGroup(scopeGroupId);
+
+boolean global = currentScopeGroup.isCompany();
 
 boolean permissions = MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PERMISSIONS);
 %>

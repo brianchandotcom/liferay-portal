@@ -23,11 +23,11 @@ public class CommerceOrderConstants {
 
 	public static final int ORDER_STATUS_ANY = WorkflowConstants.STATUS_ANY;
 
-	public static final int ORDER_STATUS_AWAITING_FULFILLMENT = 10;
+	public static final int ORDER_STATUS_AWAITING_FULFILLMENT = 11;
 
-	public static final int ORDER_STATUS_AWAITING_PICKUP = 12;
+	public static final int ORDER_STATUS_AWAITING_PICKUP = 13;
 
-	public static final int ORDER_STATUS_AWAITING_SHIPMENT = 11;
+	public static final int ORDER_STATUS_AWAITING_SHIPMENT = 12;
 
 	public static final int ORDER_STATUS_CANCELLED =
 		WorkflowConstants.STATUS_IN_TRASH;
@@ -35,28 +35,27 @@ public class CommerceOrderConstants {
 	public static final int ORDER_STATUS_COMPLETED =
 		WorkflowConstants.STATUS_APPROVED;
 
-	public static final int ORDER_STATUS_DECLINED = 15;
+	public static final int ORDER_STATUS_DECLINED = 16;
 
-	public static final int ORDER_STATUS_DISPUTED = 17;
+	public static final int ORDER_STATUS_DISPUTED = 18;
 
 	public static final int ORDER_STATUS_IN_PROGRESS =
 		WorkflowConstants.STATUS_INCOMPLETE;
 
 	public static final int ORDER_STATUS_OPEN = WorkflowConstants.STATUS_DRAFT;
 
-	public static final int ORDER_STATUS_PARTIALLY_REFUNDED = 18;
+	public static final int ORDER_STATUS_PARTIALLY_REFUNDED = 19;
 
-	public static final int ORDER_STATUS_PARTIALLY_SHIPPED = 13;
+	public static final int ORDER_STATUS_PARTIALLY_SHIPPED = 14;
 
-	public static final int ORDER_STATUS_REFUNDED = 16;
+	public static final int ORDER_STATUS_REFUNDED = 17;
 
-	public static final int ORDER_STATUS_SHIPPED = 14;
+	public static final int ORDER_STATUS_SHIPPED = 15;
 
 	public static final int ORDER_STATUS_TO_TRANSMIT =
 		WorkflowConstants.STATUS_PENDING;
 
-	public static final int ORDER_STATUS_TRANSMITTED =
-		WorkflowConstants.STATUS_INCOMPLETE;
+	public static final int ORDER_STATUS_TRANSMITTED = 10;
 
 	public static final int PAYMENT_STATUS_AUTHORIZED =
 		WorkflowConstants.STATUS_DRAFT;

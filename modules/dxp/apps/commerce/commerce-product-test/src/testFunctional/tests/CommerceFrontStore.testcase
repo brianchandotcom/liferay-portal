@@ -8,7 +8,7 @@
 
 		<execute macro="User#firstLoginPG" />
 
-		<execute macro="CommerceConfiguration#addPortletsToSitePagesViaHealthStatus" />
+		<execute macro="CommerceConfiguration#commerceSetUp" />
 	</set-up>
 
 	<tear-down>

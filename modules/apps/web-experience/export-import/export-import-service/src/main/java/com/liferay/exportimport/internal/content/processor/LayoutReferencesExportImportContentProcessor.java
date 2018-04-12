@@ -437,7 +437,7 @@ public class LayoutReferencesExportImportContentProcessor
 
 					urlSB.append(liveGroup.getUuid());
 				}
-				else if (group.getGroupId() == urlGroup.getGroupId()) {
+				else if (!urlGroup.isControlPanel()) {
 					urlSB.append(urlGroup.getFriendlyURL());
 				}
 				else {
@@ -620,9 +620,13 @@ public class LayoutReferencesExportImportContentProcessor
 				_groupLocalService.fetchGroupByUuidAndCompanyId(
 					groupUuid, portletDataContext.getCompanyId());
 
-			if ((groupFriendlyUrlGroup == null) ||
-				groupUuid.startsWith(StringPool.SLASH)) {
+			if (groupFriendlyUrlGroup == null) {
+				groupFriendlyUrlGroup =
+					_groupLocalService.fetchFriendlyURLGroup(
+						portletDataContext.getCompanyId(), groupUuid);
+			}
 
+			if (groupFriendlyUrlGroup == null) {
 				content = StringUtil.replaceFirst(
 					content, _DATA_HANDLER_GROUP_FRIENDLY_URL,
 					group.getFriendlyURL(), groupFriendlyUrlPos);

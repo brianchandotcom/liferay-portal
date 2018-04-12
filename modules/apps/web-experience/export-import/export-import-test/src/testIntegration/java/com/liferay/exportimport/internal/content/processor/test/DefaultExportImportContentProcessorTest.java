@@ -97,6 +97,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -145,6 +146,8 @@ public class DefaultExportImportContentProcessorTest {
 
 		_liveGroup = GroupTestUtil.addGroup();
 		_stagingGroup = GroupTestUtil.addGroup();
+
+		_externalGroup = GroupTestUtil.addGroup();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -207,6 +210,9 @@ public class DefaultExportImportContentProcessorTest {
 
 		_livePrivateLayout = addMultiLocaleLayout(_liveGroup, true);
 		_livePublicLayout = addMultiLocaleLayout(_liveGroup, false);
+
+		_externalPrivateLayout = addMultiLocaleLayout(_externalGroup, true);
+		_externalPublicLayout = addMultiLocaleLayout(_externalGroup, false);
 
 		Map<Long, Long> layoutPlids =
 			(Map<Long, Long>)_portletDataContextImport.getNewPrimaryKeysMap(
@@ -591,6 +597,57 @@ public class DefaultExportImportContentProcessorTest {
 	}
 
 	@Test
+	public void testImportLayoutReferencesOnExternalGroupWithDifferentUUID()
+		throws Exception {
+
+		String content = replaceParameters(
+			getContent("layout_references.txt"), _fileEntry);
+
+		_exportImportContentProcessor.validateContentReferences(
+			_stagingGroup.getGroupId(), content);
+
+		content = _exportImportContentProcessor.replaceExportContentReferences(
+			_portletDataContextExport, _referrerStagedModel, content, true,
+			false);
+
+		UUID randomUUID = UUID.randomUUID();
+
+		String uuidString = randomUUID.toString();
+
+		content = StringUtil.replace(
+			content, _externalGroup.getUuid(), uuidString);
+
+		content = _exportImportContentProcessor.replaceImportContentReferences(
+			_portletDataContextImport, _referrerStagedModel, content);
+
+		Assert.assertTrue(
+			"The imported content should contain the friendly URL of the " +
+				"external group (\"" + _externalGroup.getFriendlyURL() +
+					"\"), but it does not:\n" + content,
+			content.contains(_externalGroup.getFriendlyURL()));
+
+		Assert.assertFalse(
+			"The imported content should not contain any @ variables, but it " +
+				"does:\n" + content,
+			content.contains(StringPool.AT));
+
+		Assert.assertFalse(
+			content, content.contains("data_handler_group_friendly_url"));
+		Assert.assertFalse(
+			content, content.contains("data_handler_path_context"));
+		Assert.assertFalse(
+			content,
+			content.contains("data_handler_private_group_servlet_mapping"));
+		Assert.assertFalse(
+			content,
+			content.contains("data_handler_private_user_servlet_mapping"));
+		Assert.assertFalse(
+			content, content.contains("data_handler_public_servlet_mapping"));
+		Assert.assertFalse(
+			content, content.contains("data_handler_site_admin_url"));
+	}
+
+	@Test
 	public void testImportLayoutReferencesOnSameGroup() throws Exception {
 		_portletDataContextImport.setGroupId(_stagingGroup.getGroupId());
 		_portletDataContextImport.setScopeGroupId(_stagingGroup.getGroupId());
@@ -832,6 +889,28 @@ public class DefaultExportImportContentProcessorTest {
 			content, content.contains("data_handler_site_admin_url"));
 	}
 
+	protected String duplicateLinesWithParamNames(
+		String content, String[] findParams, String[] addParams) {
+
+		if (StringUtil.indexOfAny(content, findParams) <= -1) {
+			return content;
+		}
+
+		List<String> urls = ListUtil.toList(StringUtil.splitLines(content));
+
+		List<String> outURLs = new ArrayList<>();
+
+		for (String url : urls) {
+			outURLs.add(url);
+
+			if (StringUtil.indexOfAny(url, findParams) > -1) {
+				outURLs.add(StringUtil.replace(url, findParams, addParams));
+			}
+		}
+
+		return StringUtil.merge(outURLs, StringPool.NEW_LINE);
+	}
+
 	protected void exportImportLayouts(boolean privateLayout) throws Exception {
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
 			_stagingGroup.getGroupId(), privateLayout);
@@ -901,6 +980,12 @@ public class DefaultExportImportContentProcessorTest {
 		return urls;
 	}
 
+	protected String replaceExternalGroupFriendlyURLs(String content) {
+		return duplicateLinesWithParamNames(
+			content, _GROUP_FRIENDLY_URL_VARIABLES,
+			_EXTERNAL_GROUP_FRIENDLY_URL_VARIABLES);
+	}
+
 	protected String replaceLinksToLayoutsParameters(
 		String content, Layout privateLayout, Layout publicLayout) {
 
@@ -919,36 +1004,16 @@ public class DefaultExportImportContentProcessorTest {
 	}
 
 	protected String replaceMultiLocaleLayoutFriendlyURLs(String content) {
-		if (StringUtil.indexOfAny(content, _MULTI_LOCALE_LAYOUT_VARIABLES) <=
-				-1) {
-
-			return content;
-		}
-
-		List<String> urls = ListUtil.toList(StringUtil.splitLines(content));
-
-		List<String> outURLs = new ArrayList<>();
-
-		for (String url : urls) {
-			outURLs.add(url);
-
-			if (StringUtil.indexOfAny(url, _MULTI_LOCALE_LAYOUT_VARIABLES) >
-					-1) {
-
-				outURLs.add(
-					StringUtil.replace(
-						url, _MULTI_LOCALE_LAYOUT_VARIABLES,
-						_NON_DEFAULT_MULTI_LOCALE_LAYOUT_VARIABLES));
-			}
-		}
-
-		return StringUtil.merge(outURLs, StringPool.NEW_LINE);
+		return duplicateLinesWithParamNames(
+			content, _MULTI_LOCALE_LAYOUT_VARIABLES,
+			_NON_DEFAULT_MULTI_LOCALE_LAYOUT_VARIABLES);
 	}
 
 	protected String replaceParameters(String content, FileEntry fileEntry) {
 		Company company = CompanyLocalServiceUtil.fetchCompany(
 			fileEntry.getCompanyId());
 
+		content = replaceExternalGroupFriendlyURLs(content);
 		content = replaceMultiLocaleLayoutFriendlyURLs(content);
 
 		Map<Locale, String> livePublicLayoutFriendlyURLMap =
@@ -963,6 +1028,9 @@ public class DefaultExportImportContentProcessorTest {
 			new String[] {
 				"[$CANONICAL_URL_SEPARATOR$]", "[$CONTROL_PANEL_FRIENDLY_URL$]",
 				"[$CONTROL_PANEL_LAYOUT_FRIENDLY_URL$]",
+				"[$EXTERNAL_GROUP_FRIENDLY_URL$]",
+				"[$EXTERNAL_PRIVATE_LAYOUT_FRIENDLY_URL$]",
+				"[$EXTERNAL_PUBLIC_LAYOUT_FRIENDLY_URL$]",
 				"[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]", "[$IMAGE_ID$]",
 				"[$LIVE_GROUP_FRIENDLY_URL$]", "[$LIVE_GROUP_ID$]",
 				"[$LIVE_PUBLIC_LAYOUT_FRIENDLY_URL$]",
@@ -980,6 +1048,9 @@ public class DefaultExportImportContentProcessorTest {
 				VirtualLayoutConstants.CANONICAL_URL_SEPARATOR,
 				GroupConstants.CONTROL_PANEL_FRIENDLY_URL,
 				PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL,
+				_externalGroup.getFriendlyURL(),
+				_externalPrivateLayout.getFriendlyURL(),
+				_externalPublicLayout.getFriendlyURL(),
 				_stagingGroup.getFriendlyURL(),
 				String.valueOf(fileEntry.getGroupId()),
 				String.valueOf(fileEntry.getFileEntryId()),
@@ -1087,6 +1158,17 @@ public class DefaultExportImportContentProcessorTest {
 			entriesStream.anyMatch(entry -> entry.endsWith(expected)));
 	}
 
+	private static final String[] _EXTERNAL_GROUP_FRIENDLY_URL_VARIABLES = {
+		"[$EXTERNAL_GROUP_FRIENDLY_URL$]",
+		"[$EXTERNAL_PRIVATE_LAYOUT_FRIENDLY_URL$]",
+		"[$EXTERNAL_PUBLIC_LAYOUT_FRIENDLY_URL$]"
+	};
+
+	private static final String[] _GROUP_FRIENDLY_URL_VARIABLES = {
+		"[$GROUP_FRIENDLY_URL$]", "[$PRIVATE_LAYOUT_FRIENDLY_URL$]",
+		"[$PUBLIC_LAYOUT_FRIENDLY_URL$]"
+	};
+
 	private static final String[] _MULTI_LOCALE_LAYOUT_VARIABLES = {
 		"[$LIVE_PUBLIC_LAYOUT_FRIENDLY_URL$]",
 		"[$PRIVATE_LAYOUT_FRIENDLY_URL$]", "[$PUBLIC_LAYOUT_FRIENDLY_URL$]"
@@ -1107,6 +1189,12 @@ public class DefaultExportImportContentProcessorTest {
 
 	private Locale _defaultLocale;
 	private ExportImportContentProcessor<String> _exportImportContentProcessor;
+
+	@DeleteAfterTestRun
+	private Group _externalGroup;
+
+	private Layout _externalPrivateLayout;
+	private Layout _externalPublicLayout;
 	private FileEntry _fileEntry;
 	private ExportImportContentProcessor<String>
 		_layoutReferencesExportImportContentProcessor;

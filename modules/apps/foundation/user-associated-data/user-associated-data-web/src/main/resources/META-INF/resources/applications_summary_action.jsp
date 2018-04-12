@@ -39,7 +39,7 @@ UADApplicationSummaryDisplay uadApplicationSummaryDisplay = (UADApplicationSumma
 	</portlet:renderURL>
 
 	<liferay-ui:icon
-		message="edit"
+		message="view"
 		url="<%= viewUADEntitiesURL.toString() %>"
 	/>
 

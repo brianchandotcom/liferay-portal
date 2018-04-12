@@ -78,32 +78,6 @@ public class SiteNavigationAdminDisplayContext {
 					SITE_NAVIGATION_MENU_ITEM_TYPE_REGISTRY);
 	}
 
-	public JSONArray getAvailableItemsJSONArray() throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		for (SiteNavigationMenuItemType siteNavigationMenuItemType :
-				_siteNavigationMenuItemTypeRegistry.
-					getSiteNavigationMenuItemTypes()) {
-
-			JSONObject itemTypeJSONObject = JSONFactoryUtil.createJSONObject();
-
-			itemTypeJSONObject.put(
-				"icon", siteNavigationMenuItemType.getIcon());
-			itemTypeJSONObject.put(
-				"label",
-				siteNavigationMenuItemType.getLabel(themeDisplay.getLocale()));
-			itemTypeJSONObject.put(
-				"type", siteNavigationMenuItemType.getType());
-
-			jsonArray.put(itemTypeJSONObject);
-		}
-
-		return jsonArray;
-	}
-
 	public String getDisplayStyle() {
 		if (_displayStyle != null) {
 			return _displayStyle;

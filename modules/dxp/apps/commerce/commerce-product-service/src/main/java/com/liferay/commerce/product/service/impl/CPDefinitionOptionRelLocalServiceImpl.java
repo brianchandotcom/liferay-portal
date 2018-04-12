@@ -22,6 +22,9 @@ import com.liferay.commerce.product.service.base.CPDefinitionOptionRelLocalServi
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -36,6 +39,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -159,6 +163,10 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		expandoRowLocalService.deleteRows(
 			cpDefinitionOptionRel.getCPDefinitionOptionRelId());
+
+		// Commerce product instances
+
+		checkCPInstances(cpDefinitionOptionRel);
 
 		// Commerce product definition
 
@@ -350,6 +358,53 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		return searchContext;
 	}
 
+	protected void checkCPInstances(CPDefinitionOptionRel cpDefinitionOptionRel)
+		throws PortalException {
+
+		if (!cpDefinitionOptionRel.getSkuContributor()) {
+			return;
+		}
+
+		CPDefinition cpDefinition = cpDefinitionLocalService.getCPDefinition(
+			cpDefinitionOptionRel.getCPDefinitionId());
+
+		List<CPInstance> cpInstances =
+			cpInstanceLocalService.getCPDefinitionInstances(
+				cpDefinition.getCPDefinitionId(),
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		for (CPInstance cpInstance : cpInstances) {
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+				cpInstance.getDDMContent());
+
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+				long cpDefinitionOptionRelId = jsonObject.getLong("key");
+
+				if (cpDefinitionOptionRelId ==
+						cpDefinitionOptionRel.getCPDefinitionOptionRelId()) {
+
+					cpInstanceLocalService.updateStatus(
+						PrincipalThreadLocal.getUserId(),
+						cpInstance.getCPInstanceId(),
+						WorkflowConstants.STATUS_INACTIVE, new ServiceContext(),
+						new HashMap<String, Serializable>());
+				}
+			}
+		}
+
+		int cpDefinitionOptionRelsCount =
+			cpDefinitionOptionRelPersistence.countByC_SC(
+				cpDefinition.getCPDefinitionId(), true);
+
+		if (cpDefinitionOptionRelsCount == 0) {
+			cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
+				cpDefinition.getCPDefinitionId(), true, new ServiceContext());
+		}
+	}
+
 	protected void checkCPInstances(
 			long cpDefinitionId, boolean skuContributor,
 			ServiceContext serviceContext)
@@ -362,30 +417,30 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		CPDefinition cpDefinition = cpDefinitionLocalService.getCPDefinition(
 			cpDefinitionId);
 
-		if (!cpDefinition.isIgnoreSKUCombinations()) {
-			int cpDefinitionOptionRelsCount =
-				cpDefinitionOptionRelLocalService.
-					getCPDefinitionOptionRelsCount(
-						cpDefinition.getCPDefinitionId(), true);
+		cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
+			cpDefinition.getCPDefinitionId(), false, serviceContext);
 
-			if (cpDefinitionOptionRelsCount == 0) {
-				return;
-			}
+		int cpDefinitionOptionRelsCount =
+			cpDefinitionOptionRelLocalService.
+				getCPDefinitionOptionRelsCount(
+					cpDefinition.getCPDefinitionId(), true);
 
-			List<CPInstance> cpInstances =
-				cpInstanceLocalService.getCPDefinitionInstances(
-					cpDefinition.getCPDefinitionId(),
-					WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null);
+		if (cpDefinitionOptionRelsCount == 0) {
+			return;
+		}
 
-			for (CPInstance cpInstance : cpInstances) {
-				if (Validator.isNull(cpInstance.getDDMContent())) {
-					cpInstanceLocalService.updateStatus(
-						serviceContext.getUserId(),
-						cpInstance.getCPInstanceId(),
-						WorkflowConstants.STATUS_INACTIVE, serviceContext,
-						new HashMap<String, Serializable>());
-				}
+		List<CPInstance> cpInstances =
+			cpInstanceLocalService.getCPDefinitionInstances(
+				cpDefinition.getCPDefinitionId(),
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		for (CPInstance cpInstance : cpInstances) {
+			if (Validator.isNull(cpInstance.getDDMContent())) {
+				cpInstanceLocalService.updateStatus(
+					serviceContext.getUserId(), cpInstance.getCPInstanceId(),
+					WorkflowConstants.STATUS_INACTIVE, serviceContext,
+					new HashMap<String, Serializable>());
 			}
 		}
 	}

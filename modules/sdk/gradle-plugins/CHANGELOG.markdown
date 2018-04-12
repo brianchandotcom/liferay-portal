@@ -4076,6 +4076,12 @@ to version 2.3.126.
 - [LPS-75010]: Update the [Liferay Source Formatter] dependency to version
 1.0.598.
 
+## 3.11.0 - 2018-04-12
+
+### Added
+- [LPS-75530]: Add `gradlew watch --continuous` to quickly redeploy OSGi modules
+at any code change.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -4333,6 +4339,7 @@ to version 2.3.126.
 [LPS-75427]: https://issues.liferay.com/browse/LPS-75427
 [LPS-75430]: https://issues.liferay.com/browse/LPS-75430
 [LPS-75488]: https://issues.liferay.com/browse/LPS-75488
+[LPS-75530]: https://issues.liferay.com/browse/LPS-75530
 [LPS-75554]: https://issues.liferay.com/browse/LPS-75554
 [LPS-75589]: https://issues.liferay.com/browse/LPS-75589
 [LPS-75610]: https://issues.liferay.com/browse/LPS-75610

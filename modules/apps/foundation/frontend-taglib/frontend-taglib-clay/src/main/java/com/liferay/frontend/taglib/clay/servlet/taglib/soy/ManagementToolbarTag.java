@@ -70,6 +70,21 @@ public class ManagementToolbarTag extends BaseClayTag {
 			setShowFiltersDoneButton(false);
 		}
 
+		Boolean showCreationMenu = (Boolean)context.get("showCreationMenu");
+
+		CreationMenu creationMenu = (CreationMenu)context.get("creationMenu");
+
+		if (Validator.isNotNull(creationMenu) && showCreationMenu == null) {
+			showCreationMenu = true;
+
+			setShowCreationMenu(showCreationMenu);
+		}
+		else if (Validator.isNull(creationMenu) && showCreationMenu == null) {
+			showCreationMenu = false;
+
+			setShowCreationMenu(showCreationMenu);
+		}
+
 		return super.doStartTag();
 	}
 

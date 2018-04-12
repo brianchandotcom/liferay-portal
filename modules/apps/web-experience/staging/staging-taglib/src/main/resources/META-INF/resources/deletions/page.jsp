@@ -16,35 +16,28 @@
 
 <%@ include file="/deletions/init.jsp" %>
 
-<%
-String deleteApplicationDataBeforeImportingLabelTitle = LanguageUtil.get(request, "delete-application-data-before-importing");
-String deleteApplicationDataBeforeImportingLabelWarning = LanguageUtil.get(request, "delete-content-before-importing-warning");
-String deleteApplicationDataBeforeImportingLabelSuggestion = LanguageUtil.get(request, "delete-content-before-importing-suggestion");
-
-String individualDeletionsTitle = StringPool.BLANK;
-String individualDeletionsDescription = StringPool.BLANK;
-
-if (cmd.equals(Constants.EXPORT)) {
-	individualDeletionsTitle = LanguageUtil.get(request, "export-individual-deletions");
-	individualDeletionsDescription = LanguageUtil.get(request, "deletions-help-export");
-}
-else {
-	individualDeletionsTitle = LanguageUtil.get(request, "replicate-individual-deletions");
-	individualDeletionsDescription = LanguageUtil.get(request, "deletions-help");
-}
-
-String deleteApplicationDataBeforeImportingLabel =
-	deleteApplicationDataBeforeImportingLabelTitle + ": <span style='font-weight: normal;'>" +
-		deleteApplicationDataBeforeImportingLabelWarning + " " + deleteApplicationDataBeforeImportingLabelSuggestion + "</span> ";
-String individualDeletionsLabel = individualDeletionsTitle + ": <span style='font-weight: normal;'>" + individualDeletionsDescription + "</span> ";
-%>
-
 <c:if test="<%= cmd.equals(Constants.EXPORT) || cmd.equals(Constants.IMPORT) || cmd.equals(Constants.PUBLISH) %>">
-	<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass="options-group" label="deletions" markupView="lexicon">
-		<c:if test="<%= !cmd.equals(Constants.EXPORT) %>">
-			<aui:input disabled="<%= disableInputs %>" id="deletePortletDataBeforeImportingCheckbox" label="<%= deleteApplicationDataBeforeImportingLabel %>" name="<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.DELETE_PORTLET_DATA, false) %>" />
-		</c:if>
+	<aui:fieldset cssClass="options-group" markupView="lexicon">
+		<div class="sheet-section">
+			<h3 class="sheet-subtitle"><liferay-ui:message key="deletions" /></h3>
+			<c:if test="<%= !cmd.equals(Constants.EXPORT) %>">
+				<liferay-staging:checkbox
+					checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.DELETE_PORTLET_DATA, false) %>"
+					disabled="<%= disableInputs %>"
+					label="delete-application-data-before-importing"
+					name="<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>"
+					suggestion="delete-content-before-importing-suggestion"
+					warning="delete-content-before-importing-warning"
+				/>
+			</c:if>
 
-		<aui:input disabled="<%= disableInputs %>" label="<%= individualDeletionsLabel %>" name="<%= PortletDataHandlerKeys.DELETIONS %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.DELETIONS, false) %>" />
+			<liferay-staging:checkbox
+				checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.DELETIONS, false) %>"
+				description="<%= individualDeletionsDescription %>"
+				disabled="<%= disableInputs %>"
+				label="<%= individualDeletionsTitle %>"
+				name="<%= PortletDataHandlerKeys.DELETIONS %>"
+			/>
+		</div>
 	</aui:fieldset>
 </c:if>

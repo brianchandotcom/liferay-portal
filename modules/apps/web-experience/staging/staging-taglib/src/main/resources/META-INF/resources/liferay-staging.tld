@@ -36,6 +36,60 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Renders a checkbox designed specifically for Staging screens.</description>
+		<name>checkbox</name>
+		<tag-class>com.liferay.staging.taglib.servlet.taglib.CheckboxTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>Whether the checkbox is checked or not. Default is not checked.</description>
+			<name>checked</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The language key of the checkbox's description text. It will be displayed after the label.</description>
+			<name>description</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Whether the checkbox is disabled or not. Default is enabled.</description>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The id of the input in the html. It will be added to the portlet id when using as the dom id.</description>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The language key of the checkbox's label.</description>
+			<name>label</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The name of the input in the html.</description>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The language key of the checkbox's suggestion text. It will be displayed after the label.</description>
+			<name>suggestion</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The language key of the checkbox's warning text. It will be displayed after the suggestion.</description>
+			<name>warning</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Renders the UI section for an <![CDATA[<code>exportImportConfiguration</code>]]> object's basic information.</description>
 		<name>configuration-header</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.ConfigurationHeaderTag</tag-class>

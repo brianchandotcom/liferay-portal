@@ -34,4 +34,25 @@ if (exportImportConfiguration != null) {
 
 	parameterMap = (Map<String, String[]>)settingsMap.get("parameterMap");
 }
+
+String inputDescription = StringPool.BLANK;
+
+if (global) {
+	inputDescription = "publish-global-permissions-help";
+}
+else {
+	inputDescription = "export-import-permissions-help";
+}
+
+String inputTitle = StringPool.BLANK;
+
+if (action.equals("export")) {
+	inputTitle = "export-permissions";
+}
+else if (action.equals("publish")) {
+	inputTitle = "publish-permissions";
+}
+else {
+	inputTitle = "import-permissions";
+}
 %>

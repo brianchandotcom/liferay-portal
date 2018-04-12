@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.verify;
+package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -28,12 +29,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Douglas Wong
+ * @author Samuel Ziemer
  */
-public class VerifySQLServer extends VerifyProcess {
+public class UpgradeSQLServer extends UpgradeProcess {
 
 	protected void convertColumnsToUnicode() {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
@@ -62,7 +67,7 @@ public class VerifySQLServer extends VerifyProcess {
 				while (rs.next()) {
 					String tableName = rs.getString("table_name");
 
-					if (!isPortalTableName(tableName)) {
+					if (!_tableNames.contains(tableName)) {
 						continue;
 					}
 
@@ -165,7 +170,7 @@ public class VerifySQLServer extends VerifyProcess {
 	}
 
 	@Override
-	protected void doVerify() throws Exception {
+	protected void doUpgrade() throws Exception {
 		DB db = DBManagerUtil.getDB();
 
 		if (db.getDBType() != DBType.SQLSERVER) {
@@ -201,7 +206,7 @@ public class VerifySQLServer extends VerifyProcess {
 			while (rs.next()) {
 				String tableName = rs.getString("table_name");
 
-				if (!isPortalTableName(tableName)) {
+				if (!_tableNames.contains(tableName)) {
 					continue;
 				}
 
@@ -283,7 +288,57 @@ public class VerifySQLServer extends VerifyProcess {
 			"(systypes.name = 'varchar'))";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		VerifySQLServer.class);
+		UpgradeSQLServer.class);
+
+	private static final Set<String> _tableNames = new HashSet<>(
+		Arrays.asList(
+			"Account_", "Address", "AnnouncementsDelivery",
+			"AnnouncementsEntry", "AnnouncementsFlag", "AssetCategory",
+			"AssetCategoryProperty", "AssetEntries_AssetCategories",
+			"AssetEntries_AssetTags", "AssetEntry", "AssetLink", "AssetTag",
+			"AssetTagStats", "AssetVocabulary", "BackgroundTask", "BlogsEntry",
+			"BlogsStatsUser", "BookmarksEntry", "BookmarksFolder",
+			"BrowserTracker", "CalEvent", "Classname_", "ClusterGroup",
+			"Company", "Contact_", "Counter", "Country", "DDLRecord",
+			"DDLRecordSet", "DDLRecordVersion", "DDMContent", "DDMStorageLink",
+			"DDMStructure", "DDMStructureLink", "DDMTemplate", "DLContent",
+			"DLFileEntry", "DLFileEntryMetadata", "DLFileEntryType",
+			"DLFileEntryTypes_DLFolders", "DLFileRank", "DLFileShortcut",
+			"DLFileVersion", "DLFolder", "DLSyncEvent", "EmailAddress",
+			"ExpandoColumn", "ExpandoRow", "ExpandoTable", "ExpandoValue",
+			"ExportImportConfiguration", "Group_", "Groups_Orgs",
+			"Groups_Roles", "Groups_UserGroups", "Image", "JournalArticle",
+			"JournalArticleImage", "JournalArticleResource",
+			"JournalContentSearch", "JournalFeed", "JournalFolder",
+			"JournalStructure", "JournalTemplate", "Layout", "LayoutBranch",
+			"LayoutFriendlyURL", "LayoutPrototype", "LayoutRevision",
+			"LayoutSet", "LayoutSetBranch", "LayoutSetPrototype", "ListType",
+			"Lock_", "MBBan", "MBCategory", "MBDiscussion", "MBMailingList",
+			"MBMessage", "MBStatsUser", "MBThread", "MBThreadflag", "MDRAction",
+			"MDRRule", "MDRRuleGroup", "MDRuleGroupInstance",
+			"MembershipRequest", "Organization_", "OrgGroupRole", "OrgLabor",
+			"PasswordPolicy", "PasswordPolicyRel", "PasswordTracker", "Phone",
+			"PluginSetting", "PollsChoice", "PollsQuestion", "PollsVote",
+			"PortalPreferences", "Portlet", "PortletItem", "PortletPreferences",
+			"RatingsEntry", "RatingsStats", "RecentLayoutBranch",
+			"RecentLayoutRevision", "RecentLayoutSetBranch", "Region",
+			"Release_", "Repository", "RepositoryEntry", "ResourceAction",
+			"ResourceBlock", "ResourceBlockPermission", "ResourcePermission",
+			"ResourceTypePermission", "Role_", "ServiceComponent",
+			"ShoppingCart", "ShoppingCategory", "ShoppingCoupon",
+			"ShoppingItem", "ShoppingItemField", "ShoppingItemPrice",
+			"ShoppingOrder", "ShoppingOrderItem", "SocialActivity",
+			"SocialActivityAchievement", "SocialActivityCounter",
+			"SocialActivityLimit", "SocialActivitySet", "SocialActivitySetting",
+			"SocialRelation", "SocialRequest", "Subscription", "SystemEvent",
+			"Team", "Ticket", "TrashEntry", "TrashVersion",
+			"UserNotificationDelivery", "User_", "UserGroup",
+			"UserGroupGroupRole", "UserGroupRole", "UserGroups_Teams",
+			"UserIDMapper", "UserNotificationEvent", "Users_Groups",
+			"Users_Orgs", "Users_Roles", "Users_Teams", "Users_UserGroups",
+			"UserTracker", "UserTrackerPath", "VirtualHost", "WebDAVProps",
+			"WebSite", "WikiNode", "WikiPage", "WikiPageResource",
+			"WorkflowDefinitionLink", "WorkflowInstanceLink"));
 
 	private final List<String> _addPrimaryKeySQLs = new ArrayList<>();
 

@@ -96,28 +96,30 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
       incrementalDom.attr('class', 'form-group' + (visible ? '' : ' hide'));
       incrementalDom.attr('data-fieldname', name);
   incrementalDom.elementOpenEnd();
-    if (showLabel) {
-      incrementalDom.elementOpen('label');
+    incrementalDom.elementOpen('label');
+      if (showLabel) {
         soyIdom.print(label);
         incrementalDom.text(' ');
-        if (required) {
-          incrementalDom.elementOpenStart('svg');
-              incrementalDom.attr('aria-hidden', 'true');
-              incrementalDom.attr('class', 'lexicon-icon lexicon-icon-asterisk reference-mark');
+      }
+      if (required) {
+        incrementalDom.elementOpenStart('svg');
+            incrementalDom.attr('aria-hidden', 'true');
+            incrementalDom.attr('class', 'lexicon-icon lexicon-icon-asterisk reference-mark');
+        incrementalDom.elementOpenEnd();
+          incrementalDom.elementOpenStart('use');
+              incrementalDom.attr('xlink:href', pathThemeImages + '/lexicon/icons.svg#asterisk');
           incrementalDom.elementOpenEnd();
-            incrementalDom.elementOpenStart('use');
-                incrementalDom.attr('xlink:href', pathThemeImages + '/lexicon/icons.svg#asterisk');
-            incrementalDom.elementOpenEnd();
-            incrementalDom.elementClose('use');
-          incrementalDom.elementClose('svg');
-        }
-      incrementalDom.elementClose('label');
+          incrementalDom.elementClose('use');
+        incrementalDom.elementClose('svg');
+      }
+    incrementalDom.elementClose('label');
+    if (showLabel) {
       if (tip) {
-        incrementalDom.elementOpenStart('p');
-            incrementalDom.attr('class', 'liferay-ddm-form-field-tip');
+        incrementalDom.elementOpenStart('span');
+            incrementalDom.attr('class', 'form-text');
         incrementalDom.elementOpenEnd();
           soyIdom.print(tip);
-        incrementalDom.elementClose('p');
+        incrementalDom.elementClose('span');
       }
     }
     incrementalDom.elementOpenStart('div');
@@ -133,47 +135,47 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           incrementalDom.elementOpen('tr');
             incrementalDom.elementOpen('th');
             incrementalDom.elementClose('th');
-            var column57List = columns;
-            var column57ListLen = column57List.length;
-            for (var column57Index = 0; column57Index < column57ListLen; column57Index++) {
-                var column57Data = column57List[column57Index];
+            var column61List = columns;
+            var column61ListLen = column61List.length;
+            for (var column61Index = 0; column61Index < column61ListLen; column61Index++) {
+                var column61Data = column61List[column61Index];
                 incrementalDom.elementOpen('th');
-                  soyIdom.print(column57Data.label);
+                  soyIdom.print(column61Data.label);
                 incrementalDom.elementClose('th');
               }
           incrementalDom.elementClose('tr');
         incrementalDom.elementClose('thead');
         incrementalDom.elementOpen('tbody');
-          var row87List = rows;
-          var row87ListLen = row87List.length;
-          for (var row87Index = 0; row87Index < row87ListLen; row87Index++) {
-              var row87Data = row87List[row87Index];
+          var row91List = rows;
+          var row91ListLen = row91List.length;
+          for (var row91Index = 0; row91Index < row91ListLen; row91Index++) {
+              var row91Data = row91List[row91Index];
               incrementalDom.elementOpenStart('tr');
-                  incrementalDom.attr('name', row87Data.value);
+                  incrementalDom.attr('name', row91Data.value);
               incrementalDom.elementOpenEnd();
                 incrementalDom.elementOpen('td');
-                  soyIdom.print(row87Data.label);
+                  soyIdom.print(row91Data.label);
                 incrementalDom.elementClose('td');
-                var column84List = columns;
-                var column84ListLen = column84List.length;
-                for (var column84Index = 0; column84Index < column84ListLen; column84Index++) {
-                    var column84Data = column84List[column84Index];
+                var column88List = columns;
+                var column88ListLen = column88List.length;
+                for (var column88Index = 0; column88Index < column88ListLen; column88Index++) {
+                    var column88Data = column88List[column88Index];
                     incrementalDom.elementOpen('td');
                       incrementalDom.elementOpenStart('input');
-                          if (focusTarget && (focusTarget.row == row87Data.value && focusTarget.index == column84Index)) {
+                          if (focusTarget && (focusTarget.row == row91Data.value && focusTarget.index == column88Index)) {
                             incrementalDom.attr('autoFocus', '');
                           }
-                          if (column84Data.value == value[row87Data.value]) {
+                          if (column88Data.value == value[row91Data.value]) {
                             incrementalDom.attr('checked', '');
                           }
                           incrementalDom.attr('class', 'form-builder-grid-field');
-                          incrementalDom.attr('data-row-index', column84Index);
+                          incrementalDom.attr('data-row-index', column88Index);
                           if (readOnly) {
                             incrementalDom.attr('disabled', '');
                           }
-                          incrementalDom.attr('name', row87Data.value);
+                          incrementalDom.attr('name', row91Data.value);
                           incrementalDom.attr('type', 'radio');
-                          incrementalDom.attr('value', column84Data.value);
+                          incrementalDom.attr('value', column88Data.value);
                       incrementalDom.elementOpenEnd();
                       incrementalDom.elementClose('input');
                     incrementalDom.elementClose('td');
@@ -231,11 +233,11 @@ function $hidden_grid(opt_data, opt_ijData, opt_ijData_deprecated) {
   var value = opt_data.value;
   /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
   var dir = soy.asserts.assertType(opt_data.dir == null || (goog.isString(opt_data.dir) || opt_data.dir instanceof goog.soy.data.SanitizedContent), 'dir', opt_data.dir, '!goog.soy.data.SanitizedContent|null|string|undefined');
-  var row113List = rows;
-  var row113ListLen = row113List.length;
-  for (var row113Index = 0; row113Index < row113ListLen; row113Index++) {
-      var row113Data = row113List[row113Index];
-      var inputValue__soy97 = value[row113Data.value] ? row113Data.value + ';' + value[row113Data.value] : '';
+  var row117List = rows;
+  var row117ListLen = row117List.length;
+  for (var row117Index = 0; row117Index < row117ListLen; row117Index++) {
+      var row117Data = row117List[row117Index];
+      var inputValue__soy101 = value[row117Data.value] ? row117Data.value + ';' + value[row117Data.value] : '';
       incrementalDom.elementOpenStart('input');
           incrementalDom.attr('class', 'form-control');
           if (dir) {
@@ -243,8 +245,8 @@ function $hidden_grid(opt_data, opt_ijData, opt_ijData_deprecated) {
           }
           incrementalDom.attr('name', name);
           incrementalDom.attr('type', 'hidden');
-          if (inputValue__soy97) {
-            incrementalDom.attr('value', inputValue__soy97);
+          if (inputValue__soy101) {
+            incrementalDom.attr('value', inputValue__soy101);
           }
       incrementalDom.elementOpenEnd();
       incrementalDom.elementClose('input');

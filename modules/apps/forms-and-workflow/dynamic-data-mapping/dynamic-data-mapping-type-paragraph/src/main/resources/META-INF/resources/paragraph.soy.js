@@ -47,7 +47,7 @@ soy.$$registerDelegateFn(soy.$$getDelTemplateId('ddm.field.idom'), 'paragraph', 
  * @param {{
  *  label: (!goog.soy.data.SanitizedContent|string),
  *  name: (!goog.soy.data.SanitizedContent|string),
- *  text: (!goog.soy.data.SanitizedContent|string),
+ *  text: function(),
  *  visible: boolean
  * }} opt_data
  * @param {Object<string, *>=} opt_ijData
@@ -61,8 +61,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var label = soy.asserts.assertType(goog.isString(opt_data.label) || opt_data.label instanceof goog.soy.data.SanitizedContent, 'label', opt_data.label, '!goog.soy.data.SanitizedContent|string');
   /** @type {!goog.soy.data.SanitizedContent|string} */
   var name = soy.asserts.assertType(goog.isString(opt_data.name) || opt_data.name instanceof goog.soy.data.SanitizedContent, 'name', opt_data.name, '!goog.soy.data.SanitizedContent|string');
-  /** @type {!goog.soy.data.SanitizedContent|string} */
-  var text = soy.asserts.assertType(goog.isString(opt_data.text) || opt_data.text instanceof goog.soy.data.SanitizedContent, 'text', opt_data.text, '!goog.soy.data.SanitizedContent|string');
+  /** @type {function()} */
+  var text = soy.asserts.assertType(goog.isFunction(opt_data.text), 'text', opt_data.text, 'function()');
   /** @type {boolean} */
   var visible = soy.asserts.assertType(goog.isBoolean(opt_data.visible) || opt_data.visible === 1 || opt_data.visible === 0, 'visible', opt_data.visible, 'boolean');
   incrementalDom.elementOpenStart('div');
@@ -77,7 +77,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
       incrementalDom.elementClose('label');
     }
     incrementalDom.elementOpen('div');
-      soyIdom.print(text);
+      text();
     incrementalDom.elementClose('div');
   incrementalDom.elementClose('div');
 }
@@ -86,7 +86,7 @@ exports.render = $render;
  * @typedef {{
  *  label: (!goog.soy.data.SanitizedContent|string),
  *  name: (!goog.soy.data.SanitizedContent|string),
- *  text: (!goog.soy.data.SanitizedContent|string),
+ *  text: function(),
  *  visible: boolean
  * }}
  */
@@ -96,7 +96,7 @@ if (goog.DEBUG) {
 }
 
 exports.render.params = ["label","name","text","visible"];
-exports.render.types = {"label":"string","name":"string","text":"string","visible":"bool"};
+exports.render.types = {"label":"string","name":"string","text":"html","visible":"bool"};
 templates = exports;
 return exports;
 

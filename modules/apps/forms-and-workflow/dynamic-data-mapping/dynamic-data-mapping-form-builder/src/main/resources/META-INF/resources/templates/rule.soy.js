@@ -70,17 +70,17 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
       incrementalDom.elementOpenStart('ul');
           incrementalDom.attr('class', 'liferay-ddm-form-builder-rule-condition-list liferay-ddm-form-rule-builder-timeline timeline ' + ((conditions.length) > 1 ? 'can-remove-item' : ''));
       incrementalDom.elementOpenEnd();
-        var showLogicalOperator__soy1684 = (conditions.length) > 1 ? true : false;
-        var param1687 = function() {
+        var showLogicalOperator__soy1569 = (conditions.length) > 1 ? true : false;
+        var param1572 = function() {
           $logicalOperatorDropDown({logicalOperator: strings[logicalOperator], strings: strings}, null, opt_ijData);
         };
-        $rulesHeader({extraContent: param1687, logicalOperator: strings[logicalOperator], title: strings.condition}, null, opt_ijData);
-        var condition1710List = conditions;
-        var condition1710ListLen = condition1710List.length;
-        if (condition1710ListLen > 0) {
-          for (var condition1710Index = 0; condition1710Index < condition1710ListLen; condition1710Index++) {
-            var condition1710Data = condition1710List[condition1710Index];
-            $condition({deleteIcon: deleteIcon, if: strings.if, index: condition1710Index, logicalOperator: strings[logicalOperator]}, null, opt_ijData);
+        $rulesHeader({extraContent: param1572, logicalOperator: strings[logicalOperator], title: strings.condition}, null, opt_ijData);
+        var condition1595List = conditions;
+        var condition1595ListLen = condition1595List.length;
+        if (condition1595ListLen > 0) {
+          for (var condition1595Index = 0; condition1595Index < condition1595ListLen; condition1595Index++) {
+            var condition1595Data = condition1595List[condition1595Index];
+            $condition({deleteIcon: deleteIcon, if: strings.if, index: condition1595Index, logicalOperator: strings[logicalOperator]}, null, opt_ijData);
           }
         } else {
           $condition({deleteIcon: deleteIcon, if: strings.if, index: 0, logicalOperator: strings[logicalOperator]}, null, opt_ijData);
@@ -91,12 +91,12 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           incrementalDom.attr('class', 'action-list liferay-ddm-form-builder-rule-action-list liferay-ddm-form-rule-builder-timeline timeline ' + ((actions.length) > 1 ? 'can-remove-item' : ''));
       incrementalDom.elementOpenEnd();
         $rulesHeader({logicalOperator: strings[logicalOperator], title: strings.actions}, null, opt_ijData);
-        var action1736List = actions;
-        var action1736ListLen = action1736List.length;
-        if (action1736ListLen > 0) {
-          for (var action1736Index = 0; action1736Index < action1736ListLen; action1736Index++) {
-            var action1736Data = action1736List[action1736Index];
-            $action({deleteIcon: deleteIcon, do: strings.do, index: action1736Index}, null, opt_ijData);
+        var action1621List = actions;
+        var action1621ListLen = action1621List.length;
+        if (action1621ListLen > 0) {
+          for (var action1621Index = 0; action1621Index < action1621ListLen; action1621Index++) {
+            var action1621Data = action1621List[action1621Index];
+            $action({deleteIcon: deleteIcon, do: strings.do, index: action1621Index}, null, opt_ijData);
           }
         } else {
           $action({deleteIcon: deleteIcon, do: strings.do, index: 0}, null, opt_ijData);

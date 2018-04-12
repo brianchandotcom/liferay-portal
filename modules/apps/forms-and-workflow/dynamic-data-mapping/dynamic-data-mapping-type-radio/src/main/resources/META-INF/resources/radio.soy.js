@@ -97,25 +97,27 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
       incrementalDom.attr('class', 'form-group ' + (visible ? '' : 'hide'));
       incrementalDom.attr('data-fieldname', name);
   incrementalDom.elementOpenEnd();
-    if (showLabel) {
-      incrementalDom.elementOpen('div');
-        incrementalDom.elementOpenStart('label');
-            incrementalDom.attr('for', name);
-        incrementalDom.elementOpenEnd();
+    incrementalDom.elementOpen('div');
+      incrementalDom.elementOpenStart('label');
+          incrementalDom.attr('for', name);
+      incrementalDom.elementOpenEnd();
+        if (showLabel) {
           soyIdom.print(label);
           incrementalDom.text(' ');
-          if (required) {
-            incrementalDom.elementOpenStart('svg');
-                incrementalDom.attr('aria-hidden', 'true');
-                incrementalDom.attr('class', 'lexicon-icon lexicon-icon-asterisk reference-mark');
+        }
+        if (required) {
+          incrementalDom.elementOpenStart('svg');
+              incrementalDom.attr('aria-hidden', 'true');
+              incrementalDom.attr('class', 'lexicon-icon lexicon-icon-asterisk reference-mark');
+          incrementalDom.elementOpenEnd();
+            incrementalDom.elementOpenStart('use');
+                incrementalDom.attr('xlink:href', pathThemeImages + '/lexicon/icons.svg#asterisk');
             incrementalDom.elementOpenEnd();
-              incrementalDom.elementOpenStart('use');
-                  incrementalDom.attr('xlink:href', pathThemeImages + '/lexicon/icons.svg#asterisk');
-              incrementalDom.elementOpenEnd();
-              incrementalDom.elementClose('use');
-            incrementalDom.elementClose('svg');
-          }
-        incrementalDom.elementClose('label');
+            incrementalDom.elementClose('use');
+          incrementalDom.elementClose('svg');
+        }
+      incrementalDom.elementClose('label');
+      if (showLabel) {
         if (tip) {
           incrementalDom.elementOpenStart('span');
               incrementalDom.attr('class', 'form-text');
@@ -123,20 +125,20 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
             soyIdom.print(tip);
           incrementalDom.elementClose('span');
         }
-      incrementalDom.elementClose('div');
-    }
-    var option78List = options;
-    var option78ListLen = option78List.length;
-    for (var option78Index = 0; option78Index < option78ListLen; option78Index++) {
-        var option78Data = option78List[option78Index];
+      }
+    incrementalDom.elementClose('div');
+    var option82List = options;
+    var option82ListLen = option82List.length;
+    for (var option82Index = 0; option82Index < option82ListLen; option82Index++) {
+        var option82Data = option82List[option82Index];
         incrementalDom.elementOpenStart('div');
             incrementalDom.attr('class', 'custom-control ' + (inline ? 'custom-control-inline' : '') + ' custom-radio');
         incrementalDom.elementOpenEnd();
           incrementalDom.elementOpenStart('label');
-              incrementalDom.attr('for', name + '_' + option78Data.value);
+              incrementalDom.attr('for', name + '_' + option82Data.value);
           incrementalDom.elementOpenEnd();
             incrementalDom.elementOpenStart('input');
-                if (option78Data.value == displayValue__soy21) {
+                if (option82Data.value == displayValue__soy21) {
                   incrementalDom.attr('checked', '');
                 }
                 if (dir) {
@@ -146,10 +148,10 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                   incrementalDom.attr('disabled', '');
                 }
                 incrementalDom.attr('class', 'custom-control-input');
-                incrementalDom.attr('id', name + '_' + option78Data.value);
+                incrementalDom.attr('id', name + '_' + option82Data.value);
                 incrementalDom.attr('name', name);
                 incrementalDom.attr('type', 'radio');
-                incrementalDom.attr('value', option78Data.value);
+                incrementalDom.attr('value', option82Data.value);
             incrementalDom.elementOpenEnd();
             incrementalDom.elementClose('input');
             incrementalDom.elementOpenStart('span');
@@ -158,7 +160,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
               incrementalDom.elementOpenStart('span');
                   incrementalDom.attr('class', 'custom-control-label-text');
               incrementalDom.elementOpenEnd();
-                soyIdom.print(option78Data.label);
+                soyIdom.print(option82Data.label);
               incrementalDom.elementClose('span');
             incrementalDom.elementClose('span');
           incrementalDom.elementClose('label');

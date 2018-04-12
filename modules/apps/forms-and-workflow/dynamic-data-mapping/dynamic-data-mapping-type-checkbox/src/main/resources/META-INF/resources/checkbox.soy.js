@@ -52,7 +52,7 @@ soy.$$registerDelegateFn(soy.$$getDelTemplateId('ddm.field.idom'), 'checkbox', 0
  *  readOnly: boolean,
  *  showAsSwitcher: boolean,
  *  showLabel: boolean,
- *  value: boolean,
+ *  value: (?),
  *  visible: boolean,
  *  required: (boolean|null|undefined),
  *  tip: (!goog.soy.data.SanitizedContent|null|string|undefined)
@@ -78,8 +78,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var showAsSwitcher = soy.asserts.assertType(goog.isBoolean(opt_data.showAsSwitcher) || opt_data.showAsSwitcher === 1 || opt_data.showAsSwitcher === 0, 'showAsSwitcher', opt_data.showAsSwitcher, 'boolean');
   /** @type {boolean} */
   var showLabel = soy.asserts.assertType(goog.isBoolean(opt_data.showLabel) || opt_data.showLabel === 1 || opt_data.showLabel === 0, 'showLabel', opt_data.showLabel, 'boolean');
-  /** @type {boolean} */
-  var value = soy.asserts.assertType(goog.isBoolean(opt_data.value) || opt_data.value === 1 || opt_data.value === 0, 'value', opt_data.value, 'boolean');
+  /** @type {?} */
+  var value = opt_data.value;
   /** @type {boolean} */
   var visible = soy.asserts.assertType(goog.isBoolean(opt_data.visible) || opt_data.visible === 1 || opt_data.visible === 0, 'visible', opt_data.visible, 'boolean');
   /** @type {boolean|null|undefined} */
@@ -140,12 +140,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           }
         incrementalDom.elementClose('span');
       incrementalDom.elementClose('label');
-      if (tip) {
-        incrementalDom.elementOpenStart('span');
-            incrementalDom.attr('class', 'form-text');
-        incrementalDom.elementOpenEnd();
-          soyIdom.print(tip);
-        incrementalDom.elementClose('span');
+      if (showLabel) {
+        if (tip) {
+          incrementalDom.elementOpenStart('span');
+              incrementalDom.attr('class', 'form-text');
+          incrementalDom.elementOpenEnd();
+            soyIdom.print(tip);
+          incrementalDom.elementClose('span');
+        }
       }
     } else {
       incrementalDom.elementOpenStart('div');
@@ -222,7 +224,7 @@ exports.render = $render;
  *  readOnly: boolean,
  *  showAsSwitcher: boolean,
  *  showLabel: boolean,
- *  value: boolean,
+ *  value: (?),
  *  visible: boolean,
  *  required: (boolean|null|undefined),
  *  tip: (!goog.soy.data.SanitizedContent|null|string|undefined)
@@ -271,7 +273,7 @@ if (goog.DEBUG) {
 }
 
 exports.render.params = ["label","name","pathThemeImages","predefinedValue","readOnly","showAsSwitcher","showLabel","value","visible","required","tip"];
-exports.render.types = {"label":"string","name":"string","pathThemeImages":"string","predefinedValue":"bool","readOnly":"bool","showAsSwitcher":"bool","showLabel":"bool","value":"bool","visible":"bool","required":"bool","tip":"string"};
+exports.render.types = {"label":"string","name":"string","pathThemeImages":"string","predefinedValue":"bool","readOnly":"bool","showAsSwitcher":"bool","showLabel":"bool","value":"?","visible":"bool","required":"bool","tip":"string"};
 exports.hidden_input.params = ["name","displayValue"];
 exports.hidden_input.types = {"name":"string","displayValue":"bool"};
 templates = exports;

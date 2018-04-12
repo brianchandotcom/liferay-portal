@@ -54,7 +54,6 @@ soy.$$registerDelegateFn(soy.$$getDelTemplateId('ddm.field.idom'), 'key_value', 
  *  visible: boolean,
  *  dir: (!goog.soy.data.SanitizedContent|null|string|undefined),
  *  key: (!goog.soy.data.SanitizedContent|null|string|undefined),
- *  keyInputSize: (null|number|undefined),
  *  label: (!goog.soy.data.SanitizedContent|null|string|undefined),
  *  required: (boolean|null|undefined),
  *  tooltip: (!goog.soy.data.SanitizedContent|null|string|undefined)
@@ -84,8 +83,6 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var dir = soy.asserts.assertType(opt_data.dir == null || (goog.isString(opt_data.dir) || opt_data.dir instanceof goog.soy.data.SanitizedContent), 'dir', opt_data.dir, '!goog.soy.data.SanitizedContent|null|string|undefined');
   /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
   var key = soy.asserts.assertType(opt_data.key == null || (goog.isString(opt_data.key) || opt_data.key instanceof goog.soy.data.SanitizedContent), 'key', opt_data.key, '!goog.soy.data.SanitizedContent|null|string|undefined');
-  /** @type {null|number|undefined} */
-  var keyInputSize = soy.asserts.assertType(opt_data.keyInputSize == null || goog.isNumber(opt_data.keyInputSize), 'keyInputSize', opt_data.keyInputSize, 'null|number|undefined');
   /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
   var label = soy.asserts.assertType(opt_data.label == null || (goog.isString(opt_data.label) || opt_data.label instanceof goog.soy.data.SanitizedContent), 'label', opt_data.label, '!goog.soy.data.SanitizedContent|null|string|undefined');
   /** @type {boolean|null|undefined} */
@@ -169,7 +166,6 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
       incrementalDom.elementClose('label');
       incrementalDom.elementOpenStart('input');
           incrementalDom.attr('class', 'key-value-input');
-          incrementalDom.attr('size', keyInputSize);
           incrementalDom.attr('tabindex', '-1');
           incrementalDom.attr('type', 'text');
           incrementalDom.attr('value', key);
@@ -190,7 +186,6 @@ exports.render = $render;
  *  visible: boolean,
  *  dir: (!goog.soy.data.SanitizedContent|null|string|undefined),
  *  key: (!goog.soy.data.SanitizedContent|null|string|undefined),
- *  keyInputSize: (null|number|undefined),
  *  label: (!goog.soy.data.SanitizedContent|null|string|undefined),
  *  required: (boolean|null|undefined),
  *  tooltip: (!goog.soy.data.SanitizedContent|null|string|undefined)
@@ -201,8 +196,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'DDMKeyValue.render';
 }
 
-exports.render.params = ["name","pathThemeImages","placeholder","showLabel","strings","value","visible","dir","key","keyInputSize","label","required","tooltip"];
-exports.render.types = {"name":"string","pathThemeImages":"string","placeholder":"string","showLabel":"bool","strings":"[keyLabel: string]","value":"string","visible":"bool","dir":"string","key":"string","keyInputSize":"int","label":"string","required":"bool","tooltip":"string"};
+exports.render.params = ["name","pathThemeImages","placeholder","showLabel","strings","value","visible","dir","key","label","required","tooltip"];
+exports.render.types = {"name":"string","pathThemeImages":"string","placeholder":"string","showLabel":"bool","strings":"[keyLabel: string]","value":"string","visible":"bool","dir":"string","key":"string","label":"string","required":"bool","tooltip":"string"};
 templates = exports;
 return exports;
 

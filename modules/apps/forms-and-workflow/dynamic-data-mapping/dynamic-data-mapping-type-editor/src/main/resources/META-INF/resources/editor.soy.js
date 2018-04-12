@@ -84,25 +84,27 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
       incrementalDom.attr('class', 'form-group' + (visible ? '' : ' hide') + ' liferay-ddm-form-field-editor');
       incrementalDom.attr('data-fieldname', name);
   incrementalDom.elementOpenEnd();
-    if (showLabel) {
-      incrementalDom.elementOpenStart('label');
-          incrementalDom.attr('class', 'control-label');
-          incrementalDom.attr('for', name);
-      incrementalDom.elementOpenEnd();
+    incrementalDom.elementOpenStart('label');
+        incrementalDom.attr('class', 'control-label');
+        incrementalDom.attr('for', name);
+    incrementalDom.elementOpenEnd();
+      if (showLabel) {
         soyIdom.print(label);
         incrementalDom.text(' ');
-        if (required) {
-          incrementalDom.elementOpenStart('svg');
-              incrementalDom.attr('aria-hidden', 'true');
-              incrementalDom.attr('class', 'lexicon-icon lexicon-icon-asterisk reference-mark');
+      }
+      if (required) {
+        incrementalDom.elementOpenStart('svg');
+            incrementalDom.attr('aria-hidden', 'true');
+            incrementalDom.attr('class', 'lexicon-icon lexicon-icon-asterisk reference-mark');
+        incrementalDom.elementOpenEnd();
+          incrementalDom.elementOpenStart('use');
+              incrementalDom.attr('xlink:href', pathThemeImages + '/lexicon/icons.svg#asterisk');
           incrementalDom.elementOpenEnd();
-            incrementalDom.elementOpenStart('use');
-                incrementalDom.attr('xlink:href', pathThemeImages + '/lexicon/icons.svg#asterisk');
-            incrementalDom.elementOpenEnd();
-            incrementalDom.elementClose('use');
-          incrementalDom.elementClose('svg');
-        }
-      incrementalDom.elementClose('label');
+          incrementalDom.elementClose('use');
+        incrementalDom.elementClose('svg');
+      }
+    incrementalDom.elementClose('label');
+    if (showLabel) {
       incrementalDom.elementOpenStart('p');
           incrementalDom.attr('class', 'liferay-ddm-form-field-tip');
       incrementalDom.elementOpenEnd();
@@ -110,7 +112,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
       incrementalDom.elementClose('p');
     }
     incrementalDom.elementOpenStart('div');
-        incrementalDom.attr('class', 'form-control input-group-container');
+        incrementalDom.attr('class', 'field-type-editor form-control input-group-container');
     incrementalDom.elementOpenEnd();
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('class', 'alloy-editor-container input-group');

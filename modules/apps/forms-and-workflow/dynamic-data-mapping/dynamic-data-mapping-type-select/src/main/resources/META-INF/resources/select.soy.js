@@ -118,9 +118,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
     incrementalDom.elementOpenStart('div');
         incrementalDom.attr('class', 'input-select-wrapper');
     incrementalDom.elementOpenEnd();
-      if (showLabel) {
-        $select_label(opt_data, null, opt_ijData);
-      }
+      $select_label(opt_data, null, opt_ijData);
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('class', 'form-builder-select-field input-group-container');
       incrementalDom.elementOpenEnd();
@@ -148,18 +146,18 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
               incrementalDom.elementOpenStart('ul');
                   incrementalDom.attr('class', 'multiple-badge-list');
               incrementalDom.elementOpenEnd();
-                var option94List = options;
-                var option94ListLen = option94List.length;
-                for (var option94Index = 0; option94Index < option94ListLen; option94Index++) {
-                    var option94Data = option94List[option94Index];
-                    $badge_item({badgeCloseIcon: badgeCloseIcon, option: option94Data, readOnly: readOnly, value: displayValues__soy27}, null, opt_ijData);
+                var option90List = options;
+                var option90ListLen = option90List.length;
+                for (var option90Index = 0; option90Index < option90ListLen; option90Index++) {
+                    var option90Data = option90List[option90Index];
+                    $badge_item({badgeCloseIcon: badgeCloseIcon, option: option90Data, readOnly: readOnly, value: displayValues__soy27}, null, opt_ijData);
                   }
                 if (fixedOptions) {
-                  var fixedOption107List = fixedOptions;
-                  var fixedOption107ListLen = fixedOption107List.length;
-                  for (var fixedOption107Index = 0; fixedOption107Index < fixedOption107ListLen; fixedOption107Index++) {
-                      var fixedOption107Data = fixedOption107List[fixedOption107Index];
-                      $badge_item({badgeCloseIcon: badgeCloseIcon, option: fixedOption107Data, readOnly: readOnly, value: displayValues__soy27}, null, opt_ijData);
+                  var fixedOption103List = fixedOptions;
+                  var fixedOption103ListLen = fixedOption103List.length;
+                  for (var fixedOption103Index = 0; fixedOption103Index < fixedOption103ListLen; fixedOption103Index++) {
+                      var fixedOption103Data = fixedOption103List[fixedOption103Index];
+                      $badge_item({badgeCloseIcon: badgeCloseIcon, option: fixedOption103Data, readOnly: readOnly, value: displayValues__soy27}, null, opt_ijData);
                     }
                 }
               incrementalDom.elementClose('ul');
@@ -172,34 +170,34 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
             }
           } else {
             if (displayValues__soy27) {
-              var displayValue150List = displayValues__soy27;
-              var displayValue150ListLen = displayValue150List.length;
-              for (var displayValue150Index = 0; displayValue150Index < displayValue150ListLen; displayValue150Index++) {
-                  var displayValue150Data = displayValue150List[displayValue150Index];
-                  var option131List = options;
-                  var option131ListLen = option131List.length;
-                  for (var option131Index = 0; option131Index < option131ListLen; option131Index++) {
-                      var option131Data = option131List[option131Index];
-                      if (option131Data.value == displayValue150Data) {
+              var displayValue146List = displayValues__soy27;
+              var displayValue146ListLen = displayValue146List.length;
+              for (var displayValue146Index = 0; displayValue146Index < displayValue146ListLen; displayValue146Index++) {
+                  var displayValue146Data = displayValue146List[displayValue146Index];
+                  var option127List = options;
+                  var option127ListLen = option127List.length;
+                  for (var option127Index = 0; option127Index < option127ListLen; option127Index++) {
+                      var option127Data = option127List[option127Index];
+                      if (option127Data.value == displayValue146Data) {
                         incrementalDom.elementOpenStart('div');
                             incrementalDom.attr('class', 'option-selected');
-                            incrementalDom.attr('title', option131Data.label);
+                            incrementalDom.attr('title', option127Data.label);
                         incrementalDom.elementOpenEnd();
-                          soyIdom.print(option131Data.label);
+                          soyIdom.print(option127Data.label);
                         incrementalDom.elementClose('div');
                       }
                     }
                   if (fixedOptions) {
-                    var fixedOption146List = fixedOptions;
-                    var fixedOption146ListLen = fixedOption146List.length;
-                    for (var fixedOption146Index = 0; fixedOption146Index < fixedOption146ListLen; fixedOption146Index++) {
-                        var fixedOption146Data = fixedOption146List[fixedOption146Index];
-                        if (fixedOption146Data.value == displayValue150Data) {
+                    var fixedOption142List = fixedOptions;
+                    var fixedOption142ListLen = fixedOption142List.length;
+                    for (var fixedOption142Index = 0; fixedOption142Index < fixedOption142ListLen; fixedOption142Index++) {
+                        var fixedOption142Data = fixedOption142List[fixedOption142Index];
+                        if (fixedOption142Data.value == displayValue146Data) {
                           incrementalDom.elementOpenStart('div');
                               incrementalDom.attr('class', 'option-selected');
-                              incrementalDom.attr('title', fixedOption146Data.label);
+                              incrementalDom.attr('title', fixedOption142Data.label);
                           incrementalDom.elementOpenEnd();
-                            soyIdom.print(fixedOption146Data.label);
+                            soyIdom.print(fixedOption142Data.label);
                           incrementalDom.elementClose('div');
                         }
                       }
@@ -322,11 +320,11 @@ function $badge_item(opt_data, opt_ijData, opt_ijData_deprecated) {
   /** @type {boolean|null|undefined} */
   var readOnly = soy.asserts.assertType(opt_data.readOnly == null || (goog.isBoolean(opt_data.readOnly) || opt_data.readOnly === 1 || opt_data.readOnly === 0), 'readOnly', opt_data.readOnly, 'boolean|null|undefined');
   if (value) {
-    var currentValue209List = value;
-    var currentValue209ListLen = currentValue209List.length;
-    for (var currentValue209Index = 0; currentValue209Index < currentValue209ListLen; currentValue209Index++) {
-        var currentValue209Data = currentValue209List[currentValue209Index];
-        if (option.value == currentValue209Data) {
+    var currentValue205List = value;
+    var currentValue205ListLen = currentValue205List.length;
+    for (var currentValue205Index = 0; currentValue205Index < currentValue205ListLen; currentValue205Index++) {
+        var currentValue205Data = currentValue205List[currentValue205Index];
+        if (option.value == currentValue205Data) {
           incrementalDom.elementOpen('li');
             incrementalDom.elementOpenStart('span');
                 incrementalDom.attr('class', 'badge badge-primary badge-sm multiple-badge');
@@ -370,6 +368,7 @@ if (goog.DEBUG) {
  *  pathThemeImages: (!goog.soy.data.SanitizedContent|string),
  *  label: (!goog.soy.data.SanitizedContent|null|string|undefined),
  *  required: (boolean|null|undefined),
+ *  showLabel: (boolean|null|undefined),
  *  tip: (!goog.soy.data.SanitizedContent|null|string|undefined)
  * }} opt_data
  * @param {Object<string, *>=} opt_ijData
@@ -387,13 +386,17 @@ function $select_label(opt_data, opt_ijData, opt_ijData_deprecated) {
   var label = soy.asserts.assertType(opt_data.label == null || (goog.isString(opt_data.label) || opt_data.label instanceof goog.soy.data.SanitizedContent), 'label', opt_data.label, '!goog.soy.data.SanitizedContent|null|string|undefined');
   /** @type {boolean|null|undefined} */
   var required = soy.asserts.assertType(opt_data.required == null || (goog.isBoolean(opt_data.required) || opt_data.required === 1 || opt_data.required === 0), 'required', opt_data.required, 'boolean|null|undefined');
+  /** @type {boolean|null|undefined} */
+  var showLabel = soy.asserts.assertType(opt_data.showLabel == null || (goog.isBoolean(opt_data.showLabel) || opt_data.showLabel === 1 || opt_data.showLabel === 0), 'showLabel', opt_data.showLabel, 'boolean|null|undefined');
   /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
   var tip = soy.asserts.assertType(opt_data.tip == null || (goog.isString(opt_data.tip) || opt_data.tip instanceof goog.soy.data.SanitizedContent), 'tip', opt_data.tip, '!goog.soy.data.SanitizedContent|null|string|undefined');
   incrementalDom.elementOpenStart('label');
       incrementalDom.attr('for', name);
   incrementalDom.elementOpenEnd();
-    soyIdom.print(label);
-    incrementalDom.text(' ');
+    if (showLabel) {
+      soyIdom.print(label);
+      incrementalDom.text(' ');
+    }
     if (required) {
       incrementalDom.elementOpenStart('svg');
           incrementalDom.attr('aria-hidden', 'true');
@@ -406,12 +409,14 @@ function $select_label(opt_data, opt_ijData, opt_ijData_deprecated) {
       incrementalDom.elementClose('svg');
     }
   incrementalDom.elementClose('label');
-  if (tip) {
-    incrementalDom.elementOpenStart('span');
-        incrementalDom.attr('class', 'form-text');
-    incrementalDom.elementOpenEnd();
-      soyIdom.print(tip);
-    incrementalDom.elementClose('span');
+  if (showLabel) {
+    if (tip) {
+      incrementalDom.elementOpenStart('span');
+          incrementalDom.attr('class', 'form-text');
+      incrementalDom.elementOpenEnd();
+        soyIdom.print(tip);
+      incrementalDom.elementClose('span');
+    }
   }
 }
 exports.select_label = $select_label;
@@ -421,6 +426,7 @@ exports.select_label = $select_label;
  *  pathThemeImages: (!goog.soy.data.SanitizedContent|string),
  *  label: (!goog.soy.data.SanitizedContent|null|string|undefined),
  *  required: (boolean|null|undefined),
+ *  showLabel: (boolean|null|undefined),
  *  tip: (!goog.soy.data.SanitizedContent|null|string|undefined)
  * }}
  */
@@ -482,11 +488,11 @@ function $hidden_select(opt_data, opt_ijData, opt_ijData_deprecated) {
     incrementalDom.elementOpenEnd();
       soyIdom.print(strings.chooseAnOption);
     incrementalDom.elementClose('option');
-    var option280List = options;
-    var option280ListLen = option280List.length;
-    for (var option280Index = 0; option280Index < option280ListLen; option280Index++) {
-        var option280Data = option280List[option280Index];
-        $select_hidden_options({dir: dir, option: option280Data, values: displayValues}, null, opt_ijData);
+    var option285List = options;
+    var option285ListLen = option285List.length;
+    for (var option285Index = 0; option285Index < option285ListLen; option285Index++) {
+        var option285Data = option285List[option285Index];
+        $select_hidden_options({dir: dir, option: option285Data, values: displayValues}, null, opt_ijData);
       }
   incrementalDom.elementClose('select');
 }
@@ -526,12 +532,12 @@ function $select_hidden_options(opt_data, opt_ijData, opt_ijData_deprecated) {
   var values = soy.asserts.assertType(goog.isArray(opt_data.values), 'values', opt_data.values, '!Array<!goog.soy.data.SanitizedContent|string>');
   /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
   var dir = soy.asserts.assertType(opt_data.dir == null || (goog.isString(opt_data.dir) || opt_data.dir instanceof goog.soy.data.SanitizedContent), 'dir', opt_data.dir, '!goog.soy.data.SanitizedContent|null|string|undefined');
-  var selected__soy288 = function() {
-    var currentValue295List = values;
-    var currentValue295ListLen = currentValue295List.length;
-    for (var currentValue295Index = 0; currentValue295Index < currentValue295ListLen; currentValue295Index++) {
-        var currentValue295Data = currentValue295List[currentValue295Index];
-        if (currentValue295Data == option.value) {
+  var selected__soy293 = function() {
+    var currentValue300List = values;
+    var currentValue300ListLen = currentValue300List.length;
+    for (var currentValue300Index = 0; currentValue300Index < currentValue300ListLen; currentValue300Index++) {
+        var currentValue300Data = currentValue300List[currentValue300Index];
+        if (currentValue300Data == option.value) {
           incrementalDom.attr('selected', '');
         }
       }
@@ -540,7 +546,7 @@ function $select_hidden_options(opt_data, opt_ijData, opt_ijData_deprecated) {
       if (dir) {
         incrementalDom.attr('dir', dir);
       }
-      selected__soy288();
+      selected__soy293();
       incrementalDom.attr('value', option.value);
   incrementalDom.elementOpenEnd();
     soyIdom.print(option.label);
@@ -653,23 +659,23 @@ function $plot_dropdown_rows(opt_data, opt_ijData, opt_ijData_deprecated) {
   var fixed = soy.asserts.assertType(opt_data.fixed == null || (goog.isBoolean(opt_data.fixed) || opt_data.fixed === 1 || opt_data.fixed === 0), 'fixed', opt_data.fixed, 'boolean|null|undefined');
   /** @type {boolean|null|undefined} */
   var multiple = soy.asserts.assertType(opt_data.multiple == null || (goog.isBoolean(opt_data.multiple) || opt_data.multiple === 1 || opt_data.multiple === 0), 'multiple', opt_data.multiple, 'boolean|null|undefined');
-  var option389List = options;
-  var option389ListLen = option389List.length;
-  for (var option389Index = 0; option389Index < option389ListLen; option389Index++) {
-      var option389Data = option389List[option389Index];
-      var selected__soy356 = '';
+  var option394List = options;
+  var option394ListLen = option394List.length;
+  for (var option394Index = 0; option394Index < option394ListLen; option394Index++) {
+      var option394Data = option394List[option394Index];
+      var selected__soy361 = '';
       if (value) {
-        var currentValue366List = value;
-        var currentValue366ListLen = currentValue366List.length;
-        for (var currentValue366Index = 0; currentValue366Index < currentValue366ListLen; currentValue366Index++) {
-            var currentValue366Data = currentValue366List[currentValue366Index];
-            selected__soy356 += currentValue366Data == option389Data.value ? 'selected' : '';
+        var currentValue371List = value;
+        var currentValue371ListLen = currentValue371List.length;
+        for (var currentValue371Index = 0; currentValue371Index < currentValue371ListLen; currentValue371Index++) {
+            var currentValue371Data = currentValue371List[currentValue371Index];
+            selected__soy361 += currentValue371Data == option394Data.value ? 'selected' : '';
           }
       }
       if (multiple) {
-        $multiple_selection({fixed: fixed, indexOption: option389Index, option: option389Data, selected: selected__soy356}, null, opt_ijData);
+        $multiple_selection({fixed: fixed, indexOption: option394Index, option: option394Data, selected: selected__soy361}, null, opt_ijData);
       } else {
-        $simple_selection({fixed: fixed, indexOption: option389Index, option: option389Data, selected: selected__soy356}, null, opt_ijData);
+        $simple_selection({fixed: fixed, indexOption: option394Index, option: option394Data, selected: selected__soy361}, null, opt_ijData);
       }
     }
 }
@@ -710,14 +716,14 @@ function $multiple_selection(opt_data, opt_ijData, opt_ijData_deprecated) {
   var selected = soy.asserts.assertType(goog.isString(opt_data.selected) || opt_data.selected instanceof goog.soy.data.SanitizedContent, 'selected', opt_data.selected, '!goog.soy.data.SanitizedContent|string');
   /** @type {boolean|null|undefined} */
   var fixed = soy.asserts.assertType(opt_data.fixed == null || (goog.isBoolean(opt_data.fixed) || opt_data.fixed === 1 || opt_data.fixed === 0), 'fixed', opt_data.fixed, 'boolean|null|undefined');
-  var attributesMultipleSelection__soy398 = function() {
+  var attributesMultipleSelection__soy403 = function() {
     incrementalDom.attr('class', (selected ? ' active ' : '') + 'dropdown-item' + (fixed ? ' fixed' : ' unfixed'));
     incrementalDom.attr('data-option-index', indexOption);
     incrementalDom.attr('data-option-value', option.value);
     incrementalDom.attr('data-option-selected', selected ? 'true' : '');
   };
   incrementalDom.elementOpenStart('li');
-      attributesMultipleSelection__soy398();
+      attributesMultipleSelection__soy403();
   incrementalDom.elementOpenEnd();
     incrementalDom.elementOpenStart('div');
         incrementalDom.attr('class', 'custom-checkbox custom-control');
@@ -782,22 +788,22 @@ function $simple_selection(opt_data, opt_ijData, opt_ijData_deprecated) {
   var selected = soy.asserts.assertType(goog.isString(opt_data.selected) || opt_data.selected instanceof goog.soy.data.SanitizedContent, 'selected', opt_data.selected, '!goog.soy.data.SanitizedContent|string');
   /** @type {boolean|null|undefined} */
   var fixed = soy.asserts.assertType(opt_data.fixed == null || (goog.isBoolean(opt_data.fixed) || opt_data.fixed === 1 || opt_data.fixed === 0), 'fixed', opt_data.fixed, 'boolean|null|undefined');
-  var attributesNormalSelection__soy433 = function() {
+  var attributesNormalSelection__soy438 = function() {
     incrementalDom.attr('class', ' select-option-item' + (fixed ? ' fixed' : ' unfixed'));
     incrementalDom.attr('data-option-index', indexOption);
     incrementalDom.attr('data-option-value', option.value);
   };
   incrementalDom.elementOpenStart('li');
-      attributesNormalSelection__soy433();
+      attributesNormalSelection__soy438();
   incrementalDom.elementOpenEnd();
-    var itemAttributes__soy448 = function() {
+    var itemAttributes__soy453 = function() {
       incrementalDom.attr('class', ' dropdown-item' + (selected ? ' active' : ''));
       incrementalDom.attr('data-option-selected', selected ? 'true' : '');
       incrementalDom.attr('href', 'javascript:;');
       incrementalDom.attr('title', option.label);
     };
     incrementalDom.elementOpenStart('a');
-        itemAttributes__soy448();
+        itemAttributes__soy453();
     incrementalDom.elementOpenEnd();
       soyIdom.print(option.label);
     incrementalDom.elementClose('a');
@@ -821,8 +827,8 @@ exports.render.params = ["name","options","pathThemeImages","predefinedValue","s
 exports.render.types = {"name":"string","options":"list<[label: string, value: string]>","pathThemeImages":"string","predefinedValue":"list<string>","strings":"[chooseAnOption: string, chooseOptions: string, search: string, emptyList: string]","value":"list<string>","visible":"bool","badgeCloseIcon":"html","dir":"string","fixedOptions":"list<[label: string, value: string]>","label":"string","multiple":"bool","open":"bool","readOnly":"bool","required":"bool","selectCaretDoubleIcon":"html","selectSearchIcon":"html","showLabel":"bool","tip":"string"};
 exports.badge_item.params = ["option","value","badgeCloseIcon","readOnly"];
 exports.badge_item.types = {"option":"[label: string, value: string]","value":"list<string>","badgeCloseIcon":"html","readOnly":"bool"};
-exports.select_label.params = ["name","pathThemeImages","label","required","tip"];
-exports.select_label.types = {"name":"string","pathThemeImages":"string","label":"string","required":"bool","tip":"string"};
+exports.select_label.params = ["name","pathThemeImages","label","required","showLabel","tip"];
+exports.select_label.types = {"name":"string","pathThemeImages":"string","label":"string","required":"bool","showLabel":"bool","tip":"string"};
 exports.hidden_select.params = ["displayValues","name","options","strings","dir","multiple"];
 exports.hidden_select.types = {"displayValues":"list<string>","name":"string","options":"list<[label: string, value: string]>","strings":"[chooseAnOption: string, chooseOptions: string, search: string, emptyList: string]","dir":"string","multiple":"bool"};
 exports.select_hidden_options.params = ["option","values","dir"];

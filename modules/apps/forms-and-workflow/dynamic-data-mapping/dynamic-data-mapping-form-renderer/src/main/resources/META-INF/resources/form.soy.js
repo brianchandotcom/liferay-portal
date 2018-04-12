@@ -363,7 +363,7 @@ function $wizard_form(opt_data, opt_ijData, opt_ijData_deprecated) {
       incrementalDom.attr('id', containerId);
   incrementalDom.elementOpenEnd();
     incrementalDom.elementOpenStart('div');
-        incrementalDom.attr('class', 'lfr-ddm-form-content');
+        incrementalDom.attr('class', 'ddm-user-view-content lfr-ddm-form-content');
     incrementalDom.elementOpenEnd();
       if ((pages.length) > 1) {
         incrementalDom.elementOpenStart('div');
@@ -382,19 +382,24 @@ function $wizard_form(opt_data, opt_ijData, opt_ijData_deprecated) {
                     }
                 incrementalDom.elementOpenEnd();
                   incrementalDom.elementOpenStart('div');
-                      incrementalDom.attr('class', 'progress-bar-title');
-                  incrementalDom.elementOpenEnd();
-                    soyIdom.print(page122Data.title);
-                  incrementalDom.elementClose('div');
-                  incrementalDom.elementOpenStart('div');
-                      incrementalDom.attr('class', 'divider');
+                      incrementalDom.attr('class', 'multi-step-divider');
                   incrementalDom.elementOpenEnd();
                   incrementalDom.elementClose('div');
                   incrementalDom.elementOpenStart('div');
-                      incrementalDom.attr('class', 'progress-bar-step');
+                      incrementalDom.attr('class', 'multi-step-indicator');
                   incrementalDom.elementOpenEnd();
-                    soyIdom.print(page122Index + 1);
+                    incrementalDom.elementOpenStart('div');
+                        incrementalDom.attr('class', 'multi-step-indicator-label');
+                    incrementalDom.elementOpenEnd();
+                      soyIdom.print(page122Data.title);
+                    incrementalDom.elementClose('div');
                   incrementalDom.elementClose('div');
+                  incrementalDom.elementOpenStart('a');
+                      incrementalDom.attr('class', 'multi-step-icon');
+                      incrementalDom.attr('data-multi-step-icon', page122Index + 1);
+                      incrementalDom.attr('href', '#1');
+                  incrementalDom.elementOpenEnd();
+                  incrementalDom.elementClose('a');
                 incrementalDom.elementClose('li');
               }
           incrementalDom.elementClose('ul');
@@ -722,7 +727,7 @@ function $tabbed_form(opt_data, opt_ijData, opt_ijData_deprecated) {
           }
       incrementalDom.elementClose('ul');
       incrementalDom.elementOpenStart('div');
-          incrementalDom.attr('class', 'tab-content lfr-ddm-form-tabs-content');
+          incrementalDom.attr('class', 'lfr-ddm-form-tabs-content tab-content');
       incrementalDom.elementOpenEnd();
         var page286List = pages;
         var page286ListLen = page286List.length;

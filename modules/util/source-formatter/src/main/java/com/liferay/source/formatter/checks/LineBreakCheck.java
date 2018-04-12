@@ -29,19 +29,6 @@ public abstract class LineBreakCheck extends BaseFileCheck {
 	protected void checkLineBreaks(
 		String line, String previousLine, String fileName, int lineCount) {
 
-		int lineLeadingTabCount = getLeadingTabCount(line);
-		int previousLineLeadingTabCount = getLeadingTabCount(previousLine);
-
-		if (previousLine.endsWith(StringPool.COMMA) &&
-			previousLine.contains(StringPool.OPEN_PARENTHESIS) &&
-			!previousLine.contains("for (") &&
-			(lineLeadingTabCount > previousLineLeadingTabCount)) {
-
-			addMessage(
-				fileName, "There should be a line break after '('",
-				lineCount - 1);
-		}
-
 		String trimmedLine = StringUtil.trimLeading(line);
 
 		String strippedQuotesLine = stripQuotes(trimmedLine);
@@ -57,11 +44,12 @@ public abstract class LineBreakCheck extends BaseFileCheck {
 			addMessage(fileName, "Incorrect line break", lineCount);
 		}
 
-		if (!trimmedLine.contains(StringPool.COMMA_AND_SPACE) &&
-			trimmedLine.endsWith(StringPool.COMMA) &&
-			!trimmedLine.startsWith("for (") && (getLevel(trimmedLine) > 0)) {
+		if ((trimmedLine.endsWith(StringPool.COMMA) ||
+			 trimmedLine.endsWith("->")) &&
+			(getLevel(trimmedLine) > 0)) {
 
-			addMessage(fileName, "Incorrect line break", lineCount);
+			addMessage(
+				fileName, "There should be a line break after '('", lineCount);
 		}
 
 		if (line.endsWith(" +") || line.endsWith(" -") || line.endsWith(" *") ||

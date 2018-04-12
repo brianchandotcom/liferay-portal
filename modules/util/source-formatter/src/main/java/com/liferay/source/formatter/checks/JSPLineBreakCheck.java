@@ -44,7 +44,9 @@ public class JSPLineBreakCheck extends LineBreakCheck {
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				lineCount++;
 
-				checkLineBreaks(line, previousLine, fileName, lineCount);
+				if (!line.startsWith(StringPool.POUND)) {
+					checkLineBreaks(line, previousLine, fileName, lineCount);
+				}
 
 				previousLine = line;
 			}

@@ -19,11 +19,14 @@ import com.liferay.frontend.taglib.clay.internal.js.loader.modules.extender.npm.
 import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
+
+import javax.portlet.PortletResponse;
 
 /**
  * @author Chema Balsas
@@ -96,6 +99,16 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 	}
 
 	public String getNamespace() {
+		if (_namespace == null) {
+			PortletResponse portletResponse =
+				(PortletResponse)request.getAttribute(
+					JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+			if (portletResponse != null) {
+				_namespace = portletResponse.getNamespace();
+			}
+		}
+
 		return _namespace;
 	}
 

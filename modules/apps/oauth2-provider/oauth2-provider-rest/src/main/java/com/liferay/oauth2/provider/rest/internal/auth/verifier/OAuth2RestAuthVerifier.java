@@ -62,7 +62,7 @@ public class OAuth2RestAuthVerifier implements AuthVerifier {
 
 	@Override
 	public String getAuthType() {
-		return _OAUTH2;
+		return "OAuth2";
 	}
 
 	@Override
@@ -200,8 +200,6 @@ public class OAuth2RestAuthVerifier implements AuthVerifier {
 	}
 
 	private static final String _BEARER = "Bearer";
-
-	private static final String _OAUTH2 = "OAuth2";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OAuth2RestAuthVerifier.class);

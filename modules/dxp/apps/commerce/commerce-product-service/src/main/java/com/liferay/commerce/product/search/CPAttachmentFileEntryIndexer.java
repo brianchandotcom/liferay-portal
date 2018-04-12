@@ -67,6 +67,8 @@ public class CPAttachmentFileEntryIndexer
 	public static final String CLASS_NAME =
 		CPAttachmentFileEntry.class.getName();
 
+	public static final String FIELD_DISPLAY_DATE = "displayDate";
+
 	public static final String FIELD_FILE_ENTRY_ID = "fileEntryId";
 
 	public static final String FIELD_RELATED_ENTITY_CLASS_NAME_ID =
@@ -210,6 +212,8 @@ public class CPAttachmentFileEntryIndexer
 		document.addNumber(Field.PRIORITY, cpAttachmentFileEntry.getPriority());
 
 		document.addNumber(Field.TYPE, cpAttachmentFileEntry.getType());
+		document.addDateSortable(
+			FIELD_DISPLAY_DATE, cpAttachmentFileEntry.getDisplayDate());
 
 		document.addNumber(
 			FIELD_RELATED_ENTITY_CLASS_NAME_ID,

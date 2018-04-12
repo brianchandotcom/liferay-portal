@@ -21,6 +21,8 @@ import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.search.CPAttachmentFileEntryIndexer;
+import com.liferay.commerce.product.search.CPDefinitionIndexer;
 import com.liferay.commerce.product.search.CPInstanceIndexer;
 import com.liferay.commerce.product.util.comparator.CPAttachmentFileEntryDisplayDateComparator;
 import com.liferay.commerce.product.util.comparator.CPAttachmentFileEntryModifiedDateComparator;
@@ -89,10 +91,14 @@ public class CPDefinitionsPortletUtil {
 		Sort sort = null;
 
 		if (orderByCol.equals("display-date")) {
-			sort = SortFactoryUtil.create("display-date", reverse);
+			sort = SortFactoryUtil.create(
+				CPAttachmentFileEntryIndexer.FIELD_DISPLAY_DATE +
+					"_Number_sortable",
+				reverse);
 		}
 		else if (orderByCol.equals("modified-date")) {
-			sort = SortFactoryUtil.create(Field.MODIFIED_DATE, reverse);
+			sort = SortFactoryUtil.create(
+				Field.MODIFIED_DATE + "_sortable", reverse);
 		}
 		else if (orderByCol.equals("priority")) {
 			sort = SortFactoryUtil.create(
@@ -162,7 +168,8 @@ public class CPDefinitionsPortletUtil {
 		Sort sort = null;
 
 		if (orderByCol.equals("create-date")) {
-			sort = SortFactoryUtil.create(Field.CREATE_DATE, reverse);
+			sort = SortFactoryUtil.create(
+				Field.CREATE_DATE + "_sortable", reverse);
 		}
 		else if (orderByCol.equals("title")) {
 			sort = SortFactoryUtil.create(
@@ -262,10 +269,13 @@ public class CPDefinitionsPortletUtil {
 		Sort sort = null;
 
 		if (orderByCol.equals("display-date")) {
-			sort = SortFactoryUtil.create("display-date", reverse);
+			sort = SortFactoryUtil.create(
+				CPDefinitionIndexer.FIELD_DISPLAY_DATE + "_Number_sortable",
+				reverse);
 		}
 		else if (orderByCol.equals("modified-date")) {
-			sort = SortFactoryUtil.create(Field.MODIFIED_DATE, reverse);
+			sort = SortFactoryUtil.create(
+				Field.MODIFIED_DATE + "_sortable", reverse);
 		}
 		else if (orderByCol.equals("title")) {
 			sort = SortFactoryUtil.create(
@@ -333,10 +343,13 @@ public class CPDefinitionsPortletUtil {
 		Sort sort = null;
 
 		if (orderByCol.equals("create-date")) {
-			sort = SortFactoryUtil.create(Field.CREATE_DATE, reverse);
+			sort = SortFactoryUtil.create(
+				Field.CREATE_DATE + "_sortable", reverse);
 		}
 		else if (orderByCol.equals("display-date")) {
-			sort = SortFactoryUtil.create("display-date", reverse);
+			sort = SortFactoryUtil.create(
+				CPInstanceIndexer.FIELD_DISPLAY_DATE + "_Number_sortable",
+				reverse);
 		}
 		else if (orderByCol.equals("sku")) {
 			sort = SortFactoryUtil.create(

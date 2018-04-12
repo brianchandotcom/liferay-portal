@@ -72,6 +72,8 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 	public static final String FIELD_DEFAULT_IMAGE_FILE_ENTRY_ID =
 		"defaultImageFileEntryId";
 
+	public static final String FIELD_DISPLAY_DATE = "displayDate";
+
 	public static final String FIELD_IS_IGNORE_SKU_COMBINATIONS =
 		"isIgnoreSKUCombinations";
 
@@ -271,6 +273,8 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 		document.addKeyword(
 			FIELD_PRODUCT_TYPE_NAME, cpDefinition.getProductTypeName());
+		document.addDateSortable(
+			FIELD_DISPLAY_DATE, cpDefinition.getDisplayDate());
 
 		document.addKeyword(
 			FIELD_IS_IGNORE_SKU_COMBINATIONS,

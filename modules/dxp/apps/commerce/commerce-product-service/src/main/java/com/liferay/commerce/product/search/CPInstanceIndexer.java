@@ -64,6 +64,8 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 
 	public static final String FIELD_CP_DEFINITION_ID = "CPDefinitionId";
 
+	public static final String FIELD_DISPLAY_DATE = "displayDate";
+
 	public static final String FIELD_PURCHASABLE = "purchasable";
 
 	public static final String FIELD_SKU = "sku";
@@ -186,7 +188,8 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 		document.addText(Field.TITLE, cpDefinition.getTitle());
 
 		document.addText(Field.CONTENT, cpInstance.getSku());
-
+		document.addDateSortable(
+			FIELD_DISPLAY_DATE, cpInstance.getDisplayDate());
 		document.addText(FIELD_SKU, cpInstance.getSku());
 		document.addKeyword(
 			FIELD_CP_DEFINITION_ID, cpInstance.getCPDefinitionId());

@@ -114,8 +114,7 @@ public class FragmentEntryLinkLocalServiceUtil {
 		return getService().deleteFragmentEntryLink(fragmentEntryLinkId);
 	}
 
-	public static void deleteFragmentEntryLinks(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static void deleteFragmentEntryLinks(long groupId) {
 		getService().deleteFragmentEntryLinks(groupId);
 	}
 

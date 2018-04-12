@@ -155,7 +155,8 @@ public class MBMessageLocalServiceTest {
 			serviceContext);
 
 		Assert.assertEquals(subject, message.getSubject());
-		Assert.assertEquals(StringPool.BLANK, message.getBody());
+		Assert.assertEquals(
+			"&lt;script&gt;alert(1)&lt;/script&gt;", message.getBody());
 	}
 
 	@Test

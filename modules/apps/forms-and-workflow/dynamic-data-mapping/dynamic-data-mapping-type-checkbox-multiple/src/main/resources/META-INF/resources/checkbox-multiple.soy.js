@@ -97,25 +97,27 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
       incrementalDom.attr('class', 'form-group liferay-ddm-form-field-checkbox-multiple');
       incrementalDom.attr('data-fieldname', name);
   incrementalDom.elementOpenEnd();
-    if (showLabel) {
-      incrementalDom.elementOpen('div');
-        incrementalDom.elementOpenStart('label');
-            incrementalDom.attr('for', name);
-        incrementalDom.elementOpenEnd();
+    incrementalDom.elementOpen('div');
+      incrementalDom.elementOpenStart('label');
+          incrementalDom.attr('for', name);
+      incrementalDom.elementOpenEnd();
+        if (showLabel) {
           soyIdom.print(label);
           incrementalDom.text(' ');
-          if (required && (options.length) > 1) {
-            incrementalDom.elementOpenStart('svg');
-                incrementalDom.attr('aria-hidden', 'true');
-                incrementalDom.attr('class', 'lexicon-icon lexicon-icon-asterisk reference-mark');
+        }
+        if (required && (options.length) > 1) {
+          incrementalDom.elementOpenStart('svg');
+              incrementalDom.attr('aria-hidden', 'true');
+              incrementalDom.attr('class', 'lexicon-icon lexicon-icon-asterisk reference-mark');
+          incrementalDom.elementOpenEnd();
+            incrementalDom.elementOpenStart('use');
+                incrementalDom.attr('xlink:href', pathThemeImages + '/lexicon/icons.svg#asterisk');
             incrementalDom.elementOpenEnd();
-              incrementalDom.elementOpenStart('use');
-                  incrementalDom.attr('xlink:href', pathThemeImages + '/lexicon/icons.svg#asterisk');
-              incrementalDom.elementOpenEnd();
-              incrementalDom.elementClose('use');
-            incrementalDom.elementClose('svg');
-          }
-        incrementalDom.elementClose('label');
+            incrementalDom.elementClose('use');
+          incrementalDom.elementClose('svg');
+        }
+      incrementalDom.elementClose('label');
+      if (showLabel) {
         if (tip) {
           incrementalDom.elementOpenStart('span');
               incrementalDom.attr('class', 'form-text');
@@ -123,19 +125,19 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
             soyIdom.print(tip);
           incrementalDom.elementClose('span');
         }
-      incrementalDom.elementClose('div');
-    }
-    var option133List = options;
-    var option133ListLen = option133List.length;
-    for (var option133Index = 0; option133Index < option133ListLen; option133Index++) {
-        var option133Data = option133List[option133Index];
-        var checked__soy46 = function() {
+      }
+    incrementalDom.elementClose('div');
+    var option137List = options;
+    var option137ListLen = option137List.length;
+    for (var option137Index = 0; option137Index < option137ListLen; option137Index++) {
+        var option137Data = option137List[option137Index];
+        var checked__soy50 = function() {
           if (displayValue__soy21) {
-            var currentValue56List = displayValue__soy21;
-            var currentValue56ListLen = currentValue56List.length;
-            for (var currentValue56Index = 0; currentValue56Index < currentValue56ListLen; currentValue56Index++) {
-                var currentValue56Data = currentValue56List[currentValue56Index];
-                if (currentValue56Data == option133Data.value) {
+            var currentValue60List = displayValue__soy21;
+            var currentValue60ListLen = currentValue60List.length;
+            for (var currentValue60Index = 0; currentValue60Index < currentValue60ListLen; currentValue60Index++) {
+                var currentValue60Data = currentValue60List[currentValue60Index];
+                if (currentValue60Data == option137Data.value) {
                   incrementalDom.attr('checked', '');
                 }
               }
@@ -146,19 +148,19 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
               incrementalDom.attr('class', 'lfr-ddm-form-field-checkbox-switch ' + (inline ? 'lfr-ddm-form-field-checkbox-switch-inline' : ''));
           incrementalDom.elementOpenEnd();
             incrementalDom.elementOpenStart('label');
-                incrementalDom.attr('class', 'toggle-switch toggle-switch-option-' + option133Data.value);
-                incrementalDom.attr('for', name + '_' + option133Data.value);
+                incrementalDom.attr('class', 'toggle-switch toggle-switch-option-' + option137Data.value);
+                incrementalDom.attr('for', name + '_' + option137Data.value);
             incrementalDom.elementOpenEnd();
               incrementalDom.elementOpenStart('input');
-                  checked__soy46();
+                  checked__soy50();
                   if (readOnly) {
                     incrementalDom.attr('disabled', '');
                   }
                   incrementalDom.attr('class', 'toggle-switch-check');
-                  incrementalDom.attr('id', name + '_' + option133Data.value);
+                  incrementalDom.attr('id', name + '_' + option137Data.value);
                   incrementalDom.attr('name', name);
                   incrementalDom.attr('type', 'checkbox');
-                  incrementalDom.attr('value', option133Data.value);
+                  incrementalDom.attr('value', option137Data.value);
               incrementalDom.elementOpenEnd();
               incrementalDom.elementClose('input');
               incrementalDom.elementOpenStart('span');
@@ -173,7 +175,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
               incrementalDom.elementOpenStart('span');
                   incrementalDom.attr('class', 'toggle-switch-text toggle-switch-text-right');
               incrementalDom.elementOpenEnd();
-                soyIdom.print(option133Data.label);
+                soyIdom.print(option137Data.label);
                 incrementalDom.text(' ');
                 if (required && (options.length) == 1) {
                   incrementalDom.elementOpenStart('svg');
@@ -194,11 +196,11 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
               incrementalDom.attr('class', 'form-check custom-checkbox ' + (inline ? 'form-check-inline' : 'custom-control'));
           incrementalDom.elementOpenEnd();
             incrementalDom.elementOpenStart('label');
-                incrementalDom.attr('class', 'form-check-label-option-' + option133Data.value);
-                incrementalDom.attr('for', name + '_' + option133Data.value);
+                incrementalDom.attr('class', 'form-check-label-option-' + option137Data.value);
+                incrementalDom.attr('for', name + '_' + option137Data.value);
             incrementalDom.elementOpenEnd();
               incrementalDom.elementOpenStart('input');
-                  checked__soy46();
+                  checked__soy50();
                   if (dir) {
                     incrementalDom.attr('dir', dir);
                   }
@@ -206,10 +208,10 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                     incrementalDom.attr('disabled', '');
                   }
                   incrementalDom.attr('class', 'custom-control-input');
-                  incrementalDom.attr('id', name + '_' + option133Data.value);
+                  incrementalDom.attr('id', name + '_' + option137Data.value);
                   incrementalDom.attr('name', name);
                   incrementalDom.attr('type', 'checkbox');
-                  incrementalDom.attr('value', option133Data.value);
+                  incrementalDom.attr('value', option137Data.value);
               incrementalDom.elementOpenEnd();
               incrementalDom.elementClose('input');
               incrementalDom.elementOpenStart('span');
@@ -218,7 +220,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                 incrementalDom.elementOpenStart('span');
                     incrementalDom.attr('class', 'custom-control-label-text');
                 incrementalDom.elementOpenEnd();
-                  soyIdom.print(option133Data.label);
+                  soyIdom.print(option137Data.label);
                   incrementalDom.text(' ');
                   if (required && (options.length) == 1) {
                     incrementalDom.elementOpenStart('svg');

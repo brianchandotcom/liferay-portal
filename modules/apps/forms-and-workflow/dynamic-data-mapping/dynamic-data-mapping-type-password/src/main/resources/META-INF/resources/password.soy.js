@@ -93,24 +93,26 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
       incrementalDom.attr('class', 'form-group' + (visible ? '' : ' hide') + ' liferay-ddm-form-field-password');
       incrementalDom.attr('data-fieldname', name);
   incrementalDom.elementOpenEnd();
-    if (showLabel) {
-      incrementalDom.elementOpenStart('label');
-          incrementalDom.attr('for', name);
-      incrementalDom.elementOpenEnd();
+    incrementalDom.elementOpenStart('label');
+        incrementalDom.attr('for', name);
+    incrementalDom.elementOpenEnd();
+      if (showLabel) {
         soyIdom.print(label);
         incrementalDom.text(' ');
-        if (required) {
-          incrementalDom.elementOpenStart('svg');
-              incrementalDom.attr('aria-hidden', 'true');
-              incrementalDom.attr('class', 'lexicon-icon lexicon-icon-asterisk reference-mark');
+      }
+      if (required) {
+        incrementalDom.elementOpenStart('svg');
+            incrementalDom.attr('aria-hidden', 'true');
+            incrementalDom.attr('class', 'lexicon-icon lexicon-icon-asterisk reference-mark');
+        incrementalDom.elementOpenEnd();
+          incrementalDom.elementOpenStart('use');
+              incrementalDom.attr('xlink:href', pathThemeImages + '/lexicon/icons.svg#asterisk');
           incrementalDom.elementOpenEnd();
-            incrementalDom.elementOpenStart('use');
-                incrementalDom.attr('xlink:href', pathThemeImages + '/lexicon/icons.svg#asterisk');
-            incrementalDom.elementOpenEnd();
-            incrementalDom.elementClose('use');
-          incrementalDom.elementClose('svg');
-        }
-      incrementalDom.elementClose('label');
+          incrementalDom.elementClose('use');
+        incrementalDom.elementClose('svg');
+      }
+    incrementalDom.elementClose('label');
+    if (showLabel) {
       if (tip) {
         incrementalDom.elementOpenStart('span');
             incrementalDom.attr('class', 'form-text');

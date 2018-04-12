@@ -94,27 +94,29 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
       incrementalDom.attr('class', formGroupClass__soy19);
       incrementalDom.attr('data-fieldname', name);
   incrementalDom.elementOpenEnd();
-    if (showLabel) {
-      var labelAttributes__soy33 = function() {
-        incrementalDom.attr('for', name);
-      };
-      incrementalDom.elementOpenStart('label');
-          labelAttributes__soy33();
-      incrementalDom.elementOpenEnd();
+    var labelAttributes__soy30 = function() {
+      incrementalDom.attr('for', name);
+    };
+    incrementalDom.elementOpenStart('label');
+        labelAttributes__soy30();
+    incrementalDom.elementOpenEnd();
+      if (showLabel) {
         soyIdom.print(label);
         incrementalDom.text(' ');
-        if (required) {
-          incrementalDom.elementOpenStart('svg');
-              incrementalDom.attr('aria-hidden', 'true');
-              incrementalDom.attr('class', 'lexicon-icon lexicon-icon-asterisk reference-mark');
+      }
+      if (required) {
+        incrementalDom.elementOpenStart('svg');
+            incrementalDom.attr('aria-hidden', 'true');
+            incrementalDom.attr('class', 'lexicon-icon lexicon-icon-asterisk reference-mark');
+        incrementalDom.elementOpenEnd();
+          incrementalDom.elementOpenStart('use');
+              incrementalDom.attr('xlink:href', pathThemeImages + '/lexicon/icons.svg#asterisk');
           incrementalDom.elementOpenEnd();
-            incrementalDom.elementOpenStart('use');
-                incrementalDom.attr('xlink:href', pathThemeImages + '/lexicon/icons.svg#asterisk');
-            incrementalDom.elementOpenEnd();
-            incrementalDom.elementClose('use');
-          incrementalDom.elementClose('svg');
-        }
-      incrementalDom.elementClose('label');
+          incrementalDom.elementClose('use');
+        incrementalDom.elementClose('svg');
+      }
+    incrementalDom.elementClose('label');
+    if (showLabel) {
       if (tip) {
         incrementalDom.elementOpenStart('span');
             incrementalDom.attr('class', 'form-text');
@@ -123,17 +125,17 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('span');
       }
     }
-    var displayValue__soy55 = formattedValue ? formattedValue : predefinedValue;
+    var displayValue__soy59 = formattedValue ? formattedValue : predefinedValue;
     incrementalDom.elementOpenStart('div');
         incrementalDom.attr('class', 'input-group input-group-container');
     incrementalDom.elementOpenEnd();
-      var inputAttributes__soy57 = function() {
+      var inputAttributes__soy61 = function() {
         incrementalDom.attr('class', 'form-control');
         if (label) {
           incrementalDom.attr('aria-label', label);
         }
-        if (displayValue__soy55) {
-          incrementalDom.attr('value', displayValue__soy55);
+        if (displayValue__soy59) {
+          incrementalDom.attr('value', displayValue__soy59);
         }
         if (readOnly) {
           incrementalDom.attr('disabled', '');
@@ -141,7 +143,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.attr('type', 'text');
       };
       incrementalDom.elementOpenStart('input');
-          inputAttributes__soy57();
+          inputAttributes__soy61();
       incrementalDom.elementOpenEnd();
       incrementalDom.elementClose('input');
       incrementalDom.elementOpenStart('input');

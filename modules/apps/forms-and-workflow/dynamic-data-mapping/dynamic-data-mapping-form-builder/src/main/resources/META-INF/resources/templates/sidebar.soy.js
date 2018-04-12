@@ -180,7 +180,7 @@ if (goog.DEBUG) {
  * @return {void}
  * @suppress {checkTypes}
  */
-function __deltemplate_s2419_85c87286(opt_data, opt_ijData, opt_ijData_deprecated) {
+function __deltemplate_s2304_85c87286(opt_data, opt_ijData, opt_ijData_deprecated) {
   opt_ijData = opt_ijData_deprecated || opt_ijData;
   opt_data = opt_data || {};
   /** @type {null|undefined|{basic: !Array<{description: (!goog.soy.data.SanitizedContent|string), icon: function(), label: (!goog.soy.data.SanitizedContent|string), name: (!goog.soy.data.SanitizedContent|string)}>, customized: !Array<{description: (!goog.soy.data.SanitizedContent|string), icon: function(), label: (!goog.soy.data.SanitizedContent|string), name: (!goog.soy.data.SanitizedContent|string)}>}} */
@@ -206,32 +206,32 @@ function __deltemplate_s2419_85c87286(opt_data, opt_ijData, opt_ijData_deprecate
             incrementalDom.attr('class', 'dropdown-menu');
             incrementalDom.attr('x-placement', 'bottom-start');
         incrementalDom.elementOpenEnd();
-          var fieldType2432List = fieldTypeOptions.basic;
-          var fieldType2432ListLen = fieldType2432List.length;
-          for (var fieldType2432Index = 0; fieldType2432Index < fieldType2432ListLen; fieldType2432Index++) {
-              var fieldType2432Data = fieldType2432List[fieldType2432Index];
+          var fieldType2317List = fieldTypeOptions.basic;
+          var fieldType2317ListLen = fieldType2317List.length;
+          for (var fieldType2317Index = 0; fieldType2317Index < fieldType2317ListLen; fieldType2317Index++) {
+              var fieldType2317Data = fieldType2317List[fieldType2317Index];
               incrementalDom.elementOpenStart('a');
                   incrementalDom.attr('class', 'dropdown-item');
-                  incrementalDom.attr('data-name', fieldType2432Data.name);
+                  incrementalDom.attr('data-name', fieldType2317Data.name);
                   incrementalDom.attr('href', '#1');
               incrementalDom.elementOpenEnd();
-                soyIdom.print(fieldType2432Data.icon);
+                soyIdom.print(fieldType2317Data.icon);
                 incrementalDom.text(' ');
-                soyIdom.print(fieldType2432Data.label);
+                soyIdom.print(fieldType2317Data.label);
               incrementalDom.elementClose('a');
             }
-          var fieldType2442List = fieldTypeOptions.customized;
-          var fieldType2442ListLen = fieldType2442List.length;
-          for (var fieldType2442Index = 0; fieldType2442Index < fieldType2442ListLen; fieldType2442Index++) {
-              var fieldType2442Data = fieldType2442List[fieldType2442Index];
+          var fieldType2327List = fieldTypeOptions.customized;
+          var fieldType2327ListLen = fieldType2327List.length;
+          for (var fieldType2327Index = 0; fieldType2327Index < fieldType2327ListLen; fieldType2327Index++) {
+              var fieldType2327Data = fieldType2327List[fieldType2327Index];
               incrementalDom.elementOpenStart('a');
                   incrementalDom.attr('class', 'dropdown-item');
-                  incrementalDom.attr('data-name', fieldType2442Data.name);
+                  incrementalDom.attr('data-name', fieldType2327Data.name);
                   incrementalDom.attr('href', '#1');
               incrementalDom.elementOpenEnd();
-                soyIdom.print(fieldType2442Data.icon);
+                soyIdom.print(fieldType2327Data.icon);
                 incrementalDom.text(' ');
-                soyIdom.print(fieldType2442Data.label);
+                soyIdom.print(fieldType2327Data.label);
               incrementalDom.elementClose('a');
             }
         incrementalDom.elementClose('div');
@@ -239,17 +239,17 @@ function __deltemplate_s2419_85c87286(opt_data, opt_ijData, opt_ijData_deprecate
     incrementalDom.elementClose('ul');
   }
 }
-exports.__deltemplate_s2419_85c87286 = __deltemplate_s2419_85c87286;
+exports.__deltemplate_s2304_85c87286 = __deltemplate_s2304_85c87286;
 /**
  * @typedef {{
  *  fieldTypeOptions: (null|undefined|{basic: !Array<{description: (!goog.soy.data.SanitizedContent|string), icon: function(), label: (!goog.soy.data.SanitizedContent|string), name: (!goog.soy.data.SanitizedContent|string)}>, customized: !Array<{description: (!goog.soy.data.SanitizedContent|string), icon: function(), label: (!goog.soy.data.SanitizedContent|string), name: (!goog.soy.data.SanitizedContent|string)}>})
  * }}
  */
-__deltemplate_s2419_85c87286.Params;
+__deltemplate_s2304_85c87286.Params;
 if (goog.DEBUG) {
-  __deltemplate_s2419_85c87286.soyTemplateName = 'DDMSidebar.__deltemplate_s2419_85c87286';
+  __deltemplate_s2304_85c87286.soyTemplateName = 'DDMSidebar.__deltemplate_s2304_85c87286';
 }
-soy.$$registerDelegateFn(soy.$$getDelTemplateId('DDMSidebar.sidebar_toolbar.idom'), '', 0, __deltemplate_s2419_85c87286);
+soy.$$registerDelegateFn(soy.$$getDelTemplateId('DDMSidebar.sidebar_toolbar.idom'), '', 0, __deltemplate_s2304_85c87286);
 
 
 /**
@@ -261,7 +261,7 @@ soy.$$registerDelegateFn(soy.$$getDelTemplateId('DDMSidebar.sidebar_toolbar.idom
  * @return {void}
  * @suppress {checkTypes}
  */
-function __deltemplate_s2446_fdc381d3(opt_data, opt_ijData, opt_ijData_deprecated) {
+function __deltemplate_s2331_fdc381d3(opt_data, opt_ijData, opt_ijData_deprecated) {
   opt_ijData = opt_ijData_deprecated || opt_ijData;
   opt_data = opt_data || {};
   /** @type {function()|null|undefined} */
@@ -272,17 +272,17 @@ function __deltemplate_s2446_fdc381d3(opt_data, opt_ijData, opt_ijData_deprecate
     soyIdom.print(bodyContent);
   incrementalDom.elementClose('div');
 }
-exports.__deltemplate_s2446_fdc381d3 = __deltemplate_s2446_fdc381d3;
+exports.__deltemplate_s2331_fdc381d3 = __deltemplate_s2331_fdc381d3;
 /**
  * @typedef {{
  *  bodyContent: (function()|null|undefined)
  * }}
  */
-__deltemplate_s2446_fdc381d3.Params;
+__deltemplate_s2331_fdc381d3.Params;
 if (goog.DEBUG) {
-  __deltemplate_s2446_fdc381d3.soyTemplateName = 'DDMSidebar.__deltemplate_s2446_fdc381d3';
+  __deltemplate_s2331_fdc381d3.soyTemplateName = 'DDMSidebar.__deltemplate_s2331_fdc381d3';
 }
-soy.$$registerDelegateFn(soy.$$getDelTemplateId('DDMSidebar.sidebar_body.idom'), '', 0, __deltemplate_s2446_fdc381d3);
+soy.$$registerDelegateFn(soy.$$getDelTemplateId('DDMSidebar.sidebar_body.idom'), '', 0, __deltemplate_s2331_fdc381d3);
 
 
 /**

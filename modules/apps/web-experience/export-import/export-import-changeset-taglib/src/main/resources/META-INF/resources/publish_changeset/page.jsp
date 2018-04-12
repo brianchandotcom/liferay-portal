@@ -25,6 +25,7 @@
 	portletURL.setParameter("mvcRenderCommandName", "exportImportEntity");
 	portletURL.setParameter("cmd", ChangesetConstants.PUBLISH_CHANGESET);
 	portletURL.setParameter("groupId", String.valueOf(changesetGroupId));
+	portletURL.setParameter("backURL", currentURL);
 	portletURL.setParameter("changesetUuid", changesetUuid);
 	portletURL.setParameter("portletId", portletDisplay.getId());
 	%>

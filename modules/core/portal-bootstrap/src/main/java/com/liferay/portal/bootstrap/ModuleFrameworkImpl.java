@@ -907,14 +907,23 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	private Dictionary<String, Object> _getProperties(
 		Object bean, String beanName) {
 
+		Class<?> clazz = bean.getClass();
+
+		OSGiBeanProperties osgiBeanProperties = clazz.getAnnotation(
+			OSGiBeanProperties.class);
+
+		return _getProperties(osgiBeanProperties, beanName);
+	}
+
+	private Dictionary<String, Object> _getProperties(
+		OSGiBeanProperties osgiBeanProperties, String beanName) {
+
 		HashMapDictionary<String, Object> properties =
 			new HashMapDictionary<>();
 
-		Map<String, Object> osgiBeanProperties =
-			OSGiBeanProperties.Convert.fromObject(bean);
-
 		if (osgiBeanProperties != null) {
-			properties.putAll(osgiBeanProperties);
+			properties.putAll(
+				OSGiBeanProperties.Convert.toMap(osgiBeanProperties));
 		}
 
 		properties.put(ServicePropsKeys.BEAN_ID, beanName);
@@ -1116,23 +1125,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		return true;
 	}
 
-	private boolean _isIgnoredInterface(String interfaceClassName) {
-		for (String ignoredClass :
-				PropsValues.MODULE_FRAMEWORK_SERVICES_IGNORED_INTERFACES) {
-
-			if (!ignoredClass.startsWith(StringPool.EXCLAMATION) &&
-				(ignoredClass.equals(interfaceClassName) ||
-				 (ignoredClass.endsWith(StringPool.STAR) &&
-				  interfaceClassName.startsWith(
-					  ignoredClass.substring(0, ignoredClass.length() - 1))))) {
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private void _refreshBundles(List<Bundle> refreshBundles) {
 		FrameworkWiring frameworkWiring = _framework.adapt(
 			FrameworkWiring.class);
@@ -1200,19 +1192,14 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	private ServiceRegistration<?> _registerService(
 		BundleContext bundleContext, String beanName, Object bean) {
 
-		Set<Class<?>> interfaces = OSGiBeanProperties.Service.interfaces(bean);
+		Class<?> clazz = bean.getClass();
 
-		interfaces.add(bean.getClass());
+		OSGiBeanProperties osgiBeanProperties = clazz.getAnnotation(
+			OSGiBeanProperties.class);
 
-		List<String> names = new ArrayList<>(interfaces.size());
-
-		for (Class<?> interfaceClass : interfaces) {
-			String interfaceClassName = interfaceClass.getName();
-
-			if (!_isIgnoredInterface(interfaceClassName)) {
-				names.add(interfaceClassName);
-			}
-		}
+		Set<String> names = OSGiBeanProperties.Service.interfaces(
+			bean, osgiBeanProperties,
+			PropsValues.MODULE_FRAMEWORK_SERVICES_IGNORED_INTERFACES);
 
 		if (names.isEmpty()) {
 			return null;
@@ -1221,7 +1208,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		ServiceRegistration<?> serviceRegistration =
 			bundleContext.registerService(
 				names.toArray(new String[names.size()]), bean,
-				_getProperties(bean, beanName));
+				_getProperties(osgiBeanProperties, beanName));
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

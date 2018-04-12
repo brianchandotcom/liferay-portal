@@ -27,12 +27,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.reflect.Array;
 
-import java.util.Arrays;
+import java.util.ArrayDeque;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Queue;
 import java.util.Set;
+import java.util.function.Function;
 
 /**
  * Provides the OSGi service properties used when publishing Spring beans as
@@ -189,48 +191,108 @@ public @interface OSGiBeanProperties {
 		 * introspection. If the bean is not assignable to a specified service
 		 * type, a {@link ClassCastException} is thrown.
 		 *
-		 * @param  object the object (bean)
+		 * @deprecated As of 7.0.0, replaced by {@link
+		 *             #interfaces(Object, OSGiBeanProperties, String[])}
+		 * @param object the object (bean)
 		 * @return the service types
 		 */
+		@Deprecated
 		public static Set<Class<?>> interfaces(Object object) {
-			Class<? extends Object> clazz = object.getClass();
+			Class<?> clazz = object.getClass();
 
 			OSGiBeanProperties osgiBeanProperties = clazz.getAnnotation(
 				OSGiBeanProperties.class);
 
-			if (osgiBeanProperties == null) {
-				return _getInterfaceClasses(clazz, new HashSet<Class<?>>());
-			}
-
-			Class<?>[] serviceClasses = osgiBeanProperties.service();
-
-			if (serviceClasses.length == 0) {
-				return _getInterfaceClasses(clazz, new HashSet<Class<?>>());
-			}
-
-			for (Class<?> serviceClazz : serviceClasses) {
-				serviceClazz.cast(object);
-			}
-
-			return new HashSet<>(Arrays.asList(osgiBeanProperties.service()));
+			return _interfaces(
+				object, osgiBeanProperties, StringPool.EMPTY_ARRAY,
+				Function.identity());
 		}
 
-		private static Set<Class<?>> _getInterfaceClasses(
-			Class<?> clazz, Set<Class<?>> interfaceClasses) {
+		public static Set<String> interfaces(
+			Object object, OSGiBeanProperties osgiBeanProperties,
+			String[] ignoredInterfaces) {
 
-			if (clazz.isInterface()) {
-				interfaceClasses.add(clazz);
+			return _interfaces(
+				object, osgiBeanProperties, ignoredInterfaces, Class::getName);
+		}
+
+		private static <T> Set<T> _interfaces(
+			Object object, OSGiBeanProperties osgiBeanProperties,
+			String[] ignoredInterfaces, Function<Class<?>, T> mappingFunction) {
+
+			Set<T> interfaces = new LinkedHashSet<>();
+
+			Class<?>[] serviceClasses = null;
+
+			if (osgiBeanProperties != null) {
+				serviceClasses = osgiBeanProperties.service();
 			}
 
-			for (Class<?> interfaceClass : clazz.getInterfaces()) {
-				_getInterfaceClasses(interfaceClass, interfaceClasses);
+			if ((serviceClasses == null) || (serviceClasses.length == 0)) {
+				Queue<Class<?>> queue = new ArrayDeque<>();
+
+				queue.add(object.getClass());
+
+				while (!queue.isEmpty()) {
+					Class<?> clazz = queue.remove();
+
+					for (Class<?> interfaceClass : clazz.getInterfaces()) {
+						_optionallyCollectInterface(
+							interfaceClass, interfaces, ignoredInterfaces,
+							mappingFunction);
+
+						queue.add(interfaceClass);
+					}
+
+					clazz = clazz.getSuperclass();
+
+					if (clazz != null) {
+						if (clazz.isInterface()) {
+							_optionallyCollectInterface(
+								clazz, interfaces, ignoredInterfaces,
+								mappingFunction);
+						}
+
+						queue.add(clazz);
+					}
+				}
+			}
+			else {
+				for (Class<?> serviceClazz : serviceClasses) {
+					serviceClazz.cast(object);
+
+					_optionallyCollectInterface(
+						serviceClazz, interfaces, ignoredInterfaces,
+						mappingFunction);
+				}
 			}
 
-			if ((clazz = clazz.getSuperclass()) != null) {
-				_getInterfaceClasses(clazz, interfaceClasses);
+			_optionallyCollectInterface(
+				object.getClass(), interfaces, ignoredInterfaces,
+				mappingFunction);
+
+			return interfaces;
+		}
+
+		private static <T> void _optionallyCollectInterface(
+			Class<?> clazz, Set<T> interfaces, String[] ignoredInterfaces,
+			Function<Class<?>, T> mappingFunction) {
+
+			String interfaceClassName = clazz.getName();
+
+			for (String ignoredInterface : ignoredInterfaces) {
+				if (!ignoredInterface.startsWith(StringPool.EXCLAMATION) &&
+					(ignoredInterface.equals(interfaceClassName) ||
+					 (ignoredInterface.endsWith(StringPool.STAR) &&
+					  interfaceClassName.regionMatches(
+						  0, ignoredInterface, 0,
+						  ignoredInterface.length() - 1)))) {
+
+					return;
+				}
 			}
 
-			return interfaceClasses;
+			interfaces.add(mappingFunction.apply(clazz));
 		}
 
 	}

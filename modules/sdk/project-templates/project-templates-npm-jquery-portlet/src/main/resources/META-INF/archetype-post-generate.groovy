@@ -25,10 +25,10 @@ String liferayVersion = request.properties.get('liferayVersion')
 
 if (liferayVersion != '7.1') {
 	String className = properties.get('className')
-	
+
 	Path resourcePath = Paths.get('src', 'main', 'java', 'constants', className + 'WebKeys.java')
-	
+
 	Path resourceFullPath = projectPath.resolve(resourcePath)
-	
+
 	Files.deleteIfExists(resourceFullPath)
 }

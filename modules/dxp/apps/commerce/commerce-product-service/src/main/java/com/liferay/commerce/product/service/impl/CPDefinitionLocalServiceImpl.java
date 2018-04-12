@@ -1013,7 +1013,9 @@ public class CPDefinitionLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		checkCPInstances(cpDefinitionId, ignoreSKUCombinations, serviceContext);
+		checkCPInstances(
+			serviceContext.getUserId(), cpDefinitionId, ignoreSKUCombinations,
+			serviceContext);
 
 		CPDefinition cpDefinition = cpDefinitionPersistence.findByPrimaryKey(
 			cpDefinitionId);
@@ -1276,7 +1278,7 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	protected void checkCPInstances(
-			long cpDefinitionId, boolean ignoreSKUCombinations,
+			long userId, long cpDefinitionId, boolean ignoreSKUCombinations,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -1306,8 +1308,7 @@ public class CPDefinitionLocalServiceImpl
 			for (CPInstance cpInstance : cpInstances) {
 				if (Validator.isNull(cpInstance.getDDMContent())) {
 					cpInstanceLocalService.updateStatus(
-						serviceContext.getUserId(),
-						cpInstance.getCPInstanceId(),
+						userId, cpInstance.getCPInstanceId(),
 						WorkflowConstants.STATUS_INACTIVE, serviceContext,
 						new HashMap<String, Serializable>());
 				}

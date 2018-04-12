@@ -3,6 +3,8 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
+		var isString = Lang.isString;
+
 		var RENDER_INTERVAL_IDLE = 60000;
 
 		var RENDER_INTERVAL_IN_PROGRESS = 2000;
@@ -12,6 +14,10 @@ AUI.add(
 				ATTRS: {
 					exportProcessesNode: {
 						setter: '_setNode'
+					},
+
+					exportProcessesResourceURL: {
+						setter: 'isString'
 					}
 				},
 
@@ -22,10 +28,8 @@ AUI.add(
 				NAME: 'uadexport',
 
 				prototype: {
-					initializer: function(config) {
+					initializer: function() {
 						var instance = this;
-
-						instance._exportProcessesResourceURL = config.exportProcessesResourceURL;
 
 						instance._renderTimer = A.later(RENDER_INTERVAL_IN_PROGRESS, instance, instance._renderExportProcesses);
 					},
@@ -50,10 +54,11 @@ AUI.add(
 						var instance = this;
 
 						var exportProcessesNode = instance.get('exportProcessesNode');
+						var exportProcessesResourceURL = instance.get('exportProcessesResourceURL');
 
-						if (exportProcessesNode && instance._exportProcessesResourceURL) {
+						if (exportProcessesNode && exportProcessesResourceURL) {
 							A.io.request(
-								instance._exportProcessesResourceURL,
+								exportProcessesResourceURL,
 								{
 									method: 'GET',
 									on: {
@@ -87,7 +92,7 @@ AUI.add(
 					_setNode: function(val) {
 						var instance = this;
 
-						if (Lang.isString(val)) {
+						if (isString(val)) {
 							val = instance.one(val);
 						}
 						else {

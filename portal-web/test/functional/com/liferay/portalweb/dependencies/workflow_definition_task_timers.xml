@@ -144,6 +144,7 @@
 					<reassignments>
 						<roles>
 							<role>
+								<role-type>organization</role-type>
 								<name>Organization Content Reviewer</name>
 								<auto-create>true</auto-create>
 							</role>
@@ -158,6 +159,7 @@
 						<recipients>
 							<roles>
 								<role>
+									<role-type></role-type>
 									<name>Portal Content Reviewer</name>
 									<auto-create>true</auto-create>
 								</role>
@@ -196,6 +198,7 @@
 					<reassignments>
 						<roles>
 							<role>
+								<role-type>site</role-type>
 								<name>Site Content Reviewer</name>
 								<auto-create>true</auto-create>
 							</role>
@@ -224,6 +227,7 @@
 						<recipients>
 							<roles>
 								<role>
+									<role-type>organization</role-type>
 									<name>Organization Content Reviewer</name>
 								</role>
 							</roles>
@@ -261,6 +265,7 @@
 					<reassignments>
 						<roles>
 							<role>
+								<role-type>organization</role-type>
 								<name>Organization Content Reviewer</name>
 								<auto-create>true</auto-create>
 							</role>
@@ -269,6 +274,7 @@
 					<reassignments>
 						<roles>
 							<role>
+								<role-type>organization</role-type>
 								<name>Organization Content Reviewer</name>
 								<auto-create>true</auto-create>
 							</role>
@@ -283,6 +289,7 @@
 						<recipients>
 							<roles>
 								<role>
+									<role-type></role-type>
 									<name>Portal Content Reviewer</name>
 									<auto-create>true</auto-create>
 								</role>
@@ -298,6 +305,7 @@
 						<recipients>
 							<roles>
 								<role>
+									<role-type></role-type>
 									<name>Portal Content Reviewer</name>
 									<auto-create>true</auto-create>
 								</role>

@@ -100,11 +100,12 @@ public class DefaultBearerTokenProvider implements BearerTokenProvider {
 
 	protected boolean isValid(long expiresIn, long issuedAt) {
 		long expiresInMillis = expiresIn * 1000;
-		long issuedAtMillis = issuedAt * 1000;
 
 		if (expiresInMillis < 0) {
 			return false;
 		}
+
+		long issuedAtMillis = issuedAt * 1000;
 
 		if (issuedAtMillis > System.currentTimeMillis()) {
 			return false;

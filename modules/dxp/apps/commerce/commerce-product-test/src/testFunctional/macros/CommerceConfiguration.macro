@@ -1,5 +1,5 @@
 <definition>
-	<command name="addPortletsToSitePagesViaHealthStatus">
+	<command name="commerceSetUp">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Settings" />
 		</execute>

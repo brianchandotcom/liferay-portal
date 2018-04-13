@@ -14,7 +14,6 @@
 
 package com.liferay.portal.events;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -25,9 +24,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.verify.VerifyException;
@@ -127,46 +123,10 @@ public class StartupHelper {
 		_upgrading = true;
 
 		try {
-			if (buildNumber == ReleaseInfo.getParentBuildNumber()) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringBundler.concat(
-							"Skipping upgrade process from ",
-							String.valueOf(buildNumber), " to ",
-							String.valueOf(
-								ReleaseInfo.getParentBuildNumber())));
-				}
-
-				return;
-			}
-
-			String[] upgradeProcessClassNames = getUpgradeProcessClassNames(
-				PropsKeys.UPGRADE_PROCESSES);
-
-			if (upgradeProcessClassNames.length == 0) {
-				upgradeProcessClassNames = getUpgradeProcessClassNames(
-					PropsKeys.UPGRADE_PROCESSES + StringPool.PERIOD +
-						buildNumber);
-
-				if (upgradeProcessClassNames.length == 0) {
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							StringBundler.concat(
-								"Upgrading from ", String.valueOf(buildNumber),
-								" to ",
-								String.valueOf(
-									ReleaseInfo.getParentBuildNumber()),
-								" is not supported"));
-					}
-
-					System.exit(0);
-				}
-			}
-
 			List<UpgradeProcess> upgradeProcesses =
 				UpgradeProcessUtil.initUpgradeProcesses(
 					ClassLoaderUtil.getPortalClassLoader(),
-					upgradeProcessClassNames);
+					_UPGRADE_PROCESS_CLASS_NAMES);
 
 			_upgraded = UpgradeProcessUtil.upgradeProcess(
 				buildNumber, upgradeProcesses);
@@ -196,6 +156,16 @@ public class StartupHelper {
 
 		return StringUtil.split(GetterUtil.getString(PropsUtil.get(key)));
 	}
+
+	private static final String[] _UPGRADE_PROCESS_CLASS_NAMES = {
+		"com.liferay.portal.upgrade.UpgradeProcess_6_1_1",
+		"com.liferay.portal.upgrade.UpgradeProcess_6_2_0",
+		"com.liferay.portal.upgrade.UpgradeProcess_7_0_0",
+		"com.liferay.portal.upgrade.UpgradeProcess_7_0_1",
+		"com.liferay.portal.upgrade.UpgradeProcess_7_0_3",
+		"com.liferay.portal.upgrade.UpgradeProcess_7_0_5",
+		"com.liferay.portal.upgrade.PortalUpgradeProcess"
+	};
 
 	private static final Log _log = LogFactoryUtil.getLog(StartupHelper.class);
 

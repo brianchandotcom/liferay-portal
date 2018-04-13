@@ -40,9 +40,10 @@ public class SlimRuntimeReleaseLocalServiceImpl
 			db.runSQLTemplate("slim/portal-tables.sql", false);
 			db.runSQLTemplate("slim/portal-data-common.sql", false);
 			db.runSQLTemplate("slim/portal-data-counter.sql", false);
-			db.runSQLTemplate("slim/portal-data-release.sql", false);
 			db.runSQLTemplate("slim/indexes.sql", false);
 			db.runSQLTemplate("slim/sequences.sql", false);
+
+			addReleaseInfo();
 
 			StartupHelperUtil.setDbNew(true);
 		}

@@ -12,32 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.upgrade;
-
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.upgrade.v7_1_0.UpgradeModules;
-import com.liferay.portal.upgrade.v7_1_0.UpgradeRepository;
-import com.liferay.portal.upgrade.v7_1_0.UpgradeSchema;
+package com.liferay.portal.kernel.upgrade;
 
 /**
  * @author Alberto Chaparro
  */
-public class UpgradeProcess_7_1_0 extends UpgradeProcess {
+public class DummyUpgradeProcess extends UpgradeProcess {
 
 	@Override
-	public int getThreshold() {
-		return ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER;
-	}
-
-	@Override
-	protected void doUpgrade() throws Exception {
-		upgrade(new UpgradeSchema());
-
-		upgrade(new UpgradeModules());
-		upgrade(new UpgradeRepository());
-
-		clearIndexesCache();
+	public void doUpgrade() throws Exception {
 	}
 
 }

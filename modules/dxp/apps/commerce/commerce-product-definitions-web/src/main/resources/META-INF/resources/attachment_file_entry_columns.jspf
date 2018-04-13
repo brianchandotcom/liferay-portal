@@ -17,7 +17,6 @@
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(thumbnailSrc) %>">
 		<liferay-ui:search-container-column-image
-			cssClass="table-cell-content"
 			name="image"
 			src="<%= thumbnailSrc %>"
 			toggleRowChecker="<%= true %>"
@@ -32,20 +31,17 @@
 </c:choose>
 
 <liferay-ui:search-container-column-text
-	cssClass="table-cell-content"
 	href="<%= rowURL %>"
 	name="title"
 	value="<%= HtmlUtil.escape(cpAttachmentFileEntry.getTitle(languageId)) %>"
 />
 
 <liferay-ui:search-container-column-text
-	cssClass="table-cell-content"
 	name="extension"
 	value="<%= HtmlUtil.escape(fileEntry.getExtension()) %>"
 />
 
 <liferay-ui:search-container-column-text
-	cssClass="table-cell-content"
 	property="priority"
 />
 
@@ -54,7 +50,6 @@ for (CPDefinitionOptionRel cpDefinitionOptionRel : cpDefinitionOptionRels) {
 %>
 
 	<liferay-ui:search-container-column-text
-		cssClass="table-cell-content"
 		name="<%= cpDefinitionOptionRel.getTitle(languageId) %>"
 	>
 
@@ -78,21 +73,13 @@ for (CPDefinitionOptionRel cpDefinitionOptionRel : cpDefinitionOptionRels) {
 %>
 
 <liferay-ui:search-container-column-status
-	cssClass="table-cell-content"
 	name="status"
 	status="<%= cpAttachmentFileEntry.getStatus() %>"
 />
 
 <liferay-ui:search-container-column-date
-	cssClass="table-cell-content"
 	name="modified-date"
 	property="modifiedDate"
-/>
-
-<liferay-ui:search-container-column-date
-	cssClass="table-cell-content"
-	name="display-date"
-	property="displayDate"
 />
 
 <liferay-ui:search-container-column-jsp

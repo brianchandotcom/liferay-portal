@@ -35,7 +35,7 @@ List<CPOptionCategory> cpOptionCategories = cpDefinitionSpecificationOptionValue
 <aui:fieldset>
 	<aui:input name="value" />
 
-	<aui:select label="category" name="CPOptionCategoryId" showEmptyOption="<%= true %>">
+	<aui:select label="group" name="CPOptionCategoryId" showEmptyOption="<%= true %>">
 
 		<%
 		for (CPOptionCategory cpOptionCategory : cpOptionCategories) {

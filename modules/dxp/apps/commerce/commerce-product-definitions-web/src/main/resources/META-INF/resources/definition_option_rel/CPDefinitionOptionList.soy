@@ -28,13 +28,10 @@
 		<table class="table table-autofit table-heading-nowrap table-responsive table-hover">
 			<thead>
 				<tr>
-					<th class="table-cell-content">
-						<span class="text-truncate" title="Id">{msg desc=""}id{/msg}</span>
-					</th>
-					<th class="table-cell-content">
+					<th>
 						<span class="text-truncate" title="Description">{msg desc=""}title{/msg}</span>
 					</th>
-					<th class="table-cell-content">
+					<th>
 						<span class="text-truncate" title="Priority">{msg desc=""}priority{/msg}</span>
 					</th>
 					<th></th>
@@ -80,11 +77,6 @@
 	{/let}
 
 	<tr class="{$classes}" data-id="{$id}" onclick="{$_handleSelectOptionClick}">
-		<td>
-			{if $id != 0}
-				{$id}
-			{/if}
-		</td>
 		<td class="table-cell-content">
 			{$title}
 		</td>

@@ -18,16 +18,9 @@
 CPType cpType = cpDefinitionsDisplayContext.getCPType(cpDefinition.getProductTypeName());
 %>
 
-<liferay-ui:search-container-column-text
-	cssClass="table-cell-content"
-	name="id"
-	value="<%= String.valueOf(cpDefinition.getCPDefinitionId()) %>"
-/>
-
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(thumbnailSrc) %>">
 		<liferay-ui:search-container-column-image
-			cssClass="table-cell-content"
 			href="<%= rowURL %>"
 			name="image"
 			src="<%= thumbnailSrc %>"
@@ -50,19 +43,21 @@ CPType cpType = cpDefinitionsDisplayContext.getCPType(cpDefinition.getProductTyp
 />
 
 <liferay-ui:search-container-column-text
-	cssClass="table-cell-content"
 	name="type"
 	value="<%= cpType.getLabel(locale) %>"
 />
 
+<liferay-ui:search-container-column-date
+	name="modified-date"
+	property="modifiedDate"
+/>
+
 <liferay-ui:search-container-column-text
-	cssClass="table-cell-content"
-	name="author"
-	property="userName"
+	name="sku"
+	value="<%= cpDefinitionsDisplayContext.getSku(cpDefinition, locale) %>"
 />
 
 <liferay-ui:search-container-column-status
-	cssClass="table-cell-content"
 	name="status"
 	status="<%= cpDefinition.getStatus() %>"
 />

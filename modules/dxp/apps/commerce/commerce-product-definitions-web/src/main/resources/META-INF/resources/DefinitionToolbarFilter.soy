@@ -18,44 +18,49 @@
 	<div class="definition-toolbar-filter" id="{$id}">
 		<div class="container-fluid-1280">
 			<div class="form-group form-inline filter-selector">
-				<div class="form-inline-group">
-					<label>{msg desc=""}show-all-products-where{/msg}:</label>
-					<select class="form-control filter-selector-select" onChange="_handleFilterChange">
-						<option value="">{msg desc=""}select-filter{/msg}</option>
-						<option value="productTypeName">{msg desc=""}product-type{/msg}</option>
-						<option value="optionsNames">{msg desc=""}option{/msg}</option>
-						<option value="status">{msg desc=""}status{/msg}</option>
-						<option value="assetCategoryIds">{msg desc=""}category{/msg}</option>
-					</select>
+				<div class="form-group">
+					<div class=" form-group input-group-item input-group-item-shrink input-group-prepend">
+						<select class="form-control filter-selector-select" onChange="_handleFilterChange">
+							<option value="">{msg desc=""}select-filter{/msg}</option>
+							<option value="productTypeName">{msg desc=""}product-type{/msg}</option>
+							<option value="optionsNames">{msg desc=""}option{/msg}</option>
+							<option value="status">{msg desc=""}status{/msg}</option>
+							<option value="assetCategoryIds">{msg desc=""}category{/msg}</option>
+						</select>
+					</div>
 
-					{switch $_currentSelection}
-						{case 'status'}
-							{call .status}
-								{param terms: $_terms /}
-							{/call}
-						{case 'productTypeName'}
-							{call .productTypeName}
-								{param terms: $_terms /}
-							{/call}
-						{case 'optionsNames'}
-							{call .option}
-								{param terms: $_terms /}
-								{param handleOptionChange: $_handleOptionChange /}
-							{/call}
-						{case 'assetCategoryIds'}
-							{call .category}
-							{/call}
-					{/switch}
+					<div class=" form-group input-group-item input-group-item-shrink input-group-prepend">
+						{switch $_currentSelection}
+							{case 'status'}
+								{call .status}
+									{param terms: $_terms /}
+								{/call}
+							{case 'productTypeName'}
+								{call .productTypeName}
+									{param terms: $_terms /}
+								{/call}
+							{case 'optionsNames'}
+								{call .option}
+									{param terms: $_terms /}
+									{param handleOptionChange: $_handleOptionChange /}
+								{/call}
+							{case 'assetCategoryIds'}
+								{call .category}
+								{/call}
+						{/switch}
 
-					{if $_currentSelection == 'optionsNames' and $_optionValues.length > 0 }
-						{call .optionValues}
-							{param optionValues: $_optionValues /}
-						{/call}
-					{/if}
+						{if $_currentSelection == 'optionsNames' and $_optionValues.length > 0 }
+							{call .optionValues}
+								{param optionValues: $_optionValues /}
+							{/call}
+						{/if}
+					</div>
 
-					{if $_currentSelection != 'assetCategoryIds' }
-						<button class="btn btn-secondary add-filter-button" onclick="{$_handleAddFilter}" type="button">{msg desc=""}add-filter{/msg}</button>
-					{/if}
+					<div class=" form-group input-group-item input-group-item-shrink">
+						{if $_currentSelection != 'assetCategoryIds' }
+							<button class="btn btn-secondary add-filter-button" onclick="{$_handleAddFilter}" type="button">{msg desc=""}add-filter{/msg}</button>
+						{/if}
+					</div>
 				</div>
 			</div>
 
@@ -159,7 +164,7 @@
 				{foreach $filter in $filters}
 					<span class="label label-dismissible label-lg label-secondary">
 						{$filter.label}
-						<button aria-label="Close" class="close" data-index="{index($filter)}" onClick="{$_handlerRemoveFilter}" type="button">
+						<button aria-label="Close" class="btn close btn-unstyled" data-index="{index($filter)}" onClick="{$_handlerRemoveFilter}" type="button">
 							<svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
 								<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#times"></use>
 							</svg>

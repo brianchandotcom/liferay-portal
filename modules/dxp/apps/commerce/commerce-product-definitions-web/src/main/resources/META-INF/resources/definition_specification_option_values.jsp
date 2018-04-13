@@ -153,7 +153,7 @@ PortletURL portletURL = cpDefinitionSpecificationOptionValueDisplayContext.getPo
 
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
-								name="category"
+								name="group"
 								value="<%= HtmlUtil.escape(cpDefinitionSpecificationOptionValueDisplayContext.getCPOptionCategoryTitle(cpDefinitionSpecificationOptionValue)) %>"
 							/>
 

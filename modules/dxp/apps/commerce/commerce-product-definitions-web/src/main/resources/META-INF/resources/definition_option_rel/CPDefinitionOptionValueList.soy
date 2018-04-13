@@ -28,9 +28,6 @@
 		<table class="table table-autofit table-heading-nowrap table-responsive table-hover">
 			<thead>
 				<tr>
-					<th>
-						<span class="text-truncate" title="Id">{msg desc=""}id{/msg}</span>
-					</th>
 					<th class="table-cell-content">
 						<span class="text-truncate" title="Description">{msg desc=""}title{/msg}</span>
 					</th>
@@ -85,11 +82,6 @@
 	{/let}
 
 	<tr class="{$classes}" data-id="{$id}" onclick="{$_handleSelectCPDefinitionOptionValueRelClick}">
-		<td>
-			{if $id != 0}
-				{$id}
-			{/if}
-		</td>
 		<td class="table-cell-content">
 			{if $id != 0}
 				{$title}

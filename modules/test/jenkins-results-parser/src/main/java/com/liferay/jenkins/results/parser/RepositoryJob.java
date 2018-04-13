@@ -23,7 +23,19 @@ import java.util.regex.Pattern;
 public abstract class RepositoryJob extends BaseJob {
 
 	public String getBranchName() {
-		return branchName;
+		if (_branchName != null) {
+			return _branchName;
+		}
+
+		Matcher matcher = _jobNamePattern.matcher(jobName);
+
+		if (matcher.find()) {
+			_branchName = matcher.group("branchName");
+		}
+
+		_branchName = "master";
+
+		return _branchName;
 	}
 
 	public GitWorkingDirectory getGitWorkingDirectory() {
@@ -32,24 +44,13 @@ public abstract class RepositoryJob extends BaseJob {
 
 	protected RepositoryJob(String jobName) {
 		super(jobName);
-
-		branchName = _getBranchName(jobName);
 	}
 
-	protected String branchName;
 	protected GitWorkingDirectory gitWorkingDirectory;
-
-	private String _getBranchName(String jobName) {
-		Matcher matcher = _jobNamePattern.matcher(jobName);
-
-		if (matcher.find()) {
-			return matcher.group("branchName");
-		}
-
-		return "master";
-	}
 
 	private static final Pattern _jobNamePattern = Pattern.compile(
 		"[^\\(]+\\((?<branchName>[^\\)]+)\\)");
+
+	private String _branchName;
 
 }

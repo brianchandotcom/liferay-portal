@@ -147,11 +147,6 @@ AUI.add(
 		var previewBeforeRevert = function(event, renderUrl, actionUrl, title) {
 			var instance = this;
 
-			var form = A.Node.create('<form />');
-
-			form.setAttribute('action', actionUrl);
-			form.setAttribute('method', 'POST');
-
 			var dialog = Liferay.Util.Window.getWindow(
 				{
 					dialog: {
@@ -175,7 +170,7 @@ AUI.add(
 									label: Liferay.Language.get('restore'),
 									on: {
 										click: function() {
-											submitForm(form);
+											window.location.assign(actionUrl);
 										}
 									}
 								}

@@ -19,6 +19,7 @@ import com.liferay.oauth2.provider.rest.internal.endpoint.liferay.LiferayOAuthDa
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -64,9 +65,9 @@ public class LiferayAccessTokenServiceRegistrator {
 		liferayAccessTokenService.setDataProvider(_liferayOAuthDataProvider);
 		liferayAccessTokenService.setGrantHandlers(_accessTokenGrantHandlers);
 
-		Hashtable<String, Object> endpointProperties = new Hashtable<>();
+		Dictionary<String, Object> endpointProperties = new Hashtable<>();
 
-		endpointProperties.put(
+		properties.put(
 			OAuth2ProviderRestEndpointConstants.
 				LIFERAY_OAUTH2_ENDPOINT_RESOURCE,
 			true);

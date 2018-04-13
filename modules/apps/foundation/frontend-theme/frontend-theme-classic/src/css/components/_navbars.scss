@@ -1,6 +1,6 @@
 .navbar-top {
-	padding-bottom: 0.63rem;
-	padding-top: 0.63rem;
+	padding-bottom: 0.907rem;
+	padding-top: 0.907rem;
 }
 
 .navbar-classic {
@@ -13,6 +13,19 @@
 		}
 	}
 
+	.navbar-form {
+		padding: 0;
+
+		.field-wrapper {
+			right: 0;
+			top: 0;
+
+			.lfr-icon-item {
+				color: #6B6C7E;
+			}
+		}
+	}
+
 	.portlet-navigation {
 		margin-left: auto;
 	}
@@ -22,10 +35,9 @@
 	}
 
 	.nav-link {
-		font-size: 0.88rem;
+		color: #6B6C7E;
+		font-size: 0.8rem;
 		font-weight: 600;
-		letter-spacing: 0.031rem;
-		padding-left: 16px;
-		padding-right: 16px;
+		letter-spacing: 0.035rem;
 	}
 }

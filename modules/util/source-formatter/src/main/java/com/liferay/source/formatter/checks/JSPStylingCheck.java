@@ -62,6 +62,13 @@ public class JSPStylingCheck extends StylingCheck {
 				fileName, "Do not use debugger", getLineCount(content, pos));
 		}
 
+		pos = content.indexOf("console.log(");
+
+		if (pos != -1) {
+			addMessage(
+				fileName, "Do not use console.log", getLineCount(content, pos));
+		}
+
 		if (!fileName.endsWith("test.jsp")) {
 			pos = content.indexOf("System.out.print");
 

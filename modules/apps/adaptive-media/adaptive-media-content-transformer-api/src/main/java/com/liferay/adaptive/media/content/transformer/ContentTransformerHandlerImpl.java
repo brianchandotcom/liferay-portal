@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Alejandro Tardín
  */
 @Component(immediate = true, service = ContentTransformerHandler.class)
-public class ContentTransformerHandler {
+public class ContentTransformerHandlerImpl {
 
 	public <T> T transform(
 		ContentTransformerContentType<T> contentTransformerContentType,
@@ -94,7 +94,7 @@ public class ContentTransformerHandler {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ContentTransformerHandler.class);
+		ContentTransformerHandlerImpl.class);
 
 	private ServiceTrackerMap
 		<ContentTransformerContentType, List<ContentTransformer>>

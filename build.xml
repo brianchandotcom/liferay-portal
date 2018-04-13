@@ -904,9 +904,30 @@ message.
 			<antelope:substring beginindex="${nightly.bundle.file.beginindex}" />
 		</antelope:stringutil>
 
+		<property name="sha256.original" value="${project.dir}/tmp/${nightly.bundle.file}.sha256.original" />
+		<property name="sha256.new" value="${project.dir}/tmp/${nightly.bundle.file}.sha256.new" />
+
+		<mirrors-get
+			dest="${sha256.original}"
+			force="false"
+			skipChecksum="true"
+			src="${nightly.bundle.url}.sha256"
+		/>
+
+		<mirrors-get
+			dest="${sha256.new}"
+			force="true"
+			skipChecksum="true"
+			src="${nightly.bundle.url}.sha256"
+		/>
+
+		<condition else="true" property="nightly.bundle.force" value="false">
+			<filesmatch file1="${sha256.original}" file2="${sha256.new}" />
+		</condition>
+
 		<mirrors-get
 			dest="${project.dir}/tmp/${nightly.bundle.file}"
-			force="true"
+			force="${nightly.bundle.force}"
 			skipChecksum="true"
 			src="${nightly.bundle.url}"
 		/>

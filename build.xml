@@ -910,7 +910,7 @@ message.
 		>
 			<mapper>
 				<globmapper
-					from="bundles/*"
+					from="${nightly.bundle.parent.dir}/*"
 					to="*"
 				/>
 			</mapper>

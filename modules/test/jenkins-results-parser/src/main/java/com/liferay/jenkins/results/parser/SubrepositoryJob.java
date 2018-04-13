@@ -81,8 +81,18 @@ public abstract class SubrepositoryJob extends RepositoryJob {
 
 		gitWorkingDirectory = getGitWorkingDirectory();
 
+		Properties buildProperties = null;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to get build properties", ioe);
+		}
+
 		String defaultPropertiesFilePath = JenkinsResultsParserUtil.combine(
-			System.getenv("WORKSPACE"), "/commands/dependencies",
+			buildProperties.getProperty("base.repository.dir"),
+			"/liferay-jenkins-ee/commands/dependencies",
 			"/test-subrepository-batch.properties");
 
 		subrepositoryTestProperties = JenkinsResultsParserUtil.getProperties(

@@ -81,11 +81,11 @@ public class JobFactory {
 	private static String _getSubrepositoryModuleName(
 		GitWorkingDirectory gitWorkingDirectory) {
 
-		List<File> currentBranchFiles =
+		List<File> currentBranchModifiedFiles =
 			gitWorkingDirectory.getModifiedFilesList();
 
-		if (currentBranchFiles.size() == 1) {
-			File diffFile = currentBranchFiles.get(0);
+		if (currentBranchModifiedFiles.size() == 1) {
+			File diffFile = currentBranchModifiedFiles.get(0);
 
 			String diffFilePath = diffFile.toString();
 

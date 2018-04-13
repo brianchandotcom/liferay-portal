@@ -19,6 +19,8 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.meris.MerisRule;
+import com.liferay.meris.MerisRuleType;
+import com.liferay.meris.MerisRuleTypeManager;
 import com.liferay.meris.MerisSegmentManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -186,7 +188,8 @@ public class AssetCategoryMerisSegmentManager
 
 	@Override
 	public boolean matches(
-		String merisProfileId, String merisSegmentId, Map context) {
+		String merisProfileId, String merisSegmentId,
+		Map<String, Object> context) {
 
 		AssetCategoryMerisProfile assetCategoryMerisProfile = getMerisProfile(
 			merisProfileId);
@@ -211,7 +214,19 @@ public class AssetCategoryMerisSegmentManager
 			"assetCategoryIds",
 			assetCategoryMerisProfile.getAssetCategoryIds());
 
-		return stream.allMatch(merisRule -> merisRule.matches(context));
+		return stream.allMatch(
+			merisRule -> {
+				MerisRuleType merisRuleType =
+					_merisRuleTypeManager.getMerisRuleType(
+						merisRule.getMerisRuleTypeId());
+
+				if (merisRuleType == null) {
+					return false;
+				}
+
+				return merisRuleType.matches(
+					context, merisRule.getMerisRuleTypeSettings());
+			});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -225,6 +240,9 @@ public class AssetCategoryMerisSegmentManager
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Reference
+	private MerisRuleTypeManager _merisRuleTypeManager;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -9,7 +9,7 @@ header {
 	}
 
 	.text-default {
-		color: #FFF;
+		color: #6B6C7E;
 	}
 
 	.field-wrapper {
@@ -48,20 +48,13 @@ header {
 	}
 
 	.search-input {
-		background-color: $complementary-color;
-		border-color: transparent;
-		color: #FFF;
 		font-size: 0.88rem;
 		padding: 0.28rem 2rem 0.28rem 1rem;
-
-		&:focus {
-			background-color: $secondary;
-			color: #FFF;
-		}
 	}
 
 	.user-avatar-image {
 		display: inline-flex;
+		margin-right: 0.5rem;
 	}
 
 	.user-full-name {

@@ -84,7 +84,8 @@ public class BlogsEntryImageSelectorHelperTest {
 				"BlogsEntryImageSelectorHelper");
 
 		_constructor = clazz.getConstructor(
-			Long.TYPE, Long.TYPE, String.class, String.class, String.class);
+			Long.TYPE, Long.TYPE, Long.TYPE, String.class, String.class,
+			String.class);
 
 		_getImageSelectorMethod = clazz.getMethod("getImageSelector");
 
@@ -103,7 +104,7 @@ public class BlogsEntryImageSelectorHelperTest {
 		throws Exception {
 
 		Object blogsEntryImageSelectorHelper = _constructor.newInstance(
-			0, 1, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK);
+			0, 0, 1, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK);
 
 		ImageSelector imageSelector =
 			(ImageSelector)_getImageSelectorMethod.invoke(
@@ -132,7 +133,7 @@ public class BlogsEntryImageSelectorHelperTest {
 				StringPool.BLANK, StringPool.BLANK, bytes, serviceContext);
 
 			Object blogsEntryImageSelectorHelper = _constructor.newInstance(
-				fileEntry.getFileEntryId(), fileEntry.getFileEntryId() + 1,
+				0, fileEntry.getFileEntryId(), fileEntry.getFileEntryId() + 1,
 				_IMAGE_CROP_REGION, StringPool.BLANK, StringPool.BLANK);
 
 			ImageSelector imageSelector =
@@ -157,7 +158,7 @@ public class BlogsEntryImageSelectorHelperTest {
 	@Test
 	public void testGetImageSelectorWithImageURL() throws Exception {
 		Object blogsEntryImageSelectorHelper = _constructor.newInstance(
-			0, 0, StringPool.BLANK, _IMAGE_URL, StringPool.BLANK);
+			0, 0, 0, StringPool.BLANK, _IMAGE_URL, StringPool.BLANK);
 
 		ImageSelector imageSelector =
 			(ImageSelector)_getImageSelectorMethod.invoke(
@@ -192,7 +193,7 @@ public class BlogsEntryImageSelectorHelperTest {
 				StringPool.BLANK, StringPool.BLANK, bytes, serviceContext);
 
 			Object blogsEntryImageSelectorHelper = _constructor.newInstance(
-				fileEntry.getFileEntryId(), fileEntry.getFileEntryId(),
+				0, fileEntry.getFileEntryId(), fileEntry.getFileEntryId(),
 				_IMAGE_CROP_REGION, StringPool.BLANK, StringPool.BLANK);
 
 			Assert.assertNull(
@@ -207,7 +208,7 @@ public class BlogsEntryImageSelectorHelperTest {
 	@Test
 	public void testGetImageSelectorWithSameImageURL() throws Exception {
 		Object blogsEntryImageSelectorHelper = _constructor.newInstance(
-			0, 0, StringPool.BLANK, _IMAGE_URL, _IMAGE_URL);
+			0, 0, 0, StringPool.BLANK, _IMAGE_URL, _IMAGE_URL);
 
 		Assert.assertNull(
 			(ImageSelector)_getImageSelectorMethod.invoke(
@@ -228,7 +229,7 @@ public class BlogsEntryImageSelectorHelperTest {
 				ContentTypes.IMAGE_JPEG);
 
 			Object blogsEntryImageSelectorHelper = _constructor.newInstance(
-				tempFileEntry.getFileEntryId(),
+				0, tempFileEntry.getFileEntryId(),
 				tempFileEntry.getFileEntryId() + 1, _IMAGE_CROP_REGION,
 				StringPool.BLANK, StringPool.BLANK);
 

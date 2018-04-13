@@ -389,8 +389,15 @@ public class KaleoDesignerDisplayContext {
 		PermissionChecker permissionChecker,
 		KaleoDefinitionVersion kaleoDefinitionVersion) {
 
-		return isSaveKaleoDefinitionVersionButtonVisible(
-			permissionChecker, kaleoDefinitionVersion);
+		if (kaleoDefinitionVersion != null) {
+			return KaleoDefinitionVersionPermission.contains(
+				permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE);
+		}
+		else {
+			return KaleoDesignerPermission.contains(
+				permissionChecker, _themeDisplay.getCompanyGroupId(),
+				KaleoDesignerActionKeys.ADD_NEW_WORKFLOW);
+		}
 	}
 
 	public boolean isSaveKaleoDefinitionVersionButtonVisible(
@@ -398,8 +405,17 @@ public class KaleoDesignerDisplayContext {
 		KaleoDefinitionVersion kaleoDefinitionVersion) {
 
 		if (kaleoDefinitionVersion != null) {
-			return KaleoDefinitionVersionPermission.contains(
-				permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE);
+			KaleoDefinition kaleoDefinition = getKaleoDefinition(
+				kaleoDefinitionVersion);
+
+			if ((kaleoDefinition != null) && !kaleoDefinition.isActive()) {
+				return KaleoDefinitionVersionPermission.contains(
+					permissionChecker, kaleoDefinitionVersion,
+					ActionKeys.UPDATE);
+			}
+			else {
+				return false;
+			}
 		}
 		else {
 			return KaleoDesignerPermission.contains(

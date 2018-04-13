@@ -14,7 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.Objects;
+import java.io.File;
+
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -107,25 +108,19 @@ public class PortalAcceptancePullRequestJob extends PortalRepositoryJob {
 	}
 
 	private boolean _isPortalWebOnly() {
-		StringBuilder sb = new StringBuilder();
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			getPortalGitWorkingDirectory();
 
-		sb.append("git diff-tree --no-commit-id --name-only -r ");
-		sb.append(System.getenv("TOP_LEVEL_BRANCH_NAME"));
-		sb.append(" ");
-		sb.append(System.getenv("GITHUB_UPSTREAM_BRANCH_SHA"));
+		File portalWebDirectory = new File(
+			portalGitWorkingDirectory.getWorkingDirectory(), "portal-web");
 
-		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+		for (File modifiedFile :
+				portalGitWorkingDirectory.getModifiedFilesList()) {
 
-		GitWorkingDirectory.ExecutionResult executionResult =
-			gitWorkingDirectory.executeBashCommands(sb.toString());
+			if (!JenkinsResultsParserUtil.isFileInDirectory(
+					portalWebDirectory, modifiedFile)) {
 
-		String standardOut = executionResult.getStandardOut();
-
-		if (!Objects.isNull(standardOut)) {
-			for (String diffFilePath : standardOut.split("\n")) {
-				if (!diffFilePath.contains("portal-web/")) {
-					return false;
-				}
+				return false;
 			}
 		}
 

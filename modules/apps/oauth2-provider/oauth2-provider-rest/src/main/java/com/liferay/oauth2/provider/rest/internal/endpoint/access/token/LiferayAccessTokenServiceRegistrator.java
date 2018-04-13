@@ -54,19 +54,13 @@ public class LiferayAccessTokenServiceRegistrator {
 			return;
 		}
 
-		boolean canSupportPublicClients = MapUtil.getBoolean(
-			properties, "allow.public.clients", true);
-
-		boolean blockUnsecureRequests = MapUtil.getBoolean(
-			properties, "block.unsecure.requests", true);
-
 		LiferayAccessTokenService liferayAccessTokenService =
 			new LiferayAccessTokenService();
 
 		liferayAccessTokenService.setBlockUnsecureRequests(
-			blockUnsecureRequests);
+			MapUtil.getBoolean(properties, "block.unsecure.requests", true));
 		liferayAccessTokenService.setCanSupportPublicClients(
-			canSupportPublicClients);
+			MapUtil.getBoolean(properties, "allow.public.clients", true));
 		liferayAccessTokenService.setDataProvider(_liferayOAuthDataProvider);
 		liferayAccessTokenService.setGrantHandlers(_accessTokenGrantHandlers);
 

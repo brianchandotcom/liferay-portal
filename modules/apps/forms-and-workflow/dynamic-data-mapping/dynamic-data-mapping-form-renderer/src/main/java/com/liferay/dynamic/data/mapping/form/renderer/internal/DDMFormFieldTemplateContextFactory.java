@@ -95,10 +95,8 @@ public class DDMFormFieldTemplateContextFactory {
 			"ddmFormFieldEvaluationResult", ddmFormFieldEvaluationResult);
 		ddmFormFieldRenderingContext.setProperty(
 			"groupId", _ddmFormRenderingContext.getGroupId());
-
-		if (_ddmFormRenderingContext.isViewMode()) {
-			ddmFormFieldRenderingContext.setViewMode(true);
-		}
+		ddmFormFieldRenderingContext.setViewMode(
+			_ddmFormRenderingContext.isViewMode());
 
 		return ddmFormFieldRenderingContext;
 	}

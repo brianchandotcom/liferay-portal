@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.relationship.impl.internal;
+package com.liferay.portal.relationship.internal;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;

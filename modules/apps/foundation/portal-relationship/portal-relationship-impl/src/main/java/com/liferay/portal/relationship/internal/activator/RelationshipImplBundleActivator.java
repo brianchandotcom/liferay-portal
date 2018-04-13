@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.relationship.impl.internal.activator;
+package com.liferay.portal.relationship.internal.activator;
 
 import com.liferay.portal.relationship.RelationshipManager;
 import com.liferay.portal.relationship.RelationshipManagerUtil;

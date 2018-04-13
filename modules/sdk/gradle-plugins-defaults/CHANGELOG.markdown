@@ -3272,6 +3272,18 @@ classpath.
 ## 5.3.74 - 2018-04-12
 
 ### Changed
+- [LPS-79576]: Update the [Liferay Gradle Plugins] dependency to version
+3.10.17.
+
+## 5.3.75 - 2018-04-12
+
+### Changed
+- [LPS-79576]: Update the [Liferay Gradle Plugins] dependency to version
+3.10.18.
+
+## 5.3.76 - 2018-04-12
+
+### Changed
 - [LPS-75530]: Update the [Liferay Gradle Plugins] dependency to version
 3.11.0.
 
@@ -3646,6 +3658,7 @@ classpath.
 [LPS-79360]: https://issues.liferay.com/browse/LPS-79360
 [LPS-79365]: https://issues.liferay.com/browse/LPS-79365
 [LPS-79450]: https://issues.liferay.com/browse/LPS-79450
+[LPS-79576]: https://issues.liferay.com/browse/LPS-79576
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

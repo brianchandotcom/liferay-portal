@@ -55,19 +55,6 @@
 		}
 	}
 
-	.dialog-body,
-	.lfr-form-content,
-	.portlet-configuration-body-content {
-		bottom: 0;
-		left: 0;
-		margin-bottom: 0;
-		overflow: auto;
-		position: absolute;
-		right: 0;
-		top: 0;
-		-webkit-overflow-scrolling: touch;
-	}
-
 	.login-container {
 		padding: $modal-inner-padding;
 	}
@@ -159,12 +146,10 @@
 			left: 0;
 			margin: 0;
 			padding: 10px 15px;
-			position: absolute;
 			width: 100%;
 
-			@include sm {
-				background-color: $dialog-desktop-footer-bg;
-				padding: $dialog-footer-padding;
+			@include md {
+				position: fixed;
 			}
 		}
 	}
@@ -175,10 +160,8 @@
 	.lfr-form-content,
 	.portlet-configuration-body-content,
 	.roles-selector-body {
-		bottom: $dialog-footer-height;
-
-		@include sm {
-			bottom: $dialog-desktop-footer-height;
+		@include md {
+			padding-bottom: $dialog-footer-height;
 		}
 	}
 

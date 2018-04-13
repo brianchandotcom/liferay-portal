@@ -686,7 +686,6 @@ public abstract class UpgradeProcess
 			"usertracker", "usertrackerpath", "virtualhost", "webdavprops",
 			"website", "wikinode", "wikipage", "wikipageresource",
 			"workflowdefinitionlink", "workflowinstancelink"));
-
 	private static final Map
 		<String, List<ObjectValuePair<String, IndexMetadata>>>
 			_portalIndexesSQL = new HashMap<>();

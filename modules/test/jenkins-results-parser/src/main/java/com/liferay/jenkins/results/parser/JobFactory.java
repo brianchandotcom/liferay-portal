@@ -85,12 +85,12 @@ public class JobFactory {
 			gitWorkingDirectory.getModifiedFilesList();
 
 		if (currentBranchModifiedFiles.size() == 1) {
-			File diffFile = currentBranchModifiedFiles.get(0);
+			File modifiedFile = currentBranchModifiedFiles.get(0);
 
-			String diffFilePath = diffFile.toString();
+			String modifiedFilePath = modifiedFile.toString();
 
-			if (diffFilePath.endsWith("ci-merge")) {
-				File moduleDir = diffFile.getParentFile();
+			if (modifiedFilePath.endsWith("ci-merge")) {
+				File moduleDir = modifiedFile.getParentFile();
 
 				List<File> lfrBuildPortalFiles =
 					JenkinsResultsParserUtil.findFiles(

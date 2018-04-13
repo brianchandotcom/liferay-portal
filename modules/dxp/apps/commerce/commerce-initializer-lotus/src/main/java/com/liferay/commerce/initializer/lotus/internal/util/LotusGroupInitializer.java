@@ -138,7 +138,7 @@ public class LotusGroupInitializer implements GroupInitializer {
 
 	@Override
 	public String getThumbnailSrc() {
-		return _servletContext.getContextPath() + "/images/thumbnail.png";
+		return _servletContext.getContextPath() + "/images/thumbnail.jpg";
 	}
 
 	@Override

@@ -100,7 +100,7 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "customer-portal-description");
+		return LanguageUtil.get(resourceBundle, "beryl-description");
 	}
 
 	@Override
@@ -113,7 +113,7 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "customer-portal");
+		return LanguageUtil.get(resourceBundle, "beryl");
 	}
 
 	public ServiceContext getServiceContext(long groupId)
@@ -139,7 +139,7 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 
 	@Override
 	public String getThumbnailSrc() {
-		return _servletContext.getContextPath() + "/images/thumbnail.png";
+		return _servletContext.getContextPath() + "/images/thumbnail.jpg";
 	}
 
 	@Override

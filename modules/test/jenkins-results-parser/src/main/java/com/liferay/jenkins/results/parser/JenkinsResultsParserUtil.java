@@ -676,7 +676,8 @@ public class JenkinsResultsParserUtil {
 
 		if (!Files.exists(rootDirPath)) {
 			System.out.println(
-				"Directory " + rootDirPath.toString() + " does not exist.");
+				combine(
+					"Directory ", rootDirPath.toString(), " does not exist."));
 
 			return includedResourceURLs;
 		}

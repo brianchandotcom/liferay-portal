@@ -14,4 +14,15 @@
  */
 --%>
 
+<%@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList" %>
+
+<%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %>
+
 <%@ include file="/init.jsp" %>
+
+<%
+DropdownItemList actions = (DropdownItemList)request.getAttribute("liferay-frontend:empty-result-message:actions");
+String animationTypeCssClass = GetterUtil.getString((String)request.getAttribute("liferay-frontend:empty-result-message:animationTypeCssClass"));
+String description = (String)request.getAttribute("liferay-frontend:empty-result-message:description");
+String elementType = (String)request.getAttribute("liferay-frontend:empty-result-message:elementType");
+%>

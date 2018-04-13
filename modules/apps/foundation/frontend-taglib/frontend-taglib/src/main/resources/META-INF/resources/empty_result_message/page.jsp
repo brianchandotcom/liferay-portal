@@ -15,3 +15,31 @@
 --%>
 
 <%@ include file="/empty_result_message/init.jsp" %>
+
+<div class="taglib-empty-result-message">
+	<div class="text-center">
+		<div class="<%= animationTypeCssClass %>"></div>
+
+		<h1 class="taglib-empty-result-message-title">
+			<liferay-ui:message arguments="<%= elementType %>" key="no-x-yet" translateArguments="<%= false %>" />
+		</h1>
+
+		<c:if test="<%= Validator.isNotNull(description) %>">
+			<p class="taglib-empty-result-message-description">
+				<%= description %>
+			</p>
+		</c:if>
+
+		<c:if test="<%= Validator.isNotNull(actions) %>">
+			<div class="taglib-empty-result-message-actions">
+				<clay:dropdown-menu
+					items="<%= actions %>"
+					itemsIconAlignment="top"
+					label='<%= LanguageUtil.get(request, "new") %>'
+					style="secondary"
+					triggerCssClasses="btn-secondary"
+				/>
+			</div>
+		</c:if>
+	</div>
+</div>

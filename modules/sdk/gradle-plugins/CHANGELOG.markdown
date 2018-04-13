@@ -4097,11 +4097,19 @@ to version 2.3.128.
 ### Added
 - [LPS-75530]: Add `gradlew watch --continuous` to quickly redeploy OSGi modules
 at any code change.
+- [LPS-75530]: Set the [Liferay Gogo Shell Client] dependency to version 1.0.0.
+
+### Changed
+- [LPS-74544]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.129.
+- [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
+1.0.602.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
+[Liferay Gogo Shell Client]: https://github.com/liferay/liferay-portal/tree/master/modules/util/gogo-shell-client
 [Liferay Gradle Plugins Alloy Taglib]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-alloy-taglib
 [Liferay Gradle Plugins CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-css-builder
 [Liferay Gradle Plugins DB Support]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-db-support

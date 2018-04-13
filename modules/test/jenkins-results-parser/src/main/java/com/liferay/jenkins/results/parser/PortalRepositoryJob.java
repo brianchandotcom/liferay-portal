@@ -57,6 +57,8 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 			return (PortalGitWorkingDirectory)gitWorkingDirectory;
 		}
 
+		String branchName = getBranchName();
+
 		String workingDirectoryPath = "/opt/dev/projects/github/liferay-portal";
 
 		if (!branchName.equals("master")) {

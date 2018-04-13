@@ -62,7 +62,7 @@ public abstract class SubrepositoryJob extends RepositoryJob {
 
 			try {
 				gitWorkingDirectory = new GitWorkingDirectory(
-					branchName, repositoryDirectoryPath);
+					getBranchName(), repositoryDirectoryPath);
 			}
 			catch (IOException ioe) {
 				throw new RuntimeException(

@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 
@@ -38,6 +39,8 @@ public class JSPStylingCheck extends StylingCheck {
 
 		content = _fixIncorrectClosingTag(content);
 
+		content = _fixIncorrectSingleLineJavaSource(content);
+
 		content = StringUtil.replace(
 			content,
 			new String[] {
@@ -57,6 +60,13 @@ public class JSPStylingCheck extends StylingCheck {
 		if (pos != -1) {
 			addMessage(
 				fileName, "Do not use debugger", getLineCount(content, pos));
+		}
+
+		pos = content.indexOf("console.log(");
+
+		if (pos != -1) {
+			addMessage(
+				fileName, "Do not use console.log", getLineCount(content, pos));
 		}
 
 		if (!fileName.endsWith("test.jsp")) {
@@ -120,6 +130,35 @@ public class JSPStylingCheck extends StylingCheck {
 		return content;
 	}
 
+	private String _fixIncorrectSingleLineJavaSource(String content) {
+		Matcher matcher = _incorrectSingleLineJavaSourcePattern.matcher(
+			content);
+
+		while (matcher.find()) {
+			String javaSource = matcher.group(3);
+
+			if (javaSource.contains("<%")) {
+				continue;
+			}
+
+			String indent = matcher.group(1);
+
+			StringBundler sb = new StringBundler(6);
+
+			sb.append("<%\n");
+			sb.append(indent);
+			sb.append(StringUtil.trim(javaSource));
+			sb.append("\n");
+			sb.append(indent);
+			sb.append("%>");
+
+			return StringUtil.replaceFirst(
+				content, matcher.group(2), sb.toString(), matcher.start());
+		}
+
+		return content;
+	}
+
 	private final Pattern _chainingPattern = Pattern.compile(
 		"\\WgetClass\\(\\)\\.");
 	private final Pattern _emptyJavaSourceTagPattern = Pattern.compile(
@@ -128,5 +167,7 @@ public class JSPStylingCheck extends StylingCheck {
 		"\n(\t*)\t((?!<\\w).)* />\n");
 	private final Pattern _incorrectLineBreakPattern = Pattern.compile(
 		"[\n\t]\\} ?(catch|else|finally) ");
+	private final Pattern _incorrectSingleLineJavaSourcePattern =
+		Pattern.compile("(\t*)(<% (.*) %>)\n");
 
 }

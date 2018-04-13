@@ -99,9 +99,7 @@ public class OAuth2ProviderEndpointConfigurationsPublisher {
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append("(&(service.factoryPid=");
-		sb.append("com.liferay.portal.remote.rest.extender.configuration.");
-		sb.append("RestExtenderConfiguration)(jaxRsApplicationFilterStrings=");
+		sb.append("(&(jaxRsApplicationFilterStrings=");
 
 		String filterString =
 			"(component.name=" + OAuth2EndpointApplication.class.getName() +
@@ -109,7 +107,8 @@ public class OAuth2ProviderEndpointConfigurationsPublisher {
 
 		sb.append(_escape(filterString));
 
-		sb.append("))");
+		sb.append(")(service.factoryPid=com.liferay.portal.remote.rest.");
+		sb.append("extender.configuration.RestExtenderConfiguration))");
 
 		Configuration[] restConfigurations =
 			configurationAdmin.listConfigurations(sb.toString());

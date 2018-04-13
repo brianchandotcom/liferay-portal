@@ -485,7 +485,7 @@ public abstract class FriendlyURLEntryLocalServiceBaseImpl
 				languageId);
 
 		if (friendlyURLEntryLocalization == null) {
-			long friendlyURLEntryLocalizationId = counterLocalService.increment();
+			long friendlyURLEntryLocalizationId = counterLocalService.increment(FriendlyURLEntryLocalization.class.getName());
 
 			friendlyURLEntryLocalization = friendlyURLEntryLocalizationPersistence.create(friendlyURLEntryLocalizationId);
 
@@ -544,13 +544,14 @@ public abstract class FriendlyURLEntryLocalServiceBaseImpl
 			}
 		}
 
+		long batchCounter = counterLocalService.increment(FriendlyURLEntryLocalization.class.getName(),
+				localizedValuesMap.size()) - localizedValuesMap.size();
+
 		for (Map.Entry<String, String[]> entry : localizedValuesMap.entrySet()) {
 			String languageId = entry.getKey();
 			String[] localizedValues = entry.getValue();
 
-			long friendlyURLEntryLocalizationId = counterLocalService.increment();
-
-			FriendlyURLEntryLocalization friendlyURLEntryLocalization = friendlyURLEntryLocalizationPersistence.create(friendlyURLEntryLocalizationId);
+			FriendlyURLEntryLocalization friendlyURLEntryLocalization = friendlyURLEntryLocalizationPersistence.create(++batchCounter);
 
 			friendlyURLEntryLocalization.setFriendlyURLEntryId(friendlyURLEntry.getFriendlyURLEntryId());
 			friendlyURLEntryLocalization.setGroupId(friendlyURLEntry.getGroupId());

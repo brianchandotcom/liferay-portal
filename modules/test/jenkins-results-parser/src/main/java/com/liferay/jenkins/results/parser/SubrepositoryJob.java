@@ -52,7 +52,7 @@ public abstract class SubrepositoryJob extends RepositoryJob {
 		String distTypes = getProperty(
 			subrepositoryTestProperties, "subrepo.dist.app.servers");
 
-		return new TreeSet(Arrays.asList(distTypes.split(",")));
+		return new TreeSet<>(Arrays.asList(distTypes.split(",")));
 	}
 
 	@Override

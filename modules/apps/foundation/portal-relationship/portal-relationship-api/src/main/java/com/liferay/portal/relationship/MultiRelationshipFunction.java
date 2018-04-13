@@ -22,6 +22,6 @@ import java.util.Collection;
 @FunctionalInterface
 public interface MultiRelationshipFunction<T, U> {
 
-	public Collection<U> apply(T t);
+	public Collection<U> apply(T relationshipBase);
 
 }

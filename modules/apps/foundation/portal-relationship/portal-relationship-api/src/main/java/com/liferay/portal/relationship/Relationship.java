@@ -134,65 +134,65 @@ public class Relationship<T extends ClassedModel> {
 	}
 
 	private Stream<? extends ClassedModel> _getInboundMultiRelatedModelStream(
-		T relationshipBaseModel) {
+		T relationshipBase) {
 
 		Stream<MultiRelationshipFunction<T, ? extends ClassedModel>> stream =
 			_inboundMultiRelationshipFunctions.stream();
 
 		return stream.map(
 			multiRelationshipFunction -> multiRelationshipFunction.apply(
-				relationshipBaseModel)
+				relationshipBase)
 		).flatMap(
 			Collection::stream
 		);
 	}
 
 	private Stream<? extends ClassedModel> _getInboundRelatedModelStream(
-		T relationBaseModel) {
+		T relationshipBase) {
 
 		return Stream.concat(
-			_getInboundMultiRelatedModelStream(relationBaseModel),
-			_getSingleInboundRelatedModelStream(relationBaseModel));
+			_getInboundMultiRelatedModelStream(relationshipBase),
+			_getSingleInboundRelatedModelStream(relationshipBase));
 	}
 
 	private Stream<? extends ClassedModel> _getOutboundMultiRelatedModelStream(
-		T relationshipBaseModel) {
+		T relationshipBase) {
 
 		Stream<MultiRelationshipFunction<T, ? extends ClassedModel>> stream =
 			_outboundMultiRelationshipFunctions.stream();
 
 		return stream.map(
 			multiRelationshipFunction -> multiRelationshipFunction.apply(
-				relationshipBaseModel)
+				relationshipBase)
 		).flatMap(
 			Collection::stream
 		);
 	}
 
 	private Stream<? extends ClassedModel> _getOutboundRelatedModelStream(
-		T relationBaseModel) {
+		T relationshipBase) {
 
 		return Stream.concat(
-			_getOutboundMultiRelatedModelStream(relationBaseModel),
-			_getSingleOutboudRelatedModelStream(relationBaseModel));
+			_getOutboundMultiRelatedModelStream(relationshipBase),
+			_getSingleOutboudRelatedModelStream(relationshipBase));
 	}
 
 	private Stream<? extends ClassedModel> _getSingleInboundRelatedModelStream(
-		T relationshipBaseModel) {
+		T relationshipBase) {
 
 		Stream<Function<T, ? extends ClassedModel>> stream =
 			_inboundSingleRelationshipFunctions.stream();
 
-		return stream.map(function -> function.apply(relationshipBaseModel));
+		return stream.map(function -> function.apply(relationshipBase));
 	}
 
 	private Stream<? extends ClassedModel> _getSingleOutboudRelatedModelStream(
-		T relationshipBaseModel) {
+		T relationshipBase) {
 
 		Stream<Function<T, ? extends ClassedModel>> stream =
 			_outboundSingleRelationshipFunctions.stream();
 
-		return stream.map(function -> function.apply(relationshipBaseModel));
+		return stream.map(function -> function.apply(relationshipBase));
 	}
 
 	private final Set<MultiRelationshipFunction<T, ? extends ClassedModel>>

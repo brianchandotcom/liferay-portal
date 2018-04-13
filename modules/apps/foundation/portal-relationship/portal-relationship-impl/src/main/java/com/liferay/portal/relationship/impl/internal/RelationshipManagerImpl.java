@@ -100,10 +100,10 @@ public class RelationshipManagerImpl implements RelationshipManager {
 
 	@SuppressWarnings("unchecked")
 	private <T extends ClassedModel> Relationship<T> _getRelationship(
-		Class<T> relationshipBaseModelClass) {
+		Class<T> relationshipBaseClass) {
 
 		RelationshipResource<T> relationshipResource =
-			_serviceTrackerMap.getService(relationshipBaseModelClass.getName());
+			_serviceTrackerMap.getService(relationshipBaseClass.getName());
 
 		Relationship.Builder<T> builder = new Relationship.Builder<>();
 

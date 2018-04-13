@@ -1007,7 +1007,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 			${localizedEntity.name} ${localizedEntity.varName} = ${localizedEntity.varName}Persistence.fetchBy${pkEntityColumn.methodName}_LanguageId(${entity.varName}.get${pkEntityColumn.methodName}(), languageId);
 
 			if (${localizedEntity.varName} == null) {
-				long ${localizedEntity.varName}Id = counterLocalService.increment();
+				long ${localizedEntity.varName}Id = counterLocalService.increment(${localizedEntity.name}.class.getName());
 
 				${localizedEntity.varName} = ${localizedEntity.varName}Persistence.create(${localizedEntity.varName}Id);
 
@@ -1084,7 +1084,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 				String languageId = entry.getKey();
 				String[] localizedValues = entry.getValue();
 
-				long ${localizedEntity.PKVarName} = counterLocalService.increment();
+				long ${localizedEntity.PKVarName} = counterLocalService.increment(${localizedEntity.name}.class.getName());
 
 				${localizedEntity.name} ${localizedEntity.varName} = ${localizedEntity.varName}Persistence.create(${localizedEntity.PKVarName});
 

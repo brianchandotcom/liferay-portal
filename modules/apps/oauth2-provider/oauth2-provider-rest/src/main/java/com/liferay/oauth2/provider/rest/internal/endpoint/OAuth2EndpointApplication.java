@@ -46,7 +46,7 @@ public class OAuth2EndpointApplication extends Application {
 		unbind = "removeOAuth2Endpoint"
 	)
 	public void addOAuth2EndpointProvider(Object endpoint) {
-		_liferayOauth2Endpoints.add(endpoint);
+		_oAuth2Endpoints.add(endpoint);
 	}
 
 	@Reference(
@@ -56,7 +56,7 @@ public class OAuth2EndpointApplication extends Application {
 		unbind = "removeOAuth2Endpoint"
 	)
 	public void addOAuth2EndpointResource(Object endpoint) {
-		_liferayOauth2Endpoints.add(endpoint);
+		_oAuth2Endpoints.add(endpoint);
 	}
 
 	@Override
@@ -66,13 +66,13 @@ public class OAuth2EndpointApplication extends Application {
 
 	@Override
 	public Set<Object> getSingletons() {
-		return new HashSet<>(_liferayOauth2Endpoints);
+		return new HashSet<>(_oAuth2Endpoints);
 	}
 
 	public void removeOAuth2Endpoint(Object endpoint) {
-		_liferayOauth2Endpoints.remove(endpoint);
+		_oAuth2Endpoints.remove(endpoint);
 	}
 
-	private final List<Object> _liferayOauth2Endpoints = new ArrayList<>();
+	private final List<Object> _oAuth2Endpoints = new ArrayList<>();
 
 }

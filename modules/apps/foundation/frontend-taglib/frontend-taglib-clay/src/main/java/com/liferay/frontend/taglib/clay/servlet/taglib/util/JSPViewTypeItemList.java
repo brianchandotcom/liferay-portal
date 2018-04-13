@@ -31,8 +31,12 @@ public class JSPViewTypeItemList extends ViewTypeItemList {
 		request = (HttpServletRequest)pageContext.getRequest();
 	}
 
-	public JSPViewTypeItemList(PageContext pageContext, PortletURL portletURL, String selectedType) {
-		super((HttpServletRequest)pageContext.getRequest(), portletURL, selectedType);
+	public JSPViewTypeItemList(
+		PageContext pageContext, PortletURL portletURL, String selectedType) {
+
+		super(
+			(HttpServletRequest)pageContext.getRequest(), portletURL,
+			selectedType);
 
 		renderResponse = (RenderResponse)pageContext.findAttribute(
 			"renderResponse");

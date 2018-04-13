@@ -17,13 +17,15 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Carlos Lancha
  */
 public class LabelItem extends HashMap<String, String> {
+
 	public LabelItem() {
 		_request = null;
 	}
@@ -31,7 +33,6 @@ public class LabelItem extends HashMap<String, String> {
 	public LabelItem(HttpServletRequest request) {
 		_request = request;
 	}
-
 
 	public void setLabel(String label) {
 		if (Validator.isNotNull(_request)) {

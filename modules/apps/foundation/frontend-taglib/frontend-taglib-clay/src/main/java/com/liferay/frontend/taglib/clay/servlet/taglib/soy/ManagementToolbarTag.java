@@ -89,9 +89,8 @@ public class ManagementToolbarTag extends BaseClayTag {
 
 		Boolean showInfoButton = (Boolean)context.get("showInfoButton");
 
-
 		if (Validator.isNotNull(infoPanelId) && showInfoButton == null) {
-			showInfoButton =  true;
+			showInfoButton = true;
 
 			setShowInfoButton(showInfoButton);
 		}

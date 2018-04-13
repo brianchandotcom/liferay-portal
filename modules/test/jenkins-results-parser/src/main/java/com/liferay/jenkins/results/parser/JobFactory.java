@@ -87,9 +87,9 @@ public class JobFactory {
 		if (currentBranchModifiedFiles.size() == 1) {
 			File modifiedFile = currentBranchModifiedFiles.get(0);
 
-			String modifiedFilePath = modifiedFile.toString();
+			String modifiedFileName = modifiedFile.getName();
 
-			if (modifiedFilePath.endsWith("ci-merge")) {
+			if (modifiedFileName.equals("ci-merge")) {
 				File moduleDir = modifiedFile.getParentFile();
 
 				List<File> lfrBuildPortalFiles =

@@ -109,7 +109,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	@Override
 	public void validateFragmentEntryHTML(String html) throws PortalException {
 		_validateDuplicatedIds(html);
-		_validateEmptyAttributes(html);
+		_validateAttributes(html);
 	}
 
 	private Document _getDocument(String html) {
@@ -142,6 +142,20 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				String.join(StringPool.COMMA, _REQUIRED_ATTRIBUTES)));
 	}
 
+	private void _validateAttributes(String html)
+		throws FragmentEntryContentException {
+
+		Document document = _getDocument(html);
+
+		for (Element element : document.getElementsByTag("lfr-editable")) {
+			for (String attribute : _REQUIRED_ATTRIBUTES) {
+				_validateAttribute(element, attribute);
+			}
+
+			_validateType(element);
+		}
+	}
+
 	private void _validateDuplicatedIds(String html)
 		throws FragmentEntryContentException {
 
@@ -172,21 +186,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		}
 	}
 
-	private void _validateEmptyAttributes(String html)
-		throws FragmentEntryContentException {
-
-		Document document = _getDocument(html);
-
-		for (Element element : document.getElementsByTag("lfr-editable")) {
-			for (String attribute : _REQUIRED_ATTRIBUTES) {
-				_validateAttribute(element, attribute);
-			}
-
-			_validateValidType(element);
-		}
-	}
-
-	private void _validateValidType(Element element)
+	private void _validateType(Element element)
 		throws FragmentEntryContentException {
 
 		EditableElementParser editableElementParser =

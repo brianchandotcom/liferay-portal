@@ -59,7 +59,17 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 
 		String branchName = getBranchName();
 
-		String workingDirectoryPath = "/opt/dev/projects/github/liferay-portal";
+		Properties buildProperties = null;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to get build properties", ioe);
+		}
+
+		String workingDirectoryPath = buildProperties.getProperty(
+			"base.repository.dir") + "/liferay-portal";
 
 		if (!branchName.equals("master")) {
 			workingDirectoryPath = JenkinsResultsParserUtil.combine(

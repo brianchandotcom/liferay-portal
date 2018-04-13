@@ -112,8 +112,18 @@ public abstract class SubrepositoryJob extends RepositoryJob {
 	}
 
 	private String _getRepositoryDirectoryPath() {
-		String repositoryDirectoryPath =
-			"/opt/dev/projects/github/" + _repositoryName;
+		Properties buildProperties = null;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to get build properties", ioe);
+		}
+
+		String repositoryDirectoryPath = JenkinsResultsParserUtil.combine(
+			buildProperties.getProperty("base.repository.dir"), "/",
+			_repositoryName);
 
 		if (!repositoryDirectoryPath.endsWith("-private")) {
 			repositoryDirectoryPath += "-private";

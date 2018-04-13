@@ -12,7 +12,10 @@
  * details.
  */
 
-package com.liferay.asset.display.contributor;
+package com.liferay.asset.display.internal;
+
+import com.liferay.asset.display.contributor.AssetDisplayContributor;
+import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,14 +31,17 @@ import org.osgi.service.component.annotations.ReferencePolicy;
  * @author Jürgen Kappler
  */
 @Component(immediate = true, service = AssetDisplayContributorTracker.class)
-public class AssetDisplayContributorTrackerImpl {
+public class AssetDisplayContributorTrackerImpl
+	implements AssetDisplayContributorTracker {
 
+	@Override
 	public AssetDisplayContributor getAssetDisplayContributor(
 		String className) {
 
 		return _assetDisplayContributor.get(className);
 	}
 
+	@Override
 	public List<AssetDisplayContributor> getAssetDisplayContributors() {
 		return new ArrayList(_assetDisplayContributor.values());
 	}

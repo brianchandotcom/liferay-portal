@@ -7542,6 +7542,23 @@ public class PortalImpl implements Portal {
 	}
 
 	protected long doGetPlidFromPortletId(
+		List<Layout> layouts, String portletId, long scopeGroupId) {
+
+		for (Layout layout : layouts) {
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)layout.getLayoutType();
+
+			if (layoutTypePortlet.hasPortletId(portletId, true) &&
+				(getScopeGroupId(layout, portletId) == scopeGroupId)) {
+
+				return layout.getPlid();
+			}
+		}
+
+		return LayoutConstants.DEFAULT_PLID;
+	}
+
+	protected long doGetPlidFromPortletId(
 		long groupId, boolean privateLayout, String portletId) {
 
 		long scopeGroupId = groupId;
@@ -7559,25 +7576,28 @@ public class PortalImpl implements Portal {
 		catch (Exception e) {
 		}
 
-		long plid = LayoutConstants.DEFAULT_PLID;
-
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
 			groupId, privateLayout, LayoutConstants.TYPE_PORTLET);
 
-		for (Layout layout : layouts) {
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)layout.getLayoutType();
+		long plid = doGetPlidFromPortletId(layouts, portletId, scopeGroupId);
 
-			if (layoutTypePortlet.hasPortletId(portletId, true)) {
-				if (getScopeGroupId(layout, portletId) == scopeGroupId) {
-					plid = layout.getPlid();
-
-					break;
-				}
-			}
+		if (plid != LayoutConstants.DEFAULT_PLID) {
+			return plid;
 		}
 
-		return plid;
+		layouts = LayoutLocalServiceUtil.getLayouts(
+			groupId, privateLayout, LayoutConstants.TYPE_FULL_PAGE_APPLICATION);
+
+		plid = doGetPlidFromPortletId(layouts, portletId, scopeGroupId);
+
+		if (plid != LayoutConstants.DEFAULT_PLID) {
+			return plid;
+		}
+
+		layouts = LayoutLocalServiceUtil.getLayouts(
+			groupId, privateLayout, LayoutConstants.TYPE_PANEL);
+
+		return doGetPlidFromPortletId(layouts, portletId, scopeGroupId);
 	}
 
 	protected List<Portlet> filterControlPanelPortlets(

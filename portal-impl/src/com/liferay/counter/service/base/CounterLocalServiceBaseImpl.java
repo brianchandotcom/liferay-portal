@@ -82,11 +82,11 @@ public abstract class CounterLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Creates a new counter with the primary key. Does not add the counter to the database.
-	 *
-	 * @param name the primary key for the new counter
-	 * @return the new counter
-	 */
+	* Creates a new counter with the primary key. Does not add the counter to the database.
+	*
+	* @param name the primary key for the new counter
+	* @return the new counter
+	*/
 	@Override
 	public Counter createCounter(String name) {
 		return counterPersistence.create(name);

@@ -68,6 +68,12 @@
 			vertical-align: top !important;
 		}
 	}
+
+	.widget-mode-detail-text {
+		img {
+			max-width: 100%;
+		}
+	}
 }
 
 .firefox .portlet-blogs fieldset {

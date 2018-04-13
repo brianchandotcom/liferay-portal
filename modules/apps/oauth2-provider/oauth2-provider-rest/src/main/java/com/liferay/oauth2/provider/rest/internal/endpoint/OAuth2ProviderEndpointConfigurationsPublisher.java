@@ -97,16 +97,18 @@ public class OAuth2ProviderEndpointConfigurationsPublisher {
 			ConfigurationAdmin configurationAdmin, String contextPath)
 		throws InvalidSyntaxException, IOException {
 
-		String restComponentNameFilter =
-			"(component.name=" + OAuth2EndpointApplication.class.getName() +
-				")";
-
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("(&(service.factoryPid=");
 		sb.append("com.liferay.portal.remote.rest.extender.configuration.");
 		sb.append("RestExtenderConfiguration)(jaxRsApplicationFilterStrings=");
-		sb.append(_escapeFilterArgument(restComponentNameFilter));
+
+		String filterString =
+			"(component.name=" + OAuth2EndpointApplication.class.getName() +
+				")";
+
+		sb.append(_escape(filterString));
+
 		sb.append("))");
 
 		Configuration[] restConfigurations =
@@ -127,14 +129,14 @@ public class OAuth2ProviderEndpointConfigurationsPublisher {
 		dictionary.put("contextPaths", new String[] {contextPath});
 		dictionary.put(
 			"jaxRsApplicationFilterStrings",
-			new String[] {restComponentNameFilter});
+			new String[] {filterString});
 
 		restConfiguration.update(dictionary);
 	}
 
-	private String _escapeFilterArgument(String filter) {
+	private String _escape(String filterString) {
 		return StringUtil.replace(
-			filter, new String[] {"\\", "(", ")"},
+			filterString, new String[] {"\\", "(", ")"},
 			new String[] {"\\\\", "\\(", "\\)"});
 	}
 

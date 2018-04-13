@@ -22,17 +22,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
-
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author Amadea Fejes
@@ -84,7 +79,7 @@ public class UpgradeMySQL extends UpgradeProcess {
 			while (rs.next()) {
 				String tableName = rs.getString("TABLE_NAME");
 
-				if (!_tableNames.contains(StringUtil.toLowerCase(tableName))) {
+				if (!isPortal62TableName(tableName)) {
 					continue;
 				}
 
@@ -140,55 +135,5 @@ public class UpgradeMySQL extends UpgradeProcess {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeMySQL.class);
-
-	private static final Set<String> _tableNames = new HashSet<>(
-		Arrays.asList(
-			"account_", "address", "announcementsdelivery",
-			"announcementsentry", "announcementsflag", "assetcategory",
-			"assetcategoryproperty", "assetentries_assetcategories",
-			"assetentries_assettags", "assetentry", "assetlink", "assettag",
-			"assettagstats", "assetvocabulary", "backgroundtask", "blogsentry",
-			"blogsstatsuser", "bookmarksentry", "bookmarksfolder",
-			"browsertracker", "classname_", "clustergroup", "company",
-			"contact_", "counter", "country", "ddlrecord", "ddlrecordset",
-			"ddlrecordversion", "ddmcontent", "ddmstoragelink", "ddmstructure",
-			"ddmstructurelink", "ddmtemplate", "dlcontent", "dlfileentry",
-			"dlfileentrymetadata", "dlfileentrytype",
-			"dlfileentrytypes_dlfolders", "dlfilerank", "dlfileshortcut",
-			"dlfileversion", "dlfolder", "dlsyncevent", "emailaddress",
-			"expandocolumn", "expandorow", "expandotable", "expandovalue",
-			"exportimportconfiguration", "group_", "groups_orgs",
-			"groups_roles", "groups_usergroups", "image", "journalarticle",
-			"journalarticleimage", "journalarticleresource",
-			"journalcontentsearch", "journalfeed", "journalfolder", "layout",
-			"layoutbranch", "layoutfriendlyurl", "layoutprototype",
-			"layoutrevision", "layoutset", "layoutsetbranch",
-			"layoutsetprototype", "listtype", "lock_", "mbban", "mbcategory",
-			"mbdiscussion", "mbmailinglist", "mbmessage", "mbstatsuser",
-			"mbthread", "mbthreadflag", "mdraction", "mdrrule", "mdrrulegroup",
-			"mdrrulegroupinstance", "membershiprequest", "organization_",
-			"orggrouprole", "orglabor", "passwordpolicy", "passwordpolicyrel",
-			"passwordtracker", "phone", "pluginsetting", "pollschoice",
-			"pollsquestion", "pollsvote", "portalpreferences", "portlet",
-			"portletitem", "portletpreferences", "ratingsentry", "ratingsstats",
-			"recentlayoutbranch", "recentlayoutrevision",
-			"recentlayoutsetbranch", "region", "release_", "repository",
-			"repositoryentry", "resourceaction", "resourceblock",
-			"resourceblockpermission", "resourcepermission",
-			"resourcetypepermission", "role_", "servicecomponent",
-			"shoppingcart", "shoppingcategory", "shoppingcoupon",
-			"shoppingitem", "shoppingitemfield", "shoppingitemprice",
-			"shoppingorder", "shoppingorderitem", "socialactivity",
-			"socialactivityachievement", "socialactivitycounter",
-			"socialactivitylimit", "socialactivityset", "socialactivitysetting",
-			"socialrelation", "socialrequest", "subscription", "systemevent",
-			"team", "ticket", "trashentry", "trashversion",
-			"usernotificationdelivery", "user_", "usergroup",
-			"usergroupgrouprole", "usergrouprole", "usergroups_teams",
-			"useridmapper", "usernotificationevent", "users_groups",
-			"users_orgs", "users_roles", "users_teams", "users_usergroups",
-			"usertracker", "usertrackerpath", "virtualhost", "webdavprops",
-			"website", "wikinode", "wikipage", "wikipageresource",
-			"workflowdefinitionlink", "workflowinstancelink"));
 
 }

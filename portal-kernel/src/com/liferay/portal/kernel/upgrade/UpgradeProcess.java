@@ -568,6 +568,10 @@ public abstract class UpgradeProcess
 		return db.increment(name, size);
 	}
 
+	protected boolean isPortal62TableName(String tableName) {
+		return _portal62TableNames.contains(StringUtil.toLowerCase(tableName));
+	}
+
 	protected boolean isSupportsAlterColumnName() {
 		DB db = DBManagerUtil.getDB();
 
@@ -633,6 +637,55 @@ public abstract class UpgradeProcess
 
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeProcess.class);
 
+	private static final Set<String> _portal62TableNames = new HashSet<>(
+		Arrays.asList(
+			"account_", "address", "announcementsdelivery",
+			"announcementsentry", "announcementsflag", "assetcategory",
+			"assetcategoryproperty", "assetentries_assetcategories",
+			"assetentries_assettags", "assetentry", "assetlink", "assettag",
+			"assettagstats", "assetvocabulary", "backgroundtask", "blogsentry",
+			"blogsstatsuser", "bookmarksentry", "bookmarksfolder",
+			"browsertracker", "calevent", "classname_", "clustergroup",
+			"company", "contact_", "counter", "country", "ddlrecord",
+			"ddlrecordset", "ddlrecordversion", "ddmcontent", "ddmstoragelink",
+			"ddmstructure", "ddmstructurelink", "ddmtemplate", "dlcontent",
+			"dlfileentry", "dlfileentrymetadata", "dlfileentrytype",
+			"dlfileentrytypes_dlfolders", "dlfilerank", "dlfileshortcut",
+			"dlfileversion", "dlfolder", "dlsyncevent", "emailaddress",
+			"expandocolumn", "expandorow", "expandotable", "expandovalue",
+			"exportimportconfiguration", "group_", "groups_orgs",
+			"groups_roles", "groups_usergroups", "image", "journalarticle",
+			"journalarticleimage", "journalarticleresource",
+			"journalcontentsearch", "journalfeed", "journalfolder",
+			"journalstructure", "journaltemplate", "layout", "layoutbranch",
+			"layoutfriendlyurl", "layoutprototype", "layoutrevision",
+			"layoutset", "layoutsetbranch", "layoutsetprototype", "listtype",
+			"lock_", "mbban", "mbcategory", "mbdiscussion", "mbmailinglist",
+			"mbmessage", "mbstatsuser", "mbthread", "mbthreadflag", "mdraction",
+			"mdrrule", "mdrrulegroup", "mdrulegroupinstance",
+			"membershiprequest", "organization_", "orggrouprole", "orglabor",
+			"passwordpolicy", "passwordpolicyrel", "passwordtracker", "phone",
+			"pluginsetting", "pollschoice", "pollsquestion", "pollsvote",
+			"portalpreferences", "portlet", "portletitem", "portletpreferences",
+			"ratingsentry", "ratingsstats", "recentlayoutbranch",
+			"recentlayoutrevision", "recentlayoutsetbranch", "region",
+			"release_", "repository", "repositoryentry", "resourceaction",
+			"resourceblock", "resourceblockpermission", "resourcepermission",
+			"resourcetypepermission", "role_", "servicecomponent",
+			"shoppingcart", "shoppingcategory", "shoppingcoupon",
+			"shoppingitem", "shoppingitemfield", "shoppingitemprice",
+			"shoppingorder", "shoppingorderitem", "socialactivity",
+			"socialactivityachievement", "socialactivitycounter",
+			"socialactivitylimit", "socialactivityset", "socialactivitysetting",
+			"socialrelation", "socialrequest", "subscription", "systemevent",
+			"team", "ticket", "trashentry", "trashversion",
+			"usernotificationdelivery", "user_", "usergroup",
+			"usergroupgrouprole", "usergrouprole", "usergroups_teams",
+			"useridmapper", "usernotificationevent", "users_groups",
+			"users_orgs", "users_roles", "users_teams", "users_usergroups",
+			"usertracker", "usertrackerpath", "virtualhost", "webdavprops",
+			"website", "wikinode", "wikipage", "wikipageresource",
+			"workflowdefinitionlink", "workflowinstancelink"));
 	private static final Map
 		<String, List<ObjectValuePair<String, IndexMetadata>>>
 			_portalIndexesSQL = new HashMap<>();

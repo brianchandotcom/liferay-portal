@@ -38,6 +38,7 @@ import com.liferay.portal.upgrade.v6_2_0.UpgradeMessageBoardsAttachments;
 import com.liferay.portal.upgrade.v6_2_0.UpgradePortletItem;
 import com.liferay.portal.upgrade.v6_2_0.UpgradePortletPreferences;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeRepository;
+import com.liferay.portal.upgrade.v6_2_0.UpgradeSQLServer;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeSchema;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeSearch;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeSocial;
@@ -85,6 +86,7 @@ public class UpgradeProcess_6_2_0 extends Pre7UpgradeProcess {
 		upgrade(new UpgradeRepository());
 		upgrade(new UpgradeSearch());
 		upgrade(new UpgradeSocial());
+		upgrade(new UpgradeSQLServer());
 		upgrade(new UpgradeUser());
 		upgrade(new UpgradeWiki());
 		upgrade(new UpgradeWikiAttachments());

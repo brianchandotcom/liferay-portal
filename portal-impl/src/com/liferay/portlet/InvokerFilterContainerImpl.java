@@ -316,30 +316,30 @@ public class InvokerFilterContainerImpl
 			Set<String> declaredLifecycles =
 				(Set<String>)serviceReference.getProperty("filter.lifecycles");
 
-			if (_isFilterLifecycle(
-					PortletRequest.ACTION_PHASE, ActionFilter.class,
-					portletFilter, declaredLifecycles)) {
+			if ((portletFilter instanceof ActionFilter) &&
+				_isDeclaredLifecycles(
+					PortletRequest.ACTION_PHASE, declaredLifecycles)) {
 
 				_actionFilters.add((ActionFilter)portletFilter);
 			}
 
-			if (_isFilterLifecycle(
-					PortletRequest.EVENT_PHASE, EventFilter.class,
-					portletFilter, declaredLifecycles)) {
+			if ((portletFilter instanceof EventFilter) &&
+				_isDeclaredLifecycles(
+					PortletRequest.EVENT_PHASE, declaredLifecycles)) {
 
 				_eventFilters.add((EventFilter)portletFilter);
 			}
 
-			if (_isFilterLifecycle(
-					PortletRequest.RENDER_PHASE, RenderFilter.class,
-					portletFilter, declaredLifecycles)) {
+			if ((portletFilter instanceof RenderFilter) &&
+				_isDeclaredLifecycles(
+					PortletRequest.RENDER_PHASE, declaredLifecycles)) {
 
 				_renderFilters.add((RenderFilter)portletFilter);
 			}
 
-			if (_isFilterLifecycle(
-					PortletRequest.RESOURCE_PHASE, ResourceFilter.class,
-					portletFilter, declaredLifecycles)) {
+			if ((portletFilter instanceof ResourceFilter) &&
+				_isDeclaredLifecycles(
+					PortletRequest.RESOURCE_PHASE, declaredLifecycles)) {
 
 				_resourceFilters.add((ResourceFilter)portletFilter);
 			}
@@ -377,22 +377,14 @@ public class InvokerFilterContainerImpl
 			portletFilter.destroy();
 		}
 
-		private boolean _isFilterLifecycle(
-			String lifecycle, Class<?> filterInterface,
-			PortletFilter portletFilter, Set<String> declaredLifecycles) {
+		private boolean _isDeclaredLifecycles(
+			String lifecycle, Set<String> declaredLifecycles) {
 
-			if ((declaredLifecycles != null) && !declaredLifecycles.isEmpty()) {
-				if (declaredLifecycles.contains(lifecycle) &&
-					filterInterface.isInstance(portletFilter)) {
-
-					return true;
-				}
-				else {
-					return false;
-				}
+			if ((declaredLifecycles == null) || declaredLifecycles.isEmpty()) {
+				return true;
 			}
 
-			return filterInterface.isInstance(portletFilter);
+			return declaredLifecycles.contains(lifecycle);
 		}
 
 		private final PortletContext _portletContext;

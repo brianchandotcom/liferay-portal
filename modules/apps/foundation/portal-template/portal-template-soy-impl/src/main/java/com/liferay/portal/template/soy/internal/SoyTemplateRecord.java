@@ -49,11 +49,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.apache.commons.lang3.ClassUtils;
 
 /**
- * This implementation of SoyRecored tries to be modestly lazy in that
- * conversion of context objects only occurs if they are used by the
- * template. Further laziness could be implemented using either java
- * Futures or by simply binding sub-elements to Soy types as late as
- * possible.
+ * Provides a <code>SoyRecord</code> implementation that tries to be modestly
+ * lazy by converting context objects only as they are used by the template.
+ * Further laziness can be implemented using Java Futures or by binding
+ * sub-elements to Soy types as late as possible.
  *
  * @author Raymond Augé
  */

@@ -85,6 +85,16 @@ public class ManagementToolbarTag extends BaseClayTag {
 			setShowCreationMenu(showCreationMenu);
 		}
 
+		String infoPanelId = (String)context.get("infoPanelId");
+
+		Boolean showInfoButton = (Boolean)context.get("showInfoButton");
+
+		if (Validator.isNotNull(infoPanelId) && showInfoButton == null) {
+			showInfoButton = true;
+
+			setShowInfoButton(showInfoButton);
+		}
+
 		return super.doStartTag();
 	}
 

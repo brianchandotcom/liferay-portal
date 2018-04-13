@@ -18,8 +18,10 @@ import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
@@ -30,6 +32,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.PortletURL;
 
@@ -142,6 +145,18 @@ public abstract class BaseCPDefinitionsDisplayContext {
 		return ParamUtil.getString(
 			httpServletRequest, "screenNavigationCategoryKey",
 			getScreenNavigationCategoryKey());
+	}
+
+	public String getSku(CPDefinition cpDefinition, Locale locale) {
+		List<CPInstance> cpInstances = cpDefinition.getCPInstances();
+
+		if (cpInstances.size() > 1) {
+			return LanguageUtil.get(locale, "multiple-skus");
+		}
+
+		CPInstance cpInstance = cpInstances.get(0);
+
+		return cpInstance.getSku();
 	}
 
 	protected final ActionHelper actionHelper;

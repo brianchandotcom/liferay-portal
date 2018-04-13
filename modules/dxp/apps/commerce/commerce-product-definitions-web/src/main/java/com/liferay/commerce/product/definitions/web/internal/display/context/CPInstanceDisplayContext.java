@@ -32,14 +32,18 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.taglib.util.CustomAttributesUtil;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.StringJoiner;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -165,12 +169,36 @@ public class CPInstanceDisplayContext
 		return managementBarFilterItems;
 	}
 
+	public String getOptions(String json, Locale locale)
+		throws PortalException {
+
+		List<KeyValuePair> keyValuePairs = _cpInstanceHelper.getKeyValuePairs(
+			json, locale);
+
+		StringJoiner stringJoiner = new StringJoiner(
+			StringPool.COMMA + StringPool.SPACE);
+
+		for (KeyValuePair keyValuePair : keyValuePairs) {
+			stringJoiner.add(keyValuePair.getValue());
+		}
+
+		return stringJoiner.toString();
+	}
+
 	@Override
 	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = super.getPortletURL();
 
-		portletURL.setParameter(
-			"mvcRenderCommandName", "editProductDefinition");
+		if (getCPDefinitionId() > 0) {
+			portletURL.setParameter(
+				"mvcRenderCommandName", "editProductDefinition");
+		}
+		else {
+			portletURL.setParameter("mvcRenderCommandName", "viewInstances");
+			portletURL.setParameter(
+				"catalogNavigationItem", "view-all-instances");
+		}
+
 		portletURL.setParameter(
 			"screenNavigationCategoryKey", getScreenNavigationCategoryKey());
 
@@ -190,6 +218,8 @@ public class CPInstanceDisplayContext
 			return searchContainer;
 		}
 
+		long cpDefinitionId = getCPDefinitionId();
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -208,14 +238,14 @@ public class CPInstanceDisplayContext
 		searchContainer.setOrderByType(getOrderByType());
 		searchContainer.setRowChecker(getRowChecker());
 
-		if (isSearch()) {
+		if (isSearch() || (cpDefinitionId == 0)) {
 			Sort sort = CPDefinitionsPortletUtil.getCPInstanceSort(
 				getOrderByCol(), getOrderByType());
 
 			BaseModelSearchResult<CPInstance> cpInstanceBaseModelSearchResult =
 				_cpInstanceService.searchCPDefinitionInstances(
 					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
-					getCPDefinitionId(), getKeywords(), getStatus(),
+					cpDefinitionId, getKeywords(), getStatus(),
 					searchContainer.getStart(), searchContainer.getEnd(), sort);
 
 			searchContainer.setTotal(
@@ -225,15 +255,14 @@ public class CPInstanceDisplayContext
 		}
 		else {
 			int total = _cpInstanceService.getCPDefinitionInstancesCount(
-				getCPDefinitionId(), getStatus());
+				cpDefinitionId, getStatus());
 
 			searchContainer.setTotal(total);
 
 			List<CPInstance> results =
 				_cpInstanceService.getCPDefinitionInstances(
-					getCPDefinitionId(), getStatus(),
-					searchContainer.getStart(), searchContainer.getEnd(),
-					orderByComparator);
+					cpDefinitionId, getStatus(), searchContainer.getStart(),
+					searchContainer.getEnd(), orderByComparator);
 
 			searchContainer.setResults(results);
 		}

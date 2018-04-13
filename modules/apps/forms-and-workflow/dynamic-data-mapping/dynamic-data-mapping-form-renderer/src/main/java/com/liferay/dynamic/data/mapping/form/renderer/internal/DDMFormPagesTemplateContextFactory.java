@@ -190,10 +190,9 @@ public class DDMFormPagesTemplateContextFactory {
 
 		LocalizedValue description = ddmFormLayoutPage.getDescription();
 
-		String descriptionValueExtracted = extractText(
-			_ddmFormRenderingContext, description.getString(_locale));
-
-		pageTemplateContext.put("description", descriptionValueExtracted);
+		pageTemplateContext.put(
+			"description",
+			getValue(_ddmFormRenderingContext, description.getString(_locale)));
 
 		_pageEnabled = isPageEnabled(pageIndex);
 
@@ -220,10 +219,9 @@ public class DDMFormPagesTemplateContextFactory {
 		pageTemplateContext.put(
 			"showRequiredFieldsWarning", showRequiredFieldsWarning);
 
-		String titleValueExtracted = extractText(
-			_ddmFormRenderingContext, title.getString(_locale));
-
-		pageTemplateContext.put("title", titleValueExtracted);
+		pageTemplateContext.put(
+			"title",
+			getValue(_ddmFormRenderingContext, title.getString(_locale)));
 
 		return pageTemplateContext;
 	}
@@ -253,7 +251,7 @@ public class DDMFormPagesTemplateContextFactory {
 		return rowTemplateContext;
 	}
 
-	protected String extractText(
+	protected String getValue(
 		DDMFormRenderingContext ddmFormRenderingContext, String value) {
 
 		if (ddmFormRenderingContext.isViewMode()) {
@@ -274,7 +272,7 @@ public class DDMFormPagesTemplateContextFactory {
 		for (Map.Entry<Locale, String> entry : values.entrySet()) {
 			String languageId = LocaleUtil.toLanguageId(entry.getKey());
 
-			String keyValue = extractText(
+			String keyValue = getValue(
 				ddmFormRenderingContext, entry.getValue());
 
 			map.put(languageId, keyValue);

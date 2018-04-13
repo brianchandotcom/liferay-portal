@@ -32,7 +32,7 @@ You can provide documentation for Java packages by writing HTML in a
 Liferay's documentation is generated on
 [docs.liferay.com](https://docs.liferay.com/), the package description will be
 available when viewing the package. For example, view the
-[com.liferay.counter.kernel.model](https://docs.liferay.com/portal/7.0-latest/javadocs/portal-kernel/com/liferay/counter/kernel/model/package-summary.html)
+[com.liferay.counter.kernel.model](https://docs.liferay.com/portal/7.1-latest/javadocs/portal-kernel/com/liferay/counter/kernel/model/package-summary.html)
 package's description.
 
 ## Class Comments
@@ -307,7 +307,7 @@ please open an [LRDOCS](https://issues.liferay.com/browse/LRDOCS) JIRA ticket:
 - **Summary:** Re-add Javadoc for .... (name or prefix of class/file)
 - **Component:** Area the Javadoc pertains to
 		files
-- **Affected Release:** 7.0.x, 6.2.x, 6.1.x
+- **Affected Release:** 7.1.x, 7.0.x, 6.2.x, 6.1.x
 - **Description:** Include the *commit number* of the original Javadoc commit
   and/or the Javadoc removal commit
 

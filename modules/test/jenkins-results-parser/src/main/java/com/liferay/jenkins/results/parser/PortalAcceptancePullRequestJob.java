@@ -47,19 +47,24 @@ public class PortalAcceptancePullRequestJob extends PortalRepositoryJob {
 		Set<String> testBatchNamesSet = getSetFromString(testBatchNames);
 
 		if (_isPortalWebOnly()) {
-			Set<String> irrelevantBatchNamesSet = new TreeSet<>();
+			String[] portalWebOnlyBatchNameMarkers =
+				{"compile-jsp", "functional", "portal-web", "source-format"};
+
+			Set<String> portalWebOnlyBatchNamesSet = new TreeSet<>();
 
 			for (String testBatchName : testBatchNamesSet) {
-				if (!testBatchName.contains("compile-jsp") &&
-					!testBatchName.contains("functional") &&
-					!testBatchName.contains("portal-web") &&
-					!testBatchName.contains("source-format")) {
+				for (String portalWebOnlyBatchNameMarker :
+						portalWebOnlyBatchNameMarkers) {
 
-					irrelevantBatchNamesSet.add(testBatchName);
+					if (testBatchName.contains(portalWebOnlyBatchNameMarker)) {
+						portalWebOnlyBatchNamesSet.add(testBatchName);
+
+						break;
+					}
 				}
 			}
 
-			testBatchNamesSet.removeAll(irrelevantBatchNamesSet);
+			return portalWebOnlyBatchNamesSet;
 		}
 
 		return testBatchNamesSet;

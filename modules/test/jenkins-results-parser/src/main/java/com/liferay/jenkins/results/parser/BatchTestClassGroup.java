@@ -67,6 +67,16 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		_setTestRelevantChanges();
 	}
 
+	protected int getAxisMaxSize() {
+		String axisMaxSize = _getAxisMaxSizePropertyValue();
+
+		if (axisMaxSize != null) {
+			return Integer.parseInt(axisMaxSize);
+		}
+
+		return _DEFAULT_AXIS_MAX_SIZE;
+	}
+
 	protected String getFirstPropertyValue(String basePropertyName) {
 		List<String> propertyNames = new ArrayList<>();
 
@@ -160,7 +170,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			return;
 		}
 
-		int axisMaxSize = _getAxisMaxSize();
+		int axisMaxSize = getAxisMaxSize();
 
 		int axisCount = (int)Math.ceil(
 			(double)testClassFileCount / axisMaxSize);
@@ -192,16 +202,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	protected final Properties portalTestProperties;
 	protected boolean testRelevantChanges;
 	protected final String testSuiteName;
-
-	private int _getAxisMaxSize() {
-		String axisMaxSize = _getAxisMaxSizePropertyValue();
-
-		if (axisMaxSize != null) {
-			return Integer.parseInt(axisMaxSize);
-		}
-
-		return _DEFAULT_AXIS_MAX_SIZE;
-	}
 
 	private String _getAxisMaxSizePropertyValue() {
 		return getFirstPropertyValue("test.batch.axis.max.size");

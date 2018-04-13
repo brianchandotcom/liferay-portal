@@ -35,6 +35,9 @@ public abstract class StylingCheck extends BaseFileCheck {
 		content = _formatStyling(
 			content, "String.valueOf(true)", "Boolean.TRUE.toString()");
 
+		content = _formatStyling(
+			content, "Objects.toString(", "String.valueOf(");
+
 		return content;
 	}
 
@@ -52,6 +55,12 @@ public abstract class StylingCheck extends BaseFileCheck {
 
 			if (x == -1) {
 				return content;
+			}
+
+			if (Character.isLetterOrDigit(incorrectStyling.charAt(0)) &&
+				Character.isLetterOrDigit(content.charAt(x - 1))) {
+
+				continue;
 			}
 
 			if (isJavaSource(content, x)) {

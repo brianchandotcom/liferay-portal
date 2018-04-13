@@ -14,19 +14,21 @@
 
 package com.liferay.site.navigation.admin.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -51,6 +53,7 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
+import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -76,6 +79,29 @@ public class SiteNavigationAdminDisplayContext {
 			(SiteNavigationMenuItemTypeRegistry)_request.getAttribute(
 				SiteNavigationAdminWebKeys.
 					SITE_NAVIGATION_MENU_ITEM_TYPE_REGISTRY);
+	}
+
+	public DropdownItemList getAddSiteNavigationMenuItemDropdownItemList() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return new DropdownItemList() {
+			{
+				for (SiteNavigationMenuItemType siteNavigationMenuItemType :
+						_siteNavigationMenuItemTypeRegistry.
+							getSiteNavigationMenuItemTypes()) {
+
+					add(
+						dropdownItem -> {
+							dropdownItem.setHref(
+								_getAddURL(siteNavigationMenuItemType));
+							dropdownItem.setLabel(
+								siteNavigationMenuItemType.getLabel(
+									themeDisplay.getLocale()));
+						});
+				}
+			}
+		};
 	}
 
 	public String getDisplayStyle() {
@@ -388,6 +414,41 @@ public class SiteNavigationAdminDisplayContext {
 		}
 
 		return true;
+	}
+
+	private String _getAddURL(
+		SiteNavigationMenuItemType siteNavigationMenuItemType) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		PortletURL addSiteNavigationMenuItemRedirectURL =
+			_liferayPortletResponse.createRenderURL();
+
+		addSiteNavigationMenuItemRedirectURL.setParameter(
+			"mvcPath", "/add_site_navigation_menu_item_redirect.jsp");
+		addSiteNavigationMenuItemRedirectURL.setParameter(
+			"portletResource", portletDisplay.getId());
+
+		PortletURL addURL = _liferayPortletResponse.createRenderURL();
+
+		addURL.setParameter("mvcPath", "/add_site_navigation_menu_item.jsp");
+		addURL.setParameter(
+			"redirect", addSiteNavigationMenuItemRedirectURL.toString());
+		addURL.setParameter(
+			"siteNavigationMenuId", String.valueOf(getSiteNavigationMenuId()));
+		addURL.setParameter("type", siteNavigationMenuItemType.getType());
+
+		try {
+			addURL.setWindowState(LiferayWindowState.POP_UP);
+		}
+		catch (WindowStateException wse) {
+			return StringPool.BLANK;
+		}
+
+		return addURL.toString();
 	}
 
 	private String _getFirstSiteNavigationMenuItem() {

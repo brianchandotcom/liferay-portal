@@ -155,7 +155,7 @@ public class LPKGIndexer implements Indexer {
 	}
 
 	private static final Pattern _pattern = Pattern.compile(
-		"(.*?)(-\\d+\\.\\d+\\.\\d)(\\.jar)");
+		"(.*?)(-\\d+\\.\\d+\\.\\d+)(\\.jar)");
 
 	private final Map<String, String> _config = new HashMap<>();
 	private final Set<String> _excludedJarFileNames;

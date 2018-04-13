@@ -135,6 +135,26 @@ message.
 				<fileset
 					dir="${doc.dir}"
 				/>
+			</delete>
+
+			<if>
+				<available file="support-${app.server.type}" />
+				<then>
+					<ant dir="support-${app.server.type}" inheritAll="false" target="clean" />
+				</then>
+			</if>
+		</parallel>
+
+		<ant target="clean-liferay-home" />
+
+		<ant dir="portal-web" inheritAll="false" target="clean" />
+
+		<print-current-time />
+	</target>
+
+	<target name="clean-liferay-home">
+		<parallel failonany="true" threadcount="${parallel.thread.count}">
+			<delete failonerror="false" includeemptydirs="true">
 				<fileset
 					dir="${app.server.bin.dir}"
 					includes="*.log*"
@@ -172,13 +192,6 @@ message.
 					dir="${liferay.home}/work"
 				/>
 			</delete>
-
-			<if>
-				<available file="support-${app.server.type}" />
-				<then>
-					<ant dir="support-${app.server.type}" inheritAll="false" target="clean" />
-				</then>
-			</if>
 
 			<if>
 				<equals arg1="${clean.log.dir}" arg2="true" />
@@ -222,10 +235,6 @@ message.
 				</then>
 			</if>
 		</parallel>
-
-		<ant dir="portal-web" inheritAll="false" target="clean" />
-
-		<print-current-time />
 	</target>
 
 	<target name="compile">
@@ -902,7 +911,7 @@ message.
 			src="${nightly.bundle.url}"
 		/>
 
-		<delete dir="${liferay.home}" />
+		<ant target="clean-liferay-home" />
 
 		<unzip
 			dest="${liferay.home}"

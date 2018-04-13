@@ -14,7 +14,8 @@
  */
 --%>
 
-<%@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList" %>
+<%@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem" %><%@
+page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList" %>
 
 <%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %>
 

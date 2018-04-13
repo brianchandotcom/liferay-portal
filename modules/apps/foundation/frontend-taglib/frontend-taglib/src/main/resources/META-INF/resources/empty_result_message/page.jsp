@@ -32,13 +32,29 @@
 
 		<c:if test="<%= Validator.isNotNull(actions) %>">
 			<div class="taglib-empty-result-message-actions">
-				<clay:dropdown-menu
-					items="<%= actions %>"
-					itemsIconAlignment="top"
-					label='<%= LanguageUtil.get(request, "new") %>'
-					style="secondary"
-					triggerCssClasses="btn-secondary"
-				/>
+				<c:choose>
+					<c:when test="<%= actions.size() > 1 %>">
+						<clay:dropdown-menu
+							items="<%= actions %>"
+							itemsIconAlignment="top"
+							label='<%= LanguageUtil.get(request, "new") %>'
+							style="secondary"
+							triggerCssClasses="btn-secondary"
+						/>
+					</c:when>
+					<c:otherwise>
+
+						<%
+						DropdownItem dropdownItem = actions.get(0);
+						%>
+
+						<clay:link
+							buttonStyle="secondary"
+							href='<%= dropdownItem.get("href") %>'
+							label='<%= dropdownItem.get("label") %>'
+						/>
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</c:if>
 	</div>

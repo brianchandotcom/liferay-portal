@@ -4,4 +4,8 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.commerce.shipping.web.admin,\
 	com.liferay.commerce.shipping.web.servlet.taglib.ui
+Import-Package:\
+	com.liferay.portal.kernel.portlet;version="[7.0.0,8.1)",\
+	\
+	*
 Web-ContextPath: /commerce-shipping-web

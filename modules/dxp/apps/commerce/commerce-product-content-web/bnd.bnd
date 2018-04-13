@@ -4,5 +4,9 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.commerce.product.content.web.configuration,\
 	com.liferay.commerce.product.content.web.display.context
+Import-Package:\
+	com.liferay.portal.kernel.portlet;version="[7.0.0,8.1)",\
+	\
+	*
 Liferay-JS-Config: /META-INF/resources/js/config.js
 Web-ContextPath: /commerce-product-content-web

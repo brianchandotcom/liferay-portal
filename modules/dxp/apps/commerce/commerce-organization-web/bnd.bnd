@@ -1,4 +1,8 @@
 Bundle-Name: Liferay Commerce Organization Web
 Bundle-SymbolicName: com.liferay.commerce.organization.web
 Bundle-Version: 1.0.0
+Import-Package:\
+	com.liferay.portal.kernel.portlet;version="[7.0.0,8.1)",\
+	\
+	*
 Web-ContextPath: /commerce-organization-web

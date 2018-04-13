@@ -1,4 +1,8 @@
 Bundle-Name: Liferay Commerce Address Web
 Bundle-SymbolicName: com.liferay.commerce.address.web
 Bundle-Version: 1.0.0
+Import-Package:\
+	com.liferay.portal.kernel.portlet;version="[7.0.0,8.1)",\
+	\
+	*
 Web-ContextPath: /commerce-address-web

@@ -1,4 +1,8 @@
 Bundle-Name: Liferay Commerce Product Type Grouped Web
 Bundle-SymbolicName: com.liferay.commerce.product.type.grouped.web
 Bundle-Version: 1.0.0
+Import-Package:\
+	com.liferay.portal.kernel.portlet;version="[7.0.0,8.1)",\
+	\
+	*
 Web-ContextPath: /commerce-product-type-grouped-web

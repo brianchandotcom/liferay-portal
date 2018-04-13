@@ -1,6 +1,10 @@
 Bundle-Name: Liferay Commerce Product Options Web
 Bundle-SymbolicName: com.liferay.commerce.product.options.web
 Bundle-Version: 1.0.0
+Import-Package:\
+	com.liferay.portal.kernel.portlet;version="[7.0.0,8.1)",\
+	\
+	*
 Provide-Capability:\
 	soy;\
 		type="options-web";\

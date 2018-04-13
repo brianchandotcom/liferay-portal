@@ -4,4 +4,8 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.commerce.price.list.web.display.context,\
 	com.liferay.commerce.price.list.web.portlet.action
+Import-Package:\
+	com.liferay.portal.kernel.portlet;version="[7.0.0,8.1)",\
+	\
+	*
 Web-ContextPath: /commerce-price-list-web

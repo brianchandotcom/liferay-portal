@@ -1,3 +1,7 @@
 Bundle-Name: Liferay Commerce Product Content Category Web
 Bundle-SymbolicName: com.liferay.commerce.product.content.category.web
 Bundle-Version: 1.0.0
+Import-Package:\
+	com.liferay.portal.kernel.portlet;version="[7.0.0,8.1)",\
+	\
+	*

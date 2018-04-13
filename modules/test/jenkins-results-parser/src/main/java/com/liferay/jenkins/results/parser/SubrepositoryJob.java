@@ -57,18 +57,20 @@ public abstract class SubrepositoryJob extends RepositoryJob {
 
 	@Override
 	public GitWorkingDirectory getGitWorkingDirectory() {
-		if (gitWorkingDirectory == null) {
-			String repositoryDirectoryPath = _getRepositoryDirectoryPath();
+		if (gitWorkingDirectory != null) {
+			return gitWorkingDirectory;
+		}
 
-			try {
-				gitWorkingDirectory = new GitWorkingDirectory(
-					getBranchName(), repositoryDirectoryPath);
-			}
-			catch (IOException ioe) {
-				throw new RuntimeException(
-					"Invalid Git working directory " + repositoryDirectoryPath,
-					ioe);
-			}
+		String repositoryDirectoryPath = _getRepositoryDirectoryPath();
+
+		try {
+			gitWorkingDirectory = new GitWorkingDirectory(
+				getBranchName(), repositoryDirectoryPath);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Invalid Git working directory " + repositoryDirectoryPath,
+				ioe);
 		}
 
 		return gitWorkingDirectory;

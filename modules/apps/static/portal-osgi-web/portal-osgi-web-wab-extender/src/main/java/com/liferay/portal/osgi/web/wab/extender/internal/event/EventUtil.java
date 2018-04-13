@@ -15,8 +15,6 @@
 package com.liferay.portal.osgi.web.wab.extender.internal.event;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.osgi.web.wab.extender.internal.WabUtil;
@@ -24,6 +22,8 @@ import com.liferay.portal.osgi.web.wab.extender.internal.WabUtil;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
+
+import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -140,7 +140,8 @@ public class EventUtil
 				sb.append(". This can lead to unexpected behavior when the ");
 				sb.append("bundles are deployed to the same layout");
 
-				_log.error(sb.toString());
+				_logger = new Logger(_bundleContext);
+				_logger.log(Logger.LOG_ERROR, sb.toString());
 			}
 		}
 
@@ -175,12 +176,11 @@ public class EventUtil
 		_eventAdmin.sendEvent(event);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(EventUtil.class);
-
 	private final BundleContext _bundleContext;
 	private EventAdmin _eventAdmin;
 	private final ServiceTracker<EventAdmin, EventAdmin>
 		_eventAdminServiceTracker;
+	private Logger _logger;
 	private final Bundle _webExtenderBundle;
 
 }

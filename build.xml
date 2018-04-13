@@ -926,6 +926,16 @@ message.
 				</touch>
 			</then>
 		</if>
+
+		<if>
+			<os family="unix" />
+			<then>
+				<chmod
+					file="${app.server.tomcat.bin.dir}/*.sh"
+					perm="a+x"
+				/>
+			</then>
+		</if>
 	</target>
 
 	<target name="prepare-generated-files">

@@ -53,6 +53,8 @@ public class EventUtil
 	public EventUtil(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
+		_logger = new Logger(bundleContext);
+
 		_webExtenderBundle = _bundleContext.getBundle();
 
 		_eventAdminServiceTracker = ServiceTrackerFactory.open(
@@ -140,7 +142,6 @@ public class EventUtil
 				sb.append(". This can lead to unexpected behavior when the ");
 				sb.append("bundles are deployed to the same layout");
 
-				_logger = new Logger(_bundleContext);
 				_logger.log(Logger.LOG_ERROR, sb.toString());
 			}
 		}
@@ -180,7 +181,7 @@ public class EventUtil
 	private EventAdmin _eventAdmin;
 	private final ServiceTracker<EventAdmin, EventAdmin>
 		_eventAdminServiceTracker;
-	private Logger _logger;
+	private final Logger _logger;
 	private final Bundle _webExtenderBundle;
 
 }

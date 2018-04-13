@@ -167,6 +167,19 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		int testClassFileCount = testClassFiles.size();
 
 		if (testClassFileCount == 0) {
+			if (includeAutoBalanceTests) {
+				int id = 0;
+
+				AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(
+					this, id);
+
+				axisTestClassGroups.put(id, axisTestClassGroup);
+
+				for (File autoBalanceTestFile : autoBalanceTestFiles) {
+					axisTestClassGroup.addTestClassFile(autoBalanceTestFile);
+				}
+			}
+
 			return;
 		}
 
@@ -191,10 +204,17 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 				axisTestClassGroup.addTestClassFile(axisTestClassFile);
 			}
 
+			if (includeAutoBalanceTests) {
+				for (File autoBalanceTestFile : autoBalanceTestFiles) {
+					axisTestClassGroup.addTestClassFile(autoBalanceTestFile);
+				}
+			}
+
 			id++;
 		}
 	}
 
+	protected List<File> autoBalanceTestFiles = new ArrayList();
 	protected final Map<Integer, AxisTestClassGroup> axisTestClassGroups =
 		new HashMap<>();
 	protected final String batchName;

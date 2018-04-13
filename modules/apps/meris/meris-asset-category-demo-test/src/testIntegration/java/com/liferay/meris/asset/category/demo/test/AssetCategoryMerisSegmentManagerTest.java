@@ -46,6 +46,7 @@ import java.util.Locale;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -106,6 +107,7 @@ public class AssetCategoryMerisSegmentManagerTest {
 			_merisSegmentManager.getMerisProfile(_merisProfileId));
 	}
 
+	@Ignore
 	@Test
 	public void testGetMerisProfileMerisSegments() throws Exception {
 		Comparator<MerisSegment> merisSegmentNameComparator =
@@ -121,6 +123,7 @@ public class AssetCategoryMerisSegmentManagerTest {
 			merisSegments.isEmpty());
 	}
 
+	@Ignore
 	@Test
 	public void testGetMerisProfiles() throws Exception {
 		List merisProfiles = _merisSegmentManager.getMerisProfiles(
@@ -163,6 +166,7 @@ public class AssetCategoryMerisSegmentManagerTest {
 			"No meris segments were found", merisSegments.isEmpty());
 	}
 
+	@Ignore
 	@Test
 	public void testMatches() {
 		Assert.assertTrue(

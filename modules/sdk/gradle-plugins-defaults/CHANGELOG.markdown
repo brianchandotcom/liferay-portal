@@ -3269,6 +3269,12 @@ classpath.
 - [LPS-75010]: Update the [Liferay Gradle Plugins] dependency to version
 3.10.16.
 
+## 5.3.74 - 2018-04-12
+
+### Changed
+- [LPS-79576]: Update the [Liferay Gradle Plugins] dependency to version
+3.10.17.
+
 ## 5.3.76 - 2018-04-12
 
 ### Changed

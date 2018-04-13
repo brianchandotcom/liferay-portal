@@ -14,9 +14,10 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.function.Consumer;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Carlos Lancha

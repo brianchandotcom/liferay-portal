@@ -12,8 +12,11 @@
  * details.
  */
 
-package com.liferay.adaptive.media.content.transformer;
+package com.liferay.adaptive.media.content.transformer.internal;
 
+import com.liferay.adaptive.media.content.transformer.ContentTransformer;
+import com.liferay.adaptive.media.content.transformer.ContentTransformerContentType;
+import com.liferay.adaptive.media.content.transformer.ContentTransformerHandler;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -35,8 +38,10 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Alejandro Tardín
  */
 @Component(immediate = true, service = ContentTransformerHandler.class)
-public class ContentTransformerHandlerImpl {
+public class ContentTransformerHandlerImpl
+	implements ContentTransformerHandler {
 
+	@Override
 	public <T> T transform(
 		ContentTransformerContentType<T> contentTransformerContentType,
 		T originalContent) {

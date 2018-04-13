@@ -26,59 +26,56 @@ import java.util.Properties;
  */
 public class JobFactory {
 
-	public static RepositoryJob newRepositoryJob(String jobName) {
-		return newRepositoryJob(jobName, "default");
+	public static Job newJob(String jobName) {
+		return newJob(jobName, "default");
 	}
 
-	public static RepositoryJob newRepositoryJob(
-		String jobName, String testSuiteName) {
+	public static Job newJob(String jobName, String testSuiteName) {
+		Job job = _jobs.get(jobName);
 
-		if (_jobs.containsKey(jobName)) {
-			Job job = _jobs.get(jobName);
-
-			if (job instanceof PortalRepositoryJob) {
-				return (PortalRepositoryJob)_jobs.get(jobName);
-			}
-
-			throw new RuntimeException(
-				jobName + " is not a portal repository job");
+		if (job != null) {
+			return job;
 		}
 
-		RepositoryJob repositoryJob = null;
-
 		if (jobName.contains("test-portal-acceptance-pullrequest(")) {
-			repositoryJob = new PortalAcceptancePullRequestJob(
-				jobName, testSuiteName);
+			PortalAcceptancePullRequestJob portalAcceptancePullRequestJob =
+				new PortalAcceptancePullRequestJob(jobName, testSuiteName);
 
 			GitWorkingDirectory gitWorkingDirectory =
-				repositoryJob.getGitWorkingDirectory();
+				portalAcceptancePullRequestJob.getGitWorkingDirectory();
 
 			String subrepositoryModuleName = _getSubrepositoryModuleName(
 				gitWorkingDirectory);
 
-			if (subrepositoryModuleName != null) {
-				repositoryJob = new SubrepositoryAcceptancePullRequestJob(
+			if (subrepositoryModuleName == null) {
+				job = portalAcceptancePullRequestJob;
+			}
+			else {
+				job = new SubrepositoryAcceptancePullRequestJob(
 					jobName, subrepositoryModuleName);
 			}
 		}
-		else if (jobName.contains("test-portal-acceptance-upstream(")) {
-			repositoryJob = new PortalAcceptanceUpstreamJob(jobName);
-		}
-		else if (jobName.contains(
-					"test-subrepository-acceptance-pullrequest(")) {
 
-			repositoryJob = new SubrepositoryAcceptancePullRequestJob(
+		if ((job == null) &&
+			jobName.contains("test-portal-acceptance-upstream(")) {
+
+			job = new PortalAcceptanceUpstreamJob(jobName);
+		}
+
+		if ((job == null) &&
+			jobName.contains("test-subrepository-acceptance-pullrequest(")) {
+
+			job = new SubrepositoryAcceptancePullRequestJob(
 				jobName, System.getenv("REPOSITORY_NAME"));
 		}
-		else {
-			throw new RuntimeException("Invalid job name " + jobName);
+
+		if (job == null) {
+			throw new IllegalArgumentException("Invalid job name " + jobName);
 		}
 
-		if (repositoryJob != null) {
-			_jobs.put(jobName, repositoryJob);
-		}
+		_jobs.put(jobName, job);
 
-		return repositoryJob;
+		return job;
 	}
 
 	private static String _getSubrepositoryModuleName(

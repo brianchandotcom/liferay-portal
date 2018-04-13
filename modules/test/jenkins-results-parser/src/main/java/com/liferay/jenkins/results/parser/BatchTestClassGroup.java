@@ -64,6 +64,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 				this.portalGitWorkingDirectory.getWorkingDirectory(),
 				"test.properties"));
 
+		_setAutoBalanceTestFiles();
 		_setTestRelevantChanges();
 	}
 
@@ -226,6 +227,20 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 	private String _getAxisMaxSizePropertyValue() {
 		return getFirstPropertyValue("test.batch.axis.max.size");
+	}
+
+	private void _setAutoBalanceTestFiles() {
+		String propertyName = "test.class.names.auto.balance";
+
+		String autoBalanceTestNames = getFirstPropertyValue(propertyName);
+
+		if ((autoBalanceTestNames != null) &&
+			!autoBalanceTestNames.equals("")) {
+
+			for (String autoBalanceTestName : autoBalanceTestNames.split(",")) {
+				autoBalanceTestFiles.add(new File(autoBalanceTestName));
+			}
+		}
 	}
 
 	private void _setTestRelevantChanges() {

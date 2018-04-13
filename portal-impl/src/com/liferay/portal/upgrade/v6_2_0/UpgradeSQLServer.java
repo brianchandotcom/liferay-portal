@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.verify;
+package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -32,8 +33,9 @@ import java.util.List;
 
 /**
  * @author Douglas Wong
+ * @author Samuel Ziemer
  */
-public class VerifySQLServer extends VerifyProcess {
+public class UpgradeSQLServer extends UpgradeProcess {
 
 	protected void convertColumnsToUnicode() {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
@@ -62,7 +64,7 @@ public class VerifySQLServer extends VerifyProcess {
 				while (rs.next()) {
 					String tableName = rs.getString("table_name");
 
-					if (!isPortalTableName(tableName)) {
+					if (!isPortal62TableName(tableName)) {
 						continue;
 					}
 
@@ -165,7 +167,7 @@ public class VerifySQLServer extends VerifyProcess {
 	}
 
 	@Override
-	protected void doVerify() throws Exception {
+	protected void doUpgrade() throws Exception {
 		DB db = DBManagerUtil.getDB();
 
 		if (db.getDBType() != DBType.SQLSERVER) {
@@ -201,7 +203,7 @@ public class VerifySQLServer extends VerifyProcess {
 			while (rs.next()) {
 				String tableName = rs.getString("table_name");
 
-				if (!isPortalTableName(tableName)) {
+				if (!isPortal62TableName(tableName)) {
 					continue;
 				}
 
@@ -283,7 +285,7 @@ public class VerifySQLServer extends VerifyProcess {
 			"(systypes.name = 'varchar'))";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		VerifySQLServer.class);
+		UpgradeSQLServer.class);
 
 	private final List<String> _addPrimaryKeySQLs = new ArrayList<>();
 

@@ -1080,13 +1080,13 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 				}
 			}
 
+			long batchCounter = counterLocalService.increment(${localizedEntity.name}.class.getName(), localizedValuesMap.size()) - localizedValuesMap.size();
+
 			for (Map.Entry<String, String[]> entry : localizedValuesMap.entrySet()) {
 				String languageId = entry.getKey();
 				String[] localizedValues = entry.getValue();
 
-				long ${localizedEntity.PKVarName} = counterLocalService.increment(${localizedEntity.name}.class.getName());
-
-				${localizedEntity.name} ${localizedEntity.varName} = ${localizedEntity.varName}Persistence.create(${localizedEntity.PKVarName});
+				${localizedEntity.name} ${localizedEntity.varName} = ${localizedEntity.varName}Persistence.create(++batchCounter);
 
 				<#list entity.entityColumns as entityColumn>
 					<#if localizedEntity.hasEntityColumn(entityColumn.name) && !stringUtil.equals(entityColumn.name, "mvccVersion")>

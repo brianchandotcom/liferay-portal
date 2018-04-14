@@ -105,7 +105,7 @@ public class LiferayRefreshTokenAccessTokenGrantHandler
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Client authentication doesn't match refresh token's " +
+					"Client authentication does not match refresh token's " +
 						"client");
 			}
 

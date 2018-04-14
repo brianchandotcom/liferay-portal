@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MultivaluedMap;
 
+import org.apache.cxf.jaxrs.ext.MessageContext;
 import org.apache.cxf.rs.security.oauth2.common.Client;
 import org.apache.cxf.rs.security.oauth2.services.AccessTokenService;
 
@@ -43,8 +44,10 @@ public class LiferayAccessTokenService extends AccessTokenService {
 
 		Map<String, String> clientProperties = client.getProperties();
 
+		MessageContext messageContext = getMessageContext();
+
 		HttpServletRequest httpServletRequest =
-			getMessageContext().getHttpServletRequest();
+			messageContext.getHttpServletRequest();
 
 		String remoteAddr = httpServletRequest.getRemoteAddr();
 
@@ -60,7 +63,6 @@ public class LiferayAccessTokenService extends AccessTokenService {
 
 		clientProperties.put(
 			OAuth2ProviderRestEndpointConstants.CLIENT_REMOTE_ADDR, remoteAddr);
-
 		clientProperties.put(
 			OAuth2ProviderRestEndpointConstants.CLIENT_REMOTE_HOST, remoteHost);
 

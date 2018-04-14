@@ -91,7 +91,7 @@ public class LiferayRefreshTokenAccessTokenGrantHandler
 
 		if (!clientsMatch(client, refreshToken.getClient())) {
 
-			// audit: Trying to refresh token with other client's authentication
+			// Try to refresh token with other client's authentication
 
 			_liferayOAuthDataProvider.doRevokeRefreshToken(refreshToken);
 

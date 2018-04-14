@@ -16,32 +16,20 @@ package com.liferay.announcements.uad.exporter.test;
 
 import com.liferay.announcements.kernel.model.AnnouncementsFlag;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
-import com.liferay.announcements.uad.test.BaseAnnouncementsFlagUADEntityTestCase;
+import com.liferay.announcements.uad.test.AnnouncementsFlagUADEntityTestHelper;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Node;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.kernel.zip.ZipReader;
-import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.exporter.UADExporter;
+import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-
+import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -49,71 +37,44 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class AnnouncementsFlagUADExporterTest
-	extends BaseAnnouncementsFlagUADEntityTestCase {
+	extends BaseUADExporterTestCase<AnnouncementsFlag> {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
-		_user = UserTestUtil.addUser();
+	@Override
+	protected AnnouncementsFlag addBaseModel(long userId) throws Exception {
+		AnnouncementsFlag announcementsFlag =
+			_announcementsFlagUADEntityTestHelper.addAnnouncementsFlag(userId);
+
+		_announcementsFlags.add(announcementsFlag);
+
+		return announcementsFlag;
 	}
 
-	@Test
-	public void testExport() throws Exception {
-		AnnouncementsFlag announcementsFlag = addAnnouncementsFlag(
-			_user.getUserId());
-
-		List<AnnouncementsFlag> announcementsFlags = _uadAggregator.getRange(
-			_user.getUserId(), 0, 1);
-
-		AnnouncementsFlag announcementsFlag1 = announcementsFlags.get(0);
-
-		byte[] bytes = _uadExporter.export(announcementsFlag1);
-
-		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
-			bytes);
-
-		Document document = SAXReaderUtil.read(byteArrayInputStream);
-
-		Node entryIdNode = document.selectSingleNode(
-			"/model/column[column-name='flagId']/column-value");
-		Node userIdNode = document.selectSingleNode(
-			"/model/column[column-name='userId']/column-value");
-
-		Assert.assertEquals(
-			String.valueOf(announcementsFlag.getFlagId()),
-			entryIdNode.getText());
-		Assert.assertEquals(
-			String.valueOf(_user.getUserId()), userIdNode.getText());
+	@Override
+	protected String getPrimaryKeyName() {
+		return "flagId";
 	}
 
-	@Test
-	public void testExportAll() throws Exception {
-		addAnnouncementsFlag(_user.getUserId());
-
-		File file = _uadExporter.exportAll(_user.getUserId());
-
-		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
-
-		List<String> entries = zipReader.getEntries();
-
-		Assert.assertEquals(entries.toString(), 1, entries.size());
+	@Override
+	protected UADExporter<AnnouncementsFlag> getUADExporter() {
+		return _uadExporter;
 	}
 
-	@Inject(
-		filter = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_FLAG
-	)
-	private UADAggregator _uadAggregator;
+	@DeleteAfterTestRun
+	private final List<AnnouncementsFlag> _announcementsFlags =
+		new ArrayList<>();
+
+	@Inject
+	private AnnouncementsFlagUADEntityTestHelper
+		_announcementsFlagUADEntityTestHelper;
 
 	@Inject(
 		filter = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_FLAG
 	)
 	private UADExporter _uadExporter;
-
-	@DeleteAfterTestRun
-	private User _user;
 
 }

@@ -64,19 +64,19 @@ public class LiferayResourceOwnerGrantHandlerRegistrator
 	protected boolean hasPermission(
 		Client client, MultivaluedMap<String, String> params) {
 
-		String userName = params.getFirst("username");
+		String username = params.getFirst("username");
 		String password = params.getFirst("password");
 
-		if ((userName == null) || (password == null)) {
+		if ((username == null) || (password == null)) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("username or password parameter was not provided.");
+				_log.debug("Username or password parameter was not provided.");
 			}
 
 			return false;
 		}
 
 		UserSubject userSubject = _liferayLoginHandler.createSubject(
-			userName, password);
+			username, password);
 
 		String subjectId = userSubject.getId();
 

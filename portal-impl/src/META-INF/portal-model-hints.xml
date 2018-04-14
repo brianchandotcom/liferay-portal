@@ -200,7 +200,9 @@
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.counter.kernel.model.Counter">
-		<field name="name" type="String" />
+		<field name="name" type="String">
+			<hint name="max-length">150</hint>
+		</field>
 		<field name="currentId" type="long" />
 	</model>
 	<model name="com.liferay.document.library.kernel.model.DLFileEntry">

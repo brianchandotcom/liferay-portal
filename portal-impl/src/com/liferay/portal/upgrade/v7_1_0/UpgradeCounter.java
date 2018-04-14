@@ -12,34 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.upgrade;
+package com.liferay.portal.upgrade.v7_1_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.upgrade.v7_1_0.UpgradeCounter;
-import com.liferay.portal.upgrade.v7_1_0.UpgradeModules;
-import com.liferay.portal.upgrade.v7_1_0.UpgradeRepository;
-import com.liferay.portal.upgrade.v7_1_0.UpgradeSchema;
+import com.liferay.portal.upgrade.v7_1_0.util.CounterTable;
 
 /**
- * @author Alberto Chaparro
+ * @author Preston Crary
  */
-public class UpgradeProcess_7_1_0 extends UpgradeProcess {
-
-	@Override
-	public int getThreshold() {
-		return ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER;
-	}
+public class UpgradeCounter extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgrade(new UpgradeSchema());
-
-		upgrade(new UpgradeCounter());
-		upgrade(new UpgradeModules());
-		upgrade(new UpgradeRepository());
-
-		clearIndexesCache();
+		alter(
+			CounterTable.class,
+			new AlterColumnType("name", "VARCHAR(150) not null"));
 	}
 
 }

@@ -28,7 +28,6 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 	disabled="<%= journalDisplayContext.isDisabled() %>"
 	filterItems="<%= journalDisplayContext.getFilterDropdownItems() %>"
 	infoPanelId="infoPanelId"
-	namespace="<%= renderResponse.getNamespace() %>"
 	searchActionURL="<%= journalDisplayContext.getSearchActionURL() %>"
 	searchContainerId="<%= searchContainerId %>"
 	searchFormName="fm1"

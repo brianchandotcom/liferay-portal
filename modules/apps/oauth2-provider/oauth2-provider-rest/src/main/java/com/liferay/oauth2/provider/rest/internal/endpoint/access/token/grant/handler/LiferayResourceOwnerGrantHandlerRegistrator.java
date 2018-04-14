@@ -20,6 +20,7 @@ import com.liferay.oauth2.provider.rest.internal.endpoint.liferay.LiferayOAuthDa
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Map;
 
@@ -87,7 +88,7 @@ public class LiferayResourceOwnerGrantHandlerRegistrator
 		UserSubject userSubject = _liferayLoginHandler.createSubject(
 			username, password);
 
-		long userId = Long.parseLong(userSubject.getId());
+		long userId = GetterUtil.getLong(userSubject.getId());
 
 		OAuth2Application oAuth2Application =
 			_liferayOAuthDataProvider.resolveOAuth2Application(client);

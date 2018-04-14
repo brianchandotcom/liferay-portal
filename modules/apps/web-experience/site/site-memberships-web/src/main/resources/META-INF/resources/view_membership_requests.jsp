@@ -86,7 +86,7 @@ pendingURL.setParameter("tabs1", "pending");
 
 pendingNavigationItem.setHref(pendingURL.toString());
 
-pendingNavigationItem.setLabel(LanguageUtil.get(request, "pending"));
+pendingNavigationItem.setLabel("pending");
 
 navigationItems.add(pendingNavigationItem);
 
@@ -100,7 +100,7 @@ approvedURL.setParameter("tabs1", "approved");
 
 approvedNavigationItem.setHref(approvedURL.toString());
 
-approvedNavigationItem.setLabel(LanguageUtil.get(request, "approved"));
+approvedNavigationItem.setLabel("approved");
 
 navigationItems.add(approvedNavigationItem);
 
@@ -114,7 +114,7 @@ deniedURL.setParameter("tabs1", "denied");
 
 deniedNavigationItem.setHref(deniedURL.toString());
 
-deniedNavigationItem.setLabel(LanguageUtil.get(request, "denied"));
+deniedNavigationItem.setLabel("denied");
 
 navigationItems.add(deniedNavigationItem);
 %>

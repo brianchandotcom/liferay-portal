@@ -63,7 +63,7 @@ NavigationItem entriesNavigationItem = new NavigationItem();
 
 entriesNavigationItem.setActive(true);
 entriesNavigationItem.setHref(StringPool.BLANK);
-entriesNavigationItem.setLabel(LanguageUtil.get(request, "user-groups"));
+entriesNavigationItem.setLabel("user-groups");
 
 navigationItems.add(entriesNavigationItem);
 %>

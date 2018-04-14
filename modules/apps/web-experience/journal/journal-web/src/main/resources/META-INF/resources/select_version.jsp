@@ -40,7 +40,7 @@ portletURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
 					navigationItem -> {
 						navigationItem.setActive(true);
 						navigationItem.setHref(StringPool.BLANK);
-						navigationItem.setLabel(LanguageUtil.get(request, "versions"));
+						navigationItem.setLabel("versions");
 					});
 			}
 		}

@@ -31,7 +31,7 @@
 						navigationItem -> {
 							navigationItem.setActive(tabs1.equals("users"));
 							navigationItem.setHref(portletURL);
-							navigationItem.setLabel(LanguageUtil.get(request, "users"));
+							navigationItem.setLabel("users");
 						});
 
 					portletURL.setParameter("tabs1", "organizations");
@@ -40,7 +40,7 @@
 						navigationItem -> {
 							navigationItem.setActive(tabs1.equals("organizations"));
 							navigationItem.setHref(portletURL);
-							navigationItem.setLabel(LanguageUtil.get(request, "organizations"));
+							navigationItem.setLabel("organizations");
 						});
 
 					portletURL.setParameter("tabs1", "user-groups");
@@ -49,7 +49,7 @@
 						navigationItem -> {
 							navigationItem.setActive(tabs1.equals("user-groups"));
 							navigationItem.setHref(portletURL);
-							navigationItem.setLabel(LanguageUtil.get(request, "user-groups"));
+							navigationItem.setLabel("user-groups");
 						});
 				}
 			}

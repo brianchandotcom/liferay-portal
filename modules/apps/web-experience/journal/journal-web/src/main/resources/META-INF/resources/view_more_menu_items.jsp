@@ -82,7 +82,7 @@ ddmStructuresSearchContainer.setResults(ddmStructures);
 					navigationItem -> {
 						navigationItem.setActive(true);
 						navigationItem.setHref(StringPool.BLANK);
-						navigationItem.setLabel(LanguageUtil.get(request, "all-menu-items"));
+						navigationItem.setLabel("all-menu-items");
 					});
 			}
 		}

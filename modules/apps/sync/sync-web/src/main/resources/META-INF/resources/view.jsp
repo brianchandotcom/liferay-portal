@@ -29,21 +29,21 @@ String tabs1 = ParamUtil.getString(request, "tabs1", "settings");
 					navigationItem -> {
 						navigationItem.setActive(tabs1.equals("settings"));
 						navigationItem.setHref(renderResponse.createRenderURL(), "tabs1", "settings");
-						navigationItem.setLabel(LanguageUtil.get(request, "settings"));
+						navigationItem.setLabel("settings");
 					});
 
 				add(
 					navigationItem -> {
 						navigationItem.setActive(tabs1.equals("sites"));
 						navigationItem.setHref(renderResponse.createRenderURL(), "tabs1", "sites");
-						navigationItem.setLabel(LanguageUtil.get(request, "sites"));
+						navigationItem.setLabel("sites");
 					});
 
 				add(
 					navigationItem -> {
 						navigationItem.setActive(tabs1.equals("devices"));
 						navigationItem.setHref(renderResponse.createRenderURL(), "tabs1", "devices");
-						navigationItem.setLabel(LanguageUtil.get(request, "devices"));
+						navigationItem.setLabel("devices");
 					});
 			}
 		}

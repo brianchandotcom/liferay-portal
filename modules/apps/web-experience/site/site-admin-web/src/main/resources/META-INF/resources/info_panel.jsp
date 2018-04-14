@@ -45,7 +45,7 @@ NavigationItem navigationItem = new NavigationItem();
 
 navigationItem.setActive(true);
 navigationItem.setHref(currentURL);
-navigationItem.setLabel(LanguageUtil.get(request, "details"));
+navigationItem.setLabel("details");
 
 navigationItems.add(navigationItem);
 %>

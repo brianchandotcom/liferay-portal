@@ -67,7 +67,7 @@ NavigationItem navigationItem = new NavigationItem();
 
 navigationItem.setActive(true);
 navigationItem.setHref(currentURL);
-navigationItem.setLabel(LanguageUtil.get(request, "users"));
+navigationItem.setLabel("users");
 
 navigationItems.add(navigationItem);
 %>

@@ -34,14 +34,14 @@ portletURL.setParameter("navigation", navigation);
 				navigationItem -> {
 					navigationItem.setActive(navigation.equals("entries"));
 					navigationItem.setHref(renderResponse.createRenderURL());
-					navigationItem.setLabel(LanguageUtil.get(request, "entries"));
+					navigationItem.setLabel("entries");
 				});
 
 				add(
 				navigationItem -> {
 					navigationItem.setActive(navigation.equals("images"));
 					navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "images");
-					navigationItem.setLabel(LanguageUtil.get(request, "images"));
+					navigationItem.setLabel("images");
 				});
 			}
 		}

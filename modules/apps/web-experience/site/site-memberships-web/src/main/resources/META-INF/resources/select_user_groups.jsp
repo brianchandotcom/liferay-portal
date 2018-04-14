@@ -50,7 +50,7 @@ NavigationItem navigationItem = new NavigationItem();
 
 navigationItem.setActive(true);
 navigationItem.setHref(currentURL);
-navigationItem.setLabel(LanguageUtil.get(request, "user-groups"));
+navigationItem.setLabel("user-groups");
 
 navigationItems.add(navigationItem);
 %>

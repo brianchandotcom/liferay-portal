@@ -78,7 +78,7 @@ NavigationItem entriesNavigationItem = new NavigationItem();
 
 entriesNavigationItem.setActive(true);
 entriesNavigationItem.setHref(StringPool.BLANK);
-entriesNavigationItem.setLabel(LanguageUtil.get(request, "users"));
+entriesNavigationItem.setLabel("users");
 
 navigationItems.add(entriesNavigationItem);
 %>

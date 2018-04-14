@@ -31,7 +31,7 @@ portletURL.setParameter("mvcRenderCommandName", "/wedeploy_auth_admin/view");
 					navigationItem -> {
 						navigationItem.setActive(true);
 						navigationItem.setHref(portletURL);
-						navigationItem.setLabel(LanguageUtil.get(request, "wedeploy-app"));
+						navigationItem.setLabel("wedeploy-app");
 					});
 			}
 		}

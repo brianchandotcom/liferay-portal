@@ -52,7 +52,7 @@ NavigationItem navigationItem = new NavigationItem();
 
 navigationItem.setActive(true);
 navigationItem.setHref(currentURL);
-navigationItem.setLabel(LanguageUtil.get(request, "organizations"));
+navigationItem.setLabel("organizations");
 
 navigationItems.add(navigationItem);
 %>

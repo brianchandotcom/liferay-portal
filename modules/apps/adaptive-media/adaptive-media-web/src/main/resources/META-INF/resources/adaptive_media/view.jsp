@@ -25,7 +25,7 @@
 					navigationItem -> {
 						navigationItem.setActive(true);
 						navigationItem.setHref(renderResponse.createRenderURL());
-						navigationItem.setLabel(LanguageUtil.get(request, "image-resolutions"));
+						navigationItem.setLabel("image-resolutions");
 					});
 			}
 		}

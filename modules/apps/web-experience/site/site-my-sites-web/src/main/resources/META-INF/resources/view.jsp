@@ -78,7 +78,7 @@ mySitesURL.setParameter("tabs1", "my-sites");
 
 mySitesNavigationItem.setHref(mySitesURL.toString());
 
-mySitesNavigationItem.setLabel(LanguageUtil.get(request, "my-sites"));
+mySitesNavigationItem.setLabel"my-sites");
 
 navigationItems.add(mySitesNavigationItem);
 
@@ -92,7 +92,7 @@ availableSitesURL.setParameter("tabs1", "available-sites");
 
 availableSitesNavigationItem.setHref(availableSitesURL.toString());
 
-availableSitesNavigationItem.setLabel(LanguageUtil.get(request, "available-sites"));
+availableSitesNavigationItem.setLabel("available-sites");
 
 navigationItems.add(availableSitesNavigationItem);
 %>

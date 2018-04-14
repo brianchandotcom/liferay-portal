@@ -88,7 +88,7 @@ searchContainer.setResults(results);
 						navigationItem -> {
 							navigationItem.setActive(!mvcRenderCommandName.equals("/blogs/view_not_published_entries"));
 							navigationItem.setHref(portletURL);
-							navigationItem.setLabel(LanguageUtil.get(request, "published"));
+							navigationItem.setLabel("published");
 						});
 
 					add(

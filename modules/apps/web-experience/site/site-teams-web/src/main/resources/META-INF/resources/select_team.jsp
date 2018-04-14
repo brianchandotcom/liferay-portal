@@ -41,7 +41,7 @@ NavigationItem navigationItem = new NavigationItem();
 
 navigationItem.setActive(true);
 navigationItem.setHref(currentURL);
-navigationItem.setLabel(LanguageUtil.get(request, "teams"));
+navigationItem.setLabel("teams");
 
 navigationItems.add(navigationItem);
 %>

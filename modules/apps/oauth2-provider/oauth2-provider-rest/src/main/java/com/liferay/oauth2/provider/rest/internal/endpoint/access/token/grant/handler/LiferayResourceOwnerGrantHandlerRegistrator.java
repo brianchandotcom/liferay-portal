@@ -52,8 +52,8 @@ public class LiferayResourceOwnerGrantHandlerRegistrator
 
 		_resourceOwnerGrantHandler = new ResourceOwnerGrantHandler();
 
-		_resourceOwnerGrantHandler.setLoginHandler(_liferayLoginHandler);
 		_resourceOwnerGrantHandler.setDataProvider(_liferayOAuthDataProvider);
+		_resourceOwnerGrantHandler.setLoginHandler(_liferayLoginHandler);
 	}
 
 	@Override

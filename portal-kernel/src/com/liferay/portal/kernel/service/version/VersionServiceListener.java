@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.version.VersionedModel;
 
 /**
  * @author Preston Crary
+ * @see VersionService
  */
 public interface VersionServiceListener
 	<E extends VersionedModel<V>, V extends VersionModel<E>> {

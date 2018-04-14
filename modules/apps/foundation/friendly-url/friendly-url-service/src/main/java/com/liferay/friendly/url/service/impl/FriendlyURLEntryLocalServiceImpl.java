@@ -286,6 +286,14 @@ public class FriendlyURLEntryLocalServiceImpl
 	}
 
 	@Override
+	public FriendlyURLEntryLocalization fetchFriendlyURLEntryLocalization(
+		long groupId, long classNameId, String urlTitle) {
+
+		return friendlyURLEntryLocalizationPersistence.fetchByG_C_U(
+			groupId, classNameId, urlTitle);
+	}
+
+	@Override
 	public List<FriendlyURLEntry> getFriendlyURLEntries(
 		long groupId, long classNameId, long classPK) {
 

@@ -63,9 +63,8 @@ public class LiferayClientCredentialsAccessTokenGrantHandler
 		OAuth2Application oAuth2Application =
 			_liferayOAuthDataProvider.resolveOAuth2Application(client);
 
-		long userId = oAuth2Application.getUserId();
-
-		return hasCreateTokenPermission(userId, oAuth2Application);
+		return hasCreateTokenPermission(
+			oAuth2Application.getUserId(), oAuth2Application);
 	}
 
 	@Override

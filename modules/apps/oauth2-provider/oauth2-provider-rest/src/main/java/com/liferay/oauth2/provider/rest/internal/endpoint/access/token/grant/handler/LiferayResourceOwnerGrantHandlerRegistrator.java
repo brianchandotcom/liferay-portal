@@ -65,11 +65,20 @@ public class LiferayResourceOwnerGrantHandlerRegistrator
 		Client client, MultivaluedMap<String, String> params) {
 
 		String username = params.getFirst("username");
+
+		if (username == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Username is null");
+			}
+
+			return false;
+		}
+
 		String password = params.getFirst("password");
 
-		if ((username == null) || (password == null)) {
+		if (password == null) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Username or password parameter was not provided.");
+				_log.debug("Password is null");
 			}
 
 			return false;

@@ -5,10 +5,9 @@
 
 	.portlet-title-text {
 		color: map-get($theme-colors, secondary);
-		font-size: 16px;
+		font-size: 0.875rem;
 		font-weight: 600;
-		letter-spacing: 0.5px;
-		line-height: 1.5;
+		text-transform: uppercase;
 	}
 
 	.portlet-content {

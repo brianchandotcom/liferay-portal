@@ -8,7 +8,7 @@
 				<condition function="IsVisible" locator1="Panel#PANEL_COLLAPSED" />
 			</and>
 			<then>
-				<execute function="AssertClick" locator1="Panel#PANEL_COLLAPSED" value1="${panel}" />
+				<execute function="AssertClick#assertTextClickCaseInsensitive" locator1="Panel#PANEL_COLLAPSED" value1="${panel}" />
 			</then>
 		</if>
 

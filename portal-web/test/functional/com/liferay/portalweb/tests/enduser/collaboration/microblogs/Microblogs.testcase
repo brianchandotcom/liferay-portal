@@ -39,7 +39,7 @@
 			<var name="pageName" value="Microblogs Page" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Portlet#H2_HEADER" value1="Microblogs" />
+		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#H2_HEADER" value1="Microblogs" />
 	</set-up>
 
 	<tear-down>

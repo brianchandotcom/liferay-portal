@@ -14,6 +14,6 @@
 
 		<execute function="AssertElementPresent" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" />
 
-		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${portletTitle}" />
+		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${portletTitle}" />
 	</command>
 </definition>

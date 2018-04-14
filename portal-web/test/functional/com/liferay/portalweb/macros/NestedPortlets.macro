@@ -4,11 +4,11 @@
 
 		<execute function="MouseOver#mouseOverNotVisible" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_HEADER" />
 
-		<execute function="AssertTextEquals" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_HEADER" value1="${portletName}" />
+		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_HEADER" value1="${portletName}" />
 
 		<execute function="DragAndDrop#dragAndDropPortletToObject" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_HEADER" locator2="Home#PORTLET_COLUMN_${portletColumnNumberTo}" value1="${portletName}" />
 
-		<execute function="AssertTextEquals" locator1="Home#PORTLET_COLUMN_${portletColumnNumberTo}_NESTED_PORTLET_TITLE" value1="${portletName}" />
+		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Home#PORTLET_COLUMN_${portletColumnNumberTo}_NESTED_PORTLET_TITLE" value1="${portletName}" />
 	</command>
 
 	<command name="viewConfigurationDefaultLayoutTemplate">

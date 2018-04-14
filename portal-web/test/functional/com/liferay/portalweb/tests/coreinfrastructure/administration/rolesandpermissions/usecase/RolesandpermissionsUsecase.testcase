@@ -1909,11 +1909,11 @@
 
 		<var name="key_portletTitleName" value="Message Boards" />
 
-		<execute function="AssertTextEquals" locator1="Portlet#SPECIFIC_TITLE" value1="Message Boards" />
+		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#SPECIFIC_TITLE" value1="Message Boards" />
 
 		<var name="key_portletTitleName" value="Asset Publisher" />
 
-		<execute function="AssertTextEquals" locator1="Portlet#SPECIFIC_TITLE" value1="Asset Publisher" />
+		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#SPECIFIC_TITLE" value1="Asset Publisher" />
 
 		<execute macro="MessageboardsThread#addPG">
 			<var name="threadBody" value="This is a thread by usersn1" />
@@ -1934,11 +1934,11 @@
 
 		<var name="key_portletTitleName" value="Message Boards" />
 
-		<execute function="AssertTextEquals" locator1="Portlet#SPECIFIC_TITLE" value1="Message Boards" />
+		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#SPECIFIC_TITLE" value1="Message Boards" />
 
 		<var name="key_portletTitleName" value="Asset Publisher" />
 
-		<execute function="AssertTextEquals" locator1="Portlet#SPECIFIC_TITLE" value1="Asset Publisher" />
+		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#SPECIFIC_TITLE" value1="Asset Publisher" />
 
 		<execute function="AssertElementNotPresent" locator1="MessageBoards#ADD_CATEGORY_BUTTON" />
 		<execute function="AssertElementNotPresent" locator1="Button#PERMISSIONS" />
@@ -1954,7 +1954,7 @@
 
 		<var name="key_portletTitleName" value="Message Boards" />
 
-		<execute function="AssertTextEquals" locator1="Portlet#SPECIFIC_TITLE" value1="Message Boards" />
+		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#SPECIFIC_TITLE" value1="Message Boards" />
 
 		<execute function="AssertTextEquals" locator1="Button#ADD_CATEGORY" value1="Add Category" />
 		<execute function="AssertTextEquals" locator1="Button#NEW_THREAD" value1="New Thread" />
@@ -1973,11 +1973,11 @@
 
 		<var name="key_portletTitleName" value="Message Boards" />
 
-		<execute function="AssertTextEquals" locator1="Portlet#SPECIFIC_TITLE" value1="Message Boards" />
+		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#SPECIFIC_TITLE" value1="Message Boards" />
 
 		<var name="key_portletTitleName" value="Asset Publisher" />
 
-		<execute function="AssertTextEquals" locator1="Portlet#SPECIFIC_TITLE" value1="Asset Publisher" />
+		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#SPECIFIC_TITLE" value1="Asset Publisher" />
 
 		<execute function="AssertElementNotPresent" locator1="Button#ADD_CATEGORY" />
 

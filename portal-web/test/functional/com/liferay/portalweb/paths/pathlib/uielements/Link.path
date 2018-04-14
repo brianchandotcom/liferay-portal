@@ -85,7 +85,7 @@
 </tr>
 <tr>
 	<td>MANAGE_DISPLAY_TEMPLATES_FOR_LIFERAY</td>
-	<td>//a[contains(.,'Manage Display Templates for Liferay')]</td>
+	<td>//a[contains(.,'Manage Templates')]</td>
 	<td></td>
 </tr>
 <tr>

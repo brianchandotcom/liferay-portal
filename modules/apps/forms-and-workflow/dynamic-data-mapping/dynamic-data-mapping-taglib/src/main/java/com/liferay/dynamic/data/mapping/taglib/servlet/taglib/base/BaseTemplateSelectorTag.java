@@ -121,7 +121,7 @@ public abstract class BaseTemplateSelectorTag extends com.liferay.taglib.util.In
 		_displayStyle = null;
 		_displayStyleGroupId = 0;
 		_displayStyles = null;
-		_icon = "icon-cog";
+		_icon = null;
 		_label = "display-template";
 		_refreshURL = null;
 		_showEmptyOption = false;
@@ -134,15 +134,15 @@ public abstract class BaseTemplateSelectorTag extends com.liferay.taglib.util.In
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		setNamespacedAttribute(request, "className", _className);
-		setNamespacedAttribute(request, "defaultDisplayStyle", _defaultDisplayStyle);
-		setNamespacedAttribute(request, "displayStyle", _displayStyle);
-		setNamespacedAttribute(request, "displayStyleGroupId", _displayStyleGroupId);
-		setNamespacedAttribute(request, "displayStyles", _displayStyles);
-		setNamespacedAttribute(request, "icon", _icon);
-		setNamespacedAttribute(request, "label", _label);
-		setNamespacedAttribute(request, "refreshURL", _refreshURL);
-		setNamespacedAttribute(request, "showEmptyOption", _showEmptyOption);
+		request.setAttribute("liferay-ddm:template-selector:className", _className);
+		request.setAttribute("liferay-ddm:template-selector:defaultDisplayStyle", _defaultDisplayStyle);
+		request.setAttribute("liferay-ddm:template-selector:displayStyle", _displayStyle);
+		request.setAttribute("liferay-ddm:template-selector:displayStyleGroupId", String.valueOf(_displayStyleGroupId));
+		request.setAttribute("liferay-ddm:template-selector:displayStyles", _displayStyles);
+		request.setAttribute("liferay-ddm:template-selector:icon", _icon);
+		request.setAttribute("liferay-ddm:template-selector:label", _label);
+		request.setAttribute("liferay-ddm:template-selector:refreshURL", _refreshURL);
+		request.setAttribute("liferay-ddm:template-selector:showEmptyOption", String.valueOf(_showEmptyOption));
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "liferay-ddm:template-selector:";
@@ -155,7 +155,7 @@ public abstract class BaseTemplateSelectorTag extends com.liferay.taglib.util.In
 	private java.lang.String _displayStyle = null;
 	private long _displayStyleGroupId = 0;
 	private java.util.List<java.lang.String> _displayStyles = null;
-	private java.lang.String _icon = "icon-cog";
+	private java.lang.String _icon = null;
 	private java.lang.String _label = "display-template";
 	private java.lang.String _refreshURL = null;
 	private boolean _showEmptyOption = false;

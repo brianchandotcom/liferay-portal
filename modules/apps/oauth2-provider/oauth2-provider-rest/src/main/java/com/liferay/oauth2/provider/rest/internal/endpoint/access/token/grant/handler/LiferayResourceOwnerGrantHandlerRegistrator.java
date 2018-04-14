@@ -87,9 +87,7 @@ public class LiferayResourceOwnerGrantHandlerRegistrator
 		UserSubject userSubject = _liferayLoginHandler.createSubject(
 			username, password);
 
-		String subjectId = userSubject.getId();
-
-		long userId = Long.parseLong(subjectId);
+		long userId = Long.parseLong(userSubject.getId());
 
 		OAuth2Application oAuth2Application =
 			_liferayOAuthDataProvider.resolveOAuth2Application(client);

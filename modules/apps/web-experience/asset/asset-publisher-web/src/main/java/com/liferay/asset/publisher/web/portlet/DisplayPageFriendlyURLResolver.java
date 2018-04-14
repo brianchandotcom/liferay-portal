@@ -19,6 +19,8 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
+import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -30,13 +32,16 @@ import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.InheritableMap;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 import java.util.Locale;
@@ -134,6 +139,27 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 			namespace + "urlTitle",
 			new String[] {journalArticle.getUrlTitle()});
 
+		Locale locale = _portal.getLocale(request);
+
+		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
+			_friendlyURLEntryLocalService.fetchFriendlyURLEntryLocalization(
+				groupId,
+				_classNameLocalService.getClassNameId(JournalArticle.class),
+				urlTitle);
+
+		if (friendlyURLEntryLocalization != null) {
+			locale = LocaleUtil.fromLanguageId(
+				friendlyURLEntryLocalization.getLanguageId());
+
+			request.setAttribute(
+				WebKeys.I18N_LANGUAGE_ID,
+				friendlyURLEntryLocalization.getLanguageId());
+
+			actualParams.put(
+				namespace + "languageId",
+				new String[] {friendlyURLEntryLocalization.getLanguageId()});
+		}
+
 		String queryString = _http.parameterMapToString(actualParams, false);
 
 		if (layoutActualURL.contains(StringPool.QUESTION)) {
@@ -144,8 +170,6 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 			layoutActualURL =
 				layoutActualURL + StringPool.QUESTION + queryString;
 		}
-
-		Locale locale = _portal.getLocale(request);
 
 		_portal.addPageSubtitle(journalArticle.getTitle(locale), request);
 		_portal.addPageDescription(
@@ -216,6 +240,12 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 	}
 
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@Reference
 	private Http _http;

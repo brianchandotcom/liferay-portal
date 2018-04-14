@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.exception.RequiredGroupException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -98,6 +97,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.liveusers.LiveUsers;
 import com.liferay.site.admin.web.internal.constants.SiteAdminConstants;
 import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
+import com.liferay.site.admin.web.internal.handler.GroupExceptionRequestHandler;
 import com.liferay.site.constants.SiteWebKeys;
 import com.liferay.site.initializer.GroupInitializer;
 import com.liferay.site.initializer.GroupInitializerRegistry;
@@ -207,13 +207,8 @@ public class SiteAdminPortlet extends MVCPortlet {
 				_log.debug(pe, pe);
 			}
 
-			jsonObject.put(
-				"error",
-				LanguageUtil.get(
-					themeDisplay.getLocale(), "an-unexpected-error-occurred"));
-
-			JSONPortletResponseUtil.writeJSON(
-				actionRequest, actionResponse, jsonObject);
+			groupExceptionRequestHandler.handlePortalException(
+				actionRequest, actionResponse, pe);
 		}
 	}
 
@@ -1037,6 +1032,9 @@ public class SiteAdminPortlet extends MVCPortlet {
 
 	@Reference
 	protected BackgroundTaskManager backgroundTaskManager;
+
+	@Reference
+	protected GroupExceptionRequestHandler groupExceptionRequestHandler;
 
 	@Reference
 	protected GroupInitializerRegistry groupInitializerRegistry;

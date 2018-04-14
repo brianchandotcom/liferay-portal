@@ -71,7 +71,7 @@ public class LiferayRefreshTokenAccessTokenGrantHandler
 
 		if (refreshTokenString == null) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("No refresh_token parameter was provided.");
+				_log.debug("Refresh token is null");
 			}
 
 			return false;

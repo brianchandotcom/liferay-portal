@@ -33,10 +33,6 @@ import java.util.Map;
  */
 public class HandshakeMessage extends Message {
 
-	public int getBuildNumber() {
-		return _buildNumber;
-	}
-
 	public Map<Integer, String> getCompanyIdsWebIds() {
 		return _companyIdsWebIds;
 	}
@@ -55,6 +51,10 @@ public class HandshakeMessage extends Message {
 
 	public int getPatchingToolVersion() {
 		return _patchingToolVersion;
+	}
+
+	public int getPortalBuildNumber() {
+		return _portalBuildNumber;
 	}
 
 	public String getPortalEdition() {
@@ -99,10 +99,6 @@ public class HandshakeMessage extends Message {
 
 	public boolean isSignOff() {
 		return _signOff;
-	}
-
-	public void setBuildNumber(int buildNumber) {
-		_buildNumber = buildNumber;
 	}
 
 	public void setClusterExecutorEnabled(boolean clusterExecutorEnabled) {
@@ -153,6 +149,10 @@ public class HandshakeMessage extends Message {
 		_patchingToolVersion = patchingToolVersion;
 	}
 
+	public void setPortalBuildNumber(int portalBuildNumber) {
+		_portalBuildNumber = portalBuildNumber;
+	}
+
 	public void setPortalEdition(String portalEdition) {
 		_portalEdition = portalEdition;
 	}
@@ -175,7 +175,6 @@ public class HandshakeMessage extends Message {
 		_uptimes = uptimes;
 	}
 
-	private int _buildNumber;
 	private boolean _clusterExecutorEnabled;
 	private Map<Integer, String> _companyIdsWebIds =
 		new HashMap<Integer, String>();
@@ -188,6 +187,7 @@ public class HandshakeMessage extends Message {
 	private boolean _patchesLCSServiceEnabled;
 	private boolean _patchingToolEnabled;
 	private int _patchingToolVersion;
+	private int _portalBuildNumber;
 	private String _portalEdition;
 	private boolean _portalPropertiesLCSServiceEnabled;
 	private boolean _serverManuallyShutdown;

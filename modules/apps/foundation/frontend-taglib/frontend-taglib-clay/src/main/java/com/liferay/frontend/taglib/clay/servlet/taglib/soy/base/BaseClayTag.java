@@ -99,14 +99,15 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 	}
 
 	public String getNamespace() {
-		if (_namespace == null) {
-			PortletResponse portletResponse =
-				(PortletResponse)request.getAttribute(
-					JavaConstants.JAVAX_PORTLET_RESPONSE);
+		if (_namespace != null) {
+			return _namespace;
+		}
 
-			if (portletResponse != null) {
-				_namespace = portletResponse.getNamespace();
-			}
+		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		if (portletResponse != null) {
+			_namespace = portletResponse.getNamespace();
 		}
 
 		return _namespace;

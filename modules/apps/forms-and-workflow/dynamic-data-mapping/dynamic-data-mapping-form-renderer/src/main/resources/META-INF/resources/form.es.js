@@ -1,5 +1,6 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
+import {renderToString} from 'incremental-dom-string';
 
 import templates from './form.soy';
 
@@ -22,7 +23,18 @@ for (let template in templates) {
 			}
 		);
 		window.ddm[template] = C;
+		// window.ddm[template] = function(data, element) {
+		// 	const renderer = templates[template];
+		// 	Object.keys(data).forEach((key) => {
+		// 		if (data[key] && data[key].contentKind === 'HTML') {
+		// 			data[key] = Soy.toIncDom(data[key].content);
+		// 		}
+		// 	});
+		// 	return renderToString(() => renderer(data));
+		// };
 	}
 }
+
+window.MetalComponent = Component;
 
 export default FormTemplates;

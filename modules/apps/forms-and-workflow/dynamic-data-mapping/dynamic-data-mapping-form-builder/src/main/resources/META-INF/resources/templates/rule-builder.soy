@@ -19,7 +19,7 @@
  */
 {template .rule_list}
 	{@param kebab: html}
-	{@param rules: list<[conditions: list<[operandType: string, operandValue: string, strings: any, operator: string, operands: list<[type: string, label: string, value: string]>]>, actions: list<?>, logicOperator: string]>}
+	{@param rules: list<[conditions: list<[operandType: string, operandValue: string, strings: any, operator: string, operands: list<[type: string, label: string, value: string]>]>, actions: list<html>, logicOperator: string]>}
 	{@param strings: ?}
 
 	<div>
@@ -57,9 +57,9 @@
 							<br />
 
 							{foreach $action in $rule.actions}
-								{delcall DDMRuleBuilder.action variant="$action.type"}
+								{call .action}
 									{param action: $action /}
-								{/delcall}
+								{/call}
 								{if not isLast($action)}
 								, <br />
 								<b> {$strings['and']} </b>
@@ -135,10 +135,10 @@
 /**
  * Prints the DDM form card rule.
  */
-{template .badge}
+{template .label}
 	{@param? content: string}
 
-	<span class="badge badge-default badge-sm">{$content}</span>
+	<span class="label label-lg label-secondary">{$content}</span>
 {/template}
 
 /**
@@ -157,127 +157,18 @@
 		{/if}
 	{/if}
 
-	{call .badge}
+	{call .label}
 		{param content: $operandValue /}
 	{/call}
 {/template}
 
 /**
- * Prints outputs for autofill action.
- */
-{template .autofill_outputs}
-	{@param outputs: list<?>}
-
-	{foreach $output in $outputs}
-		{call .badge}
-			{param content: $output /}
-		{/call}
-		{if not isLast($output)}
-		,
-		{/if}
-	{/foreach}
-{/template}
-
-/**
  * Prints the show action.
  */
-{deltemplate DDMRuleBuilder.action variant="'show'"}
-	{@param action: ?}
+{template .action}
+	{@param action: html}
 
 	<b>
-		{msg desc="show-x"}
-			show-
-			{call .badge}
-				{param content: $action.param0 /}
-			{/call}
-		{/msg}
+		{$action}
 	</b>
-{/deltemplate}
-
-/**
- * Prints the enable action.
- */
-{deltemplate DDMRuleBuilder.action variant="'enable'"}
-	{@param action: ?}
-
-	<b>
-		{msg desc="enable-x"}
-			enable-
-			{call .badge}
-				{param content: $action.param0 /}
-			{/call}
-		{/msg}
-	</b>
-{/deltemplate}
-
-/**
- * Prints the calculate action.
- */
-{deltemplate DDMRuleBuilder.action variant="'calculate'"}
-	{@param action: ?}
-
-	<b>
-		{msg desc="calculate-field-x-as-x"}
-			calculate-field-
-			{call .badge}
-				{param content: $action.param0 /}
-			{/call}
-			-as-
-			{call .badge}
-				{param content: $action.param1 /}
-			{/call}
-		{/msg}
-	</b>
-{/deltemplate}
-
-/**
- * Prints the autofill action.
- */
-{deltemplate DDMRuleBuilder.action variant="'autofill'"}
-	{@param action: ?}
-
-	<b>
-		{msg desc="autofill-x-from-data-provider-x"}
-			autofill-
-			{call .autofill_outputs}
-				{param outputs: $action.param0 /}
-			{/call}
-			-from-data-provider-
-			{call .badge}
-				{param content: $action.param1 /}
-			{/call}
-		{/msg}
-	</b>
-{/deltemplate}
-
-/**
- * Prints the jump to page action.
- */
-{deltemplate DDMRuleBuilder.action variant="'jumptopage'"}
-	{@param action: ?}
-
-	<b>
-		{msg desc="jump-to-page-x"}
-			jump-to-page-
-			{call .badge}
-				{param content: $action.param0 /}
-			{/call}
-		{/msg}
-	</b>
-{/deltemplate}
-
-/**
- * Prints the require action.
- */
-{deltemplate DDMRuleBuilder.action variant="'require'"}
-	{@param action: ?}
-
-	<b>
-		{msg desc="require-x"}
-			require-
-			{call .badge}
-				{param content: $action.param0 /}
-			{/call}
-		{/msg}
-	</b>
-{/deltemplate}
+{/template}

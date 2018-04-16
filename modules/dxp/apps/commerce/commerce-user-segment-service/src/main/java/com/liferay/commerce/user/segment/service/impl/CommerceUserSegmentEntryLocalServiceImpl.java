@@ -17,24 +17,9 @@ package com.liferay.commerce.user.segment.service.impl;
 import com.liferay.commerce.user.segment.service.base.CommerceUserSegmentEntryLocalServiceBaseImpl;
 
 /**
- * The implementation of the commerce user segment entry local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
  * @author Marco Leo
- * @see CommerceUserSegmentEntryLocalServiceBaseImpl
- * @see com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryLocalServiceUtil
  */
 public class CommerceUserSegmentEntryLocalServiceImpl
 	extends CommerceUserSegmentEntryLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryLocalServiceUtil} to access the commerce user segment entry local service.
-	 */
+
 }

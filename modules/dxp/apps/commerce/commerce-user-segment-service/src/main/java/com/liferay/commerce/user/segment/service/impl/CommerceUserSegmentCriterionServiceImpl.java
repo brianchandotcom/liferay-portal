@@ -17,24 +17,9 @@ package com.liferay.commerce.user.segment.service.impl;
 import com.liferay.commerce.user.segment.service.base.CommerceUserSegmentCriterionServiceBaseImpl;
 
 /**
- * The implementation of the commerce user segment criterion remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.user.segment.service.CommerceUserSegmentCriterionService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
  * @author Marco Leo
- * @see CommerceUserSegmentCriterionServiceBaseImpl
- * @see com.liferay.commerce.user.segment.service.CommerceUserSegmentCriterionServiceUtil
  */
 public class CommerceUserSegmentCriterionServiceImpl
 	extends CommerceUserSegmentCriterionServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.commerce.user.segment.service.CommerceUserSegmentCriterionServiceUtil} to access the commerce user segment criterion remote service.
-	 */
+
 }

@@ -17,22 +17,12 @@ package com.liferay.commerce.user.segment.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 /**
- * The extended model implementation for the CommerceUserSegmentCriterion service. Represents a row in the &quot;CommerceUserSegmentCriterion&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion} interface.
- * </p>
- *
  * @author Marco Leo
  */
 @ProviderType
 public class CommerceUserSegmentCriterionImpl
 	extends CommerceUserSegmentCriterionBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a commerce user segment criterion model instance should use the {@link com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion} interface instead.
-	 */
+
 	public CommerceUserSegmentCriterionImpl() {
 	}
 }

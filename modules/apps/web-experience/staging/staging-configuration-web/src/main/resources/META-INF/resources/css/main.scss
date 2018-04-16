@@ -195,52 +195,20 @@ i {
 		font-weight: 600;
 		text-transform: uppercase;
 	}
+}
 
-	& > .staging-configuration-icon-holder {
-		&:hover + .popover-wrapper {
+.staging-taglib-popover {
+	.staging-taglib-popover-icon-holder {
+		&:hover + .popover {
 			visibility: visible;
 		}
 
-		& + .popover-wrapper {
+		+ .popover {
 			visibility: hidden;
+		}
 
-			&:hover {
-				visibility: visible;
-			}
-
-			& > .arrow {
-				border: 9px solid transparent;
-				border-left-width: 0;
-				border-right-color: #AEB7BD;
-				display: block;
-				height: 0;
-				left: -9px;
-				margin-top: -9px;
-				position: absolute;
-				top: 50%;
-				width: 0;
-				z-index: 1061;
-
-				&::after {
-					border: 8px solid transparent;
-					border-left-width: 0;
-					border-right-color: #FFF;
-					bottom: -8px;
-					content: " ";
-					display: block;
-					height: 0;
-					left: 1px;
-					position: absolute;
-					width: 0;
-				}
-			}
-
-			.popover {
-				height: 240px;
-				overflow-y: auto;
-				position: absolute;
-				width: 232px;
-			}
+		+ .popover:hover {
+			visibility:visible;
 		}
 	}
 }

@@ -137,16 +137,43 @@
 		</li>
 		<li class="layout-selector-options">
 			<aui:fieldset label="look-and-feel">
-				<aui:input disabled="<%= disableInputs %>" helpMessage="export-import-theme-settings-help" label="theme-settings" name="<%= PortletDataHandlerKeys.THEME_REFERENCE %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.THEME_REFERENCE, ParamUtil.getBoolean(request, PortletDataHandlerKeys.THEME_REFERENCE, true)) %>" />
+				<liferay-staging:checkbox
+					checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.THEME_REFERENCE, ParamUtil.getBoolean(request, PortletDataHandlerKeys.THEME_REFERENCE, true)) %>"
+					disabled="<%= disableInputs %>"
+					label="theme-settings"
+					name="<%= PortletDataHandlerKeys.THEME_REFERENCE %>"
+					popover="export-import-theme-settings-help"
+				/>
 
-				<aui:input disabled="<%= disableInputs %>" label="logo" name="<%= PortletDataHandlerKeys.LOGO %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LOGO, ParamUtil.getBoolean(request, PortletDataHandlerKeys.LOGO, true)) %>" />
+				<liferay-staging:checkbox
+					checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LOGO, ParamUtil.getBoolean(request, PortletDataHandlerKeys.LOGO, true)) %>"
+					disabled="<%= disableInputs %>"
+					label="logo"
+					name="<%= PortletDataHandlerKeys.LOGO %>"
+				/>
 
-				<aui:input disabled="<%= disableInputs %>" label="site-pages-settings" name="<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LAYOUT_SET_SETTINGS, ParamUtil.getBoolean(request, PortletDataHandlerKeys.LAYOUT_SET_SETTINGS, true)) %>" />
+				<liferay-staging:checkbox
+					checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LAYOUT_SET_SETTINGS, ParamUtil.getBoolean(request, PortletDataHandlerKeys.LAYOUT_SET_SETTINGS, true)) %>"
+					disabled="<%= disableInputs %>"
+					label="site-pages-settings"
+					name="<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>"
+				/>
 
-				<aui:input disabled="<%= disableInputs %>" label="site-template-settings" name="<%= PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS, ParamUtil.getBoolean(request, PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS, true)) %>" />
+				<liferay-staging:checkbox
+					checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS, ParamUtil.getBoolean(request, PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS, true)) %>"
+					disabled="<%= disableInputs %>"
+					label="site-template-settings"
+					name="<%= PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS %>"
+				/>
 
 				<c:if test="<%= action.equals(Constants.PUBLISH) %>">
-					<aui:input disabled="<%= disableInputs %>" helpMessage="delete-missing-layouts-staging-help" label="delete-missing-layouts" name="<%= PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS, ParamUtil.getBoolean(request, PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS, false)) %>" />
+					<liferay-staging:checkbox
+						checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS, ParamUtil.getBoolean(request, PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS, false)) %>"
+						disabled="<%= disableInputs %>"
+						label="delete-missing-layouts"
+						name="<%= PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS %>"
+						popover="delete-missing-layouts-staging-help"
+					/>
 				</c:if>
 			</aui:fieldset>
 		</li>

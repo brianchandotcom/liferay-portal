@@ -59,42 +59,11 @@
 	<aui:fieldset markupView="lexicon">
 		<div class="staging-configuration-section-title-holder">
 			<span class="staging-configuration-section-title"><%= LanguageUtil.get(request, "staged-content") %></span>
-			<span class="staging-configuration-icon-holder">
-				<svg aria-hidden="true" class="lexicon-icon lexicon-icon-question-circle-full">
-					<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#question-circle-full" />
-				</svg>
-			</span>
-
-			<div class="popover-wrapper">
-				<div class="arrow"></div>
-				<span class="bs-popover-right popover">
-					<div class="inline-scroller">
-						<div class="popover-header"><%= LanguageUtil.get(request, "staged-content") %></div>
-						<div class="popover-body">
-							<p><%= LanguageUtil.get(request, "staged-portlets-help") %></p>
-						</div>
-					</div>
-				</span>
-			</div>
-
-			<aui:script use="aui-base">
-				A.ready("aui-base", function(A)
-					{
-						var icon = A.one(".staging-configuration-section-title-holder > .staging-configuration-icon-holder");
-						icon.on("hover", function()
-							{
-								var arrow = A.one(".staging-configuration-section-title-holder > .popover-wrapper > .arrow");
-								var popover = A.one(".staging-configuration-section-title-holder > .popover-wrapper > span.popover");
-								var popoverLeft = (icon.getDOMNode().offsetLeft + icon.getDOMNode().getBoundingClientRect().width);
-								var popoverTop = -(popover.getStyle("height").slice(0, -2) / 2);
-								popover.setStyle('top', popoverTop);
-								popover.setStyle('left', popoverLeft+3);
-								arrow.setStyle('left', popoverLeft);
-							}
-						);
-					}
-				);
-			</aui:script>
+			<liferay-staging:popover
+				id="stagedportlets"
+				text="staged-portlets-help"
+				title="staged-content"
+			/>
 		</div>
 
 		<div id="<portlet:namespace />trashWarning">

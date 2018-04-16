@@ -23,6 +23,7 @@ boolean disabled = GetterUtil.getBoolean(request.getAttribute("liferay-staging:c
 String id = GetterUtil.getString(request.getAttribute("liferay-staging:checkbox:id"));
 String labelKey = GetterUtil.getString(request.getAttribute("liferay-staging:checkbox:label"));
 String name = GetterUtil.getString(request.getAttribute("liferay-staging:checkbox:name"));
+String popoverTextKey = GetterUtil.getString(request.getAttribute("liferay-staging:checkbox:popover"));
 String suggestionKey = GetterUtil.getString(request.getAttribute("liferay-staging:checkbox:suggestion"));
 String warningKey = GetterUtil.getString(request.getAttribute("liferay-staging:checkbox:warning"));
 
@@ -36,6 +37,8 @@ String disabledString = (disabled) ? "disabled" : "";
 String domId = liferayPortletResponse.getNamespace() + id;
 String domName = liferayPortletResponse.getNamespace() + name;
 String label = LanguageUtil.get(request, labelKey);
+String popoverName = name + "_popover";
+String popoverText = (Validator.isNull(popoverTextKey)) ? " " : LanguageUtil.get(request, popoverTextKey);
 String suggestion = LanguageUtil.get(request, suggestionKey);
 String warning = LanguageUtil.get(request, warningKey);
 

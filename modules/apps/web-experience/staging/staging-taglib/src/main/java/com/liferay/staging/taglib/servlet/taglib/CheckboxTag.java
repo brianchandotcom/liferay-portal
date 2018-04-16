@@ -60,6 +60,10 @@ public class CheckboxTag extends IncludeTag {
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
+	public void setPopover(String popover) {
+		_popover = popover;
+	}
+
 	public void setSuggestion(String suggestion) {
 		_suggestion = suggestion;
 	}
@@ -78,6 +82,7 @@ public class CheckboxTag extends IncludeTag {
 		_id = StringPool.BLANK;
 		_label = StringPool.BLANK;
 		_name = StringPool.BLANK;
+		_popover = StringPool.BLANK;
 		_suggestion = StringPool.BLANK;
 		_warning = StringPool.BLANK;
 	}
@@ -96,6 +101,7 @@ public class CheckboxTag extends IncludeTag {
 		request.setAttribute("liferay-staging:checkbox:id", _id);
 		request.setAttribute("liferay-staging:checkbox:label", _label);
 		request.setAttribute("liferay-staging:checkbox:name", _name);
+		request.setAttribute("liferay-staging:checkbox:popover", _popover);
 		request.setAttribute(
 			"liferay-staging:checkbox:suggestion", _suggestion);
 		request.setAttribute("liferay-staging:checkbox:warning", _warning);
@@ -109,6 +115,7 @@ public class CheckboxTag extends IncludeTag {
 	private String _id = StringPool.BLANK;
 	private String _label = StringPool.BLANK;
 	private String _name = StringPool.BLANK;
+	private String _popover = StringPool.BLANK;
 	private String _suggestion = StringPool.BLANK;
 	private String _warning = StringPool.BLANK;
 

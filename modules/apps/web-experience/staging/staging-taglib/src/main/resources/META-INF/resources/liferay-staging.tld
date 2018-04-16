@@ -77,6 +77,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The language key of the text for the optional popover.</description>
+			<name>popover</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>The language key of the checkbox's suggestion text. It will be displayed after the label.</description>
 			<name>suggestion</name>
 			<required>false</required>
@@ -293,6 +299,30 @@
 			<description>The CSS class used to format the Permissions section's label.</description>
 			<name>labelCSSClass</name>
 			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Displays a popover.</description>
+		<name>popover</name>
+		<tag-class>com.liferay.staging.taglib.servlet.taglib.PopoverTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>The id of the popover. It will be added to the portletId for creating the dom id.</description>
+			<name>id</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The language key of the popover's body text. If it is empty, the popover will not be displayed.</description>
+			<name>text</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>the language key of the popover's title.</description>
+			<name>title</name>
+			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>

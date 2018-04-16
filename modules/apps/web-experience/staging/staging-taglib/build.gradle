@@ -13,6 +13,8 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.http", version: "1.2.1"
 	compileOnly group: "org.osgi", name: "org.osgi.service.http.whiteboard", version: "1.0.0"
 	compileOnly project(":apps:foundation:frontend-taglib:frontend-taglib")
+	compileOnly project(":apps:foundation:frontend-taglib:frontend-taglib-clay")
+	compileOnly project(":apps:foundation:frontend-taglib:frontend-taglib-soy")
 	compileOnly project(":apps:web-experience:export-import:export-import-api")
 	compileOnly project(":apps:web-experience:export-import:export-import-changeset-api")
 	compileOnly project(":apps:web-experience:layout:layout-taglib")

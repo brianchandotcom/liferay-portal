@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.lang.internal;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Enumeration;
 import java.util.ResourceBundle;

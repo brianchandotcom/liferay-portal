@@ -8,6 +8,7 @@ dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.item.selector.taglib", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.journal.api", version: "3.0.0-20170601.182427-18"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.portlet.display.template", version: "2.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.upload.api", version: "1.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"

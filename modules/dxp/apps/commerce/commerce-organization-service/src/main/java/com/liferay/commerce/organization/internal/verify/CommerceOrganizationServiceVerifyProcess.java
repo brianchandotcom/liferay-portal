@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.organization.internal.verify;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.verify.VerifyProcess;
 
 import java.util.Dictionary;

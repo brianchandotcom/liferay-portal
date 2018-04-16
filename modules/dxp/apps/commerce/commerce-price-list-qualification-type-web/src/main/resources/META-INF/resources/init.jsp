@@ -28,6 +28,7 @@ page import="com.liferay.commerce.price.list.qualification.type.web.internal.dis
 page import="com.liferay.commerce.price.list.qualification.type.web.internal.display.context.RolePriceListQualificationTypeDisplayContext" %><%@
 page import="com.liferay.commerce.price.list.qualification.type.web.internal.display.context.UserGroupPriceListQualificationTypeDisplayContext" %><%@
 page import="com.liferay.commerce.price.list.qualification.type.web.internal.display.context.UserPriceListQualificationTypeDisplayContext" %><%@
+page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Organization" %><%@
@@ -37,7 +38,6 @@ page import="com.liferay.portal.kernel.model.UserGroup" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
-page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <%@ page import="javax.portlet.PortletURL" %>

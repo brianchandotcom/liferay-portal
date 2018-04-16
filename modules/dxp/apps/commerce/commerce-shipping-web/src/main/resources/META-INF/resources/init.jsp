@@ -41,6 +41,7 @@ page import="com.liferay.commerce.shipping.web.internal.display.context.Commerce
 page import="com.liferay.commerce.shipping.web.internal.display.context.CommerceShippingSettingsDisplayContext" %><%@
 page import="com.liferay.commerce.shipping.web.internal.servlet.taglib.ui.CommerceShippingFormNavigatorConstants" %><%@
 page import="com.liferay.commerce.shipping.web.servlet.taglib.ui.CommerceShippingScreenNavigationConstants" %><%@
+page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
@@ -48,7 +49,6 @@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
-page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 

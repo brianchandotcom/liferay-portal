@@ -109,7 +109,9 @@ boolean hasAddOrganizationPermission = PortalPermissionUtil.contains(permissionC
 				/>
 
 				<c:if test="<%= hasAddOrganizationPermission %>">
-					<liferay-frontend:add-menu>
+					<liferay-frontend:add-menu
+						inline="<%= true %>"
+					>
 						<portlet:renderURL var="viewUsersURL">
 							<portlet:param name="toolbarItem" value="<%= toolbarItem %>" />
 							<portlet:param name="usersListView" value="<%= usersListView %>" />

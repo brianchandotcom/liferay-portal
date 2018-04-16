@@ -14,4 +14,36 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<filteredResources>
+		<filter>
+			<id>1523898065293</id>
+			<name/>
+			<type>26</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.orFilterMatcher</id>
+				<arguments>
+					<matcher>
+						<arguments>1.0-name-matches-false-false-.git</arguments>
+						<id>org.eclipse.ui.ide.multiFilter</id>
+					</matcher>
+					<matcher>
+						<arguments>1.0-name-matches-false-false-.gradle</arguments>
+						<id>org.eclipse.ui.ide.multiFilter</id>
+					</matcher>
+					<matcher>
+						<arguments>1.0-name-matches-false-false-build</arguments>
+						<id>org.eclipse.ui.ide.multiFilter</id>
+					</matcher>
+					<matcher>
+						<arguments>1.0-name-matches-false-false-node_modules</arguments>
+						<id>org.eclipse.ui.ide.multiFilter</id>
+					</matcher>
+					<matcher>
+						<arguments>1.0-name-matches-false-false-tmp</arguments>
+						<id>org.eclipse.ui.ide.multiFilter</id>
+					</matcher>
+				</arguments>
+			</matcher>
+		</filter>
+	</filteredResources>
 </projectDescription>

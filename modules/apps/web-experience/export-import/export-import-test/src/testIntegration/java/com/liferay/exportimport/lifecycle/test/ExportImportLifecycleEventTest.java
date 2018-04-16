@@ -167,12 +167,7 @@ public class ExportImportLifecycleEventTest {
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					"com.liferay.portal.background.task.internal.messaging." +
 						"BackgroundTaskMessageListener",
-					Level.ERROR);
-			CaptureAppender captureAppender2 =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"com.liferay.exportimport.internal.background.task." +
-						"LayoutStagingBackgroundTaskExecutor",
-					Level.WARN)) {
+					Level.ERROR)) {
 
 			long targetGroupId = RandomTestUtil.nextLong();
 
@@ -194,15 +189,6 @@ public class ExportImportLifecycleEventTest {
 			Throwable throwable = throwableInformation.getThrowable();
 
 			Assert.assertSame(NoSuchGroupException.class, throwable.getClass());
-
-			loggingEvents = captureAppender2.getLoggingEvents();
-
-			loggingEvent = loggingEvents.get(0);
-
-			Assert.assertEquals(
-				"Unable to publish layout: Target group does not exists with " +
-					"the primary key " + targetGroupId,
-				loggingEvent.getMessage());
 		}
 
 		Assert.assertTrue(

@@ -16,10 +16,10 @@ package com.liferay.message.boards.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
-import com.liferay.message.boards.model.MBThread;
-import com.liferay.message.boards.service.MBThreadLocalService;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.uad.constants.MBUADConstants;
-import com.liferay.message.boards.uad.test.MBThreadUADEntityTestHelper;
+import com.liferay.message.boards.uad.test.MBMessageUADEntityTestHelper;
 
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -28,8 +28,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import com.liferay.user.associated.data.aggregator.UADAggregator;
-import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
-import com.liferay.user.associated.data.test.util.BaseUADEntityAnonymizerTestCase;
+import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
+import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 
 import org.junit.After;
@@ -46,39 +46,38 @@ import java.util.List;
  * @generated
  */
 @RunWith(Arquillian.class)
-public class MBThreadUADEntityAnonymizerTest
-	extends BaseUADEntityAnonymizerTestCase<MBThread>
+public class MBMessageUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBMessage>
 	implements WhenHasStatusByUserIdField {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
 
 	@Override
-	public MBThread addBaseModelWithStatusByUserId(long userId,
+	public MBMessage addBaseModelWithStatusByUserId(long userId,
 		long statusByUserId) throws Exception {
-		MBThread mbThread = _mbThreadUADEntityTestHelper.addMBThreadWithStatusByUserId(userId,
+		MBMessage mbMessage = _mbMessageUADEntityTestHelper.addMBMessageWithStatusByUserId(userId,
 				statusByUserId);
 
-		_mbThreads.add(mbThread);
+		_mbMessages.add(mbMessage);
 
-		return mbThread;
+		return mbMessage;
 	}
 
 	@Override
-	protected MBThread addBaseModel(long userId) throws Exception {
+	protected MBMessage addBaseModel(long userId) throws Exception {
 		return addBaseModel(userId, true);
 	}
 
 	@Override
-	protected MBThread addBaseModel(long userId, boolean deleteAfterTestRun)
+	protected MBMessage addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
-		MBThread mbThread = _mbThreadUADEntityTestHelper.addMBThread(userId);
+		MBMessage mbMessage = _mbMessageUADEntityTestHelper.addMBMessage(userId);
 
 		if (deleteAfterTestRun) {
-			_mbThreads.add(mbThread);
+			_mbMessages.add(mbMessage);
 		}
 
-		return mbThread;
+		return mbMessage;
 	}
 
 	@Override
@@ -87,23 +86,21 @@ public class MBThreadUADEntityAnonymizerTest
 	}
 
 	@Override
-	protected UADEntityAnonymizer getUADEntityAnonymizer() {
-		return _uadEntityAnonymizer;
+	protected UADAnonymizer getUADAnonymizer() {
+		return _uadAnonymizer;
 	}
 
 	@Override
 	protected boolean isBaseModelAutoAnonymized(long baseModelPK, User user)
 		throws Exception {
-		MBThread mbThread = _mbThreadLocalService.getMBThread(baseModelPK);
+		MBMessage mbMessage = _mbMessageLocalService.getMBMessage(baseModelPK);
 
-		String userName = mbThread.getUserName();
-		String statusByUserName = mbThread.getStatusByUserName();
+		String userName = mbMessage.getUserName();
+		String statusByUserName = mbMessage.getStatusByUserName();
 
-		if ((mbThread.getUserId() != user.getUserId()) &&
+		if ((mbMessage.getUserId() != user.getUserId()) &&
 				!userName.equals(user.getFullName()) &&
-				(mbThread.getRootMessageUserId() != user.getUserId()) &&
-				(mbThread.getLastPostByUserId() != user.getUserId()) &&
-				(mbThread.getStatusByUserId() != user.getUserId()) &&
+				(mbMessage.getStatusByUserId() != user.getUserId()) &&
 				!statusByUserName.equals(user.getFullName())) {
 			return true;
 		}
@@ -113,7 +110,7 @@ public class MBThreadUADEntityAnonymizerTest
 
 	@Override
 	protected boolean isBaseModelDeleted(long baseModelPK) {
-		if (_mbThreadLocalService.fetchMBThread(baseModelPK) == null) {
+		if (_mbMessageLocalService.fetchMBMessage(baseModelPK) == null) {
 			return true;
 		}
 
@@ -121,24 +118,26 @@ public class MBThreadUADEntityAnonymizerTest
 	}
 
 	@Override
-	public void tearDownBaseModels(List<MBThread> baseModels)
+	public void tearDownBaseModels(List<MBMessage> baseModels)
 		throws Exception {
-		_mbThreadUADEntityTestHelper.cleanUpDependencies(baseModels);
+		_mbMessageUADEntityTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		_mbThreadUADEntityTestHelper.cleanUpDependencies(_mbThreads);
+		_mbMessageUADEntityTestHelper.cleanUpDependencies(_mbMessages);
 	}
 
 	@DeleteAfterTestRun
-	private final List<MBThread> _mbThreads = new ArrayList<MBThread>();
+	private final List<MBMessage> _mbMessages = new ArrayList<MBMessage>();
 	@Inject
-	private MBThreadLocalService _mbThreadLocalService;
+	private MBMessageLocalService _mbMessageLocalService;
 	@Inject
-	private MBThreadUADEntityTestHelper _mbThreadUADEntityTestHelper;
-	@Inject(filter = "model.class.name=" + MBUADConstants.CLASS_NAME_MB_THREAD)
+	private MBMessageUADEntityTestHelper _mbMessageUADEntityTestHelper;
+	@Inject(filter = "model.class.name=" +
+	MBUADConstants.CLASS_NAME_MB_MESSAGE)
 	private UADAggregator _uadAggregator;
-	@Inject(filter = "model.class.name=" + MBUADConstants.CLASS_NAME_MB_THREAD)
-	private UADEntityAnonymizer _uadEntityAnonymizer;
+	@Inject(filter = "model.class.name=" +
+	MBUADConstants.CLASS_NAME_MB_MESSAGE)
+	private UADAnonymizer _uadAnonymizer;
 }

@@ -14,16 +14,16 @@
 
 package com.liferay.message.boards.uad.anonymizer;
 
-import com.liferay.message.boards.model.MBCategory;
-import com.liferay.message.boards.service.MBCategoryLocalService;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.uad.constants.MBUADConstants;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 
-import com.liferay.user.associated.data.anonymizer.DynamicQueryUADEntityAnonymizer;
-import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
+import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
+import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.util.UADAnonymizerHelper;
 
 import org.osgi.service.component.annotations.Component;
@@ -37,49 +37,48 @@ import java.util.List;
  * @generated
  */
 @Component(immediate = true, property =  {
-	"model.class.name=" + MBUADConstants.CLASS_NAME_MB_CATEGORY}, service = UADEntityAnonymizer.class)
-public class MBCategoryUADEntityAnonymizer
-	extends DynamicQueryUADEntityAnonymizer<MBCategory> {
+	"model.class.name=" + MBUADConstants.CLASS_NAME_MB_MESSAGE}, service = UADAnonymizer.class)
+public class MBMessageUADAnonymizer extends DynamicQueryUADAnonymizer<MBMessage> {
 	@Override
-	public void autoAnonymize(MBCategory mbCategory, long userId)
+	public void autoAnonymize(MBMessage mbMessage, long userId)
 		throws PortalException {
 		User anonymousUser = _uadAnonymizerHelper.getAnonymousUser();
 
-		if (mbCategory.getUserId() == userId) {
-			mbCategory.setUserId(anonymousUser.getUserId());
-			mbCategory.setUserName(anonymousUser.getFullName());
+		if (mbMessage.getUserId() == userId) {
+			mbMessage.setUserId(anonymousUser.getUserId());
+			mbMessage.setUserName(anonymousUser.getFullName());
 		}
 
-		if (mbCategory.getStatusByUserId() == userId) {
-			mbCategory.setStatusByUserId(anonymousUser.getUserId());
-			mbCategory.setStatusByUserName(anonymousUser.getFullName());
+		if (mbMessage.getStatusByUserId() == userId) {
+			mbMessage.setStatusByUserId(anonymousUser.getUserId());
+			mbMessage.setStatusByUserName(anonymousUser.getFullName());
 		}
 
-		_mbCategoryLocalService.updateMBCategory(mbCategory);
+		_mbMessageLocalService.updateMBMessage(mbMessage);
 	}
 
 	@Override
-	public void delete(MBCategory mbCategory) throws PortalException {
-		_mbCategoryLocalService.deleteCategory(mbCategory);
+	public void delete(MBMessage mbMessage) throws PortalException {
+		_mbMessageLocalService.deleteMessage(mbMessage);
 	}
 
 	@Override
 	public List<String> getNonanonymizableFieldNames() {
-		return Arrays.asList("name", "description");
+		return Arrays.asList("subject", "body");
 	}
 
 	@Override
 	protected ActionableDynamicQuery doGetActionableDynamicQuery() {
-		return _mbCategoryLocalService.getActionableDynamicQuery();
+		return _mbMessageLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	protected String[] doGetUserIdFieldNames() {
-		return MBUADConstants.USER_ID_FIELD_NAMES_MB_CATEGORY;
+		return MBUADConstants.USER_ID_FIELD_NAMES_MB_MESSAGE;
 	}
 
 	@Reference
-	private MBCategoryLocalService _mbCategoryLocalService;
+	private MBMessageLocalService _mbMessageLocalService;
 	@Reference
 	private UADAnonymizerHelper _uadAnonymizerHelper;
 }

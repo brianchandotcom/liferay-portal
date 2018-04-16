@@ -148,6 +148,41 @@ public class DetailASTUtil {
 		return parameterNames;
 	}
 
+	public static String getSignature(DetailAST detailAST) {
+		if ((detailAST.getType() != TokenTypes.CTOR_DEF) &&
+			(detailAST.getType() != TokenTypes.METHOD_DEF)) {
+
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(CharPool.OPEN_PARENTHESIS);
+
+		DetailAST parametersAST = detailAST.findFirstToken(
+			TokenTypes.PARAMETERS);
+
+		List<DetailAST> parameterDefASTList = getAllChildTokens(
+			parametersAST, false, TokenTypes.PARAMETER_DEF);
+
+		if (parameterDefASTList.isEmpty()) {
+			sb.append(CharPool.CLOSE_PARENTHESIS);
+
+			return sb.toString();
+		}
+
+		for (DetailAST parameterDefAST : parameterDefASTList) {
+			sb.append(getTypeName(parameterDefAST, true));
+			sb.append(CharPool.COMMA);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(CharPool.CLOSE_PARENTHESIS);
+
+		return sb.toString();
+	}
+
 	public static int getStartLine(DetailAST detailAST) {
 		int startLine = detailAST.getLineNo();
 

@@ -7,6 +7,7 @@ dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.item.selector.criteria.api", version: "2.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.item.selector.taglib", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.organizations.item.selector.api", version: "1.0.0-20171116.195852-1"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.roles.item.selector.api", version: "1.0.0-20171115.184622-1"
 	compileOnly group: "com.liferay", name: "com.liferay.user.groups.admin.item.selector.api", version: "1.0.0-20171115.184817-1"
 	compileOnly group: "com.liferay", name: "com.liferay.users.admin.item.selector.api", version: "1.0.0-20171115.183709-1"

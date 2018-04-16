@@ -248,6 +248,30 @@ public class LayoutPageTemplateEntryServiceImpl
 	}
 
 	@Override
+	public void setDefaultLayoutPageTemplateEntry(
+			LayoutPageTemplateEntry layoutPageTemplateEntry)
+		throws PortalException {
+
+		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
+			fetchDefaultLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getGroupId(),
+				layoutPageTemplateEntry.getClassNameId(),
+				layoutPageTemplateEntry.getClassTypeId());
+
+		if (defaultLayoutPageTemplateEntry != null) {
+			defaultLayoutPageTemplateEntry.setDefaultTemplate(false);
+
+			layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+				defaultLayoutPageTemplateEntry);
+		}
+
+		layoutPageTemplateEntry.setDefaultTemplate(true);
+
+		layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+			layoutPageTemplateEntry);
+	}
+
+	@Override
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 			long layoutPageTemplateEntryId, long classNameId, long classTypeId)
 		throws PortalException {

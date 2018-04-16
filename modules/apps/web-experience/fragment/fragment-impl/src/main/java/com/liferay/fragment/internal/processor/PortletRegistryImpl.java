@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.fragment.processor;
+package com.liferay.fragment.internal.processor;
 
+import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.ArrayList;

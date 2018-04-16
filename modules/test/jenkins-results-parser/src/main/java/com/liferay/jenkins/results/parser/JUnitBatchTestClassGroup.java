@@ -49,6 +49,8 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		setTestClassFiles();
 
+		_setIncludeAutoBalanceTests();
+
 		setAxisTestClassGroups();
 	}
 
@@ -237,6 +239,25 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		return pathMatchers;
 	}
 
+	private void _setIncludeAutoBalanceTests() {
+		if (!testClassFiles.isEmpty()) {
+			includeAutoBalanceTests = true;
+
+			return;
+		}
+
+		List<File> modifiedJavaFilesList =
+			portalGitWorkingDirectory.getModifiedFilesList(".java");
+
+		if (!modifiedJavaFilesList.isEmpty()) {
+			includeAutoBalanceTests = true;
+
+			return;
+		}
+
+		includeAutoBalanceTests = _DEFAULT_INCLUDE_AUTO_BALANCE_TESTS;
+	}
+
 	private void _setTestClassNamesExcludesRelativeGlobs() {
 		String testClassNamesExcludesPropertyValue =
 			_getTestClassNamesExcludesPropertyValue();
@@ -284,6 +305,8 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			_getTestClassNamesPathMatchers(
 				testClassNamesIncludesRelativeGlobs));
 	}
+
+	private static final boolean _DEFAULT_INCLUDE_AUTO_BALANCE_TESTS = false;
 
 	private final Pattern _packagePathPattern = Pattern.compile(
 		".*/(?<packagePath>com/.*)");

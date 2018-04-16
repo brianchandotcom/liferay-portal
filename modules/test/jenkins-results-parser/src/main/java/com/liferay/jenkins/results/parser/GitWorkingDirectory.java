@@ -754,30 +754,40 @@ public class GitWorkingDirectory {
 	}
 
 	public List<File> getModifiedFilesList() {
-		List<File> currentBranchFiles = new ArrayList<>();
+		return getModifiedFilesList(null);
+	}
+
+	public List<File> getModifiedFilesList(String grepPredicateString) {
+		List<File> modifiedFiles = new ArrayList<>();
 
 		Branch currentBranch = getCurrentBranch();
 
-		ExecutionResult executionResult = executeBashCommands(
-			JenkinsResultsParserUtil.combine(
-				"git diff --diff-filter=AM --name-only ",
-				_getMergeBaseCommitSHA(
-					currentBranch, getBranch(_upstreamBranchName, null)),
-				" ", currentBranch.getSHA()));
+		String bashCommand = JenkinsResultsParserUtil.combine(
+			"git diff --diff-filter=AM --name-only ",
+			_getMergeBaseCommitSHA(
+				currentBranch, getBranch(_upstreamBranchName, null)),
+			" ", currentBranch.getSHA());
+
+		if ((grepPredicateString != null) && !grepPredicateString.isEmpty()) {
+			bashCommand = JenkinsResultsParserUtil.combine(
+				bashCommand, " | grep ", grepPredicateString);
+		}
+
+		ExecutionResult executionResult = executeBashCommands(bashCommand);
 
 		if (executionResult.getExitValue() != 0) {
 			throw new RuntimeException(
-				"Unable to get current branch files\n" +
+				"Unable to get current branch modified files\n" +
 					executionResult.getStandardError());
 		}
 
 		String gitDiffOutput = executionResult.getStandardOut();
 
 		for (String line : gitDiffOutput.split("\n")) {
-			currentBranchFiles.add(new File(_workingDirectory, line));
+			modifiedFiles.add(new File(_workingDirectory, line));
 		}
 
-		return currentBranchFiles;
+		return modifiedFiles;
 	}
 
 	public Remote getRemote(String name) {

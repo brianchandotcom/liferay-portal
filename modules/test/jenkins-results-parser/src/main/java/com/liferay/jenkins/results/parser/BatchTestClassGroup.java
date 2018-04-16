@@ -64,7 +64,18 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 				this.portalGitWorkingDirectory.getWorkingDirectory(),
 				"test.properties"));
 
+		_setAutoBalanceTestFiles();
 		_setTestRelevantChanges();
+	}
+
+	protected int getAxisMaxSize() {
+		String axisMaxSize = _getAxisMaxSizePropertyValue();
+
+		if (axisMaxSize != null) {
+			return Integer.parseInt(axisMaxSize);
+		}
+
+		return _DEFAULT_AXIS_MAX_SIZE;
 	}
 
 	protected String getFirstPropertyValue(String basePropertyName) {
@@ -157,10 +168,23 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		int testClassFileCount = testClassFiles.size();
 
 		if (testClassFileCount == 0) {
+			if (includeAutoBalanceTests) {
+				int id = 0;
+
+				AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(
+					this, id);
+
+				axisTestClassGroups.put(id, axisTestClassGroup);
+
+				for (File autoBalanceTestFile : autoBalanceTestFiles) {
+					axisTestClassGroup.addTestClassFile(autoBalanceTestFile);
+				}
+			}
+
 			return;
 		}
 
-		int axisMaxSize = _getAxisMaxSize();
+		int axisMaxSize = getAxisMaxSize();
 
 		int axisCount = (int)Math.ceil(
 			(double)testClassFileCount / axisMaxSize);
@@ -181,30 +205,42 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 				axisTestClassGroup.addTestClassFile(axisTestClassFile);
 			}
 
+			if (includeAutoBalanceTests) {
+				for (File autoBalanceTestFile : autoBalanceTestFiles) {
+					axisTestClassGroup.addTestClassFile(autoBalanceTestFile);
+				}
+			}
+
 			id++;
 		}
 	}
 
+	protected List<File> autoBalanceTestFiles = new ArrayList();
 	protected final Map<Integer, AxisTestClassGroup> axisTestClassGroups =
 		new HashMap<>();
 	protected final String batchName;
+	protected boolean includeAutoBalanceTests;
 	protected final PortalGitWorkingDirectory portalGitWorkingDirectory;
 	protected final Properties portalTestProperties;
 	protected boolean testRelevantChanges;
 	protected final String testSuiteName;
 
-	private int _getAxisMaxSize() {
-		String axisMaxSize = _getAxisMaxSizePropertyValue();
-
-		if (axisMaxSize != null) {
-			return Integer.parseInt(axisMaxSize);
-		}
-
-		return _DEFAULT_AXIS_MAX_SIZE;
-	}
-
 	private String _getAxisMaxSizePropertyValue() {
 		return getFirstPropertyValue("test.batch.axis.max.size");
+	}
+
+	private void _setAutoBalanceTestFiles() {
+		String propertyName = "test.class.names.auto.balance";
+
+		String autoBalanceTestNames = getFirstPropertyValue(propertyName);
+
+		if ((autoBalanceTestNames != null) &&
+			!autoBalanceTestNames.equals("")) {
+
+			for (String autoBalanceTestName : autoBalanceTestNames.split(",")) {
+				autoBalanceTestFiles.add(new File(autoBalanceTestName));
+			}
+		}
 	}
 
 	private void _setTestRelevantChanges() {

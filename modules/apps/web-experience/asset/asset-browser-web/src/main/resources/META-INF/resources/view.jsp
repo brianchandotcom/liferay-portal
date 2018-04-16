@@ -31,7 +31,7 @@
 	selectable="<%= false %>"
 	sortingOrder="<%= assetBrowserDisplayContext.getOrderByType() %>"
 	sortingURL="<%= assetBrowserDisplayContext.getSortingURL() %>"
-	totalItems="<%= assetBrowserDisplayContext.getTotal() %>"
+	totalItems="<%= assetBrowserDisplayContext.getTotalItems() %>"
 	viewTypes="<%= assetBrowserDisplayContext.getViewTypeItemList() %>"
 />
 

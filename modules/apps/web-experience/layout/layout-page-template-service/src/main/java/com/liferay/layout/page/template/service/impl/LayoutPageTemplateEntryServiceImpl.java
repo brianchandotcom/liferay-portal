@@ -122,10 +122,10 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@Override
 	public LayoutPageTemplateEntry fetchDefaultLayoutPageTemplateEntry(
-		long groupId, long classNameId) {
+		long groupId, long classNameId, long classTypeId) {
 
-		return layoutPageTemplateEntryPersistence.fetchByG_C_D_First(
-			groupId, classNameId, true, null);
+		return layoutPageTemplateEntryPersistence.fetchByG_C_C_D_First(
+			groupId, classNameId, classTypeId, true, null);
 	}
 
 	@Override

@@ -23,8 +23,6 @@ import com.liferay.commerce.product.service.permission.CPPermission;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -253,11 +251,6 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 		cpDefinitionLocalService.restoreCPDefinitionFromTrash(
 			getUserId(), cpDefinitionId);
-	}
-
-	@Override
-	public Hits search(SearchContext searchContext) {
-		return cpDefinitionLocalService.search(searchContext);
 	}
 
 	@Override

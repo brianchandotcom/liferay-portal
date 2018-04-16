@@ -20,17 +20,13 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.CollectionResource;
 import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes;
-import com.liferay.portal.kernel.exception.NoSuchGroupException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 
 import java.util.List;
-
-import javax.ws.rs.NotFoundException;
-import javax.ws.rs.ServerErrorException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -66,7 +62,7 @@ public class WebSiteCollectionResource
 		ItemRoutes.Builder<Group, Long> builder) {
 
 		return builder.addGetter(
-			this::_getGroup
+			_groupService::getGroup
 		).build();
 	}
 
@@ -88,18 +84,6 @@ public class WebSiteCollectionResource
 		).build();
 	}
 
-	private Group _getGroup(Long groupId) {
-		try {
-			return _groupLocalService.getGroup(groupId);
-		}
-		catch (NoSuchGroupException nsge) {
-			throw new NotFoundException("Unable to get group " + groupId, nsge);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
-	}
-
 	private PageItems<Group> _getPageItems(
 		Pagination pagination, Company company) {
 
@@ -114,5 +98,8 @@ public class WebSiteCollectionResource
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private GroupService _groupService;
 
 }

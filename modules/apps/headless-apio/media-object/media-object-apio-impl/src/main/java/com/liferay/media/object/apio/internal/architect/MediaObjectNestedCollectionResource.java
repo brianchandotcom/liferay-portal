@@ -14,6 +14,8 @@
 
 package com.liferay.media.object.apio.internal.architect;
 
+import static com.liferay.portal.apio.architect.context.idempotent.Idempotent.idempotent;
+
 import com.liferay.apio.architect.file.BinaryFile;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
@@ -22,7 +24,6 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
-import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.folder.apio.architect.identifier.FolderIdentifier;
 import com.liferay.media.object.apio.architect.identifier.FileEntryIdentifier;
@@ -31,12 +32,8 @@ import com.liferay.portal.apio.architect.context.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 
 import java.util.List;
-
-import javax.ws.rs.NotFoundException;
-import javax.ws.rs.ServerErrorException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -72,9 +69,10 @@ public class MediaObjectNestedCollectionResource
 		ItemRoutes.Builder<FileEntry, Long> builder) {
 
 		return builder.addGetter(
-			this::_getFileEntry
+			_dlAppService::getFileEntry
 		).addRemover(
-			this::_deleteFileEntry, _hasPermission.forDeleting(FileEntry.class)
+			idempotent(_dlAppService::deleteFileEntry),
+			_hasPermission.forDeleting(FileEntry.class)
 		).build();
 	}
 
@@ -112,15 +110,6 @@ public class MediaObjectNestedCollectionResource
 		).build();
 	}
 
-	private void _deleteFileEntry(Long fileEntryId) {
-		try {
-			_dlAppService.deleteFileEntry(fileEntryId);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
-	}
-
 	private BinaryFile _getBinaryFile(FileEntry fileEntry) {
 		Try<BinaryFile> binaryFileTry = Try.fromFallible(
 			() -> new BinaryFile(
@@ -130,35 +119,19 @@ public class MediaObjectNestedCollectionResource
 		return binaryFileTry.orElse(null);
 	}
 
-	private FileEntry _getFileEntry(Long fileEntryId) {
-		try {
-			return _dlAppService.getFileEntry(fileEntryId);
-		}
-		catch (NoSuchFileEntryException | PrincipalException e) {
-			throw new NotFoundException("Unable to get file " + fileEntryId, e);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
-	}
-
 	private PageItems<FileEntry> _getPageItems(
-		Pagination pagination, Long folderId) {
+			Pagination pagination, Long folderId)
+		throws PortalException {
 
-		try {
-			Folder folder = _dlAppService.getFolder(folderId);
+		Folder folder = _dlAppService.getFolder(folderId);
 
-			List<FileEntry> fileEntries = _dlAppService.getFileEntries(
-				folder.getGroupId(), folderId, pagination.getStartPosition(),
-				pagination.getEndPosition(), null);
-			int count = _dlAppService.getFileEntriesCount(
-				folder.getGroupId(), folderId);
+		List<FileEntry> fileEntries = _dlAppService.getFileEntries(
+			folder.getGroupId(), folderId, pagination.getStartPosition(),
+			pagination.getEndPosition(), null);
+		int count = _dlAppService.getFileEntriesCount(
+			folder.getGroupId(), folderId);
 
-			return new PageItems<>(fileEntries, count);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
+		return new PageItems<>(fileEntries, count);
 	}
 
 	@Reference

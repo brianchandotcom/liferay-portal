@@ -97,7 +97,7 @@
 	</tear-down>
 
 	<command name="ApproveEventWithInvitedUser" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="quarantine" />
 
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />

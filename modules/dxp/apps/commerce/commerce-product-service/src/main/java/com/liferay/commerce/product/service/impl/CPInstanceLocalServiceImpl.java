@@ -988,7 +988,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 					}
 				}
 
-				if (Validator.isNull(ddmContent)) {
+				if ((cpInstanceId > 0) && Validator.isNull(ddmContent)) {
 					updateStatus(
 						serviceContext.getUserId(), cpInstanceId,
 						WorkflowConstants.STATUS_INACTIVE, serviceContext,

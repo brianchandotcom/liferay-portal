@@ -18,11 +18,8 @@ AUI.add(
 
 				var renderer = instance.getTemplateRenderer();
 
-				var container = document.createDocumentFragment();
-
-				new renderer(instance.getTemplateContext(), container);
-
-				return container.firstChild.outerHTML;
+				return MetalComponent.renderToString(
+					renderer, instance.getTemplateContext());
 			},
 
 			getTemplateContext: function() {

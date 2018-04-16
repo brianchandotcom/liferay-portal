@@ -1,7 +1,11 @@
 AUI.add(
 	'liferay-ddm-form-builder-rule-builder',
 	function(A) {
+		var Lang = A.Lang;
+
 		var SoyTemplateUtil = Liferay.DDM.SoyTemplateUtil;
+
+		var ACTION_LABEL = '<span class="label label-lg label-secondary">{content}</span>';
 
 		var MAP_ACTION_DESCRIPTIONS = {
 			'auto-fill': 'auto-fill',
@@ -314,45 +318,109 @@ AUI.add(
 					_getActionDescription: function(type, action) {
 						var instance = this;
 
+						var actionDescription = '';
 						var actionKey = MAP_ACTION_DESCRIPTIONS[type];
 
 						if (actionKey) {
-							if (type === 'jump-to-page') {
-								var pages = instance.getPages();
+							if (type === 'auto-fill') {
+								var fieldList = action.outputs;
+								var fieldListLabels = [];
 
-								return {
-									param0: pages[action.target].label,
-									type: 'jumptopage'
-								};
-							}
-							else if (type === 'auto-fill') {
-								var fieldListDescription = [];
-
-								for (var output in action.outputs) {
-									fieldListDescription.push(action.outputs[output]);
+								for (var output in fieldList) {
+									fieldListLabels.push(
+										Lang.sub(
+											ACTION_LABEL,
+											{
+												content: fieldList[output]
+											}
+										)
+									);
 								}
 
-								return {
-									param0: fieldListDescription,
-									param1: instance._getDataProviderLabel(action.ddmDataProviderInstanceUUID),
-									type: 'autofill'
-								};
+								actionDescription = Lang.sub(
+									Liferay.Language.get('autofill-x-from-data-provider-x'),
+									[
+										fieldListLabels,
+										instance._getDataProviderLabel(action.ddmDataProviderInstanceUUID)
+									]
+								);
 							}
 							else if (type === 'calculate') {
-
-								return {
-									param0: action.expression.replace(/\[|\]/g, ''),
-									param1: instance._getFieldLabel(action.target),
-									type: type
-								};
+								actionDescription = Lang.sub(
+									Liferay.Language.get('calculate-field-x-as-x'),
+									[
+										Lang.sub(
+											ACTION_LABEL,
+											{
+												content: action.expression.replace(/\[|\]/g, '')
+											}
+										),
+										Lang.sub(
+											ACTION_LABEL,
+											{
+												content: instance._getFieldLabel(action.target)
+											}
+										)
+									]
+								);
 							}
-							return {
-								param0: action.label,
-								type: type
-							};
+							else if (type === 'enable') {
+								actionDescription = Lang.sub(
+									Liferay.Language.get('enable-x'),
+									[
+										Lang.sub(
+											ACTION_LABEL,
+											{
+												content: action.label
+											}
+										)
+									]
+								);
+							}
+							else if (type === 'jump-to-page') {
+								var pages = instance.getPages();
+
+								actionDescription = Lang.sub(
+									Liferay.Language.get('jump-to-page-x'),
+									[
+										Lang.sub(
+											ACTION_LABEL,
+											{
+												content: pages[action.target].label
+											}
+										)
+									]
+								);
+							}
+							else if (type === 'require') {
+								actionDescription = Lang.sub(
+									Liferay.Language.get('require-x'),
+									[
+										Lang.sub(
+											ACTION_LABEL,
+											{
+												content: action.label
+											}
+										)
+									]
+								);
+							}
+							else if (type === 'show') {
+								actionDescription = Lang.sub(
+									Liferay.Language.get('show-x'),
+									[
+										Lang.sub(
+											ACTION_LABEL,
+											{
+												content: action.label
+											}
+										)
+									]
+								);
+							}
 						}
 
-						return {};
+						return window.DDMRuleBuilder.render.Soy.toIncDom(actionDescription);
 					},
 
 					_getActionsDescription: function(actions) {

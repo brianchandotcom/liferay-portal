@@ -41,7 +41,7 @@ public class SourceFormatFailureMessageGenerator
 
 		int end = start + _CHARACTER_LIMIT;
 
-		end = consoleText.indexOf("\n", end);
+		end = consoleText.lastIndexOf("\n", end);
 
 		return getConsoleTextSnippetElement(consoleText, false, start, end);
 	}

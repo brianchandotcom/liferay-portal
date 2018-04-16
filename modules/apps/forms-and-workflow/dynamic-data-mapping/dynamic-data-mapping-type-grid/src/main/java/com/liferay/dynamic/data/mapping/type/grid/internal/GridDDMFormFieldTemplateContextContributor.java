@@ -53,7 +53,6 @@ public class GridDDMFormFieldTemplateContextContributor
 		parameters.put(
 			"rows",
 			getOptions("rows", ddmFormField, ddmFormFieldRenderingContext));
-
 		parameters.put(
 			"value",
 			jsonFactory.looseDeserialize(

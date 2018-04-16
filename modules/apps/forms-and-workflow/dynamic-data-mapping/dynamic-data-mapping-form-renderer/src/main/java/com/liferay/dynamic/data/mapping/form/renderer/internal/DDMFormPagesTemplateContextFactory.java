@@ -251,16 +251,6 @@ public class DDMFormPagesTemplateContextFactory {
 		return rowTemplateContext;
 	}
 
-	protected String getValue(
-		DDMFormRenderingContext ddmFormRenderingContext, String value) {
-
-		if (ddmFormRenderingContext.isViewMode()) {
-			value = HtmlUtil.extractText(value);
-		}
-
-		return value;
-	}
-
 	protected Map<String, String> getLocalizedValueMap(
 		LocalizedValue localizedValue,
 		DDMFormRenderingContext ddmFormRenderingContext) {
@@ -279,6 +269,16 @@ public class DDMFormPagesTemplateContextFactory {
 		}
 
 		return map;
+	}
+
+	protected String getValue(
+		DDMFormRenderingContext ddmFormRenderingContext, String value) {
+
+		if (ddmFormRenderingContext.isViewMode()) {
+			return HtmlUtil.extractText(value);
+		}
+
+		return value;
 	}
 
 	protected boolean isPageEnabled(int pageIndex) {

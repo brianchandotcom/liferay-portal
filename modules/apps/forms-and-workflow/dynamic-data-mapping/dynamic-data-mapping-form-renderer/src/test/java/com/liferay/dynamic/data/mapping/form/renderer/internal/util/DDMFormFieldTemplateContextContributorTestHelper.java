@@ -33,7 +33,7 @@ public class DDMFormFieldTemplateContextContributorTestHelper
 	extends PowerMockito {
 
 	public CheckboxMultipleDDMFormFieldTemplateContextContributor
-			createCheckboxMultipleDMFormFieldTemplateContextContributor()
+			createCheckboxMultipleDDMFormFieldTemplateContextContributor()
 		throws Exception {
 
 		CheckboxMultipleDDMFormFieldTemplateContextContributor

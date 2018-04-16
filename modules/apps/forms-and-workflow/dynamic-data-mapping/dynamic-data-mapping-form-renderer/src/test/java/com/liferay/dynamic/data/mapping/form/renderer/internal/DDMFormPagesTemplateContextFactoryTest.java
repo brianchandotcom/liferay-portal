@@ -88,7 +88,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 	}
 
 	@Test
-	public void testCheckboxMultipleFieldHtmlTagExtraction() throws Exception {
+	public void testExtractHTMLTagsFromCheckboxMultipleFieldTemplateContext() throws Exception {
 
 		// Dynamic data mapping form
 
@@ -108,7 +108,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		mockDDMFormFieldTypeServicesTracker(
 			"checkbox-multiple",
 			_ddmFormFieldTemplateContextContributorTestHelper.
-				createCheckboxMultipleDMFormFieldTemplateContextContributor());
+				createCheckboxMultipleDDMFormFieldTemplateContextContributor());
 
 		// Dynamic data mapping form layout
 
@@ -125,25 +125,28 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
 
-		Map<String, Object> checkboxMultipleField = getField1Column1Row1(pages);
+		Map<String, Object> fieldTemplateContext = getFieldTemplateContext(
+			pages);
+
+		Assert.assertEquals("label", fieldTemplateContext.get("label"));
 
 		List<Map<String, String>> options =
-			(List<Map<String, String>>)checkboxMultipleField.get("options");
+			(List<Map<String, String>>)fieldTemplateContext.get("options");
 
 		Map<String, String> optionField = options.get(0);
 
-		String optionLabelFieldValue = optionField.get("label");
+		Assert.assertEquals("option", optionField.get("label"));
 
-		Assert.assertEquals("label", checkboxMultipleField.get("label"));
-		Assert.assertEquals("tip", checkboxMultipleField.get("tip"));
-		Assert.assertEquals("option", optionLabelFieldValue);
+		Object predefinedValue = fieldTemplateContext.get("predefinedValue");
+
 		Assert.assertEquals(
-			"[predefinedValue]",
-			checkboxMultipleField.get("predefinedValue").toString());
+			"[\"predefinedValue\"]", predefinedValue.toString());
+
+		Assert.assertEquals("tip", fieldTemplateContext.get("tip"));
 	}
 
 	@Test
-	public void testDateFieldHtmlTagExtraction() throws Exception {
+	public void testExtractHTMLTagsFromDateFieldTemplateContext() throws Exception {
 
 		// Dynamic data mapping form
 
@@ -170,14 +173,15 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
 
-		Map<String, Object> radioField = getField1Column1Row1(pages);
+		Map<String, Object> fieldTemplateContext = getFieldTemplateContext(
+			pages);
 
-		Assert.assertEquals("label", radioField.get("label"));
-		Assert.assertEquals("tip", radioField.get("tip"));
+		Assert.assertEquals("label", fieldTemplateContext.get("label"));
+		Assert.assertEquals("tip", fieldTemplateContext.get("tip"));
 	}
 
 	@Test
-	public void testDescriptionHtmlTagExtraction() throws Exception {
+	public void testExtractHTMLTagsFromPageDescription() throws Exception {
 
 		// Dynamic data mapping form
 
@@ -200,9 +204,11 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
 
-		Map<String, Object> page1 = (Map<String, Object>)pages.get(0);
+		Map<String, Object> pageTemplateContext =
+			(Map<String, Object>)pages.get(0);
 
-		Assert.assertEquals("descriptionPage", page1.get("description"));
+		Assert.assertEquals(
+			"descriptionPage", pageTemplateContext.get("description"));
 	}
 
 	@Test
@@ -286,7 +292,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 	}
 
 	@Test
-	public void testGridFieldHtmlTagExtraction() throws Exception {
+	public void testExtractHTMLTagsFromGridFieldTemplateContext() throws Exception {
 
 		// Dynamic data mapping form
 
@@ -326,30 +332,30 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
 
-		Map<String, Object> checkboxMultipleField = getField1Column1Row1(pages);
+		Map<String, Object> fieldTemplateContext = getFieldTemplateContext(
+			pages);
+
+		Assert.assertEquals("label", fieldTemplateContext.get("label"));
 
 		List<Map<String, String>> columns =
-			(List<Map<String, String>>)checkboxMultipleField.get("columns");
+			(List<Map<String, String>>)fieldTemplateContext.get("columns");
 
 		Map<String, String> columnField = columns.get(0);
 
-		String columnOptionLabelFieldValue = columnField.get("label");
+		Assert.assertEquals("option", columnField.get("label"));
 
 		List<Map<String, String>> rows =
-			(List<Map<String, String>>)checkboxMultipleField.get("rows");
+			(List<Map<String, String>>)fieldTemplateContext.get("rows");
 
 		Map<String, String> rowField = rows.get(0);
 
-		String rowOptionLabelFieldValue = rowField.get("label");
+		Assert.assertEquals("option", rowField.get("label"));
 
-		Assert.assertEquals("label", checkboxMultipleField.get("label"));
-		Assert.assertEquals("tip", checkboxMultipleField.get("tip"));
-		Assert.assertEquals("option", columnOptionLabelFieldValue);
-		Assert.assertEquals("option", rowOptionLabelFieldValue);
+		Assert.assertEquals("tip", fieldTemplateContext.get("tip"));
 	}
 
 	@Test
-	public void testNumericFieldHtmlTagExtraction() throws Exception {
+	public void testExtractHTMLTagsFromNumericFieldTemplateContext() throws Exception {
 
 		// Dynamic data mapping form
 
@@ -382,12 +388,14 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
 
-		Map<String, Object> numericField = getField1Column1Row1(pages);
+		Map<String, Object> fieldTemplateContext = getFieldTemplateContext(
+			pages);
 
-		Assert.assertEquals("label", numericField.get("label"));
-		Assert.assertEquals("tip", numericField.get("tip"));
-		Assert.assertEquals("placeHolder", numericField.get("placeholder"));
-		Assert.assertEquals("toolTip", numericField.get("tooltip"));
+		Assert.assertEquals("label", fieldTemplateContext.get("label"));
+		Assert.assertEquals(
+			"placeHolder", fieldTemplateContext.get("placeholder"));
+		Assert.assertEquals("tip", fieldTemplateContext.get("tip"));
+		Assert.assertEquals("toolTip", fieldTemplateContext.get("tooltip"));
 	}
 
 	@Test
@@ -474,7 +482,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 	}
 
 	@Test
-	public void testRadioFieldHtmlTagExtraction() throws Exception {
+	public void testExtractHTMLTagsFromRadioFieldTemplateContext() throws Exception {
 
 		// Dynamic data mapping form
 
@@ -511,20 +519,22 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
 
-		Map<String, Object> radioField = getField1Column1Row1(pages);
+		Map<String, Object> fieldTemplateContext = getFieldTemplateContext(
+			pages);
 
 		List<Map<String, String>> options =
-			(List<Map<String, String>>)radioField.get("options");
+			(List<Map<String, String>>)fieldTemplateContext.get("options");
 
 		Map<String, String> optionField = options.get(0);
 
-		String optionLabelFieldValue = optionField.get("label");
+		Assert.assertEquals("label", fieldTemplateContext.get("label"));
+		Assert.assertEquals("option", optionField.get("label"));
 
-		Assert.assertEquals("label", radioField.get("label"));
-		Assert.assertEquals("tip", radioField.get("tip"));
-		Assert.assertEquals("option", optionLabelFieldValue);
-		Assert.assertEquals(
-			"predefinedValue", radioField.get("predefinedValue").toString());
+		Object predefinedValue = fieldTemplateContext.get("predefinedValue");
+
+		Assert.assertEquals("predefinedValue", predefinedValue.toString());
+
+		Assert.assertEquals("tip", fieldTemplateContext.get("tip"));
 	}
 
 	@Test
@@ -641,7 +651,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 	}
 
 	@Test
-	public void testSelectFieldHtmlTagExtraction() throws Exception {
+	public void testExtractHTMLTagsFromSelectFieldTemplateContext() throws Exception {
 
 		// Dynamic data mapping form
 
@@ -678,24 +688,28 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
 
-		Map<String, Object> selectField = getField1Column1Row1(pages);
+		Map<String, Object> fieldTemplateContext = getFieldTemplateContext(
+			pages);
+
+		Assert.assertEquals("label", fieldTemplateContext.get("label"));
 
 		List<Map<String, String>> options =
-			(List<Map<String, String>>)selectField.get("options");
+			(List<Map<String, String>>)fieldTemplateContext.get("options");
 
 		Map<String, String> optionField = options.get(0);
 
-		String optionLabelFieldValue = optionField.get("label");
+		Assert.assertEquals("option", optionField.get("label"));
 
-		Assert.assertEquals("label", selectField.get("label"));
-		Assert.assertEquals("tip", selectField.get("tip"));
-		Assert.assertEquals("option", optionLabelFieldValue);
+		Object predefinedValue = fieldTemplateContext.get("predefinedValue");
+
 		Assert.assertEquals(
-			"[predefinedValue]", selectField.get("predefinedValue").toString());
+			"[\"predefinedValue\"]", predefinedValue.toString());
+
+		Assert.assertEquals("tip", fieldTemplateContext.get("tip"));
 	}
 
 	@Test
-	public void testTextFieldHtmlTagExtraction() throws Exception {
+	public void testExtractHTMLTagsFromTextFieldTemplateContext() throws Exception {
 
 		// Dynamic data mapping form
 
@@ -731,27 +745,28 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
 
-		Map<String, Object> textField = getField1Column1Row1(pages);
+		Map<String, Object> fieldTemplateContext = getFieldTemplateContext(
+			pages);
+
+		Assert.assertEquals("label", fieldTemplateContext.get("label"));
 
 		List<Map<String, String>> options =
-			(List<Map<String, String>>)textField.get("options");
+			(List<Map<String, String>>)fieldTemplateContext.get("options");
 
 		Map<String, String> optionField = options.get(0);
 
-		String optionLabelFieldValue = optionField.get("label");
-
-		Assert.assertEquals("label", textField.get("label"));
-		Assert.assertEquals("tip", textField.get("tip"));
-		Assert.assertEquals("placeHolder", textField.get("placeholder"));
-		Assert.assertEquals("toolTip", textField.get("tooltip"));
-		Assert.assertEquals("option", optionLabelFieldValue);
+		Assert.assertEquals("option", optionField.get("label"));
 
 		Assert.assertEquals(
-			"predefinedValue", textField.get("predefinedValue"));
+			"placeHolder", fieldTemplateContext.get("placeholder"));
+		Assert.assertEquals(
+			"predefinedValue", fieldTemplateContext.get("predefinedValue"));
+		Assert.assertEquals("tip", fieldTemplateContext.get("tip"));
+		Assert.assertEquals("toolTip", fieldTemplateContext.get("tooltip"));
 	}
 
 	@Test
-	public void testTitleHtmlTagExtraction() throws Exception {
+	public void testExtractHTMLTagsFromPageTitle() throws Exception {
 
 		// Dynamic data mapping form
 
@@ -774,9 +789,10 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
 
-		Map<String, Object> page1 = (Map<String, Object>)pages.get(0);
+		Map<String, Object> pageTemplateContext =
+			(Map<String, Object>)pages.get(0);
 
-		Assert.assertEquals("titlePage", page1.get("title"));
+		Assert.assertEquals("titlePage", pageTemplateContext.get("title"));
 	}
 
 	protected void assertColumnSize(
@@ -897,7 +913,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		return ddmFormEvaluator;
 	}
 
-	protected Map<String, Object> getField1Column1Row1(List<Object> pages) {
+	protected Map<String, Object> getFieldTemplateContext(List<Object> pages) {
 		Map<String, Object> page1 = (Map<String, Object>)pages.get(0);
 
 		List<Object> rows = (List<Object>)page1.get("rows");
@@ -920,7 +936,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		DDMFormFieldTemplateContextContributor
 			ddmFormFieldTemplateContextContributor) {
 
-		Mockito.when(
+		when(
 			_ddmFormFieldTypeServicesTracker.
 				getDDMFormFieldTemplateContextContributor(Matchers.eq(type))
 		).thenReturn(
@@ -935,7 +951,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		themeDisplay.setPathThemeImages(StringPool.BLANK);
 
-		Mockito.when(
+		when(
 			(ThemeDisplay)_request.getAttribute(WebKeys.THEME_DISPLAY)
 		).thenReturn(
 			themeDisplay

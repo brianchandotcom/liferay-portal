@@ -152,8 +152,6 @@ public class DDMFormDisplayContext {
 		DDMFormRenderingContext ddmFormRenderingContext =
 			createDDMFormRenderingContext(ddmForm);
 
-		ddmFormRenderingContext.setViewMode(true);
-
 		ddmFormRenderingContext.setGroupId(ddmFormInstance.getGroupId());
 
 		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
@@ -352,6 +350,8 @@ public class DDMFormDisplayContext {
 
 		ddmFormRenderingContext.setPortletNamespace(
 			_renderResponse.getNamespace());
+
+		ddmFormRenderingContext.setViewMode(true);
 
 		return ddmFormRenderingContext;
 	}

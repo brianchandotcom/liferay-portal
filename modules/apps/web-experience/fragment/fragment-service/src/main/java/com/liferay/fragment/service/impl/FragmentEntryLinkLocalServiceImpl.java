@@ -73,6 +73,8 @@ public class FragmentEntryLinkLocalServiceImpl
 		fragmentEntryLink.setJs(js);
 		fragmentEntryLink.setEditableValues(editableValues);
 		fragmentEntryLink.setPosition(position);
+		fragmentEntryLink.setLastPropagationDate(
+			serviceContext.getCreateDate(new Date()));
 
 		fragmentEntryLinkPersistence.update(fragmentEntryLink);
 

@@ -7,6 +7,7 @@ dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.expando.taglib", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.3.0-20180131.001308-11"
 	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib.clay", version: "1.0.0-20180109.010916-4"
+	compileOnly group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "4.0.0-20180316.222213-1"
 	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib.soy", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0-20180326.173807-1"

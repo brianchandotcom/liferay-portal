@@ -111,6 +111,9 @@ public class FreeMarkerPortlet extends MVCPortlet {
 					writer = new UnsyncStringWriter();
 				}
 
+				template.prepare(
+					PortalUtil.getHttpServletRequest(portletRequest));
+
 				template.processTemplate(writer);
 			}
 			catch (Exception e) {

@@ -146,7 +146,7 @@ public class AssetBrowserDisplayContext {
 			addPortletURL.toString(), "refererPlid", themeDisplay.getPlid());
 	}
 
-	public AssetBrowserSearch getAssetBrowserSearch() throws Exception {
+	public AssetBrowserSearch getAssetBrowserSearch() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -270,7 +270,7 @@ public class AssetBrowserDisplayContext {
 		return _eventName;
 	}
 
-	public long[] getFilterGroupIds() throws PortalException {
+	public long[] getFilterGroupIds() {
 		long[] filterGroupIds = getSelectedGroupIds();
 
 		if (getGroupId() > 0) {
@@ -333,7 +333,7 @@ public class AssetBrowserDisplayContext {
 		return listable;
 	}
 
-	public List<NavigationItem> getNavigationItems() throws PortalException {
+	public List<NavigationItem> getNavigationItems() {
 		List<NavigationItem> navigationItems = new ArrayList<>();
 
 		NavigationItem entriesNavigationItem = new NavigationItem();
@@ -492,7 +492,7 @@ public class AssetBrowserDisplayContext {
 		return _subtypeSelectionId;
 	}
 
-	public int getTotal() throws PortalException {
+	public int getTotal() {
 		return getTotal(getFilterGroupIds());
 	}
 
@@ -546,7 +546,7 @@ public class AssetBrowserDisplayContext {
 		};
 	}
 
-	public boolean isDisabledManagementBar() throws PortalException {
+	public boolean isDisabledManagementBar() {
 		if (getTotal(getSelectedGroupIds()) > 0) {
 			return false;
 		}

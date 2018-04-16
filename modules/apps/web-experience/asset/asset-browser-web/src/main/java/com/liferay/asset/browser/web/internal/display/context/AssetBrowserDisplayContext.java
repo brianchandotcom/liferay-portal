@@ -24,9 +24,11 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -255,21 +257,21 @@ public class AssetBrowserDisplayContext {
 		return _eventName;
 	}
 
-	public DropdownItemList getFilterItemsDropdownItemList() {
+	public List<DropdownItem> getFilterItemsDropdownItems() {
 		return new DropdownItemList(_request) {
 			{
 				addGroup(
 					SafeConsumer.ignore(
 						dropdownGroupItem -> {
-							dropdownGroupItem.setDropdownItemList(
-								_getFilterNavigationDropdownItemList());
+							dropdownGroupItem.setDropdownItems(
+								_getFilterNavigationDropdownItems());
 							dropdownGroupItem.setLabel("sites");
 						}));
 
 				addGroup(
 					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItemList(
-							_getOrderByDropdownItemList());
+						dropdownGroupItem.setDropdownItems(
+							_getOrderByDropdownItems());
 						dropdownGroupItem.setLabel("order-by");
 					});
 			}
@@ -398,7 +400,7 @@ public class AssetBrowserDisplayContext {
 		return _typeSelection;
 	}
 
-	public ViewTypeItemList getViewTypeItemList() {
+	public List<ViewTypeItem> getViewTypeItems() {
 		PortletURL portletURL = _renderResponse.createActionURL();
 
 		portletURL.setParameter(
@@ -448,7 +450,7 @@ public class AssetBrowserDisplayContext {
 		return filterGroupIds;
 	}
 
-	private DropdownItemList _getFilterNavigationDropdownItemList()
+	private List<DropdownItem> _getFilterNavigationDropdownItems()
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
@@ -528,7 +530,7 @@ public class AssetBrowserDisplayContext {
 		return _orderByCol;
 	}
 
-	private DropdownItemList _getOrderByDropdownItemList() {
+	private List<DropdownItem> _getOrderByDropdownItems() {
 		return new DropdownItemList(_request) {
 			{
 

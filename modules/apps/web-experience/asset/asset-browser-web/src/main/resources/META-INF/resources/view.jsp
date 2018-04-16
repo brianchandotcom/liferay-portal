@@ -25,14 +25,14 @@
 	componentId="assetBrowserManagementToolbar"
 	creationMenu="<%= Validator.isNotNull(assetBrowserDisplayContext.getAddButtonURL()) ? assetBrowserDisplayContext.getCreationMenu() : null %>"
 	disabled="<%= assetBrowserDisplayContext.isDisabledManagementBar() %>"
-	filterItems="<%= assetBrowserDisplayContext.getFilterItemsDropdownItemList() %>"
+	filterItems="<%= assetBrowserDisplayContext.getFilterItemsDropdownItems() %>"
 	searchActionURL="<%= assetBrowserDisplayContext.getSearchActionURL() %>"
 	searchFormName="searchFm"
 	selectable="<%= false %>"
 	sortingOrder="<%= assetBrowserDisplayContext.getOrderByType() %>"
 	sortingURL="<%= assetBrowserDisplayContext.getSortingURL() %>"
 	totalItems="<%= assetBrowserDisplayContext.getTotalItems() %>"
-	viewTypes="<%= assetBrowserDisplayContext.getViewTypeItemList() %>"
+	viewTypes="<%= assetBrowserDisplayContext.getViewTypeItems() %>"
 />
 
 <aui:form action="<%= assetBrowserDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="post" name="selectAssetFm">

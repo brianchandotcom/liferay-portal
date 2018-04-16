@@ -59,8 +59,7 @@ page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %>
 <%@ page import="java.util.LinkedHashMap" %><%@
 page import="java.util.List" %>
 
-<%@ page import="javax.portlet.PortletURL" %><%@
-page import="javax.portlet.WindowState" %>
+<%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
 

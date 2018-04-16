@@ -23,14 +23,12 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
@@ -72,11 +70,5 @@ public class GroupExceptionRequestHandler {
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
 	}
-
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.site.admin.web)",
-		unbind = "-"
-	)
-	private ResourceBundleLoader _resourceBundleLoader;
 
 }

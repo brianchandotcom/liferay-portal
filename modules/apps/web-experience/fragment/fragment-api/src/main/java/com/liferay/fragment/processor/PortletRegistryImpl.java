@@ -32,12 +32,14 @@ import org.osgi.service.component.annotations.ReferencePolicy;
  * @author Pavel Savinov
  */
 @Component(immediate = true, service = PortletRegistry.class)
-public class PortletRegistryImpl {
+public class PortletRegistryImpl implements PortletRegistry {
 
+	@Override
 	public List<String> getPortletAliases() {
 		return new ArrayList<>(_portletNames.keySet());
 	}
 
+	@Override
 	public String getPortletName(String alias) {
 		return _portletNames.get(alias);
 	}

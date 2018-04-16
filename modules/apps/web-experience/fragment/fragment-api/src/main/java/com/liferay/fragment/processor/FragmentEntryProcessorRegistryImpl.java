@@ -33,8 +33,10 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Pavel Savinov
  */
 @Component(immediate = true, service = FragmentEntryProcessorRegistry.class)
-public class FragmentEntryProcessorRegistryImpl {
+public class FragmentEntryProcessorRegistryImpl
+	implements FragmentEntryProcessorRegistry {
 
+	@Override
 	public String processFragmentEntryLinkHTML(
 			FragmentEntryLink fragmentEntryLink)
 		throws PortalException {
@@ -43,6 +45,7 @@ public class FragmentEntryProcessorRegistryImpl {
 			fragmentEntryLink, PortletMode.EDIT.toString());
 	}
 
+	@Override
 	public String processFragmentEntryLinkHTML(
 			FragmentEntryLink fragmentEntryLink, String mode)
 		throws PortalException {
@@ -59,6 +62,7 @@ public class FragmentEntryProcessorRegistryImpl {
 		return html;
 	}
 
+	@Override
 	public void validateFragmentEntryHTML(String html) throws PortalException {
 		for (FragmentEntryProcessor fragmentEntryProcessor :
 				_serviceTrackerList) {

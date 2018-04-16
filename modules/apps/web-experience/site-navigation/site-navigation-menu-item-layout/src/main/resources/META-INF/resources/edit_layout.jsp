@@ -74,14 +74,14 @@ if (selLayout != null) {
 }
 %>
 
-<aui:script use="liferay-item-selector-dialog">
-	var groupId = $('#<portlet:namespace />groupId');
-	var layoutItemRemove = $('#<portlet:namespace />layoutItemRemove');
-	var layoutNameInput = $('#<portlet:namespace />layoutNameInput');
-	var layoutUuid = $('#<portlet:namespace />layoutUuid');
-	var privateLayout = $('#<portlet:namespace />privateLayout');
+<aui:script use="aui-base,liferay-item-selector-dialog">
+	var groupId = A.one('#<portlet:namespace />groupId');
+	var layoutItemRemove = A.one('#<portlet:namespace />layoutItemRemove');
+	var layoutNameInput = A.one('#<portlet:namespace />layoutNameInput');
+	var layoutUuid = A.one('#<portlet:namespace />layoutUuid');
+	var privateLayout = A.one('#<portlet:namespace />privateLayout');
 
-	$('#<portlet:namespace />chooseLayout').on(
+	A.one('#<portlet:namespace />chooseLayout').on(
 		'click',
 		function(event) {
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
@@ -99,7 +99,7 @@ if (selLayout != null) {
 								privateLayout.val(selectedItem.privateLayout);
 
 								layoutNameInput.html(selectedItem.name);
-								layoutNameInput.trigger('change');
+								layoutNameInput.simulate('change');
 
 								layoutItemRemove.removeClass('hide');
 							}

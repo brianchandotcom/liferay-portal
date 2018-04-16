@@ -11,17 +11,13 @@ var soydata = goog.require('soydata');
 
 /**
  * @fileoverview Templates in namespace DDMRuleBuilder.
- * @hassoydeltemplate {DDMRuleBuilder.action.idom}
- * @hassoydelcall {DDMRuleBuilder.action.idom}
  * @public
  */
 
 goog.module('DDMRuleBuilder.incrementaldom');
 
 goog.require('goog.soy.data.SanitizedContent');
-goog.require('goog.string');
 var incrementalDom = goog.require('incrementaldom');
-goog.require('soy');
 goog.require('soy.asserts');
 var soyIdom = goog.require('soy.idom');
 
@@ -68,7 +64,7 @@ if (goog.DEBUG) {
 /**
  * @param {{
  *  kebab: function(),
- *  rules: !Array<{actions: !Array<?>, conditions: !Array<{operandType: (!goog.soy.data.SanitizedContent|string), operandValue: (!goog.soy.data.SanitizedContent|string), operands: !Array<{label: (!goog.soy.data.SanitizedContent|string), type: (!goog.soy.data.SanitizedContent|string), value: (!goog.soy.data.SanitizedContent|string)}>, operator: (!goog.soy.data.SanitizedContent|string), strings: *}>, logicOperator: (!goog.soy.data.SanitizedContent|string)}>,
+ *  rules: !Array<{actions: !Array<function()>, conditions: !Array<{operandType: (!goog.soy.data.SanitizedContent|string), operandValue: (!goog.soy.data.SanitizedContent|string), operands: !Array<{label: (!goog.soy.data.SanitizedContent|string), type: (!goog.soy.data.SanitizedContent|string), value: (!goog.soy.data.SanitizedContent|string)}>, operator: (!goog.soy.data.SanitizedContent|string), strings: *}>, logicOperator: (!goog.soy.data.SanitizedContent|string)}>,
  *  strings: (?)
  * }} opt_data
  * @param {Object<string, *>=} opt_ijData
@@ -80,8 +76,8 @@ function $rule_list(opt_data, opt_ijData, opt_ijData_deprecated) {
   opt_ijData = opt_ijData_deprecated || opt_ijData;
   /** @type {function()} */
   var kebab = soy.asserts.assertType(goog.isFunction(opt_data.kebab), 'kebab', opt_data.kebab, 'function()');
-  /** @type {!Array<{actions: !Array<?>, conditions: !Array<{operandType: (!goog.soy.data.SanitizedContent|string), operandValue: (!goog.soy.data.SanitizedContent|string), operands: !Array<{label: (!goog.soy.data.SanitizedContent|string), type: (!goog.soy.data.SanitizedContent|string), value: (!goog.soy.data.SanitizedContent|string)}>, operator: (!goog.soy.data.SanitizedContent|string), strings: *}>, logicOperator: (!goog.soy.data.SanitizedContent|string)}>} */
-  var rules = soy.asserts.assertType(goog.isArray(opt_data.rules), 'rules', opt_data.rules, '!Array<{actions: !Array<?>, conditions: !Array<{operandType: (!goog.soy.data.SanitizedContent|string), operandValue: (!goog.soy.data.SanitizedContent|string), operands: !Array<{label: (!goog.soy.data.SanitizedContent|string), type: (!goog.soy.data.SanitizedContent|string), value: (!goog.soy.data.SanitizedContent|string)}>, operator: (!goog.soy.data.SanitizedContent|string), strings: *}>, logicOperator: (!goog.soy.data.SanitizedContent|string)}>');
+  /** @type {!Array<{actions: !Array<function()>, conditions: !Array<{operandType: (!goog.soy.data.SanitizedContent|string), operandValue: (!goog.soy.data.SanitizedContent|string), operands: !Array<{label: (!goog.soy.data.SanitizedContent|string), type: (!goog.soy.data.SanitizedContent|string), value: (!goog.soy.data.SanitizedContent|string)}>, operator: (!goog.soy.data.SanitizedContent|string), strings: *}>, logicOperator: (!goog.soy.data.SanitizedContent|string)}>} */
+  var rules = soy.asserts.assertType(goog.isArray(opt_data.rules), 'rules', opt_data.rules, '!Array<{actions: !Array<function()>, conditions: !Array<{operandType: (!goog.soy.data.SanitizedContent|string), operandValue: (!goog.soy.data.SanitizedContent|string), operands: !Array<{label: (!goog.soy.data.SanitizedContent|string), type: (!goog.soy.data.SanitizedContent|string), value: (!goog.soy.data.SanitizedContent|string)}>, operator: (!goog.soy.data.SanitizedContent|string), strings: *}>, logicOperator: (!goog.soy.data.SanitizedContent|string)}>');
   /** @type {?} */
   var strings = opt_data.strings;
   incrementalDom.elementOpen('div');
@@ -139,7 +135,7 @@ function $rule_list(opt_data, opt_ijData, opt_ijData_deprecated) {
                   var action1174ListLen = action1174List.length;
                   for (var action1174Index = 0; action1174Index < action1174ListLen; action1174Index++) {
                       var action1174Data = action1174List[action1174Index];
-                      soy.$$getDelegateFn(soy.$$getDelTemplateId('DDMRuleBuilder.action.idom'), action1174Data.type, false)({action: action1174Data}, null, opt_ijData);
+                      $action({action: action1174Data}, null, opt_ijData);
                       if (!(action1174Index == action1174ListLen - 1)) {
                         incrementalDom.text(', ');
                         incrementalDom.elementOpen('br');
@@ -208,7 +204,7 @@ exports.rule_list = $rule_list;
 /**
  * @typedef {{
  *  kebab: function(),
- *  rules: !Array<{actions: !Array<?>, conditions: !Array<{operandType: (!goog.soy.data.SanitizedContent|string), operandValue: (!goog.soy.data.SanitizedContent|string), operands: !Array<{label: (!goog.soy.data.SanitizedContent|string), type: (!goog.soy.data.SanitizedContent|string), value: (!goog.soy.data.SanitizedContent|string)}>, operator: (!goog.soy.data.SanitizedContent|string), strings: *}>, logicOperator: (!goog.soy.data.SanitizedContent|string)}>,
+ *  rules: !Array<{actions: !Array<function()>, conditions: !Array<{operandType: (!goog.soy.data.SanitizedContent|string), operandValue: (!goog.soy.data.SanitizedContent|string), operands: !Array<{label: (!goog.soy.data.SanitizedContent|string), type: (!goog.soy.data.SanitizedContent|string), value: (!goog.soy.data.SanitizedContent|string)}>, operator: (!goog.soy.data.SanitizedContent|string), strings: *}>, logicOperator: (!goog.soy.data.SanitizedContent|string)}>,
  *  strings: (?)
  * }}
  */
@@ -331,26 +327,26 @@ if (goog.DEBUG) {
  * @return {void}
  * @suppress {checkTypes}
  */
-function $badge(opt_data, opt_ijData, opt_ijData_deprecated) {
+function $label(opt_data, opt_ijData, opt_ijData_deprecated) {
   opt_ijData = opt_ijData_deprecated || opt_ijData;
   opt_data = opt_data || {};
   /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
   var content = soy.asserts.assertType(opt_data.content == null || (goog.isString(opt_data.content) || opt_data.content instanceof goog.soy.data.SanitizedContent), 'content', opt_data.content, '!goog.soy.data.SanitizedContent|null|string|undefined');
   incrementalDom.elementOpenStart('span');
-      incrementalDom.attr('class', 'badge badge-default badge-sm');
+      incrementalDom.attr('class', 'label label-lg label-secondary');
   incrementalDom.elementOpenEnd();
     soyIdom.print(content);
   incrementalDom.elementClose('span');
 }
-exports.badge = $badge;
+exports.label = $label;
 /**
  * @typedef {{
  *  content: (!goog.soy.data.SanitizedContent|null|string|undefined)
  * }}
  */
-$badge.Params;
+$label.Params;
 if (goog.DEBUG) {
-  $badge.soyTemplateName = 'DDMRuleBuilder.badge';
+  $label.soyTemplateName = 'DDMRuleBuilder.label';
 }
 
 
@@ -386,7 +382,7 @@ function $condition(opt_data, opt_ijData, opt_ijData_deprecated) {
       incrementalDom.elementClose('span');
     }
   }
-  $badge({content: operandValue}, null, opt_ijData);
+  $label({content: operandValue}, null, opt_ijData);
 }
 exports.condition = $condition;
 /**
@@ -404,310 +400,46 @@ if (goog.DEBUG) {
 
 /**
  * @param {{
- *  outputs: !Array<?>
+ *  action: function()
  * }} opt_data
  * @param {Object<string, *>=} opt_ijData
  * @param {Object<string, *>=} opt_ijData_deprecated
  * @return {void}
  * @suppress {checkTypes}
  */
-function $autofill_outputs(opt_data, opt_ijData, opt_ijData_deprecated) {
+function $action(opt_data, opt_ijData, opt_ijData_deprecated) {
   opt_ijData = opt_ijData_deprecated || opt_ijData;
-  /** @type {!Array<?>} */
-  var outputs = soy.asserts.assertType(goog.isArray(opt_data.outputs), 'outputs', opt_data.outputs, '!Array<?>');
-  var output1255List = outputs;
-  var output1255ListLen = output1255List.length;
-  for (var output1255Index = 0; output1255Index < output1255ListLen; output1255Index++) {
-      var output1255Data = output1255List[output1255Index];
-      $badge({content: output1255Data}, null, opt_ijData);
-      if (!(output1255Index == output1255ListLen - 1)) {
-        incrementalDom.text(',');
-      }
-    }
-}
-exports.autofill_outputs = $autofill_outputs;
-/**
- * @typedef {{
- *  outputs: !Array<?>
- * }}
- */
-$autofill_outputs.Params;
-if (goog.DEBUG) {
-  $autofill_outputs.soyTemplateName = 'DDMRuleBuilder.autofill_outputs';
-}
-
-
-/**
- * @param {{
- *  action: (?)
- * }} opt_data
- * @param {Object<string, *>=} opt_ijData
- * @param {Object<string, *>=} opt_ijData_deprecated
- * @return {void}
- * @suppress {checkTypes}
- */
-function __deltemplate_s1258_e38e35bf(opt_data, opt_ijData, opt_ijData_deprecated) {
-  opt_ijData = opt_ijData_deprecated || opt_ijData;
-  /** @type {?} */
-  var action = opt_data.action;
+  /** @type {function()} */
+  var action = soy.asserts.assertType(goog.isFunction(opt_data.action), 'action', opt_data.action, 'function()');
   incrementalDom.elementOpen('b');
-    /** @desc show-x */
-    var MSG_EXTERNAL_6763821615557154 = goog.getMsg('show-{$xxx}', {'xxx': '\u00010\u0001'});
-    var lastIndex_1262 = 0, partRe_1262 = /\x01\d+\x01/g, match_1262;
-    do {
-      match_1262 = partRe_1262.exec(MSG_EXTERNAL_6763821615557154) || undefined;
-      incrementalDom.text(goog.string.unescapeEntities(MSG_EXTERNAL_6763821615557154.substring(lastIndex_1262, match_1262 && match_1262.index)));
-      lastIndex_1262 = partRe_1262.lastIndex;
-      switch (match_1262 && match_1262[0]) {
-        case '\u00010\u0001':
-          $badge({content: action.param0}, null, opt_ijData);
-          break;
-      }
-    } while (match_1262);
+    action();
   incrementalDom.elementClose('b');
 }
-exports.__deltemplate_s1258_e38e35bf = __deltemplate_s1258_e38e35bf;
+exports.action = $action;
 /**
  * @typedef {{
- *  action: (?)
+ *  action: function()
  * }}
  */
-__deltemplate_s1258_e38e35bf.Params;
+$action.Params;
 if (goog.DEBUG) {
-  __deltemplate_s1258_e38e35bf.soyTemplateName = 'DDMRuleBuilder.__deltemplate_s1258_e38e35bf';
+  $action.soyTemplateName = 'DDMRuleBuilder.action';
 }
-soy.$$registerDelegateFn(soy.$$getDelTemplateId('DDMRuleBuilder.action.idom'), 'show', 0, __deltemplate_s1258_e38e35bf);
-
-
-/**
- * @param {{
- *  action: (?)
- * }} opt_data
- * @param {Object<string, *>=} opt_ijData
- * @param {Object<string, *>=} opt_ijData_deprecated
- * @return {void}
- * @suppress {checkTypes}
- */
-function __deltemplate_s1271_b56ff7a3(opt_data, opt_ijData, opt_ijData_deprecated) {
-  opt_ijData = opt_ijData_deprecated || opt_ijData;
-  /** @type {?} */
-  var action = opt_data.action;
-  incrementalDom.elementOpen('b');
-    /** @desc enable-x */
-    var MSG_EXTERNAL_1991085455776803984 = goog.getMsg('enable-{$xxx}', {'xxx': '\u00010\u0001'});
-    var lastIndex_1275 = 0, partRe_1275 = /\x01\d+\x01/g, match_1275;
-    do {
-      match_1275 = partRe_1275.exec(MSG_EXTERNAL_1991085455776803984) || undefined;
-      incrementalDom.text(goog.string.unescapeEntities(MSG_EXTERNAL_1991085455776803984.substring(lastIndex_1275, match_1275 && match_1275.index)));
-      lastIndex_1275 = partRe_1275.lastIndex;
-      switch (match_1275 && match_1275[0]) {
-        case '\u00010\u0001':
-          $badge({content: action.param0}, null, opt_ijData);
-          break;
-      }
-    } while (match_1275);
-  incrementalDom.elementClose('b');
-}
-exports.__deltemplate_s1271_b56ff7a3 = __deltemplate_s1271_b56ff7a3;
-/**
- * @typedef {{
- *  action: (?)
- * }}
- */
-__deltemplate_s1271_b56ff7a3.Params;
-if (goog.DEBUG) {
-  __deltemplate_s1271_b56ff7a3.soyTemplateName = 'DDMRuleBuilder.__deltemplate_s1271_b56ff7a3';
-}
-soy.$$registerDelegateFn(soy.$$getDelTemplateId('DDMRuleBuilder.action.idom'), 'enable', 0, __deltemplate_s1271_b56ff7a3);
-
-
-/**
- * @param {{
- *  action: (?)
- * }} opt_data
- * @param {Object<string, *>=} opt_ijData
- * @param {Object<string, *>=} opt_ijData_deprecated
- * @return {void}
- * @suppress {checkTypes}
- */
-function __deltemplate_s1284_a5108aa8(opt_data, opt_ijData, opt_ijData_deprecated) {
-  opt_ijData = opt_ijData_deprecated || opt_ijData;
-  /** @type {?} */
-  var action = opt_data.action;
-  incrementalDom.elementOpen('b');
-    /** @desc calculate-field-x-as-x */
-    var MSG_EXTERNAL_5511274467569914026 = goog.getMsg('calculate-field-{$xxx_1}-as-{$xxx_2}', {'xxx_1': '\u00010\u0001', 'xxx_2': '\u00011\u0001'});
-    var lastIndex_1288 = 0, partRe_1288 = /\x01\d+\x01/g, match_1288;
-    do {
-      match_1288 = partRe_1288.exec(MSG_EXTERNAL_5511274467569914026) || undefined;
-      incrementalDom.text(goog.string.unescapeEntities(MSG_EXTERNAL_5511274467569914026.substring(lastIndex_1288, match_1288 && match_1288.index)));
-      lastIndex_1288 = partRe_1288.lastIndex;
-      switch (match_1288 && match_1288[0]) {
-        case '\u00011\u0001':
-          $badge({content: action.param1}, null, opt_ijData);
-          break;
-        case '\u00010\u0001':
-          $badge({content: action.param0}, null, opt_ijData);
-          break;
-      }
-    } while (match_1288);
-  incrementalDom.elementClose('b');
-}
-exports.__deltemplate_s1284_a5108aa8 = __deltemplate_s1284_a5108aa8;
-/**
- * @typedef {{
- *  action: (?)
- * }}
- */
-__deltemplate_s1284_a5108aa8.Params;
-if (goog.DEBUG) {
-  __deltemplate_s1284_a5108aa8.soyTemplateName = 'DDMRuleBuilder.__deltemplate_s1284_a5108aa8';
-}
-soy.$$registerDelegateFn(soy.$$getDelTemplateId('DDMRuleBuilder.action.idom'), 'calculate', 0, __deltemplate_s1284_a5108aa8);
-
-
-/**
- * @param {{
- *  action: (?)
- * }} opt_data
- * @param {Object<string, *>=} opt_ijData
- * @param {Object<string, *>=} opt_ijData_deprecated
- * @return {void}
- * @suppress {checkTypes}
- */
-function __deltemplate_s1301_f2670823(opt_data, opt_ijData, opt_ijData_deprecated) {
-  opt_ijData = opt_ijData_deprecated || opt_ijData;
-  /** @type {?} */
-  var action = opt_data.action;
-  incrementalDom.elementOpen('b');
-    /** @desc autofill-x-from-data-provider-x */
-    var MSG_EXTERNAL_7333391118384881260 = goog.getMsg('autofill-{$xxx_1}-from-data-provider-{$xxx_2}', {'xxx_1': '\u00010\u0001', 'xxx_2': '\u00011\u0001'});
-    var lastIndex_1305 = 0, partRe_1305 = /\x01\d+\x01/g, match_1305;
-    do {
-      match_1305 = partRe_1305.exec(MSG_EXTERNAL_7333391118384881260) || undefined;
-      incrementalDom.text(goog.string.unescapeEntities(MSG_EXTERNAL_7333391118384881260.substring(lastIndex_1305, match_1305 && match_1305.index)));
-      lastIndex_1305 = partRe_1305.lastIndex;
-      switch (match_1305 && match_1305[0]) {
-        case '\u00011\u0001':
-          $badge({content: action.param1}, null, opt_ijData);
-          break;
-        case '\u00010\u0001':
-          $autofill_outputs({outputs: action.param0}, null, opt_ijData);
-          break;
-      }
-    } while (match_1305);
-  incrementalDom.elementClose('b');
-}
-exports.__deltemplate_s1301_f2670823 = __deltemplate_s1301_f2670823;
-/**
- * @typedef {{
- *  action: (?)
- * }}
- */
-__deltemplate_s1301_f2670823.Params;
-if (goog.DEBUG) {
-  __deltemplate_s1301_f2670823.soyTemplateName = 'DDMRuleBuilder.__deltemplate_s1301_f2670823';
-}
-soy.$$registerDelegateFn(soy.$$getDelTemplateId('DDMRuleBuilder.action.idom'), 'autofill', 0, __deltemplate_s1301_f2670823);
-
-
-/**
- * @param {{
- *  action: (?)
- * }} opt_data
- * @param {Object<string, *>=} opt_ijData
- * @param {Object<string, *>=} opt_ijData_deprecated
- * @return {void}
- * @suppress {checkTypes}
- */
-function __deltemplate_s1318_9bf2c8a4(opt_data, opt_ijData, opt_ijData_deprecated) {
-  opt_ijData = opt_ijData_deprecated || opt_ijData;
-  /** @type {?} */
-  var action = opt_data.action;
-  incrementalDom.elementOpen('b');
-    /** @desc jump-to-page-x */
-    var MSG_EXTERNAL_7070892870969211427 = goog.getMsg('jump-to-page-{$xxx}', {'xxx': '\u00010\u0001'});
-    var lastIndex_1322 = 0, partRe_1322 = /\x01\d+\x01/g, match_1322;
-    do {
-      match_1322 = partRe_1322.exec(MSG_EXTERNAL_7070892870969211427) || undefined;
-      incrementalDom.text(goog.string.unescapeEntities(MSG_EXTERNAL_7070892870969211427.substring(lastIndex_1322, match_1322 && match_1322.index)));
-      lastIndex_1322 = partRe_1322.lastIndex;
-      switch (match_1322 && match_1322[0]) {
-        case '\u00010\u0001':
-          $badge({content: action.param0}, null, opt_ijData);
-          break;
-      }
-    } while (match_1322);
-  incrementalDom.elementClose('b');
-}
-exports.__deltemplate_s1318_9bf2c8a4 = __deltemplate_s1318_9bf2c8a4;
-/**
- * @typedef {{
- *  action: (?)
- * }}
- */
-__deltemplate_s1318_9bf2c8a4.Params;
-if (goog.DEBUG) {
-  __deltemplate_s1318_9bf2c8a4.soyTemplateName = 'DDMRuleBuilder.__deltemplate_s1318_9bf2c8a4';
-}
-soy.$$registerDelegateFn(soy.$$getDelTemplateId('DDMRuleBuilder.action.idom'), 'jumptopage', 0, __deltemplate_s1318_9bf2c8a4);
-
-
-/**
- * @param {{
- *  action: (?)
- * }} opt_data
- * @param {Object<string, *>=} opt_ijData
- * @param {Object<string, *>=} opt_ijData_deprecated
- * @return {void}
- * @suppress {checkTypes}
- */
-function __deltemplate_s1331_831406f5(opt_data, opt_ijData, opt_ijData_deprecated) {
-  opt_ijData = opt_ijData_deprecated || opt_ijData;
-  /** @type {?} */
-  var action = opt_data.action;
-  incrementalDom.elementOpen('b');
-    /** @desc require-x */
-    var MSG_EXTERNAL_3017347163412966732 = goog.getMsg('require-{$xxx}', {'xxx': '\u00010\u0001'});
-    var lastIndex_1335 = 0, partRe_1335 = /\x01\d+\x01/g, match_1335;
-    do {
-      match_1335 = partRe_1335.exec(MSG_EXTERNAL_3017347163412966732) || undefined;
-      incrementalDom.text(goog.string.unescapeEntities(MSG_EXTERNAL_3017347163412966732.substring(lastIndex_1335, match_1335 && match_1335.index)));
-      lastIndex_1335 = partRe_1335.lastIndex;
-      switch (match_1335 && match_1335[0]) {
-        case '\u00010\u0001':
-          $badge({content: action.param0}, null, opt_ijData);
-          break;
-      }
-    } while (match_1335);
-  incrementalDom.elementClose('b');
-}
-exports.__deltemplate_s1331_831406f5 = __deltemplate_s1331_831406f5;
-/**
- * @typedef {{
- *  action: (?)
- * }}
- */
-__deltemplate_s1331_831406f5.Params;
-if (goog.DEBUG) {
-  __deltemplate_s1331_831406f5.soyTemplateName = 'DDMRuleBuilder.__deltemplate_s1331_831406f5';
-}
-soy.$$registerDelegateFn(soy.$$getDelTemplateId('DDMRuleBuilder.action.idom'), 'require', 0, __deltemplate_s1331_831406f5);
 
 exports.render.params = ["strings"];
 exports.render.types = {"strings":"[ruleBuilder: string]"};
 exports.rule_list.params = ["kebab","rules","strings"];
-exports.rule_list.types = {"kebab":"html","rules":"list<[conditions: list<[operandType: string, operandValue: string, strings: any, operator: string, operands: list<[type: string, label: string, value: string]>]>, actions: list<?>, logicOperator: string]>","strings":"?"};
+exports.rule_list.types = {"kebab":"html","rules":"list<[conditions: list<[operandType: string, operandValue: string, strings: any, operator: string, operands: list<[type: string, label: string, value: string]>]>, actions: list<html>, logicOperator: string]>","strings":"?"};
 exports.empty_list.params = ["message"];
 exports.empty_list.types = {"message":"string"};
 exports.rule_types.params = ["strings"];
 exports.rule_types.types = {"strings":"[showHide: string, enableDisable: string, require: string]"};
-exports.badge.params = ["content"];
-exports.badge.types = {"content":"string"};
+exports.label.params = ["content"];
+exports.label.types = {"content":"string"};
 exports.condition.params = ["operandType","operandValue","strings"];
 exports.condition.types = {"operandType":"string","operandValue":"string","strings":"?"};
-exports.autofill_outputs.params = ["outputs"];
-exports.autofill_outputs.types = {"outputs":"list<?>"};
+exports.action.params = ["action"];
+exports.action.types = {"action":"html"};
 templates = exports;
 return exports;
 

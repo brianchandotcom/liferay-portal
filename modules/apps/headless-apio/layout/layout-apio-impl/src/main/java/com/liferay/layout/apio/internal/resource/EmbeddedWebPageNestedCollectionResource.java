@@ -88,7 +88,7 @@ public class EmbeddedWebPageNestedCollectionResource
 		).addDate(
 			"datePublished", Layout::getLastPublishDate
 		).addLocalizedString(
-			"breadcrumb", _layoutResourceCollectionUtil::getBreadcrumb
+			"breadcrumb", LayoutResourceCollectionUtil::getBreadcrumb
 		).addLocalizedString(
 			"description",
 			(layout, language) -> layout.getDescription(
@@ -111,7 +111,7 @@ public class EmbeddedWebPageNestedCollectionResource
 			"embeddedUrl",
 			layout -> layout.getTypeSettingsProperty("embeddedLayoutURL")
 		).addString(
-			"image", _layoutResourceCollectionUtil::getImageURL
+			"image", LayoutResourceCollectionUtil::getImageURL
 		).build();
 	}
 
@@ -131,9 +131,6 @@ public class EmbeddedWebPageNestedCollectionResource
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private LayoutResourceCollectionUtil _layoutResourceCollectionUtil;
 
 	@Reference
 	private LayoutService _layoutService;

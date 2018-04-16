@@ -4,6 +4,44 @@
 <service-builder auto-namespace-tables="false" package-path="com.liferay.commerce.user.segment">
 	<author>Marco Leo</author>
 	<namespace>Commerce</namespace>
+	<entity local-service="true" name="CommerceUserSegmentCriterion" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceUserSegmentCriterionId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceUserSegmentEntryId" type="long" />
+		<column name="criterionType" type="String" />
+		<column name="condition" type="String" />
+		<column name="value" type="String" />
+		<column name="priority" type="double" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="priority" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceUserSegmentEntryId" return-type="Collection">
+			<finder-column name="commerceUserSegmentEntryId" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="CommerceUserSegmentEntry" remote-service="true">
 
 		<!-- PK fields -->
@@ -42,44 +80,6 @@
 		<finder name="G_A" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="active" />
-		</finder>
-	</entity>
-	<entity local-service="true" name="CommerceUserSegmentCriterion" remote-service="true">
-
-		<!-- PK fields -->
-
-		<column name="commerceUserSegmentCriterionId" primary="true" type="long" />
-
-		<!-- Group instance -->
-
-		<column name="groupId" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
-
-		<!-- Other fields -->
-
-		<column name="commerceUserSegmentEntryId" type="long" />
-		<column name="criterionType" type="String" />
-		<column name="condition" type="String" />
-		<column name="value" type="String" />
-		<column name="priority" type="double" />
-
-		<!-- Order -->
-
-		<order by="asc">
-			<order-column name="priority" />
-		</order>
-
-		<!-- Finder methods -->
-
-		<finder name="CommerceUserSegmentEntryId" return-type="Collection">
-			<finder-column name="commerceUserSegmentEntryId" />
 		</finder>
 	</entity>
 </service-builder>

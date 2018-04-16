@@ -246,10 +246,10 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			return;
 		}
 
-		List<File> filteredModifiedFilesList =
-			portalGitWorkingDirectory.getFilteredModifiedFilesList(".java");
+		List<File> modifiedJavaFilesList =
+			portalGitWorkingDirectory.getModifiedFilesList(".java");
 
-		if (!filteredModifiedFilesList.isEmpty()) {
+		if (!modifiedJavaFilesList.isEmpty()) {
 			includeAutoBalanceTests = true;
 
 			return;

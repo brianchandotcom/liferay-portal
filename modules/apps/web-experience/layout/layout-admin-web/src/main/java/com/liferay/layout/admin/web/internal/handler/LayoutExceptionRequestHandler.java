@@ -14,18 +14,23 @@
 
 package com.liferay.layout.admin.web.internal.handler;
 
+import com.liferay.portal.kernel.exception.LayoutNameException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -43,13 +48,31 @@ public class LayoutExceptionRequestHandler {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put(
-			"error",
-			LanguageUtil.get(
-				themeDisplay.getLocale(), "an-unexpected-error-occurred"));
+		if (pe instanceof LayoutNameException) {
+			ResourceBundle resourceBundle =
+				_resourceBundleLoader.loadResourceBundle(
+					themeDisplay.getLocale());
+
+			jsonObject.put(
+				"error",
+				LanguageUtil.get(
+					resourceBundle, "please-enter-a-valid-name-for-the-page"));
+		}
+		else {
+			jsonObject.put(
+				"error",
+				LanguageUtil.get(
+					themeDisplay.getLocale(), "an-unexpected-error-occurred"));
+		}
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
 	}
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.layout.admin.web)",
+		unbind = "-"
+	)
+	private ResourceBundleLoader _resourceBundleLoader;
 
 }

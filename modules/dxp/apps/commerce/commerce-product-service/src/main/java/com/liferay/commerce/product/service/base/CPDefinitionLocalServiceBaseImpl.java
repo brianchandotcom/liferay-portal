@@ -550,7 +550,7 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 				languageId);
 
 		if (cpDefinitionLocalization == null) {
-			long cpDefinitionLocalizationId = counterLocalService.increment();
+			long cpDefinitionLocalizationId = counterLocalService.increment(CPDefinitionLocalization.class.getName());
 
 			cpDefinitionLocalization = cpDefinitionLocalizationPersistence.create(cpDefinitionLocalizationId);
 
@@ -686,13 +686,14 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 			}
 		}
 
+		long batchCounter = counterLocalService.increment(CPDefinitionLocalization.class.getName(),
+				localizedValuesMap.size()) - localizedValuesMap.size();
+
 		for (Map.Entry<String, String[]> entry : localizedValuesMap.entrySet()) {
 			String languageId = entry.getKey();
 			String[] localizedValues = entry.getValue();
 
-			long cpDefinitionLocalizationId = counterLocalService.increment();
-
-			CPDefinitionLocalization cpDefinitionLocalization = cpDefinitionLocalizationPersistence.create(cpDefinitionLocalizationId);
+			CPDefinitionLocalization cpDefinitionLocalization = cpDefinitionLocalizationPersistence.create(++batchCounter);
 
 			cpDefinitionLocalization.setCPDefinitionId(cpDefinition.getCPDefinitionId());
 			cpDefinitionLocalization.setCompanyId(cpDefinition.getCompanyId());

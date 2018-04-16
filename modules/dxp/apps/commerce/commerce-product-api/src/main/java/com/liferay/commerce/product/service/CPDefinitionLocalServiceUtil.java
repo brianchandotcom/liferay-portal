@@ -541,11 +541,6 @@ public class CPDefinitionLocalServiceUtil {
 		return getService().restoreCPDefinitionFromTrash(userId, cpDefinitionId);
 	}
 
-	public static com.liferay.portal.kernel.search.Hits search(
-		com.liferay.portal.kernel.search.SearchContext searchContext) {
-		return getService().search(searchContext);
-	}
-
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPDefinition> searchCPDefinitions(
 		long companyId, long groupId, java.lang.String keywords, int status,
 		int start, int end, com.liferay.portal.kernel.search.Sort sort)

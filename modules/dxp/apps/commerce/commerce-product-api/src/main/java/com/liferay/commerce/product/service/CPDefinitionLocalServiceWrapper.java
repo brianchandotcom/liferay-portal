@@ -586,12 +586,6 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 	}
 
 	@Override
-	public com.liferay.portal.kernel.search.Hits search(
-		com.liferay.portal.kernel.search.SearchContext searchContext) {
-		return _cpDefinitionLocalService.search(searchContext);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPDefinition> searchCPDefinitions(
 		long companyId, long groupId, java.lang.String keywords, int status,
 		int start, int end, com.liferay.portal.kernel.search.Sort sort)

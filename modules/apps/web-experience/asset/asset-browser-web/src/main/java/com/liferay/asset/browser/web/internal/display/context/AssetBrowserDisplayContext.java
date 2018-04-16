@@ -142,7 +142,7 @@ public class AssetBrowserDisplayContext {
 
 		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
 
-		int total = getTotal();
+		int total = getTotalItems();
 
 		assetBrowserSearch.setTotal(total);
 
@@ -384,7 +384,7 @@ public class AssetBrowserDisplayContext {
 		return _subtypeSelectionId;
 	}
 
-	public int getTotal() {
+	public int getTotalItems() {
 		return _getTotal(_getFilterGroupIds());
 	}
 

@@ -199,7 +199,7 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 
 		var onTitleInput = _.debounce(
 			function(event) {
-				nameInput.val(titleInput.val());
+				nameInput.val(titleInput.val().substring(0, nameInput.attr('maxlength')));
 			},
 			200
 		);

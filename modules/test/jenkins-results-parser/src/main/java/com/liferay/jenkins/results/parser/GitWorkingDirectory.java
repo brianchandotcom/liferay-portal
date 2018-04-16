@@ -24,7 +24,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
@@ -769,9 +768,7 @@ public class GitWorkingDirectory {
 				currentBranch, getBranch(_upstreamBranchName, null)),
 			" ", currentBranch.getSHA());
 
-		if ((grepPredicateString != null) ||
-			Objects.equals(grepPredicateString, "")) {
-
+		if ((grepPredicateString != null) && !grepPredicateString.isEmpty()) {
 			bashCommand = JenkinsResultsParserUtil.combine(
 				bashCommand, " | grep ", grepPredicateString);
 		}

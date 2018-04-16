@@ -81,7 +81,7 @@ public class ConstantNameCheck
 
 		String regex = null;
 
-		String typeName = DetailASTUtil.getTypeName(detailAST);
+		String typeName = DetailASTUtil.getTypeName(detailAST, false);
 
 		if (ArrayUtil.contains(_camelCaseTypeNames, typeName) ||
 			DetailASTUtil.isCollection(

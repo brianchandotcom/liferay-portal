@@ -58,8 +58,8 @@ public class InstanceofOrderCheck extends BaseCheck {
 		NaturalOrderStringComparator comparator =
 			new NaturalOrderStringComparator();
 
-		String typeName1 = DetailASTUtil.getTypeName(detailAST);
-		String typeName2 = DetailASTUtil.getTypeName(nextConditionAST);
+		String typeName1 = DetailASTUtil.getTypeName(detailAST, false);
+		String typeName2 = DetailASTUtil.getTypeName(nextConditionAST, false);
 
 		if (comparator.compare(typeName1, typeName2) > 0) {
 			log(

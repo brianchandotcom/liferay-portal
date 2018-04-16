@@ -31,7 +31,7 @@ public class StringBundlerNamingCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		String typeName = DetailASTUtil.getTypeName(detailAST);
+		String typeName = DetailASTUtil.getTypeName(detailAST, false);
 
 		if (!typeName.equals("StringBundler")) {
 			return;

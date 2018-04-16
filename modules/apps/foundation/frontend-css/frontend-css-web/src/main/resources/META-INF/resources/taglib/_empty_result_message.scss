@@ -13,6 +13,14 @@
 		}
 	}
 
+	.taglib-empty-result-message-actions {
+		margin-top: 16px;
+	}
+
+	.taglib-empty-result-message-description {
+		margin-top: 8px;
+	}
+
 	.taglib-empty-result-message-header,
 	.taglib-empty-result-message-header-has-plus-btn,
 	.taglib-empty-search-result-message-header {
@@ -37,9 +45,34 @@
 		background-image: url(@theme_image_path@/emoticons/happy_new_content_right.gif);
 	}
 
+	.taglib-empty-result-message-title {
+		margin-top: 40px;
+	}
+
 	.taglib-empty-search-result-message-header {
 		background-image: url(@theme_image_path@/emoticons/sad_search_results.gif);
 		max-width: 210px;
 		padding-top: 232px;
+	}
+
+	.taglib-empty-state {
+		background-image: url(@theme_image_path@/states/empty_state.gif);
+		margin: auto;
+		max-width: 250px;
+		padding-top: 250px;
+	}
+
+	.taglib-success-state {
+		background-image: url(@theme_image_path@/states/success_state.gif);
+		margin: auto;
+		max-width: 250px;
+		padding-top: 250px;
+	}
+
+	.taglib-search-state {
+		background-image: url(@theme_image_path@/states/search_state.gif);
+		margin: auto;
+		max-width: 250px;
+		padding-top: 250px;
 	}
 }

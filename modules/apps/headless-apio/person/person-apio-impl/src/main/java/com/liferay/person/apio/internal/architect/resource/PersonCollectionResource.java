@@ -14,6 +14,8 @@
 
 package com.liferay.person.apio.internal.architect.resource;
 
+import static com.liferay.portal.apio.architect.context.idempotent.Idempotent.idempotent;
+
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
@@ -26,21 +28,17 @@ import com.liferay.person.apio.internal.architect.form.PersonCreatorForm;
 import com.liferay.person.apio.internal.architect.form.PersonUpdaterForm;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.apio.architect.context.permission.HasPermission;
-import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.Date;
 import java.util.List;
-
-import javax.ws.rs.NotFoundException;
-import javax.ws.rs.ServerErrorException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -80,9 +78,10 @@ public class PersonCollectionResource
 		ItemRoutes.Builder<User, Long> builder) {
 
 		return builder.addGetter(
-			this::_getUser
+			_userService::getUserById
 		).addRemover(
-			this::_deleteUser, _hasPermission.forDeleting(User.class)
+			idempotent(_userService::deleteUser),
+			_hasPermission.forDeleting(User.class)
 		).addUpdater(
 			this::_updateUser, _hasPermission.forUpdating(User.class),
 			PersonUpdaterForm::buildForm
@@ -136,66 +135,40 @@ public class PersonCollectionResource
 		);
 	}
 
-	private User _addUser(
-		PersonCreatorForm personCreatorForm, Company company) {
+	private User _addUser(PersonCreatorForm personCreatorForm, Company company)
+		throws PortalException {
 
-		try {
-			return _userLocalService.addUser(
-				UserConstants.USER_ID_DEFAULT, company.getCompanyId(), false,
-				personCreatorForm.getPassword1(),
-				personCreatorForm.getPassword2(),
-				personCreatorForm.hasAlternateName(),
-				personCreatorForm.getAlternateName(),
-				personCreatorForm.getEmail(), 0, StringPool.BLANK,
-				LocaleUtil.getDefault(), personCreatorForm.getGivenName(),
-				StringPool.BLANK, personCreatorForm.getFamilyName(), 0, 0,
-				personCreatorForm.isMale(),
-				personCreatorForm.getBirthdayMonth(),
-				personCreatorForm.getBirthdayDay(),
-				personCreatorForm.getBirthdayYear(),
-				personCreatorForm.getJobTitle(), null, null, null, null, false,
-				new ServiceContext());
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
-	}
-
-	private void _deleteUser(Long userId) {
-		try {
-			_userLocalService.deleteUser(userId);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
+		return _userLocalService.addUser(
+			UserConstants.USER_ID_DEFAULT, company.getCompanyId(), false,
+			personCreatorForm.getPassword1(), personCreatorForm.getPassword2(),
+			personCreatorForm.hasAlternateName(),
+			personCreatorForm.getAlternateName(), personCreatorForm.getEmail(),
+			0, StringPool.BLANK, LocaleUtil.getDefault(),
+			personCreatorForm.getGivenName(), StringPool.BLANK,
+			personCreatorForm.getFamilyName(), 0, 0, personCreatorForm.isMale(),
+			personCreatorForm.getBirthdayMonth(),
+			personCreatorForm.getBirthdayDay(),
+			personCreatorForm.getBirthdayYear(),
+			personCreatorForm.getJobTitle(), null, null, null, null, false,
+			new ServiceContext());
 	}
 
 	private PageItems<User> _getPageItems(
-		Pagination pagination, Company company) {
+			Pagination pagination, Company company)
+		throws PortalException {
 
-		List<User> users = _userLocalService.getCompanyUsers(
+		List<User> users = _userService.getCompanyUsers(
 			company.getCompanyId(), pagination.getStartPosition(),
 			pagination.getEndPosition());
-		int count = _userLocalService.getCompanyUsersCount(
-			company.getCompanyId());
+		int count = _userService.getCompanyUsersCount(company.getCompanyId());
 
 		return new PageItems<>(users, count);
 	}
 
-	private User _getUser(Long userId) {
-		try {
-			return _userLocalService.getUserById(userId);
-		}
-		catch (NoSuchUserException | PrincipalException e) {
-			throw new NotFoundException("Unable to get user " + userId, e);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
-	}
+	private User _updateUser(Long userId, PersonUpdaterForm personUpdaterForm)
+		throws PortalException {
 
-	private User _updateUser(Long userId, PersonUpdaterForm personUpdaterForm) {
-		User user = _getUser(userId);
+		User user = _userService.getUserById(userId);
 
 		user.setPassword(personUpdaterForm.getPassword());
 		user.setScreenName(personUpdaterForm.getAlternateName());
@@ -204,9 +177,7 @@ public class PersonCollectionResource
 		user.setLastName(personUpdaterForm.getFamilyName());
 		user.setJobTitle(personUpdaterForm.getJobTitle());
 
-		return Try.fromFallible(
-			() -> _userLocalService.updateUser(user)
-		).getUnchecked();
+		return _userLocalService.updateUser(user);
 	}
 
 	@Reference
@@ -214,5 +185,8 @@ public class PersonCollectionResource
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private UserService _userService;
 
 }

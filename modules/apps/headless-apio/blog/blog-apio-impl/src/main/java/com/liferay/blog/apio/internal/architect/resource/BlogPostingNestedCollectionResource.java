@@ -14,6 +14,8 @@
 
 package com.liferay.blog.apio.internal.architect.resource;
 
+import static com.liferay.portal.apio.architect.context.idempotent.Idempotent.idempotent;
+
 import com.liferay.aggregate.rating.apio.architect.identifier.AggregateRatingIdentifier;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
@@ -24,21 +26,16 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.blog.apio.architect.identifier.BlogPostingIdentifier;
 import com.liferay.blog.apio.internal.architect.form.BlogPostingForm;
-import com.liferay.blogs.exception.NoSuchEntryException;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.apio.architect.context.identifier.ClassNameClassPK;
 import com.liferay.portal.apio.architect.context.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 
 import java.util.List;
-
-import javax.ws.rs.NotFoundException;
-import javax.ws.rs.ServerErrorException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -80,9 +77,9 @@ public class BlogPostingNestedCollectionResource
 		ItemRoutes.Builder<BlogsEntry, Long> builder) {
 
 		return builder.addGetter(
-			this::_getBlogsEntry
+			_blogsService::getEntry
 		).addRemover(
-			this::_deleteBlogsEntry,
+			idempotent(_blogsService::deleteEntry),
 			_hasPermission.forDeleting(BlogsEntry.class)
 		).addUpdater(
 			this::_updateBlogsEntry,
@@ -115,9 +112,9 @@ public class BlogPostingNestedCollectionResource
 			"aggregateRating", AggregateRatingIdentifier.class,
 			ClassNameClassPK::create
 		).addLinkedModel(
-			"author", PersonIdentifier.class, this::_getUserOptional
+			"author", PersonIdentifier.class, BlogsEntry::getUserId
 		).addLinkedModel(
-			"creator", PersonIdentifier.class, this::_getUserOptional
+			"creator", PersonIdentifier.class, BlogsEntry::getUserId
 		).addString(
 			"alternativeHeadline", BlogsEntry::getSubtitle
 		).addString(
@@ -155,28 +152,6 @@ public class BlogPostingNestedCollectionResource
 		).getUnchecked();
 	}
 
-	private void _deleteBlogsEntry(Long blogsEntryId) {
-		try {
-			_blogsService.deleteEntry(blogsEntryId);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
-	}
-
-	private BlogsEntry _getBlogsEntry(Long blogsEntryId) {
-		try {
-			return _blogsService.getEntry(blogsEntryId);
-		}
-		catch (NoSuchEntryException | PrincipalException e) {
-			throw new NotFoundException(
-				"Unable to get blogs entry " + blogsEntryId, e);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
-	}
-
 	private PageItems<BlogsEntry> _getPageItems(
 		Pagination pagination, Long groupId) {
 
@@ -188,35 +163,29 @@ public class BlogPostingNestedCollectionResource
 		return new PageItems<>(blogsEntries, count);
 	}
 
-	private Long _getUserOptional(BlogsEntry blogsEntry) {
-		return blogsEntry.getUserId();
-	}
-
 	private BlogsEntry _updateBlogsEntry(
-		Long blogsEntryId, BlogPostingForm blogPostingForm) {
+			Long blogsEntryId, BlogPostingForm blogPostingForm)
+		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		BlogsEntry blogsEntry = _getBlogsEntry(blogsEntryId);
+		BlogsEntry blogsEntry = _blogsService.getEntry(blogsEntryId);
 
 		serviceContext.setScopeGroupId(blogsEntry.getGroupId());
 
-		return Try.fromFallible(
-			() -> _blogsService.updateEntry(
-				blogsEntryId, blogPostingForm.getHeadline(),
-				blogPostingForm.getAlternativeHeadline(),
-				blogPostingForm.getDescription(),
-				blogPostingForm.getArticleBody(),
-				blogPostingForm.getDisplayDateMonth(),
-				blogPostingForm.getDisplayDateDay(),
-				blogPostingForm.getDisplayDateYear(),
-				blogPostingForm.getDisplayDateHour(),
-				blogPostingForm.getDisplayDateMinute(), false, false, null,
-				null, null, null, serviceContext)
-		).getUnchecked();
+		return _blogsService.updateEntry(
+			blogsEntryId, blogPostingForm.getHeadline(),
+			blogPostingForm.getAlternativeHeadline(),
+			blogPostingForm.getDescription(), blogPostingForm.getArticleBody(),
+			blogPostingForm.getDisplayDateMonth(),
+			blogPostingForm.getDisplayDateDay(),
+			blogPostingForm.getDisplayDateYear(),
+			blogPostingForm.getDisplayDateHour(),
+			blogPostingForm.getDisplayDateMinute(), false, false, null, null,
+			null, null, serviceContext);
 	}
 
 	@Reference

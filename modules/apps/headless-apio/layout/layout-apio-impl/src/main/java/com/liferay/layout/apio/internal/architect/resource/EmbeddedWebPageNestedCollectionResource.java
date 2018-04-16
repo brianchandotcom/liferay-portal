@@ -14,6 +14,8 @@
 
 package com.liferay.layout.apio.internal.architect.resource;
 
+import static com.liferay.portal.apio.architect.context.idempotent.Idempotent.idempotent;
+
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -23,21 +25,13 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.layout.apio.architect.identifier.EmbeddedWebPageIdentifier;
 import com.liferay.layout.apio.internal.util.LayoutResourceCollectionUtil;
 import com.liferay.portal.apio.architect.context.permission.HasPermission;
-import com.liferay.portal.kernel.exception.NoSuchLayoutException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.security.auth.AuthException;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 
 import java.util.List;
-
-import javax.ws.rs.NotAuthorizedException;
-import javax.ws.rs.NotFoundException;
-import javax.ws.rs.ServerErrorException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -69,9 +63,10 @@ public class EmbeddedWebPageNestedCollectionResource
 		ItemRoutes.Builder<Layout, Long> builder) {
 
 		return builder.addGetter(
-			this::_getLayout
+			_layoutLocalService::getLayout
 		).addRemover(
-			this::_removeLayout, _hasPermission::forDeletingLayouts
+			idempotent(_layoutLocalService::deleteLayout),
+			_hasPermission::forDeletingLayouts
 		).build();
 	}
 
@@ -120,21 +115,6 @@ public class EmbeddedWebPageNestedCollectionResource
 		).build();
 	}
 
-	private Layout _getLayout(Long plid) {
-		try {
-			return _layoutLocalService.getLayout(plid);
-		}
-		catch (AuthException | PrincipalException e) {
-			throw new NotAuthorizedException(e);
-		}
-		catch (NoSuchLayoutException nsle) {
-			throw new NotFoundException("Unable to get layout " + plid, nsle);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
-	}
-
 	private PageItems<Layout> _getLayouts(Pagination pagination, Long groupId) {
 		List<Layout> layouts = _layoutService.getLayouts(
 			groupId, LayoutConstants.TYPE_EMBEDDED,
@@ -144,21 +124,6 @@ public class EmbeddedWebPageNestedCollectionResource
 			groupId, LayoutConstants.TYPE_EMBEDDED);
 
 		return new PageItems<>(layouts, layoutsCount);
-	}
-
-	private Layout _removeLayout(Long plid) {
-		try {
-			return _layoutLocalService.deleteLayout(plid);
-		}
-		catch (AuthException | PrincipalException e) {
-			throw new NotAuthorizedException(e);
-		}
-		catch (NoSuchLayoutException nsle) {
-			throw new NotFoundException("Unable to get layout " + plid, nsle);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
 	}
 
 	@Reference

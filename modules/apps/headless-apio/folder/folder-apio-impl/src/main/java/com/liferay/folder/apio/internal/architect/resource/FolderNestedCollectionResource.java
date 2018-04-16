@@ -14,8 +14,8 @@
 
 package com.liferay.folder.apio.internal.architect.resource;
 
-import com.liferay.announcements.kernel.exception.NoSuchEntryException;
-import com.liferay.apio.architect.functional.Try;
+import static com.liferay.portal.apio.architect.context.idempotent.Idempotent.idempotent;
+
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -28,15 +28,10 @@ import com.liferay.folder.apio.internal.architect.form.FolderForm;
 import com.liferay.portal.apio.architect.context.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 
 import java.util.List;
-
-import javax.ws.rs.BadRequestException;
-import javax.ws.rs.NotFoundException;
-import javax.ws.rs.ServerErrorException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -75,9 +70,10 @@ public class FolderNestedCollectionResource
 		ItemRoutes.Builder<Folder, Long> builder) {
 
 		return builder.addGetter(
-			this::_getFolder
+			_dlAppService::getFolder
 		).addRemover(
-			this::_deleteFolder, _hasPermission.forDeleting(Folder.class)
+			idempotent(_dlAppService::deleteFolder),
+			_hasPermission.forDeleting(Folder.class)
 		).addUpdater(
 			this::_updateFolder, _hasPermission.forUpdating(Folder.class),
 			FolderForm::buildForm
@@ -106,69 +102,33 @@ public class FolderNestedCollectionResource
 		).build();
 	}
 
-	private Folder _addFolder(Long groupId, FolderForm folderForm) {
+	private Folder _addFolder(Long groupId, FolderForm folderForm)
+		throws PortalException {
+
 		long parentFolderId = 0;
 
-		Try<Folder> folderTry = Try.fromFallible(
-			() -> _dlAppService.getFolder(
-				groupId, parentFolderId, folderForm.getName()));
-
-		if (folderTry.isSuccess()) {
-			throw new BadRequestException(
-				"A folder with that name already exists");
-		}
-
-		folderTry = Try.fromFallible(
-			() -> _dlAppService.addFolder(
-				groupId, parentFolderId, folderForm.getName(),
-				folderForm.getDescription(), new ServiceContext()));
-
-		return folderTry.getUnchecked();
+		return _dlAppService.addFolder(
+			groupId, parentFolderId, folderForm.getName(),
+			folderForm.getDescription(), new ServiceContext());
 	}
 
-	private void _deleteFolder(Long folderId) {
-		try {
-			_dlAppService.deleteFolder(folderId);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
+	private PageItems<Folder> _getPageItems(Pagination pagination, Long groupId)
+		throws PortalException {
+
+		List<Folder> folders = _dlAppService.getFolders(
+			groupId, 0, pagination.getStartPosition(),
+			pagination.getEndPosition(), null);
+		int count = _dlAppService.getFoldersCount(groupId, 0);
+
+		return new PageItems<>(folders, count);
 	}
 
-	private Folder _getFolder(Long folderId) {
-		try {
-			return _dlAppService.getFolder(folderId);
-		}
-		catch (NoSuchEntryException | PrincipalException e) {
-			throw new NotFoundException("Unable to get folder " + folderId, e);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
-	}
+	private Folder _updateFolder(Long folderId, FolderForm folderForm)
+		throws PortalException {
 
-	private PageItems<Folder> _getPageItems(
-		Pagination pagination, Long groupId) {
-
-		try {
-			List<Folder> folders = _dlAppService.getFolders(
-				groupId, 0, pagination.getStartPosition(),
-				pagination.getEndPosition(), null);
-			int count = _dlAppService.getFoldersCount(groupId, 0);
-
-			return new PageItems<>(folders, count);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
-	}
-
-	private Folder _updateFolder(Long folderId, FolderForm folderForm) {
-		return Try.fromFallible(
-			() -> _dlAppService.updateFolder(
-				folderId, folderForm.getName(), folderForm.getDescription(),
-				new ServiceContext())
-		).getUnchecked();
+		return _dlAppService.updateFolder(
+			folderId, folderForm.getName(), folderForm.getDescription(),
+			new ServiceContext());
 	}
 
 	@Reference

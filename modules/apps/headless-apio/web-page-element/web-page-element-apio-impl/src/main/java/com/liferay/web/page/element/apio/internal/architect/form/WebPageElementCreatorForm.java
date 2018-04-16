@@ -49,8 +49,6 @@ public class WebPageElementCreatorForm {
 			__ -> "This form can be used to create a web page element"
 		).constructor(
 			WebPageElementCreatorForm::new
-		).addOptionalLong(
-			"folder", WebPageElementCreatorForm::_setFolder
 		).addRequiredDate(
 			"displayDate", WebPageElementCreatorForm::_setDisplayDate
 		).addRequiredString(
@@ -127,21 +125,6 @@ public class WebPageElementCreatorForm {
 	}
 
 	/**
-	 * Returns the folder ID if added through the form. Returns {@code 0}
-	 * otherwise.
-	 *
-	 * @return the web page element's folder ID if present; {@code 0} otherwise
-	 * @review
-	 */
-	public long getFolder() {
-		if (_folder == null) {
-			return 0;
-		}
-
-		return _folder;
-	}
-
-	/**
 	 * Returns the web page element's structure ID.
 	 *
 	 * @return the web page element's structure ID
@@ -197,10 +180,6 @@ public class WebPageElementCreatorForm {
 		_displayDateMinute = calendar.get(Calendar.MINUTE);
 	}
 
-	private void _setFolder(long folder) {
-		_folder = folder;
-	}
-
 	private void _setStructure(String structure) {
 		_structure = structure;
 	}
@@ -223,7 +202,6 @@ public class WebPageElementCreatorForm {
 	private Integer _displayDateMinute;
 	private Integer _displayDateMonth;
 	private Integer _displayDateYear;
-	private Long _folder;
 	private String _structure;
 	private String _template;
 	private String _text;

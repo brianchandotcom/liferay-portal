@@ -71,7 +71,7 @@ public class CommerceAvailabilityRangeLocalServiceImpl
 
 		commerceAvailabilityRangePersistence.remove(commerceAvailabilityRange);
 
-		// Commerce product definition availability range
+		// Commerce product definition availability ranges
 
 		cpDefinitionAvailabilityRangeLocalService.
 			deleteCPDefinitionAvailabilityRanges(
@@ -94,8 +94,18 @@ public class CommerceAvailabilityRangeLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCommerceAvailabilityRanges(long groupId) {
-		commerceAvailabilityRangePersistence.removeByGroupId(groupId);
+	public void deleteCommerceAvailabilityRanges(long groupId)
+		throws PortalException {
+
+		List<CommerceAvailabilityRange> commerceAvailabilityRanges =
+			commerceAvailabilityRangePersistence.findByGroupId(groupId);
+
+		for (CommerceAvailabilityRange commerceAvailabilityRange :
+				commerceAvailabilityRanges) {
+
+			commerceAvailabilityRangeLocalService.
+				deleteCommerceAvailabilityRange(commerceAvailabilityRange);
+		}
 	}
 
 	@Override

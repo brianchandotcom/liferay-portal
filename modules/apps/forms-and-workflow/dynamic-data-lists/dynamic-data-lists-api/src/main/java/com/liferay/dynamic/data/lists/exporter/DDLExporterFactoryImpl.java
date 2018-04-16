@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @see    DDLExporter
  */
 @Component(immediate = true, service = DDLExporterFactory.class)
-public class DDLExporterFactory {
+public class DDLExporterFactoryImpl {
 
 	/**
 	 * Returns the available formats that can be used to export record set

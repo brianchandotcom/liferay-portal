@@ -45,7 +45,7 @@ public class StringCastCheck extends BaseCheck {
 			DetailAST variableNameAST = nameASTList.get(0);
 
 			String variableTypeName = DetailASTUtil.getVariableTypeName(
-				methodCallAST, variableNameAST.getText());
+				methodCallAST, variableNameAST.getText(), false);
 
 			if (variableTypeName.equals("String")) {
 				log(methodCallAST.getLineNo(), _MSG_UNNEEDED_STRING_CAST);

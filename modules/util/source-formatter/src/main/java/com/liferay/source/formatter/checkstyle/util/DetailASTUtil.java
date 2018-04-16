@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checkstyle.util;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -147,6 +148,41 @@ public class DetailASTUtil {
 		return parameterNames;
 	}
 
+	public static String getSignature(DetailAST detailAST) {
+		if ((detailAST.getType() != TokenTypes.CTOR_DEF) &&
+			(detailAST.getType() != TokenTypes.METHOD_DEF)) {
+
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(CharPool.OPEN_PARENTHESIS);
+
+		DetailAST parametersAST = detailAST.findFirstToken(
+			TokenTypes.PARAMETERS);
+
+		List<DetailAST> parameterDefASTList = getAllChildTokens(
+			parametersAST, false, TokenTypes.PARAMETER_DEF);
+
+		if (parameterDefASTList.isEmpty()) {
+			sb.append(CharPool.CLOSE_PARENTHESIS);
+
+			return sb.toString();
+		}
+
+		for (DetailAST parameterDefAST : parameterDefASTList) {
+			sb.append(getTypeName(parameterDefAST, true));
+			sb.append(CharPool.COMMA);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(CharPool.CLOSE_PARENTHESIS);
+
+		return sb.toString();
+	}
+
 	public static int getStartLine(DetailAST detailAST) {
 		int startLine = detailAST.getLineNo();
 
@@ -161,7 +197,9 @@ public class DetailASTUtil {
 		return startLine;
 	}
 
-	public static String getTypeName(DetailAST detailAST) {
+	public static String getTypeName(
+		DetailAST detailAST, boolean includeTypeArguments) {
+
 		if (detailAST == null) {
 			return StringPool.BLANK;
 		}
@@ -195,6 +233,35 @@ public class DetailASTUtil {
 		for (int i = 0; i < arrayDimension; i++) {
 			sb.append("[]");
 		}
+
+		if (!includeTypeArguments) {
+			return sb.toString();
+		}
+
+		DetailAST typeArgumentsAST = typeAST.findFirstToken(
+			TokenTypes.TYPE_ARGUMENTS);
+
+		if (typeArgumentsAST == null) {
+			return sb.toString();
+		}
+
+		sb.append(CharPool.LESS_THAN);
+
+		List<DetailAST> typeArgumentASTList = getAllChildTokens(
+			typeArgumentsAST, false, TokenTypes.TYPE_ARGUMENT);
+
+		for (DetailAST typeArgumentAST : typeArgumentASTList) {
+			FullIdent typeArgumenIdent = FullIdent.createFullIdentBelow(
+				typeArgumentAST);
+
+			sb.append(typeArgumenIdent.getText());
+
+			sb.append(CharPool.COMMA);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(CharPool.GREATER_THAN);
 
 		return sb.toString();
 	}
@@ -291,9 +358,11 @@ public class DetailASTUtil {
 	}
 
 	public static String getVariableTypeName(
-		DetailAST detailAST, String variableName) {
+		DetailAST detailAST, String variableName,
+		boolean includeTypeArguments) {
 
-		return getTypeName(getVariableTypeAST(detailAST, variableName));
+		return getTypeName(
+			getVariableTypeAST(detailAST, variableName), includeTypeArguments);
 	}
 
 	public static boolean hasParentWithTokenType(

@@ -23,6 +23,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.AnnotationUtility;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -100,8 +101,11 @@ public class MethodNameCheck
 		for (DetailAST methodDefAST : methodDefASTList) {
 			String methodName = _getMethodName(methodDefAST);
 
-			if (methodName.equals(noDoName) ||
-				methodName.equals(noUnderscoreName)) {
+			if (methodName.equals(noUnderscoreName) ||
+				(methodName.equals(noDoName) &&
+				 Objects.equals(
+					 DetailASTUtil.getSignature(detailAST),
+					 DetailASTUtil.getSignature(methodDefAST)))) {
 
 				return;
 			}

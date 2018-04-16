@@ -329,7 +329,7 @@ public class ChainingCheck extends BaseCheck {
 			}
 
 			String variableTypeName = DetailASTUtil.getVariableTypeName(
-				methodCallAST, classOrVariableName);
+				methodCallAST, classOrVariableName, false);
 
 			if (Validator.isNotNull(variableTypeName)) {
 				for (String allowedVariableTypeName :

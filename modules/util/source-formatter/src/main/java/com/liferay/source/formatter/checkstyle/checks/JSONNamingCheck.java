@@ -43,7 +43,7 @@ public class JSONNamingCheck extends BaseCheck {
 			return;
 		}
 
-		String typeName = DetailASTUtil.getTypeName(detailAST);
+		String typeName = DetailASTUtil.getTypeName(detailAST, false);
 
 		if (typeName.equals("boolean") || typeName.equals("void")) {
 			return;

@@ -343,7 +343,7 @@ public class DeprecatedMethodCallsCheck extends BaseCheck {
 		String s = firstChildAST.getText();
 
 		if (s.matches("_?[a-z].*")) {
-			s = DetailASTUtil.getVariableTypeName(methodCallAST, s);
+			s = DetailASTUtil.getVariableTypeName(methodCallAST, s, false);
 
 			if (Validator.isNull(s)) {
 				return null;
@@ -564,7 +564,7 @@ public class DeprecatedMethodCallsCheck extends BaseCheck {
 				String parameterName = firstChild.getText();
 
 				String parameterTypeName = DetailASTUtil.getVariableTypeName(
-					methodCallAST, parameterName);
+					methodCallAST, parameterName, false);
 
 				if (Validator.isNotNull(parameterTypeName)) {
 					parameterTypeNames.add(parameterTypeName);

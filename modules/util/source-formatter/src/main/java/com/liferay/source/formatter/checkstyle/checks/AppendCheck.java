@@ -45,7 +45,7 @@ public class AppendCheck extends StringConcatenationCheck {
 			String variableName = _getVariableName(methodCallAST);
 
 			String variableTypeName = DetailASTUtil.getVariableTypeName(
-				methodCallAST, variableName);
+				methodCallAST, variableName, false);
 
 			if (!variableTypeName.equals("StringBundler")) {
 				continue;

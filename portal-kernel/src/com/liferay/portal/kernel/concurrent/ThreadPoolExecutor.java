@@ -123,7 +123,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
 					   (_poolSize < _corePoolSize) &&
 					   ((runnable = _taskQueue.poll()) != null)) {
 
-					_doAddWorkerThread(runnable);
+					_addWorkerThread(runnable);
 				}
 			}
 		}
@@ -500,7 +500,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
 					Runnable runnable = _taskQueue.poll();
 
 					if (runnable != null) {
-						_doAddWorkerThread(runnable);
+						_addWorkerThread(runnable);
 					}
 				}
 			}
@@ -510,7 +510,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
 		}
 	}
 
-	private void _doAddWorkerThread(Runnable runnable) {
+	private void _addWorkerThread(Runnable runnable) {
 		WorkerTask workerTask = new WorkerTask(runnable);
 
 		_workerTasks.add(workerTask);
@@ -604,7 +604,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
 			}
 
 			if (!_taskQueue.isEmpty()) {
-				_doAddWorkerThread(_taskQueue.poll());
+				_addWorkerThread(_taskQueue.poll());
 			}
 		}
 	}

@@ -61,25 +61,24 @@ public abstract class SubrepositoryJob extends RepositoryJob {
 			return gitWorkingDirectory;
 		}
 
-		String repositoryDirectoryPath = _getRepositoryDirectoryPath();
+		checkRepositoryDir();
 
 		try {
 			gitWorkingDirectory = new GitWorkingDirectory(
-				getBranchName(), repositoryDirectoryPath);
+				getBranchName(), repositoryDir.getPath());
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(
-				"Invalid Git working directory " + repositoryDirectoryPath,
+				"Unable to create GitWorkingDirectory " +
+					repositoryDir.getPath(),
 				ioe);
 		}
 
 		return gitWorkingDirectory;
 	}
 
-	protected SubrepositoryJob(String jobName, String repositoryName) {
+	protected SubrepositoryJob(String jobName) {
 		super(jobName);
-
-		_repositoryName = repositoryName;
 
 		gitWorkingDirectory = getGitWorkingDirectory();
 
@@ -109,6 +108,28 @@ public abstract class SubrepositoryJob extends RepositoryJob {
 		}
 	}
 
+	protected Properties getSubrepositoryTestProperties() {
+		checkRepositoryDir();
+
+		Properties buildProperties = null;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to get build properties", ioe);
+		}
+
+		File defaultPropertiesFile = new File(
+			JenkinsResultsParserUtil.combine(
+				buildProperties.getProperty("base.repository.dir"),
+				"/liferay-jenkins-ee/commands/dependencies",
+				"/test-subrepository-batch.properties"));
+
+		return JenkinsResultsParserUtil.getProperties(
+			defaultPropertiesFile, new File(repositoryDir, "test.properties"));
+	}
+
 	protected final Properties subrepositoryTestProperties;
 
 	private boolean _containsIntegrationTest() throws IOException {
@@ -121,27 +142,6 @@ public abstract class SubrepositoryJob extends RepositoryJob {
 		}
 
 		return true;
-	}
-
-	private String _getRepositoryDirectoryPath() {
-		Properties buildProperties = null;
-
-		try {
-			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException("Unable to get build properties", ioe);
-		}
-
-		String repositoryDirectoryPath = JenkinsResultsParserUtil.combine(
-			buildProperties.getProperty("base.repository.dir"), "/",
-			_repositoryName);
-
-		if (!repositoryDirectoryPath.endsWith("-private")) {
-			repositoryDirectoryPath += "-private";
-		}
-
-		return repositoryDirectoryPath;
 	}
 
 	private Set<String> _getRequiredTestBatchNames() {
@@ -170,7 +170,5 @@ public abstract class SubrepositoryJob extends RepositoryJob {
 
 		return testRequiredBatchNamesSet;
 	}
-
-	private final String _repositoryName;
 
 }

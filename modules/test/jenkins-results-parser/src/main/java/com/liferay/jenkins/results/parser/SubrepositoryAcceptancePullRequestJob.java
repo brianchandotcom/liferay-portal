@@ -19,10 +19,8 @@ package com.liferay.jenkins.results.parser;
  */
 public class SubrepositoryAcceptancePullRequestJob extends SubrepositoryJob {
 
-	public SubrepositoryAcceptancePullRequestJob(
-		String jobName, String repositoryName) {
-
-		super(jobName, repositoryName);
+	public SubrepositoryAcceptancePullRequestJob(String jobName) {
+		super(jobName);
 	}
 
 }

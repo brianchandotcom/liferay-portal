@@ -960,6 +960,18 @@ public class JenkinsResultsParserUtil {
 		return properties;
 	}
 
+	public static Properties getProperties(File... propertiesFiles) {
+		Properties properties = new Properties();
+
+		for (File propertiesFile : propertiesFiles) {
+			if ((propertiesFile != null) && propertiesFile.exists()) {
+				properties.putAll(getProperties(propertiesFile));
+			}
+		}
+
+		return properties;
+	}
+
 	public static List<String> getRandomList(List<String> list, int size) {
 		if (list.size() < size) {
 			throw new IllegalStateException(

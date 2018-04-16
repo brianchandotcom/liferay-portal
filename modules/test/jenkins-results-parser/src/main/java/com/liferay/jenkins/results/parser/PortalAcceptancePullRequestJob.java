@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
+import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -36,6 +37,8 @@ public class PortalAcceptancePullRequestJob extends PortalRepositoryJob {
 
 	@Override
 	public Set<String> getBatchNames() {
+		Properties portalTestProperties = getPortalTestProperties();
+
 		String testBatchNames = getProperty(
 			portalTestProperties, "test.batch.names[" + _testSuiteName + "]");
 
@@ -72,6 +75,8 @@ public class PortalAcceptancePullRequestJob extends PortalRepositoryJob {
 
 	@Override
 	public Set<String> getDistTypes() {
+		Properties portalTestProperties = getPortalTestProperties();
+
 		String testBatchDistAppServers = getProperty(
 			portalTestProperties,
 			"test.batch.dist.app.servers[" + _testSuiteName + "]");
@@ -95,6 +100,8 @@ public class PortalAcceptancePullRequestJob extends PortalRepositoryJob {
 				"test.batch.run.property.query[", testBatchName, "]")
 		};
 
+		Properties portalTestProperties = getPortalTestProperties();
+
 		for (String propertyName : propertyNames) {
 			if (portalTestProperties.containsKey(propertyName)) {
 				String propertyValue = getProperty(
@@ -114,15 +121,12 @@ public class PortalAcceptancePullRequestJob extends PortalRepositoryJob {
 	}
 
 	private boolean _isPortalWebOnly() {
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			getPortalGitWorkingDirectory();
+		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
 		File portalWebDirectory = new File(
-			portalGitWorkingDirectory.getWorkingDirectory(), "portal-web");
+			gitWorkingDirectory.getWorkingDirectory(), "portal-web");
 
-		for (File modifiedFile :
-				portalGitWorkingDirectory.getModifiedFilesList()) {
-
+		for (File modifiedFile : gitWorkingDirectory.getModifiedFilesList()) {
 			if (!JenkinsResultsParserUtil.isFileInDirectory(
 					portalWebDirectory, modifiedFile)) {
 

@@ -14,6 +14,9 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.File;
+import java.io.IOException;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,14 +42,49 @@ public abstract class RepositoryJob extends BaseJob {
 	}
 
 	public GitWorkingDirectory getGitWorkingDirectory() {
+		if (gitWorkingDirectory != null) {
+			return gitWorkingDirectory;
+		}
+
+		checkRepositoryDir();
+
+		try {
+			gitWorkingDirectory = new GitWorkingDirectory(
+				getBranchName(), repositoryDir.getAbsolutePath());
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to create git working directory for branch ",
+					getBranchName(), " in repository ",
+					repositoryDir.getAbsolutePath()),
+				ioe);
+		}
+
 		return gitWorkingDirectory;
+	}
+
+	public void setRepositoryDir(File repositoryDir) {
+		this.repositoryDir = repositoryDir;
 	}
 
 	protected RepositoryJob(String jobName) {
 		super(jobName);
 	}
 
+	protected void checkRepositoryDir() {
+		if (repositoryDir == null) {
+			throw new IllegalStateException("repositoryDir is not set");
+		}
+
+		if (!repositoryDir.exists()) {
+			throw new IllegalStateException(
+				repositoryDir.getPath() + " does not exist");
+		}
+	}
+
 	protected GitWorkingDirectory gitWorkingDirectory;
+	protected File repositoryDir;
 
 	private static final Pattern _jobNamePattern = Pattern.compile(
 		"[^\\(]+\\((?<branchName>[^\\)]+)\\)");

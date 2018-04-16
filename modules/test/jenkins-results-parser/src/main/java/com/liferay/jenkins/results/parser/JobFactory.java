@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -47,35 +48,52 @@ public class JobFactory {
 			String subrepositoryModuleName = _getSubrepositoryModuleName(
 				gitWorkingDirectory);
 
+			RepositoryJob repositoryJob = null;
+
 			if (subrepositoryModuleName == null) {
-				job = portalAcceptancePullRequestJob;
+				repositoryJob = portalAcceptancePullRequestJob;
 			}
 			else {
-				job = new SubrepositoryAcceptancePullRequestJob(
-					jobName, subrepositoryModuleName);
+				repositoryJob = new SubrepositoryAcceptancePullRequestJob(
+					jobName);
+
+				Properties buildProperties = null;
+
+				try {
+					buildProperties =
+						JenkinsResultsParserUtil.getBuildProperties();
+				}
+				catch (IOException ioe) {
+					throw new RuntimeException(
+						"Unable to get build properties", ioe);
+				}
+
+				repositoryJob.setRepositoryDir(
+					new File(
+						JenkinsResultsParserUtil.combine(
+							buildProperties.getProperty("base.repository.dir"),
+							"/", subrepositoryModuleName)));
 			}
+
+			_jobs.put(jobName, repositoryJob);
+
+			return repositoryJob;
 		}
 
-		if ((job == null) &&
-			jobName.contains("test-portal-acceptance-upstream(")) {
+		if (jobName.contains("test-portal-acceptance-upstream(")) {
+			_jobs.put(jobName, new PortalAcceptanceUpstreamJob(jobName));
 
-			job = new PortalAcceptanceUpstreamJob(jobName);
+			return _jobs.get(jobName);
 		}
 
-		if ((job == null) &&
-			jobName.contains("test-subrepository-acceptance-pullrequest(")) {
+		if (jobName.contains("test-subrepository-acceptance-pullrequest(")) {
+			_jobs.put(
+				jobName, new SubrepositoryAcceptancePullRequestJob(jobName));
 
-			job = new SubrepositoryAcceptancePullRequestJob(
-				jobName, System.getenv("REPOSITORY_NAME"));
+			return _jobs.get(jobName);
 		}
 
-		if (job == null) {
-			throw new IllegalArgumentException("Invalid job name " + jobName);
-		}
-
-		_jobs.put(jobName, job);
-
-		return job;
+		throw new IllegalArgumentException("Invalid job name " + jobName);
 	}
 
 	private static String _getSubrepositoryModuleName(

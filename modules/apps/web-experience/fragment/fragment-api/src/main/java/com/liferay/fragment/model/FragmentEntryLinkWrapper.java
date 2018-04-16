@@ -78,6 +78,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 		attributes.put("js", getJs());
 		attributes.put("editableValues", getEditableValues());
 		attributes.put("position", getPosition());
+		attributes.put("lastPropagationDate", getLastPropagationDate());
 
 		return attributes;
 	}
@@ -185,6 +186,12 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 
 		if (position != null) {
 			setPosition(position);
+		}
+
+		Date lastPropagationDate = (Date)attributes.get("lastPropagationDate");
+
+		if (lastPropagationDate != null) {
+			setLastPropagationDate(lastPropagationDate);
 		}
 	}
 
@@ -324,6 +331,16 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	}
 
 	/**
+	* Returns the last propagation date of this fragment entry link.
+	*
+	* @return the last propagation date of this fragment entry link
+	*/
+	@Override
+	public Date getLastPropagationDate() {
+		return _fragmentEntryLink.getLastPropagationDate();
+	}
+
+	/**
 	* Returns the modified date of this fragment entry link.
 	*
 	* @return the modified date of this fragment entry link
@@ -421,6 +438,12 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	@Override
 	public boolean isEscapedModel() {
 		return _fragmentEntryLink.isEscapedModel();
+	}
+
+	@Override
+	public boolean isLatestFragmentEntryUsed()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _fragmentEntryLink.isLatestFragmentEntryUsed();
 	}
 
 	@Override
@@ -567,6 +590,16 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	@Override
 	public void setJs(java.lang.String js) {
 		_fragmentEntryLink.setJs(js);
+	}
+
+	/**
+	* Sets the last propagation date of this fragment entry link.
+	*
+	* @param lastPropagationDate the last propagation date of this fragment entry link
+	*/
+	@Override
+	public void setLastPropagationDate(Date lastPropagationDate) {
+		_fragmentEntryLink.setLastPropagationDate(lastPropagationDate);
 	}
 
 	/**

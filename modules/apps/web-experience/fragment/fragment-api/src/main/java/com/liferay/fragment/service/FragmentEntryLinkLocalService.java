@@ -251,7 +251,17 @@ public interface FragmentEntryLinkLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentEntryLink> getFragmentEntryLinks(long groupId,
+		long fragmentEntryId, int start, int end,
+		OrderByComparator<FragmentEntryLink> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentEntryLink> getFragmentEntryLinks(long groupId,
 		long classNameId, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentEntryLink> getFragmentEntryLinks(long groupId,
+		long fragmentEntryId, long classNameId, int start, int end,
+		OrderByComparator<FragmentEntryLink> orderByComparator);
 
 	/**
 	* Returns all the fragment entry links matching the UUID and company.
@@ -286,6 +296,13 @@ public interface FragmentEntryLinkLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFragmentEntryLinksCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFragmentEntryLinksCount(long groupId, long fragmentEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFragmentEntryLinksCount(long groupId, long fragmentEntryId,
+		long classNameId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

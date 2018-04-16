@@ -54,4 +54,7 @@ public interface FragmentEntryLink extends FragmentEntryLinkModel, PersistedMode
 				return FragmentEntryLink.class;
 			}
 		};
+
+	public boolean isLatestFragmentEntryUsed()
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

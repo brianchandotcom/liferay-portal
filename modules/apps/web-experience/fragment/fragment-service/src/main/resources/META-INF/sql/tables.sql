@@ -49,5 +49,6 @@ create table FragmentEntryLink (
 	html STRING null,
 	js STRING null,
 	editableValues STRING null,
-	position INTEGER
+	position INTEGER,
+	lastPropagationDate DATE null
 );

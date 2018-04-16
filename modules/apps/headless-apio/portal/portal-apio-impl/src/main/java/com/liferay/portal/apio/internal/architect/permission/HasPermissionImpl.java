@@ -15,6 +15,7 @@
 package com.liferay.portal.apio.internal.architect.permission;
 
 import static com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory.openSingleValueMap;
+import static com.liferay.portal.kernel.security.permission.ActionKeys.ADD_ARTICLE;
 import static com.liferay.portal.kernel.security.permission.ActionKeys.ADD_ENTRY;
 import static com.liferay.portal.kernel.security.permission.ActionKeys.ADD_USER;
 import static com.liferay.portal.kernel.security.permission.ActionKeys.DELETE;
@@ -24,6 +25,7 @@ import aQute.bnd.annotation.component.Component;
 
 import com.liferay.apio.architect.credentials.Credentials;
 import com.liferay.apio.architect.functional.Try;
+import com.liferay.journal.model.JournalFolder;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.portal.apio.architect.context.permission.HasPermission;
 import com.liferay.portal.kernel.model.ClassedModel;
@@ -68,6 +70,24 @@ public class HasPermissionImpl implements HasPermission {
 				false
 			);
 		};
+	}
+
+	@Override
+	public Boolean forAddingRootArticle(Credentials credentials, Long groupId) {
+		Try<String> stringTry = Try.success(JournalFolder.class.getName());
+
+		Try<PermissionChecker> permissionCheckerTry = getPermissionCheckerTry(
+			credentials);
+
+		return stringTry.map(
+			_modelResourcePermissions::getService
+		).flatMap(
+			modelResourcePermission -> permissionCheckerTry.map(
+				permissionChecker -> modelResourcePermission.contains(
+					permissionChecker, 0, ADD_ARTICLE))
+		).orElse(
+			false
+		);
 	}
 
 	@Override

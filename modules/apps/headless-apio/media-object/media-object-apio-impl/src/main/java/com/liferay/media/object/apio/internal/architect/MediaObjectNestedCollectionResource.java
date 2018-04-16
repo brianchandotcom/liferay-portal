@@ -30,6 +30,7 @@ import com.liferay.document.library.kernel.service.DLFolderService;
 import com.liferay.folder.apio.architect.identifier.FolderIdentifier;
 import com.liferay.media.object.apio.architect.identifier.FileEntryIdentifier;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
+import com.liferay.portal.apio.architect.context.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 
@@ -76,7 +77,8 @@ public class MediaObjectNestedCollectionResource
 		return builder.addGetter(
 			this::_getDLFileEntry
 		).addRemover(
-			this::_deleteDLFileEntry, MockPermissions::validPermission
+			this::_deleteDLFileEntry,
+			_hasPermission.forDeleting(DLFileEntry.class)
 		).build();
 	}
 
@@ -174,5 +176,8 @@ public class MediaObjectNestedCollectionResource
 
 	@Reference
 	private DLFolderService _dlFolderService;
+
+	@Reference
+	private HasPermission _hasPermission;
 
 }

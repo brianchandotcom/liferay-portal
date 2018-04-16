@@ -57,6 +57,23 @@ public interface HasPermission {
 		Class<?> clazz);
 
 	/**
+	 * Returns {@code true} if the current {@code User} can add a root {@code
+	 * JournalArticle}.
+	 *
+	 * <p>
+	 * This method is intended to be used for providing a function to check
+	 * permissions in {@code Routes.Builder#addCreator} methods.
+	 * </p>
+	 *
+	 * @param  credentials the current request credentials
+	 * @param  groupId the group ID
+	 * @return {@code true} if the current user can add a root {@code JournalArticle};
+	 *         {@code false} otherwise
+	 * @review
+	 */
+	public Boolean forAddingRootArticle(Credentials credentials, Long groupId);
+
+	/**
 	 * Returns {@code true} if the current {@code User} can add an {@code User}.
 	 *
 	 * <p>

@@ -12,7 +12,10 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.exporter;
+package com.liferay.dynamic.data.lists.internal.exporter;
+
+import com.liferay.dynamic.data.lists.exporter.DDLExporter;
+import com.liferay.dynamic.data.lists.exporter.DDLExporterFactory;
 
 import java.util.Collections;
 import java.util.Map;

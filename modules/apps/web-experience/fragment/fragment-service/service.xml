@@ -173,6 +173,11 @@
 			<finder-column name="groupId" />
 			<finder-column name="fragmentEntryId" />
 		</finder>
+		<finder name="G_F_C" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="fragmentEntryId" />
+			<finder-column name="classNameId" />
+		</finder>
 		<finder name="G_C_C" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />

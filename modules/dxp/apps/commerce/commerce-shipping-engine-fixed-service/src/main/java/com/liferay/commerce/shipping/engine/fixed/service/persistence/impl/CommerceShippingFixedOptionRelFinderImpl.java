@@ -17,12 +17,13 @@ package com.liferay.commerce.shipping.engine.fixed.service.persistence.impl;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel;
 import com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionRelImpl;
 import com.liferay.commerce.shipping.engine.fixed.service.persistence.CommerceShippingFixedOptionRelFinder;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
 
@@ -74,7 +75,7 @@ public class CommerceShippingFixedOptionRelFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_C_C_C_Z_W);
+			String sql = _customSQL.get(getClass(), FIND_BY_C_C_C_Z_W);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -101,5 +102,8 @@ public class CommerceShippingFixedOptionRelFinderImpl
 			closeSession(session);
 		}
 	}
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

@@ -17,7 +17,7 @@ package com.liferay.commerce.service.persistence.impl;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.impl.CommerceCountryImpl;
 import com.liferay.commerce.service.persistence.CommerceCountryFinder;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class CommerceCountryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(
+			String sql = _customSQL.get(
 				getClass(), FIND_BY_COMMERCE_WAREHOUSES);
 
 			if (all) {
@@ -79,5 +80,8 @@ public class CommerceCountryFinderImpl
 		"AND (CommerceWarehouse.active_ = true)";
 
 	private static final String _ALL_SQL = "[$ALL$]";
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

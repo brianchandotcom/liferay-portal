@@ -17,13 +17,14 @@ package com.liferay.commerce.service.persistence.impl;
 import com.liferay.commerce.model.CommercePriceList;
 import com.liferay.commerce.model.impl.CommercePriceListImpl;
 import com.liferay.commerce.service.persistence.CommercePriceListFinder;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
 import java.util.List;
@@ -54,7 +55,7 @@ public class CommercePriceListFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(
+			String sql = _customSQL.get(
 				getClass(), FIND_BY_EXPIRATION_DATE, queryDefinition,
 				CommercePriceListImpl.TABLE_NAME);
 
@@ -82,5 +83,8 @@ public class CommercePriceListFinderImpl
 			closeSession(session);
 		}
 	}
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

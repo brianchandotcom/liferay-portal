@@ -57,20 +57,20 @@ ddmStructuresSearchContainer.setResults(ddmStructures);
 %>
 
 <c:if test="<%= journalDisplayContext.getAddMenuFavItemsLength() == 0 %>">
-	<liferay-ui:alert
+	<clay:stripe
+		destroyOnHide="<%= true %>"
 		message='<%= LanguageUtil.format(resourceBundle, "you-can-add-as-many-as-x-favorites-in-your-quick-menu", journalWebConfiguration.maxAddMenuItems()) %>'
-		timeout="<%= 0 %>"
-		type="info"
+		title='<%= LanguageUtil.get(resourceBundle, "info") + ":" %>'
 	/>
 </c:if>
 
 <liferay-ui:error exception="<%= MaxAddMenuFavItemsException.class %>" message='<%= LanguageUtil.format(resourceBundle, "you-cannot-add-more-than-x-favorites", journalWebConfiguration.maxAddMenuItems()) %>' />
 
 <c:if test="<%= journalDisplayContext.getAddMenuFavItemsLength() >= journalWebConfiguration.maxAddMenuItems() %>">
-	<liferay-ui:alert
+	<clay:stripe
 		message='<%= LanguageUtil.get(resourceBundle, "right-now-your-quick-menu-is-full-of-favorites-if-you-want-to-add-another-one-please-remove-at-least-one-of-them") %>'
-		timeout="<%= 0 %>"
-		type="warning"
+		style="warning"
+		title='<%= LanguageUtil.get(resourceBundle, "warning") + ":" %>'
 	/>
 </c:if>
 

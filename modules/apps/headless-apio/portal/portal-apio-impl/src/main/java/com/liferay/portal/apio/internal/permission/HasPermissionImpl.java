@@ -21,8 +21,6 @@ import static com.liferay.portal.kernel.security.permission.ActionKeys.ADD_USER;
 import static com.liferay.portal.kernel.security.permission.ActionKeys.DELETE;
 import static com.liferay.portal.kernel.security.permission.ActionKeys.UPDATE;
 
-import aQute.bnd.annotation.component.Component;
-
 import com.liferay.apio.architect.credentials.Credentials;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.journal.model.JournalFolder;
@@ -42,6 +40,7 @@ import java.util.function.BiFunction;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**

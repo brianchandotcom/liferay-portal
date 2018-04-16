@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Pavel Savinov
  */
 @Component(immediate = true, service = FragmentEntryProcessorRegistry.class)
-public class FragmentEntryProcessorRegistry {
+public class FragmentEntryProcessorRegistryImpl {
 
 	public String processFragmentEntryLinkHTML(
 			FragmentEntryLink fragmentEntryLink)

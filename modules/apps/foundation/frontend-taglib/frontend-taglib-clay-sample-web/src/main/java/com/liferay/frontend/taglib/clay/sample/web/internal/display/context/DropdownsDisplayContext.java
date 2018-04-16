@@ -103,16 +103,14 @@ public class DropdownsDisplayContext {
 			{
 				addGroup(
 					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							group1DropdownItems);
+						dropdownGroupItem.setDropdownItems(group1DropdownItems);
 						dropdownGroupItem.setLabel("Group 1");
 						dropdownGroupItem.setSeparator(true);
 					});
 
 				addGroup(
 					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							group2DropdownItems);
+						dropdownGroupItem.setDropdownItems(group2DropdownItems);
 						dropdownGroupItem.setLabel("Group 2");
 					});
 			}
@@ -220,8 +218,7 @@ public class DropdownsDisplayContext {
 			{
 				addGroup(
 					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							group1DropdownItems);
+						dropdownGroupItem.setDropdownItems(group1DropdownItems);
 						dropdownGroupItem.setLabel("Group 1");
 						dropdownGroupItem.setSeparator(true);
 					});

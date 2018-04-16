@@ -17,8 +17,8 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.List;
 import java.util.HashMap;
+import java.util.List;
 import java.util.function.Consumer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -101,8 +101,7 @@ public class CreationMenu extends HashMap {
 		if (!_favoriteDropdownItems.isEmpty()) {
 			secondaryDropdownItemList.addGroup(
 				dropdownGroupItem -> {
-					dropdownGroupItem.setDropdownItems(
-						_favoriteDropdownItems);
+					dropdownGroupItem.setDropdownItems(_favoriteDropdownItems);
 					dropdownGroupItem.setLabel(
 						LanguageUtil.get(_request, "favorites"));
 
@@ -115,8 +114,7 @@ public class CreationMenu extends HashMap {
 		if (!_restDropdownItems.isEmpty()) {
 			secondaryDropdownItemList.addGroup(
 				dropdownGroupItem -> {
-					dropdownGroupItem.setDropdownItems(
-						_restDropdownItems);
+					dropdownGroupItem.setDropdownItems(_restDropdownItems);
 				});
 		}
 

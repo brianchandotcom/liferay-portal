@@ -42,9 +42,6 @@ public class RadioDDMFormFieldContextHelper {
 
 		List<Object> options = new ArrayList<>();
 
-		RadioDDMFormFieldTemplateContextContributor radio =
-			new RadioDDMFormFieldTemplateContextContributor();
-
 		for (String optionValue : _ddmFormFieldOptions.getOptionsValues()) {
 			Map<String, String> optionMap = new HashMap<>();
 

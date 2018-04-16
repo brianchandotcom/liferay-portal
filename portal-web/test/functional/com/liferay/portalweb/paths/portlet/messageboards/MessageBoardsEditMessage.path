@@ -44,6 +44,12 @@
 	<td>//*[@data-qa-id='row'][contains(.,'${key_attachmentName}')]//span[contains(@class,'item-remove')]</td>
 	<td></td>
 </tr>
+
+<tr>
+	<td>ATTACHMENTS_SELECTED_FILE</td>
+	<td>//li[contains(@class,'upload-file')]//span[contains(.,'${key_attachmentName}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @see    DDLExporter
  */
 @Component(immediate = true, service = DDLExporterFactory.class)
-public class DDLExporterFactoryImpl {
+public class DDLExporterFactoryImpl implements DDLExporterFactory {
 
 	/**
 	 * Returns the available formats that can be used to export record set
@@ -42,6 +42,7 @@ public class DDLExporterFactoryImpl {
 	 *
 	 * @return the available formats registered in the system
 	 */
+	@Override
 	public Set<String> getAvailableFormats() {
 		return Collections.unmodifiableSet(_ddlExporters.keySet());
 	}
@@ -52,6 +53,7 @@ public class DDLExporterFactoryImpl {
 	 * @param  format the format that will be used to export
 	 * @return the DDL Exporter instance
 	 */
+	@Override
 	public DDLExporter getDDLExporter(String format) {
 		DDLExporter ddlExporter = _ddlExporters.get(format);
 

@@ -36,25 +36,27 @@ CPType cpType = cpDefinitionsDisplayContext.getCPType(cpDefinition.getProductTyp
 </c:choose>
 
 <liferay-ui:search-container-column-text
-	cssClass="table-cell-content"
+	cssClass="table-cell-content important"
 	href="<%= rowURL %>"
 	name="title"
 	value="<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>"
 />
 
 <liferay-ui:search-container-column-text
+	cssClass="table-cell-content"
 	name="type"
 	value="<%= cpType.getLabel(locale) %>"
+/>
+
+<liferay-ui:search-container-column-text
+	cssClass="table-cell-content"
+	name="sku"
+	value="<%= cpDefinitionsDisplayContext.getSku(cpDefinition, locale) %>"
 />
 
 <liferay-ui:search-container-column-date
 	name="modified-date"
 	property="modifiedDate"
-/>
-
-<liferay-ui:search-container-column-text
-	name="sku"
-	value="<%= cpDefinitionsDisplayContext.getSku(cpDefinition, locale) %>"
 />
 
 <liferay-ui:search-container-column-status

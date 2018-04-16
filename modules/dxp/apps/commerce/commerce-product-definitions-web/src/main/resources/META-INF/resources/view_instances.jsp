@@ -152,7 +152,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 							/>
 
 							<liferay-ui:search-container-column-text
-								cssClass="table-cell-content"
 								name="product"
 								value="<%= cpDefinition.getTitle(languageId) %>"
 							/>

@@ -1,5 +1,5 @@
 dependencies {
-	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0-20180326.173807-1"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.test", version: "1.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.test.integration", version: "1.0.0"
 	compileOnly group: "junit", name: "junit", version: "4.12"

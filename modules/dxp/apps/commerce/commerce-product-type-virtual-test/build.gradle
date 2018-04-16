@@ -3,7 +3,7 @@ dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "latest.integration"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.test.util", version: "2.1.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.journal.api", version: "3.0.0-20170601.182427-18"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0-20180326.173807-1"
 	testIntegrationCompile project(":private:apps:commerce:commerce-product-api")
 	testIntegrationCompile project(":private:apps:commerce:commerce-product-test-util")
 	testIntegrationCompile project(":private:apps:commerce:commerce-product-type-virtual-api")

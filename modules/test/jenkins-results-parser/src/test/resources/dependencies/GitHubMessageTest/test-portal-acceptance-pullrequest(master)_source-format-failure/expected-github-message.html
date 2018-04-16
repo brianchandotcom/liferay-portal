@@ -629,7 +629,8 @@
               <div>
                 <a href="${dependencies.url}/GitHubMessageTest/test-portal-acceptance-pullrequest(master)_source-format-failure/test-1-15/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=0,label_exp=!master/94121//consoleText">AXIS_VARIABLE=0,label_exp=!master #94121</a>
                 <pre>
-                  <code>     [java] 	@Override
+                  <code>     [java] Exception in thread "main" com.liferay.source.formatter.SourceMismatchException: ./modules/apps/web-experience/asset/asset-display-template-service/src/main/java/com/liferay/asset/display/template/service/impl/AssetDisplayTemplateLocalServiceImpl.java expected:&lt;...
+     [java] 	@Override
      [java] 	public [List&lt;AssetDisplayTemplate&gt; getAssetDisplayTemplates(long groupId) {
      [java] 		return assetDisplayTemplatePersistence.findByGroupId(groupId);
      [java] 	}
@@ -674,8 +675,7 @@
      [java] 	at com.liferay.source.formatter.BaseSourceProcessor.processFormattedFile(BaseSourceProcessor.java:351)
      [java] 	at com.liferay.source.formatter.BaseSourceProcessor._format(BaseSourceProcessor.java:526)
      [java] 	at com.liferay.source.formatter.BaseSourceProcessor.access$000(BaseSourceProcessor.java:67)
-     [java] 	at com.liferay.source.formatter.BaseSourceProcessor$1.call(BaseSourceProcessor.java:103)
-     [java] 	at com.liferay.source.formatter.BaseSourceProcessor$1.call(BaseSourceProcessor.java:98)</code>
+     [java] 	at com.liferay.source.formatter.BaseSourceProcessor$1.call(BaseSourceProcessor.java:103)</code>
                 </pre>
               </div>
             </li>

@@ -385,6 +385,33 @@ public class KaleoDesignerDisplayContext {
 		return userName;
 	}
 
+	public boolean isDefinitionInputDisabled(
+		boolean previewBeforeRestore,
+		KaleoDefinitionVersion kaleoDefinitionVersion,
+		PermissionChecker permissionChecker) {
+
+		if (previewBeforeRestore) {
+			return true;
+		}
+
+		if ((kaleoDefinitionVersion == null) &&
+			KaleoDesignerPermission.contains(
+				permissionChecker, _themeDisplay.getCompanyGroupId(),
+				KaleoDesignerActionKeys.ADD_NEW_WORKFLOW)) {
+
+			return false;
+		}
+
+		if ((kaleoDefinitionVersion != null) &&
+			KaleoDefinitionVersionPermission.contains(
+				permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE)) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	public boolean isPublishKaleoDefinitionVersionButtonVisible(
 		PermissionChecker permissionChecker,
 		KaleoDefinitionVersion kaleoDefinitionVersion) {

@@ -247,7 +247,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 					<aui:fieldset-group markupView="lexicon">
 						<aui:fieldset>
 							<liferay-ui:input-localized
-								disabled="<%= (kaleoDefinitionVersion != null) && !KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE) %>"
+								disabled="<%= kaleoDesignerDisplayContext.isDefinitionInputDisabled(isPreviewBeforeRestoreState, kaleoDefinitionVersion, permissionChecker) %>"
 								name="title"
 								placeholder="untitled-workflow"
 								xml='<%= BeanPropertiesUtil.getString(kaleoDefinitionVersion, "title") %>'
@@ -312,7 +312,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 															</aui:a>
 														</liferay-util:buffer>
 
-														<c:if test="<%= kaleoDesignerDisplayContext.isSaveKaleoDefinitionVersionButtonVisible(permissionChecker, kaleoDefinitionVersion) %>">
+														<c:if test="<%= !kaleoDesignerDisplayContext.isDefinitionInputDisabled(isPreviewBeforeRestoreState, kaleoDefinitionVersion, permissionChecker) %>">
 															<liferay-ui:message arguments="<%= importFileMark %>" key="write-your-definition-or-x" translateArguments="<%= false %>" />
 														</c:if>
 
@@ -388,22 +388,20 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 									['aui-base']
 								);
 
-								<c:if test="<%= kaleoDesignerDisplayContext.isPublishKaleoDefinitionVersionButtonVisible(permissionChecker, kaleoDefinitionVersion) %>">
-									Liferay.provide(
-										window,
-										'<portlet:namespace />publishKaleoDefinitionVersion',
-										function() {
-											<portlet:namespace />updateContent();
+								Liferay.provide(
+									window,
+									'<portlet:namespace />publishKaleoDefinitionVersion',
+									function() {
+										<portlet:namespace />updateContent();
 
-											<portlet:namespace />updateTitle();
+										<portlet:namespace />updateTitle();
 
-											<portlet:namespace />updateAction('<portlet:actionURL name="publishKaleoDefinitionVersion" />');
+										<portlet:namespace />updateAction('<portlet:actionURL name="publishKaleoDefinitionVersion" />');
 
-											submitForm(document.<portlet:namespace />fm);
-										},
-										['aui-base']
-									);
-								</c:if>
+										submitForm(document.<portlet:namespace />fm);
+									},
+									['aui-base']
+								);
 
 								Liferay.provide(
 									window,
@@ -418,22 +416,20 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 									['aui-base']
 								);
 
-								<c:if test="<%= kaleoDesignerDisplayContext.isSaveKaleoDefinitionVersionButtonVisible(permissionChecker, kaleoDefinitionVersion) %>">
-									Liferay.provide(
-										window,
-										'<portlet:namespace />saveKaleoDefinitionVersion',
-										function() {
-											<portlet:namespace />updateContent();
+								Liferay.provide(
+									window,
+									'<portlet:namespace />saveKaleoDefinitionVersion',
+									function() {
+										<portlet:namespace />updateContent();
 
-											<portlet:namespace />updateTitle();
+										<portlet:namespace />updateTitle();
 
-											<portlet:namespace />updateAction('<portlet:actionURL name="saveKaleoDefinitionVersion" />');
+										<portlet:namespace />updateAction('<portlet:actionURL name="saveKaleoDefinitionVersion" />');
 
-											submitForm(document.<portlet:namespace />fm);
-										},
-										['aui-base']
-									);
-								</c:if>
+										submitForm(document.<portlet:namespace />fm);
+									},
+									['aui-base']
+								);
 
 								Liferay.provide(
 									window,
@@ -579,7 +575,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 									}
 								).render();
 
-								<c:if test="<%= !kaleoDesignerDisplayContext.isSaveKaleoDefinitionVersionButtonVisible(permissionChecker, kaleoDefinitionVersion) %>">
+								<c:if test="<%= kaleoDesignerDisplayContext.isDefinitionInputDisabled(isPreviewBeforeRestoreState, kaleoDefinitionVersion, permissionChecker) %>">
 									<portlet:namespace />kaleoDesigner.after(
 										'render',
 										function() {
@@ -620,7 +616,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 									}
 								);
 
-								<c:if test="<%= kaleoDesignerDisplayContext.isSaveKaleoDefinitionVersionButtonVisible(permissionChecker, kaleoDefinitionVersion) %>">
+								<c:if test="<%= !kaleoDesignerDisplayContext.isDefinitionInputDisabled(isPreviewBeforeRestoreState, kaleoDefinitionVersion, permissionChecker) %>">
 									var uploadLink = $('#<portlet:namespace />uploadLink');
 
 									uploadLink.on(

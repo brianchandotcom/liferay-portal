@@ -66,9 +66,7 @@ public class OrderSettingsCommerceAdminModule implements CommerceAdminModule {
 	}
 
 	@Override
-	public boolean isVisible(HttpServletRequest httpServletRequest)
-		throws PortalException {
-
+	public boolean isVisible(long groupId) throws PortalException {
 		if (_workflowEngineManager.isDeployed() &&
 			(WorkflowHandlerRegistryUtil.getWorkflowHandler(
 				CommerceOrder.class.getName()) != null)) {

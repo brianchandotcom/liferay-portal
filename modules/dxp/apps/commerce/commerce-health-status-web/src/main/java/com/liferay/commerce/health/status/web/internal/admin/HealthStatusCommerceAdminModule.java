@@ -67,9 +67,7 @@ public class HealthStatusCommerceAdminModule implements CommerceAdminModule {
 	}
 
 	@Override
-	public boolean isVisible(HttpServletRequest httpServletRequest)
-		throws PortalException {
-
+	public boolean isVisible(long groupId) throws PortalException {
 		return true;
 	}
 

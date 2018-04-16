@@ -29,7 +29,7 @@ for (Map.Entry<String, CommerceAdminModule> entry : commerceAdminModules.entrySe
 	String commerceAdminModuleKey = entry.getKey();
 	CommerceAdminModule commerceAdminModule = entry.getValue();
 
-	if (!commerceAdminModule.isVisible(request)) {
+	if (!commerceAdminModule.isVisible(scopeGroupId)) {
 		continue;
 	}
 

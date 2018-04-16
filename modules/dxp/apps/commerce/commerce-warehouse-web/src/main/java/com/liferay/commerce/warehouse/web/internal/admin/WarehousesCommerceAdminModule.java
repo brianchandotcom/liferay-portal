@@ -87,16 +87,13 @@ public class WarehousesCommerceAdminModule implements CommerceAdminModule {
 	}
 
 	@Override
-	public boolean isVisible(HttpServletRequest httpServletRequest)
-		throws PortalException {
-
+	public boolean isVisible(long groupId) throws PortalException {
 		CommerceShippingGroupServiceConfiguration
 			commerceShippingGroupServiceConfiguration =
 				_configurationProvider.getConfiguration(
 					CommerceShippingGroupServiceConfiguration.class,
 					new GroupServiceSettingsLocator(
-						_portal.getScopeGroupId(httpServletRequest),
-						CommerceConstants.SHIPPING_SERVICE_NAME));
+						groupId, CommerceConstants.SHIPPING_SERVICE_NAME));
 
 		String commerceShippingOriginLocatorKey =
 			commerceShippingGroupServiceConfiguration.

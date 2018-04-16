@@ -77,7 +77,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The language key of the text for the optional popover.</description>
+			<description>The language key for the optional popover's text.</description>
 			<name>popover</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -308,19 +308,19 @@
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.PopoverTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>The id of the popover. It will be added to the portletId for creating the dom id.</description>
+			<description>The popover's ID. It is added to the portlet ID for creating the DOM ID.</description>
 			<name>id</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The language key of the popover's body text. If it is empty, the popover will not be displayed.</description>
+			<description>The language key of the popover's body text. If it is empty, the popover is not displayed.</description>
 			<name>text</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>the language key of the popover's title.</description>
+			<description>The language key of the popover's title.</description>
 			<name>title</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

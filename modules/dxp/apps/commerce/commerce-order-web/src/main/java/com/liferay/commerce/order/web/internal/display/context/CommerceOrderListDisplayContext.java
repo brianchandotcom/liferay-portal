@@ -17,7 +17,7 @@ package com.liferay.commerce.order.web.internal.display.context;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderConstants;
-import com.liferay.commerce.order.CommerceOrderHttpHelper;
+import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.order.web.internal.display.context.util.CommerceOrderRequestHelper;
 import com.liferay.commerce.order.web.internal.search.CommerceOrderDisplayTerms;
 import com.liferay.commerce.order.web.internal.search.CommerceOrderSearch;
@@ -92,7 +92,7 @@ import javax.servlet.http.HttpServletRequest;
 public class CommerceOrderListDisplayContext {
 
 	public CommerceOrderListDisplayContext(
-		CommerceOrderHttpHelper commerceOrderHttpHelper,
+		CommerceOrderHelper commerceOrderHelper,
 		CommerceOrderLocalService commerceOrderLocalService,
 		CommerceOrderNoteService commerceOrderNoteService,
 		CommerceOrganizationService commerceOrganizationService,
@@ -102,7 +102,7 @@ public class CommerceOrderListDisplayContext {
 		GroupLocalService groupLocalService, JSONFactory jsonFactory,
 		RenderRequest renderRequest) {
 
-		_commerceOrderHttpHelper = commerceOrderHttpHelper;
+		_commerceOrderHelper = commerceOrderHelper;
 		_commerceOrderLocalService = commerceOrderLocalService;
 		_commerceOrderNoteService = commerceOrderNoteService;
 		_commerceOrganizationService = commerceOrganizationService;
@@ -225,7 +225,7 @@ public class CommerceOrderListDisplayContext {
 		int start = transitionOVPs.size();
 
 		transitionOVPs.addAll(
-			_commerceOrderHttpHelper.getWorkflowTransitions(
+			_commerceOrderHelper.getWorkflowTransitions(
 				_commerceOrderRequestHelper.getUserId(), commerceOrder));
 
 		if (approveOVP != null) {
@@ -747,7 +747,7 @@ public class CommerceOrderListDisplayContext {
 	private List<KeyValuePair> _availableOrderOrganizationKVPs;
 	private List<KeyValuePair> _availableOrderStatusKVPs;
 	private final Format _commerceOrderDateFormatDateTime;
-	private final CommerceOrderHttpHelper _commerceOrderHttpHelper;
+	private final CommerceOrderHelper _commerceOrderHelper;
 	private final CommerceOrderLocalService _commerceOrderLocalService;
 	private final CommerceOrderNoteService _commerceOrderNoteService;
 	private final CommerceOrderRequestHelper _commerceOrderRequestHelper;

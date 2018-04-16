@@ -23,6 +23,7 @@ import com.liferay.commerce.model.CommerceOrderNote;
 import com.liferay.commerce.model.CommercePaymentMethod;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.organization.order.web.internal.display.context.util.CommerceOrganizationOrderRequestHelper;
 import com.liferay.commerce.organization.order.web.internal.search.CommerceOrderDisplayTerms;
@@ -102,6 +103,7 @@ public class CommerceOrganizationOrderDisplayContext {
 
 	public CommerceOrganizationOrderDisplayContext(
 			CommerceAddressService commerceAddressService,
+			CommerceOrderHelper commerceOrderHelper,
 			CommerceOrderHttpHelper commerceOrderHttpHelper,
 			CommerceOrderItemService commerceOrderItemService,
 			CommerceOrderLocalService commerceOrderLocalService,
@@ -118,7 +120,7 @@ public class CommerceOrganizationOrderDisplayContext {
 		throws PortalException {
 
 		_commerceAddressService = commerceAddressService;
-		_commerceOrderHttpHelper = commerceOrderHttpHelper;
+		_commerceOrderHelper = commerceOrderHelper;
 		_commerceOrderItemService = commerceOrderItemService;
 		_commerceOrderLocalService = commerceOrderLocalService;
 		_commerceOrderNoteService = commerceOrderNoteService;
@@ -148,9 +150,8 @@ public class CommerceOrganizationOrderDisplayContext {
 				DateFormat.MEDIUM, DateFormat.MEDIUM, themeDisplay.getLocale(),
 				themeDisplay.getTimeZone());
 
-		_currentCommerceOrder =
-			_commerceOrderHttpHelper.getCurrentCommerceOrder(
-				_commerceOrganizationOrderRequestHelper.getRequest());
+		_currentCommerceOrder = commerceOrderHttpHelper.getCurrentCommerceOrder(
+			_commerceOrganizationOrderRequestHelper.getRequest());
 		_organization = commerceOrganizationHelper.getCurrentOrganization(
 			_commerceOrganizationOrderRequestHelper.getRequest());
 
@@ -413,7 +414,7 @@ public class CommerceOrganizationOrderDisplayContext {
 		int start = transitionOVPs.size();
 
 		transitionOVPs.addAll(
-			_commerceOrderHttpHelper.getWorkflowTransitions(
+			_commerceOrderHelper.getWorkflowTransitions(
 				_commerceOrganizationOrderRequestHelper.getUserId(),
 				commerceOrder));
 
@@ -845,7 +846,7 @@ public class CommerceOrganizationOrderDisplayContext {
 	private final Format _commerceOrderDateFormatDate;
 	private final Format _commerceOrderDateFormatDateTime;
 	private final Format _commerceOrderDateFormatTime;
-	private final CommerceOrderHttpHelper _commerceOrderHttpHelper;
+	private final CommerceOrderHelper _commerceOrderHelper;
 	private final long _commerceOrderId;
 	private final CommerceOrderItemService _commerceOrderItemService;
 	private SearchContainer<CommerceOrderItem>

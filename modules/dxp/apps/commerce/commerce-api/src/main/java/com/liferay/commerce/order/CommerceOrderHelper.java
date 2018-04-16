@@ -18,39 +18,18 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 
-import javax.portlet.PortletURL;
-
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
- * @author Marco Leo
  * @author Andrea Di Giorgi
  */
 @ProviderType
-public interface CommerceOrderHttpHelper {
+public interface CommerceOrderHelper {
 
-	public CommerceOrder addCommerceOrder(HttpServletRequest httpServletRequest)
-		throws PortalException;
-
-	public PortletURL getCommerceCartPortletURL(
-			HttpServletRequest httpServletRequest)
-		throws PortalException;
-
-	public PortletURL getCommerceCheckoutPortletURL(
-			HttpServletRequest httpServletRequest)
-		throws PortalException;
-
-	public int getCommerceOrderItemsQuantity(
-			HttpServletRequest httpServletRequest)
-		throws PortalException;
-
-	public CommerceOrder getCurrentCommerceOrder(
-			HttpServletRequest httpServletRequest)
-		throws PortalException;
-
-	public void setCurrentCommerceOrder(
-			HttpServletRequest httpServletRequest, CommerceOrder commerceOrder)
+	public List<ObjectValuePair<Long, String>> getWorkflowTransitions(
+			long userId, CommerceOrder commerceOrder)
 		throws PortalException;
 
 }

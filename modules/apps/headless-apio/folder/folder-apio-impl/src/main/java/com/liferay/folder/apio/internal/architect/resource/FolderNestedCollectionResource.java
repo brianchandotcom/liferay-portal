@@ -22,18 +22,16 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
-import com.liferay.document.library.kernel.model.DLFolder;
-import com.liferay.document.library.kernel.model.DLFolderModel;
-import com.liferay.document.library.kernel.service.DLFolderService;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.folder.apio.architect.identifier.FolderIdentifier;
 import com.liferay.folder.apio.internal.architect.form.FolderForm;
 import com.liferay.portal.apio.architect.context.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.BadRequestException;
@@ -45,24 +43,24 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the information necessary to expose folder resources through a web
- * API. The resources are mapped from the internal model {@code DLFolder}.
+ * API. The resources are mapped from the internal model {@code Folder}.
  *
  * @author Javier Gamarra
  */
 @Component(immediate = true)
 public class FolderNestedCollectionResource
 	implements
-		NestedCollectionResource<DLFolder, Long, FolderIdentifier,
+		NestedCollectionResource<Folder, Long, FolderIdentifier,
 			Long, WebSiteIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<DLFolder, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<DLFolder, Long> builder) {
+	public NestedCollectionRoutes<Folder, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<Folder, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_addDLFolder, (credentials, identifier) -> true,
+			this::_addFolder, (credentials, identifier) -> true,
 			FolderForm::buildForm
 		).build();
 	}
@@ -73,124 +71,108 @@ public class FolderNestedCollectionResource
 	}
 
 	@Override
-	public ItemRoutes<DLFolder, Long> itemRoutes(
-		ItemRoutes.Builder<DLFolder, Long> builder) {
+	public ItemRoutes<Folder, Long> itemRoutes(
+		ItemRoutes.Builder<Folder, Long> builder) {
 
 		return builder.addGetter(
-			this::_getDLFolder
+			this::_getFolder
 		).addRemover(
-			this::_deleteDLFolder, _hasPermission.forDeleting(DLFolder.class)
+			this::_deleteFolder, _hasPermission.forDeleting(Folder.class)
 		).addUpdater(
-			this::_updateDLFolder, _hasPermission.forUpdating(DLFolder.class),
+			this::_updateFolder, _hasPermission.forUpdating(Folder.class),
 			FolderForm::buildForm
 		).build();
 	}
 
 	@Override
-	public Representor<DLFolder, Long> representor(
-		Representor.Builder<DLFolder, Long> builder) {
+	public Representor<Folder, Long> representor(
+		Representor.Builder<Folder, Long> builder) {
 
 		return builder.types(
 			"Folder"
 		).identifier(
-			DLFolder::getFolderId
+			Folder::getFolderId
 		).addBidirectionalModel(
-			"webSite", "folders", WebSiteIdentifier.class,
-			DLFolderModel::getGroupId
+			"interactionService", "folder", WebSiteIdentifier.class,
+			Folder::getGroupId
 		).addDate(
-			"dateCreated", DLFolder::getCreateDate
+			"dateCreated", Folder::getCreateDate
 		).addDate(
-			"dateModified", DLFolder::getCreateDate
+			"dateModified", Folder::getCreateDate
 		).addDate(
-			"datePublished", DLFolder::getCreateDate
+			"datePublished", Folder::getCreateDate
 		).addString(
-			"name", DLFolder::getName
-		).addString(
-			"path", this::_getPath
+			"name", Folder::getName
 		).build();
 	}
 
-	private DLFolder _addDLFolder(Long groupId, FolderForm folderForm) {
+	private Folder _addFolder(Long groupId, FolderForm folderForm) {
 		long parentFolderId = 0;
 
-		Try<DLFolder> dlFolderTry = Try.fromFallible(
-			() -> _dlFolderService.getFolder(
+		Try<Folder> folderTry = Try.fromFallible(
+			() -> _dlAppService.getFolder(
 				groupId, parentFolderId, folderForm.getName()));
 
-		if (dlFolderTry.isSuccess()) {
+		if (folderTry.isSuccess()) {
 			throw new BadRequestException(
 				"A folder with that name already exists");
 		}
 
-		dlFolderTry = Try.fromFallible(
-			() -> _dlFolderService.addFolder(
-				groupId, groupId, false, parentFolderId, folderForm.getName(),
+		folderTry = Try.fromFallible(
+			() -> _dlAppService.addFolder(
+				groupId, parentFolderId, folderForm.getName(),
 				folderForm.getDescription(), new ServiceContext()));
 
-		return dlFolderTry.getUnchecked();
+		return folderTry.getUnchecked();
 	}
 
-	private void _deleteDLFolder(Long dlFolderId) {
+	private void _deleteFolder(Long folderId) {
 		try {
-			_dlFolderService.deleteFolder(dlFolderId);
+			_dlAppService.deleteFolder(folderId);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);
 		}
 	}
 
-	private DLFolder _getDLFolder(Long dlFolderId) {
+	private Folder _getFolder(Long folderId) {
 		try {
-			return _dlFolderService.getFolder(dlFolderId);
+			return _dlAppService.getFolder(folderId);
 		}
 		catch (NoSuchEntryException | PrincipalException e) {
-			throw new NotFoundException(
-				"Unable to get folder " + dlFolderId, e);
+			throw new NotFoundException("Unable to get folder " + folderId, e);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);
 		}
 	}
 
-	private PageItems<DLFolder> _getPageItems(
+	private PageItems<Folder> _getPageItems(
 		Pagination pagination, Long groupId) {
 
 		try {
-			List<DLFolder> dlFolders = _dlFolderService.getFolders(
+			List<Folder> folders = _dlAppService.getFolders(
 				groupId, 0, pagination.getStartPosition(),
 				pagination.getEndPosition(), null);
-			int count = _dlFolderService.getFoldersCount(groupId, 0);
+			int count = _dlAppService.getFoldersCount(groupId, 0);
 
-			return new PageItems<>(dlFolders, count);
+			return new PageItems<>(folders, count);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);
 		}
 	}
 
-	private String _getPath(DLFolder dlFolder) {
-		try {
-			return dlFolder.getPath();
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
-	}
-
-	private DLFolder _updateDLFolder(Long dlFolderId, FolderForm folderForm) {
-		DLFolder dlFolder = _getDLFolder(dlFolderId);
-
+	private Folder _updateFolder(Long folderId, FolderForm folderForm) {
 		return Try.fromFallible(
-			() -> _dlFolderService.updateFolder(
-				dlFolderId, dlFolder.getParentFolderId(), folderForm.getName(),
-				folderForm.getDescription(),
-				dlFolder.getDefaultFileEntryTypeId(), new ArrayList<>(),
-				dlFolder.getRestrictionType(), new ServiceContext())
+			() -> _dlAppService.updateFolder(
+				folderId, folderForm.getName(), folderForm.getDescription(),
+				new ServiceContext())
 		).getUnchecked();
 	}
 
 	@Reference
-	private DLFolderService _dlFolderService;
+	private DLAppService _dlAppService;
 
 	@Reference
 	private HasPermission _hasPermission;

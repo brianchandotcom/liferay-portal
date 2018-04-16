@@ -21,5 +21,4 @@ import com.liferay.commerce.user.segment.service.base.CommerceUserSegmentCriteri
  */
 public class CommerceUserSegmentCriterionServiceImpl
 	extends CommerceUserSegmentCriterionServiceBaseImpl {
-
 }

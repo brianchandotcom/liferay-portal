@@ -21,5 +21,4 @@ import com.liferay.commerce.user.segment.service.base.CommerceUserSegmentEntrySe
  */
 public class CommerceUserSegmentEntryServiceImpl
 	extends CommerceUserSegmentEntryServiceBaseImpl {
-
 }

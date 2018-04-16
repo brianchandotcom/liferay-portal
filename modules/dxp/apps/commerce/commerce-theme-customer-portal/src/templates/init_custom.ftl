@@ -1,6 +1,6 @@
 <#assign
-	orderItemsQuantity = commerceOrderHelper.getCommerceOrderItemsQuantity(request)
-	cartUrl = commerceOrderHelper.getCommerceCartPortletURL(request)
+	orderItemsQuantity = commerceOrderHttpHelper.getCommerceOrderItemsQuantity(request)
+	cartUrl = commerceOrderHttpHelper.getCommerceCartPortletURL(request)
 	currentOrganization = (commerceOrganizationHelper.getCurrentOrganization(request))!""
 	demo_mode = getterUtil.getBoolean(themeDisplay.getThemeSetting("demo-mode"))
 	wishListItemsCount = commerceWishListHttpHelper.getCurrentCommerceWishListItemsCount(request, themeDisplay.getResponse())
@@ -8,9 +8,9 @@
 	orderNumber = ""
 />
 
-<#if commerceOrderHelper.getCurrentCommerceOrder(request)??>
+<#if commerceOrderHttpHelper.getCurrentCommerceOrder(request)??>
 	<#assign
-		currentOrder = commerceOrderHelper.getCurrentCommerceOrder(request)
+		currentOrder = commerceOrderHttpHelper.getCurrentCommerceOrder(request)
 		orderNumber =  currentOrder.getCommerceOrderId()
 	/>
 </#if>

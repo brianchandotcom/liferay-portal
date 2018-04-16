@@ -19,7 +19,7 @@ import com.liferay.commerce.checkout.web.internal.display.context.CheckoutDispla
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStepServicesTracker;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.order.CommerceOrderHelper;
+import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -104,7 +104,7 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 			return _commerceOrderService.getCommerceOrder(commerceOrderId);
 		}
 
-		return _commerceOrderHelper.getCurrentCommerceOrder(
+		return _commerceOrderHttpHelper.getCurrentCommerceOrder(
 			_portal.getHttpServletRequest(renderRequest));
 	}
 
@@ -113,7 +113,7 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 		_commerceCheckoutStepServicesTracker;
 
 	@Reference
-	private CommerceOrderHelper _commerceOrderHelper;
+	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;

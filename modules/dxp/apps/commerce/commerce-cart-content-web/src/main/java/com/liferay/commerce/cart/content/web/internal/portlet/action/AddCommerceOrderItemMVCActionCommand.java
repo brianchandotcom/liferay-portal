@@ -18,7 +18,7 @@ import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.CommerceOrderValidatorException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
-import com.liferay.commerce.order.CommerceOrderHelper;
+import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
@@ -83,11 +83,11 @@ public class AddCommerceOrderItemMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			CommerceOrder commerceOrder =
-				_commerceOrderHelper.getCurrentCommerceOrder(
+				_commerceOrderHttpHelper.getCurrentCommerceOrder(
 					httpServletRequest);
 
 			if (commerceOrder == null) {
-				commerceOrder = _commerceOrderHelper.addCommerceOrder(
+				commerceOrder = _commerceOrderHttpHelper.addCommerceOrder(
 					httpServletRequest);
 			}
 
@@ -161,7 +161,7 @@ public class AddCommerceOrderItemMVCActionCommand extends BaseMVCActionCommand {
 		AddCommerceOrderItemMVCActionCommand.class);
 
 	@Reference
-	private CommerceOrderHelper _commerceOrderHelper;
+	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
 
 	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;

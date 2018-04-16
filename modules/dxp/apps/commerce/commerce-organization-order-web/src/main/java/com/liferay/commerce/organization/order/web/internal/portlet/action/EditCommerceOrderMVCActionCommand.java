@@ -17,7 +17,7 @@ package com.liferay.commerce.organization.order.web.internal.portlet.action;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.order.CommerceOrderHelper;
+import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.organization.service.CommerceOrganizationLocalService;
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.commerce.service.CommerceOrderService;
@@ -90,7 +90,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		PortletURL portletURL =
-			_commerceOrderHelper.getCommerceCheckoutPortletURL(
+			_commerceOrderHttpHelper.getCommerceCheckoutPortletURL(
 				_portal.getHttpServletRequest(actionRequest));
 
 		portletURL.setParameter(
@@ -232,7 +232,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			commerceOrderId);
 
-		_commerceOrderHelper.setCurrentCommerceOrder(
+		_commerceOrderHttpHelper.setCurrentCommerceOrder(
 			_portal.getHttpServletRequest(actionRequest), commerceOrder);
 	}
 
@@ -241,7 +241,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private CommerceOrderHelper _commerceOrderHelper;
+	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;

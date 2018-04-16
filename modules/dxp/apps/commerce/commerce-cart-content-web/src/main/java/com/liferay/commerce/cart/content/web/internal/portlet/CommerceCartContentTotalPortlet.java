@@ -16,7 +16,7 @@ package com.liferay.commerce.cart.content.web.internal.portlet;
 
 import com.liferay.commerce.cart.content.web.internal.display.context.CommerceCartContentTotalDisplayContext;
 import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.order.CommerceOrderHelper;
+import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.price.CommercePriceFormatter;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
@@ -82,7 +82,7 @@ public class CommerceCartContentTotalPortlet extends MVCPortlet {
 			CommerceCartContentTotalDisplayContext
 				commerceCartContentTotalDisplayContext =
 					new CommerceCartContentTotalDisplayContext(
-						httpServletRequest, _commerceOrderHelper,
+						httpServletRequest, _commerceOrderHttpHelper,
 						_commerceOrderItemService,
 						_commerceOrderValidatorRegistry,
 						_commercePriceCalculationLocalService,
@@ -103,7 +103,7 @@ public class CommerceCartContentTotalPortlet extends MVCPortlet {
 		CommerceCartContentTotalPortlet.class);
 
 	@Reference
-	private CommerceOrderHelper _commerceOrderHelper;
+	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
 
 	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;

@@ -17,7 +17,7 @@ package com.liferay.commerce.internal.order;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderConstants;
-import com.liferay.commerce.order.CommerceOrderHelper;
+import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.organization.service.CommerceOrganizationLocalService;
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
@@ -59,7 +59,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Di Giorgi
  */
 @Component(immediate = true)
-public class CommerceOrderHelperImpl implements CommerceOrderHelper {
+public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 
 	@Override
 	public CommerceOrder addCommerceOrder(HttpServletRequest httpServletRequest)
@@ -436,7 +436,7 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 
 	private static final ThreadLocal<CommerceOrder>
 		_commerceOrderUuidThreadLocal = new CentralizedThreadLocal<>(
-			CommerceOrderHelperImpl.class.getName());
+			CommerceOrderHttpHelperImpl.class.getName());
 
 	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;

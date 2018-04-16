@@ -15,7 +15,7 @@
 package com.liferay.commerce.cart.content.web.internal.display.context;
 
 import com.liferay.commerce.cart.content.web.internal.portlet.configuration.CommerceCartContentMiniPortletInstanceConfiguration;
-import com.liferay.commerce.order.CommerceOrderHelper;
+import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
@@ -39,7 +39,7 @@ public class CommerceCartContentMiniDisplayContext
 
 	public CommerceCartContentMiniDisplayContext(
 			HttpServletRequest httpServletRequest,
-			CommerceOrderHelper commerceOrderHelper,
+			CommerceOrderHttpHelper commerceOrderHttpHelper,
 			CommerceOrderItemService commerceOrderItemService,
 			CommerceOrderValidatorRegistry commerceOrderValidatorRegistry,
 			CommercePriceCalculationLocalService
@@ -49,8 +49,8 @@ public class CommerceCartContentMiniDisplayContext
 		throws ConfigurationException {
 
 		super(
-			httpServletRequest, commerceOrderHelper, commerceOrderItemService,
-			commerceOrderValidatorRegistry,
+			httpServletRequest, commerceOrderHttpHelper,
+			commerceOrderItemService, commerceOrderValidatorRegistry,
 			commercePriceCalculationLocalService, cpDefinitionHelper,
 			cpInstanceHelper);
 
@@ -66,8 +66,9 @@ public class CommerceCartContentMiniDisplayContext
 	}
 
 	public String getCommerceCartPortletURL() throws PortalException {
-		PortletURL portletURL = commerceOrderHelper.getCommerceCartPortletURL(
-			commerceCartContentRequestHelper.getRequest());
+		PortletURL portletURL =
+			commerceOrderHttpHelper.getCommerceCartPortletURL(
+				commerceCartContentRequestHelper.getRequest());
 
 		return portletURL.toString();
 	}

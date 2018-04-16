@@ -17,7 +17,7 @@ package com.liferay.commerce.organization.order.web.internal.portlet.action;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.order.CommerceOrderHelper;
+import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.organization.order.web.internal.display.context.CommerceOrganizationOrderDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -60,7 +60,7 @@ public class EditCommerceOrderMVCRenderCommand implements MVCRenderCommand {
 				commerceOrganizationOrderDisplayContext.getCommerceOrder();
 
 			if ((commerceOrder != null) && commerceOrder.isOpen()) {
-				_commerceOrderHelper.setCurrentCommerceOrder(
+				_commerceOrderHttpHelper.setCurrentCommerceOrder(
 					_portal.getHttpServletRequest(renderRequest),
 					commerceOrder);
 			}
@@ -82,7 +82,7 @@ public class EditCommerceOrderMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference
-	private CommerceOrderHelper _commerceOrderHelper;
+	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
 
 	@Reference
 	private Portal _portal;

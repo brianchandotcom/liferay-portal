@@ -16,7 +16,7 @@ package com.liferay.commerce.cart.content.web.internal.display.context;
 
 import com.liferay.commerce.cart.content.web.internal.portlet.configuration.CommerceCartContentTotalPortletInstanceConfiguration;
 import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.order.CommerceOrderHelper;
+import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
@@ -43,7 +43,7 @@ public class CommerceCartContentTotalDisplayContext
 
 	public CommerceCartContentTotalDisplayContext(
 			HttpServletRequest httpServletRequest,
-			CommerceOrderHelper commerceOrderHelper,
+			CommerceOrderHttpHelper commerceOrderHttpHelper,
 			CommerceOrderItemService commerceOrderItemService,
 			CommerceOrderValidatorRegistry commerceOrderValidatorRegistry,
 			CommercePriceCalculationLocalService
@@ -53,8 +53,8 @@ public class CommerceCartContentTotalDisplayContext
 		throws ConfigurationException {
 
 		super(
-			httpServletRequest, commerceOrderHelper, commerceOrderItemService,
-			commerceOrderValidatorRegistry,
+			httpServletRequest, commerceOrderHttpHelper,
+			commerceOrderItemService, commerceOrderValidatorRegistry,
 			commercePriceCalculationLocalService, cpDefinitionHelper,
 			cpInstanceHelper);
 

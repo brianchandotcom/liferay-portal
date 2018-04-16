@@ -17,7 +17,7 @@ package com.liferay.commerce.cart.content.web.internal.display.context;
 import com.liferay.commerce.cart.content.web.internal.display.context.util.CommerceCartContentRequestHelper;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
-import com.liferay.commerce.order.CommerceOrderHelper;
+import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
@@ -53,7 +53,7 @@ public class CommerceCartContentDisplayContext {
 
 	public CommerceCartContentDisplayContext(
 		HttpServletRequest httpServletRequest,
-		CommerceOrderHelper commerceOrderHelper,
+		CommerceOrderHttpHelper commerceOrderHttpHelper,
 		CommerceOrderItemService commerceOrderItemService,
 		CommerceOrderValidatorRegistry commerceOrderValidatorRegistry,
 		CommercePriceCalculationLocalService
@@ -61,7 +61,7 @@ public class CommerceCartContentDisplayContext {
 		CPDefinitionHelper cpDefinitionHelper,
 		CPInstanceHelper cpInstanceHelper) {
 
-		this.commerceOrderHelper = commerceOrderHelper;
+		this.commerceOrderHttpHelper = commerceOrderHttpHelper;
 
 		_commerceOrderItemService = commerceOrderItemService;
 		_commerceOrderValidatorRegistry = commerceOrderValidatorRegistry;
@@ -80,7 +80,7 @@ public class CommerceCartContentDisplayContext {
 			return _commerceOrder;
 		}
 
-		_commerceOrder = commerceOrderHelper.getCurrentCommerceOrder(
+		_commerceOrder = commerceOrderHttpHelper.getCurrentCommerceOrder(
 			commerceCartContentRequestHelper.getRequest());
 
 		return _commerceOrder;
@@ -252,7 +252,7 @@ public class CommerceCartContentDisplayContext {
 
 	protected final CommerceCartContentRequestHelper
 		commerceCartContentRequestHelper;
-	protected final CommerceOrderHelper commerceOrderHelper;
+	protected final CommerceOrderHttpHelper commerceOrderHttpHelper;
 	protected final CPDefinitionHelper cpDefinitionHelper;
 	protected final CPInstanceHelper cpInstanceHelper;
 

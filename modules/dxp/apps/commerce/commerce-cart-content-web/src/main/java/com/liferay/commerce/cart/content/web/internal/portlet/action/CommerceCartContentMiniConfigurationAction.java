@@ -16,7 +16,7 @@ package com.liferay.commerce.cart.content.web.internal.portlet.action;
 
 import com.liferay.commerce.cart.content.web.internal.display.context.CommerceCartContentMiniDisplayContext;
 import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.order.CommerceOrderHelper;
+import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
@@ -65,7 +65,7 @@ public class CommerceCartContentMiniConfigurationAction
 			CommerceCartContentMiniDisplayContext
 				commerceCartContentDisplayContext =
 					new CommerceCartContentMiniDisplayContext(
-						httpServletRequest, _commerceOrderHelper,
+						httpServletRequest, _commerceOrderHttpHelper,
 						_commerceOrderItemService,
 						_commerceOrderValidatorRegistry,
 						_commercePriceCalculationLocalService,
@@ -95,7 +95,7 @@ public class CommerceCartContentMiniConfigurationAction
 		CommerceCartContentMiniConfigurationAction.class);
 
 	@Reference
-	private CommerceOrderHelper _commerceOrderHelper;
+	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
 
 	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;

@@ -20,7 +20,7 @@ import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.exception.CommerceOrderPurchaseOrderNumberException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommercePaymentMethod;
-import com.liferay.commerce.order.CommerceOrderHelper;
+import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.payment.engine.purchase.order.internal.PurchaseOrderCommercePaymentEngine;
 import com.liferay.commerce.payment.engine.purchase.order.internal.display.context.PurchaseOrderCheckoutStepDisplayContext;
 import com.liferay.commerce.service.CommerceOrderService;
@@ -81,7 +81,7 @@ public class PurchaseOrderCommerceCheckoutStep
 		}
 		else {
 			CommerceOrder commerceOrder =
-				_commerceOrderHelper.getCurrentCommerceOrder(
+				_commerceOrderHttpHelper.getCurrentCommerceOrder(
 					httpServletRequest);
 
 			commercePaymentMethodId =
@@ -169,7 +169,7 @@ public class PurchaseOrderCommerceCheckoutStep
 	}
 
 	@Reference
-	private CommerceOrderHelper _commerceOrderHelper;
+	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;

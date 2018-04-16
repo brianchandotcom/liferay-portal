@@ -104,15 +104,13 @@
 	{@param? message: string}
 
 	<div class="main-content-body">
-		<div class="card main-content-card taglib-empty-result-message">
-			<div class="card-row card-row-padded">
-				<div class="taglib-empty-result-message-header-has-plus-btn"></div>
-				{if $message}
-				<div class="text-center text-muted">
-					<p class="text-default">{$message}</p>
-				</div>
-				{/if}
+		<div class="sheet">
+			<div class="taglib-empty-result-message-header"></div>
+			{if $message}
+			<div class="sheet-text text-center text-muted">
+				<p class="text-default">{$message}</p>
 			</div>
+			{/if}
 		</div>
 	</div>
 {/template}

@@ -102,7 +102,7 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 	public String getColumnValue(
 		DDMFormField formField, List<DDMFormFieldValue> formFieldValues) {
 
-		if (formFieldValues == null) {
+		if ((formField == null) || (formFieldValues == null)) {
 			return StringPool.BLANK;
 		}
 

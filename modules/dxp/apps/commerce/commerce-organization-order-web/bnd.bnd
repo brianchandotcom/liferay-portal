@@ -3,5 +3,6 @@ Bundle-SymbolicName: com.liferay.commerce.organization.order.web
 Bundle-Version: 1.0.0
 Import-Package:\
 	com.liferay.portal.kernel.portlet;version="[7.0.0,8.1)",\
+	com.liferay.portal.util;version="[1.0.0,3.0.0)",\
 	\
 	*

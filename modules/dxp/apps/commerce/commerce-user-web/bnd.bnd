@@ -1,4 +1,8 @@
 Bundle-Name: Liferay Commerce User Web
 Bundle-SymbolicName: com.liferay.commerce.user.web
 Bundle-Version: 1.0.0
+Import-Package:\
+	com.liferay.portal.util;version="[1.15.0,3.0.0)",\
+	\
+	*
 Web-ContextPath: /commerce-user-web

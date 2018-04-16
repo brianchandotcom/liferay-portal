@@ -218,13 +218,13 @@ public class DDMFormTestUtil {
 	}
 
 	public static DDMFormField createNumericDDMFormField(
-		String name, String label, String type, String dataType,
-		boolean localizable, boolean repeatable, boolean required, String tip,
-		String placeHolder, String toolTip) {
+		String name, String label, String dataType, boolean localizable,
+		boolean repeatable, boolean required, String tip, String placeHolder,
+		String toolTip) {
 
 		return createDDMFormField(
-			name, label, type, dataType, localizable, repeatable, required, tip,
-			null, placeHolder, toolTip, null);
+			name, label, "numeric", dataType, localizable, repeatable, required,
+			tip, null, placeHolder, toolTip, null);
 	}
 
 	public static DDMFormField createSeparatorDDMFormField(

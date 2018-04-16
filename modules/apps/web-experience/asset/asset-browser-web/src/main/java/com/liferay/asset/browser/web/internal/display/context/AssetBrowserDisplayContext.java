@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Sort;
@@ -174,7 +173,7 @@ public class AssetBrowserDisplayContext {
 					Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
 			}
 			else if (Objects.equals(_getOrderByCol(), "title")) {
-				String sortFieldName = DocumentImpl.getSortableFieldName(
+				String sortFieldName = Field.getSortableFieldName(
 					"localized_title_".concat(themeDisplay.getLanguageId()));
 
 				sort = new Sort(sortFieldName, Sort.STRING_TYPE, orderByAsc);

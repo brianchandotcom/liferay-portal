@@ -59,7 +59,7 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 					navigationItem -> {
 						navigationItem.setActive(true);
 						navigationItem.setHref(StringPool.BLANK);
-						navigationItem.setLabel(LanguageUtil.get(request, "device-families"));
+						navigationItem.setLabel("device-families");
 					});
 			}
 		}

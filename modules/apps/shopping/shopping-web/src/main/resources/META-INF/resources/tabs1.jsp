@@ -33,28 +33,28 @@ viewURL.setParameter("mvcRenderCommandName", "/shopping/view");
 					navigationItem -> {
 						navigationItem.setActive(tabs1.equals("categories"));
 						navigationItem.setHref(viewURL, "tabs1", "categories");
-						navigationItem.setLabel(LanguageUtil.get(request, "categories"));
+						navigationItem.setLabel("categories");
 					});
 
 				add(
 					navigationItem -> {
 						navigationItem.setActive(tabs1.equals("cart"));
 						navigationItem.setHref(viewURL, "tabs1", "cart");
-						navigationItem.setLabel(LanguageUtil.get(request, "cart"));
+						navigationItem.setLabel("cart");
 					});
 
 				add(
 					navigationItem -> {
 						navigationItem.setActive(tabs1.equals("orders"));
 						navigationItem.setHref(viewURL, "tabs1", "orders");
-						navigationItem.setLabel(LanguageUtil.get(request, "orders"));
+						navigationItem.setLabel("orders");
 					});
 
 				add(
 					navigationItem -> {
 						navigationItem.setActive(tabs1.equals("coupons"));
 						navigationItem.setHref(viewURL, "tabs1", "coupons");
-						navigationItem.setLabel(LanguageUtil.get(request, "coupons"));
+						navigationItem.setLabel("coupons");
 					});
 			}
 		}

@@ -35,7 +35,7 @@ portletURL.setParameter("mvcRenderCommandName", "/portal_instances/view");
 					navigationItem -> {
 						navigationItem.setActive(true);
 						navigationItem.setHref(StringPool.BLANK);
-						navigationItem.setLabel(LanguageUtil.get(request, "instances"));
+						navigationItem.setLabel("instances");
 					});
 			}
 		}

@@ -47,7 +47,7 @@ PortletURL mainURL = renderResponse.createRenderURL();
 
 mySitesNavigationItem.setHref(mainURL.toString());
 
-mySitesNavigationItem.setLabel(LanguageUtil.get(request, "available-themes"));
+mySitesNavigationItem.setLabel"available-themes");
 
 navigationItems.add(mySitesNavigationItem);
 %>

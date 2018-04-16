@@ -17,17 +17,29 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Carlos Lancha
  */
 public class LabelItemList extends ArrayList<LabelItem> {
 
+	public LabelItemList() {
+		_request = null;
+	}
+
+	public LabelItemList(HttpServletRequest request) {
+		_request = request;
+	}
+
 	public void add(Consumer<LabelItem> consumer) {
-		LabelItem labelItem = new LabelItem();
+		LabelItem labelItem = new LabelItem(_request);
 
 		consumer.accept(labelItem);
 
 		add(labelItem);
 	}
+
+	private final HttpServletRequest _request;
 
 }

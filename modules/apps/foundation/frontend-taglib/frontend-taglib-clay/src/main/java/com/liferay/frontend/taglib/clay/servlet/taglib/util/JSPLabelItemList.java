@@ -25,6 +25,8 @@ import javax.servlet.jsp.PageContext;
 public class JSPLabelItemList extends LabelItemList {
 
 	public JSPLabelItemList(PageContext pageContext) {
+		super((HttpServletRequest)pageContext.getRequest());
+
 		renderResponse = (RenderResponse)pageContext.findAttribute(
 			"renderResponse");
 		request = (HttpServletRequest)pageContext.getRequest();

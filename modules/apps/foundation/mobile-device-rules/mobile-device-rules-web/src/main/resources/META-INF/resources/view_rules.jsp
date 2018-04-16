@@ -83,7 +83,7 @@ renderResponse.setTitle(ruleGroup.getName(locale));
 					navigationItem -> {
 						navigationItem.setActive(true);
 						navigationItem.setHref(renderResponse.createRenderURL());
-						navigationItem.setLabel(LanguageUtil.get(request, "classification-rules"));
+						navigationItem.setLabel("classification-rules");
 					});
 			}
 		}

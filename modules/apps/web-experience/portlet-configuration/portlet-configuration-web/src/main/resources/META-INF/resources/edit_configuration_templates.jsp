@@ -79,7 +79,7 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 
 			navigationItem.setActive(true);
 			navigationItem.setHref(portletURL.toString());
-			navigationItem.setLabel(LanguageUtil.get(request, "configuration-templates"));
+			navigationItem.setLabel("configuration-templates");
 
 			navigationItems.add(navigationItem);
 			%>

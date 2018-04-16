@@ -390,8 +390,8 @@
 				) TEMP_TABLE
 			INNER JOIN
 				JournalArticle ON
-					(TEMP_TABLE.articleId = JournalArticle.articleId) AND
 					(TEMP_TABLE.groupId = JournalArticle.groupId) AND
+					(TEMP_TABLE.articleId = JournalArticle.articleId) AND
 					(TEMP_TABLE.version = JournalArticle.version)
 		]]>
 	</sql>
@@ -415,8 +415,8 @@
 				) TEMP_TABLE
 			INNER JOIN
 				JournalArticle ON
-					(TEMP_TABLE.articleId = JournalArticle.articleId) AND
 					(TEMP_TABLE.groupId = JournalArticle.groupId) AND
+					(TEMP_TABLE.articleId = JournalArticle.articleId) AND
 					(TEMP_TABLE.version = JournalArticle.version)
 			LEFT JOIN
 				JournalArticleLocalization ON

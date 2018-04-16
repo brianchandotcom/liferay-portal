@@ -15,6 +15,7 @@
 package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.exception.NoSuchAvailabilityRangeException;
+import com.liferay.commerce.exception.NoSuchCPDefinitionAvailabilityRangeException;
 import com.liferay.commerce.model.CPDefinitionAvailabilityRange;
 import com.liferay.commerce.model.CommerceAvailabilityRange;
 import com.liferay.commerce.service.base.CPDefinitionAvailabilityRangeLocalServiceBaseImpl;
@@ -53,21 +54,24 @@ public class CPDefinitionAvailabilityRangeLocalServiceImpl
 	}
 
 	@Override
+	public void deleteCPDefinitionAvailabilityRangeByCPDefinitionId(
+		long cpDefinitionId) {
+
+		try {
+			cpDefinitionAvailabilityRangePersistence.removeByCPDefinitionId(
+				cpDefinitionId);
+		}
+		catch (NoSuchCPDefinitionAvailabilityRangeException nscpdare) {
+		}
+	}
+
+	@Override
 	public void deleteCPDefinitionAvailabilityRanges(
 			long commerceAvailabilityRangeId)
 		throws PortalException {
 
 		cpDefinitionAvailabilityRangePersistence.
 			removeByCommerceAvailabilityRangeId(commerceAvailabilityRangeId);
-	}
-
-	@Override
-	public void deleteCPDefinitionAvailabilityRangesByCPDefinitionId(
-			long cpDefinitionId)
-		throws PortalException {
-
-		cpDefinitionAvailabilityRangePersistence.removeByCPDefinitionId(
-			cpDefinitionId);
 	}
 
 	@Override

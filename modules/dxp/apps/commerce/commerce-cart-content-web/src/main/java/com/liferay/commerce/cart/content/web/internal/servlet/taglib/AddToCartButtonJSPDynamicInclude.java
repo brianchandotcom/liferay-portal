@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class AddToCartButtonDynamicInclude extends BaseJSPDynamicInclude {
+public class AddToCartButtonJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
@@ -56,6 +56,6 @@ public class AddToCartButtonDynamicInclude extends BaseJSPDynamicInclude {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AddToCartButtonDynamicInclude.class);
+		AddToCartButtonJSPDynamicInclude.class);
 
 }

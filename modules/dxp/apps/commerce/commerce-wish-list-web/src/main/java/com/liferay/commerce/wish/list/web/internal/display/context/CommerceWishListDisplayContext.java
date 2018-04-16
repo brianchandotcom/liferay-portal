@@ -320,7 +320,7 @@ public class CommerceWishListDisplayContext {
 
 		String namespace = _commerceWishListRequestHelper.getPortletId();
 		String prefix = TextFormatter.format(
-			clazz.getSimpleName(), TextFormatter.P);
+			clazz.getSimpleName(), TextFormatter.K);
 
 		if (Validator.isNotNull(orderByCol) &&
 			Validator.isNotNull(orderByType)) {

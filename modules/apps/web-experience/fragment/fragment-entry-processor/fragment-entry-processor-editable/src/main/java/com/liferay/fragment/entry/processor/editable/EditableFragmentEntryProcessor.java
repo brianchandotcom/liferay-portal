@@ -109,7 +109,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	@Override
 	public void validateFragmentEntryHTML(String html) throws PortalException {
 		_validateDuplicatedIds(html);
-		_validateEmptyAttributes(html);
+		_validateAttributes(html);
 	}
 
 	private Document _getDocument(String html) {
@@ -122,6 +122,38 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		document.outputSettings(outputSettings);
 
 		return document;
+	}
+
+	private void _validateAttribute(Element element, String attribute)
+		throws FragmentEntryContentException {
+
+		if (element.hasAttr(attribute)) {
+			return;
+		}
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", getClass());
+
+		throw new FragmentEntryContentException(
+			LanguageUtil.format(
+				resourceBundle,
+				"you-must-define-all-require-attributes-x-for-each-editable-" +
+					"element",
+				String.join(StringPool.COMMA, _REQUIRED_ATTRIBUTES)));
+	}
+
+	private void _validateAttributes(String html)
+		throws FragmentEntryContentException {
+
+		Document document = _getDocument(html);
+
+		for (Element element : document.getElementsByTag("lfr-editable")) {
+			for (String attribute : _REQUIRED_ATTRIBUTES) {
+				_validateAttribute(element, attribute);
+			}
+
+			_validateType(element);
+		}
 	}
 
 	private void _validateDuplicatedIds(String html)
@@ -154,28 +186,23 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		}
 	}
 
-	private void _validateEmptyAttributes(String html)
+	private void _validateType(Element element)
 		throws FragmentEntryContentException {
 
-		Document document = _getDocument(html);
+		EditableElementParser editableElementParser =
+			_editableElementParsers.get(element.attr("type"));
 
-		for (Element element : document.getElementsByTag("lfr-editable")) {
-			for (String attribute : _REQUIRED_ATTRIBUTES) {
-				if (element.hasAttr(attribute)) {
-					continue;
-				}
-
-				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-					"content.Language", getClass());
-
-				throw new FragmentEntryContentException(
-					LanguageUtil.format(
-						resourceBundle,
-						"you-must-define-all-require-attributes-x-for-each-" +
-							"editable-element",
-						String.join(StringPool.COMMA, _REQUIRED_ATTRIBUTES)));
-			}
+		if (editableElementParser != null) {
+			return;
 		}
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", getClass());
+
+		throw new FragmentEntryContentException(
+			LanguageUtil.get(
+				resourceBundle,
+				"you-must-define-a-valid-type-for-each-editable-element"));
 	}
 
 	private static final String[] _REQUIRED_ATTRIBUTES = {"id", "type"};

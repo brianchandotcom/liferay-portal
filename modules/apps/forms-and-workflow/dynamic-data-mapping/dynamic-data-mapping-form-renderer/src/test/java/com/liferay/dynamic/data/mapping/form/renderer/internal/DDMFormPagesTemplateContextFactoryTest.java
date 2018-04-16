@@ -158,6 +158,11 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 				"string", false, false, true,
 				String.format(_HTML_WRAPPER, "tip")));
 
+		mockDDMFormFieldTypeServicesTracker(
+			"date",
+			_ddmFormFieldTemplateContextContributorTestHelper.
+				createDateDDMFormFieldTemplateContextContributor());
+
 		// Dynamic data mapping form layout
 
 		DDMFormLayout ddmFormLayout = new DDMFormLayout();

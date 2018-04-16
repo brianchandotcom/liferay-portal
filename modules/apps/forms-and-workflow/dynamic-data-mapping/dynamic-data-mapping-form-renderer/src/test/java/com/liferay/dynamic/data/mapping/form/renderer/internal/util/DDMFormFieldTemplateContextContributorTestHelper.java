@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.form.renderer.internal.util;
 
 import com.liferay.dynamic.data.mapping.form.field.type.internal.DDMFormFieldOptionsFactoryImpl;
 import com.liferay.dynamic.data.mapping.type.checkbox.multiple.internal.CheckboxMultipleDDMFormFieldTemplateContextContributor;
+import com.liferay.dynamic.data.mapping.type.date.internal.DateDDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.type.grid.internal.GridDDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.type.numeric.internal.NumericDDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.type.radio.internal.RadioDDMFormFieldTemplateContextContributor;
@@ -48,6 +49,12 @@ public class DDMFormFieldTemplateContextContributorTestHelper
 		);
 
 		return checkboxMultipleDDMFormFieldTemplateContextContributor;
+	}
+
+	public DateDDMFormFieldTemplateContextContributor
+		createDateDDMFormFieldTemplateContextContributor() {
+
+		return new DateDDMFormFieldTemplateContextContributor();
 	}
 
 	public GridDDMFormFieldTemplateContextContributor

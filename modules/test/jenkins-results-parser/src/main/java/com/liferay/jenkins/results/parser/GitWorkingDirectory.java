@@ -758,7 +758,7 @@ public class GitWorkingDirectory {
 	}
 
 	public List<File> getModifiedFilesList(String grepPredicateString) {
-		List<File> filteredModifiedFiles = new ArrayList<>();
+		List<File> modifiedFiles = new ArrayList<>();
 
 		Branch currentBranch = getCurrentBranch();
 
@@ -784,10 +784,10 @@ public class GitWorkingDirectory {
 		String gitDiffOutput = executionResult.getStandardOut();
 
 		for (String line : gitDiffOutput.split("\n")) {
-			filteredModifiedFiles.add(new File(_workingDirectory, line));
+			modifiedFiles.add(new File(_workingDirectory, line));
 		}
 
-		return filteredModifiedFiles;
+		return modifiedFiles;
 	}
 
 	public Remote getRemote(String name) {

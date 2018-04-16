@@ -173,6 +173,24 @@
 		}
 	}
 
+	.portlet-configuration-edit-permissions {
+		.portlet-configuration-body-content {
+			display: flex;
+			flex-direction: column;
+			overflow: visible;
+
+			> form {
+				flex-grow: 1;
+				max-width: none;
+				overflow: auto;
+			}
+
+			.table-responsive, .table-responsive-lg {
+				overflow: visible;
+			}
+		}
+	}
+
 	.portlet-configuration-edit-templates .portlet-configuration-body-content {
 		bottom: 0;
 	}

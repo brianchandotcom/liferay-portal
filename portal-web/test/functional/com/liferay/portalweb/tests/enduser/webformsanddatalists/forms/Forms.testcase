@@ -776,7 +776,7 @@
 	</command>
 
 	<command name="ChangeFieldType" priority="4">
-		<description message="This is a use case for LPS-75116." />
+		<description message="This is a use case for LPS-75116 and LPS-79101." />
 
 		<execute macro="Navigator#openURL" />
 
@@ -980,6 +980,20 @@
 		</execute>
 
 		<execute macro="FormFields#viewRequiredAsterisk" />
+
+		<execute macro="FormFields#changeFieldType">
+			<var name="selectOption" value="Numeric" />
+		</execute>
+
+		<execute macro="FormFields#viewTextLabel">
+			<var name="fieldLabel" value="Testing Title" />
+			<var name="fieldName" value="TestingTitle" />
+		</execute>
+
+		<execute macro="FormFields#viewRadioValue">
+			<var name="fieldName" value="dataType" />
+			<var name="fieldValue" value="integer" />
+		</execute>
 
 		<execute macro="FormFields#changeFieldType">
 			<var name="selectOption" value="Multiple Selection" />

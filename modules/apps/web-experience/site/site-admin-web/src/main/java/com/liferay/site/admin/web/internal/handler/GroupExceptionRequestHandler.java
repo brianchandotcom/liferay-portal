@@ -66,6 +66,12 @@ public class GroupExceptionRequestHandler {
 					themeDisplay.getLocale(),
 					"this-site-cannot-inherit-content-from-its-parent-site"));
 		}
+		else {
+			jsonObject.put(
+				"error",
+				LanguageUtil.get(
+					themeDisplay.getLocale(), "an-unexpected-error-occurred"));
+		}
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);

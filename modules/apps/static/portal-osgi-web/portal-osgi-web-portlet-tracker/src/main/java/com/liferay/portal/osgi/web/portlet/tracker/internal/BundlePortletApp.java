@@ -176,6 +176,14 @@ public class BundlePortletApp implements PortletApp {
 		return _portletApp.getServletURLPatterns();
 	}
 
+	public int getSpecMajorVersion() {
+		return _portletApp.getSpecMajorVersion();
+	}
+
+	public int getSpecMinorVersion() {
+		return _portletApp.getSpecMinorVersion();
+	}
+
 	@Override
 	public SpriteImage getSpriteImage(String fileName) {
 		return _portletApp.getSpriteImage(fileName);
@@ -204,6 +212,14 @@ public class BundlePortletApp implements PortletApp {
 	@Override
 	public void setServletContext(ServletContext servletContext) {
 		throw new UnsupportedOperationException();
+	}
+
+	public void setSpecMajorVersion(int specMajorVersion) {
+		_portletApp.setSpecMajorVersion(specMajorVersion);
+	}
+
+	public void setSpecMinorVersion(int specMinorVersion) {
+		_portletApp.setSpecMinorVersion(specMinorVersion);
 	}
 
 	@Override

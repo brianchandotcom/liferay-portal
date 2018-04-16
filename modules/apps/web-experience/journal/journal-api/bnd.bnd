@@ -11,7 +11,7 @@ Export-Package:\
 	com.liferay.journal.util,\
 	com.liferay.journal.util.comparator
 Import-Package:\
-	com.liferay.portal.kernel.model;version="[1.0,1.2)",\
+	com.liferay.portal.kernel.model;version="[1.0,2.1)",\
 	\
 	*
 Liferay-Releng-Module-Group-Description:

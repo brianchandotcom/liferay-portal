@@ -73,6 +73,10 @@ public interface PortletApp extends Serializable {
 
 	public Set<String> getServletURLPatterns();
 
+	public int getSpecMajorVersion();
+
+	public int getSpecMinorVersion();
+
 	public SpriteImage getSpriteImage(String fileName);
 
 	public Set<String> getUserAttributes();
@@ -84,6 +88,10 @@ public interface PortletApp extends Serializable {
 	public void setDefaultNamespace(String defaultNamespace);
 
 	public void setServletContext(ServletContext servletContext);
+
+	public void setSpecMajorVersion(int specMajorVersion);
+
+	public void setSpecMinorVersion(int specMinorVersion);
 
 	public void setSpriteImages(String spriteFileName, Properties properties);
 

@@ -172,6 +172,16 @@ public class PortletAppImpl implements PortletApp {
 	}
 
 	@Override
+	public int getSpecMajorVersion() {
+		return _specMajorVersion;
+	}
+
+	@Override
+	public int getSpecMinorVersion() {
+		return _specMinorVersion;
+	}
+
+	@Override
 	public SpriteImage getSpriteImage(String fileName) {
 		return _spriteImagesMap.get(fileName);
 	}
@@ -201,6 +211,16 @@ public class PortletAppImpl implements PortletApp {
 		_servletContext = servletContext;
 
 		_contextPath = _servletContext.getContextPath();
+	}
+
+	@Override
+	public void setSpecMajorVersion(int specMajorVersion) {
+		_specMajorVersion = specMajorVersion;
+	}
+
+	@Override
+	public void setSpecMinorVersion(int specMinorVersion) {
+		_specMinorVersion = specMinorVersion;
 	}
 
 	@Override
@@ -248,6 +268,8 @@ public class PortletAppImpl implements PortletApp {
 	private ServletContext _servletContext;
 	private final String _servletContextName;
 	private final Set<String> _servletURLPatterns = new LinkedHashSet<>();
+	private int _specMajorVersion = 2;
+	private int _specMinorVersion;
 	private final Map<String, SpriteImage> _spriteImagesMap = new HashMap<>();
 	private final Set<String> _userAttributes = new LinkedHashSet<>();
 	private boolean _warFile;

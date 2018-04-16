@@ -23,7 +23,7 @@ import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.commerce.wish.list.model.CommerceWishListItem;
 import com.liferay.commerce.wish.list.service.CommerceWishListItemService;
 import com.liferay.commerce.wish.list.service.CommerceWishListService;
-import com.liferay.commerce.wish.list.util.CommerceWishListHelper;
+import com.liferay.commerce.wish.list.util.CommerceWishListHttpHelper;
 import com.liferay.commerce.wish.list.web.internal.display.context.util.CommerceWishListRequestHelper;
 import com.liferay.commerce.wish.list.web.internal.util.CommerceWishListPortletUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -57,7 +57,7 @@ public class CommerceWishListDisplayContext {
 	public CommerceWishListDisplayContext(
 		CommercePriceCalculationLocalService
 			commercePriceCalculationLocalService,
-		CommerceWishListHelper commerceWishListHelper,
+		CommerceWishListHttpHelper commerceWishListHttpHelper,
 		CommerceWishListItemService commerceWishListItemService,
 		CommerceWishListService commerceWishListService,
 		CPDefinitionHelper cpDefinitionHelper,
@@ -66,7 +66,7 @@ public class CommerceWishListDisplayContext {
 
 		_commercePriceCalculationLocalService =
 			commercePriceCalculationLocalService;
-		_commerceWishListHelper = commerceWishListHelper;
+		_commerceWishListHttpHelper = commerceWishListHttpHelper;
 		_commerceWishListItemService = commerceWishListItemService;
 		_commerceWishListService = commerceWishListService;
 		_cpDefinitionHelper = cpDefinitionHelper;
@@ -95,7 +95,7 @@ public class CommerceWishListDisplayContext {
 		}
 		else if (isContentPortlet()) {
 			_commerceWishList =
-				_commerceWishListHelper.getCurrentCommerceWishList(
+				_commerceWishListHttpHelper.getCurrentCommerceWishList(
 					httpServletRequest,
 					_commerceWishListRequestHelper.getResponse());
 		}
@@ -344,7 +344,7 @@ public class CommerceWishListDisplayContext {
 	private final CommercePriceCalculationLocalService
 		_commercePriceCalculationLocalService;
 	private CommerceWishList _commerceWishList;
-	private final CommerceWishListHelper _commerceWishListHelper;
+	private final CommerceWishListHttpHelper _commerceWishListHttpHelper;
 	private final CommerceWishListItemService _commerceWishListItemService;
 	private SearchContainer<CommerceWishListItem>
 		_commerceWishListItemsSearchContainer;

@@ -7,8 +7,8 @@
 	show_cart_icon = getterUtil.getBoolean(themeDisplay.getThemeSetting("show-cart-icon"))
 	show_main_search_icon = getterUtil.getBoolean(themeDisplay.getThemeSetting("show-main-search-icon"))
 	show_wishlist_icon = getterUtil.getBoolean(themeDisplay.getThemeSetting("show-wishlist-icon"))
-	wishListItemsCount = commerceWishListHelper.getCurrentCommerceWishListItemsCount(request, themeDisplay.getResponse())
-	wishlistUrl = commerceWishListHelper.getCommerceWishListPortletURL(request)
+	wishListItemsCount = commerceWishListHttpHelper.getCurrentCommerceWishListItemsCount(request, themeDisplay.getResponse())
+	wishlistUrl = commerceWishListHttpHelper.getCommerceWishListPortletURL(request)
 />
 
 <#macro commerce_category_navigation_menu default_preferences = "">

@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.wish.list.web.internal.theme.contributor;
 
-import com.liferay.commerce.wish.list.util.CommerceWishListHelper;
+import com.liferay.commerce.wish.list.util.CommerceWishListHttpHelper;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 
 import java.util.Map;
@@ -40,10 +40,11 @@ public class CommerceWishListTemplateContextContributor
 		Map<String, Object> contextObjects,
 		HttpServletRequest httpServletRequest) {
 
-		contextObjects.put("commerceWishListHelper", _commerceWishListHelper);
+		contextObjects.put(
+			"commerceWishListHttpHelper", _commerceWishListHttpHelper);
 	}
 
 	@Reference
-	private CommerceWishListHelper _commerceWishListHelper;
+	private CommerceWishListHttpHelper _commerceWishListHttpHelper;
 
 }

@@ -20,7 +20,7 @@ import com.liferay.commerce.service.CommercePriceCalculationLocalService;
 import com.liferay.commerce.wish.list.constants.CommerceWishListPortletKeys;
 import com.liferay.commerce.wish.list.service.CommerceWishListItemService;
 import com.liferay.commerce.wish.list.service.CommerceWishListService;
-import com.liferay.commerce.wish.list.util.CommerceWishListHelper;
+import com.liferay.commerce.wish.list.util.CommerceWishListHttpHelper;
 import com.liferay.commerce.wish.list.web.internal.display.context.CommerceWishListDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
@@ -77,9 +77,10 @@ public class CommerceWishListPortlet extends MVCPortlet {
 
 		CommerceWishListDisplayContext commerceWishListDisplayContext =
 			new CommerceWishListDisplayContext(
-				commercePriceCalculationLocalService, commerceWishListHelper,
-				commerceWishListItemService, commerceWishListService,
-				cpDefinitionHelper, cpInstanceHelper, httpServletRequest);
+				commercePriceCalculationLocalService,
+				commerceWishListHttpHelper, commerceWishListItemService,
+				commerceWishListService, cpDefinitionHelper, cpInstanceHelper,
+				httpServletRequest);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceWishListDisplayContext);
@@ -92,7 +93,7 @@ public class CommerceWishListPortlet extends MVCPortlet {
 		commercePriceCalculationLocalService;
 
 	@Reference
-	protected CommerceWishListHelper commerceWishListHelper;
+	protected CommerceWishListHttpHelper commerceWishListHttpHelper;
 
 	@Reference
 	protected CommerceWishListItemService commerceWishListItemService;

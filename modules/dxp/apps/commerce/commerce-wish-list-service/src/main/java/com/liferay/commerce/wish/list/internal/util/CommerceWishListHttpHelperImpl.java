@@ -18,7 +18,7 @@ import com.liferay.commerce.wish.list.constants.CommerceWishListPortletKeys;
 import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.commerce.wish.list.service.CommerceWishListItemService;
 import com.liferay.commerce.wish.list.service.CommerceWishListLocalService;
-import com.liferay.commerce.wish.list.util.CommerceWishListHelper;
+import com.liferay.commerce.wish.list.util.CommerceWishListHttpHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
@@ -42,7 +42,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Di Giorgi
  */
 @Component(immediate = true)
-public class CommerceWishListHelperImpl implements CommerceWishListHelper {
+public class CommerceWishListHttpHelperImpl
+	implements CommerceWishListHttpHelper {
 
 	@Override
 	public PortletURL getCommerceWishListPortletURL(

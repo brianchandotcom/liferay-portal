@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Andrea Di Giorgi
  */
 @ProviderType
-public interface CommerceWishListHelper {
+public interface CommerceWishListHttpHelper {
 
 	public PortletURL getCommerceWishListPortletURL(
 			HttpServletRequest httpServletRequest)

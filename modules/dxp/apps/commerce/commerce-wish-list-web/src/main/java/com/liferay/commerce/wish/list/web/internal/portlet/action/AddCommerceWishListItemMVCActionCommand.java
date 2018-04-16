@@ -19,7 +19,7 @@ import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.commerce.wish.list.model.CommerceWishListItem;
 import com.liferay.commerce.wish.list.service.CommerceWishListItemService;
 import com.liferay.commerce.wish.list.service.CommerceWishListService;
-import com.liferay.commerce.wish.list.util.CommerceWishListHelper;
+import com.liferay.commerce.wish.list.util.CommerceWishListHttpHelper;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -79,7 +79,7 @@ public class AddCommerceWishListItemMVCActionCommand
 
 		try {
 			CommerceWishList commerceWishList =
-				_commerceWishListHelper.getCurrentCommerceWishList(
+				_commerceWishListHttpHelper.getCurrentCommerceWishList(
 					httpServletRequest, httpServletResponse);
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -128,7 +128,7 @@ public class AddCommerceWishListItemMVCActionCommand
 		AddCommerceWishListItemMVCActionCommand.class);
 
 	@Reference
-	private CommerceWishListHelper _commerceWishListHelper;
+	private CommerceWishListHttpHelper _commerceWishListHttpHelper;
 
 	@Reference
 	private CommerceWishListItemService _commerceWishListItemService;

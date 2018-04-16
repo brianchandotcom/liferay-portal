@@ -42,7 +42,7 @@ Organization organization = commerceOrganizationMembersDisplayContext.getCurrent
 
 		<aui:container fluid="<%= true %>">
 			<aui:row>
-				<aui:col width="100">
+				<aui:col width="<%= 100 %>">
 					<div id="<portlet:namespace />userInvitationContent"></div>
 				</aui:col>
 			</aui:row>

@@ -32,7 +32,7 @@ long commercePaymentMethodId = BeanParamUtil.getLong(commerceOrder, request, "co
 	<c:choose>
 		<c:when test="<%= commercePaymentMethods.isEmpty() %>">
 			<aui:row>
-				<aui:col width="100">
+				<aui:col width="<%= 100 %>">
 					<aui:alert type="info">
 						<liferay-ui:message key="there-are-no-available-payment-methods" />
 					</aui:alert>

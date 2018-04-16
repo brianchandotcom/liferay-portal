@@ -45,7 +45,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 	<liferay-ui:error exception="<%= CommerceOrderShippingMethodException.class %>" message="please-select-a-valid-shipping-method" />
 
 	<aui:row>
-		<aui:col cssClass="commerce-checkout-summary" width="70">
+		<aui:col cssClass="commerce-checkout-summary" width="<%= 70 %>">
 			<ul class="commerce-checkout-summary-header">
 				<li class="autofit-row">
 					<div class="autofit-col autofit-col-expand">
@@ -184,7 +184,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 			</ul>
 		</aui:col>
 
-		<aui:col cssClass="commerce-checkout-info" width="30">
+		<aui:col cssClass="commerce-checkout-info" width="<%= 30 %>">
 
 			<%
 			CommerceAddress shippingAddress = commerceOrder.getShippingAddress();

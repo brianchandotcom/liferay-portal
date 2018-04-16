@@ -70,12 +70,12 @@ public class TextDDMFormFieldTemplateContextContributor
 		if (predefinedValue != null) {
 			parameters.put("predefinedValue", predefinedValue);
 		}
-		
-		String value = getValue(ddmFormFieldRenderingContext);	
-	
-		if (value != null) {	
-			parameters.put("value", value);	
-		}	
+
+		String value = getValue(ddmFormFieldRenderingContext);
+
+		if (value != null) {
+			parameters.put("value", value);
+		}
 
 		parameters.put(
 			"tooltip", getTooltip(ddmFormField, ddmFormFieldRenderingContext));
@@ -165,34 +165,34 @@ public class TextDDMFormFieldTemplateContextContributor
 			ddmFormFieldRenderingContext);
 	}
 
+	protected String getValue(
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
+
+		String value = String.valueOf(
+			ddmFormFieldRenderingContext.getProperty("value"));
+
+		if (ddmFormFieldRenderingContext.isViewMode()) {
+			value = HtmlUtil.extractText(value);
+		}
+
+		return value;
+	}
+
 	protected String getValueString(
 		Value value, Locale locale,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		if (value != null) {
-			String valueString = value.getString(locale);
-
-			if (ddmFormFieldRenderingContext.isViewMode()) {
-				valueString = HtmlUtil.extractText(valueString);
-			}
-
-			return valueString;
+		if (value == null) {
+			return StringPool.BLANK;
 		}
 
-		return StringPool.BLANK;
-	}
-	
-	protected String getValue(	
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {	
-	
-		String value = (String)ddmFormFieldRenderingContext.getProperty(	
-			"value");	
-	
-		if (ddmFormFieldRenderingContext.isViewMode()) {	
-			value = HtmlUtil.extractText(value);	
-		}	
-	
-		return value;	
+		String valueString = value.getString(locale);
+
+		if (ddmFormFieldRenderingContext.isViewMode()) {
+			valueString = HtmlUtil.extractText(valueString);
+		}
+
+		return valueString;
 	}
 
 	protected boolean isAutocompleteEnabled(DDMFormField ddmFormField) {

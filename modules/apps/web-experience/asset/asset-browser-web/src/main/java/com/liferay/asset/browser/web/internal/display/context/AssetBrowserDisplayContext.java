@@ -601,22 +601,17 @@ public class AssetBrowserDisplayContext {
 
 		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
 
-		int total = 0;
-
 		if (AssetBrowserWebConfigurationValues.SEARCH_WITH_DATABASE) {
-			total = AssetEntryLocalServiceUtil.getEntriesCount(
+			return AssetEntryLocalServiceUtil.getEntriesCount(
 				groupIds, new long[] {assetRendererFactory.getClassNameId()},
 				_getKeywords(), _getKeywords(), _getKeywords(), _getKeywords(),
 				_getListable(), false, false);
 		}
-		else {
-			total = (int)AssetEntryLocalServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), groupIds, themeDisplay.getUserId(),
-				assetRendererFactory.getClassName(), getSubtypeSelectionId(),
-				_getKeywords(), _isShowNonindexable(), _getStatuses());
-		}
 
-		return total;
+		return (int)AssetEntryLocalServiceUtil.searchCount(
+			themeDisplay.getCompanyId(), groupIds, themeDisplay.getUserId(),
+			assetRendererFactory.getClassName(), getSubtypeSelectionId(),
+			_getKeywords(), _isShowNonindexable(), _getStatuses());
 	}
 
 	private boolean _isShowNonindexable() {

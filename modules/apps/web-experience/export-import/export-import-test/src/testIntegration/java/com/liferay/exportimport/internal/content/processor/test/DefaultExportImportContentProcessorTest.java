@@ -23,6 +23,7 @@ import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessorRegistryUtil;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactory;
+import com.liferay.exportimport.kernel.exception.ExportImportContentValidationException;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -752,8 +753,12 @@ public class DefaultExportImportContentProcessorTest {
 				_exportImportContentProcessor.validateContentReferences(
 					_stagingGroup.getGroupId(), layoutReference);
 			}
-			catch (NoSuchLayoutException nsle) {
-				noSuchLayoutExceptionThrown = true;
+			catch (ExportImportContentValidationException eicve) {
+				Throwable cause = eicve.getCause();
+
+				if (cause instanceof NoSuchLayoutException) {
+					noSuchLayoutExceptionThrown = true;
+				}
 			}
 
 			Assert.assertTrue(

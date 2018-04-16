@@ -65,14 +65,27 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 		String workingDirectoryPath = buildProperties.getProperty(
 			"base.repository.dir") + "/liferay-portal";
 
-		if (!branchName.equals("master")) {	
-			super.setRepositoryDir(
-				new File(
-					JenkinsResultsParserUtil.combine(
-						workingDirectoryPath, "-", branchName)));
+		if (!branchName.equals("master")) {
+			workingDirectoryPath = JenkinsResultsParserUtil.combine(
+				workingDirectoryPath, "-", branchName);
 		}
 
-		return super.getGitWorkingDirectory();
+		super.setRepositoryDir(new File(workingDirectoryPath));
+
+		checkRepositoryDir();
+
+		try {
+			gitWorkingDirectory = new PortalGitWorkingDirectory(
+				branchName, repositoryDir.getAbsolutePath());
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to create PortalGitWorkingDirectory " +
+					repositoryDir.getPath(),
+				ioe);
+		}
+
+		return gitWorkingDirectory;
 	}
 
 	public String getPoshiQuery(String testBatchName) {

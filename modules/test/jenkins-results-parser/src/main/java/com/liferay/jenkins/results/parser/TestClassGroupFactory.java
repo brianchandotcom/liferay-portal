@@ -72,7 +72,8 @@ public class TestClassGroupFactory {
 		String batchName, PortalRepositoryJob portalRepositoryJob) {
 
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			portalRepositoryJob.getPortalGitWorkingDirectory();
+			(PortalGitWorkingDirectory)portalRepositoryJob.
+				getGitWorkingDirectory();
 
 		String testSuiteName = null;
 

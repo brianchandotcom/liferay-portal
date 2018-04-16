@@ -129,6 +129,8 @@ public class CommerceCountryIndexer extends BaseIndexer<CommerceCountry> {
 				name);
 			document.addNumber(
 				FIELD_NUMERIC_ISO_CODE, commerceCountry.getNumericISOCode());
+			document.addNumberSortable(
+				Field.PRIORITY, commerceCountry.getPriority());
 			document.addText(
 				FIELD_THREE_LETTERS_ISO_CODE,
 				commerceCountry.getThreeLettersISOCode());

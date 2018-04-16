@@ -77,6 +77,21 @@ public abstract class SubrepositoryJob extends RepositoryJob {
 		return gitWorkingDirectory;
 	}
 
+	@Override
+	public void setRepositoryDir(File repositoryDir) {
+		String dirName = repositoryDir.getName();
+
+		if (!dirName.endsWith("-private")) {
+			dirName += "-private";
+
+			this.repositoryDir = new File(
+				repositoryDir.getParentFile(), dirName);
+		}
+		else {
+			this.repositoryDir = repositoryDir;
+		}
+	}
+
 	protected SubrepositoryJob(String jobName) {
 		super(jobName);
 	}

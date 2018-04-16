@@ -928,7 +928,7 @@ public class ServiceBuilder {
 							//_removeUADEntityDisplayTest(entity);
 							//_removeUADEntityTestHelper(entity);
 							//_removeUADExporter(entity);
-					}
+						}
 					}
 					else {
 						if (entity.hasEntityColumns()) {

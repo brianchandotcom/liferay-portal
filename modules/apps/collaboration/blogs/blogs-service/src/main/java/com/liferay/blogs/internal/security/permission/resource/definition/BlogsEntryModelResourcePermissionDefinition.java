@@ -12,63 +12,68 @@
  * details.
  */
 
-package com.liferay.blogs.internal.security.permission.resource;
+package com.liferay.blogs.internal.security.permission.resource.definition;
 
 import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.WorkflowedModelPermissionLogic;
-import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.security.permission.resource.definition.ModelResourcePermissionDefinition;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermission;
 
-import java.util.Dictionary;
+import java.util.function.Consumer;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Preston Crary
  */
-@Component(immediate = true)
-public class BlogsEntryModelResourcePermissionRegistrar {
+@Component(immediate = true, service = ModelResourcePermissionDefinition.class)
+public class BlogsEntryModelResourcePermissionDefinition
+	implements ModelResourcePermissionDefinition<BlogsEntry> {
 
-	@Activate
-	public void activate(BundleContext bundleContext) {
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put("model.class.name", BlogsEntry.class.getName());
-
-		_serviceRegistration = bundleContext.registerService(
-			ModelResourcePermission.class,
-			ModelResourcePermissionFactory.create(
-				BlogsEntry.class, BlogsEntry::getEntryId,
-				_blogsEntryLocalService::getEntry, _portletResourcePermission,
-				(modelResourcePermission, consumer) -> {
-					consumer.accept(
-						new StagedModelPermissionLogic<>(
-							_stagingPermission, BlogsPortletKeys.BLOGS,
-							BlogsEntry::getEntryId));
-					consumer.accept(
-						new WorkflowedModelPermissionLogic<>(
-							_workflowPermission, modelResourcePermission,
-							BlogsEntry::getEntryId));
-				}),
-			properties);
+	@Override
+	public BlogsEntry getModel(long entryId) throws PortalException {
+		return _blogsEntryLocalService.getBlogsEntry(entryId);
 	}
 
-	@Deactivate
-	public void deactivate() {
-		_serviceRegistration.unregister();
+	@Override
+	public Class<BlogsEntry> getModelClass() {
+		return BlogsEntry.class;
+	}
+
+	@Override
+	public PortletResourcePermission getPortletResourcePermission() {
+		return _portletResourcePermission;
+	}
+
+	@Override
+	public long getPrimaryKey(BlogsEntry blogsEntry) {
+		return blogsEntry.getEntryId();
+	}
+
+	@Override
+	public void registerModelResourcePermissionLogics(
+		ModelResourcePermission<BlogsEntry> modelResourcePermission,
+		Consumer<ModelResourcePermissionLogic<BlogsEntry>>
+			modelResourcePermissionLogicConsumer) {
+
+		modelResourcePermissionLogicConsumer.accept(
+			new StagedModelPermissionLogic<>(
+				_stagingPermission, BlogsPortletKeys.BLOGS,
+				BlogsEntry::getEntryId));
+		modelResourcePermissionLogicConsumer.accept(
+			new WorkflowedModelPermissionLogic<>(
+				_workflowPermission, modelResourcePermission,
+				BlogsEntry::getEntryId));
 	}
 
 	@Reference
@@ -76,8 +81,6 @@ public class BlogsEntryModelResourcePermissionRegistrar {
 
 	@Reference(target = "(resource.name=" + BlogsConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;
-
-	private ServiceRegistration<ModelResourcePermission> _serviceRegistration;
 
 	@Reference
 	private StagingPermission _stagingPermission;

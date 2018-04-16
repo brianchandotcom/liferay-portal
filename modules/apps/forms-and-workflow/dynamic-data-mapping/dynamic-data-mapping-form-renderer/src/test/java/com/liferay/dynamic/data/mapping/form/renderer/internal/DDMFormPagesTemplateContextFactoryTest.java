@@ -19,8 +19,8 @@ import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.DDMFormEvaluatorImpl;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
-import com.liferay.dynamic.data.mapping.form.field.type.internal.DDMFormFieldOptionsFactoryImpl;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
+import com.liferay.dynamic.data.mapping.form.renderer.internal.util.DDMFormFieldTemplateContextContributorTestHelper;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
@@ -32,15 +32,7 @@ import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
-import com.liferay.dynamic.data.mapping.type.checkbox.multiple.internal.CheckboxMultipleDDMFormFieldTemplateContextContributor;
-import com.liferay.dynamic.data.mapping.type.grid.internal.GridDDMFormFieldTemplateContextContributor;
-import com.liferay.dynamic.data.mapping.type.numeric.internal.NumericDDMFormFieldTemplateContextContributor;
-import com.liferay.dynamic.data.mapping.type.radio.internal.RadioDDMFormFieldTemplateContextContributor;
-import com.liferay.dynamic.data.mapping.type.select.internal.SelectDDMFormFieldTemplateContextContributor;
-import com.liferay.dynamic.data.mapping.type.text.internal.TextDDMFormFieldTemplateContextContributor;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -115,7 +107,8 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		mockDDMFormFieldTypeServicesTracker(
 			"checkbox-multiple",
-			createCheckboxMultipleDMFormFieldTemplateContextContributor());
+			_ddmFormFieldTemplateContextContributorTestHelper.
+				createCheckboxMultipleDMFormFieldTemplateContextContributor());
 
 		// Dynamic data mapping form layout
 
@@ -307,7 +300,9 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 				String.format(_HTML_WRAPPER, "option")));
 
 		mockDDMFormFieldTypeServicesTracker(
-			"grid", createGridDDMFormFieldTemplateContextContributor());
+			"grid",
+			_ddmFormFieldTemplateContextContributorTestHelper.
+				createGridDDMFormFieldTemplateContextContributor());
 
 		// Dynamic data mapping form layout
 
@@ -369,7 +364,9 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 				String.format(_HTML_WRAPPER, "toolTip"), null));
 
 		mockDDMFormFieldTypeServicesTracker(
-			"numeric", createNumericDDMFormFieldTemplateContextContributor());
+			"numeric",
+			_ddmFormFieldTemplateContextContributorTestHelper.
+				createNumericDDMFormFieldTemplateContextContributor());
 
 		// Dynamic data mapping form layout
 
@@ -496,7 +493,9 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 				String.format(_HTML_WRAPPER, "option")));
 
 		mockDDMFormFieldTypeServicesTracker(
-			"radio", createRadioDDMFormFieldTemplateContextContributor());
+			"radio",
+			_ddmFormFieldTemplateContextContributorTestHelper.
+				createRadioDDMFormFieldTemplateContextContributor());
 
 		// Dynamic data mapping form layout
 
@@ -661,7 +660,9 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 				String.format(_HTML_WRAPPER, "option")));
 
 		mockDDMFormFieldTypeServicesTracker(
-			"select", createSelectDDMFormFieldTemplateContextContributor());
+			"select",
+			_ddmFormFieldTemplateContextContributorTestHelper.
+				createSelectDDMFormFieldTemplateContextContributor());
 
 		// Dynamic data mapping form layout
 
@@ -712,7 +713,9 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 				String.format(_HTML_WRAPPER, "option")));
 
 		mockDDMFormFieldTypeServicesTracker(
-			"text", createTextDDMFormFieldTemplateContextContributor());
+			"text",
+			_ddmFormFieldTemplateContextContributorTestHelper.
+				createTextDDMFormFieldTemplateContextContributor());
 
 		// Dynamic data mapping form layout
 
@@ -782,24 +785,6 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		Assert.assertEquals(
 			expectedSize, MapUtil.getInteger(columnTemplateContex, "size"));
-	}
-
-	protected CheckboxMultipleDDMFormFieldTemplateContextContributor
-			createCheckboxMultipleDMFormFieldTemplateContextContributor()
-		throws Exception {
-
-		CheckboxMultipleDDMFormFieldTemplateContextContributor
-			checkboxMultipleDDMFormFieldTemplateContextContributor =
-				new CheckboxMultipleDDMFormFieldTemplateContextContributor();
-
-		field(
-			CheckboxMultipleDDMFormFieldTemplateContextContributor.class,
-			"jsonFactory"
-		).set(
-			checkboxMultipleDDMFormFieldTemplateContextContributor, _jsonFactory
-		);
-
-		return checkboxMultipleDDMFormFieldTemplateContextContributor;
 	}
 
 	protected DDMFormLayoutColumn createDDMFormLayoutColumn(
@@ -893,90 +878,6 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 			_ddmFormFieldTypeServicesTracker);
 
 		return ddmFormPagesTemplateContextFactory;
-	}
-
-	protected GridDDMFormFieldTemplateContextContributor
-		createGridDDMFormFieldTemplateContextContributor() throws Exception {
-
-		GridDDMFormFieldTemplateContextContributor
-			gridDDMFormFieldTemplateContextContributor =
-				new GridDDMFormFieldTemplateContextContributor();
-
-		field(
-			GridDDMFormFieldTemplateContextContributor.class, "jsonFactory"
-		).set(
-			gridDDMFormFieldTemplateContextContributor, _jsonFactory
-		);
-
-		return gridDDMFormFieldTemplateContextContributor;
-	}
-
-	protected NumericDDMFormFieldTemplateContextContributor
-		createNumericDDMFormFieldTemplateContextContributor() throws Exception {
-
-		NumericDDMFormFieldTemplateContextContributor
-			numericDDMFormFieldTemplateContextContributor =
-				new NumericDDMFormFieldTemplateContextContributor();
-
-		return numericDDMFormFieldTemplateContextContributor;
-	}
-
-	protected RadioDDMFormFieldTemplateContextContributor
-		createRadioDDMFormFieldTemplateContextContributor() throws Exception {
-
-		RadioDDMFormFieldTemplateContextContributor
-			radioDDMFormFieldTemplateContextContributor =
-				new RadioDDMFormFieldTemplateContextContributor();
-
-		field(
-			RadioDDMFormFieldTemplateContextContributor.class, "jsonFactory"
-		).set(
-			radioDDMFormFieldTemplateContextContributor, _jsonFactory
-		);
-
-		return radioDDMFormFieldTemplateContextContributor;
-	}
-
-	protected SelectDDMFormFieldTemplateContextContributor
-		createSelectDDMFormFieldTemplateContextContributor() throws Exception {
-
-		SelectDDMFormFieldTemplateContextContributor
-			selectDDMFormFieldTemplateContextContributor =
-				new SelectDDMFormFieldTemplateContextContributor();
-
-		field(
-			SelectDDMFormFieldTemplateContextContributor.class,
-			"ddmFormFieldOptionsFactory"
-		).set(
-			selectDDMFormFieldTemplateContextContributor,
-			new DDMFormFieldOptionsFactoryImpl()
-		);
-
-		field(
-			SelectDDMFormFieldTemplateContextContributor.class, "jsonFactory"
-		).set(
-			selectDDMFormFieldTemplateContextContributor, _jsonFactory
-		);
-
-		return selectDDMFormFieldTemplateContextContributor;
-	}
-
-	protected TextDDMFormFieldTemplateContextContributor
-		createTextDDMFormFieldTemplateContextContributor() throws Exception {
-
-		TextDDMFormFieldTemplateContextContributor
-			textDDMFormFieldTemplateContextContributor =
-				new TextDDMFormFieldTemplateContextContributor();
-
-		field(
-			TextDDMFormFieldTemplateContextContributor.class,
-			"ddmFormFieldOptionsFactory"
-		).set(
-			textDDMFormFieldTemplateContextContributor,
-			new DDMFormFieldOptionsFactoryImpl()
-		);
-
-		return textDDMFormFieldTemplateContextContributor;
 	}
 
 	protected DDMFormEvaluator getDDMFormEvaluator() throws Exception {
@@ -1089,10 +990,13 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 	private static final String _PORTLET_NAMESPACE = StringUtil.randomString();
 
+	private final DDMFormFieldTemplateContextContributorTestHelper
+		_ddmFormFieldTemplateContextContributorTestHelper =
+			new DDMFormFieldTemplateContextContributorTestHelper();
+
 	@Mock
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 
-	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
 	private HttpServletRequest _request;
 
 }

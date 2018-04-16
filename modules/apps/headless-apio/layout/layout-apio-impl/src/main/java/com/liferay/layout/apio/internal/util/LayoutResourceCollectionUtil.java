@@ -32,15 +32,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = LayoutResourceCollectionUtil.class)
 public class LayoutResourceCollectionUtil {
 
-	public String getBreadcrumb(Layout layout, Language language) {
+	public static String getBreadcrumb(Layout layout, Language language) {
 		List<Layout> ancestorLayouts = null;
 
 		Locale locale = language.getPreferredLocale();
@@ -81,7 +78,7 @@ public class LayoutResourceCollectionUtil {
 		return sb.toString();
 	}
 
-	public String getImageURL(Layout layout) {
+	public static String getImageURL(Layout layout) {
 		ServiceContext serviceContext = Optional.ofNullable(
 			ServiceContextThreadLocal.getServiceContext()
 		).orElse(

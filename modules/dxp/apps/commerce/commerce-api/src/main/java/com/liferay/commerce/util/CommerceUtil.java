@@ -139,7 +139,8 @@ public class CommerceUtil {
 		Sort sort = null;
 
 		if (orderByCol.equals("priority")) {
-			sort = SortFactoryUtil.create(Field.PRIORITY, reverse);
+			sort = SortFactoryUtil.create(
+				Field.PRIORITY + "_Number_sortable", reverse);
 		}
 
 		return sort;

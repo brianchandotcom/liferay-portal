@@ -128,6 +128,7 @@ public class CPSpecificationOptionIndexer
 			document.addText(
 				LocalizationUtil.getLocalizedName(Field.TITLE, languageId),
 				title);
+
 			document.addText(
 				LocalizationUtil.getLocalizedName(
 					Field.DESCRIPTION, languageId),

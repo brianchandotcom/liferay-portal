@@ -36,7 +36,7 @@ CPType cpType = cpDefinitionsDisplayContext.getCPType(cpDefinition.getProductTyp
 </c:choose>
 
 <liferay-ui:search-container-column-text
-	cssClass="table-cell-content important"
+	cssClass="important table-cell-content"
 	href="<%= rowURL %>"
 	name="title"
 	value="<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>"

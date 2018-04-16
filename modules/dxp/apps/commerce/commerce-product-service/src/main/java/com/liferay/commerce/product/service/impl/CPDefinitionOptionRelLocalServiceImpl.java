@@ -421,9 +421,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			cpDefinition.getCPDefinitionId(), false, serviceContext);
 
 		int cpDefinitionOptionRelsCount =
-			cpDefinitionOptionRelLocalService.
-				getCPDefinitionOptionRelsCount(
-					cpDefinition.getCPDefinitionId(), true);
+			cpDefinitionOptionRelLocalService.getCPDefinitionOptionRelsCount(
+				cpDefinition.getCPDefinitionId(), true);
 
 		if (cpDefinitionOptionRelsCount == 0) {
 			return;

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+	<bean class="com.liferay.commerce.user.segment.service.impl.CommerceUserSegmentEntryLocalServiceImpl" id="com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryLocalService" />
+	<bean class="com.liferay.commerce.user.segment.service.impl.CommerceUserSegmentEntryServiceImpl" id="com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryService" />
+	<bean class="com.liferay.commerce.user.segment.service.persistence.impl.CommerceUserSegmentEntryPersistenceImpl" id="com.liferay.commerce.user.segment.service.persistence.CommerceUserSegmentEntryPersistence" parent="basePersistence" />
+</beans>

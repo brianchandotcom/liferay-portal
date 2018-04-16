@@ -16,23 +16,18 @@ package com.liferay.meris;
 
 import aQute.bnd.annotation.ProviderType;
 
-import java.util.Locale;
-import java.util.Map;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * @author Eduardo Garcia
  */
 @ProviderType
-public interface MerisRule {
+public interface MerisRuleTypeManager {
 
-	public String getDescription(Locale locale);
+	public MerisRuleType getMerisRuleType(String merisRuleTypeId);
 
-	public String getMerisRuleId();
-
-	public String getMerisRuleTypeId();
-
-	public Map<String, Object> getMerisRuleTypeSettings();
-
-	public String getName(Locale locale);
+	public List<MerisRuleType> getMerisRuleTypes(
+		int start, int end, Comparator<MerisRuleType> comparator);
 
 }

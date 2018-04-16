@@ -16,8 +16,9 @@ package com.liferay.meris.asset.category.demo.internal;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.meris.MerisRule;
-import com.liferay.portal.kernel.util.ArrayUtil;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -49,21 +50,23 @@ public class AssetCategoryMerisRule
 	}
 
 	@Override
-	public String getName(Locale locale) {
-		return _assetCategory.getTitle(locale);
+	public String getMerisRuleTypeId() {
+		return AssetCategoryMerisRuleType.class.getName();
 	}
 
 	@Override
-	public boolean matches(Map<String, Object> context) {
-		long[] assetCategoryIds = (long[])context.get("assetCategoryIds");
+	public Map<String, Object> getMerisRuleTypeSettings() {
+		Map<String, Object> merisRuleTypeDefaultSetting = new HashMap<>();
 
-		if (ArrayUtil.contains(
-				assetCategoryIds, _assetCategory.getCategoryId())) {
+		merisRuleTypeDefaultSetting.put(
+			"assetCategoryId", _assetCategory.getCategoryId());
 
-			return true;
-		}
+		return Collections.unmodifiableMap(merisRuleTypeDefaultSetting);
+	}
 
-		return false;
+	@Override
+	public String getName(Locale locale) {
+		return _assetCategory.getTitle(locale);
 	}
 
 	private final AssetCategory _assetCategory;

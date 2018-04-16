@@ -6,4 +6,5 @@ dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:meris:meris-api")
+	testIntegrationCompile project(":apps:web-experience:asset:asset-entry-rel-api")
 }

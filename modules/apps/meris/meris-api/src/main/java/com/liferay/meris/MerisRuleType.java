@@ -14,25 +14,23 @@
 
 package com.liferay.meris;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.Locale;
 import java.util.Map;
 
 /**
  * @author Eduardo Garcia
  */
-@ProviderType
-public interface MerisRule {
+public interface MerisRuleType {
 
 	public String getDescription(Locale locale);
 
-	public String getMerisRuleId();
+	public Map<String, Object> getMerisRuleTypeDefaultSettings();
 
 	public String getMerisRuleTypeId();
 
-	public Map<String, Object> getMerisRuleTypeSettings();
-
 	public String getName(Locale locale);
+
+	public boolean matches(
+		Map<String, Object> context, Map<String, Object> merisRuleSettings);
 
 }

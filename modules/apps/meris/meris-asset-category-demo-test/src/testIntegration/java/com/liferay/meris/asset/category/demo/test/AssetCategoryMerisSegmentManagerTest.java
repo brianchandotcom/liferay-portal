@@ -15,6 +15,7 @@
 package com.liferay.meris.asset.category.demo.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalServiceUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetVocabulary;
@@ -46,7 +47,6 @@ import java.util.Locale;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -90,10 +90,12 @@ public class AssetCategoryMerisSegmentManagerTest {
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			_user.getModelClassName(), _user.getUserId());
 
-		AssetCategoryLocalServiceUtil.addAssetEntryAssetCategory(
-			assetEntry.getEntryId(), soccerAssetCategory.getCategoryId());
-		AssetCategoryLocalServiceUtil.addAssetEntryAssetCategory(
-			assetEntry.getEntryId(), tennisAssetCategory.getCategoryId());
+		AssetEntryAssetCategoryRelLocalServiceUtil.
+			addAssetEntryAssetCategoryRel(
+				assetEntry.getEntryId(), soccerAssetCategory.getCategoryId());
+		AssetEntryAssetCategoryRelLocalServiceUtil.
+			addAssetEntryAssetCategoryRel(
+				assetEntry.getEntryId(), tennisAssetCategory.getCategoryId());
 
 		_merisProfileId = String.valueOf(_user.getUserId());
 		_merisScopeId = String.valueOf(_group.getGroupId());
@@ -107,7 +109,6 @@ public class AssetCategoryMerisSegmentManagerTest {
 			_merisSegmentManager.getMerisProfile(_merisProfileId));
 	}
 
-	@Ignore
 	@Test
 	public void testGetMerisProfileMerisSegments() throws Exception {
 		Comparator<MerisSegment> merisSegmentNameComparator =
@@ -123,7 +124,6 @@ public class AssetCategoryMerisSegmentManagerTest {
 			merisSegments.isEmpty());
 	}
 
-	@Ignore
 	@Test
 	public void testGetMerisProfiles() throws Exception {
 		List merisProfiles = _merisSegmentManager.getMerisProfiles(
@@ -166,7 +166,6 @@ public class AssetCategoryMerisSegmentManagerTest {
 			"No meris segments were found", merisSegments.isEmpty());
 	}
 
-	@Ignore
 	@Test
 	public void testMatches() {
 		Assert.assertTrue(

@@ -92,8 +92,8 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 				modifiedModuleTestProperties);
 
 			String testBatchRunPropertyQuery = testProperties.getProperty(
-				getWildcardPropertyName(
-					testProperties, "test.batch.run.property.query",
+				getFirstMatchingPropertyName(
+					"test.batch.run.property.query", testProperties,
 					testSuiteName));
 
 			if (testBatchRunPropertyQuery == null) {

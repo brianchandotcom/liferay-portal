@@ -68,6 +68,44 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		_setTestRelevantChanges();
 	}
 
+	protected String getFirstMatchingPropertyName(
+		String basePropertyName, Properties properties) {
+
+		return getFirstMatchingPropertyName(basePropertyName, properties, null);
+	}
+
+	protected String getFirstMatchingPropertyName(
+		String basePropertyName, Properties properties, String testSuiteName) {
+
+		for (String propertyName : properties.stringPropertyNames()) {
+			if (!propertyName.startsWith(basePropertyName)) {
+				continue;
+			}
+
+			Matcher matcher = _propertyNamePattern.matcher(propertyName);
+
+			if (matcher.find()) {
+				String batchNameRegex = matcher.group("batchName");
+
+				batchNameRegex = batchNameRegex.replace("*", ".+");
+
+				if (!batchName.matches(batchNameRegex)) {
+					continue;
+				}
+
+				String targetTestSuiteName = matcher.group("testSuiteName");
+
+				if (Objects.equals(testSuiteName, targetTestSuiteName)) {
+					return propertyName;
+				}
+
+				continue;
+			}
+		}
+
+		return null;
+	}
+
 	protected String getFirstPropertyValue(String basePropertyName) {
 		List<String> propertyNames = new ArrayList<>();
 
@@ -78,8 +116,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 					"]"));
 
 			propertyNames.add(
-				getWildcardPropertyName(
-					portalTestProperties, basePropertyName, testSuiteName));
+				getFirstMatchingPropertyName(
+					basePropertyName, portalTestProperties, testSuiteName));
 
 			propertyNames.add(
 				JenkinsResultsParserUtil.combine(
@@ -91,7 +129,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 				basePropertyName, "[", batchName, "]"));
 
 		propertyNames.add(
-			getWildcardPropertyName(portalTestProperties, basePropertyName));
+			getFirstMatchingPropertyName(
+				basePropertyName, portalTestProperties));
 
 		propertyNames.add(basePropertyName);
 
@@ -107,45 +146,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 				if ((propertyValue != null) && !propertyValue.isEmpty()) {
 					return propertyValue;
 				}
-			}
-		}
-
-		return null;
-	}
-
-	protected String getWildcardPropertyName(
-		Properties properties, String propertyName) {
-
-		return getWildcardPropertyName(properties, propertyName, null);
-	}
-
-	protected String getWildcardPropertyName(
-		Properties properties, String propertyName, String testSuiteName) {
-
-		for (String wildcardPropertyName : properties.stringPropertyNames()) {
-			if (!wildcardPropertyName.startsWith(propertyName)) {
-				continue;
-			}
-
-			Matcher matcher = _propertyNamePattern.matcher(
-				wildcardPropertyName);
-
-			if (matcher.find()) {
-				String batchNameRegex = matcher.group("batchName");
-
-				batchNameRegex = batchNameRegex.replace("*", ".+");
-
-				if (!batchName.matches(batchNameRegex)) {
-					continue;
-				}
-
-				String targetTestSuiteName = matcher.group("testSuiteName");
-
-				if (Objects.equals(testSuiteName, targetTestSuiteName)) {
-					return wildcardPropertyName;
-				}
-
-				continue;
 			}
 		}
 

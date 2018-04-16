@@ -392,7 +392,7 @@ AUI.add(
 										var previousFieldLocalizable = previousSettingsFormFieldContext.localizable;
 										var previousFieldName = previousSettingsFormFieldContext.fieldName;
 
-										if (!(fieldName === 'type') && (fieldName === previousFieldName)) {
+										if (!(fieldName === 'type') && !(fieldName === 'dataType') && (fieldName === previousFieldName)) {
 											if (fieldLocalizable && previousFieldLocalizable) {
 												settingsFormFieldContext.localizedValue = previousSettingsFormFieldContext.localizedValue;
 											}

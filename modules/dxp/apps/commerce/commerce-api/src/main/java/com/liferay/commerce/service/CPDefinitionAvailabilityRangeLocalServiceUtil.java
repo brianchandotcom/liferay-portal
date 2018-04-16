@@ -93,18 +93,17 @@ public class CPDefinitionAvailabilityRangeLocalServiceUtil {
 				   .deleteCPDefinitionAvailabilityRange(CPDefinitionAvailabilityRangeId);
 	}
 
+	public static void deleteCPDefinitionAvailabilityRangeByCPDefinitionId(
+		long cpDefinitionId) {
+		getService()
+			.deleteCPDefinitionAvailabilityRangeByCPDefinitionId(cpDefinitionId);
+	}
+
 	public static void deleteCPDefinitionAvailabilityRanges(
 		long commerceAvailabilityRangeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.deleteCPDefinitionAvailabilityRanges(commerceAvailabilityRangeId);
-	}
-
-	public static void deleteCPDefinitionAvailabilityRangesByCPDefinitionId(
-		long cpDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.deleteCPDefinitionAvailabilityRangesByCPDefinitionId(cpDefinitionId);
 	}
 
 	/**

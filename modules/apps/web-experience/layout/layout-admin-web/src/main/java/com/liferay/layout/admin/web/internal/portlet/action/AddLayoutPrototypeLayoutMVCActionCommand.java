@@ -15,10 +15,10 @@
 package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.admin.web.internal.handler.LayoutExceptionRequestHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -128,18 +128,16 @@ public class AddLayoutPrototypeLayoutMVCActionCommand
 				_log.debug(pe, pe);
 			}
 
-			jsonObject.put(
-				"error",
-				LanguageUtil.get(
-					themeDisplay.getLocale(), "an-unexpected-error-occurred"));
-
-			JSONPortletResponseUtil.writeJSON(
-				actionRequest, actionResponse, jsonObject);
+			_layoutExceptionRequestHandler.handlePortalException(
+				actionRequest, actionResponse, pe);
 		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AddLayoutPrototypeLayoutMVCActionCommand.class);
+
+	@Reference
+	private LayoutExceptionRequestHandler _layoutExceptionRequestHandler;
 
 	@Reference
 	private LayoutPrototypeService _layoutPrototypeService;

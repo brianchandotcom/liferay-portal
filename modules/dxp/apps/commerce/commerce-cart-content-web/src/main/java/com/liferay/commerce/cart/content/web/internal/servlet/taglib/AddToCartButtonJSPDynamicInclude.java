@@ -38,7 +38,7 @@ public class AddToCartButtonJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override
 	protected String getJspPath() {
-		return "/add_to_cart_button.jsp";
+		return "/dynamic_include/add_to_cart_button.jsp";
 	}
 
 	@Override

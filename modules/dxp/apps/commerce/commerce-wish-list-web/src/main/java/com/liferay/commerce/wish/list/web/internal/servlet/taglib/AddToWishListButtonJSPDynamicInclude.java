@@ -40,7 +40,7 @@ public class AddToWishListButtonJSPDynamicInclude
 
 	@Override
 	protected String getJspPath() {
-		return "/product_content/add_to_wish_list_button.jsp";
+		return "/dynamic_include/add_to_wish_list_button.jsp";
 	}
 
 	@Override

@@ -356,12 +356,11 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		ddmForm.addDDMFormField(
-			DDMFormTestUtil.createDDMFormField(
-				"Field1", String.format(_HTML_WRAPPER, "label"), "numeric",
-				"string", false, false, true,
-				String.format(_HTML_WRAPPER, "tip"), null,
+			DDMFormTestUtil.createNumericDDMFormField(
+				"Field1", String.format(_HTML_WRAPPER, "label"), "integer",
+				false, false, true, String.format(_HTML_WRAPPER, "tip"),
 				String.format(_HTML_WRAPPER, "placeHolder"),
-				String.format(_HTML_WRAPPER, "toolTip"), null));
+				String.format(_HTML_WRAPPER, "toolTip")));
 
 		mockDDMFormFieldTypeServicesTracker(
 			"numeric",

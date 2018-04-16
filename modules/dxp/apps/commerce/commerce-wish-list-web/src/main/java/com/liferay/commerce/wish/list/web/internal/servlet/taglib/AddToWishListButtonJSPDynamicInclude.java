@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Di Giorgi
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class AddToWishListButtonDynamicInclude extends BaseJSPDynamicInclude {
+public class AddToWishListButtonJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
@@ -57,6 +57,6 @@ public class AddToWishListButtonDynamicInclude extends BaseJSPDynamicInclude {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AddToWishListButtonDynamicInclude.class);
+		AddToWishListButtonJSPDynamicInclude.class);
 
 }

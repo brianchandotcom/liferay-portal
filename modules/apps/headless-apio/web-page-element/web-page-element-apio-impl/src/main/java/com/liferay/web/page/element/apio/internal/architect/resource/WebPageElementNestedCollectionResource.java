@@ -26,7 +26,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleModel;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
-import com.liferay.portal.apio.architect.context.auth.MockPermissions;
+import com.liferay.portal.apio.architect.context.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
@@ -63,7 +63,7 @@ public class WebPageElementNestedCollectionResource
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_addJournalArticle, MockPermissions::validPermission,
+			this::_addJournalArticle, _hasPermission::forAddingRootArticle,
 			WebPageElementCreatorForm::buildForm
 		).build();
 	}
@@ -80,9 +80,11 @@ public class WebPageElementNestedCollectionResource
 		return builder.addGetter(
 			this::_getJournalArticle
 		).addRemover(
-			this::_deleteJournalArticle, MockPermissions::validPermission
+			this::_deleteJournalArticle,
+			_hasPermission.forDeleting(JournalArticle.class)
 		).addUpdater(
-			this::_updateJournalArticle, MockPermissions::validPermission,
+			this::_updateJournalArticle,
+			_hasPermission.forUpdating(JournalArticle.class),
 			WebPageElementUpdaterForm::buildForm
 		).build();
 	}
@@ -130,8 +132,8 @@ public class WebPageElementNestedCollectionResource
 
 		return Try.fromFallible(
 			() -> _journalArticleService.addArticle(
-				webSiteId, webPageElementCreatorForm.getFolder(), 0, 0, null,
-				true, webPageElementCreatorForm.getTitleMap(),
+				webSiteId, 0, 0, 0, null, true,
+				webPageElementCreatorForm.getTitleMap(),
 				webPageElementCreatorForm.getDescriptionMap(),
 				webPageElementCreatorForm.getText(),
 				webPageElementCreatorForm.getStructure(),
@@ -203,8 +205,7 @@ public class WebPageElementNestedCollectionResource
 		return Try.fromFallible(
 			() -> _journalArticleService.updateArticle(
 				webPageElementUpdaterForm.getUser(),
-				webPageElementUpdaterForm.getGroup(),
-				webPageElementUpdaterForm.getFolder(),
+				webPageElementUpdaterForm.getGroup(), 0,
 				String.valueOf(journalArticleId),
 				webPageElementUpdaterForm.getVersion(),
 				webPageElementUpdaterForm.getTitleMap(),
@@ -212,6 +213,9 @@ public class WebPageElementNestedCollectionResource
 				webPageElementUpdaterForm.getText(), null, serviceContext)
 		).getUnchecked();
 	}
+
+	@Reference
+	private HasPermission _hasPermission;
 
 	@Reference
 	private JournalArticleService _journalArticleService;

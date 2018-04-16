@@ -11,4 +11,5 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compileOnly project(":apps:foundation:apio-architect:apio-architect-api")
 	compileOnly project(":apps:headless-apio:portal:portal-apio-api")
+	compileOnly project(":apps:web-experience:journal:journal-api")
 }

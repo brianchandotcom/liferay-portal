@@ -28,8 +28,8 @@ import com.liferay.blogs.exception.NoSuchEntryException;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
-import com.liferay.portal.apio.architect.context.auth.MockPermissions;
 import com.liferay.portal.apio.architect.context.identifier.ClassNameClassPK;
+import com.liferay.portal.apio.architect.context.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -64,7 +64,8 @@ public class BlogPostingNestedCollectionResource
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_addBlogsEntry, MockPermissions::validPermission,
+			this::_addBlogsEntry,
+			_hasPermission.forAddingEntries(BlogsEntry.class),
 			BlogPostingForm::buildForm
 		).build();
 	}
@@ -81,9 +82,11 @@ public class BlogPostingNestedCollectionResource
 		return builder.addGetter(
 			this::_getBlogsEntry
 		).addRemover(
-			this::_deleteBlogsEntry, MockPermissions::validPermission
+			this::_deleteBlogsEntry,
+			_hasPermission.forDeleting(BlogsEntry.class)
 		).addUpdater(
-			this::_updateBlogsEntry, MockPermissions::validPermission,
+			this::_updateBlogsEntry,
+			_hasPermission.forUpdating(BlogsEntry.class),
 			BlogPostingForm::buildForm
 		).build();
 	}
@@ -218,5 +221,8 @@ public class BlogPostingNestedCollectionResource
 
 	@Reference
 	private BlogsEntryService _blogsService;
+
+	@Reference
+	private HasPermission _hasPermission;
 
 }

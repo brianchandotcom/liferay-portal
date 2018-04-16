@@ -22,6 +22,7 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.layout.apio.architect.identifier.EmbeddedWebPageIdentifier;
 import com.liferay.layout.apio.internal.util.LayoutResourceCollectionUtil;
+import com.liferay.portal.apio.architect.context.permission.HasPermission;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
@@ -70,7 +71,7 @@ public class EmbeddedWebPageNestedCollectionResource
 		return builder.addGetter(
 			this::_getLayout
 		).addRemover(
-			this::_removeLayout, (credentials, plid) -> true
+			this::_removeLayout, _hasPermission::forDeletingLayouts
 		).build();
 	}
 
@@ -159,6 +160,9 @@ public class EmbeddedWebPageNestedCollectionResource
 			throw new ServerErrorException(500, pe);
 		}
 	}
+
+	@Reference
+	private HasPermission _hasPermission;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

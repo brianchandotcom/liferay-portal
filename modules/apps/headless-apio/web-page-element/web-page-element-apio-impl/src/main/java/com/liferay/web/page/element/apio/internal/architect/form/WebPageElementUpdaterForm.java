@@ -47,8 +47,6 @@ public class WebPageElementUpdaterForm {
 			__ -> "This form can be used to update a web page element"
 		).constructor(
 			WebPageElementUpdaterForm::new
-		).addOptionalLong(
-			"folder", WebPageElementUpdaterForm::_setFolder
 		).addRequiredLong(
 			"group", WebPageElementUpdaterForm::_setGroup
 		).addRequiredLong(
@@ -72,21 +70,6 @@ public class WebPageElementUpdaterForm {
 	 */
 	public Map<Locale, String> getDescriptionMap() {
 		return Collections.singletonMap(Locale.getDefault(), _description);
-	}
-
-	/**
-	 * Returns the folder ID if added through the form. Returns {@code 0}
-	 * otherwise.
-	 *
-	 * @return the web page element's folder ID if present; {@code 0} otherwise
-	 * @review
-	 */
-	public long getFolder() {
-		if (_folder == null) {
-			return 0;
-		}
-
-		return _folder;
 	}
 
 	/**
@@ -143,10 +126,6 @@ public class WebPageElementUpdaterForm {
 		_description = description;
 	}
 
-	private void _setFolder(long folder) {
-		_folder = folder;
-	}
-
 	private void _setGroup(Long group) {
 		_group = group;
 	}
@@ -168,7 +147,6 @@ public class WebPageElementUpdaterForm {
 	}
 
 	private String _description;
-	private Long _folder;
 	private Long _group;
 	private String _text;
 	private String _title;

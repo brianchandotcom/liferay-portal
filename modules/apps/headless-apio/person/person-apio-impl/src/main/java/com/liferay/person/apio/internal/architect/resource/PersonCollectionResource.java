@@ -25,6 +25,7 @@ import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.person.apio.internal.architect.form.PersonCreatorForm;
 import com.liferay.person.apio.internal.architect.form.PersonUpdaterForm;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.apio.architect.context.permission.HasPermission;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -64,7 +65,7 @@ public class PersonCollectionResource
 		return builder.addGetter(
 			this::_getPageItems, Company.class
 		).addCreator(
-			this::_addUser, Company.class, MockPermissions::validPermission,
+			this::_addUser, Company.class, _hasPermission::forAddingUsers,
 			PersonCreatorForm::buildForm
 		).build();
 	}
@@ -81,9 +82,9 @@ public class PersonCollectionResource
 		return builder.addGetter(
 			this::_getUser
 		).addRemover(
-			this::_deleteUser, MockPermissions::validPermission
+			this::_deleteUser, _hasPermission.forDeleting(User.class)
 		).addUpdater(
-			this::_updateUser, MockPermissions::validPermission,
+			this::_updateUser, _hasPermission.forUpdating(User.class),
 			PersonUpdaterForm::buildForm
 		).build();
 	}
@@ -207,6 +208,9 @@ public class PersonCollectionResource
 			() -> _userLocalService.updateUser(user)
 		).getUnchecked();
 	}
+
+	@Reference
+	private HasPermission _hasPermission;
 
 	@Reference
 	private UserLocalService _userLocalService;

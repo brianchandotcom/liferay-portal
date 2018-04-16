@@ -27,6 +27,7 @@ import com.liferay.document.library.kernel.model.DLFolderModel;
 import com.liferay.document.library.kernel.service.DLFolderService;
 import com.liferay.folder.apio.architect.identifier.FolderIdentifier;
 import com.liferay.folder.apio.internal.architect.form.FolderForm;
+import com.liferay.portal.apio.architect.context.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -61,7 +62,7 @@ public class FolderNestedCollectionResource
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_addDLFolder, MockPermissions::validPermission,
+			this::_addDLFolder, (credentials, identifier) -> true,
 			FolderForm::buildForm
 		).build();
 	}
@@ -78,9 +79,9 @@ public class FolderNestedCollectionResource
 		return builder.addGetter(
 			this::_getDLFolder
 		).addRemover(
-			this::_deleteDLFolder, MockPermissions::validPermission
+			this::_deleteDLFolder, _hasPermission.forDeleting(DLFolder.class)
 		).addUpdater(
-			this::_updateDLFolder, MockPermissions::validPermission,
+			this::_updateDLFolder, _hasPermission.forUpdating(DLFolder.class),
 			FolderForm::buildForm
 		).build();
 	}
@@ -190,5 +191,8 @@ public class FolderNestedCollectionResource
 
 	@Reference
 	private DLFolderService _dlFolderService;
+
+	@Reference
+	private HasPermission _hasPermission;
 
 }

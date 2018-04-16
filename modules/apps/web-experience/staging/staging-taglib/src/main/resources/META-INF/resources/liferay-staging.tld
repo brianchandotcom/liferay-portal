@@ -41,25 +41,25 @@
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.CheckboxTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>Whether the checkbox is checked or not. Default is not checked.</description>
+			<description>Whether the checkbox is checked. The default is unchecked.</description>
 			<name>checked</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The language key of the checkbox's description text. It will be displayed after the label.</description>
+			<description>The language key of the checkbox's description text. It is displayed after the label.</description>
 			<name>description</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether the checkbox is disabled or not. Default is enabled.</description>
+			<description>Whether the checkbox is disabled. The default is enabled.</description>
 			<name>disabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The id of the input in the html. It will be added to the portlet id when using as the dom id.</description>
+			<description>The HTML input's ID. It is added to the portlet ID when used as the DOM ID.</description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -71,7 +71,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The name of the input in the html.</description>
+			<description>The HTML input's name.</description>
 			<name>name</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -83,13 +83,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The language key of the checkbox's suggestion text. It will be displayed after the label.</description>
+			<description>The language key of the checkbox's suggestion text. It is displayed after the label.</description>
 			<name>suggestion</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The language key of the checkbox's warning text. It will be displayed after the suggestion.</description>
+			<description>The language key of the checkbox's warning text. It is displayed after the suggestion.</description>
 			<name>warning</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.aggregate.rating.apio.internal.architect.uri.mapper;
+package com.liferay.portal.apio.internal.architect.uri.mapper;
 
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.identifier.Identifier;
@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Hernández
  */
 @Component(immediate = true)
-public class AggregateRatingPathIdentifierMapper
+public class ClassNameClassPKIdentifierMapper
 	implements PathIdentifierMapper<ClassNameClassPK> {
 
 	@Override

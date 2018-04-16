@@ -70,7 +70,7 @@ public class AppServer {
 
 	public static AppServer getWildFlyAppServer() {
 		return new AppServer(
-			"../../wildfly-10.0.0", _getJBossExtraLibDirNames(),
+			"../../wildfly-11.0.0", _getJBossExtraLibDirNames(),
 			"/modules/com/liferay/portal/main",
 			"/standalone/deployments/ROOT.war", "wildfly");
 	}

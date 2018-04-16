@@ -500,6 +500,15 @@ AUI.add(
 
 						var editingLanguageId = event.newVal;
 
+						var defaultLanguageId = instance.get('defaultLanguageId');
+
+						if (editingLanguageId != defaultLanguageId) {
+							instance.one('.lfr-ddm-plus-button').addClass('hide');
+						}
+						else {
+							instance.one('.lfr-ddm-plus-button').removeClass('hide');
+						}
+
 						var formBuilder = instance.get('formBuilder');
 
 						instance.set('editingLanguageId', editingLanguageId);

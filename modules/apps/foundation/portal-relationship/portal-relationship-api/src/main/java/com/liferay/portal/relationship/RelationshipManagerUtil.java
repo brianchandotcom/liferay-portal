@@ -27,24 +27,23 @@ import java.util.Collection;
 public class RelationshipManagerUtil {
 
 	public static <T extends ClassedModel> Collection<? extends ClassedModel>
-		getInboundRelatedModels(Class<T> relationshipBaseClass, long primKey) {
+		getInboundRelatedModels(Class<T> modelClass, long primKey) {
 
 		return _relationshipManager.getInboundRelatedModels(
-			relationshipBaseClass, primKey);
+			modelClass, primKey);
 	}
 
 	public static <T extends ClassedModel> Collection<? extends ClassedModel>
-		getOutboundRelatedModels(Class<T> relationshipBaseClass, long primKey) {
+		getOutboundRelatedModels(Class<T> modelClass, long primKey) {
 
 		return _relationshipManager.getOutboundRelatedModels(
-			relationshipBaseClass, primKey);
+			modelClass, primKey);
 	}
 
 	public static <T extends ClassedModel> Collection<? extends ClassedModel>
-		getRelatedModels(Class<T> relationshipBaseClass, long primKey) {
+		getRelatedModels(Class<T> modelClass, long primKey) {
 
-		return _relationshipManager.getRelatedModels(
-			relationshipBaseClass, primKey);
+		return _relationshipManager.getRelatedModels(modelClass, primKey);
 	}
 
 	public static void setRelationshipManager(

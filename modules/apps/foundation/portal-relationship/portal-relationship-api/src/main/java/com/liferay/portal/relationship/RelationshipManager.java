@@ -27,12 +27,12 @@ import java.util.Collection;
 public interface RelationshipManager {
 
 	public <T extends ClassedModel> Collection<? extends ClassedModel>
-		getInboundRelatedModels(Class<T> relationshipBaseClass, long primKey);
+		getInboundRelatedModels(Class<T> modelClass, long primKey);
 
 	public <T extends ClassedModel> Collection<? extends ClassedModel>
-		getOutboundRelatedModels(Class<T> relationshipBaseClass, long primKey);
+		getOutboundRelatedModels(Class<T> modelClass, long primKey);
 
 	public <T extends ClassedModel> Collection<? extends ClassedModel>
-		getRelatedModels(Class<T> relationshipBaseClass, long primKey);
+		getRelatedModels(Class<T> modelClass, long primKey);
 
 }

@@ -41,9 +41,9 @@ public class RelationshipManagerImpl implements RelationshipManager {
 
 	@Override
 	public <T extends ClassedModel> Collection<? extends ClassedModel>
-		getInboundRelatedModels(Class<T> relationshipBaseClass, long primKey) {
+		getInboundRelatedModels(Class<T> modelClass, long primKey) {
 
-		Relationship<T> relationship = _getRelationship(relationshipBaseClass);
+		Relationship<T> relationship = _getRelationship(modelClass);
 
 		Stream<? extends ClassedModel> stream =
 			relationship.getInboundRelatedModelStream(primKey);
@@ -53,9 +53,9 @@ public class RelationshipManagerImpl implements RelationshipManager {
 
 	@Override
 	public <T extends ClassedModel> Collection<? extends ClassedModel>
-		getOutboundRelatedModels(Class<T> relationshipBaseClass, long primKey) {
+		getOutboundRelatedModels(Class<T> modelClass, long primKey) {
 
-		Relationship<T> relationship = _getRelationship(relationshipBaseClass);
+		Relationship<T> relationship = _getRelationship(modelClass);
 
 		Stream<? extends ClassedModel> stream =
 			relationship.getOutboundRelatedModelStream(primKey);
@@ -65,9 +65,9 @@ public class RelationshipManagerImpl implements RelationshipManager {
 
 	@Override
 	public <T extends ClassedModel> Collection<? extends ClassedModel>
-		getRelatedModels(Class<T> relationshipBaseClass, long primKey) {
+		getRelatedModels(Class<T> modelClass, long primKey) {
 
-		Relationship<T> relationship = _getRelationship(relationshipBaseClass);
+		Relationship<T> relationship = _getRelationship(modelClass);
 
 		Stream<? extends ClassedModel> stream =
 			relationship.getRelatedModelStream(primKey);
@@ -100,10 +100,10 @@ public class RelationshipManagerImpl implements RelationshipManager {
 
 	@SuppressWarnings("unchecked")
 	private <T extends ClassedModel> Relationship<T> _getRelationship(
-		Class<T> relationshipBaseModelClass) {
+		Class<T> modelClass) {
 
 		RelationshipResource<T> relationshipResource =
-			_serviceTrackerMap.getService(relationshipBaseModelClass.getName());
+			_serviceTrackerMap.getService(modelClass.getName());
 
 		Relationship.Builder<T> builder = new Relationship.Builder<>();
 

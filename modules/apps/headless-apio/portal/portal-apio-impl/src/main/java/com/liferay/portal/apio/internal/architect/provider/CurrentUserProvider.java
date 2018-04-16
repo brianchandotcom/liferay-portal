@@ -17,7 +17,7 @@ package com.liferay.portal.apio.internal.architect.provider;
 import com.liferay.apio.architect.provider.Provider;
 import com.liferay.portal.apio.architect.context.user.CurrentUser;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.util.Portal;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -42,7 +42,7 @@ public class CurrentUserProvider implements Provider<CurrentUser> {
 	public CurrentUser createContext(HttpServletRequest httpServletRequest) {
 		return () -> {
 			try {
-				return _userService.getCurrentUser();
+				return _portal.getUser(httpServletRequest);
 			}
 			catch (PortalException pe) {
 				throw new ForbiddenException(
@@ -52,6 +52,6 @@ public class CurrentUserProvider implements Provider<CurrentUser> {
 	}
 
 	@Reference
-	private UserService _userService;
+	private Portal _portal;
 
 }

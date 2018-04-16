@@ -2,7 +2,24 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping auto-import="false" default-lazy="false">
+	<import class="com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion" />
 	<import class="com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry" />
+	<class name="com.liferay.commerce.user.segment.model.impl.CommerceUserSegmentCriterionImpl" table="CommerceUserSegmentCriterion">
+		<id name="commerceUserSegmentCriterionId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="commerceUserSegmentEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="criterionType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property column="condition_" name="condition" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="value" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+	</class>
 	<class name="com.liferay.commerce.user.segment.model.impl.CommerceUserSegmentEntryImpl" table="CommerceUserSegmentEntry">
 		<id name="commerceUserSegmentEntryId" type="long">
 			<generator class="assigned" />

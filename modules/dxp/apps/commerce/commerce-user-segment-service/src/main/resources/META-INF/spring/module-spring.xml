@@ -7,6 +7,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
+	<bean class="com.liferay.commerce.user.segment.service.impl.CommerceUserSegmentCriterionLocalServiceImpl" id="com.liferay.commerce.user.segment.service.CommerceUserSegmentCriterionLocalService" />
+	<bean class="com.liferay.commerce.user.segment.service.impl.CommerceUserSegmentCriterionServiceImpl" id="com.liferay.commerce.user.segment.service.CommerceUserSegmentCriterionService" />
+	<bean class="com.liferay.commerce.user.segment.service.persistence.impl.CommerceUserSegmentCriterionPersistenceImpl" id="com.liferay.commerce.user.segment.service.persistence.CommerceUserSegmentCriterionPersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.user.segment.service.impl.CommerceUserSegmentEntryLocalServiceImpl" id="com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryLocalService" />
 	<bean class="com.liferay.commerce.user.segment.service.impl.CommerceUserSegmentEntryServiceImpl" id="com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryService" />
 	<bean class="com.liferay.commerce.user.segment.service.persistence.impl.CommerceUserSegmentEntryPersistenceImpl" id="com.liferay.commerce.user.segment.service.persistence.CommerceUserSegmentEntryPersistence" parent="basePersistence" />

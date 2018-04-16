@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
@@ -138,10 +139,43 @@ public class FragmentEntryLinkLocalServiceImpl
 
 	@Override
 	public List<FragmentEntryLink> getFragmentEntryLinks(
+		long groupId, long fragmentEntryId, int start, int end,
+		OrderByComparator<FragmentEntryLink> orderByComparator) {
+
+		return fragmentEntryLinkPersistence.findByG_F(
+			groupId, fragmentEntryId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<FragmentEntryLink> getFragmentEntryLinks(
 		long groupId, long classNameId, long classPK) {
 
 		return fragmentEntryLinkPersistence.findByG_C_C(
 			groupId, classNameId, classPK);
+	}
+
+	@Override
+	public List<FragmentEntryLink> getFragmentEntryLinks(
+		long groupId, long fragmentEntryId, long classNameId, int start,
+		int end, OrderByComparator<FragmentEntryLink> orderByComparator) {
+
+		return fragmentEntryLinkPersistence.findByG_F_C(
+			groupId, fragmentEntryId, classNameId, start, end,
+			orderByComparator);
+	}
+
+	@Override
+	public int getFragmentEntryLinksCount(long groupId, long fragmentEntryId) {
+		return fragmentEntryLinkPersistence.countByG_F(
+			groupId, fragmentEntryId);
+	}
+
+	@Override
+	public int getFragmentEntryLinksCount(
+		long groupId, long fragmentEntryId, long classNameId) {
+
+		return fragmentEntryLinkPersistence.countByG_F_C(
+			groupId, fragmentEntryId, classNameId);
 	}
 
 	@Override

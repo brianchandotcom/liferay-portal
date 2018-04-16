@@ -32,7 +32,12 @@ import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -73,6 +78,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -575,6 +581,70 @@ public class AssetCategoriesDisplayContext {
 		return _selectCategoryURL;
 	}
 
+	public List<DropdownItem> getVocabulariesActionItemsDropdownItems() {
+		return new DropdownItemList(_request) {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							"javascript:" + _renderResponse.getNamespace() +
+								"deleteSelectedVocabularies();");
+						dropdownItem.setIcon("trash");
+						dropdownItem.setLabel("delete");
+						dropdownItem.setQuickAction(true);
+					});
+			}
+		};
+	}
+
+	public String getVocabulariesClearResultsURL() {
+		PortletURL clearResultsURL = _renderResponse.createRenderURL();
+
+		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+
+		return clearResultsURL.toString();
+	}
+
+	public CreationMenu getVocabulariesCreationMenu() {
+		return new CreationMenu(_request) {
+			{
+				addPrimaryDropdownItem(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							_renderResponse.createRenderURL(), "mvcPath",
+							"/edit_vocabulary.jsp");
+						dropdownItem.setLabel("add-vocabulary");
+					});
+			}
+		};
+	}
+
+	public List<DropdownItem> getVocabulariesFilterItemsDropdownItems() {
+		return new DropdownItemList(_request) {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getVocabulariesFilterNavigationDropdownItems());
+						dropdownGroupItem.setLabel("filter-by-navigation");
+					});
+
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getVocabulariesOrderByDropdownItems());
+						dropdownGroupItem.setLabel("order-by");
+					});
+			}
+		};
+	}
+
+	public String getVocabulariesSearchActionURL() {
+		PortletURL searchActionURL = _renderResponse.createRenderURL();
+
+		return searchActionURL.toString();
+	}
+
 	public SearchContainer getVocabulariesSearchContainer()
 		throws PortalException {
 
@@ -673,6 +743,39 @@ public class AssetCategoriesDisplayContext {
 		_vocabulariesSearchContainer = vocabulariesSearchContainer;
 
 		return _vocabulariesSearchContainer;
+	}
+
+	public String getVocabulariesSortingURL() {
+		PortletURL sortingURL = _renderResponse.createRenderURL();
+
+		sortingURL.setParameter(
+			"orderByType",
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
+
+		return sortingURL.toString();
+	}
+
+	public int getVocabulariesTotalItems() throws PortalException {
+		SearchContainer vocabulariesSearchContainer =
+			getVocabulariesSearchContainer();
+
+		return vocabulariesSearchContainer.getTotal();
+	}
+
+	public List<ViewTypeItem> getVocabulariesViewTypeItems() {
+		PortletURL portletURL = _renderResponse.createActionURL();
+
+		portletURL.setParameter(
+			ActionRequest.ACTION_NAME, "changeDisplayStyle");
+		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(_request));
+
+		return new ViewTypeItemList(_request, portletURL, getDisplayStyle()) {
+			{
+				addCardViewTypeItem();
+				addListViewTypeItem();
+				addTableViewTypeItem();
+			}
+		};
 	}
 
 	public AssetVocabulary getVocabulary() throws PortalException {
@@ -862,6 +965,32 @@ public class AssetCategoriesDisplayContext {
 		}
 
 		return false;
+	}
+
+	private List<DropdownItem> _getVocabulariesFilterNavigationDropdownItems() {
+		return new DropdownItemList(_request) {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(true);
+						dropdownItem.setHref(_renderResponse.createRenderURL());
+						dropdownItem.setLabel("all");
+					});
+			}
+		};
+	}
+
+	private List<DropdownItem> _getVocabulariesOrderByDropdownItems() {
+		return new DropdownItemList(_request) {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(true);
+						dropdownItem.setHref(_renderResponse.createRenderURL());
+						dropdownItem.setLabel("create-date");
+					});
+			}
+		};
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

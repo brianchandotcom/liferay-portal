@@ -33,3 +33,19 @@ portletDisplay.setTitle(titleSB.toString());
 portletDisplay.setURLBack(ParamUtil.getString(request, "redirect"));
 portletDisplay.setShowBackIcon(true);
 %>
+
+<clay:management-toolbar
+	actionItems="<%= fragmentEntryLinkDisplayContext.getActionItemsDropdownItemList() %>"
+	clearResultsURL="<%= fragmentEntryLinkDisplayContext.getClearResultsURL() %>"
+	componentId="fragmentEntryLinksManagementToolbar"
+	disabled="<%= fragmentEntry.getUsageCount() > 0 %>"
+	namespace="<%= renderResponse.getNamespace() %>"
+	searchActionURL="<%= fragmentEntryLinkDisplayContext.getClearResultsURL() %>"
+	searchContainerId="fragmentEntryLinks"
+	searchFormName="searchFm"
+	showCreationMenu="<%= false %>"
+	showSearch="<%= true %>"
+	sortingOrder="<%= fragmentEntryLinkDisplayContext.getOrderByType() %>"
+	sortingURL="<%= fragmentEntryLinkDisplayContext.getSortingURL() %>"
+	totalItems="<%= fragmentEntry.getUsageCount() %>"
+/>

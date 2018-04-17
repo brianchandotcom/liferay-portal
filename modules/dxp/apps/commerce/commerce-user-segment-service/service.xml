@@ -81,5 +81,6 @@
 			<finder-column name="groupId" />
 			<finder-column name="active" />
 		</finder>
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
 </service-builder>

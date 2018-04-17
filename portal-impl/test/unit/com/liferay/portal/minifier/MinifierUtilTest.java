@@ -93,4 +93,16 @@ public class MinifierUtilTest extends Mockito {
 			minifiedCss);
 	}
 
+	@Test
+	public void testProcessMinifiedCssWithDataImageUrl() {
+		String minifiedCss = MinifierUtil.minifyCss(
+			"background-image: url(\"data:image/svg+xml;charset=utf8,%3Csvg " +
+				"xmlns='http://www.w3.org/2000/svg');");
+
+		Assert.assertEquals(
+			"background-image: url(\"data:image/svg+xml;charset=utf8,%3Csvg " +
+				"xmlns='http://www.w3.org/2000/svg');",
+			minifiedCss);
+	}
+
 }

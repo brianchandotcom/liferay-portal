@@ -73,17 +73,9 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 
 						<liferay-ui:search-container-column-text
 							cssClass="table-cell-expand"
-							name="data-to-export"
-						>
-							<c:choose>
-								<c:when test="<%= uadApplicationExportDisplay.getDataCount() > 0 %>">
-									<liferay-ui:message key="yes" />
-								</c:when>
-								<c:otherwise>
-									<liferay-ui:message key="no" />
-								</c:otherwise>
-							</c:choose>
-						</liferay-ui:search-container-column-text>
+							name="items"
+							value="<%= String.valueOf(uadApplicationExportDisplay.getDataCount()) %>"
+						/>
 
 						<%
 						Format dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("yyyy.MM.dd - hh:mm a", locale, themeDisplay.getTimeZone());

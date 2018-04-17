@@ -97,7 +97,7 @@ public class OAuth2ProviderEndpointConfigurationsPublisher {
 			ConfigurationAdmin configurationAdmin, String contextPath)
 		throws InvalidSyntaxException, IOException {
 
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(4);
 
 		sb.append("(&(jaxRsApplicationFilterStrings=");
 
@@ -127,8 +127,7 @@ public class OAuth2ProviderEndpointConfigurationsPublisher {
 
 		dictionary.put("contextPaths", new String[] {contextPath});
 		dictionary.put(
-			"jaxRsApplicationFilterStrings",
-			new String[] {filterString});
+			"jaxRsApplicationFilterStrings", new String[] {filterString});
 
 		restConfiguration.update(dictionary);
 	}

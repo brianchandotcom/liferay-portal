@@ -215,9 +215,30 @@ public class LiferayTokenIntrospectionService extends AbstractTokenService {
 
 		TokenIntrospection tokenIntrospection = new TokenIntrospection(true);
 
+		List<String> audiences = serverAccessToken.getAudiences();
+
+		if ((audiences != null) && !audiences.isEmpty()) {
+			tokenIntrospection.setAud(audiences);
+		}
+
 		Client client = serverAccessToken.getClient();
 
 		tokenIntrospection.setClientId(client.getClientId());
+
+		tokenIntrospection.setExp(
+			serverAccessToken.getIssuedAt() + serverAccessToken.getExpiresIn());
+
+		if (serverAccessToken.getExtraProperties() != null) {
+			Map<String, String> extensions = tokenIntrospection.getExtensions();
+
+			extensions.putAll(serverAccessToken.getExtraProperties());
+		}
+
+		if (serverAccessToken.getIssuer() != null) {
+			tokenIntrospection.setIss(serverAccessToken.getIssuer());
+		}
+
+		tokenIntrospection.setIat(serverAccessToken.getIssuedAt());
 
 		List<OAuthPermission> oAuthPermissions = serverAccessToken.getScopes();
 
@@ -233,28 +254,7 @@ public class LiferayTokenIntrospectionService extends AbstractTokenService {
 			tokenIntrospection.setSub(userSubject.getId());
 		}
 
-		List<String> audiences = serverAccessToken.getAudiences();
-
-		if ((audiences != null) && !audiences.isEmpty()) {
-			tokenIntrospection.setAud(audiences);
-		}
-
-		if (serverAccessToken.getIssuer() != null) {
-			tokenIntrospection.setIss(serverAccessToken.getIssuer());
-		}
-
-		tokenIntrospection.setIat(serverAccessToken.getIssuedAt());
-
-		tokenIntrospection.setExp(
-			serverAccessToken.getIssuedAt() + serverAccessToken.getExpiresIn());
-
 		tokenIntrospection.setTokenType(serverAccessToken.getTokenType());
-
-		if (serverAccessToken.getExtraProperties() != null) {
-			Map<String, String> extensions = tokenIntrospection.getExtensions();
-
-			extensions.putAll(serverAccessToken.getExtraProperties());
-		}
 
 		return tokenIntrospection;
 	}

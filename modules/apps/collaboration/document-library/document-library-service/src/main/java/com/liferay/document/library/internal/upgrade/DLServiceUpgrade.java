@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Miguel Pastor
  */
 @Component(immediate = true, service = UpgradeStepRegistrator.class)
-public class DLServiceUpgradeProcess implements UpgradeStepRegistrator {
+public class DLServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {

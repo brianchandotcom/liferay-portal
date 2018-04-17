@@ -59,7 +59,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The HTML input's ID. It is added to the portlet ID when used as the DOM ID.</description>
+			<description>The HTML input's ID. It is added to the portlet ID when creating the DOM ID.</description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -308,7 +308,7 @@
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.PopoverTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>The popover's ID. It is added to the portlet ID for creating the DOM ID.</description>
+			<description>The popover's ID. It is added to the portlet ID when creating the DOM ID.</description>
 			<name>id</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

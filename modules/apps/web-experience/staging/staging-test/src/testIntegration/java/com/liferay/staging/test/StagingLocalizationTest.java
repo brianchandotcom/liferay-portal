@@ -62,6 +62,7 @@ import java.util.Set;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -80,12 +81,15 @@ public class StagingLocalizationTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUpClass() throws Exception {
 		_availableLocales = LanguageUtil.getAvailableLocales(
 			TestPropsValues.getCompanyId());
 		_defaultLocale = LocaleThreadLocal.getDefaultLocale();
+	}
 
+	@Before
+	public void setUp() throws Exception {
 		CompanyTestUtil.resetCompanyLocales(
 			TestPropsValues.getCompanyId(), _locales, Locale.US);
 
@@ -302,8 +306,9 @@ public class StagingLocalizationTest {
 		return nameMap;
 	}
 
-	private Set<Locale> _availableLocales;
-	private Locale _defaultLocale;
+	private static Set<Locale> _availableLocales;
+	private static Locale _defaultLocale;
+
 	private final List<Locale> _locales = Arrays.asList(
 		LocaleUtil.US, LocaleUtil.GERMANY, LocaleUtil.SPAIN);
 

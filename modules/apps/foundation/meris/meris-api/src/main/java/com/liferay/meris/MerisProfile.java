@@ -19,15 +19,37 @@ import aQute.bnd.annotation.ProviderType;
 import java.util.Map;
 
 /**
+ * Represents a profile.
+ *
  * @author Eduardo Garcia
+ * @review
  */
 @ProviderType
 public interface MerisProfile {
 
+	/**
+	 * Returns the value of a profile attribute
+	 *
+	 * @param  key the key of the profile attribute
+	 * @return the value of a profile attribute
+	 * @review
+	 */
 	public Object getAttribute(String key);
 
+	/**
+	 * Returns the profile attributes
+	 *
+	 * @return the profile attributes
+	 * @review
+	 */
 	public Map<String, Object> getAttributes();
 
+	/**
+	 * Returns the unique ID of the profile
+	 *
+	 * @return
+	 * @review
+	 */
 	public String getMerisProfileId();
 
 }

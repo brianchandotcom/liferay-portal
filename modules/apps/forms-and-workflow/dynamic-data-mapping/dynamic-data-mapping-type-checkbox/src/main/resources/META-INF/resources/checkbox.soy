@@ -14,7 +14,6 @@
 	{@param label: string}
 	{@param name: string}
 	{@param pathThemeImages: string}
-	{@param predefinedValue: bool}
 	{@param readOnly: bool}
 	{@param showAsSwitcher: bool}
 	{@param showLabel: bool}
@@ -23,13 +22,11 @@
 	{@param? required: bool}
 	{@param? tip: string}
 
-	{let $displayValue: $value ? $value : $predefinedValue /}
-
 	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-checkbox" data-fieldname="{$name}">
 		{if $showAsSwitcher}
-			<label aria-checked="{$displayValue ? 'true' : 'false'}" for="{$name}" role="checkbox">
+			<label aria-checked="{$value ? 'true' : 'false'}" for="{$name}" role="checkbox">
 				<input class="toggle-switch"
-					{if $displayValue}checked{/if}
+					{if $value}checked{/if}
 					{if $readOnly}disabled{/if}
 					id="{$name}"
 					name="{$name}"
@@ -59,12 +56,12 @@
 				{/if}
 			{/if}
 		{else}
-			<div class="custom-control custom-checkbox">
+			<div class="custom-checkbox custom-control">
 				{if $showLabel}
 					<label for="{$name}">
 				{/if}
 
-				<input {if $displayValue}checked{/if}
+				<input {if $value}checked{/if}
 					{if $readOnly}disabled{/if}
 					class="custom-control-input"
 					id="{$name}"
@@ -98,10 +95,10 @@
 			{/if}
 		{/if}
 
-		{if not $displayValue}
+		{if not $value}
 			{call .hidden_input}
-				{param displayValue: $displayValue /}
 				{param name: $name /}
+				{param value: $value /}
 			{/call}
 		{/if}
 	</div>
@@ -113,11 +110,11 @@
  */
 {template .hidden_input}
 	{@param name: string}
-	{@param displayValue: bool}
+	{@param value: bool}
 
 	<input id="{$name}"
 		name="{$name}"
 		type="hidden"
-		value="{$displayValue ? 'true' : 'false'}"
+		value="{$value ? 'true' : 'false'}"
 	/>
 {/template}

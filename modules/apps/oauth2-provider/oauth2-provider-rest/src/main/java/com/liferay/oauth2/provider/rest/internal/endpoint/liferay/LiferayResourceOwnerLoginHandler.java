@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.security.auth.Authenticator;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Collections;
@@ -70,7 +71,7 @@ public class LiferayResourceOwnerLoginHandler
 			}
 			else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
 				authResult = _userLocalService.authenticateByUserId(
-					company.getCompanyId(), Long.parseLong(login), password,
+					company.getCompanyId(), GetterUtil.getLong(login), password,
 					headerMap, parameterMap, resultsMap);
 			}
 		}
@@ -105,13 +106,13 @@ public class LiferayResourceOwnerLoginHandler
 			User user = authenticateUser(login, password);
 
 			UserSubject userSubject = new UserSubject(
-				user.getLogin(), Long.toString(user.getUserId()));
+				user.getLogin(), GetterUtil.getString(user.getUserId()));
 
 			Map<String, String> properties = userSubject.getProperties();
 
 			properties.put(
 				OAuth2ProviderRestEndpointConstants.COMPANY_ID,
-				Long.toString(user.getCompanyId()));
+				GetterUtil.getString(user.getCompanyId()));
 
 			return userSubject;
 		}

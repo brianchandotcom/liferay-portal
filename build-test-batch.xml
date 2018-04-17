@@ -3430,17 +3430,6 @@ information. Make sure to commit in all build services results.
 	<target name="source-format-current-branch-jdk8">
 		<run-batch-test>
 			<test-action>
-				<antcall target="compile" />
-
-				<antcall target="install-portal-snapshots" />
-
-				<if>
-					<available file="modules/util/source-formatter" />
-					<then>
-						<gradle-execute dir="modules/util/source-formatter" task="deploy" />
-					</then>
-				</if>
-
 				<exec executable="git" failonerror="true" outputproperty="git.diff">
 					<arg value="diff" />
 					<arg value="--name-only" />
@@ -3453,6 +3442,17 @@ information. Make sure to commit in all build services results.
 					<contains string="${git.diff}" substring="modules${file.separator}util${file.separator}source-formatter" />
 					<then>
 						<var name="format.current.branch" value="false" />
+
+						<antcall target="compile" />
+
+						<antcall target="install-portal-snapshots" />
+
+						<if>
+							<available file="modules/util/source-formatter" />
+							<then>
+								<gradle-execute dir="modules/util/source-formatter" task="deploy" />
+							</then>
+						</if>
 					</then>
 				</if>
 

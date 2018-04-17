@@ -54,7 +54,7 @@ public class LiferayResourceOwnerGrantHandlerRegistrator
 		_resourceOwnerGrantHandler = new ResourceOwnerGrantHandler();
 
 		_resourceOwnerGrantHandler.setDataProvider(_liferayOAuthDataProvider);
-		_resourceOwnerGrantHandler.setLoginHandler(_liferayLoginHandler);
+		_resourceOwnerGrantHandler.setLoginHandler(_resourceOwnerLoginHandler);
 	}
 
 	@Override
@@ -85,7 +85,7 @@ public class LiferayResourceOwnerGrantHandlerRegistrator
 			return false;
 		}
 
-		UserSubject userSubject = _liferayLoginHandler.createSubject(
+		UserSubject userSubject = _resourceOwnerLoginHandler.createSubject(
 			username, password);
 
 		OAuth2Application oAuth2Application =
@@ -105,12 +105,12 @@ public class LiferayResourceOwnerGrantHandlerRegistrator
 		LiferayResourceOwnerGrantHandlerRegistrator.class);
 
 	@Reference
-	private ResourceOwnerLoginHandler _liferayLoginHandler;
-
-	@Reference
 	private LiferayOAuthDataProvider _liferayOAuthDataProvider;
 
 	private OAuth2ProviderConfiguration _oAuth2ProviderConfiguration;
 	private ResourceOwnerGrantHandler _resourceOwnerGrantHandler;
+
+	@Reference
+	private ResourceOwnerLoginHandler _resourceOwnerLoginHandler;
 
 }

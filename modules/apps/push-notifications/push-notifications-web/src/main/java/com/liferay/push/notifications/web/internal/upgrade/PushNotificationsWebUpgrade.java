@@ -27,7 +27,7 @@ public class PushNotificationsWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.push.notifications.web", "0.0.0", "1.0.0",
+			"0.0.0", "1.0.0",
 			new com.liferay.push.notifications.web.internal.upgrade.v1_0_0.
 				UpgradePortletId());
 	}

@@ -30,7 +30,7 @@ LayoutPageTemplateEntry layoutPageTemplateEntry = (LayoutPageTemplateEntry)row.g
 	showWhenSingleIcon="<%= true %>"
 >
 	<c:if test="<%= LayoutPageTemplateEntryPermission.contains(permissionChecker, layoutPageTemplateEntry, ActionKeys.UPDATE) %>">
-		<portlet:renderURL var="editLayoutPageTemplateEntryURL">
+		<portlet:renderURL var="editDisplayPageURL">
 			<portlet:param name="mvcPath" value="/edit_layout_page_template_entry.jsp" />
 			<portlet:param name="layoutPageTemplateEntryId" value="<%= String.valueOf(layoutPageTemplateEntry.getLayoutPageTemplateEntryId()) %>" />
 			<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()) %>" />
@@ -38,27 +38,28 @@ LayoutPageTemplateEntry layoutPageTemplateEntry = (LayoutPageTemplateEntry)row.g
 
 		<liferay-ui:icon
 			message="edit"
-			url="<%= editLayoutPageTemplateEntryURL %>"
+			url="<%= editDisplayPageURL %>"
 		/>
 	</c:if>
 
 	<c:if test="<%= LayoutPageTemplateEntryPermission.contains(permissionChecker, layoutPageTemplateEntry, ActionKeys.UPDATE) %>">
-		<portlet:actionURL name="/layout/update_layout_page_template_entry" var="updateLayoutPageTemplateEntryURL">
+		<portlet:actionURL name="/layout/update_layout_page_template_entry" var="updateDisplayPageURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()) %>" />
 			<portlet:param name="layoutPageTemplateEntryId" value="<%= String.valueOf(layoutPageTemplateEntry.getLayoutPageTemplateEntryId()) %>" />
 		</portlet:actionURL>
 
 		<%
-		Map<String, Object> updateLayoutPageTemplateEntryData = new HashMap<String, Object>();
+		Map<String, Object> updateDisplayPageData = new HashMap<String, Object>();
 
-		updateLayoutPageTemplateEntryData.put("form-submit-url", updateLayoutPageTemplateEntryURL.toString());
-		updateLayoutPageTemplateEntryData.put("id-field-value", layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
-		updateLayoutPageTemplateEntryData.put("main-field-value", layoutPageTemplateEntry.getName());
+		updateDisplayPageData.put("form-submit-url", updateDisplayPageURL.toString());
+		updateDisplayPageData.put("id-field-value", layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+		updateDisplayPageData.put("main-field-value", layoutPageTemplateEntry.getName());
 		%>
 
 		<liferay-ui:icon
-			cssClass='<%= renderResponse.getNamespace() + "update-layout-page-template-action-option" %>'
-			data="<%= updateLayoutPageTemplateEntryData %>"
+			cssClass='<%= renderResponse.getNamespace() + "update-display-page-action-option" %>'
+			data="<%= updateDisplayPageData %>"
 			message="rename"
 			url="javascript:;"
 		/>
@@ -69,26 +70,26 @@ LayoutPageTemplateEntry layoutPageTemplateEntry = (LayoutPageTemplateEntry)row.g
 			modelResource="<%= LayoutPageTemplateCollection.class.getName() %>"
 			modelResourceDescription="<%= layoutPageTemplateEntry.getName() %>"
 			resourcePrimKey="<%= String.valueOf(layoutPageTemplateEntry.getLayoutPageTemplateEntryId()) %>"
-			var="layoutPageTemplateEntryPermissionsURL"
+			var="displayPagePermissionsURL"
 			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 		/>
 
 		<liferay-ui:icon
 			message="permissions"
 			method="get"
-			url="<%= layoutPageTemplateEntryPermissionsURL %>"
+			url="<%= displayPagePermissionsURL %>"
 			useDialog="<%= true %>"
 		/>
 	</c:if>
 
 	<c:if test="<%= LayoutPageTemplateEntryPermission.contains(permissionChecker, layoutPageTemplateEntry, ActionKeys.DELETE) %>">
-		<portlet:actionURL name="/layout/delete_layout_page_template_entry" var="deleteLayoutPageTemplateEntryURL">
+		<portlet:actionURL name="/layout/delete_layout_page_template_entry" var="deleteDisplayPageURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="layoutPageTemplateEntryId" value="<%= String.valueOf(layoutPageTemplateEntry.getLayoutPageTemplateEntryId()) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete
-			url="<%= deleteLayoutPageTemplateEntryURL %>"
+			url="<%= deleteDisplayPageURL %>"
 		/>
 	</c:if>
 </liferay-ui:icon-menu>

@@ -45,75 +45,78 @@ DDMFormInstance selFormInstance = DDMFormInstanceServiceUtil.fetchFormInstance(f
 			</div>
 
 			<aui:fieldset>
-				<liferay-ui:search-container
-					emptyResultsMessage="no-forms-were-found"
-					iteratorURL="<%= configurationRenderURL %>"
-					total="<%= DDMFormInstanceServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, keywords) %>"
-				>
-					<div class="form-search input-append">
-						<liferay-ui:input-search
-							autoFocus="<%= true %>"
-							placeholder='<%= LanguageUtil.get(request, "keywords") %>'
-						/>
-					</div>
-
-					<liferay-ui:search-container-results
-						results="<%= DDMFormInstanceServiceUtil.search(company.getCompanyId(), scopeGroupId, keywords, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
-					/>
-
-					<liferay-ui:search-container-row
-						className="com.liferay.dynamic.data.mapping.model.DDMFormInstance"
-						escapedModel="<%= true %>"
-						keyProperty="formInstanceId"
-						modelVar="formInstance"
+				<div class="container-view">
+					<liferay-ui:search-container
+						cssClass="sheet sheet-lg"
+						emptyResultsMessage="no-forms-were-found"
+						iteratorURL="<%= configurationRenderURL %>"
+						total="<%= DDMFormInstanceServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, keywords) %>"
 					>
+						<div class="form-search input-append">
+							<liferay-ui:input-search
+								autoFocus="<%= true %>"
+								placeholder='<%= LanguageUtil.get(request, "keywords") %>'
+							/>
+						</div>
 
-						<%
-						StringBundler sb = new StringBundler(7);
-
-						sb.append("javascript:");
-						sb.append(renderResponse.getNamespace());
-						sb.append("selectFormInstance('");
-						sb.append(formInstance.getFormInstanceId());
-						sb.append("','");
-						sb.append(HtmlUtil.escapeJS(formInstance.getName(locale)));
-						sb.append("');");
-
-						String rowURL = sb.toString();
-						%>
-
-						<liferay-ui:search-container-column-text
-							href="<%= rowURL %>"
-							name="name"
-							orderable="<%= false %>"
-							value="<%= formInstance.getName(locale) %>"
+						<liferay-ui:search-container-results
+							results="<%= DDMFormInstanceServiceUtil.search(company.getCompanyId(), scopeGroupId, keywords, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
 						/>
 
-						<liferay-ui:search-container-column-text
-							buffer="buffer"
-							href="<%= rowURL %>"
-							name="description"
-							orderable="<%= false %>"
+						<liferay-ui:search-container-row
+							className="com.liferay.dynamic.data.mapping.model.DDMFormInstance"
+							escapedModel="<%= true %>"
+							keyProperty="formInstanceId"
+							modelVar="formInstance"
 						>
 
 							<%
-							buffer.append(StringUtil.shorten(formInstance.getDescription(locale), 100));
+							StringBundler sb = new StringBundler(7);
+
+							sb.append("javascript:");
+							sb.append(renderResponse.getNamespace());
+							sb.append("selectFormInstance('");
+							sb.append(formInstance.getFormInstanceId());
+							sb.append("','");
+							sb.append(HtmlUtil.escapeJS(formInstance.getName(locale)));
+							sb.append("');");
+
+							String rowURL = sb.toString();
 							%>
 
-						</liferay-ui:search-container-column-text>
+							<liferay-ui:search-container-column-text
+								href="<%= rowURL %>"
+								name="name"
+								orderable="<%= false %>"
+								value="<%= formInstance.getName(locale) %>"
+							/>
 
-						<liferay-ui:search-container-column-date
-							href="<%= rowURL %>"
-							name="modified-date"
-							orderable="<%= false %>"
-							value="<%= formInstance.getModifiedDate() %>"
-						/>
-					</liferay-ui:search-container-row>
+							<liferay-ui:search-container-column-text
+								buffer="buffer"
+								href="<%= rowURL %>"
+								name="description"
+								orderable="<%= false %>"
+							>
 
-					<div class="separator"><!-- --></div>
+								<%
+								buffer.append(StringUtil.shorten(formInstance.getDescription(locale), 100));
+								%>
 
-					<liferay-ui:search-iterator />
-				</liferay-ui:search-container>
+							</liferay-ui:search-container-column-text>
+
+							<liferay-ui:search-container-column-date
+								href="<%= rowURL %>"
+								name="modified-date"
+								orderable="<%= false %>"
+								value="<%= formInstance.getModifiedDate() %>"
+							/>
+						</liferay-ui:search-container-row>
+
+						<div class="separator"><!-- --></div>
+
+						<liferay-ui:search-iterator />
+					</liferay-ui:search-container>
+				</div>
 			</aui:fieldset>
 		</div>
 	</div>

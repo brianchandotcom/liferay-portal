@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -107,6 +108,10 @@ public class VariableNameCheck extends BaseCheck {
 	}
 
 	private void _checkTypo(DetailAST detailAST, String name) {
+		if (StringUtil.isUpperCase(name)) {
+			return;
+		}
+
 		DetailAST typeAST = detailAST.findFirstToken(TokenTypes.TYPE);
 
 		DetailAST firstChildAST = typeAST.getFirstChild();
@@ -123,53 +128,93 @@ public class VariableNameCheck extends BaseCheck {
 			return;
 		}
 
-		String s1 = StringUtil.toLowerCase(_trimTrailingDigits(typeName));
+		String nameTrailingDigits = _getTrailingDigits(name);
 
-		String originalName = name;
+		String trimmedName = StringUtil.replaceLast(
+			name, nameTrailingDigits, StringPool.BLANK);
 
-		boolean leadingUnderLine = false;
+		String leadingUnderline = StringPool.BLANK;
 
 		if (name.startsWith(StringPool.UNDERLINE)) {
-			leadingUnderLine = true;
+			leadingUnderline = StringPool.UNDERLINE;
 
-			name = name.substring(1);
+			trimmedName = trimmedName.substring(1);
 		}
 
-		String s2 = StringUtil.toLowerCase(_trimTrailingDigits(name));
+		String typeNameTrailingDigits = _getTrailingDigits(typeName);
 
-		if (s1.equals(s2)) {
+		String trimmedTypeName = StringUtil.replaceLast(
+			typeName, typeNameTrailingDigits, StringPool.BLANK);
+
+		String expectedName = _getExpectedVariableName(trimmedTypeName);
+
+		if (StringUtil.equals(trimmedName, expectedName)) {
 			return;
 		}
 
-		if ((s1.charAt(0) != s2.charAt(0)) ||
-			(s1.charAt(s1.length() - 1) != s2.charAt(s2.length() - 1))) {
+		if (StringUtil.equalsIgnoreCase(trimmedName, trimmedTypeName)) {
+			for (int i = expectedName.length() - 1; i >= 0; i--) {
+				char c1 = trimmedName.charAt(i);
+
+				if (c1 == expectedName.charAt(i)) {
+					continue;
+				}
+
+				if (i < (expectedName.length() - 1)) {
+					char c2 = trimmedName.charAt(i + 1);
+
+					if (Character.isUpperCase(c1) &&
+						(Character.isDigit(c2) || Character.isUpperCase(c2))) {
+
+						return;
+					}
+				}
+			}
+
+			log(
+				detailAST.getLineNo(), _MSG_TYPO_VARIABLE, name,
+				StringBundler.concat(
+					leadingUnderline, expectedName, nameTrailingDigits));
 
 			return;
 		}
 
-		int min = Math.min(s1.length(), s2.length());
-		int diff = Math.abs(s1.length() - s2.length());
+		trimmedName = StringUtil.toLowerCase(trimmedName);
+		trimmedTypeName = StringUtil.toLowerCase(trimmedTypeName);
+
+		if ((trimmedName.charAt(0) != trimmedTypeName.charAt(0)) ||
+			(trimmedName.charAt(trimmedName.length() - 1) !=
+				trimmedTypeName.charAt(trimmedTypeName.length() - 1))) {
+
+			return;
+		}
+
+		int min = Math.min(trimmedName.length(), trimmedTypeName.length());
+		int diff = Math.abs(trimmedName.length() - trimmedTypeName.length());
 
 		if ((min < 5) || (diff > 1)) {
 			return;
 		}
 
-		int i = StringUtil.startsWithWeight(s1, s2);
+		int i = StringUtil.startsWithWeight(trimmedName, trimmedTypeName);
 
-		s1 = s1.substring(i);
-		s2 = s2.substring(i);
+		trimmedName = trimmedName.substring(i);
 
-		if (s2.startsWith(StringPool.UNDERLINE)) {
+		if (trimmedName.startsWith(StringPool.UNDERLINE)) {
 			return;
 		}
 
+		trimmedTypeName = trimmedTypeName.substring(i);
+
 		for (int j = 1;; j++) {
-			if ((j > s1.length()) || (j > s2.length())) {
+			if ((j > trimmedName.length()) || (j > trimmedTypeName.length())) {
 				break;
 			}
 
-			if (s1.charAt(s1.length() - j) != s2.charAt(s2.length() - j)) {
-				if (!_containSameCharacters(s1, s2)) {
+			if (trimmedName.charAt(trimmedName.length() - j) !=
+					trimmedTypeName.charAt(trimmedTypeName.length() - j)) {
+
+				if (!_containSameCharacters(trimmedName, trimmedTypeName)) {
 					return;
 				}
 
@@ -177,15 +222,10 @@ public class VariableNameCheck extends BaseCheck {
 			}
 		}
 
-		String expectedName = _getExpectedVariableName(typeName);
-
-		if (leadingUnderLine) {
-			expectedName = StringPool.UNDERLINE + expectedName;
-		}
-
 		log(
-			detailAST.getLineNo(), _MSG_TYPO_VARIABLE, originalName,
-			expectedName);
+			detailAST.getLineNo(), _MSG_TYPO_VARIABLE, name,
+			_getExpectedVariableName(
+				typeName, leadingUnderline, nameTrailingDigits));
 	}
 
 	private boolean _classHasVariableWithName(
@@ -246,6 +286,14 @@ public class VariableNameCheck extends BaseCheck {
 			return StringUtil.toLowerCase(typeName);
 		}
 
+		if (typeName.startsWith("IDf")) {
+			return StringUtil.replaceFirst(typeName, "IDf", "idf");
+		}
+
+		if (typeName.startsWith("OSGi")) {
+			return StringUtil.replaceFirst(typeName, "OSGi", "osgi");
+		}
+
 		for (int i = 0; i < typeName.length(); i++) {
 			char c = typeName.charAt(i);
 
@@ -269,6 +317,29 @@ public class VariableNameCheck extends BaseCheck {
 		return StringUtil.toLowerCase(typeName);
 	}
 
+	private String _getExpectedVariableName(
+		String typeName, String leadingUnderline, String trailingDigits) {
+
+		return StringBundler.concat(
+			leadingUnderline, _getExpectedVariableName(typeName),
+			trailingDigits);
+	}
+
+	private String _getTrailingDigits(String s) {
+		String digits = StringPool.BLANK;
+
+		for (int i = s.length() - 1; i >= 0; i--) {
+			if (Character.isDigit(s.charAt(i))) {
+				digits = s.charAt(i) + digits;
+			}
+			else {
+				return digits;
+			}
+		}
+
+		return digits;
+	}
+
 	private boolean _isBooleanType(DetailAST typeAST) {
 		DetailAST childAST = typeAST.getFirstChild();
 
@@ -289,16 +360,6 @@ public class VariableNameCheck extends BaseCheck {
 		}
 
 		return false;
-	}
-
-	private String _trimTrailingDigits(String s) {
-		for (int i = s.length() - 1; i >= 0; i--) {
-			if (!Character.isDigit(s.charAt(i))) {
-				return s.substring(0, i + 1);
-			}
-		}
-
-		return StringPool.BLANK;
 	}
 
 	private static final String[][] _ALL_CAPS_STRINGS = {

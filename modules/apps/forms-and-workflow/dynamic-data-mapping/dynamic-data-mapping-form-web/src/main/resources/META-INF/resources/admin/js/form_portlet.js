@@ -502,7 +502,7 @@ AUI.add(
 
 						var defaultLanguageId = instance.get('defaultLanguageId');
 
-						if (editingLanguageId != defaultLanguageId) {
+						if (editingLanguageId !== defaultLanguageId) {
 							instance.one('.lfr-ddm-plus-button').addClass('hide');
 						}
 						else {

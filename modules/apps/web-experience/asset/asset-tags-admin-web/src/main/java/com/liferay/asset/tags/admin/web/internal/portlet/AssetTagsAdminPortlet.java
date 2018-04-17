@@ -15,6 +15,7 @@
 package com.liferay.asset.tags.admin.web.internal.portlet;
 
 import com.liferay.asset.kernel.exception.AssetTagException;
+import com.liferay.asset.kernel.exception.AssetTagNameException;
 import com.liferay.asset.kernel.exception.DuplicateTagException;
 import com.liferay.asset.kernel.exception.NoSuchTagException;
 import com.liferay.asset.kernel.model.AssetTag;
@@ -187,6 +188,7 @@ public class AssetTagsAdminPortlet extends MVCPortlet {
 	@Override
 	protected boolean isSessionErrorException(Throwable cause) {
 		if (cause instanceof AssetTagException ||
+			cause instanceof AssetTagNameException ||
 			cause instanceof DuplicateTagException ||
 			cause instanceof NoSuchTagException ||
 			cause instanceof PrincipalException) {

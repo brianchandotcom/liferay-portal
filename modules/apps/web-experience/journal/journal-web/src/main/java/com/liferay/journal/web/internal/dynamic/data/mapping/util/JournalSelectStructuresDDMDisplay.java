@@ -16,10 +16,14 @@ package com.liferay.journal.web.internal.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
+import com.liferay.dynamic.data.mapping.util.DDMDisplayTabItem;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.web.dynamic.data.mapping.util.JournalDDMDisplay;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.util.Portal;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,6 +40,15 @@ public class JournalSelectStructuresDDMDisplay extends JournalDDMDisplay {
 	@Override
 	public String getPortletId() {
 		return JournalPortletKeys.JOURNAL + ".selectStructure";
+	}
+
+	@Override
+	public List<DDMDisplayTabItem> getTabItems() {
+		List<DDMDisplayTabItem> tabItems = new ArrayList<>();
+
+		tabItems.add(getTemplatesTabItem());
+
+		return tabItems;
 	}
 
 	@Override

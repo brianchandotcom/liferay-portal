@@ -25,6 +25,7 @@ import com.liferay.fragment.util.comparator.FragmentEntryNameComparator;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -93,7 +94,7 @@ public class FragmentItemSelectorViewDisplayContext {
 		return _fragmentCollectionId;
 	}
 
-	public String getFragmentCollectionsRedirect() throws PortletException {
+	public String getFragmentCollectionsRedirect() {
 		PortletURL backURL = getPortletURL();
 
 		backURL.setParameter("fragmentCollectionId", "0");
@@ -101,9 +102,7 @@ public class FragmentItemSelectorViewDisplayContext {
 		return backURL.toString();
 	}
 
-	public SearchContainer getFragmentCollectionsSearchContainer()
-		throws PortletException {
-
+	public SearchContainer getFragmentCollectionsSearchContainer() {
 		if (_fragmentCollectionsSearchContainer != null) {
 			return _fragmentCollectionsSearchContainer;
 		}
@@ -174,9 +173,7 @@ public class FragmentItemSelectorViewDisplayContext {
 		return fragmentCollection.getName();
 	}
 
-	public SearchContainer getFragmentEntriesSearchContainer()
-		throws PortletException {
-
+	public SearchContainer getFragmentEntriesSearchContainer() {
 		if (_fragmentEntriesSearchContainer != null) {
 			return _fragmentEntriesSearchContainer;
 		}
@@ -271,10 +268,19 @@ public class FragmentItemSelectorViewDisplayContext {
 		return new String[] {"create-date", "name"};
 	}
 
-	public PortletURL getPortletURL() throws PortletException {
-		PortletURL portletURL = PortletURLUtil.clone(
-			_portletURL,
-			PortalUtil.getLiferayPortletResponse(_portletResponse));
+	public PortletURL getPortletURL() {
+		LiferayPortletResponse liferayPortletResponse =
+			PortalUtil.getLiferayPortletResponse(_portletResponse);
+
+		PortletURL portletURL = null;
+
+		try {
+			portletURL = PortletURLUtil.clone(
+				_portletURL, liferayPortletResponse);
+		}
+		catch (PortletException pe) {
+			portletURL = liferayPortletResponse.createRenderURL();
+		}
 
 		String displayStyle = getDisplayStyle();
 

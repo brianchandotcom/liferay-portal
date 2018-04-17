@@ -572,6 +572,7 @@ public class LiferayOAuthDataProvider
 		_codeGrantsPortalCache =
 			(PortalCache<String, ServerAuthorizationCodeGrant>)
 				_multiVMPool.getPortalCache("oauth2-provider-code-grants");
+
 		_oAuth2ProviderConfiguration = ConfigurableUtil.createConfigurable(
 			OAuth2ProviderConfiguration.class, properties);
 	}

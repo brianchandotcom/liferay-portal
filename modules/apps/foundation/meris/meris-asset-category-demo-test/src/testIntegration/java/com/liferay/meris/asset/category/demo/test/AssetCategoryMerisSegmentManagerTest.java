@@ -116,8 +116,8 @@ public class AssetCategoryMerisSegmentManagerTest {
 
 		List<MerisSegment> merisSegments =
 			_merisSegmentManager.getMerisSegments(
-				_merisScopeId, _merisProfileId, _merisSegmentId,
-				new HashMap<>(), 0, 1, merisSegmentNameComparator);
+				_merisScopeId, _merisProfileId, new HashMap<>(), 0, 1,
+				merisSegmentNameComparator);
 
 		Assert.assertFalse(
 			"Meris profile does not contain a meris segment",

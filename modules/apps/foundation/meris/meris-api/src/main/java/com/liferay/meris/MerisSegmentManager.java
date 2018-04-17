@@ -39,9 +39,8 @@ public interface MerisSegmentManager
 		String scopeId, int start, int end, Comparator<S> comparator);
 
 	public List<S> getMerisSegments(
-		String scopeId, String merisProfileId, String merisSegmentId,
-		Map<String, Object> context, int start, int end,
-		Comparator<S> comparator);
+		String scopeId, String merisProfileId, Map<String, Object> context,
+		int start, int end, Comparator<S> comparator);
 
 	public boolean matches(
 		String merisProfileId, String merisSegmentId,

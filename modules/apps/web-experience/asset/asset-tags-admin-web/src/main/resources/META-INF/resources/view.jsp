@@ -28,7 +28,6 @@
 	creationMenu="<%= assetTagsDisplayContext.isShowAddButton() ? assetTagsDisplayContext.getCreationMenu() : null %>"
 	disabled="<%= assetTagsDisplayContext.getTotalItems() == 0 %>"
 	filterItems="<%= assetTagsDisplayContext.getFilterDropdownItems() %>"
-	namespace="<%= renderResponse.getNamespace() %>"
 	searchActionURL="<%= assetTagsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="assetTags"
 	searchFormName="searchFm"

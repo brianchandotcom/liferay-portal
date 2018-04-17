@@ -22,6 +22,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -57,18 +58,29 @@ public class ManagementToolbarTag extends BaseClayTag {
 			setSearchValue(ParamUtil.getString(request, searchInputName));
 		}
 
-		Boolean selectable = (Boolean)context.get("selectable");
+		boolean selectable = GetterUtil.getBoolean(
+			context.get("selectable"), true);
 
-		if (selectable == null) {
-			setSelectable(true);
-		}
+		setSelectable(selectable);
 
-		Boolean showFiltersDoneButton = (Boolean)context.get(
-			"showFiltersDoneButton");
+		boolean showFiltersDoneButton = GetterUtil.getBoolean(
+			context.get("showFiltersDoneButton"));
 
-		if (showFiltersDoneButton == null) {
-			setShowFiltersDoneButton(false);
-		}
+		setShowFiltersDoneButton(showFiltersDoneButton);
+
+		CreationMenu creationMenu = (CreationMenu)context.get("creationMenu");
+
+		boolean showCreationMenu = GetterUtil.getBoolean(
+			context.get("showCreationMenu"), Validator.isNotNull(creationMenu));
+
+		setShowCreationMenu(showCreationMenu);
+
+		String infoPanelId = (String)context.get("infoPanelId");
+
+		boolean showInfoButton = GetterUtil.getBoolean(
+			context.get("showInfoButton"), Validator.isNotNull(infoPanelId));
+
+		setShowInfoButton(showInfoButton);
 
 		return super.doStartTag();
 	}

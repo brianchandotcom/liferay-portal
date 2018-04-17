@@ -34,18 +34,78 @@ portletDisplay.setURLBack(ParamUtil.getString(request, "redirect"));
 portletDisplay.setShowBackIcon(true);
 %>
 
-<clay:management-toolbar
-	actionItems="<%= fragmentEntryLinkDisplayContext.getActionItemsDropdownItemList() %>"
-	clearResultsURL="<%= fragmentEntryLinkDisplayContext.getClearResultsURL() %>"
-	componentId="fragmentEntryLinksManagementToolbar"
-	disabled="<%= fragmentEntry.getUsageCount() > 0 %>"
-	namespace="<%= renderResponse.getNamespace() %>"
-	searchActionURL="<%= fragmentEntryLinkDisplayContext.getClearResultsURL() %>"
-	searchContainerId="fragmentEntryLinks"
-	searchFormName="searchFm"
-	showCreationMenu="<%= false %>"
-	showSearch="<%= true %>"
-	sortingOrder="<%= fragmentEntryLinkDisplayContext.getOrderByType() %>"
-	sortingURL="<%= fragmentEntryLinkDisplayContext.getSortingURL() %>"
-	totalItems="<%= fragmentEntry.getUsageCount() %>"
-/>
+<div class="container-fluid-1280 d-flex mt-3">
+	<div class="col-md-2">
+		<ul class="nav nav-nested">
+			<li class="nav-item">
+				<span class="text-uppercase">
+					<liferay-ui:message key="site-pages" />
+				</span>
+
+				<ul class="nav nav-stacked">
+					<li>
+
+						<%
+						PortletURL allNavigationURL = currentURLObj;
+
+						allNavigationURL.setParameter("navigation", "all");
+						%>
+
+						<aui:a cssClass="nav-link" href="<%= allNavigationURL.toString() %>">
+							<liferay-ui:message key="all" />
+							&nbsp;(<%= fragmentEntryLinkDisplayContext.getUsageCount("all") %>)
+						</aui:a>
+					</li>
+					<li>
+
+						<%
+						PortletURL pagesNavigationURL = currentURLObj;
+
+						pagesNavigationURL.setParameter("navigation", "pages");
+						%>
+
+						<aui:a cssClass="nav-link" href="<%= pagesNavigationURL.toString() %>">
+							<liferay-ui:message key="pages" />
+							&nbsp;(<%= fragmentEntryLinkDisplayContext.getUsageCount("pages") %>)
+						</aui:a>
+					</li>
+					<li>
+
+						<%
+						PortletURL pageTemplatesNavigationURL = currentURLObj;
+
+						pageTemplatesNavigationURL.setParameter("navigation", "page-templates");
+						%>
+
+						<aui:a cssClass="nav-link" href="<%= pageTemplatesNavigationURL.toString() %>">
+							<liferay-ui:message key="page-templates" />
+							&nbsp;(<%= fragmentEntryLinkDisplayContext.getUsageCount("page-templates") %>)
+						</aui:a>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+
+	<div class="card col-md-9 pt-2">
+		<h3>
+			<liferay-ui:message key="<%= fragmentEntryLinkDisplayContext.getNavigation() %>" />&nbsp;(<%= fragmentEntryLinkDisplayContext.getUsageCount(fragmentEntryLinkDisplayContext.getNavigation()) %>)
+		</h3>
+
+		<clay:management-toolbar
+			actionItems="<%= fragmentEntryLinkDisplayContext.getActionItemsDropdownItemList() %>"
+			clearResultsURL="<%= currentURL %>"
+			componentId="fragmentEntryLinksManagementToolbar"
+			disabled="<%= fragmentEntry.getUsageCount() > 0 %>"
+			namespace="<%= renderResponse.getNamespace() %>"
+			searchActionURL="<%= currentURL %>"
+			searchContainerId="fragmentEntryLinks"
+			searchFormName="searchFm"
+			showCreationMenu="<%= false %>"
+			showSearch="<%= true %>"
+			sortingOrder="<%= fragmentEntryLinkDisplayContext.getOrderByType() %>"
+			sortingURL="<%= currentURL %>"
+			totalItems="<%= fragmentEntry.getUsageCount() %>"
+		/>
+	</div>
+</div>

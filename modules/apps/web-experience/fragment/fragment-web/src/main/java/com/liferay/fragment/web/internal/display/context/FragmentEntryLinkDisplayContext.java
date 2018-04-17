@@ -15,16 +15,18 @@
 package com.liferay.fragment.web.internal.display.context;
 
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Objects;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -61,15 +63,6 @@ public class FragmentEntryLinkDisplayContext {
 		};
 	}
 
-	public String getClearResultsURL() {
-		PortletURL clearResultsURL = _renderResponse.createRenderURL();
-
-		clearResultsURL.setParameter("orderByCol", getOrderByCol());
-		clearResultsURL.setParameter("orderByType", getOrderByType());
-
-		return clearResultsURL.toString();
-	}
-
 	public FragmentEntry getFragmentEntry() throws PortalException {
 		if (Validator.isNotNull(_fragmentEntry)) {
 			return _fragmentEntry;
@@ -101,6 +94,16 @@ public class FragmentEntryLinkDisplayContext {
 		return _keywords;
 	}
 
+	public String getNavigation() {
+		if (Validator.isNotNull(_navigation)) {
+			return _navigation;
+		}
+
+		_navigation = ParamUtil.getString(_renderRequest, "navigation", "all");
+
+		return _navigation;
+	}
+
 	public String getOrderByCol() {
 		if (Validator.isNotNull(_orderByCol)) {
 			return _orderByCol;
@@ -122,21 +125,28 @@ public class FragmentEntryLinkDisplayContext {
 		return _orderByType;
 	}
 
-	public String getSortingURL() {
-		PortletURL sortingURL = _renderResponse.createRenderURL();
+	public int getUsageCount(String navigation) throws PortalException {
+		FragmentEntry fragmentEntry = getFragmentEntry();
 
-		sortingURL.setParameter("keywords", getKeywords());
-		sortingURL.setParameter("orderByCol", getOrderByCol());
-		sortingURL.setParameter(
-			"orderByType",
-			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
+		if (Objects.equals(navigation, "pages")) {
+			return FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinksCount(
+				fragmentEntry.getGroupId(), getFragmentEntryId(),
+				PortalUtil.getClassNameId(Layout.class));
+		}
+		else if (Objects.equals(navigation, "page-templates")) {
+			return FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinksCount(
+				fragmentEntry.getGroupId(), getFragmentEntryId(),
+				PortalUtil.getClassNameId(LayoutPageTemplateEntry.class));
+		}
 
-		return sortingURL.toString();
+		return FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinksCount(
+			fragmentEntry.getGroupId(), getFragmentEntryId());
 	}
 
 	private FragmentEntry _fragmentEntry;
 	private Long _fragmentEntryId;
 	private String _keywords;
+	private String _navigation;
 	private String _orderByCol;
 	private String _orderByType;
 	private final RenderRequest _renderRequest;

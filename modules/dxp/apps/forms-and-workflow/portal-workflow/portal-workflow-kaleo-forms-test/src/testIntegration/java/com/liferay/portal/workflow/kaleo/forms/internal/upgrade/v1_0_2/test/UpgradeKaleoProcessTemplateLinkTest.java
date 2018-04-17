@@ -120,7 +120,7 @@ public class UpgradeKaleoProcessTemplateLinkTest {
 
 		String sql = sb.toString();
 
-		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+		try (Connection con = DataAccess.getConnection();
 			PreparedStatement ps = con.prepareStatement(sql)) {
 
 			ps.setString(1, PortalUUIDUtil.generate());
@@ -151,7 +151,7 @@ public class UpgradeKaleoProcessTemplateLinkTest {
 
 		String sql = sb.toString();
 
-		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+		try (Connection con = DataAccess.getConnection();
 			PreparedStatement ps = con.prepareStatement(sql)) {
 
 			ps.setLong(1, kaleoProcessLinkId);

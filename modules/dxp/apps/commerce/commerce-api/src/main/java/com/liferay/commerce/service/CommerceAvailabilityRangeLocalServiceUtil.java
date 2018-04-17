@@ -105,7 +105,8 @@ public class CommerceAvailabilityRangeLocalServiceUtil {
 				   .deleteCommerceAvailabilityRange(commerceAvailabilityRangeId);
 	}
 
-	public static void deleteCommerceAvailabilityRanges(long groupId) {
+	public static void deleteCommerceAvailabilityRanges(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteCommerceAvailabilityRanges(groupId);
 	}
 

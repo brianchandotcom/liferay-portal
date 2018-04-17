@@ -97,7 +97,8 @@ public class CommerceAvailabilityRangeLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCommerceAvailabilityRanges(long groupId) {
+	public void deleteCommerceAvailabilityRanges(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_commerceAvailabilityRangeLocalService.deleteCommerceAvailabilityRanges(groupId);
 	}
 

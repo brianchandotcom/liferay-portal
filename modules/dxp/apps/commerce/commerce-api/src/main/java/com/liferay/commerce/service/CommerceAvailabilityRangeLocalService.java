@@ -116,7 +116,8 @@ public interface CommerceAvailabilityRangeLocalService extends BaseLocalService,
 	public CommerceAvailabilityRange deleteCommerceAvailabilityRange(
 		long commerceAvailabilityRangeId) throws PortalException;
 
-	public void deleteCommerceAvailabilityRanges(long groupId);
+	public void deleteCommerceAvailabilityRanges(long groupId)
+		throws PortalException;
 
 	/**
 	* @throws PortalException

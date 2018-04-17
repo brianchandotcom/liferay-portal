@@ -50,6 +50,11 @@ public class EntryUADAnonymizerTest extends BaseUADAnonymizerTestCase<Entry> {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
 
+	@After
+	public void tearDown() throws Exception {
+		_entryUADEntityTestHelper.cleanUpDependencies(_entries);
+	}
+
 	@Override
 	protected Entry addBaseModel(long userId) throws Exception {
 		return addBaseModel(userId, true);
@@ -65,6 +70,12 @@ public class EntryUADAnonymizerTest extends BaseUADAnonymizerTestCase<Entry> {
 		}
 
 		return entry;
+	}
+
+	@Override
+	protected void deleteBaseModels(List<Entry> baseModels)
+		throws Exception {
+		_entryUADEntityTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -99,17 +110,6 @@ public class EntryUADAnonymizerTest extends BaseUADAnonymizerTestCase<Entry> {
 		}
 
 		return false;
-	}
-
-	@Override
-	public void tearDownBaseModels(List<Entry> baseModels)
-		throws Exception {
-		_entryUADEntityTestHelper.cleanUpDependencies(baseModels);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_entryUADEntityTestHelper.cleanUpDependencies(_entries);
 	}
 
 	@DeleteAfterTestRun

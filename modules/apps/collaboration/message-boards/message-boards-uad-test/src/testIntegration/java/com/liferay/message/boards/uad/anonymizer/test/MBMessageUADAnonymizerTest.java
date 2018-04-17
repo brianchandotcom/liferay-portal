@@ -63,6 +63,11 @@ public class MBMessageUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBMess
 		return mbMessage;
 	}
 
+	@After
+	public void tearDown() throws Exception {
+		_mbMessageUADEntityTestHelper.cleanUpDependencies(_mbMessages);
+	}
+
 	@Override
 	protected MBMessage addBaseModel(long userId) throws Exception {
 		return addBaseModel(userId, true);
@@ -78,6 +83,12 @@ public class MBMessageUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBMess
 		}
 
 		return mbMessage;
+	}
+
+	@Override
+	protected void deleteBaseModels(List<MBMessage> baseModels)
+		throws Exception {
+		_mbMessageUADEntityTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -115,17 +126,6 @@ public class MBMessageUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBMess
 		}
 
 		return false;
-	}
-
-	@Override
-	public void tearDownBaseModels(List<MBMessage> baseModels)
-		throws Exception {
-		_mbMessageUADEntityTestHelper.cleanUpDependencies(baseModels);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_mbMessageUADEntityTestHelper.cleanUpDependencies(_mbMessages);
 	}
 
 	@DeleteAfterTestRun

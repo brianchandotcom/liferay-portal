@@ -63,6 +63,11 @@ public class MBThreadUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBThrea
 		return mbThread;
 	}
 
+	@After
+	public void tearDown() throws Exception {
+		_mbThreadUADEntityTestHelper.cleanUpDependencies(_mbThreads);
+	}
+
 	@Override
 	protected MBThread addBaseModel(long userId) throws Exception {
 		return addBaseModel(userId, true);
@@ -78,6 +83,12 @@ public class MBThreadUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBThrea
 		}
 
 		return mbThread;
+	}
+
+	@Override
+	protected void deleteBaseModels(List<MBThread> baseModels)
+		throws Exception {
+		_mbThreadUADEntityTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -117,17 +128,6 @@ public class MBThreadUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBThrea
 		}
 
 		return false;
-	}
-
-	@Override
-	public void tearDownBaseModels(List<MBThread> baseModels)
-		throws Exception {
-		_mbThreadUADEntityTestHelper.cleanUpDependencies(baseModels);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_mbThreadUADEntityTestHelper.cleanUpDependencies(_mbThreads);
 	}
 
 	@DeleteAfterTestRun

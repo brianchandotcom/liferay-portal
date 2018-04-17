@@ -63,6 +63,11 @@ public class WikiPageUADAnonymizerTest extends BaseUADAnonymizerTestCase<WikiPag
 		return wikiPage;
 	}
 
+	@After
+	public void tearDown() throws Exception {
+		_wikiPageUADEntityTestHelper.cleanUpDependencies(_wikiPages);
+	}
+
 	@Override
 	protected WikiPage addBaseModel(long userId) throws Exception {
 		return addBaseModel(userId, true);
@@ -78,6 +83,12 @@ public class WikiPageUADAnonymizerTest extends BaseUADAnonymizerTestCase<WikiPag
 		}
 
 		return wikiPage;
+	}
+
+	@Override
+	protected void deleteBaseModels(List<WikiPage> baseModels)
+		throws Exception {
+		_wikiPageUADEntityTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -115,17 +126,6 @@ public class WikiPageUADAnonymizerTest extends BaseUADAnonymizerTestCase<WikiPag
 		}
 
 		return false;
-	}
-
-	@Override
-	public void tearDownBaseModels(List<WikiPage> baseModels)
-		throws Exception {
-		_wikiPageUADEntityTestHelper.cleanUpDependencies(baseModels);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_wikiPageUADEntityTestHelper.cleanUpDependencies(_wikiPages);
 	}
 
 	@DeleteAfterTestRun

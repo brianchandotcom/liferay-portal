@@ -63,6 +63,11 @@ public class BlogsEntryUADAnonymizerTest extends BaseUADAnonymizerTestCase<Blogs
 		return blogsEntry;
 	}
 
+	@After
+	public void tearDown() throws Exception {
+		_blogsEntryUADEntityTestHelper.cleanUpDependencies(_blogsEntries);
+	}
+
 	@Override
 	protected BlogsEntry addBaseModel(long userId) throws Exception {
 		return addBaseModel(userId, true);
@@ -78,6 +83,12 @@ public class BlogsEntryUADAnonymizerTest extends BaseUADAnonymizerTestCase<Blogs
 		}
 
 		return blogsEntry;
+	}
+
+	@Override
+	protected void deleteBaseModels(List<BlogsEntry> baseModels)
+		throws Exception {
+		_blogsEntryUADEntityTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -115,17 +126,6 @@ public class BlogsEntryUADAnonymizerTest extends BaseUADAnonymizerTestCase<Blogs
 		}
 
 		return false;
-	}
-
-	@Override
-	public void tearDownBaseModels(List<BlogsEntry> baseModels)
-		throws Exception {
-		_blogsEntryUADEntityTestHelper.cleanUpDependencies(baseModels);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_blogsEntryUADEntityTestHelper.cleanUpDependencies(_blogsEntries);
 	}
 
 	@DeleteAfterTestRun

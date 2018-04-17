@@ -63,6 +63,11 @@ public class MBCategoryUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBCat
 		return mbCategory;
 	}
 
+	@After
+	public void tearDown() throws Exception {
+		_mbCategoryUADEntityTestHelper.cleanUpDependencies(_mbCategories);
+	}
+
 	@Override
 	protected MBCategory addBaseModel(long userId) throws Exception {
 		return addBaseModel(userId, true);
@@ -78,6 +83,12 @@ public class MBCategoryUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBCat
 		}
 
 		return mbCategory;
+	}
+
+	@Override
+	protected void deleteBaseModels(List<MBCategory> baseModels)
+		throws Exception {
+		_mbCategoryUADEntityTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -115,17 +126,6 @@ public class MBCategoryUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBCat
 		}
 
 		return false;
-	}
-
-	@Override
-	public void tearDownBaseModels(List<MBCategory> baseModels)
-		throws Exception {
-		_mbCategoryUADEntityTestHelper.cleanUpDependencies(baseModels);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_mbCategoryUADEntityTestHelper.cleanUpDependencies(_mbCategories);
 	}
 
 	@DeleteAfterTestRun

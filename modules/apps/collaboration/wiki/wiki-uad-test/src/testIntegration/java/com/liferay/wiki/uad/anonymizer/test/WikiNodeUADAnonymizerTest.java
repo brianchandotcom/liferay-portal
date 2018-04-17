@@ -63,6 +63,11 @@ public class WikiNodeUADAnonymizerTest extends BaseUADAnonymizerTestCase<WikiNod
 		return wikiNode;
 	}
 
+	@After
+	public void tearDown() throws Exception {
+		_wikiNodeUADEntityTestHelper.cleanUpDependencies(_wikiNodes);
+	}
+
 	@Override
 	protected WikiNode addBaseModel(long userId) throws Exception {
 		return addBaseModel(userId, true);
@@ -78,6 +83,12 @@ public class WikiNodeUADAnonymizerTest extends BaseUADAnonymizerTestCase<WikiNod
 		}
 
 		return wikiNode;
+	}
+
+	@Override
+	protected void deleteBaseModels(List<WikiNode> baseModels)
+		throws Exception {
+		_wikiNodeUADEntityTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -115,17 +126,6 @@ public class WikiNodeUADAnonymizerTest extends BaseUADAnonymizerTestCase<WikiNod
 		}
 
 		return false;
-	}
-
-	@Override
-	public void tearDownBaseModels(List<WikiNode> baseModels)
-		throws Exception {
-		_wikiNodeUADEntityTestHelper.cleanUpDependencies(baseModels);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_wikiNodeUADEntityTestHelper.cleanUpDependencies(_wikiNodes);
 	}
 
 	@DeleteAfterTestRun

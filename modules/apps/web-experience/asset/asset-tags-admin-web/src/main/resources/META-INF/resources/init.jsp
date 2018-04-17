@@ -26,6 +26,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.asset.kernel.exception.AssetTagException" %><%@
+page import="com.liferay.asset.kernel.exception.AssetTagNameException" %><%@
 page import="com.liferay.asset.kernel.exception.DuplicateTagException" %><%@
 page import="com.liferay.asset.kernel.exception.NoSuchTagException" %><%@
 page import="com.liferay.asset.kernel.model.AssetTag" %><%@

@@ -81,16 +81,15 @@ public class UADApplicationSummaryHelper {
 		Predicate<UADApplicationSummaryDisplay> predicate = getPredicate(
 			ParamUtil.getString(renderRequest, "navigation", "all"));
 
-		Supplier<Stream<UADApplicationSummaryDisplay>> streamSupplier =
-			() -> getUADApplicationSummaryDisplayStream(portletRequest, userId);
+		Supplier<Stream<UADApplicationSummaryDisplay>> streamSupplier = () ->
+			getUADApplicationSummaryDisplayStream(portletRequest, userId).
+				filter(predicate);
 
 		Stream<UADApplicationSummaryDisplay> summaryDisplayStream =
 			streamSupplier.get();
 
 		List<UADApplicationSummaryDisplay> results =
-			summaryDisplayStream.filter(
-				predicate
-			).sorted(
+			summaryDisplayStream.sorted(
 				getComparator(
 					searchContainer.getOrderByCol(),
 					searchContainer.getOrderByType())
@@ -106,11 +105,7 @@ public class UADApplicationSummaryHelper {
 
 		summaryDisplayStream = streamSupplier.get();
 
-		long total = summaryDisplayStream.filter(
-			predicate
-		).count();
-
-		searchContainer.setTotal((int)total);
+		searchContainer.setTotal((int)summaryDisplayStream.count());
 
 		return searchContainer;
 	}

@@ -127,7 +127,7 @@ public class SourceFormatterUtil {
 
 		outerLoop:
 		for (String fileName : allFileNames) {
-			String encodedFileName = _getEncodedFileName(fileName);
+			String encodedFileName = SourceUtil.getAbsolutePath(fileName);
 
 			for (String includeRegex : includeRegexList) {
 				if (encodedFileName.matches(includeRegex)) {
@@ -519,17 +519,6 @@ public class SourceFormatterUtil {
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
 		}
-	}
-
-	private static String _getEncodedFileName(String fileName) {
-		String absolutePath = SourceUtil.getAbsolutePath(fileName);
-
-		if (!absolutePath.startsWith("/home/travis/")) {
-			return absolutePath;
-		}
-
-		return StringUtil.replace(
-			fileName, CharPool.BACK_SLASH, CharPool.SLASH);
 	}
 
 	private static PathMatchers _getPathMatchers(

@@ -3211,7 +3211,10 @@ public class PortalImpl implements Portal {
 			return themeDisplay.getPathMain() + PATH_PORTAL_LAYOUT;
 		}
 
-		if (!layout.isTypeURL()) {
+		if (layout.isTypeURL()) {
+			return getLayoutActualURL(layout);
+		}
+
 			String layoutFriendlyURL = getLayoutFriendlyURL(
 				layout, themeDisplay);
 
@@ -3221,14 +3224,11 @@ public class PortalImpl implements Portal {
 
 				return layoutFriendlyURL;
 			}
-		}
 
 		String layoutURL = getLayoutActualURL(layout);
 
-		if (!layout.isTypeURL()) {
 			layoutURL = addPreservedParameters(
 				themeDisplay, layout, layoutURL, doAsUser);
-		}
 
 		return layoutURL;
 	}

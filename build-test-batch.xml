@@ -3430,16 +3430,8 @@ information. Make sure to commit in all build services results.
 	<target name="source-format-current-branch-jdk8">
 		<run-batch-test>
 			<test-action>
-				<antcall target="compile" />
-
-				<antcall target="install-portal-snapshots" />
-
-				<if>
-					<available file="modules/util/source-formatter" />
-					<then>
-						<gradle-execute dir="modules/util/source-formatter" task="deploy" />
-					</then>
-				</if>
+				<setup-libs />
+				<setup-sdk />
 
 				<exec executable="git" failonerror="true" outputproperty="git.diff">
 					<arg value="diff" />
@@ -3453,6 +3445,35 @@ information. Make sure to commit in all build services results.
 					<contains string="${git.diff}" substring="modules${file.separator}util${file.separator}source-formatter" />
 					<then>
 						<var name="format.current.branch" value="false" />
+
+						<gradle-execute dir="modules/core" task="deploy">
+							<arg value="--parallel" />
+							<arg value="-Dbuild.profile=portal-pre" />
+							<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
+						</gradle-execute>
+
+						<ant dir="portal-kernel" inheritAll="false" target="install-portal-snapshot" />
+
+						<gradle-execute dir="modules/apps" task="deploy">
+							<arg value="--parallel" />
+							<arg value="-Dbuild.profile=portal-pre" />
+							<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
+						</gradle-execute>
+
+						<parallel failonany="true" threadcount="${parallel.thread.count}">
+							<ant dir="util-bridges" inheritAll="false" target="compile" />
+
+							<sequential>
+								<ant dir="util-java" inheritAll="false" target="compile" />
+								<ant dir="util-taglib" inheritAll="false" target="compile" />
+							</sequential>
+
+							<ant dir="util-slf4j" inheritAll="false" target="compile" />
+						</parallel>
+
+						<ant dir="portal-impl" inheritAll="false" target="install-portal-snapshot" />
+
+						<gradle-execute dir="modules/util/source-formatter" task="deploy" />
 					</then>
 				</if>
 

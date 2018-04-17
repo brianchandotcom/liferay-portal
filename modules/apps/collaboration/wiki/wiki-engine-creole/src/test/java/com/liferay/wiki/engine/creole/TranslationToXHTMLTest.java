@@ -767,11 +767,11 @@ public class TranslationToXHTMLTest {
 	}
 
 	protected WikiPageNode getWikiPageNode(String fileName) throws Exception {
-		_creole10parser = getCreole10Parser(fileName);
+		_creole10Parser = getCreole10Parser(fileName);
 
-		_creole10parser.wikipage();
+		_creole10Parser.wikipage();
 
-		return _creole10parser.getWikiPageNode();
+		return _creole10Parser.getWikiPageNode();
 	}
 
 	protected String toUnix(String text) {
@@ -785,7 +785,7 @@ public class TranslationToXHTMLTest {
 
 	private static final String _NEW_LINE = StringPool.NEW_LINE;
 
-	private Creole10Parser _creole10parser;
+	private Creole10Parser _creole10Parser;
 	private WikiEngineCreoleComponentProvider
 		_wikiEngineCreoleComponentProvider;
 	private final XhtmlTranslationVisitor _xhtmlTranslationVisitor =

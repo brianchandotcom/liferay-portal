@@ -213,12 +213,12 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 
 		// Recurrence
 
-		RRule rrule = (RRule)vEvent.getProperty(Property.RRULE);
+		RRule rRule = (RRule)vEvent.getProperty(Property.RRULE);
 
 		String recurrence = StringPool.BLANK;
 
-		if (rrule != null) {
-			recurrence = StringUtil.trim(rrule.toString());
+		if (rRule != null) {
+			recurrence = StringUtil.trim(rRule.toString());
 
 			PropertyList propertyList = vEvent.getProperties(Property.EXDATE);
 

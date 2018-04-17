@@ -360,12 +360,12 @@ public class LayoutReferencesExportImportContentProcessor
 
 					privateLayout = layoutSet.isPrivateLayout();
 
-					LayoutFriendlyURL layoutFriendlyUrl =
+					LayoutFriendlyURL layoutFriendlyURL =
 						_layoutFriendlyURLLocalService.
 							fetchFirstLayoutFriendlyURL(
 								group.getGroupId(), privateLayout, url);
 
-					if (layoutFriendlyUrl == null) {
+					if (layoutFriendlyURL == null) {
 						continue;
 					}
 

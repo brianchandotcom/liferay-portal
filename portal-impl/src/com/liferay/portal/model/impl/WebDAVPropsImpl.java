@@ -40,11 +40,11 @@ public class WebDAVPropsImpl extends WebDAVPropsBaseImpl {
 
 		Namespace namespace = WebDAVUtil.createNamespace(prefix, uri);
 
-		QName qname = SAXReaderUtil.createQName(name, namespace);
+		QName qName = SAXReaderUtil.createQName(name, namespace);
 
-		Element root = _removeExisting(qname);
+		Element root = _removeExisting(qName);
 
-		root.addElement(qname);
+		root.addElement(qName);
 	}
 
 	@Override
@@ -53,11 +53,11 @@ public class WebDAVPropsImpl extends WebDAVPropsBaseImpl {
 
 		Namespace namespace = WebDAVUtil.createNamespace(prefix, uri);
 
-		QName qname = SAXReaderUtil.createQName(name, namespace);
+		QName qName = SAXReaderUtil.createQName(name, namespace);
 
-		Element root = _removeExisting(qname);
+		Element root = _removeExisting(qName);
 
-		Element element = root.addElement(qname);
+		Element element = root.addElement(qName);
 
 		element.addText(text);
 	}
@@ -100,13 +100,13 @@ public class WebDAVPropsImpl extends WebDAVPropsBaseImpl {
 
 		Namespace namespace = WebDAVUtil.createNamespace(prefix, uri);
 
-		QName qname = SAXReaderUtil.createQName(name, namespace);
+		QName qName = SAXReaderUtil.createQName(name, namespace);
 
 		Document doc = _getPropsDocument();
 
 		Element root = doc.getRootElement();
 
-		Element prop = root.element(qname);
+		Element prop = root.element(qName);
 
 		return prop.getText();
 	}
@@ -117,9 +117,9 @@ public class WebDAVPropsImpl extends WebDAVPropsBaseImpl {
 
 		Namespace namespace = WebDAVUtil.createNamespace(prefix, uri);
 
-		QName qname = SAXReaderUtil.createQName(name, namespace);
+		QName qName = SAXReaderUtil.createQName(name, namespace);
 
-		_removeExisting(qname);
+		_removeExisting(qName);
 	}
 
 	@Override
@@ -141,12 +141,12 @@ public class WebDAVPropsImpl extends WebDAVPropsBaseImpl {
 		return _document;
 	}
 
-	private Element _removeExisting(QName qname) throws Exception {
+	private Element _removeExisting(QName qName) throws Exception {
 		Document doc = _getPropsDocument();
 
 		Element root = doc.getRootElement();
 
-		List<Element> elementsList = root.elements(qname);
+		List<Element> elementsList = root.elements(qName);
 
 		Iterator<Element> itr = elementsList.iterator();
 

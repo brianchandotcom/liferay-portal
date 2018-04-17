@@ -44,11 +44,11 @@ public class BridgeJUnitTestRunner extends BlockJUnit4ClassRunner {
 	public static Result runBridgeTests(
 		BridgeRunListener bridgeRunListener, Class<?>... testClasses) {
 
-		JUnitCore junitCore = new JUnitCore();
+		JUnitCore jUnitCore = new JUnitCore();
 
-		junitCore.addListener(bridgeRunListener);
+		jUnitCore.addListener(bridgeRunListener);
 
-		return junitCore.run(testClasses);
+		return jUnitCore.run(testClasses);
 	}
 
 	public BridgeJUnitTestRunner(Class<?> clazz) throws InitializationError {

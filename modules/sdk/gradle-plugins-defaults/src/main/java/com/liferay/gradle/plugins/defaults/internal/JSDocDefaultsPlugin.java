@@ -37,7 +37,7 @@ public class JSDocDefaultsPlugin extends BaseDefaultsPlugin<JSDocPlugin> {
 	public static final Plugin<Project> INSTANCE = new JSDocDefaultsPlugin();
 
 	@Override
-	protected void configureDefaults(Project project, JSDocPlugin jsdocPlugin) {
+	protected void configureDefaults(Project project, JSDocPlugin jsDocPlugin) {
 		_configureTasksJSDoc(project);
 	}
 
@@ -49,20 +49,20 @@ public class JSDocDefaultsPlugin extends BaseDefaultsPlugin<JSDocPlugin> {
 	private JSDocDefaultsPlugin() {
 	}
 
-	private void _configureTaskJSDoc(JSDocTask jsdocTask) {
-		Project project = jsdocTask.getProject();
+	private void _configureTaskJSDoc(JSDocTask jsDocTask) {
+		Project project = jsDocTask.getProject();
 
 		ResourceHandler resourceHandler = project.getResources();
 
 		TextResourceFactory textResourceFactory = resourceHandler.getText();
 
-		jsdocTask.setConfiguration(
+		jsDocTask.setConfiguration(
 			textResourceFactory.fromString(_CONFIG_JSON));
 
 		File readmeFile = project.file("README.markdown");
 
 		if (readmeFile.exists()) {
-			jsdocTask.setReadmeFile(readmeFile);
+			jsDocTask.setReadmeFile(readmeFile);
 		}
 	}
 
@@ -74,8 +74,8 @@ public class JSDocDefaultsPlugin extends BaseDefaultsPlugin<JSDocPlugin> {
 			new Action<JSDocTask>() {
 
 				@Override
-				public void execute(JSDocTask jsdocTask) {
-					_configureTaskJSDoc(jsdocTask);
+				public void execute(JSDocTask jsDocTask) {
+					_configureTaskJSDoc(jsDocTask);
 				}
 
 			});

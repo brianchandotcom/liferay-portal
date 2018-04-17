@@ -29,7 +29,7 @@ public class WebXMLDefinitionTest {
 
 	@Before
 	public void setUp() {
-		_webXmlDefinition = new WebXMLDefinition();
+		_webXMLDefinition = new WebXMLDefinition();
 	}
 
 	@Test
@@ -72,11 +72,11 @@ public class WebXMLDefinitionTest {
 
 			filterDefinition.setName(s);
 
-			_webXmlDefinition.setFilterDefinition(s, filterDefinition);
+			_webXMLDefinition.setFilterDefinition(s, filterDefinition);
 		}
 
 		Map<String, FilterDefinition> filterDefinitions =
-			_webXmlDefinition.getFilterDefinitions();
+			_webXMLDefinition.getFilterDefinitions();
 
 		Assert.assertEquals(
 			filterDefinitions.toString(), count, filterDefinitions.size());
@@ -88,11 +88,11 @@ public class WebXMLDefinitionTest {
 
 			listenerDefinition.setEventListener(new EventListener() {});
 
-			_webXmlDefinition.addListenerDefinition(listenerDefinition);
+			_webXMLDefinition.addListenerDefinition(listenerDefinition);
 		}
 
 		List<ListenerDefinition> listenerDefinitions =
-			_webXmlDefinition.getListenerDefinitions();
+			_webXMLDefinition.getListenerDefinitions();
 
 		Assert.assertEquals(
 			listenerDefinitions.toString(), count, listenerDefinitions.size());
@@ -108,16 +108,16 @@ public class WebXMLDefinitionTest {
 
 			servletDefinition.setName(s);
 
-			_webXmlDefinition.setServletDefinition(s, servletDefinition);
+			_webXMLDefinition.setServletDefinition(s, servletDefinition);
 		}
 
 		Map<String, ServletDefinition> servletDefinitions =
-			_webXmlDefinition.getServletDefinitions();
+			_webXMLDefinition.getServletDefinitions();
 
 		Assert.assertEquals(
 			servletDefinitions.toString(), count, servletDefinitions.size());
 	}
 
-	private WebXMLDefinition _webXmlDefinition;
+	private WebXMLDefinition _webXMLDefinition;
 
 }

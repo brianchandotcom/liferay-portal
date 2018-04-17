@@ -127,11 +127,11 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_freemarkerEngineConfiguration = ConfigurableUtil.createConfigurable(
+		_freeMarkerEngineConfiguration = ConfigurableUtil.createConfigurable(
 			FreeMarkerEngineConfiguration.class, properties);
 
 		_restrictedVariables = SetUtil.fromArray(
-			_freemarkerEngineConfiguration.restrictedVariables());
+			_freeMarkerEngineConfiguration.restrictedVariables());
 	}
 
 	@Override
@@ -178,7 +178,7 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 	}
 
 	private volatile FreeMarkerEngineConfiguration
-		_freemarkerEngineConfiguration;
+		_freeMarkerEngineConfiguration;
 	private Set<String> _restrictedVariables;
 	private final List<TemplateContextContributor>
 		_templateContextContributors = new CopyOnWriteArrayList<>();

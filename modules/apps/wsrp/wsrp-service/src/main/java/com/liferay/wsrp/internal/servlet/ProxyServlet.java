@@ -89,7 +89,7 @@ public class ProxyServlet extends HttpServlet {
 		long companyId = _portal.getCompanyId(request);
 		String urlString = ParamUtil.getString(request, "url");
 
-		String expectedWSRPAuth = _wsrpUrlUtil.encodeWSRPAuth(
+		String expectedWSRPAuth = _wsrpURLUtil.encodeWSRPAuth(
 			companyId, urlString);
 
 		String actualWSRPAuth = ParamUtil.getString(request, WebKeys.WSRP_AUTH);
@@ -225,6 +225,6 @@ public class ProxyServlet extends HttpServlet {
 	private WSRPConfigurationUtil _wsrpConfigurationUtil;
 
 	@Reference
-	private WSRPURLUtil _wsrpUrlUtil;
+	private WSRPURLUtil _wsrpURLUtil;
 
 }

@@ -119,7 +119,7 @@ public class DBInspectorUnitTest {
 		Mockito.when(
 			_connection.getMetaData()
 		).thenReturn(
-			_databaseMetadata
+			_databaseMetaData
 		);
 
 		Mockito.when(
@@ -135,7 +135,7 @@ public class DBInspectorUnitTest {
 		);
 
 		Mockito.when(
-			_databaseMetadata.getColumns(
+			_databaseMetaData.getColumns(
 				Mockito.anyString(), Mockito.anyString(),
 				Mockito.eq(StringUtil.toLowerCase(tableName)),
 				Mockito.eq(columnName))
@@ -144,7 +144,7 @@ public class DBInspectorUnitTest {
 		);
 
 		Mockito.when(
-			_databaseMetadata.storesLowerCaseIdentifiers()
+			_databaseMetaData.storesLowerCaseIdentifiers()
 		).thenReturn(
 			true
 		);
@@ -152,7 +152,7 @@ public class DBInspectorUnitTest {
 		Mockito.when(
 			_resultSet.getMetaData()
 		).thenReturn(
-			_resultSetMetadata
+			_resultSetMetaData
 		);
 
 		Mockito.when(
@@ -176,7 +176,7 @@ public class DBInspectorUnitTest {
 	private Connection _connection;
 
 	@Mock
-	private DatabaseMetaData _databaseMetadata;
+	private DatabaseMetaData _databaseMetaData;
 
 	@Mock
 	private PreparedStatement _preparedStatement;
@@ -185,6 +185,6 @@ public class DBInspectorUnitTest {
 	private ResultSet _resultSet;
 
 	@Mock
-	private ResultSetMetaData _resultSetMetadata;
+	private ResultSetMetaData _resultSetMetaData;
 
 }

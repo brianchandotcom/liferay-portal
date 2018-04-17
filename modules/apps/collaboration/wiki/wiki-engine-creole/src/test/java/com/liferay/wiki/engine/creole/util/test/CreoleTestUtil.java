@@ -60,12 +60,12 @@ public class CreoleTestUtil {
 	public static WikiPageNode getWikiPageNode(
 		String fileName, Class<?> clazz) {
 
-		Creole10Parser creole10parser = null;
+		Creole10Parser creole10Parser = null;
 
 		try {
-			creole10parser = getCreole10Parser(fileName, clazz);
+			creole10Parser = getCreole10Parser(fileName, clazz);
 
-			creole10parser.wikipage();
+			creole10Parser.wikipage();
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException("File " + fileName + " does not exist");
@@ -74,7 +74,7 @@ public class CreoleTestUtil {
 			throw new RuntimeException("Uanble to parse " + fileName);
 		}
 
-		return creole10parser.getWikiPageNode();
+		return creole10Parser.getWikiPageNode();
 	}
 
 	protected static Creole10Parser getCreole10Parser(

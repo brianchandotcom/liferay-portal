@@ -1542,7 +1542,7 @@ public class WebServerServlet extends HttpServlet {
 			return false;
 		}
 
-		_inactiveRequesthandler.processInactiveRequest(
+		_inactiveRequestHandler.processInactiveRequest(
 			request, response,
 			"this-instance-is-inactive-please-contact-the-administrator");
 
@@ -1567,7 +1567,7 @@ public class WebServerServlet extends HttpServlet {
 
 	private static final Set<String> _acceptRangesMimeTypes = SetUtil.fromArray(
 		PropsValues.WEB_SERVER_SERVLET_ACCEPT_RANGES_MIME_TYPES);
-	private static volatile InactiveRequestHandler _inactiveRequesthandler =
+	private static volatile InactiveRequestHandler _inactiveRequestHandler =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			InactiveRequestHandler.class, WebServerServlet.class,
 			"_inactiveRequesthandler", false);

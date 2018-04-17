@@ -46,7 +46,7 @@ public class LiferayTemplateCache extends TemplateCache {
 
 	public LiferayTemplateCache(
 			Configuration configuration,
-			FreeMarkerEngineConfiguration freemarkerEngineConfiguration,
+			FreeMarkerEngineConfiguration freeMarkerEngineConfiguration,
 			TemplateResourceLoader templateResourceLoader,
 			SingleVMPool singleVMPool)
 		throws Exception {
@@ -54,7 +54,7 @@ public class LiferayTemplateCache extends TemplateCache {
 		super(null, configuration);
 
 		_configuration = configuration;
-		_freemarkerEngineConfiguration = freemarkerEngineConfiguration;
+		_freeMarkerEngineConfiguration = freeMarkerEngineConfiguration;
 		_templateResourceLoader = templateResourceLoader;
 
 		String porttalCacheName = TemplateResource.class.getName();
@@ -79,7 +79,7 @@ public class LiferayTemplateCache extends TemplateCache {
 		throws IOException {
 
 		for (String macroTemplateId :
-				_freemarkerEngineConfiguration.macroLibrary()) {
+				_freeMarkerEngineConfiguration.macroLibrary()) {
 
 			int pos = macroTemplateId.indexOf(" as ");
 
@@ -159,7 +159,7 @@ public class LiferayTemplateCache extends TemplateCache {
 			MaybeMissingTemplate maybeMissingTemplate =
 				_constructor.newInstance(template);
 
-			if (_freemarkerEngineConfiguration.resourceModificationCheck() !=
+			if (_freeMarkerEngineConfiguration.resourceModificationCheck() !=
 					0) {
 
 				_portalCache.put(templateResource, maybeMissingTemplate);
@@ -174,7 +174,7 @@ public class LiferayTemplateCache extends TemplateCache {
 
 	private final Configuration _configuration;
 	private final Constructor<MaybeMissingTemplate> _constructor;
-	private final FreeMarkerEngineConfiguration _freemarkerEngineConfiguration;
+	private final FreeMarkerEngineConfiguration _freeMarkerEngineConfiguration;
 	private final PortalCache<TemplateResource, Object> _portalCache;
 	private final TemplateResourceLoader _templateResourceLoader;
 

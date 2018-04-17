@@ -278,11 +278,11 @@ public class UIItemsBuilder {
 		sb.append(selectFileVersionURL.toString());
 		sb.append("');");
 
-		JavaScriptMenuItem javascriptMenuItem = _addJavaScriptUIItem(
+		JavaScriptMenuItem javaScriptMenuItem = _addJavaScriptUIItem(
 			new JavaScriptMenuItem(), menuItems, DLUIItemKeys.COMPARE_TO,
 			"compare-to", sb.toString());
 
-		javascriptMenuItem.setData(data);
+		javaScriptMenuItem.setData(data);
 
 		String javaScript =
 			"/com/liferay/document/library/web/display/context/dependencies" +
@@ -307,7 +307,7 @@ public class UIItemsBuilder {
 
 		template.processTemplate(unsyncStringWriter);
 
-		javascriptMenuItem.setJavaScript(unsyncStringWriter.toString());
+		javaScriptMenuItem.setJavaScript(unsyncStringWriter.toString());
 	}
 
 	public void addDeleteMenuItem(List<MenuItem> menuItems)
@@ -652,7 +652,7 @@ public class UIItemsBuilder {
 		String onClick = StringBundler.concat(
 			getNamespace(), "openDocument('", webDavURL, "');");
 
-		JavaScriptMenuItem javascriptMenuItem = _addJavaScriptUIItem(
+		JavaScriptMenuItem javaScriptMenuItem = _addJavaScriptUIItem(
 			new JavaScriptMenuItem(), menuItems, DLUIItemKeys.OPEN_IN_MS_OFFICE,
 			"open-in-ms-office", onClick);
 
@@ -680,7 +680,7 @@ public class UIItemsBuilder {
 
 		template.processTemplate(unsyncStringWriter);
 
-		javascriptMenuItem.setJavaScript(unsyncStringWriter.toString());
+		javaScriptMenuItem.setJavaScript(unsyncStringWriter.toString());
 	}
 
 	public void addOpenInMsOfficeToolbarItem(List<ToolbarItem> toolbarItems)
@@ -856,11 +856,11 @@ public class UIItemsBuilder {
 		portletURL.setParameter(
 			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
 
-		JavaScriptMenuItem javascriptMenuItem = new JavaScriptMenuItem();
+		JavaScriptMenuItem javaScriptMenuItem = new JavaScriptMenuItem();
 
-		javascriptMenuItem.setKey(DLUIItemKeys.CHECKIN);
-		javascriptMenuItem.setLabel("checkin");
-		javascriptMenuItem.setOnClick(
+		javaScriptMenuItem.setKey(DLUIItemKeys.CHECKIN);
+		javaScriptMenuItem.setLabel("checkin");
+		javaScriptMenuItem.setOnClick(
 			StringBundler.concat(
 				getNamespace(), "showVersionDetailsDialog('",
 				String.valueOf(portletURL), "');"));
@@ -893,9 +893,9 @@ public class UIItemsBuilder {
 
 		template.processTemplate(unsyncStringWriter);
 
-		javascriptMenuItem.setJavaScript(unsyncStringWriter.toString());
+		javaScriptMenuItem.setJavaScript(unsyncStringWriter.toString());
 
-		return javascriptMenuItem;
+		return javaScriptMenuItem;
 	}
 
 	public boolean isOpenInMsOfficeActionAvailable() throws PortalException {

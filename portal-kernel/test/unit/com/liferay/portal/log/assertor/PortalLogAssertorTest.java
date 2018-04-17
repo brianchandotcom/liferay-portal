@@ -129,10 +129,10 @@ public class PortalLogAssertorTest {
 			Document document = documentBuilder.parse(
 				new InputSource(new UnsyncStringReader(content)));
 
-			NodeList nodelist = document.getElementsByTagName("event");
+			NodeList nodeList = document.getElementsByTagName("event");
 
-			for (int i = 0; i < nodelist.getLength(); i++) {
-				Node node = nodelist.item(i);
+			for (int i = 0; i < nodeList.getLength(); i++) {
+				Node node = nodeList.item(i);
 
 				NamedNodeMap namedNodeMap = node.getAttributes();
 

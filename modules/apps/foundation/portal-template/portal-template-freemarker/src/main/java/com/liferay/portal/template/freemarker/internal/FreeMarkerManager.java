@@ -248,7 +248,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 
 	@Override
 	public String[] getRestrictedVariables() {
-		return _freemarkerEngineConfiguration.restrictedVariables();
+		return _freeMarkerEngineConfiguration.restrictedVariables();
 	}
 
 	@Override
@@ -264,7 +264,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 				Configuration.class, "cache");
 
 			TemplateCache templateCache = new LiferayTemplateCache(
-				_configuration, _freemarkerEngineConfiguration,
+				_configuration, _freeMarkerEngineConfiguration,
 				templateResourceLoader, _singleVMPool);
 
 			field.set(_configuration, templateCache);
@@ -276,7 +276,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 
 		_configuration.setDefaultEncoding(StringPool.UTF8);
 		_configuration.setLocalizedLookup(
-			_freemarkerEngineConfiguration.localizedLookup());
+			_freeMarkerEngineConfiguration.localizedLookup());
 		_configuration.setNewBuiltinClassResolver(_templateClassResolver);
 		_configuration.setObjectWrapper(new LiferayObjectWrapper());
 
@@ -284,10 +284,10 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 			_configuration.setSetting(
 				"auto_import",
 				StringUtil.merge(
-					_freemarkerEngineConfiguration.macroLibrary()));
+					_freeMarkerEngineConfiguration.macroLibrary()));
 			_configuration.setSetting(
 				"template_exception_handler",
-				_freemarkerEngineConfiguration.templateExceptionHandler());
+				_freeMarkerEngineConfiguration.templateExceptionHandler());
 		}
 		catch (Exception e) {
 			throw new TemplateException("Unable to init FreeMarker manager", e);
@@ -324,7 +324,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 	@Activate
 	@Modified
 	protected void activate(ComponentContext componentContext) {
-		_freemarkerEngineConfiguration = ConfigurableUtil.createConfigurable(
+		_freeMarkerEngineConfiguration = ConfigurableUtil.createConfigurable(
 			FreeMarkerEngineConfiguration.class,
 			componentContext.getProperties());
 
@@ -358,7 +358,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 		Template template = new FreeMarkerTemplate(
 			templateResource, errorTemplateResource, helperUtilities,
 			_configuration, templateContextHelper, privileged,
-			_freemarkerEngineConfiguration.resourceModificationCheck());
+			_freeMarkerEngineConfiguration.resourceModificationCheck());
 
 		if (restricted) {
 			template = new RestrictedTemplate(
@@ -414,7 +414,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 	private Configuration _configuration;
 	private volatile FreeMarkerBundleClassloader _freeMarkerBundleClassloader;
 	private volatile FreeMarkerEngineConfiguration
-		_freemarkerEngineConfiguration;
+		_freeMarkerEngineConfiguration;
 	private SingleVMPool _singleVMPool;
 	private final Map<String, String> _taglibMappings =
 		new ConcurrentHashMap<>();

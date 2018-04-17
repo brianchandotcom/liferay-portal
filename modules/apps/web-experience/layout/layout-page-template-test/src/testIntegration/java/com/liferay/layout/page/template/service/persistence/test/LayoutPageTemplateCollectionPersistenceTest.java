@@ -140,8 +140,6 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 
 		newLayoutPageTemplateCollection.setDescription(RandomTestUtil.randomString());
 
-		newLayoutPageTemplateCollection.setType(RandomTestUtil.nextInt());
-
 		_layoutPageTemplateCollections.add(_persistence.update(
 				newLayoutPageTemplateCollection));
 
@@ -169,8 +167,6 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 			newLayoutPageTemplateCollection.getName());
 		Assert.assertEquals(existingLayoutPageTemplateCollection.getDescription(),
 			newLayoutPageTemplateCollection.getDescription());
-		Assert.assertEquals(existingLayoutPageTemplateCollection.getType(),
-			newLayoutPageTemplateCollection.getType());
 	}
 
 	@Test
@@ -196,14 +192,6 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 		_persistence.countByG_LikeN(0L, "null");
 
 		_persistence.countByG_LikeN(0L, (String)null);
-	}
-
-	@Test
-	public void testCountByG_T() throws Exception {
-		_persistence.countByG_T(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
-
-		_persistence.countByG_T(0L, 0);
 	}
 
 	@Test
@@ -239,8 +227,7 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("LayoutPageTemplateCollection",
 			"layoutPageTemplateCollectionId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "name", true, "description", true,
-			"type", true);
+			true, "modifiedDate", true, "name", true, "description", true);
 	}
 
 	@Test
@@ -494,8 +481,6 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 		layoutPageTemplateCollection.setName(RandomTestUtil.randomString());
 
 		layoutPageTemplateCollection.setDescription(RandomTestUtil.randomString());
-
-		layoutPageTemplateCollection.setType(RandomTestUtil.nextInt());
 
 		_layoutPageTemplateCollections.add(_persistence.update(
 				layoutPageTemplateCollection));

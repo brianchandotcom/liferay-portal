@@ -144,6 +144,8 @@ public class LayoutPageTemplateEntryPersistenceTest {
 
 		newLayoutPageTemplateEntry.setName(RandomTestUtil.randomString());
 
+		newLayoutPageTemplateEntry.setType(RandomTestUtil.nextInt());
+
 		newLayoutPageTemplateEntry.setHtmlPreviewEntryId(RandomTestUtil.nextLong());
 
 		newLayoutPageTemplateEntry.setDefaultTemplate(RandomTestUtil.randomBoolean());
@@ -177,6 +179,8 @@ public class LayoutPageTemplateEntryPersistenceTest {
 			newLayoutPageTemplateEntry.getClassTypeId());
 		Assert.assertEquals(existingLayoutPageTemplateEntry.getName(),
 			newLayoutPageTemplateEntry.getName());
+		Assert.assertEquals(existingLayoutPageTemplateEntry.getType(),
+			newLayoutPageTemplateEntry.getType());
 		Assert.assertEquals(existingLayoutPageTemplateEntry.getHtmlPreviewEntryId(),
 			newLayoutPageTemplateEntry.getHtmlPreviewEntryId());
 		Assert.assertEquals(existingLayoutPageTemplateEntry.getDefaultTemplate(),
@@ -208,6 +212,14 @@ public class LayoutPageTemplateEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_T() throws Exception {
+		_persistence.countByG_T(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByG_T(0L, 0);
+	}
+
+	@Test
 	public void testCountByG_L_LikeN() throws Exception {
 		_persistence.countByG_L_LikeN(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), "");
@@ -223,6 +235,16 @@ public class LayoutPageTemplateEntryPersistenceTest {
 			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
 
 		_persistence.countByG_C_D(0L, 0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
+	public void testCountByG_T_LikeN() throws Exception {
+		_persistence.countByG_T_LikeN(RandomTestUtil.nextLong(), "",
+			RandomTestUtil.nextInt());
+
+		_persistence.countByG_T_LikeN(0L, "null", 0);
+
+		_persistence.countByG_T_LikeN(0L, (String)null, 0);
 	}
 
 	@Test
@@ -259,8 +281,8 @@ public class LayoutPageTemplateEntryPersistenceTest {
 			"layoutPageTemplateEntryId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "layoutPageTemplateCollectionId", true,
-			"classNameId", true, "classTypeId", true, "name", true,
-			"htmlPreviewEntryId", true, "defaultTemplate", true);
+			"classNameId", true, "classTypeId", true, "name", true, "type",
+			true, "htmlPreviewEntryId", true, "defaultTemplate", true);
 	}
 
 	@Test
@@ -511,6 +533,8 @@ public class LayoutPageTemplateEntryPersistenceTest {
 		layoutPageTemplateEntry.setClassTypeId(RandomTestUtil.nextLong());
 
 		layoutPageTemplateEntry.setName(RandomTestUtil.randomString());
+
+		layoutPageTemplateEntry.setType(RandomTestUtil.nextInt());
 
 		layoutPageTemplateEntry.setHtmlPreviewEntryId(RandomTestUtil.nextLong());
 

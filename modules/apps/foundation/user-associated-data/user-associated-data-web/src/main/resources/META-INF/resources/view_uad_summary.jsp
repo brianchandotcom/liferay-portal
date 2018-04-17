@@ -122,7 +122,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 					cssClass="text-success"
 					iconCssClass="icon-ok-sign"
 					label="<%= true %>"
-					message="all-ambiguous-data-was-forgotten"
+					message="application-data-successfully-reviewed"
 				/>
 			</c:if>
 		</div>

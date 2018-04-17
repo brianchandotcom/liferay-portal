@@ -33,6 +33,7 @@ import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -77,25 +78,34 @@ public class UADApplicationSummaryHelper {
 			ParamUtil.getString(
 				renderRequest, searchContainer.getOrderByTypeParam(), "asc"));
 
-		Stream<UADApplicationSummaryDisplay>
-			uadApplicationSummaryDisplayStream =
-				getUADApplicationSummaryDisplayStream(portletRequest, userId);
+		Predicate<UADApplicationSummaryDisplay> predicate = getPredicate(
+			ParamUtil.getString(renderRequest, "navigation", "all"));
 
-		List<UADApplicationSummaryDisplay> uadApplicationSummaryDisplays =
-			uadApplicationSummaryDisplayStream.filter(
-				getPredicate(
-					ParamUtil.getString(renderRequest, "navigation", "all"))
-			).sorted(
+		Supplier<Stream<UADApplicationSummaryDisplay>> streamSupplier = () ->
+			getUADApplicationSummaryDisplayStream(portletRequest, userId).
+				filter(predicate);
+
+		Stream<UADApplicationSummaryDisplay> summaryDisplayStream =
+			streamSupplier.get();
+
+		List<UADApplicationSummaryDisplay> results =
+			summaryDisplayStream.sorted(
 				getComparator(
 					searchContainer.getOrderByCol(),
 					searchContainer.getOrderByType())
+			).skip(
+				searchContainer.getStart()
+			).limit(
+				searchContainer.getDelta()
 			).collect(
 				Collectors.toList()
 			);
 
-		searchContainer.setResults(uadApplicationSummaryDisplays);
+		searchContainer.setResults(results);
 
-		searchContainer.setTotal(uadApplicationSummaryDisplays.size());
+		summaryDisplayStream = streamSupplier.get();
+
+		searchContainer.setTotal((int)summaryDisplayStream.count());
 
 		return searchContainer;
 	}

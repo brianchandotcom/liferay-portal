@@ -163,6 +163,7 @@ public interface RoleLocalService extends BaseLocalService,
 	* @param roleId the primary key for the new role
 	* @return the new role
 	*/
+	@Transactional(enabled = false)
 	public Role createRole(long roleId);
 
 	public void deleteGroupRole(long groupId, long roleId);

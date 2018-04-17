@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -94,12 +95,13 @@ public abstract class MBThreadFlagLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new message boards thread flag with the primary key. Does not add the message boards thread flag to the database.
-	 *
-	 * @param threadFlagId the primary key for the new message boards thread flag
-	 * @return the new message boards thread flag
-	 */
+	* Creates a new message boards thread flag with the primary key. Does not add the message boards thread flag to the database.
+	*
+	* @param threadFlagId the primary key for the new message boards thread flag
+	* @return the new message boards thread flag
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public MBThreadFlag createMBThreadFlag(long threadFlagId) {
 		return mbThreadFlagPersistence.create(threadFlagId);
 	}

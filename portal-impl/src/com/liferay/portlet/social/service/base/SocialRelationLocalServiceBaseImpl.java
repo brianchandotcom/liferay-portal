@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -88,12 +89,13 @@ public abstract class SocialRelationLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new social relation with the primary key. Does not add the social relation to the database.
-	 *
-	 * @param relationId the primary key for the new social relation
-	 * @return the new social relation
-	 */
+	* Creates a new social relation with the primary key. Does not add the social relation to the database.
+	*
+	* @param relationId the primary key for the new social relation
+	* @return the new social relation
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public SocialRelation createSocialRelation(long relationId) {
 		return socialRelationPersistence.create(relationId);
 	}

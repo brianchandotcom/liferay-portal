@@ -104,6 +104,7 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	* @param nodeId the primary key for the new wiki node
 	* @return the new wiki node
 	*/
+	@Transactional(enabled = false)
 	public WikiNode createWikiNode(long nodeId);
 
 	public void deleteNode(long nodeId) throws PortalException;

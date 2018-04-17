@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -101,12 +102,13 @@ public abstract class KBFolderLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Creates a new kb folder with the primary key. Does not add the kb folder to the database.
-	 *
-	 * @param kbFolderId the primary key for the new kb folder
-	 * @return the new kb folder
-	 */
+	* Creates a new kb folder with the primary key. Does not add the kb folder to the database.
+	*
+	* @param kbFolderId the primary key for the new kb folder
+	* @return the new kb folder
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public KBFolder createKBFolder(long kbFolderId) {
 		return kbFolderPersistence.create(kbFolderId);
 	}

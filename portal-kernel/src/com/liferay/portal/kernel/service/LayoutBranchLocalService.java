@@ -81,6 +81,7 @@ public interface LayoutBranchLocalService extends BaseLocalService,
 	* @param layoutBranchId the primary key for the new layout branch
 	* @return the new layout branch
 	*/
+	@Transactional(enabled = false)
 	public LayoutBranch createLayoutBranch(long layoutBranchId);
 
 	/**

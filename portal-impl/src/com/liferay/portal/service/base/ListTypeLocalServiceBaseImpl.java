@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.ListTypePersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -84,12 +85,13 @@ public abstract class ListTypeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Creates a new list type with the primary key. Does not add the list type to the database.
-	 *
-	 * @param listTypeId the primary key for the new list type
-	 * @return the new list type
-	 */
+	* Creates a new list type with the primary key. Does not add the list type to the database.
+	*
+	* @param listTypeId the primary key for the new list type
+	* @return the new list type
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public ListType createListType(long listTypeId) {
 		return listTypePersistence.create(listTypeId);
 	}

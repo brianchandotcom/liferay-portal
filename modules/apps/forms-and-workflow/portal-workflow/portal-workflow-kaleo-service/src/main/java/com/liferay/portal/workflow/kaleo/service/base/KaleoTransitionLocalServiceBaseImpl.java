@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -106,12 +107,13 @@ public abstract class KaleoTransitionLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new kaleo transition with the primary key. Does not add the kaleo transition to the database.
-	 *
-	 * @param kaleoTransitionId the primary key for the new kaleo transition
-	 * @return the new kaleo transition
-	 */
+	* Creates a new kaleo transition with the primary key. Does not add the kaleo transition to the database.
+	*
+	* @param kaleoTransitionId the primary key for the new kaleo transition
+	* @return the new kaleo transition
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public KaleoTransition createKaleoTransition(long kaleoTransitionId) {
 		return kaleoTransitionPersistence.create(kaleoTransitionId);
 	}

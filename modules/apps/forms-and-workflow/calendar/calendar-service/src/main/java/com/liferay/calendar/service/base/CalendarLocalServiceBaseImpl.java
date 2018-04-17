@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -101,12 +102,13 @@ public abstract class CalendarLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Creates a new calendar with the primary key. Does not add the calendar to the database.
-	 *
-	 * @param calendarId the primary key for the new calendar
-	 * @return the new calendar
-	 */
+	* Creates a new calendar with the primary key. Does not add the calendar to the database.
+	*
+	* @param calendarId the primary key for the new calendar
+	* @return the new calendar
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public Calendar createCalendar(long calendarId) {
 		return calendarPersistence.create(calendarId);
 	}

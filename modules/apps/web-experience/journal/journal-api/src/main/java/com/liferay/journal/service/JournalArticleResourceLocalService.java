@@ -77,6 +77,7 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	* @param resourcePrimKey the primary key for the new journal article resource
 	* @return the new journal article resource
 	*/
+	@Transactional(enabled = false)
 	public JournalArticleResource createJournalArticleResource(
 		long resourcePrimKey);
 

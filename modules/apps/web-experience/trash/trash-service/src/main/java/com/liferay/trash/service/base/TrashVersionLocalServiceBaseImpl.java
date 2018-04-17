@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -87,12 +88,13 @@ public abstract class TrashVersionLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new trash version with the primary key. Does not add the trash version to the database.
-	 *
-	 * @param versionId the primary key for the new trash version
-	 * @return the new trash version
-	 */
+	* Creates a new trash version with the primary key. Does not add the trash version to the database.
+	*
+	* @param versionId the primary key for the new trash version
+	* @return the new trash version
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public TrashVersion createTrashVersion(long versionId) {
 		return trashVersionPersistence.create(versionId);
 	}

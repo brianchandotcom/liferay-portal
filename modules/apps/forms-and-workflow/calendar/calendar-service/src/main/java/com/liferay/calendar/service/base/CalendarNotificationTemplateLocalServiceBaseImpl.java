@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -103,12 +104,13 @@ public abstract class CalendarNotificationTemplateLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new calendar notification template with the primary key. Does not add the calendar notification template to the database.
-	 *
-	 * @param calendarNotificationTemplateId the primary key for the new calendar notification template
-	 * @return the new calendar notification template
-	 */
+	* Creates a new calendar notification template with the primary key. Does not add the calendar notification template to the database.
+	*
+	* @param calendarNotificationTemplateId the primary key for the new calendar notification template
+	* @return the new calendar notification template
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public CalendarNotificationTemplate createCalendarNotificationTemplate(
 		long calendarNotificationTemplateId) {
 		return calendarNotificationTemplatePersistence.create(calendarNotificationTemplateId);

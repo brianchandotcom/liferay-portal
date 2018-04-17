@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -87,12 +88,13 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new journal article resource with the primary key. Does not add the journal article resource to the database.
-	 *
-	 * @param resourcePrimKey the primary key for the new journal article resource
-	 * @return the new journal article resource
-	 */
+	* Creates a new journal article resource with the primary key. Does not add the journal article resource to the database.
+	*
+	* @param resourcePrimKey the primary key for the new journal article resource
+	* @return the new journal article resource
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public JournalArticleResource createJournalArticleResource(
 		long resourcePrimKey) {
 		return journalArticleResourcePersistence.create(resourcePrimKey);

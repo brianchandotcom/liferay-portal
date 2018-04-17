@@ -570,6 +570,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @param userId the primary key for the new user
 	* @return the new user
 	*/
+	@Transactional(enabled = false)
 	public User createUser(long userId);
 
 	/**

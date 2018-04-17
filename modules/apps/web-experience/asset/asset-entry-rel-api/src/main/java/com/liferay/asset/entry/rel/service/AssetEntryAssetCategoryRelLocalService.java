@@ -83,6 +83,7 @@ public interface AssetEntryAssetCategoryRelLocalService extends BaseLocalService
 	* @param assetEntryAssetCategoryRelId the primary key for the new asset entry asset category rel
 	* @return the new asset entry asset category rel
 	*/
+	@Transactional(enabled = false)
 	public AssetEntryAssetCategoryRel createAssetEntryAssetCategoryRel(
 		long assetEntryAssetCategoryRelId);
 

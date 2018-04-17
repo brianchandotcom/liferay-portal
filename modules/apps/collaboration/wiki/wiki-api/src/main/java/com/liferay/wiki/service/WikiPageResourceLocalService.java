@@ -86,6 +86,7 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	* @param resourcePrimKey the primary key for the new wiki page resource
 	* @return the new wiki page resource
 	*/
+	@Transactional(enabled = false)
 	public WikiPageResource createWikiPageResource(long resourcePrimKey);
 
 	public void deletePageResource(long nodeId, java.lang.String title)

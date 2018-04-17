@@ -80,6 +80,7 @@ public interface KaleoNodeLocalService extends BaseLocalService,
 	* @param kaleoNodeId the primary key for the new kaleo node
 	* @return the new kaleo node
 	*/
+	@Transactional(enabled = false)
 	public KaleoNode createKaleoNode(long kaleoNodeId);
 
 	public void deleteCompanyKaleoNodes(long companyId);

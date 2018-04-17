@@ -95,6 +95,7 @@ public interface UserThreadLocalService extends BaseLocalService,
 	* @param userThreadId the primary key for the new user thread
 	* @return the new user thread
 	*/
+	@Transactional(enabled = false)
 	public UserThread createUserThread(long userThreadId);
 
 	/**

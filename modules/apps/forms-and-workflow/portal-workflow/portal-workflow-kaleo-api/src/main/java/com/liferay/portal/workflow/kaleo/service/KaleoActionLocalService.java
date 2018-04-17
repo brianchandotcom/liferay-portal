@@ -82,6 +82,7 @@ public interface KaleoActionLocalService extends BaseLocalService,
 	* @param kaleoActionId the primary key for the new kaleo action
 	* @return the new kaleo action
 	*/
+	@Transactional(enabled = false)
 	public KaleoAction createKaleoAction(long kaleoActionId);
 
 	public void deleteCompanyKaleoActions(long companyId);

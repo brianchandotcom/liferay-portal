@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.persistence.GroupFinder;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -92,12 +93,13 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new social activity achievement with the primary key. Does not add the social activity achievement to the database.
-	 *
-	 * @param activityAchievementId the primary key for the new social activity achievement
-	 * @return the new social activity achievement
-	 */
+	* Creates a new social activity achievement with the primary key. Does not add the social activity achievement to the database.
+	*
+	* @param activityAchievementId the primary key for the new social activity achievement
+	* @return the new social activity achievement
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public SocialActivityAchievement createSocialActivityAchievement(
 		long activityAchievementId) {
 		return socialActivityAchievementPersistence.create(activityAchievementId);

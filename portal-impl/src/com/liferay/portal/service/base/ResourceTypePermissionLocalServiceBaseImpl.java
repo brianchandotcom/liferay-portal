@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.service.ResourceTypePermissionLocalService;
 import com.liferay.portal.kernel.service.persistence.ResourceActionPersistence;
 import com.liferay.portal.kernel.service.persistence.ResourceTypePermissionFinder;
 import com.liferay.portal.kernel.service.persistence.ResourceTypePermissionPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -89,12 +90,13 @@ public abstract class ResourceTypePermissionLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new resource type permission with the primary key. Does not add the resource type permission to the database.
-	 *
-	 * @param resourceTypePermissionId the primary key for the new resource type permission
-	 * @return the new resource type permission
-	 */
+	* Creates a new resource type permission with the primary key. Does not add the resource type permission to the database.
+	*
+	* @param resourceTypePermissionId the primary key for the new resource type permission
+	* @return the new resource type permission
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public ResourceTypePermission createResourceTypePermission(
 		long resourceTypePermissionId) {
 		return resourceTypePermissionPersistence.create(resourceTypePermissionId);

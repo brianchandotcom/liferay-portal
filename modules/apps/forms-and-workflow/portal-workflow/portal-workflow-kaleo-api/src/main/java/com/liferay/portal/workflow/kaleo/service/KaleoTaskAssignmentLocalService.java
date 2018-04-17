@@ -83,6 +83,7 @@ public interface KaleoTaskAssignmentLocalService extends BaseLocalService,
 	* @param kaleoTaskAssignmentId the primary key for the new kaleo task assignment
 	* @return the new kaleo task assignment
 	*/
+	@Transactional(enabled = false)
 	public KaleoTaskAssignment createKaleoTaskAssignment(
 		long kaleoTaskAssignmentId);
 

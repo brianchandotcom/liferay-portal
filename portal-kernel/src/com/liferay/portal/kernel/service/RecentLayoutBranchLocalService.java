@@ -77,6 +77,7 @@ public interface RecentLayoutBranchLocalService extends BaseLocalService,
 	* @param recentLayoutBranchId the primary key for the new recent layout branch
 	* @return the new recent layout branch
 	*/
+	@Transactional(enabled = false)
 	public RecentLayoutBranch createRecentLayoutBranch(
 		long recentLayoutBranchId);
 

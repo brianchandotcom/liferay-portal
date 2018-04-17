@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -98,12 +99,13 @@ public abstract class DDMDataProviderInstanceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new ddm data provider instance with the primary key. Does not add the ddm data provider instance to the database.
-	 *
-	 * @param dataProviderInstanceId the primary key for the new ddm data provider instance
-	 * @return the new ddm data provider instance
-	 */
+	* Creates a new ddm data provider instance with the primary key. Does not add the ddm data provider instance to the database.
+	*
+	* @param dataProviderInstanceId the primary key for the new ddm data provider instance
+	* @return the new ddm data provider instance
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public DDMDataProviderInstance createDDMDataProviderInstance(
 		long dataProviderInstanceId) {
 		return ddmDataProviderInstancePersistence.create(dataProviderInstanceId);

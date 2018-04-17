@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.SystemEventPersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -104,12 +105,13 @@ public abstract class AssetEntryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new asset entry with the primary key. Does not add the asset entry to the database.
-	 *
-	 * @param entryId the primary key for the new asset entry
-	 * @return the new asset entry
-	 */
+	* Creates a new asset entry with the primary key. Does not add the asset entry to the database.
+	*
+	* @param entryId the primary key for the new asset entry
+	* @return the new asset entry
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public AssetEntry createAssetEntry(long entryId) {
 		return assetEntryPersistence.create(entryId);
 	}

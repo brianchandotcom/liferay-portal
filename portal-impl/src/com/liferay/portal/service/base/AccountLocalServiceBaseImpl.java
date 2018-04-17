@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.AccountLocalService;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.AccountPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -83,12 +84,13 @@ public abstract class AccountLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Creates a new account with the primary key. Does not add the account to the database.
-	 *
-	 * @param accountId the primary key for the new account
-	 * @return the new account
-	 */
+	* Creates a new account with the primary key. Does not add the account to the database.
+	*
+	* @param accountId the primary key for the new account
+	* @return the new account
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public Account createAccount(long accountId) {
 		return accountPersistence.create(accountId);
 	}

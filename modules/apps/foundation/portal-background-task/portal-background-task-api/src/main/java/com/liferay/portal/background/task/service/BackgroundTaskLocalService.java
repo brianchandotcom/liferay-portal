@@ -112,6 +112,7 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	* @param backgroundTaskId the primary key for the new background task
 	* @return the new background task
 	*/
+	@Transactional(enabled = false)
 	public BackgroundTask createBackgroundTask(long backgroundTaskId);
 
 	/**

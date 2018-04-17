@@ -79,6 +79,7 @@ public interface MBStatsUserLocalService extends BaseLocalService,
 	* @param statsUserId the primary key for the new message boards stats user
 	* @return the new message boards stats user
 	*/
+	@Transactional(enabled = false)
 	public MBStatsUser createMBStatsUser(long statsUserId);
 
 	/**

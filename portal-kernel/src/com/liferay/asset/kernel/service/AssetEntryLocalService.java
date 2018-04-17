@@ -104,6 +104,7 @@ public interface AssetEntryLocalService extends BaseLocalService,
 	* @param entryId the primary key for the new asset entry
 	* @return the new asset entry
 	*/
+	@Transactional(enabled = false)
 	public AssetEntry createAssetEntry(long entryId);
 
 	public void deleteAssetCategoryAssetEntries(long categoryId,

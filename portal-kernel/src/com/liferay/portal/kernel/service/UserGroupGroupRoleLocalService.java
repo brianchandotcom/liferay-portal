@@ -81,6 +81,7 @@ public interface UserGroupGroupRoleLocalService extends BaseLocalService,
 	* @param userGroupGroupRolePK the primary key for the new user group group role
 	* @return the new user group group role
 	*/
+	@Transactional(enabled = false)
 	public UserGroupGroupRole createUserGroupGroupRole(
 		UserGroupGroupRolePK userGroupGroupRolePK);
 

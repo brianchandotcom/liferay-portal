@@ -81,6 +81,7 @@ public interface OAuth2ApplicationScopeAliasesLocalService
 	* @param oAuth2ApplicationScopeAliasesId the primary key for the new o auth2 application scope aliases
 	* @return the new o auth2 application scope aliases
 	*/
+	@Transactional(enabled = false)
 	public OAuth2ApplicationScopeAliases createOAuth2ApplicationScopeAliases(
 		long oAuth2ApplicationScopeAliasesId);
 

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -87,12 +88,13 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new wiki page resource with the primary key. Does not add the wiki page resource to the database.
-	 *
-	 * @param resourcePrimKey the primary key for the new wiki page resource
-	 * @return the new wiki page resource
-	 */
+	* Creates a new wiki page resource with the primary key. Does not add the wiki page resource to the database.
+	*
+	* @param resourcePrimKey the primary key for the new wiki page resource
+	* @return the new wiki page resource
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public WikiPageResource createWikiPageResource(long resourcePrimKey) {
 		return wikiPageResourcePersistence.create(resourcePrimKey);
 	}

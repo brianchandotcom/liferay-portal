@@ -79,6 +79,7 @@ public interface FooLocalService extends BaseLocalService,
 	* @param fooId the primary key for the new foo
 	* @return the new foo
 	*/
+	@Transactional(enabled = false)
 	public Foo createFoo(long fooId);
 
 	/**

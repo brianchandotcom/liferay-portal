@@ -88,6 +88,7 @@ public interface SAPEntryLocalService extends BaseLocalService,
 	* @param sapEntryId the primary key for the new sap entry
 	* @return the new sap entry
 	*/
+	@Transactional(enabled = false)
 	public SAPEntry createSAPEntry(long sapEntryId);
 
 	/**

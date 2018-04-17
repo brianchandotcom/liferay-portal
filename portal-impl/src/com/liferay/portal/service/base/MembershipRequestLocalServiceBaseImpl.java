@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.service.persistence.UserGroupPersistence;
 import com.liferay.portal.kernel.service.persistence.UserGroupRoleFinder;
 import com.liferay.portal.kernel.service.persistence.UserGroupRolePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -96,12 +97,13 @@ public abstract class MembershipRequestLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new membership request with the primary key. Does not add the membership request to the database.
-	 *
-	 * @param membershipRequestId the primary key for the new membership request
-	 * @return the new membership request
-	 */
+	* Creates a new membership request with the primary key. Does not add the membership request to the database.
+	*
+	* @param membershipRequestId the primary key for the new membership request
+	* @return the new membership request
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public MembershipRequest createMembershipRequest(long membershipRequestId) {
 		return membershipRequestPersistence.create(membershipRequestId);
 	}

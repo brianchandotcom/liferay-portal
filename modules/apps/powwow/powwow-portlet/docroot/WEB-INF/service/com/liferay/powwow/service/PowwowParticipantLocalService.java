@@ -82,6 +82,7 @@ public interface PowwowParticipantLocalService extends BaseLocalService,
 	* @param powwowParticipantId the primary key for the new powwow participant
 	* @return the new powwow participant
 	*/
+	@Transactional(enabled = false)
 	public PowwowParticipant createPowwowParticipant(long powwowParticipantId);
 
 	/**

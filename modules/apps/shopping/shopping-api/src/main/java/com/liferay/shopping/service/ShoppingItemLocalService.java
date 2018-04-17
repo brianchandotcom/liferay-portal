@@ -106,6 +106,7 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 	* @param itemId the primary key for the new shopping item
 	* @return the new shopping item
 	*/
+	@Transactional(enabled = false)
 	public ShoppingItem createShoppingItem(long itemId);
 
 	public void deleteItem(long itemId) throws PortalException;

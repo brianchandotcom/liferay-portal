@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.WebDAVPropsLocalService;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.WebDAVPropsPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -85,12 +86,13 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new web dav props with the primary key. Does not add the web dav props to the database.
-	 *
-	 * @param webDavPropsId the primary key for the new web dav props
-	 * @return the new web dav props
-	 */
+	* Creates a new web dav props with the primary key. Does not add the web dav props to the database.
+	*
+	* @param webDavPropsId the primary key for the new web dav props
+	* @return the new web dav props
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public WebDAVProps createWebDAVProps(long webDavPropsId) {
 		return webDAVPropsPersistence.create(webDavPropsId);
 	}

@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -102,12 +103,13 @@ public abstract class DDLRecordLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Creates a new ddl record with the primary key. Does not add the ddl record to the database.
-	 *
-	 * @param recordId the primary key for the new ddl record
-	 * @return the new ddl record
-	 */
+	* Creates a new ddl record with the primary key. Does not add the ddl record to the database.
+	*
+	* @param recordId the primary key for the new ddl record
+	* @return the new ddl record
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public DDLRecord createDDLRecord(long recordId) {
 		return ddlRecordPersistence.create(recordId);
 	}

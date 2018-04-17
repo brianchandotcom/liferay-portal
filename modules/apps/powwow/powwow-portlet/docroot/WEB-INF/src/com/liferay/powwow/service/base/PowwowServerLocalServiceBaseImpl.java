@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -90,12 +91,13 @@ public abstract class PowwowServerLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new powwow server with the primary key. Does not add the powwow server to the database.
-	 *
-	 * @param powwowServerId the primary key for the new powwow server
-	 * @return the new powwow server
-	 */
+	* Creates a new powwow server with the primary key. Does not add the powwow server to the database.
+	*
+	* @param powwowServerId the primary key for the new powwow server
+	* @return the new powwow server
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public PowwowServer createPowwowServer(long powwowServerId) {
 		return powwowServerPersistence.create(powwowServerId);
 	}

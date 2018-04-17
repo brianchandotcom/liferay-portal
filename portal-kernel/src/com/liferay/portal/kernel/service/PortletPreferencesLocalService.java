@@ -86,6 +86,7 @@ public interface PortletPreferencesLocalService extends BaseLocalService,
 	* @param portletPreferencesId the primary key for the new portlet preferences
 	* @return the new portlet preferences
 	*/
+	@Transactional(enabled = false)
 	public PortletPreferences createPortletPreferences(
 		long portletPreferencesId);
 

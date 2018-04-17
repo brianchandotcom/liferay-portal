@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -87,12 +88,13 @@ public abstract class DDMDataProviderInstanceLinkLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new ddm data provider instance link with the primary key. Does not add the ddm data provider instance link to the database.
-	 *
-	 * @param dataProviderInstanceLinkId the primary key for the new ddm data provider instance link
-	 * @return the new ddm data provider instance link
-	 */
+	* Creates a new ddm data provider instance link with the primary key. Does not add the ddm data provider instance link to the database.
+	*
+	* @param dataProviderInstanceLinkId the primary key for the new ddm data provider instance link
+	* @return the new ddm data provider instance link
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public DDMDataProviderInstanceLink createDDMDataProviderInstanceLink(
 		long dataProviderInstanceLinkId) {
 		return ddmDataProviderInstanceLinkPersistence.create(dataProviderInstanceLinkId);

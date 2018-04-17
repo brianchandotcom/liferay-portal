@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.service.persistence.OrganizationPersistence;
 import com.liferay.portal.kernel.service.persistence.RepositoryPersistence;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -99,12 +100,13 @@ public abstract class SyncDLObjectLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new sync dl object with the primary key. Does not add the sync dl object to the database.
-	 *
-	 * @param syncDLObjectId the primary key for the new sync dl object
-	 * @return the new sync dl object
-	 */
+	* Creates a new sync dl object with the primary key. Does not add the sync dl object to the database.
+	*
+	* @param syncDLObjectId the primary key for the new sync dl object
+	* @return the new sync dl object
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public SyncDLObject createSyncDLObject(long syncDLObjectId) {
 		return syncDLObjectPersistence.create(syncDLObjectId);
 	}

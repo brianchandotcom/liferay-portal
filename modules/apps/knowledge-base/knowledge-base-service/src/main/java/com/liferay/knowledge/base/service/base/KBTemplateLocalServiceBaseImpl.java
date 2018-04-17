@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -104,12 +105,13 @@ public abstract class KBTemplateLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new kb template with the primary key. Does not add the kb template to the database.
-	 *
-	 * @param kbTemplateId the primary key for the new kb template
-	 * @return the new kb template
-	 */
+	* Creates a new kb template with the primary key. Does not add the kb template to the database.
+	*
+	* @param kbTemplateId the primary key for the new kb template
+	* @return the new kb template
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public KBTemplate createKBTemplate(long kbTemplateId) {
 		return kbTemplatePersistence.create(kbTemplateId);
 	}

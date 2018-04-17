@@ -17,14 +17,13 @@ package com.liferay.commerce.service.persistence.impl;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.impl.CommerceOrderItemImpl;
 import com.liferay.commerce.service.persistence.CommerceOrderItemFinder;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Iterator;
 import java.util.List;
@@ -66,7 +65,7 @@ public class CommerceOrderItemFinderImpl
 		try {
 			session = openSession();
 
-			String sql = _customSQL.get(getClass(), FIND_BY_C_C);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_C_C);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -95,7 +94,7 @@ public class CommerceOrderItemFinderImpl
 		try {
 			session = openSession();
 
-			String sql = _customSQL.get(
+			String sql = CustomSQLUtil.get(
 				getClass(), GET_COMMERCE_ORDER_ITEMS_QUANTITY);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -133,7 +132,8 @@ public class CommerceOrderItemFinderImpl
 		try {
 			session = openSession();
 
-			String sql = _customSQL.get(getClass(), GET_CP_INSTANCE_QUANTITY);
+			String sql = CustomSQLUtil.get(
+				getClass(), GET_CP_INSTANCE_QUANTITY);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -163,8 +163,5 @@ public class CommerceOrderItemFinderImpl
 			closeSession(session);
 		}
 	}
-
-	@ServiceReference(type = CustomSQL.class)
-	private CustomSQL _customSQL;
 
 }

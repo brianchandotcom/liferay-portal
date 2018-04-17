@@ -17,14 +17,13 @@ package com.liferay.commerce.product.service.persistence.impl;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.impl.CPInstanceImpl;
 import com.liferay.commerce.product.service.persistence.CPInstanceFinder;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
 import java.util.List;
@@ -54,7 +53,7 @@ public class CPInstanceFinderImpl
 		try {
 			session = openSession();
 
-			String sql = _customSQL.get(
+			String sql = CustomSQLUtil.get(
 				getClass(), FIND_BY_EXPIRATION_DATE, queryDefinition,
 				CPInstanceImpl.TABLE_NAME);
 
@@ -81,8 +80,5 @@ public class CPInstanceFinderImpl
 			closeSession(session);
 		}
 	}
-
-	@ServiceReference(type = CustomSQL.class)
-	private CustomSQL _customSQL;
 
 }

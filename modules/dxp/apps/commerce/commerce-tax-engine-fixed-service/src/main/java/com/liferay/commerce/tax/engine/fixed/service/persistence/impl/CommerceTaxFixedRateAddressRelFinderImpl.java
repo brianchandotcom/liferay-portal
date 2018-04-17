@@ -17,13 +17,12 @@ package com.liferay.commerce.tax.engine.fixed.service.persistence.impl;
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel;
 import com.liferay.commerce.tax.engine.fixed.model.impl.CommerceTaxFixedRateAddressRelImpl;
 import com.liferay.commerce.tax.engine.fixed.service.persistence.CommerceTaxFixedRateAddressRelFinder;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
 
@@ -73,7 +72,7 @@ public class CommerceTaxFixedRateAddressRelFinderImpl
 		try {
 			session = openSession();
 
-			String sql = _customSQL.get(getClass(), FIND_BY_C_C_C_Z);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_C_C_C_Z);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -98,8 +97,5 @@ public class CommerceTaxFixedRateAddressRelFinderImpl
 			closeSession(session);
 		}
 	}
-
-	@ServiceReference(type = CustomSQL.class)
-	private CustomSQL _customSQL;
 
 }

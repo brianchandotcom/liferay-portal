@@ -15,12 +15,11 @@
 package com.liferay.commerce.currency.service.persistence.impl;
 
 import com.liferay.commerce.currency.service.persistence.CommerceCurrencyFinder;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
 
@@ -40,7 +39,7 @@ public class CommerceCurrencyFinderImpl
 		try {
 			session = openSession();
 
-			String sql = _customSQL.get(getClass(), GET_GROUP_IDS);
+			String sql = CustomSQLUtil.get(getClass(), GET_GROUP_IDS);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -54,8 +53,5 @@ public class CommerceCurrencyFinderImpl
 			closeSession(session);
 		}
 	}
-
-	@ServiceReference(type = CustomSQL.class)
-	private CustomSQL _customSQL;
 
 }

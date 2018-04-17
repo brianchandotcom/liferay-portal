@@ -42,6 +42,28 @@ public class CommerceUserSegmentEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.user.segment.service.impl.CommerceUserSegmentEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry addCommerceUserSegmentEntry(
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		double priority, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCommerceUserSegmentEntry(nameMap, priority, active,
+			serviceContext);
+	}
+
+	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry deleteCommerceUserSegmentEntry(
+		long commerceUserSegmentEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .deleteCommerceUserSegmentEntry(commerceUserSegmentEntryId);
+	}
+
+	public static java.util.List<com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry> getCommerceUserSegmentEntries(
+		long groupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommerceUserSegmentEntries(groupId, start, end);
+	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -50,6 +72,17 @@ public class CommerceUserSegmentEntryServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry updateCommerceUserSegmentEntry(
+		long commerceUserSegmentEntryId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		double priority, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommerceUserSegmentEntry(commerceUserSegmentEntryId,
+			nameMap, priority, active, serviceContext);
 	}
 
 	public static CommerceUserSegmentEntryService getService() {

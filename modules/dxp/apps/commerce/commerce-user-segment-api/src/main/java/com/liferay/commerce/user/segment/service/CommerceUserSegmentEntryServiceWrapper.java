@@ -34,6 +34,31 @@ public class CommerceUserSegmentEntryServiceWrapper
 		_commerceUserSegmentEntryService = commerceUserSegmentEntryService;
 	}
 
+	@Override
+	public com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry addCommerceUserSegmentEntry(
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		double priority, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceUserSegmentEntryService.addCommerceUserSegmentEntry(nameMap,
+			priority, active, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry deleteCommerceUserSegmentEntry(
+		long commerceUserSegmentEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceUserSegmentEntryService.deleteCommerceUserSegmentEntry(commerceUserSegmentEntryId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry> getCommerceUserSegmentEntries(
+		long groupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceUserSegmentEntryService.getCommerceUserSegmentEntries(groupId,
+			start, end);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -42,6 +67,17 @@ public class CommerceUserSegmentEntryServiceWrapper
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _commerceUserSegmentEntryService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry updateCommerceUserSegmentEntry(
+		long commerceUserSegmentEntryId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		double priority, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceUserSegmentEntryService.updateCommerceUserSegmentEntry(commerceUserSegmentEntryId,
+			nameMap, priority, active, serviceContext);
 	}
 
 	@Override

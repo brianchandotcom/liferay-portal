@@ -25,10 +25,13 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -37,6 +40,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the local service interface for CommerceUserSegmentEntry. Methods of this
@@ -71,6 +76,11 @@ public interface CommerceUserSegmentEntryLocalService extends BaseLocalService,
 	public CommerceUserSegmentEntry addCommerceUserSegmentEntry(
 		CommerceUserSegmentEntry commerceUserSegmentEntry);
 
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceUserSegmentEntry addCommerceUserSegmentEntry(
+		Map<Locale, java.lang.String> nameMap, double priority, boolean active,
+		ServiceContext serviceContext) throws PortalException;
+
 	/**
 	* Creates a new commerce user segment entry with the primary key. Does not add the commerce user segment entry to the database.
 	*
@@ -85,10 +95,13 @@ public interface CommerceUserSegmentEntryLocalService extends BaseLocalService,
 	*
 	* @param commerceUserSegmentEntry the commerce user segment entry
 	* @return the commerce user segment entry that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceUserSegmentEntry deleteCommerceUserSegmentEntry(
-		CommerceUserSegmentEntry commerceUserSegmentEntry);
+		CommerceUserSegmentEntry commerceUserSegmentEntry)
+		throws PortalException;
 
 	/**
 	* Deletes the commerce user segment entry with the primary key from the database. Also notifies the appropriate model listeners.
@@ -189,6 +202,10 @@ public interface CommerceUserSegmentEntryLocalService extends BaseLocalService,
 	public List<CommerceUserSegmentEntry> getCommerceUserSegmentEntries(
 		int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceUserSegmentEntry> getCommerceUserSegmentEntries(
+		long groupId, int start, int end);
+
 	/**
 	* Returns the number of commerce user segment entries.
 	*
@@ -232,4 +249,10 @@ public interface CommerceUserSegmentEntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceUserSegmentEntry updateCommerceUserSegmentEntry(
 		CommerceUserSegmentEntry commerceUserSegmentEntry);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceUserSegmentEntry updateCommerceUserSegmentEntry(
+		long commerceUserSegmentEntryId, Map<Locale, java.lang.String> nameMap,
+		double priority, boolean active, ServiceContext serviceContext)
+		throws PortalException;
 }

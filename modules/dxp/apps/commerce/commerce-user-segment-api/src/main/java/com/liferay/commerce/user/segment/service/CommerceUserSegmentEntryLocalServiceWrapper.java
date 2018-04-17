@@ -46,6 +46,16 @@ public class CommerceUserSegmentEntryLocalServiceWrapper
 		return _commerceUserSegmentEntryLocalService.addCommerceUserSegmentEntry(commerceUserSegmentEntry);
 	}
 
+	@Override
+	public com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry addCommerceUserSegmentEntry(
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		double priority, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceUserSegmentEntryLocalService.addCommerceUserSegmentEntry(nameMap,
+			priority, active, serviceContext);
+	}
+
 	/**
 	* Creates a new commerce user segment entry with the primary key. Does not add the commerce user segment entry to the database.
 	*
@@ -63,10 +73,12 @@ public class CommerceUserSegmentEntryLocalServiceWrapper
 	*
 	* @param commerceUserSegmentEntry the commerce user segment entry
 	* @return the commerce user segment entry that was removed
+	* @throws PortalException
 	*/
 	@Override
 	public com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry deleteCommerceUserSegmentEntry(
-		com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry commerceUserSegmentEntry) {
+		com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry commerceUserSegmentEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceUserSegmentEntryLocalService.deleteCommerceUserSegmentEntry(commerceUserSegmentEntry);
 	}
 
@@ -209,6 +221,13 @@ public class CommerceUserSegmentEntryLocalServiceWrapper
 			end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry> getCommerceUserSegmentEntries(
+		long groupId, int start, int end) {
+		return _commerceUserSegmentEntryLocalService.getCommerceUserSegmentEntries(groupId,
+			start, end);
+	}
+
 	/**
 	* Returns the number of commerce user segment entries.
 	*
@@ -265,6 +284,17 @@ public class CommerceUserSegmentEntryLocalServiceWrapper
 	public com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry updateCommerceUserSegmentEntry(
 		com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry commerceUserSegmentEntry) {
 		return _commerceUserSegmentEntryLocalService.updateCommerceUserSegmentEntry(commerceUserSegmentEntry);
+	}
+
+	@Override
+	public com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry updateCommerceUserSegmentEntry(
+		long commerceUserSegmentEntryId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		double priority, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceUserSegmentEntryLocalService.updateCommerceUserSegmentEntry(commerceUserSegmentEntryId,
+			nameMap, priority, active, serviceContext);
 	}
 
 	@Override

@@ -16,9 +16,20 @@ package com.liferay.commerce.user.segment.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+
+import java.rmi.RemoteException;
+
+import java.util.Locale;
+import java.util.Map;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryServiceUtil} service utility. The
+ * {@link CommerceUserSegmentEntryServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +64,85 @@ import aQute.bnd.annotation.ProviderType;
  * @author Marco Leo
  * @see CommerceUserSegmentEntryServiceHttp
  * @see com.liferay.commerce.user.segment.model.CommerceUserSegmentEntrySoap
- * @see com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryServiceUtil
+ * @see CommerceUserSegmentEntryServiceUtil
  * @generated
  */
 @ProviderType
 public class CommerceUserSegmentEntryServiceSoap {
+	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentEntrySoap addCommerceUserSegmentEntry(
+		java.lang.String[] nameMapLanguageIds,
+		java.lang.String[] nameMapValues, double priority, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
+
+			com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry returnValue =
+				CommerceUserSegmentEntryServiceUtil.addCommerceUserSegmentEntry(nameMap,
+					priority, active, serviceContext);
+
+			return com.liferay.commerce.user.segment.model.CommerceUserSegmentEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentEntrySoap deleteCommerceUserSegmentEntry(
+		long commerceUserSegmentEntryId) throws RemoteException {
+		try {
+			com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry returnValue =
+				CommerceUserSegmentEntryServiceUtil.deleteCommerceUserSegmentEntry(commerceUserSegmentEntryId);
+
+			return com.liferay.commerce.user.segment.model.CommerceUserSegmentEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentEntrySoap updateCommerceUserSegmentEntry(
+		long commerceUserSegmentEntryId, java.lang.String[] nameMapLanguageIds,
+		java.lang.String[] nameMapValues, double priority, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
+
+			com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry returnValue =
+				CommerceUserSegmentEntryServiceUtil.updateCommerceUserSegmentEntry(commerceUserSegmentEntryId,
+					nameMap, priority, active, serviceContext);
+
+			return com.liferay.commerce.user.segment.model.CommerceUserSegmentEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentEntrySoap[] getCommerceUserSegmentEntries(
+		long groupId, int start, int end) throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry> returnValue =
+				CommerceUserSegmentEntryServiceUtil.getCommerceUserSegmentEntries(groupId,
+					start, end);
+
+			return com.liferay.commerce.user.segment.model.CommerceUserSegmentEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(CommerceUserSegmentEntryServiceSoap.class);
 }

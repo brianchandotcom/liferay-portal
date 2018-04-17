@@ -29,6 +29,11 @@
 	<td>//span[contains(@data-qa-id,'processResult')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>LATEST_PROCESS_RESULT</td>
+	<td>xpath=(//span[contains(@data-qa-id,'processResult')])[1]</td>
+	<td></td>
+</tr>
 <!--STAGING-->
 <tr>
 	<td>STAGING_NEW_PUBLICATION_PROCESS_NAVIGATION</td>

@@ -15,16 +15,25 @@
 package com.liferay.fragment.web.internal.display.context;
 
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.RenderRequest;
@@ -84,6 +93,29 @@ public class FragmentEntryLinkDisplayContext {
 		return _fragmentEntryId;
 	}
 
+	public String getFragmentEntryLinkName(FragmentEntryLink fragmentEntryLink)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long classNameId = fragmentEntryLink.getClassNameId();
+
+		if (classNameId == PortalUtil.getClassNameId(Layout.class)) {
+			Layout layout = LayoutLocalServiceUtil.getLayout(
+				fragmentEntryLink.getClassPK());
+
+			return layout.getName(themeDisplay.getLocale());
+		}
+		else {
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				LayoutPageTemplateEntryLocalServiceUtil.
+					getLayoutPageTemplateEntry(fragmentEntryLink.getClassPK());
+
+			return layoutPageTemplateEntry.getName();
+		}
+	}
+
 	public String getKeywords() {
 		if (Validator.isNotNull(_keywords)) {
 			return _keywords;
@@ -125,6 +157,79 @@ public class FragmentEntryLinkDisplayContext {
 		return _orderByType;
 	}
 
+	public SearchContainer getSearchContainer() throws PortalException {
+		if (_searchContainer != null) {
+			return _searchContainer;
+		}
+
+		SearchContainer fragmentEntryLinksSearchContainer = new SearchContainer(
+			_renderRequest, _renderResponse.createRenderURL(), null,
+			"there-are-no-fragment-usages");
+
+		fragmentEntryLinksSearchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse));
+
+		OrderByComparator<FragmentEntryLink> orderByComparator = null;
+
+		fragmentEntryLinksSearchContainer.setOrderByCol(getOrderByCol());
+		fragmentEntryLinksSearchContainer.setOrderByComparator(
+			orderByComparator);
+		fragmentEntryLinksSearchContainer.setOrderByType(getOrderByType());
+
+		List<FragmentEntryLink> fragmentEntryLinks = null;
+		int fragmentEntryLinksCount = 0;
+
+		FragmentEntry fragmentEntry = getFragmentEntry();
+
+		if (Objects.equals(getNavigation(), "pages")) {
+			fragmentEntryLinks =
+				FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
+					fragmentEntry.getGroupId(), getFragmentEntryId(),
+					PortalUtil.getClassNameId(Layout.class),
+					fragmentEntryLinksSearchContainer.getStart(),
+					fragmentEntryLinksSearchContainer.getEnd(),
+					orderByComparator);
+
+			fragmentEntryLinksCount =
+				FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinksCount(
+					fragmentEntry.getGroupId(), getFragmentEntryId(),
+					PortalUtil.getClassNameId(Layout.class));
+		}
+		else if (Objects.equals(getNavigation(), "page-templates")) {
+			fragmentEntryLinks =
+				FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
+					fragmentEntry.getGroupId(), getFragmentEntryId(),
+					PortalUtil.getClassNameId(LayoutPageTemplateEntry.class),
+					fragmentEntryLinksSearchContainer.getStart(),
+					fragmentEntryLinksSearchContainer.getEnd(),
+					orderByComparator);
+
+			fragmentEntryLinksCount =
+				FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinksCount(
+					fragmentEntry.getGroupId(), getFragmentEntryId(),
+					PortalUtil.getClassNameId(LayoutPageTemplateEntry.class));
+		}
+		else {
+			fragmentEntryLinks =
+				FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
+					fragmentEntry.getGroupId(), getFragmentEntryId(),
+					fragmentEntryLinksSearchContainer.getStart(),
+					fragmentEntryLinksSearchContainer.getEnd(),
+					orderByComparator);
+
+			fragmentEntryLinksCount =
+				FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinksCount(
+					fragmentEntry.getGroupId(), getFragmentEntryId());
+		}
+
+		fragmentEntryLinksSearchContainer.setResults(fragmentEntryLinks);
+		fragmentEntryLinksSearchContainer.setTotal(fragmentEntryLinksCount);
+
+		_searchContainer = fragmentEntryLinksSearchContainer;
+
+		return _searchContainer;
+	}
+
 	public int getUsageCount(String navigation) throws PortalException {
 		FragmentEntry fragmentEntry = getFragmentEntry();
 
@@ -151,5 +256,6 @@ public class FragmentEntryLinkDisplayContext {
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
+	private SearchContainer _searchContainer;
 
 }

@@ -32,6 +32,8 @@ titleSB.append(StringPool.CLOSE_PARENTHESIS);
 portletDisplay.setTitle(titleSB.toString());
 portletDisplay.setURLBack(ParamUtil.getString(request, "redirect"));
 portletDisplay.setShowBackIcon(true);
+
+renderResponse.setTitle(titleSB.toString());
 %>
 
 <div class="container-fluid-1280 d-flex mt-3">
@@ -87,7 +89,7 @@ portletDisplay.setShowBackIcon(true);
 		</ul>
 	</div>
 
-	<div class="card col-md-9 pt-2">
+	<div class="card col-md-9 p-2">
 		<h3>
 			<liferay-ui:message key="<%= fragmentEntryLinkDisplayContext.getNavigation() %>" />&nbsp;(<%= fragmentEntryLinkDisplayContext.getUsageCount(fragmentEntryLinkDisplayContext.getNavigation()) %>)
 		</h3>
@@ -107,5 +109,59 @@ portletDisplay.setShowBackIcon(true);
 			sortingURL="<%= currentURL %>"
 			totalItems="<%= fragmentEntry.getUsageCount() %>"
 		/>
+
+		<aui:form cssClass="container-fluid-1280" name="fm">
+			<liferay-ui:search-container
+				id="fragmentEntryLinks"
+				searchContainer="<%= fragmentEntryLinkDisplayContext.getSearchContainer() %>"
+			>
+				<liferay-ui:search-container-row
+					className="com.liferay.fragment.model.FragmentEntryLink"
+					keyProperty="fragmentEntryLinkId"
+					modelVar="fragmentEntryLink"
+				>
+					<liferay-ui:search-container-column-text
+						name="name"
+						value="<%= fragmentEntryLinkDisplayContext.getFragmentEntryLinkName(fragmentEntryLink) %>"
+					/>
+
+					<%
+					String propagationLabelCssClass = "label";
+
+					if (fragmentEntryLink.isLatestFragmentEntryUsed()) {
+						propagationLabelCssClass += " label-success";
+					}
+					else {
+						propagationLabelCssClass += " label-warning";
+					}
+					%>
+
+					<liferay-ui:search-container-column-text
+						name="propagation"
+						translate="<%= true %>"
+					>
+						<span class="<%= propagationLabelCssClass %>">
+							<liferay-ui:message key='<%= fragmentEntryLink.isLatestFragmentEntryUsed() ? "propagated" : "not-propagated" %>' />
+						</span>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						name="type"
+						translate="<%= true %>"
+						value='<%= fragmentEntryLink.getClassNameId() == PortalUtil.getClassNameId(Layout.class) ? "page" : "page-template" %>'
+					/>
+
+					<liferay-ui:search-container-column-date
+						name="last-propagation"
+						value="<%= fragmentEntryLink.getModifiedDate() %>"
+					/>
+				</liferay-ui:search-container-row>
+
+				<liferay-ui:search-iterator
+					displayStyle="list"
+					markupView="lexicon"
+				/>
+			</liferay-ui:search-container>
+		</aui:form>
 	</div>
 </div>

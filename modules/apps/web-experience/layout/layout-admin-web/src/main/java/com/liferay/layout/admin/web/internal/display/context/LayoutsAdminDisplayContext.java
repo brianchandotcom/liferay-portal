@@ -439,6 +439,23 @@ public class LayoutsAdminDisplayContext {
 
 		navigationItems.add(pageTemplatesNavigationItem);
 
+		NavigationItem assetDisplayPagesNavigationItem = new NavigationItem();
+
+		assetDisplayPagesNavigationItem.setActive(
+			Objects.equals(getTabs1(), "display-pages"));
+
+		PortletURL assetDisplayPagesURL = getPortletURL();
+
+		assetDisplayPagesURL.setParameter("tabs1", "display-pages");
+
+		assetDisplayPagesNavigationItem.setHref(
+			assetDisplayPagesURL.toString());
+
+		assetDisplayPagesNavigationItem.setLabel(
+			LanguageUtil.get(_themeDisplay.getLocale(), "display-pages"));
+
+		navigationItems.add(assetDisplayPagesNavigationItem);
+
 		return navigationItems;
 	}
 

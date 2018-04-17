@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.util.DDMNavigationHelper;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
@@ -715,7 +716,7 @@ public class JournalDisplayContext {
 		return sb.toString();
 	}
 
-	public NavigationItemList getInfoPanelNavigationItems() {
+	public List<NavigationItem> getInfoPanelNavigationItems() {
 		return new NavigationItemList(_request) {
 			{
 				add(
@@ -798,7 +799,7 @@ public class JournalDisplayContext {
 		return _navigation;
 	}
 
-	public NavigationItemList getNavigationBarItems(String currentItem) {
+	public List<NavigationItem> getNavigationBarItems(String currentItem) {
 		return new NavigationItemList(_request) {
 			{
 				add(

@@ -17,7 +17,7 @@ package com.liferay.layout.admin.web.internal.display.context;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
 import com.liferay.layout.admin.web.internal.util.LayoutPageTemplatePortletUtil;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
@@ -376,21 +376,6 @@ public class LayoutPageTemplateDisplayContext {
 		return new String[] {"create-date", "name"};
 	}
 
-	public boolean isAssetDisplayPageCollection() throws PortalException {
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			getLayoutPageTemplateCollection();
-
-		if (Objects.equals(
-				layoutPageTemplateCollection.getType(),
-				LayoutPageTemplateCollectionTypeConstants.
-					TYPE_ASSET_DISPLAY_PAGE)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	public boolean isDisabledLayoutPageTemplateCollectionsManagementBar()
 		throws PortalException {
 
@@ -413,6 +398,20 @@ public class LayoutPageTemplateDisplayContext {
 		}
 
 		return true;
+	}
+
+	public boolean isDisplayPage() throws PortalException {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			getLayoutPageTemplateEntry();
+
+		if (Objects.equals(
+				layoutPageTemplateEntry.getType(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isSearch() {

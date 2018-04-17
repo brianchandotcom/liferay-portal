@@ -70,21 +70,6 @@ public class SourceFormatterUtil {
 			}
 		}
 
-		for (ExcludeSyntaxPattern excludeSyntaxPattern :
-				sourceFormatterExcludes.getDefaultExcludeSyntaxPatterns()) {
-
-			String excludePattern = excludeSyntaxPattern.getExcludePattern();
-			ExcludeSyntax excludeSyntax =
-				excludeSyntaxPattern.getExcludeSyntax();
-
-			if (excludeSyntax.equals(ExcludeSyntax.REGEX)) {
-				excludeRegexList.add(excludePattern);
-			}
-			else if (!excludePattern.contains(StringPool.DOLLAR)) {
-				excludeRegexList.add(_createRegex(excludePattern));
-			}
-		}
-
 		if (!forceIncludeAllFiles) {
 			Map<String, List<ExcludeSyntaxPattern>> excludeSyntaxPatternsMap =
 				sourceFormatterExcludes.getExcludeSyntaxPatternsMap();

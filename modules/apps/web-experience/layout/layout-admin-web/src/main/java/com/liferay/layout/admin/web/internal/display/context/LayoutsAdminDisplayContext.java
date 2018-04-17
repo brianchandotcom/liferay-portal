@@ -51,11 +51,15 @@ import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -72,6 +76,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
@@ -406,6 +411,8 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() {
+		ResourceBundle resourceBundle = _getResourceBundle();
+
 		List<NavigationItem> navigationItems = new ArrayList<>();
 
 		NavigationItem pagesNavigationItem = new NavigationItem();
@@ -418,8 +425,7 @@ public class LayoutsAdminDisplayContext {
 
 		pagesNavigationItem.setHref(pagesURL.toString());
 
-		pagesNavigationItem.setLabel(
-			LanguageUtil.get(_themeDisplay.getLocale(), "pages"));
+		pagesNavigationItem.setLabel(LanguageUtil.get(resourceBundle, "pages"));
 
 		navigationItems.add(pagesNavigationItem);
 
@@ -435,7 +441,7 @@ public class LayoutsAdminDisplayContext {
 		pageTemplatesNavigationItem.setHref(pageTemplatesURL.toString());
 
 		pageTemplatesNavigationItem.setLabel(
-			LanguageUtil.get(_themeDisplay.getLocale(), "page-templates"));
+			LanguageUtil.get(resourceBundle, "page-templates"));
 
 		navigationItems.add(pageTemplatesNavigationItem);
 
@@ -452,7 +458,7 @@ public class LayoutsAdminDisplayContext {
 			assetDisplayPagesURL.toString());
 
 		assetDisplayPagesNavigationItem.setLabel(
-			LanguageUtil.get(_themeDisplay.getLocale(), "display-pages"));
+			LanguageUtil.get(resourceBundle, "display-pages"));
 
 		navigationItems.add(assetDisplayPagesNavigationItem);
 
@@ -1089,6 +1095,21 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		return orderByComparator;
+	}
+
+	private ResourceBundle _getResourceBundle() {
+		ResourceBundleLoader portalResourceBundleLoader =
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
+
+		ResourceBundle portalResourceBundle =
+			portalResourceBundleLoader.loadResourceBundle(
+				_themeDisplay.getLocale());
+
+		ResourceBundle portletResourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", _themeDisplay.getLocale(), getClass());
+
+		return new AggregateResourceBundle(
+			portletResourceBundle, portalResourceBundle);
 	}
 
 	private boolean _isActive(long plid) throws PortalException {

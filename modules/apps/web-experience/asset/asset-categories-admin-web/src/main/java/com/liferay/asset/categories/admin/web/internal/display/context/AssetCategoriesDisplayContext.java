@@ -587,7 +587,7 @@ public class AssetCategoriesDisplayContext {
 		return _displayStyle;
 	}
 
-	public String getEditCategoryRedirect() throws PortalException {
+	public String getEditCategoryRedirect() {
 		PortletURL backURL = _renderResponse.createRenderURL();
 
 		long parentCategoryId = BeanParamUtil.getLong(
@@ -904,9 +904,7 @@ public class AssetCategoriesDisplayContext {
 			permissionChecker, category, actionId);
 	}
 
-	public boolean hasPermission(AssetVocabulary vocabulary, String actionId)
-		throws PortalException {
-
+	public boolean hasPermission(AssetVocabulary vocabulary, String actionId) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

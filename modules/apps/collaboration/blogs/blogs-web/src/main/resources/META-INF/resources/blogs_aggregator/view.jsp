@@ -21,11 +21,10 @@ boolean blogsPortletFound = ParamUtil.getBoolean(request, "blogsPortletFound", t
 %>
 
 <c:if test="<%= !blogsPortletFound %>">
-	<liferay-ui:alert
-		icon="exclamation-full"
+	<clay:stripe
 		message='<%= LanguageUtil.get(resourceBundle, "no-suitable-application-found-to-display-the-blogs-entry") %>'
-		timeout="<%= 0 %>"
-		type="danger"
+		style="danger"
+		title='<%= LanguageUtil.get(resourceBundle, "error") + ":" %>'
 	/>
 </c:if>
 

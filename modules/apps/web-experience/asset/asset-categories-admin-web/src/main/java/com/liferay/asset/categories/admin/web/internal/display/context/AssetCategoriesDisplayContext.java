@@ -587,14 +587,6 @@ public class AssetCategoriesDisplayContext {
 		return _displayStyle;
 	}
 
-	public String[] getDisplayViews() {
-		if (isFlattenedNavigationAllowed()) {
-			return new String[] {"list"};
-		}
-
-		return new String[] {"icon", "descriptive", "list"};
-	}
-
 	public String getEditCategoryRedirect() throws PortalException {
 		PortletURL backURL = _renderResponse.createRenderURL();
 
@@ -679,14 +671,6 @@ public class AssetCategoriesDisplayContext {
 		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
 
 		return _orderByType;
-	}
-
-	public String[] getOrderColumns() {
-		if (isFlattenedNavigationAllowed()) {
-			return new String[] {"path"};
-		}
-
-		return new String[] {"create-date"};
 	}
 
 	public String getSelectCategoryURL() throws Exception {
@@ -1086,21 +1070,6 @@ public class AssetCategoriesDisplayContext {
 				AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN,
 				themeDisplay.getSiteGroupId(), ActionKeys.ADD_VOCABULARY)) {
 
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isShowVocabulariesSearch() throws PortalException {
-		if (Validator.isNotNull(getKeywords())) {
-			return true;
-		}
-
-		SearchContainer vocabulariesSearchContainer =
-			getVocabulariesSearchContainer();
-
-		if (vocabulariesSearchContainer.getTotal() > 0) {
 			return true;
 		}
 

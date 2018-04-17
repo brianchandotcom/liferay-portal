@@ -959,10 +959,12 @@ public class ProjectTemplateFilesTest {
 			while (matcher.find()) {
 				String name = matcher.group(1);
 
-				if (Objects.equals(fileName, "pom.xml") && 
-					_pomXmlProperties.contains(name)) {	
+				if (Objects.equals(fileName, "pom.xml") &&
+					_pomXmlProperties.contains(name)) {
+
 					continue;
 				}
+
 				if (!text.contains("#set ($" + name + " = ")) {
 					archetypeResourcePropertyNames.add(name);
 				}

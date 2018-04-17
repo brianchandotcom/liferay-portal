@@ -1945,7 +1945,10 @@ this task.
 			/>
 		</unzip>
 
-		<move file="${app.server.tcserver.script.dir}/tcserver" tofile="${app.server.tcserver.script.dir}/tcserver.sh"/>
+		<move
+			file="${app.server.tcserver.developer.dir}/tcserver"
+			tofile="${app.server.tcserver.developer.dir}/tcserver.sh"
+		/>
 
 		<chmod
 			perm="a+x"
@@ -1960,12 +1963,12 @@ this task.
 		<if>
 			<os family="windows" />
 			<then>
-				<exec dir="${app.server.tcserver.script.dir}" executable="cmd">
+				<exec dir="${app.server.tcserver.developer.dir}" executable="cmd">
 					<arg line="/c set JAVA_OPTS= &amp; tcserver.bat create liferay -v ${app.server.tcserver.tomcat.version}" />
 				</exec>
 			</then>
 			<else>
-				<exec dir="${app.server.tcserver.script.dir}" executable="${app.server.tcserver.script.dir}/tcserver.sh">
+				<exec dir="${app.server.tcserver.developer.dir}" executable="${app.server.tcserver.developer.dir}/tcserver.sh">
 					<arg line="create liferay -v ${app.server.tcserver.tomcat.version}" />
 				</exec>
 			</else>
@@ -2001,8 +2004,8 @@ this task.
 		<replace
 			file="${app.server.tcserver.conf.dir}/server.xml"
 		>
-			<replacetoken><![CDATA[redirectPort="${bio.https.port}"/>]]></replacetoken>
-			<replacevalue><![CDATA[redirectPort="${bio.https.port}" URIEncoding="UTF-8"/>]]></replacevalue>
+			<replacetoken><![CDATA[redirectPort="${nio.https.port}"/>]]></replacetoken>
+			<replacevalue><![CDATA[redirectPort="${nio.https.port}" URIEncoding="UTF-8"/>]]></replacevalue>
 		</replace>
 
 		<replace

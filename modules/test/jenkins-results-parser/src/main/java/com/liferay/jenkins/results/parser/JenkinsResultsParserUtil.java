@@ -910,62 +910,12 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
-	public static Properties getProperties(File basePropertiesFile) {
-		if (!basePropertiesFile.exists()) {
-			throw new RuntimeException(
-				"Unable to find properties file " +
-					basePropertiesFile.getPath());
-		}
-
-		List<File> propertiesFiles = new ArrayList<>();
-
-		propertiesFiles.add(basePropertiesFile);
-
-		String propertiesFileName = basePropertiesFile.getName();
-
-		String[] environments = {
-			System.getenv("HOSTNAME"), System.getenv("HOST"),
-			System.getenv("COMPUTERNAME"), System.getProperty("user.name")
-		};
-
-		for (String environment : environments) {
-			if (environment == null) {
-				continue;
-			}
-
-			File environmentPropertyFile = new File(
-				basePropertiesFile.getParentFile(),
-				propertiesFileName.replace(
-					".properties", "." + environment + ".properties"));
-
-			if (environmentPropertyFile.exists()) {
-				propertiesFiles.add(environmentPropertyFile);
-			}
-		}
-
-		Properties properties = new Properties();
-
-		try {
-			for (File propertiesFile : propertiesFiles) {
-				properties.load(new FileInputStream(propertiesFile));
-			}
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(
-				"Unable to load properties file " +
-					basePropertiesFile.getPath(),
-				ioe);
-		}
-
-		return properties;
-	}
-
 	public static Properties getProperties(File... propertiesFiles) {
 		Properties properties = new Properties();
 
 		for (File propertiesFile : propertiesFiles) {
 			if ((propertiesFile != null) && propertiesFile.exists()) {
-				properties.putAll(getProperties(propertiesFile));
+				properties.putAll(_getProperties(propertiesFile));
 			}
 		}
 
@@ -1776,6 +1726,56 @@ public class JenkinsResultsParserUtil {
 			Integer.toString(key.hashCode()), ".txt");
 
 		return new File(fileName);
+	}
+
+	private static Properties _getProperties(File basePropertiesFile) {
+		if (!basePropertiesFile.exists()) {
+			throw new RuntimeException(
+				"Unable to find properties file " +
+					basePropertiesFile.getPath());
+		}
+
+		List<File> propertiesFiles = new ArrayList<>();
+
+		propertiesFiles.add(basePropertiesFile);
+
+		String propertiesFileName = basePropertiesFile.getName();
+
+		String[] environments = {
+			System.getenv("HOSTNAME"), System.getenv("HOST"),
+			System.getenv("COMPUTERNAME"), System.getProperty("user.name")
+		};
+
+		for (String environment : environments) {
+			if (environment == null) {
+				continue;
+			}
+
+			File environmentPropertyFile = new File(
+				basePropertiesFile.getParentFile(),
+				propertiesFileName.replace(
+					".properties", "." + environment + ".properties"));
+
+			if (environmentPropertyFile.exists()) {
+				propertiesFiles.add(environmentPropertyFile);
+			}
+		}
+
+		Properties properties = new Properties();
+
+		try {
+			for (File propertiesFile : propertiesFiles) {
+				properties.load(new FileInputStream(propertiesFile));
+			}
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to load properties file " +
+					basePropertiesFile.getPath(),
+				ioe);
+		}
+
+		return properties;
 	}
 
 	private static String _getRedactTokenKey(int index) {

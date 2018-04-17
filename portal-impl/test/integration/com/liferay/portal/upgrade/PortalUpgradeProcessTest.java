@@ -171,7 +171,8 @@ public class PortalUpgradeProcessTest {
 			Assert.fail(
 				"The execution of the upgrade process failed after being " +
 					"reexecuted. Upgrade processes must be harmless if they " +
-						"were executed previously.");
+						"were executed previously." + " current " +
+							_currentSchemaVersion);
 
 			return;
 		}

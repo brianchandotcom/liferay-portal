@@ -85,44 +85,70 @@ request.setAttribute("edit_roles.jsp-roleType", roleType);
 request.setAttribute("edit_roles.jsp-portletURL", portletURL);
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<c:choose>
-			<c:when test="<%= role == null %>">
-				<aui:nav-item label="roles" selected="<%= true %>" />
-			</c:when>
-			<c:otherwise>
+<clay:navigation-bar
+	items='<%=
+		new JSPNavigationItemList(pageContext) {
+			{
+				if (role == null) {
+					add(
+						navigationItem -> {
+							navigationItem.setActive(true);
+							navigationItem.setHref(StringPool.BLANK);
+							navigationItem.setLabel(LanguageUtil.get(request, "roles"));
+						});
+				}
+				else {
+					add(
+						navigationItem -> {
+							navigationItem.setActive(tabs1.equals("current"));
+							navigationItem.setHref(portletURL, "tabs1", "current");
+							navigationItem.setLabel(LanguageUtil.get(request, "current"));
+						});
 
-				<%
-				portletURL.setParameter("tabs1", "current");
-				%>
+					add(
+						navigationItem -> {
+							navigationItem.setActive(tabs1.equals("available"));
+							navigationItem.setHref(portletURL, "tabs1", "available");
+							navigationItem.setLabel(LanguageUtil.get(request, "available"));
+						});
+				}
+			}
+		}
+	%>'
+/>
 
-				<aui:nav-item href="<%= portletURL.toString() %>" label="current" selected='<%= tabs1.equals("current") %>' />
+<%
+String stripeMessage;
 
-				<%
-				portletURL.setParameter("tabs1", "available");
-				%>
+if (role == null) {
+	stripeMessage = LanguageUtil.format(request, "step-x-of-x", new String[] {"1", "2"}, false) + StringPool.SPACE + LanguageUtil.get(request, "choose-a-role");
+}
+else {
+	stripeMessage =
+		LanguageUtil.format(request, "step-x-of-x", new String[] {"2", "2"}, false) + StringPool.SPACE +
+		LanguageUtil.format(
+			request, "current-signifies-current-users-associated-with-the-x-role.-available-signifies-all-users-associated-with-the-x-x",
+			new String[] {
+				HtmlUtil.escape(role.getTitle(locale)),
+				HtmlUtil.escape(groupDescriptiveName),
+				LanguageUtil.get(request, (group.isOrganization() ? "organization" : "site"))
+			});
+}
+%>
 
-				<aui:nav-item href="<%= portletURL.toString() %>" label="available" selected='<%= tabs1.equals("available") %>' />
+<clay:stripe
+	destroyOnHide="<%= true %>"
+	message="<%= stripeMessage %>"
+	title='<%= LanguageUtil.get(request, "info") %>'
+/>
 
-				<%
-				portletURL.setParameter("tabs1", tabs1);
-				%>
-
-			</c:otherwise>
-		</c:choose>
-	</aui:nav>
-
-	<aui:nav-bar-search>
-		<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-			<liferay-ui:input-search
-				autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
-				markupView="lexicon"
-				placeholder='<%= LanguageUtil.get(request, "keywords") %>'
-			/>
-		</aui:form>
-	</aui:nav-bar-search>
-</aui:nav-bar>
+<clay:management-toolbar
+	clearResultsURL="<%= portletURL.toString() %>"
+	namespace="<%= renderResponse.getNamespace() %>"
+	searchActionURL="<%= portletURL.toString() %>"
+	selectable="<%= false %>"
+	showCreationMenu="<%= false %>"
+/>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />

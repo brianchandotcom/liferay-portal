@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.servlet.ProtectedPrincipal;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -86,7 +87,7 @@ public class AuthorizationCodeGrantServiceContainerRequestFilter
 						@Override
 						public Principal getUserPrincipal() {
 							return new ProtectedPrincipal(
-								Long.toString(user.getUserId()));
+								GetterUtil.getString(user.getUserId()));
 						}
 
 						@Override

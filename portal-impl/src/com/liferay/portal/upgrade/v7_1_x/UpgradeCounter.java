@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_1;
+package com.liferay.portal.upgrade.v7_1_x;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.v7_1_0.util.CounterTable;
+import com.liferay.portal.upgrade.v7_1_x.util.CounterTable;
 
 /**
  * @author Preston Crary

@@ -154,9 +154,8 @@ public class AssetCategoryMerisSegmentManager
 
 	@Override
 	public List<AssetCategoryMerisSegment> getMerisSegments(
-		String scopeId, String merisProfileId, String merisSegmentId,
-		Map<String, Object> context, int start, int end,
-		Comparator<AssetCategoryMerisSegment> comparator) {
+		String scopeId, String merisProfileId, Map<String, Object> context,
+		int start, int end, Comparator<AssetCategoryMerisSegment> comparator) {
 
 		AssetCategoryMerisProfile assetCategoryMerisProfile = getMerisProfile(
 			merisProfileId);

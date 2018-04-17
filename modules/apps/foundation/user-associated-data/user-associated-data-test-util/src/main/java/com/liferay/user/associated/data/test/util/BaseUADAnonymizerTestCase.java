@@ -42,9 +42,6 @@ public abstract class BaseUADAnonymizerTestCase<T extends BaseModel> {
 		_user = UserTestUtil.addUser();
 	}
 
-	public abstract void tearDownBaseModels(List<T> baseModels)
-		throws Exception;
-
 	@Test
 	public void testAutoAnonymize() throws Exception {
 		T baseModel = addBaseModel(_user.getUserId());
@@ -110,7 +107,7 @@ public abstract class BaseUADAnonymizerTestCase<T extends BaseModel> {
 
 		_uadAnonymizer.delete(baseModels.get(0));
 
-		tearDownBaseModels(baseModels);
+		deleteBaseModels(baseModels);
 
 		long baseModelPK = getBaseModelPrimaryKey(baseModel);
 
@@ -128,7 +125,7 @@ public abstract class BaseUADAnonymizerTestCase<T extends BaseModel> {
 
 		baseModels.add(deletedBaseModel);
 
-		tearDownBaseModels(baseModels);
+		deleteBaseModels(baseModels);
 
 		long baseModelPK = getBaseModelPrimaryKey(baseModel);
 
@@ -147,6 +144,9 @@ public abstract class BaseUADAnonymizerTestCase<T extends BaseModel> {
 	protected abstract T addBaseModel(long userId) throws Exception;
 
 	protected abstract T addBaseModel(long userId, boolean deleteAfterTestRun)
+		throws Exception;
+
+	protected abstract void deleteBaseModels(List<T> baseModels)
 		throws Exception;
 
 	protected long getBaseModelPrimaryKey(BaseModel baseModel) {

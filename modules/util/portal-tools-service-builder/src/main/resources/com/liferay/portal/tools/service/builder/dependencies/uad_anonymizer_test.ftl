@@ -119,7 +119,7 @@ public class ${entity.name}UADAnonymizerTest extends BaseUADAnonymizerTestCase<$
 	}
 
 	@Override
-	public void tearDownBaseModels(List<${entity.name}> baseModels) throws Exception {
+	protected void deleteBaseModels(List<${entity.name}> baseModels) throws Exception {
 		_${entity.varName}UADEntityTestHelper.cleanUpDependencies(baseModels);
 	}
 	

@@ -34,6 +34,8 @@ public abstract class RepositoryJob extends BaseJob {
 
 		if (matcher.find()) {
 			_branchName = matcher.group("branchName");
+
+			return _branchName;
 		}
 
 		_branchName = "master";

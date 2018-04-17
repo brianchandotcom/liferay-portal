@@ -134,10 +134,10 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 
 		String workingDirectoryPath = _tckHomeDirectory.getAbsolutePath();
 
+		FileSystem fileSystem = FileSystems.getDefault();
+
 		for (String testClassNamesRelativeGlob :
 				testClassNamesRelativeGlobs.split(",")) {
-
-			FileSystem fileSystem = FileSystems.getDefault();
 
 			pathMatchers.add(
 				fileSystem.getPathMatcher(

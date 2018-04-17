@@ -1,3 +1,6 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
@@ -11,4 +14,5 @@ dependencies {
 	compileOnly project(":apps:foundation:frontend-taglib:frontend-taglib-soy")
 	compileOnly project(":apps:foundation:portal:portal-upgrade-api")
 	compileOnly project(":core:petra:petra-lang")
+	compileOnly project(":core:petra:petra-string")
 }

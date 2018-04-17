@@ -20,47 +20,20 @@
 	items="<%= assetTagsSelectorDisplayContext.getNavigationItems() %>"
 />
 
-<liferay-frontend:management-bar
+<clay:management-toolbar
+	clearResultsURL="<%= assetTagsSelectorDisplayContext.getClearResultsURL() %>"
+	componentId="assetTagsSelectorManagementToolbar"
 	disabled="<%= assetTagsSelectorDisplayContext.isDisabledTagsManagementBar() %>"
-	includeCheckBox="<%= true %>"
+	filterItems="<%= assetTagsSelectorDisplayContext.getFilterItemsDropdownItems() %>"
+	searchActionURL="<%= assetTagsSelectorDisplayContext.getSearchActionURL() %>"
 	searchContainerId="tags"
->
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= assetTagsSelectorDisplayContext.getPortletURL() %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= assetTagsSelectorDisplayContext.getOrderByCol() %>"
-			orderByType="<%= assetTagsSelectorDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"name"} %>'
-			portletURL="<%= assetTagsSelectorDisplayContext.getPortletURL() %>"
-		/>
-
-		<c:if test="<%= assetTagsSelectorDisplayContext.isShowTagsSearch() %>">
-			<li>
-				<aui:form action="<%= assetTagsSelectorDisplayContext.getPortletURL() %>" name="searchFm">
-					<liferay-ui:input-search
-						markupView="lexicon"
-					/>
-				</aui:form>
-			</li>
-		</c:if>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-buttons>
-		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-		</liferay-portlet:actionURL>
-
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= assetTagsSelectorDisplayContext.getPortletURL() %>"
-			selectedDisplayStyle="<%= assetTagsSelectorDisplayContext.getDisplayStyle() %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+	searchFormName="searchFm"
+	showSearch="<%= assetTagsSelectorDisplayContext.isShowTagsSearch() %>"
+	sortingOrder="<%= assetTagsSelectorDisplayContext.getOrderByType() %>"
+	sortingURL="<%= assetTagsSelectorDisplayContext.getSortingURL() %>"
+	totalItems="<%= assetTagsSelectorDisplayContext.getTotalItems() %>"
+	viewTypes="<%= assetTagsSelectorDisplayContext.getViewTypeItems() %>"
+/>
 
 <div class="container-fluid-1280">
 	<liferay-ui:search-container

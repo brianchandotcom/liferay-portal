@@ -118,9 +118,8 @@
 			<var name="pageName" value="Test Page Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoSitePage">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Liferay" />
 		</execute>
 
 		<execute function="AssertLocation" value1="${portalURL}/web/guest/test-page-name" />

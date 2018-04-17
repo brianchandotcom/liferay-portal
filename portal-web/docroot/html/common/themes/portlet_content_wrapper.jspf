@@ -35,7 +35,14 @@
 				<c:choose>
 					<c:when test="<%= PortalUtil.isSkipPortletContentRendering(group, layoutTypePortlet, portletDisplay, portletName) %>">
 						<div class="alert alert-info">
-							<liferay-ui:message key="configure-this-application-and-place-it-where-desired-on-the-page" />
+							<c:choose>
+								<c:when test="<%= layout.isPortletEmbedded(portlet.getPortletId(), group.getGroupId()) %>">
+									<liferay-ui:message key="configure-this-application" />
+								</c:when>
+								<c:otherwise>
+									<liferay-ui:message key="configure-this-application-and-place-it-where-desired-on-the-page" />
+								</c:otherwise>
+							</c:choose>
 						</div>
 					</c:when>
 					<c:otherwise>

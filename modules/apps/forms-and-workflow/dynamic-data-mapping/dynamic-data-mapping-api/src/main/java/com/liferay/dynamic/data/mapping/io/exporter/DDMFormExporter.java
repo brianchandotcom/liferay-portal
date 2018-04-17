@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.io.exporter;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Locale;
 
@@ -38,6 +39,10 @@ public interface DDMFormExporter {
 		throws Exception;
 
 	public String getFormat();
+
+	public default String getLabel() {
+		return StringUtil.toUpperCase(getFormat());
+	}
 
 	public Locale getLocale();
 

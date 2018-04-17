@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.io.exporter;
 
 import aQute.bnd.annotation.ProviderType;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -25,6 +26,8 @@ import java.util.Set;
 public interface DDMExporterFactory {
 
 	public Set<String> getAvailableFormats();
+
+	public Map<String, String> getAvailableFormatsMap();
 
 	public DDMFormExporter getDDMFormExporter(String format);
 

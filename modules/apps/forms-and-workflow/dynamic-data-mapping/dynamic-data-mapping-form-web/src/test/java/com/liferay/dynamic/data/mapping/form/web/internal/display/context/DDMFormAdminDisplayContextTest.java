@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory
 import com.liferay.dynamic.data.mapping.form.web.configuration.DDMFormWebConfiguration;
 import com.liferay.dynamic.data.mapping.form.web.internal.instance.lifecycle.AddDefaultSharedFormLayoutPortalInstanceLifecycleListener;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.exporter.DDMExporterFactory;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
@@ -96,7 +97,7 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 		setRenderRequestParamenter(
 			"formInstanceId", String.valueOf(_RESTRICTED_FORM_INSTANCE_ID));
 
-		String formURL = _ddlFormAdminDisplayContext.getFormURL();
+		String formURL = _ddmFormAdminDisplayContext.getFormURL();
 
 		Assert.assertEquals(getRestrictedFormURL(), formURL);
 	}
@@ -106,7 +107,7 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 		setRenderRequestParamenter(
 			"formInstanceId", String.valueOf(_SHARED_FORM_INSTANCE_ID));
 
-		String formURL = _ddlFormAdminDisplayContext.getFormURL();
+		String formURL = _ddmFormAdminDisplayContext.getFormURL();
 
 		Assert.assertEquals(getSharedFormURL(), formURL);
 	}
@@ -114,14 +115,14 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 	@Test
 	public void testGetRestrictedFormURL() throws Exception {
 		String restrictedFormURL =
-			_ddlFormAdminDisplayContext.getRestrictedFormURL();
+			_ddmFormAdminDisplayContext.getRestrictedFormURL();
 
 		Assert.assertEquals(getRestrictedFormURL(), restrictedFormURL);
 	}
 
 	@Test
 	public void testGetSharedFormURL() throws Exception {
-		String sharedFormURL = _ddlFormAdminDisplayContext.getSharedFormURL();
+		String sharedFormURL = _ddmFormAdminDisplayContext.getSharedFormURL();
 
 		Assert.assertEquals(getSharedFormURL(), sharedFormURL);
 	}
@@ -275,10 +276,10 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 	protected void setUpDDMFormDisplayContext() throws PortalException {
 		_renderRequest = mock(RenderRequest.class);
 
-		_ddlFormAdminDisplayContext = new DDMFormAdminDisplayContext(
+		_ddmFormAdminDisplayContext = new DDMFormAdminDisplayContext(
 			_renderRequest, mock(RenderResponse.class),
 			new AddDefaultSharedFormLayoutPortalInstanceLifecycleListener(),
-			mock(DDMFormWebConfiguration.class),
+			mock(DDMExporterFactory.class), mock(DDMFormWebConfiguration.class),
 			mock(DDMFormInstanceRecordLocalService.class),
 			mockDDMFormInstanceService(),
 			mock(DDMFormFieldTypeServicesTracker.class),
@@ -296,16 +297,6 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 		Language language = mock(Language.class);
 
 		languageUtil.setLanguage(language);
-	}
-
-	protected void setUpLocaleUtil() {
-		mockStatic(LocaleUtil.class);
-
-		when(
-			LocaleUtil.toLanguageId(Matchers.any(Locale.class))
-		).thenReturn(
-			"en_US"
-		);
 	}
 
 	protected void setUpPortalUtil() {
@@ -383,7 +374,7 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 	private static final long _SHARED_FORM_INSTANCE_ID =
 		RandomTestUtil.randomLong();
 
-	private DDMFormAdminDisplayContext _ddlFormAdminDisplayContext;
+	private DDMFormAdminDisplayContext _ddmFormAdminDisplayContext;
 	private RenderRequest _renderRequest;
 
 	@Mock

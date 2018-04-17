@@ -19,6 +19,7 @@ import com.liferay.oauth2.provider.rest.internal.endpoint.constants.OAuth2Provid
 import com.liferay.oauth2.provider.rest.internal.endpoint.liferay.LiferayOAuthDataProvider;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
+import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -66,7 +67,7 @@ public class AuthorizationCodeGrantServiceRegistrator {
 
 		authorizationCodeGrantService.setSubjectCreator(_subjectCreator);
 
-		Hashtable<String, Object> endpointProperties = new Hashtable<>();
+		Dictionary<String, Object> endpointProperties = new Hashtable<>();
 
 		endpointProperties.put(
 			OAuth2ProviderRestEndpointConstants.

@@ -3215,20 +3215,19 @@ public class PortalImpl implements Portal {
 			return getLayoutActualURL(layout);
 		}
 
-			String layoutFriendlyURL = getLayoutFriendlyURL(
-				layout, themeDisplay);
+		String layoutFriendlyURL = getLayoutFriendlyURL(layout, themeDisplay);
 
-			if (Validator.isNotNull(layoutFriendlyURL)) {
-				layoutFriendlyURL = addPreservedParameters(
-					themeDisplay, layout, layoutFriendlyURL, doAsUser);
+		if (Validator.isNotNull(layoutFriendlyURL)) {
+			layoutFriendlyURL = addPreservedParameters(
+				themeDisplay, layout, layoutFriendlyURL, doAsUser);
 
-				return layoutFriendlyURL;
-			}
+			return layoutFriendlyURL;
+		}
 
 		String layoutURL = getLayoutActualURL(layout);
 
-			layoutURL = addPreservedParameters(
-				themeDisplay, layout, layoutURL, doAsUser);
+		layoutURL = addPreservedParameters(
+			themeDisplay, layout, layoutURL, doAsUser);
 
 		return layoutURL;
 	}

@@ -65,6 +65,12 @@ public abstract class RepositoryJob extends BaseJob {
 	}
 
 	public void setRepositoryDir(File repositoryDir) {
+		if (this.repositoryDir != null) {
+			throw new IllegalStateException(
+				"repositoryDir is already set to " +
+					this.repositoryDir.getPath());
+		}
+
 		this.repositoryDir = repositoryDir;
 	}
 

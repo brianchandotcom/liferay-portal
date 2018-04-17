@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.internal.upgrade.v1_2_0;
+package com.liferay.message.boards.internal.upgrade.v1_1_0;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;

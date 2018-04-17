@@ -344,6 +344,8 @@ public class SaveFormInstanceMVCCommandHelper {
 			DDMFormValues settingsDDMFormValues)
 		throws Exception {
 
+		validateRedirectURL(settingsDDMFormValues);
+
 		long formInstanceId = ParamUtil.getLong(
 			portletRequest, "formInstanceId");
 
@@ -357,8 +359,6 @@ public class SaveFormInstanceMVCCommandHelper {
 			serviceContext.setAttribute(
 				"status", WorkflowConstants.ACTION_SAVE_DRAFT);
 		}
-
-		validateRedirectURL(settingsDDMFormValues);
 
 		return formInstanceService.updateFormInstance(
 			formInstanceId, ddmStructureId,

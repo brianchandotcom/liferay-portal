@@ -273,7 +273,7 @@ public class LayoutsAdminDisplayContext {
 
 		List<LayoutPageTemplateCollection> layoutPageTemplateCollections =
 			layoutPageTemplateCollectionService.
-				getBasicLayoutPageTemplateCollections(
+				getLayoutPageTemplateCollections(
 					getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 					layoutPageTemplateCollectionNameComparator);
 

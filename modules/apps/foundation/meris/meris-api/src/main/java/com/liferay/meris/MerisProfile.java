@@ -16,11 +16,17 @@ package com.liferay.meris;
 
 import aQute.bnd.annotation.ProviderType;
 
+import java.util.Map;
+
 /**
  * @author Eduardo Garcia
  */
 @ProviderType
 public interface MerisProfile {
+
+	public Object getAttribute(String key);
+
+	public Map<String, Object> getAttributes();
 
 	public String getMerisProfileId();
 

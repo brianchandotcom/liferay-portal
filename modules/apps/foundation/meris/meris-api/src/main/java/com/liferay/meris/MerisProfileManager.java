@@ -16,6 +16,9 @@ package com.liferay.meris;
 
 import aQute.bnd.annotation.ProviderType;
 
+import java.util.Comparator;
+import java.util.List;
+
 /**
  * @author Eduardo Garcia
  */
@@ -23,5 +26,8 @@ import aQute.bnd.annotation.ProviderType;
 public interface MerisProfileManager <P extends MerisProfile> {
 
 	public P getMerisProfile(String merisProfileId);
+
+	public List<P> getMerisProfiles(
+		int start, int end, Comparator<P> comparator);
 
 }

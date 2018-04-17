@@ -219,6 +219,16 @@ AUI.add(
 						contentBox.empty();
 
 						contentBox.append(instance._getItemsNodeList(val));
+
+						instance._updateLastPageItem();
+					},
+
+					_updateLastPageItem: function() {
+						var instance = this;
+
+						var contentBox = instance.get('contentBox');
+
+						contentBox.one('li:last-child').removeClass('multi-step-item-expand');
 					},
 
 					_valueItemsNodeList: function() {

@@ -1,7 +1,7 @@
 AUI.add(
 	'liferay-ddm-form-builder-wizard',
 	function(A) {
-		var TPL_WIZARD_SUCCESSPAGE = '<li class="{state} success-page multi-step-item multi-step-item-expand" data-success-page="true">' +
+		var TPL_WIZARD_SUCCESSPAGE = '<li class="{state} success-page multi-step-item" data-success-page="true">' +
 				'<div class="multi-step-divider"></div>' +
 				'<div class="multi-step-indicator">' +
 					'<div class="multi-step-indicator-label">{title}</div>' +

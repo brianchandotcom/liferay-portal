@@ -142,8 +142,8 @@
  * Prints the form fields required message warning.
  */
 {template .required_warning_message}
-	{@param showRequiredFieldsWarning: bool}
 	{@param requiredFieldsWarningMessageHTML: html}
+	{@param showRequiredFieldsWarning: bool}
 
 	{if $showRequiredFieldsWarning}
 		{$requiredFieldsWarningMessageHTML}
@@ -162,15 +162,15 @@
 		rows: list<[columns: list<[size: int, fields: list<?>]>]>
 	]>}
 	{@param requiredFieldsWarningMessageHTML: html}
-	{@param submitLabel: string}
 	{@param showSubmitButton: bool}
 	{@param strings: [previous: string, next: string]}
+	{@param submitLabel: string}
 
 	<div class="lfr-ddm-form-container" id="{$containerId}">
 		<div class="ddm-user-view-content lfr-ddm-form-content">
 			{if length($pages) > 1}
 					<div class="lfr-ddm-form-wizard">
-						<ul class="multi-step-progress-bar multi-step-progress-bar-collapse">
+						<ul class="multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm">
 							{foreach $page in $pages}
 								<li {if isFirst($page)}class="active"{/if}>
 									<div class="multi-step-divider"></div>

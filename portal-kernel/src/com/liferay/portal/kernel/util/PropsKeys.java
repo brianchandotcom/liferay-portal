@@ -2505,6 +2505,10 @@ public interface PropsKeys {
 
 	public static final String UPGRADE_DATABASE_TRANSACTIONS_DISABLED = "upgrade.database.transactions.disabled";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String UPGRADE_PROCESSES = "upgrade.processes";
 
 	/**

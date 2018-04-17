@@ -38,6 +38,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -62,6 +63,20 @@ public class MBThreadLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testAddThreadTitleWhenAddingRootMessage() throws Exception {
+		MBMessage rootMessage = addMessage(null, true);
+
+		MBThread thread = MBThreadLocalServiceUtil.getThread(
+			rootMessage.getThreadId());
+
+		Assert.assertEquals(rootMessage.getSubject(), thread.getTitle());
+
+		MBMessage childMessage = addMessage(rootMessage, true);
+
+		Assert.assertNotEquals(childMessage.getSubject(), thread.getTitle());
 	}
 
 	@Test
@@ -122,6 +137,106 @@ public class MBThreadLocalServiceTest {
 
 		Assert.assertEquals(threads.toString(), 1, threads.size());
 		Assert.assertEquals(thread, threads.get(0));
+	}
+
+	@Test
+	public void testNotUpdateThreadTitleWhenUpdatingChildMessage()
+		throws Exception {
+
+		MBMessage rootMessage = addMessage(null, true);
+
+		MBMessage childMessage = addMessage(rootMessage, true);
+
+		MBThread thread = MBThreadLocalServiceUtil.getThread(
+			rootMessage.getThreadId());
+
+		Assert.assertEquals(rootMessage.getSubject(), thread.getTitle());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
+			Collections.emptyList();
+
+		String newSubject = RandomTestUtil.randomString();
+
+		MBMessageLocalServiceUtil.updateMessage(
+			TestPropsValues.getUserId(), childMessage.getMessageId(),
+			newSubject, RandomTestUtil.randomString(), inputStreamOVPs,
+			new ArrayList<String>(), 0.0, false, serviceContext);
+
+		thread = MBThreadLocalServiceUtil.getThread(rootMessage.getThreadId());
+
+		Assert.assertEquals(rootMessage.getSubject(), thread.getTitle());
+		Assert.assertNotEquals(newSubject, thread.getTitle());
+	}
+
+	@Test
+	public void testUpdateThreadTitleWhenSplittingMessage() throws Exception {
+		MBMessage rootMessage = addMessage(null, true);
+
+		MBMessage splitMessage = addMessage(rootMessage, true);
+
+		MBThread thread = MBThreadLocalServiceUtil.getThread(
+			rootMessage.getThreadId());
+
+		Assert.assertEquals(rootMessage.getSubject(), thread.getTitle());
+
+		Assert.assertNotEquals(splitMessage.getSubject(), thread.getTitle());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		MBThreadLocalServiceUtil.splitThread(
+			TestPropsValues.getUserId(), splitMessage.getMessageId(),
+			RandomTestUtil.randomString(), serviceContext);
+
+		rootMessage = MBMessageLocalServiceUtil.getMBMessage(
+			rootMessage.getMessageId());
+
+		thread = MBThreadLocalServiceUtil.getThread(rootMessage.getThreadId());
+
+		Assert.assertEquals(rootMessage.getSubject(), thread.getTitle());
+
+		splitMessage = MBMessageLocalServiceUtil.getMBMessage(
+			splitMessage.getMessageId());
+
+		MBThread splitThread = MBThreadLocalServiceUtil.getThread(
+			splitMessage.getThreadId());
+
+		Assert.assertEquals(splitMessage.getSubject(), splitThread.getTitle());
+	}
+
+	@Test
+	public void testUpdateThreadTitleWhenUpdatingRootMessage()
+		throws Exception {
+
+		MBMessage rootMessage = addMessage(null, true);
+
+		MBThread thread = MBThreadLocalServiceUtil.getThread(
+			rootMessage.getThreadId());
+
+		Assert.assertEquals(rootMessage.getSubject(), thread.getTitle());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
+			Collections.emptyList();
+
+		String newSubject = RandomTestUtil.randomString();
+
+		MBMessageLocalServiceUtil.updateMessage(
+			TestPropsValues.getUserId(), rootMessage.getMessageId(), newSubject,
+			RandomTestUtil.randomString(), inputStreamOVPs,
+			new ArrayList<String>(), 0.0, false, serviceContext);
+
+		thread = MBThreadLocalServiceUtil.getThread(rootMessage.getThreadId());
+
+		Assert.assertEquals(newSubject, thread.getTitle());
 	}
 
 	protected MBMessage addMessage(

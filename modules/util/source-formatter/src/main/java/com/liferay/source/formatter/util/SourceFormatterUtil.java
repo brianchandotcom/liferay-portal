@@ -574,10 +574,6 @@ public class SourceFormatterUtil {
 	private static String _getEncodedFileName(String fileName) {
 		String absolutePath = SourceUtil.getAbsolutePath(fileName);
 
-		if (true) {
-			return absolutePath;
-		}
-
 		if (!absolutePath.startsWith("/home/travis/")) {
 			return absolutePath;
 		}

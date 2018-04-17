@@ -264,6 +264,20 @@ public interface LayoutPageTemplateEntryModel extends BaseModel<LayoutPageTempla
 	public void setName(String name);
 
 	/**
+	 * Returns the type of this layout page template entry.
+	 *
+	 * @return the type of this layout page template entry
+	 */
+	public int getType();
+
+	/**
+	 * Sets the type of this layout page template entry.
+	 *
+	 * @param type the type of this layout page template entry
+	 */
+	public void setType(int type);
+
+	/**
 	 * Returns the html preview entry ID of this layout page template entry.
 	 *
 	 * @return the html preview entry ID of this layout page template entry

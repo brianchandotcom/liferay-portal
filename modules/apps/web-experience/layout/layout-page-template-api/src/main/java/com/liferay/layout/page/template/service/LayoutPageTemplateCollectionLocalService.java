@@ -74,11 +74,6 @@ public interface LayoutPageTemplateCollectionLocalService
 
 	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
 		long userId, long groupId, java.lang.String name,
-		java.lang.String description, int type, ServiceContext serviceContext)
-		throws PortalException;
-
-	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
-		long userId, long groupId, java.lang.String name,
 		java.lang.String description, ServiceContext serviceContext)
 		throws PortalException;
 

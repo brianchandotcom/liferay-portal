@@ -109,6 +109,7 @@
 		<!-- Temporary suppressions for private repos and subrepos -->
 
 		<suppress checks="JavaAPISignatureCheck" files="modules/apps/foundation/apio-architect/.*" />
+		<suppress checks="JavaAPISignatureCheck" files="modules/private/apps/commerce/.*" />
 		<suppress checks="JavaDeprecatedKernelClassesCheck" files="modules/private/.*" />
 	</source-check>
 </suppressions>

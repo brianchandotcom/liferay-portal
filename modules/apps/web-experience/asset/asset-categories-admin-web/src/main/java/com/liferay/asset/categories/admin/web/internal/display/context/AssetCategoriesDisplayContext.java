@@ -229,6 +229,93 @@ public class AssetCategoriesDisplayContext {
 		return navigationItems;
 	}
 
+	public List<DropdownItem> getCategoriesActionItemsDropdownItems() {
+		return new DropdownItemList(_request) {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							"javascript:" + _renderResponse.getNamespace() +
+								"deleteSelectedCategories();");
+						dropdownItem.setIcon("trash");
+						dropdownItem.setLabel("delete");
+						dropdownItem.setQuickAction(true);
+					});
+			}
+		};
+	}
+
+	public String getCategoriesClearResultsURL() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletURL clearResultsURL = _renderResponse.createRenderURL();
+
+		clearResultsURL.setParameter("mvcPath", "/view_categories.jsp");
+		clearResultsURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		clearResultsURL.setParameter(
+			"categoryId", String.valueOf(getCategoryId()));
+		clearResultsURL.setParameter(
+			"vocabularyId", String.valueOf(getVocabularyId()));
+		clearResultsURL.setParameter("displayStyle", getDisplayStyle());
+
+		return clearResultsURL.toString();
+	}
+
+	public CreationMenu getCategoriesCreationMenu() {
+		return new CreationMenu(_request) {
+			{
+				addPrimaryDropdownItem(
+					dropdownItem -> {
+						PortletURL addCategoryURL =
+							_renderResponse.createRenderURL();
+
+						addCategoryURL.setParameter(
+							"mvcPath", "/edit_category.jsp");
+
+						if (getCategoryId() > 0) {
+							addCategoryURL.setParameter(
+								"parentCategoryId",
+								String.valueOf(getCategoryId()));
+						}
+
+						addCategoryURL.setParameter(
+							"vocabularyId", String.valueOf(getVocabularyId()));
+
+						dropdownItem.setHref(addCategoryURL);
+
+						String label = "add-category";
+
+						if (getCategoryId() > 0) {
+							label = "add-subcategory";
+						}
+
+						dropdownItem.setLabel(label);
+					});
+			}
+		};
+	}
+
+	public List<DropdownItem> getCategoriesFilterItemsDropdownItems() {
+		return new DropdownItemList(_request) {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getCategoriesFilterNavigationDropdownItems());
+						dropdownGroupItem.setLabel("filter-by-navigation");
+					});
+
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getCategoriesOrderByDropdownItems());
+						dropdownGroupItem.setLabel("order-by");
+					});
+			}
+		};
+	}
+
 	public String getCategoriesRedirect() {
 		String redirect = ParamUtil.getString(_request, "redirect");
 
@@ -255,6 +342,23 @@ public class AssetCategoriesDisplayContext {
 		}
 
 		return redirect;
+	}
+
+	public String getCategoriesSearchActionURL() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletURL searchActionURL = _renderResponse.createRenderURL();
+
+		searchActionURL.setParameter("mvcPath", "/view_categories.jsp");
+		searchActionURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		searchActionURL.setParameter(
+			"categoryId", String.valueOf(getCategoryId()));
+		searchActionURL.setParameter(
+			"vocabularyId", String.valueOf(getVocabularyId()));
+		searchActionURL.setParameter("displayStyle", getDisplayStyle());
+
+		return searchActionURL.toString();
 	}
 
 	public SearchContainer getCategoriesSearchContainer()
@@ -385,6 +489,42 @@ public class AssetCategoriesDisplayContext {
 		_categoriesSearchContainer = categoriesSearchContainer;
 
 		return _categoriesSearchContainer;
+	}
+
+	public String getCategoriesSortingURL() {
+		PortletURL sortingURL = getIteratorURL();
+
+		sortingURL.setParameter(
+			"orderByType",
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
+
+		return sortingURL.toString();
+	}
+
+	public int getCategoriesTotalItems() throws PortalException {
+		SearchContainer categoriesSearchContainer =
+			getCategoriesSearchContainer();
+
+		return categoriesSearchContainer.getTotal();
+	}
+
+	public List<ViewTypeItem> getCategoriesViewTypeItems() {
+		PortletURL portletURL = _renderResponse.createActionURL();
+
+		portletURL.setParameter(
+			ActionRequest.ACTION_NAME, "changeDisplayStyle");
+		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(_request));
+
+		return new ViewTypeItemList(_request, portletURL, getDisplayStyle()) {
+			{
+				if (!isFlattenedNavigationAllowed()) {
+					addCardViewTypeItem();
+					addListViewTypeItem();
+				}
+
+				addTableViewTypeItem();
+			}
+		};
 	}
 
 	public AssetCategory getCategory() {
@@ -965,6 +1105,58 @@ public class AssetCategoriesDisplayContext {
 		}
 
 		return false;
+	}
+
+	private List<DropdownItem> _getCategoriesFilterNavigationDropdownItems() {
+		return new DropdownItemList(_request) {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(isNavigationAll());
+						dropdownItem.setHref(
+							getIteratorURL(), "navigation", "all");
+						dropdownItem.setLabel("all");
+					});
+
+				if (isFlattenedNavigationAllowed()) {
+					add(
+						dropdownItem -> {
+							dropdownItem.setActive(isNavigationCategory());
+							dropdownItem.setHref(
+								"javascript:" + _renderResponse.getNamespace() +
+									"selectCategory();");
+							dropdownItem.setLabel("category");
+						});
+				}
+			}
+		};
+	}
+
+	private List<DropdownItem> _getCategoriesOrderByDropdownItems() {
+		return new DropdownItemList(_request) {
+			{
+				if (isFlattenedNavigationAllowed()) {
+					add(
+						dropdownItem -> {
+							dropdownItem.setActive(
+								Objects.equals(getOrderByCol(), "path"));
+							dropdownItem.setHref(
+								getIteratorURL(), "orderByCol", "path");
+							dropdownItem.setLabel("path");
+						});
+				}
+				else {
+					add(
+						dropdownItem -> {
+							dropdownItem.setActive(
+								Objects.equals(getOrderByCol(), "create-date"));
+							dropdownItem.setHref(
+								getIteratorURL(), "orderByCol", "create-date");
+							dropdownItem.setLabel("create-date");
+						});
+				}
+			}
+		};
 	}
 
 	private List<DropdownItem> _getVocabulariesFilterNavigationDropdownItems() {

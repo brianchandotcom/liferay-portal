@@ -49,6 +49,11 @@ public class ${entity.name}UADAnonymizerTest extends BaseUADAnonymizerTestCase<$
 		}
 	</#if>
 
+	@After
+	public void tearDown() throws Exception {
+		_${entity.varName}UADEntityTestHelper.cleanUpDependencies(_${entity.varNames});
+	}
+
 	@Override
 	protected ${entity.name} addBaseModel(long userId) throws Exception {
 		return addBaseModel(userId, true);
@@ -63,6 +68,11 @@ public class ${entity.name}UADAnonymizerTest extends BaseUADAnonymizerTestCase<$
 		}
 
 		return ${entity.varName};
+	}
+
+	@Override
+	protected void deleteBaseModels(List<${entity.name}> baseModels) throws Exception {
+		_${entity.varName}UADEntityTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -116,16 +126,6 @@ public class ${entity.name}UADAnonymizerTest extends BaseUADAnonymizerTestCase<$
 		}
 
 		return false;
-	}
-
-	@Override
-	protected void deleteBaseModels(List<${entity.name}> baseModels) throws Exception {
-		_${entity.varName}UADEntityTestHelper.cleanUpDependencies(baseModels);
-	}
-	
-	@After
-	public void tearDown() throws Exception {
-		_${entity.varName}UADEntityTestHelper.cleanUpDependencies(_${entity.varNames});
 	}
 
 	@DeleteAfterTestRun

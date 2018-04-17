@@ -131,14 +131,14 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 	function <portlet:namespace/>doAnonymizeMultiple() {
 		<portlet:namespace />doMultiple(
 			'<portlet:actionURL name="/anonymize_uad_entities" />',
-			'<liferay-ui:message key="are-you-sure-you-want-to-anonymize-the-selected items" />'
+			'<liferay-ui:message key="are-you-sure-you-want-to-anonymize-the-selected-items" />'
 		);
 	}
 
 	function <portlet:namespace/>doDeleteMultiple() {
 		<portlet:namespace />doMultiple(
 			'<portlet:actionURL name="/delete_uad_entities" />',
-			'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected items" />'
+			'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-items" />'
 		);
 	}
 

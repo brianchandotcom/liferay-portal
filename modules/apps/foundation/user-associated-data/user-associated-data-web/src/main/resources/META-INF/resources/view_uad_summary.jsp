@@ -93,14 +93,14 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		<div class="sheet-text">
 			<portlet:actionURL name="/forget_personal_site" var="forgetPersonalSiteURL" />
 
-			<aui:button cssClass="btn-sm" disabled="<%= step != 2 %>" onClick='<%= renderResponse.getNamespace() + "confirmAction('viewUADSummaryFm', '" + forgetPersonalSiteURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-forget-the-users-personal-site") + "')" %>' value="delete-personal-site" />
+			<aui:button cssClass="btn-sm" disabled="<%= step != 2 %>" onClick='<%= renderResponse.getNamespace() + "confirmAction('viewUADSummaryFm', '" + forgetPersonalSiteURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-users-personal-site") + "')" %>' value="delete-personal-site" />
 
 			<c:if test="<%= step > 2 %>">
 				<liferay-ui:icon
 					cssClass="text-success"
 					iconCssClass="icon-ok-sign"
 					label="<%= true %>"
-					message="personal-site-was-successfully-forgotten"
+					message="personal-site-was-successfully-deleted"
 				/>
 			</c:if>
 		</div>

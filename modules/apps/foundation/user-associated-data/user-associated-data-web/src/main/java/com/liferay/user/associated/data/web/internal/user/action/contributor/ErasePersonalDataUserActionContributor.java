@@ -41,7 +41,7 @@ public class ErasePersonalDataUserActionContributor
 	public String getMessage(PortletRequest portletRequest) {
 		return LanguageUtil.get(
 			getResourceBundle(getLocale(portletRequest)),
-			"erase-personal-data");
+			"delete-personal-data");
 	}
 
 	@Override

@@ -162,6 +162,10 @@ $sidebar-z-index: 1000;
 }
 
 .form-builder-field-settings-sidebar {
+	.form-builder-select-field.input-group-container {
+		display: inherit;
+	}
+
 	&.loading-data {
 		.lfr-ddm-form-container {
 			visibility: hidden;

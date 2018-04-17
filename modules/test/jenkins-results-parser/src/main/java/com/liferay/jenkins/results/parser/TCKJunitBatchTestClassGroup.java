@@ -127,7 +127,7 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 		if ((testClassNamesRelativeGlobs == null) ||
 			testClassNamesRelativeGlobs.isEmpty()) {
 
-			return new ArrayList<>();
+			return Collections.emptyList();
 		}
 
 		List<PathMatcher> pathMatchers = new ArrayList<>();

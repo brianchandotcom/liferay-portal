@@ -46,6 +46,21 @@ public class LayoutPageTemplateEntryServiceImpl
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long groupId, long layoutPageTemplateCollectionId, String name,
+			int type, long[] fragmentEntryIds, ServiceContext serviceContext)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_ENTRY);
+
+		return layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+			getUserId(), groupId, layoutPageTemplateCollectionId, name, type,
+			fragmentEntryIds, serviceContext);
+	}
+
+	@Override
+	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
+			long groupId, long layoutPageTemplateCollectionId, String name,
 			long[] fragmentEntryIds, ServiceContext serviceContext)
 		throws PortalException {
 

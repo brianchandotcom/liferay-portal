@@ -23,7 +23,6 @@ import org.apache.tools.ant.Task;
 /**
  * @author Cesar Polanco
  */
-
 public class AntUtil {
 
 	public static void runTask(
@@ -34,9 +33,9 @@ public class AntUtil {
 		RuntimeConfigurable runtimeConfigurable =
 			task.getRuntimeConfigurableWrapper();
 
-		for (String attributeName : attributes.keySet()) {
+		for (Map.Entry<String, String> attribute : attributes.entrySet()) {
 			runtimeConfigurable.setAttribute(
-				attributeName, attributes.get(attributeName));
+				attribute.getKey(), attribute.getValue());
 		}
 
 		task.setRuntimeConfigurableWrapper(runtimeConfigurable);

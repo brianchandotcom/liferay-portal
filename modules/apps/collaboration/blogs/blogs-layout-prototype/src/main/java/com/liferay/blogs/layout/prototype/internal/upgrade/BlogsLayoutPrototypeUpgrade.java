@@ -28,13 +28,9 @@ public class BlogsLayoutPrototypeUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"com.liferay.blogs.layout.prototype", "0.0.0", "1.0.0",
-			new DummyUpgradeStep());
+		registry.register("0.0.0", "1.0.0", new DummyUpgradeStep());
 
-		registry.register(
-			"com.liferay.blogs.layout.prototype", "1.0.0", "1.0.1",
-			new UpgradeLocalizedColumn());
+		registry.register("1.0.0", "1.0.1", new UpgradeLocalizedColumn());
 	}
 
 }

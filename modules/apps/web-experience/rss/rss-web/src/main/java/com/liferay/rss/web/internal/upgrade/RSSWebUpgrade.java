@@ -34,11 +34,10 @@ public class RSSWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"com.liferay.rss.web", "0.0.0", "3.0.0", new DummyUpgradeStep());
+		registry.register("0.0.0", "3.0.0", new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.rss.web", "0.0.1", "1.0.0",
+			"0.0.1", "1.0.0",
 			new BaseUpgradePortletId() {
 
 				@Override
@@ -51,7 +50,7 @@ public class RSSWebUpgrade implements UpgradeStepRegistrator {
 			});
 
 		registry.register(
-			"com.liferay.rss.web", "1.0.0", "3.0.0",
+			"1.0.0", "3.0.0",
 			new UpgradeKernelPackage() {
 
 				@Override
@@ -72,7 +71,7 @@ public class RSSWebUpgrade implements UpgradeStepRegistrator {
 			});
 
 		registry.register(
-			"com.liferay.rss.web", "3.0.0", "3.0.1",
+			"3.0.0", "3.0.1",
 			_configurationUpgradeStepFactory.createUpgradeStep(
 				"com.liferay.rss.web.configuration." +
 					"RSSPortletInstanceConfiguration",

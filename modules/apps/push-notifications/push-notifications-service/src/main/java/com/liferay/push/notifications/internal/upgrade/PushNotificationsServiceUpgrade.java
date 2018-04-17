@@ -28,13 +28,9 @@ public class PushNotificationsServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"com.liferay.push.notifications.service", "0.0.1", "1.0.5",
-			new DummyUpgradeStep());
+		registry.register("0.0.1", "1.0.5", new DummyUpgradeStep());
 
-		registry.register(
-			"com.liferay.push.notifications.service", "1.0.5", "1.0.6",
-			new UpgradeCompanyId());
+		registry.register("1.0.5", "1.0.6", new UpgradeCompanyId());
 	}
 
 }

@@ -38,13 +38,10 @@ public class ExportImportServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"com.liferay.exportimport.service", "0.0.0", "1.0.0",
-			new DummyUpgradeStep());
+		registry.register("0.0.0", "1.0.0", new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.exportimport.service", "0.0.1", "1.0.0",
-			new UpgradeBackgroundTaskExecutorClassNames(),
+			"0.0.1", "1.0.0", new UpgradeBackgroundTaskExecutorClassNames(),
 			new UpgradePublisherRequest(
 				_exportImportConfigurationLocalService, _groupLocalService,
 				_schedulerEngineHelper, _userLocalService));

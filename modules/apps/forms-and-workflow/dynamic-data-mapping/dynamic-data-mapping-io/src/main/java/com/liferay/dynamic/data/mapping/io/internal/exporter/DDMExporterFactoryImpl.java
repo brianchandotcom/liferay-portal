@@ -45,9 +45,7 @@ public class DDMExporterFactoryImpl implements DDMExporterFactory {
 		for (String format : getAvailableFormats()) {
 			DDMFormExporter ddmFormExporter = getDDMFormExporter(format);
 
-			String formatLabel = ddmFormExporter.getLabel();
-
-			availableFormatsMap.put(formatLabel, format);
+			availableFormatsMap.put(ddmFormExporter.getLabel(), format);
 		}
 
 		return availableFormatsMap;

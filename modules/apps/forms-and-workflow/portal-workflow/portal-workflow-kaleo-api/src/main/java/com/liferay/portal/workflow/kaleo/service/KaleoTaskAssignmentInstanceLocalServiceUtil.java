@@ -114,9 +114,9 @@ public class KaleoTaskAssignmentInstanceLocalServiceUtil {
 	}
 
 	public static void deleteKaleoDefinitionVersionKaleoTaskAssignmentInstances(
-		long kaleoDefintionId) {
+		long kaleoDefinitionId) {
 		getService()
-			.deleteKaleoDefinitionVersionKaleoTaskAssignmentInstances(kaleoDefintionId);
+			.deleteKaleoDefinitionVersionKaleoTaskAssignmentInstances(kaleoDefinitionId);
 	}
 
 	public static void deleteKaleoInstanceKaleoTaskAssignmentInstances(

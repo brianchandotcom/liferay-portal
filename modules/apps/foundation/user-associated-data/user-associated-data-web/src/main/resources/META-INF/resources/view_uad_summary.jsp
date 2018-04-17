@@ -51,7 +51,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 					cssClass="text-success"
 					iconCssClass="icon-ok-sign"
 					label="<%= true %>"
-					message="user-was-successfully-deactivated"
+					message="user-successfully-deactivated"
 				/>
 			</c:if>
 		</div>
@@ -100,7 +100,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 					cssClass="text-success"
 					iconCssClass="icon-ok-sign"
 					label="<%= true %>"
-					message="personal-site-was-successfully-deleted"
+					message="personal-site-successfully-deleted"
 				/>
 			</c:if>
 		</div>
@@ -141,7 +141,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 					cssClass="text-success"
 					iconCssClass="icon-ok-sign"
 					label="<%= true %>"
-					message="all-data-was-anonymized"
+					message="all-data-anonymized"
 				/>
 			</c:if>
 		</div>

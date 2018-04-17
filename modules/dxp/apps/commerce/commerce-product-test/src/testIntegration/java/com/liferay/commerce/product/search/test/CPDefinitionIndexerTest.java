@@ -69,7 +69,7 @@ public class CPDefinitionIndexerTest {
 
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
-		Document document = assertSearchOneCPDefinition(
+		Document document = _assertSearchOneCPDefinition(
 			cpDefinition.getCompanyId(), groupId, cpDefinition.getTitle());
 
 		String title = document.get(Field.TITLE);
@@ -77,12 +77,13 @@ public class CPDefinitionIndexerTest {
 		Assert.assertEquals(cpDefinition.getTitle(), title);
 	}
 
-	private static Hits search(SearchContext searchContext) throws Exception {
+	private static Hits _search(SearchContext searchContext) throws Exception {
 		return _indexer.search(searchContext);
 	}
 
-	private Document assertSearchOneCPDefinition(
-		long companyId, long groupId, String title) throws Exception {
+	private Document _assertSearchOneCPDefinition(
+			long companyId, long groupId, String title)
+		throws Exception {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -90,7 +91,7 @@ public class CPDefinitionIndexerTest {
 		searchContext.setCompanyId(companyId);
 		searchContext.setGroupIds(new long[] {groupId});
 
-		return HitsAssert.assertOnlyOne(search(searchContext));
+		return HitsAssert.assertOnlyOne(_search(searchContext));
 	}
 
 	private static Indexer<CPDefinition> _indexer;

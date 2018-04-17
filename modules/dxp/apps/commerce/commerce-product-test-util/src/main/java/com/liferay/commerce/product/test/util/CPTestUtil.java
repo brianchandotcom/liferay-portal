@@ -15,15 +15,11 @@
 package com.liferay.commerce.product.test.util;
 
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceConstants;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -34,12 +30,8 @@ import com.liferay.portal.kernel.util.Time;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Andrea Di Giorgi
@@ -50,14 +42,14 @@ public class CPTestUtil {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
 
-		CPDefinition cpDefinition = addCPDefinition(
+		CPDefinition cpDefinition = _addCPDefinition(
 			SimpleCPTypeConstants.NAME, true, serviceContext);
 
 		return CPInstanceLocalServiceUtil.getCPInstance(
 			cpDefinition.getCPDefinitionId(), CPInstanceConstants.DEFAULT_SKU);
 	}
 
-	protected static CPDefinition addCPDefinition(
+	private static CPDefinition _addCPDefinition(
 			String productTypeName, boolean hasDefaultInstance,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -139,51 +131,6 @@ public class CPTestUtil {
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, hasDefaultInstance, serviceContext);
-	}
-
-	protected static String getJSON(
-		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels) {
-
-		Map<Long, Set<Long>> cpDefinitionOptionValueRelMap = new HashMap<>();
-
-		for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
-				cpDefinitionOptionValueRels) {
-
-			long key = cpDefinitionOptionValueRel.getCPDefinitionOptionRelId();
-
-			Set<Long> values = cpDefinitionOptionValueRelMap.get(key);
-
-			if (values == null) {
-				values = new HashSet<>();
-
-				cpDefinitionOptionValueRelMap.put(key, values);
-			}
-
-			values.add(
-				cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId());
-		}
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		for (Map.Entry<Long, Set<Long>> entry :
-				cpDefinitionOptionValueRelMap.entrySet()) {
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			jsonObject.put("key", entry.getKey());
-
-			JSONArray valueJSONArray = JSONFactoryUtil.createJSONArray();
-
-			for (long value : entry.getValue()) {
-				valueJSONArray.put(value);
-			}
-
-			jsonObject.put("value", valueJSONArray);
-
-			jsonArray.put(jsonObject);
-		}
-
-		return jsonArray.toJSONString();
 	}
 
 }

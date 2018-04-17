@@ -3472,6 +3472,8 @@ information. Make sure to commit in all build services results.
 						</parallel>
 
 						<ant dir="portal-impl" inheritAll="false" target="install-portal-snapshot" />
+
+						<gradle-execute dir="modules/util/source-formatter" task="deploy" />
 					</then>
 				</if>
 

@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -57,6 +58,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.cxf.jaxrs.ext.MessageContext;
 import org.apache.cxf.rs.security.oauth2.common.AccessTokenRegistration;
 import org.apache.cxf.rs.security.oauth2.common.Client;
 import org.apache.cxf.rs.security.oauth2.common.OAuthPermission;
@@ -100,7 +102,7 @@ public class LiferayOAuthDataProvider
 
 		List<String> invisibleToClientScopes = getInvisibleToClientScopes();
 
-		List<OAuthPermission> permissions = new ArrayList<>();
+		List<OAuthPermission> oAuth2Permissions = new ArrayList<>();
 
 		for (String requestedScope : requestedScopes) {
 			OAuthPermission oAuthPermission = new OAuthPermission(
@@ -112,10 +114,10 @@ public class LiferayOAuthDataProvider
 				oAuthPermission.setInvisibleToClient(true);
 			}
 
-			permissions.add(oAuthPermission);
+			oAuth2Permissions.add(oAuthPermission);
 		}
 
-		return permissions;
+		return oAuth2Permissions;
 	}
 
 	@Override
@@ -213,7 +215,7 @@ public class LiferayOAuthDataProvider
 			OAuthUtils.convertPermissionsToScopeList(
 				serverAccessToken.getScopes()),
 			serverAccessToken.getTokenKey(), serverAccessToken.getTokenType(),
-			Long.parseLong(userSubject.getId()), userSubject.getLogin());
+			GetterUtil.getLong(userSubject.getId()), userSubject.getLogin());
 	}
 
 	public BearerTokenProvider.RefreshToken fromCXFRefreshToken(
@@ -230,7 +232,7 @@ public class LiferayOAuthDataProvider
 			refreshToken.getGrantType(), refreshToken.getIssuedAt(),
 			OAuthUtils.convertPermissionsToScopeList(refreshToken.getScopes()),
 			refreshToken.getTokenKey(), refreshToken.getTokenType(),
-			Long.parseLong(userSubject.getId()), userSubject.getLogin());
+			GetterUtil.getLong(userSubject.getId()), userSubject.getLogin());
 	}
 
 	@Override
@@ -303,7 +305,9 @@ public class LiferayOAuthDataProvider
 			return null;
 		}
 
-		getMessageContext().put(OAuthConstants.CLIENT_ID, clientId);
+		MessageContext messageContext = getMessageContext();
+
+		messageContext.put(OAuthConstants.CLIENT_ID, clientId);
 
 		return populateClient(oAuth2Application);
 	}
@@ -422,7 +426,7 @@ public class LiferayOAuthDataProvider
 
 			extraProperties.put(
 				OAuth2ProviderRestEndpointConstants.COMPANY_ID,
-				Long.toString(oAuth2Authorization.getCompanyId()));
+				GetterUtil.getString(oAuth2Authorization.getCompanyId()));
 
 			return refreshToken;
 		}
@@ -534,7 +538,7 @@ public class LiferayOAuthDataProvider
 	public OAuth2Application resolveOAuth2Application(Client client) {
 		Map<String, String> clientProperties = client.getProperties();
 
-		long companyId = Long.parseLong(
+		long companyId = GetterUtil.getLong(
 			clientProperties.get(
 				OAuth2ProviderRestEndpointConstants.COMPANY_ID));
 
@@ -565,19 +569,18 @@ public class LiferayOAuthDataProvider
 		_codeGrantsPortalCache =
 			(PortalCache<String, ServerAuthorizationCodeGrant>)
 				_multiVMPool.getPortalCache("oauth2-provider-code-grants");
-		_oAuth2ProviderConfiguration = ConfigurableUtil.createConfigurable(
-			OAuth2ProviderConfiguration.class, properties);
 		_codeGrantsPortalCache =
 			(PortalCache<String, ServerAuthorizationCodeGrant>)
 				_multiVMPool.getPortalCache("oauth2-provider-code-grants");
+		_oAuth2ProviderConfiguration = ConfigurableUtil.createConfigurable(
+			OAuth2ProviderConfiguration.class, properties);
 	}
 
 	@Override
 	protected ServerAccessToken doCreateAccessToken(
-		AccessTokenRegistration accessTokenRegistration) {
+		AccessTokenRegistration atReg) {
 
-		ServerAccessToken serverAccessToken = super.doCreateAccessToken(
-			accessTokenRegistration);
+		ServerAccessToken serverAccessToken = super.doCreateAccessToken(atReg);
 
 		BearerTokenProvider.AccessToken accessToken = fromCXFAccessToken(
 			serverAccessToken);
@@ -611,7 +614,7 @@ public class LiferayOAuthDataProvider
 
 		UserSubject userSubject = serverAccessToken.getSubject();
 
-		userSubject.setId(String.valueOf(accessToken.getUserId()));
+		userSubject.setId(GetterUtil.getString(accessToken.getUserId()));
 		userSubject.setLogin(accessToken.getUserName());
 
 		return serverAccessToken;
@@ -649,7 +652,7 @@ public class LiferayOAuthDataProvider
 
 		UserSubject userSubject = cxfRefreshToken.getSubject();
 
-		userSubject.setId(String.valueOf(refreshToken.getUserId()));
+		userSubject.setId(GetterUtil.getString(refreshToken.getUserId()));
 		userSubject.setLogin(refreshToken.getUserName());
 
 		return cxfRefreshToken;
@@ -694,7 +697,7 @@ public class LiferayOAuthDataProvider
 		serverAccessToken.setTokenType(accessToken.getTokenType());
 		UserSubject userSubject = serverAccessToken.getSubject();
 
-		userSubject.setId(String.valueOf(accessToken.getUserId()));
+		userSubject.setId(GetterUtil.getString(accessToken.getUserId()));
 		userSubject.setLogin(accessToken.getUserName());
 
 		return serverAccessToken;
@@ -748,17 +751,17 @@ public class LiferayOAuthDataProvider
 				getOAuth2ApplicationScopeAliases(
 					oAuth2Authorization.getOAuth2ApplicationScopeAliasesId());
 
-		List<OAuthPermission> permissions = convertScopeToPermissions(
+		List<OAuthPermission> oAuth2Permissions = convertScopeToPermissions(
 			client, oAuth2ApplicationScopeAliases.getScopeAliasesList());
 
-		serverAccessToken.setScopes(permissions);
+		serverAccessToken.setScopes(oAuth2Permissions);
 
 		Map<String, String> extraProperties =
 			serverAccessToken.getExtraProperties();
 
 		extraProperties.put(
 			OAuth2ProviderRestEndpointConstants.COMPANY_ID,
-			Long.toString(oAuth2Authorization.getCompanyId()));
+			GetterUtil.getString(oAuth2Authorization.getCompanyId()));
 
 		return serverAccessToken;
 	}
@@ -856,17 +859,17 @@ public class LiferayOAuthDataProvider
 
 		long companyId = oAuth2Application.getCompanyId();
 
-		Map<String, String> clientProperties = client.getProperties();
+		Map<String, String> properties = client.getProperties();
 
-		clientProperties.put(
+		properties.put(
 			OAuth2ProviderRestEndpointConstants.COMPANY_ID,
-			Long.toString(companyId));
-		clientProperties.put(
+			GetterUtil.getString(companyId));
+		properties.put(
 			OAuth2ProviderRestEndpointConstants.FEATURES,
 			oAuth2Application.getFeatures());
 
 		for (String feature : oAuth2Application.getFeaturesList()) {
-			clientProperties.put(
+			properties.put(
 				OAuth2ProviderRestEndpointConstants.FEATURE_PREFIX + feature,
 				feature);
 		}
@@ -875,16 +878,16 @@ public class LiferayOAuthDataProvider
 	}
 
 	protected UserSubject populateUserSubject(
-		long companyId, long userId, String userName) {
+		long companyId, long userId, String username) {
 
 		UserSubject userSubject = new UserSubject(
-			userName, Long.toString(userId));
+			username, GetterUtil.getString(userId));
 
 		Map<String, String> properties = userSubject.getProperties();
 
 		properties.put(
 			OAuth2ProviderRestEndpointConstants.COMPANY_ID,
-			Long.toString(companyId));
+			GetterUtil.getString(companyId));
 
 		return userSubject;
 	}
@@ -976,30 +979,30 @@ public class LiferayOAuthDataProvider
 
 		long companyId = oAuth2Application.getCompanyId();
 
-		UserSubject subject = serverAccessToken.getSubject();
+		UserSubject userSubject = serverAccessToken.getSubject();
 
 		long userId = 0;
 		String userName = StringPool.BLANK;
 
-		if (subject != null) {
+		if (userSubject != null) {
 			try {
-				userId = Long.parseLong(subject.getId());
+				userId = GetterUtil.getLong(userSubject.getId());
 
 				User user = _userLocalService.getUser(userId);
 
 				userName = user.getFullName();
 			}
 			catch (Exception e) {
-				_log.error("Unable to load user " + subject.getId(), e);
+				_log.error("Unable to load user " + userSubject.getId(), e);
 				throw new RuntimeException(e);
 			}
 		}
 
-		Map<String, String> clientProperties = client.getProperties();
+		Map<String, String> properties = client.getProperties();
 
-		String remoteAddr = clientProperties.get(
+		String remoteAddr = properties.get(
 			OAuth2ProviderRestEndpointConstants.CLIENT_REMOTE_ADDR);
-		String remoteHost = clientProperties.get(
+		String remoteHost = properties.get(
 			OAuth2ProviderRestEndpointConstants.CLIENT_REMOTE_HOST);
 
 		OAuth2Authorization oAuth2Authorization =

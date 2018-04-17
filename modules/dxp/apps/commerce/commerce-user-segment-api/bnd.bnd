@@ -2,6 +2,8 @@ Bundle-Name: Liferay Commerce User Segment API
 Bundle-SymbolicName: com.liferay.commerce.user.segment.api
 Bundle-Version: 1.0.0
 Export-Package:\
+	com.liferay.commerce.user.segment.constants,\
+	com.liferay.commerce.user.segment.criterion,\
 	com.liferay.commerce.user.segment.exception,\
 	com.liferay.commerce.user.segment.model,\
 	com.liferay.commerce.user.segment.service

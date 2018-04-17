@@ -16,32 +16,12 @@ package com.liferay.meris;
 
 import aQute.bnd.annotation.ProviderType;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-
 /**
  * @author Eduardo Garcia
  */
 @ProviderType
-public interface MerisSegmentManager
-	<S extends MerisSegment, P extends MerisProfile> {
+public interface MerisProfileManager <P extends MerisProfile> {
 
-	public List<P> getMerisProfiles(
-		String merisSegmentId, Map<String, Object> context, int start, int end,
-		Comparator<P> comparator);
-
-	public S getMerisSegment(String merisSegmentId);
-
-	public List<S> getMerisSegments(
-		String scopeId, int start, int end, Comparator<S> comparator);
-
-	public List<S> getMerisSegments(
-		String scopeId, String merisProfileId, Map<String, Object> context,
-		int start, int end, Comparator<S> comparator);
-
-	public boolean matches(
-		String merisProfileId, String merisSegmentId,
-		Map<String, Object> context);
+	public P getMerisProfile(String merisProfileId);
 
 }

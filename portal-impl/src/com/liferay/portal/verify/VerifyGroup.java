@@ -14,24 +14,19 @@
 
 package com.liferay.portal.verify;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.exception.GroupFriendlyURLException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserGroupGroupRole;
 import com.liferay.portal.kernel.model.UserGroupRole;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
@@ -62,81 +57,10 @@ public class VerifyGroup extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		verifyCompanyGroups();
-		verifyNullFriendlyURLGroups();
 		verifyOrganizationNames();
 		verifySites();
 		verifyStagedGroups();
 		verifyTree();
-	}
-
-	protected void verifyCompanyGroups() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			List<Company> companies = CompanyLocalServiceUtil.getCompanies();
-
-			for (Company company : companies) {
-				GroupLocalServiceUtil.checkCompanyGroup(company.getCompanyId());
-
-				GroupLocalServiceUtil.checkSystemGroups(company.getCompanyId());
-			}
-		}
-	}
-
-	protected void verifyNullFriendlyURLGroups() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			List<Group> groups =
-				GroupLocalServiceUtil.getNullFriendlyURLGroups();
-
-			for (Group group : groups) {
-				String friendlyURL = StringPool.SLASH + group.getGroupId();
-
-				User user = null;
-
-				if (group.isCompany() && !group.isCompanyStagingGroup()) {
-					friendlyURL = GroupConstants.GLOBAL_FRIENDLY_URL;
-				}
-				else if (group.isUser()) {
-					user = UserLocalServiceUtil.getUserById(group.getClassPK());
-
-					friendlyURL = StringPool.SLASH + user.getScreenName();
-				}
-				else if (group.getClassPK() > 0) {
-					friendlyURL = StringPool.SLASH + group.getClassPK();
-				}
-
-				try {
-					GroupLocalServiceUtil.updateFriendlyURL(
-						group.getGroupId(), friendlyURL);
-				}
-				catch (GroupFriendlyURLException gfurle) {
-					if (user != null) {
-						long userId = user.getUserId();
-
-						if (_log.isWarnEnabled()) {
-							StringBundler sb = new StringBundler(7);
-
-							sb.append("Updating user screen name ");
-							sb.append(user.getScreenName());
-							sb.append(" to ");
-							sb.append(userId);
-							sb.append(" because it is generating an invalid ");
-							sb.append("friendly URL ");
-							sb.append(friendlyURL);
-
-							_log.warn(sb.toString());
-						}
-
-						UserLocalServiceUtil.updateScreenName(
-							userId, String.valueOf(userId));
-					}
-					else {
-						_log.error("Invalid Friendly URL " + friendlyURL);
-
-						throw gfurle;
-					}
-				}
-			}
-		}
 	}
 
 	protected void verifyOrganizationNames() throws Exception {

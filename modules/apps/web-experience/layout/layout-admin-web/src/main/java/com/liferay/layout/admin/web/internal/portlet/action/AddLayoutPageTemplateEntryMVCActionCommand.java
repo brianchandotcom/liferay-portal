@@ -59,6 +59,8 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 		long layoutPageTemplateCollectionId = ParamUtil.getLong(
 			actionRequest, "layoutPageTemplateCollectionId");
 
+		int type = ParamUtil.getInteger(actionRequest, "type");
+
 		String name = ParamUtil.getString(actionRequest, "name");
 
 		try {
@@ -68,7 +70,8 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
 				_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 					serviceContext.getScopeGroupId(),
-					layoutPageTemplateCollectionId, name, null, serviceContext);
+					layoutPageTemplateCollectionId, name, type, null,
+					serviceContext);
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 

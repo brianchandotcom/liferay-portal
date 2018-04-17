@@ -153,6 +153,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 	* @param pageId the primary key for the new wiki page
 	* @return the new wiki page
 	*/
+	@Transactional(enabled = false)
 	public WikiPage createWikiPage(long pageId);
 
 	public void deletePage(long nodeId, java.lang.String title)

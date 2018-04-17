@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -87,12 +88,13 @@ public abstract class ShoppingOrderItemLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new shopping order item with the primary key. Does not add the shopping order item to the database.
-	 *
-	 * @param orderItemId the primary key for the new shopping order item
-	 * @return the new shopping order item
-	 */
+	* Creates a new shopping order item with the primary key. Does not add the shopping order item to the database.
+	*
+	* @param orderItemId the primary key for the new shopping order item
+	* @return the new shopping order item
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public ShoppingOrderItem createShoppingOrderItem(long orderItemId) {
 		return shoppingOrderItemPersistence.create(orderItemId);
 	}

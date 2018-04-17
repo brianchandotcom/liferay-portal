@@ -85,6 +85,7 @@ public interface DLContentLocalService extends BaseLocalService,
 	* @param contentId the primary key for the new document library content
 	* @return the new document library content
 	*/
+	@Transactional(enabled = false)
 	public DLContent createDLContent(long contentId);
 
 	public void deleteContent(long companyId, long repositoryId,

@@ -92,6 +92,7 @@ public interface CalendarNotificationTemplateLocalService
 	* @param calendarNotificationTemplateId the primary key for the new calendar notification template
 	* @return the new calendar notification template
 	*/
+	@Transactional(enabled = false)
 	public CalendarNotificationTemplate createCalendarNotificationTemplate(
 		long calendarNotificationTemplateId);
 

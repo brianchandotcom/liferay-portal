@@ -112,6 +112,7 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	* @param categoryId the primary key for the new message boards category
 	* @return the new message boards category
 	*/
+	@Transactional(enabled = false)
 	public MBCategory createMBCategory(long categoryId);
 
 	public void deleteCategories(long groupId) throws PortalException;

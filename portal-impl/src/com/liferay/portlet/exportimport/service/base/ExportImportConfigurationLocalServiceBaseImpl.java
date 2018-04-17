@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -92,12 +93,13 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new export import configuration with the primary key. Does not add the export import configuration to the database.
-	 *
-	 * @param exportImportConfigurationId the primary key for the new export import configuration
-	 * @return the new export import configuration
-	 */
+	* Creates a new export import configuration with the primary key. Does not add the export import configuration to the database.
+	*
+	* @param exportImportConfigurationId the primary key for the new export import configuration
+	* @return the new export import configuration
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public ExportImportConfiguration createExportImportConfiguration(
 		long exportImportConfigurationId) {
 		return exportImportConfigurationPersistence.create(exportImportConfigurationId);

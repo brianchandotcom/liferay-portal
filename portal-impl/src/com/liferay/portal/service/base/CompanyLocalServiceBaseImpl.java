@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.service.persistence.UserGroupFinder;
 import com.liferay.portal.kernel.service.persistence.UserGroupPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.VirtualHostPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -106,12 +107,13 @@ public abstract class CompanyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Creates a new company with the primary key. Does not add the company to the database.
-	 *
-	 * @param companyId the primary key for the new company
-	 * @return the new company
-	 */
+	* Creates a new company with the primary key. Does not add the company to the database.
+	*
+	* @param companyId the primary key for the new company
+	* @return the new company
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public Company createCompany(long companyId) {
 		return companyPersistence.create(companyId);
 	}

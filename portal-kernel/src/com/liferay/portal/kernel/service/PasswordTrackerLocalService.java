@@ -73,6 +73,7 @@ public interface PasswordTrackerLocalService extends BaseLocalService,
 	* @param passwordTrackerId the primary key for the new password tracker
 	* @return the new password tracker
 	*/
+	@Transactional(enabled = false)
 	public PasswordTracker createPasswordTracker(long passwordTrackerId);
 
 	/**

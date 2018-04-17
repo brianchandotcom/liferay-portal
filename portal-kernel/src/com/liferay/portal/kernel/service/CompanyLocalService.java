@@ -132,6 +132,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	* @param companyId the primary key for the new company
 	* @return the new company
 	*/
+	@Transactional(enabled = false)
 	public Company createCompany(long companyId);
 
 	/**

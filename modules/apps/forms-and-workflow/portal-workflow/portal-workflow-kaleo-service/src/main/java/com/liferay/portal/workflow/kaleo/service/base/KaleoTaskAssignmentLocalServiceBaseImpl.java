@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.RolePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -108,12 +109,13 @@ public abstract class KaleoTaskAssignmentLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new kaleo task assignment with the primary key. Does not add the kaleo task assignment to the database.
-	 *
-	 * @param kaleoTaskAssignmentId the primary key for the new kaleo task assignment
-	 * @return the new kaleo task assignment
-	 */
+	* Creates a new kaleo task assignment with the primary key. Does not add the kaleo task assignment to the database.
+	*
+	* @param kaleoTaskAssignmentId the primary key for the new kaleo task assignment
+	* @return the new kaleo task assignment
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public KaleoTaskAssignment createKaleoTaskAssignment(
 		long kaleoTaskAssignmentId) {
 		return kaleoTaskAssignmentPersistence.create(kaleoTaskAssignmentId);

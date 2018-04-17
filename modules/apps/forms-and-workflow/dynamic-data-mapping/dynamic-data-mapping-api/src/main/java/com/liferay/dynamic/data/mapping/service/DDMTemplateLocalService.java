@@ -229,6 +229,7 @@ public interface DDMTemplateLocalService extends BaseLocalService,
 	* @param templateId the primary key for the new ddm template
 	* @return the new ddm template
 	*/
+	@Transactional(enabled = false)
 	public DDMTemplate createDDMTemplate(long templateId);
 
 	/**

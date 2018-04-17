@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutPersistence;
 import com.liferay.portal.kernel.service.persistence.UserNotificationEventPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -92,12 +93,13 @@ public abstract class UserThreadLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new user thread with the primary key. Does not add the user thread to the database.
-	 *
-	 * @param userThreadId the primary key for the new user thread
-	 * @return the new user thread
-	 */
+	* Creates a new user thread with the primary key. Does not add the user thread to the database.
+	*
+	* @param userThreadId the primary key for the new user thread
+	* @return the new user thread
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public UserThread createUserThread(long userThreadId) {
 		return userThreadPersistence.create(userThreadId);
 	}

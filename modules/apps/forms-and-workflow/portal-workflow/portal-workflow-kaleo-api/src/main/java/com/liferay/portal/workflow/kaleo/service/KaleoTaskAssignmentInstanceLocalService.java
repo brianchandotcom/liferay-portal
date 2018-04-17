@@ -101,6 +101,7 @@ public interface KaleoTaskAssignmentInstanceLocalService
 	* @param kaleoTaskAssignmentInstanceId the primary key for the new kaleo task assignment instance
 	* @return the new kaleo task assignment instance
 	*/
+	@Transactional(enabled = false)
 	public KaleoTaskAssignmentInstance createKaleoTaskAssignmentInstance(
 		long kaleoTaskAssignmentInstanceId);
 

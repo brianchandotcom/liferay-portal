@@ -89,6 +89,7 @@ public interface SiteNavigationMenuItemLocalService extends BaseLocalService,
 	* @param siteNavigationMenuItemId the primary key for the new site navigation menu item
 	* @return the new site navigation menu item
 	*/
+	@Transactional(enabled = false)
 	public SiteNavigationMenuItem createSiteNavigationMenuItem(
 		long siteNavigationMenuItemId);
 

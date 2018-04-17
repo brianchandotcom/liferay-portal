@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -98,12 +99,13 @@ public abstract class SyncDeviceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new sync device with the primary key. Does not add the sync device to the database.
-	 *
-	 * @param syncDeviceId the primary key for the new sync device
-	 * @return the new sync device
-	 */
+	* Creates a new sync device with the primary key. Does not add the sync device to the database.
+	*
+	* @param syncDeviceId the primary key for the new sync device
+	* @return the new sync device
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public SyncDevice createSyncDevice(long syncDeviceId) {
 		return syncDevicePersistence.create(syncDeviceId);
 	}

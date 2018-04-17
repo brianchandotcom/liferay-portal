@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowDefinitionLinkPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -103,12 +104,13 @@ public abstract class DLFileEntryTypeLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new document library file entry type with the primary key. Does not add the document library file entry type to the database.
-	 *
-	 * @param fileEntryTypeId the primary key for the new document library file entry type
-	 * @return the new document library file entry type
-	 */
+	* Creates a new document library file entry type with the primary key. Does not add the document library file entry type to the database.
+	*
+	* @param fileEntryTypeId the primary key for the new document library file entry type
+	* @return the new document library file entry type
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public DLFileEntryType createDLFileEntryType(long fileEntryTypeId) {
 		return dlFileEntryTypePersistence.create(fileEntryTypeId);
 	}

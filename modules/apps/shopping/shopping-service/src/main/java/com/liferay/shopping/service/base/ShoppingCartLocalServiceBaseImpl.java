@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -91,12 +92,13 @@ public abstract class ShoppingCartLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new shopping cart with the primary key. Does not add the shopping cart to the database.
-	 *
-	 * @param cartId the primary key for the new shopping cart
-	 * @return the new shopping cart
-	 */
+	* Creates a new shopping cart with the primary key. Does not add the shopping cart to the database.
+	*
+	* @param cartId the primary key for the new shopping cart
+	* @return the new shopping cart
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public ShoppingCart createShoppingCart(long cartId) {
 		return shoppingCartPersistence.create(cartId);
 	}

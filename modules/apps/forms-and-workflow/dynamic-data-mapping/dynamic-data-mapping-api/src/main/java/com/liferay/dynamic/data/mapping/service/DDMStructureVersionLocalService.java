@@ -78,6 +78,7 @@ public interface DDMStructureVersionLocalService extends BaseLocalService,
 	* @param structureVersionId the primary key for the new ddm structure version
 	* @return the new ddm structure version
 	*/
+	@Transactional(enabled = false)
 	public DDMStructureVersion createDDMStructureVersion(
 		long structureVersionId);
 

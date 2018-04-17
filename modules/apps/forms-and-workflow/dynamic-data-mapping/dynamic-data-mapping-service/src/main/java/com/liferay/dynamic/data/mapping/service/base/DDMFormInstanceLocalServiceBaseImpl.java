@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowDefinitionLinkPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -101,12 +102,13 @@ public abstract class DDMFormInstanceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new ddm form instance with the primary key. Does not add the ddm form instance to the database.
-	 *
-	 * @param formInstanceId the primary key for the new ddm form instance
-	 * @return the new ddm form instance
-	 */
+	* Creates a new ddm form instance with the primary key. Does not add the ddm form instance to the database.
+	*
+	* @param formInstanceId the primary key for the new ddm form instance
+	* @return the new ddm form instance
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public DDMFormInstance createDDMFormInstance(long formInstanceId) {
 		return ddmFormInstancePersistence.create(formInstanceId);
 	}

@@ -77,6 +77,7 @@ public interface ShoppingItemPriceLocalService extends BaseLocalService,
 	* @param itemPriceId the primary key for the new shopping item price
 	* @return the new shopping item price
 	*/
+	@Transactional(enabled = false)
 	public ShoppingItemPrice createShoppingItemPrice(long itemPriceId);
 
 	/**

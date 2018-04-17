@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -88,12 +89,13 @@ public abstract class SocialRequestLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new social request with the primary key. Does not add the social request to the database.
-	 *
-	 * @param requestId the primary key for the new social request
-	 * @return the new social request
-	 */
+	* Creates a new social request with the primary key. Does not add the social request to the database.
+	*
+	* @param requestId the primary key for the new social request
+	* @return the new social request
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public SocialRequest createSocialRequest(long requestId) {
 		return socialRequestPersistence.create(requestId);
 	}

@@ -69,6 +69,7 @@ import com.liferay.portal.kernel.service.persistence.RepositoryPersistence;
 import com.liferay.portal.kernel.service.persistence.SystemEventPersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -115,12 +116,13 @@ public abstract class RepositoryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new repository with the primary key. Does not add the repository to the database.
-	 *
-	 * @param repositoryId the primary key for the new repository
-	 * @return the new repository
-	 */
+	* Creates a new repository with the primary key. Does not add the repository to the database.
+	*
+	* @param repositoryId the primary key for the new repository
+	* @return the new repository
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public Repository createRepository(long repositoryId) {
 		return repositoryPersistence.create(repositoryId);
 	}

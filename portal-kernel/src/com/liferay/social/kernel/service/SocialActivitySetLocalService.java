@@ -79,6 +79,7 @@ public interface SocialActivitySetLocalService extends BaseLocalService,
 	* @param activitySetId the primary key for the new social activity set
 	* @return the new social activity set
 	*/
+	@Transactional(enabled = false)
 	public SocialActivitySet createSocialActivitySet(long activitySetId);
 
 	public void decrementActivityCount(long activitySetId)

@@ -89,6 +89,7 @@ public interface BookmarksEntryLocalService extends BaseLocalService,
 	* @param entryId the primary key for the new bookmarks entry
 	* @return the new bookmarks entry
 	*/
+	@Transactional(enabled = false)
 	public BookmarksEntry createBookmarksEntry(long entryId);
 
 	/**

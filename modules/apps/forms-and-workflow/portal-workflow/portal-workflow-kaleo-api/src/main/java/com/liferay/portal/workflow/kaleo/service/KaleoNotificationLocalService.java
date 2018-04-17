@@ -84,6 +84,7 @@ public interface KaleoNotificationLocalService extends BaseLocalService,
 	* @param kaleoNotificationId the primary key for the new kaleo notification
 	* @return the new kaleo notification
 	*/
+	@Transactional(enabled = false)
 	public KaleoNotification createKaleoNotification(long kaleoNotificationId);
 
 	public void deleteCompanyKaleoNotifications(long companyId);

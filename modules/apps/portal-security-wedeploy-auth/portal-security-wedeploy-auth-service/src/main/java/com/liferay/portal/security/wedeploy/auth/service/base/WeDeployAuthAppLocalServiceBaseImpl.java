@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp;
@@ -88,12 +89,13 @@ public abstract class WeDeployAuthAppLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new we deploy auth app with the primary key. Does not add the we deploy auth app to the database.
-	 *
-	 * @param weDeployAuthAppId the primary key for the new we deploy auth app
-	 * @return the new we deploy auth app
-	 */
+	* Creates a new we deploy auth app with the primary key. Does not add the we deploy auth app to the database.
+	*
+	* @param weDeployAuthAppId the primary key for the new we deploy auth app
+	* @return the new we deploy auth app
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public WeDeployAuthApp createWeDeployAuthApp(long weDeployAuthAppId) {
 		return weDeployAuthAppPersistence.create(weDeployAuthAppId);
 	}

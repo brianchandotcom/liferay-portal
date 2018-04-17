@@ -77,6 +77,7 @@ import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WebDAVPropsPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -128,12 +129,13 @@ public abstract class DLFileEntryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new document library file entry with the primary key. Does not add the document library file entry to the database.
-	 *
-	 * @param fileEntryId the primary key for the new document library file entry
-	 * @return the new document library file entry
-	 */
+	* Creates a new document library file entry with the primary key. Does not add the document library file entry to the database.
+	*
+	* @param fileEntryId the primary key for the new document library file entry
+	* @return the new document library file entry
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public DLFileEntry createDLFileEntry(long fileEntryId) {
 		return dlFileEntryPersistence.create(fileEntryId);
 	}

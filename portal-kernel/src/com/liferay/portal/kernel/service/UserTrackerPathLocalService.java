@@ -73,6 +73,7 @@ public interface UserTrackerPathLocalService extends BaseLocalService,
 	* @param userTrackerPathId the primary key for the new user tracker path
 	* @return the new user tracker path
 	*/
+	@Transactional(enabled = false)
 	public UserTrackerPath createUserTrackerPath(long userTrackerPathId);
 
 	/**

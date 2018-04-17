@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -104,12 +105,13 @@ public abstract class FriendlyURLEntryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new friendly url entry with the primary key. Does not add the friendly url entry to the database.
-	 *
-	 * @param friendlyURLEntryId the primary key for the new friendly url entry
-	 * @return the new friendly url entry
-	 */
+	* Creates a new friendly url entry with the primary key. Does not add the friendly url entry to the database.
+	*
+	* @param friendlyURLEntryId the primary key for the new friendly url entry
+	* @return the new friendly url entry
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public FriendlyURLEntry createFriendlyURLEntry(long friendlyURLEntryId) {
 		return friendlyURLEntryPersistence.create(friendlyURLEntryId);
 	}

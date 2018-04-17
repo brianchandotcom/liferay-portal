@@ -79,6 +79,7 @@ public interface RepositoryEntryLocalService extends BaseLocalService,
 	* @param repositoryEntryId the primary key for the new repository entry
 	* @return the new repository entry
 	*/
+	@Transactional(enabled = false)
 	public RepositoryEntry createRepositoryEntry(long repositoryEntryId);
 
 	/**

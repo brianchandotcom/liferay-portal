@@ -83,6 +83,7 @@ public interface LayoutPageTemplateCollectionLocalService
 	* @param layoutPageTemplateCollectionId the primary key for the new layout page template collection
 	* @return the new layout page template collection
 	*/
+	@Transactional(enabled = false)
 	public LayoutPageTemplateCollection createLayoutPageTemplateCollection(
 		long layoutPageTemplateCollectionId);
 

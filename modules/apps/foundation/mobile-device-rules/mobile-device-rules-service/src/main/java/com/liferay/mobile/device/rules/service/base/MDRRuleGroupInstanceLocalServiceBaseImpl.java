@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.service.persistence.LayoutPersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutSetPersistence;
 import com.liferay.portal.kernel.service.persistence.SystemEventPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -104,12 +105,13 @@ public abstract class MDRRuleGroupInstanceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new mdr rule group instance with the primary key. Does not add the mdr rule group instance to the database.
-	 *
-	 * @param ruleGroupInstanceId the primary key for the new mdr rule group instance
-	 * @return the new mdr rule group instance
-	 */
+	* Creates a new mdr rule group instance with the primary key. Does not add the mdr rule group instance to the database.
+	*
+	* @param ruleGroupInstanceId the primary key for the new mdr rule group instance
+	* @return the new mdr rule group instance
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public MDRRuleGroupInstance createMDRRuleGroupInstance(
 		long ruleGroupInstanceId) {
 		return mdrRuleGroupInstancePersistence.create(ruleGroupInstanceId);

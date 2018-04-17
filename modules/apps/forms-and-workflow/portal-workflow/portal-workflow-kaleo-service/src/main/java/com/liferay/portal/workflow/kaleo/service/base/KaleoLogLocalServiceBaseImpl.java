@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -105,12 +106,13 @@ public abstract class KaleoLogLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Creates a new kaleo log with the primary key. Does not add the kaleo log to the database.
-	 *
-	 * @param kaleoLogId the primary key for the new kaleo log
-	 * @return the new kaleo log
-	 */
+	* Creates a new kaleo log with the primary key. Does not add the kaleo log to the database.
+	*
+	* @param kaleoLogId the primary key for the new kaleo log
+	* @return the new kaleo log
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public KaleoLog createKaleoLog(long kaleoLogId) {
 		return kaleoLogPersistence.create(kaleoLogId);
 	}

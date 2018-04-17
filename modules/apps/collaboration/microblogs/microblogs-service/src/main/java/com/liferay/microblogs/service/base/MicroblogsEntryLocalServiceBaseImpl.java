@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.UserNotificationEventPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -95,12 +96,13 @@ public abstract class MicroblogsEntryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new microblogs entry with the primary key. Does not add the microblogs entry to the database.
-	 *
-	 * @param microblogsEntryId the primary key for the new microblogs entry
-	 * @return the new microblogs entry
-	 */
+	* Creates a new microblogs entry with the primary key. Does not add the microblogs entry to the database.
+	*
+	* @param microblogsEntryId the primary key for the new microblogs entry
+	* @return the new microblogs entry
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public MicroblogsEntry createMicroblogsEntry(long microblogsEntryId) {
 		return microblogsEntryPersistence.create(microblogsEntryId);
 	}

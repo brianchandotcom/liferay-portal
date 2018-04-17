@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -87,12 +88,13 @@ public abstract class DDMTemplateVersionLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new ddm template version with the primary key. Does not add the ddm template version to the database.
-	 *
-	 * @param templateVersionId the primary key for the new ddm template version
-	 * @return the new ddm template version
-	 */
+	* Creates a new ddm template version with the primary key. Does not add the ddm template version to the database.
+	*
+	* @param templateVersionId the primary key for the new ddm template version
+	* @return the new ddm template version
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public DDMTemplateVersion createDDMTemplateVersion(long templateVersionId) {
 		return ddmTemplateVersionPersistence.create(templateVersionId);
 	}

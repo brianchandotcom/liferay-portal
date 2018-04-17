@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -86,12 +87,13 @@ public abstract class TestEntityLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new test entity with the primary key. Does not add the test entity to the database.
-	 *
-	 * @param id the primary key for the new test entity
-	 * @return the new test entity
-	 */
+	* Creates a new test entity with the primary key. Does not add the test entity to the database.
+	*
+	* @param id the primary key for the new test entity
+	* @return the new test entity
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public TestEntity createTestEntity(long id) {
 		return testEntityPersistence.create(id);
 	}

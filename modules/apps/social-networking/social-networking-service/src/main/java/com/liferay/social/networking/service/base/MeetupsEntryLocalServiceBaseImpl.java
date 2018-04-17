@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.ImagePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -92,12 +93,13 @@ public abstract class MeetupsEntryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new meetups entry with the primary key. Does not add the meetups entry to the database.
-	 *
-	 * @param meetupsEntryId the primary key for the new meetups entry
-	 * @return the new meetups entry
-	 */
+	* Creates a new meetups entry with the primary key. Does not add the meetups entry to the database.
+	*
+	* @param meetupsEntryId the primary key for the new meetups entry
+	* @return the new meetups entry
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public MeetupsEntry createMeetupsEntry(long meetupsEntryId) {
 		return meetupsEntryPersistence.create(meetupsEntryId);
 	}

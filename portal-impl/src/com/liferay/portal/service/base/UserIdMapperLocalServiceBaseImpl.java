@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.UserIdMapperLocalService;
 import com.liferay.portal.kernel.service.persistence.UserIdMapperPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -84,12 +85,13 @@ public abstract class UserIdMapperLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new user ID mapper with the primary key. Does not add the user ID mapper to the database.
-	 *
-	 * @param userIdMapperId the primary key for the new user ID mapper
-	 * @return the new user ID mapper
-	 */
+	* Creates a new user ID mapper with the primary key. Does not add the user ID mapper to the database.
+	*
+	* @param userIdMapperId the primary key for the new user ID mapper
+	* @return the new user ID mapper
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public UserIdMapper createUserIdMapper(long userIdMapperId) {
 		return userIdMapperPersistence.create(userIdMapperId);
 	}

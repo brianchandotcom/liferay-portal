@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -88,12 +89,13 @@ public abstract class WorkflowInstanceLinkLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new workflow instance link with the primary key. Does not add the workflow instance link to the database.
-	 *
-	 * @param workflowInstanceLinkId the primary key for the new workflow instance link
-	 * @return the new workflow instance link
-	 */
+	* Creates a new workflow instance link with the primary key. Does not add the workflow instance link to the database.
+	*
+	* @param workflowInstanceLinkId the primary key for the new workflow instance link
+	* @return the new workflow instance link
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public WorkflowInstanceLink createWorkflowInstanceLink(
 		long workflowInstanceLinkId) {
 		return workflowInstanceLinkPersistence.create(workflowInstanceLinkId);

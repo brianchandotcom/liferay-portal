@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.persistence.GroupFinder;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -90,12 +91,13 @@ public abstract class SocialActivityLimitLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new social activity limit with the primary key. Does not add the social activity limit to the database.
-	 *
-	 * @param activityLimitId the primary key for the new social activity limit
-	 * @return the new social activity limit
-	 */
+	* Creates a new social activity limit with the primary key. Does not add the social activity limit to the database.
+	*
+	* @param activityLimitId the primary key for the new social activity limit
+	* @return the new social activity limit
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public SocialActivityLimit createSocialActivityLimit(long activityLimitId) {
 		return socialActivityLimitPersistence.create(activityLimitId);
 	}

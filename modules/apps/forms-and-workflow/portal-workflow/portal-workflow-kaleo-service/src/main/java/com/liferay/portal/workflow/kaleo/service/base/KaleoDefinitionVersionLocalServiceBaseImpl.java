@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -107,12 +108,13 @@ public abstract class KaleoDefinitionVersionLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new kaleo definition version with the primary key. Does not add the kaleo definition version to the database.
-	 *
-	 * @param kaleoDefinitionVersionId the primary key for the new kaleo definition version
-	 * @return the new kaleo definition version
-	 */
+	* Creates a new kaleo definition version with the primary key. Does not add the kaleo definition version to the database.
+	*
+	* @param kaleoDefinitionVersionId the primary key for the new kaleo definition version
+	* @return the new kaleo definition version
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public KaleoDefinitionVersion createKaleoDefinitionVersion(
 		long kaleoDefinitionVersionId) {
 		return kaleoDefinitionVersionPersistence.create(kaleoDefinitionVersionId);

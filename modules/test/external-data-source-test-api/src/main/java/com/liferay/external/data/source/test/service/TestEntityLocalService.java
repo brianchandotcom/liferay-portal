@@ -76,6 +76,7 @@ public interface TestEntityLocalService extends BaseLocalService,
 	* @param id the primary key for the new test entity
 	* @return the new test entity
 	*/
+	@Transactional(enabled = false)
 	public TestEntity createTestEntity(long id);
 
 	/**

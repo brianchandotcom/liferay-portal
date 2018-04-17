@@ -17,30 +17,20 @@ package com.liferay.bookmarks.uad.exporter.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
-import com.liferay.bookmarks.uad.test.BaseBookmarksEntryUADEntityTestCase;
-import com.liferay.portal.kernel.model.User;
+import com.liferay.bookmarks.uad.test.BookmarksEntryUADEntityTestHelper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Node;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.kernel.zip.ZipReader;
-import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.exporter.UADExporter;
+import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
+import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-
+import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -48,7 +38,8 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class BookmarksEntryUADExporterTest
-	extends BaseBookmarksEntryUADEntityTestCase {
+	extends BaseUADExporterTestCase<BookmarksEntry>
+	implements WhenHasStatusByUserIdField<BookmarksEntry> {
 
 	@ClassRule
 	@Rule
@@ -56,63 +47,49 @@ public class BookmarksEntryUADExporterTest
 		new LiferayIntegrationTestRule();
 
 	@Override
-	public void setUp() throws Exception {
-		super.setUp();
+	public BookmarksEntry addBaseModelWithStatusByUserId(
+			long userId, long statusByUserId)
+		throws Exception {
 
-		_user = UserTestUtil.addUser();
+		BookmarksEntry bookmarksEntry =
+			_bookmarksEntryUADEntityTestHelper.
+				addBookmarksEntryWithStatusByUserId(userId, statusByUserId);
+
+		_bookmarksEntries.add(bookmarksEntry);
+
+		return bookmarksEntry;
 	}
 
-	@Test
-	public void testExport() throws Exception {
-		BookmarksEntry bookmarksEntry = addBookmarksEntry(_user.getUserId());
+	@Override
+	protected BookmarksEntry addBaseModel(long userId) throws Exception {
+		BookmarksEntry bookmarksEntry =
+			_bookmarksEntryUADEntityTestHelper.addBookmarksEntry(userId);
 
-		List<BookmarksEntry> bookmarksEntries = _uadAggregator.getRange(
-			_user.getUserId(), 0, 1);
+		_bookmarksEntries.add(bookmarksEntry);
 
-		BookmarksEntry bookmarksEntry1 = bookmarksEntries.get(0);
-
-		byte[] bytes = _uadExporter.export(bookmarksEntry1);
-
-		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
-			bytes);
-
-		Document document = SAXReaderUtil.read(byteArrayInputStream);
-
-		Node entryIdNode = document.selectSingleNode(
-			"/model/column[column-name='entryId']/column-value");
-		Node userIdNode = document.selectSingleNode(
-			"/model/column[column-name='userId']/column-value");
-
-		Assert.assertEquals(
-			String.valueOf(bookmarksEntry.getEntryId()), entryIdNode.getText());
-		Assert.assertEquals(
-			String.valueOf(_user.getUserId()), userIdNode.getText());
+		return bookmarksEntry;
 	}
 
-	@Test
-	public void testExportAll() throws Exception {
-		addBookmarksEntry(_user.getUserId());
-
-		File file = _uadExporter.exportAll(_user.getUserId());
-
-		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
-
-		List<String> entries = zipReader.getEntries();
-
-		Assert.assertEquals(entries.toString(), 1, entries.size());
+	@Override
+	protected String getPrimaryKeyName() {
+		return "entryId";
 	}
 
-	@Inject(
-		filter = "model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY
-	)
-	private UADAggregator _uadAggregator;
+	@Override
+	protected UADExporter<BookmarksEntry> getUADExporter() {
+		return _uadExporter;
+	}
+
+	@DeleteAfterTestRun
+	private final List<BookmarksEntry> _bookmarksEntries = new ArrayList<>();
+
+	@Inject
+	private BookmarksEntryUADEntityTestHelper
+		_bookmarksEntryUADEntityTestHelper;
 
 	@Inject(
 		filter = "model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY
 	)
 	private UADExporter _uadExporter;
-
-	@DeleteAfterTestRun
-	private User _user;
 
 }

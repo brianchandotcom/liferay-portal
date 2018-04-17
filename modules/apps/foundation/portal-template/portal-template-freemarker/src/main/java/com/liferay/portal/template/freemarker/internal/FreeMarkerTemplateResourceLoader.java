@@ -78,12 +78,12 @@ public class FreeMarkerTemplateResourceLoader
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_freemarkerEngineConfiguration = ConfigurableUtil.createConfigurable(
+		_freeMarkerEngineConfiguration = ConfigurableUtil.createConfigurable(
 			FreeMarkerEngineConfiguration.class, properties);
 
 		_defaultTemplateResourceLoader = new DefaultTemplateResourceLoader(
 			TemplateConstants.LANG_TYPE_FTL,
-			_freemarkerEngineConfiguration.resourceModificationCheck(),
+			_freeMarkerEngineConfiguration.resourceModificationCheck(),
 			_multiVMPool, _singleVMPool);
 	}
 
@@ -100,7 +100,7 @@ public class FreeMarkerTemplateResourceLoader
 	private static volatile DefaultTemplateResourceLoader
 		_defaultTemplateResourceLoader;
 	private static volatile FreeMarkerEngineConfiguration
-		_freemarkerEngineConfiguration;
+		_freeMarkerEngineConfiguration;
 
 	private MultiVMPool _multiVMPool;
 	private SingleVMPool _singleVMPool;

@@ -62,10 +62,10 @@ public class AntivirusScannerUtil {
 		}
 	}
 
-	public void setAntivirusScanner(AntivirusScanner antiVirusScanner) {
+	public void setAntivirusScanner(AntivirusScanner antivirusScanner) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
-		_antivirusScanner = antiVirusScanner;
+		_antivirusScanner = antivirusScanner;
 	}
 
 	private static AntivirusScanner _antivirusScanner;

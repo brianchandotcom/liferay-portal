@@ -93,31 +93,31 @@ public class ImageEditorDLDisplayContextHelper {
 			ResourceBundle resourceBundle)
 		throws PortalException {
 
-		JavaScriptMenuItem javascriptMenuItem = new JavaScriptMenuItem();
+		JavaScriptMenuItem javaScriptMenuItem = new JavaScriptMenuItem();
 
-		javascriptMenuItem.setKey("#edit-with-image-editor");
-		javascriptMenuItem.setLabel(
+		javaScriptMenuItem.setKey("#edit-with-image-editor");
+		javaScriptMenuItem.setLabel(
 			LanguageUtil.get(resourceBundle, "edit-with-image-editor"));
-		javascriptMenuItem.setOnClick(_getOnclickMethod());
-		javascriptMenuItem.setJavaScript(_getJavaScript());
+		javaScriptMenuItem.setOnClick(_getOnclickMethod());
+		javaScriptMenuItem.setJavaScript(_getJavaScript());
 
-		return javascriptMenuItem;
+		return javaScriptMenuItem;
 	}
 
 	public JavaScriptToolbarItem getJavacriptEditWithImageEditorToolbarItem(
 			ResourceBundle resourceBundle)
 		throws PortalException {
 
-		JavaScriptToolbarItem javascriptToolbarItem =
+		JavaScriptToolbarItem javaScriptToolbarItem =
 			new JavaScriptToolbarItem();
 
-		javascriptToolbarItem.setKey("#edit-with-image-editor");
-		javascriptToolbarItem.setLabel(
+		javaScriptToolbarItem.setKey("#edit-with-image-editor");
+		javaScriptToolbarItem.setLabel(
 			LanguageUtil.get(resourceBundle, "edit-with-image-editor"));
-		javascriptToolbarItem.setOnClick(_getOnclickMethod());
-		javascriptToolbarItem.setJavaScript(_getJavaScript());
+		javaScriptToolbarItem.setOnClick(_getOnclickMethod());
+		javaScriptToolbarItem.setJavaScript(_getJavaScript());
 
-		return javascriptToolbarItem;
+		return javaScriptToolbarItem;
 	}
 
 	public boolean isShowActions() throws PortalException {

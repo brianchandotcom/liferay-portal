@@ -670,10 +670,10 @@ public class DefaultWikiListPagesDisplayContext
 		throws PortalException {
 
 		try {
-			JavaScriptMenuItem javascriptMenuItem = new JavaScriptMenuItem();
+			JavaScriptMenuItem javaScriptMenuItem = new JavaScriptMenuItem();
 
-			javascriptMenuItem.setKey(WikiUIItemKeys.PRINT);
-			javascriptMenuItem.setLabel("print");
+			javaScriptMenuItem.setKey(WikiUIItemKeys.PRINT);
+			javaScriptMenuItem.setLabel("print");
 
 			StringBundler sb = new StringBundler(5);
 
@@ -698,9 +698,9 @@ public class DefaultWikiListPagesDisplayContext
 			sb.append("menubar=1,resizable=1,scrollbars=yes,status=0,");
 			sb.append("toolbar=0,top=180,width=640');");
 
-			javascriptMenuItem.setOnClick(sb.toString());
+			javaScriptMenuItem.setOnClick(sb.toString());
 
-			menuItems.add(javascriptMenuItem);
+			menuItems.add(javaScriptMenuItem);
 		}
 		catch (WindowStateException wse) {
 		}

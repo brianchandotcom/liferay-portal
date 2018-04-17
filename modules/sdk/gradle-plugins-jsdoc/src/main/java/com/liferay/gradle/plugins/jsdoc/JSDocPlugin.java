@@ -46,26 +46,26 @@ public class JSDocPlugin extends BaseJSDocPlugin {
 	}
 
 	private JSDocTask _addTaskJSDoc(Project project) {
-		final JSDocTask jsdocTask = GradleUtil.addTask(
+		final JSDocTask jsDocTask = GradleUtil.addTask(
 			project, JSDOC_TASK_NAME, JSDocTask.class);
 
-		jsdocTask.setDescription(
+		jsDocTask.setDescription(
 			"Generates the API documentation for the JavaScript code in this " +
 				"project.");
 
-		jsdocTask.setDestinationDir(
+		jsDocTask.setDestinationDir(
 			new Callable<File>() {
 
 				@Override
 				public File call() throws Exception {
-					Project project = jsdocTask.getProject();
+					Project project = jsDocTask.getProject();
 
 					return new File(project.getBuildDir(), "jsdoc");
 				}
 
 			});
 
-		jsdocTask.setGroup(JavaBasePlugin.DOCUMENTATION_GROUP);
+		jsDocTask.setGroup(JavaBasePlugin.DOCUMENTATION_GROUP);
 
 		PluginContainer pluginContainer = project.getPlugins();
 
@@ -75,18 +75,18 @@ public class JSDocPlugin extends BaseJSDocPlugin {
 
 				@Override
 				public void execute(JavaPlugin javaPlugin) {
-					_configureTaskJSDocForJavaPlugin(jsdocTask);
+					_configureTaskJSDocForJavaPlugin(jsDocTask);
 				}
 
 			});
 
-		return jsdocTask;
+		return jsDocTask;
 	}
 
-	private void _configureTaskJSDocForJavaPlugin(JSDocTask jsdocTask) {
-		final Project project = jsdocTask.getProject();
+	private void _configureTaskJSDocForJavaPlugin(JSDocTask jsDocTask) {
+		final Project project = jsDocTask.getProject();
 
-		jsdocTask.setDestinationDir(
+		jsDocTask.setDestinationDir(
 			new Callable<File>() {
 
 				@Override
@@ -100,7 +100,7 @@ public class JSDocPlugin extends BaseJSDocPlugin {
 
 			});
 
-		jsdocTask.setSourceDirs(
+		jsDocTask.setSourceDirs(
 			new Callable<File>() {
 
 				@Override

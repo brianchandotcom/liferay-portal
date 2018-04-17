@@ -99,15 +99,15 @@ public class AppTLDDocBuilderPlugin implements Plugin<Project> {
 
 		final Project project = copyAppTLDDocResourcesTask.getProject();
 
-		TLDDocTask tlddocTask = GradleUtil.addTask(
+		TLDDocTask tldDocTask = GradleUtil.addTask(
 			project, APP_TLDDOC_TASK_NAME, TLDDocTask.class);
 
-		tlddocTask.dependsOn(copyAppTLDDocResourcesTask);
-		tlddocTask.setClasspath(classpath);
-		tlddocTask.setDescription(
+		tldDocTask.dependsOn(copyAppTLDDocResourcesTask);
+		tldDocTask.setClasspath(classpath);
+		tldDocTask.setDescription(
 			"Generates tag library documentation for the app.");
 
-		tlddocTask.setDestinationDir(
+		tldDocTask.setDestinationDir(
 			new Callable<File>() {
 
 				@Override
@@ -117,9 +117,9 @@ public class AppTLDDocBuilderPlugin implements Plugin<Project> {
 
 			});
 
-		tlddocTask.setGroup(JavaBasePlugin.DOCUMENTATION_GROUP);
+		tldDocTask.setGroup(JavaBasePlugin.DOCUMENTATION_GROUP);
 
-		return tlddocTask;
+		return tldDocTask;
 	}
 
 	private Copy _addTaskCopyAppTLDDocResources(final Project project) {
@@ -144,11 +144,11 @@ public class AppTLDDocBuilderPlugin implements Plugin<Project> {
 		return copy;
 	}
 
-	private Jar _addTaskJarAppTLDDoc(TLDDocTask tlddocTask) {
+	private Jar _addTaskJarAppTLDDoc(TLDDocTask tldDocTask) {
 		Jar jar = GradleUtil.addTask(
-			tlddocTask.getProject(), JAR_APP_TLDDOC_TASK_NAME, Jar.class);
+			tldDocTask.getProject(), JAR_APP_TLDDOC_TASK_NAME, Jar.class);
 
-		jar.from(tlddocTask);
+		jar.from(tldDocTask);
 		jar.setClassifier("taglibdoc");
 		jar.setDescription(
 			"Assembles a jar archive containing the tag library " +
@@ -166,10 +166,10 @@ public class AppTLDDocBuilderPlugin implements Plugin<Project> {
 
 		appTLDDocTask.dependsOn(task);
 
-		TLDDocTask tlddocTask = (TLDDocTask)GradleUtil.getTask(
+		TLDDocTask tldDocTask = (TLDDocTask)GradleUtil.getTask(
 			subproject, TLDDocBuilderPlugin.TLDDOC_TASK_NAME);
 
-		appTLDDocTask.source(tlddocTask.getSource());
+		appTLDDocTask.source(tldDocTask.getSource());
 	}
 
 	private void _configureTaskCopyAppTLDDocResources(

@@ -79,7 +79,7 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 		}
 
 		String[] restrictedClassNames = GetterUtil.getStringValues(
-			_freemarkerEngineConfiguration.restrictedClasses());
+			_freeMarkerEngineConfiguration.restrictedClasses());
 
 		for (String restrictedClassName : restrictedClassNames) {
 			if (match(restrictedClassName, className)) {
@@ -94,7 +94,7 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 		boolean allowed = false;
 
 		String[] allowedClasseNames = GetterUtil.getStringValues(
-			_freemarkerEngineConfiguration.allowedClasses());
+			_freeMarkerEngineConfiguration.allowedClasses());
 
 		for (String allowedClassName : allowedClasseNames) {
 			if (match(allowedClassName, className)) {
@@ -136,7 +136,7 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		_freemarkerEngineConfiguration = ConfigurableUtil.createConfigurable(
+		_freeMarkerEngineConfiguration = ConfigurableUtil.createConfigurable(
 			FreeMarkerEngineConfiguration.class, properties);
 
 		_classLoaderBundleTracker = new BundleTracker<>(
@@ -282,12 +282,12 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 	protected void modified(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		_freemarkerEngineConfiguration = ConfigurableUtil.createConfigurable(
+		_freeMarkerEngineConfiguration = ConfigurableUtil.createConfigurable(
 			FreeMarkerEngineConfiguration.class, properties);
 
 		for (Bundle bundle : _bundles) {
 			ClassLoader classLoader = findClassLoader(
-				_freemarkerEngineConfiguration.allowedClasses(),
+				_freeMarkerEngineConfiguration.allowedClasses(),
 				bundle.getBundleContext());
 
 			if (classLoader != null) {
@@ -303,7 +303,7 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 		new ConcurrentHashMap<>());
 	private BundleTracker<ClassLoader> _classLoaderBundleTracker;
 	private volatile FreeMarkerEngineConfiguration
-		_freemarkerEngineConfiguration;
+		_freeMarkerEngineConfiguration;
 	private final Set<ClassLoader> _whitelistedClassLoaders =
 		Collections.newSetFromMap(new ConcurrentHashMap<>());
 
@@ -315,7 +315,7 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 			Bundle bundle, BundleEvent bundleEvent) {
 
 			ClassLoader classLoader = findClassLoader(
-				_freemarkerEngineConfiguration.allowedClasses(),
+				_freeMarkerEngineConfiguration.allowedClasses(),
 				bundle.getBundleContext());
 
 			if (classLoader != null) {

@@ -258,9 +258,9 @@ public class ServiceAnalyzerPlugin implements AnalyzerPlugin {
 		DocumentBuilder documentBuilder =
 			documentBuilderFactory.newDocumentBuilder();
 
-		XPathFactory xPathfactory = XPathFactory.newInstance();
+		XPathFactory xPathFactory = XPathFactory.newInstance();
 
-		XPath xPath = xPathfactory.newXPath();
+		XPath xPath = xPathFactory.newXPath();
 
 		for (File serviceXmlFile : serviceXmlFiles) {
 			populateServiceClassNames(

@@ -37,12 +37,12 @@ public class PortletURLMatcher extends CallbackMatcher {
 	}
 
 	public String replaceMatches(CharSequence charSequence) {
-		return replaceMatches(charSequence, _callBack);
+		return replaceMatches(charSequence, _callback);
 	}
 
 	private static final String _TITLE_PLACEHOLDER = "__TITLE_PLACEHOLDER__";
 
-	private final Callback _callBack = new Callback() {
+	private final Callback _callback = new Callback() {
 
 		@Override
 		public String foundMatch(MatchResult matchResult) {

@@ -127,10 +127,10 @@ public class BeanLocatorTest {
 	@Test
 	public void testPortal3() throws Exception {
 		try {
-			PortalUUID portalUuid = (PortalUUID)PortalBeanLocatorUtil.locate(
+			PortalUUID portalUUID = (PortalUUID)PortalBeanLocatorUtil.locate(
 				PortalUUID.class.getName());
 
-			portalUuid.generate();
+			portalUUID.generate();
 
 			Assert.fail();
 		}

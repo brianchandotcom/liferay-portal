@@ -116,12 +116,12 @@ public class NetlogonConnectionManagerImpl
 			throw new NtlmLogonException("Session key negotiation failed");
 		}
 
-		NetlogonConnection netLogonConnection = new NetlogonConnection(
+		NetlogonConnection netlogonConnection = new NetlogonConnection(
 			clientCredential, sessionKey);
 
-		netLogonConnection.setDcerpcHandle(dcerpcHandle);
+		netlogonConnection.setDcerpcHandle(dcerpcHandle);
 
-		return netLogonConnection;
+		return netlogonConnection;
 	}
 
 	protected byte[] computeSessionKey(

@@ -921,7 +921,7 @@ public class QuartzSchedulerEngineTest {
 		}
 
 		@Override
-		public boolean checkExists(JobKey jobkey) {
+		public boolean checkExists(JobKey jobKey) {
 			return false;
 		}
 
@@ -1061,7 +1061,7 @@ public class QuartzSchedulerEngineTest {
 
 		@Override
 		public List<? extends org.quartz.Trigger> getTriggersOfJob(
-			JobKey jobkey) {
+			JobKey jobKey) {
 
 			return Collections.emptyList();
 		}
@@ -1074,7 +1074,7 @@ public class QuartzSchedulerEngineTest {
 		}
 
 		@Override
-		public boolean interrupt(JobKey jobkey) {
+		public boolean interrupt(JobKey jobKey) {
 			return false;
 		}
 
@@ -1247,11 +1247,11 @@ public class QuartzSchedulerEngineTest {
 		}
 
 		@Override
-		public void triggerJob(JobKey jobkey) {
+		public void triggerJob(JobKey jobKey) {
 		}
 
 		@Override
-		public void triggerJob(JobKey jobkey, JobDataMap jobDataMap) {
+		public void triggerJob(JobKey jobKey, JobDataMap jobDataMap) {
 		}
 
 		@Override

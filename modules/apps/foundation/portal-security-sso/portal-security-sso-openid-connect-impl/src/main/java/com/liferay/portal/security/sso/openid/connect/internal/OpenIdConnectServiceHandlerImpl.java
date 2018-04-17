@@ -256,11 +256,11 @@ public class OpenIdConnectServiceHandlerImpl
 				AuthenticationResponseParser.parse(requestURI);
 
 			if (authenticationResponse instanceof AuthenticationErrorResponse) {
-				AuthenticationErrorResponse authenticationerrorresponse =
+				AuthenticationErrorResponse authenticationErrorResponse =
 					(AuthenticationErrorResponse)authenticationResponse;
 
 				ErrorObject errorObject =
-					authenticationerrorresponse.getErrorObject();
+					authenticationErrorResponse.getErrorObject();
 
 				throw new OpenIdConnectServiceException.AuthenticationException(
 					errorObject.toString());

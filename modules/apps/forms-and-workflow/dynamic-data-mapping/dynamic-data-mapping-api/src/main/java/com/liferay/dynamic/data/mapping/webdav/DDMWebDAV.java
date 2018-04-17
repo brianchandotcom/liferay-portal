@@ -29,7 +29,7 @@ public interface DDMWebDAV {
 
 	public static final String TYPE_TEMPLATES = "Templates";
 
-	public int addResource(WebDAVRequest webDavRequest, long classNameId)
+	public int addResource(WebDAVRequest webDAVRequest, long classNameId)
 		throws Exception;
 
 	public int deleteResource(

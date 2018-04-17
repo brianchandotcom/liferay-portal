@@ -85,7 +85,7 @@ public class ProppatchMethodImpl extends BasePropMethodImpl {
 
 		Resource resource = storage.getResource(webDAVRequest);
 
-		WebDAVProps webDavProps = null;
+		WebDAVProps webDAVProps = null;
 
 		if (resource.getPrimaryKey() <= 0) {
 			if (_log.isWarnEnabled()) {
@@ -108,11 +108,11 @@ public class ProppatchMethodImpl extends BasePropMethodImpl {
 			}
 		}
 
-		webDavProps = WebDAVPropsLocalServiceUtil.getWebDAVProps(
+		webDAVProps = WebDAVPropsLocalServiceUtil.getWebDAVProps(
 			webDAVRequest.getCompanyId(), resource.getClassName(),
 			resource.getPrimaryKey());
 
-		return webDavProps;
+		return webDAVProps;
 	}
 
 	protected Set<QName> processInstructions(WebDAVRequest webDAVRequest)
@@ -123,7 +123,7 @@ public class ProppatchMethodImpl extends BasePropMethodImpl {
 
 			HttpServletRequest request = webDAVRequest.getHttpServletRequest();
 
-			WebDAVProps webDavProps = getStoredProperties(webDAVRequest);
+			WebDAVProps webDAVProps = getStoredProperties(webDAVRequest);
 
 			String xml = new String(
 				FileUtil.getBytes(request.getInputStream()));
@@ -182,10 +182,10 @@ public class ProppatchMethodImpl extends BasePropMethodImpl {
 
 					if (instructionElementName.equals("set")) {
 						if (Validator.isNull(text)) {
-							webDavProps.addProp(name, prefix, uri);
+							webDAVProps.addProp(name, prefix, uri);
 						}
 						else {
-							webDavProps.addProp(name, prefix, uri, text);
+							webDAVProps.addProp(name, prefix, uri, text);
 						}
 
 						newProps.add(
@@ -193,7 +193,7 @@ public class ProppatchMethodImpl extends BasePropMethodImpl {
 								customPropElement.getName(), namespace));
 					}
 					else if (instructionElementName.equals("remove")) {
-						webDavProps.removeProp(name, prefix, uri);
+						webDAVProps.removeProp(name, prefix, uri);
 					}
 					else {
 						throw new InvalidRequestException(
@@ -203,7 +203,7 @@ public class ProppatchMethodImpl extends BasePropMethodImpl {
 				}
 			}
 
-			WebDAVPropsLocalServiceUtil.storeWebDAVProps(webDavProps);
+			WebDAVPropsLocalServiceUtil.storeWebDAVProps(webDAVProps);
 
 			return newProps;
 		}

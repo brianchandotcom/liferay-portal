@@ -1063,10 +1063,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		jar.setGroup(BasePlugin.BUILD_GROUP);
 		jar.setIncludeEmptyDirs(false);
 
-		JSDocTask jsdocTask = (JSDocTask)GradleUtil.getTask(
+		JSDocTask jsDocTask = (JSDocTask)GradleUtil.getTask(
 			project, JSDocPlugin.JSDOC_TASK_NAME);
 
-		jar.from(jsdocTask);
+		jar.from(jsDocTask);
 
 		return jar;
 	}
@@ -1200,10 +1200,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				"Documentation files for this project.");
 		jar.setGroup(BasePlugin.BUILD_GROUP);
 
-		TLDDocTask tlddocTask = (TLDDocTask)GradleUtil.getTask(
+		TLDDocTask tldDocTask = (TLDDocTask)GradleUtil.getTask(
 			project, TLDDocBuilderPlugin.TLDDOC_TASK_NAME);
 
-		jar.from(tlddocTask);
+		jar.from(tldDocTask);
 
 		return jar;
 	}
@@ -1737,20 +1737,20 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				Dependency.ARCHIVES_CONFIGURATION, jarJavadocTask);
 		}
 
-		Task jsdocTask = GradleUtil.getTask(
+		Task jsDocTask = GradleUtil.getTask(
 			project, JSDocPlugin.JSDOC_TASK_NAME);
 
-		TaskInputs taskInputs = jsdocTask.getInputs();
+		TaskInputs taskInputs = jsDocTask.getInputs();
 
 		if (FileUtil.hasFiles(taskInputs.getFiles(), _jsdocSpec)) {
 			artifactHandler.add(
 				Dependency.ARCHIVES_CONFIGURATION, jarJSDocTask);
 		}
 
-		Task tlddocTask = GradleUtil.getTask(
+		Task tldDocTask = GradleUtil.getTask(
 			project, TLDDocBuilderPlugin.TLDDOC_TASK_NAME);
 
-		if (FileUtil.hasSourceFiles(tlddocTask, _tldSpec)) {
+		if (FileUtil.hasSourceFiles(tldDocTask, _tldSpec)) {
 			artifactHandler.add(
 				Dependency.ARCHIVES_CONFIGURATION, jarTLDDocTask);
 		}
@@ -3355,12 +3355,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			return;
 		}
 
-		TLDDocTask tlddocTask = (TLDDocTask)GradleUtil.getTask(
+		TLDDocTask tldDocTask = (TLDDocTask)GradleUtil.getTask(
 			project, TLDDocBuilderPlugin.TLDDOC_TASK_NAME);
 
 		File xsltDir = new File(portalRootDir, "tools/styles/taglibs");
 
-		tlddocTask.setXsltDir(xsltDir);
+		tldDocTask.setXsltDir(xsltDir);
 	}
 
 	private void _configureTaskUpdateFileVersions(

@@ -45,39 +45,39 @@ public class WebDAVPropsLocalServiceImpl
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
-		WebDAVProps webDavProps = webDAVPropsPersistence.fetchByC_C(
+		WebDAVProps webDAVProps = webDAVPropsPersistence.fetchByC_C(
 			classNameId, classPK);
 
-		if (webDavProps == null) {
-			webDavProps = webDAVPropsPersistence.create(
+		if (webDAVProps == null) {
+			webDAVProps = webDAVPropsPersistence.create(
 				counterLocalService.increment());
 
 			Date now = new Date();
 
-			webDavProps.setCompanyId(companyId);
-			webDavProps.setCreateDate(now);
-			webDavProps.setModifiedDate(now);
-			webDavProps.setClassNameId(classNameId);
-			webDavProps.setClassPK(classPK);
+			webDAVProps.setCompanyId(companyId);
+			webDAVProps.setCreateDate(now);
+			webDAVProps.setModifiedDate(now);
+			webDAVProps.setClassNameId(classNameId);
+			webDAVProps.setClassPK(classPK);
 
-			webDAVPropsLocalService.updateWebDAVProps(webDavProps);
+			webDAVPropsLocalService.updateWebDAVProps(webDAVProps);
 		}
 
-		return webDavProps;
+		return webDAVProps;
 	}
 
 	@Override
-	public void storeWebDAVProps(WebDAVProps webDavProps)
+	public void storeWebDAVProps(WebDAVProps webDAVProps)
 		throws PortalException {
 
 		try {
-			webDavProps.store();
+			webDAVProps.store();
 		}
 		catch (Exception e) {
 			throw new WebDAVException("Problem trying to store WebDAVProps", e);
 		}
 
-		webDAVPropsPersistence.update(webDavProps);
+		webDAVPropsPersistence.update(webDAVProps);
 	}
 
 }

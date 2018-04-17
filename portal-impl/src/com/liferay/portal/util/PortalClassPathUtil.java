@@ -163,12 +163,12 @@ public class PortalClassPathUtil {
 	}
 
 	private static String _buildClassPath(
-		ClassLoader classloader, String... classNames) {
+		ClassLoader classLoader, String... classNames) {
 
 		Set<File> fileSet = new HashSet<>();
 
 		for (String className : classNames) {
-			File[] files = _listClassPathFiles(classloader, className);
+			File[] files = _listClassPathFiles(classLoader, className);
 
 			if (files != null) {
 				Collections.addAll(fileSet, files);
@@ -192,14 +192,14 @@ public class PortalClassPathUtil {
 	}
 
 	private static File[] _listClassPathFiles(
-		ClassLoader classloader, String className) {
+		ClassLoader classLoader, String className) {
 
 		String pathOfClass = StringUtil.replace(
 			className, CharPool.PERIOD, CharPool.SLASH);
 
 		pathOfClass = pathOfClass.concat(".class");
 
-		URL url = classloader.getResource(pathOfClass);
+		URL url = classLoader.getResource(pathOfClass);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Build class path from " + url);

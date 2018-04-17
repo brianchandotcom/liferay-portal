@@ -40,11 +40,11 @@ public class ExternalDataSourceTestBundleActivator implements BundleActivator {
 				throw new IllegalStateException();
 			}
 
-			JUnitCore junitCore = new JUnitCore();
+			JUnitCore jUnitCore = new JUnitCore();
 
-			junitCore.addListener(runListener);
+			jUnitCore.addListener(runListener);
 
-			junitCore.run(DataSourceTest.class);
+			jUnitCore.run(DataSourceTest.class);
 		}
 		finally {
 			bundleContext.ungetService(serviceReference);

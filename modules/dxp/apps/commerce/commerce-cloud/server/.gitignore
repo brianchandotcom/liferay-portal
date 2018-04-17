@@ -4,3 +4,4 @@
 /.vertx/
 /bin/
 /build/
+/conf/config.json

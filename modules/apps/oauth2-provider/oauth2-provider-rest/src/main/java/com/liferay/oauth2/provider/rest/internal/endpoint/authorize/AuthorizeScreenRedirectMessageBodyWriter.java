@@ -123,40 +123,40 @@ public class AuthorizeScreenRedirectMessageBodyWriter
 		}
 
 		authorizeScreenURL = setParameter(
-			authorizeScreenURL, OAuthConstants.CLIENT_ID,
-			oAuthAuthorizationData.getClientId());
-
-		authorizeScreenURL = setParameter(
-			authorizeScreenURL, OAuthConstants.REDIRECT_URI,
-			oAuthAuthorizationData.getRedirectUri());
-
-		authorizeScreenURL = setParameter(
-			authorizeScreenURL, OAuthConstants.STATE,
-			oAuthAuthorizationData.getState());
-
-		authorizeScreenURL = setParameter(
-			authorizeScreenURL, OAuthConstants.SCOPE,
-			oAuthAuthorizationData.getProposedScope());
+			authorizeScreenURL, OAuthConstants.AUTHORIZATION_CODE_CHALLENGE,
+			oAuthAuthorizationData.getClientCodeChallenge());
 
 		authorizeScreenURL = setParameter(
 			authorizeScreenURL, OAuthConstants.CLIENT_AUDIENCE,
 			oAuthAuthorizationData.getAudience());
 
 		authorizeScreenURL = setParameter(
+			authorizeScreenURL, OAuthConstants.CLIENT_ID,
+			oAuthAuthorizationData.getClientId());
+
+		authorizeScreenURL = setParameter(
 			authorizeScreenURL, OAuthConstants.NONCE,
 			oAuthAuthorizationData.getNonce());
 
 		authorizeScreenURL = setParameter(
-			authorizeScreenURL, OAuthConstants.AUTHORIZATION_CODE_CHALLENGE,
-			oAuthAuthorizationData.getClientCodeChallenge());
+			authorizeScreenURL, OAuthConstants.REDIRECT_URI,
+			oAuthAuthorizationData.getRedirectUri());
 
 		authorizeScreenURL = setParameter(
 			authorizeScreenURL, OAuthConstants.RESPONSE_TYPE,
 			oAuthAuthorizationData.getResponseType());
 
 		authorizeScreenURL = setParameter(
+			authorizeScreenURL, OAuthConstants.SCOPE,
+			oAuthAuthorizationData.getProposedScope());
+
+		authorizeScreenURL = setParameter(
 			authorizeScreenURL, OAuthConstants.SESSION_AUTHENTICITY_TOKEN,
 			oAuthAuthorizationData.getAuthenticityToken());
+
+		authorizeScreenURL = setParameter(
+			authorizeScreenURL, OAuthConstants.STATE,
+			oAuthAuthorizationData.getState());
 
 		authorizeScreenURL = setParameter(
 			authorizeScreenURL, "reply_to",

@@ -570,7 +570,7 @@
 				// Functions to run on portlet load
 
 				if (canEditTitle) {
-					var events = ['focus', 'gesturemovestart'];
+					var events = ['focus'];
 
 					if (!A.UA.touch) {
 						events.push('mousemove');
@@ -591,10 +591,6 @@
 							handle.detach();
 						}
 					);
-
-					if (A.UA.chrome) {
-						handle.detach();
-					}
 				}
 			}
 

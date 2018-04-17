@@ -1,0 +1,6 @@
+.col-no-padding {
+	[class*="col-"] {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}

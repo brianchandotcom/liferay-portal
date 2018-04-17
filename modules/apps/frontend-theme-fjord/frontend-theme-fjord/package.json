@@ -1,0 +1,25 @@
+{
+	"author": "Nathan Cavanaugh <nathan.cavanaugh@liferay.com> (https://github.com/natecavanaugh)",
+	"bugs": {
+		"url": "https://issues.liferay.com/"
+	},
+	"devDependencies": {
+		"gulp": "3.9.1",
+		"liferay-theme-deps-7.1": "8.0.0-alpha.3",
+		"liferay-theme-tasks": "8.0.0-alpha.3"
+	},
+	"keywords": [
+		"liferay-theme"
+	],
+	"license": "LGPL",
+	"liferayTheme": {
+		"baseTheme": "styled",
+		"distName": "fjord-theme",
+		"rubySass": false,
+		"version": "7.1"
+	},
+	"main": "package.json",
+	"name": "liferay-fjord-theme",
+	"repository": "liferay/liferay-portal",
+	"version": "1.0.29"
+}

@@ -1,0 +1,19 @@
+.portlet-decorate {
+	.portlet {
+		margin-bottom: 0;
+	}
+
+	.portlet-content {
+		border-width: 0;
+		padding: 0;
+	}
+}
+
+.portlet-solid .portlet-content {
+	background: #FFF;
+	border: 1px solid #DEEEEE;
+}
+
+.portlet-barebone .portlet-content {
+	padding: 0;
+}

@@ -1,0 +1,18 @@
+#footer {
+	background-color: $brand-bg-color-1;
+	color: $brand-color-3;
+	padding-bottom: 0;
+
+	a {
+		color: $brand-color-3;
+
+		&:hover, &:focus {
+			text-decoration: underline;
+		}
+	}
+}
+
+#footer-recursive {
+	background-color: #318AB7;
+	font-family: 'open_sanssemibold';
+}

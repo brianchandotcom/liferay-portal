@@ -1,0 +1,167 @@
+#navigation {
+	position: relative;
+
+	.portlet {
+		margin: 0;
+
+		&:hover, &.focus {
+			z-index: 1035;
+		}
+	}
+}
+
+#banner {
+	background-color: $background-color-3;
+
+	.portlet-content {
+		padding: 0;
+	}
+
+	.navbar {
+		margin-bottom: 0;
+		min-height: 60px;
+		padding-bottom: 8px;
+		padding-top: 8px;
+
+		.custom-logo {
+			color: $color-2;
+			line-height: 28px;
+
+			.site-name {
+				margin-left: 16px;
+			}
+		}
+	}
+
+	.navbar-nav {
+		> li {
+			> a {
+				color: $color-2;
+			}
+		}
+	}
+
+	a.logo {
+		color: $color-2;
+	}
+}
+
+.full-screen-navigation {
+	&.main-nav-opened {
+		overflow: hidden;
+
+		#banner .navbar-toggler {
+			z-index: 953;
+		}
+	}
+
+	#banner {
+		.lfr-nav-child-toggle, .child-menu {
+			display: none;
+		}
+
+		.navbar {
+			margin-bottom: 0;
+
+			.collapse {
+				background-color: $background-color-1;
+
+				&.in {
+					bottom: 0;
+					left: 0;
+					position: fixed;
+					right: 0;
+					top: 0;
+					z-index: 952;
+				}
+			}
+		}
+
+		.navbar-nav {
+			display: block;
+			margin-right: 0;
+
+			> li {
+				float: none;
+				text-align: center;
+
+				> a {
+					display: block;
+					font-size: 34px;
+					padding: 30px 15px;
+
+					@include sm {
+						font-size: 54px;
+					}
+				}
+			}
+		}
+	}
+
+	#navigationCollapse {
+		&.collapse.show, &.collapsing {
+			bottom: 0;
+			height: auto;
+			left: 0;
+			overflow: auto;
+			position: fixed;
+			right: 0;
+			top: 0;
+			z-index: 952;
+
+			#navigation {
+				left: 0;
+				position: absolute;
+				right: 0;
+				top: 50%;
+
+				@include transform(translateY(-50%));
+			}
+		}
+
+		&.collapse:not(.show) {
+			display: none;
+		}
+	}
+}
+
+.navbar-toggler {
+	margin: 4px;
+	padding: 6px;
+
+	.icon-bar {
+		background-color: $color-2;
+		display: block;
+		height: 2px;
+		left: 2px;
+		width: 20px;
+
+		@include transform(rotate(0));
+		@include transition(all 0.2s ease-in-out);
+
+		&:first-child {
+			margin-bottom: 4px;
+		}
+	}
+
+	&[aria-expanded="true"] {
+		.icon-bar {
+			margin-bottom: 0;
+			position: relative;
+
+			&:first-child {
+				top: -4px;
+
+				@include transform(rotate(45deg));
+				@include transform-origin(10% 10%);
+			}
+
+			&:last-child {
+				bottom: -5px;
+
+				@include transform(rotate(-45deg));
+				@include transform-origin(10% 90%);
+			}
+		}
+	}
+}

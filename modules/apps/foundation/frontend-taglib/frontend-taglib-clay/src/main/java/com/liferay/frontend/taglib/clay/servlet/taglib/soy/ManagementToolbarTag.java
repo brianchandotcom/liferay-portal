@@ -22,6 +22,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -57,39 +58,29 @@ public class ManagementToolbarTag extends BaseClayTag {
 			setSearchValue(ParamUtil.getString(request, searchInputName));
 		}
 
-		Boolean selectable = (Boolean)context.get("selectable");
+		boolean selectable = GetterUtil.getBoolean(
+			context.get("selectable"), true);
 
-		if (selectable == null) {
-			setSelectable(true);
-		}
+		setSelectable(selectable);
 
-		Boolean showFiltersDoneButton = (Boolean)context.get(
-			"showFiltersDoneButton");
+		boolean showFiltersDoneButton = GetterUtil.getBoolean(
+			context.get("showFiltersDoneButton"));
 
-		if (showFiltersDoneButton == null) {
-			setShowFiltersDoneButton(false);
-		}
-
-		Boolean showCreationMenu = (Boolean)context.get("showCreationMenu");
+		setShowFiltersDoneButton(showFiltersDoneButton);
 
 		CreationMenu creationMenu = (CreationMenu)context.get("creationMenu");
 
-		if (Validator.isNotNull(creationMenu) && (showCreationMenu == null)) {
-			showCreationMenu = true;
+		boolean showCreationMenu = GetterUtil.getBoolean(
+			context.get("showCreationMenu"), Validator.isNotNull(creationMenu));
 
-			setShowCreationMenu(showCreationMenu);
-		}
-		else if (Validator.isNull(creationMenu) && (showCreationMenu == null)) {
-			setShowCreationMenu(false);
-		}
+		setShowCreationMenu(showCreationMenu);
 
 		String infoPanelId = (String)context.get("infoPanelId");
 
-		Boolean showInfoButton = (Boolean)context.get("showInfoButton");
+		boolean showInfoButton = GetterUtil.getBoolean(
+			context.get("showInfoButton"), Validator.isNotNull(infoPanelId));
 
-		if (Validator.isNotNull(infoPanelId) && (showInfoButton == null)) {
-			setShowInfoButton(true);
-		}
+		setShowInfoButton(showInfoButton);
 
 		return super.doStartTag();
 	}

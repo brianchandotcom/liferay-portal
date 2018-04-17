@@ -78,7 +78,7 @@
 
 			<then>
 				<execute macro="Navigator#gotoNavTab">
-					<var name="key_tab" value="Display Settings" />
+					<var name="navTab" value="Display Settings" />
 				</execute>
 			</then>
 			<elseif>

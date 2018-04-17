@@ -272,12 +272,7 @@ public class ExportImportLifecycleEventTest {
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					"com.liferay.portal.background.task.internal.messaging." +
 						"BackgroundTaskMessageListener",
-					Level.ERROR);
-			CaptureAppender captureAppender2 =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"com.liferay.exportimport.internal.background.task." +
-						"PortletStagingBackgroundTaskExecutor",
-					Level.WARN)) {
+					Level.ERROR)) {
 
 			StagingUtil.publishPortlet(
 				user.getUserId(), _group.getGroupId(), _liveGroup.getGroupId(),
@@ -298,15 +293,6 @@ public class ExportImportLifecycleEventTest {
 
 			Assert.assertSame(
 				NoSuchLayoutException.class, throwable.getClass());
-
-			loggingEvents = captureAppender2.getLoggingEvents();
-
-			loggingEvent = loggingEvents.get(0);
-
-			Assert.assertEquals(
-				"Unable to publish portlet: No Layout exists with the " +
-					"primary key 0",
-				loggingEvent.getMessage());
 		}
 
 		Assert.assertTrue(

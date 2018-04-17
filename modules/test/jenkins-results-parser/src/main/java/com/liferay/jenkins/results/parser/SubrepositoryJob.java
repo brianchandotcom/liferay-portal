@@ -84,12 +84,10 @@ public abstract class SubrepositoryJob extends RepositoryJob {
 		if (!dirName.endsWith("-private")) {
 			dirName += "-private";
 
-			this.repositoryDir = new File(
-				repositoryDir.getParentFile(), dirName);
+			repositoryDir = new File(repositoryDir.getParentFile(), dirName);
 		}
-		else {
-			this.repositoryDir = repositoryDir;
-		}
+
+		super.setRepositoryDir(repositoryDir);
 	}
 
 	protected SubrepositoryJob(String jobName) {

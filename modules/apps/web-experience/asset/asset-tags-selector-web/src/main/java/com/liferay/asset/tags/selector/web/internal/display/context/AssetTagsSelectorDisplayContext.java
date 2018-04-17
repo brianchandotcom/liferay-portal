@@ -61,7 +61,7 @@ public class AssetTagsSelectorDisplayContext {
 	}
 
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
+		PortletURL clearResultsURL = _getPortletURL();
 
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
 
@@ -110,34 +110,6 @@ public class AssetTagsSelectorDisplayContext {
 		};
 	}
 
-	public long[] getGroupIds() {
-		if (ArrayUtil.isNotEmpty(_groupIds)) {
-			return _groupIds;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		_groupIds = StringUtil.split(
-			ParamUtil.getString(_request, "groupIds"), 0L);
-
-		if (ArrayUtil.isEmpty(_groupIds)) {
-			_groupIds = new long[] {themeDisplay.getScopeGroupId()};
-		}
-
-		return _groupIds;
-	}
-
-	public String getKeywords() {
-		if (Validator.isNotNull(_keywords)) {
-			return _keywords;
-		}
-
-		_keywords = ParamUtil.getString(_request, "keywords", null);
-
-		return _keywords;
-	}
-
 	public List<NavigationItem> getNavigationItems() {
 		List<NavigationItem> navigationItems = new ArrayList<>();
 
@@ -156,16 +128,6 @@ public class AssetTagsSelectorDisplayContext {
 		return navigationItems;
 	}
 
-	public String getOrderByCol() {
-		if (Validator.isNotNull(_orderByCol)) {
-			return _orderByCol;
-		}
-
-		_orderByCol = ParamUtil.getString(_request, "orderByCol", "name");
-
-		return _orderByCol;
-	}
-
 	public String getOrderByType() {
 		if (Validator.isNotNull(_orderByType)) {
 			return _orderByType;
@@ -176,18 +138,8 @@ public class AssetTagsSelectorDisplayContext {
 		return _orderByType;
 	}
 
-	public PortletURL getPortletURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("eventName", getEventName());
-		portletURL.setParameter(
-			"selectedTagNames", StringUtil.merge(getSelectedTagNames()));
-
-		return portletURL;
-	}
-
 	public String getSearchActionURL() {
-		PortletURL searchActionURL = getPortletURL();
+		PortletURL searchActionURL = _getPortletURL();
 
 		return searchActionURL.toString();
 	}
@@ -204,7 +156,7 @@ public class AssetTagsSelectorDisplayContext {
 	}
 
 	public String getSortingURL() {
-		PortletURL sortingURL = getPortletURL();
+		PortletURL sortingURL = _getPortletURL();
 
 		sortingURL.setParameter(
 			"orderByType",
@@ -222,15 +174,15 @@ public class AssetTagsSelectorDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		SearchContainer tagsSearchContainer = new SearchContainer(
-			_renderRequest, getPortletURL(), null, "there-are-no-tags");
+			_renderRequest, _getPortletURL(), null, "there-are-no-tags");
 
-		String keywords = getKeywords();
+		String keywords = _getKeywords();
 
 		if (Validator.isNotNull(keywords)) {
 			tagsSearchContainer.setSearch(true);
 		}
 
-		String orderByCol = getOrderByCol();
+		String orderByCol = _getOrderByCol();
 
 		tagsSearchContainer.setOrderByCol(orderByCol);
 
@@ -256,7 +208,7 @@ public class AssetTagsSelectorDisplayContext {
 		tagsSearchContainer.setTotal(tagsCount);
 
 		List<AssetTag> tags = AssetTagServiceUtil.getTags(
-			getGroupIds(), keywords, tagsSearchContainer.getStart(),
+			_getGroupIds(), keywords, tagsSearchContainer.getStart(),
 			tagsSearchContainer.getEnd(),
 			tagsSearchContainer.getOrderByComparator());
 
@@ -298,7 +250,7 @@ public class AssetTagsSelectorDisplayContext {
 	}
 
 	public boolean isShowTagsSearch() throws PortalException {
-		if (Validator.isNotNull(getKeywords())) {
+		if (Validator.isNotNull(_getKeywords())) {
 			return true;
 		}
 
@@ -317,11 +269,49 @@ public class AssetTagsSelectorDisplayContext {
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(true);
-						dropdownItem.setHref(getPortletURL());
+						dropdownItem.setHref(_getPortletURL());
 						dropdownItem.setLabel("all");
 					});
 			}
 		};
+	}
+
+	private long[] _getGroupIds() {
+		if (ArrayUtil.isNotEmpty(_groupIds)) {
+			return _groupIds;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		_groupIds = StringUtil.split(
+			ParamUtil.getString(_request, "groupIds"), 0L);
+
+		if (ArrayUtil.isEmpty(_groupIds)) {
+			_groupIds = new long[] {themeDisplay.getScopeGroupId()};
+		}
+
+		return _groupIds;
+	}
+
+	private String _getKeywords() {
+		if (Validator.isNotNull(_keywords)) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(_request, "keywords", null);
+
+		return _keywords;
+	}
+
+	private String _getOrderByCol() {
+		if (Validator.isNotNull(_orderByCol)) {
+			return _orderByCol;
+		}
+
+		_orderByCol = ParamUtil.getString(_request, "orderByCol", "name");
+
+		return _orderByCol;
 	}
 
 	private List<DropdownItem> _getOrderByDropdownItems() {
@@ -331,11 +321,21 @@ public class AssetTagsSelectorDisplayContext {
 					dropdownItem -> {
 						dropdownItem.setActive(true);
 						dropdownItem.setHref(
-							getPortletURL(), "orderByCol", "name");
+							_getPortletURL(), "orderByCol", "name");
 						dropdownItem.setLabel("name");
 					});
 			}
 		};
+	}
+
+	private PortletURL _getPortletURL() {
+		PortletURL portletURL = _renderResponse.createRenderURL();
+
+		portletURL.setParameter("eventName", getEventName());
+		portletURL.setParameter(
+			"selectedTagNames", StringUtil.merge(getSelectedTagNames()));
+
+		return portletURL;
 	}
 
 	private String _displayStyle;

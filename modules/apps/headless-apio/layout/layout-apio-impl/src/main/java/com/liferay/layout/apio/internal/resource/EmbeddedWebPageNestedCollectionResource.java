@@ -87,26 +87,18 @@ public class EmbeddedWebPageNestedCollectionResource
 			"dateModified", Layout::getModifiedDate
 		).addDate(
 			"datePublished", Layout::getLastPublishDate
-		).addLocalizedString(
+		).addLocalizedStringByLocale(
 			"breadcrumb", LayoutResourceCollectionUtil::getBreadcrumb
-		).addLocalizedString(
-			"description",
-			(layout, language) -> layout.getDescription(
-				language.getPreferredLocale())
-		).addLocalizedString(
-			"keywords",
-			(layout, language) -> layout.getKeywords(
-				language.getPreferredLocale())
-		).addLocalizedString(
-			"name",
-			(layout, language) -> layout.getName(language.getPreferredLocale())
-		).addLocalizedString(
-			"title",
-			(layout, language) -> layout.getTitle(language.getPreferredLocale())
-		).addLocalizedString(
-			"url",
-			(layout, language) -> layout.getFriendlyURL(
-				language.getPreferredLocale())
+		).addLocalizedStringByLocale(
+			"description", Layout::getDescription
+		).addLocalizedStringByLocale(
+			"keywords", Layout::getKeywords
+		).addLocalizedStringByLocale(
+			"name", Layout::getName
+		).addLocalizedStringByLocale(
+			"title", Layout::getTitle
+		).addLocalizedStringByLocale(
+			"url", Layout::getFriendlyURL
 		).addString(
 			"embeddedUrl",
 			layout -> layout.getTypeSettingsProperty("embeddedLayoutURL")

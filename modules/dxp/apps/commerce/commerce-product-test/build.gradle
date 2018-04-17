@@ -2,8 +2,10 @@ apply plugin: "com.liferay.poshi.runner.resources.defaults"
 
 dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.7"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.portal.search.test.util", version: "2.1.0-20180327.164608-1"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0-20180326.173807-1"
 	testIntegrationCompile project(":private:apps:commerce:commerce-product-api")
+	testIntegrationCompile project(":private:apps:commerce:commerce-product-test-util")
 }
 
 poshiRunnerResources {

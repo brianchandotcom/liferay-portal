@@ -34,7 +34,9 @@ import java.util.Dictionary;
 import java.util.List;
 import java.util.Properties;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
@@ -201,16 +203,29 @@ public class UpgradeStepRegistratorTracker {
 
 		@Override
 		public void register(
-			final String bundleSymbolicName, String fromSchemaVersionString,
+			String bundleSymbolicName, String fromSchemaVersionString,
 			String toSchemaVersionString, UpgradeStep... upgradeSteps) {
+
+			register(
+				fromSchemaVersionString, toSchemaVersionString, upgradeSteps);
+		}
+
+		@Override
+		public void register(
+			String fromSchemaVersionString, String toSchemaVersionString,
+			UpgradeStep... upgradeSteps) {
+
+			Class<? extends UpgradeStepRegistrator> clazz =
+				_upgradeStepRegistrator.getClass();
+
+			Bundle bundle = FrameworkUtil.getBundle(clazz);
+
+			String bundleSymbolicName = bundle.getSymbolicName();
 
 			int buildNumber = 0;
 
 			try {
 				if (ArrayUtil.isNotEmpty(upgradeSteps)) {
-					Class<? extends UpgradeStepRegistrator> clazz =
-						_upgradeStepRegistrator.getClass();
-
 					Configuration configuration =
 						ConfigurationFactoryUtil.getConfiguration(
 							clazz.getClassLoader(), "service");

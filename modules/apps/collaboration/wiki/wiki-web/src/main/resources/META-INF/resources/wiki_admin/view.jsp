@@ -63,7 +63,7 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 					navigationItem -> {
 						navigationItem.setActive(true);
 						navigationItem.setHref(renderResponse.createRenderURL(), "mvcRenderCommandName", "/wiki_admin/view");
-						navigationItem.setLabel(LanguageUtil.get(request, "wikis"));
+						navigationItem.setLabel("wikis");
 					});
 			}
 		}

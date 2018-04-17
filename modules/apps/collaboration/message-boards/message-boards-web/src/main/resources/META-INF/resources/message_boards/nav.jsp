@@ -35,7 +35,7 @@ boolean signedIn = themeDisplay.isSignedIn();
 					navigationItem -> {
 						navigationItem.setActive(mvcRenderCommandName.equals("/message_boards/edit_category") || mvcRenderCommandName.equals("/message_boards/edit_message") || mvcRenderCommandName.equals("/message_boards/view") || mvcRenderCommandName.equals("/message_boards/view_category") || mvcRenderCommandName.equals("/message_boards/view_message"));
 						navigationItem.setHref(messageBoardsHomeURL);
-						navigationItem.setLabel(LanguageUtil.get(request, "home"));
+						navigationItem.setLabel("home");
 					});
 
 				PortletURL viewRecentPostsURL = renderResponse.createRenderURL();
@@ -46,7 +46,7 @@ boolean signedIn = themeDisplay.isSignedIn();
 					navigationItem -> {
 						navigationItem.setActive(mvcRenderCommandName.equals("/message_boards/view_recent_posts"));
 						navigationItem.setHref(viewRecentPostsURL);
-						navigationItem.setLabel(LanguageUtil.get(request, "recent-posts"));
+						navigationItem.setLabel("recent-posts");
 					});
 
 				if (signedIn) {
@@ -58,7 +58,7 @@ boolean signedIn = themeDisplay.isSignedIn();
 						navigationItem -> {
 							navigationItem.setActive(mvcRenderCommandName.equals("/message_boards/view_my_posts"));
 							navigationItem.setHref(viewMyPostsURL);
-							navigationItem.setLabel(LanguageUtil.get(request, "my-posts"));
+							navigationItem.setLabel("my-posts");
 						});
 
 					if (mbGroupServiceSettings.isEmailMessageAddedEnabled() || mbGroupServiceSettings.isEmailMessageUpdatedEnabled()) {
@@ -70,7 +70,7 @@ boolean signedIn = themeDisplay.isSignedIn();
 							navigationItem -> {
 								navigationItem.setActive(mvcRenderCommandName.equals("/message_boards/view_my_subscriptions"));
 								navigationItem.setHref(viewMySubscriptionsURL);
-								navigationItem.setLabel(LanguageUtil.get(request, "my-subscriptions"));
+								navigationItem.setLabel("my-subscriptions");
 							});
 					}
 				}
@@ -83,7 +83,7 @@ boolean signedIn = themeDisplay.isSignedIn();
 					navigationItem -> {
 						navigationItem.setActive(mvcRenderCommandName.equals("/message_boards/view_statistics"));
 						navigationItem.setHref(viewStatisticsURL);
-						navigationItem.setLabel(LanguageUtil.get(request, "statistics"));
+						navigationItem.setLabel("statistics");
 					});
 			}
 		}

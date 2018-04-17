@@ -43,7 +43,7 @@ if (selPortlet.getConfigurationActionInstance() != null) {
 
 	navigationItem.setHref(configurationURL.toString());
 
-	navigationItem.setLabel(LanguageUtil.get(request, "setup"));
+	navigationItem.setLabel("setup");
 
 	navigationItems.add(navigationItem);
 }
@@ -63,7 +63,7 @@ if (selPortlet.hasMultipleMimeTypes()) {
 
 	navigationItem.setHref(supportedClientsURL.toString());
 
-	navigationItem.setLabel(LanguageUtil.get(request, "supported-clients"));
+	navigationItem.setLabel("supported-clients");
 
 	navigationItems.add(navigationItem);
 }
@@ -85,7 +85,7 @@ if (!publicRenderParameters.isEmpty()) {
 
 	navigationItem.setHref(publicRenderParametersURL.toString());
 
-	navigationItem.setLabel(LanguageUtil.get(request, "communication"));
+	navigationItem.setLabel("communication");
 
 	navigationItems.add(navigationItem);
 }
@@ -104,7 +104,7 @@ sharingURL.setParameter("portletResource", portletResource);
 
 navigationItem.setHref(sharingURL.toString());
 
-navigationItem.setLabel(LanguageUtil.get(request, "sharing"));
+navigationItem.setLabel("sharing");
 
 navigationItems.add(navigationItem);
 
@@ -123,7 +123,7 @@ if (selPortlet.isScopeable()) {
 
 	navigationItem.setHref(scopeURL.toString());
 
-	navigationItem.setLabel(LanguageUtil.get(request, "scope"));
+	navigationItem.setLabel("scope");
 
 	navigationItems.add(navigationItem);
 }

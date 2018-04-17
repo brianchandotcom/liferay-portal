@@ -14,19 +14,38 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.HashMap;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Carlos Lancha
  */
 public class LabelItem extends HashMap<String, String> {
 
+	public LabelItem() {
+		_request = null;
+	}
+
+	public LabelItem(HttpServletRequest request) {
+		_request = request;
+	}
+
 	public void setLabel(String label) {
+		if (Validator.isNotNull(_request)) {
+			label = LanguageUtil.get(_request, label);
+		}
+
 		put("label", label);
 	}
 
 	public void setStyle(String style) {
 		put("style", style);
 	}
+
+	private final HttpServletRequest _request;
 
 }

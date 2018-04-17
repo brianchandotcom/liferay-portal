@@ -52,7 +52,7 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 					navigationItem -> {
 						navigationItem.setActive(true);
 						navigationItem.setHref(renderResponse.createRenderURL());
-						navigationItem.setLabel(LanguageUtil.get(request, "device-families"));
+						navigationItem.setLabel("device-families");
 					});
 			}
 		}

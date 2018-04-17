@@ -12350,7 +12350,7 @@
 		<method>
 			<name>deleteKaleoDefinitionKaleoTaskAssignmentInstances</name>
 			<param>
-				<name>kaleoDefintionId</name>
+				<name>kaleoDefinitionId</name>
 				<type>long</type>
 				<comment><![CDATA[]]></comment>
 			</param>

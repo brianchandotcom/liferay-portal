@@ -179,10 +179,10 @@ public class KaleoTaskAssignmentInstanceLocalServiceImpl
 
 	@Override
 	public void deleteKaleoDefinitionVersionKaleoTaskAssignmentInstances(
-		long kaleoDefintionId) {
+		long kaleoDefinitionId) {
 
 		kaleoTaskAssignmentInstancePersistence.removeByKaleoDefinitionVersionId(
-			kaleoDefintionId);
+			kaleoDefinitionId);
 	}
 
 	@Override

@@ -43,6 +43,7 @@ import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -132,6 +133,11 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 		}
 
 		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(_map, _computedValues);
 	}
 
 	public Set<String> keys() {

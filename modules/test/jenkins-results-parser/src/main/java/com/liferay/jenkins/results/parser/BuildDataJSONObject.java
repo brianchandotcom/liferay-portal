@@ -100,6 +100,7 @@ public class BuildDataJSONObject extends JSONObject {
 			sb.append(entry.getKey());
 			sb.append("=");
 			sb.append(entry.getValue());
+			sb.append("\n");
 		}
 
 		JenkinsResultsParserUtil.write(destFilePath, sb.toString());

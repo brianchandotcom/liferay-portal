@@ -36,8 +36,15 @@ import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.net.UnknownHostException;
 
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.PathMatcher;
 import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -645,6 +652,63 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	public static List<URL> getIncludedResourceURLs(
+			String[] resourceIncludesRelativeGlobs, File rootDir)
+		throws IOException {
+
+		final List<PathMatcher> pathMatchers = new ArrayList<>();
+
+		FileSystem fileSystem = FileSystems.getDefault();
+
+		for (String resourceIncludesRelativeGlob :
+				resourceIncludesRelativeGlobs) {
+
+			pathMatchers.add(
+				fileSystem.getPathMatcher(
+					combine(
+						"glob:", rootDir.getAbsolutePath(), File.separator,
+						resourceIncludesRelativeGlob)));
+		}
+
+		final List<URL> includedResourceURLs = new ArrayList<>();
+
+		Path rootDirPath = rootDir.toPath();
+
+		if (!Files.exists(rootDirPath)) {
+			System.out.println(
+				combine(
+					"Directory ", rootDirPath.toString(), " does not exist."));
+
+			return includedResourceURLs;
+		}
+
+		Files.walkFileTree(
+			rootDirPath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult visitFile(
+						Path filePath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					for (PathMatcher pathMatcher : pathMatchers) {
+						if (pathMatcher.matches(filePath)) {
+							URI uri = filePath.toUri();
+
+							includedResourceURLs.add(uri.toURL());
+
+							break;
+						}
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+
+		return includedResourceURLs;
+	}
+
 	public static float getJavaVersionNumber() {
 		Matcher matcher = _javaVersionPattern.matcher(
 			System.getProperty("java.version"));
@@ -846,51 +910,13 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
-	public static Properties getProperties(File basePropertiesFile) {
-		if (!basePropertiesFile.exists()) {
-			throw new RuntimeException(
-				"Unable to find properties file " +
-					basePropertiesFile.getPath());
-		}
-
-		List<File> propertiesFiles = new ArrayList<>();
-
-		propertiesFiles.add(basePropertiesFile);
-
-		String propertiesFileName = basePropertiesFile.getName();
-
-		String[] environments = {
-			System.getenv("HOSTNAME"), System.getenv("HOST"),
-			System.getenv("COMPUTERNAME"), System.getProperty("user.name")
-		};
-
-		for (String environment : environments) {
-			if (environment == null) {
-				continue;
-			}
-
-			File environmentPropertyFile = new File(
-				basePropertiesFile.getParentFile(),
-				propertiesFileName.replace(
-					".properties", "." + environment + ".properties"));
-
-			if (environmentPropertyFile.exists()) {
-				propertiesFiles.add(environmentPropertyFile);
-			}
-		}
-
+	public static Properties getProperties(File... propertiesFiles) {
 		Properties properties = new Properties();
 
-		try {
-			for (File propertiesFile : propertiesFiles) {
-				properties.load(new FileInputStream(propertiesFile));
+		for (File propertiesFile : propertiesFiles) {
+			if ((propertiesFile != null) && propertiesFile.exists()) {
+				properties.putAll(_getProperties(propertiesFile));
 			}
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(
-				"Unable to load properties file " +
-					basePropertiesFile.getPath(),
-				ioe);
 		}
 
 		return properties;
@@ -1700,6 +1726,56 @@ public class JenkinsResultsParserUtil {
 			Integer.toString(key.hashCode()), ".txt");
 
 		return new File(fileName);
+	}
+
+	private static Properties _getProperties(File basePropertiesFile) {
+		if (!basePropertiesFile.exists()) {
+			throw new RuntimeException(
+				"Unable to find properties file " +
+					basePropertiesFile.getPath());
+		}
+
+		List<File> propertiesFiles = new ArrayList<>();
+
+		propertiesFiles.add(basePropertiesFile);
+
+		String propertiesFileName = basePropertiesFile.getName();
+
+		String[] environments = {
+			System.getenv("HOSTNAME"), System.getenv("HOST"),
+			System.getenv("COMPUTERNAME"), System.getProperty("user.name")
+		};
+
+		for (String environment : environments) {
+			if (environment == null) {
+				continue;
+			}
+
+			File environmentPropertyFile = new File(
+				basePropertiesFile.getParentFile(),
+				propertiesFileName.replace(
+					".properties", "." + environment + ".properties"));
+
+			if (environmentPropertyFile.exists()) {
+				propertiesFiles.add(environmentPropertyFile);
+			}
+		}
+
+		Properties properties = new Properties();
+
+		try {
+			for (File propertiesFile : propertiesFiles) {
+				properties.load(new FileInputStream(propertiesFile));
+			}
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to load properties file " +
+					basePropertiesFile.getPath(),
+				ioe);
+		}
+
+		return properties;
 	}
 
 	private static String _getRedactTokenKey(int index) {

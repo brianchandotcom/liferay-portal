@@ -14,6 +14,10 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * @author Michael Hashimoto
  */
@@ -28,6 +32,28 @@ public abstract class BaseJob implements Job {
 		this.jobName = jobName;
 	}
 
+	protected String getProperty(Properties properties, String name) {
+		if (!properties.containsKey(name)) {
+			return null;
+		}
+
+		String value = properties.getProperty(name);
+
+		Matcher matcher = _propertiesPattern.matcher(value);
+
+		String newValue = value;
+
+		while (matcher.find()) {
+			newValue = newValue.replace(
+				matcher.group(0), getProperty(properties, matcher.group(1)));
+		}
+
+		return newValue;
+	}
+
 	protected String jobName;
+
+	private static final Pattern _propertiesPattern = Pattern.compile(
+		"\\$\\{([^\\}]+)\\}");
 
 }

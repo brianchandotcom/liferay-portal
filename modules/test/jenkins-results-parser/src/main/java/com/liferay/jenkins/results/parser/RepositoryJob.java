@@ -14,24 +14,87 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.File;
+import java.io.IOException;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * @author Michael Hashimoto
  */
 public abstract class RepositoryJob extends BaseJob {
 
 	public String getBranchName() {
-		return branchName;
+		if (_branchName != null) {
+			return _branchName;
+		}
+
+		Matcher matcher = _jobNamePattern.matcher(jobName);
+
+		if (matcher.find()) {
+			_branchName = matcher.group("branchName");
+		}
+
+		_branchName = "master";
+
+		return _branchName;
 	}
 
 	public GitWorkingDirectory getGitWorkingDirectory() {
+		if (gitWorkingDirectory != null) {
+			return gitWorkingDirectory;
+		}
+
+		checkRepositoryDir();
+
+		try {
+			gitWorkingDirectory = new GitWorkingDirectory(
+				getBranchName(), repositoryDir.getAbsolutePath());
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to create git working directory for branch ",
+					getBranchName(), " in repository ",
+					repositoryDir.getAbsolutePath()),
+				ioe);
+		}
+
 		return gitWorkingDirectory;
+	}
+
+	public void setRepositoryDir(File repositoryDir) {
+		if (this.repositoryDir != null) {
+			throw new IllegalStateException(
+				"repositoryDir is already set to " +
+					this.repositoryDir.getPath());
+		}
+
+		this.repositoryDir = repositoryDir;
 	}
 
 	protected RepositoryJob(String jobName) {
 		super(jobName);
 	}
 
-	protected String branchName;
+	protected void checkRepositoryDir() {
+		if (repositoryDir == null) {
+			throw new IllegalStateException("repositoryDir is not set");
+		}
+
+		if (!repositoryDir.exists()) {
+			throw new IllegalStateException(
+				repositoryDir.getPath() + " does not exist");
+		}
+	}
+
 	protected GitWorkingDirectory gitWorkingDirectory;
+	protected File repositoryDir;
+
+	private static final Pattern _jobNamePattern = Pattern.compile(
+		"[^\\(]+\\((?<branchName>[^\\)]+)\\)");
+
+	private String _branchName;
 
 }

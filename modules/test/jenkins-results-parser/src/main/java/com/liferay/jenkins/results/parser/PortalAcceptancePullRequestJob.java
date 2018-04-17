@@ -14,7 +14,11 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.List;
+import java.io.File;
+
+import java.util.Properties;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Michael Hashimoto
@@ -32,7 +36,9 @@ public class PortalAcceptancePullRequestJob extends PortalRepositoryJob {
 	}
 
 	@Override
-	public List<String> getBatchNames() {
+	public Set<String> getBatchNames() {
+		Properties portalTestProperties = getPortalTestProperties();
+
 		String testBatchNames = getProperty(
 			portalTestProperties, "test.batch.names[" + _testSuiteName + "]");
 
@@ -41,11 +47,36 @@ public class PortalAcceptancePullRequestJob extends PortalRepositoryJob {
 				portalTestProperties, "test.batch.names");
 		}
 
-		return getListFromString(testBatchNames);
+		Set<String> testBatchNamesSet = getSetFromString(testBatchNames);
+
+		if (_isPortalWebOnly()) {
+			String[] portalWebOnlyBatchNameMarkers =
+				{"compile-jsp", "functional", "portal-web", "source-format"};
+
+			Set<String> portalWebOnlyBatchNamesSet = new TreeSet<>();
+
+			for (String testBatchName : testBatchNamesSet) {
+				for (String portalWebOnlyBatchNameMarker :
+						portalWebOnlyBatchNameMarkers) {
+
+					if (testBatchName.contains(portalWebOnlyBatchNameMarker)) {
+						portalWebOnlyBatchNamesSet.add(testBatchName);
+
+						break;
+					}
+				}
+			}
+
+			return portalWebOnlyBatchNamesSet;
+		}
+
+		return testBatchNamesSet;
 	}
 
 	@Override
-	public List<String> getDistTypes() {
+	public Set<String> getDistTypes() {
+		Properties portalTestProperties = getPortalTestProperties();
+
 		String testBatchDistAppServers = getProperty(
 			portalTestProperties,
 			"test.batch.dist.app.servers[" + _testSuiteName + "]");
@@ -55,7 +86,7 @@ public class PortalAcceptancePullRequestJob extends PortalRepositoryJob {
 				portalTestProperties, "test.batch.dist.app.servers");
 		}
 
-		return getListFromString(testBatchDistAppServers);
+		return getSetFromString(testBatchDistAppServers);
 	}
 
 	@Override
@@ -64,9 +95,12 @@ public class PortalAcceptancePullRequestJob extends PortalRepositoryJob {
 			JenkinsResultsParserUtil.combine(
 				"test.batch.run.property.query[", testBatchName, "][",
 				_testSuiteName, "]"),
+
 			JenkinsResultsParserUtil.combine(
 				"test.batch.run.property.query[", testBatchName, "]")
 		};
+
+		Properties portalTestProperties = getPortalTestProperties();
 
 		for (String propertyName : propertyNames) {
 			if (portalTestProperties.containsKey(propertyName)) {
@@ -84,6 +118,23 @@ public class PortalAcceptancePullRequestJob extends PortalRepositoryJob {
 
 	public String getTestSuiteName() {
 		return _testSuiteName;
+	}
+
+	private boolean _isPortalWebOnly() {
+		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+
+		File portalWebDirectory = new File(
+			gitWorkingDirectory.getWorkingDirectory(), "portal-web");
+
+		for (File modifiedFile : gitWorkingDirectory.getModifiedFilesList()) {
+			if (!JenkinsResultsParserUtil.isFileInDirectory(
+					portalWebDirectory, modifiedFile)) {
+
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	private final String _testSuiteName;

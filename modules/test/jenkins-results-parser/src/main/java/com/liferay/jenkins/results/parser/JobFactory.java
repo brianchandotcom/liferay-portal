@@ -14,50 +14,122 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.File;
+import java.io.IOException;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * @author Michael Hashimoto
  */
 public class JobFactory {
 
-	public static PortalRepositoryJob newPortalRepositoryJob(String jobName) {
-		return newPortalRepositoryJob(jobName, "default");
+	public static Job newJob(String jobName) {
+		return newJob(jobName, "default");
 	}
 
-	public static PortalRepositoryJob newPortalRepositoryJob(
-		String jobName, String testSuiteName) {
+	public static Job newJob(String jobName, String testSuiteName) {
+		Job job = _jobs.get(jobName);
 
-		if (_jobs.containsKey(jobName)) {
-			Job job = _jobs.get(jobName);
-
-			if (job instanceof PortalRepositoryJob) {
-				return (PortalRepositoryJob)_jobs.get(jobName);
-			}
-
-			throw new RuntimeException(
-				jobName + " is not a portal repository job");
+		if (job != null) {
+			return job;
 		}
-
-		PortalRepositoryJob portalRepositoryJob = null;
 
 		if (jobName.contains("test-portal-acceptance-pullrequest(")) {
-			portalRepositoryJob = new PortalAcceptancePullRequestJob(
-				jobName, testSuiteName);
-		}
-		else if (jobName.contains("test-portal-acceptance-upstream(")) {
-			portalRepositoryJob = new PortalAcceptanceUpstreamJob(jobName);
-		}
-		else {
-			throw new RuntimeException("Invalid job name " + jobName);
+			PortalAcceptancePullRequestJob portalAcceptancePullRequestJob =
+				new PortalAcceptancePullRequestJob(jobName, testSuiteName);
+
+			GitWorkingDirectory gitWorkingDirectory =
+				portalAcceptancePullRequestJob.getGitWorkingDirectory();
+
+			String subrepositoryModuleName = _getSubrepositoryModuleName(
+				gitWorkingDirectory);
+
+			RepositoryJob repositoryJob = null;
+
+			if (subrepositoryModuleName == null) {
+				repositoryJob = portalAcceptancePullRequestJob;
+			}
+			else {
+				repositoryJob = new SubrepositoryAcceptancePullRequestJob(
+					jobName);
+
+				Properties buildProperties = null;
+
+				try {
+					buildProperties =
+						JenkinsResultsParserUtil.getBuildProperties();
+				}
+				catch (IOException ioe) {
+					throw new RuntimeException(
+						"Unable to get build properties", ioe);
+				}
+
+				repositoryJob.setRepositoryDir(
+					new File(
+						JenkinsResultsParserUtil.combine(
+							buildProperties.getProperty("base.repository.dir"),
+							"/", subrepositoryModuleName)));
+			}
+
+			_jobs.put(jobName, repositoryJob);
+
+			return repositoryJob;
 		}
 
-		if (portalRepositoryJob != null) {
-			_jobs.put(jobName, portalRepositoryJob);
+		if (jobName.contains("test-portal-acceptance-upstream(")) {
+			_jobs.put(jobName, new PortalAcceptanceUpstreamJob(jobName));
+
+			return _jobs.get(jobName);
 		}
 
-		return portalRepositoryJob;
+		if (jobName.contains("test-subrepository-acceptance-pullrequest(")) {
+			_jobs.put(
+				jobName, new SubrepositoryAcceptancePullRequestJob(jobName));
+
+			return _jobs.get(jobName);
+		}
+
+		throw new IllegalArgumentException("Invalid job name " + jobName);
+	}
+
+	private static String _getSubrepositoryModuleName(
+		GitWorkingDirectory gitWorkingDirectory) {
+
+		List<File> currentBranchModifiedFiles =
+			gitWorkingDirectory.getModifiedFilesList();
+
+		if (currentBranchModifiedFiles.size() == 1) {
+			File modifiedFile = currentBranchModifiedFiles.get(0);
+
+			String modifiedFileName = modifiedFile.getName();
+
+			if (modifiedFileName.equals("ci-merge")) {
+				File moduleDir = modifiedFile.getParentFile();
+
+				List<File> lfrBuildPortalFiles =
+					JenkinsResultsParserUtil.findFiles(
+						moduleDir, "\\.lfrbuild-portal");
+
+				if (lfrBuildPortalFiles.isEmpty()) {
+					File gitRepoFile = new File(moduleDir, ".gitrepo");
+
+					Properties properties =
+						JenkinsResultsParserUtil.getProperties(gitRepoFile);
+
+					String subrepositoryRemote = properties.getProperty(
+						"remote");
+
+					return subrepositoryRemote.replaceAll(
+						".*(com-liferay-[^\\.]+)\\.git", "$1");
+				}
+			}
+		}
+
+		return null;
 	}
 
 	private static final Map<String, Job> _jobs = new HashMap<>();

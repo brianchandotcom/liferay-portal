@@ -126,10 +126,10 @@ public class DefaultNameIdResolverTest extends BaseSamlTestCase {
 			"screenName"
 		);
 
-		NameIDPolicy nameIdPolicy = OpenSamlUtil.buildNameIdPolicy();
+		NameIDPolicy nameIDPolicy = OpenSamlUtil.buildNameIdPolicy();
 
-		nameIdPolicy.setFormat(NameID.ENTITY.toString());
-		nameIdPolicy.setSPNameQualifier("urn:liferay");
+		nameIDPolicy.setFormat(NameID.ENTITY.toString());
+		nameIDPolicy.setSPNameQualifier("urn:liferay");
 
 		String nameId = _defaultNameIdResolver.resolve(
 			_user, SP_ENTITY_ID, NameID.ENTITY.toString(), null, false, null);

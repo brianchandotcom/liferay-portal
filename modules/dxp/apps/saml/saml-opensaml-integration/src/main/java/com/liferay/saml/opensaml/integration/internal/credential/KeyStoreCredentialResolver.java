@@ -156,10 +156,10 @@ public class KeyStoreCredentialResolver
 		try {
 			checkCriteriaRequirements(criteriaSet);
 
-			EntityIDCriteria entityIdCriteria = criteriaSet.get(
+			EntityIDCriteria entityIDCriteria = criteriaSet.get(
 				EntityIDCriteria.class);
 
-			String entityId = entityIdCriteria.getEntityID();
+			String entityId = entityIDCriteria.getEntityID();
 
 			KeyStore.PasswordProtection keyStorePasswordProtection = null;
 

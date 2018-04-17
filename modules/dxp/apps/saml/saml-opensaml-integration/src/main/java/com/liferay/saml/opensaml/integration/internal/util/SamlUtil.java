@@ -57,18 +57,18 @@ public class SamlUtil {
 
 	public static AssertionConsumerService
 			getAssertionConsumerServiceForBinding(
-				SPSSODescriptor spSsoDescriptor, String binding)
+				SPSSODescriptor spSSODescriptor, String binding)
 		throws MetadataProviderException {
 
 		AssertionConsumerService assertionConsumerService =
-			spSsoDescriptor.getDefaultAssertionConsumerService();
+			spSSODescriptor.getDefaultAssertionConsumerService();
 
 		if (binding.equals(assertionConsumerService.getBinding())) {
 			return assertionConsumerService;
 		}
 
 		List<AssertionConsumerService> assertionConsumerServices =
-			spSsoDescriptor.getAssertionConsumerServices();
+			spSSODescriptor.getAssertionConsumerServices();
 
 		for (AssertionConsumerService curAssertionConsumerService :
 				assertionConsumerServices) {
@@ -175,8 +175,8 @@ public class SamlUtil {
 		return null;
 	}
 
-	public static String getNameIdFormat(NameID nameId) {
-		String format = nameId.getFormat();
+	public static String getNameIdFormat(NameID nameID) {
+		String format = nameID.getFormat();
 
 		if (Validator.isNull(format)) {
 			return NameID.UNSPECIFIED;
@@ -203,11 +203,11 @@ public class SamlUtil {
 	}
 
 	public static SingleSignOnService getSingleSignOnServiceForBinding(
-			IDPSSODescriptor idpSsoDescriptor, String binding)
+			IDPSSODescriptor idpSSODescriptor, String binding)
 		throws MetadataProviderException {
 
 		List<SingleSignOnService> singleSignOnServices =
-			idpSsoDescriptor.getSingleSignOnServices();
+			idpSSODescriptor.getSingleSignOnServices();
 
 		for (SingleSignOnService singleSignOnService : singleSignOnServices) {
 			if (binding.equals(singleSignOnService.getBinding())) {
@@ -339,11 +339,11 @@ public class SamlUtil {
 				authnRequest.getAssertionConsumerServiceURL();
 		}
 
-		SPSSODescriptor spSsoDescriptor =
+		SPSSODescriptor spSSODescriptor =
 			(SPSSODescriptor)samlMessageContext.getPeerEntityRoleMetadata();
 
 		for (AssertionConsumerService assertionConsumerService :
-				spSsoDescriptor.getAssertionConsumerServices()) {
+				spSSODescriptor.getAssertionConsumerServices()) {
 
 			if (!binding.equals(assertionConsumerService.getBinding())) {
 				continue;
@@ -367,7 +367,7 @@ public class SamlUtil {
 		}
 
 		for (AssertionConsumerService assertionConsumerService :
-				spSsoDescriptor.getAssertionConsumerServices()) {
+				spSSODescriptor.getAssertionConsumerServices()) {
 
 			if (binding.equals(assertionConsumerService.getBinding())) {
 				return assertionConsumerService;
@@ -397,10 +397,10 @@ public class SamlUtil {
 	}
 
 	public static SingleSignOnService resolveSingleSignOnService(
-		IDPSSODescriptor idpSsoDescriptor, String preferredBinding) {
+		IDPSSODescriptor idpSSODescriptor, String preferredBinding) {
 
 		List<SingleSignOnService> singleSignOnServices =
-			idpSsoDescriptor.getSingleSignOnServices();
+			idpSSODescriptor.getSingleSignOnServices();
 
 		for (SingleSignOnService singleSignOnService : singleSignOnServices) {
 			if (preferredBinding.equals(singleSignOnService.getBinding())) {

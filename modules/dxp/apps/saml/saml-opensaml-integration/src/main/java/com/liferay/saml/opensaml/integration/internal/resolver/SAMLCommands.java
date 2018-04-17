@@ -117,16 +117,16 @@ public interface SAMLCommands {
 
 		return new AttributeResolverSAMLCommand<>(
 			samlMessageContext -> {
-				IDPSSODescriptor idpSsoDescriptor =
+				IDPSSODescriptor idpSSODescriptor =
 					(IDPSSODescriptor)
 						samlMessageContext.getLocalEntityRoleMetadata();
 
-				if (idpSsoDescriptor == null) {
+				if (idpSSODescriptor == null) {
 					return null;
 				}
 
 				List<SingleSignOnService> singleSignOnServices =
-					idpSsoDescriptor.getSingleSignOnServices();
+					idpSSODescriptor.getSingleSignOnServices();
 
 				if (singleSignOnServices == null) {
 					return null;
@@ -151,25 +151,25 @@ public interface SAMLCommands {
 	public SAMLCommand<String, Resolver> subjectNameFormat =
 		new SAMLCommandImpl<>(
 			samlMessageContext -> {
-				NameID nameId = samlMessageContext.getSubjectNameIdentifier();
+				NameID nameID = samlMessageContext.getSubjectNameIdentifier();
 
-				if (nameId == null) {
+				if (nameID == null) {
 					return null;
 				}
 
-				return nameId.getFormat();
+				return nameID.getFormat();
 			});
 
 	public SAMLCommand<String, Resolver> subjectNameIdentifier =
 		new SAMLCommandImpl<>(
 			samlMessageContext -> {
-				NameID nameId = samlMessageContext.getSubjectNameIdentifier();
+				NameID nameID = samlMessageContext.getSubjectNameIdentifier();
 
-				if (nameId == null) {
+				if (nameID == null) {
 					return null;
 				}
 
-				return nameId.getValue();
+				return nameID.getValue();
 			});
 
 }

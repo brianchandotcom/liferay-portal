@@ -181,11 +181,11 @@ public class DownloadPatchesCommand implements Command {
 	}
 
 	private void _checkZipFile(File file) throws IOException {
-		ZipFile zipfile = null;
+		ZipFile zipFile = null;
 		ZipInputStream zipInputStream = null;
 
 		try {
-			zipfile = new ZipFile(file);
+			zipFile = new ZipFile(file);
 
 			FileInputStream fileInputStream = new FileInputStream(file);
 
@@ -199,7 +199,7 @@ public class DownloadPatchesCommand implements Command {
 			}
 
 			while (zipEntry != null) {
-				zipfile.getInputStream(zipEntry);
+				zipFile.getInputStream(zipEntry);
 
 				zipEntry.getCompressedSize();
 				zipEntry.getCrc();
@@ -210,8 +210,8 @@ public class DownloadPatchesCommand implements Command {
 		}
 		finally {
 			try {
-				if (zipfile != null) {
-					zipfile.close();
+				if (zipFile != null) {
+					zipFile.close();
 				}
 
 				if (zipInputStream != null) {

@@ -115,12 +115,12 @@ public class SingleLogoutProfileImpl
 			EntityDescriptor entityDescriptor =
 				metadataProvider.getEntityDescriptor(entityId);
 
-			IDPSSODescriptor idpSsoDescriptor =
+			IDPSSODescriptor idpSSODescriptor =
 				entityDescriptor.getIDPSSODescriptor(SAMLConstants.SAML20P_NS);
 
 			SingleLogoutService singleLogoutService =
 				SamlUtil.resolveSingleLogoutService(
-					idpSsoDescriptor, SAMLConstants.SAML2_REDIRECT_BINDING_URI);
+					idpSSODescriptor, SAMLConstants.SAML2_REDIRECT_BINDING_URI);
 
 			if (singleLogoutService != null) {
 				String binding = singleLogoutService.getBinding();
@@ -515,12 +515,12 @@ public class SingleLogoutProfileImpl
 				(SAMLMessageContext<LogoutResponse, LogoutRequest, NameID>)
 					getSamlMessageContext(request, response, entityId);
 
-		SPSSODescriptor spSsoDescriptor =
+		SPSSODescriptor spSSODescriptor =
 			(SPSSODescriptor)samlMessageContext.getPeerEntityRoleMetadata();
 
 		SingleLogoutService singleLogoutService =
 			SamlUtil.resolveSingleLogoutService(
-				spSsoDescriptor, SAMLConstants.SAML2_SOAP11_BINDING_URI);
+				spSSODescriptor, SAMLConstants.SAML2_SOAP11_BINDING_URI);
 
 		if (singleLogoutService == null) {
 			if (_log.isDebugEnabled()) {
@@ -721,7 +721,7 @@ public class SingleLogoutProfileImpl
 		LogoutRequest logoutRequest =
 			samlMessageContext.getInboundSAMLMessage();
 
-		NameID nameId = logoutRequest.getNameID();
+		NameID nameID = logoutRequest.getNameID();
 
 		List<SessionIndex> sessionIndexes = logoutRequest.getSessionIndexes();
 
@@ -729,7 +729,7 @@ public class SingleLogoutProfileImpl
 
 		if (sessionIndexes.isEmpty()) {
 			List<SamlSpSession> samlSpSessions =
-				samlSpSessionLocalService.getSamlSpSessions(nameId.getValue());
+				samlSpSessionLocalService.getSamlSpSessions(nameID.getValue());
 
 			if (samlSpSessions.isEmpty()) {
 				statusCodeURI = StatusCode.UNKNOWN_PRINCIPAL_URI;
@@ -754,9 +754,9 @@ public class SingleLogoutProfileImpl
 			}
 
 			if (Objects.equals(
-					samlSpSession.getNameIdValue(), nameId.getValue()) &&
+					samlSpSession.getNameIdValue(), nameID.getValue()) &&
 				Objects.equals(
-					samlSpSession.getNameIdFormat(), nameId.getFormat())) {
+					samlSpSession.getNameIdFormat(), nameID.getFormat())) {
 
 				samlSpSession.setTerminated(true);
 
@@ -895,23 +895,23 @@ public class SingleLogoutProfileImpl
 					getSamlMessageContext(
 						request, response, samlSloRequestInfo.getEntityId());
 
-		SPSSODescriptor spSsoDescriptor =
+		SPSSODescriptor spSSODescriptor =
 			(SPSSODescriptor)samlMessageContext.getPeerEntityRoleMetadata();
 
 		SingleLogoutService singleLogoutService =
 			SamlUtil.resolveSingleLogoutService(
-				spSsoDescriptor, SAMLConstants.SAML2_REDIRECT_BINDING_URI);
+				spSSODescriptor, SAMLConstants.SAML2_REDIRECT_BINDING_URI);
 
 		samlMessageContext.setPeerEntityEndpoint(singleLogoutService);
 
 		SamlIdpSpSession samlIdpSpSession =
 			samlSloRequestInfo.getSamlIdpSpSession();
 
-		NameID nameId = OpenSamlUtil.buildNameId(
+		NameID nameID = OpenSamlUtil.buildNameId(
 			samlIdpSpSession.getNameIdFormat(),
 			samlIdpSpSession.getNameIdValue());
 
-		samlMessageContext.setSubjectNameIdentifier(nameId);
+		samlMessageContext.setSubjectNameIdentifier(nameID);
 
 		samlSloRequestInfo.setInitiateTime(new DateTime(DateTimeZone.UTC));
 		samlSloRequestInfo.setStatus(
@@ -1028,12 +1028,12 @@ public class SingleLogoutProfileImpl
 				(SAMLMessageContext<SAMLObject, LogoutRequest, SAMLObject>)
 					getSamlMessageContext(request, response, entityId);
 
-		IDPSSODescriptor idpSsoDescriptor =
+		IDPSSODescriptor idpSSODescriptor =
 			(IDPSSODescriptor)samlMessageContext.getPeerEntityRoleMetadata();
 
 		SingleLogoutService singleLogoutService =
 			SamlUtil.resolveSingleLogoutService(
-				idpSsoDescriptor, SAMLConstants.SAML2_POST_BINDING_URI);
+				idpSSODescriptor, SAMLConstants.SAML2_POST_BINDING_URI);
 
 		logoutRequest.setDestination(singleLogoutService.getLocation());
 
@@ -1053,11 +1053,11 @@ public class SingleLogoutProfileImpl
 		String nameIdSPNameQualifier = samlSpSession.getNameIdSPNameQualifier();
 		String nameIdValue = samlSpSession.getNameIdValue();
 
-		NameID nameId = OpenSamlUtil.buildNameId(
+		NameID nameID = OpenSamlUtil.buildNameId(
 			nameIdFormat, nameIdNameQualifier, nameIdSPNameQualifier,
 			nameIdValue);
 
-		logoutRequest.setNameID(nameId);
+		logoutRequest.setNameID(nameID);
 
 		logoutRequest.setVersion(SAMLVersion.VERSION_20);
 

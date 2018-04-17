@@ -520,9 +520,9 @@ public class OpenSamlUtil {
 	}
 
 	public static AuthnRequest buildAuthnRequest(
-		SPSSODescriptor spSsoDescriptor,
+		SPSSODescriptor spSSODescriptor,
 		AssertionConsumerService assertionConsumerService,
-		SingleSignOnService singleSignOnService, NameIDPolicy nameIdPolicy) {
+		SingleSignOnService singleSignOnService, NameIDPolicy nameIDPolicy) {
 
 		SAMLObjectBuilder<AuthnRequest> samlObjectBuilder =
 			(SAMLObjectBuilder<AuthnRequest>)_getBuilder(
@@ -536,14 +536,14 @@ public class OpenSamlUtil {
 		authnRequest.setIsPassive(false);
 		authnRequest.setIssueInstant(now);
 
-		Issuer issuer = buildIssuer(spSsoDescriptor.getID());
+		Issuer issuer = buildIssuer(spSSODescriptor.getID());
 
 		authnRequest.setIssuer(issuer);
 
 		authnRequest.setAssertionConsumerServiceURL(
 			assertionConsumerService.getLocation());
 		authnRequest.setDestination(singleSignOnService.getLocation());
-		authnRequest.setNameIDPolicy(nameIdPolicy);
+		authnRequest.setNameIDPolicy(nameIDPolicy);
 		authnRequest.setProtocolBinding(assertionConsumerService.getBinding());
 		authnRequest.setVersion(SAMLVersion.VERSION_20);
 
@@ -656,20 +656,20 @@ public class OpenSamlUtil {
 		SAMLObjectBuilder<NameID> samlObjectBuilder =
 			(SAMLObjectBuilder<NameID>)_getBuilder(NameID.DEFAULT_ELEMENT_NAME);
 
-		NameID nameId = samlObjectBuilder.buildObject();
+		NameID nameID = samlObjectBuilder.buildObject();
 
-		nameId.setFormat(nameIdFormat);
-		nameId.setValue(nameIdValue);
+		nameID.setFormat(nameIdFormat);
+		nameID.setValue(nameIdValue);
 
 		if (Validator.isNotNull(nameIdNameQualifier)) {
-			nameId.setNameQualifier(nameIdNameQualifier);
+			nameID.setNameQualifier(nameIdNameQualifier);
 		}
 
 		if (Validator.isNotNull(nameIdSPNameQualifier)) {
-			nameId.setSPNameQualifier(nameIdSPNameQualifier);
+			nameID.setSPNameQualifier(nameIdSPNameQualifier);
 		}
 
-		return nameId;
+		return nameID;
 	}
 
 	public static NameIDPolicy buildNameIdPolicy() {

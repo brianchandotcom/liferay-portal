@@ -231,10 +231,10 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 		LogoutRequest logoutRequest =
 			(LogoutRequest)samlMessageContext.getInboundSAMLMessage();
 
-		NameID nameId = logoutRequest.getNameID();
+		NameID nameID = logoutRequest.getNameID();
 
-		Assert.assertEquals(NameID.EMAIL, nameId.getFormat());
-		Assert.assertEquals("test@liferay.com", nameId.getValue());
+		Assert.assertEquals(NameID.EMAIL, nameID.getFormat());
+		Assert.assertEquals("test@liferay.com", nameID.getValue());
 	}
 
 	@Test
@@ -292,10 +292,10 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 		LogoutRequest logoutRequest =
 			(LogoutRequest)samlMessageContext.getInboundSAMLMessage();
 
-		NameID nameId = logoutRequest.getNameID();
+		NameID nameID = logoutRequest.getNameID();
 
-		Assert.assertEquals(NameID.EMAIL, nameId.getFormat());
-		Assert.assertEquals("test@liferay.com", nameId.getValue());
+		Assert.assertEquals(NameID.EMAIL, nameID.getFormat());
+		Assert.assertEquals("test@liferay.com", nameID.getValue());
 	}
 
 	private SamlIdpSpConnectionLocalService _samlIdpSpConnectionLocalService;

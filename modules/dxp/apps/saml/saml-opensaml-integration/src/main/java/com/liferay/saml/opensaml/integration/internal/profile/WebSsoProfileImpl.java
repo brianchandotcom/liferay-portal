@@ -220,7 +220,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 	protected void addSamlSsoSession(
 			HttpServletRequest request, HttpServletResponse response,
-			SamlSsoRequestContext samlSsoRequestContext, NameID nameId)
+			SamlSsoRequestContext samlSsoRequestContext, NameID nameID)
 		throws Exception {
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -235,8 +235,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		_samlIdpSpSessionLocalService.addSamlIdpSpSession(
 			samlIdpSsoSession.getSamlIdpSsoSessionId(),
-			samlMessageContext.getPeerEntityId(), nameId.getFormat(),
-			nameId.getValue(), serviceContext);
+			samlMessageContext.getPeerEntityId(), nameID.getFormat(),
+			nameID.getValue(), serviceContext);
 
 		addCookie(
 			request, response, SamlWebKeys.SAML_SSO_SESSION_ID,
@@ -605,14 +605,14 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				"Response does not contain any acceptable assertions");
 		}
 
-		NameID nameId = samlMessageContext.getSubjectNameIdentifier();
+		NameID nameID = samlMessageContext.getSubjectNameIdentifier();
 
-		if (nameId == null) {
+		if (nameID == null) {
 			throw new SamlException("Name ID not present in subject");
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("SAML authenticated user " + nameId.getValue());
+			_log.debug("SAML authenticated user " + nameID.getValue());
 		}
 
 		String assertionXml = OpenSamlUtil.marshall(assertion);
@@ -640,8 +640,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			samlSpSessionLocalService.updateSamlSpSession(
 				samlSpSession.getSamlSpSessionId(),
 				samlSpSession.getSamlSpSessionKey(), assertionXml,
-				session.getId(), nameId.getFormat(), nameId.getNameQualifier(),
-				nameId.getSPNameQualifier(), nameId.getValue(), sessionIndex,
+				session.getId(), nameID.getFormat(), nameID.getNameQualifier(),
+				nameID.getSPNameQualifier(), nameID.getValue(), sessionIndex,
 				serviceContext);
 		}
 		else {
@@ -649,8 +649,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 			samlSpSession = samlSpSessionLocalService.addSamlSpSession(
 				samlSpSessionKey, assertionXml, session.getId(),
-				nameId.getFormat(), nameId.getNameQualifier(),
-				nameId.getSPNameQualifier(), nameId.getValue(), sessionIndex,
+				nameID.getFormat(), nameID.getNameQualifier(),
+				nameID.getSPNameQualifier(), nameID.getValue(), sessionIndex,
 				serviceContext);
 		}
 
@@ -695,28 +695,28 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				(SAMLMessageContext<SAMLObject, AuthnRequest, SAMLObject>)
 					getSamlMessageContext(request, response, entityId);
 
-		SPSSODescriptor spSsoDescriptor =
+		SPSSODescriptor spSSODescriptor =
 			(SPSSODescriptor)samlMessageContext.getLocalEntityRoleMetadata();
 
 		AssertionConsumerService assertionConsumerService =
 			SamlUtil.getAssertionConsumerServiceForBinding(
-				spSsoDescriptor, SAMLConstants.SAML2_POST_BINDING_URI);
+				spSSODescriptor, SAMLConstants.SAML2_POST_BINDING_URI);
 
-		IDPSSODescriptor idpSsoDescriptor =
+		IDPSSODescriptor idpSSODescriptor =
 			(IDPSSODescriptor)samlMessageContext.getPeerEntityRoleMetadata();
 
 		SingleSignOnService singleSignOnService =
 			SamlUtil.resolveSingleSignOnService(
-				idpSsoDescriptor, SAMLConstants.SAML2_POST_BINDING_URI);
+				idpSSODescriptor, SAMLConstants.SAML2_POST_BINDING_URI);
 
-		NameIDPolicy nameIdPolicy = OpenSamlUtil.buildNameIdPolicy();
+		NameIDPolicy nameIDPolicy = OpenSamlUtil.buildNameIdPolicy();
 
-		nameIdPolicy.setAllowCreate(true);
-		nameIdPolicy.setFormat(metadataManager.getNameIdFormat(entityId));
+		nameIDPolicy.setAllowCreate(true);
+		nameIDPolicy.setFormat(metadataManager.getNameIdFormat(entityId));
 
 		AuthnRequest authnRequest = OpenSamlUtil.buildAuthnRequest(
-			spSsoDescriptor, assertionConsumerService, singleSignOnService,
-			nameIdPolicy);
+			spSSODescriptor, assertionConsumerService, singleSignOnService,
+			nameIDPolicy);
 
 		authnRequest.setID(generateIdentifier(20));
 
@@ -738,8 +738,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		samlMessageContext.setOutboundSAMLMessage(authnRequest);
 
-		if (spSsoDescriptor.isAuthnRequestsSigned() ||
-			idpSsoDescriptor.getWantAuthnRequestsSigned()) {
+		if (spSSODescriptor.isAuthnRequestsSigned() ||
+			idpSSODescriptor.getWantAuthnRequestsSigned()) {
 
 			Credential credential = metadataManager.getSigningCredential();
 
@@ -764,7 +764,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 	protected Assertion getSuccessAssertion(
 		SamlSsoRequestContext samlSsoRequestContext,
-		AssertionConsumerService assertionConsumerService, NameID nameId) {
+		AssertionConsumerService assertionConsumerService, NameID nameID) {
 
 		SAMLMessageContext<AuthnRequest, Response, NameID> samlMessageContext =
 			samlSsoRequestContext.getSAMLMessageContext();
@@ -793,7 +793,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		assertion.setIssuer(issuer);
 
 		Subject subject = getSuccessSubject(
-			samlSsoRequestContext, assertionConsumerService, nameId,
+			samlSsoRequestContext, assertionConsumerService, nameID,
 			subjectConfirmationData);
 
 		assertion.setSubject(subject);
@@ -1002,7 +1002,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 	protected Subject getSuccessSubject(
 		SamlSsoRequestContext samlSsoRequestContext,
-		AssertionConsumerService assertionConsumerService, NameID nameId,
+		AssertionConsumerService assertionConsumerService, NameID nameID,
 		SubjectConfirmationData subjectConfirmationData) {
 
 		SubjectConfirmation subjectConfirmation =
@@ -1011,7 +1011,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		subjectConfirmation.setMethod(SubjectConfirmation.METHOD_BEARER);
 		subjectConfirmation.setSubjectConfirmationData(subjectConfirmationData);
 
-		Subject subject = OpenSamlUtil.buildSubject(nameId);
+		Subject subject = OpenSamlUtil.buildSubject(nameID);
 
 		List<SubjectConfirmation> subjectConfirmations =
 			subject.getSubjectConfirmations();
@@ -1176,17 +1176,17 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			SamlUtil.resolverAssertionConsumerService(
 				samlMessageContext, samlBinding.getCommunicationProfileId());
 
-		NameID nameId = getSuccessNameId(samlSsoRequestContext);
+		NameID nameID = getSuccessNameId(samlSsoRequestContext);
 
 		Assertion assertion = getSuccessAssertion(
-			samlSsoRequestContext, assertionConsumerService, nameId);
+			samlSsoRequestContext, assertionConsumerService, nameID);
 
 		Credential credential = metadataManager.getSigningCredential();
 
-		SPSSODescriptor spSsoDescriptor =
+		SPSSODescriptor spSSODescriptor =
 			(SPSSODescriptor)samlMessageContext.getPeerEntityRoleMetadata();
 
-		if (spSsoDescriptor.getWantAssertionsSigned()) {
+		if (spSSODescriptor.getWantAssertionsSigned()) {
 			OpenSamlUtil.signObject(assertion, credential);
 		}
 
@@ -1201,10 +1201,10 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		samlMessageContext.setPeerEntityEndpoint(assertionConsumerService);
 
 		if (samlSsoRequestContext.isNewSession()) {
-			addSamlSsoSession(request, response, samlSsoRequestContext, nameId);
+			addSamlSsoSession(request, response, samlSsoRequestContext, nameID);
 		}
 		else {
-			updateSamlSsoSession(request, samlSsoRequestContext, nameId);
+			updateSamlSsoSession(request, samlSsoRequestContext, nameID);
 		}
 
 		sendSamlMessage(samlMessageContext);
@@ -1300,7 +1300,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 	protected void updateSamlSsoSession(
 			HttpServletRequest request,
-			SamlSsoRequestContext samlSsoRequestContext, NameID nameId)
+			SamlSsoRequestContext samlSsoRequestContext, NameID nameID)
 		throws Exception {
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -1321,8 +1321,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		catch (NoSuchIdpSpSessionException nsisse) {
 			_samlIdpSpSessionLocalService.addSamlIdpSpSession(
 				samlIdpSsoSession.getSamlIdpSsoSessionId(),
-				samlMessageContext.getPeerEntityId(), nameId.getFormat(),
-				nameId.getValue(), serviceContext);
+				samlMessageContext.getPeerEntityId(), nameID.getFormat(),
+				nameID.getValue(), serviceContext);
 		}
 	}
 
@@ -1345,13 +1345,13 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			TrustEngine<Signature> trustEngine)
 		throws PortalException {
 
-		SPSSODescriptor spSsoDescriptor =
+		SPSSODescriptor spSSODescriptor =
 			(SPSSODescriptor)samlMessageContext.getLocalEntityRoleMetadata();
 
 		if (signature != null) {
 			verifySignature(samlMessageContext, signature, trustEngine);
 		}
-		else if (spSsoDescriptor.getWantAssertionsSigned()) {
+		else if (spSSODescriptor.getWantAssertionsSigned()) {
 			throw new SignatureException("SAML assertion is not signed");
 		}
 	}
@@ -1408,11 +1408,11 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			SAMLMessageContext<?, ?, ?> samlMessageContext, String destination)
 		throws PortalException {
 
-		SPSSODescriptor spSsoDescriptor =
+		SPSSODescriptor spSSODescriptor =
 			(SPSSODescriptor)samlMessageContext.getLocalEntityRoleMetadata();
 
 		List<AssertionConsumerService> assertionConsumerServices =
-			spSsoDescriptor.getAssertionConsumerServices();
+			spSSODescriptor.getAssertionConsumerServices();
 
 		for (AssertionConsumerService assertionConsumerService :
 				assertionConsumerServices) {
@@ -1640,9 +1640,9 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 						subjectConfirmationData.getRecipient());
 				}
 
-				NameID nameId = subject.getNameID();
+				NameID nameID = subject.getNameID();
 
-				samlMessageContext.setSubjectNameIdentifier(nameId);
+				samlMessageContext.setSubjectNameIdentifier(nameID);
 
 				return;
 			}

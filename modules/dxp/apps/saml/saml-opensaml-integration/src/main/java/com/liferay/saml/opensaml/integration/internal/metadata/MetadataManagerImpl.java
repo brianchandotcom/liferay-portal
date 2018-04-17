@@ -411,9 +411,9 @@ public class MetadataManagerImpl
 				return null;
 			}
 
-			EntityIDCriteria entityIdCriteria = new EntityIDCriteria(entityId);
+			EntityIDCriteria entityIDCriteria = new EntityIDCriteria(entityId);
 
-			criteriaSet.add(entityIdCriteria);
+			criteriaSet.add(entityIDCriteria);
 
 			return _credentialResolver.resolveSingle(criteriaSet);
 		}

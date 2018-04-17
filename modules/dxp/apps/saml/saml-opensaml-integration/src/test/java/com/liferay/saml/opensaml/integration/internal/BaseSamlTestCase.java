@@ -142,11 +142,11 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 	}
 
 	protected Credential getCredential(String entityId) throws Exception {
-		EntityIDCriteria entityIdCriteria = new EntityIDCriteria(entityId);
+		EntityIDCriteria entityIDCriteria = new EntityIDCriteria(entityId);
 
 		CriteriaSet criteriaSet = new CriteriaSet();
 
-		criteriaSet.add(entityIdCriteria);
+		criteriaSet.add(entityIDCriteria);
 
 		if (entityId.equals(samlProviderConfiguration.entityId())) {
 			return credentialResolver.resolveSingle(criteriaSet);
@@ -674,9 +674,9 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 
 			CriteriaSet criteriaSet = new CriteriaSet();
 
-			EntityIDCriteria entityIdCriteria = new EntityIDCriteria(entityId);
+			EntityIDCriteria entityIDCriteria = new EntityIDCriteria(entityId);
 
-			criteriaSet.add(entityIdCriteria);
+			criteriaSet.add(entityIDCriteria);
 
 			Credential credential = keyStoreCredentialResolver.resolveSingle(
 				criteriaSet);
@@ -687,12 +687,12 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 						mockHttpServletRequest, entityId, true, true, false,
 						credential);
 
-				IDPSSODescriptor idpSsoDescriptor =
+				IDPSSODescriptor idpSSODescriptor =
 					entityDescriptor.getIDPSSODescriptor(
 						SAMLConstants.SAML20P_NS);
 
 				List<SingleLogoutService> singleLogoutServices =
-					idpSsoDescriptor.getSingleLogoutServices();
+					idpSSODescriptor.getSingleLogoutServices();
 
 				for (SingleLogoutService singleLogoutService :
 						singleLogoutServices) {
@@ -707,7 +707,7 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 				}
 
 				List<SingleSignOnService> singleSignOnServices =
-					idpSsoDescriptor.getSingleSignOnServices();
+					idpSSODescriptor.getSingleSignOnServices();
 
 				for (SingleSignOnService singleSignOnService :
 						singleSignOnServices) {

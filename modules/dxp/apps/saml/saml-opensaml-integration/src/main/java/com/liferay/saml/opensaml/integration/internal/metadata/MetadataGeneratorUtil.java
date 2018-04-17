@@ -81,16 +81,16 @@ public class MetadataGeneratorUtil {
 			Credential credential)
 		throws Exception {
 
-		IDPSSODescriptor idpSsoDescriptor =
+		IDPSSODescriptor idpSSODescriptor =
 			OpenSamlUtil.buildIdpSsoDescriptor();
 
-		idpSsoDescriptor.addSupportedProtocol(SAMLConstants.SAML20P_NS);
+		idpSSODescriptor.addSupportedProtocol(SAMLConstants.SAML20P_NS);
 
-		idpSsoDescriptor.setID(entityId);
-		idpSsoDescriptor.setWantAuthnRequestsSigned(wantAuthnRequestSigned);
+		idpSSODescriptor.setID(entityId);
+		idpSSODescriptor.setWantAuthnRequestsSigned(wantAuthnRequestSigned);
 
 		List<KeyDescriptor> keyDescriptors =
-			idpSsoDescriptor.getKeyDescriptors();
+			idpSSODescriptor.getKeyDescriptors();
 
 		KeyDescriptor keyDescriptor = OpenSamlUtil.buildKeyDescriptor(
 			UsageType.SIGNING, OpenSamlUtil.buildKeyInfo(credential));
@@ -98,7 +98,7 @@ public class MetadataGeneratorUtil {
 		keyDescriptors.add(keyDescriptor);
 
 		List<SingleSignOnService> singleSignOnServices =
-			idpSsoDescriptor.getSingleSignOnServices();
+			idpSSODescriptor.getSingleSignOnServices();
 
 		String portalURL = PortalUtil.getPortalURL(request, requireSSL);
 		String pathMain = PortalUtil.getPathMain();
@@ -117,7 +117,7 @@ public class MetadataGeneratorUtil {
 		singleSignOnServices.add(singleSignOnService);
 
 		List<SingleLogoutService> singleLogoutServices =
-			idpSsoDescriptor.getSingleLogoutServices();
+			idpSSODescriptor.getSingleLogoutServices();
 
 		SingleLogoutService postSingleLogoutService =
 			OpenSamlUtil.buildSingleLogoutService(
@@ -133,7 +133,7 @@ public class MetadataGeneratorUtil {
 
 		singleLogoutServices.add(redirectSingleLogoutService);
 
-		return idpSsoDescriptor;
+		return idpSSODescriptor;
 	}
 
 	public static EntityDescriptor buildSpEntityDescriptor(
@@ -169,16 +169,16 @@ public class MetadataGeneratorUtil {
 			boolean wantAssertionsSigned, Credential credential)
 		throws Exception {
 
-		SPSSODescriptor spSsoDescriptor = OpenSamlUtil.buildSpSsoDescriptor();
+		SPSSODescriptor spSSODescriptor = OpenSamlUtil.buildSpSsoDescriptor();
 
-		spSsoDescriptor.addSupportedProtocol(SAMLConstants.SAML20P_NS);
+		spSSODescriptor.addSupportedProtocol(SAMLConstants.SAML20P_NS);
 
-		spSsoDescriptor.setAuthnRequestsSigned(signAuthnRequests);
-		spSsoDescriptor.setID(entityId);
-		spSsoDescriptor.setWantAssertionsSigned(wantAssertionsSigned);
+		spSSODescriptor.setAuthnRequestsSigned(signAuthnRequests);
+		spSSODescriptor.setID(entityId);
+		spSSODescriptor.setWantAssertionsSigned(wantAssertionsSigned);
 
 		List<AssertionConsumerService> assertionConsumerServices =
-			spSsoDescriptor.getAssertionConsumerServices();
+			spSSODescriptor.getAssertionConsumerServices();
 
 		String portalURL = PortalUtil.getPortalURL(request, requireSSL);
 		String pathMain = PortalUtil.getPathMain();
@@ -191,7 +191,7 @@ public class MetadataGeneratorUtil {
 		assertionConsumerServices.add(assertionConsumerService);
 
 		List<KeyDescriptor> keyDescriptors =
-			spSsoDescriptor.getKeyDescriptors();
+			spSSODescriptor.getKeyDescriptors();
 
 		KeyDescriptor keyDescriptor = OpenSamlUtil.buildKeyDescriptor(
 			UsageType.SIGNING, OpenSamlUtil.buildKeyInfo(credential));
@@ -199,7 +199,7 @@ public class MetadataGeneratorUtil {
 		keyDescriptors.add(keyDescriptor);
 
 		List<SingleLogoutService> singleLogoutServices =
-			spSsoDescriptor.getSingleLogoutServices();
+			spSSODescriptor.getSingleLogoutServices();
 
 		SingleLogoutService postSingleLogoutService =
 			OpenSamlUtil.buildSingleLogoutService(
@@ -222,7 +222,7 @@ public class MetadataGeneratorUtil {
 
 		singleLogoutServices.add(soapSingleLogoutService);
 
-		return spSsoDescriptor;
+		return spSSODescriptor;
 	}
 
 }

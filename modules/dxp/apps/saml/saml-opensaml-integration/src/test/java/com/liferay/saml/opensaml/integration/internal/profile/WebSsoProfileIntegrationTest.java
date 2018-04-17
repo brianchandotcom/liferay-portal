@@ -434,12 +434,12 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		EntityDescriptor entityDescriptor =
 			samlMessageContext.getLocalEntityMetadata();
 
-		SPSSODescriptor spSsoDescriptor = entityDescriptor.getSPSSODescriptor(
+		SPSSODescriptor spSSODescriptor = entityDescriptor.getSPSSODescriptor(
 			SAMLConstants.SAML20P_NS);
 
-		spSsoDescriptor.setWantAssertionsSigned(false);
+		spSSODescriptor.setWantAssertionsSigned(false);
 
-		samlMessageContext.setLocalEntityRoleMetadata(spSsoDescriptor);
+		samlMessageContext.setLocalEntityRoleMetadata(spSSODescriptor);
 
 		samlMessageContext.setPeerEntityId(IDP_ENTITY_ID);
 
@@ -462,12 +462,12 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		EntityDescriptor entityDescriptor =
 			samlMessageContext.getLocalEntityMetadata();
 
-		SPSSODescriptor spSsoDescriptor = entityDescriptor.getSPSSODescriptor(
+		SPSSODescriptor spSSODescriptor = entityDescriptor.getSPSSODescriptor(
 			SAMLConstants.SAML20P_NS);
 
-		spSsoDescriptor.setWantAssertionsSigned(true);
+		spSSODescriptor.setWantAssertionsSigned(true);
 
-		samlMessageContext.setLocalEntityRoleMetadata(spSsoDescriptor);
+		samlMessageContext.setLocalEntityRoleMetadata(spSSODescriptor);
 
 		samlMessageContext.setPeerEntityId(IDP_ENTITY_ID);
 
@@ -814,14 +814,14 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			SAMLConstants.SAML2_POST_BINDING_URI);
 		samlMessageContext.setPeerEntityId(IDP_ENTITY_ID);
 
-		NameID nameId = OpenSamlUtil.buildNameId(
+		NameID nameID = OpenSamlUtil.buildNameId(
 			NameIDType.UNSPECIFIED, "test");
 
 		DateTime issueDate = new DateTime(DateTimeZone.UTC);
 
 		issueDate = issueDate.minusYears(1);
 
-		Subject subject = getSubject(samlMessageContext, nameId, issueDate);
+		Subject subject = getSubject(samlMessageContext, nameID, issueDate);
 
 		_webSsoProfileImpl.verifySubject(samlMessageContext, subject);
 	}
@@ -842,11 +842,11 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			SAMLConstants.SAML2_POST_BINDING_URI);
 		samlMessageContext.setPeerEntityId(IDP_ENTITY_ID);
 
-		NameID nameId = OpenSamlUtil.buildNameId(
+		NameID nameID = OpenSamlUtil.buildNameId(
 			NameIDType.UNSPECIFIED, "test");
 
 		Subject subject = getSubject(
-			samlMessageContext, nameId, new DateTime(DateTimeZone.UTC));
+			samlMessageContext, nameID, new DateTime(DateTimeZone.UTC));
 
 		List<SubjectConfirmation> subjectConfirmations =
 			subject.getSubjectConfirmations();
@@ -873,25 +873,25 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			SAMLConstants.SAML2_POST_BINDING_URI);
 		samlMessageContext.setPeerEntityId(IDP_ENTITY_ID);
 
-		NameID nameId = OpenSamlUtil.buildNameId(
+		NameID nameID = OpenSamlUtil.buildNameId(
 			NameIDType.UNSPECIFIED, "test");
 
 		Subject subject = getSubject(
-			samlMessageContext, nameId, new DateTime(DateTimeZone.UTC));
+			samlMessageContext, nameID, new DateTime(DateTimeZone.UTC));
 
 		_webSsoProfileImpl.verifySubject(samlMessageContext, subject);
 
 		NameID resolvedNameId = samlMessageContext.getSubjectNameIdentifier();
 
 		Assert.assertNotNull(resolvedNameId);
-		Assert.assertEquals(nameId.getFormat(), resolvedNameId.getFormat());
-		Assert.assertEquals(nameId.getValue(), resolvedNameId.getValue());
+		Assert.assertEquals(nameID.getFormat(), resolvedNameId.getFormat());
+		Assert.assertEquals(nameID.getValue(), resolvedNameId.getValue());
 	}
 
 	protected Subject getSubject(
 			SAMLMessageContext<AuthnRequest, Response, NameID>
 				samlMessageContext,
-			NameID nameId, DateTime issueDate)
+			NameID nameID, DateTime issueDate)
 		throws Exception {
 
 		SamlSsoRequestContext samlSsoRequestContext = new SamlSsoRequestContext(
@@ -899,19 +899,19 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			samlMessageContext.getRelayState(), samlMessageContext,
 			userLocalService);
 
-		SPSSODescriptor spSsoDescriptor =
+		SPSSODescriptor spSSODescriptor =
 			(SPSSODescriptor)samlMessageContext.getLocalEntityRoleMetadata();
 
 		AssertionConsumerService assertionConsumerService =
 			SamlUtil.getAssertionConsumerServiceForBinding(
-				spSsoDescriptor, SAMLConstants.SAML2_POST_BINDING_URI);
+				spSSODescriptor, SAMLConstants.SAML2_POST_BINDING_URI);
 
 		SubjectConfirmationData subjectConfirmationData =
 			_webSsoProfileImpl.getSuccessSubjectConfirmationData(
 				samlSsoRequestContext, assertionConsumerService, issueDate);
 
 		return _webSsoProfileImpl.getSuccessSubject(
-			samlSsoRequestContext, assertionConsumerService, nameId,
+			samlSsoRequestContext, assertionConsumerService, nameID,
 			subjectConfirmationData);
 	}
 

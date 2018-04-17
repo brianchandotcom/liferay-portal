@@ -69,9 +69,7 @@ public class AuthorizationCodeGrantServiceContainerRequestFilter
 	public void filter(ContainerRequestContext requestContext) {
 		UriInfo uriInfo = requestContext.getUriInfo();
 
-		String path = uriInfo.getPath();
-
-		if (!StringUtil.startsWith(path, "authorize")) {
+		if (!StringUtil.startsWith(uriInfo.getPath(), "authorize")) {
 			return;
 		}
 

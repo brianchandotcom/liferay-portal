@@ -92,9 +92,16 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 				modifiedModuleTestProperties);
 
 			String testBatchRunPropertyQuery = testProperties.getProperty(
-				JenkinsResultsParserUtil.combine(
-					"test.batch.run.property.query[", batchName, "][",
-					testSuiteName, "]"));
+				getFirstMatchingPropertyName(
+					"test.batch.run.property.query", testProperties,
+					testSuiteName));
+
+			if (testBatchRunPropertyQuery == null) {
+				testBatchRunPropertyQuery = testProperties.getProperty(
+					JenkinsResultsParserUtil.combine(
+						"test.batch.run.property.query[", batchName, "][",
+						testSuiteName, "]"));
+			}
 
 			if (testBatchRunPropertyQuery != null) {
 				if (sb.length() > 0) {

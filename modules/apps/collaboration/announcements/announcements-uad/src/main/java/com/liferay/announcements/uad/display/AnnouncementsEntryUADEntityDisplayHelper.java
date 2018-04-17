@@ -54,6 +54,8 @@ public class AnnouncementsEntryUADEntityDisplayHelper {
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/announcements/edit_entry");
 		portletURL.setParameter(
+			"redirect", portal.getCurrentURL(liferayPortletRequest));
+		portletURL.setParameter(
 			"entryId", String.valueOf(announcementsEntry.getEntryId()));
 
 		return portletURL.toString();

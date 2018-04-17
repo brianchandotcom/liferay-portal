@@ -88,12 +88,11 @@ public class LiferayResourceOwnerGrantHandlerRegistrator
 		UserSubject userSubject = _liferayLoginHandler.createSubject(
 			username, password);
 
-		long userId = GetterUtil.getLong(userSubject.getId());
-
 		OAuth2Application oAuth2Application =
 			_liferayOAuthDataProvider.resolveOAuth2Application(client);
 
-		return hasCreateTokenPermission(userId, oAuth2Application);
+		return hasCreateTokenPermission(
+			GetterUtil.getLong(userSubject.getId()), oAuth2Application);
 	}
 
 	@Override

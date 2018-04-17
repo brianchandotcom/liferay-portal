@@ -638,10 +638,15 @@ public abstract class Try<T> {
 		public Try<T> filter(Predicate<T> predicate) {
 			Objects.requireNonNull(predicate);
 
-			if (predicate.test(_value)) {
-				return this;
+			try {
+				if (predicate.test(_value)) {
+					return this;
+				}
+				else {
+					return Try.fail(new FalsePredicateException(_value));
+				}
 			}
-			else {
+			catch (Exception e) {
 				return Try.fail(new FalsePredicateException(_value));
 			}
 		}

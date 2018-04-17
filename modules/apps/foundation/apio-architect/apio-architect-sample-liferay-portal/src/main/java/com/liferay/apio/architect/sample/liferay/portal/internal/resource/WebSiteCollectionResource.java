@@ -23,6 +23,7 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.sample.liferay.portal.internal.identifier.WebSiteIdentifier;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupModel;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 
@@ -74,13 +75,10 @@ public class WebSiteCollectionResource
 			"WebSite"
 		).identifier(
 			Group::getGroupId
-		).addLocalizedString(
-			"description",
-			(group, language) -> group.getDescription(
-				language.getPreferredLocale())
-		).addLocalizedString(
-			"name",
-			(group, language) -> group.getName(language.getPreferredLocale())
+		).addLocalizedStringByLocale(
+			"description", GroupModel::getDescription
+		).addLocalizedStringByLocale(
+			"name", GroupModel::getName
 		).build();
 	}
 

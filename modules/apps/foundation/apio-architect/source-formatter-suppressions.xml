@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 
 <suppressions>
+	<checkstyle>
+		<suppress checks="VariableNameCheck" files="apio-architect-api/src/main/java/com/liferay/apio/architect/routes/.*" />
+	</checkstyle>
 	<source-check>
 		<suppress checks="JavaDiamondOperatorCheck" files="apio-architect-jaxrs-json/src/main/java/com/liferay/apio/architect/jaxrs/json/internal/reader/JSONBodyMessageBodyReader\.java" />
 		<suppress checks="JavaModuleInternalImportsCheck" files="apio-architect-wiring-osgi-impl/src/main/java/com/liferay/apio/architect/wiring/osgi/internal/manager/base/BaseManager\.java" />

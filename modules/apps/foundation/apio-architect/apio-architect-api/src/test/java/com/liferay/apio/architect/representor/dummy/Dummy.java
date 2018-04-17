@@ -45,9 +45,7 @@ public class Dummy {
 		return locale.getLanguage() + "1";
 	}
 
-	public String getLocalizedString2(Language language) {
-		Locale locale = language.getPreferredLocale();
-
+	public String getLocalizedString2(Locale locale) {
 		return locale.getLanguage() + "2";
 	}
 

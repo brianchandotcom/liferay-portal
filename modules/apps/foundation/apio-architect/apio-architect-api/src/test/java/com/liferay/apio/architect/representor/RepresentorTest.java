@@ -105,9 +105,9 @@ public class RepresentorTest {
 			"linked1", IntegerIdentifier.class, dummy -> dummy.relatedModelId3
 		).addLinkedModel(
 			"linked2", IntegerIdentifier.class, dummy -> dummy.relatedModelId4
-		).addLocalizedString(
+		).addLocalizedStringByLanguage(
 			"localized1", Dummy::getLocalizedString1
-		).addLocalizedString(
+		).addLocalizedStringByLocale(
 			"localized2", Dummy::getLocalizedString2
 		).addNumber(
 			"number1", dummy -> dummy.number1

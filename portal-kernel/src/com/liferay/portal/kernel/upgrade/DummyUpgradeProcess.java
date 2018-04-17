@@ -12,21 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_1_0;
-
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.v7_1_0.util.RepositoryTable;
+package com.liferay.portal.kernel.upgrade;
 
 /**
- * @author Alec Shay
+ * @author Alberto Chaparro
  */
-public class UpgradeRepository extends UpgradeProcess {
+public class DummyUpgradeProcess extends UpgradeProcess {
 
 	@Override
-	protected void doUpgrade() throws Exception {
-		alter(
-			RepositoryTable.class,
-			new AlterColumnType("name", "VARCHAR(200) null"));
+	public void doUpgrade() throws Exception {
 	}
 
 }

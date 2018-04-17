@@ -20,54 +20,20 @@
 	items="<%= assetBrowserDisplayContext.getNavigationItems() %>"
 />
 
-<liferay-frontend:management-bar
+<clay:management-toolbar
+	clearResultsURL="<%= assetBrowserDisplayContext.getClearResultsURL() %>"
+	componentId="assetBrowserManagementToolbar"
+	creationMenu="<%= Validator.isNotNull(assetBrowserDisplayContext.getAddButtonURL()) ? assetBrowserDisplayContext.getCreationMenu() : null %>"
 	disabled="<%= assetBrowserDisplayContext.isDisabledManagementBar() %>"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-filter
-				managementBarFilterItems="<%= assetBrowserDisplayContext.getManagementBarFilterItem() %>"
-				value="<%= assetBrowserDisplayContext.getManagementBarFilterLabel() %>"
-			/>
-
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= assetBrowserDisplayContext.getOrderByCol() %>"
-				orderByType="<%= assetBrowserDisplayContext.getOrderByType() %>"
-				orderColumns="<%= assetBrowserDisplayContext.getOrderColumns() %>"
-				portletURL="<%= assetBrowserDisplayContext.getPortletURL() %>"
-			/>
-
-			<li>
-				<aui:form action="<%= assetBrowserDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="post" name="searchFm">
-					<liferay-ui:input-search
-						markupView="lexicon"
-					/>
-				</aui:form>
-			</li>
-		</liferay-frontend:management-bar-filters>
-
-		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-		</liferay-portlet:actionURL>
-
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= changeDisplayStyleURL %>"
-			selectedDisplayStyle="<%= assetBrowserDisplayContext.getDisplayStyle() %>"
-		/>
-
-		<c:if test="<%= Validator.isNotNull(assetBrowserDisplayContext.getAddButtonURL()) %>">
-			<liferay-frontend:add-menu
-				inline="<%= true %>"
-			>
-				<liferay-frontend:add-menu-item
-					title='<%= LanguageUtil.format(request, "add-x", assetBrowserDisplayContext.getAddButtonLabel(), false) %>'
-					url="<%= assetBrowserDisplayContext.getAddButtonURL() %>"
-				/>
-			</liferay-frontend:add-menu>
-		</c:if>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+	filterItems="<%= assetBrowserDisplayContext.getFilterItemsDropdownItems() %>"
+	searchActionURL="<%= assetBrowserDisplayContext.getSearchActionURL() %>"
+	searchFormName="searchFm"
+	selectable="<%= false %>"
+	sortingOrder="<%= assetBrowserDisplayContext.getOrderByType() %>"
+	sortingURL="<%= assetBrowserDisplayContext.getSortingURL() %>"
+	totalItems="<%= assetBrowserDisplayContext.getTotalItems() %>"
+	viewTypes="<%= assetBrowserDisplayContext.getViewTypeItems() %>"
+/>
 
 <aui:form action="<%= assetBrowserDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="post" name="selectAssetFm">
 	<aui:input name="typeSelection" type="hidden" value="<%= assetBrowserDisplayContext.getTypeSelection() %>" />

@@ -16,6 +16,7 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.handler.LayoutPageTemplateEntryExceptionRequestHandler;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -59,7 +60,9 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 		long layoutPageTemplateCollectionId = ParamUtil.getLong(
 			actionRequest, "layoutPageTemplateCollectionId");
 
-		int type = ParamUtil.getInteger(actionRequest, "type");
+		int type = ParamUtil.getInteger(
+			actionRequest, "type",
+			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
 
 		String name = ParamUtil.getString(actionRequest, "name");
 

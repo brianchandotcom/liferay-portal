@@ -14,7 +14,6 @@
 
 package com.liferay.layout.apio.internal.util;
 
-import com.liferay.apio.architect.language.Language;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -37,10 +36,8 @@ import java.util.Optional;
  */
 public class LayoutResourceCollectionUtil {
 
-	public static String getBreadcrumb(Layout layout, Language language) {
+	public static String getBreadcrumb(Layout layout, Locale locale) {
 		List<Layout> ancestorLayouts = null;
-
-		Locale locale = language.getPreferredLocale();
 
 		try {
 			ancestorLayouts = layout.getAncestors();

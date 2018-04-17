@@ -18,6 +18,7 @@ import com.liferay.oauth2.provider.rest.internal.endpoint.constants.OAuth2Provid
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.security.Principal;
 
@@ -51,7 +52,7 @@ public class LiferaySubjectCreator implements SubjectCreator {
 
 		try {
 			User user = _userLocalService.getUser(
-				Long.parseLong(userPrincipal.getName()));
+				GetterUtil.getLong(userPrincipal.getName()));
 
 			UserSubject userSubject = new UserSubject(
 				user.getLogin(), Long.toString(user.getUserId()));
@@ -60,7 +61,7 @@ public class LiferaySubjectCreator implements SubjectCreator {
 
 			properties.put(
 				OAuth2ProviderRestEndpointConstants.COMPANY_ID,
-				Long.toString(user.getCompanyId()));
+				GetterUtil.getString(user.getCompanyId()));
 
 			return userSubject;
 		}

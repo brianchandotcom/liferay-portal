@@ -369,13 +369,13 @@ public class AssetCategoriesDisplayContext {
 		}
 
 		SearchContainer categoriesSearchContainer = new SearchContainer(
-			_renderRequest, getIteratorURL(), null, "there-are-no-categories");
+			_renderRequest, _getIteratorURL(), null, "there-are-no-categories");
 
-		if (Validator.isNotNull(getKeywords())) {
+		if (Validator.isNotNull(_getKeywords())) {
 			categoriesSearchContainer.setSearch(true);
 		}
 
-		categoriesSearchContainer.setOrderByCol(getOrderByCol());
+		categoriesSearchContainer.setOrderByCol(_getOrderByCol());
 
 		boolean orderByAsc = false;
 
@@ -417,7 +417,7 @@ public class AssetCategoriesDisplayContext {
 
 		long scopeGroupId = themeDisplay.getScopeGroupId();
 
-		if (Validator.isNotNull(getKeywords())) {
+		if (Validator.isNotNull(_getKeywords())) {
 			AssetCategoryDisplay assetCategoryDisplay = null;
 
 			Sort sort = null;
@@ -431,7 +431,7 @@ public class AssetCategoriesDisplayContext {
 
 			assetCategoryDisplay =
 				AssetCategoryServiceUtil.searchCategoriesDisplay(
-					new long[] {scopeGroupId}, getKeywords(),
+					new long[] {scopeGroupId}, _getKeywords(),
 					new long[] {getVocabularyId()}, new long[0],
 					categoriesSearchContainer.getStart(),
 					categoriesSearchContainer.getEnd(), sort);
@@ -492,7 +492,7 @@ public class AssetCategoriesDisplayContext {
 	}
 
 	public String getCategoriesSortingURL() {
-		PortletURL sortingURL = getIteratorURL();
+		PortletURL sortingURL = _getIteratorURL();
 
 		sortingURL.setParameter(
 			"orderByType",
@@ -608,39 +608,6 @@ public class AssetCategoriesDisplayContext {
 		return backURL.toString();
 	}
 
-	public PortletURL getIteratorURL() {
-		PortletURL currentURL = PortletURLUtil.getCurrent(
-			_renderRequest, _renderResponse);
-
-		PortletURL iteratorURL = _renderResponse.createRenderURL();
-
-		iteratorURL.setParameter("mvcPath", "/view_categories.jsp");
-		iteratorURL.setParameter("redirect", currentURL.toString());
-		iteratorURL.setParameter("navigation", getNavigation());
-
-		if (!isFlattenedNavigationAllowed()) {
-			iteratorURL.setParameter(
-				"categoryId", String.valueOf(getCategoryId()));
-		}
-
-		iteratorURL.setParameter(
-			"vocabularyId", String.valueOf(getVocabularyId()));
-		iteratorURL.setParameter("displayStyle", getDisplayStyle());
-		iteratorURL.setParameter("keywords", getKeywords());
-
-		return iteratorURL;
-	}
-
-	public String getKeywords() {
-		if (Validator.isNotNull(_keywords)) {
-			return _keywords;
-		}
-
-		_keywords = ParamUtil.getString(_request, "keywords");
-
-		return _keywords;
-	}
-
 	public String getNavigation() {
 		if (_navigation != null) {
 			return _navigation;
@@ -649,18 +616,6 @@ public class AssetCategoriesDisplayContext {
 		_navigation = ParamUtil.getString(_request, "navigation", "all");
 
 		return _navigation;
-	}
-
-	public String getOrderByCol() {
-		if (Validator.isNotNull(_orderByCol)) {
-			return _orderByCol;
-		}
-
-		_orderByCol = ParamUtil.getString(
-			_request, "orderByCol",
-			isFlattenedNavigationAllowed() ? "path" : "create-date");
-
-		return _orderByCol;
 	}
 
 	public String getOrderByType() {
@@ -780,13 +735,13 @@ public class AssetCategoriesDisplayContext {
 			_renderRequest, _renderResponse.createRenderURL(), null,
 			"there-are-no-vocabularies");
 
-		String keywords = getKeywords();
+		String keywords = _getKeywords();
 
 		if (Validator.isNotNull(keywords)) {
 			vocabulariesSearchContainer.setSearch(true);
 		}
 
-		vocabulariesSearchContainer.setOrderByCol(getOrderByCol());
+		vocabulariesSearchContainer.setOrderByCol(_getOrderByCol());
 
 		String orderByType = getOrderByType();
 
@@ -1009,26 +964,6 @@ public class AssetCategoriesDisplayContext {
 		return false;
 	}
 
-	public boolean isNavigationAll() {
-		if (!isFlattenedNavigationAllowed() ||
-			Objects.equals(getNavigation(), "all")) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isNavigationCategory() {
-		if (isFlattenedNavigationAllowed() &&
-			Objects.equals(getNavigation(), "category")) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	public boolean isShowCategoriesAddButton() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -1046,7 +981,7 @@ public class AssetCategoriesDisplayContext {
 	}
 
 	public boolean isShowCategoriesSearch() throws PortalException {
-		if (Validator.isNotNull(getKeywords())) {
+		if (Validator.isNotNull(_getKeywords())) {
 			return true;
 		}
 
@@ -1081,16 +1016,16 @@ public class AssetCategoriesDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setActive(isNavigationAll());
+						dropdownItem.setActive(_isNavigationAll());
 						dropdownItem.setHref(
-							getIteratorURL(), "navigation", "all");
+							_getIteratorURL(), "navigation", "all");
 						dropdownItem.setLabel("all");
 					});
 
 				if (isFlattenedNavigationAllowed()) {
 					add(
 						dropdownItem -> {
-							dropdownItem.setActive(isNavigationCategory());
+							dropdownItem.setActive(_isNavigationCategory());
 							dropdownItem.setHref(
 								"javascript:" + _renderResponse.getNamespace() +
 									"selectCategory();");
@@ -1108,9 +1043,9 @@ public class AssetCategoriesDisplayContext {
 					add(
 						dropdownItem -> {
 							dropdownItem.setActive(
-								Objects.equals(getOrderByCol(), "path"));
+								Objects.equals(_getOrderByCol(), "path"));
 							dropdownItem.setHref(
-								getIteratorURL(), "orderByCol", "path");
+								_getIteratorURL(), "orderByCol", "path");
 							dropdownItem.setLabel("path");
 						});
 				}
@@ -1118,14 +1053,60 @@ public class AssetCategoriesDisplayContext {
 					add(
 						dropdownItem -> {
 							dropdownItem.setActive(
-								Objects.equals(getOrderByCol(), "create-date"));
+								Objects.equals(
+									_getOrderByCol(), "create-date"));
 							dropdownItem.setHref(
-								getIteratorURL(), "orderByCol", "create-date");
+								_getIteratorURL(), "orderByCol", "create-date");
 							dropdownItem.setLabel("create-date");
 						});
 				}
 			}
 		};
+	}
+
+	private PortletURL _getIteratorURL() {
+		PortletURL currentURL = PortletURLUtil.getCurrent(
+			_renderRequest, _renderResponse);
+
+		PortletURL iteratorURL = _renderResponse.createRenderURL();
+
+		iteratorURL.setParameter("mvcPath", "/view_categories.jsp");
+		iteratorURL.setParameter("redirect", currentURL.toString());
+		iteratorURL.setParameter("navigation", getNavigation());
+
+		if (!isFlattenedNavigationAllowed()) {
+			iteratorURL.setParameter(
+				"categoryId", String.valueOf(getCategoryId()));
+		}
+
+		iteratorURL.setParameter(
+			"vocabularyId", String.valueOf(getVocabularyId()));
+		iteratorURL.setParameter("displayStyle", getDisplayStyle());
+		iteratorURL.setParameter("keywords", _getKeywords());
+
+		return iteratorURL;
+	}
+
+	private String _getKeywords() {
+		if (Validator.isNotNull(_keywords)) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(_request, "keywords");
+
+		return _keywords;
+	}
+
+	private String _getOrderByCol() {
+		if (Validator.isNotNull(_orderByCol)) {
+			return _orderByCol;
+		}
+
+		_orderByCol = ParamUtil.getString(
+			_request, "orderByCol",
+			isFlattenedNavigationAllowed() ? "path" : "create-date");
+
+		return _orderByCol;
 	}
 
 	private List<DropdownItem> _getVocabulariesFilterNavigationDropdownItems() {
@@ -1152,6 +1133,26 @@ public class AssetCategoriesDisplayContext {
 					});
 			}
 		};
+	}
+
+	private boolean _isNavigationAll() {
+		if (!isFlattenedNavigationAllowed() ||
+			Objects.equals(getNavigation(), "all")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isNavigationCategory() {
+		if (isFlattenedNavigationAllowed() &&
+			Objects.equals(getNavigation(), "category")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -115,10 +115,16 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 	}
 
 	protected Properties getPortalTestProperties() {
+		if (portalTestProperties != null) {
+			return portalTestProperties;
+		}
+
 		checkRepositoryDir();
 
-		return JenkinsResultsParserUtil.getProperties(
+		portalTestProperties = JenkinsResultsParserUtil.getProperties(
 			new File(repositoryDir, "test.properties"));
+
+		return portalTestProperties;
 	}
 
 	protected Set<String> getSetFromString(String string) {
@@ -138,5 +144,7 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 
 		return set;
 	}
+
+	protected Properties portalTestProperties;
 
 }

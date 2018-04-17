@@ -97,6 +97,10 @@ public abstract class SubrepositoryJob extends RepositoryJob {
 	}
 
 	protected Properties getSubrepositoryTestProperties() {
+		if (subrepositoryTestProperties != null) {
+			return subrepositoryTestProperties;
+		}
+
 		checkRepositoryDir();
 
 		Properties buildProperties = null;
@@ -114,9 +118,13 @@ public abstract class SubrepositoryJob extends RepositoryJob {
 				"/liferay-jenkins-ee/commands/dependencies",
 				"/test-subrepository-batch.properties"));
 
-		return JenkinsResultsParserUtil.getProperties(
+		subrepositoryTestProperties = JenkinsResultsParserUtil.getProperties(
 			defaultPropertiesFile, new File(repositoryDir, "test.properties"));
+
+		return subrepositoryTestProperties;
 	}
+
+	protected Properties subrepositoryTestProperties;
 
 	private boolean _containsIntegrationTest() throws IOException {
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();

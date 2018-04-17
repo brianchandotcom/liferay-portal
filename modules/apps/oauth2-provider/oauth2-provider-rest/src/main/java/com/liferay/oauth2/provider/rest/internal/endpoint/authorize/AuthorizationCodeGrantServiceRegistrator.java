@@ -74,21 +74,21 @@ public class AuthorizationCodeGrantServiceRegistrator {
 				LIFERAY_OAUTH2_ENDPOINT_RESOURCE,
 			true);
 
-		_endpointServiceRegistration = bundleContext.registerService(
+		_serviceRegistration = bundleContext.registerService(
 			Object.class, authorizationCodeGrantService, endpointProperties);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		if (_endpointServiceRegistration != null) {
-			_endpointServiceRegistration.unregister();
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
 		}
 	}
 
-	private ServiceRegistration<Object> _endpointServiceRegistration;
-
 	@Reference
 	private LiferayOAuthDataProvider _liferayOAuthDataProvider;
+
+	private ServiceRegistration<Object> _serviceRegistration;
 
 	@Reference
 	private SubjectCreator _subjectCreator;

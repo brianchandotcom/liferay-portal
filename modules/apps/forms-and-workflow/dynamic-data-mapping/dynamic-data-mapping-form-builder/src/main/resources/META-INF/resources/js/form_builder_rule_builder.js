@@ -318,10 +318,15 @@ AUI.add(
 
 						if (actionKey) {
 							if (type === 'jump-to-page') {
+								var pageIndex = action.target;
 								var pages = instance.getPages();
 
+								var page = pages[pageIndex];
+
+								var pageLabel = page ? page.label : (parseInt(pageIndex) + 1);
+
 								return {
-									param0: pages[action.target].label,
+									param0: pageLabel.toString(),
 									type: 'jumptopage'
 								};
 							}

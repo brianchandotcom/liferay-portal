@@ -81,6 +81,7 @@ AUI.add(
 
 					value: {
 						state: true,
+						validator: '_validateValue',
 						value: []
 					}
 				},
@@ -229,6 +230,23 @@ AUI.add(
 						instance.set('value', value);
 
 						instance.render();
+					},
+
+					_validateValue: function(value) {
+						var instance = this;
+
+						var options = instance.get('options');
+						var valid = false;
+
+						for (var indexOption in options) {
+							for (var indexValue in value) {
+								if (options[indexOption].value == value[indexValue]) {
+									valid = true;
+								}
+							}
+						}
+
+						return (value.length == 0) || valid;
 					},
 
 					showErrorMessage: function() {

@@ -4,9 +4,9 @@
 		"url": "https://issues.liferay.com/"
 	},
 	"devDependencies": {
-		"gulp": "^3.8.10",
-		"liferay-theme-deps-7.0": "~1.2.0",
-		"liferay-theme-tasks": "^1.4.0"
+		"gulp": "3.9.1",
+		"liferay-theme-deps-7.1": "8.0.0-alpha.3",
+		"liferay-theme-tasks": "8.0.0-alpha.3"
 	},
 	"keywords": [
 		"liferay-theme"
@@ -16,7 +16,7 @@
 		"baseTheme": "styled",
 		"distName": "fjord-theme",
 		"rubySass": false,
-		"version": "7.0"
+		"version": "7.1"
 	},
 	"main": "package.json",
 	"name": "liferay-fjord-theme",

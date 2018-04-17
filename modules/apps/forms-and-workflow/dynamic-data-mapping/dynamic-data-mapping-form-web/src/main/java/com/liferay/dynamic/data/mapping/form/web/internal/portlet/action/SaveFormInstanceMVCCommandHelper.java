@@ -344,6 +344,8 @@ public class SaveFormInstanceMVCCommandHelper {
 			DDMFormValues settingsDDMFormValues)
 		throws Exception {
 
+		validateRedirectURL(settingsDDMFormValues);
+
 		long formInstanceId = ParamUtil.getLong(
 			portletRequest, "formInstanceId");
 

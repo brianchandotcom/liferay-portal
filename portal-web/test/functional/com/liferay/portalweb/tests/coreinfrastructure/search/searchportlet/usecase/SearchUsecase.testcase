@@ -1637,7 +1637,7 @@
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
-		<execute function="AssertLocation" value1="${portalURL}/web/guest/search-page?q=Blogs%20Entry%20Title" />
+		<execute function="AssertLocation" value1="${portalURL}/web/guest/search-page?q=Blogs+Entry+Title" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Search Page" />
@@ -1652,13 +1652,13 @@
 			<var name="searchTerm" value="Blogs Entry Title" />
 		</execute>
 
-		<execute function="AssertLocation" value1="${portalURL}/web/guest/search-page?keywordparameter=Blogs%20Entry%20Title" />
+		<execute function="AssertLocation" value1="${portalURL}/web/guest/search-page?keywordparameter=Blogs+Entry+Title" />
 
 		<execute macro="SearchFacetPortlet#checkFacetOption">
 			<var name="facetOption" value="Blogs Entry" />
 		</execute>
 
-		<execute function="AssertLocation" value1="${portalURL}/web/guest/search-page?keywordparameter=Blogs%20Entry%20Title&amp;type=com.liferay.blogs.model.BlogsEntry" />
+		<execute function="AssertLocation" value1="${portalURL}/web/guest/search-page?keywordparameter=Blogs+Entry+Title&amp;type=com.liferay.blogs.model.BlogsEntry" />
 	</command>
 
 	<command name="ViewURLChangesWithUpdatedSearchAndScopeParameters" priority="4">

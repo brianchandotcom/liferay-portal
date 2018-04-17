@@ -358,6 +358,8 @@ public class SaveFormInstanceMVCCommandHelper {
 				"status", WorkflowConstants.ACTION_SAVE_DRAFT);
 		}
 
+		validateRedirectURL(settingsDDMFormValues);
+
 		return formInstanceService.updateFormInstance(
 			formInstanceId, ddmStructureId,
 			getLocalizedMap(name, availableLocales, defaultLocale),

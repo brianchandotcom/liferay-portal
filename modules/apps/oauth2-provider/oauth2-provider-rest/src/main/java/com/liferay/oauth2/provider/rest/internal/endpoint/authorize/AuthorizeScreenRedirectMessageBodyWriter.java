@@ -70,18 +70,18 @@ public class AuthorizeScreenRedirectMessageBodyWriter
 
 	@Override
 	public long getSize(
-		OAuthAuthorizationData oAuthAuthorizationData, Class<?> aClass,
-		Type type, Annotation[] annotations, MediaType mediaType) {
+		OAuthAuthorizationData oAuthAuthorizationData, Class<?> type,
+		Type genericType, Annotation[] annotations, MediaType mediaType) {
 
 		return -1L;
 	}
 
 	@Override
 	public boolean isWriteable(
-		Class<?> aClass, Type type, Annotation[] annotations,
+		Class<?> type, Type genericType, Annotation[] annotations,
 		MediaType mediaType) {
 
-		if (aClass.isAssignableFrom(OAuthAuthorizationData.class) &&
+		if (type.isAssignableFrom(OAuthAuthorizationData.class) &&
 			StringUtil.equalsIgnoreCase(mediaType.getType(), "text") &&
 			StringUtil.equalsIgnoreCase(mediaType.getSubtype(), "html")) {
 
@@ -93,10 +93,10 @@ public class AuthorizeScreenRedirectMessageBodyWriter
 
 	@Override
 	public void writeTo(
-			OAuthAuthorizationData oAuthAuthorizationData, Class<?> aClass,
-			Type type, Annotation[] annotations, MediaType mediaType,
+			OAuthAuthorizationData oAuthAuthorizationData, Class<?> type,
+			Type genericType, Annotation[] annotations, MediaType mediaType,
 			MultivaluedMap<String, Object> httpHeaders,
-			OutputStream outputStream)
+			OutputStream entityStream)
 		throws WebApplicationException {
 
 		HttpServletRequest httpServletRequest =

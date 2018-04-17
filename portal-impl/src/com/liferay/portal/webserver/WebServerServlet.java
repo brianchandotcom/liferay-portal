@@ -1570,7 +1570,7 @@ public class WebServerServlet extends HttpServlet {
 	private static volatile InactiveRequestHandler _inactiveRequestHandler =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			InactiveRequestHandler.class, WebServerServlet.class,
-			"_inactiveRequesthandler", false);
+			"_inactiveRequestHandler", false);
 	private static volatile UserFileUploadsSettings _userFileUploadsSettings =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			UserFileUploadsSettings.class, WebServerServlet.class,

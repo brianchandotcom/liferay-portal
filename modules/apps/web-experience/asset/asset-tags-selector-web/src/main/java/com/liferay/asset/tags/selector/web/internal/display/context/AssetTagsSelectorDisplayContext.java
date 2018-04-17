@@ -24,7 +24,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -239,7 +238,7 @@ public class AssetTagsSelectorDisplayContext {
 		};
 	}
 
-	public boolean isDisabledTagsManagementBar() throws PortalException {
+	public boolean isDisabledTagsManagementBar() {
 		SearchContainer tagsSearchContainer = getTagsSearchContainer();
 
 		if (tagsSearchContainer.getTotal() <= 0) {
@@ -249,7 +248,7 @@ public class AssetTagsSelectorDisplayContext {
 		return false;
 	}
 
-	public boolean isShowTagsSearch() throws PortalException {
+	public boolean isShowTagsSearch() {
 		if (Validator.isNotNull(_getKeywords())) {
 			return true;
 		}

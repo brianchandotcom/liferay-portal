@@ -110,7 +110,7 @@ public class TokenIntrospectionJSONProviderMessageBodyWriter
 			audience.removeIf(String::isEmpty);
 
 			if (!audience.isEmpty()) {
-				StringBundler audienceSB = null;
+				StringBundler audienceSB;
 
 				if (audience.size() == 1) {
 					audienceSB = new StringBundler(7);
@@ -220,7 +220,7 @@ public class TokenIntrospectionJSONProviderMessageBodyWriter
 		if (quote) {
 			sb.append("\"");
 
-			String stringValue = null;
+			String stringValue;
 
 			if (value == null) {
 				stringValue = "null";

@@ -22,7 +22,6 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
-import com.liferay.meris.MerisRule;
 import com.liferay.meris.MerisSegment;
 import com.liferay.meris.MerisSegmentManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -32,6 +31,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -74,16 +74,12 @@ public class AssetCategoryMerisSegmentManagerTest {
 		AssetVocabulary assetVocabulary =
 			AssetVocabularyLocalServiceUtil.addVocabulary(
 				TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-				"Sports Fan", serviceContext);
+				_ASSET_VOCABULARY_NAME, serviceContext);
 
-		AssetCategory soccerAssetCategory =
-			AssetCategoryLocalServiceUtil.addCategory(
-				TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-				"Soccer", assetVocabulary.getVocabularyId(), serviceContext);
-		AssetCategory tennisAssetCategory =
-			AssetCategoryLocalServiceUtil.addCategory(
-				TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-				"Tennis", assetVocabulary.getVocabularyId(), serviceContext);
+		AssetCategory assetCategory = AssetCategoryLocalServiceUtil.addCategory(
+			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
 
 		_user = UserTestUtil.addUser();
 
@@ -92,21 +88,11 @@ public class AssetCategoryMerisSegmentManagerTest {
 
 		AssetEntryAssetCategoryRelLocalServiceUtil.
 			addAssetEntryAssetCategoryRel(
-				assetEntry.getEntryId(), soccerAssetCategory.getCategoryId());
-		AssetEntryAssetCategoryRelLocalServiceUtil.
-			addAssetEntryAssetCategoryRel(
-				assetEntry.getEntryId(), tennisAssetCategory.getCategoryId());
+				assetEntry.getEntryId(), assetCategory.getCategoryId());
 
 		_merisProfileId = String.valueOf(_user.getUserId());
-		_merisScopeId = String.valueOf(_group.getGroupId());
-		_merisSegmentId = String.valueOf(assetVocabulary.getVocabularyId());
-	}
-
-	@Test
-	public void testGetMerisProfile() {
-		Assert.assertNotNull(
-			"Meris profile was not found",
-			_merisSegmentManager.getMerisProfile(_merisProfileId));
+		_merisScopeId = String.valueOf(assetCategory.getGroupId());
+		_merisSegmentId = String.valueOf(assetCategory.getCategoryId());
 	}
 
 	@Test
@@ -141,16 +127,6 @@ public class AssetCategoryMerisSegmentManagerTest {
 			_merisSegmentId);
 
 		Assert.assertNotNull("Meris segment was not found", merisSegment);
-
-		Comparator<MerisRule> merisRuleNameComparator = Comparator.comparing(
-			s -> s.getName(Locale.getDefault()));
-
-		List<MerisRule> merisRules = merisSegment.getMerisRules(
-			0, 1, merisRuleNameComparator);
-
-		Assert.assertFalse(
-			"Meris segment does not contain a meris rule",
-			merisRules.isEmpty());
 	}
 
 	@Test
@@ -173,6 +149,8 @@ public class AssetCategoryMerisSegmentManagerTest {
 			_merisSegmentManager.matches(
 				_merisProfileId, _merisSegmentId, new HashMap<>()));
 	}
+
+	private static final String _ASSET_VOCABULARY_NAME = "Segments";
 
 	@Inject
 	private static MerisSegmentManager _merisSegmentManager;

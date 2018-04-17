@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -93,6 +94,7 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	 * @return the new ddm storage link
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public DDMStorageLink createDDMStorageLink(long storageLinkId) {
 		return ddmStorageLinkPersistence.create(storageLinkId);
 	}

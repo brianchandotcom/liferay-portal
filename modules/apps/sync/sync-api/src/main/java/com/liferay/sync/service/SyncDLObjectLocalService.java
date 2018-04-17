@@ -107,6 +107,7 @@ public interface SyncDLObjectLocalService extends BaseLocalService,
 	* @param syncDLObjectId the primary key for the new sync dl object
 	* @return the new sync dl object
 	*/
+	@Transactional(enabled = false)
 	public SyncDLObject createSyncDLObject(long syncDLObjectId);
 
 	/**

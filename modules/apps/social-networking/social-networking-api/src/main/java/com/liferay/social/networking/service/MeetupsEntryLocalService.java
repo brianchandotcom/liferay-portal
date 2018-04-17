@@ -82,6 +82,7 @@ public interface MeetupsEntryLocalService extends BaseLocalService,
 	* @param meetupsEntryId the primary key for the new meetups entry
 	* @return the new meetups entry
 	*/
+	@Transactional(enabled = false)
 	public MeetupsEntry createMeetupsEntry(long meetupsEntryId);
 
 	/**

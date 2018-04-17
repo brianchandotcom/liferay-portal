@@ -123,6 +123,7 @@ public interface KBArticleLocalService extends BaseLocalService,
 	* @param kbArticleId the primary key for the new kb article
 	* @return the new kb article
 	*/
+	@Transactional(enabled = false)
 	public KBArticle createKBArticle(long kbArticleId);
 
 	public void deleteGroupKBArticles(long groupId) throws PortalException;

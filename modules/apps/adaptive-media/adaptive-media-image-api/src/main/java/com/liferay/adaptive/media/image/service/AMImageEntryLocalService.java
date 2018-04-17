@@ -101,6 +101,7 @@ public interface AMImageEntryLocalService extends BaseLocalService,
 	* @param amImageEntryId the primary key for the new am image entry
 	* @return the new am image entry
 	*/
+	@Transactional(enabled = false)
 	public AMImageEntry createAMImageEntry(long amImageEntryId);
 
 	/**

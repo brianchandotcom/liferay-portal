@@ -141,6 +141,7 @@ public interface AssetTagLocalService extends BaseLocalService,
 	* @param tagId the primary key for the new asset tag
 	* @return the new asset tag
 	*/
+	@Transactional(enabled = false)
 	public AssetTag createAssetTag(long tagId);
 
 	/**

@@ -101,6 +101,7 @@ public interface DLFileShortcutLocalService extends BaseLocalService,
 	* @param fileShortcutId the primary key for the new document library file shortcut
 	* @return the new document library file shortcut
 	*/
+	@Transactional(enabled = false)
 	public DLFileShortcut createDLFileShortcut(long fileShortcutId);
 
 	/**

@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.PortletItemPersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -93,6 +94,7 @@ public abstract class PortletItemLocalServiceBaseImpl
 	 * @return the new portlet item
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public PortletItem createPortletItem(long portletItemId) {
 		return portletItemPersistence.create(portletItemId);
 	}

@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence;
 import com.liferay.portal.kernel.service.persistence.RolePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
@@ -101,6 +102,7 @@ public abstract class SAPEntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the new sap entry
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public SAPEntry createSAPEntry(long sapEntryId) {
 		return sapEntryPersistence.create(sapEntryId);
 	}

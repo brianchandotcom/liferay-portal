@@ -103,6 +103,7 @@ public interface ExportImportConfigurationLocalService extends BaseLocalService,
 	* @param exportImportConfigurationId the primary key for the new export import configuration
 	* @return the new export import configuration
 	*/
+	@Transactional(enabled = false)
 	public ExportImportConfiguration createExportImportConfiguration(
 		long exportImportConfigurationId);
 

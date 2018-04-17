@@ -80,6 +80,7 @@ public interface TrashVersionLocalService extends BaseLocalService,
 	* @param versionId the primary key for the new trash version
 	* @return the new trash version
 	*/
+	@Transactional(enabled = false)
 	public TrashVersion createTrashVersion(long versionId);
 
 	/**

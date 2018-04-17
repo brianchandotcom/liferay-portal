@@ -80,6 +80,7 @@ public interface DDMStorageLinkLocalService extends BaseLocalService,
 	* @param storageLinkId the primary key for the new ddm storage link
 	* @return the new ddm storage link
 	*/
+	@Transactional(enabled = false)
 	public DDMStorageLink createDDMStorageLink(long storageLinkId);
 
 	public void deleteClassStorageLink(long classPK);

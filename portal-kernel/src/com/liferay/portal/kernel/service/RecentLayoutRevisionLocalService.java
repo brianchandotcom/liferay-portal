@@ -77,6 +77,7 @@ public interface RecentLayoutRevisionLocalService extends BaseLocalService,
 	* @param recentLayoutRevisionId the primary key for the new recent layout revision
 	* @return the new recent layout revision
 	*/
+	@Transactional(enabled = false)
 	public RecentLayoutRevision createRecentLayoutRevision(
 		long recentLayoutRevisionId);
 

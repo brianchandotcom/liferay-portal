@@ -82,6 +82,7 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	* @param columnId the primary key for the new expando column
 	* @return the new expando column
 	*/
+	@Transactional(enabled = false)
 	public ExpandoColumn createExpandoColumn(long columnId);
 
 	public void deleteColumn(ExpandoColumn column);

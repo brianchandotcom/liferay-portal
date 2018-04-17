@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -96,6 +97,7 @@ public abstract class OAuth2ScopeGrantLocalServiceBaseImpl
 	 * @return the new o auth2 scope grant
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public OAuth2ScopeGrant createOAuth2ScopeGrant(long oAuth2ScopeGrantId) {
 		return oAuth2ScopeGrantPersistence.create(oAuth2ScopeGrantId);
 	}

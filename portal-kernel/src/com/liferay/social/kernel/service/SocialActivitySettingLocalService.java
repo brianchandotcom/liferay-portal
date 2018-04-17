@@ -79,6 +79,7 @@ public interface SocialActivitySettingLocalService extends BaseLocalService,
 	* @param activitySettingId the primary key for the new social activity setting
 	* @return the new social activity setting
 	*/
+	@Transactional(enabled = false)
 	public SocialActivitySetting createSocialActivitySetting(
 		long activitySettingId);
 

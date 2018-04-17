@@ -83,6 +83,7 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 	* @param discussionId the primary key for the new message boards discussion
 	* @return the new message boards discussion
 	*/
+	@Transactional(enabled = false)
 	public MBDiscussion createMBDiscussion(long discussionId);
 
 	/**

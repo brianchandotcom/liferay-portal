@@ -90,6 +90,7 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	* @param mailingListId the primary key for the new message boards mailing list
 	* @return the new message boards mailing list
 	*/
+	@Transactional(enabled = false)
 	public MBMailingList createMBMailingList(long mailingListId);
 
 	public void deleteCategoryMailingList(long groupId, long categoryId)

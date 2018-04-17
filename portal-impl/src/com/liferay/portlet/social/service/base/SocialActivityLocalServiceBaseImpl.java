@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.service.persistence.LayoutFinder;
 import com.liferay.portal.kernel.service.persistence.LayoutPersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -108,6 +109,7 @@ public abstract class SocialActivityLocalServiceBaseImpl
 	 * @return the new social activity
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public SocialActivity createSocialActivity(long activityId) {
 		return socialActivityPersistence.create(activityId);
 	}

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserNotificationEventPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -99,6 +100,7 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	 * @return the new tasks entry
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public TasksEntry createTasksEntry(long tasksEntryId) {
 		return tasksEntryPersistence.create(tasksEntryId);
 	}

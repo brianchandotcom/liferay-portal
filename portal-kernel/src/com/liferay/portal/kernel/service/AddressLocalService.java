@@ -85,6 +85,7 @@ public interface AddressLocalService extends BaseLocalService,
 	* @param addressId the primary key for the new address
 	* @return the new address
 	*/
+	@Transactional(enabled = false)
 	public Address createAddress(long addressId);
 
 	/**

@@ -80,6 +80,7 @@ public interface WallEntryLocalService extends BaseLocalService,
 	* @param wallEntryId the primary key for the new wall entry
 	* @return the new wall entry
 	*/
+	@Transactional(enabled = false)
 	public WallEntry createWallEntry(long wallEntryId);
 
 	/**

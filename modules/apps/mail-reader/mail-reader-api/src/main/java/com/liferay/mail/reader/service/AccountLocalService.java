@@ -87,6 +87,7 @@ public interface AccountLocalService extends BaseLocalService,
 	* @param accountId the primary key for the new account
 	* @return the new account
 	*/
+	@Transactional(enabled = false)
 	public Account createAccount(long accountId);
 
 	/**

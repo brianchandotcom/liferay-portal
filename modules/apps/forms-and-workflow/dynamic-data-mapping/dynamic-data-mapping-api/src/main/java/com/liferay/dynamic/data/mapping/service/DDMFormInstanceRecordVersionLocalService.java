@@ -77,6 +77,7 @@ public interface DDMFormInstanceRecordVersionLocalService
 	* @param formInstanceRecordVersionId the primary key for the new ddm form instance record version
 	* @return the new ddm form instance record version
 	*/
+	@Transactional(enabled = false)
 	public DDMFormInstanceRecordVersion createDDMFormInstanceRecordVersion(
 		long formInstanceRecordVersionId);
 

@@ -60,6 +60,7 @@ import com.liferay.portal.kernel.service.persistence.UserGroupGroupRoleFinder;
 import com.liferay.portal.kernel.service.persistence.UserGroupGroupRolePersistence;
 import com.liferay.portal.kernel.service.persistence.UserGroupPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -111,6 +112,7 @@ public abstract class UserGroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the new user group
 	 */
 	@Override
+	@Transactional(enabled = false)
 	public UserGroup createUserGroup(long userGroupId) {
 		return userGroupPersistence.create(userGroupId);
 	}

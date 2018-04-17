@@ -98,6 +98,7 @@ public interface KaleoTaskInstanceTokenLocalService extends BaseLocalService,
 	* @param kaleoTaskInstanceTokenId the primary key for the new kaleo task instance token
 	* @return the new kaleo task instance token
 	*/
+	@Transactional(enabled = false)
 	public KaleoTaskInstanceToken createKaleoTaskInstanceToken(
 		long kaleoTaskInstanceTokenId);
 

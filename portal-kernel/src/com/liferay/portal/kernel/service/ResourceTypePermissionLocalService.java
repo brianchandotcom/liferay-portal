@@ -77,6 +77,7 @@ public interface ResourceTypePermissionLocalService extends BaseLocalService,
 	* @param resourceTypePermissionId the primary key for the new resource type permission
 	* @return the new resource type permission
 	*/
+	@Transactional(enabled = false)
 	public ResourceTypePermission createResourceTypePermission(
 		long resourceTypePermissionId);
 

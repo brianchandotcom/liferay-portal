@@ -127,6 +127,7 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	* @param resourceBlockId the primary key for the new resource block
 	* @return the new resource block
 	*/
+	@Transactional(enabled = false)
 	public ResourceBlock createResourceBlock(long resourceBlockId);
 
 	/**

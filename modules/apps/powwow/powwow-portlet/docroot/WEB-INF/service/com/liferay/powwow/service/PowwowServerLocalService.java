@@ -83,6 +83,7 @@ public interface PowwowServerLocalService extends BaseLocalService,
 	* @param powwowServerId the primary key for the new powwow server
 	* @return the new powwow server
 	*/
+	@Transactional(enabled = false)
 	public PowwowServer createPowwowServer(long powwowServerId);
 
 	/**

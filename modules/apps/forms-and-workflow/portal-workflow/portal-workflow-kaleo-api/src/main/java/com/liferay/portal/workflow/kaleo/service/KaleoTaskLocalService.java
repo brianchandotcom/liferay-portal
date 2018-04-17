@@ -81,6 +81,7 @@ public interface KaleoTaskLocalService extends BaseLocalService,
 	* @param kaleoTaskId the primary key for the new kaleo task
 	* @return the new kaleo task
 	*/
+	@Transactional(enabled = false)
 	public KaleoTask createKaleoTask(long kaleoTaskId);
 
 	public void deleteCompanyKaleoTasks(long companyId);

@@ -79,6 +79,7 @@ public interface JournalContentSearchLocalService extends BaseLocalService,
 	* @param contentSearchId the primary key for the new journal content search
 	* @return the new journal content search
 	*/
+	@Transactional(enabled = false)
 	public JournalContentSearch createJournalContentSearch(long contentSearchId);
 
 	public void deleteArticleContentSearch(long groupId, boolean privateLayout,

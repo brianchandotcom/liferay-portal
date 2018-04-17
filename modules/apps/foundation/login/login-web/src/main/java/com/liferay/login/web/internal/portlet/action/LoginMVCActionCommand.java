@@ -221,6 +221,8 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 
 				actionRequest.setAttribute(
 					WebKeys.REDIRECT, actionURL.toString());
+
+				return;
 			}
 
 			redirect = _portal.escapeRedirect(redirect);

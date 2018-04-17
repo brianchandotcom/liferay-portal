@@ -77,6 +77,7 @@ public interface MeetupsRegistrationLocalService extends BaseLocalService,
 	* @param meetupsRegistrationId the primary key for the new meetups registration
 	* @return the new meetups registration
 	*/
+	@Transactional(enabled = false)
 	public MeetupsRegistration createMeetupsRegistration(
 		long meetupsRegistrationId);
 

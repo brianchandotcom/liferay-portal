@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -91,12 +92,13 @@ public abstract class ExpandoTableLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new expando table with the primary key. Does not add the expando table to the database.
-	 *
-	 * @param tableId the primary key for the new expando table
-	 * @return the new expando table
-	 */
+	* Creates a new expando table with the primary key. Does not add the expando table to the database.
+	*
+	* @param tableId the primary key for the new expando table
+	* @return the new expando table
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public ExpandoTable createExpandoTable(long tableId) {
 		return expandoTablePersistence.create(tableId);
 	}

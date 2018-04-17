@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.SystemEventPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -91,12 +92,13 @@ public abstract class TrashEntryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new trash entry with the primary key. Does not add the trash entry to the database.
-	 *
-	 * @param entryId the primary key for the new trash entry
-	 * @return the new trash entry
-	 */
+	* Creates a new trash entry with the primary key. Does not add the trash entry to the database.
+	*
+	* @param entryId the primary key for the new trash entry
+	* @return the new trash entry
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public TrashEntry createTrashEntry(long entryId) {
 		return trashEntryPersistence.create(entryId);
 	}

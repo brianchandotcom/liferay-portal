@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.SystemEventPersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -90,12 +91,13 @@ public abstract class AssetLinkLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Creates a new asset link with the primary key. Does not add the asset link to the database.
-	 *
-	 * @param linkId the primary key for the new asset link
-	 * @return the new asset link
-	 */
+	* Creates a new asset link with the primary key. Does not add the asset link to the database.
+	*
+	* @param linkId the primary key for the new asset link
+	* @return the new asset link
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public AssetLink createAssetLink(long linkId) {
 		return assetLinkPersistence.create(linkId);
 	}

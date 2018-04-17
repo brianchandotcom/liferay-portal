@@ -82,6 +82,7 @@ public interface TasksEntryLocalService extends BaseLocalService,
 	* @param tasksEntryId the primary key for the new tasks entry
 	* @return the new tasks entry
 	*/
+	@Transactional(enabled = false)
 	public TasksEntry createTasksEntry(long tasksEntryId);
 
 	/**

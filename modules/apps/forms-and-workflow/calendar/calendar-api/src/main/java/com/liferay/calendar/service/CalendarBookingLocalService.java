@@ -114,6 +114,7 @@ public interface CalendarBookingLocalService extends BaseLocalService,
 	* @param calendarBookingId the primary key for the new calendar booking
 	* @return the new calendar booking
 	*/
+	@Transactional(enabled = false)
 	public CalendarBooking createCalendarBooking(long calendarBookingId);
 
 	/**

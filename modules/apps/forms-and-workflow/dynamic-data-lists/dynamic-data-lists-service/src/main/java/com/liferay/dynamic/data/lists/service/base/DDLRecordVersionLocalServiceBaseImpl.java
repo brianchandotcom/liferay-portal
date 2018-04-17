@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -89,12 +90,13 @@ public abstract class DDLRecordVersionLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new ddl record version with the primary key. Does not add the ddl record version to the database.
-	 *
-	 * @param recordVersionId the primary key for the new ddl record version
-	 * @return the new ddl record version
-	 */
+	* Creates a new ddl record version with the primary key. Does not add the ddl record version to the database.
+	*
+	* @param recordVersionId the primary key for the new ddl record version
+	* @return the new ddl record version
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public DDLRecordVersion createDDLRecordVersion(long recordVersionId) {
 		return ddlRecordVersionPersistence.create(recordVersionId);
 	}

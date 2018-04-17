@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -90,12 +91,13 @@ public abstract class DDMFormInstanceRecordVersionLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new ddm form instance record version with the primary key. Does not add the ddm form instance record version to the database.
-	 *
-	 * @param formInstanceRecordVersionId the primary key for the new ddm form instance record version
-	 * @return the new ddm form instance record version
-	 */
+	* Creates a new ddm form instance record version with the primary key. Does not add the ddm form instance record version to the database.
+	*
+	* @param formInstanceRecordVersionId the primary key for the new ddm form instance record version
+	* @return the new ddm form instance record version
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public DDMFormInstanceRecordVersion createDDMFormInstanceRecordVersion(
 		long formInstanceRecordVersionId) {
 		return ddmFormInstanceRecordVersionPersistence.create(formInstanceRecordVersionId);

@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -90,12 +91,13 @@ public abstract class FolderLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Creates a new folder with the primary key. Does not add the folder to the database.
-	 *
-	 * @param folderId the primary key for the new folder
-	 * @return the new folder
-	 */
+	* Creates a new folder with the primary key. Does not add the folder to the database.
+	*
+	* @param folderId the primary key for the new folder
+	* @return the new folder
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public Folder createFolder(long folderId) {
 		return folderPersistence.create(folderId);
 	}

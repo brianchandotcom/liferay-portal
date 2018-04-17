@@ -92,6 +92,7 @@ public interface DDMFormInstanceRecordLocalService extends BaseLocalService,
 	* @param formInstanceRecordId the primary key for the new ddm form instance record
 	* @return the new ddm form instance record
 	*/
+	@Transactional(enabled = false)
 	public DDMFormInstanceRecord createDDMFormInstanceRecord(
 		long formInstanceRecordId);
 

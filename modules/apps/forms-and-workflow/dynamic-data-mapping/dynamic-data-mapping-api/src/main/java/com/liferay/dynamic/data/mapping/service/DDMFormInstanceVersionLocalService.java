@@ -77,6 +77,7 @@ public interface DDMFormInstanceVersionLocalService extends BaseLocalService,
 	* @param formInstanceVersionId the primary key for the new ddm form instance version
 	* @return the new ddm form instance version
 	*/
+	@Transactional(enabled = false)
 	public DDMFormInstanceVersion createDDMFormInstanceVersion(
 		long formInstanceVersionId);
 

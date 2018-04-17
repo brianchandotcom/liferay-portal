@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken;
@@ -89,12 +90,13 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new we deploy auth token with the primary key. Does not add the we deploy auth token to the database.
-	 *
-	 * @param weDeployAuthTokenId the primary key for the new we deploy auth token
-	 * @return the new we deploy auth token
-	 */
+	* Creates a new we deploy auth token with the primary key. Does not add the we deploy auth token to the database.
+	*
+	* @param weDeployAuthTokenId the primary key for the new we deploy auth token
+	* @return the new we deploy auth token
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public WeDeployAuthToken createWeDeployAuthToken(long weDeployAuthTokenId) {
 		return weDeployAuthTokenPersistence.create(weDeployAuthTokenId);
 	}

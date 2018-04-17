@@ -83,6 +83,7 @@ public interface KaleoNotificationRecipientLocalService extends BaseLocalService
 	* @param kaleoNotificationRecipientId the primary key for the new kaleo notification recipient
 	* @return the new kaleo notification recipient
 	*/
+	@Transactional(enabled = false)
 	public KaleoNotificationRecipient createKaleoNotificationRecipient(
 		long kaleoNotificationRecipientId);
 

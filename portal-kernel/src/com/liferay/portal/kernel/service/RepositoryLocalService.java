@@ -86,6 +86,7 @@ public interface RepositoryLocalService extends BaseLocalService,
 	* @param repositoryId the primary key for the new repository
 	* @return the new repository
 	*/
+	@Transactional(enabled = false)
 	public Repository createRepository(long repositoryId);
 
 	/**

@@ -82,6 +82,7 @@ public interface DLFileEntryMetadataLocalService extends BaseLocalService,
 	* @param fileEntryMetadataId the primary key for the new document library file entry metadata
 	* @return the new document library file entry metadata
 	*/
+	@Transactional(enabled = false)
 	public DLFileEntryMetadata createDLFileEntryMetadata(
 		long fileEntryMetadataId);
 

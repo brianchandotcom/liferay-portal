@@ -80,6 +80,7 @@ public interface OAuthConsumerLocalService extends BaseLocalService,
 	* @param oAuthConsumerId the primary key for the new o auth consumer
 	* @return the new o auth consumer
 	*/
+	@Transactional(enabled = false)
 	public OAuthConsumer createOAuthConsumer(long oAuthConsumerId);
 
 	/**

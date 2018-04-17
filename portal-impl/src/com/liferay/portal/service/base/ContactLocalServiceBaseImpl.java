@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.service.persistence.PhonePersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WebsitePersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -91,12 +92,13 @@ public abstract class ContactLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Creates a new contact with the primary key. Does not add the contact to the database.
-	 *
-	 * @param contactId the primary key for the new contact
-	 * @return the new contact
-	 */
+	* Creates a new contact with the primary key. Does not add the contact to the database.
+	*
+	* @param contactId the primary key for the new contact
+	* @return the new contact
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public Contact createContact(long contactId) {
 		return contactPersistence.create(contactId);
 	}

@@ -81,6 +81,7 @@ public interface KaleoTimerLocalService extends BaseLocalService,
 	* @param kaleoTimerId the primary key for the new kaleo timer
 	* @return the new kaleo timer
 	*/
+	@Transactional(enabled = false)
 	public KaleoTimer createKaleoTimer(long kaleoTimerId);
 
 	/**

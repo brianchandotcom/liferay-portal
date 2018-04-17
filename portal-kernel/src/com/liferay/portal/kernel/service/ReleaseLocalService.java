@@ -82,6 +82,7 @@ public interface ReleaseLocalService extends BaseLocalService,
 	* @param releaseId the primary key for the new release
 	* @return the new release
 	*/
+	@Transactional(enabled = false)
 	public Release createRelease(long releaseId);
 
 	public void createTablesAndPopulate();

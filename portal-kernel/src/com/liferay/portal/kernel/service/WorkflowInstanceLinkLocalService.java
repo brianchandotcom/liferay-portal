@@ -78,6 +78,7 @@ public interface WorkflowInstanceLinkLocalService extends BaseLocalService,
 	* @param workflowInstanceLinkId the primary key for the new workflow instance link
 	* @return the new workflow instance link
 	*/
+	@Transactional(enabled = false)
 	public WorkflowInstanceLink createWorkflowInstanceLink(
 		long workflowInstanceLinkId);
 

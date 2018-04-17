@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -91,12 +92,13 @@ public abstract class PowwowParticipantLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new powwow participant with the primary key. Does not add the powwow participant to the database.
-	 *
-	 * @param powwowParticipantId the primary key for the new powwow participant
-	 * @return the new powwow participant
-	 */
+	* Creates a new powwow participant with the primary key. Does not add the powwow participant to the database.
+	*
+	* @param powwowParticipantId the primary key for the new powwow participant
+	* @return the new powwow participant
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public PowwowParticipant createPowwowParticipant(long powwowParticipantId) {
 		return powwowParticipantPersistence.create(powwowParticipantId);
 	}

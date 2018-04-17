@@ -109,6 +109,7 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 	* @param vocabularyId the primary key for the new asset vocabulary
 	* @return the new asset vocabulary
 	*/
+	@Transactional(enabled = false)
 	public AssetVocabulary createAssetVocabulary(long vocabularyId);
 
 	/**

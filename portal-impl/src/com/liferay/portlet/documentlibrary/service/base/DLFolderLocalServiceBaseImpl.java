@@ -74,6 +74,7 @@ import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WebDAVPropsPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowDefinitionLinkPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -125,12 +126,13 @@ public abstract class DLFolderLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Creates a new document library folder with the primary key. Does not add the document library folder to the database.
-	 *
-	 * @param folderId the primary key for the new document library folder
-	 * @return the new document library folder
-	 */
+	* Creates a new document library folder with the primary key. Does not add the document library folder to the database.
+	*
+	* @param folderId the primary key for the new document library folder
+	* @return the new document library folder
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public DLFolder createDLFolder(long folderId) {
 		return dlFolderPersistence.create(folderId);
 	}

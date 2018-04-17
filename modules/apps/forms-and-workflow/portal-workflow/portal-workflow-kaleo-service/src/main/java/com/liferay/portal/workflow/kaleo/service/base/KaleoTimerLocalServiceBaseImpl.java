@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -106,12 +107,13 @@ public abstract class KaleoTimerLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new kaleo timer with the primary key. Does not add the kaleo timer to the database.
-	 *
-	 * @param kaleoTimerId the primary key for the new kaleo timer
-	 * @return the new kaleo timer
-	 */
+	* Creates a new kaleo timer with the primary key. Does not add the kaleo timer to the database.
+	*
+	* @param kaleoTimerId the primary key for the new kaleo timer
+	* @return the new kaleo timer
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public KaleoTimer createKaleoTimer(long kaleoTimerId) {
 		return kaleoTimerPersistence.create(kaleoTimerId);
 	}

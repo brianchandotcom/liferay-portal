@@ -249,6 +249,7 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	* @param structureId the primary key for the new ddm structure
 	* @return the new ddm structure
 	*/
+	@Transactional(enabled = false)
 	public DDMStructure createDDMStructure(long structureId);
 
 	/**

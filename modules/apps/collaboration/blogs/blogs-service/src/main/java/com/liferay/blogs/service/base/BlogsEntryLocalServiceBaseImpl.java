@@ -69,6 +69,7 @@ import com.liferay.portal.kernel.service.persistence.OrganizationPersistence;
 import com.liferay.portal.kernel.service.persistence.PortletPreferencesPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -119,12 +120,13 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new blogs entry with the primary key. Does not add the blogs entry to the database.
-	 *
-	 * @param entryId the primary key for the new blogs entry
-	 * @return the new blogs entry
-	 */
+	* Creates a new blogs entry with the primary key. Does not add the blogs entry to the database.
+	*
+	* @param entryId the primary key for the new blogs entry
+	* @return the new blogs entry
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public BlogsEntry createBlogsEntry(long entryId) {
 		return blogsEntryPersistence.create(entryId);
 	}

@@ -81,6 +81,7 @@ public interface OAuthTokenLocalService extends BaseLocalService,
 	* @param oAuthTokenId the primary key for the new o auth token
 	* @return the new o auth token
 	*/
+	@Transactional(enabled = false)
 	public OAuthToken createOAuthToken(long oAuthTokenId);
 
 	/**

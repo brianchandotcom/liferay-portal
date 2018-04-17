@@ -73,6 +73,7 @@ public interface WebDAVPropsLocalService extends BaseLocalService,
 	* @param webDavPropsId the primary key for the new web dav props
 	* @return the new web dav props
 	*/
+	@Transactional(enabled = false)
 	public WebDAVProps createWebDAVProps(long webDavPropsId);
 
 	/**

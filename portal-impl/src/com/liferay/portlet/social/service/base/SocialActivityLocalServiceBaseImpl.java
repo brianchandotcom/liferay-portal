@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.service.persistence.LayoutFinder;
 import com.liferay.portal.kernel.service.persistence.LayoutPersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -102,12 +103,13 @@ public abstract class SocialActivityLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new social activity with the primary key. Does not add the social activity to the database.
-	 *
-	 * @param activityId the primary key for the new social activity
-	 * @return the new social activity
-	 */
+	* Creates a new social activity with the primary key. Does not add the social activity to the database.
+	*
+	* @param activityId the primary key for the new social activity
+	* @return the new social activity
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public SocialActivity createSocialActivity(long activityId) {
 		return socialActivityPersistence.create(activityId);
 	}

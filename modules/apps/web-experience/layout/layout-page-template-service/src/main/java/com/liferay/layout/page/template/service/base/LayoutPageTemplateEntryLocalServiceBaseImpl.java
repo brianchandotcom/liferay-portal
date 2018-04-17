@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -90,12 +91,13 @@ public abstract class LayoutPageTemplateEntryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new layout page template entry with the primary key. Does not add the layout page template entry to the database.
-	 *
-	 * @param layoutPageTemplateEntryId the primary key for the new layout page template entry
-	 * @return the new layout page template entry
-	 */
+	* Creates a new layout page template entry with the primary key. Does not add the layout page template entry to the database.
+	*
+	* @param layoutPageTemplateEntryId the primary key for the new layout page template entry
+	* @return the new layout page template entry
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public LayoutPageTemplateEntry createLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId) {
 		return layoutPageTemplateEntryPersistence.create(layoutPageTemplateEntryId);

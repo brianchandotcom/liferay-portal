@@ -92,6 +92,7 @@ public interface WSRPConsumerPortletLocalService extends BaseLocalService,
 	* @param wsrpConsumerPortletId the primary key for the new wsrp consumer portlet
 	* @return the new wsrp consumer portlet
 	*/
+	@Transactional(enabled = false)
 	public WSRPConsumerPortlet createWSRPConsumerPortlet(
 		long wsrpConsumerPortletId);
 

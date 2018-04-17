@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.BrowserTrackerLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.BrowserTrackerPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -84,12 +85,13 @@ public abstract class BrowserTrackerLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new browser tracker with the primary key. Does not add the browser tracker to the database.
-	 *
-	 * @param browserTrackerId the primary key for the new browser tracker
-	 * @return the new browser tracker
-	 */
+	* Creates a new browser tracker with the primary key. Does not add the browser tracker to the database.
+	*
+	* @param browserTrackerId the primary key for the new browser tracker
+	* @return the new browser tracker
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public BrowserTracker createBrowserTracker(long browserTrackerId) {
 		return browserTrackerPersistence.create(browserTrackerId);
 	}

@@ -96,6 +96,7 @@ public interface ShoppingCategoryLocalService extends BaseLocalService,
 	* @param categoryId the primary key for the new shopping category
 	* @return the new shopping category
 	*/
+	@Transactional(enabled = false)
 	public ShoppingCategory createShoppingCategory(long categoryId);
 
 	public void deleteCategories(long groupId) throws PortalException;

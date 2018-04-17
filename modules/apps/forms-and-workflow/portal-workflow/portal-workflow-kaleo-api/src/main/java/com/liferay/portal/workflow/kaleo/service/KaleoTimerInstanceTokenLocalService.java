@@ -106,6 +106,7 @@ public interface KaleoTimerInstanceTokenLocalService extends BaseLocalService,
 	* @param kaleoTimerInstanceTokenId the primary key for the new kaleo timer instance token
 	* @return the new kaleo timer instance token
 	*/
+	@Transactional(enabled = false)
 	public KaleoTimerInstanceToken createKaleoTimerInstanceToken(
 		long kaleoTimerInstanceTokenId);
 

@@ -89,6 +89,7 @@ public interface VersionedEntryLocalService extends BaseLocalService,
 	*
 	* @return the new versioned entry
 	*/
+	@Transactional(enabled = false)
 	@Override
 	public VersionedEntry create();
 

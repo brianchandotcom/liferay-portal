@@ -200,6 +200,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @param groupId the primary key for the new group
 	* @return the new group
 	*/
+	@Transactional(enabled = false)
 	public Group createGroup(long groupId);
 
 	/**

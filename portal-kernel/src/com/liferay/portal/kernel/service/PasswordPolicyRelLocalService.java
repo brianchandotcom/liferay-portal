@@ -79,6 +79,7 @@ public interface PasswordPolicyRelLocalService extends BaseLocalService,
 	* @param passwordPolicyRelId the primary key for the new password policy rel
 	* @return the new password policy rel
 	*/
+	@Transactional(enabled = false)
 	public PasswordPolicyRel createPasswordPolicyRel(long passwordPolicyRelId);
 
 	/**

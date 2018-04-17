@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.GroupFinder;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -89,12 +90,13 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new social activity setting with the primary key. Does not add the social activity setting to the database.
-	 *
-	 * @param activitySettingId the primary key for the new social activity setting
-	 * @return the new social activity setting
-	 */
+	* Creates a new social activity setting with the primary key. Does not add the social activity setting to the database.
+	*
+	* @param activitySettingId the primary key for the new social activity setting
+	* @return the new social activity setting
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public SocialActivitySetting createSocialActivitySetting(
 		long activitySettingId) {
 		return socialActivitySettingPersistence.create(activitySettingId);

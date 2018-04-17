@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -90,12 +91,13 @@ public abstract class PowwowMeetingLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new powwow meeting with the primary key. Does not add the powwow meeting to the database.
-	 *
-	 * @param powwowMeetingId the primary key for the new powwow meeting
-	 * @return the new powwow meeting
-	 */
+	* Creates a new powwow meeting with the primary key. Does not add the powwow meeting to the database.
+	*
+	* @param powwowMeetingId the primary key for the new powwow meeting
+	* @return the new powwow meeting
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public PowwowMeeting createPowwowMeeting(long powwowMeetingId) {
 		return powwowMeetingPersistence.create(powwowMeetingId);
 	}

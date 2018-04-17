@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.service.persistence.ResourceTypePermissionFinde
 import com.liferay.portal.kernel.service.persistence.ResourceTypePermissionPersistence;
 import com.liferay.portal.kernel.service.persistence.RoleFinder;
 import com.liferay.portal.kernel.service.persistence.RolePersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -93,12 +94,13 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new resource block with the primary key. Does not add the resource block to the database.
-	 *
-	 * @param resourceBlockId the primary key for the new resource block
-	 * @return the new resource block
-	 */
+	* Creates a new resource block with the primary key. Does not add the resource block to the database.
+	*
+	* @param resourceBlockId the primary key for the new resource block
+	* @return the new resource block
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public ResourceBlock createResourceBlock(long resourceBlockId) {
 		return resourceBlockPersistence.create(resourceBlockId);
 	}

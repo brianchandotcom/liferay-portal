@@ -77,6 +77,7 @@ public interface UserNotificationDeliveryLocalService extends BaseLocalService,
 	* @param userNotificationDeliveryId the primary key for the new user notification delivery
 	* @return the new user notification delivery
 	*/
+	@Transactional(enabled = false)
 	public UserNotificationDelivery createUserNotificationDelivery(
 		long userNotificationDeliveryId);
 

@@ -74,6 +74,7 @@ public interface CounterLocalService extends BaseLocalService,
 	* @param name the primary key for the new counter
 	* @return the new counter
 	*/
+	@Transactional(enabled = false)
 	public Counter createCounter(java.lang.String name);
 
 	/**

@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.RecentLayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.persistence.LayoutRevisionPersistence;
 import com.liferay.portal.kernel.service.persistence.RecentLayoutRevisionPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -86,12 +87,13 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new recent layout revision with the primary key. Does not add the recent layout revision to the database.
-	 *
-	 * @param recentLayoutRevisionId the primary key for the new recent layout revision
-	 * @return the new recent layout revision
-	 */
+	* Creates a new recent layout revision with the primary key. Does not add the recent layout revision to the database.
+	*
+	* @param recentLayoutRevisionId the primary key for the new recent layout revision
+	* @return the new recent layout revision
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public RecentLayoutRevision createRecentLayoutRevision(
 		long recentLayoutRevisionId) {
 		return recentLayoutRevisionPersistence.create(recentLayoutRevisionId);

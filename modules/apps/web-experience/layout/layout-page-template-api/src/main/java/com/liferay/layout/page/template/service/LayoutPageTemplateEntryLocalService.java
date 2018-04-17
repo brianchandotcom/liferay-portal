@@ -88,6 +88,7 @@ public interface LayoutPageTemplateEntryLocalService extends BaseLocalService,
 	* @param layoutPageTemplateEntryId the primary key for the new layout page template entry
 	* @return the new layout page template entry
 	*/
+	@Transactional(enabled = false)
 	public LayoutPageTemplateEntry createLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId);
 

@@ -96,6 +96,7 @@ public interface FragmentEntryLinkLocalService extends BaseLocalService,
 	* @param fragmentEntryLinkId the primary key for the new fragment entry link
 	* @return the new fragment entry link
 	*/
+	@Transactional(enabled = false)
 	public FragmentEntryLink createFragmentEntryLink(long fragmentEntryLinkId);
 
 	/**

@@ -16,8 +16,6 @@ package com.liferay.meris;
 
 import aQute.bnd.annotation.ProviderType;
 
-import java.util.Comparator;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -27,9 +25,6 @@ import java.util.Locale;
 public interface MerisSegment {
 
 	public String getDescription(Locale locale);
-
-	public List<MerisRule> getMerisRules(
-		int start, int end, Comparator<MerisRule> comparator);
 
 	public String getMerisSegmentId();
 

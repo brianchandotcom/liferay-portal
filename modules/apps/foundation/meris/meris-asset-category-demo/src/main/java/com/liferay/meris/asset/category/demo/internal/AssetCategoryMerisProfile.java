@@ -17,6 +17,9 @@ package com.liferay.meris.asset.category.demo.internal;
 import com.liferay.meris.MerisProfile;
 import com.liferay.portal.kernel.model.User;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Eduardo Garcia
  */
@@ -25,7 +28,8 @@ public class AssetCategoryMerisProfile
 
 	public AssetCategoryMerisProfile(User user, long[] assetCategoryIds) {
 		_user = user;
-		_assetCategoryIds = assetCategoryIds;
+
+		_attributes.put("assetCategoryIds", assetCategoryIds);
 	}
 
 	@Override
@@ -36,8 +40,14 @@ public class AssetCategoryMerisProfile
 			assetCategoryMerisProfile.getMerisProfileId());
 	}
 
-	public long[] getAssetCategoryIds() {
-		return _assetCategoryIds;
+	@Override
+	public Object getAttribute(String key) {
+		return _attributes.get(key);
+	}
+
+	@Override
+	public Map<String, Object> getAttributes() {
+		return _attributes;
 	}
 
 	@Override
@@ -45,7 +55,7 @@ public class AssetCategoryMerisProfile
 		return String.valueOf(_user.getUserId());
 	}
 
-	private final long[] _assetCategoryIds;
+	private final Map<String, Object> _attributes = new HashMap();
 	private final User _user;
 
 }

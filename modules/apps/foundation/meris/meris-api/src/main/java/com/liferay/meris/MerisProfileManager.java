@@ -16,49 +16,39 @@ package com.liferay.meris;
 
 import aQute.bnd.annotation.ProviderType;
 
-import java.util.Locale;
+import java.util.Comparator;
+import java.util.List;
 
 /**
- * Represents a segment.
+ * Represents a profile manager.
  *
  * @author Eduardo Garcia
  * @review
  */
 @ProviderType
-public interface MerisSegment {
+public interface MerisProfileManager <P extends MerisProfile> {
 
 	/**
-	 * Returns the segment description
+	 * Returns a {@code MerisProfile}
 	 *
-	 * @param  locale the {@code Locale} of the language
-	 * @return the segment description
+	 * @param  merisProfileId the ID of the {@code MerisProfile}
+	 * @return the {@code MerisProfile}
 	 * @review
 	 */
-	public String getDescription(Locale locale);
+	public P getMerisProfile(String merisProfileId);
 
 	/**
-	 * Returns the unique ID of the segment
+	 * Returns a range of {@code MerisProfile}
 	 *
-	 * @return the unique ID of the segment
+	 * @param  start the lower bound of the range of model instances
+	 * @param  end the upper bound of the range of model instances (not
+	 *         inclusive)
+	 * @param  comparator the comparator to order the results by (optionally
+	 *         {@code null})
+	 * @return the range of {@code MerisProfile}
 	 * @review
 	 */
-	public String getMerisSegmentId();
-
-	/**
-	 * Returns the segment name
-	 *
-	 * @param  locale the {@code Locale} of the language
-	 * @return the segment name
-	 * @review
-	 */
-	public String getName(Locale locale);
-
-	/**
-	 * Returns the ID of the segment scope
-	 *
-	 * @return the ID of the segment scope
-	 * @review
-	 */
-	public String getScopeId();
+	public List<P> getMerisProfiles(
+		int start, int end, Comparator<P> comparator);
 
 }

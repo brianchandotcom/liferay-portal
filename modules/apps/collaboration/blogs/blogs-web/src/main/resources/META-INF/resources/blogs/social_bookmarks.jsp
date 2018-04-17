@@ -18,8 +18,6 @@
 
 <%
 BlogsEntry entry = (BlogsEntry)request.getAttribute("view_entry_content.jsp-entry");
-
-String socialBookmarksDisplayStyle = blogsPortletInstanceConfiguration.socialBookmarksDisplayStyle();
 %>
 
 <portlet:renderURL var="bookmarkURL" windowState="<%= WindowState.NORMAL.toString() %>">

@@ -19,8 +19,6 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
-
 MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
 
 long messageId = BeanParamUtil.getLong(message, request, "messageId");

@@ -19,8 +19,6 @@
 <%
 long organizationId = ParamUtil.getLong(request, "organizationId");
 
-Organization organization = OrganizationServiceUtil.fetchOrganization(organizationId);
-
 List<OrgLabor> orgLabors = OrgLaborServiceUtil.getOrgLabors(organizationId);
 
 Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("HH:mm", locale);

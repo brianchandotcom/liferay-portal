@@ -89,7 +89,6 @@ else if (fileEntry != null) {
 	assetClassPK = fileEntry.getFileEntryId();
 }
 
-boolean approved = false;
 boolean checkedOut = false;
 boolean hasLock = false;
 boolean pending = false;
@@ -97,7 +96,6 @@ boolean pending = false;
 com.liferay.portal.kernel.lock.Lock lock = null;
 
 if (fileEntry != null) {
-	approved = fileVersion.isApproved();
 	checkedOut = fileEntry.isCheckedOut();
 	hasLock = fileEntry.hasLock();
 	lock = fileEntry.getLock();

@@ -19,8 +19,6 @@
 <%
 String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
 
-String tabs2 = ParamUtil.getString(request, "tabs2", "version-history");
-
 String redirect = ParamUtil.getString(request, "redirect");
 
 FileShortcut fileShortcut = (FileShortcut)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_SHORTCUT);
@@ -57,7 +55,6 @@ if (toFileEntryId > 0) {
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);
-portletURL.setParameter("tabs2", tabs2);
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 
@@ -80,7 +77,6 @@ if (portletTitleBasedNavigation) {
 
 	<aui:form action="<%= editFileShortcutURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFileShortcut();" %>'>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-		<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="fileShortcutId" type="hidden" value="<%= fileShortcutId %>" />
 		<aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />

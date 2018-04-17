@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-OrganizationSearch searchContainer = (OrganizationSearch)request.getAttribute("liferay-ui:search:searchContainer");
-
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 Organization organization = (Organization)row.getObject();

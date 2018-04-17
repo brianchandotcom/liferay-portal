@@ -32,7 +32,6 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			List<MenuItem> menuItems = MenuItem.fromWikiPage(wikiPage, portletURL);
 
 			for (MenuItem menuItem : menuItems) {
-				String url = menuItem.getURL();
 				String label = menuItem.getLabel();
 			%>
 

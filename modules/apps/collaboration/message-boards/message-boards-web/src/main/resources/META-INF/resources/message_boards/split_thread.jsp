@@ -74,12 +74,6 @@ if (portletTitleBasedNavigation) {
 			MBMessageDisplay messageDisplay = MBMessageServiceUtil.getMessageDisplay(messageId, WorkflowConstants.STATUS_APPROVED);
 
 			MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
-
-			List messages = new ArrayList();
-
-			messages.addAll(treeWalker.getMessages());
-
-			messages = ListUtil.sort(messages, new MessageCreateDateComparator(true));
 			%>
 
 			<table class="toggle_id_message_boards_view_message_thread" id="toggle_id_message_boards_view_message_thread" style="display: <liferay-ui:toggle-value id="toggle_id_message_boards_view_message_thread" />;">

@@ -21,8 +21,6 @@ String tabs1 = ParamUtil.getString(request, "tabs1", "timeline");
 
 int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
 
-String redirect = ParamUtil.getString(request, "redirect");
-
 long receiverUserId = ParamUtil.getLong(request, "receiverUserId");
 long parentMicroblogsEntryId = ParamUtil.getLong(request, "parentMicroblogsEntryId");
 

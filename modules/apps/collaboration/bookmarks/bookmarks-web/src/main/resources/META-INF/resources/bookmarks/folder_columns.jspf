@@ -29,15 +29,6 @@ for (int j = 0; j < entryColumns.length; j++) {
 
 	<c:choose>
 		<c:when test='<%= curEntryColumn.equals("action") %>'>
-
-			<%
-			String align = SearchEntry.DEFAULT_ALIGN;
-
-			if ((j + 1) == entryColumns.length) {
-				align = "right";
-			}
-			%>
-
 			<liferay-ui:search-container-column-jsp
 				path="/bookmarks/folder_action.jsp"
 			/>

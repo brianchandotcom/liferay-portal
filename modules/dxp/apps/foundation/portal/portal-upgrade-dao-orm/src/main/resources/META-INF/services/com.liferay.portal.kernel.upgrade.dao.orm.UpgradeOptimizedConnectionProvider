@@ -1,2 +1,0 @@
-com.liferay.portal.upgrade.dao.orm.sqlserver.SQLServerUpgradeOptimizedConnectionProvider
-com.liferay.portal.upgrade.dao.orm.sybase.SybaseUpgradeOptimizedConnectionProvider

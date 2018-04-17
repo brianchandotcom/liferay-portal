@@ -18,9 +18,9 @@ import com.liferay.dynamic.data.mapping.io.exporter.DDMExporterFactory;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormExporter;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -40,7 +40,7 @@ public class DDMExporterFactoryImpl implements DDMExporterFactory {
 	}
 
 	public Map<String, String> getAvailableFormatsMap() {
-		Map<String, String> availableFormatsMap = new HashMap<>();
+		Map<String, String> availableFormatsMap = new TreeMap<>();
 
 		for (String format : getAvailableFormats()) {
 			DDMFormExporter ddmFormExporter = getDDMFormExporter(format);

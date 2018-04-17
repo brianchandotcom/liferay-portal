@@ -83,7 +83,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.TreeMap;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -140,8 +139,8 @@ public class DDMFormAdminDisplayContext {
 		return _ddmFormWebConfiguration.autosaveInterval();
 	}
 
-	public Map getAvailableExportFormats() {
-		return new TreeMap<>(_ddmExporterFactory.getAvailableFormatsMap());
+	public Map<String, String> getAvailableExportFormats() {
+		return _ddmExporterFactory.getAvailableFormatsMap();
 	}
 
 	public Locale[] getAvailableLocales() {

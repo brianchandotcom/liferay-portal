@@ -94,6 +94,10 @@ public class UADApplicationSummaryHelper {
 				getComparator(
 					searchContainer.getOrderByCol(),
 					searchContainer.getOrderByType())
+			).skip(
+				searchContainer.getStart()
+			).limit(
+				searchContainer.getDelta()
 			).collect(
 				Collectors.toList()
 			);

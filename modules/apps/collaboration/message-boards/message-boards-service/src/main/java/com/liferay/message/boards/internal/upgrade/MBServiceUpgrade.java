@@ -16,7 +16,7 @@ package com.liferay.message.boards.internal.upgrade;
 
 import com.liferay.message.boards.internal.upgrade.v1_0_0.UpgradeClassNames;
 import com.liferay.message.boards.internal.upgrade.v1_0_1.UpgradeUnsupportedGuestPermissions;
-import com.liferay.message.boards.internal.upgrade.v1_2_0.UpgradeMBThread;
+import com.liferay.message.boards.internal.upgrade.v1_1_0.UpgradeMBThread;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -42,7 +42,7 @@ public class MBServiceUpgrade implements UpgradeStepRegistrator {
 				_roleLocalService));
 
 		registry.register(
-			"com.liferay.message.boards.service", "1.0.1", "1.2.0",
+			"com.liferay.message.boards.service", "1.0.1", "1.1.0",
 			new UpgradeMBThread());
 	}
 

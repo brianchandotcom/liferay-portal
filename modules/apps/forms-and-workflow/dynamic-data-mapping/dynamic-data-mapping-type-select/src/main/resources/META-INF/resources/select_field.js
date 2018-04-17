@@ -241,7 +241,7 @@ AUI.add(
 						for (var indexOption in options) {
 							for (var indexValue in value) {
 								if (options[indexOption].value == value[indexValue]) {
-									valid = valid || true;
+									valid = true;
 								}
 							}
 						}

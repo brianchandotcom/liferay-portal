@@ -106,6 +106,7 @@ AUI.add(
 						var value = [];
 
 						var action = instance.get('action');
+
 						var pageIndex = action.target;
 
 						if (action && pageIndex) {

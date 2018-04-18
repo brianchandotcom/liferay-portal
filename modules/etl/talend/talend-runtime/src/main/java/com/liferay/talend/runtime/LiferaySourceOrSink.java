@@ -44,6 +44,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -247,15 +248,21 @@ public class LiferaySourceOrSink
 
 	@Override
 	public List<NamedThing> getAvailableWebSites() throws IOException {
-		String webSitesEndpointURL = _getWebSitesEndpointURL();
+		String webSitesEndpointURL = null;
+		List<NamedThing> webSitesList = new ArrayList<>();
+
+		try {
+			webSitesEndpointURL = _getWebSitesEndpointURL();
+		}
+		catch (NoSuchElementException nsee) {
+			return webSitesList;
+		}
 
 		JsonNode resourceCollectionJsonNode = doApioGetRequest(
 			webSitesEndpointURL);
 
 		ApioResourceCollection webSitesApioResourceCollection =
 			new ApioResourceCollection(resourceCollectionJsonNode);
-
-		List<NamedThing> webSitesList = new ArrayList<>();
 
 		String actualPage =
 			webSitesApioResourceCollection.getResourceActualPage();

@@ -33,6 +33,8 @@ import org.slf4j.LoggerFactory;
 import org.talend.components.api.component.ISchemaListener;
 import org.talend.components.common.SchemaProperties;
 import org.talend.daikon.NamedThing;
+import org.talend.daikon.i18n.GlobalI18N;
+import org.talend.daikon.i18n.I18nMessages;
 import org.talend.daikon.properties.PropertiesImpl;
 import org.talend.daikon.properties.ValidationResult;
 import org.talend.daikon.properties.ValidationResult.Result;
@@ -141,34 +143,43 @@ public class LiferayResourceProperties
 			liferaySourceOrSinkRuntime.initialize(
 				null, _getEffectiveConnectionProperties());
 
+			ValidationResultMutable validationResultMutable =
+				new ValidationResultMutable();
+
 			ValidationResult validationResult =
 				liferaySourceOrSinkRuntime.validate(null);
 
-			if (validationResult.getStatus() == ValidationResult.Result.OK) {
+			validationResultMutable.setStatus(validationResult.getStatus());
+
+			if (validationResultMutable.getStatus() == Result.OK) {
 				try {
-					List<NamedThing> moduleNames = null;
+					List<NamedThing> resourceNames = null;
 
 					if (useWebSiteRelatedResource.getValue()) {
-						moduleNames =
+						resourceNames =
 							liferaySourceOrSinkRuntime.getResourceList(
 								webSiteURL.getValue());
 					}
 					else {
-						moduleNames = liferaySourceOrSinkRuntime.getSchemaNames(
-							null);
+						resourceNames =
+							liferaySourceOrSinkRuntime.getSchemaNames(null);
 					}
 
-					resourceURL.setPossibleNamedThingValues(moduleNames);
+					if (resourceNames.isEmpty()) {
+						validationResultMutable.setMessage(
+							i18nMessages.getMessage(
+								"error.validation.resources"));
+						validationResultMutable.setStatus(Result.ERROR);
+					}
+
+					resourceURL.setPossibleNamedThingValues(resourceNames);
 				}
 				catch (Exception e) {
 					return ExceptionUtils.exceptionToValidationResult(e);
 				}
 			}
-			else {
-				return validationResult;
-			}
 
-			return ValidationResult.OK;
+			return validationResultMutable;
 		}
 	}
 
@@ -184,13 +195,25 @@ public class LiferayResourceProperties
 			liferaySourceOrSinkRuntime.initialize(
 				null, _getEffectiveConnectionProperties());
 
+			ValidationResultMutable validationResultMutable =
+				new ValidationResultMutable();
+
 			ValidationResult validationResult =
 				liferaySourceOrSinkRuntime.validate(null);
 
-			if (validationResult.getStatus() == ValidationResult.Result.OK) {
+			validationResultMutable.setStatus(validationResult.getStatus());
+
+			if (validationResultMutable.getStatus() == Result.OK) {
 				try {
 					List<NamedThing> webSites =
 						liferaySourceOrSinkRuntime.getAvailableWebSites();
+
+					if (webSites.isEmpty()) {
+						validationResultMutable.setMessage(
+							i18nMessages.getMessage(
+								"error.validation.websites"));
+						validationResultMutable.setStatus(Result.ERROR);
+					}
 
 					webSiteURL.setPossibleNamedThingValues(webSites);
 				}
@@ -198,11 +221,8 @@ public class LiferayResourceProperties
 					return ExceptionUtils.exceptionToValidationResult(e);
 				}
 			}
-			else {
-				return validationResult;
-			}
 
-			return ValidationResult.OK;
+			return validationResultMutable;
 		}
 	}
 
@@ -310,6 +330,10 @@ public class LiferayResourceProperties
 	public Property<Boolean> useWebSiteRelatedResource =
 		PropertyFactory.newBoolean("useWebSiteRelatedResource");
 	public StringProperty webSiteURL = PropertyFactory.newString("webSiteURL");
+
+	protected static final I18nMessages i18nMessages =
+		GlobalI18N.getI18nMessageProvider().getI18nMessages(
+			LiferayResourceProperties.class);
 
 	private LiferayConnectionProperties _getEffectiveConnectionProperties() {
 		LiferayConnectionProperties liferayConnectionProperties =

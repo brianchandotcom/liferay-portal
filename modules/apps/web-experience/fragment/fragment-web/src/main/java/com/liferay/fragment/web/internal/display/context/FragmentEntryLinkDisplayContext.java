@@ -209,6 +209,20 @@ public class FragmentEntryLinkDisplayContext {
 					fragmentEntry.getGroupId(), getFragmentEntryId(),
 					PortalUtil.getClassNameId(LayoutPageTemplateEntry.class));
 		}
+		else if (Objects.equals(getNavigation(), "display-pages")) {
+			fragmentEntryLinks =
+				FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
+					fragmentEntry.getGroupId(), getFragmentEntryId(),
+					PortalUtil.getClassNameId(LayoutPageTemplateEntry.class),
+					fragmentEntryLinksSearchContainer.getStart(),
+					fragmentEntryLinksSearchContainer.getEnd(),
+					orderByComparator);
+
+			fragmentEntryLinksCount =
+				FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinksCount(
+					fragmentEntry.getGroupId(), getFragmentEntryId(),
+					PortalUtil.getClassNameId(LayoutPageTemplateEntry.class));
+		}
 		else {
 			fragmentEntryLinks =
 				FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
@@ -239,6 +253,11 @@ public class FragmentEntryLinkDisplayContext {
 				PortalUtil.getClassNameId(Layout.class));
 		}
 		else if (Objects.equals(navigation, "page-templates")) {
+			return FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinksCount(
+				fragmentEntry.getGroupId(), getFragmentEntryId(),
+				PortalUtil.getClassNameId(LayoutPageTemplateEntry.class));
+		}
+		else if (Objects.equals(navigation, "display-pages")) {
 			return FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinksCount(
 				fragmentEntry.getGroupId(), getFragmentEntryId(),
 				PortalUtil.getClassNameId(LayoutPageTemplateEntry.class));

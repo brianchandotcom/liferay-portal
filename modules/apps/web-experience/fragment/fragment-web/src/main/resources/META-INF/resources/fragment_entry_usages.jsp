@@ -74,6 +74,19 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 							<liferay-ui:message arguments='<%= fragmentEntryLinkDisplayContext.getUsageCount("page-templates") %>' key="page-templates-x" />
 						</aui:a>
 					</li>
+
+					<li>
+
+						<%
+						PortletURL displayPagesNavigationURL = currentURLObj;
+
+						displayPagesNavigationURL.setParameter("navigation", "display-pages");
+						%>
+
+						<aui:a cssClass="nav-link" href="<%= displayPagesNavigationURL.toString() %>">
+							<liferay-ui:message arguments='<%= fragmentEntryLinkDisplayContext.getUsageCount("display-pages") %>' key="display-pages-x" />
+						</aui:a>
+					</li>
 				</ul>
 			</li>
 		</ul>

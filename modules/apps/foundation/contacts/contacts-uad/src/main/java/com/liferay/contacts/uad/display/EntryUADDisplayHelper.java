@@ -32,8 +32,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author William Newbury
  */
-@Component(immediate = true, service = EntryUADEntityDisplayHelper.class)
-public class EntryUADEntityDisplayHelper {
+@Component(immediate = true, service = EntryUADDisplayHelper.class)
+public class EntryUADDisplayHelper {
 
 	public String[] getDisplayFieldNames() {
 		return new String[] {"fullName", "emailAddress", "comments"};

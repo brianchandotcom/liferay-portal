@@ -46,6 +46,7 @@ public class LayoutPageTemplateEntrySoap implements Serializable {
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassTypeId(model.getClassTypeId());
 		soapModel.setName(model.getName());
+		soapModel.setType(model.getType());
 		soapModel.setHtmlPreviewEntryId(model.getHtmlPreviewEntryId());
 		soapModel.setDefaultTemplate(model.getDefaultTemplate());
 
@@ -192,6 +193,14 @@ public class LayoutPageTemplateEntrySoap implements Serializable {
 		_name = name;
 	}
 
+	public int getType() {
+		return _type;
+	}
+
+	public void setType(int type) {
+		_type = type;
+	}
+
 	public long getHtmlPreviewEntryId() {
 		return _htmlPreviewEntryId;
 	}
@@ -223,6 +232,7 @@ public class LayoutPageTemplateEntrySoap implements Serializable {
 	private long _classNameId;
 	private long _classTypeId;
 	private String _name;
+	private int _type;
 	private long _htmlPreviewEntryId;
 	private boolean _defaultTemplate;
 }

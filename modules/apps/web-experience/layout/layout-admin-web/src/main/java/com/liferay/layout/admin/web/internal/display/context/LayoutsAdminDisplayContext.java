@@ -76,6 +76,8 @@ import java.util.Objects;
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Eudaldo Alonso
  */
@@ -91,8 +93,9 @@ public class LayoutsAdminDisplayContext {
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_groupDisplayContextHelper = new GroupDisplayContextHelper(
-			PortalUtil.getHttpServletRequest(liferayPortletRequest));
+		_request = PortalUtil.getHttpServletRequest(_liferayPortletRequest);
+
+		_groupDisplayContextHelper = new GroupDisplayContextHelper(_request);
 
 		_liferayPortletRequest.setAttribute(
 			WebKeys.LAYOUT_DESCRIPTIONS, getLayoutDescriptions());
@@ -273,7 +276,7 @@ public class LayoutsAdminDisplayContext {
 
 		List<LayoutPageTemplateCollection> layoutPageTemplateCollections =
 			layoutPageTemplateCollectionService.
-				getBasicLayoutPageTemplateCollections(
+				getLayoutPageTemplateCollections(
 					getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 					layoutPageTemplateCollectionNameComparator);
 
@@ -418,8 +421,7 @@ public class LayoutsAdminDisplayContext {
 
 		pagesNavigationItem.setHref(pagesURL.toString());
 
-		pagesNavigationItem.setLabel(
-			LanguageUtil.get(_themeDisplay.getLocale(), "pages"));
+		pagesNavigationItem.setLabel(LanguageUtil.get(_request, "pages"));
 
 		navigationItems.add(pagesNavigationItem);
 
@@ -435,9 +437,25 @@ public class LayoutsAdminDisplayContext {
 		pageTemplatesNavigationItem.setHref(pageTemplatesURL.toString());
 
 		pageTemplatesNavigationItem.setLabel(
-			LanguageUtil.get(_themeDisplay.getLocale(), "page-templates"));
+			LanguageUtil.get(_request, "page-templates"));
 
 		navigationItems.add(pageTemplatesNavigationItem);
+
+		NavigationItem displayPagesNavigationItem = new NavigationItem();
+
+		displayPagesNavigationItem.setActive(
+			Objects.equals(getTabs1(), "display-pages"));
+
+		PortletURL displayPagesURL = getPortletURL();
+
+		displayPagesURL.setParameter("tabs1", "display-pages");
+
+		displayPagesNavigationItem.setHref(displayPagesURL.toString());
+
+		displayPagesNavigationItem.setLabel(
+			LanguageUtil.get(_request, "display-pages"));
+
+		navigationItems.add(displayPagesNavigationItem);
 
 		return navigationItems;
 	}
@@ -1109,6 +1127,7 @@ public class LayoutsAdminDisplayContext {
 	private Long _parentLayoutId;
 	private Boolean _privateLayout;
 	private String _redirect;
+	private final HttpServletRequest _request;
 	private String _rootNodeName;
 	private Layout _selLayout;
 	private LayoutSet _selLayoutSet;

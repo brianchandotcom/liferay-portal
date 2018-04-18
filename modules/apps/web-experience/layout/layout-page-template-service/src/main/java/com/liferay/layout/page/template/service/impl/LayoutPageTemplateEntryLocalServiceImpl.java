@@ -17,6 +17,7 @@ package com.liferay.layout.page.template.service.impl;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.html.preview.model.HtmlPreviewEntry;
 import com.liferay.html.preview.service.HtmlPreviewEntryLocalService;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateEntryException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -44,7 +45,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
-			String name, long[] fragmentEntryIds, ServiceContext serviceContext)
+			String name, int type, long[] fragmentEntryIds,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Layout page template entry
@@ -70,6 +72,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		layoutPageTemplateEntry.setLayoutPageTemplateCollectionId(
 			layoutPageTemplateCollectionId);
 		layoutPageTemplateEntry.setName(name);
+		layoutPageTemplateEntry.setType(type);
 
 		// HTML preview
 
@@ -96,6 +99,18 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			layoutPageTemplateEntry, serviceContext);
 
 		return layoutPageTemplateEntry;
+	}
+
+	@Override
+	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
+			long userId, long groupId, long layoutPageTemplateCollectionId,
+			String name, long[] fragmentEntryIds, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addLayoutPageTemplateEntry(
+			userId, groupId, layoutPageTemplateCollectionId, name,
+			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, fragmentEntryIds,
+			serviceContext);
 	}
 
 	@Override

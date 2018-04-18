@@ -72,6 +72,7 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classTypeId", getClassTypeId());
 		attributes.put("name", getName());
+		attributes.put("type", getType());
 		attributes.put("htmlPreviewEntryId", getHtmlPreviewEntryId());
 		attributes.put("defaultTemplate", getDefaultTemplate());
 
@@ -146,6 +147,12 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 
 		if (name != null) {
 			setName(name);
+		}
+
+		Integer type = (Integer)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
 		}
 
 		Long htmlPreviewEntryId = (Long)attributes.get("htmlPreviewEntryId");
@@ -321,6 +328,16 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _layoutPageTemplateEntry.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the type of this layout page template entry.
+	*
+	* @return the type of this layout page template entry
+	*/
+	@Override
+	public int getType() {
+		return _layoutPageTemplateEntry.getType();
 	}
 
 	/**
@@ -543,6 +560,16 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_layoutPageTemplateEntry.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the type of this layout page template entry.
+	*
+	* @param type the type of this layout page template entry
+	*/
+	@Override
+	public void setType(int type) {
+		_layoutPageTemplateEntry.setType(type);
 	}
 
 	/**

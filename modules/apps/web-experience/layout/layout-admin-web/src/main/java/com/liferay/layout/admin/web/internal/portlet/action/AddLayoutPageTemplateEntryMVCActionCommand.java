@@ -16,6 +16,7 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.handler.LayoutPageTemplateEntryExceptionRequestHandler;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -61,6 +62,10 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 
 		String name = ParamUtil.getString(actionRequest, "name");
 
+		int type = ParamUtil.getInteger(
+			actionRequest, "type",
+			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
+
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				actionRequest);
@@ -68,13 +73,15 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
 				_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 					serviceContext.getScopeGroupId(),
-					layoutPageTemplateCollectionId, name, null, serviceContext);
+					layoutPageTemplateCollectionId, name, type, null,
+					serviceContext);
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 			jsonObject.put(
 				"redirectURL",
-				getRedirectURL(actionResponse, layoutPageTemplateEntry));
+				getRedirectURL(
+					actionRequest, actionResponse, layoutPageTemplateEntry));
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);
@@ -88,7 +95,7 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 	}
 
 	protected String getRedirectURL(
-		ActionResponse actionResponse,
+		ActionRequest actionRequest, ActionResponse actionResponse,
 		LayoutPageTemplateEntry layoutPageTemplateEntry) {
 
 		LiferayPortletResponse liferayPortletResponse =
@@ -106,6 +113,10 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 			"layoutPageTemplateEntryId",
 			String.valueOf(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		portletURL.setParameter("redirect", redirect);
 
 		return portletURL.toString();
 	}

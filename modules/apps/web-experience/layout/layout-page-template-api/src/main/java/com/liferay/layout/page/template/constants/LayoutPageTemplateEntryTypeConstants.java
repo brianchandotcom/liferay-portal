@@ -17,10 +17,10 @@ package com.liferay.layout.page.template.constants;
 /**
  * @author Jürgen Kappler
  */
-public class LayoutPageTemplateCollectionTypeConstants {
-
-	public static final int TYPE_ASSET_DISPLAY_PAGE = 1;
+public class LayoutPageTemplateEntryTypeConstants {
 
 	public static final int TYPE_BASIC = 0;
+
+	public static final int TYPE_DISPLAY_PAGE = 1;
 
 }

@@ -25,73 +25,21 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 	items="<%= assetCategoriesDisplayContext.getAssetVocabulariesNavigationItems() %>"
 />
 
-<liferay-frontend:management-bar
+<clay:management-toolbar
+	actionItems="<%= assetCategoriesDisplayContext.getVocabulariesActionItemsDropdownItems() %>"
+	clearResultsURL="<%= assetCategoriesDisplayContext.getVocabulariesClearResultsURL() %>"
+	componentId="assetVocabulariesManagementToolbar"
+	creationMenu="<%= assetCategoriesDisplayContext.isShowVocabulariesAddButton() ? assetCategoriesDisplayContext.getVocabulariesCreationMenu() : null %>"
 	disabled="<%= assetCategoriesDisplayContext.isDisabledVocabulariesManagementBar() %>"
-	includeCheckBox="<%= true %>"
+	filterItems="<%= assetCategoriesDisplayContext.getVocabulariesFilterItemsDropdownItems() %>"
+	searchActionURL="<%= assetCategoriesDisplayContext.getVocabulariesSearchActionURL() %>"
 	searchContainerId="assetVocabularies"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= PortletURLUtil.clone(renderResponse.createRenderURL(), liferayPortletResponse) %>"
-			/>
-
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= assetCategoriesDisplayContext.getOrderByCol() %>"
-				orderByType="<%= assetCategoriesDisplayContext.getOrderByType() %>"
-				orderColumns='<%= new String[] {"create-date"} %>'
-				portletURL="<%= PortletURLUtil.clone(renderResponse.createRenderURL(), liferayPortletResponse) %>"
-			/>
-
-			<c:if test="<%= assetCategoriesDisplayContext.isShowVocabulariesSearch() %>">
-				<liferay-portlet:renderURL varImpl="portletURL" />
-
-				<li>
-					<aui:form action="<%= portletURL %>" name="searchFm">
-						<liferay-ui:input-search
-							markupView="lexicon"
-						/>
-					</aui:form>
-				</li>
-			</c:if>
-		</liferay-frontend:management-bar-filters>
-
-		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-		</liferay-portlet:actionURL>
-
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= changeDisplayStyleURL %>"
-			selectedDisplayStyle="<%= assetCategoriesDisplayContext.getDisplayStyle() %>"
-		/>
-
-		<c:if test="<%= assetCategoriesDisplayContext.isShowVocabulariesAddButton() %>">
-			<portlet:renderURL var="addVocabularyURL">
-				<portlet:param name="mvcPath" value="/edit_vocabulary.jsp" />
-			</portlet:renderURL>
-
-			<liferay-frontend:add-menu
-				inline="<%= true %>"
-			>
-				<liferay-frontend:add-menu-item
-					title='<%= LanguageUtil.get(request, "add-vocabulary") %>'
-					url="<%= addVocabularyURL.toString() %>"
-				/>
-			</liferay-frontend:add-menu>
-		</c:if>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button
-			href="javascript:;"
-			icon="trash"
-			id="deleteSelectedVocabularies"
-			label="delete"
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+	searchFormName="searchFm"
+	sortingOrder="<%= assetCategoriesDisplayContext.getOrderByType() %>"
+	sortingURL="<%= assetCategoriesDisplayContext.getVocabulariesSortingURL() %>"
+	totalItems="<%= assetCategoriesDisplayContext.getVocabulariesTotalItems() %>"
+	viewTypes="<%= assetCategoriesDisplayContext.getVocabulariesViewTypeItems() %>"
+/>
 
 <portlet:actionURL name="deleteVocabulary" var="deleteVocabularyURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -241,13 +189,10 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script sandbox="<%= true %>">
-	$('#<portlet:namespace />deleteSelectedVocabularies').on(
-		'click',
-		function() {
-			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				submitForm($(document.<portlet:namespace />fm));
-			}
+<aui:script>
+	window.<portlet:namespace />deleteSelectedVocabularies = function() {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+			submitForm(document.querySelector('#<portlet:namespace />fm'));
 		}
-	);
+	}
 </aui:script>

@@ -155,6 +155,13 @@ public class AssetTagsDisplayContext {
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
+							_getFilterNavigationDropdownItems());
+						dropdownGroupItem.setLabel("filter-by-navigation");
+					});
+
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
 							_getOrderByDropdownItems());
 						dropdownGroupItem.setLabel("order-by");
 					});
@@ -439,6 +446,19 @@ public class AssetTagsDisplayContext {
 		}
 
 		return false;
+	}
+
+	private List<DropdownItem> _getFilterNavigationDropdownItems() {
+		return new DropdownItemList(_request) {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(true);
+						dropdownItem.setHref(_renderResponse.createRenderURL());
+						dropdownItem.setLabel("all");
+					});
+			}
+		};
 	}
 
 	private List<DropdownItem> _getOrderByDropdownItems() {

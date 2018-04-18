@@ -128,7 +128,9 @@
 </aui:form>
 
 <aui:script>
-	function <portlet:namespace />mergeTags() {
+	var form = document.querySelector('#<portlet:namespace />fm');
+
+	window.<portlet:namespace />mergeTags = function() {
 		<portlet:renderURL var="mergeURL">
 			<portlet:param name="mvcPath" value="/merge_tag.jsp" />
 			<portlet:param name="mergeTagIds" value="[$MERGE_TAGS_IDS$]" />
@@ -138,11 +140,11 @@
 
 		location.href = mergeURL.replace(
 			escape('[$MERGE_TAGS_IDS$]'),
-			Liferay.Util.listCheckedExcept(document.querySelector('#<portlet:namespace />fm'), '<portlet:namespace />allRowIds')
+			Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds')
 		);
 	}
 
-	function <portlet:namespace/>deleteTags() {
+	window.<portlet:namespace/>deleteTags = function() {
 		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
 			submitForm(form);
 		}

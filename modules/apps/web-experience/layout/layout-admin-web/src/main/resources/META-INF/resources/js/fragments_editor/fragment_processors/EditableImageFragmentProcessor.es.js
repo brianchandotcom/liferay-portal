@@ -56,14 +56,16 @@ class EditableImageFragmentProcessor {
 	process() {
 		this._removeListeners();
 
-		this._eventHandler.add(
-			dom.delegate(
-				this.fragmentEntryLink.refs.content,
-				'click',
-				'lfr-editable[type="image"]',
-				this._handleImageSelectorClick
-			)
-		);
+		if (!this.fragmentEntryLink.showMapping) {
+			this._eventHandler.add(
+				dom.delegate(
+					this.fragmentEntryLink.refs.content,
+					'click',
+					'lfr-editable[type="image"]',
+					this._handleImageSelectorClick
+				)
+			);
+		}
 	}
 
 	/**

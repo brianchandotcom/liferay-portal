@@ -99,7 +99,7 @@ class FragmentEntryLink extends Component {
 	 */
 
 	shouldUpdate(changes) {
-		return !!changes.content;
+		return !!changes.content || !!changes.showMapping;
 	}
 
 	/**
@@ -421,6 +421,17 @@ FragmentEntryLink.STATE = {
 	 */
 
 	showControlBar: Config.bool().value(true),
+
+	/**
+	 * If true, asset mapping is enabled
+	 * @default false
+	 * @instance
+	 * @memberOf FragmentEntryLink
+	 * @review
+	 * @type {bool}
+	 */
+
+	showMapping: Config.bool().value(false),
 
 	/**
 	 * Portlet namespace needed for prefixing Alloy Editor instances

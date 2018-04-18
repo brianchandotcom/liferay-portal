@@ -17,14 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 FragmentEntryLinkDisplayContext fragmentEntryLinkDisplayContext = new FragmentEntryLinkDisplayContext(renderRequest, renderResponse);
 
 FragmentEntry fragmentEntry = fragmentEntryLinkDisplayContext.getFragmentEntry();
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBack(fragmentEntryLinkDisplayContext.getRedirect());
 
 renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x", fragmentEntry.getName()));
 %>
@@ -43,7 +41,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 							<li class="nav-item">
 
 								<%
-								PortletURL allNavigationURL = currentURLObj;
+								PortletURL allNavigationURL = fragmentEntryLinkDisplayContext.getPortletURL();
 
 								allNavigationURL.setParameter("navigation", "all");
 								%>
@@ -55,7 +53,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 							<li class="nav-item">
 
 								<%
-								PortletURL pagesNavigationURL = currentURLObj;
+								PortletURL pagesNavigationURL = fragmentEntryLinkDisplayContext.getPortletURL();
 
 								pagesNavigationURL.setParameter("navigation", "pages");
 								%>
@@ -67,7 +65,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 							<li class="nav-item">
 
 								<%
-								PortletURL pageTemplatesNavigationURL = currentURLObj;
+								PortletURL pageTemplatesNavigationURL = fragmentEntryLinkDisplayContext.getPortletURL();
 
 								pageTemplatesNavigationURL.setParameter("navigation", "page-templates");
 								%>
@@ -79,7 +77,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 							<li class="nav-item">
 
 								<%
-								PortletURL displayPagesNavigationURL = currentURLObj;
+								PortletURL displayPagesNavigationURL = fragmentEntryLinkDisplayContext.getPortletURL();
 
 								displayPagesNavigationURL.setParameter("navigation", "display-pages");
 								%>

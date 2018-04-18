@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.List;
 import java.util.Objects;
 
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -85,6 +86,17 @@ public class FragmentEntryLinkDisplayContext {
 		return FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinksCount(
 			fragmentEntry.getGroupId(), getFragmentEntryId(),
 			PortalUtil.getClassNameId(LayoutPageTemplateEntry.class));
+	}
+
+	public long getFragmentCollectionId() {
+		if (Validator.isNotNull(_fragmentCollectionId)) {
+			return _fragmentCollectionId;
+		}
+
+		_fragmentCollectionId = ParamUtil.getLong(
+			_renderRequest, "fragmentCollectionId");
+
+		return _fragmentCollectionId;
 	}
 
 	public FragmentEntry getFragmentEntry() throws PortalException {
@@ -188,6 +200,30 @@ public class FragmentEntryLinkDisplayContext {
 			PortalUtil.getClassNameId(LayoutPageTemplateEntry.class));
 	}
 
+	public PortletURL getPortletURL() {
+		PortletURL portletURL = _renderResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/fragment/view_fragment_entry_usages");
+		portletURL.setParameter("redirect", getRedirect());
+		portletURL.setParameter(
+			"fragmentCollectionId", String.valueOf(getFragmentCollectionId()));
+		portletURL.setParameter(
+			"fragmentEntryId", String.valueOf(getFragmentEntryId()));
+
+		return portletURL;
+	}
+
+	public String getRedirect() {
+		if (_redirect != null) {
+			return _redirect;
+		}
+
+		_redirect = ParamUtil.getString(_renderRequest, "redirect");
+
+		return _redirect;
+	}
+
 	public SearchContainer getSearchContainer() throws PortalException {
 		if (_searchContainer != null) {
 			return _searchContainer;
@@ -275,12 +311,14 @@ public class FragmentEntryLinkDisplayContext {
 		return _searchContainer;
 	}
 
+	private Long _fragmentCollectionId;
 	private FragmentEntry _fragmentEntry;
 	private Long _fragmentEntryId;
 	private String _keywords;
 	private String _navigation;
 	private String _orderByCol;
 	private String _orderByType;
+	private String _redirect;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private SearchContainer _searchContainer;

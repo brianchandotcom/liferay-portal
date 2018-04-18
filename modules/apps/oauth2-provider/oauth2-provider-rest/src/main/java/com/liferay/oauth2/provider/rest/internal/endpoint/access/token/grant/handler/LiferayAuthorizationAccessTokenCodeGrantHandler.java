@@ -76,7 +76,7 @@ public class LiferayAuthorizationAccessTokenCodeGrantHandler
 
 		if (code == null) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("No code parameter was provided.");
+				_log.debug("No code parameter was provided");
 			}
 
 			return false;

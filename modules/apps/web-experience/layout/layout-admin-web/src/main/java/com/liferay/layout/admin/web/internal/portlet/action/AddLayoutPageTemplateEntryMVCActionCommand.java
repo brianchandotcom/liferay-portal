@@ -113,8 +113,10 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 			"layoutPageTemplateEntryId",
 			String.valueOf(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
-		portletURL.setParameter(
-			"redirect", ParamUtil.getString(actionRequest, "redirect"));
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		portletURL.setParameter("redirect", redirect);
 
 		return portletURL.toString();
 	}

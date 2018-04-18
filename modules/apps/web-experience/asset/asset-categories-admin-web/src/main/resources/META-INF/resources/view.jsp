@@ -190,9 +190,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 </aui:form>
 
 <aui:script>
-	function <portlet:namespace />deleteSelectedVocabularies() {
+	window.<portlet:namespace />deleteSelectedVocabularies = function() {
 		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-			submitForm($(document.<portlet:namespace />fm));
+			submitForm(document.querySelector('#<portlet:namespace />fm'));
 		}
 	}
 </aui:script>

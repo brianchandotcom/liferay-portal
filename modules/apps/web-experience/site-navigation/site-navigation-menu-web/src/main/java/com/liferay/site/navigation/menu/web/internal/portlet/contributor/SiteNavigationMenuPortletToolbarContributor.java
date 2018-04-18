@@ -100,6 +100,7 @@ public class SiteNavigationMenuPortletToolbarContributor
 
 		portletURL.setParameter(
 			"mvcPath", "/select_layout_page_template_entry.jsp");
+		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 		portletURL.setParameter(
 			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
 

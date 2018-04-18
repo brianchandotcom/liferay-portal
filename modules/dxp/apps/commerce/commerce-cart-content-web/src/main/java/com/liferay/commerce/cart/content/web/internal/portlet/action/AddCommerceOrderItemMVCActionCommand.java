@@ -25,6 +25,7 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -122,7 +123,9 @@ public class AddCommerceOrderItemMVCActionCommand extends BaseMVCActionCommand {
 				JSONObject errorObject = _jsonFactory.createJSONObject();
 
 				errorObject.put(
-					"message", commerceOrderValidatorResult.getMessage());
+					"message",
+					getCommerceOrderValidatorResultMessage(
+						commerceOrderValidatorResult, httpServletRequest));
 
 				errorArray.put(errorObject);
 			}
@@ -142,6 +145,21 @@ public class AddCommerceOrderItemMVCActionCommand extends BaseMVCActionCommand {
 		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
 		writeJSON(actionResponse, jsonObject);
+	}
+
+	protected String getCommerceOrderValidatorResultMessage(
+		CommerceOrderValidatorResult commerceOrderValidatorResult,
+		HttpServletRequest httpServletRequest) {
+
+		if (commerceOrderValidatorResult.hasArgument()) {
+			return LanguageUtil.format(
+				httpServletRequest, commerceOrderValidatorResult.getMessage(),
+				commerceOrderValidatorResult.getArgument());
+		}
+		else {
+			return LanguageUtil.get(
+				httpServletRequest, commerceOrderValidatorResult.getMessage());
+		}
 	}
 
 	protected void writeJSON(ActionResponse actionResponse, Object jsonObj)

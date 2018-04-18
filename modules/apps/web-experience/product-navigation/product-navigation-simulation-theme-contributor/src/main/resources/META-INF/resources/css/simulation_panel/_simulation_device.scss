@@ -32,6 +32,14 @@
 			}
 		}
 	}
+
+	.modal-dialog {
+		max-width: none;
+
+		.modal-content {
+			border-radius: 0;
+		}
+	}
 }
 
 .lfr-device {

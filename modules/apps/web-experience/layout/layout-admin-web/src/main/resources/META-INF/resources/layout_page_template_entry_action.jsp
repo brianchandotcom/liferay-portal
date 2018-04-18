@@ -68,7 +68,7 @@ LayoutPageTemplateEntry layoutPageTemplateEntry = (LayoutPageTemplateEntry)row.g
 
 	<c:if test="<%= LayoutPageTemplateEntryPermission.contains(permissionChecker, layoutPageTemplateEntry, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
-			modelResource="<%= LayoutPageTemplateCollection.class.getName() %>"
+			modelResource="<%= LayoutPageTemplateEntry.class.getName() %>"
 			modelResourceDescription="<%= layoutPageTemplateEntry.getName() %>"
 			resourcePrimKey="<%= String.valueOf(layoutPageTemplateEntry.getLayoutPageTemplateEntryId()) %>"
 			var="layoutPageTemplateEntryPermissionsURL"

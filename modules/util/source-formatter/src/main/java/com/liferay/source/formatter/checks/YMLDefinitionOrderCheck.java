@@ -31,7 +31,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class YMLDefintionOrderCheck extends BaseFileCheck {
+public class YMLDefinitionOrderCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(

@@ -165,7 +165,9 @@ public class GetFileSetTask extends Task {
 
 						String fileName = fileNamePath.toString();
 
-						if (_isSkip(fileName)) {
+						Path parentDir = path.getParent();
+
+						if (_isSkip(fileName, parentDir.toString())) {
 							return FileVisitResult.SKIP_SUBTREE;
 						}
 
@@ -251,8 +253,11 @@ public class GetFileSetTask extends Task {
 		return true;
 	}
 
-	private boolean _isSkip(String fileName) {
-		if (fileName.startsWith(".") || _skipFileNames.contains(fileName)) {
+	private boolean _isSkip(String fileName, String parentDir) {
+		if (fileName.startsWith(".") ||
+			_skipModuleFileNames.contains(fileName) ||
+			(_skipFileNames.contains(fileName) && parentDir.equals(_rootDir))) {
+
 			return true;
 		}
 
@@ -267,8 +272,9 @@ public class GetFileSetTask extends Task {
 
 	private static final List<String> _skipFileNames = Arrays.asList(
 		"benchmarks", "definitions", "gradle", "lib", "nbproject",
-		"node_modules", "oss-licenses", "portal-client", "readme", "sql",
-		"tools");
+		"oss-licenses", "portal-client", "readme", "sql", "tools");
+	private static final List<String> _skipModuleFileNames = Arrays.asList(
+		"node_modules");
 
 	private String _classNames;
 	private String _rootDir;

@@ -115,13 +115,10 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 
 				<clay:management-toolbar
 					actionItems="<%= fragmentEntryLinkDisplayContext.getActionItemsDropdownItemList() %>"
-					clearResultsURL="<%= currentURL %>"
 					componentId="fragmentEntryLinksManagementToolbar"
 					disabled="<%= fragmentEntry.getUsageCount() <= 0 %>"
-					searchActionURL="<%= currentURL %>"
 					searchContainerId="fragmentEntryLinks"
-					searchFormName="searchFm"
-					showSearch="<%= true %>"
+					showSearch="<%= false %>"
 					sortingOrder="<%= fragmentEntryLinkDisplayContext.getOrderByType() %>"
 					sortingURL="<%= currentURL %>"
 					totalItems="<%= fragmentEntry.getUsageCount() %>"

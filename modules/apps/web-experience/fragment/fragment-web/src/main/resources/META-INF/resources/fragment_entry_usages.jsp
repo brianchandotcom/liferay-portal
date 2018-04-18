@@ -135,6 +135,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 							modelVar="fragmentEntryLink"
 						>
 							<liferay-ui:search-container-column-text
+								cssClass="table-cell-content"
 								name="name"
 								value="<%= fragmentEntryLinkDisplayContext.getFragmentEntryLinkName(fragmentEntryLink) %>"
 							/>

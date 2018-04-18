@@ -119,6 +119,10 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 			return portalTestProperties;
 		}
 
+		if (gitWorkingDirectory == null) {
+			getGitWorkingDirectory();
+		}
+
 		checkRepositoryDir();
 
 		portalTestProperties = JenkinsResultsParserUtil.getProperties(

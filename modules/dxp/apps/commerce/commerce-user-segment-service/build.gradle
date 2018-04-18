@@ -10,6 +10,7 @@ dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "3.0.0-20180316.221954-1"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.function", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.portal.search.api", version: "2.0.0-20180327.164433-1"
 	compileOnly group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "2.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"

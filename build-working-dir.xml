@@ -153,14 +153,13 @@
 
 			<!-- sql/portal-data-release.sql -->
 
-			<try if:set="replace.portal.data.release.sql">
-				<replace-regex
-					replace.regex.file="sql/portal-data-release.sql"
-					replace.regex.pattern="${portal.data.release[@{from.branch.name}]}"
-					replace.regex.replacement="${portal.data.release[@{to.branch.name}]}"
-					replace.regex.tmp.file="${replace.regex.tmp.file}"
-				/>
-			</try>
+			<replace-regex
+				if:set="replace.portal.data.release.sql"
+				replace.regex.file="sql/portal-data-release.sql"
+				replace.regex.pattern="${portal.data.release[@{from.branch.name}]}"
+				replace.regex.replacement="${portal.data.release[@{to.branch.name}]}"
+				replace.regex.tmp.file="${replace.regex.tmp.file}"
+			/>
 
 			<!-- sql/sql.properties -->
 

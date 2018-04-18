@@ -108,11 +108,12 @@ public class CalendarBookingIndexerLocalizedContentTest
 		String prefix1 = "新";
 		String prefix2 = "作";
 
-		Stream<String> stream = Stream.of(word1, word2, prefix1, prefix2);
-
-		stream.forEach(
+		Stream.of(
+			word1, word2, prefix1, prefix2
+		).forEach(
 			keywords -> assertFieldValues(
-				"title", LocaleUtil.JAPAN, titleMap, keywords));
+				"title", LocaleUtil.JAPAN, titleMap, keywords)
+		);
 	}
 
 	@Test
@@ -121,12 +122,12 @@ public class CalendarBookingIndexerLocalizedContentTest
 		String partial1 = "新大阪";
 		String partial2 = "作戦大成功";
 
-		Stream<String> titlesStream = Stream.of(full, partial1, partial2);
-
 		String description = StringUtil.toLowerCase(
 			RandomTestUtil.randomString());
 
-		titlesStream.forEach(
+		Stream.of(
+			full, partial1, partial2
+		).forEach(
 			title -> {
 				addCalendarBooking(
 					new LocalizedValuesMap() {
@@ -146,7 +147,8 @@ public class CalendarBookingIndexerLocalizedContentTest
 							put(LocaleUtil.HUNGARY, description);
 						}
 					});
-			});
+			}
+		);
 
 		Map<String, String> titleMap = new HashMap<String, String>() {
 			{
@@ -157,11 +159,12 @@ public class CalendarBookingIndexerLocalizedContentTest
 		String word1 = "新規";
 		String word2 = "作成";
 
-		Stream<String> keywordsStream = Stream.of(word1, word2);
-
-		keywordsStream.forEach(
+		Stream.of(
+			word1, word2
+		).forEach(
 			keywords -> assertFieldValues(
-				"title", LocaleUtil.JAPAN, titleMap, keywords));
+				"title", LocaleUtil.JAPAN, titleMap, keywords)
+		);
 	}
 
 	protected CalendarBooking addCalendarBooking(

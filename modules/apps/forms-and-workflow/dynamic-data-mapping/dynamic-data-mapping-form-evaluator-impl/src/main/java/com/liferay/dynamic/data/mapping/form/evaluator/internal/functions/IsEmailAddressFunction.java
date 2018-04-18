@@ -39,12 +39,13 @@ public class IsEmailAddressFunction implements DDMExpressionFunction {
 			throw new IllegalArgumentException("One parameter is expected");
 		}
 
-		Stream<String> stream = Stream.of(
-			StringUtil.split(parameters[0].toString(), CharPool.COMMA));
-
-		stream = stream.map(String::trim);
-
-		return stream.allMatch(Validator::isEmailAddress);
+		return Stream.of(
+			StringUtil.split(parameters[0].toString(), CharPool.COMMA)
+		).map(
+			String::trim
+		).allMatch(
+			Validator::isEmailAddress
+		);
 	}
 
 }

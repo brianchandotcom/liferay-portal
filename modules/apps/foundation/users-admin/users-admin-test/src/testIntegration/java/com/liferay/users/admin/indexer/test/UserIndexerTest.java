@@ -43,7 +43,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.junit.Assert;
@@ -421,13 +420,12 @@ public class UserIndexerTest {
 	protected Document getDocument(Document[] documents, long userId) {
 		String userIdString = String.valueOf(userId);
 
-		Stream<Document> stream = Stream.of(documents);
-
-		Optional<Document> optional = stream.filter(
+		return Stream.of(
+			documents
+		).filter(
 			document -> userIdString.equals(document.get("userId"))
-		).findAny();
-
-		return optional.get();
+		).findAny(
+		).get();
 	}
 
 	protected List<String> getScreenNames(List<User> users) {

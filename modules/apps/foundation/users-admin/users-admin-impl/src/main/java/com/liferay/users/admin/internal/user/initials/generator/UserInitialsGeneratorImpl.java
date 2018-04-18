@@ -42,10 +42,9 @@ public class UserInitialsGeneratorImpl implements UserInitialsGenerator {
 
 		String[] userNames = {firstName, middleName, lastName};
 
-		Stream<String> userInitialsFieldNamesStream = Stream.of(
-			_getUserInitialsFieldNames(locale));
-
-		return userInitialsFieldNamesStream.map(
+		return Stream.of(
+			_getUserInitialsFieldNames(locale)
+		).map(
 			key -> userNames[_userNameIndexes.get(key)]
 		).filter(
 			name -> Validator.isNotNull(name)

@@ -108,9 +108,9 @@ public class CalendarIndexerLocalizedContentTest
 		String prefix1 = "新";
 		String prefix2 = "作";
 
-		Stream<String> stream = Stream.of(word1, word2, prefix1, prefix2);
-
-		stream.forEach(
+		Stream.of(
+			word1, word2, prefix1, prefix2
+		).forEach(
 			keywords -> {
 				Document document = calendarSearchFixture.searchOnlyOne(
 					keywords, LocaleUtil.JAPAN);
@@ -120,7 +120,8 @@ public class CalendarIndexerLocalizedContentTest
 
 				FieldValuesAssert.assertFieldValues(
 					descriptionMap, "description", document, keywords);
-			});
+			}
+		);
 	}
 
 	@Test
@@ -129,15 +130,15 @@ public class CalendarIndexerLocalizedContentTest
 		String partial1 = "新大阪";
 		String partial2 = "作戦大成功";
 
-		Stream<String> namesStream = Stream.of(full, partial1, partial2);
-
 		String originalName = StringUtil.toLowerCase(
 			RandomTestUtil.randomString());
 
 		String description = StringUtil.toLowerCase(
 			RandomTestUtil.randomString());
 
-		namesStream.forEach(
+		Stream.of(
+			full, partial1, partial2
+		).forEach(
 			name -> {
 				addCalendar(
 					new LocalizedValuesMap() {
@@ -152,7 +153,8 @@ public class CalendarIndexerLocalizedContentTest
 							put(LocaleUtil.JAPAN, description);
 						}
 					});
-			});
+			}
+		);
 
 		Map<String, String> nameMap = new HashMap<String, String>() {
 			{
@@ -165,16 +167,17 @@ public class CalendarIndexerLocalizedContentTest
 		String word1 = "新規";
 		String word2 = "作成";
 
-		Stream<String> keywordsStream = Stream.of(word1, word2);
-
-		keywordsStream.forEach(
+		Stream.of(
+			word1, word2
+		).forEach(
 			keywords -> {
 				Document document = calendarSearchFixture.searchOnlyOne(
 					keywords, LocaleUtil.JAPAN);
 
 				FieldValuesAssert.assertFieldValues(
 					nameMap, "name", document, keywords);
-			});
+			}
+		);
 	}
 
 	protected Calendar addCalendar(

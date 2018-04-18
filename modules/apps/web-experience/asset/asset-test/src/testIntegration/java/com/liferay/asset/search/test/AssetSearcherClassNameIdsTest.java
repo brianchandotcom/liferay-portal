@@ -163,9 +163,9 @@ public class AssetSearcherClassNameIdsTest {
 	}
 
 	protected long[] getClassNameIds(String... classNames) {
-		Stream<String> stream = Stream.of(classNames);
-
-		return stream.mapToLong(
+		return Stream.of(
+			classNames
+		).mapToLong(
 			PortalUtil::getClassNameId
 		).toArray();
 	}

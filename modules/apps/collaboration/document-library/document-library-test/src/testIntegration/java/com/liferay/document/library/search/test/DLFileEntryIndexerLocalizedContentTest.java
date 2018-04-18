@@ -96,14 +96,15 @@ public class DLFileEntryIndexerLocalizedContentTest {
 		String prefix1 = "新";
 		String prefix2 = "作";
 
-		Stream<String> searchTerms = Stream.of(word1, word2, prefix1, prefix2);
-
-		searchTerms.forEach(
+		Stream.of(
+			word1, word2, prefix1, prefix2
+		).forEach(
 			searchTerm -> {
 				Document document = _search(searchTerm, LocaleUtil.JAPAN);
 
 				assertLocalization(contentStrings, document);
-			});
+			}
+		);
 	}
 
 	@Test
@@ -121,14 +122,15 @@ public class DLFileEntryIndexerLocalizedContentTest {
 		String word1 = "新規";
 		String word2 = "作成";
 
-		Stream<String> searchTerms = Stream.of(word1, word2);
-
-		searchTerms.forEach(
+		Stream.of(
+			word1, word2
+		).forEach(
 			searchTerm -> {
 				Document document = _search(searchTerm, LocaleUtil.JAPAN);
 
 				assertLocalization(contentStrings, document);
-			});
+			}
+		);
 	}
 
 	@Test

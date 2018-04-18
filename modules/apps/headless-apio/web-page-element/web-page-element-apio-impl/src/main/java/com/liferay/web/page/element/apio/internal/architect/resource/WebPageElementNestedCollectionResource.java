@@ -128,7 +128,7 @@ public class WebPageElementNestedCollectionResource
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setScopeGroupId(webSiteId);
 
-		Try<JournalArticle> journalArticleTry = Try.fromFallible(
+		return Try.fromFallible(
 			() -> _journalArticleService.addArticle(
 				webSiteId, webPageElementCreatorForm.getFolder(), 0, 0, null,
 				true, webPageElementCreatorForm.getTitleMap(),
@@ -141,9 +141,8 @@ public class WebPageElementNestedCollectionResource
 				webPageElementCreatorForm.getDisplayDateYear(),
 				webPageElementCreatorForm.getDisplayDateHour(),
 				webPageElementCreatorForm.getDisplayDateMinute(), 0, 0, 0, 0, 0,
-				true, 0, 0, 0, 0, 0, true, true, null, serviceContext));
-
-		return journalArticleTry.getUnchecked();
+				true, 0, 0, 0, 0, 0, true, true, null, serviceContext)
+		).getUnchecked();
 	}
 
 	private void _deleteJournalArticle(Long journalArticleId) {
@@ -201,7 +200,7 @@ public class WebPageElementNestedCollectionResource
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setScopeGroupId(webPageElementUpdaterForm.getGroup());
 
-		Try<JournalArticle> journalArticleTry = Try.fromFallible(
+		return Try.fromFallible(
 			() -> _journalArticleService.updateArticle(
 				webPageElementUpdaterForm.getUser(),
 				webPageElementUpdaterForm.getGroup(),
@@ -210,9 +209,8 @@ public class WebPageElementNestedCollectionResource
 				webPageElementUpdaterForm.getVersion(),
 				webPageElementUpdaterForm.getTitleMap(),
 				webPageElementUpdaterForm.getDescriptionMap(),
-				webPageElementUpdaterForm.getText(), null, serviceContext));
-
-		return journalArticleTry.getUnchecked();
+				webPageElementUpdaterForm.getText(), null, serviceContext)
+		).getUnchecked();
 	}
 
 	@Reference

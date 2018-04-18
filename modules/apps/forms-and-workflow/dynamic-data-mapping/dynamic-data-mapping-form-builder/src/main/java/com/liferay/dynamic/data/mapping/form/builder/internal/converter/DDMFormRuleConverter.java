@@ -152,13 +152,13 @@ public class DDMFormRuleConverter {
 		UnaryOperator<String> quoteOperation = StringUtil::quote;
 		UnaryOperator<String> trimOperation = StringUtil::trim;
 
-		Stream<String> valuesStream = Stream.of(values);
-
-		Stream<String> valueStream = valuesStream.map(
-			trimOperation.andThen(quoteOperation));
-
-		return valueStream.collect(
-			Collectors.joining(StringPool.COMMA_AND_SPACE));
+		return Stream.of(
+			values
+		).map(
+			trimOperation.andThen(quoteOperation)
+		).collect(
+			Collectors.joining(StringPool.COMMA_AND_SPACE)
+		);
 	}
 
 	protected String convertOperands(

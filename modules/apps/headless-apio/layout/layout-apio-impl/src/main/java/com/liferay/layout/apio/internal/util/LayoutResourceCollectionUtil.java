@@ -82,11 +82,11 @@ public class LayoutResourceCollectionUtil {
 	}
 
 	public String getImageURL(Layout layout) {
-		Optional<ServiceContext> serviceContextOptional = Optional.ofNullable(
-			ServiceContextThreadLocal.getServiceContext());
-
-		ServiceContext serviceContext = serviceContextOptional.orElse(
-			new ServiceContext());
+		ServiceContext serviceContext = Optional.ofNullable(
+			ServiceContextThreadLocal.getServiceContext()
+		).orElse(
+			new ServiceContext()
+		);
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 

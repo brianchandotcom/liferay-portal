@@ -67,9 +67,11 @@ public class AllFunction implements DDMExpressionFunction {
 			values = new Object[] {parameters[1]};
 		}
 
-		Stream<Object> stream = Stream.of(values);
-
-		return stream.allMatch(value -> accept(expression, value));
+		return Stream.of(
+			values
+		).allMatch(
+			value -> accept(expression, value)
+		);
 	}
 
 	protected boolean accept(String expression, Object value) {

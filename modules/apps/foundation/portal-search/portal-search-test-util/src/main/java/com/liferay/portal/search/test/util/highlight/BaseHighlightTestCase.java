@@ -143,9 +143,9 @@ public abstract class BaseHighlightTestCase extends BaseIndexingTestCase {
 	}
 
 	protected List<String> toFullHighlights(String... strings) {
-		Stream<String> stream = Stream.of(strings);
-
-		return stream.map(
+		return Stream.of(
+			strings
+		).map(
 			this::toFullHighlight
 		).collect(
 			Collectors.toList()

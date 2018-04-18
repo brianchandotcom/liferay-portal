@@ -217,9 +217,9 @@ public class CSSBuilder implements AutoCloseable {
 	}
 
 	private long _getNewestModifiedTime(String baseDir, String[] fileNames) {
-		Stream<String> stream = Stream.of(fileNames);
-
-		return stream.map(
+		return Stream.of(
+			fileNames
+		).map(
 			fileName -> Paths.get(baseDir, fileName)
 		).map(
 			FileUtil::getLastModifiedTime
@@ -231,9 +231,9 @@ public class CSSBuilder implements AutoCloseable {
 	}
 
 	private long _getOldestModifiedTime(String baseDir, String[] fileNames) {
-		Stream<String> stream = Stream.of(fileNames);
-
-		return stream.map(
+		return Stream.of(
+			fileNames
+		).map(
 			fileName -> Paths.get(baseDir, fileName)
 		).map(
 			FileUtil::getLastModifiedTime

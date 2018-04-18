@@ -289,9 +289,9 @@ public class JournalArticleIndexerLocalizedContentTest {
 		String prefix1 = "新";
 		String prefix2 = "作";
 
-		Stream<String> searchTerms = Stream.of(word1, word2, prefix1, prefix2);
-
-		searchTerms.forEach(
+		Stream.of(
+			word1, word2, prefix1, prefix2
+		).forEach(
 			searchTerm -> {
 				Document document = _search(searchTerm, LocaleUtil.JAPAN);
 
@@ -304,7 +304,8 @@ public class JournalArticleIndexerLocalizedContentTest {
 				FieldValuesAssert.assertFieldValues(
 					localizedTitleStrings, "localized_title", document,
 					searchTerm);
-			});
+			}
+		);
 	}
 
 	@Test
@@ -313,9 +314,9 @@ public class JournalArticleIndexerLocalizedContentTest {
 		String partial1 = "新大阪";
 		String partial2 = "作戦大成功";
 
-		Stream<String> titles = Stream.of(full, partial1, partial2);
-
-		titles.forEach(
+		Stream.of(
+			full, partial1, partial2
+		).forEach(
 			title -> {
 				setTitle(
 					new JournalArticleTitle() {
@@ -337,7 +338,8 @@ public class JournalArticleIndexerLocalizedContentTest {
 					});
 
 				addArticle();
-			});
+			}
+		);
 
 		Map<String, String> titleStrings = new HashMap<String, String>() {
 			{
@@ -348,15 +350,16 @@ public class JournalArticleIndexerLocalizedContentTest {
 		String word1 = "新規";
 		String word2 = "作成";
 
-		Stream<String> searchTerms = Stream.of(word1, word2);
-
-		searchTerms.forEach(
+		Stream.of(
+			word1, word2
+		).forEach(
 			searchTerm -> {
 				Document document = _search(searchTerm, LocaleUtil.JAPAN);
 
 				FieldValuesAssert.assertFieldValues(
 					titleStrings, "title", document, searchTerm);
-			});
+			}
+		);
 	}
 
 	protected JournalArticle addArticle() {

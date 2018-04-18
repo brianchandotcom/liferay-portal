@@ -365,10 +365,9 @@ public class SuggestionsPortletDisplayBuilderTest {
 	}
 
 	protected String formatSimplifiedSuggestedKeywords(String simplifiedQuery) {
-		Stream<String> stream = Stream.of(
-			StringUtil.split(simplifiedQuery, CharPool.SPACE));
-
-		return stream.map(
+		return Stream.of(
+			StringUtil.split(simplifiedQuery, CharPool.SPACE)
+		).map(
 			this::formatKeyword
 		).collect(
 			Collectors.joining(StringPool.SPACE)

@@ -3454,6 +3454,9 @@ information. Make sure to commit in all build services results.
 							</then>
 						</if>
 					</then>
+					<else>
+						<antcall target="setup-sdk" />
+					</else>
 				</if>
 
 				<ant dir="portal-impl" target="format-source-all">

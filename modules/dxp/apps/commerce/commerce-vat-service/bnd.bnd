@@ -1,5 +1,0 @@
-Bundle-Name: Liferay Commerce Vat Service
-Bundle-SymbolicName: com.liferay.commerce.vat.service
-Bundle-Version: 1.0.0
-Liferay-Require-SchemaVersion: 1.0.0
-Liferay-Service: true

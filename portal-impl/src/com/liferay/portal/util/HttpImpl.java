@@ -645,13 +645,27 @@ public class HttpImpl implements Http {
 			return url;
 		}
 
+		url = url.trim();
+
+		// Define protocol as "[a-zA-Z][a-zA-Z0-9]*://"
+
 		int pos = url.indexOf(Http.PROTOCOL_DELIMITER);
 
-		if (pos != -1) {
-			return url.substring(0, pos);
+		if (pos <= 0) {
+			return StringPool.BLANK;
 		}
 
-		return Http.HTTP;
+		if (!_isLetter(url.charAt(0))) {
+			return StringPool.BLANK;
+		}
+
+		for (int i = 1; i < pos; ++i) {
+			if (!_isLetter(url.charAt(i)) && !_isNumber(url.charAt(i))) {
+				return StringPool.BLANK;
+			}
+		}
+
+		return url.substring(0, pos);
 	}
 
 	@Override
@@ -689,13 +703,27 @@ public class HttpImpl implements Http {
 			return false;
 		}
 
+		url = url.trim();
+
+		// Define protocol as "[a-zA-Z][a-zA-Z0-9]*://"
+
 		int pos = url.indexOf(Http.PROTOCOL_DELIMITER);
 
-		if (pos != -1) {
-			return true;
+		if (pos <= 0) {
+			return false;
 		}
 
-		return false;
+		if (!_isLetter(url.charAt(0))) {
+			return false;
+		}
+
+		for (int i = 1; i < pos; ++i) {
+			if (!_isLetter(url.charAt(i)) && !_isNumber(url.charAt(i))) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	@Override
@@ -1105,11 +1133,11 @@ public class HttpImpl implements Http {
 
 		url = url.trim();
 
-		if (url.startsWith(Http.HTTP_WITH_SLASH)) {
-			return url.substring(Http.HTTP_WITH_SLASH.length());
-		}
-		else if (url.startsWith(Http.HTTPS_WITH_SLASH)) {
-			return url.substring(Http.HTTPS_WITH_SLASH.length());
+		String protocol = getProtocol(url);
+
+		if (protocol.length() > 0) {
+			return url.substring(
+				protocol.length() + Http.PROTOCOL_DELIMITER.length());
 		}
 		else {
 			return url;
@@ -1982,15 +2010,24 @@ public class HttpImpl implements Http {
 		}
 	}
 
-	private boolean _isLetterOrNumber(char c) {
-		if (((CharPool.NUMBER_0 <= c) && (c <= CharPool.NUMBER_9)) ||
-			((CharPool.UPPER_CASE_A <= c) && (c <= CharPool.UPPER_CASE_Z)) ||
+	private boolean _isLetter(char c) {
+		if (((CharPool.UPPER_CASE_A <= c) && (c <= CharPool.UPPER_CASE_Z)) ||
 			((CharPool.LOWER_CASE_A <= c) && (c <= CharPool.LOWER_CASE_Z))) {
 
 			return true;
 		}
+		else {
+			return false;
+		}
+	}
 
-		return false;
+	private boolean _isNumber(char c) {
+		if ((CharPool.NUMBER_0 <= c) && (c <= CharPool.NUMBER_9)) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	private String _shortenURL(String url, int currentLength) {

@@ -99,15 +99,14 @@ public class AuthorizeScreenRedirectMessageBodyWriter
 			OutputStream entityStream)
 		throws WebApplicationException {
 
+		String authorizeScreenURL = null;
+
 		HttpServletRequest httpServletRequest =
 			_messageContext.getHttpServletRequest();
 
-		long companyId = _portal.getCompanyId(httpServletRequest);
-
-		String authorizeScreenURL = null;
-
 		try {
-			authorizeScreenURL = getAuthorizeScreenURL(companyId);
+			authorizeScreenURL = getAuthorizeScreenURL(
+				_portal.getCompanyId(httpServletRequest));
 		}
 		catch (ConfigurationException ce) {
 			_log.error("Unable to locate configuration", ce);

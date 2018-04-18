@@ -28,13 +28,9 @@ public class BackgroundTaskServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"com.liferay.portal.background.task.service", "0.0.1", "0.0.2",
-			new UpgradeSchema());
+		registry.register("0.0.1", "0.0.2", new UpgradeSchema());
 
-		registry.register(
-			"com.liferay.portal.background.task.service", "0.0.2", "1.0.0",
-			new UpgradeBackgroundTask());
+		registry.register("0.0.2", "1.0.0", new UpgradeBackgroundTask());
 	}
 
 }

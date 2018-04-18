@@ -30,7 +30,7 @@ public class PortalMessagingUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.portal.messaging", "0.0.0", "1.0.0",
+			"0.0.0", "1.0.0",
 			_configurationUpgradeStepFactory.createUpgradeStep(
 				"com.liferay.portal.messaging.internal.configuration." +
 					"DestinationWorkerConfiguration",

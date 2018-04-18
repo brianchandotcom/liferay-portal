@@ -28,9 +28,7 @@ public class AssetCategoryPropertyServiceUpgrade
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"com.liferay.asset.category.property.service", "0.0.1", "1.0.0",
-			new UpgradeClassNames());
+		registry.register("0.0.1", "1.0.0", new UpgradeClassNames());
 	}
 
 }

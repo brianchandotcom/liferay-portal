@@ -32,7 +32,7 @@ public class PortalRemoteSoapExtenderImplUpgrade
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.portal.remote.soap.extender.impl", "0.0.0", "1.0.0",
+			"0.0.0", "1.0.0",
 			_configurationUpgradeStepFactory.createUpgradeStep(
 				"com.liferay.portal.remote.soap.extender.configuration." +
 					"SoapExtenderConfiguration",

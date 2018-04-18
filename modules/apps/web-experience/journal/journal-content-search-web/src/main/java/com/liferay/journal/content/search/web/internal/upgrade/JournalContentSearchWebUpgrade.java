@@ -29,12 +29,10 @@ public class JournalContentSearchWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"com.liferay.journal.content.search.web", "0.0.0", "1.0.1",
-			new DummyUpgradeStep());
+		registry.register("0.0.0", "1.0.1", new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.journal.content.search.web", "0.0.1", "1.0.0",
+			"0.0.1", "1.0.0",
 			new BaseUpgradePortletId() {
 
 				@Override
@@ -50,9 +48,7 @@ public class JournalContentSearchWebUpgrade implements UpgradeStepRegistrator {
 
 			});
 
-		registry.register(
-			"com.liferay.journal.content.search.web", "1.0.0", "1.0.1",
-			new DummyUpgradeStep());
+		registry.register("1.0.0", "1.0.1", new DummyUpgradeStep());
 	}
 
 }

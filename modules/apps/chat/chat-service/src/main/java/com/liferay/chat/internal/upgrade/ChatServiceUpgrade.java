@@ -30,12 +30,10 @@ public class ChatServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"com.liferay.chat.service", "0.0.1", "1.0.0",
-			new DummyUpgradeStep());
+		registry.register("0.0.1", "1.0.0", new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.chat.service", "1.0.0", "1.0.1",
+			"1.0.0", "1.0.1",
 			_configurationUpgradeStepFactory.createUpgradeStep(
 				"com.liferay.chat.configuration.ChatGroupServiceConfiguration",
 				ChatGroupServiceConfiguration.class.getName()));

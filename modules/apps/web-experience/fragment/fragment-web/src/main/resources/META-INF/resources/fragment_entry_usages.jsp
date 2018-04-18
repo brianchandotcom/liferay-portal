@@ -126,22 +126,10 @@ renderResponse.setTitle(titleSB.toString());
 						value="<%= fragmentEntryLinkDisplayContext.getFragmentEntryLinkName(fragmentEntryLink) %>"
 					/>
 
-					<%
-					String propagationLabelCssClass = "label";
-
-					if (fragmentEntryLink.isLatestFragmentEntryUsed()) {
-						propagationLabelCssClass += " label-success";
-					}
-					else {
-						propagationLabelCssClass += " label-warning";
-					}
-					%>
-
 					<liferay-ui:search-container-column-text
 						name="propagation"
-						translate="<%= true %>"
 					>
-						<span class="<%= propagationLabelCssClass %>">
+						<span class="label <%= fragmentEntryLink.isLatestFragmentEntryUsed() ? "label-success" : "label-warning" %>">
 							<liferay-ui:message key='<%= fragmentEntryLink.isLatestFragmentEntryUsed() ? "propagated" : "not-propagated" %>' />
 						</span>
 					</liferay-ui:search-container-column-text>
@@ -149,7 +137,7 @@ renderResponse.setTitle(titleSB.toString());
 					<liferay-ui:search-container-column-text
 						name="type"
 						translate="<%= true %>"
-						value='<%= fragmentEntryLink.getClassNameId() == PortalUtil.getClassNameId(Layout.class) ? "page" : "page-template" %>'
+						value='<%= (fragmentEntryLink.getClassNameId() == PortalUtil.getClassNameId(Layout.class)) ? "page" : "page-template" %>'
 					/>
 
 					<liferay-ui:search-container-column-date

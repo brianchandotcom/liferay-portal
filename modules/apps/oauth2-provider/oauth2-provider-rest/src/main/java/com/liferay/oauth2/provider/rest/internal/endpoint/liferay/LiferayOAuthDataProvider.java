@@ -121,7 +121,8 @@ public class LiferayOAuthDataProvider
 	}
 
 	@Override
-	public ServerAccessToken createAccessToken(AccessTokenRegistration accessTokenRegistration)
+	public ServerAccessToken createAccessToken(
+			AccessTokenRegistration accessTokenRegistration)
 		throws OAuthServiceException {
 
 		List<String> approvedScope = new ArrayList<>(
@@ -153,7 +154,8 @@ public class LiferayOAuthDataProvider
 			super.createCodeGrant(authorizationCodeRegistration);
 
 		_codeGrantsPortalCache.put(
-			serverAuthorizationCodeGrant.getCode(), serverAuthorizationCodeGrant,
+			serverAuthorizationCodeGrant.getCode(),
+			serverAuthorizationCodeGrant,
 			Math.toIntExact(serverAuthorizationCodeGrant.getExpiresIn()));
 
 		return serverAuthorizationCodeGrant;

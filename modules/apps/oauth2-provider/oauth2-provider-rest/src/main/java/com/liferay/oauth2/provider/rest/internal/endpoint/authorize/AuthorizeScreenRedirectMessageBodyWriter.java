@@ -70,7 +70,7 @@ public class AuthorizeScreenRedirectMessageBodyWriter
 
 	@Override
 	public long getSize(
-		OAuthAuthorizationData oAuthAuthorizationData, Class<?> type,
+		OAuthAuthorizationData oAuthAuthorizationData, Class<?> clazz,
 		Type genericType, Annotation[] annotations, MediaType mediaType) {
 
 		return -1L;
@@ -78,10 +78,10 @@ public class AuthorizeScreenRedirectMessageBodyWriter
 
 	@Override
 	public boolean isWriteable(
-		Class<?> type, Type genericType, Annotation[] annotations,
+		Class<?> clazz, Type genericType, Annotation[] annotations,
 		MediaType mediaType) {
 
-		if (type.isAssignableFrom(OAuthAuthorizationData.class) &&
+		if (clazz.isAssignableFrom(OAuthAuthorizationData.class) &&
 			StringUtil.equalsIgnoreCase(mediaType.getType(), "text") &&
 			StringUtil.equalsIgnoreCase(mediaType.getSubtype(), "html")) {
 
@@ -93,7 +93,7 @@ public class AuthorizeScreenRedirectMessageBodyWriter
 
 	@Override
 	public void writeTo(
-			OAuthAuthorizationData oAuthAuthorizationData, Class<?> type,
+			OAuthAuthorizationData oAuthAuthorizationData, Class<?> clazz,
 			Type genericType, Annotation[] annotations, MediaType mediaType,
 			MultivaluedMap<String, Object> httpHeaders,
 			OutputStream entityStream)

@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
-import com.liferay.user.associated.data.display.UADEntityDisplay;
+import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.web.internal.display.UADApplicationSummaryDisplay;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
@@ -113,11 +113,11 @@ public class UADApplicationSummaryHelper {
 	public List<UADAnonymizer> getApplicationUADAnonymizers(
 		String applicationName) {
 
-		Stream<UADEntityDisplay> uadEntityDisplayStream =
-			getApplicationUADEntityDisplayStream(applicationName);
+		Stream<UADDisplay> uadDisplayStream = getApplicationUADDisplayStream(
+			applicationName);
 
-		return uadEntityDisplayStream.map(
-			UADEntityDisplay::getKey
+		return uadDisplayStream.map(
+			UADDisplay::getKey
 		).map(
 			key -> _uadRegistry.getUADAnonymizer(key)
 		).collect(
@@ -125,15 +125,15 @@ public class UADApplicationSummaryHelper {
 		);
 	}
 
-	public Stream<UADEntityDisplay> getApplicationUADEntityDisplayStream(
+	public Stream<UADDisplay> getApplicationUADDisplayStream(
 		String applicationName) {
 
-		Stream<UADEntityDisplay> uadEntityDisplayStream =
-			_uadRegistry.getUADEntityDisplayStream();
+		Stream<UADDisplay> uadDisplayStream =
+			_uadRegistry.getUADDisplayStream();
 
-		return uadEntityDisplayStream.filter(
-			uadEntityDisplay -> applicationName.equals(
-				uadEntityDisplay.getApplicationName()));
+		return uadDisplayStream.filter(
+			uadDisplay -> applicationName.equals(
+				uadDisplay.getApplicationName()));
 	}
 
 	public Comparator<UADApplicationSummaryDisplay> getComparator(
@@ -155,11 +155,11 @@ public class UADApplicationSummaryHelper {
 	}
 
 	public String getDefaultUADRegistryKey(String applicationName) {
-		Stream<UADEntityDisplay> uadEntityDisplayStream =
-			getApplicationUADEntityDisplayStream(applicationName);
+		Stream<UADDisplay> uadDisplayStream = getApplicationUADDisplayStream(
+			applicationName);
 
-		return uadEntityDisplayStream.map(
-			UADEntityDisplay::getKey
+		return uadDisplayStream.map(
+			UADDisplay::getKey
 		).findFirst(
 		).get();
 	}
@@ -178,10 +178,10 @@ public class UADApplicationSummaryHelper {
 	}
 
 	public int getReviewableUADEntitiesCount(
-		Stream<UADEntityDisplay> uadEntityDisplayStream, long userId) {
+		Stream<UADDisplay> uadDisplayStream, long userId) {
 
-		return uadEntityDisplayStream.map(
-			uadEntityDisplay -> uadEntityDisplay.getKey()
+		return uadDisplayStream.map(
+			uadDisplay -> uadDisplay.getKey()
 		).map(
 			key -> _uadRegistry.getUADAggregator(key)
 		).mapToInt(
@@ -191,7 +191,7 @@ public class UADApplicationSummaryHelper {
 
 	public int getTotalReviewableUADEntitiesCount(long userId) {
 		return getReviewableUADEntitiesCount(
-			_uadRegistry.getUADEntityDisplayStream(), userId);
+			_uadRegistry.getUADDisplayStream(), userId);
 	}
 
 	public UADApplicationSummaryDisplay getUADApplicationSummaryDisplay(
@@ -201,7 +201,7 @@ public class UADApplicationSummaryHelper {
 			new UADApplicationSummaryDisplay();
 
 		int count = getReviewableUADEntitiesCount(
-			getApplicationUADEntityDisplayStream(applicationName), userId);
+			getApplicationUADDisplayStream(applicationName), userId);
 
 		uadApplicationSummaryDisplay.setCount(count);
 
@@ -219,11 +219,11 @@ public class UADApplicationSummaryHelper {
 		getUADApplicationSummaryDisplayStream(
 			PortletRequest portletRequest, long userId) {
 
-		Stream<UADEntityDisplay> uadEntityDisplayStream =
-			_uadRegistry.getUADEntityDisplayStream();
+		Stream<UADDisplay> uadDisplayStream =
+			_uadRegistry.getUADDisplayStream();
 
-		return uadEntityDisplayStream.map(
-			UADEntityDisplay::getApplicationName
+		return uadDisplayStream.map(
+			UADDisplay::getApplicationName
 		).distinct(
 		).sorted(
 		).map(

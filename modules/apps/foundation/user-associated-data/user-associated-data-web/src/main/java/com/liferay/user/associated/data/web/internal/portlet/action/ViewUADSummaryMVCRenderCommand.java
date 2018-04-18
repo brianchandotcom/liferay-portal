@@ -78,8 +78,7 @@ public class ViewUADSummaryMVCRenderCommand implements MVCRenderCommand {
 
 		int reviewableUADEntitiesCount =
 			_uadApplicationSummaryHelper.getReviewableUADEntitiesCount(
-				_uadRegistry.getUADEntityDisplayStream(),
-				selectedUser.getUserId());
+				_uadRegistry.getUADDisplayStream(), selectedUser.getUserId());
 
 		if (reviewableUADEntitiesCount > 0) {
 			return 3;

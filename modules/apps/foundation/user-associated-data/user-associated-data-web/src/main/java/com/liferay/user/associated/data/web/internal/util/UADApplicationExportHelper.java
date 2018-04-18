@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.aggregator.UADAggregator;
-import com.liferay.user.associated.data.display.UADEntityDisplay;
+import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.web.internal.display.UADApplicationExportDisplay;
 import com.liferay.user.associated.data.web.internal.export.background.task.UADExportBackgroundTaskManagerUtil;
@@ -96,14 +96,14 @@ public class UADApplicationExportHelper {
 	public List<UADExporter> getApplicationUADExporters(
 		String applicationName) {
 
-		Stream<UADEntityDisplay> uadEntityDisplayStream =
-			_uadRegistry.getUADEntityDisplayStream();
+		Stream<UADDisplay> uadDisplayStream =
+			_uadRegistry.getUADDisplayStream();
 
-		return uadEntityDisplayStream.filter(
-			uadEntityDisplay -> applicationName.equals(
-				uadEntityDisplay.getApplicationName())
+		return uadDisplayStream.filter(
+			uadDisplay -> applicationName.equals(
+				uadDisplay.getApplicationName())
 		).map(
-			uadEntityDisplay -> uadEntityDisplay.getKey()
+			uadDisplay -> uadDisplay.getKey()
 		).map(
 			key -> _uadRegistry.getUADExporter(key)
 		).filter(

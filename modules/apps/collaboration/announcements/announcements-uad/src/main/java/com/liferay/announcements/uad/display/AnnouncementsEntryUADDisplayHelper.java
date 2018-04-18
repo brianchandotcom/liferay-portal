@@ -33,10 +33,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Noah Sherrill
  */
-@Component(
-	immediate = true, service = AnnouncementsEntryUADEntityDisplayHelper.class
-)
-public class AnnouncementsEntryUADEntityDisplayHelper {
+@Component(immediate = true, service = AnnouncementsEntryUADDisplayHelper.class)
+public class AnnouncementsEntryUADDisplayHelper {
 
 	public String getAnnouncementsEntryEditURL(
 			AnnouncementsEntry announcementsEntry,

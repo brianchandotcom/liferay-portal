@@ -18,7 +18,7 @@ import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.user.associated.data.display.UADEntityDisplay;
+import com.liferay.user.associated.data.display.UADDisplay;
 
 import java.util.Map;
 
@@ -31,17 +31,17 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_ENTRY,
-	service = UADEntityDisplay.class
+	service = UADDisplay.class
 )
-public class AnnouncementsEntryUADEntityDisplay
-	implements UADEntityDisplay<AnnouncementsEntry> {
+public class AnnouncementsEntryUADDisplay
+	implements UADDisplay<AnnouncementsEntry> {
 
 	public String getApplicationName() {
 		return AnnouncementsUADConstants.APPLICATION_NAME;
 	}
 
 	public String[] getDisplayFieldNames() {
-		return _announcementsEntryUADEntityDisplayHelper.getDisplayFieldNames();
+		return _announcementsEntryUADDisplayHelper.getDisplayFieldNames();
 	}
 
 	public String getEditURL(
@@ -50,10 +50,8 @@ public class AnnouncementsEntryUADEntityDisplay
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		return _announcementsEntryUADEntityDisplayHelper.
-			getAnnouncementsEntryEditURL(
-				announcementsEntry, liferayPortletRequest,
-				liferayPortletResponse);
+		return _announcementsEntryUADDisplayHelper.getAnnouncementsEntryEditURL(
+			announcementsEntry, liferayPortletRequest, liferayPortletResponse);
 	}
 
 	public String getKey() {
@@ -64,7 +62,7 @@ public class AnnouncementsEntryUADEntityDisplay
 	public Map<String, Object> getNonanonymizableFieldValues(
 		AnnouncementsEntry announcementsEntry) {
 
-		return _announcementsEntryUADEntityDisplayHelper.
+		return _announcementsEntryUADDisplayHelper.
 			getUADEntityNonanonymizableFieldValues(announcementsEntry);
 	}
 
@@ -77,7 +75,7 @@ public class AnnouncementsEntryUADEntityDisplay
 	}
 
 	@Reference
-	private AnnouncementsEntryUADEntityDisplayHelper
-		_announcementsEntryUADEntityDisplayHelper;
+	private AnnouncementsEntryUADDisplayHelper
+		_announcementsEntryUADDisplayHelper;
 
 }

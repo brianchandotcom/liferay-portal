@@ -70,4 +70,12 @@ DLFileEntryType fileEntryType = (DLFileEntryType)row.getObject();
 			url="<%= deleteURL %>"
 		/>
 	</c:if>
+
+	<c:if test="<%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) %>">
+		<liferay-export-import-changeset:publish-entity-menu-item
+			className="<%= DLFileEntryType.class.getName() %>"
+			groupId="<%= fileEntryType.getGroupId() %>"
+			uuid="<%= fileEntryType.getUuid() %>"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>

@@ -60,6 +60,8 @@ public interface FragmentEntry extends FragmentEntryModel, PersistedModel {
 	public java.lang.String getImagePreviewURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay);
 
+	public int getUsageCount();
+
 	public void populateZipWriter(
 		com.liferay.portal.kernel.zip.ZipWriter zipWriter, java.lang.String path)
 		throws java.lang.Exception;

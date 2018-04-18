@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.model.impl;
 
+import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.util.FragmentEntryRenderUtil;
 import com.liferay.html.preview.model.HtmlPreviewEntry;
 import com.liferay.html.preview.service.HtmlPreviewEntryLocalServiceUtil;
@@ -48,6 +49,12 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 		}
 
 		return htmlPreviewEntry.getImagePreviewURL(themeDisplay);
+	}
+
+	@Override
+	public int getUsageCount() {
+		return FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinksCount(
+			getGroupId(), getFragmentEntryId());
 	}
 
 	@Override

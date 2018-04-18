@@ -84,7 +84,8 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 			{ "html", Types.VARCHAR },
 			{ "js", Types.VARCHAR },
 			{ "editableValues", Types.VARCHAR },
-			{ "position", Types.INTEGER }
+			{ "position", Types.INTEGER },
+			{ "lastPropagationDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -106,9 +107,10 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 		TABLE_COLUMNS_MAP.put("js", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("editableValues", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("position", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("lastPropagationDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table FragmentEntryLink (uuid_ VARCHAR(75) null,fragmentEntryLinkId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,originalFragmentEntryLinkId LONG,fragmentEntryId LONG,classNameId LONG,classPK LONG,css STRING null,html STRING null,js STRING null,editableValues STRING null,position INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table FragmentEntryLink (uuid_ VARCHAR(75) null,fragmentEntryLinkId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,originalFragmentEntryLinkId LONG,fragmentEntryId LONG,classNameId LONG,classPK LONG,css STRING null,html STRING null,js STRING null,editableValues STRING null,position INTEGER,lastPropagationDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table FragmentEntryLink";
 	public static final String ORDER_BY_JPQL = " ORDER BY fragmentEntryLink.classNameId ASC, fragmentEntryLink.classPK ASC, fragmentEntryLink.position ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY FragmentEntryLink.classNameId ASC, FragmentEntryLink.classPK ASC, FragmentEntryLink.position ASC";
@@ -189,6 +191,7 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 		attributes.put("js", getJs());
 		attributes.put("editableValues", getEditableValues());
 		attributes.put("position", getPosition());
+		attributes.put("lastPropagationDate", getLastPropagationDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -299,6 +302,12 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 
 		if (position != null) {
 			setPosition(position);
+		}
+
+		Date lastPropagationDate = (Date)attributes.get("lastPropagationDate");
+
+		if (lastPropagationDate != null) {
+			setLastPropagationDate(lastPropagationDate);
 		}
 	}
 
@@ -615,6 +624,16 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 	}
 
 	@Override
+	public Date getLastPropagationDate() {
+		return _lastPropagationDate;
+	}
+
+	@Override
+	public void setLastPropagationDate(Date lastPropagationDate) {
+		_lastPropagationDate = lastPropagationDate;
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				FragmentEntryLink.class.getName()), getClassNameId());
@@ -668,6 +687,7 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 		fragmentEntryLinkImpl.setJs(getJs());
 		fragmentEntryLinkImpl.setEditableValues(getEditableValues());
 		fragmentEntryLinkImpl.setPosition(getPosition());
+		fragmentEntryLinkImpl.setLastPropagationDate(getLastPropagationDate());
 
 		fragmentEntryLinkImpl.resetOriginalValues();
 
@@ -879,12 +899,21 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 
 		fragmentEntryLinkCacheModel.position = getPosition();
 
+		Date lastPropagationDate = getLastPropagationDate();
+
+		if (lastPropagationDate != null) {
+			fragmentEntryLinkCacheModel.lastPropagationDate = lastPropagationDate.getTime();
+		}
+		else {
+			fragmentEntryLinkCacheModel.lastPropagationDate = Long.MIN_VALUE;
+		}
+
 		return fragmentEntryLinkCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -920,6 +949,8 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 		sb.append(getEditableValues());
 		sb.append(", position=");
 		sb.append(getPosition());
+		sb.append(", lastPropagationDate=");
+		sb.append(getLastPropagationDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -927,7 +958,7 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(58);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.fragment.model.FragmentEntryLink");
@@ -1001,6 +1032,10 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 			"<column><column-name>position</column-name><column-value><![CDATA[");
 		sb.append(getPosition());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lastPropagationDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPropagationDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1040,6 +1075,7 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 	private String _js;
 	private String _editableValues;
 	private int _position;
+	private Date _lastPropagationDate;
 	private long _columnBitmask;
 	private FragmentEntryLink _escapedModel;
 }

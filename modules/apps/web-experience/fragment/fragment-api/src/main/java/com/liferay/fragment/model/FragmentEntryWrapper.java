@@ -402,6 +402,11 @@ public class FragmentEntryWrapper implements FragmentEntry,
 		return _fragmentEntry.getStatusDate();
 	}
 
+	@Override
+	public int getUsageCount() {
+		return _fragmentEntry.getUsageCount();
+	}
+
 	/**
 	* Returns the user ID of this fragment entry.
 	*

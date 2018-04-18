@@ -355,6 +355,20 @@ public interface FragmentEntryLinkModel extends AttachedModel,
 	 */
 	public void setPosition(int position);
 
+	/**
+	 * Returns the last propagation date of this fragment entry link.
+	 *
+	 * @return the last propagation date of this fragment entry link
+	 */
+	public Date getLastPropagationDate();
+
+	/**
+	 * Sets the last propagation date of this fragment entry link.
+	 *
+	 * @param lastPropagationDate the last propagation date of this fragment entry link
+	 */
+	public void setLastPropagationDate(Date lastPropagationDate);
+
 	@Override
 	public boolean isNew();
 

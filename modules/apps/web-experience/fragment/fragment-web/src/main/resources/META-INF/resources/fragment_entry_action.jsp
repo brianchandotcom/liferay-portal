@@ -91,6 +91,20 @@ FragmentEntry fragmentEntry = (FragmentEntry)row.getObject();
 		url="<%= exportFragmentEntriesURL %>"
 	/>
 
+	<c:if test="<%= fragmentEntry.getUsageCount() > 0 %>">
+		<portlet:renderURL var="viewFragmentEntryUsagesURL">
+			<portlet:param name="mvcRenderCommandName" value="/fragment/view_fragment_entry_usages" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentEntry.getFragmentCollectionId()) %>" />
+			<portlet:param name="fragmentEntryId" value="<%= String.valueOf(fragmentEntry.getFragmentEntryId()) %>" />
+		</portlet:renderURL>
+
+		<liferay-ui:icon
+			message="view-usages"
+			url="<%= viewFragmentEntryUsagesURL %>"
+		/>
+	</c:if>
+
 	<c:if test="<%= FragmentEntryPermission.contains(permissionChecker, fragmentEntry, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="/fragment/delete_fragment_entries" var="deleteFragmentEntryURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />

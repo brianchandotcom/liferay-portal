@@ -71,5 +71,6 @@
 			<hint name="max-length">4000</hint>
 		</field>
 		<field name="position" type="int" />
+		<field name="lastPropagationDate" type="Date" />
 	</model>
 </model-hints>

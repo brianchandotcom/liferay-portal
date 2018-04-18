@@ -156,6 +156,8 @@ public class FragmentEntryLinkPersistenceTest {
 
 		newFragmentEntryLink.setPosition(RandomTestUtil.nextInt());
 
+		newFragmentEntryLink.setLastPropagationDate(RandomTestUtil.nextDate());
+
 		_fragmentEntryLinks.add(_persistence.update(newFragmentEntryLink));
 
 		FragmentEntryLink existingFragmentEntryLink = _persistence.findByPrimaryKey(newFragmentEntryLink.getPrimaryKey());
@@ -196,6 +198,10 @@ public class FragmentEntryLinkPersistenceTest {
 			newFragmentEntryLink.getEditableValues());
 		Assert.assertEquals(existingFragmentEntryLink.getPosition(),
 			newFragmentEntryLink.getPosition());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingFragmentEntryLink.getLastPropagationDate()),
+			Time.getShortTimestamp(
+				newFragmentEntryLink.getLastPropagationDate()));
 	}
 
 	@Test
@@ -241,6 +247,14 @@ public class FragmentEntryLinkPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_F_C() throws Exception {
+		_persistence.countByG_F_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByG_F_C(0L, 0L, 0L);
+	}
+
+	@Test
 	public void testCountByG_C_C() throws Exception {
 		_persistence.countByG_C_C(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
@@ -277,7 +291,7 @@ public class FragmentEntryLinkPersistenceTest {
 			"modifiedDate", true, "originalFragmentEntryLinkId", true,
 			"fragmentEntryId", true, "classNameId", true, "classPK", true,
 			"css", true, "html", true, "js", true, "editableValues", true,
-			"position", true);
+			"position", true, "lastPropagationDate", true);
 	}
 
 	@Test
@@ -527,6 +541,8 @@ public class FragmentEntryLinkPersistenceTest {
 		fragmentEntryLink.setEditableValues(RandomTestUtil.randomString());
 
 		fragmentEntryLink.setPosition(RandomTestUtil.nextInt());
+
+		fragmentEntryLink.setLastPropagationDate(RandomTestUtil.nextDate());
 
 		_fragmentEntryLinks.add(_persistence.update(fragmentEntryLink));
 

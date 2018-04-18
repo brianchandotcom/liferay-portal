@@ -154,6 +154,7 @@
 		<column name="js" type="String" />
 		<column name="editableValues" type="String" />
 		<column name="position" type="int" />
+		<column name="lastPropagationDate" type="Date" />
 
 		<!-- Order -->
 
@@ -171,6 +172,11 @@
 		<finder name="G_F" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="fragmentEntryId" />
+		</finder>
+		<finder name="G_F_C" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="fragmentEntryId" />
+			<finder-column name="classNameId" />
 		</finder>
 		<finder name="G_C_C" return-type="Collection">
 			<finder-column name="groupId" />

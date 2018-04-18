@@ -282,8 +282,25 @@ public class FragmentEntryLinkLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.fragment.model.FragmentEntryLink> getFragmentEntryLinks(
+		long groupId, long fragmentEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentEntryLink> orderByComparator) {
+		return getService()
+				   .getFragmentEntryLinks(groupId, fragmentEntryId, start, end,
+			orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.fragment.model.FragmentEntryLink> getFragmentEntryLinks(
 		long groupId, long classNameId, long classPK) {
 		return getService().getFragmentEntryLinks(groupId, classNameId, classPK);
+	}
+
+	public static java.util.List<com.liferay.fragment.model.FragmentEntryLink> getFragmentEntryLinks(
+		long groupId, long fragmentEntryId, long classNameId, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentEntryLink> orderByComparator) {
+		return getService()
+				   .getFragmentEntryLinks(groupId, fragmentEntryId,
+			classNameId, start, end, orderByComparator);
 	}
 
 	/**
@@ -324,6 +341,18 @@ public class FragmentEntryLinkLocalServiceUtil {
 	*/
 	public static int getFragmentEntryLinksCount() {
 		return getService().getFragmentEntryLinksCount();
+	}
+
+	public static int getFragmentEntryLinksCount(long groupId,
+		long fragmentEntryId) {
+		return getService().getFragmentEntryLinksCount(groupId, fragmentEntryId);
+	}
+
+	public static int getFragmentEntryLinksCount(long groupId,
+		long fragmentEntryId, long classNameId) {
+		return getService()
+				   .getFragmentEntryLinksCount(groupId, fragmentEntryId,
+			classNameId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {

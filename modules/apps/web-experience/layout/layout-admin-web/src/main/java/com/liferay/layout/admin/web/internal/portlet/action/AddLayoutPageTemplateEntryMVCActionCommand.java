@@ -60,11 +60,11 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 		long layoutPageTemplateCollectionId = ParamUtil.getLong(
 			actionRequest, "layoutPageTemplateCollectionId");
 
+		String name = ParamUtil.getString(actionRequest, "name");
+
 		int type = ParamUtil.getInteger(
 			actionRequest, "type",
 			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
-
-		String name = ParamUtil.getString(actionRequest, "name");
 
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(

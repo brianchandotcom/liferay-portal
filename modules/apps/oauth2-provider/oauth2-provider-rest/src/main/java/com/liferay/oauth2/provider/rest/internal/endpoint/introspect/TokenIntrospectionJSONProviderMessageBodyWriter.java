@@ -57,7 +57,7 @@ public class TokenIntrospectionJSONProviderMessageBodyWriter
 
 	@Override
 	public long getSize(
-		TokenIntrospection tokenIntrospection, Class<?> type, Type genericType,
+		TokenIntrospection tokenIntrospection, Class<?> clazz, Type genericType,
 		Annotation[] annotations, MediaType mediaType) {
 
 		return -1;
@@ -65,15 +65,15 @@ public class TokenIntrospectionJSONProviderMessageBodyWriter
 
 	@Override
 	public boolean isWriteable(
-		Class<?> type, Type genericType, Annotation[] annotations,
+		Class<?> clazz, Type genericType, Annotation[] annotations,
 		MediaType mediaType) {
 
-		return TokenIntrospection.class.isAssignableFrom(type);
+		return TokenIntrospection.class.isAssignableFrom(clazz);
 	}
 
 	@Override
 	public void writeTo(
-			TokenIntrospection tokenIntrospection, Class<?> type,
+			TokenIntrospection tokenIntrospection, Class<?> clazz,
 			Type genericType, Annotation[] annotations, MediaType mediaType,
 			MultivaluedMap<String, Object> httpHeaders,
 			OutputStream entityStream)

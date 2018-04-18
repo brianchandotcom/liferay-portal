@@ -75,6 +75,10 @@ $wrapperBorderColor: #FF8F39;
 			margin: 0 0.5em;
 		}
 	}
+
+	lfr-editable > div[data-lfr-editable-id] {
+		display: inline;
+	}
 }
 
 .fragment-entry-link-wrapper:focus,

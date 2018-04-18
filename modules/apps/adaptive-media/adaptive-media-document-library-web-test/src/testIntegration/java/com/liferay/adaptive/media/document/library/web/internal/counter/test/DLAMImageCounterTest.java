@@ -216,10 +216,7 @@ public class DLAMImageCounterTest {
 	}
 
 	private byte[] _getImageBytes() throws Exception {
-		return FileUtil.getBytes(
-			DLAMImageCounterTest.class,
-			"/com/liferay/adaptive/media/document/library/web/internal" +
-				"/counter/test/dependencies/image.jpg");
+		return FileUtil.getBytes(DLAMImageCounterTest.class, "image.jpg");
 	}
 
 	@Inject(

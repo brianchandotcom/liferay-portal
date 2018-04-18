@@ -290,10 +290,7 @@ public class BlogsAMImageOptimizerTest {
 	}
 
 	private byte[] _getImageBytes() throws Exception {
-		return FileUtil.getBytes(
-			BlogsAMImageOptimizerTest.class,
-			"/com/liferay/adaptive/media/blogs/web/internal/optimizer/test" +
-				"/dependencies/image.jpg");
+		return FileUtil.getBytes(BlogsAMImageOptimizerTest.class, "image.jpg");
 	}
 
 	@Inject

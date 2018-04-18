@@ -356,10 +356,7 @@ public class AMThumbnailsOSGiCommandsTest {
 	}
 
 	private byte[] _getFileContents(String fileName) throws Exception {
-		return FileUtil.getBytes(
-			AMThumbnailsOSGiCommandsTest.class,
-			"/com/liferay/adaptive/media/document/library/thumbnails/internal" +
-				"/osgi/commands/test/dependencies/" + fileName);
+		return FileUtil.getBytes(AMThumbnailsOSGiCommandsTest.class, fileName);
 	}
 
 	private int _getThumbnailCount() throws Exception {

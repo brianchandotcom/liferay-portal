@@ -161,10 +161,7 @@ public class BlogsAMImageCounterTest {
 		"{\"height\": 0, \"width\": 00, \"x\": 0, \"y\": 0}";
 
 	private byte[] _getImageBytes() throws Exception {
-		return FileUtil.getBytes(
-			BlogsAMImageCounterTest.class,
-			"/com/liferay/adaptive/media/blogs/web/internal/counter/test" +
-				"/dependencies/image.jpg");
+		return FileUtil.getBytes(BlogsAMImageCounterTest.class, "image.jpg");
 	}
 
 	@Inject(filter = "adaptive.media.key=blogs", type = AMImageCounter.class)

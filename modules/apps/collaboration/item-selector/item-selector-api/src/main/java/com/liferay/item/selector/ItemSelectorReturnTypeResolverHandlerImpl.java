@@ -33,8 +33,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Roberto Díaz
  */
 @Component(service = ItemSelectorReturnTypeResolverHandler.class)
-public class ItemSelectorReturnTypeResolverHandlerImpl {
+public class ItemSelectorReturnTypeResolverHandlerImpl
+	implements ItemSelectorReturnTypeResolverHandler {
 
+	@Override
 	public ItemSelectorReturnTypeResolver getItemSelectorReturnTypeResolver(
 		Class<? extends ItemSelectorReturnType> itemSelectorReturnTypeClass,
 		Class<?> modelClass) {
@@ -43,6 +45,7 @@ public class ItemSelectorReturnTypeResolverHandlerImpl {
 			_getKey(itemSelectorReturnTypeClass, modelClass));
 	}
 
+	@Override
 	public ItemSelectorReturnTypeResolver getItemSelectorReturnTypeResolver(
 		ItemSelectorCriterion itemSelectorCriterion,
 		ItemSelectorView itemSelectorView, Class<?> modelClass) {
@@ -63,6 +66,7 @@ public class ItemSelectorReturnTypeResolverHandlerImpl {
 			itemSelectorReturnType.getClass(), modelClass);
 	}
 
+	@Override
 	public ItemSelectorReturnTypeResolver getItemSelectorReturnTypeResolver(
 		String itemSelectorReturnTypeClassName, String modelClassName) {
 

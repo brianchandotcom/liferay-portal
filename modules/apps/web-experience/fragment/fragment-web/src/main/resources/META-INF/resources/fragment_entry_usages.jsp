@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
 FragmentEntryLinkDisplayContext fragmentEntryLinkDisplayContext = new FragmentEntryLinkDisplayContext(renderRequest, renderResponse);
 
 FragmentEntry fragmentEntry = fragmentEntryLinkDisplayContext.getFragmentEntry();
@@ -29,9 +31,8 @@ titleSB.append(StringPool.OPEN_PARENTHESIS);
 titleSB.append(fragmentEntry.getName());
 titleSB.append(StringPool.CLOSE_PARENTHESIS);
 
-portletDisplay.setTitle(titleSB.toString());
-portletDisplay.setURLBack(ParamUtil.getString(request, "redirect"));
 portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(titleSB.toString());
 %>

@@ -46,7 +46,9 @@ public class SimpleReadingTimeMessageProviderImpl
 		}
 
 		return LanguageUtil.format(
-			resourceBundle, "x-min", readingTimeInMinutes);
+			resourceBundle,
+			(readingTimeInMinutes == 1) ? "x-minute" : "x-minutes",
+			readingTimeInMinutes);
 	}
 
 	@Override

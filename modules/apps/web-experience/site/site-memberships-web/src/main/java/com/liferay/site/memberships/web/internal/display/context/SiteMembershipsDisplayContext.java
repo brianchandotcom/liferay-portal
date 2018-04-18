@@ -62,7 +62,7 @@ public class SiteMembershipsDisplayContext {
 		return _cur;
 	}
 
-	public Group getGroup() throws PortalException {
+	public Group getGroup() {
 		if (_group != null) {
 			return _group;
 		}
@@ -73,13 +73,17 @@ public class SiteMembershipsDisplayContext {
 		long groupId = ParamUtil.getLong(
 			_request, "groupId", themeDisplay.getSiteGroupIdOrLiveGroupId());
 
-		_group = GroupLocalServiceUtil.getGroup(groupId);
+		_group = GroupLocalServiceUtil.fetchGroup(groupId);
 
 		return _group;
 	}
 
-	public long getGroupId() throws PortalException {
+	public long getGroupId() {
 		Group group = getGroup();
+
+		if (group == null) {
+			return 0;
+		}
 
 		return group.getGroupId();
 	}
@@ -101,7 +105,7 @@ public class SiteMembershipsDisplayContext {
 		return navigationItems;
 	}
 
-	public PortletURL getPortletURL() throws PortalException {
+	public PortletURL getPortletURL() {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("mvcPath", "/view.jsp");

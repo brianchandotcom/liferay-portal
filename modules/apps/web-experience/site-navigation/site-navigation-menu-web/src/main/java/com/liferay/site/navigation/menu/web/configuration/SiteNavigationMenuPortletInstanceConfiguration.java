@@ -84,7 +84,7 @@ public interface SiteNavigationMenuPortletInstanceConfiguration {
 	 * @deprecated As of 2.0.0, replaced by {@link #expandedLevels()}
 	 */
 	@Deprecated
-	@Meta.AD(deflt = "current", name = "included-layouts", required = false)
+	@Meta.AD(name = "included-layouts", required = false)
 	public String includedLayouts();
 
 	@Meta.AD(deflt = "preview", name = "preview", required = false)

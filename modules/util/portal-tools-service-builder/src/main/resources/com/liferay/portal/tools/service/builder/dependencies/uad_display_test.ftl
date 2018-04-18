@@ -11,8 +11,8 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.aggregator.UADAggregator;
-import com.liferay.user.associated.data.display.UADEntityDisplay;
-import com.liferay.user.associated.data.test.util.BaseUADEntityDisplayTestCase;
+import com.liferay.user.associated.data.display.UADDisplay;
+import com.liferay.user.associated.data.test.util.BaseUADDisplayTestCase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ import org.junit.runner.RunWith;
  * @generated
  */
 @RunWith(Arquillian.class)
-public class ${entity.name}UADEntityDisplayTest extends BaseUADEntityDisplayTestCase {
+public class ${entity.name}UADDisplayTest extends BaseUADDisplayTestCase {
 
 	@ClassRule
 	@Rule
@@ -53,8 +53,8 @@ public class ${entity.name}UADEntityDisplayTest extends BaseUADEntityDisplayTest
 	}
 
 	@Override
-	protected UADEntityDisplay getUADEntityDisplay() {
-		return _uadEntityDisplay;
+	protected UADDisplay getUADDisplay() {
+		return _uadDisplay;
 	}
 
 	@Override
@@ -81,6 +81,6 @@ public class ${entity.name}UADEntityDisplayTest extends BaseUADEntityDisplayTest
 	@Inject(
 		filter = "model.class.name=" + ${portletShortName}UADConstants.CLASS_NAME_${entity.constantName}
 	)
-	private UADEntityDisplay _uadEntityDisplay;
+	private UADDisplay _uadDisplay;
 
 }

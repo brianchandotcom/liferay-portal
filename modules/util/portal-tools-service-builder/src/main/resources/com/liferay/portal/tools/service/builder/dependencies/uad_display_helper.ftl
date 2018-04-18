@@ -15,9 +15,9 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	service = ${entity.name}UADEntityDisplayHelper.class
+	service = ${entity.name}UADDisplayHelper.class
 )
-public class ${entity.name}UADEntityDisplayHelper {
+public class ${entity.name}UADDisplayHelper {
 
 	/**
 	 * Returns an ordered string array of the fields' names to be displayed.

@@ -393,6 +393,24 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 				</c:otherwise>
 			</c:choose>
 		</c:if>
+
+		<%
+		boolean documentLibraryAdmin = portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN);
+		boolean hasExportImportPortletInfoPermission = GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
+		boolean inStagingGroup = stagingGroupHelper.isStagingGroup(scopeGroupId);
+		boolean portletStaged = stagingGroupHelper.isStagedPortlet(scopeGroupId, DLPortletKeys.DOCUMENT_LIBRARY);
+		%>
+
+		<c:if test="<%= (folder != null) && documentLibraryAdmin && hasExportImportPortletInfoPermission && inStagingGroup && portletStaged %>">
+			<portlet:actionURL name="/document_library/publish_folder" var="publishFolderURL">
+				<portlet:param name="folderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
+			</portlet:actionURL>
+
+			<liferay-ui:icon
+				message="publish"
+				url="<%= publishFolderURL %>"
+			/>
+		</c:if>
 	</liferay-ui:icon-menu>
 
 	<aui:script use="uploader">

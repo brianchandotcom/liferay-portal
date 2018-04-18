@@ -16,7 +16,6 @@ package com.liferay.layout.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
@@ -108,9 +107,7 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 					layoutPageTemplateCollections =
 						LayoutPageTemplateCollectionServiceUtil.
 							getLayoutPageTemplateCollections(
-								_themeDisplay.getScopeGroupId(),
-								LayoutPageTemplateCollectionTypeConstants.
-									TYPE_BASIC);
+								_themeDisplay.getScopeGroupId());
 
 				for (LayoutPageTemplateCollection layoutPageTemplateCollection :
 						layoutPageTemplateCollections) {

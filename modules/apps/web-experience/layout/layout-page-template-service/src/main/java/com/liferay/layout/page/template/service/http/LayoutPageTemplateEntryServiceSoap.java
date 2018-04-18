@@ -67,6 +67,26 @@ import java.rmi.RemoteException;
 public class LayoutPageTemplateEntryServiceSoap {
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap addLayoutPageTemplateEntry(
 		long groupId, long layoutPageTemplateCollectionId,
+		java.lang.String name, int type, long[] fragmentEntryIds,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.layout.page.template.model.LayoutPageTemplateEntry returnValue =
+				LayoutPageTemplateEntryServiceUtil.addLayoutPageTemplateEntry(groupId,
+					layoutPageTemplateCollectionId, name, type,
+					fragmentEntryIds, serviceContext);
+
+			return com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap addLayoutPageTemplateEntry(
+		long groupId, long layoutPageTemplateCollectionId,
 		java.lang.String name, long[] fragmentEntryIds,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -178,6 +198,24 @@ public class LayoutPageTemplateEntryServiceSoap {
 	}
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap[] getLayoutPageTemplateEntries(
+		long groupId, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> returnValue =
+				LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(groupId,
+					type, start, end, orderByComparator);
+
+			return com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap[] getLayoutPageTemplateEntries(
 		long groupId, long layoutPageTemplateCollectionId, int start, int end)
 		throws RemoteException {
 		try {
@@ -233,6 +271,39 @@ public class LayoutPageTemplateEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap[] getLayoutPageTemplateEntries(
+		long groupId, java.lang.String name, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> returnValue =
+				LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(groupId,
+					name, type, start, end, orderByComparator);
+
+			return com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getLayoutPageTemplateEntriesCount(long groupId, int type)
+		throws RemoteException {
+		try {
+			int returnValue = LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntriesCount(groupId,
+					type);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getLayoutPageTemplateEntriesCount(long groupId,
 		long layoutPageTemplateFolder) throws RemoteException {
 		try {
@@ -254,6 +325,21 @@ public class LayoutPageTemplateEntryServiceSoap {
 		try {
 			int returnValue = LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntriesCount(groupId,
 					layoutPageTemplateFolder, name);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getLayoutPageTemplateEntriesCount(long groupId,
+		java.lang.String name, int type) throws RemoteException {
+		try {
+			int returnValue = LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntriesCount(groupId,
+					name, type);
 
 			return returnValue;
 		}

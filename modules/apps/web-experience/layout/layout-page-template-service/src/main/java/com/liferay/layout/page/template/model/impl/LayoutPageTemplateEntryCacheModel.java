@@ -65,7 +65,7 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{layoutPageTemplateEntryId=");
 		sb.append(layoutPageTemplateEntryId);
@@ -89,6 +89,8 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 		sb.append(classTypeId);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", type=");
+		sb.append(type);
 		sb.append(", htmlPreviewEntryId=");
 		sb.append(htmlPreviewEntryId);
 		sb.append(", defaultTemplate=");
@@ -139,6 +141,7 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 			layoutPageTemplateEntryImpl.setName(name);
 		}
 
+		layoutPageTemplateEntryImpl.setType(type);
 		layoutPageTemplateEntryImpl.setHtmlPreviewEntryId(htmlPreviewEntryId);
 		layoutPageTemplateEntryImpl.setDefaultTemplate(defaultTemplate);
 
@@ -166,6 +169,8 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 
 		classTypeId = objectInput.readLong();
 		name = objectInput.readUTF();
+
+		type = objectInput.readInt();
 
 		htmlPreviewEntryId = objectInput.readLong();
 
@@ -206,6 +211,8 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 			objectOutput.writeUTF(name);
 		}
 
+		objectOutput.writeInt(type);
+
 		objectOutput.writeLong(htmlPreviewEntryId);
 
 		objectOutput.writeBoolean(defaultTemplate);
@@ -222,6 +229,7 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 	public long classNameId;
 	public long classTypeId;
 	public String name;
+	public int type;
 	public long htmlPreviewEntryId;
 	public boolean defaultTemplate;
 }

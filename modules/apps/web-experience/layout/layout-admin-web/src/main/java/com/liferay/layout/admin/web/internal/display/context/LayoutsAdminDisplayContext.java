@@ -17,6 +17,7 @@ package com.liferay.layout.admin.web.internal.display.context;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.configuration.LayoutAdminWebConfiguration;
 import com.liferay.layout.admin.web.constants.LayoutAdminDisplayStyleKeys;
@@ -67,7 +68,6 @@ import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -75,6 +75,8 @@ import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -91,8 +93,9 @@ public class LayoutsAdminDisplayContext {
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_groupDisplayContextHelper = new GroupDisplayContextHelper(
-			PortalUtil.getHttpServletRequest(liferayPortletRequest));
+		_request = PortalUtil.getHttpServletRequest(_liferayPortletRequest);
+
+		_groupDisplayContextHelper = new GroupDisplayContextHelper(_request);
 
 		_liferayPortletRequest.setAttribute(
 			WebKeys.LAYOUT_DESCRIPTIONS, getLayoutDescriptions());
@@ -273,7 +276,7 @@ public class LayoutsAdminDisplayContext {
 
 		List<LayoutPageTemplateCollection> layoutPageTemplateCollections =
 			layoutPageTemplateCollectionService.
-				getBasicLayoutPageTemplateCollections(
+				getLayoutPageTemplateCollections(
 					getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 					layoutPageTemplateCollectionNameComparator);
 
@@ -406,40 +409,39 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() {
-		List<NavigationItem> navigationItems = new ArrayList<>();
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(
+							Objects.equals(getTabs1(), "pages"));
+						navigationItem.setHref(
+							getPortletURL(), "tabs1", "pages");
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "pages"));
+					});
 
-		NavigationItem pagesNavigationItem = new NavigationItem();
+				add(
+					navigationItem -> {
+						navigationItem.setActive(
+							Objects.equals(getTabs1(), "page-templates"));
+						navigationItem.setHref(
+							getPortletURL(), "tabs1", "page-templates");
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "page-templates"));
+					});
 
-		pagesNavigationItem.setActive(Objects.equals(getTabs1(), "pages"));
-
-		PortletURL pagesURL = getPortletURL();
-
-		pagesURL.setParameter("tabs1", "pages");
-
-		pagesNavigationItem.setHref(pagesURL.toString());
-
-		pagesNavigationItem.setLabel(
-			LanguageUtil.get(_themeDisplay.getLocale(), "pages"));
-
-		navigationItems.add(pagesNavigationItem);
-
-		NavigationItem pageTemplatesNavigationItem = new NavigationItem();
-
-		pageTemplatesNavigationItem.setActive(
-			Objects.equals(getTabs1(), "page-templates"));
-
-		PortletURL pageTemplatesURL = getPortletURL();
-
-		pageTemplatesURL.setParameter("tabs1", "page-templates");
-
-		pageTemplatesNavigationItem.setHref(pageTemplatesURL.toString());
-
-		pageTemplatesNavigationItem.setLabel(
-			LanguageUtil.get(_themeDisplay.getLocale(), "page-templates"));
-
-		navigationItems.add(pageTemplatesNavigationItem);
-
-		return navigationItems;
+				add(
+					navigationItem -> {
+						navigationItem.setActive(
+							Objects.equals(getTabs1(), "display-pages"));
+						navigationItem.setHref(
+							getPortletURL(), "tabs1", "display-pages");
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "display-pages"));
+					});
+			}
+		};
 	}
 
 	public String[] getNavigationKeys() {
@@ -1109,6 +1111,7 @@ public class LayoutsAdminDisplayContext {
 	private Long _parentLayoutId;
 	private Boolean _privateLayout;
 	private String _redirect;
+	private final HttpServletRequest _request;
 	private String _rootNodeName;
 	private Layout _selLayout;
 	private LayoutSet _selLayoutSet;

@@ -12,11 +12,12 @@
 		"liferay-npm-bundler": "^1.6.1",
 		"liferay-npm-bundler-preset-amd": "1.6.1",
 		"liferay-npm-bundler-preset-standard": "^1.6.1",
-		"metal-tools-soy": "^4.2.1"
+		"metal-tools-soy": "^4.2.1",
+		"rimraf": "^2.6.2"
 	},
 	"name": "dynamic-data-mapping-type-checkbox",
 	"scripts": {
-		"build": "metalsoy && babel -d classes/META-INF/resources src/main/resources/META-INF/resources --ignore config.js,checkbox_field.js && liferay-npm-bundler"
+		"build": "metalsoy && babel -d classes/META-INF/resources src/main/resources/META-INF/resources --ignore config.js,checkbox_field.js && liferay-npm-bundler && rimraf src/**/*.soy.js"
 	},
 	"version": "3.0.0"
 }

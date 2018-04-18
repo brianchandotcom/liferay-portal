@@ -15,6 +15,7 @@
 package com.liferay.trash.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -34,7 +35,6 @@ import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.service.TrashEntryLocalServiceUtil;
 import com.liferay.trash.web.internal.constants.TrashPortletKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -149,17 +149,17 @@ public class TrashDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		List<NavigationItem> navigationItems = new ArrayList<>();
-
-		NavigationItem navigationItem = new NavigationItem();
-
-		navigationItem.setActive(true);
-		navigationItem.setHref(themeDisplay.getURLCurrent());
-		navigationItem.setLabel(LanguageUtil.get(_request, "details"));
-
-		navigationItems.add(navigationItem);
-
-		return navigationItems;
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(themeDisplay.getURLCurrent());
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "details"));
+					});
+			}
+		};
 	}
 
 	public String getNavigation() {
@@ -173,21 +173,18 @@ public class TrashDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() {
-		List<NavigationItem> navigationItems = new ArrayList<>();
-
-		NavigationItem entriesNavigationItem = new NavigationItem();
-
-		entriesNavigationItem.setActive(true);
-
-		PortletURL mainURL = _liferayPortletResponse.createRenderURL();
-
-		entriesNavigationItem.setHref(mainURL.toString());
-
-		entriesNavigationItem.setLabel(LanguageUtil.get(_request, "entries"));
-
-		navigationItems.add(entriesNavigationItem);
-
-		return navigationItems;
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(
+							_liferayPortletResponse.createRenderURL());
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "entries"));
+					});
+			}
+		};
 	}
 
 	public String getOrderByCol() {

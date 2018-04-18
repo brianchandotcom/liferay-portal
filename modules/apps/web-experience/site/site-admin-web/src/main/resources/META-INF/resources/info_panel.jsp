@@ -38,16 +38,6 @@ if (ListUtil.isEmpty(groups)) {
 }
 
 request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-
-List<NavigationItem> navigationItems = new ArrayList<>();
-
-NavigationItem navigationItem = new NavigationItem();
-
-navigationItem.setActive(true);
-navigationItem.setHref(currentURL);
-navigationItem.setLabel(LanguageUtil.get(request, "details"));
-
-navigationItems.add(navigationItem);
 %>
 
 <c:choose>
@@ -64,7 +54,18 @@ navigationItems.add(navigationItem);
 				</div>
 
 				<clay:navigation-bar
-					items="<%= navigationItems %>"
+					items="<%=
+						new JSPNavigationItemList(pageContext) {
+							{
+								add(
+									navigationItem -> {
+										navigationItem.setActive(true);
+										navigationItem.setHref(currentURL);
+										navigationItem.setLabel(LanguageUtil.get(request, "details"));
+									});
+							}
+						}
+					%>"
 				/>
 
 				<div class="sidebar-body">

@@ -65,36 +65,6 @@ groupSearch.setResults(groups);
 long[] groupIds = ListUtil.toLongArray(groups, Group.GROUP_ID_ACCESSOR);
 
 Map<Long, Integer> groupUsersCounts = UserLocalServiceUtil.searchCounts(company.getCompanyId(), WorkflowConstants.STATUS_APPROVED, groupIds);
-
-List<NavigationItem> navigationItems = new ArrayList<>();
-
-NavigationItem mySitesNavigationItem = new NavigationItem();
-
-mySitesNavigationItem.setActive(tabs1.equals("my-sites"));
-
-PortletURL mySitesURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-mySitesURL.setParameter("tabs1", "my-sites");
-
-mySitesNavigationItem.setHref(mySitesURL.toString());
-
-mySitesNavigationItem.setLabel(LanguageUtil.get(request, "my-sites"));
-
-navigationItems.add(mySitesNavigationItem);
-
-NavigationItem availableSitesNavigationItem = new NavigationItem();
-
-availableSitesNavigationItem.setActive(tabs1.equals("available-sites"));
-
-PortletURL availableSitesURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-availableSitesURL.setParameter("tabs1", "available-sites");
-
-availableSitesNavigationItem.setHref(availableSitesURL.toString());
-
-availableSitesNavigationItem.setLabel(LanguageUtil.get(request, "available-sites"));
-
-navigationItems.add(availableSitesNavigationItem);
 %>
 
 <liferay-ui:success key="membershipRequestSent" message="your-request-was-sent-you-will-receive-a-reply-by-email" />
@@ -102,7 +72,25 @@ navigationItems.add(availableSitesNavigationItem);
 <liferay-ui:error key="membershipAlreadyRequested" message="membership-was-already-requested" />
 
 <clay:navigation-bar
-	items="<%= navigationItems %>"
+	items="<%=
+		new JSPNavigationItemList(pageContext) {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(tabs1.equals("my-sites"));
+						navigationItem.setHref(portletURL, "tabs1", "my-sites");
+						navigationItem.setLabel(LanguageUtil.get(request, "my-sites"));
+					});
+
+				add(
+					navigationItem -> {
+						navigationItem.setActive(tabs1.equals("available-sites"));
+						navigationItem.setHref(portletURL, "tabs1", "available-sites");
+						navigationItem.setLabel(LanguageUtil.get(request, "available-sites"));
+					});
+			}
+		}
+	%>"
 />
 
 <liferay-frontend:management-bar>

@@ -60,20 +60,21 @@ List<User> users = UserLocalServiceUtil.search(company.getCompanyId(), searchTer
 userSearchContainer.setResults(users);
 
 RowChecker rowChecker = new UserTeamChecker(renderResponse, team);
-
-List<NavigationItem> navigationItems = new ArrayList<>();
-
-NavigationItem navigationItem = new NavigationItem();
-
-navigationItem.setActive(true);
-navigationItem.setHref(currentURL);
-navigationItem.setLabel(LanguageUtil.get(request, "users"));
-
-navigationItems.add(navigationItem);
 %>
 
 <clay:navigation-bar
-	items="<%= navigationItems %>"
+	items="<%=
+		new JSPNavigationItemList(pageContext) {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(currentURL);
+						navigationItem.setLabel(LanguageUtil.get(request, "users"));
+					});
+			}
+		}
+	%>"
 />
 
 <liferay-frontend:management-bar

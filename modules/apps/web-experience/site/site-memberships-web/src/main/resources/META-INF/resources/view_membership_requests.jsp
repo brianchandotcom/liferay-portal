@@ -73,54 +73,35 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL.toString());
 
 renderResponse.setTitle(LanguageUtil.get(request, "membership-requests"));
-
-List<NavigationItem> navigationItems = new ArrayList<>();
-
-NavigationItem pendingNavigationItem = new NavigationItem();
-
-pendingNavigationItem.setActive(tabs1.equals("pending"));
-
-PortletURL pendingURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-pendingURL.setParameter("tabs1", "pending");
-
-pendingNavigationItem.setHref(pendingURL.toString());
-
-pendingNavigationItem.setLabel(LanguageUtil.get(request, "pending"));
-
-navigationItems.add(pendingNavigationItem);
-
-NavigationItem approvedNavigationItem = new NavigationItem();
-
-approvedNavigationItem.setActive(tabs1.equals("approved"));
-
-PortletURL approvedURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-approvedURL.setParameter("tabs1", "approved");
-
-approvedNavigationItem.setHref(approvedURL.toString());
-
-approvedNavigationItem.setLabel(LanguageUtil.get(request, "approved"));
-
-navigationItems.add(approvedNavigationItem);
-
-NavigationItem deniedNavigationItem = new NavigationItem();
-
-deniedNavigationItem.setActive(tabs1.equals("denied"));
-
-PortletURL deniedURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-deniedURL.setParameter("tabs1", "denied");
-
-deniedNavigationItem.setHref(deniedURL.toString());
-
-deniedNavigationItem.setLabel(LanguageUtil.get(request, "denied"));
-
-navigationItems.add(deniedNavigationItem);
 %>
 
 <clay:navigation-bar
-	items="<%= navigationItems %>"
+	items="<%=
+		new JSPNavigationItemList(pageContext) {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(tabs1.equals("pending"));
+						navigationItem.setHref(portletURL, "tabs1", "pending");
+						navigationItem.setLabel(LanguageUtil.get(request, "pending"));
+					});
+
+				add(
+					navigationItem -> {
+						navigationItem.setActive(tabs1.equals("approved"));
+						navigationItem.setHref(portletURL, "tabs1", "approved");
+						navigationItem.setLabel(LanguageUtil.get(request, "approved"));
+					});
+
+				add(
+					navigationItem -> {
+						navigationItem.setActive(tabs1.equals("denied"));
+						navigationItem.setHref(portletURL, "tabs1", "denied");
+						navigationItem.setLabel(LanguageUtil.get(request, "denied"));
+					});
+			}
+		}
+	%>"
 />
 
 <liferay-ui:success key="membershipReplySent" message="your-reply-will-be-sent-to-the-user-by-email" />

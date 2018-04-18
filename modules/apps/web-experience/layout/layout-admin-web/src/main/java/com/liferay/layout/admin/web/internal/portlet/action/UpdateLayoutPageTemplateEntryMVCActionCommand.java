@@ -62,8 +62,9 @@ public class UpdateLayoutPageTemplateEntryMVCActionCommand
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			jsonObject.put(
-				"redirectURL", ParamUtil.getString(actionRequest, "redirect"));
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			jsonObject.put("redirectURL", redirect);
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);

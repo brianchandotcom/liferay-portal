@@ -50,6 +50,12 @@
 	<bean class="com.liferay.commerce.product.service.impl.CPOptionValueLocalServiceImpl" id="com.liferay.commerce.product.service.CPOptionValueLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPOptionValueServiceImpl" id="com.liferay.commerce.product.service.CPOptionValueService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPOptionValuePersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPOptionValuePersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.product.service.impl.CPRuleLocalServiceImpl" id="com.liferay.commerce.product.service.CPRuleLocalService" />
+	<bean class="com.liferay.commerce.product.service.impl.CPRuleServiceImpl" id="com.liferay.commerce.product.service.CPRuleService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPRulePersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPRulePersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.product.service.impl.CPRuleUserSegmentRelLocalServiceImpl" id="com.liferay.commerce.product.service.CPRuleUserSegmentRelLocalService" />
+	<bean class="com.liferay.commerce.product.service.impl.CPRuleUserSegmentRelServiceImpl" id="com.liferay.commerce.product.service.CPRuleUserSegmentRelService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPRuleUserSegmentRelPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPRuleUserSegmentRelPersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.product.service.impl.CPSpecificationOptionLocalServiceImpl" id="com.liferay.commerce.product.service.CPSpecificationOptionLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPSpecificationOptionServiceImpl" id="com.liferay.commerce.product.service.CPSpecificationOptionService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPSpecificationOptionPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPSpecificationOptionPersistence" parent="basePersistence" />

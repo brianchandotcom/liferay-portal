@@ -33,6 +33,8 @@ import com.liferay.commerce.product.service.persistence.CPMeasurementUnitPersist
 import com.liferay.commerce.product.service.persistence.CPOptionCategoryPersistence;
 import com.liferay.commerce.product.service.persistence.CPOptionPersistence;
 import com.liferay.commerce.product.service.persistence.CPOptionValuePersistence;
+import com.liferay.commerce.product.service.persistence.CPRulePersistence;
+import com.liferay.commerce.product.service.persistence.CPRuleUserSegmentRelPersistence;
 import com.liferay.commerce.product.service.persistence.CPSpecificationOptionPersistence;
 import com.liferay.commerce.product.service.persistence.CPTaxCategoryPersistence;
 
@@ -886,6 +888,119 @@ public abstract class CPFriendlyURLEntryServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the cp rule local service.
+	 *
+	 * @return the cp rule local service
+	 */
+	public com.liferay.commerce.product.service.CPRuleLocalService getCPRuleLocalService() {
+		return cpRuleLocalService;
+	}
+
+	/**
+	 * Sets the cp rule local service.
+	 *
+	 * @param cpRuleLocalService the cp rule local service
+	 */
+	public void setCPRuleLocalService(
+		com.liferay.commerce.product.service.CPRuleLocalService cpRuleLocalService) {
+		this.cpRuleLocalService = cpRuleLocalService;
+	}
+
+	/**
+	 * Returns the cp rule remote service.
+	 *
+	 * @return the cp rule remote service
+	 */
+	public com.liferay.commerce.product.service.CPRuleService getCPRuleService() {
+		return cpRuleService;
+	}
+
+	/**
+	 * Sets the cp rule remote service.
+	 *
+	 * @param cpRuleService the cp rule remote service
+	 */
+	public void setCPRuleService(
+		com.liferay.commerce.product.service.CPRuleService cpRuleService) {
+		this.cpRuleService = cpRuleService;
+	}
+
+	/**
+	 * Returns the cp rule persistence.
+	 *
+	 * @return the cp rule persistence
+	 */
+	public CPRulePersistence getCPRulePersistence() {
+		return cpRulePersistence;
+	}
+
+	/**
+	 * Sets the cp rule persistence.
+	 *
+	 * @param cpRulePersistence the cp rule persistence
+	 */
+	public void setCPRulePersistence(CPRulePersistence cpRulePersistence) {
+		this.cpRulePersistence = cpRulePersistence;
+	}
+
+	/**
+	 * Returns the cp rule user segment rel local service.
+	 *
+	 * @return the cp rule user segment rel local service
+	 */
+	public com.liferay.commerce.product.service.CPRuleUserSegmentRelLocalService getCPRuleUserSegmentRelLocalService() {
+		return cpRuleUserSegmentRelLocalService;
+	}
+
+	/**
+	 * Sets the cp rule user segment rel local service.
+	 *
+	 * @param cpRuleUserSegmentRelLocalService the cp rule user segment rel local service
+	 */
+	public void setCPRuleUserSegmentRelLocalService(
+		com.liferay.commerce.product.service.CPRuleUserSegmentRelLocalService cpRuleUserSegmentRelLocalService) {
+		this.cpRuleUserSegmentRelLocalService = cpRuleUserSegmentRelLocalService;
+	}
+
+	/**
+	 * Returns the cp rule user segment rel remote service.
+	 *
+	 * @return the cp rule user segment rel remote service
+	 */
+	public com.liferay.commerce.product.service.CPRuleUserSegmentRelService getCPRuleUserSegmentRelService() {
+		return cpRuleUserSegmentRelService;
+	}
+
+	/**
+	 * Sets the cp rule user segment rel remote service.
+	 *
+	 * @param cpRuleUserSegmentRelService the cp rule user segment rel remote service
+	 */
+	public void setCPRuleUserSegmentRelService(
+		com.liferay.commerce.product.service.CPRuleUserSegmentRelService cpRuleUserSegmentRelService) {
+		this.cpRuleUserSegmentRelService = cpRuleUserSegmentRelService;
+	}
+
+	/**
+	 * Returns the cp rule user segment rel persistence.
+	 *
+	 * @return the cp rule user segment rel persistence
+	 */
+	public CPRuleUserSegmentRelPersistence getCPRuleUserSegmentRelPersistence() {
+		return cpRuleUserSegmentRelPersistence;
+	}
+
+	/**
+	 * Sets the cp rule user segment rel persistence.
+	 *
+	 * @param cpRuleUserSegmentRelPersistence the cp rule user segment rel persistence
+	 */
+	public void setCPRuleUserSegmentRelPersistence(
+		CPRuleUserSegmentRelPersistence cpRuleUserSegmentRelPersistence) {
+		this.cpRuleUserSegmentRelPersistence = cpRuleUserSegmentRelPersistence;
+	}
+
+	/**
 	 * Returns the cp specification option local service.
 	 *
 	 * @return the cp specification option local service
@@ -1284,6 +1399,18 @@ public abstract class CPFriendlyURLEntryServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.commerce.product.service.CPOptionValueService cpOptionValueService;
 	@BeanReference(type = CPOptionValuePersistence.class)
 	protected CPOptionValuePersistence cpOptionValuePersistence;
+	@BeanReference(type = com.liferay.commerce.product.service.CPRuleLocalService.class)
+	protected com.liferay.commerce.product.service.CPRuleLocalService cpRuleLocalService;
+	@BeanReference(type = com.liferay.commerce.product.service.CPRuleService.class)
+	protected com.liferay.commerce.product.service.CPRuleService cpRuleService;
+	@BeanReference(type = CPRulePersistence.class)
+	protected CPRulePersistence cpRulePersistence;
+	@BeanReference(type = com.liferay.commerce.product.service.CPRuleUserSegmentRelLocalService.class)
+	protected com.liferay.commerce.product.service.CPRuleUserSegmentRelLocalService cpRuleUserSegmentRelLocalService;
+	@BeanReference(type = com.liferay.commerce.product.service.CPRuleUserSegmentRelService.class)
+	protected com.liferay.commerce.product.service.CPRuleUserSegmentRelService cpRuleUserSegmentRelService;
+	@BeanReference(type = CPRuleUserSegmentRelPersistence.class)
+	protected CPRuleUserSegmentRelPersistence cpRuleUserSegmentRelPersistence;
 	@BeanReference(type = com.liferay.commerce.product.service.CPSpecificationOptionLocalService.class)
 	protected com.liferay.commerce.product.service.CPSpecificationOptionLocalService cpSpecificationOptionLocalService;
 	@BeanReference(type = com.liferay.commerce.product.service.CPSpecificationOptionService.class)

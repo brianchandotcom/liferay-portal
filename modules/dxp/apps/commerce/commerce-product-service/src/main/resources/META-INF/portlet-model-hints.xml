@@ -344,6 +344,30 @@
 		</field>
 		<field name="lastPublishDate" type="Date" />
 	</model>
+	<model name="com.liferay.commerce.product.model.CPRule">
+		<field name="CPRuleId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String" />
+		<field name="active" type="boolean" />
+		<field name="type" type="String" />
+		<field name="typeSettings" type="String" />
+	</model>
+	<model name="com.liferay.commerce.product.model.CPRuleUserSegmentRel">
+		<field name="CPRuleUserSegmentRelId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="CPRuleId" type="long" />
+		<field name="commerceUserSegmentEntryId" type="boolean" />
+	</model>
 	<model name="com.liferay.commerce.product.model.CPSpecificationOption">
 		<field name="uuid" type="String" />
 		<field name="CPSpecificationOptionId" type="long" />

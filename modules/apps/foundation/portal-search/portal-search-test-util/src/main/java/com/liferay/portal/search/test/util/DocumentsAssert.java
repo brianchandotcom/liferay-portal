@@ -68,12 +68,13 @@ public class DocumentsAssert {
 	private static List<String> _getValues(
 		String field, Document... documents) {
 
-		Stream<Document> documentsStream = Stream.of(documents);
-
-		Stream<String> valuesStream = documentsStream.map(
-			document -> document.get(field));
-
-		return valuesStream.collect(Collectors.toList());
+		return Stream.of(
+			documents
+		).map(
+			document -> document.get(field)
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	private static String _sort(Collection<String> collection) {

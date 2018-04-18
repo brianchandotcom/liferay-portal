@@ -180,10 +180,11 @@ public class FacetDiscounterTest {
 	}
 
 	private void _discount(FacetDiscounter facetDiscounter, String... terms) {
-		Stream<String> termsStream = Stream.of(terms);
-
-		Stream<Document> documentsStream = termsStream.map(
-			this::_createDocument);
+		Stream<Document> documentsStream = Stream.of(
+			terms
+		).map(
+			this::_createDocument
+		);
 
 		_discount(facetDiscounter, documentsStream);
 	}

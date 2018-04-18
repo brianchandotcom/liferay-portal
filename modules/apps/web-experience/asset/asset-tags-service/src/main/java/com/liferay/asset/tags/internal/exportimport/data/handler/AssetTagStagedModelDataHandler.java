@@ -137,11 +137,12 @@ public class AssetTagStagedModelDataHandler
 				AssetTagsPortletDataHandler.NAMESPACE, "merge-tags-by-name",
 				false)) {
 
-			Optional<AssetTag> assetTagOptional = Optional.ofNullable(
+			existingAssetTag = Optional.ofNullable(
 				_assetTagLocalService.fetchTag(
-					portletDataContext.getScopeGroupId(), assetTag.getName()));
-
-			existingAssetTag = assetTagOptional.orElse(existingAssetTag);
+					portletDataContext.getScopeGroupId(), assetTag.getName())
+			).orElse(
+				existingAssetTag
+			);
 		}
 
 		AssetTag importedAssetTag = null;

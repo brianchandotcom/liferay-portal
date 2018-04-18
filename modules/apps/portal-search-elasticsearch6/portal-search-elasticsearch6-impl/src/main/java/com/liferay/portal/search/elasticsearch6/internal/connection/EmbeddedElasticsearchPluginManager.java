@@ -107,10 +107,9 @@ public class EmbeddedElasticsearchPluginManager {
 	protected Optional<Path> getInstalledPluginPath(PluginManager pluginManager)
 		throws IOException {
 
-		Stream<Path> stream = Stream.of(
-			pluginManager.getInstalledPluginsPaths());
-
-		return stream.filter(
+		return Stream.of(
+			pluginManager.getInstalledPluginsPaths()
+		).filter(
 			path -> path.endsWith(_pluginName)
 		).findAny();
 	}

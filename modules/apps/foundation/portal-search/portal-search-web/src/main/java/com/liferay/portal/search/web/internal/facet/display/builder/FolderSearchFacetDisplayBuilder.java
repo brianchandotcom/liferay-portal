@@ -91,14 +91,15 @@ public class FolderSearchFacetDisplayBuilder {
 	public void setParameterValues(String... parameterValues) {
 		Objects.requireNonNull(parameterValues);
 
-		Stream<String> parameterValuesStream = Stream.of(parameterValues);
-
-		Stream<Long> folderIdsStream = parameterValuesStream.map(
-			GetterUtil::getLong);
-
-		folderIdsStream = folderIdsStream.filter(folderId -> folderId > 0);
-
-		_selectedFolderIds = folderIdsStream.collect(Collectors.toList());
+		_selectedFolderIds = Stream.of(
+			parameterValues
+		).map(
+			GetterUtil::getLong
+		).filter(
+			folderId -> folderId > 0
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	protected FolderSearchFacetTermDisplayContext

@@ -62,12 +62,12 @@ public class AggregateRatingPathIdentifierMapper
 			() -> new NotFoundException(
 				"No resource found for path " + components[0]));
 
-		Try<Long> longTry = Try.fromFallible(
-			() -> Long.parseLong(components[1]));
-
-		Long classPK = longTry.orElseThrow(
+		Long classPK = Try.fromFallible(
+			() -> Long.parseLong(components[1])
+		).orElseThrow(
 			() -> new BadRequestException(
-				"Unable to convert " + id + " to a long class PK"));
+				"Unable to convert " + id + " to a long class PK")
+		);
 
 		return ClassNameClassPK.create(modelClass.getName(), classPK);
 	}

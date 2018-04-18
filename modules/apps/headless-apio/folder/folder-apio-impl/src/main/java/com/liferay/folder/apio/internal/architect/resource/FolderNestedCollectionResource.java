@@ -180,14 +180,13 @@ public class FolderNestedCollectionResource
 	private DLFolder _updateDLFolder(Long dlFolderId, FolderForm folderForm) {
 		DLFolder dlFolder = _getDLFolder(dlFolderId);
 
-		Try<DLFolder> dlFolderTry = Try.fromFallible(
+		return Try.fromFallible(
 			() -> _dlFolderService.updateFolder(
 				dlFolderId, dlFolder.getParentFolderId(), folderForm.getName(),
 				folderForm.getDescription(),
 				dlFolder.getDefaultFileEntryTypeId(), new ArrayList<>(),
-				dlFolder.getRestrictionType(), new ServiceContext()));
-
-		return dlFolderTry.getUnchecked();
+				dlFolder.getRestrictionType(), new ServiceContext())
+		).getUnchecked();
 	}
 
 	@Reference

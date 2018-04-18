@@ -120,15 +120,16 @@ public class DDMFormTemplateContextFactoryHelper {
 
 		Map<String, String> map = new HashMap<>();
 
-		Stream<String> innerExpressionsStream = Stream.of(innerExpressions);
-
-		innerExpressionsStream.forEach(
+		Stream.of(
+			innerExpressions
+		).forEach(
 			innerExpression -> {
 				String[] parts = StringUtil.split(
 					innerExpression, CharPool.EQUAL);
 
 				map.put(parts[0], parts[1]);
-			});
+			}
+		);
 
 		return map;
 	}

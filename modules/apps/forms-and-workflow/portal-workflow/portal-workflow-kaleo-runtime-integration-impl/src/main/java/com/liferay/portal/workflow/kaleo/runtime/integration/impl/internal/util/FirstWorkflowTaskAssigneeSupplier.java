@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.kaleo.runtime.integration.impl.internal.util;
 
 import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
-import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 
 import java.util.Optional;
@@ -35,14 +34,13 @@ public class FirstWorkflowTaskAssigneeSupplier
 
 	@Override
 	public Optional<WorkflowTaskAssignee> get() {
-		Optional<KaleoTaskAssignmentInstance>
-			kaleoTaskAssignmentInstanceOptional = Optional.ofNullable(
-				_kaleoTaskInstanceToken.getFirstKaleoTaskAssignmentInstance());
-
-		return kaleoTaskAssignmentInstanceOptional.map(
+		return Optional.ofNullable(
+			_kaleoTaskInstanceToken.getFirstKaleoTaskAssignmentInstance()
+		).map(
 			kaleoTaskAssignmentInstance -> new WorkflowTaskAssignee(
 				kaleoTaskAssignmentInstance.getAssigneeClassName(),
-				kaleoTaskAssignmentInstance.getAssigneeClassPK()));
+				kaleoTaskAssignmentInstance.getAssigneeClassPK())
+		);
 	}
 
 	private final KaleoTaskInstanceToken _kaleoTaskInstanceToken;

@@ -139,7 +139,7 @@ public class BlogPostingNestedCollectionResource
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setScopeGroupId(groupId);
 
-		Try<BlogsEntry> blogsEntryTry = Try.fromFallible(
+		return Try.fromFallible(
 			() -> _blogsService.addEntry(
 				blogPostingForm.getHeadline(),
 				blogPostingForm.getAlternativeHeadline(),
@@ -150,9 +150,8 @@ public class BlogPostingNestedCollectionResource
 				blogPostingForm.getDisplayDateYear(),
 				blogPostingForm.getDisplayDateHour(),
 				blogPostingForm.getDisplayDateMinute(), false, false, null,
-				null, null, null, serviceContext));
-
-		return blogsEntryTry.getUnchecked();
+				null, null, null, serviceContext)
+		).getUnchecked();
 	}
 
 	private void _deleteBlogsEntry(Long blogsEntryId) {
@@ -204,7 +203,7 @@ public class BlogPostingNestedCollectionResource
 
 		serviceContext.setScopeGroupId(blogsEntry.getGroupId());
 
-		Try<BlogsEntry> blogsEntryTry = Try.fromFallible(
+		return Try.fromFallible(
 			() -> _blogsService.updateEntry(
 				blogsEntryId, blogPostingForm.getHeadline(),
 				blogPostingForm.getAlternativeHeadline(),
@@ -215,9 +214,8 @@ public class BlogPostingNestedCollectionResource
 				blogPostingForm.getDisplayDateYear(),
 				blogPostingForm.getDisplayDateHour(),
 				blogPostingForm.getDisplayDateMinute(), false, false, null,
-				null, null, null, serviceContext));
-
-		return blogsEntryTry.getUnchecked();
+				null, null, null, serviceContext)
+		).getUnchecked();
 	}
 
 	@Reference

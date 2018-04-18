@@ -110,10 +110,9 @@ public class AssetCategoriesSearchFacetDisplayBuilder implements Serializable {
 	}
 
 	public void setParameterValues(String... parameterValues) {
-		Stream<String> parameterValuesStream = Stream.of(
-			Objects.requireNonNull(parameterValues));
-
-		_selectedCategoryIds = parameterValuesStream.map(
+		_selectedCategoryIds = Stream.of(
+			Objects.requireNonNull(parameterValues)
+		).map(
 			GetterUtil::getLong
 		).filter(
 			categoryId -> categoryId > 0
@@ -244,12 +243,11 @@ public class AssetCategoriesSearchFacetDisplayBuilder implements Serializable {
 	protected Optional<AssetCategoriesSearchFacetTermDisplayContext>
 		getEmptyTermDisplayContext(long assetCategoryId) {
 
-		Optional<AssetCategory> assetCategoryOptional = Optional.ofNullable(
-			_fetchAssetCategory(assetCategoryId));
-
-		return assetCategoryOptional.map(
-			assetCategory -> buildTermDisplayContext(
-				assetCategory, 0, true, 1));
+		return Optional.ofNullable(
+			_fetchAssetCategory(assetCategoryId)
+		).map(
+			assetCategory -> buildTermDisplayContext(assetCategory, 0, true, 1)
+		);
 	}
 
 	protected List<AssetCategoriesSearchFacetTermDisplayContext>

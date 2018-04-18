@@ -499,10 +499,10 @@ public class AMImageConfigurationHelperImpl
 			String[] imageVariants = nullableImageVariants.orElseGet(
 				() -> settings.getValues("imageVariants", new String[0]));
 
-			Stream<String> imageVariantsStream = Stream.of(imageVariants);
-
 			List<AMImageConfigurationEntry> amImageConfigurationEntries =
-				imageVariantsStream.map(
+				Stream.of(
+					imageVariants
+				).map(
 					_amImageConfigurationEntryParser::parse
 				).collect(
 					Collectors.toList()

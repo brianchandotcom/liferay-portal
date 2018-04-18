@@ -43,9 +43,11 @@ public class IsEmptyFunction implements DDMExpressionFunction {
 				return true;
 			}
 
-			Stream<Object> stream = Stream.of(values);
-
-			return !stream.anyMatch(Validator::isNotNull);
+			return !Stream.of(
+				values
+			).anyMatch(
+				Validator::isNotNull
+			);
 		}
 
 		return Validator.isNull(parameters[0]);

@@ -119,15 +119,17 @@ public class PersonCollectionResource
 	}
 
 	private static Date _getBirthday(User user) {
-		Try<Date> dateTry = Try.fromFallible(user::getBirthday);
-
-		return dateTry.orElse(null);
+		return Try.fromFallible(
+			user::getBirthday
+		).orElse(
+			null
+		);
 	}
 
 	private static String _getGender(User user) {
-		Try<Boolean> booleanTry = Try.fromFallible(user::isMale);
-
-		return booleanTry.map(
+		return Try.fromFallible(
+			user::isMale
+		).map(
 			male -> male ? "male" : "female"
 		).orElse(
 			null
@@ -202,10 +204,9 @@ public class PersonCollectionResource
 		user.setLastName(personUpdaterForm.getFamilyName());
 		user.setJobTitle(personUpdaterForm.getJobTitle());
 
-		Try<User> userTry = Try.fromFallible(
-			() -> _userLocalService.updateUser(user));
-
-		return userTry.getUnchecked();
+		return Try.fromFallible(
+			() -> _userLocalService.updateUser(user)
+		).getUnchecked();
 	}
 
 	@Reference

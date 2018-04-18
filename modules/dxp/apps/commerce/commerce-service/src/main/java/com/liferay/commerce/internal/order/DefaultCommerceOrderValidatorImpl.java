@@ -123,16 +123,18 @@ public class DefaultCommerceOrderValidatorImpl
 			_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(
 				cpDefinitionInventory);
 
-		if (cpDefinitionInventoryEngine.isBackOrderAllowed(cpInstance)) {
-			return new CommerceOrderValidatorResult(true);
-		}
-
 		int minOrderQuantity = cpDefinitionInventoryEngine.getMinOrderQuantity(
 			cpInstance);
 		int maxOrderQuantity = cpDefinitionInventoryEngine.getMaxOrderQuantity(
 			cpInstance);
 		String[] allowedOrderQuantities =
 			cpDefinitionInventoryEngine.getAllowedOrderQuantities(cpInstance);
+
+		if (cpDefinitionInventoryEngine.isBackOrderAllowed(cpInstance) &&
+			(quantity >= minOrderQuantity) && (quantity <= maxOrderQuantity)) {
+
+			return new CommerceOrderValidatorResult(true);
+		}
 
 		if ((minOrderQuantity > 0) && (quantity < minOrderQuantity)) {
 			return new CommerceOrderValidatorResult(

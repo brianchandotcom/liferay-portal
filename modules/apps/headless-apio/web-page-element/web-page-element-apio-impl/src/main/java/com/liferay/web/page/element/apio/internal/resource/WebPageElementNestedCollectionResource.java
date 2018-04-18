@@ -59,7 +59,8 @@ public class WebPageElementNestedCollectionResource
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_addJournalArticle, _hasPermission::forAddingRootArticle,
+			this::_addJournalArticle,
+			_hasPermission::forAddingRootJournalArticle,
 			WebPageElementCreatorForm::buildForm
 		).build();
 	}

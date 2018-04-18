@@ -72,7 +72,9 @@ public class HasPermissionImpl implements HasPermission {
 	}
 
 	@Override
-	public Boolean forAddingRootArticle(Credentials credentials, Long groupId) {
+	public Boolean forAddingRootJournalArticle(
+		Credentials credentials, Long groupId) {
+
 		Try<String> stringTry = Try.success(JournalFolder.class.getName());
 
 		Try<PermissionChecker> permissionCheckerTry = getPermissionCheckerTry(

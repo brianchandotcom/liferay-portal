@@ -71,7 +71,8 @@ public interface HasPermission {
 	 *         {@code false} otherwise
 	 * @review
 	 */
-	public Boolean forAddingRootArticle(Credentials credentials, Long groupId);
+	public Boolean forAddingRootJournalArticle(
+		Credentials credentials, Long groupId);
 
 	/**
 	 * Returns {@code true} if the current {@code User} can add an {@code User}.

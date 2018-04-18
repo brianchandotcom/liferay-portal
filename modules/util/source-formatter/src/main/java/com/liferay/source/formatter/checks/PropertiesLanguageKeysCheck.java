@@ -52,7 +52,7 @@ public class PropertiesLanguageKeysCheck extends BaseFileCheck {
 
 				String value = array[1];
 
-				if (value.matches("(?s).*<a\\b[^>]*>.*?</a>.*")) {
+				if (value.matches("(?s).*<([a-zA-Z0-9]+)[^>]*>.*?<\\/\\1>.*")) {
 					addMessage(
 						fileName, "Remove HTML markup for '" + key + "'",
 						"language_keys.markdown",

@@ -67,8 +67,8 @@ public interface HasPermission {
 	 *
 	 * @param  credentials the current request credentials
 	 * @param  groupId the group ID
-	 * @return {@code true} if the current user can add a root {@code JournalArticle};
-	 *         {@code false} otherwise
+	 * @return {@code true} if the current user can add a root {@code
+	 *         JournalArticle}; {@code false} otherwise
 	 * @review
 	 */
 	public Boolean forAddingRootJournalArticle(

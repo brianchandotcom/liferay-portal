@@ -152,7 +152,7 @@ public class AuthorizeScreenRedirectMessageBodyWriter
 			authorizeScreenURL, "reply_to",
 			oAuthAuthorizationData.getReplyTo());
 
-		if (authorizeScreenURL.length() > _invokerFilterUriMaxLength) {
+		if (authorizeScreenURL.length() > _invokerFilterURIMaxLength) {
 			authorizeScreenURL = removeParameter(
 				authorizeScreenURL, OAuthConstants.SCOPE);
 		}
@@ -167,9 +167,9 @@ public class AuthorizeScreenRedirectMessageBodyWriter
 
 	@Activate
 	protected void activate() {
-		_invokerFilterUriMaxLength = GetterUtil.getInteger(
+		_invokerFilterURIMaxLength = GetterUtil.getInteger(
 			_props.get(PropsKeys.INVOKER_FILTER_URI_MAX_LENGTH),
-			_invokerFilterUriMaxLength);
+			_invokerFilterURIMaxLength);
 	}
 
 	protected String getAuthorizeScreenURL(long companyId)
@@ -205,7 +205,7 @@ public class AuthorizeScreenRedirectMessageBodyWriter
 	@Reference
 	private Http _http;
 
-	private int _invokerFilterUriMaxLength = 4000;
+	private int _invokerFilterURIMaxLength = 4000;
 
 	@Context
 	private MessageContext _messageContext;

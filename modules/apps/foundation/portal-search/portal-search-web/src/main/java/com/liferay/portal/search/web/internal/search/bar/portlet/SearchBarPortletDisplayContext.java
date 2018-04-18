@@ -47,6 +47,10 @@ public class SearchBarPortletDisplayContext {
 		return _availableEverythingSearchScope;
 	}
 
+	public boolean isDestinationConfigured() {
+		return _destinationConfigured;
+	}
+
 	public boolean isLetTheUserChooseTheSearchScope() {
 		return _letTheUserChooseTheSearchScope;
 	}
@@ -70,6 +74,10 @@ public class SearchBarPortletDisplayContext {
 
 		_currentSiteSearchScopeParameterString =
 			searchScopeCurrentSiteParameterString;
+	}
+
+	public void setDestinationConfigured(boolean destinationConfigured) {
+		_destinationConfigured = destinationConfigured;
 	}
 
 	public void setEverythingSearchScopeParameterString(
@@ -115,6 +123,7 @@ public class SearchBarPortletDisplayContext {
 
 	private boolean _availableEverythingSearchScope;
 	private String _currentSiteSearchScopeParameterString;
+	private boolean _destinationConfigured;
 	private String _everythingSearchScopeParameterString;
 	private String _keywords;
 	private String _keywordsParameterName;

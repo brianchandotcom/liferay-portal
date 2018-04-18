@@ -103,6 +103,11 @@ public class FolderFacetPortlet
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, folderSearchFacetDisplayContext);
 
+		if (folderSearchFacetDisplayContext.isRenderNothing()) {
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
+		}
+
 		super.render(renderRequest, renderResponse);
 	}
 

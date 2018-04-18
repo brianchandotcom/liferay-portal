@@ -108,6 +108,11 @@ public class CategoryFacetPortlet
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			assetCategoriesSearchFacetDisplayContext);
 
+		if (assetCategoriesSearchFacetDisplayContext.isRenderNothing()) {
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
+		}
+
 		super.render(renderRequest, renderResponse);
 	}
 

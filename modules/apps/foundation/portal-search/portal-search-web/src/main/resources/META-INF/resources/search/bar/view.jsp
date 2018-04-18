@@ -22,51 +22,65 @@ page import="com.liferay.portal.search.web.internal.search.bar.portlet.SearchBar
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+
+<liferay-theme:defineObjects />
 
 <%
 SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortletDisplayContext)java.util.Objects.requireNonNull(request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT));
 %>
 
-<portlet:actionURL name="redirectSearchBar" var="portletURL">
-	<portlet:param name="mvcActionCommandName" value="redirectSearchBar" />
-</portlet:actionURL>
+<c:choose>
+	<c:when test="<%= searchBarPortletDisplayContext.isDestinationConfigured() %>">
+		<div class="alert alert-info text-center">
+			<liferay-ui:message key="this-search-bar-is-not-visible-to-users-yet" />
 
-<aui:form action="<%= portletURL %>" method="post" name="fm">
-	<aui:fieldset id="searchContainer">
-		<div class="input-group search-bar">
-			<aui:field-wrapper inlineField="<%= true %>">
-				<aui:input autoFocus="<%= true %>" cssClass="search-bar-keywords-input search-input" label="" name="<%= searchBarPortletDisplayContext.getKeywordsParameterName() %>" placeholder="search-..." title="search" type="text" value="<%= searchBarPortletDisplayContext.getKeywords() %>" />
-			</aui:field-wrapper>
-
-			<c:choose>
-				<c:when test="<%= searchBarPortletDisplayContext.isLetTheUserChooseTheSearchScope() %>">
-					<aui:field-wrapper inlineField="<%= true %>">
-						<aui:select cssClass="search-select" label="" name="<%= searchBarPortletDisplayContext.getScopeParameterName() %>" title="scope">
-							<c:if test="<%= searchBarPortletDisplayContext.isAvailableEverythingSearchScope() %>">
-								<aui:option label="all-sites" selected="<%= searchBarPortletDisplayContext.isSelectedEverythingSearchScope() %>" value="<%= searchBarPortletDisplayContext.getEverythingSearchScopeParameterString() %>" />
-							</c:if>
-
-							<aui:option label="this-site" selected="<%= searchBarPortletDisplayContext.isSelectedCurrentSiteSearchScope() %>" value="<%= searchBarPortletDisplayContext.getCurrentSiteSearchScopeParameterString() %>" />
-						</aui:select>
-					</aui:field-wrapper>
-				</c:when>
-				<c:otherwise>
-					<aui:input name="<%= searchBarPortletDisplayContext.getScopeParameterName() %>" type="hidden" value="<%= searchBarPortletDisplayContext.getScopeParameterValue() %>" />
-				</c:otherwise>
-			</c:choose>
-
-			<aui:field-wrapper cssClass="input-group-btn search-field" inlineField="<%= true %>">
-				<liferay-ui:icon
-					cssClass="icon-monospaced search-bar-search-button"
-					icon="search"
-					markupView="lexicon"
-				/>
-			</aui:field-wrapper>
+			<aui:a href="javascript:;" onClick="<%= portletDisplay.getURLConfigurationJS() %>"><liferay-ui:message key="set-up-its-destination-to-make-it-visible" /></aui:a>
 		</div>
-	</aui:fieldset>
-</aui:form>
+	</c:when>
+	<c:otherwise>
+		<portlet:actionURL name="redirectSearchBar" var="portletURL">
+			<portlet:param name="mvcActionCommandName" value="redirectSearchBar" />
+		</portlet:actionURL>
 
-<aui:script use="liferay-search-bar">
-	new Liferay.Search.SearchBar(A.one('#<portlet:namespace/>fm'));
-</aui:script>
+		<aui:form action="<%= portletURL %>" method="post" name="fm">
+			<aui:fieldset id="searchContainer">
+				<div class="input-group search-bar">
+					<aui:field-wrapper inlineField="<%= true %>">
+						<aui:input autoFocus="<%= true %>" cssClass="search-bar-keywords-input search-input" label="" name="<%= searchBarPortletDisplayContext.getKeywordsParameterName() %>" placeholder="search-..." title="search" type="text" value="<%= searchBarPortletDisplayContext.getKeywords() %>" />
+					</aui:field-wrapper>
+
+					<c:choose>
+						<c:when test="<%= searchBarPortletDisplayContext.isLetTheUserChooseTheSearchScope() %>">
+							<aui:field-wrapper inlineField="<%= true %>">
+								<aui:select cssClass="search-select" label="" name="<%= searchBarPortletDisplayContext.getScopeParameterName() %>" title="scope">
+									<c:if test="<%= searchBarPortletDisplayContext.isAvailableEverythingSearchScope() %>">
+										<aui:option label="all-sites" selected="<%= searchBarPortletDisplayContext.isSelectedEverythingSearchScope() %>" value="<%= searchBarPortletDisplayContext.getEverythingSearchScopeParameterString() %>" />
+									</c:if>
+
+									<aui:option label="this-site" selected="<%= searchBarPortletDisplayContext.isSelectedCurrentSiteSearchScope() %>" value="<%= searchBarPortletDisplayContext.getCurrentSiteSearchScopeParameterString() %>" />
+								</aui:select>
+							</aui:field-wrapper>
+						</c:when>
+						<c:otherwise>
+							<aui:input name="<%= searchBarPortletDisplayContext.getScopeParameterName() %>" type="hidden" value="<%= searchBarPortletDisplayContext.getScopeParameterValue() %>" />
+						</c:otherwise>
+					</c:choose>
+
+					<aui:field-wrapper cssClass="input-group-btn search-field" inlineField="<%= true %>">
+						<liferay-ui:icon
+							cssClass="icon-monospaced search-bar-search-button"
+							icon="search"
+							markupView="lexicon"
+						/>
+					</aui:field-wrapper>
+				</div>
+			</aui:fieldset>
+		</aui:form>
+
+		<aui:script use="liferay-search-bar">
+			new Liferay.Search.SearchBar(A.one('#<portlet:namespace/>fm'));
+		</aui:script>
+	</c:otherwise>
+</c:choose>

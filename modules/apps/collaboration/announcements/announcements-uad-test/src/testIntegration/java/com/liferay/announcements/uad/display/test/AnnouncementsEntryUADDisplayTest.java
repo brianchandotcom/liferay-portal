@@ -18,7 +18,6 @@ import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.announcements.uad.test.AnnouncementsEntryUADEntityTestHelper;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
@@ -38,7 +37,8 @@ import org.junit.runner.RunWith;
  * @author Noah Sherrill
  */
 @RunWith(Arquillian.class)
-public class AnnouncementsEntryUADDisplayTest extends BaseUADDisplayTestCase {
+public class AnnouncementsEntryUADDisplayTest
+	extends BaseUADDisplayTestCase<AnnouncementsEntry> {
 
 	@ClassRule
 	@Rule
@@ -46,7 +46,7 @@ public class AnnouncementsEntryUADDisplayTest extends BaseUADDisplayTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Override
-	protected BaseModel<?> addBaseModel(long userId) throws Exception {
+	protected AnnouncementsEntry addBaseModel(long userId) throws Exception {
 		AnnouncementsEntry announcementsEntry =
 			_announcementsEntryUADEntityTestHelper.addAnnouncementsEntry(
 				userId);
@@ -67,12 +67,12 @@ public class AnnouncementsEntryUADDisplayTest extends BaseUADDisplayTestCase {
 	}
 
 	@Override
-	protected UADAggregator getUADAggregator() {
+	protected UADAggregator<AnnouncementsEntry> getUADAggregator() {
 		return _uadAggregator;
 	}
 
 	@Override
-	protected UADDisplay getUADDisplay() {
+	protected UADDisplay<AnnouncementsEntry> getUADDisplay() {
 		return _uadDisplay;
 	}
 
@@ -87,11 +87,11 @@ public class AnnouncementsEntryUADDisplayTest extends BaseUADDisplayTestCase {
 	@Inject(
 		filter = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_ENTRY
 	)
-	private UADAggregator _uadAggregator;
+	private UADAggregator<AnnouncementsEntry> _uadAggregator;
 
 	@Inject(
 		filter = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_ENTRY
 	)
-	private UADDisplay _uadDisplay;
+	private UADDisplay<AnnouncementsEntry> _uadDisplay;
 
 }

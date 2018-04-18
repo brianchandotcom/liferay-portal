@@ -143,7 +143,7 @@ public class PayPalCommercePaymentEngine implements CommercePaymentEngine {
 			WebKeys.THEME_DISPLAY);
 
 		PayPalCommercePaymentEngineGroupServiceConfiguration
-			paypalCommercePaymentEngineGroupServiceConfiguration =
+			payPalCommercePaymentEngineGroupServiceConfiguration =
 				_configurationProvider.getConfiguration(
 					PayPalCommercePaymentEngineGroupServiceConfiguration.class,
 					new ParameterMapSettingsLocator(
@@ -156,7 +156,7 @@ public class PayPalCommercePaymentEngine implements CommercePaymentEngine {
 		renderRequest.setAttribute(
 			PayPalCommercePaymentEngineGroupServiceConfiguration.class.
 				getName(),
-			paypalCommercePaymentEngineGroupServiceConfiguration);
+			payPalCommercePaymentEngineGroupServiceConfiguration);
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);

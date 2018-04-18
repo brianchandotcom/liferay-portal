@@ -35,9 +35,9 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 			<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
 				<ul class="nav nav-nested">
 					<li class="nav-item">
-						<span class="text-uppercase">
+						<strong class="text-uppercase">
 							<liferay-ui:message key="site-pages" />
-						</span>
+						</strong>
 
 						<ul class="nav nav-stacked">
 							<li class="nav-item">
@@ -94,8 +94,8 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 			</nav>
 		</div>
 
-		<div class="col-lg-8">
-			<div class="sheet sheet-lg">
+		<div class="col-lg-9">
+			<div class="sheet">
 				<h3>
 					<c:choose>
 						<c:when test='<%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "pages") %>'>

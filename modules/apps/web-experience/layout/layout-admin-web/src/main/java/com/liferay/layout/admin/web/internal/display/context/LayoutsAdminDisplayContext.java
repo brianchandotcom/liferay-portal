@@ -445,22 +445,21 @@ public class LayoutsAdminDisplayContext {
 
 		navigationItems.add(pageTemplatesNavigationItem);
 
-		NavigationItem assetDisplayPagesNavigationItem = new NavigationItem();
+		NavigationItem displayPagesNavigationItem = new NavigationItem();
 
-		assetDisplayPagesNavigationItem.setActive(
+		displayPagesNavigationItem.setActive(
 			Objects.equals(getTabs1(), "display-pages"));
 
-		PortletURL assetDisplayPagesURL = getPortletURL();
+		PortletURL displayPagesURL = getPortletURL();
 
-		assetDisplayPagesURL.setParameter("tabs1", "display-pages");
+		displayPagesURL.setParameter("tabs1", "display-pages");
 
-		assetDisplayPagesNavigationItem.setHref(
-			assetDisplayPagesURL.toString());
+		displayPagesNavigationItem.setHref(displayPagesURL.toString());
 
-		assetDisplayPagesNavigationItem.setLabel(
+		displayPagesNavigationItem.setLabel(
 			LanguageUtil.get(resourceBundle, "display-pages"));
 
-		navigationItems.add(assetDisplayPagesNavigationItem);
+		navigationItems.add(displayPagesNavigationItem);
 
 		return navigationItems;
 	}

@@ -121,10 +121,10 @@ public class AuthorizationCodeGrantServiceContainerRequestFilter
 				Response.status(Response.Status.INTERNAL_SERVER_ERROR).build());
 		}
 
-		URI requestUri = uriInfo.getRequestUri();
+		URI requestURI = uriInfo.getRequestUri();
 
 		loginURL = _http.addParameter(
-			loginURL, "redirect", requestUri.toASCIIString());
+			loginURL, "redirect", requestURI.toASCIIString());
 
 		requestContext.abortWith(
 			Response.status(

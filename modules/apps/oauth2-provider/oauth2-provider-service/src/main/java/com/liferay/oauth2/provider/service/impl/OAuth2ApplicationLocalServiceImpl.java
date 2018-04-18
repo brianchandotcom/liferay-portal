@@ -150,7 +150,7 @@ public class OAuth2ApplicationLocalServiceImpl
 			"iana.registered.uri.schemes");
 
 		if (!Validator.isBlank(ianaRegisteredSchemes)) {
-			_ianaRegisteredUriSchemes = new HashSet<>(
+			_ianaRegisteredURISchemes = new HashSet<>(
 				Arrays.asList(StringUtil.split(ianaRegisteredSchemes)));
 		}
 	}
@@ -474,7 +474,7 @@ public class OAuth2ApplicationLocalServiceImpl
 
 				if (!Objects.equals(scheme, Http.HTTP) &&
 					!Objects.equals(scheme, Http.HTTPS) &&
-					_ianaRegisteredUriSchemes.contains(scheme)) {
+					_ianaRegisteredURISchemes.contains(scheme)) {
 
 					throw new OAuth2ApplicationHomePageURLSchemeException(
 						redirectURI);
@@ -496,7 +496,7 @@ public class OAuth2ApplicationLocalServiceImpl
 		}
 	}
 
-	private static Set<String> _ianaRegisteredUriSchemes = SetUtil.fromArray(
+	private static Set<String> _ianaRegisteredURISchemes = SetUtil.fromArray(
 		new String[] {
 			"aaa", "aaas", "about", "acap", "acct", "acr", "adiumxtra", "afp",
 			"afs", "aim", "appdata", "apt", "attachment", "aw", "barion",

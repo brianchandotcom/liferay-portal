@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.ListTypeConstants;
+import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
@@ -44,6 +45,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -188,6 +190,8 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 	protected void configureB2BSite(long groupId, ServiceContext serviceContext)
 		throws Exception {
 
+		updateOrganizationTypes();
+
 		_commerceOrganizationLocalService.configureB2BSite(
 			groupId, serviceContext);
 
@@ -204,7 +208,7 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 
 			String name = jsonObject.getString("name");
 
-			_createConfiguration(name);
+			_createCommerceRole(name);
 		}
 	}
 
@@ -407,6 +411,15 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 		}
 	}
 
+	protected void updateOrganizationTypes() throws Exception {
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			_getConfigurationFilter(_ORGANIZATION_TYPE_CONFIGURATION_PID));
+
+		for (String organizationType : _ORGANIZATION_TYPES) {
+			_updateOrganizationType(configurations, organizationType);
+		}
+	}
+
 	private void _addDemoAccountOrganizations(
 			long organizationId, String groupName, int quantity,
 			ServiceContext serviceContext)
@@ -427,16 +440,16 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 		}
 	}
 
-	private void _createConfiguration(String name) throws Exception {
+	private void _createCommerceRole(String name) throws Exception {
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			_getConfigurationFilter());
+			_getConfigurationFilter(_COMMERCE_ROLE_CONFIGURATION_PID));
 
 		if (configurations != null) {
 			for (Configuration configuration : configurations) {
-				Dictionary<String, Object> props =
+				Dictionary<String, Object> properties =
 					configuration.getProperties();
 
-				String roleName = (String)props.get("roleName");
+				String roleName = (String)properties.get("roleName");
 
 				if (name.equals(roleName)) {
 					return;
@@ -448,24 +461,35 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 			_configurationAdmin.createFactoryConfiguration(
 				_COMMERCE_ROLE_CONFIGURATION_PID, StringPool.QUESTION);
 
-		Dictionary<String, Object> props = configuration.getProperties();
+		Dictionary<String, Object> properties = configuration.getProperties();
 
-		if (props == null) {
-			props = new Hashtable<>();
+		if (properties == null) {
+			properties = new Hashtable<>();
 		}
 
-		props.put("roleName", name);
+		properties.put("roleName", name);
 
-		configuration.update(props);
+		configuration.update(properties);
 	}
 
-	private String _getConfigurationFilter() {
+	private void _createOrganizationType(String organizationType)
+		throws Exception {
+
+		Configuration configuration =
+			_configurationAdmin.createFactoryConfiguration(
+				_ORGANIZATION_TYPE_CONFIGURATION_PID, StringPool.QUESTION);
+
+		configuration.update(
+			_getOrganizationTypeProperties(configuration, organizationType));
+	}
+
+	private String _getConfigurationFilter(String configurationPid) {
 		StringBundler sb = new StringBundler(5);
 
 		sb.append(StringPool.OPEN_PARENTHESIS);
 		sb.append(ConfigurationAdmin.SERVICE_FACTORYPID);
 		sb.append(StringPool.EQUAL);
-		sb.append(_COMMERCE_ROLE_CONFIGURATION_PID);
+		sb.append(configurationPid);
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		return sb.toString();
@@ -481,6 +505,53 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 		return FileUtil.createTempFile(inputStream);
 	}
 
+	private String[] _getOrganizationTypeChildrenTypes(
+		String organizationType) {
+
+		if (organizationType.equals(OrganizationConstants.TYPE_ORGANIZATION)) {
+			return new String[] {
+				OrganizationConstants.TYPE_ORGANIZATION,
+				CommerceOrganizationConstants.TYPE_ACCOUNT
+			};
+		}
+		else if (organizationType.equals(
+			CommerceOrganizationConstants.TYPE_ACCOUNT)) {
+
+			return new String[] {
+				OrganizationConstants.TYPE_ORGANIZATION,
+				CommerceOrganizationConstants.TYPE_BRANCH
+			};
+		}
+
+		return new String[0];
+	}
+
+	private Dictionary<String, Object> _getOrganizationTypeProperties(
+		Configuration configuration, String organizationType) {
+
+		Dictionary<String, Object> properties = configuration.getProperties();
+
+		if (properties == null) {
+			properties = new Hashtable<>();
+		}
+
+		boolean rootable = false;
+
+		if (organizationType.equals(OrganizationConstants.TYPE_ORGANIZATION)) {
+			rootable = true;
+		}
+
+		properties.put(
+			"childrenTypes",
+			_getOrganizationTypeChildrenTypes(organizationType));
+		properties.put("countryEnabled", false);
+		properties.put("countryRequired", false);
+		properties.put("name", organizationType);
+		properties.put("rootable", rootable);
+
+		return properties;
+	}
+
 	private void _setPlidPortletPreferences(
 			long plid, String portletId, ServiceContext serviceContext)
 		throws Exception {
@@ -493,6 +564,30 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 				StringPool.BLANK);
 
 		portletSetup.store();
+	}
+
+	private void _updateOrganizationType(
+			Configuration[] configurations, String organizationType)
+		throws Exception {
+
+		if (configurations != null) {
+			for (Configuration configuration : configurations) {
+				Dictionary<String, Object> properties =
+					configuration.getProperties();
+
+				String name = (String)properties.get("name");
+
+				if (organizationType.equals(name)) {
+					configuration.update(
+						_getOrganizationTypeProperties(
+							configuration, organizationType));
+
+					return;
+				}
+			}
+		}
+
+		_createOrganizationType(organizationType);
 	}
 
 	private static final String _COMMERCE_ROLE_CONFIGURATION_PID =
@@ -517,6 +612,14 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 	private static final String _DEPENDENCY_PATH =
 		"com/liferay/commerce/initializer/customer/portal/internal" +
 			"/dependencies/";
+
+	private static final String _ORGANIZATION_TYPE_CONFIGURATION_PID =
+		"com.liferay.organizations.service.internal.configuration." +
+			"OrganizationTypeConfiguration";
+
+	private static final String[] _ORGANIZATION_TYPES = ArrayUtil.append(
+		new String[] {OrganizationConstants.TYPE_ORGANIZATION},
+		CommerceOrganizationConstants.TYPES);
 
 	private static final String _SIMPLE_CP_TYPE_CLASS_NAME =
 		"com.liferay.commerce.product.type.simple.internal.SimpleCPType";

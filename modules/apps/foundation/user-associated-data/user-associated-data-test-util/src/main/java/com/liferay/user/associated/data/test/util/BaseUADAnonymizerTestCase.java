@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
@@ -106,6 +107,8 @@ public abstract class BaseUADAnonymizerTestCase<T extends BaseModel> {
 
 		_uadAnonymizer.delete(baseModels.get(0));
 
+		deleteBaseModels(baseModels);
+
 		long baseModelPK = getBaseModelPrimaryKey(baseModel);
 
 		Assert.assertTrue(isBaseModelDeleted(baseModelPK));
@@ -117,6 +120,12 @@ public abstract class BaseUADAnonymizerTestCase<T extends BaseModel> {
 		T deletedBaseModel = addBaseModel(_user.getUserId(), false);
 
 		_uadAnonymizer.deleteAll(_user.getUserId());
+
+		List<T> baseModels = new ArrayList<>();
+
+		baseModels.add(deletedBaseModel);
+
+		deleteBaseModels(baseModels);
 
 		long baseModelPK = getBaseModelPrimaryKey(baseModel);
 
@@ -135,6 +144,9 @@ public abstract class BaseUADAnonymizerTestCase<T extends BaseModel> {
 	protected abstract T addBaseModel(long userId) throws Exception;
 
 	protected abstract T addBaseModel(long userId, boolean deleteAfterTestRun)
+		throws Exception;
+
+	protected abstract void deleteBaseModels(List<T> baseModels)
 		throws Exception;
 
 	protected long getBaseModelPrimaryKey(BaseModel baseModel) {

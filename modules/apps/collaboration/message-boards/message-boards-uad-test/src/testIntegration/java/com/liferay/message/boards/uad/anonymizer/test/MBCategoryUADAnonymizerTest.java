@@ -12,9 +12,14 @@
  * details.
  */
 
-package com.liferay.wiki.uad.anonymizer.test;
+package com.liferay.message.boards.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
+import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.service.MBCategoryLocalService;
+import com.liferay.message.boards.uad.constants.MBUADConstants;
+import com.liferay.message.boards.uad.test.MBCategoryUADEntityTestHelper;
 
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -26,11 +31,6 @@ import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
-
-import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.service.WikiNodeLocalService;
-import com.liferay.wiki.uad.constants.WikiUADConstants;
-import com.liferay.wiki.uad.test.WikiNodeUADEntityTestHelper;
 
 import org.junit.After;
 import org.junit.ClassRule;
@@ -46,49 +46,49 @@ import java.util.List;
  * @generated
  */
 @RunWith(Arquillian.class)
-public class WikiNodeUADAnonymizerTest extends BaseUADAnonymizerTestCase<WikiNode>
+public class MBCategoryUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBCategory>
 	implements WhenHasStatusByUserIdField {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
 
 	@Override
-	public WikiNode addBaseModelWithStatusByUserId(long userId,
+	public MBCategory addBaseModelWithStatusByUserId(long userId,
 		long statusByUserId) throws Exception {
-		WikiNode wikiNode = _wikiNodeUADEntityTestHelper.addWikiNodeWithStatusByUserId(userId,
+		MBCategory mbCategory = _mbCategoryUADEntityTestHelper.addMBCategoryWithStatusByUserId(userId,
 				statusByUserId);
 
-		_wikiNodes.add(wikiNode);
+		_mbCategories.add(mbCategory);
 
-		return wikiNode;
+		return mbCategory;
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		_wikiNodeUADEntityTestHelper.cleanUpDependencies(_wikiNodes);
+		_mbCategoryUADEntityTestHelper.cleanUpDependencies(_mbCategories);
 	}
 
 	@Override
-	protected WikiNode addBaseModel(long userId) throws Exception {
+	protected MBCategory addBaseModel(long userId) throws Exception {
 		return addBaseModel(userId, true);
 	}
 
 	@Override
-	protected WikiNode addBaseModel(long userId, boolean deleteAfterTestRun)
+	protected MBCategory addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
-		WikiNode wikiNode = _wikiNodeUADEntityTestHelper.addWikiNode(userId);
+		MBCategory mbCategory = _mbCategoryUADEntityTestHelper.addMBCategory(userId);
 
 		if (deleteAfterTestRun) {
-			_wikiNodes.add(wikiNode);
+			_mbCategories.add(mbCategory);
 		}
 
-		return wikiNode;
+		return mbCategory;
 	}
 
 	@Override
-	protected void deleteBaseModels(List<WikiNode> baseModels)
+	protected void deleteBaseModels(List<MBCategory> baseModels)
 		throws Exception {
-		_wikiNodeUADEntityTestHelper.cleanUpDependencies(baseModels);
+		_mbCategoryUADEntityTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -104,14 +104,14 @@ public class WikiNodeUADAnonymizerTest extends BaseUADAnonymizerTestCase<WikiNod
 	@Override
 	protected boolean isBaseModelAutoAnonymized(long baseModelPK, User user)
 		throws Exception {
-		WikiNode wikiNode = _wikiNodeLocalService.getWikiNode(baseModelPK);
+		MBCategory mbCategory = _mbCategoryLocalService.getMBCategory(baseModelPK);
 
-		String userName = wikiNode.getUserName();
-		String statusByUserName = wikiNode.getStatusByUserName();
+		String userName = mbCategory.getUserName();
+		String statusByUserName = mbCategory.getStatusByUserName();
 
-		if ((wikiNode.getUserId() != user.getUserId()) &&
+		if ((mbCategory.getUserId() != user.getUserId()) &&
 				!userName.equals(user.getFullName()) &&
-				(wikiNode.getStatusByUserId() != user.getUserId()) &&
+				(mbCategory.getStatusByUserId() != user.getUserId()) &&
 				!statusByUserName.equals(user.getFullName())) {
 			return true;
 		}
@@ -121,7 +121,7 @@ public class WikiNodeUADAnonymizerTest extends BaseUADAnonymizerTestCase<WikiNod
 
 	@Override
 	protected boolean isBaseModelDeleted(long baseModelPK) {
-		if (_wikiNodeLocalService.fetchWikiNode(baseModelPK) == null) {
+		if (_mbCategoryLocalService.fetchMBCategory(baseModelPK) == null) {
 			return true;
 		}
 
@@ -129,15 +129,15 @@ public class WikiNodeUADAnonymizerTest extends BaseUADAnonymizerTestCase<WikiNod
 	}
 
 	@DeleteAfterTestRun
-	private final List<WikiNode> _wikiNodes = new ArrayList<WikiNode>();
+	private final List<MBCategory> _mbCategories = new ArrayList<MBCategory>();
 	@Inject
-	private WikiNodeLocalService _wikiNodeLocalService;
+	private MBCategoryLocalService _mbCategoryLocalService;
 	@Inject
-	private WikiNodeUADEntityTestHelper _wikiNodeUADEntityTestHelper;
+	private MBCategoryUADEntityTestHelper _mbCategoryUADEntityTestHelper;
 	@Inject(filter = "model.class.name=" +
-	WikiUADConstants.CLASS_NAME_WIKI_NODE)
+	MBUADConstants.CLASS_NAME_MB_CATEGORY)
 	private UADAggregator _uadAggregator;
 	@Inject(filter = "model.class.name=" +
-	WikiUADConstants.CLASS_NAME_WIKI_NODE)
+	MBUADConstants.CLASS_NAME_MB_CATEGORY)
 	private UADAnonymizer _uadAnonymizer;
 }

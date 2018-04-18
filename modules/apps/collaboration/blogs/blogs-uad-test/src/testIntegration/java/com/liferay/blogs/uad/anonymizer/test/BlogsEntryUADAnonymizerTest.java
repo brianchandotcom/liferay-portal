@@ -21,7 +21,6 @@ import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.uad.constants.BlogsUADConstants;
 import com.liferay.blogs.uad.test.BlogsEntryUADEntityTestHelper;
 
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -47,14 +46,14 @@ import java.util.List;
  * @generated
  */
 @RunWith(Arquillian.class)
-public class BlogsEntryUADAnonymizerTest extends BaseUADAnonymizerTestCase
+public class BlogsEntryUADAnonymizerTest extends BaseUADAnonymizerTestCase<BlogsEntry>
 	implements WhenHasStatusByUserIdField {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
 
 	@Override
-	public BaseModel<?> addBaseModelWithStatusByUserId(long userId,
+	public BlogsEntry addBaseModelWithStatusByUserId(long userId,
 		long statusByUserId) throws Exception {
 		BlogsEntry blogsEntry = _blogsEntryUADEntityTestHelper.addBlogsEntryWithStatusByUserId(userId,
 				statusByUserId);
@@ -64,13 +63,18 @@ public class BlogsEntryUADAnonymizerTest extends BaseUADAnonymizerTestCase
 		return blogsEntry;
 	}
 
+	@After
+	public void tearDown() throws Exception {
+		_blogsEntryUADEntityTestHelper.cleanUpDependencies(_blogsEntries);
+	}
+
 	@Override
-	protected BaseModel<?> addBaseModel(long userId) throws Exception {
+	protected BlogsEntry addBaseModel(long userId) throws Exception {
 		return addBaseModel(userId, true);
 	}
 
 	@Override
-	protected BaseModel<?> addBaseModel(long userId, boolean deleteAfterTestRun)
+	protected BlogsEntry addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
 		BlogsEntry blogsEntry = _blogsEntryUADEntityTestHelper.addBlogsEntry(userId);
 
@@ -79,6 +83,12 @@ public class BlogsEntryUADAnonymizerTest extends BaseUADAnonymizerTestCase
 		}
 
 		return blogsEntry;
+	}
+
+	@Override
+	protected void deleteBaseModels(List<BlogsEntry> baseModels)
+		throws Exception {
+		_blogsEntryUADEntityTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -116,11 +126,6 @@ public class BlogsEntryUADAnonymizerTest extends BaseUADAnonymizerTestCase
 		}
 
 		return false;
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_blogsEntryUADEntityTestHelper.cleanUpDependencies(_blogsEntries);
 	}
 
 	@DeleteAfterTestRun

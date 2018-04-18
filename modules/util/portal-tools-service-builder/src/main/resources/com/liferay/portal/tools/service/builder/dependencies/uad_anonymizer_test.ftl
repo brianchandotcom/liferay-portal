@@ -6,7 +6,6 @@ import ${packagePath}.uad.constants.${portletShortName}UADConstants;
 import ${packagePath}.uad.test.${entity.name}UADEntityTestHelper;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -33,7 +32,7 @@ import org.junit.runner.RunWith;
  * @generated
  */
 @RunWith(Arquillian.class)
-public class ${entity.name}UADAnonymizerTest extends BaseUADAnonymizerTestCase <#if entity.hasEntityColumn("statusByUserId")>implements WhenHasStatusByUserIdField </#if>{
+public class ${entity.name}UADAnonymizerTest extends BaseUADAnonymizerTestCase<${entity.name}> <#if entity.hasEntityColumn("statusByUserId")>implements WhenHasStatusByUserIdField </#if>{
 
 	@ClassRule
 	@Rule
@@ -41,7 +40,7 @@ public class ${entity.name}UADAnonymizerTest extends BaseUADAnonymizerTestCase <
 
 	<#if entity.hasEntityColumn("statusByUserId")>
 		@Override
-		public BaseModel<?> addBaseModelWithStatusByUserId(long userId, long statusByUserId) throws Exception {
+		public ${entity.name} addBaseModelWithStatusByUserId(long userId, long statusByUserId) throws Exception {
 			${entity.name} ${entity.varName} = _${entity.varName}UADEntityTestHelper.add${entity.name}WithStatusByUserId(userId, statusByUserId);
 
 			_${entity.varNames}.add(${entity.varName});
@@ -50,13 +49,18 @@ public class ${entity.name}UADAnonymizerTest extends BaseUADAnonymizerTestCase <
 		}
 	</#if>
 
+	@After
+	public void tearDown() throws Exception {
+		_${entity.varName}UADEntityTestHelper.cleanUpDependencies(_${entity.varNames});
+	}
+
 	@Override
-	protected BaseModel<?> addBaseModel(long userId) throws Exception {
+	protected ${entity.name} addBaseModel(long userId) throws Exception {
 		return addBaseModel(userId, true);
 	}
 
 	@Override
-	protected BaseModel<?> addBaseModel(long userId, boolean deleteAfterTestRun) throws Exception {
+	protected ${entity.name} addBaseModel(long userId, boolean deleteAfterTestRun) throws Exception {
 		${entity.name} ${entity.varName} = _${entity.varName}UADEntityTestHelper.add${entity.name}(userId);
 
 		if (deleteAfterTestRun) {
@@ -64,6 +68,11 @@ public class ${entity.name}UADAnonymizerTest extends BaseUADAnonymizerTestCase <
 		}
 
 		return ${entity.varName};
+	}
+
+	@Override
+	protected void deleteBaseModels(List<${entity.name}> baseModels) throws Exception {
+		_${entity.varName}UADEntityTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -117,11 +126,6 @@ public class ${entity.name}UADAnonymizerTest extends BaseUADAnonymizerTestCase <
 		}
 
 		return false;
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_${entity.varName}UADEntityTestHelper.cleanUpDependencies(_${entity.varNames});
 	}
 
 	@DeleteAfterTestRun

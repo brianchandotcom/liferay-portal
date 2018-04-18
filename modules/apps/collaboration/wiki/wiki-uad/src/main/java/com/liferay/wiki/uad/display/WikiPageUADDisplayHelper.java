@@ -32,8 +32,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author William Newbury
  */
-@Component(immediate = true, service = WikiPageUADEntityDisplayHelper.class)
-public class WikiPageUADEntityDisplayHelper {
+@Component(immediate = true, service = WikiPageUADDisplayHelper.class)
+public class WikiPageUADDisplayHelper {
 
 	/**
 	 * Returns an ordered string array of the fields' names to be displayed.

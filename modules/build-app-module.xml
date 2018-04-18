@@ -82,7 +82,7 @@
 		name="dist-module-artifact"
 	/>
 
-	<target depends="move-artifact,move-artifact-dependencies" name="dist-module-artifact-lpkg" />
+	<target depends="move-artifact,move-artifact-dependencies,move-artifact-wsdd" name="dist-module-artifact-lpkg" />
 
 	<target depends="get-artifact-properties" name="download-artifact" unless="artifact.exclude">
 		<fail message="Missing artifact.properties file in ${releng.module.dir}.">
@@ -433,6 +433,31 @@
 		</move>
 
 		<delete dir="artifact.dependencies.tmp.dir" quiet="true" />
+	</target>
+
+	<target depends="get-artifact-properties" if="download.artifact.wsdd" name="move-artifact-wsdd" unless="artifact.exclude">
+		<loadfile property="artifact.location.wsdd.dest">
+			<filterchain>
+				<replaceregex pattern="\.jar$" replace="-wsdd.jar" />
+
+				<striplinebreaks />
+			</filterchain>
+			<propertyresource name="artifact.location.dest" />
+		</loadfile>
+
+		<loadfile property="artifact.location.wsdd.src">
+			<filterchain>
+				<replaceregex pattern="\.jar$" replace="-wsdd.jar" />
+
+				<striplinebreaks />
+			</filterchain>
+			<propertyresource name="artifact.location.src" />
+		</loadfile>
+
+		<move
+			file="${artifact.location.wsdd.src}"
+			tofile="${artifact.location.wsdd.dest}"
+		/>
 	</target>
 
 	<target depends="get-artifact-change-log-ticket-list" description="Record the change log tickets for the current module to app.changelog." if="${artifact.has.change.log.ticket.list}" name="record-artifact-change-log">

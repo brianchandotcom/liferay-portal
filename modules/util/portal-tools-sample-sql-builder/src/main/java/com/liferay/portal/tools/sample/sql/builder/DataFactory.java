@@ -1442,7 +1442,8 @@ public class DataFactory {
 
 		counterModels.add(counterModel);
 
-		//FriendlyURLEntryLocalization
+		// FriendlyURLEntryLocalization
+
 		counterModel = new CounterModelImpl();
 
 		counterModel.setName(FriendlyURLEntryLocalization.class.getName());

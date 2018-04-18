@@ -30,9 +30,9 @@ let initSPA = function() {
 
 					const loginRedirect = new Uri(Liferay.SPA.loginRedirect);
 
-					const hostname = loginRedirect.getHostname() || window.location.hostname;
+					const host = loginRedirect.getHost() || window.location.host;
 
-					if (app.isLinkSameOrigin_(hostname)) {
+					if (app.isLinkSameOrigin_(host)) {
 						match = uri.getParameterValue('p_p_lifecycle') === '1';
 					}
 

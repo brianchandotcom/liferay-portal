@@ -3,14 +3,12 @@
 
 .notifications-portlet .user-notifications {
 	.unread {
-		.list-group-item-field:first-child {
-			&:before {
-				background-color: #65B3F0;
-				content: '';
-				width: 6px;
+		&:before {
+			background-color: #65B3F0;
+			content: '';
+			width: 6px;
 
-				@include position(absolute, 0 null 0 0);
-			}
+			@include position(absolute, 0 null 0 0);
 		}
 	}
 }

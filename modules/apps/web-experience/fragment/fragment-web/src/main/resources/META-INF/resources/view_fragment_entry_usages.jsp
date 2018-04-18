@@ -143,8 +143,8 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 							<liferay-ui:search-container-column-text
 								name="propagation"
 							>
-								<span class="label <%= fragmentEntryLink.isLatestFragmentEntryUsed() ? "label-success" : "label-warning" %>">
-									<liferay-ui:message key='<%= fragmentEntryLink.isLatestFragmentEntryUsed() ? "propagated" : "not-propagated" %>' />
+								<span class="label <%= fragmentEntryLink.isLatestVersion() ? "label-success" : "label-warning" %>">
+									<liferay-ui:message key='<%= fragmentEntryLink.isLatestVersion() ? "propagated" : "not-propagated" %>' />
 								</span>
 							</liferay-ui:search-container-column-text>
 

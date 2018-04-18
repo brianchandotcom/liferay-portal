@@ -29,7 +29,7 @@ import java.util.Date;
 public class FragmentEntryLinkImpl extends FragmentEntryLinkBaseImpl {
 
 	@Override
-	public boolean isLatestFragmentEntryUsed() throws PortalException {
+	public boolean isLatestVersion() throws PortalException {
 		FragmentEntry fragmentEntry =
 			FragmentEntryLocalServiceUtil.getFragmentEntry(
 				getFragmentEntryId());

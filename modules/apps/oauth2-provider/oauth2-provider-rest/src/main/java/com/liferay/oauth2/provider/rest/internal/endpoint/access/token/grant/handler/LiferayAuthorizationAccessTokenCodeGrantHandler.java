@@ -95,7 +95,7 @@ public class LiferayAuthorizationAccessTokenCodeGrantHandler
 
 		if (!clientsMatch(client, serverAuthorizationCodeGrant.getClient())) {
 
-			// audit: Trying to get other client's code
+			// Try to get other client's code
 
 			_liferayOAuthDataProvider.removeCodeGrant(code);
 

@@ -80,7 +80,8 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 
 			jsonObject.put(
 				"redirectURL",
-				getRedirectURL(actionResponse, layoutPageTemplateEntry));
+				getRedirectURL(
+					actionRequest, actionResponse, layoutPageTemplateEntry));
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);
@@ -94,7 +95,7 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 	}
 
 	protected String getRedirectURL(
-		ActionResponse actionResponse,
+		ActionRequest actionRequest, ActionResponse actionResponse,
 		LayoutPageTemplateEntry layoutPageTemplateEntry) {
 
 		LiferayPortletResponse liferayPortletResponse =
@@ -112,6 +113,8 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 			"layoutPageTemplateEntryId",
 			String.valueOf(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+		portletURL.setParameter(
+			"redirect", ParamUtil.getString(actionRequest, "redirect"));
 
 		return portletURL.toString();
 	}

@@ -72,22 +72,6 @@ public class LayoutPageTemplateDisplayContext {
 		return _displayStyle;
 	}
 
-	public String getEditLayoutPageTemplateEntryRedirect() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcPath", "/view_layout_page_template_entries.jsp");
-		portletURL.setParameter("tabs1", "page-templates");
-
-		if (getLayoutPageTemplateCollectionId() > 0) {
-			portletURL.setParameter(
-				"layoutPageTemplateCollectionId",
-				String.valueOf(getLayoutPageTemplateCollectionId()));
-		}
-
-		return portletURL.toString();
-	}
-
 	public String getKeywords() {
 		if (_keywords != null) {
 			return _keywords;

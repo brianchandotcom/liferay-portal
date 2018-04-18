@@ -17,6 +17,7 @@ package com.liferay.layout.admin.web.internal.display.context;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.configuration.LayoutAdminWebConfiguration;
 import com.liferay.layout.admin.web.constants.LayoutAdminDisplayStyleKeys;
@@ -67,7 +68,6 @@ import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -409,55 +409,39 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() {
-		List<NavigationItem> navigationItems = new ArrayList<>();
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(
+							Objects.equals(getTabs1(), "pages"));
+						navigationItem.setHref(
+							getPortletURL(), "tabs1", "pages");
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "pages"));
+					});
 
-		NavigationItem pagesNavigationItem = new NavigationItem();
+				add(
+					navigationItem -> {
+						navigationItem.setActive(
+							Objects.equals(getTabs1(), "page-templates"));
+						navigationItem.setHref(
+							getPortletURL(), "tabs1", "page-templates");
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "page-templates"));
+					});
 
-		pagesNavigationItem.setActive(Objects.equals(getTabs1(), "pages"));
-
-		PortletURL pagesURL = getPortletURL();
-
-		pagesURL.setParameter("tabs1", "pages");
-
-		pagesNavigationItem.setHref(pagesURL.toString());
-
-		pagesNavigationItem.setLabel(LanguageUtil.get(_request, "pages"));
-
-		navigationItems.add(pagesNavigationItem);
-
-		NavigationItem pageTemplatesNavigationItem = new NavigationItem();
-
-		pageTemplatesNavigationItem.setActive(
-			Objects.equals(getTabs1(), "page-templates"));
-
-		PortletURL pageTemplatesURL = getPortletURL();
-
-		pageTemplatesURL.setParameter("tabs1", "page-templates");
-
-		pageTemplatesNavigationItem.setHref(pageTemplatesURL.toString());
-
-		pageTemplatesNavigationItem.setLabel(
-			LanguageUtil.get(_request, "page-templates"));
-
-		navigationItems.add(pageTemplatesNavigationItem);
-
-		NavigationItem displayPagesNavigationItem = new NavigationItem();
-
-		displayPagesNavigationItem.setActive(
-			Objects.equals(getTabs1(), "display-pages"));
-
-		PortletURL displayPagesURL = getPortletURL();
-
-		displayPagesURL.setParameter("tabs1", "display-pages");
-
-		displayPagesNavigationItem.setHref(displayPagesURL.toString());
-
-		displayPagesNavigationItem.setLabel(
-			LanguageUtil.get(_request, "display-pages"));
-
-		navigationItems.add(displayPagesNavigationItem);
-
-		return navigationItems;
+				add(
+					navigationItem -> {
+						navigationItem.setActive(
+							Objects.equals(getTabs1(), "display-pages"));
+						navigationItem.setHref(
+							getPortletURL(), "tabs1", "display-pages");
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "display-pages"));
+					});
+			}
+		};
 	}
 
 	public String[] getNavigationKeys() {

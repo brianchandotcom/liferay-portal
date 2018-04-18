@@ -23,7 +23,10 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.io.Serializable;
+
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -59,9 +62,10 @@ public class BlogsEntryUADEntityTestHelper {
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId());
 
-		_blogsEntryLocalService.updateStatus(
+		blogsEntry = _blogsEntryLocalService.updateStatus(
 			statusByUserId, blogsEntry.getEntryId(),
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			WorkflowConstants.STATUS_APPROVED, serviceContext,
+			new HashMap<String, Serializable>());
 
 		return blogsEntry;
 	}

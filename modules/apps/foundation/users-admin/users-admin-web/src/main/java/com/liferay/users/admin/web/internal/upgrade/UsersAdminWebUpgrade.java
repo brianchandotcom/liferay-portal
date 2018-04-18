@@ -44,17 +44,15 @@ public class UsersAdminWebUpgrade implements UpgradeStepRegistrator {
 			_releaseLocalService.updateRelease(release);
 		}
 
-		registry.register(
-			"com.liferay.users.admin.web", "0.0.0", "0.0.1",
-			new DummyUpgradeStep());
+		registry.register("0.0.0", "0.0.1", new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.users.admin.web", "0.0.1", "1.0.0",
+			"0.0.1", "1.0.0",
 			new UpgradeFileUploadsConfiguration(
 				_configurationAdmin, _prefsProps));
 
 		registry.register(
-			"com.liferay.users.admin.web", "1.0.0", "1.0.1",
+			"1.0.0", "1.0.1",
 			new BaseUpgradePortletId() {
 
 				@Override

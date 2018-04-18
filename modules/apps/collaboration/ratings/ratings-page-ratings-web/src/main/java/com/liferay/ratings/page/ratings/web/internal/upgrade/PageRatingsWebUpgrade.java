@@ -30,9 +30,7 @@ public class PageRatingsWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"com.liferay.ratings.page.ratings.web", "0.0.0", "1.0.0",
-			new DummyUpgradeStep());
+		registry.register("0.0.0", "1.0.0", new DummyUpgradeStep());
 
 		UpgradeStep upgradePortletId = new BaseUpgradePortletId() {
 
@@ -45,9 +43,7 @@ public class PageRatingsWebUpgrade implements UpgradeStepRegistrator {
 
 		};
 
-		registry.register(
-			"com.liferay.ratings.page.ratings.web", "0.0.1", "1.0.0",
-			upgradePortletId);
+		registry.register("0.0.1", "1.0.0", upgradePortletId);
 	}
 
 }

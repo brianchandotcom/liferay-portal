@@ -30,20 +30,16 @@ import org.osgi.service.component.annotations.Reference;
  * @author Miguel Pastor
  */
 @Component(immediate = true, service = UpgradeStepRegistrator.class)
-public class DLServiceUpgradeProcess implements UpgradeStepRegistrator {
+public class DLServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"com.liferay.document.library.service", "0.0.0", "1.0.0",
-			new DummyUpgradeStep());
+		registry.register("0.0.0", "1.0.0", new DummyUpgradeStep());
+
+		registry.register("0.0.1", "1.0.0", new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.document.library.service", "0.0.1", "1.0.0",
-			new DummyUpgradeStep());
-
-		registry.register(
-			"com.liferay.document.library.service", "1.0.0", "1.0.1",
+			"1.0.0", "1.0.1",
 			new UpgradeDLConfiguration(
 				_configurationAdmin, _prefsProps,
 				_prefsPropsToConfigurationUpgrade),
@@ -51,9 +47,7 @@ public class DLServiceUpgradeProcess implements UpgradeStepRegistrator {
 				_configurationAdmin, _prefsProps,
 				_prefsPropsToConfigurationUpgrade));
 
-		registry.register(
-			"com.liferay.document.library.service", "1.0.1", "1.0.2",
-			new UpgradeDLFileShortcut());
+		registry.register("1.0.1", "1.0.2", new UpgradeDLFileShortcut());
 	}
 
 	@Reference

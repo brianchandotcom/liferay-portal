@@ -28,9 +28,7 @@ public class MessageBoardsLayoutSetPrototypeUpgrade
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"com.liferay.message.boards.layout.set.prototype", "0.0.0", "1.0.0",
-			new UpgradeLocalizedColumn());
+		registry.register("0.0.0", "1.0.0", new UpgradeLocalizedColumn());
 	}
 
 }

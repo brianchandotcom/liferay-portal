@@ -31,12 +31,10 @@ public class UploadUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"com.liferay.portal.upload", "0.0.0", "0.0.1",
-			new DummyUpgradeStep());
+		registry.register("0.0.0", "0.0.1", new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.portal.upload", "0.0.1", "1.0.0",
+			"0.0.1", "1.0.0",
 			new UpgradeUploadServletRequestConfiguration(
 				_configurationAdmin, _prefsProps));
 	}

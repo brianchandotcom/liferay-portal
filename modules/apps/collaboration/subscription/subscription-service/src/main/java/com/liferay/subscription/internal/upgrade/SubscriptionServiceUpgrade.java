@@ -29,9 +29,7 @@ public class SubscriptionServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"com.liferay.subscription.service", "0.0.1", "1.0.0",
-			new UpgradeClassNames());
+		registry.register("0.0.1", "1.0.0", new UpgradeClassNames());
 	}
 
 	@Reference

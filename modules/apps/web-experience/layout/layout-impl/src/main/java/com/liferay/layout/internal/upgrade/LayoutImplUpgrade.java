@@ -27,9 +27,7 @@ public class LayoutImplUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"com.liferay.layout.impl", "0.0.0", "1.0.0",
-			new UpgradeLayoutPermissions());
+		registry.register("0.0.0", "1.0.0", new UpgradeLayoutPermissions());
 	}
 
 }

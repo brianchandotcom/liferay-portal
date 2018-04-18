@@ -33,7 +33,7 @@ public class SyncWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.sync.web", "0.0.0", "1.0.0",
+			"0.0.0", "1.0.0",
 			new BaseUpgradePortletId() {
 
 				@Override

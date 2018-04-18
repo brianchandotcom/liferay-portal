@@ -60,9 +60,7 @@ public class SocialNetworkingWebUpgrade implements UpgradeStepRegistrator {
 			throw new RuntimeException(ue);
 		}
 
-		registry.register(
-			"com.liferay.social.networking.web", "0.0.1", "1.0.4",
-			new DummyUpgradeStep());
+		registry.register("0.0.1", "1.0.4", new DummyUpgradeStep());
 	}
 
 }

@@ -55,19 +55,13 @@ public class MicroblogsWebUpgrade implements UpgradeStepRegistrator {
 			throw new RuntimeException(ue);
 		}
 
-		registry.register(
-			"com.liferay.microblogs.web", "0.0.0", "1.0.0",
-			new DummyUpgradeStep());
+		registry.register("0.0.0", "1.0.0", new DummyUpgradeStep());
 
-		registry.register(
-			"com.liferay.microblogs.web", "0.0.1", "1.0.1",
-			new UpgradePortletId());
+		registry.register("0.0.1", "1.0.1", new UpgradePortletId());
 
 		// See LPS-65946
 
-		registry.register(
-			"com.liferay.microblogs.web", "1.0.0", "1.0.1",
-			new UpgradePortletId());
+		registry.register("1.0.0", "1.0.1", new UpgradePortletId());
 	}
 
 }

@@ -32,8 +32,7 @@ public class AMDocumentLibraryThumbnailsUpgrade
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.adaptive.media.document.library.thumbnails", "0.0.0",
-			"1.0.0",
+			"0.0.0", "1.0.0",
 			new UpgradeDocumentLibraryThumbnailsConfiguration(
 				_amCompanyThumbnailConfigurationInitializer,
 				_companyLocalService));

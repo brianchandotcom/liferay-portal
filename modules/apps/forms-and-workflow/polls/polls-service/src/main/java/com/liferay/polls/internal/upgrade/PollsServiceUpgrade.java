@@ -33,19 +33,15 @@ public class PollsServiceUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.polls.service", "0.0.1", "0.0.2",
-			new UpgradeKernelPackage(), new UpgradePortletId());
+			"0.0.1", "0.0.2", new UpgradeKernelPackage(),
+			new UpgradePortletId());
+
+		registry.register("0.0.2", "1.0.0", new UpgradeLastPublishDate());
+
+		registry.register("1.0.0", "1.0.4", new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.polls.service", "0.0.2", "1.0.0",
-			new UpgradeLastPublishDate());
-
-		registry.register(
-			"com.liferay.polls.service", "1.0.0", "1.0.4",
-			new DummyUpgradeStep());
-
-		registry.register(
-			"com.liferay.polls.service", "1.0.3", "1.0.4",
+			"1.0.3", "1.0.4",
 			new com.liferay.polls.internal.upgrade.v1_0_4.UpgradePortletId());
 	}
 

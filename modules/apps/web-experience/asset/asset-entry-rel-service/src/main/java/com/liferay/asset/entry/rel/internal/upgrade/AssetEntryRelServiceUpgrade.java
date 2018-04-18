@@ -30,13 +30,10 @@ public class AssetEntryRelServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"com.liferay.asset.entry.rel.service", "0.0.0", "1.0.0",
-			new DummyUpgradeStep());
+		registry.register("0.0.0", "1.0.0", new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.asset.entry.rel.service", "0.0.1", "1.0.0",
-			new UpgradeAssetEntryAssetCategoryRel());
+			"0.0.1", "1.0.0", new UpgradeAssetEntryAssetCategoryRel());
 	}
 
 }

@@ -800,6 +800,81 @@
 
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
+	<entity local-service="true" name="CPRule" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="CPRuleId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+		<column name="active" type="boolean" />
+		<column name="type" type="String" />
+		<column name="typeSettings" type="String" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="CPRuleUserSegmentRel" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="CPRuleUserSegmentRelId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="CPRuleId" type="long" />
+		<column name="commerceUserSegmentEntryId" type="boolean" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CPRuleId" return-type="Collection">
+			<finder-column name="CPRuleId" />
+		</finder>
+		<finder name="commerceUserSegmentEntryId" return-type="Collection">
+			<finder-column name="commerceUserSegmentEntryId" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="CPSpecificationOption" remote-service="true" uuid="true">
 
 		<!-- PK fields -->

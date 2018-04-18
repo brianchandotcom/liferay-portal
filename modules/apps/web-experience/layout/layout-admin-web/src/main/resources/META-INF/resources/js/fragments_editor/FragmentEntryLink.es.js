@@ -5,6 +5,7 @@ import Soy from 'metal-soy';
 
 import EditableTextFragmentProcessor from './fragment_processors/EditableTextFragmentProcessor.es';
 import EditableImageFragmentProcessor from './fragment_processors/EditableImageFragmentProcessor.es';
+import MappeableFragmentProcessor from './fragment_processors/MappeableFragmentProcessor.es';
 import templates from './FragmentEntryLink.soy';
 
 const ARROW_DOWN_KEYCODE = 40;
@@ -15,7 +16,8 @@ const EDITABLE_FRAGMENT_ENTRY_PROCESSOR = 'com.liferay.fragment.entry.processor.
 
 const FRAGMENT_PROCESSORS = [
 	EditableTextFragmentProcessor,
-	EditableImageFragmentProcessor
+	EditableImageFragmentProcessor,
+	MappeableFragmentProcessor
 ];
 
 /**

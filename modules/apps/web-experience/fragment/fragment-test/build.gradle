@@ -8,8 +8,9 @@ copyLibs {
 dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	testIntegrationCompile project (":apps:web-experience:fragment:fragment-api")
-	testIntegrationCompile project (":apps:web-experience:fragment:fragment-service")
+	testIntegrationCompile project(":apps:web-experience:export-import:export-import-test-util")
+	testIntegrationCompile project(":apps:web-experience:fragment:fragment-api")
+	testIntegrationCompile project(":apps:web-experience:fragment:fragment-service")
 	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

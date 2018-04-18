@@ -36,12 +36,10 @@
 		function <portlet:namespace />monitorIframe() {
 			var A = AUI();
 
-			var iframe = null;
-
 			var url = null;
 
 			try {
-				iframe = A.one('#<portlet:namespace />iframe');
+				var iframe = document.getElementById('<portlet:namespace />iframe');
 
 				url = iframe.contentWindow.document.location.href;
 			}

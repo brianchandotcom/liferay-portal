@@ -121,41 +121,42 @@ public class LiferayOAuthDataProvider
 	}
 
 	@Override
-	public ServerAccessToken createAccessToken(AccessTokenRegistration reg)
+	public ServerAccessToken createAccessToken(AccessTokenRegistration accessTokenRegistration)
 		throws OAuthServiceException {
 
-		List<String> approvedScope = new ArrayList<>(reg.getApprovedScope());
+		List<String> approvedScope = new ArrayList<>(
+			accessTokenRegistration.getApprovedScope());
 
 		if (approvedScope.isEmpty()) {
-			Client client = reg.getClient();
+			Client client = accessTokenRegistration.getClient();
 
 			approvedScope.addAll(client.getRegisteredScopes());
 		}
 
-		reg.setApprovedScope(approvedScope);
+		accessTokenRegistration.setApprovedScope(approvedScope);
 
 		if (!OAuthConstants.CLIENT_CREDENTIALS_GRANT.equals(
-				reg.getGrantType())) {
+				accessTokenRegistration.getGrantType())) {
 
 			approvedScope.add(OAuthConstants.REFRESH_TOKEN_SCOPE);
 		}
 
-		return super.createAccessToken(reg);
+		return super.createAccessToken(accessTokenRegistration);
 	}
 
 	@Override
 	public ServerAuthorizationCodeGrant createCodeGrant(
-			AuthorizationCodeRegistration reg)
+			AuthorizationCodeRegistration authorizationCodeRegistration)
 		throws OAuthServiceException {
 
-		ServerAuthorizationCodeGrant authorizationCodeGrant =
-			super.createCodeGrant(reg);
+		ServerAuthorizationCodeGrant serverAuthorizationCodeGrant =
+			super.createCodeGrant(authorizationCodeRegistration);
 
 		_codeGrantsPortalCache.put(
-			authorizationCodeGrant.getCode(), authorizationCodeGrant,
-			Math.toIntExact(authorizationCodeGrant.getExpiresIn()));
+			serverAuthorizationCodeGrant.getCode(), serverAuthorizationCodeGrant,
+			Math.toIntExact(serverAuthorizationCodeGrant.getExpiresIn()));
 
-		return authorizationCodeGrant;
+		return serverAuthorizationCodeGrant;
 	}
 
 	@Override
@@ -332,7 +333,7 @@ public class LiferayOAuthDataProvider
 
 		List<String> keys = _codeGrantsPortalCache.getKeys();
 
-		List<ServerAuthorizationCodeGrant> authorizationCodeGrants =
+		List<ServerAuthorizationCodeGrant> serverAuthorizationCodeGrants =
 			new ArrayList<>();
 
 		for (String key : keys) {
@@ -346,11 +347,11 @@ public class LiferayOAuthDataProvider
 			if (client.equals(serverAuthorizationCodeGrant.getClient()) &&
 				subject.equals(serverAuthorizationCodeGrant.getSubject())) {
 
-				authorizationCodeGrants.add(serverAuthorizationCodeGrant);
+				serverAuthorizationCodeGrants.add(serverAuthorizationCodeGrant);
 			}
 		}
 
-		return authorizationCodeGrants;
+		return serverAuthorizationCodeGrants;
 	}
 
 	@Override

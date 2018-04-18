@@ -61,10 +61,8 @@ public class AuthorizationCodeGrantServiceRegistrator {
 
 		authorizationCodeGrantService.setCanSupportPublicClients(
 			oAuth2ProviderConfiguration.allowAuthorizationCodePKCEGrant());
-
 		authorizationCodeGrantService.setDataProvider(
 			_liferayOAuthDataProvider);
-
 		authorizationCodeGrantService.setSubjectCreator(_subjectCreator);
 
 		Dictionary<String, Object> endpointProperties = new Hashtable<>();

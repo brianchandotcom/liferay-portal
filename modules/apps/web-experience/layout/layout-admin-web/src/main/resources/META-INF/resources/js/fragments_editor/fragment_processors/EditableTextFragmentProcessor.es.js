@@ -102,6 +102,10 @@ class EditableTextFragmentProcessor {
 			this._handleEditorChange
 		);
 
+		nativeEditor.name = this.fragmentEntryLink.portletNamespace +
+			'_fragmentEntryLink_' +
+			this.fragmentEntryLink.fragmentEntryLinkId;
+
 		return {
 			defaultValue: editableContent,
 			editableField,

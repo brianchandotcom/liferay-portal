@@ -53,15 +53,6 @@ public class CPDefinitionAvailabilityRangeLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCPDefinitionAvailabilityRanges(
-			long commerceAvailabilityRangeId)
-		throws PortalException {
-
-		cpDefinitionAvailabilityRangePersistence.
-			removeByCommerceAvailabilityRangeId(commerceAvailabilityRangeId);
-	}
-
-	@Override
 	public void deleteCPDefinitionAvailabilityRangeByCPDefinitionId(
 		long cpDefinitionId) {
 
@@ -74,6 +65,15 @@ public class CPDefinitionAvailabilityRangeLocalServiceImpl
 				deleteCPDefinitionAvailabilityRange(
 					cpDefinitionAvailabilityRange);
 		}
+	}
+
+	@Override
+	public void deleteCPDefinitionAvailabilityRanges(
+			long commerceAvailabilityRangeId)
+		throws PortalException {
+
+		cpDefinitionAvailabilityRangePersistence.
+			removeByCommerceAvailabilityRangeId(commerceAvailabilityRangeId);
 	}
 
 	@Override

@@ -18,7 +18,7 @@ import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.user.associated.data.display.UADEntityDisplay;
+import com.liferay.user.associated.data.display.UADDisplay;
 
 import java.util.Map;
 
@@ -31,17 +31,16 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = "model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY,
-	service = UADEntityDisplay.class
+	service = UADDisplay.class
 )
-public class BookmarksEntryUADEntityDisplay
-	implements UADEntityDisplay<BookmarksEntry> {
+public class BookmarksEntryUADDisplay implements UADDisplay<BookmarksEntry> {
 
 	public String getApplicationName() {
 		return BookmarksUADConstants.APPLICATION_NAME;
 	}
 
 	public String[] getDisplayFieldNames() {
-		return _bookmarksEntryUADEntityDisplayHelper.getDisplayFieldNames();
+		return _bookmarksEntryUADDisplayHelper.getDisplayFieldNames();
 	}
 
 	public String getEditURL(
@@ -50,7 +49,7 @@ public class BookmarksEntryUADEntityDisplay
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		return _bookmarksEntryUADEntityDisplayHelper.getBookmarksEntryEditURL(
+		return _bookmarksEntryUADDisplayHelper.getBookmarksEntryEditURL(
 			bookmarksEntry, liferayPortletRequest, liferayPortletResponse);
 	}
 
@@ -62,8 +61,8 @@ public class BookmarksEntryUADEntityDisplay
 	public Map<String, Object> getNonanonymizableFieldValues(
 		BookmarksEntry bookmarksEntry) {
 
-		return _bookmarksEntryUADEntityDisplayHelper.
-			getNonanonymizableFieldValues(bookmarksEntry);
+		return _bookmarksEntryUADDisplayHelper.getNonanonymizableFieldValues(
+			bookmarksEntry);
 	}
 
 	public String getTypeDescription() {
@@ -75,7 +74,6 @@ public class BookmarksEntryUADEntityDisplay
 	}
 
 	@Reference
-	private BookmarksEntryUADEntityDisplayHelper
-		_bookmarksEntryUADEntityDisplayHelper;
+	private BookmarksEntryUADDisplayHelper _bookmarksEntryUADDisplayHelper;
 
 }

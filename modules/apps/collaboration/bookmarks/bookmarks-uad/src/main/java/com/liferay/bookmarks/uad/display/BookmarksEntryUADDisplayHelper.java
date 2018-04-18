@@ -27,10 +27,8 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Noah Sherrill
  */
-@Component(
-	immediate = true, service = BookmarksEntryUADEntityDisplayHelper.class
-)
-public class BookmarksEntryUADEntityDisplayHelper {
+@Component(immediate = true, service = BookmarksEntryUADDisplayHelper.class)
+public class BookmarksEntryUADDisplayHelper {
 
 	public String getBookmarksEntryEditURL(
 			BookmarksEntry bookmarksEntry,

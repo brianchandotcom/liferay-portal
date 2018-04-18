@@ -117,7 +117,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 					actionItems="<%= fragmentEntryLinkDisplayContext.getActionItemsDropdownItemList() %>"
 					clearResultsURL="<%= currentURL %>"
 					componentId="fragmentEntryLinksManagementToolbar"
-					disabled="<%= fragmentEntry.getUsageCount() > 0 %>"
+					disabled="<%= fragmentEntry.getUsageCount() <= 0 %>"
 					namespace="<%= renderResponse.getNamespace() %>"
 					searchActionURL="<%= currentURL %>"
 					searchContainerId="fragmentEntryLinks"

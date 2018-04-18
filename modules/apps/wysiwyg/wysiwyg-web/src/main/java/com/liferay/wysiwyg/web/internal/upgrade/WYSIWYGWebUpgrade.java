@@ -54,13 +54,9 @@ public class WYSIWYGWebUpgrade implements UpgradeStepRegistrator {
 			throw new RuntimeException(ue);
 		}
 
-		registry.register(
-			"com.liferay.wysiwyg.web", "0.0.0", "1.0.0",
-			new DummyUpgradeStep());
+		registry.register("0.0.0", "1.0.0", new DummyUpgradeStep());
 
-		registry.register(
-			"com.liferay.wysiwyg.web", "0.0.1", "1.0.0",
-			new UpgradePortletId());
+		registry.register("0.0.1", "1.0.0", new UpgradePortletId());
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

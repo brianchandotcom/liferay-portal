@@ -29,13 +29,11 @@ public class JournalContentWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"com.liferay.journal.content.web", "0.0.0", "1.0.0",
-			new DummyUpgradeStep());
+		registry.register("0.0.0", "1.0.0", new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.journal.content.web", "0.0.1", "1.0.0",
-			new UpgradePortletId(), new UpgradePortletPreferences());
+			"0.0.1", "1.0.0", new UpgradePortletId(),
+			new UpgradePortletPreferences());
 	}
 
 }

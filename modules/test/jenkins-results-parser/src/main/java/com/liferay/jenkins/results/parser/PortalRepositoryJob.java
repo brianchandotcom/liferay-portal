@@ -51,32 +51,11 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 			return gitWorkingDirectory;
 		}
 
-		String branchName = getBranchName();
-
-		Properties buildProperties = null;
-
-		try {
-			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException("Unable to get build properties", ioe);
-		}
-
-		String workingDirectoryPath = buildProperties.getProperty(
-			"base.repository.dir") + "/liferay-portal";
-
-		if (!branchName.equals("master")) {
-			workingDirectoryPath = JenkinsResultsParserUtil.combine(
-				workingDirectoryPath, "-", branchName);
-		}
-
-		super.setRepositoryDir(new File(workingDirectoryPath));
-
 		checkRepositoryDir();
 
 		try {
 			gitWorkingDirectory = new PortalGitWorkingDirectory(
-				branchName, repositoryDir.getAbsolutePath());
+				getBranchName(), repositoryDir.getAbsolutePath());
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(
@@ -112,6 +91,8 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 
 	protected PortalRepositoryJob(String jobName) {
 		super(jobName);
+
+		_findRepositoryDir();
 	}
 
 	protected Properties getPortalTestProperties() {
@@ -150,5 +131,28 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 	}
 
 	protected Properties portalTestProperties;
+
+	private void _findRepositoryDir() {
+		String branchName = getBranchName();
+
+		Properties buildProperties = null;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to get build properties", ioe);
+		}
+
+		String workingDirectoryPath = buildProperties.getProperty(
+			"base.repository.dir") + "/liferay-portal";
+
+		if (!branchName.equals("master")) {
+			workingDirectoryPath = JenkinsResultsParserUtil.combine(
+				workingDirectoryPath, "-", branchName);
+		}
+
+		super.setRepositoryDir(new File(workingDirectoryPath));
+	}
 
 }

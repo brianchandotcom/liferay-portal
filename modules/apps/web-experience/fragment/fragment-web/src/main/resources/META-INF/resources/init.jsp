@@ -68,7 +68,8 @@ page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.util.Date" %><%@
 page import="java.util.HashMap" %><%@
-page import="java.util.Map" %>
+page import="java.util.Map" %><%@
+page import="java.util.Objects" %>
 
 <%@ page import="javax.portlet.PortletMode" %><%@
 page import="javax.portlet.PortletURL" %>

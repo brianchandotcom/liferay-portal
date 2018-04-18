@@ -47,7 +47,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 						%>
 
 						<aui:a cssClass="nav-link" href="<%= allNavigationURL.toString() %>">
-							<liferay-ui:message arguments='<%= fragmentEntryLinkDisplayContext.getUsageCount("all") %>' key="all-x" />
+							<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getAllUsageCount() %>" key="all-x" />
 						</aui:a>
 					</li>
 					<li>
@@ -59,7 +59,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 						%>
 
 						<aui:a cssClass="nav-link" href="<%= pagesNavigationURL.toString() %>">
-							<liferay-ui:message arguments='<%= fragmentEntryLinkDisplayContext.getUsageCount("pages") %>' key="pages-x" />
+							<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getPagesUsageCount() %>" key="pages-x" />
 						</aui:a>
 					</li>
 					<li>
@@ -71,10 +71,9 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 						%>
 
 						<aui:a cssClass="nav-link" href="<%= pageTemplatesNavigationURL.toString() %>">
-							<liferay-ui:message arguments='<%= fragmentEntryLinkDisplayContext.getUsageCount("page-templates") %>' key="page-templates-x" />
+							<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getPageTemplatesUsageCount() %>" key="page-templates-x" />
 						</aui:a>
 					</li>
-
 					<li>
 
 						<%
@@ -84,7 +83,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 						%>
 
 						<aui:a cssClass="nav-link" href="<%= displayPagesNavigationURL.toString() %>">
-							<liferay-ui:message arguments='<%= fragmentEntryLinkDisplayContext.getUsageCount("display-pages") %>' key="display-pages-x" />
+							<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getDisplayPagesUsageCount() %>" key="display-pages-x" />
 						</aui:a>
 					</li>
 				</ul>
@@ -94,7 +93,20 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 
 	<div class="card col-md-9 p-2">
 		<h3>
-			<liferay-ui:message key="<%= fragmentEntryLinkDisplayContext.getNavigation() %>" />&nbsp;(<%= fragmentEntryLinkDisplayContext.getUsageCount(fragmentEntryLinkDisplayContext.getNavigation()) %>)
+			<c:choose>
+				<c:when test='<%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "pages") %>'>
+					<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getPagesUsageCount() %>" key="pages-x" />
+				</c:when>
+				<c:when test='<%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "page-templates") %>'>
+					<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getPageTemplatesUsageCount() %>" key="page-templates-x" />
+				</c:when>
+				<c:when test='<%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "display-pages") %>'>
+					<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getDisplayPagesUsageCount() %>" key="display-pages-x" />
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getAllUsageCount() %>" key="all-x" />
+				</c:otherwise>
+			</c:choose>
 		</h3>
 
 		<clay:management-toolbar

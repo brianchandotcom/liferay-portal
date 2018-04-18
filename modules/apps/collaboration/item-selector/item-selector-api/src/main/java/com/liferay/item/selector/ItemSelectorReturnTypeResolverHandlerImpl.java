@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Roberto Díaz
  */
 @Component(service = ItemSelectorReturnTypeResolverHandler.class)
-public class ItemSelectorReturnTypeResolverHandler {
+public class ItemSelectorReturnTypeResolverHandlerImpl {
 
 	public ItemSelectorReturnTypeResolver getItemSelectorReturnTypeResolver(
 		Class<? extends ItemSelectorReturnType> itemSelectorReturnTypeClass,

@@ -37,7 +37,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Roberto Díaz
  */
 @Component(service = ItemSelectorViewReturnTypeProviderHandler.class)
-public class ItemSelectorViewReturnTypeProviderHandler {
+public class ItemSelectorViewReturnTypeProviderHandlerImpl {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {

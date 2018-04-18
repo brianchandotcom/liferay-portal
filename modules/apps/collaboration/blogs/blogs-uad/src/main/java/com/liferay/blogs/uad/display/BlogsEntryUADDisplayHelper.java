@@ -33,8 +33,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author William Newbury
  */
-@Component(immediate = true, service = BlogsEntryUADEntityDisplayHelper.class)
-public class BlogsEntryUADEntityDisplayHelper {
+@Component(immediate = true, service = BlogsEntryUADDisplayHelper.class)
+public class BlogsEntryUADDisplayHelper {
 
 	public String getBlogsEntryEditURL(
 			BlogsEntry blogsEntry, LiferayPortletRequest liferayPortletRequest,

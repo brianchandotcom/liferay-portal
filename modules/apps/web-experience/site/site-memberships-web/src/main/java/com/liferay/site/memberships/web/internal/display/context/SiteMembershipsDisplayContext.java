@@ -15,6 +15,7 @@
 package com.liferay.site.memberships.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -92,17 +92,17 @@ public class SiteMembershipsDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		List<NavigationItem> navigationItems = new ArrayList<>();
-
-		NavigationItem navigationItem = new NavigationItem();
-
-		navigationItem.setActive(true);
-		navigationItem.setHref(themeDisplay.getURLCurrent());
-		navigationItem.setLabel(LanguageUtil.get(_request, "details"));
-
-		navigationItems.add(navigationItem);
-
-		return navigationItems;
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(themeDisplay.getURLCurrent());
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "details"));
+					});
+			}
+		};
 	}
 
 	public PortletURL getPortletURL() {
@@ -145,17 +145,17 @@ public class SiteMembershipsDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		List<NavigationItem> navigationItems = new ArrayList<>();
-
-		NavigationItem navigationItem = new NavigationItem();
-
-		navigationItem.setActive(true);
-		navigationItem.setHref(themeDisplay.getURLCurrent());
-		navigationItem.setLabel(LanguageUtil.get(_request, "site-roles"));
-
-		navigationItems.add(navigationItem);
-
-		return navigationItems;
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(themeDisplay.getURLCurrent());
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "site-roles"));
+					});
+			}
+		};
 	}
 
 	public String getTabs1() {
@@ -198,58 +198,40 @@ public class SiteMembershipsDisplayContext {
 		return 0;
 	}
 
-	public List<NavigationItem> getViewNavigationItems()
-		throws PortalException {
+	public List<NavigationItem> getViewNavigationItems() {
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(
+							Objects.equals(getTabs1(), "users"));
+						navigationItem.setHref(
+							getPortletURL(), "tabs1", "users");
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "users"));
+					});
 
-		List<NavigationItem> navigationItems = new ArrayList<>();
+				add(
+					navigationItem -> {
+						navigationItem.setActive(
+							Objects.equals(getTabs1(), "organizations"));
+						navigationItem.setHref(
+							getPortletURL(), "tabs1", "organizations");
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "organizations"));
+					});
 
-		NavigationItem userNavigationItem = new NavigationItem();
-
-		userNavigationItem.setActive(Objects.equals(getTabs1(), "users"));
-
-		PortletURL usersURL = getPortletURL();
-
-		usersURL.setParameter("tabs1", "users");
-
-		userNavigationItem.setHref(usersURL.toString());
-
-		userNavigationItem.setLabel(LanguageUtil.get(_request, "users"));
-
-		navigationItems.add(userNavigationItem);
-
-		NavigationItem organizationsNavigationItem = new NavigationItem();
-
-		organizationsNavigationItem.setActive(
-			Objects.equals(getTabs1(), "organizations"));
-
-		PortletURL organizationsURL = getPortletURL();
-
-		organizationsURL.setParameter("tabs1", "organizations");
-
-		organizationsNavigationItem.setHref(organizationsURL.toString());
-
-		organizationsNavigationItem.setLabel(
-			LanguageUtil.get(_request, "organizations"));
-
-		navigationItems.add(organizationsNavigationItem);
-
-		NavigationItem userGroupsNavigationItem = new NavigationItem();
-
-		userGroupsNavigationItem.setActive(
-			Objects.equals(getTabs1(), "user-groups"));
-
-		PortletURL userGroupsURL = getPortletURL();
-
-		userGroupsURL.setParameter("tabs1", "user-groups");
-
-		userGroupsNavigationItem.setHref(userGroupsURL.toString());
-
-		userGroupsNavigationItem.setLabel(
-			LanguageUtil.get(_request, "user-groups"));
-
-		navigationItems.add(userGroupsNavigationItem);
-
-		return navigationItems;
+				add(
+					navigationItem -> {
+						navigationItem.setActive(
+							Objects.equals(getTabs1(), "user-groups"));
+						navigationItem.setHref(
+							getPortletURL(), "tabs1", "user-groups");
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "user-groups"));
+					});
+			}
+		};
 	}
 
 	private Integer _cur;

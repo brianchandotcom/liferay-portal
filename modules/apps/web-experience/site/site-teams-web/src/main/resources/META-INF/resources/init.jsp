@@ -28,7 +28,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.exportimport.kernel.staging.StagingUtil" %><%@
-page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem" %><%@
+page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPNavigationItemList" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
@@ -77,8 +77,7 @@ page import="com.liferay.site.teams.web.internal.search.TeamDisplayTerms" %><%@
 page import="com.liferay.site.teams.web.internal.search.TeamSearch" %><%@
 page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %>
 
-<%@ page import="java.util.ArrayList" %><%@
-page import="java.util.HashMap" %><%@
+<%@ page import="java.util.HashMap" %><%@
 page import="java.util.LinkedHashMap" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %><%@

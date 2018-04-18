@@ -27,6 +27,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
@@ -54,7 +55,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -279,21 +279,17 @@ public class AssetBrowserDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() {
-		List<NavigationItem> navigationItems = new ArrayList<>();
-
-		NavigationItem entriesNavigationItem = new NavigationItem();
-
-		entriesNavigationItem.setActive(true);
-
-		PortletURL mainURL = getPortletURL();
-
-		entriesNavigationItem.setHref(mainURL.toString());
-
-		entriesNavigationItem.setLabel(LanguageUtil.get(_request, "entries"));
-
-		navigationItems.add(entriesNavigationItem);
-
-		return navigationItems;
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(getPortletURL());
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "entries"));
+					});
+			}
+		};
 	}
 
 	public String getOrderByType() {

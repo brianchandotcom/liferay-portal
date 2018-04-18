@@ -28,6 +28,7 @@ import com.liferay.dynamic.data.mapping.util.DDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
 import com.liferay.dynamic.data.mapping.util.DDMTemplateHelper;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -42,11 +43,9 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -165,22 +164,19 @@ public class AssetDisplayTemplateDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() {
-		List<NavigationItem> navigationItems = new ArrayList<>();
-
-		NavigationItem entriesNavigationItem = new NavigationItem();
-
-		entriesNavigationItem.setActive(true);
-
-		PortletURL mainURL = _renderResponse.createRenderURL();
-
-		entriesNavigationItem.setHref(mainURL.toString());
-
-		entriesNavigationItem.setLabel(
-			LanguageUtil.get(_request, "asset-display-templates"));
-
-		navigationItems.add(entriesNavigationItem);
-
-		return navigationItems;
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(
+							_renderResponse.createRenderURL());
+						navigationItem.setLabel(
+							LanguageUtil.get(
+								_request, "asset-display-templates"));
+					});
+			}
+		};
 	}
 
 	public String getOrderByCol() {

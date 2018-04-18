@@ -15,6 +15,7 @@
 package com.liferay.site.teams.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,7 +37,6 @@ import com.liferay.site.teams.web.internal.constants.SiteTeamsPortletKeys;
 import com.liferay.site.teams.web.internal.search.TeamSearch;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
@@ -79,21 +79,17 @@ public class SiteTeamsDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() {
-		List<NavigationItem> navigationItems = new ArrayList<>();
-
-		NavigationItem entriesNavigationItem = new NavigationItem();
-
-		entriesNavigationItem.setActive(true);
-
-		PortletURL portletURL = getPortletURL();
-
-		entriesNavigationItem.setHref(portletURL.toString());
-
-		entriesNavigationItem.setLabel(LanguageUtil.get(_request, "teams"));
-
-		navigationItems.add(entriesNavigationItem);
-
-		return navigationItems;
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(getPortletURL());
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "teams"));
+					});
+			}
+		};
 	}
 
 	public String getOrderByCol() {

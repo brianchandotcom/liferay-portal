@@ -36,6 +36,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
@@ -73,7 +74,6 @@ import com.liferay.portlet.asset.util.comparator.AssetCategoryCreateDateComparat
 import com.liferay.portlet.asset.util.comparator.AssetCategoryLeftCategoryIdComparator;
 import com.liferay.portlet.asset.util.comparator.AssetVocabularyCreateDateComparator;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -105,25 +105,20 @@ public class AssetCategoriesDisplayContext {
 	}
 
 	public List<NavigationItem> getAssetCategoriesNavigationItems() {
-		List<NavigationItem> navigationItems = new ArrayList<>();
-
-		NavigationItem entriesNavigationItem = new NavigationItem();
-
-		entriesNavigationItem.setActive(true);
-
-		PortletURL mainURL = _renderResponse.createRenderURL();
-
-		mainURL.setParameter("mvcPath", "/view_categories.jsp");
-		mainURL.setParameter("vocabularyId", String.valueOf(getVocabularyId()));
-
-		entriesNavigationItem.setHref(mainURL.toString());
-
-		entriesNavigationItem.setLabel(
-			LanguageUtil.get(_request, "categories"));
-
-		navigationItems.add(entriesNavigationItem);
-
-		return navigationItems;
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(
+							_renderResponse.createRenderURL(), "mvcPath",
+							"/view_categories.jsp", "vocabularyId",
+							String.valueOf(getVocabularyId()));
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "categories"));
+					});
+			}
+		};
 	}
 
 	public String getAssetCategoriesSelectorURL() throws Exception {
@@ -211,22 +206,18 @@ public class AssetCategoriesDisplayContext {
 	}
 
 	public List<NavigationItem> getAssetVocabulariesNavigationItems() {
-		List<NavigationItem> navigationItems = new ArrayList<>();
-
-		NavigationItem entriesNavigationItem = new NavigationItem();
-
-		entriesNavigationItem.setActive(true);
-
-		PortletURL mainURL = _renderResponse.createRenderURL();
-
-		entriesNavigationItem.setHref(mainURL.toString());
-
-		entriesNavigationItem.setLabel(
-			LanguageUtil.get(_request, "vocabularies"));
-
-		navigationItems.add(entriesNavigationItem);
-
-		return navigationItems;
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(
+							_renderResponse.createRenderURL());
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "vocabularies"));
+					});
+			}
+		};
 	}
 
 	public List<DropdownItem> getCategoriesActionItemsDropdownItems() {

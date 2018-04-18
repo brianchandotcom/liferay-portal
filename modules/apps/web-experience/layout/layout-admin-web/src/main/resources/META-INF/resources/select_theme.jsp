@@ -36,24 +36,21 @@ portletURL.setParameter("eventName", eventName);
 List<Theme> themes = ThemeLocalServiceUtil.getPageThemes(company.getCompanyId(), layoutsAdminDisplayContext.getLiveGroupId(), user.getUserId());
 
 themes = ListUtil.sort(themes, new ThemeNameComparator(orderByType.equals("asc")));
-
-List<NavigationItem> navigationItems = new ArrayList<>();
-
-NavigationItem mySitesNavigationItem = new NavigationItem();
-
-mySitesNavigationItem.setActive(true);
-
-PortletURL mainURL = renderResponse.createRenderURL();
-
-mySitesNavigationItem.setHref(mainURL.toString());
-
-mySitesNavigationItem.setLabel(LanguageUtil.get(request, "available-themes"));
-
-navigationItems.add(mySitesNavigationItem);
 %>
 
 <clay:navigation-bar
-	items="<%= navigationItems %>"
+	items="<%=
+		new JSPNavigationItemList(pageContext) {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(renderResponse.createRenderURL());
+						navigationItem.setLabel(LanguageUtil.get(request, "available-themes"));
+					});
+			}
+		}
+	%>"
 />
 
 <liferay-frontend:management-bar>

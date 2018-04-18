@@ -71,21 +71,19 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 
 	<aui:form action="<%= deleteArchivedSetupsURL %>" name="fm">
 		<div class="portlet-configuration-body-content">
-
-			<%
-			List<NavigationItem> navigationItems = new ArrayList<>();
-
-			NavigationItem navigationItem = new NavigationItem();
-
-			navigationItem.setActive(true);
-			navigationItem.setHref(portletURL.toString());
-			navigationItem.setLabel(LanguageUtil.get(request, "configuration-templates"));
-
-			navigationItems.add(navigationItem);
-			%>
-
 			<clay:navigation-bar
-				items="<%= navigationItems %>"
+				items="<%=
+					new JSPNavigationItemList(pageContext) {
+						{
+							add(
+								navigationItem -> {
+									navigationItem.setActive(true);
+									navigationItem.setHref(portletURL);
+									navigationItem.setLabel(LanguageUtil.get(request, "configuration-templates"));
+								});
+						}
+					}
+				%>"
 			/>
 
 			<liferay-frontend:management-bar

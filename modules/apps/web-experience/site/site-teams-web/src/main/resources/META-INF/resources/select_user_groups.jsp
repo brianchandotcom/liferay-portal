@@ -58,20 +58,21 @@ List<UserGroup> userGroups = UserGroupLocalServiceUtil.search(company.getCompany
 userGroupSearchContainer.setResults(userGroups);
 
 RowChecker rowChecker = new UserGroupTeamChecker(renderResponse, team);
-
-List<NavigationItem> navigationItems = new ArrayList<>();
-
-NavigationItem navigationItem = new NavigationItem();
-
-navigationItem.setActive(true);
-navigationItem.setHref(currentURL);
-navigationItem.setLabel(LanguageUtil.get(request, "user-groups"));
-
-navigationItems.add(navigationItem);
 %>
 
 <clay:navigation-bar
-	items="<%= navigationItems %>"
+	items="<%=
+		new JSPNavigationItemList(pageContext) {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(currentURL);
+						navigationItem.setLabel(LanguageUtil.get(request, "user-groups"));
+					});
+			}
+		}
+	%>"
 />
 
 <liferay-frontend:management-bar

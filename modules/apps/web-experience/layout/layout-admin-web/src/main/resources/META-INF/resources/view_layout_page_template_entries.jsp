@@ -176,6 +176,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, layoutPageTemplateDisplayContext.g
 
 <portlet:actionURL name="/layout/add_layout_page_template_entry" var="addLayoutPageTemplateEntryURL">
 	<portlet:param name="mvcPath" value="/edit_layout_page_template_entry.jsp" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionId()) %>" />
 </portlet:actionURL>
 

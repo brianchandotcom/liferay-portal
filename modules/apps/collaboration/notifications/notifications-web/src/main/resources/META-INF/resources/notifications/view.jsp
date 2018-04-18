@@ -21,6 +21,10 @@ String navigation = ParamUtil.getString(request, "navigation", "all");
 
 boolean actionRequired = ParamUtil.getBoolean(request, "actionRequired");
 
+if (actionRequired) {
+	navigation = "unread";
+}
+
 String orderByCol = "date";
 String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 
@@ -53,7 +57,7 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 			<liferay-portlet:param name="actionRequired" value="<%= StringPool.TRUE %>" />
 		</liferay-portlet:renderURL>
 
-		<aui:nav-item href="<%= viewRequestsURL %>" label='<%= LanguageUtil.format(request, "requests-list-x", String.valueOf(UserNotificationEventLocalServiceUtil.getDeliveredUserNotificationEventsCount(themeDisplay.getUserId(), UserNotificationDeliveryConstants.TYPE_WEBSITE, true, true))) %>' selected="<%= actionRequired %>" />
+		<aui:nav-item href="<%= viewRequestsURL %>" label='<%= LanguageUtil.format(request, "requests-list-x", String.valueOf(UserNotificationEventLocalServiceUtil.getArchivedUserNotificationEventsCount(themeDisplay.getUserId(), UserNotificationDeliveryConstants.TYPE_WEBSITE, true, false))) %>' selected="<%= actionRequired %>" />
 	</aui:nav>
 </aui:nav-bar>
 
@@ -73,7 +77,7 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 	<liferay-frontend:management-bar-filters>
 
 		<%
-		String[] navigationKeys = {"all"};
+		String[] navigationKeys = {"unread"};
 
 		if (!actionRequired) {
 			navigationKeys = new String[] {"all", "unread", "read"};
@@ -201,7 +205,9 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 								if (notificationContainer) {
 									var markAsReadURL = notificationContainer.one('a').attr('href');
 
-									A.io.request(markAsReadURL);
+									form.attr('method', 'post');
+
+									submitForm(form, markAsReadURL);
 
 									notificationContainer.remove();
 								}

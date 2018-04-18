@@ -242,7 +242,8 @@ public class LiferayOAuthDataProvider
 
 		if (Validator.isBlank(accessToken)) {
 
-			// audit: trying to use empty token
+			// TODO: Inform the audit service that the user is trying to use an
+			// empty token
 
 			return null;
 		}
@@ -253,7 +254,8 @@ public class LiferayOAuthDataProvider
 
 		if (oAuth2Authorization == null) {
 
-			// audit: trying to use deleted token or brute-force token
+			// TODO: Inform the audit service that the user is trying to use a
+			// deleted token or brute-force token
 
 			return null;
 		}
@@ -261,7 +263,8 @@ public class LiferayOAuthDataProvider
 		if (OAuth2ProviderConstants.EXPIRED_TOKEN.equals(
 				oAuth2Authorization.getAccessTokenContent())) {
 
-			// audit: trying intentionally to use expired token
+			// TODO: Inform the audit service that the user is intentionally
+			// trying to use an expired token
 
 			return null;
 		}
@@ -301,7 +304,8 @@ public class LiferayOAuthDataProvider
 
 		if (oAuth2Application == null) {
 
-			//audit: trying non-existing or removed clientId
+			// TODO: Inform the audit service that the user is trying a
+			// non-existent or removed clientId
 
 			return null;
 		}
@@ -358,7 +362,8 @@ public class LiferayOAuthDataProvider
 	public RefreshToken getRefreshToken(String refreshTokenKey) {
 		if (Validator.isBlank(refreshTokenKey)) {
 
-			// audit: trying to use empty token
+			// TODO: Inform the audit service that the user is trying to use an
+			// empty token
 
 			return null;
 		}
@@ -371,7 +376,8 @@ public class LiferayOAuthDataProvider
 
 			if (oAuth2Authorization == null) {
 
-				// audit: trying to use deleted token or brute-force token
+				// TODO: Inform the audit service that the user is trying to use
+				// a deleted token or brute-force token
 
 				return null;
 			}
@@ -379,7 +385,8 @@ public class LiferayOAuthDataProvider
 			if (OAuth2ProviderConstants.EXPIRED_TOKEN.equals(
 					oAuth2Authorization.getRefreshTokenContent())) {
 
-				// audit: trying intentionally to use expired token
+				// TODO: Inform the audit service that the user is intentionally
+				// trying to use an expired token
 
 				return null;
 			}
@@ -462,7 +469,8 @@ public class LiferayOAuthDataProvider
 
 			doRevokeRefreshToken(oldRefreshToken);
 
-			// audit: using expired refresh token
+			// TODO: Inform the audit service that the user is using an expired
+			// refresh token
 
 			throw new OAuthServiceException(OAuthConstants.ACCESS_DENIED);
 		}
@@ -477,7 +485,8 @@ public class LiferayOAuthDataProvider
 
 			doRevokeRefreshToken(oldRefreshToken);
 
-			// audit: using invalid refresh token
+			// TODO: Inform the audit service that the user is using an invalid
+			// refresh token
 
 			throw new OAuthServiceException(OAuthConstants.ACCESS_DENIED);
 		}
@@ -488,7 +497,8 @@ public class LiferayOAuthDataProvider
 
 		if (oAuth2Authorization == null) {
 
-			// audit: using non-existing refresh token
+			// TODO: Inform the audit service that the user is using a
+			// non-existent refresh token
 
 			throw new OAuthServiceException(OAuthConstants.ACCESS_DENIED);
 		}
@@ -549,7 +559,7 @@ public class LiferayOAuthDataProvider
 
 		if (oAuth2Application == null) {
 
-			// audit: possible attack on client_id
+			// TODO: Inform the audit service of a possible attack on client_id
 
 			return null;
 		}

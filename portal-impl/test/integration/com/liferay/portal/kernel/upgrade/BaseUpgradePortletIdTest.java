@@ -92,7 +92,7 @@ public class BaseUpgradePortletIdTest extends BaseUpgradePortletId {
 
 	@After
 	public void tearDown() throws Exception {
-		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
+		try (Connection con = DataAccess.getConnection()) {
 			connection = con;
 
 			String[][] renamePortletIdsArray = getRenamePortletIdsArray();

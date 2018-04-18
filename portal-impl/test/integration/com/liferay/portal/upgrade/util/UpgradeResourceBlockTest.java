@@ -52,7 +52,7 @@ public class UpgradeResourceBlockTest extends BaseUpgradeResourceBlock {
 
 		_siteRole = RoleTestUtil.addRole(RoleConstants.TYPE_SITE);
 
-		connection = DataAccess.getUpgradeOptimizedConnection();
+		connection = DataAccess.getConnection();
 
 		runSQL(
 			"create table UpgradeResourceBlockTest(id_ LONG not null primary " +

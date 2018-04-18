@@ -26,7 +26,7 @@ public class DBContext {
 
 	public Connection getDataAccess() {
 		try {
-			return DataAccess.getUpgradeOptimizedConnection();
+			return DataAccess.getConnection();
 		}
 		catch (SQLException sqle) {
 			throw new RuntimeException(sqle);
@@ -39,7 +39,7 @@ public class DBContext {
 
 	public Connection getUpgradeOptimizedConnection() {
 		try {
-			return DataAccess.getUpgradeOptimizedConnection();
+			return DataAccess.getConnection();
 		}
 		catch (SQLException sqle) {
 			throw new RuntimeException(sqle);

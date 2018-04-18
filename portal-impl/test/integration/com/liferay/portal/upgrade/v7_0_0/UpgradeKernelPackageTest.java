@@ -49,7 +49,7 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 
 	@Before
 	public void setUp() throws Exception {
-		connection = DataAccess.getUpgradeOptimizedConnection();
+		connection = DataAccess.getConnection();
 
 		runSQL("insert into Counter values('" + _OLD_CLASS_NAME + "', 10)");
 

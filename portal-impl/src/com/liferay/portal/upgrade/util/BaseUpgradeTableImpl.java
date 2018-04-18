@@ -74,7 +74,7 @@ public abstract class BaseUpgradeTableImpl extends Table {
 	}
 
 	public void updateTable() throws Exception {
-		Connection connection = DataAccess.getUpgradeOptimizedConnection();
+		Connection connection = DataAccess.getConnection();
 
 		try {
 			updateTable(connection, connection, true);

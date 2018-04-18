@@ -42,9 +42,7 @@ public class DBAssertionUtil {
 
 		Set<String> columnNamesSet = SetUtil.fromArray(columnNames);
 
-		try (Connection connection =
-				DataAccess.getUpgradeOptimizedConnection()) {
-
+		try (Connection connection = DataAccess.getConnection()) {
 			DBInspector dbInspector = new DBInspector(connection);
 
 			DatabaseMetaData databaseMetaData = connection.getMetaData();

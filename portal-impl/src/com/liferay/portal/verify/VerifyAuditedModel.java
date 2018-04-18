@@ -282,7 +282,7 @@ public class VerifyAuditedModel extends VerifyProcess {
 
 			long previousCompanyId = 0;
 
-			try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+			try (Connection con = DataAccess.getConnection();
 				PreparedStatement ps1 = con.prepareStatement(sb.toString());
 				ResultSet rs = ps1.executeQuery();
 				PreparedStatement ps2 =

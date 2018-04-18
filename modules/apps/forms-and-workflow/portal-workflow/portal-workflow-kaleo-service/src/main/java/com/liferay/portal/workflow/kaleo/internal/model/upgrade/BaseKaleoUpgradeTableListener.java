@@ -44,7 +44,7 @@ public class BaseKaleoUpgradeTableListener extends BaseUpgradeTableListener {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
+			con = DataAccess.getConnection();
 
 			ps = con.prepareStatement(
 				StringBundler.concat(

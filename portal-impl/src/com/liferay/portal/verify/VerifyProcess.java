@@ -66,7 +66,7 @@ public abstract class VerifyProcess extends BaseDBProcess {
 			_log.info("Verifying " + ClassUtil.getClassName(this));
 		}
 
-		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
+		try (Connection con = DataAccess.getConnection()) {
 			connection = con;
 
 			doVerify();

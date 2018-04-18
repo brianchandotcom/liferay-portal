@@ -17,8 +17,6 @@ package com.liferay.staging.processes.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPNavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.staging.constants.StagingProcessesWebKeys;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
@@ -41,14 +39,13 @@ public class PublishTemplatesDisplayContext {
 	}
 
 	public JSPNavigationItemList getJSPNavigationItemList() {
-
 		PortletURL renderURL = _renderResponse.createRenderURL();
 
-		renderURL.setParameter("mvcRenderCommandName", "viewPublishConfigurations");
+		renderURL.setParameter(
+			"mvcRenderCommandName", "viewPublishConfigurations");
 
 		NavigationItem publishTemplatesNavigationItem = _createNavigationItem(
-			true, renderURL,
-			LanguageUtil.get(_request, "publish-templates"));
+			true, renderURL, LanguageUtil.get(_request, "publish-templates"));
 
 		JSPNavigationItemList navigationItemList = new JSPNavigationItemList(
 			_pageContext);

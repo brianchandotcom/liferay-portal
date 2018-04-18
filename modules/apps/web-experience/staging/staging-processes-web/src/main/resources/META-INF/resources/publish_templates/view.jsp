@@ -119,8 +119,8 @@ int exportImportConfigurationType = stagingGroup.isStagedRemotely() ? ExportImpo
 				/>
 
 				<%
-					request.setAttribute("view.jsp-layoutSetBranchId", layoutSetBranchId);
-					request.setAttribute("view.jsp-layoutSetBranchName", layoutSetBranchName);
+				request.setAttribute("view.jsp-layoutSetBranchId", layoutSetBranchId);
+				request.setAttribute("view.jsp-layoutSetBranchName", layoutSetBranchName);
 				%>
 
 				<liferay-ui:search-container-column-jsp

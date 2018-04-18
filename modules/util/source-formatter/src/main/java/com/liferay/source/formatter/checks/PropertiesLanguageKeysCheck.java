@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -55,7 +56,7 @@ public class PropertiesLanguageKeysCheck extends BaseFileCheck {
 
 				String key = array[0];
 
-				if (_allowedLanguageKeys.contains(key)) {
+				if (_isAllowedLanguageKey(key)) {
 					continue;
 				}
 
@@ -71,6 +72,18 @@ public class PropertiesLanguageKeysCheck extends BaseFileCheck {
 		}
 
 		return content;
+	}
+
+	private boolean _isAllowedLanguageKey(String key) {
+		String s = key.replaceAll("[^\\w.-]", StringPool.BLANK);
+
+		for (String allowedLanguageKey : _allowedLanguageKeys) {
+			if (s.equals(allowedLanguageKey)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private final List<String> _allowedLanguageKeys = new ArrayList<>();

@@ -168,9 +168,6 @@ public class SiteAdminPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Throwable {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {

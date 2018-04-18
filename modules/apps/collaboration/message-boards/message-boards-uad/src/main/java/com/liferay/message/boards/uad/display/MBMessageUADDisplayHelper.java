@@ -32,8 +32,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author William Newbury
  */
-@Component(immediate = true, service = MBMessageUADEntityDisplayHelper.class)
-public class MBMessageUADEntityDisplayHelper {
+@Component(immediate = true, service = MBMessageUADDisplayHelper.class)
+public class MBMessageUADDisplayHelper {
 
 	/**
 	 * Returns an ordered string array of the fields' names to be displayed.

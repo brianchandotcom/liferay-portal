@@ -24,4 +24,5 @@ public class CPRuleUserSegmentRelImpl extends CPRuleUserSegmentRelBaseImpl {
 
 	public CPRuleUserSegmentRelImpl() {
 	}
+
 }

@@ -24,4 +24,5 @@ public class CPRuleImpl extends CPRuleBaseImpl {
 
 	public CPRuleImpl() {
 	}
+
 }

@@ -40,7 +40,7 @@ public class ViewFragmentEntryUsagesMVCRenderCommand
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/fragment_entry_usages.jsp";
+		return "/view_fragment_entry_usages.jsp";
 	}
 
 }

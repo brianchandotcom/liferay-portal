@@ -280,8 +280,8 @@ public class AMBlogsEntryStagedModelDataHandlerTest
 
 	private String _getImgTag(long fileEntryId) throws Exception {
 		return String.format(
-			"<img alt=\"alt\" class=\"a class\" data-fileentryid=\"%s\" " +
-				"src=\"theURL\" />",
+			"<img alt=\"alt\" class=\"a class\" src=\"theURL\" " +
+				"data-fileEntryId=\"%s\" />",
 			fileEntryId);
 	}
 

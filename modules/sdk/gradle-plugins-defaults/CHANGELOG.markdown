@@ -3311,6 +3311,12 @@ classpath.
 - [LPS-79576]: Update the [Liferay Gradle Plugins] dependency to version
 3.11.4.
 
+## 5.3.81 - 2018-04-16
+
+### Changed
+- [LPS-79665]: Update the [Liferay Gradle Plugins] dependency to version
+3.11.5.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -3685,6 +3691,7 @@ classpath.
 [LPS-79450]: https://issues.liferay.com/browse/LPS-79450
 [LPS-79576]: https://issues.liferay.com/browse/LPS-79576
 [LPS-79623]: https://issues.liferay.com/browse/LPS-79623
+[LPS-79665]: https://issues.liferay.com/browse/LPS-79665
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

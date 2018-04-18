@@ -20,10 +20,12 @@ import java.util.List;
  * @author Lance Ji
  */
 public interface ItemSelectorViewReturnTypeProviderHandler {
+
 	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes(
 		ItemSelectorView itemSelectorView);
 
 	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes(
 		List<ItemSelectorReturnType> itemSelectorReturnTypes,
 		String itemSelectorViewKey);
+
 }

@@ -56,14 +56,12 @@ public class LiferayAuthorizationAccessTokenCodeGrantHandler
 
 		_authorizationCodeGrantHandler = new AuthorizationCodeGrantHandler();
 
-		_authorizationCodeGrantHandler.setDataProvider(
-			_liferayOAuthDataProvider);
-
-		_authorizationCodeGrantHandler.setExpectCodeVerifierForPublicClients(
-			_oAuth2ProviderConfiguration.allowAuthorizationCodePKCEGrant());
-
 		_authorizationCodeGrantHandler.setCodeVerifierTransformer(
 			new DigestCodeVerifier());
+		_authorizationCodeGrantHandler.setDataProvider(
+			_liferayOAuthDataProvider);
+		_authorizationCodeGrantHandler.setExpectCodeVerifierForPublicClients(
+			_oAuth2ProviderConfiguration.allowAuthorizationCodePKCEGrant());
 	}
 
 	@Override

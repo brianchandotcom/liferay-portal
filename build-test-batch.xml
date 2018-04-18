@@ -3705,10 +3705,9 @@ information. Make sure to commit in all build services results.
 
 				<fail message="${failure.property}" />
 			</catch>
-			<finally>
-				<merge-test-results />
-			</finally>
 		</trycatch>
+
+		<merge-test-results />
 	</target>
 
 	<target name="sybase-service-start">

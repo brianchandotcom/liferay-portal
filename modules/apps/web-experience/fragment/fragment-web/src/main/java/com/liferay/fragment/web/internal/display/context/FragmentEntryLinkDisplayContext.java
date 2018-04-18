@@ -18,7 +18,10 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -52,6 +55,8 @@ public class FragmentEntryLinkDisplayContext {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+
+		_request = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
 	public DropdownItemList getActionItemsDropdownItemList() {
@@ -86,6 +91,19 @@ public class FragmentEntryLinkDisplayContext {
 		return FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinksCount(
 			fragmentEntry.getGroupId(), getFragmentEntryId(),
 			PortalUtil.getClassNameId(LayoutPageTemplateEntry.class));
+	}
+
+	public List<DropdownItem> getFilterItemsDropdownItems() {
+		return new DropdownItemList(_request) {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getOrderByDropdownItems());
+						dropdownGroupItem.setLabel("order-by");
+					});
+			}
+		};
 	}
 
 	public long getFragmentCollectionId() {
@@ -311,6 +329,28 @@ public class FragmentEntryLinkDisplayContext {
 		return _searchContainer;
 	}
 
+	public List<ViewTypeItem> getViewTypeItems() {
+		return new ViewTypeItemList(_request, getPortletURL(), "list") {
+			{
+				addTableViewTypeItem();
+			}
+		};
+	}
+
+	private List<DropdownItem> _getOrderByDropdownItems() {
+		return new DropdownItemList(_request) {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(true);
+						dropdownItem.setHref(
+							getPortletURL(), "orderByCol", "last-propagation");
+						dropdownItem.setLabel("last-propagation");
+					});
+			}
+		};
+	}
+
 	private Long _fragmentCollectionId;
 	private FragmentEntry _fragmentEntry;
 	private Long _fragmentEntryId;
@@ -321,6 +361,7 @@ public class FragmentEntryLinkDisplayContext {
 	private String _redirect;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
+	private final HttpServletRequest _request;
 	private SearchContainer _searchContainer;
 
 }

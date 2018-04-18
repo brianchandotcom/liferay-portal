@@ -115,11 +115,13 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 					actionItems="<%= fragmentEntryLinkDisplayContext.getActionItemsDropdownItemList() %>"
 					componentId="fragmentEntryLinksManagementToolbar"
 					disabled="<%= fragmentEntry.getUsageCount() <= 0 %>"
+					filterItems="<%= fragmentEntryLinkDisplayContext.getFilterItemsDropdownItems() %>"
 					searchContainerId="fragmentEntryLinks"
 					showSearch="<%= false %>"
 					sortingOrder="<%= fragmentEntryLinkDisplayContext.getOrderByType() %>"
 					sortingURL="<%= currentURL %>"
 					totalItems="<%= fragmentEntry.getUsageCount() %>"
+					viewTypes="<%= fragmentEntryLinkDisplayContext.getViewTypeItems() %>"
 				/>
 
 				<aui:form name="fm">

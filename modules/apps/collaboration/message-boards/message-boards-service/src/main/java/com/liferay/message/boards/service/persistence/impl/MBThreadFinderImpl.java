@@ -347,8 +347,11 @@ public class MBThreadFinderImpl
 			String sql = _customSQL.get(getClass(), COUNT_BY_G_U_LPD);
 
 			if (userId <= 0) {
-				sql = StringUtil.replace(
-					sql, _INNER_JOIN_SQL, StringPool.BLANK);
+				if (includeAnonymous) {
+					sql = StringUtil.replace(
+						sql, _INNER_JOIN_SQL, StringPool.BLANK);
+				}
+
 				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
 			}
 
@@ -812,8 +815,11 @@ public class MBThreadFinderImpl
 			String sql = _customSQL.get(getClass(), FIND_BY_G_U_LPD);
 
 			if (userId <= 0) {
-				sql = StringUtil.replace(
-					sql, _INNER_JOIN_SQL, StringPool.BLANK);
+				if (includeAnonymous) {
+					sql = StringUtil.replace(
+						sql, _INNER_JOIN_SQL, StringPool.BLANK);
+				}
+
 				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
 			}
 

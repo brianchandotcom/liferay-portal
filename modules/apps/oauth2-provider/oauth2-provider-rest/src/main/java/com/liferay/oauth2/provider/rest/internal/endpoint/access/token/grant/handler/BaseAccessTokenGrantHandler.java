@@ -82,7 +82,7 @@ public abstract class BaseAccessTokenGrantHandler
 
 		if (!hasPermission(client, multivaluedMap)) {
 			throw new OAuthServiceException(
-				"User doesn't have permission to create token");
+				"User does not have permission to create token");
 		}
 
 		return getAccessTokenGrantHandler().createAccessToken(
@@ -135,7 +135,7 @@ public abstract class BaseAccessTokenGrantHandler
 
 			sb.append("User ");
 			sb.append(userId);
-			sb.append(" doesn't have permission to create access token for ");
+			sb.append(" does not have permission to create access token for ");
 			sb.append("client ");
 			sb.append(oAuth2Application.getClientId());
 

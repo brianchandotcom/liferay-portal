@@ -100,7 +100,8 @@ public class LiferayAuthorizationAccessTokenCodeGrantHandler
 			_liferayOAuthDataProvider.removeCodeGrant(code);
 
 			if (_log.isDebugEnabled()) {
-				_log.debug("Client authentication doesn't match code's client");
+				_log.debug(
+					"Client authentication does not match code's client");
 			}
 
 			return false;

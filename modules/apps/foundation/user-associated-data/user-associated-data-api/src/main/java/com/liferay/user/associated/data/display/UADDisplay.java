@@ -22,7 +22,7 @@ import java.util.Map;
 /**
  * @author William Newbury
  */
-public interface UADEntityDisplay<T> {
+public interface UADDisplay<T> {
 
 	public String getApplicationName();
 

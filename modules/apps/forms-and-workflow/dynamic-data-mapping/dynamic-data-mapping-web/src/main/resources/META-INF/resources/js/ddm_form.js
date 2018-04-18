@@ -789,7 +789,7 @@ AUI.add(
 
 						var value = instance.getValue();
 
-						if (typeof localizationMap === 'object') {
+						if (Lang.isObject(localizationMap)) {
 							if (AObject.keys(localizationMap).length != 0) {
 								this.removeNotAvailableLocales(localizationMap);
 							}

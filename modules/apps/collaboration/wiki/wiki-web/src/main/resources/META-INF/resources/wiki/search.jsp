@@ -108,7 +108,35 @@ portletURL.setParameter("keywords", keywords);
 
 			WikiNode curNode = wikiPage.getNode();
 
-			Summary summary = searchResult.getSummary();
+			PortletURL viewPageURL = renderResponse.createRenderURL();
+
+			if (portletName.equals(WikiPortletKeys.WIKI_DISPLAY)) {
+				viewPageURL.setParameter("mvcRenderCommandName", "/wiki/view_page");
+			}
+			else {
+				viewPageURL.setParameter("mvcRenderCommandName", "/wiki/view");
+			}
+
+			viewPageURL.setParameter("nodeName", node.getName());
+			viewPageURL.setParameter("title", wikiPage.getTitle());
+
+			PortletURL editPageURL = renderResponse.createRenderURL();
+
+			editPageURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
+			editPageURL.setParameter("redirect", currentURL);
+			editPageURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
+			editPageURL.setParameter("title", title);
+
+			WikiEngineRenderer wikiEngineRenderer = (WikiEngineRenderer)request.getAttribute(WikiWebKeys.WIKI_ENGINE_RENDERER);
+
+			String formattedContent = null;
+
+			try {
+				formattedContent = WikiUtil.getFormattedContent(wikiEngineRenderer, renderRequest, renderResponse, wikiPage, viewPageURL, editPageURL, wikiPage.getTitle(), false);
+			}
+			catch (Exception e) {
+				formattedContent = wikiPage.getContent();
+			}
 			%>
 
 			<portlet:renderURL var="rowURL">
@@ -121,11 +149,11 @@ portletURL.setParameter("keywords", keywords);
 				commentRelatedSearchResults="<%= searchResult.getCommentRelatedSearchResults() %>"
 				containerName="<%= curNode.getName() %>"
 				cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
-				description="<%= (summary != null) ? HtmlUtil.stripHtml(summary.getContent()) : HtmlUtil.stripHtml(wikiPage.getSummary()) %>"
+				description="<%= HtmlUtil.stripHtml(formattedContent) %>"
 				fileEntryRelatedSearchResults="<%= searchResult.getFileEntryRelatedSearchResults() %>"
 				highlightEnabled="<%= queryConfig.isHighlightEnabled() %>"
 				queryTerms="<%= hits.getQueryTerms() %>"
-				title="<%= (summary != null) ? summary.getTitle() : wikiPage.getTitle() %>"
+				title="<%= wikiPage.getTitle() %>"
 				url="<%= rowURL %>"
 			/>
 		</liferay-ui:search-container-row>

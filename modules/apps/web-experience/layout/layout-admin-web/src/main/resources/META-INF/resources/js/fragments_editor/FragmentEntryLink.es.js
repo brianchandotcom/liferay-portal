@@ -412,6 +412,27 @@ FragmentEntryLink.STATE = {
 	name: Config.string().value(''),
 
 	/**
+	 * Selected mapping type label
+	 * @default {}
+	 * @instance
+	 * @memberOf FragmentEntryLink
+	 * @review
+	 * @type {{
+	 *   subtype: string,
+	 *   type: string
+	 * }}
+	 */
+
+	selectedMappingTypeLabel: Config
+		.shapeOf(
+			{
+				subtype: Config.string().value(''),
+				type: Config.string().value('')
+			}
+		)
+		.value({}),
+
+	/**
 	 * Shows FragmentEntryLink control toolbar
 	 * @default true
 	 * @instance

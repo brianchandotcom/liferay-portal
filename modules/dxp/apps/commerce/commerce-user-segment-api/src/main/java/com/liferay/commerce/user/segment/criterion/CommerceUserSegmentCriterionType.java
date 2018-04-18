@@ -16,13 +16,14 @@ package com.liferay.commerce.user.segment.criterion;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry;
+import com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.service.ServiceContext;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -32,7 +33,10 @@ import java.util.Locale;
 public interface CommerceUserSegmentCriterionType {
 
 	public void contributeToDocument(
-		CommerceUserSegmentEntry commerceUserSegmentEntry, Document document);
+		CommerceUserSegmentCriterion commerceUserSegmentCriterion,
+		Document document);
+
+	public List<String> getConditions();
 
 	public String getKey();
 

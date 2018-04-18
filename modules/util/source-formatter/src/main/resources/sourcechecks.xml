@@ -144,9 +144,7 @@
 
 		<!-- Module checks -->
 
-		<check name="JavaModuleComponentCheck">
-			<property name="enabled" value="false" />
-		</check>
+		<check name="JavaModuleComponentCheck" />
 		<check name="JavaModuleExtendedObjectClassDefinitionCheck" />
 		<check name="JavaModuleIllegalImportsCheck">
 			<property name="checkRegistryInTestClasses" value="false" />

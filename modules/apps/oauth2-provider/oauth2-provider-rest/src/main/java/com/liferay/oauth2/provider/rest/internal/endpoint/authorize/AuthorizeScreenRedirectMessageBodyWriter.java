@@ -175,13 +175,13 @@ public class AuthorizeScreenRedirectMessageBodyWriter
 	protected String getAuthorizeScreenURL(long companyId)
 		throws ConfigurationException {
 
-		AuthorizeScreenConfiguration authorizeScreenRedirectConfiguration =
+		AuthorizeScreenConfiguration authorizeScreenConfiguration =
 			_configurationProvider.getConfiguration(
 				AuthorizeScreenConfiguration.class,
 				new CompanyServiceSettingsLocator(
 					companyId, AuthorizeScreenConfiguration.class.getName()));
 
-		return authorizeScreenRedirectConfiguration.authorizeScreenURL();
+		return authorizeScreenConfiguration.authorizeScreenURL();
 	}
 
 	protected String removeParameter(String url, String name) {

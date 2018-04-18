@@ -154,6 +154,7 @@
 		<column name="js" type="String" />
 		<column name="editableValues" type="String" />
 		<column name="position" type="int" />
+		<column name="lastPropagationDate" type="Date" />
 
 		<!-- Order -->
 

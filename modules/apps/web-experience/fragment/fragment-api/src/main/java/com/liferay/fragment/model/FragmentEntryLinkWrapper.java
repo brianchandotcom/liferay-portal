@@ -441,9 +441,9 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	}
 
 	@Override
-	public boolean isLatestFragmentEntryUsed()
+	public boolean isLatestVersion()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _fragmentEntryLink.isLatestFragmentEntryUsed();
+		return _fragmentEntryLink.isLatestVersion();
 	}
 
 	@Override

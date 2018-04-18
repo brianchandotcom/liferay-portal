@@ -193,7 +193,7 @@ public class LiferayTemplateClassResolverTest {
 			});
 
 		ReflectionTestUtil.setFieldValue(
-			_liferayTemplateClassResolver, "_freemarkerEngineConfiguration",
+			_liferayTemplateClassResolver, "_freeMarkerEngineConfiguration",
 			freeMarkerEngineConfiguration);
 	}
 

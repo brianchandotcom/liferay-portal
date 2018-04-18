@@ -23,18 +23,10 @@ FragmentEntryLinkDisplayContext fragmentEntryLinkDisplayContext = new FragmentEn
 
 FragmentEntry fragmentEntry = fragmentEntryLinkDisplayContext.getFragmentEntry();
 
-StringBundler titleSB = new StringBundler();
-
-titleSB.append(LanguageUtil.get(request, "usages-and-propagation"));
-titleSB.append(StringPool.SPACE);
-titleSB.append(StringPool.OPEN_PARENTHESIS);
-titleSB.append(fragmentEntry.getName());
-titleSB.append(StringPool.CLOSE_PARENTHESIS);
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle(titleSB.toString());
+renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x", fragmentEntry.getName()));
 %>
 
 <div class="container-fluid-1280 d-flex mt-3">
@@ -55,8 +47,7 @@ renderResponse.setTitle(titleSB.toString());
 						%>
 
 						<aui:a cssClass="nav-link" href="<%= allNavigationURL.toString() %>">
-							<liferay-ui:message key="all" />
-							&nbsp;(<%= fragmentEntryLinkDisplayContext.getUsageCount("all") %>)
+							<liferay-ui:message arguments='<%= fragmentEntryLinkDisplayContext.getUsageCount("all") %>' key="all-x" />
 						</aui:a>
 					</li>
 					<li>
@@ -68,8 +59,7 @@ renderResponse.setTitle(titleSB.toString());
 						%>
 
 						<aui:a cssClass="nav-link" href="<%= pagesNavigationURL.toString() %>">
-							<liferay-ui:message key="pages" />
-							&nbsp;(<%= fragmentEntryLinkDisplayContext.getUsageCount("pages") %>)
+							<liferay-ui:message arguments='<%= fragmentEntryLinkDisplayContext.getUsageCount("pages") %>' key="pages-x" />
 						</aui:a>
 					</li>
 					<li>
@@ -81,8 +71,7 @@ renderResponse.setTitle(titleSB.toString());
 						%>
 
 						<aui:a cssClass="nav-link" href="<%= pageTemplatesNavigationURL.toString() %>">
-							<liferay-ui:message key="page-templates" />
-							&nbsp;(<%= fragmentEntryLinkDisplayContext.getUsageCount("page-templates") %>)
+							<liferay-ui:message arguments='<%= fragmentEntryLinkDisplayContext.getUsageCount("page-templates") %>' key="page-templates-x" />
 						</aui:a>
 					</li>
 				</ul>

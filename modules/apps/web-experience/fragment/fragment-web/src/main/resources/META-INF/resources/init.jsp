@@ -45,7 +45,6 @@ page import="com.liferay.fragment.web.internal.display.context.FragmentDisplayCo
 page import="com.liferay.fragment.web.internal.display.context.FragmentEntryLinkDisplayContext" %><%@
 page import="com.liferay.fragment.web.internal.security.permission.resource.FragmentCollectionPermission" %><%@
 page import="com.liferay.fragment.web.internal.security.permission.resource.FragmentEntryPermission" %><%@
-page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

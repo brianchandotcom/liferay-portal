@@ -85,6 +85,8 @@ public class SiteNavigationMenuConfigurationAction
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();
 
+		modifiableSettings.reset("included-layouts");
+
 		String rootMenuItemType = modifiableSettings.getValue(
 			"rootMenuItemType", StringPool.BLANK);
 

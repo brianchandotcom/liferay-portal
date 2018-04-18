@@ -515,7 +515,7 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 			};
 		}
 		else if (organizationType.equals(
-			CommerceOrganizationConstants.TYPE_ACCOUNT)) {
+					CommerceOrganizationConstants.TYPE_ACCOUNT)) {
 
 			return new String[] {
 				OrganizationConstants.TYPE_ORGANIZATION,

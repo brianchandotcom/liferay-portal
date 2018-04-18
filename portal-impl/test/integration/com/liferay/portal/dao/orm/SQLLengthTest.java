@@ -60,7 +60,7 @@ public class SQLLengthTest {
 
 	@Test
 	public void testLength() throws Exception {
-		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+		try (Connection con = DataAccess.getConnection();
 			PreparedStatement ps = con.prepareStatement(
 				SQLTransformer.transform(
 					"select LENGTH(data) from SQLLengthTest"));

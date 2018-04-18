@@ -128,7 +128,7 @@ public class CalEventImporter {
 			_log.info("Importing CalEvent records");
 		}
 
-		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
+		try (Connection con = DataAccess.getConnection()) {
 			connection = con;
 
 			DBInspector dbInspector = new DBInspector(connection);

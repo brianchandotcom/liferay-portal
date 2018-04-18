@@ -62,9 +62,11 @@ public class LiferayAccessTokenService extends AccessTokenService {
 		}
 
 		clientProperties.put(
-			OAuth2ProviderRestEndpointConstants.CLIENT_REMOTE_ADDR, remoteAddr);
+			OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_CLIENT_REMOTE_ADDR,
+			remoteAddr);
 		clientProperties.put(
-			OAuth2ProviderRestEndpointConstants.CLIENT_REMOTE_HOST, remoteHost);
+			OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_CLIENT_REMOTE_HOST,
+			remoteHost);
 
 		return client;
 	}

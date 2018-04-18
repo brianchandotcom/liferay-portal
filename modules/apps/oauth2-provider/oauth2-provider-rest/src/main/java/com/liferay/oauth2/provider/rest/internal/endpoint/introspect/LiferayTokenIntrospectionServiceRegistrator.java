@@ -61,7 +61,7 @@ public class LiferayTokenIntrospectionServiceRegistrator {
 
 			endpointProperties.put(
 				OAuth2ProviderRestEndpointConstants.
-					OAUTH2_ENDPOINT_JAXRS_RESOURCE,
+					PROPERTY_KEY_OAUTH2_ENDPOINT_JAXRS_RESOURCE,
 				true);
 
 			_serviceRegistration = bundleContext.registerService(

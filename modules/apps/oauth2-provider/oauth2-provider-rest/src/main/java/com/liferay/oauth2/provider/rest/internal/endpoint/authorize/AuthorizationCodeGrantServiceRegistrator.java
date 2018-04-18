@@ -68,7 +68,8 @@ public class AuthorizationCodeGrantServiceRegistrator {
 		Dictionary<String, Object> endpointProperties = new Hashtable<>();
 
 		endpointProperties.put(
-			OAuth2ProviderRestEndpointConstants.OAUTH2_ENDPOINT_JAXRS_RESOURCE,
+			OAuth2ProviderRestEndpointConstants.
+				PROPERTY_KEY_OAUTH2_ENDPOINT_JAXRS_RESOURCE,
 			true);
 
 		_serviceRegistration = bundleContext.registerService(

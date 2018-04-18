@@ -57,12 +57,12 @@ public abstract class BaseAccessTokenGrantHandler
 		Map<String, String> properties = client1.getProperties();
 
 		String companyId1 = properties.get(
-			OAuth2ProviderRestEndpointConstants.COMPANY_ID);
+			OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_COMPANY_ID);
 
 		properties = client2.getProperties();
 
 		String companyId2 = properties.get(
-			OAuth2ProviderRestEndpointConstants.COMPANY_ID);
+			OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_COMPANY_ID);
 
 		if (!Objects.equals(companyId1, companyId2)) {
 			return false;

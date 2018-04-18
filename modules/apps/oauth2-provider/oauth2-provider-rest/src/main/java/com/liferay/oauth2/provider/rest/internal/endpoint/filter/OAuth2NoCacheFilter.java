@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = OAuth2ProviderRestEndpointConstants.OAUTH2_ENDPOINT_JAXRS_PROVIDER + "=true",
+	property = OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_OAUTH2_ENDPOINT_JAXRS_PROVIDER + "=true",
 	service = Object.class
 )
 @Provider

@@ -60,7 +60,7 @@ public class LiferaySubjectCreator implements SubjectCreator {
 			Map<String, String> properties = userSubject.getProperties();
 
 			properties.put(
-				OAuth2ProviderRestEndpointConstants.COMPANY_ID,
+				OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_COMPANY_ID,
 				GetterUtil.getString(user.getCompanyId()));
 
 			return userSubject;

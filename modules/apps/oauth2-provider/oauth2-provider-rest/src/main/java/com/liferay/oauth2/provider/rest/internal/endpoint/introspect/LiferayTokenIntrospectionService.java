@@ -189,9 +189,10 @@ public class LiferayTokenIntrospectionService extends AbstractTokenService {
 		Map<String, String> properties = authenticatedClient.getProperties();
 
 		if (!properties.containsKey(
-				OAuth2ProviderRestEndpointConstants.CLIENT_FEATURE_PREFIX +
-					OAuth2ProviderRestEndpointConstants.
-						CLIENT_FEATURE_TOKEN_INTROSPECTION)) {
+				OAuth2ProviderRestEndpointConstants.
+					PROPERTY_KEY_CLIENT_FEATURE_PREFIX +
+						OAuth2ProviderRestEndpointConstants.
+							PROPERTY_KEY_CLIENT_FEATURE_TOKEN_INTROSPECTION)) {
 
 			return false;
 		}
@@ -270,12 +271,12 @@ public class LiferayTokenIntrospectionService extends AbstractTokenService {
 		Map<String, String> properties = client1.getProperties();
 
 		String companyId1 = properties.get(
-			OAuth2ProviderRestEndpointConstants.COMPANY_ID);
+			OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_COMPANY_ID);
 
 		properties = client2.getProperties();
 
 		String companyId2 = properties.get(
-			OAuth2ProviderRestEndpointConstants.COMPANY_ID);
+			OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_COMPANY_ID);
 
 		if (!Objects.equals(companyId1, companyId2)) {
 			return false;

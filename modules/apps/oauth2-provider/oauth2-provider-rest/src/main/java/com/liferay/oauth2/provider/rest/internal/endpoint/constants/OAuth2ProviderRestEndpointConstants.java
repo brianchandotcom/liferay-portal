@@ -22,24 +22,25 @@ public class OAuth2ProviderRestEndpointConstants {
 	public static final String AUTHORIZATION_CODE_PKCE_GRANT =
 		"authorization_code_pkce";
 
-	public static final String CLIENT_FEATURE_PREFIX = "FEATURE-";
+	public static final String PROPERTY_KEY_CLIENT_FEATURE_PREFIX = "FEATURE-";
 
-	public static final String CLIENT_FEATURE_TOKEN_INTROSPECTION =
+	public static final String PROPERTY_KEY_CLIENT_FEATURE_TOKEN_INTROSPECTION =
 		"token-introspection";
 
-	public static final String CLIENT_FEATURES = "FEATURES";
+	public static final String PROPERTY_KEY_CLIENT_FEATURES = "FEATURES";
 
-	public static final String CLIENT_REMOTE_ADDR =
+	public static final String PROPERTY_KEY_CLIENT_REMOTE_ADDR =
 		"CLIENT_REMOTE_ADDR";
 
-	public static final String CLIENT_REMOTE_HOST = "CLIENT_REMOTE_HOST";
+	public static final String PROPERTY_KEY_CLIENT_REMOTE_HOST =
+		"CLIENT_REMOTE_HOST";
 
-	public static final String COMPANY_ID = "COMPANY_ID";
+	public static final String PROPERTY_KEY_COMPANY_ID = "COMPANY_ID";
 
-	public static final String OAUTH2_ENDPOINT_JAXRS_PROVIDER =
+	public static final String PROPERTY_KEY_OAUTH2_ENDPOINT_JAXRS_PROVIDER =
 		"oauth2.endpoint.jaxrs.provider";
 
-	public static final String OAUTH2_ENDPOINT_JAXRS_RESOURCE =
+	public static final String PROPERTY_KEY_OAUTH2_ENDPOINT_JAXRS_RESOURCE =
 		"oauth2.endpoint.jaxrs.resource";
 
 }

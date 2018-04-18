@@ -42,7 +42,7 @@ public class OAuth2EndpointApplication extends Application {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(" + OAuth2ProviderRestEndpointConstants.OAUTH2_ENDPOINT_JAXRS_PROVIDER + "=true)",
+		target = "(" + OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_OAUTH2_ENDPOINT_JAXRS_PROVIDER + "=true)",
 		unbind = "removeJaxrsObject"
 	)
 	public void addJaxrsProvider(Object jaxrsProvider) {
@@ -52,7 +52,7 @@ public class OAuth2EndpointApplication extends Application {
 	@Reference(
 		cardinality = ReferenceCardinality.AT_LEAST_ONE,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(" + OAuth2ProviderRestEndpointConstants.OAUTH2_ENDPOINT_JAXRS_RESOURCE + "=true)",
+		target = "(" + OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_OAUTH2_ENDPOINT_JAXRS_RESOURCE + "=true)",
 		unbind = "removeJaxrsProvider"
 	)
 	public void addJaxrsResource(Object jaxrsResource) {

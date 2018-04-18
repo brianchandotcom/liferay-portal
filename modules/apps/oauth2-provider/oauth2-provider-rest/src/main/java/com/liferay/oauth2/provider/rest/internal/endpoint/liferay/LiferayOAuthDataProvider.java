@@ -435,7 +435,7 @@ public class LiferayOAuthDataProvider
 				refreshToken.getExtraProperties();
 
 			extraProperties.put(
-				OAuth2ProviderRestEndpointConstants.COMPANY_ID,
+				OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_COMPANY_ID,
 				GetterUtil.getString(oAuth2Authorization.getCompanyId()));
 
 			return refreshToken;
@@ -553,7 +553,7 @@ public class LiferayOAuthDataProvider
 
 		long companyId = GetterUtil.getLong(
 			clientProperties.get(
-				OAuth2ProviderRestEndpointConstants.COMPANY_ID));
+				OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_COMPANY_ID));
 
 		OAuth2Application oAuth2Application =
 			_oAuth2ApplicationLocalService.fetchOAuth2Application(
@@ -774,7 +774,7 @@ public class LiferayOAuthDataProvider
 			serverAccessToken.getExtraProperties();
 
 		extraProperties.put(
-			OAuth2ProviderRestEndpointConstants.COMPANY_ID,
+			OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_COMPANY_ID,
 			GetterUtil.getString(oAuth2Authorization.getCompanyId()));
 
 		return serverAccessToken;
@@ -876,16 +876,17 @@ public class LiferayOAuthDataProvider
 		Map<String, String> properties = client.getProperties();
 
 		properties.put(
-			OAuth2ProviderRestEndpointConstants.COMPANY_ID,
+			OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_COMPANY_ID,
 			GetterUtil.getString(companyId));
 		properties.put(
-			OAuth2ProviderRestEndpointConstants.CLIENT_FEATURES,
+			OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_CLIENT_FEATURES,
 			oAuth2Application.getFeatures());
 
 		for (String feature : oAuth2Application.getFeaturesList()) {
 			properties.put(
-				OAuth2ProviderRestEndpointConstants.CLIENT_FEATURE_PREFIX +
-					feature,
+				OAuth2ProviderRestEndpointConstants.
+					PROPERTY_KEY_CLIENT_FEATURE_PREFIX +
+						feature,
 				feature);
 		}
 
@@ -901,7 +902,7 @@ public class LiferayOAuthDataProvider
 		Map<String, String> properties = userSubject.getProperties();
 
 		properties.put(
-			OAuth2ProviderRestEndpointConstants.COMPANY_ID,
+			OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_COMPANY_ID,
 			GetterUtil.getString(companyId));
 
 		return userSubject;
@@ -1016,9 +1017,11 @@ public class LiferayOAuthDataProvider
 		Map<String, String> properties = client.getProperties();
 
 		String remoteAddr = properties.get(
-			OAuth2ProviderRestEndpointConstants.CLIENT_REMOTE_ADDR);
+			OAuth2ProviderRestEndpointConstants.
+				PROPERTY_KEY_CLIENT_REMOTE_ADDR);
 		String remoteHost = properties.get(
-			OAuth2ProviderRestEndpointConstants.CLIENT_REMOTE_HOST);
+			OAuth2ProviderRestEndpointConstants.
+				PROPERTY_KEY_CLIENT_REMOTE_HOST);
 
 		OAuth2Authorization oAuth2Authorization =
 			_oAuth2AuthorizationLocalService.addOAuth2Authorization(

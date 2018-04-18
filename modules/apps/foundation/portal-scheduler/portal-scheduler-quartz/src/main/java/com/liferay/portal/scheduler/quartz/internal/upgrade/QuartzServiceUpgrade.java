@@ -30,13 +30,9 @@ public class QuartzServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"com.liferay.portal.scheduler.quartz", "0.0.0", "1.0.0",
-			new DummyUpgradeStep());
+		registry.register("0.0.0", "1.0.0", new DummyUpgradeStep());
 
-		registry.register(
-			"com.liferay.portal.scheduler.quartz", "0.0.1", "1.0.0",
-			new UpgradeQuartz());
+		registry.register("0.0.1", "1.0.0", new UpgradeQuartz());
 	}
 
 }

@@ -30,12 +30,10 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"com.liferay.blogs.service", "0.0.1", "1.0.0",
-			new UpgradeClassNames());
+		registry.register("0.0.1", "1.0.0", new UpgradeClassNames());
 
 		registry.register(
-			"com.liferay.blogs.service", "1.0.0", "1.1.0",
+			"1.0.0", "1.1.0",
 			new UpgradeFriendlyURL(_friendlyURLEntryLocalService));
 	}
 

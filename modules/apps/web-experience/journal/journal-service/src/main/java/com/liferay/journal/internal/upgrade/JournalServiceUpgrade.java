@@ -75,24 +75,19 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"com.liferay.journal.service", "0.0.1", "0.0.2",
-			new UpgradeClassNames());
+		registry.register("0.0.1", "0.0.2", new UpgradeClassNames());
 
 		registry.register(
-			"com.liferay.journal.service", "0.0.2", "0.0.3",
+			"0.0.2", "0.0.3",
 			new UpgradeJournalArticleType(
 				_assetCategoryLocalService, _assetEntryLocalService,
 				_assetVocabularyLocalService, _companyLocalService,
 				_userLocalService));
 
-		registry.register(
-			"com.liferay.journal.service", "0.0.3", "0.0.4",
-			new UpgradeSchema());
+		registry.register("0.0.3", "0.0.4", new UpgradeSchema());
 
 		registry.register(
-			"com.liferay.journal.service", "0.0.4", "0.0.5",
-			new UpgradeCompanyId(),
+			"0.0.4", "0.0.5", new UpgradeCompanyId(),
 			new UpgradeJournal(
 				_companyLocalService, _ddmStorageLinkLocalService,
 				_ddmStructureLocalService, _ddmTemplateLinkLocalService,
@@ -123,40 +118,32 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 
 			});
 
-		registry.register(
-			"com.liferay.journal.service", "0.0.5", "0.0.6",
-			new UpgradeJournalArticleImage());
+		registry.register("0.0.5", "0.0.6", new UpgradeJournalArticleImage());
 
 		registry.register(
-			"com.liferay.journal.service", "0.0.6", "0.0.7",
-			new UpgradeImageTypeContentAttributes());
+			"0.0.6", "0.0.7", new UpgradeImageTypeContentAttributes());
 
 		registry.register(
-			"com.liferay.journal.service", "0.0.7", "1.0.0",
-			new UpgradeJournalArticleDates(),
+			"0.0.7", "1.0.0", new UpgradeJournalArticleDates(),
 			new UpgradeJournalArticleTreePath());
 
-		registry.register(
-			"com.liferay.journal.service", "1.0.0", "1.0.1",
-			new UpgradeJournalContentSearch());
+		registry.register("1.0.0", "1.0.1", new UpgradeJournalContentSearch());
+
+		registry.register("1.0.1", "1.0.2", new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.journal.service", "1.0.1", "1.0.2",
-			new DummyUpgradeStep());
-
-		registry.register(
-			"com.liferay.journal.service", "1.0.2", "1.1.0",
+			"1.0.2", "1.1.0",
 			new UpgradeDocumentLibraryTypeContent(_dlAppLocalService),
 			new UpgradeImageTypeContent(_imageLocalService),
 			new UpgradeJournalArticleLocalizedValues());
 
 		registry.register(
-			"com.liferay.journal.service", "1.1.0", "1.1.1",
+			"1.1.0", "1.1.1",
 			new UpgradeFileUploadsConfiguration(
 				_configurationAdmin, _prefsProps));
 
 		registry.register(
-			"com.liferay.journal.service", "1.1.1", "1.1.2",
+			"1.1.1", "1.1.2",
 			new UpgradeCheckIntervalConfiguration(_configurationAdmin));
 	}
 

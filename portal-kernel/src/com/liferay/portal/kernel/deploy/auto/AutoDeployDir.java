@@ -338,7 +338,7 @@ public class AutoDeployDir {
 	private static final ServiceTracker<AutoDeployListener, AutoDeployListener>
 		_serviceTracker;
 	private static final Pattern _versionPattern = Pattern.compile(
-		"-[\\d]+((\\.[\\d]+)+(-SNAPSHOT)?)\\.war$");
+		"-[\\d]+((\\.[\\d]+)+(-.+)*)\\.war$");
 
 	static {
 		Registry registry = RegistryUtil.getRegistry();

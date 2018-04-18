@@ -32,13 +32,10 @@ public class DDLDisplayWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"com.liferay.dynamic.data.lists.web", "0.0.0", "1.0.0",
-			new DummyUpgradeStep());
+		registry.register("0.0.0", "1.0.0", new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.dynamic.data.lists.web", "0.0.1", "1.0.0",
-			new UpgradeDDLDisplayPortletId(),
+			"0.0.1", "1.0.0", new UpgradeDDLDisplayPortletId(),
 			new UpgradeDDLFormPortletId(
 				_portletPreferencesLocalService,
 				_resourcePermissionLocalService));

@@ -32,12 +32,10 @@ public class MBServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"com.liferay.message.boards.service", "0.0.1", "1.0.0",
-			new UpgradeClassNames());
+		registry.register("0.0.1", "1.0.0", new UpgradeClassNames());
 
 		registry.register(
-			"com.liferay.message.boards.service", "1.0.0", "1.0.1",
+			"1.0.0", "1.0.1",
 			new UpgradeUnsupportedGuestPermissions(
 				_resourceActionLocalService, _resourcePermissionLocalService,
 				_roleLocalService));

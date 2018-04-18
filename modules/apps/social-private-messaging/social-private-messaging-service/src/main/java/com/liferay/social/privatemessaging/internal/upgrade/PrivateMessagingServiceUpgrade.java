@@ -37,11 +37,11 @@ public class PrivateMessagingServiceUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.social.privatemessaging.service", "0.0.1", "1.0.0",
+			"0.0.1", "1.0.0",
 			new UpgradePrivateMessaging(_mBThreadLocalService));
 
 		registry.register(
-			"com.liferay.social.privatemessaging.service", "1.0.0", "1.0.1",
+			"1.0.0", "1.0.1",
 			new UpgradeResourcePermission(
 				_companyLocalService, _groupLocalService,
 				_repositoryLocalService, _resourceLocalService,

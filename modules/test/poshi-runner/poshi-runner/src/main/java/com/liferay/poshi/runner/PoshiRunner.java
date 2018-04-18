@@ -308,6 +308,20 @@ public class PoshiRunner {
 				}
 			}
 
+			private String _getShortMessage(Throwable throwable) {
+				String message = throwable.getMessage();
+
+				if (throwable instanceof WebDriverException) {
+					int index = message.indexOf("Build info:");
+
+					message = message.substring(0, index);
+
+					message = message.trim();
+				}
+
+				return message;
+			}
+
 			private boolean _isValidRetryThrowable(Throwable throwable) {
 				List<Throwable> throwables = null;
 
@@ -324,21 +338,19 @@ public class PoshiRunner {
 				for (Throwable validRetryThrowable : _validRetryThrowables) {
 					Class<?> validRetryThrowableClass =
 						validRetryThrowable.getClass();
-					String validRetryThrowableMessage =
-						validRetryThrowable.getMessage();
+					String validRetryThrowableShortMessage = _getShortMessage(
+						validRetryThrowable);
 
 					for (Throwable t : throwables) {
 						if (validRetryThrowableClass.equals(t.getClass())) {
-							if ((validRetryThrowableMessage == null) ||
-								validRetryThrowableMessage.isEmpty()) {
+							if ((validRetryThrowableShortMessage == null) ||
+								validRetryThrowableShortMessage.isEmpty()) {
 
 								return true;
 							}
 
-							if (validRetryThrowableMessage.equals(
-									t.getMessage()) ||
-								validRetryThrowableMessage.startsWith(
-									"Build info")) {
+							if (validRetryThrowableShortMessage.equals(
+									_getShortMessage(t))) {
 
 								return true;
 							}

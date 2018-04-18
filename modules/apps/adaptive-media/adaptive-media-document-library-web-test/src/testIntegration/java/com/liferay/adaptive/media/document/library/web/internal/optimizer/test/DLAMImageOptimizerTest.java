@@ -390,10 +390,7 @@ public class DLAMImageOptimizerTest {
 	}
 
 	private byte[] _getImageBytes() throws Exception {
-		return FileUtil.getBytes(
-			DLAMImageOptimizerTest.class,
-			"/com/liferay/adaptive/media/document/library/web/internal" +
-				"/optimizer/test/dependencies/image.jpg");
+		return FileUtil.getBytes(DLAMImageOptimizerTest.class, "image.jpg");
 	}
 
 	@Inject

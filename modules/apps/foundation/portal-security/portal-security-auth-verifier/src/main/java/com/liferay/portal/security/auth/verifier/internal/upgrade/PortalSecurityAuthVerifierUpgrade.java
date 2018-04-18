@@ -36,7 +36,7 @@ public class PortalSecurityAuthVerifierUpgrade
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.portal.security.auth.verifier", "0.0.0", "1.0.0",
+			"0.0.0", "1.0.0",
 			_configurationUpgradeStepFactory.createUpgradeStep(
 				"com.liferay.portal.security.auth.verifier.basic.auth.header." +
 					"module.configuration." +

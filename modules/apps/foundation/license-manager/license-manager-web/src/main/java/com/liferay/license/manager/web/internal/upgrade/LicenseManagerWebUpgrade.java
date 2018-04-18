@@ -27,17 +27,15 @@ public class LicenseManagerWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"com.liferay.license.manager.web", "0.0.0", "1.0.0",
-			new DummyUpgradeStep());
+		registry.register("0.0.0", "1.0.0", new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.license.manager.web", "0.0.1", "1.0.0",
+			"0.0.1", "1.0.0",
 			new com.liferay.license.manager.web.internal.upgrade.v1_0_0.
 				UpgradePortletId());
 
 		registry.register(
-			"com.liferay.license.manager.web", "1.0.0", "1.0.1",
+			"1.0.0", "1.0.1",
 			new com.liferay.license.manager.web.internal.upgrade.v1_0_1.
 				UpgradePortletId());
 	}

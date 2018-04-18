@@ -99,8 +99,7 @@ public class AMGIFImageScalerTest {
 		Assert.assertEquals(100, amImageScaledImage.getWidth());
 
 		Assert.assertArrayEquals(
-			FileUtil.getBytes(
-				AMGIFImageScalerTest.class, _FILE_PATH_SCALED_IMAGE),
+			FileUtil.getBytes(AMGIFImageScalerTest.class, "scaled.gif"),
 			FileUtil.getBytes(amImageScaledImage.getInputStream()));
 	}
 
@@ -109,7 +108,7 @@ public class AMGIFImageScalerTest {
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".gif", ContentTypes.IMAGE_GIF,
-			FileUtil.getBytes(AMGIFImageScalerTest.class, _FILE_PATH_GIF_IMAGE),
+			FileUtil.getBytes(AMGIFImageScalerTest.class, "image.gif"),
 			new ServiceContext());
 	}
 
@@ -123,14 +122,6 @@ public class AMGIFImageScalerTest {
 			TestPropsValues.getCompanyId(), "small", StringPool.BLANK, "0",
 			properties);
 	}
-
-	private static final String _FILE_PATH_GIF_IMAGE =
-		"/com/liferay/adaptive/media/image/internal/configuration/test" +
-			"/dependencies/image.gif";
-
-	private static final String _FILE_PATH_SCALED_IMAGE =
-		"/com/liferay/adaptive/media/image/internal/configuration/test" +
-			"/dependencies/scaled.gif";
 
 	private AMImageConfigurationEntry _amImageConfigurationEntry;
 

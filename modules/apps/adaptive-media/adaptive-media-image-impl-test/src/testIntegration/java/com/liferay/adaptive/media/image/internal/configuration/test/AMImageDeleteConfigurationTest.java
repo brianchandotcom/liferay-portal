@@ -717,13 +717,9 @@ public class AMImageDeleteConfigurationTest
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
 			FileUtil.getBytes(
-				AMImageDeleteConfigurationTest.class, _JPG_IMAGE_FILE_PATH),
+				AMImageDeleteConfigurationTest.class, "image.jpg"),
 			new ServiceContext());
 	}
-
-	private static final String _JPG_IMAGE_FILE_PATH =
-		"/com/liferay/adaptive/media/image/internal/configuration/test" +
-			"/dependencies/image.jpg";
 
 	@Inject
 	private AMImageConfigurationHelper _amImageConfigurationHelper;

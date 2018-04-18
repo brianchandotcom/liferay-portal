@@ -31,12 +31,10 @@ public class CaptchaUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"com.liferay.captcha.impl", "0.0.0", "0.0.1",
-			new DummyUpgradeStep());
+		registry.register("0.0.0", "0.0.1", new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.captcha.impl", "0.0.1", "1.0.0",
+			"0.0.1", "1.0.0",
 			new UpgradeCaptchaConfiguration(_configurationAdmin, _prefsProps));
 	}
 

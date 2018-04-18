@@ -40,50 +40,42 @@ public class KaleoServiceUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.portal.workflow.kaleo.service", "0.0.1", "1.0.0",
-			new UpgradeKaleoTaskInstanceToken(),
+			"0.0.1", "1.0.0", new UpgradeKaleoTaskInstanceToken(),
 			new com.liferay.portal.workflow.kaleo.internal.upgrade.v1_0_0.
 				UpgradeSchema());
 
-		registry.register(
-			"com.liferay.portal.workflow.kaleo.service", "1.0.0", "1.1.0",
-			new UpgradeWorkflowContext());
+		registry.register("1.0.0", "1.1.0", new UpgradeWorkflowContext());
 
 		registry.register(
-			"com.liferay.portal.workflow.kaleo.service", "1.1.0", "1.2.0",
+			"1.1.0", "1.2.0",
 			new com.liferay.portal.workflow.kaleo.internal.upgrade.v1_2_0.
 				UpgradeSchema());
 
 		registry.register(
-			"com.liferay.portal.workflow.kaleo.service", "1.2.0", "1.2.1",
-			new UpgradeKaleoLog(), new UpgradeKaleoNotificationRecipient());
+			"1.2.0", "1.2.1", new UpgradeKaleoLog(),
+			new UpgradeKaleoNotificationRecipient());
 
 		registry.register(
-			"com.liferay.portal.workflow.kaleo.service", "1.2.1", "1.3.0",
-			new UpgradeClassNames(), new UpgradeKaleoAction(),
+			"1.2.1", "1.3.0", new UpgradeClassNames(), new UpgradeKaleoAction(),
 			new UpgradeKaleoDefinition());
 
 		registry.register(
-			"com.liferay.portal.workflow.kaleo.service", "1.3.0", "1.3.1",
+			"1.3.0", "1.3.1",
 			new com.liferay.portal.workflow.kaleo.internal.upgrade.v1_3_1.
 				UpgradeSchema());
 
 		registry.register(
-			"com.liferay.portal.workflow.kaleo.service", "1.3.1", "1.3.2",
-			new UpgradeKaleoClassNameAndKaleoClassPK());
+			"1.3.1", "1.3.2", new UpgradeKaleoClassNameAndKaleoClassPK());
+
+		registry.register("1.3.2", "1.3.3", new UpgradeBlogsEntryClassName());
 
 		registry.register(
-			"com.liferay.portal.workflow.kaleo.service", "1.3.2", "1.3.3",
-			new UpgradeBlogsEntryClassName());
-
-		registry.register(
-			"com.liferay.portal.workflow.kaleo.service", "1.3.3", "1.4.0",
+			"1.3.3", "1.4.0",
 			new com.liferay.portal.workflow.kaleo.internal.upgrade.v1_4_0.
 				UpgradeSchema());
 
 		registry.register(
-			"com.liferay.portal.workflow.kaleo.service", "1.4.0", "1.4.1",
-			new UpgradeKaleoDefinitionVersion());
+			"1.4.0", "1.4.1", new UpgradeKaleoDefinitionVersion());
 	}
 
 }

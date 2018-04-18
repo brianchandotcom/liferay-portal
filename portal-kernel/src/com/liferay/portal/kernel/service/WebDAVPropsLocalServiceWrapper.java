@@ -264,9 +264,9 @@ public class WebDAVPropsLocalServiceWrapper implements WebDAVPropsLocalService,
 
 	@Override
 	public void storeWebDAVProps(
-		com.liferay.portal.kernel.model.WebDAVProps webDavProps)
+		com.liferay.portal.kernel.model.WebDAVProps webDAVProps)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_webDAVPropsLocalService.storeWebDAVProps(webDavProps);
+		_webDAVPropsLocalService.storeWebDAVProps(webDAVProps);
 	}
 
 	/**

@@ -16,6 +16,7 @@ package com.liferay.asset.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.exception.AssetTagException;
+import com.liferay.asset.kernel.exception.AssetTagNameException;
 import com.liferay.asset.kernel.exception.DuplicateTagException;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
@@ -125,7 +126,7 @@ public class AssetTagLocalServiceTest {
 		Assert.assertEquals("tag", assetTag.getName());
 	}
 
-	@Test(expected = AssetTagException.class)
+	@Test(expected = AssetTagNameException.class)
 	public void testAddTagWithEmptyName() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -163,7 +164,7 @@ public class AssetTagLocalServiceTest {
 		Assert.assertEquals("tag name", tag.getName());
 	}
 
-	@Test(expected = AssetTagException.class)
+	@Test(expected = AssetTagNameException.class)
 	public void testAddTagWithNullName() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -174,7 +175,7 @@ public class AssetTagLocalServiceTest {
 			serviceContext);
 	}
 
-	@Test(expected = AssetTagException.class)
+	@Test(expected = AssetTagNameException.class)
 	public void testAddTagWithOnlySpacesInName() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(

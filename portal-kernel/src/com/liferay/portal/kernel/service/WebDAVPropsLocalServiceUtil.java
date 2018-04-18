@@ -251,9 +251,9 @@ public class WebDAVPropsLocalServiceUtil {
 	}
 
 	public static void storeWebDAVProps(
-		com.liferay.portal.kernel.model.WebDAVProps webDavProps)
+		com.liferay.portal.kernel.model.WebDAVProps webDAVProps)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().storeWebDAVProps(webDavProps);
+		getService().storeWebDAVProps(webDAVProps);
 	}
 
 	/**

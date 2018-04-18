@@ -221,7 +221,7 @@ public interface WebDAVPropsLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getWebDAVPropsesCount();
 
-	public void storeWebDAVProps(WebDAVProps webDavProps)
+	public void storeWebDAVProps(WebDAVProps webDAVProps)
 		throws PortalException;
 
 	/**

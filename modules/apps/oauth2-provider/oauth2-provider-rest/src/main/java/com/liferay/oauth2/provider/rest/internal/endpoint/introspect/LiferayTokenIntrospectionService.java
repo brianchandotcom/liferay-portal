@@ -189,9 +189,9 @@ public class LiferayTokenIntrospectionService extends AbstractTokenService {
 		Map<String, String> properties = authenticatedClient.getProperties();
 
 		if (!properties.containsKey(
-				OAuth2ProviderRestEndpointConstants.FEATURE_PREFIX +
+				OAuth2ProviderRestEndpointConstants.CLIENT_FEATURE_PREFIX +
 					OAuth2ProviderRestEndpointConstants.
-						TOKEN_INTROSPECTION_FEATURE)) {
+						CLIENT_FEATURE_TOKEN_INTROSPECTION)) {
 
 			return false;
 		}

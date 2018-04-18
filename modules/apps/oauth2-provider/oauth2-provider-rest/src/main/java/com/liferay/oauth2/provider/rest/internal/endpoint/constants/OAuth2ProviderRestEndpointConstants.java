@@ -22,27 +22,24 @@ public class OAuth2ProviderRestEndpointConstants {
 	public static final String AUTHORIZATION_CODE_PKCE_GRANT =
 		"authorization_code_pkce";
 
+	public static final String CLIENT_FEATURE_PREFIX = "FEATURE-";
+
+	public static final String CLIENT_FEATURE_TOKEN_INTROSPECTION =
+		"token-introspection";
+
+	public static final String CLIENT_FEATURES = "FEATURES";
+
 	public static final String CLIENT_REMOTE_ADDR =
-		"CLIENT_REMOTE_ADDR_ADDRESS";
+		"CLIENT_REMOTE_ADDR";
 
 	public static final String CLIENT_REMOTE_HOST = "CLIENT_REMOTE_HOST";
 
 	public static final String COMPANY_ID = "COMPANY_ID";
 
-	public static final String FEATURE_PREFIX = "FEATURE-";
+	public static final String OAUTH2_ENDPOINT_JAXRS_PROVIDER =
+		"oauth2.endpoint.jaxrs.provider";
 
-	public static final String FEATURES = "FEATURES";
-
-	public static final String LIFERAY_OAUTH2_CLIENT_ID =
-		"liferay.oauth2.client.id";
-
-	public static final String LIFERAY_OAUTH2_ENDPOINT_PROVIDER =
-		"liferay.oauth2.endpoint.provider";
-
-	public static final String LIFERAY_OAUTH2_ENDPOINT_RESOURCE =
-		"liferay.oauth2.endpoint.resource";
-
-	public static final String TOKEN_INTROSPECTION_FEATURE =
-		"token-introspection";
+	public static final String OAUTH2_ENDPOINT_JAXRS_RESOURCE =
+		"oauth2.endpoint.jaxrs.resource";
 
 }

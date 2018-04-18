@@ -68,8 +68,7 @@ public class LiferayAccessTokenServiceRegistrator {
 		Dictionary<String, Object> endpointProperties = new Hashtable<>();
 
 		endpointProperties.put(
-			OAuth2ProviderRestEndpointConstants.
-				LIFERAY_OAUTH2_ENDPOINT_RESOURCE,
+			OAuth2ProviderRestEndpointConstants.OAUTH2_ENDPOINT_JAXRS_RESOURCE,
 			true);
 
 		_endpointServiceRegistration = bundleContext.registerService(

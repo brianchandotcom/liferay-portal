@@ -42,21 +42,21 @@ public class OAuth2EndpointApplication extends Application {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(" + OAuth2ProviderRestEndpointConstants.LIFERAY_OAUTH2_ENDPOINT_PROVIDER + "=true)",
-		unbind = "removeOAuth2Endpoint"
+		target = "(" + OAuth2ProviderRestEndpointConstants.OAUTH2_ENDPOINT_JAXRS_PROVIDER + "=true)",
+		unbind = "removeJaxrsObject"
 	)
-	public void addOAuth2EndpointProvider(Object endpoint) {
-		_oAuth2Endpoints.add(endpoint);
+	public void addJaxrsProvider(Object jaxrsProvider) {
+		_jaxrsObjects.add(jaxrsProvider);
 	}
 
 	@Reference(
 		cardinality = ReferenceCardinality.AT_LEAST_ONE,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(" + OAuth2ProviderRestEndpointConstants.LIFERAY_OAUTH2_ENDPOINT_RESOURCE + "=true)",
-		unbind = "removeOAuth2Endpoint"
+		target = "(" + OAuth2ProviderRestEndpointConstants.OAUTH2_ENDPOINT_JAXRS_RESOURCE + "=true)",
+		unbind = "removeJaxrsProvider"
 	)
-	public void addOAuth2EndpointResource(Object endpoint) {
-		_oAuth2Endpoints.add(endpoint);
+	public void addJaxrsResource(Object jaxrsResource) {
+		_jaxrsObjects.add(jaxrsResource);
 	}
 
 	@Override
@@ -66,13 +66,13 @@ public class OAuth2EndpointApplication extends Application {
 
 	@Override
 	public Set<Object> getSingletons() {
-		return new HashSet<>(_oAuth2Endpoints);
+		return new HashSet<>(_jaxrsObjects);
 	}
 
-	public void removeOAuth2Endpoint(Object endpoint) {
-		_oAuth2Endpoints.remove(endpoint);
+	public void removeJaxrsObject(Object object) {
+		_jaxrsObjects.remove(object);
 	}
 
-	private final List<Object> _oAuth2Endpoints = new ArrayList<>();
+	private final List<Object> _jaxrsObjects = new ArrayList<>();
 
 }

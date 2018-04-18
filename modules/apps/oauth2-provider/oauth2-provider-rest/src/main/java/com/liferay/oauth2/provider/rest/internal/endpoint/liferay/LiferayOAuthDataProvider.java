@@ -879,12 +879,13 @@ public class LiferayOAuthDataProvider
 			OAuth2ProviderRestEndpointConstants.COMPANY_ID,
 			GetterUtil.getString(companyId));
 		properties.put(
-			OAuth2ProviderRestEndpointConstants.FEATURES,
+			OAuth2ProviderRestEndpointConstants.CLIENT_FEATURES,
 			oAuth2Application.getFeatures());
 
 		for (String feature : oAuth2Application.getFeaturesList()) {
 			properties.put(
-				OAuth2ProviderRestEndpointConstants.FEATURE_PREFIX + feature,
+				OAuth2ProviderRestEndpointConstants.CLIENT_FEATURE_PREFIX +
+					feature,
 				feature);
 		}
 

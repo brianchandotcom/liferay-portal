@@ -42,6 +42,45 @@ public class CommerceUserSegmentCriterionServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.user.segment.service.impl.CommerceUserSegmentCriterionServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion addCommerceUserSegmentCriterion(
+		long commerceUserSegmentEntryId, java.lang.String type,
+		java.lang.String typeSettings, double priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCommerceUserSegmentCriterion(commerceUserSegmentEntryId,
+			type, typeSettings, priority, serviceContext);
+	}
+
+	public static void deleteCommerceUserSegmentCriterion(
+		long commerceUserSegmentCriterionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.deleteCommerceUserSegmentCriterion(commerceUserSegmentCriterionId);
+	}
+
+	public static java.util.List<com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion> getCommerceUserSegmentCriteria(
+		long commerceUserSegmentEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCommerceUserSegmentCriteria(commerceUserSegmentEntryId,
+			start, end, orderByComparator);
+	}
+
+	public static int getCommerceUserSegmentCriteriaCount(
+		long commerceUserSegmentEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCommerceUserSegmentCriteriaCount(commerceUserSegmentEntryId);
+	}
+
+	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion getCommerceUserSegmentCriterion(
+		long commerceUserSegmentCriterionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCommerceUserSegmentCriterion(commerceUserSegmentCriterionId);
+	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -50,6 +89,16 @@ public class CommerceUserSegmentCriterionServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion updateCommerceUserSegmentCriterion(
+		long commerceUserSegmentCriterionId, java.lang.String type,
+		java.lang.String typeSettings, double priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommerceUserSegmentCriterion(commerceUserSegmentCriterionId,
+			type, typeSettings, priority, serviceContext);
 	}
 
 	public static CommerceUserSegmentCriterionService getService() {

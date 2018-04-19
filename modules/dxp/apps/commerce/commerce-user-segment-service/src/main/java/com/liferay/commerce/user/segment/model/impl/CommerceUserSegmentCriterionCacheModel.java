@@ -66,7 +66,7 @@ public class CommerceUserSegmentCriterionCacheModel implements CacheModel<Commer
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{commerceUserSegmentCriterionId=");
 		sb.append(commerceUserSegmentCriterionId);
@@ -84,12 +84,10 @@ public class CommerceUserSegmentCriterionCacheModel implements CacheModel<Commer
 		sb.append(modifiedDate);
 		sb.append(", commerceUserSegmentEntryId=");
 		sb.append(commerceUserSegmentEntryId);
-		sb.append(", criterionType=");
-		sb.append(criterionType);
-		sb.append(", condition=");
-		sb.append(condition);
-		sb.append(", value=");
-		sb.append(value);
+		sb.append(", type=");
+		sb.append(type);
+		sb.append(", typeSettings=");
+		sb.append(typeSettings);
 		sb.append(", priority=");
 		sb.append(priority);
 		sb.append("}");
@@ -130,25 +128,18 @@ public class CommerceUserSegmentCriterionCacheModel implements CacheModel<Commer
 
 		commerceUserSegmentCriterionImpl.setCommerceUserSegmentEntryId(commerceUserSegmentEntryId);
 
-		if (criterionType == null) {
-			commerceUserSegmentCriterionImpl.setCriterionType("");
+		if (type == null) {
+			commerceUserSegmentCriterionImpl.setType("");
 		}
 		else {
-			commerceUserSegmentCriterionImpl.setCriterionType(criterionType);
+			commerceUserSegmentCriterionImpl.setType(type);
 		}
 
-		if (condition == null) {
-			commerceUserSegmentCriterionImpl.setCondition("");
+		if (typeSettings == null) {
+			commerceUserSegmentCriterionImpl.setTypeSettings("");
 		}
 		else {
-			commerceUserSegmentCriterionImpl.setCondition(condition);
-		}
-
-		if (value == null) {
-			commerceUserSegmentCriterionImpl.setValue("");
-		}
-		else {
-			commerceUserSegmentCriterionImpl.setValue(value);
+			commerceUserSegmentCriterionImpl.setTypeSettings(typeSettings);
 		}
 
 		commerceUserSegmentCriterionImpl.setPriority(priority);
@@ -172,9 +163,8 @@ public class CommerceUserSegmentCriterionCacheModel implements CacheModel<Commer
 		modifiedDate = objectInput.readLong();
 
 		commerceUserSegmentEntryId = objectInput.readLong();
-		criterionType = objectInput.readUTF();
-		condition = objectInput.readUTF();
-		value = objectInput.readUTF();
+		type = objectInput.readUTF();
+		typeSettings = objectInput.readUTF();
 
 		priority = objectInput.readDouble();
 	}
@@ -202,25 +192,18 @@ public class CommerceUserSegmentCriterionCacheModel implements CacheModel<Commer
 
 		objectOutput.writeLong(commerceUserSegmentEntryId);
 
-		if (criterionType == null) {
+		if (type == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(criterionType);
+			objectOutput.writeUTF(type);
 		}
 
-		if (condition == null) {
+		if (typeSettings == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(condition);
-		}
-
-		if (value == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(value);
+			objectOutput.writeUTF(typeSettings);
 		}
 
 		objectOutput.writeDouble(priority);
@@ -234,8 +217,7 @@ public class CommerceUserSegmentCriterionCacheModel implements CacheModel<Commer
 	public long createDate;
 	public long modifiedDate;
 	public long commerceUserSegmentEntryId;
-	public String criterionType;
-	public String condition;
-	public String value;
+	public String type;
+	public String typeSettings;
 	public double priority;
 }

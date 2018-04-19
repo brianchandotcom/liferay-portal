@@ -25,10 +25,13 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -71,6 +74,11 @@ public interface CommerceUserSegmentCriterionLocalService
 	public CommerceUserSegmentCriterion addCommerceUserSegmentCriterion(
 		CommerceUserSegmentCriterion commerceUserSegmentCriterion);
 
+	public CommerceUserSegmentCriterion addCommerceUserSegmentCriterion(
+		long commerceUserSegmentEntryId, java.lang.String type,
+		java.lang.String typeSettings, double priority,
+		ServiceContext serviceContext) throws PortalException;
+
 	/**
 	* Creates a new commerce user segment criterion with the primary key. Does not add the commerce user segment criterion to the database.
 	*
@@ -80,15 +88,21 @@ public interface CommerceUserSegmentCriterionLocalService
 	public CommerceUserSegmentCriterion createCommerceUserSegmentCriterion(
 		long commerceUserSegmentCriterionId);
 
+	public void deleteCommerceUserSegmentCriteria(
+		long commerceUserSegmentEntryId) throws PortalException;
+
 	/**
 	* Deletes the commerce user segment criterion from the database. Also notifies the appropriate model listeners.
 	*
 	* @param commerceUserSegmentCriterion the commerce user segment criterion
 	* @return the commerce user segment criterion that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceUserSegmentCriterion deleteCommerceUserSegmentCriterion(
-		CommerceUserSegmentCriterion commerceUserSegmentCriterion);
+		CommerceUserSegmentCriterion commerceUserSegmentCriterion)
+		throws PortalException;
 
 	/**
 	* Deletes the commerce user segment criterion with the primary key from the database. Also notifies the appropriate model listeners.
@@ -174,6 +188,15 @@ public interface CommerceUserSegmentCriterionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceUserSegmentCriterion> getCommerceUserSegmentCriteria(
+		long commerceUserSegmentEntryId, int start, int end,
+		OrderByComparator<CommerceUserSegmentCriterion> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceUserSegmentCriteriaCount(
+		long commerceUserSegmentEntryId);
+
 	/**
 	* Returns the commerce user segment criterion with the primary key.
 	*
@@ -232,4 +255,9 @@ public interface CommerceUserSegmentCriterionLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceUserSegmentCriterion updateCommerceUserSegmentCriterion(
 		CommerceUserSegmentCriterion commerceUserSegmentCriterion);
+
+	public CommerceUserSegmentCriterion updateCommerceUserSegmentCriterion(
+		long commerceUserSegmentCriterionId, java.lang.String type,
+		java.lang.String typeSettings, double priority,
+		ServiceContext serviceContext) throws PortalException;
 }

@@ -208,49 +208,34 @@ public interface CommerceUserSegmentCriterionModel extends BaseModel<CommerceUse
 	public void setCommerceUserSegmentEntryId(long commerceUserSegmentEntryId);
 
 	/**
-	 * Returns the criterion type of this commerce user segment criterion.
+	 * Returns the type of this commerce user segment criterion.
 	 *
-	 * @return the criterion type of this commerce user segment criterion
+	 * @return the type of this commerce user segment criterion
 	 */
 	@AutoEscape
-	public String getCriterionType();
+	public String getType();
 
 	/**
-	 * Sets the criterion type of this commerce user segment criterion.
+	 * Sets the type of this commerce user segment criterion.
 	 *
-	 * @param criterionType the criterion type of this commerce user segment criterion
+	 * @param type the type of this commerce user segment criterion
 	 */
-	public void setCriterionType(String criterionType);
+	public void setType(String type);
 
 	/**
-	 * Returns the condition of this commerce user segment criterion.
+	 * Returns the type settings of this commerce user segment criterion.
 	 *
-	 * @return the condition of this commerce user segment criterion
-	 */
-	@AutoEscape
-	public String getCondition();
-
-	/**
-	 * Sets the condition of this commerce user segment criterion.
-	 *
-	 * @param condition the condition of this commerce user segment criterion
-	 */
-	public void setCondition(String condition);
-
-	/**
-	 * Returns the value of this commerce user segment criterion.
-	 *
-	 * @return the value of this commerce user segment criterion
+	 * @return the type settings of this commerce user segment criterion
 	 */
 	@AutoEscape
-	public String getValue();
+	public String getTypeSettings();
 
 	/**
-	 * Sets the value of this commerce user segment criterion.
+	 * Sets the type settings of this commerce user segment criterion.
 	 *
-	 * @param value the value of this commerce user segment criterion
+	 * @param typeSettings the type settings of this commerce user segment criterion
 	 */
-	public void setValue(String value);
+	public void setTypeSettings(String typeSettings);
 
 	/**
 	 * Returns the priority of this commerce user segment criterion.

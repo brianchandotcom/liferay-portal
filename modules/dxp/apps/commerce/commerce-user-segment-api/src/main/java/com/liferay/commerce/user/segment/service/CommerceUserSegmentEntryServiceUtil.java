@@ -60,9 +60,24 @@ public class CommerceUserSegmentEntryServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry> getCommerceUserSegmentEntries(
-		long groupId, int start, int end)
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCommerceUserSegmentEntries(groupId, start, end);
+		return getService()
+				   .getCommerceUserSegmentEntries(groupId, start, end,
+			orderByComparator);
+	}
+
+	public static int getCommerceUserSegmentEntriesCount(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommerceUserSegmentEntriesCount(groupId);
+	}
+
+	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry getCommerceUserSegmentEntry(
+		long commerceUserSegmentEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCommerceUserSegmentEntry(commerceUserSegmentEntryId);
 	}
 
 	/**
@@ -72,6 +87,21 @@ public class CommerceUserSegmentEntryServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry> searchCommerceUserSegmentEntries(
+		long companyId, long groupId, java.lang.String keywords, int start,
+		int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchCommerceUserSegmentEntries(companyId, groupId,
+			keywords, start, end, sort);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry> searchCommerceUserSegmentEntries(
+		com.liferay.portal.kernel.search.SearchContext searchContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().searchCommerceUserSegmentEntries(searchContext);
 	}
 
 	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry updateCommerceUserSegmentEntry(

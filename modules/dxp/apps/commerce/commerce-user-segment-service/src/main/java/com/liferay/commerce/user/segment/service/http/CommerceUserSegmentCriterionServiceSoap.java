@@ -16,9 +16,16 @@ package com.liferay.commerce.user.segment.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.user.segment.service.CommerceUserSegmentCriterionServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.commerce.user.segment.service.CommerceUserSegmentCriterionServiceUtil} service utility. The
+ * {@link CommerceUserSegmentCriterionServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,107 @@ import aQute.bnd.annotation.ProviderType;
  * @author Marco Leo
  * @see CommerceUserSegmentCriterionServiceHttp
  * @see com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterionSoap
- * @see com.liferay.commerce.user.segment.service.CommerceUserSegmentCriterionServiceUtil
+ * @see CommerceUserSegmentCriterionServiceUtil
  * @generated
  */
 @ProviderType
 public class CommerceUserSegmentCriterionServiceSoap {
+	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterionSoap addCommerceUserSegmentCriterion(
+		long commerceUserSegmentEntryId, java.lang.String type,
+		java.lang.String typeSettings, double priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion returnValue =
+				CommerceUserSegmentCriterionServiceUtil.addCommerceUserSegmentCriterion(commerceUserSegmentEntryId,
+					type, typeSettings, priority, serviceContext);
+
+			return com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterionSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void deleteCommerceUserSegmentCriterion(
+		long commerceUserSegmentCriterionId) throws RemoteException {
+		try {
+			CommerceUserSegmentCriterionServiceUtil.deleteCommerceUserSegmentCriterion(commerceUserSegmentCriterionId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterionSoap[] getCommerceUserSegmentCriteria(
+		long commerceUserSegmentEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion> returnValue =
+				CommerceUserSegmentCriterionServiceUtil.getCommerceUserSegmentCriteria(commerceUserSegmentEntryId,
+					start, end, orderByComparator);
+
+			return com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterionSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCommerceUserSegmentCriteriaCount(
+		long commerceUserSegmentEntryId) throws RemoteException {
+		try {
+			int returnValue = CommerceUserSegmentCriterionServiceUtil.getCommerceUserSegmentCriteriaCount(commerceUserSegmentEntryId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterionSoap getCommerceUserSegmentCriterion(
+		long commerceUserSegmentCriterionId) throws RemoteException {
+		try {
+			com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion returnValue =
+				CommerceUserSegmentCriterionServiceUtil.getCommerceUserSegmentCriterion(commerceUserSegmentCriterionId);
+
+			return com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterionSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterionSoap updateCommerceUserSegmentCriterion(
+		long commerceUserSegmentCriterionId, java.lang.String type,
+		java.lang.String typeSettings, double priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion returnValue =
+				CommerceUserSegmentCriterionServiceUtil.updateCommerceUserSegmentCriterion(commerceUserSegmentCriterionId,
+					type, typeSettings, priority, serviceContext);
+
+			return com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterionSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(CommerceUserSegmentCriterionServiceSoap.class);
 }

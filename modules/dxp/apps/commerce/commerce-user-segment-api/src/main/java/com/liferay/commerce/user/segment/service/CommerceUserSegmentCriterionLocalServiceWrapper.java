@@ -46,6 +46,16 @@ public class CommerceUserSegmentCriterionLocalServiceWrapper
 		return _commerceUserSegmentCriterionLocalService.addCommerceUserSegmentCriterion(commerceUserSegmentCriterion);
 	}
 
+	@Override
+	public com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion addCommerceUserSegmentCriterion(
+		long commerceUserSegmentEntryId, java.lang.String type,
+		java.lang.String typeSettings, double priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceUserSegmentCriterionLocalService.addCommerceUserSegmentCriterion(commerceUserSegmentEntryId,
+			type, typeSettings, priority, serviceContext);
+	}
+
 	/**
 	* Creates a new commerce user segment criterion with the primary key. Does not add the commerce user segment criterion to the database.
 	*
@@ -58,15 +68,24 @@ public class CommerceUserSegmentCriterionLocalServiceWrapper
 		return _commerceUserSegmentCriterionLocalService.createCommerceUserSegmentCriterion(commerceUserSegmentCriterionId);
 	}
 
+	@Override
+	public void deleteCommerceUserSegmentCriteria(
+		long commerceUserSegmentEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceUserSegmentCriterionLocalService.deleteCommerceUserSegmentCriteria(commerceUserSegmentEntryId);
+	}
+
 	/**
 	* Deletes the commerce user segment criterion from the database. Also notifies the appropriate model listeners.
 	*
 	* @param commerceUserSegmentCriterion the commerce user segment criterion
 	* @return the commerce user segment criterion that was removed
+	* @throws PortalException
 	*/
 	@Override
 	public com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion deleteCommerceUserSegmentCriterion(
-		com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion commerceUserSegmentCriterion) {
+		com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion commerceUserSegmentCriterion)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceUserSegmentCriterionLocalService.deleteCommerceUserSegmentCriterion(commerceUserSegmentCriterion);
 	}
 
@@ -191,6 +210,20 @@ public class CommerceUserSegmentCriterionLocalServiceWrapper
 		return _commerceUserSegmentCriterionLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion> getCommerceUserSegmentCriteria(
+		long commerceUserSegmentEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion> orderByComparator) {
+		return _commerceUserSegmentCriterionLocalService.getCommerceUserSegmentCriteria(commerceUserSegmentEntryId,
+			start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCommerceUserSegmentCriteriaCount(
+		long commerceUserSegmentEntryId) {
+		return _commerceUserSegmentCriterionLocalService.getCommerceUserSegmentCriteriaCount(commerceUserSegmentEntryId);
+	}
+
 	/**
 	* Returns the commerce user segment criterion with the primary key.
 	*
@@ -265,6 +298,16 @@ public class CommerceUserSegmentCriterionLocalServiceWrapper
 	public com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion updateCommerceUserSegmentCriterion(
 		com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion commerceUserSegmentCriterion) {
 		return _commerceUserSegmentCriterionLocalService.updateCommerceUserSegmentCriterion(commerceUserSegmentCriterion);
+	}
+
+	@Override
+	public com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion updateCommerceUserSegmentCriterion(
+		long commerceUserSegmentCriterionId, java.lang.String type,
+		java.lang.String typeSettings, double priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceUserSegmentCriterionLocalService.updateCommerceUserSegmentCriterion(commerceUserSegmentCriterionId,
+			type, typeSettings, priority, serviceContext);
 	}
 
 	@Override

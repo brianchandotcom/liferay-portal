@@ -43,9 +43,8 @@ public class CommerceUserSegmentCriterionSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setCommerceUserSegmentEntryId(model.getCommerceUserSegmentEntryId());
-		soapModel.setCriterionType(model.getCriterionType());
-		soapModel.setCondition(model.getCondition());
-		soapModel.setValue(model.getValue());
+		soapModel.setType(model.getType());
+		soapModel.setTypeSettings(model.getTypeSettings());
 		soapModel.setPriority(model.getPriority());
 
 		return soapModel;
@@ -167,28 +166,20 @@ public class CommerceUserSegmentCriterionSoap implements Serializable {
 		_commerceUserSegmentEntryId = commerceUserSegmentEntryId;
 	}
 
-	public String getCriterionType() {
-		return _criterionType;
+	public String getType() {
+		return _type;
 	}
 
-	public void setCriterionType(String criterionType) {
-		_criterionType = criterionType;
+	public void setType(String type) {
+		_type = type;
 	}
 
-	public String getCondition() {
-		return _condition;
+	public String getTypeSettings() {
+		return _typeSettings;
 	}
 
-	public void setCondition(String condition) {
-		_condition = condition;
-	}
-
-	public String getValue() {
-		return _value;
-	}
-
-	public void setValue(String value) {
-		_value = value;
+	public void setTypeSettings(String typeSettings) {
+		_typeSettings = typeSettings;
 	}
 
 	public double getPriority() {
@@ -207,8 +198,7 @@ public class CommerceUserSegmentCriterionSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _commerceUserSegmentEntryId;
-	private String _criterionType;
-	private String _condition;
-	private String _value;
+	private String _type;
+	private String _typeSettings;
 	private double _priority;
 }

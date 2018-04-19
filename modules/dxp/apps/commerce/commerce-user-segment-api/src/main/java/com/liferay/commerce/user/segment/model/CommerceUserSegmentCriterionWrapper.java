@@ -70,9 +70,8 @@ public class CommerceUserSegmentCriterionWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("commerceUserSegmentEntryId",
 			getCommerceUserSegmentEntryId());
-		attributes.put("criterionType", getCriterionType());
-		attributes.put("condition", getCondition());
-		attributes.put("value", getValue());
+		attributes.put("type", getType());
+		attributes.put("typeSettings", getTypeSettings());
 		attributes.put("priority", getPriority());
 
 		return attributes;
@@ -130,22 +129,16 @@ public class CommerceUserSegmentCriterionWrapper
 			setCommerceUserSegmentEntryId(commerceUserSegmentEntryId);
 		}
 
-		String criterionType = (String)attributes.get("criterionType");
+		String type = (String)attributes.get("type");
 
-		if (criterionType != null) {
-			setCriterionType(criterionType);
+		if (type != null) {
+			setType(type);
 		}
 
-		String condition = (String)attributes.get("condition");
+		String typeSettings = (String)attributes.get("typeSettings");
 
-		if (condition != null) {
-			setCondition(condition);
-		}
-
-		String value = (String)attributes.get("value");
-
-		if (value != null) {
-			setValue(value);
+		if (typeSettings != null) {
+			setTypeSettings(typeSettings);
 		}
 
 		Double priority = (Double)attributes.get("priority");
@@ -197,16 +190,6 @@ public class CommerceUserSegmentCriterionWrapper
 	}
 
 	/**
-	* Returns the condition of this commerce user segment criterion.
-	*
-	* @return the condition of this commerce user segment criterion
-	*/
-	@Override
-	public java.lang.String getCondition() {
-		return _commerceUserSegmentCriterion.getCondition();
-	}
-
-	/**
 	* Returns the create date of this commerce user segment criterion.
 	*
 	* @return the create date of this commerce user segment criterion
@@ -214,16 +197,6 @@ public class CommerceUserSegmentCriterionWrapper
 	@Override
 	public Date getCreateDate() {
 		return _commerceUserSegmentCriterion.getCreateDate();
-	}
-
-	/**
-	* Returns the criterion type of this commerce user segment criterion.
-	*
-	* @return the criterion type of this commerce user segment criterion
-	*/
-	@Override
-	public java.lang.String getCriterionType() {
-		return _commerceUserSegmentCriterion.getCriterionType();
 	}
 
 	@Override
@@ -277,6 +250,26 @@ public class CommerceUserSegmentCriterionWrapper
 	}
 
 	/**
+	* Returns the type of this commerce user segment criterion.
+	*
+	* @return the type of this commerce user segment criterion
+	*/
+	@Override
+	public java.lang.String getType() {
+		return _commerceUserSegmentCriterion.getType();
+	}
+
+	/**
+	* Returns the type settings of this commerce user segment criterion.
+	*
+	* @return the type settings of this commerce user segment criterion
+	*/
+	@Override
+	public java.lang.String getTypeSettings() {
+		return _commerceUserSegmentCriterion.getTypeSettings();
+	}
+
+	/**
 	* Returns the user ID of this commerce user segment criterion.
 	*
 	* @return the user ID of this commerce user segment criterion
@@ -304,16 +297,6 @@ public class CommerceUserSegmentCriterionWrapper
 	@Override
 	public java.lang.String getUserUuid() {
 		return _commerceUserSegmentCriterion.getUserUuid();
-	}
-
-	/**
-	* Returns the value of this commerce user segment criterion.
-	*
-	* @return the value of this commerce user segment criterion
-	*/
-	@Override
-	public java.lang.String getValue() {
-		return _commerceUserSegmentCriterion.getValue();
 	}
 
 	@Override
@@ -378,16 +361,6 @@ public class CommerceUserSegmentCriterionWrapper
 	}
 
 	/**
-	* Sets the condition of this commerce user segment criterion.
-	*
-	* @param condition the condition of this commerce user segment criterion
-	*/
-	@Override
-	public void setCondition(java.lang.String condition) {
-		_commerceUserSegmentCriterion.setCondition(condition);
-	}
-
-	/**
 	* Sets the create date of this commerce user segment criterion.
 	*
 	* @param createDate the create date of this commerce user segment criterion
@@ -395,16 +368,6 @@ public class CommerceUserSegmentCriterionWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		_commerceUserSegmentCriterion.setCreateDate(createDate);
-	}
-
-	/**
-	* Sets the criterion type of this commerce user segment criterion.
-	*
-	* @param criterionType the criterion type of this commerce user segment criterion
-	*/
-	@Override
-	public void setCriterionType(java.lang.String criterionType) {
-		_commerceUserSegmentCriterion.setCriterionType(criterionType);
 	}
 
 	@Override
@@ -474,6 +437,26 @@ public class CommerceUserSegmentCriterionWrapper
 	}
 
 	/**
+	* Sets the type of this commerce user segment criterion.
+	*
+	* @param type the type of this commerce user segment criterion
+	*/
+	@Override
+	public void setType(java.lang.String type) {
+		_commerceUserSegmentCriterion.setType(type);
+	}
+
+	/**
+	* Sets the type settings of this commerce user segment criterion.
+	*
+	* @param typeSettings the type settings of this commerce user segment criterion
+	*/
+	@Override
+	public void setTypeSettings(java.lang.String typeSettings) {
+		_commerceUserSegmentCriterion.setTypeSettings(typeSettings);
+	}
+
+	/**
 	* Sets the user ID of this commerce user segment criterion.
 	*
 	* @param userId the user ID of this commerce user segment criterion
@@ -501,16 +484,6 @@ public class CommerceUserSegmentCriterionWrapper
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_commerceUserSegmentCriterion.setUserUuid(userUuid);
-	}
-
-	/**
-	* Sets the value of this commerce user segment criterion.
-	*
-	* @param value the value of this commerce user segment criterion
-	*/
-	@Override
-	public void setValue(java.lang.String value) {
-		_commerceUserSegmentCriterion.setValue(value);
 	}
 
 	@Override

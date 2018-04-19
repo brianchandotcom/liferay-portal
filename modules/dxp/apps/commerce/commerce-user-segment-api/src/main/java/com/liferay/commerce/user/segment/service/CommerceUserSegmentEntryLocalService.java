@@ -26,8 +26,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.SystemEventConstants;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -204,7 +207,8 @@ public interface CommerceUserSegmentEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceUserSegmentEntry> getCommerceUserSegmentEntries(
-		long groupId, int start, int end);
+		long groupId, int start, int end,
+		OrderByComparator<CommerceUserSegmentEntry> orderByComparator);
 
 	/**
 	* Returns the number of commerce user segment entries.
@@ -213,6 +217,9 @@ public interface CommerceUserSegmentEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceUserSegmentEntriesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceUserSegmentEntriesCount(long groupId);
 
 	/**
 	* Returns the commerce user segment entry with the primary key.
@@ -239,6 +246,15 @@ public interface CommerceUserSegmentEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CommerceUserSegmentEntry> searchCommerceUserSegmentEntries(
+		long companyId, long groupId, java.lang.String keywords, int start,
+		int end, Sort sort) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CommerceUserSegmentEntry> searchCommerceUserSegmentEntries(
+		SearchContext searchContext) throws PortalException;
 
 	/**
 	* Updates the commerce user segment entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

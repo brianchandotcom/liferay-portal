@@ -640,7 +640,7 @@ public class CommerceUserSegmentCriterionPersistenceImpl
 
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
-			dbColumnNames.put("condition", "condition_");
+			dbColumnNames.put("type", "type_");
 
 			field.set(this, dbColumnNames);
 		}
@@ -969,9 +969,8 @@ public class CommerceUserSegmentCriterionPersistenceImpl
 		commerceUserSegmentCriterionImpl.setCreateDate(commerceUserSegmentCriterion.getCreateDate());
 		commerceUserSegmentCriterionImpl.setModifiedDate(commerceUserSegmentCriterion.getModifiedDate());
 		commerceUserSegmentCriterionImpl.setCommerceUserSegmentEntryId(commerceUserSegmentCriterion.getCommerceUserSegmentEntryId());
-		commerceUserSegmentCriterionImpl.setCriterionType(commerceUserSegmentCriterion.getCriterionType());
-		commerceUserSegmentCriterionImpl.setCondition(commerceUserSegmentCriterion.getCondition());
-		commerceUserSegmentCriterionImpl.setValue(commerceUserSegmentCriterion.getValue());
+		commerceUserSegmentCriterionImpl.setType(commerceUserSegmentCriterion.getType());
+		commerceUserSegmentCriterionImpl.setTypeSettings(commerceUserSegmentCriterion.getTypeSettings());
 		commerceUserSegmentCriterionImpl.setPriority(commerceUserSegmentCriterion.getPriority());
 
 		return commerceUserSegmentCriterionImpl;
@@ -1405,6 +1404,6 @@ public class CommerceUserSegmentCriterionPersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No CommerceUserSegmentCriterion exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(CommerceUserSegmentCriterionPersistenceImpl.class);
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"condition"
+				"type"
 			});
 }

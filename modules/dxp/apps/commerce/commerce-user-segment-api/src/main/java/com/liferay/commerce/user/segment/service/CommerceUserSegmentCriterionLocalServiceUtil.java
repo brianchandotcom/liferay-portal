@@ -55,6 +55,16 @@ public class CommerceUserSegmentCriterionLocalServiceUtil {
 				   .addCommerceUserSegmentCriterion(commerceUserSegmentCriterion);
 	}
 
+	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion addCommerceUserSegmentCriterion(
+		long commerceUserSegmentEntryId, java.lang.String type,
+		java.lang.String typeSettings, double priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCommerceUserSegmentCriterion(commerceUserSegmentEntryId,
+			type, typeSettings, priority, serviceContext);
+	}
+
 	/**
 	* Creates a new commerce user segment criterion with the primary key. Does not add the commerce user segment criterion to the database.
 	*
@@ -67,14 +77,23 @@ public class CommerceUserSegmentCriterionLocalServiceUtil {
 				   .createCommerceUserSegmentCriterion(commerceUserSegmentCriterionId);
 	}
 
+	public static void deleteCommerceUserSegmentCriteria(
+		long commerceUserSegmentEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.deleteCommerceUserSegmentCriteria(commerceUserSegmentEntryId);
+	}
+
 	/**
 	* Deletes the commerce user segment criterion from the database. Also notifies the appropriate model listeners.
 	*
 	* @param commerceUserSegmentCriterion the commerce user segment criterion
 	* @return the commerce user segment criterion that was removed
+	* @throws PortalException
 	*/
 	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion deleteCommerceUserSegmentCriterion(
-		com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion commerceUserSegmentCriterion) {
+		com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion commerceUserSegmentCriterion)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .deleteCommerceUserSegmentCriterion(commerceUserSegmentCriterion);
 	}
@@ -190,6 +209,20 @@ public class CommerceUserSegmentCriterionLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static java.util.List<com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion> getCommerceUserSegmentCriteria(
+		long commerceUserSegmentEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion> orderByComparator) {
+		return getService()
+				   .getCommerceUserSegmentCriteria(commerceUserSegmentEntryId,
+			start, end, orderByComparator);
+	}
+
+	public static int getCommerceUserSegmentCriteriaCount(
+		long commerceUserSegmentEntryId) {
+		return getService()
+				   .getCommerceUserSegmentCriteriaCount(commerceUserSegmentEntryId);
+	}
+
 	/**
 	* Returns the commerce user segment criterion with the primary key.
 	*
@@ -258,6 +291,16 @@ public class CommerceUserSegmentCriterionLocalServiceUtil {
 		com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion commerceUserSegmentCriterion) {
 		return getService()
 				   .updateCommerceUserSegmentCriterion(commerceUserSegmentCriterion);
+	}
+
+	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion updateCommerceUserSegmentCriterion(
+		long commerceUserSegmentCriterionId, java.lang.String type,
+		java.lang.String typeSettings, double priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommerceUserSegmentCriterion(commerceUserSegmentCriterionId,
+			type, typeSettings, priority, serviceContext);
 	}
 
 	public static CommerceUserSegmentCriterionLocalService getService() {

@@ -106,6 +106,53 @@ public class CommerceUserSegmentEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentEntrySoap[] getCommerceUserSegmentEntries(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry> returnValue =
+				CommerceUserSegmentEntryServiceUtil.getCommerceUserSegmentEntries(groupId,
+					start, end, orderByComparator);
+
+			return com.liferay.commerce.user.segment.model.CommerceUserSegmentEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCommerceUserSegmentEntriesCount(long groupId)
+		throws RemoteException {
+		try {
+			int returnValue = CommerceUserSegmentEntryServiceUtil.getCommerceUserSegmentEntriesCount(groupId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentEntrySoap getCommerceUserSegmentEntry(
+		long commerceUserSegmentEntryId) throws RemoteException {
+		try {
+			com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry returnValue =
+				CommerceUserSegmentEntryServiceUtil.getCommerceUserSegmentEntry(commerceUserSegmentEntryId);
+
+			return com.liferay.commerce.user.segment.model.CommerceUserSegmentEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentEntrySoap updateCommerceUserSegmentEntry(
 		long commerceUserSegmentEntryId, java.lang.String[] nameMapLanguageIds,
 		java.lang.String[] nameMapValues, double priority, boolean active,
@@ -120,22 +167,6 @@ public class CommerceUserSegmentEntryServiceSoap {
 					nameMap, priority, active, serviceContext);
 
 			return com.liferay.commerce.user.segment.model.CommerceUserSegmentEntrySoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentEntrySoap[] getCommerceUserSegmentEntries(
-		long groupId, int start, int end) throws RemoteException {
-		try {
-			java.util.List<com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry> returnValue =
-				CommerceUserSegmentEntryServiceUtil.getCommerceUserSegmentEntries(groupId,
-					start, end);
-
-			return com.liferay.commerce.user.segment.model.CommerceUserSegmentEntrySoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

@@ -223,9 +223,10 @@ public class CommerceUserSegmentEntryLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry> getCommerceUserSegmentEntries(
-		long groupId, int start, int end) {
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry> orderByComparator) {
 		return _commerceUserSegmentEntryLocalService.getCommerceUserSegmentEntries(groupId,
-			start, end);
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -236,6 +237,11 @@ public class CommerceUserSegmentEntryLocalServiceWrapper
 	@Override
 	public int getCommerceUserSegmentEntriesCount() {
 		return _commerceUserSegmentEntryLocalService.getCommerceUserSegmentEntriesCount();
+	}
+
+	@Override
+	public int getCommerceUserSegmentEntriesCount(long groupId) {
+		return _commerceUserSegmentEntryLocalService.getCommerceUserSegmentEntriesCount(groupId);
 	}
 
 	/**
@@ -272,6 +278,22 @@ public class CommerceUserSegmentEntryLocalServiceWrapper
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceUserSegmentEntryLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry> searchCommerceUserSegmentEntries(
+		long companyId, long groupId, java.lang.String keywords, int start,
+		int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceUserSegmentEntryLocalService.searchCommerceUserSegmentEntries(companyId,
+			groupId, keywords, start, end, sort);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry> searchCommerceUserSegmentEntries(
+		com.liferay.portal.kernel.search.SearchContext searchContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceUserSegmentEntryLocalService.searchCommerceUserSegmentEntries(searchContext);
 	}
 
 	/**

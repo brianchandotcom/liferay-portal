@@ -77,9 +77,8 @@ public class CommerceUserSegmentCriterionModelImpl extends BaseModelImpl<Commerc
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "commerceUserSegmentEntryId", Types.BIGINT },
-			{ "criterionType", Types.VARCHAR },
-			{ "condition_", Types.VARCHAR },
-			{ "value", Types.VARCHAR },
+			{ "type_", Types.VARCHAR },
+			{ "typeSettings", Types.VARCHAR },
 			{ "priority", Types.DOUBLE }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -93,13 +92,12 @@ public class CommerceUserSegmentCriterionModelImpl extends BaseModelImpl<Commerc
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("commerceUserSegmentEntryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("criterionType", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("condition_", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("value", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("typeSettings", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceUserSegmentCriterion (commerceUserSegmentCriterionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceUserSegmentEntryId LONG,criterionType VARCHAR(75) null,condition_ VARCHAR(75) null,value VARCHAR(75) null,priority DOUBLE)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceUserSegmentCriterion (commerceUserSegmentCriterionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceUserSegmentEntryId LONG,type_ VARCHAR(75) null,typeSettings VARCHAR(75) null,priority DOUBLE)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceUserSegmentCriterion";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceUserSegmentCriterion.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceUserSegmentCriterion.priority ASC";
@@ -140,9 +138,8 @@ public class CommerceUserSegmentCriterionModelImpl extends BaseModelImpl<Commerc
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setCommerceUserSegmentEntryId(soapModel.getCommerceUserSegmentEntryId());
-		model.setCriterionType(soapModel.getCriterionType());
-		model.setCondition(soapModel.getCondition());
-		model.setValue(soapModel.getValue());
+		model.setType(soapModel.getType());
+		model.setTypeSettings(soapModel.getTypeSettings());
 		model.setPriority(soapModel.getPriority());
 
 		return model;
@@ -219,9 +216,8 @@ public class CommerceUserSegmentCriterionModelImpl extends BaseModelImpl<Commerc
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("commerceUserSegmentEntryId",
 			getCommerceUserSegmentEntryId());
-		attributes.put("criterionType", getCriterionType());
-		attributes.put("condition", getCondition());
-		attributes.put("value", getValue());
+		attributes.put("type", getType());
+		attributes.put("typeSettings", getTypeSettings());
 		attributes.put("priority", getPriority());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -282,22 +278,16 @@ public class CommerceUserSegmentCriterionModelImpl extends BaseModelImpl<Commerc
 			setCommerceUserSegmentEntryId(commerceUserSegmentEntryId);
 		}
 
-		String criterionType = (String)attributes.get("criterionType");
+		String type = (String)attributes.get("type");
 
-		if (criterionType != null) {
-			setCriterionType(criterionType);
+		if (type != null) {
+			setType(type);
 		}
 
-		String condition = (String)attributes.get("condition");
+		String typeSettings = (String)attributes.get("typeSettings");
 
-		if (condition != null) {
-			setCondition(condition);
-		}
-
-		String value = (String)attributes.get("value");
-
-		if (value != null) {
-			setValue(value);
+		if (typeSettings != null) {
+			setTypeSettings(typeSettings);
 		}
 
 		Double priority = (Double)attributes.get("priority");
@@ -437,50 +427,34 @@ public class CommerceUserSegmentCriterionModelImpl extends BaseModelImpl<Commerc
 
 	@JSON
 	@Override
-	public String getCriterionType() {
-		if (_criterionType == null) {
+	public String getType() {
+		if (_type == null) {
 			return "";
 		}
 		else {
-			return _criterionType;
+			return _type;
 		}
 	}
 
 	@Override
-	public void setCriterionType(String criterionType) {
-		_criterionType = criterionType;
+	public void setType(String type) {
+		_type = type;
 	}
 
 	@JSON
 	@Override
-	public String getCondition() {
-		if (_condition == null) {
+	public String getTypeSettings() {
+		if (_typeSettings == null) {
 			return "";
 		}
 		else {
-			return _condition;
+			return _typeSettings;
 		}
 	}
 
 	@Override
-	public void setCondition(String condition) {
-		_condition = condition;
-	}
-
-	@JSON
-	@Override
-	public String getValue() {
-		if (_value == null) {
-			return "";
-		}
-		else {
-			return _value;
-		}
-	}
-
-	@Override
-	public void setValue(String value) {
-		_value = value;
+	public void setTypeSettings(String typeSettings) {
+		_typeSettings = typeSettings;
 	}
 
 	@JSON
@@ -535,9 +509,8 @@ public class CommerceUserSegmentCriterionModelImpl extends BaseModelImpl<Commerc
 		commerceUserSegmentCriterionImpl.setCreateDate(getCreateDate());
 		commerceUserSegmentCriterionImpl.setModifiedDate(getModifiedDate());
 		commerceUserSegmentCriterionImpl.setCommerceUserSegmentEntryId(getCommerceUserSegmentEntryId());
-		commerceUserSegmentCriterionImpl.setCriterionType(getCriterionType());
-		commerceUserSegmentCriterionImpl.setCondition(getCondition());
-		commerceUserSegmentCriterionImpl.setValue(getValue());
+		commerceUserSegmentCriterionImpl.setType(getType());
+		commerceUserSegmentCriterionImpl.setTypeSettings(getTypeSettings());
 		commerceUserSegmentCriterionImpl.setPriority(getPriority());
 
 		commerceUserSegmentCriterionImpl.resetOriginalValues();
@@ -659,28 +632,20 @@ public class CommerceUserSegmentCriterionModelImpl extends BaseModelImpl<Commerc
 
 		commerceUserSegmentCriterionCacheModel.commerceUserSegmentEntryId = getCommerceUserSegmentEntryId();
 
-		commerceUserSegmentCriterionCacheModel.criterionType = getCriterionType();
+		commerceUserSegmentCriterionCacheModel.type = getType();
 
-		String criterionType = commerceUserSegmentCriterionCacheModel.criterionType;
+		String type = commerceUserSegmentCriterionCacheModel.type;
 
-		if ((criterionType != null) && (criterionType.length() == 0)) {
-			commerceUserSegmentCriterionCacheModel.criterionType = null;
+		if ((type != null) && (type.length() == 0)) {
+			commerceUserSegmentCriterionCacheModel.type = null;
 		}
 
-		commerceUserSegmentCriterionCacheModel.condition = getCondition();
+		commerceUserSegmentCriterionCacheModel.typeSettings = getTypeSettings();
 
-		String condition = commerceUserSegmentCriterionCacheModel.condition;
+		String typeSettings = commerceUserSegmentCriterionCacheModel.typeSettings;
 
-		if ((condition != null) && (condition.length() == 0)) {
-			commerceUserSegmentCriterionCacheModel.condition = null;
-		}
-
-		commerceUserSegmentCriterionCacheModel.value = getValue();
-
-		String value = commerceUserSegmentCriterionCacheModel.value;
-
-		if ((value != null) && (value.length() == 0)) {
-			commerceUserSegmentCriterionCacheModel.value = null;
+		if ((typeSettings != null) && (typeSettings.length() == 0)) {
+			commerceUserSegmentCriterionCacheModel.typeSettings = null;
 		}
 
 		commerceUserSegmentCriterionCacheModel.priority = getPriority();
@@ -690,7 +655,7 @@ public class CommerceUserSegmentCriterionModelImpl extends BaseModelImpl<Commerc
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{commerceUserSegmentCriterionId=");
 		sb.append(getCommerceUserSegmentCriterionId());
@@ -708,12 +673,10 @@ public class CommerceUserSegmentCriterionModelImpl extends BaseModelImpl<Commerc
 		sb.append(getModifiedDate());
 		sb.append(", commerceUserSegmentEntryId=");
 		sb.append(getCommerceUserSegmentEntryId());
-		sb.append(", criterionType=");
-		sb.append(getCriterionType());
-		sb.append(", condition=");
-		sb.append(getCondition());
-		sb.append(", value=");
-		sb.append(getValue());
+		sb.append(", type=");
+		sb.append(getType());
+		sb.append(", typeSettings=");
+		sb.append(getTypeSettings());
 		sb.append(", priority=");
 		sb.append(getPriority());
 		sb.append("}");
@@ -723,7 +686,7 @@ public class CommerceUserSegmentCriterionModelImpl extends BaseModelImpl<Commerc
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append(
@@ -763,16 +726,12 @@ public class CommerceUserSegmentCriterionModelImpl extends BaseModelImpl<Commerc
 		sb.append(getCommerceUserSegmentEntryId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>criterionType</column-name><column-value><![CDATA[");
-		sb.append(getCriterionType());
+			"<column><column-name>type</column-name><column-value><![CDATA[");
+		sb.append(getType());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>condition</column-name><column-value><![CDATA[");
-		sb.append(getCondition());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>value</column-name><column-value><![CDATA[");
-		sb.append(getValue());
+			"<column><column-name>typeSettings</column-name><column-value><![CDATA[");
+		sb.append(getTypeSettings());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>priority</column-name><column-value><![CDATA[");
@@ -799,9 +758,8 @@ public class CommerceUserSegmentCriterionModelImpl extends BaseModelImpl<Commerc
 	private long _commerceUserSegmentEntryId;
 	private long _originalCommerceUserSegmentEntryId;
 	private boolean _setOriginalCommerceUserSegmentEntryId;
-	private String _criterionType;
-	private String _condition;
-	private String _value;
+	private String _type;
+	private String _typeSettings;
 	private double _priority;
 	private long _columnBitmask;
 	private CommerceUserSegmentCriterion _escapedModel;

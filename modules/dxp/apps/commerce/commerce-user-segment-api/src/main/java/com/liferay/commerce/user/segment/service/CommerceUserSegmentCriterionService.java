@@ -16,14 +16,21 @@ package com.liferay.commerce.user.segment.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for CommerceUserSegmentCriterion. Methods of this
@@ -49,6 +56,27 @@ public interface CommerceUserSegmentCriterionService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceUserSegmentCriterionServiceUtil} to access the commerce user segment criterion remote service. Add custom service methods to {@link com.liferay.commerce.user.segment.service.impl.CommerceUserSegmentCriterionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public CommerceUserSegmentCriterion addCommerceUserSegmentCriterion(
+		long commerceUserSegmentEntryId, java.lang.String type,
+		java.lang.String typeSettings, double priority,
+		ServiceContext serviceContext) throws PortalException;
+
+	public void deleteCommerceUserSegmentCriterion(
+		long commerceUserSegmentCriterionId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceUserSegmentCriterion> getCommerceUserSegmentCriteria(
+		long commerceUserSegmentEntryId, int start, int end,
+		OrderByComparator<CommerceUserSegmentCriterion> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceUserSegmentCriteriaCount(
+		long commerceUserSegmentEntryId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceUserSegmentCriterion getCommerceUserSegmentCriterion(
+		long commerceUserSegmentCriterionId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -56,4 +84,9 @@ public interface CommerceUserSegmentCriterionService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	public CommerceUserSegmentCriterion updateCommerceUserSegmentCriterion(
+		long commerceUserSegmentCriterionId, java.lang.String type,
+		java.lang.String typeSettings, double priority,
+		ServiceContext serviceContext) throws PortalException;
 }

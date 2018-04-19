@@ -218,8 +218,11 @@ public class CommerceUserSegmentEntryLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry> getCommerceUserSegmentEntries(
-		long groupId, int start, int end) {
-		return getService().getCommerceUserSegmentEntries(groupId, start, end);
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry> orderByComparator) {
+		return getService()
+				   .getCommerceUserSegmentEntries(groupId, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -229,6 +232,10 @@ public class CommerceUserSegmentEntryLocalServiceUtil {
 	*/
 	public static int getCommerceUserSegmentEntriesCount() {
 		return getService().getCommerceUserSegmentEntriesCount();
+	}
+
+	public static int getCommerceUserSegmentEntriesCount(long groupId) {
+		return getService().getCommerceUserSegmentEntriesCount(groupId);
 	}
 
 	/**
@@ -262,6 +269,21 @@ public class CommerceUserSegmentEntryLocalServiceUtil {
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry> searchCommerceUserSegmentEntries(
+		long companyId, long groupId, java.lang.String keywords, int start,
+		int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchCommerceUserSegmentEntries(companyId, groupId,
+			keywords, start, end, sort);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry> searchCommerceUserSegmentEntries(
+		com.liferay.portal.kernel.search.SearchContext searchContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().searchCommerceUserSegmentEntries(searchContext);
 	}
 
 	/**

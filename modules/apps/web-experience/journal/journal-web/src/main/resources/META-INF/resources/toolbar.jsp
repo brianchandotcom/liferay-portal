@@ -31,6 +31,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 	searchActionURL="<%= journalDisplayContext.getSearchActionURL() %>"
 	searchContainerId="<%= searchContainerId %>"
 	searchFormName="fm1"
+	showCreationMenu="<%= journalDisplayContext.isShowAddButton() %>"
 	showInfoButton="<%= journalDisplayContext.isShowInfoButton() %>"
 	showSearch="<%= journalDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= journalDisplayContext.getOrderByType() %>"

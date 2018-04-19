@@ -1435,6 +1435,31 @@ public class JournalDisplayContext {
 		return false;
 	}
 
+	public boolean isShowAddButton() throws PortalException {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Group group = themeDisplay.getScopeGroup();
+
+		if (group.isStaged() && !group.isStagingGroup() &&
+			group.isStagedPortlet(JournalPortletKeys.JOURNAL)) {
+
+			return false;
+		}
+
+		if (JournalFolderPermission.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
+			getFolderId(), ActionKeys.ADD_FOLDER) ||
+		JournalFolderPermission.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
+			getFolderId(), ActionKeys.ADD_ARTICLE)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isShowEditActions() {
 		if (_showEditActions != null) {
 			return _showEditActions;

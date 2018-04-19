@@ -284,7 +284,7 @@ public class FragmentDisplayContext {
 				_renderRequest, _renderResponse.createRenderURL(), null,
 				"there-are-no-collections");
 
-		if (isSearch()) {
+		if (_isSearch()) {
 			fragmentCollectionsSearchContainer.setSearch(true);
 		}
 
@@ -293,9 +293,9 @@ public class FragmentDisplayContext {
 
 		OrderByComparator<FragmentCollection> orderByComparator =
 			FragmentPortletUtil.getFragmentCollectionOrderByComparator(
-				getOrderByCol(), getOrderByType());
+				_getOrderByCol(), getOrderByType());
 
-		fragmentCollectionsSearchContainer.setOrderByCol(getOrderByCol());
+		fragmentCollectionsSearchContainer.setOrderByCol(_getOrderByCol());
 		fragmentCollectionsSearchContainer.setOrderByComparator(
 			orderByComparator);
 		fragmentCollectionsSearchContainer.setOrderByType(getOrderByType());
@@ -305,17 +305,17 @@ public class FragmentDisplayContext {
 		List<FragmentCollection> fragmentCollections = null;
 		int fragmentCollectionsCount = 0;
 
-		if (isSearch()) {
+		if (_isSearch()) {
 			fragmentCollections =
 				FragmentCollectionServiceUtil.getFragmentCollections(
-					themeDisplay.getScopeGroupId(), getKeywords(),
+					themeDisplay.getScopeGroupId(), _getKeywords(),
 					fragmentCollectionsSearchContainer.getStart(),
 					fragmentCollectionsSearchContainer.getEnd(),
 					orderByComparator);
 
 			fragmentCollectionsCount =
 				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
-					themeDisplay.getScopeGroupId(), getKeywords());
+					themeDisplay.getScopeGroupId(), _getKeywords());
 		}
 		else {
 			fragmentCollections =
@@ -379,7 +379,7 @@ public class FragmentDisplayContext {
 			_renderRequest, _renderResponse.createRenderURL(), null,
 			"there-are-no-fragments");
 
-		if (isSearch()) {
+		if (_isSearch()) {
 			fragmentEntriesSearchContainer.setSearch(true);
 		}
 
@@ -388,25 +388,25 @@ public class FragmentDisplayContext {
 
 		OrderByComparator<FragmentEntry> orderByComparator =
 			FragmentPortletUtil.getFragmentEntryOrderByComparator(
-				getOrderByCol(), getOrderByType());
+				_getOrderByCol(), getOrderByType());
 
-		fragmentEntriesSearchContainer.setOrderByCol(getOrderByCol());
+		fragmentEntriesSearchContainer.setOrderByCol(_getOrderByCol());
 		fragmentEntriesSearchContainer.setOrderByComparator(orderByComparator);
 		fragmentEntriesSearchContainer.setOrderByType(getOrderByType());
 
 		List<FragmentEntry> fragmentEntries = null;
 		int fragmentEntriesCount = 0;
 
-		if (isSearch()) {
+		if (_isSearch()) {
 			fragmentEntries = FragmentEntryServiceUtil.getFragmentEntries(
 				themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
-				getKeywords(), fragmentEntriesSearchContainer.getStart(),
+				_getKeywords(), fragmentEntriesSearchContainer.getStart(),
 				fragmentEntriesSearchContainer.getEnd(), orderByComparator);
 
 			fragmentEntriesCount =
 				FragmentEntryServiceUtil.getFragmentCollectionsCount(
 					themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
-					getKeywords());
+					_getKeywords());
 		}
 		else {
 			fragmentEntries = FragmentEntryServiceUtil.getFragmentEntries(
@@ -598,27 +598,6 @@ public class FragmentDisplayContext {
 		return _jsContent;
 	}
 
-	public String getKeywords() {
-		if (_keywords != null) {
-			return _keywords;
-		}
-
-		_keywords = ParamUtil.getString(_request, "keywords");
-
-		return _keywords;
-	}
-
-	public String getOrderByCol() {
-		if (Validator.isNotNull(_orderByCol)) {
-			return _orderByCol;
-		}
-
-		_orderByCol = ParamUtil.getString(
-			_request, "orderByCol", "create-date");
-
-		return _orderByCol;
-	}
-
 	public String getOrderByType() {
 		if (Validator.isNotNull(_orderByType)) {
 			return _orderByType;
@@ -634,7 +613,7 @@ public class FragmentDisplayContext {
 			return false;
 		}
 
-		if (isSearch()) {
+		if (_isSearch()) {
 			return false;
 		}
 
@@ -646,19 +625,11 @@ public class FragmentDisplayContext {
 			return false;
 		}
 
-		if (isSearch()) {
+		if (_isSearch()) {
 			return false;
 		}
 
 		return true;
-	}
-
-	public boolean isSearch() {
-		if (Validator.isNotNull(getKeywords())) {
-			return true;
-		}
-
-		return false;
 	}
 
 	public boolean isShowAddButton(String actionId) {
@@ -697,7 +668,7 @@ public class FragmentDisplayContext {
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(
-							Objects.equals(getOrderByCol(), "name"));
+							Objects.equals(_getOrderByCol(), "name"));
 						dropdownItem.setHref(
 							_getFragmentCollectionPortletURL(), "orderByCol",
 							"name");
@@ -707,7 +678,7 @@ public class FragmentDisplayContext {
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(
-							Objects.equals(getOrderByCol(), "create-date"));
+							Objects.equals(_getOrderByCol(), "create-date"));
 						dropdownItem.setHref(
 							_getFragmentCollectionPortletURL(), "orderByCol",
 							"create-date");
@@ -728,13 +699,13 @@ public class FragmentDisplayContext {
 			portletURL.setParameter("displayStyle", displayStyle);
 		}
 
-		String keywords = getKeywords();
+		String keywords = _getKeywords();
 
 		if (Validator.isNotNull(keywords)) {
 			portletURL.setParameter("keywords", keywords);
 		}
 
-		String orderByCol = getOrderByCol();
+		String orderByCol = _getOrderByCol();
 
 		if (Validator.isNotNull(orderByCol)) {
 			portletURL.setParameter("orderByCol", orderByCol);
@@ -770,7 +741,7 @@ public class FragmentDisplayContext {
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(
-							Objects.equals(getOrderByCol(), "name"));
+							Objects.equals(_getOrderByCol(), "name"));
 						dropdownItem.setHref(
 							_getFragmentEntryPortletURL(), "orderByCol",
 							"name");
@@ -780,7 +751,7 @@ public class FragmentDisplayContext {
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(
-							Objects.equals(getOrderByCol(), "create-date"));
+							Objects.equals(_getOrderByCol(), "create-date"));
 						dropdownItem.setHref(
 							_getFragmentEntryPortletURL(), "orderByCol",
 							"create-date");
@@ -804,13 +775,13 @@ public class FragmentDisplayContext {
 			portletURL.setParameter("displayStyle", displayStyle);
 		}
 
-		String keywords = getKeywords();
+		String keywords = _getKeywords();
 
 		if (Validator.isNotNull(keywords)) {
 			portletURL.setParameter("keywords", keywords);
 		}
 
-		String orderByCol = getOrderByCol();
+		String orderByCol = _getOrderByCol();
 
 		if (Validator.isNotNull(orderByCol)) {
 			portletURL.setParameter("orderByCol", orderByCol);
@@ -823,6 +794,27 @@ public class FragmentDisplayContext {
 		}
 
 		return portletURL;
+	}
+
+	private String _getKeywords() {
+		if (_keywords != null) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(_request, "keywords");
+
+		return _keywords;
+	}
+
+	private String _getOrderByCol() {
+		if (Validator.isNotNull(_orderByCol)) {
+			return _orderByCol;
+		}
+
+		_orderByCol = ParamUtil.getString(
+			_request, "orderByCol", "create-date");
+
+		return _orderByCol;
 	}
 
 	private boolean _hasFragmentCollectionsResults() {
@@ -840,6 +832,14 @@ public class FragmentDisplayContext {
 		SearchContainer searchContainer = getFragmentEntriesSearchContainer();
 
 		if (searchContainer.getTotal() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isSearch() {
+		if (Validator.isNotNull(_getKeywords())) {
 			return true;
 		}
 

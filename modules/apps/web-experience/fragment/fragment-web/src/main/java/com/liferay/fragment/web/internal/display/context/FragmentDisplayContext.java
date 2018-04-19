@@ -23,8 +23,14 @@ import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.fragment.web.util.FragmentPortletUtil;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -38,6 +44,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -138,6 +145,75 @@ public class FragmentDisplayContext {
 		return _fragmentCollection;
 	}
 
+	public List<DropdownItem> getFragmentCollectionActionItemsDropdownItems() {
+		return new DropdownItemList(_request) {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							"javascript:" + _renderResponse.getNamespace() +
+								"exportSelectedFragmentCollections();");
+						dropdownItem.setIcon("import-export");
+						dropdownItem.setLabel("export");
+						dropdownItem.setQuickAction(true);
+					});
+
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							"javascript:" + _renderResponse.getNamespace() +
+								"deleteSelectedFragmentCollections();");
+						dropdownItem.setIcon("trash");
+						dropdownItem.setLabel("delete");
+						dropdownItem.setQuickAction(true);
+					});
+			}
+		};
+	}
+
+	public String getFragmentCollectionClearResultsURL() {
+		PortletURL clearResultsURL = _getFragmentCollectionPortletURL();
+
+		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+
+		return clearResultsURL.toString();
+	}
+
+	public CreationMenu getFragmentCollectionCreationMenu() {
+		return new CreationMenu(_request) {
+			{
+				addPrimaryDropdownItem(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							_renderResponse.createRenderURL(),
+							"mvcRenderCommandName",
+							"/fragment/edit_fragment_collection");
+						dropdownItem.setLabel("add-collection");
+					});
+			}
+		};
+	}
+
+	public List<DropdownItem> getFragmentCollectionFilterItemsDropdownItems() {
+		return new DropdownItemList(_request) {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getFragmentCollectionFilterNavigationDropdownItems());
+						dropdownGroupItem.setLabel("filter-by-navigation");
+					});
+
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getFragmentCollectionOrderByDropdownItems());
+						dropdownGroupItem.setLabel("order-by");
+					});
+			}
+		};
+	}
+
 	public long getFragmentCollectionId() {
 		if (Validator.isNotNull(_fragmentCollectionId)) {
 			return _fragmentCollectionId;
@@ -162,6 +238,29 @@ public class FragmentDisplayContext {
 					});
 			}
 		};
+	}
+
+	public String getFragmentCollectionSearchActionURL() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletURL searchActionURL = _renderResponse.createRenderURL();
+
+		searchActionURL.setParameter("mvcRenderCommandName", "/fragment/view");
+		searchActionURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		searchActionURL.setParameter("displayStyle", getDisplayStyle());
+
+		return searchActionURL.toString();
+	}
+
+	public String getFragmentCollectionSortingURL() {
+		PortletURL sortingURL = _getFragmentCollectionPortletURL();
+
+		sortingURL.setParameter(
+			"orderByType",
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
+
+		return sortingURL.toString();
 	}
 
 	public String getFragmentCollectionsRedirect() {
@@ -250,6 +349,24 @@ public class FragmentDisplayContext {
 		return fragmentCollection.getName();
 	}
 
+	public int getFragmentCollectionTotalItems() {
+		SearchContainer fragmentCollectionsSearchContainer =
+			getFragmentCollectionsSearchContainer();
+
+		return fragmentCollectionsSearchContainer.getTotal();
+	}
+
+	public List<ViewTypeItem> getFragmentCollectionViewTypeItems() {
+		return new ViewTypeItemList(
+			_request, _getFragmentCollectionPortletURL(), getDisplayStyle()) {
+
+			{
+				addCardViewTypeItem();
+			}
+
+		};
+	}
+
 	public SearchContainer getFragmentEntriesSearchContainer() {
 		if (_fragmentEntriesSearchContainer != null) {
 			return _fragmentEntriesSearchContainer;
@@ -321,6 +438,60 @@ public class FragmentDisplayContext {
 		return _fragmentEntry;
 	}
 
+	public List<DropdownItem> getFragmentEntryActionItemsDropdownItems() {
+		return new DropdownItemList(_request) {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							"javascript:" + _renderResponse.getNamespace() +
+								"exportSelectedFragmentEntries();");
+						dropdownItem.setIcon("import-export");
+						dropdownItem.setLabel("export");
+						dropdownItem.setQuickAction(true);
+					});
+
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							"javascript:" + _renderResponse.getNamespace() +
+								"deleteSelectedFragmentEntries();");
+						dropdownItem.setIcon("trash");
+						dropdownItem.setLabel("delete");
+						dropdownItem.setQuickAction(true);
+					});
+			}
+		};
+	}
+
+	public String getFragmentEntryClearResultsURL() {
+		PortletURL clearResultsURL = _getFragmentEntryPortletURL();
+
+		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+
+		return clearResultsURL.toString();
+	}
+
+	public List<DropdownItem> getFragmentEntryFilterItemsDropdownItems() {
+		return new DropdownItemList(_request) {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getFragmentEntryFilterNavigationDropdownItems());
+						dropdownGroupItem.setLabel("filter-by-navigation");
+					});
+
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getFragmentEntryOrderByDropdownItems());
+						dropdownGroupItem.setLabel("order-by");
+					});
+			}
+		};
+	}
+
 	public long getFragmentEntryId() {
 		if (Validator.isNotNull(_fragmentEntryId)) {
 			return _fragmentEntryId;
@@ -331,6 +502,32 @@ public class FragmentDisplayContext {
 		return _fragmentEntryId;
 	}
 
+	public String getFragmentEntrySearchActionURL() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletURL searchActionURL = _renderResponse.createRenderURL();
+
+		searchActionURL.setParameter(
+			"mvcRenderCommandName", "/fragment/view_fragment_entries");
+		searchActionURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		searchActionURL.setParameter(
+			"fragmentCollectionId", String.valueOf(getFragmentCollectionId()));
+		searchActionURL.setParameter("displayStyle", getDisplayStyle());
+
+		return searchActionURL.toString();
+	}
+
+	public String getFragmentEntrySortingURL() {
+		PortletURL sortingURL = _getFragmentEntryPortletURL();
+
+		sortingURL.setParameter(
+			"orderByType",
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
+
+		return sortingURL.toString();
+	}
+
 	public String getFragmentEntryTitle() {
 		FragmentEntry fragmentEntry = getFragmentEntry();
 
@@ -339,6 +536,24 @@ public class FragmentDisplayContext {
 		}
 
 		return fragmentEntry.getName();
+	}
+
+	public int getFragmentEntryTotalItems() {
+		SearchContainer fragmentEntriesSearchContainer =
+			getFragmentEntriesSearchContainer();
+
+		return fragmentEntriesSearchContainer.getTotal();
+	}
+
+	public List<ViewTypeItem> getFragmentEntryViewTypeItems() {
+		return new ViewTypeItemList(
+			_request, _getFragmentEntryPortletURL(), getDisplayStyle()) {
+
+			{
+				addCardViewTypeItem();
+			}
+
+		};
 	}
 
 	public String getHtmlContent() {
@@ -486,6 +701,156 @@ public class FragmentDisplayContext {
 		}
 
 		return false;
+	}
+
+	private List<DropdownItem>
+		_getFragmentCollectionFilterNavigationDropdownItems() {
+
+		return new DropdownItemList(_request) {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(true);
+						dropdownItem.setHref(
+							_getFragmentCollectionPortletURL());
+						dropdownItem.setLabel("all");
+					});
+			}
+		};
+	}
+
+	private List<DropdownItem> _getFragmentCollectionOrderByDropdownItems() {
+		return new DropdownItemList(_request) {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(
+							Objects.equals(getOrderByCol(), "name"));
+						dropdownItem.setHref(
+							_getFragmentCollectionPortletURL(), "orderByCol",
+							"name");
+						dropdownItem.setLabel("name");
+					});
+
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(
+							Objects.equals(getOrderByCol(), "create-date"));
+						dropdownItem.setHref(
+							_getFragmentCollectionPortletURL(), "orderByCol",
+							"create-date");
+						dropdownItem.setLabel("create-date");
+					});
+			}
+		};
+	}
+
+	private PortletURL _getFragmentCollectionPortletURL() {
+		PortletURL portletURL = _renderResponse.createRenderURL();
+
+		portletURL.setParameter("mvcRenderCommandName", "/fragment/view");
+
+		String displayStyle = getDisplayStyle();
+
+		if (Validator.isNotNull(displayStyle)) {
+			portletURL.setParameter("displayStyle", displayStyle);
+		}
+
+		String keywords = getKeywords();
+
+		if (Validator.isNotNull(keywords)) {
+			portletURL.setParameter("keywords", keywords);
+		}
+
+		String orderByCol = getOrderByCol();
+
+		if (Validator.isNotNull(orderByCol)) {
+			portletURL.setParameter("orderByCol", orderByCol);
+		}
+
+		String orderByType = getOrderByType();
+
+		if (Validator.isNotNull(orderByType)) {
+			portletURL.setParameter("orderByType", orderByType);
+		}
+
+		return portletURL;
+	}
+
+	private List<DropdownItem>
+		_getFragmentEntryFilterNavigationDropdownItems() {
+
+		return new DropdownItemList(_request) {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(true);
+						dropdownItem.setHref(_getFragmentEntryPortletURL());
+						dropdownItem.setLabel("all");
+					});
+			}
+		};
+	}
+
+	private List<DropdownItem> _getFragmentEntryOrderByDropdownItems() {
+		return new DropdownItemList(_request) {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(
+							Objects.equals(getOrderByCol(), "name"));
+						dropdownItem.setHref(
+							_getFragmentEntryPortletURL(), "orderByCol",
+							"name");
+						dropdownItem.setLabel("name");
+					});
+
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(
+							Objects.equals(getOrderByCol(), "create-date"));
+						dropdownItem.setHref(
+							_getFragmentEntryPortletURL(), "orderByCol",
+							"create-date");
+						dropdownItem.setLabel("create-date");
+					});
+			}
+		};
+	}
+
+	private PortletURL _getFragmentEntryPortletURL() {
+		PortletURL portletURL = _renderResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/fragment/view_fragment_entries");
+		portletURL.setParameter(
+			"fragmentCollectionId", String.valueOf(getFragmentCollectionId()));
+
+		String displayStyle = getDisplayStyle();
+
+		if (Validator.isNotNull(displayStyle)) {
+			portletURL.setParameter("displayStyle", displayStyle);
+		}
+
+		String keywords = getKeywords();
+
+		if (Validator.isNotNull(keywords)) {
+			portletURL.setParameter("keywords", keywords);
+		}
+
+		String orderByCol = getOrderByCol();
+
+		if (Validator.isNotNull(orderByCol)) {
+			portletURL.setParameter("orderByCol", orderByCol);
+		}
+
+		String orderByType = getOrderByType();
+
+		if (Validator.isNotNull(orderByType)) {
+			portletURL.setParameter("orderByType", orderByType);
+		}
+
+		return portletURL;
 	}
 
 	private boolean _hasFragmentCollectionsResults() {

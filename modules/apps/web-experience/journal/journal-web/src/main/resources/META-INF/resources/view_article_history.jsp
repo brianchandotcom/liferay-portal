@@ -17,15 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-String backURL = ParamUtil.getString(request, "backURL");
-
-String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
-
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
-String orderByCol = ParamUtil.getString(request, "orderByCol", "version");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
 JournalArticle article = journalDisplayContext.getArticle();
 %>
 
@@ -38,51 +29,19 @@ JournalArticle article = journalDisplayContext.getArticle();
 	<c:otherwise>
 
 		<%
+		JournalHistoryDisplayContext journalHistoryDisplayContext = new JournalHistoryDisplayContext(renderRequest, renderResponse, journalDisplayContext.getArticle());
+
+		String backURL = ParamUtil.getString(request, "backURL");
+
 		portletDisplay.setShowBackIcon(true);
 		portletDisplay.setURLBack(backURL);
 
 		renderResponse.setTitle(article.getTitle(locale));
-
-		PortletURL portletURL = renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/view_article_history.jsp");
-		portletURL.setParameter("redirect", redirect);
-		portletURL.setParameter("referringPortletResource", referringPortletResource);
-		portletURL.setParameter("groupId", String.valueOf(article.getGroupId()));
-		portletURL.setParameter("articleId", article.getArticleId());
-		portletURL.setParameter("displayStyle", displayStyle);
-		portletURL.setParameter("orderByCol", orderByCol);
-		portletURL.setParameter("orderByType", orderByType);
-
-		SearchContainer articleSearchContainer = new SearchContainer(renderRequest, portletURL, null, null);
-
-		articleSearchContainer.setRowChecker(new EmptyOnClickRowChecker(renderResponse));
-
-		int articleVersionsCount = JournalArticleServiceUtil.getArticlesCountByArticleId(article.getGroupId(), article.getArticleId());
-
-		articleSearchContainer.setTotal(articleVersionsCount);
-
-		OrderByComparator<JournalArticle> orderByComparator = JournalPortletUtil.getArticleOrderByComparator(orderByCol, orderByType);
-
-		List<JournalArticle> articleVersions = JournalArticleServiceUtil.getArticlesByArticleId(article.getGroupId(), article.getArticleId(), articleSearchContainer.getStart(), articleSearchContainer.getEnd(), orderByComparator);
-
-		articleSearchContainer.setResults(articleVersions);
 		%>
 
 		<clay:navigation-bar
 			inverted="<%= true %>"
-			items="<%=
-				new JSPNavigationItemList(pageContext) {
-					{
-						add(
-							navigationItem -> {
-								navigationItem.setActive(true);
-								navigationItem.setHref(StringPool.BLANK);
-								navigationItem.setLabel(LanguageUtil.get(request, "versions"));
-							});
-					}
-				}
-			%>"
+			items="<%= journalHistoryDisplayContext.getNavigationItems() %>"
 		/>
 
 		<liferay-frontend:management-bar
@@ -92,22 +51,22 @@ JournalArticle article = journalDisplayContext.getArticle();
 			<liferay-frontend:management-bar-buttons>
 				<liferay-frontend:management-bar-display-buttons
 					displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-					portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-					selectedDisplayStyle="<%= displayStyle %>"
+					portletURL="<%= PortletURLUtil.clone(journalHistoryDisplayContext.getPortletURL(), renderResponse) %>"
+					selectedDisplayStyle="<%= journalHistoryDisplayContext.getDisplayStyle() %>"
 				/>
 			</liferay-frontend:management-bar-buttons>
 
 			<liferay-frontend:management-bar-filters>
 				<liferay-frontend:management-bar-navigation
 					navigationKeys='<%= new String[] {"all"} %>'
-					portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+					portletURL="<%= PortletURLUtil.clone(journalHistoryDisplayContext.getPortletURL(), renderResponse) %>"
 				/>
 
 				<liferay-frontend:management-bar-sort
-					orderByCol="<%= orderByCol %>"
-					orderByType="<%= orderByType %>"
+					orderByCol="<%= journalHistoryDisplayContext.getOrderByCol() %>"
+					orderByType="<%= journalHistoryDisplayContext.getOrderByType() %>"
 					orderColumns='<%= new String[] {"version", "display-date", "modified-date"} %>'
-					portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+					portletURL="<%= PortletURLUtil.clone(journalHistoryDisplayContext.getPortletURL(), renderResponse) %>"
 				/>
 			</liferay-frontend:management-bar-filters>
 
@@ -132,13 +91,17 @@ JournalArticle article = journalDisplayContext.getArticle();
 			</liferay-frontend:management-bar-action-buttons>
 		</liferay-frontend:management-bar>
 
+		<%
+		PortletURL portletURL = journalHistoryDisplayContext.getPortletURL();
+		%>
+
 		<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
-			<aui:input name="referringPortletResource" type="hidden" value="<%= referringPortletResource %>" />
+			<aui:input name="referringPortletResource" type="hidden" value="<%= journalHistoryDisplayContext.getReferringPortletResource() %>" />
 			<aui:input name="groupId" type="hidden" value="<%= String.valueOf(article.getGroupId()) %>" />
 
 			<liferay-ui:search-container
 				id="articleVersions"
-				searchContainer="<%= articleSearchContainer %>"
+				searchContainer="<%= journalHistoryDisplayContext.getArticleSearchContainer() %>"
 			>
 				<liferay-ui:search-container-row
 					className="com.liferay.journal.model.JournalArticle"
@@ -150,7 +113,7 @@ JournalArticle article = journalDisplayContext.getArticle();
 					%>
 
 					<c:choose>
-						<c:when test='<%= displayStyle.equals("descriptive") %>'>
+						<c:when test='<%= Objects.equals(journalHistoryDisplayContext.getDisplayStyle(), "descriptive") %>'>
 							<liferay-ui:search-container-column-text>
 								<liferay-ui:user-portrait
 									userId="<%= articleVersion.getUserId() %>"
@@ -184,7 +147,7 @@ JournalArticle article = journalDisplayContext.getArticle();
 								path="/article_history_action.jsp"
 							/>
 						</c:when>
-						<c:when test='<%= displayStyle.equals("icon") %>'>
+						<c:when test='<%= Objects.equals(journalHistoryDisplayContext.getDisplayStyle(), "icon") %>'>
 
 							<%
 							row.setCssClass("entry-card lfr-asset-item");
@@ -224,7 +187,7 @@ JournalArticle article = journalDisplayContext.getArticle();
 								</c:choose>
 							</liferay-ui:search-container-column-text>
 						</c:when>
-						<c:when test='<%= displayStyle.equals("list") %>'>
+						<c:when test='<%= Objects.equals(journalHistoryDisplayContext.getDisplayStyle(), "list") %>'>
 							<liferay-ui:search-container-column-text
 								name="id"
 								value="<%= HtmlUtil.escape(articleVersion.getArticleId()) %>"
@@ -272,7 +235,7 @@ JournalArticle article = journalDisplayContext.getArticle();
 				</liferay-ui:search-container-row>
 
 				<liferay-ui:search-iterator
-					displayStyle="<%= displayStyle %>"
+					displayStyle="<%= journalHistoryDisplayContext.getDisplayStyle() %>"
 					markupView="lexicon"
 				/>
 			</liferay-ui:search-container>

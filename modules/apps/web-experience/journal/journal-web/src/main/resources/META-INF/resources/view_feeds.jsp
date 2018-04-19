@@ -30,73 +30,22 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 	items='<%= journalDisplayContext.getNavigationBarItems("feeds") %>'
 />
 
-<liferay-frontend:management-bar
+<clay:management-toolbar
+	actionItems="<%= journalFeedsDisplayContext.getActionItemsDropdownItems() %>"
+	clearResultsURL="<%= journalFeedsDisplayContext.getClearResultsURL() %>"
+	componentId="journalFeedsManagementToolbar"
+	creationMenu="<%= JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_FEED) ? journalFeedsDisplayContext.getCreationMenu() : null %>"
 	disabled="<%= journalFeedsDisplayContext.isDisabledManagementBar() %>"
-	includeCheckBox="<%= true %>"
+	filterItems="<%= journalFeedsDisplayContext.getFilterItemsDropdownItems() %>"
+	searchActionURL="<%= journalFeedsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="feeds"
->
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= PortletURLUtil.clone(journalFeedsDisplayContext.getPortletURL(), renderResponse) %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= journalFeedsDisplayContext.getOrderByCol() %>"
-			orderByType="<%= journalFeedsDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"name", "id"} %>'
-			portletURL="<%= journalFeedsDisplayContext.getPortletURL() %>"
-		/>
-
-		<c:if test="<%= journalFeedsDisplayContext.isShowSearch() %>">
-
-			<%
-			PortletURL portletURL = journalFeedsDisplayContext.getPortletURL();
-			%>
-
-			<li>
-				<aui:form action="<%= portletURL.toString() %>" method="post" name="searchFm">
-					<liferay-ui:input-search
-						markupView="lexicon"
-					/>
-				</aui:form>
-			</li>
-		</c:if>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= journalFeedsDisplayContext.getPortletURL() %>"
-			selectedDisplayStyle="<%= journalFeedsDisplayContext.getDisplayStyle() %>"
-		/>
-
-		<c:if test="<%= JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_FEED) %>">
-			<portlet:renderURL var="editFeedURL">
-				<portlet:param name="mvcPath" value="/edit_feed.jsp" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-			</portlet:renderURL>
-
-			<liferay-frontend:add-menu
-				inline="<%= true %>"
-			>
-				<liferay-frontend:add-menu-item
-					title='<%= LanguageUtil.get(request, "add-feed") %>'
-					url="<%= editFeedURL %>"
-				/>
-			</liferay-frontend:add-menu>
-		</c:if>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button
-			href="javascript:;"
-			icon="trash"
-			id="deleteFeeds"
-			label="delete"
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+	searchFormName="searchFm"
+	showSearch="<%= journalFeedsDisplayContext.isShowSearch() %>"
+	sortingOrder="<%= journalFeedsDisplayContext.getOrderByType() %>"
+	sortingURL="<%= journalFeedsDisplayContext.getSortingURL() %>"
+	totalItems="<%= journalFeedsDisplayContext.getTotalItems() %>"
+	viewTypes="<%= journalFeedsDisplayContext.getViewTypeItems() %>"
+/>
 
 <portlet:actionURL name="deleteFeeds" var="deleteFeedsURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -211,12 +160,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 </aui:form>
 
 <aui:script sandbox="<%= true %>">
-	$('#<portlet:namespace />deleteFeeds').on(
-		'click',
-		function() {
-			if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-feeds") %>')) {
-				submitForm(document.<portlet:namespace />fm);
-			}
+	window.<portlet:namespace />deleteFeeds = function() {
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-feeds") %>')) {
+			submitForm(document.<portlet:namespace />fm);
 		}
-	);
+	}
 </aui:script>

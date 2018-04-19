@@ -14,21 +14,31 @@
 
 package com.liferay.journal.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.journal.service.JournalFeedLocalServiceUtil;
 import com.liferay.journal.web.internal.search.FeedSearch;
 import com.liferay.journal.web.internal.search.FeedSearchTerms;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -40,6 +50,46 @@ public class JournalFeedsDisplayContext {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+
+		_request = PortalUtil.getHttpServletRequest(renderRequest);
+	}
+
+	public List<DropdownItem> getActionItemsDropdownItems() {
+		return new DropdownItemList(_request) {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							"javascript:" + _renderResponse.getNamespace() +
+								"deleteFeeds();");
+						dropdownItem.setIcon("trash");
+						dropdownItem.setLabel("delete");
+						dropdownItem.setQuickAction(true);
+					});
+			}
+		};
+	}
+
+	public String getClearResultsURL() {
+		PortletURL clearResultsURL = getPortletURL();
+
+		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+
+		return clearResultsURL.toString();
+	}
+
+	public CreationMenu getCreationMenu() {
+		return new CreationMenu(_request) {
+			{
+				addPrimaryDropdownItem(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							_renderResponse.createRenderURL(), "mvcPath",
+							"/edit_feed.jsp");
+						dropdownItem.setLabel("add-feed");
+					});
+			}
+		};
 	}
 
 	public String getDisplayStyle() {
@@ -87,6 +137,26 @@ public class JournalFeedsDisplayContext {
 		return _feedSearch;
 	}
 
+	public List<DropdownItem> getFilterItemsDropdownItems() {
+		return new DropdownItemList(_request) {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getFilterNavigationDropdownItems());
+						dropdownGroupItem.setLabel("filter-by-navigation");
+					});
+
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getOrderByDropdownItems());
+						dropdownGroupItem.setLabel("order-by");
+					});
+			}
+		};
+	}
+
 	public String getOrderByCol() {
 		if (_orderByCol != null) {
 			return _orderByCol;
@@ -130,6 +200,39 @@ public class JournalFeedsDisplayContext {
 		return _redirect;
 	}
 
+	public String getSearchActionURL() {
+		PortletURL searchActionURL = getPortletURL();
+
+		return searchActionURL.toString();
+	}
+
+	public String getSortingURL() {
+		PortletURL sortingURL = getPortletURL();
+
+		sortingURL.setParameter(
+			"orderByType",
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
+
+		return sortingURL.toString();
+	}
+
+	public int getTotalItems() {
+		return _getTotal();
+	}
+
+	public List<ViewTypeItem> getViewTypeItems() {
+		return new ViewTypeItemList(
+			_request, getPortletURL(), getDisplayStyle()) {
+
+			{
+				addCardViewTypeItem();
+				addListViewTypeItem();
+				addTableViewTypeItem();
+			}
+
+		};
+	}
+
 	public boolean isDisabledManagementBar() {
 		if (_getTotal() > 0) {
 			return false;
@@ -154,6 +257,19 @@ public class JournalFeedsDisplayContext {
 		return false;
 	}
 
+	private List<DropdownItem> _getFilterNavigationDropdownItems() {
+		return new DropdownItemList(_request) {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(true);
+						dropdownItem.setHref(_renderResponse.createRenderURL());
+						dropdownItem.setLabel("all");
+					});
+			}
+		};
+	}
+
 	private String _getKeywords() {
 		if (_keywords != null) {
 			return _keywords;
@@ -162,6 +278,30 @@ public class JournalFeedsDisplayContext {
 		_keywords = ParamUtil.getString(_renderRequest, "keywords");
 
 		return _keywords;
+	}
+
+	private List<DropdownItem> _getOrderByDropdownItems() {
+		return new DropdownItemList(_request) {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(
+							Objects.equals(getOrderByCol(), "name"));
+						dropdownItem.setHref(
+							getPortletURL(), "orderByCol", "name");
+						dropdownItem.setLabel("name");
+					});
+
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(
+							Objects.equals(getOrderByCol(), "id"));
+						dropdownItem.setHref(
+							getPortletURL(), "orderByCol", "id");
+						dropdownItem.setLabel("id");
+					});
+			}
+		};
 	}
 
 	private int _getTotal() {
@@ -186,5 +326,6 @@ public class JournalFeedsDisplayContext {
 	private String _redirect;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
+	private final HttpServletRequest _request;
 
 }

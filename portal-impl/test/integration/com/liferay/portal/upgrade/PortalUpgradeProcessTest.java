@@ -145,9 +145,8 @@ public class PortalUpgradeProcessTest {
 			portalServiceUpgrade.upgrade();
 		}
 		catch (Exception e) {
-			Assert.fail("No upgrade processes should have been executed");
-
-			return;
+			throw new SQLException(
+				"No upgrade processes should have been executed", e);
 		}
 
 		Assert.assertTrue(
@@ -168,12 +167,11 @@ public class PortalUpgradeProcessTest {
 			portalServiceUpgrade.upgrade();
 		}
 		catch (Exception e) {
-			Assert.fail(
+			throw new SQLException(
 				"The execution of the upgrade process failed after being " +
 					"reexecuted. Upgrade processes must be harmless if they " +
-						"were executed previously.");
-
-			return;
+						"were executed previously.",
+				e);
 		}
 
 		Assert.assertTrue(

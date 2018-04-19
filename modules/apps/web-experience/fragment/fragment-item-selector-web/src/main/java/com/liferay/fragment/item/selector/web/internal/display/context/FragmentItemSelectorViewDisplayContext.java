@@ -22,6 +22,11 @@ import com.liferay.fragment.util.comparator.FragmentCollectionCreateDateComparat
 import com.liferay.fragment.util.comparator.FragmentCollectionNameComparator;
 import com.liferay.fragment.util.comparator.FragmentEntryCreateDateComparator;
 import com.liferay.fragment.util.comparator.FragmentEntryNameComparator;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,6 +40,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -61,6 +67,14 @@ public class FragmentItemSelectorViewDisplayContext {
 		_portletURL = portletURL;
 	}
 
+	public String getClearResultsURL() {
+		PortletURL clearResultsURL = getPortletURL();
+
+		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+
+		return clearResultsURL.toString();
+	}
+
 	public String getDisplayStyle() {
 		if (Validator.isNotNull(_displayStyle)) {
 			return _displayStyle;
@@ -69,6 +83,26 @@ public class FragmentItemSelectorViewDisplayContext {
 		_displayStyle = ParamUtil.getString(_request, "displayStyle", "icon");
 
 		return _displayStyle;
+	}
+
+	public List<DropdownItem> getFilterItemsDropdownItems() {
+		return new DropdownItemList(_request) {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getFilterNavigationDropdownItems());
+						dropdownGroupItem.setLabel("filter-by-navigation");
+					});
+
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getOrderByDropdownItems());
+						dropdownGroupItem.setLabel("order-by");
+					});
+			}
+		};
 	}
 
 	public FragmentCollection getFragmentCollection() throws PortalException {
@@ -167,6 +201,13 @@ public class FragmentItemSelectorViewDisplayContext {
 		return _fragmentCollectionsSearchContainer;
 	}
 
+	public int getFragmentCollectionsTotalItems() {
+		SearchContainer fragmentCollectionsSearchContainer =
+			getFragmentCollectionsSearchContainer();
+
+		return fragmentCollectionsSearchContainer.getTotal();
+	}
+
 	public String getFragmentCollectionTitle() throws PortalException {
 		FragmentCollection fragmentCollection = getFragmentCollection();
 
@@ -229,6 +270,13 @@ public class FragmentItemSelectorViewDisplayContext {
 		return _fragmentEntriesSearchContainer;
 	}
 
+	public int getFragmentEntriesTotalItems() {
+		SearchContainer fragmentEntriesSearchContainer =
+			getFragmentEntriesSearchContainer();
+
+		return fragmentEntriesSearchContainer.getTotal();
+	}
+
 	public String getItemSelectedEventName() {
 		return _itemSelectedEventName;
 	}
@@ -282,6 +330,13 @@ public class FragmentItemSelectorViewDisplayContext {
 			portletURL = liferayPortletResponse.createRenderURL();
 		}
 
+		long fragmentCollectionId = getFragmentCollectionId();
+
+		if (fragmentCollectionId > 0) {
+			portletURL.setParameter(
+				"fragmentCollectionId", String.valueOf(fragmentCollectionId));
+		}
+
 		String displayStyle = getDisplayStyle();
 
 		if (Validator.isNotNull(displayStyle)) {
@@ -309,8 +364,48 @@ public class FragmentItemSelectorViewDisplayContext {
 		return portletURL;
 	}
 
+	public String getSearchActionURL() {
+		PortletURL searchActionURL = getPortletURL();
+
+		return searchActionURL.toString();
+	}
+
+	public String getSortingURL() {
+		PortletURL sortingURL = getPortletURL();
+
+		sortingURL.setParameter(
+			"orderByType",
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
+
+		return sortingURL.toString();
+	}
+
+	public List<ViewTypeItem> getViewTypeItems() {
+		return new ViewTypeItemList(
+			_request, getPortletURL(), getDisplayStyle()) {
+
+			{
+				addCardViewTypeItem();
+			}
+
+		};
+	}
+
 	public boolean isSearch() {
 		return _search;
+	}
+
+	private List<DropdownItem> _getFilterNavigationDropdownItems() {
+		return new DropdownItemList(_request) {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(true);
+						dropdownItem.setHref(getPortletURL());
+						dropdownItem.setLabel("all");
+					});
+			}
+		};
 	}
 
 	private OrderByComparator<FragmentCollection>
@@ -357,6 +452,30 @@ public class FragmentItemSelectorViewDisplayContext {
 		}
 
 		return orderByComparator;
+	}
+
+	private List<DropdownItem> _getOrderByDropdownItems() {
+		return new DropdownItemList(_request) {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(
+							Objects.equals(getOrderByCol(), "name"));
+						dropdownItem.setHref(
+							getPortletURL(), "orderByCol", "name");
+						dropdownItem.setLabel("name");
+					});
+
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(
+							Objects.equals(getOrderByCol(), "create-date"));
+						dropdownItem.setHref(
+							getPortletURL(), "orderByCol", "create-date");
+						dropdownItem.setLabel("create-date");
+					});
+			}
+		};
 	}
 
 	private String _displayStyle;

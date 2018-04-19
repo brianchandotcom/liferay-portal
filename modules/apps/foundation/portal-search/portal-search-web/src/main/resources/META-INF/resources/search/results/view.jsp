@@ -91,6 +91,12 @@ com.liferay.portal.kernel.dao.search.SearchContainer<com.liferay.portal.kernel.s
 		<c:choose>
 			<c:when test="<%= !searchResultSummaryDisplayContext.isTemporarilyUnavailable() %>">
 				<liferay-ui:search-container-column-text>
+					<c:if test="<%= searchResultSummaryDisplayContext.isUserPortraitVisible() %>">
+						<liferay-ui:user-portrait
+							userId="<%= searchResultSummaryDisplayContext.getAssetEntryUserId() %>"
+						/>
+					</c:if>
+
 					<c:if test="<%= searchResultSummaryDisplayContext.isThumbnailVisible() %>">
 						<img alt="blog cover image" class="img-rounded search-result-thumbnail-img" src="<%= searchResultSummaryDisplayContext.getThumbnailURLString() %>" />
 					</c:if>

@@ -312,10 +312,6 @@ public class CPDefinitionLocalServiceImpl
 	public CPDefinition deleteCPDefinition(CPDefinition cpDefinition)
 		throws PortalException {
 
-		// Commerce product definition
-
-		cpDefinitionPersistence.remove(cpDefinition);
-
 		// Commerce product definition localization
 
 		cpDefinitionLocalizationPersistence.removeByCPDefinitionId(
@@ -366,6 +362,10 @@ public class CPDefinitionLocalServiceImpl
 
 		cpDisplayLayoutLocalService.deleteCPDisplayLayout(
 			CPDefinition.class, cpDefinition.getCPDefinitionId());
+
+		// Commerce product definition
+
+		cpDefinitionPersistence.remove(cpDefinition);
 
 		// Resources
 

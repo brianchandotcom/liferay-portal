@@ -775,6 +775,10 @@ public class GitWorkingDirectory {
 
 		ExecutionResult executionResult = executeBashCommands(bashCommand);
 
+		if (executionResult.getExitValue() == 1) {
+			return modifiedFiles;
+		}
+
 		if (executionResult.getExitValue() != 0) {
 			throw new RuntimeException(
 				"Unable to get current branch modified files\n" +

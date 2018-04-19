@@ -2368,10 +2368,6 @@ ${tomcat-gc-log}
 
 					int axisCount = batchTestClassGroup.getAxisCount();
 
-					String autoBalanceTestClassNamesString = project.getProperty("test.class.names.auto.balance");
-
-					String[] autoBalanceTestClassNames = autoBalanceTestClassNamesString.split(",");
-
 					StringBuilder sb = new StringBuilder();
 
 					for (i = 0; i < axisCount; i++) {
@@ -2388,14 +2384,7 @@ ${tomcat-gc-log}
 							sb.append(",");
 						}
 
-						for (String testClass : autoBalanceTestClassNames) {
-							if (!testClassGroup.contains(testClass)) {
-								sb.append(testClass);
-								sb.append(",");
-							}
-						}
-
-						if (!testClassGroup.isEmpty() || autoBalanceTestClassNames.length > 0) {
+						if (!testClassGroup.isEmpty()) {
 							sb.setLength(sb.length() - 1);
 						}
 

@@ -17,7 +17,6 @@ package com.liferay.commerce.user.segment.internal.search;
 import com.liferay.commerce.user.segment.criterion.CommerceUserSegmentCriterionType;
 import com.liferay.commerce.user.segment.criterion.CommerceUserSegmentCriterionTypeRegistry;
 import com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry;
-import com.liferay.commerce.user.segment.service.CommerceUserSegmentCriterionLocalService;
 import com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -33,7 +32,6 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -62,6 +60,7 @@ public class CommerceUserSegmentEntryIndexer
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
 			Field.GROUP_ID, Field.MODIFIED_DATE, Field.NAME,
 			Field.SCOPE_GROUP_ID, Field.UID);
+		setFilterSearch(true);
 	}
 
 	@Override
@@ -236,13 +235,6 @@ public class CommerceUserSegmentEntryIndexer
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceUserSegmentEntryIndexer.class);
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
-	private CommerceUserSegmentCriterionLocalService
-		_commerceUserSegmentCriterionLocalService;
 
 	@Reference
 	private CommerceUserSegmentCriterionTypeRegistry

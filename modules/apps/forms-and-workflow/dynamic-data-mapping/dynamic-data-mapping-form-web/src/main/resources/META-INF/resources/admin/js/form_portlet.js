@@ -402,6 +402,7 @@ AUI.add(
 									},
 									width: 600
 								},
+								id: 'leaveFormDialog',
 								title: Liferay.Language.get('leave-form')
 							}
 						);

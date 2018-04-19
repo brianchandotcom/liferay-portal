@@ -584,7 +584,7 @@ renderResponse.setTitle(((item == null) ? LanguageUtil.get(request, "new-item") 
 
 		if (form) {
 			if (form.querySelector('#<portlet:namespace />defaultPrice' + i).checked) {
-				alert('<%= UnicodeLanguageUtil.get(request, "you-cannot-delete-or-deactivate-a-default-price") %>');
+				alert('<liferay-ui:message key="you-cannot-delete-or-deactivate-a-default-price" />');
 			}
 			else if (form.querySelector('#<portlet:namespace />pricesCount').value > 1) {
 				form.querySelector('#<portlet:namespace />scroll').value = '<portlet:namespace />prices';
@@ -620,7 +620,7 @@ renderResponse.setTitle(((item == null) ? LanguageUtil.get(request, "new-item") 
 					},
 					id: '<portlet:namespace />itemQuantities',
 					refreshWindow: window,
-					title: '<%= UnicodeLanguageUtil.get(request, "edit-stock-quantity") %>',
+					title: '<liferay-ui:message key="edit-stock-quantity" />',
 					uri: itemQuantitiesURL
 				}
 			);

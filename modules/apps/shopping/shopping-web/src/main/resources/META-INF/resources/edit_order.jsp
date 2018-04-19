@@ -457,7 +457,7 @@ long orderId = BeanParamUtil.getLong(order, request, "orderId");
 				},
 				id: '<portlet:namespace />viewCoupon',
 				refreshWindow: window,
-				title: '<%= UnicodeLanguageUtil.get(request, "coupons") %>',
+				title: '<liferay-ui:message key="coupons" />',
 				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/shopping/view_coupon" /><portlet:param name="code" value="<%= order.getCouponCodes() %>" /></portlet:renderURL>'
 			}
 		);

@@ -326,7 +326,7 @@ ShoppingOrder order = ShoppingOrderLocalServiceUtil.getLatestOrder(user.getUserI
 					},
 					id: '<portlet:namespace />viewCoupon',
 					refreshWindow: window,
-					title: '<%= UnicodeLanguageUtil.get(request, "coupon") %>',
+					title: '<liferay-ui:message key="coupon" />',
 					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/shopping/view_coupon" /><portlet:param name="couponId" value="<%= String.valueOf(coupon.getCouponId()) %>" /></portlet:renderURL>'
 				}
 			);

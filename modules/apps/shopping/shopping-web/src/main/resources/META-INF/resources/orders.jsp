@@ -122,7 +122,7 @@ portletURL.setParameter("tabs1", "order");
 	function <portlet:namespace />deleteOrders () {
 		var form = var form = document.querySelector('#<portlet:namespace />fm');
 
-		if (form && confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-orders") %>')) {
+		if (form && confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-orders" />')) {
 			form.querySelector('#<portlet:namespace /><%= Constants.CMD %>').value = '<%= Constants.DELETE %>';
 
 			form.querySelector('#<portlet:namespace />deleteOrderIds').value = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');

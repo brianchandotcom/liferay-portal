@@ -194,7 +194,7 @@ couponSearch.setResults(coupons);
 		function() {
 			var form = document.querySelector('#<portlet:namespace />fm');
 
-			if (form && confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-coupons") %>')) {
+			if (form && confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-coupons" />')) {
 				submitForm(form);
 			}
 		}

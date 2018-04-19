@@ -227,11 +227,9 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 			<h4><liferay-ui:message arguments="<%= folders.size() + articles.size() %>" key="x-items-are-selected" /></h4>
 		</div>
 
-		<aui:nav-bar>
-			<aui:nav cssClass="navbar-nav">
-				<aui:nav-item label="details" selected="<%= true %>" />
-			</aui:nav>
-		</aui:nav-bar>
+		<clay:navigation-bar
+			items="<%= journalDisplayContext.getInfoPanelNavigationItems() %>"
+		/>
 
 		<div class="sidebar-body">
 			<h5><liferay-ui:message arguments="<%= folders.size() + articles.size() %>" key="x-items-are-selected" /></h5>

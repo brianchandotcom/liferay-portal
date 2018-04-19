@@ -20,7 +20,6 @@
 long groupId = ParamUtil.getLong(request, "groupId");
 String articleId = ParamUtil.getString(request, "articleId");
 double sourceVersion = ParamUtil.getDouble(request, "sourceVersion");
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 String eventName = ParamUtil.getString(request, "eventName", renderResponse.getNamespace() + "selectVersionFm");
 
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -47,22 +46,51 @@ portletURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
 	%>"
 />
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-			/>
-		</liferay-frontend:management-bar-filters>
+<%
+List<DropdownItem> dropdownItems = new JSPDropdownItemList(pageContext) {
+	{
+		add(
+			dropdownItem -> {
+				dropdownItem.setActive(true);
+				dropdownItem.setHref(StringPool.BLANK);
+				dropdownItem.setLabel(LanguageUtil.get(request, "all"));
+			});
+	}
+};
+%>
 
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	componentId="journalSelectVersionsManagementToolbar"
+	filterItems="<%=
+		new JSPDropdownItemList(pageContext) {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(dropdownItems);
+						dropdownGroupItem.setLabel(LanguageUtil.get(request, "filter-by-navigation"));
+					}
+				);
+			}
+		}
+	%>"
+	searchContainerId="articleVersions"
+	selectable="<%= false %>"
+	showSearch="<%= false %>"
+	viewTypes="<%=
+		new JSPViewTypeItemList(pageContext) {
+			{
+			add(
+				viewTypeItem -> {
+					viewTypeItem.setActive(true);
+					viewTypeItem.setHref(StringPool.BLANK);
+					viewTypeItem.setIcon("table");
+					viewTypeItem.setLabel(LanguageUtil.get(request, "table"));
+				}
+			);
+			}
+		}
+	%>"
+/>
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="selectVersionFm">
 	<liferay-ui:search-container

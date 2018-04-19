@@ -196,7 +196,7 @@ public class FTLTagCheck extends BaseFileCheck {
 	}
 
 	private final Pattern _assignTagsBlockPattern = Pattern.compile(
-		"((\t*)<#assign[^<#/>]*=[^<#/>]*/>(\n|$)+){2,}", Pattern.MULTILINE);
+		"((\t*)<#assign[^<#/>]*=[^<#!/>]*/>(\n|$)+){2,}", Pattern.MULTILINE);
 	private final Pattern _incorrectAssignTagPattern = Pattern.compile(
 		"(<#assign .*=.*[^/])>(\n|$)");
 	private final Pattern _tagAttributePattern = Pattern.compile(

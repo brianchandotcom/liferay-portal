@@ -3284,44 +3284,37 @@ classpath.
 ## 5.3.76 - 2018-04-12
 
 ### Changed
-- [LPS-75530]: Update the [Liferay Gradle Plugins] dependency to version
-3.11.0.
+- [LPS-75530]: Update the [Liferay Gradle Plugins] dependency to version 3.11.0.
 
 ## 5.3.77 - 2018-04-13
 
 ### Changed
-- [LPS-79576]: Update the [Liferay Gradle Plugins] dependency to version
-3.11.1.
+- [LPS-79576]: Update the [Liferay Gradle Plugins] dependency to version 3.11.1.
 
 ## 5.3.78 - 2018-04-13
 
 ### Changed
-- [LPS-77639]: Update the [Liferay Gradle Plugins] dependency to version
-3.11.2.
+- [LPS-77639]: Update the [Liferay Gradle Plugins] dependency to version 3.11.2.
 
 ## 5.3.79 - 2018-04-13
 
 ### Changed
-- [LPS-79623]: Update the [Liferay Gradle Plugins] dependency to version
-3.11.3.
+- [LPS-79623]: Update the [Liferay Gradle Plugins] dependency to version 3.11.3.
 
 ## 5.3.80 - 2018-04-16
 
 ### Changed
-- [LPS-79576]: Update the [Liferay Gradle Plugins] dependency to version
-3.11.4.
+- [LPS-79576]: Update the [Liferay Gradle Plugins] dependency to version 3.11.4.
 
 ## 5.3.81 - 2018-04-16
 
 ### Changed
-- [LPS-79665]: Update the [Liferay Gradle Plugins] dependency to version
-3.11.5.
+- [LPS-79665]: Update the [Liferay Gradle Plugins] dependency to version 3.11.5.
 
 ## 5.3.82 - 2018-04-17
 
 ### Changed
-- [LPS-79679]: Update the [Liferay Gradle Plugins] dependency to version
-3.11.6.
+- [LPS-79679]: Update the [Liferay Gradle Plugins] dependency to version 3.11.6.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report

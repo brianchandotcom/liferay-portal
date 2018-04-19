@@ -36,9 +36,13 @@ public class StagingProcessesWebKeys {
 
 	public static final String LIVE_URL = "LIVE_URL";
 
+	public static final String PROCESSES_TAB = "PROCESSES";
+
 	public static final String REMOTE_SITE_URL = "REMOTE_SITE_URL";
 
 	public static final String REMOTE_URL = "REMOTE_URL";
+
+	public static final String SCHEDULED_TAB = "SCHEDULED";
 
 	public static final String STAGING_GROUP = "STAGING_GROUP";
 

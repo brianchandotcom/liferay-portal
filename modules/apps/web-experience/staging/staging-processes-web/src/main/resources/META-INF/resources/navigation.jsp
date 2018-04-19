@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1", "processes");
+String tabs1 = ParamUtil.getString(request, "tabs1", StagingProcessesWebKeys.PROCESSES_TAB);
 
 String displayStyle = ParamUtil.getString(request, "displayStyle", "descriptive");
 String navigation = ParamUtil.getString(request, "navigation", "all");
@@ -35,29 +35,15 @@ else {
 }
 
 String searchContainerId = "publishLayoutProcesses";
-
-PortletURL portletURL = renderResponse.createRenderURL();
 %>
 
-<aui:nav-bar markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-
-		<%
-		portletURL.setParameter("tabs1", "processes");
-		%>
-
-		<aui:nav-item href="<%= portletURL.toString() %>" label="processes" selected='<%= tabs1.equals("processes") %>' />
-
-		<%
-		portletURL.setParameter("tabs1", "scheduled");
-		%>
-
-		<aui:nav-item href="<%= portletURL.toString() %>" label="scheduled" selected='<%= tabs1.equals("scheduled") %>' />
-	</aui:nav>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= stagingProcessesWebDisplayContext.getJSPNavigationItemList() %>"
+/>
 
 <c:choose>
-	<c:when test='<%= tabs1.equals("processes") %>'>
+	<c:when test="<%= tabs1.equals(StagingProcessesWebKeys.PROCESSES_TAB) %>">
 		<liferay-util:include page="/processes_list/view.jsp" servletContext="<%= application %>">
 			<liferay-util:param name="tabs1" value="<%= tabs1 %>" />
 			<liferay-util:param name="displayStyle" value="<%= displayStyle %>" />
@@ -66,10 +52,8 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			<liferay-util:param name="orderByType" value="<%= orderByType %>" />
 			<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
 		</liferay-util:include>
-
-		<liferay-util:include page="/add_button.jsp" servletContext="<%= application %>" />
 	</c:when>
-	<c:when test='<%= tabs1.equals("scheduled") %>'>
+	<c:when test="<%= tabs1.equals(StagingProcessesWebKeys.SCHEDULED_TAB) %>">
 		<liferay-util:include page="/scheduled_list/view.jsp" servletContext="<%= application %>" />
 	</c:when>
 </c:choose>

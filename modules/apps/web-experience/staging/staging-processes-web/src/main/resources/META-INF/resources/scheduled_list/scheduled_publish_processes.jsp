@@ -145,7 +145,7 @@ else {
 				>
 					<portlet:renderURL var="deleteScheduledPublicationRedirectURL">
 						<portlet:param name="mvcPath" value="/view.jsp" />
-						<portlet:param name="tabs1" value="scheduled" />
+						<portlet:param name="tabs1" value="<%= StagingProcessesWebKeys.SCHEDULED_TAB %>" />
 					</portlet:renderURL>
 
 					<portlet:actionURL name="publishLayouts" var="deleteScheduledPublicationURL">

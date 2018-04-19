@@ -1084,7 +1084,8 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 			<#assign entityVarName = "draft" + entity.name />
 		</#if>
 
-		protected ${localizedEntity.name} update${localizedEntity.name}(
+		@Override
+		public ${localizedEntity.name} update${localizedEntity.name}(
 			${entity.name} ${entityVarName}, String languageId,
 			<#list localizedEntityColumns as entityColumn>
 				String ${entityColumn.name}
@@ -1114,7 +1115,8 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 			);
 		}
 
-		protected List<${localizedEntity.name}> update${localizedEntity.names}(
+		@Override
+		public List<${localizedEntity.name}> update${localizedEntity.names}(
 			${entity.name} ${entityVarName},
 			<#list localizedEntityColumns as entityColumn>
 				Map<String, String> ${entityColumn.name}Map

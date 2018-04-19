@@ -15,7 +15,7 @@
 		}
 	},
 	"dependencies": {
-		"metal": "^2.13.2",
+		"metal": "^2.16.5",
 		"metal-component": "^2.16.3",
 		"metal-debounce": "^2.0.0",
 		"metal-dom": "^2.5.18",

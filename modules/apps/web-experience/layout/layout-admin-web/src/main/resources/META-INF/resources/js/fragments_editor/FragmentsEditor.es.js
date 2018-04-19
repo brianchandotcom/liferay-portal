@@ -2,11 +2,13 @@ import 'frontend-taglib/contextual_sidebar/ContextualSidebar.es';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
+import core from 'metal';
 
 import './dialogs/SelectMappingTypeDialog.es';
 import './sidebar/SidebarAddedFragments.es';
 import './sidebar/SidebarAvailableFragments.es';
 import './sidebar/SidebarMapping.es';
+import './translation/TranslationStatus.es';
 import FragmentEntryLink from './FragmentEntryLink.es';
 import templates from './FragmentsEditor.soy';
 
@@ -25,6 +27,14 @@ const ADDED_FRAGMENTS_TAB = {
 };
 
 /**
+ * Constant for the EditableFragmentEntryProcessor class
+ * @review
+ * @type {string}
+ */
+
+const EDITABLE_FRAGMENT_ENTRY_PROCESSOR = 'com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor';
+
+/**
  * FragmentsEditor
  * @review
  */
@@ -40,6 +50,13 @@ class FragmentsEditor extends Component {
 		this._sidebarTabs = this.fragmentEntryLinks.length > 0 ?
 			[...this.sidebarTabs, ADDED_FRAGMENTS_TAB] :
 			[...this.sidebarTabs];
+
+		this.on('languageIdChanged', this._handleLanguageIdChange);
+
+		this._translationStatus = this._getTranslationStatus(
+			this.availableLanguageIds,
+			this._getEditableValues(this.fragmentEntryLinks)
+		);
 	}
 
 	/**
@@ -134,6 +151,19 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
+	 * Gets all editable values in the current fragment
+	 * @returns Array<Object>
+	 * @private
+	 * @review
+	 */
+
+	_getEditableValues() {
+		return Object.keys(this.fragmentEntryLinks).map(
+			fragmentEntryLinkId => this.fragmentEntryLinks[fragmentEntryLinkId].editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]
+		);
+	}
+
+	/**
 	 * Gets a new FragmentEntryLink position.
 	 * @returns {number}
 	 * @private
@@ -149,6 +179,61 @@ class FragmentsEditor extends Component {
 		);
 
 		return position + 1;
+	}
+
+	/**
+	 * Gets the translation status for a given set of parameters
+	 * @param languageIds The set of languageIds to check
+	 * @param editableValues The current editable values state
+	 * @private
+	 * @returns {{
+	 * 	languageValues: {{
+	 * 		languageId: string
+	 * 		values: Array<string>
+	 *  }},
+	 *  translationKeys: Array<string>
+	 * }} A translation status object
+	 * @review
+	 */
+
+	_getTranslationStatus(languageIds, editableValues) {
+		const translationKeys = editableValues.map(
+			editableValue => {
+				return Object.keys(editableValue).map(
+					editableValueId => editableValue[editableValueId].defaultValue
+				);
+			}
+		).reduce(
+			(acc, val) => acc.concat(val),
+			[]
+		);
+
+		const languageValues = languageIds.map(
+			languageId => {
+				const values = editableValues.map(
+					editableValue => {
+						return Object.keys(editableValue).map(
+							editableValueId => editableValue[editableValueId][languageId]
+						);
+					}
+				).reduce(
+					(acc, val) => acc.concat(val),
+					[]
+				).filter(
+					localeValue => localeValue
+				);
+
+				return {
+					languageId,
+					values
+				};
+			}
+		);
+
+		return {
+			languageValues,
+			translationKeys
+		};
 	}
 
 	/**
@@ -168,10 +253,16 @@ class FragmentsEditor extends Component {
 		);
 
 		if (fragmentEntryLink) {
-			fragmentEntryLink.editableValues[data.editableId] = data.value;
-		}
+			const editableValues = fragmentEntryLink.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][data.editableId];
 
-		this._updateFragmentEntryLink(fragmentEntryLink);
+			const defaultEditableValue = editableValues.defaultValue.trim();
+
+			if (data.value !== defaultEditableValue) {
+				editableValues[this.languageId] = data.value;
+
+				this._updateFragmentEntryLink(fragmentEntryLink);
+			}
+		}
 	}
 
 	/**
@@ -374,6 +465,20 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
+	 * Callback executed when the language id has changed
+	 * @private
+	 * @review
+	 */
+
+	_handleLanguageIdChange() {
+		Object.keys(this.refs).filter(
+			key => key.startsWith('fragmentEntryLink_')
+		).forEach(
+			key => this.refs[key].update(this.languageId, this.defaultLanguageId)
+		);
+	}
+
+	/**
 	 * Callback executed when a mapping type hsa been selected
 	 * @param {{ labels: Array<string> }} event
 	 * @private
@@ -426,6 +531,17 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
+	 * Callback executed when the translation language has changed
+	 * @private
+	 * @param {string} languageId
+	 * @review
+	 */
+
+	_handleTranslationLanguageChange(languageId) {
+		this.languageId = languageId;
+	}
+
+	/**
 	 * Swap the positions of two fragmentEntryLinks
 	 * @param {Array} list
 	 * @param {number} indexA
@@ -473,6 +589,17 @@ class FragmentsEditor extends Component {
 				() => {
 					this._lastSaveDate = new Date().toLocaleTimeString();
 
+					this._translationStatus = this._getTranslationStatus(
+						this.availableLanguageIds,
+						this._getEditableValues(this.fragmentEntryLinks)
+					);
+
+					const fragmentEntryLinkComponent = this.refs[`fragmentEntryLink_${fragmentEntryLink.fragmentEntryLinkId}`];
+
+					if (fragmentEntryLinkComponent) {
+						fragmentEntryLinkComponent.updateTranslationStatus(this.languageId, this.defaultLanguageId);
+					}
+
 					this._dirty = false;
 				}
 			);
@@ -510,6 +637,17 @@ FragmentsEditor.STATE = {
 	addFragmentEntryLinkURL: Config.string().required(),
 
 	/**
+	 * List of available language ids for translation.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	availableLanguageIds: Config.arrayOf(Config.string()).value([]),
+
+	/**
 	 * Class name id used for storing changes.
 	 * @default undefined
 	 * @instance
@@ -541,6 +679,17 @@ FragmentsEditor.STATE = {
 	 */
 
 	defaultEditorConfiguration: Config.object().value({}),
+
+	/**
+	 * Default language id.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	defaultLanguageId: Config.string().required(),
 
 	/**
 	 * URL for removing fragment entries of the underlying model.
@@ -659,6 +808,17 @@ FragmentsEditor.STATE = {
 			}
 		)
 	).value([]),
+
+	/**
+	 * Currently selected language id.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	languageId: Config.string().required(),
 
 	/**
 	 * Portlet namespace needed for prefixing form inputs

@@ -929,7 +929,7 @@ public class JenkinsResultsParserUtil {
 
 		String value = properties.getProperty(name);
 
-		Matcher matcher = _propertiesPattern.matcher(value);
+		Matcher matcher = _nestedPropertyPattern.matcher(value);
 
 		String newValue = value;
 
@@ -1828,7 +1828,7 @@ public class JenkinsResultsParserUtil {
 	private static String[] _buildPropertiesURLs;
 	private static final Pattern _javaVersionPattern = Pattern.compile(
 		"(\\d+\\.\\d+)");
-	private static final Pattern _propertiesPattern = Pattern.compile(
+	private static final Pattern _nestedPropertyPattern = Pattern.compile(
 		"\\$\\{([^\\}]+)\\}");
 	private static Set<String> _redactTokens;
 	private static final Pattern _remoteURLAuthorityPattern1 = Pattern.compile(

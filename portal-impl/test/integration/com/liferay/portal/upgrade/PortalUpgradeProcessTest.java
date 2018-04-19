@@ -57,6 +57,8 @@ public class PortalUpgradeProcessTest {
 	@After
 	public void tearDown() throws SQLException {
 		_innerPortalUpgradeProcess.updateSchemaVersion(_currentSchemaVersion);
+
+		_innerPortalUpgradeProcess.close();
 	}
 
 	@Test
@@ -202,6 +204,10 @@ public class PortalUpgradeProcessTest {
 
 		private InnerPortalUpgradeProcess() throws SQLException {
 			connection = DataAccess.getUpgradeOptimizedConnection();
+		}
+
+		private void close() throws SQLException {
+			connection.close();
 		}
 
 	}

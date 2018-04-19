@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Commerce User Segment Web
+Bundle-SymbolicName: com.liferay.commerce.user.segment.web
+Bundle-Version: 1.0.0
+Import-Package:\
+	com.liferay.portal.kernel.portlet;version="[7.0.0,8.1)",\
+	\
+	*
+Web-ContextPath: /commerce-user-segment-web

@@ -147,6 +147,13 @@ public class CommerceUserSegmentDisplayContext {
 		return commerceUserSegmentCriterion.getCommerceUserSegmentCriterionId();
 	}
 
+	public CommerceUserSegmentCriterionTypeJSPContributor
+		getCommerceUserSegmentCriterionTypeJSPContributor(String key) {
+
+		return _commerceUserSegmentCriterionTypeJSPContributorRegistry.
+			getCommerceUserSegmentCriterionTypeJSPContributor(key);
+	}
+
 	public List<CommerceUserSegmentCriterionType>
 		getCommerceUserSegmentCriterionTypes() {
 
@@ -329,6 +336,8 @@ public class CommerceUserSegmentDisplayContext {
 	private CommerceUserSegmentCriterion _commerceUserSegmentCriterion;
 	private final CommerceUserSegmentCriterionService
 		_commerceUserSegmentCriterionService;
+	private CommerceUserSegmentCriterionTypeJSPContributorRegistry
+		_commerceUserSegmentCriterionTypeJSPContributorRegistry;
 	private final CommerceUserSegmentCriterionTypeRegistry
 		_commerceUserSegmentCriterionTypeRegistry;
 	private CommerceUserSegmentEntry _commerceUserSegmentEntry;

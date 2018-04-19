@@ -270,6 +270,30 @@ public class FragmentEntryLinkLocalServiceImpl
 		}
 	}
 
+	@Override
+	public void updateFragmentEntryLinks(
+			long[] fragmentEntryLinkIds, long fragmentEntryId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
+			fragmentEntryId);
+
+		for (long fragmentEntryLinkId : fragmentEntryLinkIds) {
+			FragmentEntryLink fragmentEntryLink =
+				fragmentEntryLinkPersistence.findByPrimaryKey(
+					fragmentEntryLinkId);
+
+			fragmentEntryLink.setCss(fragmentEntry.getCss());
+			fragmentEntryLink.setHtml(fragmentEntry.getHtml());
+			fragmentEntryLink.setJs(fragmentEntry.getJs());
+			fragmentEntryLink.setLastPropagationDate(
+				serviceContext.getModifiedDate(new Date()));
+
+			fragmentEntryLinkPersistence.update(fragmentEntryLink);
+		}
+	}
+
 	@ServiceReference(type = JSONFactory.class)
 	private JSONFactory _jsonFactory;
 

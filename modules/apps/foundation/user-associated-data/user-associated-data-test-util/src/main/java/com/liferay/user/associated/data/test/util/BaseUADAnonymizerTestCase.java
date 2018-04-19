@@ -146,8 +146,8 @@ public abstract class BaseUADAnonymizerTestCase<T extends BaseModel> {
 	protected abstract T addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception;
 
-	protected abstract void deleteBaseModels(List<T> baseModels)
-		throws Exception;
+	protected void deleteBaseModels(List<T> baseModels) throws Exception {
+	}
 
 	protected long getBaseModelPrimaryKey(BaseModel baseModel) {
 		return (long)baseModel.getPrimaryKeyObj();

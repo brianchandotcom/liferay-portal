@@ -57,6 +57,8 @@ public class PortalUpgradeProcessTest {
 	@After
 	public void tearDown() throws SQLException {
 		_innerPortalUpgradeProcess.updateSchemaVersion(_currentSchemaVersion);
+
+		_innerPortalUpgradeProcess.close();
 	}
 
 	@Test
@@ -145,9 +147,8 @@ public class PortalUpgradeProcessTest {
 			portalServiceUpgrade.upgrade();
 		}
 		catch (Exception e) {
-			Assert.fail("No upgrade processes should have been executed");
-
-			return;
+			throw new SQLException(
+				"No upgrade processes should have been executed", e);
 		}
 
 		Assert.assertTrue(
@@ -168,12 +169,11 @@ public class PortalUpgradeProcessTest {
 			portalServiceUpgrade.upgrade();
 		}
 		catch (Exception e) {
-			Assert.fail(
+			throw new SQLException(
 				"The execution of the upgrade process failed after being " +
 					"reexecuted. Upgrade processes must be harmless if they " +
-						"were executed previously.");
-
-			return;
+						"were executed previously.",
+				e);
 		}
 
 		Assert.assertTrue(
@@ -204,6 +204,10 @@ public class PortalUpgradeProcessTest {
 
 		private InnerPortalUpgradeProcess() throws SQLException {
 			connection = DataAccess.getUpgradeOptimizedConnection();
+		}
+
+		private void close() throws SQLException {
+			connection.close();
 		}
 
 	}

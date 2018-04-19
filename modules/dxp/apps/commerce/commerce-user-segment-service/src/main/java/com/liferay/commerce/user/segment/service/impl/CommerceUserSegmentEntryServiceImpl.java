@@ -14,17 +14,21 @@
 
 package com.liferay.commerce.user.segment.service.impl;
 
-import com.liferay.commerce.user.segment.constants.CommerceUserSegmentsActionKeys;
-import com.liferay.commerce.user.segment.constants.CommerceUserSegmentsConstants;
+import com.liferay.commerce.user.segment.constants.CommerceUserSegmentActionKeys;
+import com.liferay.commerce.user.segment.constants.CommerceUserSegmentConstants;
 import com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry;
 import com.liferay.commerce.user.segment.service.base.CommerceUserSegmentEntryServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 import java.util.Locale;
@@ -44,8 +48,7 @@ public class CommerceUserSegmentEntryServiceImpl
 
 		_portletResourcePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			CommerceUserSegmentsActionKeys.
-				ADD_COMMERCE_USER_SEGMENTATION_ENTRY);
+			CommerceUserSegmentActionKeys.ADD_COMMERCE_USER_SEGMENTATION_ENTRY);
 
 		return commerceUserSegmentEntryLocalService.addCommerceUserSegmentEntry(
 			nameMap, priority, active, serviceContext);
@@ -66,14 +69,61 @@ public class CommerceUserSegmentEntryServiceImpl
 
 	@Override
 	public List<CommerceUserSegmentEntry> getCommerceUserSegmentEntries(
-			long groupId, int start, int end)
+			long groupId, int start, int end,
+			OrderByComparator<CommerceUserSegmentEntry> orderByComparator)
 		throws PortalException {
 
 		_portletResourcePermission.check(
 			getPermissionChecker(), groupId, ActionKeys.VIEW);
 
 		return commerceUserSegmentEntryLocalService.
-			getCommerceUserSegmentEntries(groupId, start, end);
+			getCommerceUserSegmentEntries(
+				groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCommerceUserSegmentEntriesCount(long groupId)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId, ActionKeys.VIEW);
+
+		return commerceUserSegmentEntryLocalService.
+			getCommerceUserSegmentEntriesCount(groupId);
+	}
+
+	@Override
+	public CommerceUserSegmentEntry getCommerceUserSegmentEntry(
+			long commerceUserSegmentEntryId)
+		throws PortalException {
+
+		_commerceUserSegmentEntryResourcePermission.check(
+			getPermissionChecker(), commerceUserSegmentEntryId,
+			ActionKeys.VIEW);
+
+		return commerceUserSegmentEntryLocalService.getCommerceUserSegmentEntry(
+			commerceUserSegmentEntryId);
+	}
+
+	@Override
+	public BaseModelSearchResult<CommerceUserSegmentEntry>
+			searchCommerceUserSegmentEntries(
+				long companyId, long groupId, String keywords, int start,
+				int end, Sort sort)
+		throws PortalException {
+
+		return commerceUserSegmentEntryLocalService.
+			searchCommerceUserSegmentEntries(
+				companyId, groupId, keywords, start, end, sort);
+	}
+
+	@Override
+	public BaseModelSearchResult<CommerceUserSegmentEntry>
+			searchCommerceUserSegmentEntries(SearchContext searchContext)
+		throws PortalException {
+
+		return commerceUserSegmentEntryLocalService.
+			searchCommerceUserSegmentEntries(searchContext);
 	}
 
 	@Override
@@ -103,6 +153,6 @@ public class CommerceUserSegmentEntryServiceImpl
 			PortletResourcePermissionFactory.getInstance(
 				CommerceUserSegmentEntryServiceImpl.class,
 				"_portletResourcePermission",
-				CommerceUserSegmentsConstants.RESOURCE_NAME);
+				CommerceUserSegmentConstants.RESOURCE_NAME);
 
 }

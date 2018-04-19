@@ -20,17 +20,36 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Validator;
 
+import java.io.Serializable;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 public class CommerceUserSegmentEntryLocalServiceImpl
 	extends CommerceUserSegmentEntryLocalServiceBaseImpl {
@@ -83,6 +102,12 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 
 		commerceUserSegmentEntryPersistence.remove(commerceUserSegmentEntry);
 
+		// Commerce user segment criteria
+
+		commerceUserSegmentCriterionLocalService.
+			deleteCommerceUserSegmentCriteria(
+				commerceUserSegmentEntry.getCommerceUserSegmentEntryId());
+
 		// Resources
 
 		resourceLocalService.deleteResource(
@@ -111,10 +136,55 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 
 	@Override
 	public List<CommerceUserSegmentEntry> getCommerceUserSegmentEntries(
-		long groupId, int start, int end) {
+		long groupId, int start, int end,
+		OrderByComparator<CommerceUserSegmentEntry> orderByComparator) {
 
 		return commerceUserSegmentEntryPersistence.findByGroupId(
-			groupId, start, end);
+			groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCommerceUserSegmentEntriesCount(long groupId) {
+		return commerceUserSegmentEntryPersistence.countByGroupId(groupId);
+	}
+
+	@Override
+	public BaseModelSearchResult<CommerceUserSegmentEntry>
+			searchCommerceUserSegmentEntries(
+				long companyId, long groupId, String keywords, int start,
+				int end, Sort sort)
+		throws PortalException {
+
+		SearchContext searchContext = buildSearchContext(
+			companyId, groupId, keywords, start, end, sort);
+
+		return commerceUserSegmentEntryLocalService.
+			searchCommerceUserSegmentEntries(searchContext);
+	}
+
+	@Override
+	public BaseModelSearchResult<CommerceUserSegmentEntry>
+			searchCommerceUserSegmentEntries(SearchContext searchContext)
+		throws PortalException {
+
+		Indexer<CommerceUserSegmentEntry> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(
+				CommerceUserSegmentEntry.class);
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
+
+			List<CommerceUserSegmentEntry> commerceUserSegmentEntries =
+				getCommerceUserSegmentEntries(hits);
+
+			if (commerceUserSegmentEntries != null) {
+				return new BaseModelSearchResult<>(
+					commerceUserSegmentEntries, hits.getLength());
+			}
+		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -123,8 +193,6 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 			long commerceUserSegmentEntryId, Map<Locale, String> nameMap,
 			double priority, boolean active, ServiceContext serviceContext)
 		throws PortalException {
-
-		// Commerce user segment entry
 
 		CommerceUserSegmentEntry commerceUserSegmentEntry =
 			commerceUserSegmentEntryPersistence.findByPrimaryKey(
@@ -138,5 +206,82 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 		return commerceUserSegmentEntryPersistence.update(
 			commerceUserSegmentEntry);
 	}
+
+	protected SearchContext buildSearchContext(
+		long companyId, long groupId, String keywords, int start, int end,
+		Sort sort) {
+
+		SearchContext searchContext = new SearchContext();
+
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+
+		params.put("keywords", keywords);
+
+		Map<String, Serializable> attributes = new HashMap<>();
+
+		attributes.put(Field.NAME, keywords);
+		attributes.put("params", params);
+
+		searchContext.setAttributes(attributes);
+
+		searchContext.setCompanyId(companyId);
+		searchContext.setStart(start);
+		searchContext.setEnd(end);
+		searchContext.setGroupIds(new long[] {groupId});
+
+		if (Validator.isNotNull(keywords)) {
+			searchContext.setKeywords(keywords);
+		}
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		if (sort != null) {
+			searchContext.setSorts(sort);
+		}
+
+		return searchContext;
+	}
+
+	protected List<CommerceUserSegmentEntry> getCommerceUserSegmentEntries(
+			Hits hits)
+		throws PortalException {
+
+		List<Document> documents = hits.toList();
+
+		List<CommerceUserSegmentEntry> commerceUserSegmentEntries =
+			new ArrayList<>(documents.size());
+
+		for (Document document : documents) {
+			long commerceUserSegmentEntryId = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			CommerceUserSegmentEntry commerceUserSegmentEntry =
+				fetchCommerceUserSegmentEntry(commerceUserSegmentEntryId);
+
+			if (commerceUserSegmentEntry == null) {
+				commerceUserSegmentEntries = null;
+
+				Indexer<CommerceUserSegmentEntry> indexer =
+					IndexerRegistryUtil.getIndexer(
+						CommerceUserSegmentEntry.class);
+
+				long companyId = GetterUtil.getLong(
+					document.get(Field.COMPANY_ID));
+
+				indexer.delete(companyId, document.getUID());
+			}
+			else if (commerceUserSegmentEntries != null) {
+				commerceUserSegmentEntries.add(commerceUserSegmentEntry);
+			}
+		}
+
+		return commerceUserSegmentEntries;
+	}
+
+	private static final String[] _SELECTED_FIELD_NAMES =
+		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
 
 }

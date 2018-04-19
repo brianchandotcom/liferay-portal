@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.user.segment.internal.security.permission.resource;
 
-import com.liferay.commerce.user.segment.constants.CommerceUserSegmentsConstants;
+import com.liferay.commerce.user.segment.constants.CommerceUserSegmentConstants;
 import com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry;
 import com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryLocalService;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
@@ -68,7 +68,7 @@ public class CommerceUserSegmentEntryModelResourcePermissionRegistrar {
 		_commerceUserSegmentEntryLocalService;
 
 	@Reference(
-		target = "(resource.name=" + CommerceUserSegmentsConstants.RESOURCE_NAME + ")"
+		target = "(resource.name=" + CommerceUserSegmentConstants.RESOURCE_NAME + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
 

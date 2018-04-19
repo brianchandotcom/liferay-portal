@@ -16,10 +16,17 @@ package com.liferay.commerce.user.segment.constants;
 
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
-public class CommerceUserSegmentsActionKeys {
+public class CommerceUserSegmentActionKeys {
+
+	public static final String ADD_COMMERCE_USER_SEGMENTATION_CRITERION =
+		"ADD_COMMERCE_USER_SEGMENTATION_CRITERION";
 
 	public static final String ADD_COMMERCE_USER_SEGMENTATION_ENTRY =
 		"ADD_COMMERCE_USER_SEGMENTATION_ENTRY";
+
+	public static final String DELETE_COMMERCE_USER_SEGMENTATION_CRITERION =
+		"DELETE_COMMERCE_USER_SEGMENTATION_CRITERION";
 
 }

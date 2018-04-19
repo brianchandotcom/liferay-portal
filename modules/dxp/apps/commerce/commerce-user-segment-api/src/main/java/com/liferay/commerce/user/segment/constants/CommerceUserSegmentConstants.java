@@ -17,10 +17,22 @@ package com.liferay.commerce.user.segment.constants;
 /**
  * @author Marco Leo
  */
-public class CommerceUserSegmentsPortletKeys {
+public class CommerceUserSegmentConstants {
 
-	public static final String COMMERCE_USER_SEGMENTS =
-		"com_liferay_commerce_user_segment_web_portlet_" +
-			"CommerceUserSegmentsPortlet";
+	public static final String CRITERION_TYPE_ORGANIZATION =
+		"CRITERION_TYPE_ORGANIZATION";
+
+	public static final String CRITERION_TYPE_ROLE = "CRITERION_TYPE_ROLE";
+
+	public static final String CRITERION_TYPE_USER = "CRITERION_TYPE_USER";
+
+	public static final String CRITERION_TYPE_USER_GROUP =
+		"CRITERION_TYPE_USER_GROUP";
+
+	public static final String RESOURCE_NAME =
+		"com.liferay.commerce.user.segment";
+
+	public static final String SERVICE_NAME =
+		"com.liferay.commerce.user.segment";
 
 }

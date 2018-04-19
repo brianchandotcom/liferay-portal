@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.user.segment.internal.security.permission.resource;
 
-import com.liferay.commerce.user.segment.constants.CommerceUserSegmentsConstants;
-import com.liferay.commerce.user.segment.constants.CommerceUserSegmentsPortletKeys;
+import com.liferay.commerce.user.segment.constants.CommerceUserSegmentConstants;
+import com.liferay.commerce.user.segment.constants.CommerceUserSegmentPortletKeys;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
@@ -42,15 +42,15 @@ public class CommerceUserSegmentsPortletResourcePermissionRegistrar {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put(
-			"resource.name", CommerceUserSegmentsConstants.RESOURCE_NAME);
+			"resource.name", CommerceUserSegmentConstants.RESOURCE_NAME);
 
 		_serviceRegistration = bundleContext.registerService(
 			PortletResourcePermission.class,
 			PortletResourcePermissionFactory.create(
-				CommerceUserSegmentsConstants.RESOURCE_NAME,
+				CommerceUserSegmentConstants.RESOURCE_NAME,
 				new StagedPortletPermissionLogic(
 					_stagingPermission,
-					CommerceUserSegmentsPortletKeys.COMMERCE_USER_SEGMENTS)),
+					CommerceUserSegmentPortletKeys.COMMERCE_USER_SEGMENT)),
 			properties);
 	}
 

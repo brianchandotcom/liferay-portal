@@ -24,7 +24,7 @@ long userNotificationEventUserId = jsonObject.getLong("userId");
 boolean notificationUnread = !actionRequired && !userNotificationEvent.isArchived() && userNotificationFeedEntry.isApplicable();
 
 if (notificationUnread) {
-	row.setCssClass("unread");
+	row.setCssClass("list-group-item-primary");
 }
 %>
 

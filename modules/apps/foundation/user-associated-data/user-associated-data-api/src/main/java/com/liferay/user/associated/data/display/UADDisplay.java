@@ -37,8 +37,6 @@ public interface UADDisplay<T> {
 
 	public Map<String, Object> getNonanonymizableFieldValues(T t);
 
-	public String getTypeDescription();
-
 	public String getTypeName();
 
 }

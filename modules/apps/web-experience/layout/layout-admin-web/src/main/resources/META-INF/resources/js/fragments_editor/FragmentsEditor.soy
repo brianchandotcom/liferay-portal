@@ -29,6 +29,7 @@
 	{@param? _handleFragmentRemove: any}
 	{@param? _handleHideContextualSidebar: any}
 	{@param? _handleMappeableFieldClicked: any}
+	{@param? _handleMappeableFieldSelected: any}
 	{@param? _handleMappingTypeSelected: any}
 	{@param? _handleToggleContextualSidebarButtonClick: any}
 	{@param? _handleSelectAssetTypeButtonClick: any}
@@ -119,6 +120,7 @@
 			{call com.liferay.layout.admin.web.SelectMappingDialog.render}
 				{param editableId: $_selectMappingDialogEditableId /}
 				{param events: [
+					'mappeableFieldSelected': $_handleMappeableFieldSelected,
 					'visibleChanged': $_handleSelectMappingDialogVisibleChanged
 				] /}
 				{param fragmentEntryLinkId: $_selectMappingDialogFragmentEntryLinkId /}

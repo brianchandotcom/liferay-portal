@@ -50,7 +50,9 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.template.soy.utils.SoyContext;
@@ -156,6 +158,28 @@ public class FragmentsEditorContext {
 			"updateLayoutPageTemplateEntryAssetTypeURL",
 			_getFragmentEntryActionURL(
 				"/layout/update_layout_page_template_entry_asset_type"));
+
+		String languageId = _themeDisplay.getLanguageId();
+
+		languageId = StringUtil.toLowerCase(
+			languageId.replace(StringPool.UNDERLINE, StringPool.DASH));
+
+		soyContext.put("defaultLanguageId", languageId);
+		soyContext.put("languageId", languageId);
+
+		String[] languageIds = LocaleUtil.toLanguageIds(
+			LanguageUtil.getAvailableLocales(_themeDisplay.getSiteGroupId()));
+
+		List<String> availableLanguageIds = new ArrayList<>();
+
+		for (String curLanguageId : languageIds) {
+			availableLanguageIds.add(
+				StringUtil.toLowerCase(
+					curLanguageId.replace(
+						StringPool.UNDERLINE, StringPool.DASH)));
+		}
+
+		soyContext.put("availableLanguageIds", availableLanguageIds);
 
 		return soyContext;
 	}

@@ -30,6 +30,25 @@ class EditableImageFragmentProcessor {
 	}
 
 	/**
+	 * Finds an associated editor for a given editable id
+	 * @param {string} editableId The id of editable section
+	 * @return {?{
+	 * 	setData: {Function}
+	 * }}
+	 * @review
+	 */
+
+	findEditor(editableId) {
+		const editableElement = this.fragmentEntryLink.element.querySelector(`lfr-editable[type="image"][id="${editableId}"] img`);
+
+		return editableElement ? {
+			setData: url => {
+				editableElement.src = url;
+			}
+		} : null;
+	}
+
+	/**
 	 * @inheritDoc
 	 * @review
 	 */

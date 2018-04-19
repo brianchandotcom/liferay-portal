@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.IndexerPostProcessor;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
+import com.liferay.portal.kernel.search.SearchPermissionChecker;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -89,7 +90,8 @@ public class AssetEntriesFacet extends MultiValueFacet {
 				if ((indexerBooleanFilter == null) ||
 					!indexerBooleanFilter.hasClauses()) {
 
-					continue;
+					indexerBooleanFilter = _getFacetBooleanFilter(
+						entryClassName, searchContext);
 				}
 
 				BooleanFilter entityBooleanFilter = new BooleanFilter();
@@ -220,6 +222,28 @@ public class AssetEntriesFacet extends MultiValueFacet {
 
 			entityFilter.add(queryFilter, BooleanClauseOccur.MUST);
 		}
+	}
+
+	private BooleanFilter _getFacetBooleanFilter(
+			String className, SearchContext searchContext)
+		throws Exception {
+
+		BooleanFilter facetBooleanFilter = new BooleanFilter();
+
+		facetBooleanFilter.addTerm(Field.ENTRY_CLASS_NAME, className);
+
+		if (searchContext.getUserId() > 0) {
+			SearchPermissionChecker searchPermissionChecker =
+				SearchEngineHelperUtil.getSearchPermissionChecker();
+
+			facetBooleanFilter =
+				searchPermissionChecker.getPermissionBooleanFilter(
+					searchContext.getCompanyId(), searchContext.getGroupIds(),
+					searchContext.getUserId(), className, facetBooleanFilter,
+					searchContext);
+		}
+
+		return facetBooleanFilter;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

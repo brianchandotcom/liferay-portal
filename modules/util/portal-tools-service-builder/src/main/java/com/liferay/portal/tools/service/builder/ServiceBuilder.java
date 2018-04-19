@@ -903,6 +903,7 @@ public class ServiceBuilder {
 							_createUADAnonymizerTest(entity);
 							_createUADEntityTestHelper(entity);
 							_createUADExporter(entity);
+							_createUADExporterTest(entity);
 
 							if (ListUtil.isEmpty(
 									entity.
@@ -928,6 +929,7 @@ public class ServiceBuilder {
 							//_removeUADEntityDisplayTest(entity);
 							//_removeUADEntityTestHelper(entity);
 							//_removeUADExporter(entity);
+							//_removeUADExporterTest(entity);
 						}
 					}
 					else {
@@ -4151,6 +4153,26 @@ public class ServiceBuilder {
 			file, content, _author, _jalopySettings, _modifiedFileNames);
 	}
 
+	private void _createUADExporterTest(Entity entity) throws Exception {
+		Map<String, Object> context = _getContext();
+
+		context.put("entity", entity);
+
+		// Content
+
+		String content = _processTemplate(_tplUADExporterTest, context);
+
+		// Write file
+
+		File file = new File(
+			StringBundler.concat(
+				_uadTestIntegrationOutputPath, "/uad/exporter/test/",
+				entity.getName(), "UADExporterTest.java"));
+
+		ToolsUtil.writeFile(
+			file, content, _author, _jalopySettings, _modifiedFileNames);
+	}
+
 	private void _createUADTestBnd() throws Exception {
 		Map<String, Object> context = _getContext();
 
@@ -6563,6 +6585,13 @@ public class ServiceBuilder {
 				"UADExporter.java"));
 	}
 
+	private void _removeUADExporterTest(Entity entity) {
+		_deleteFile(
+			StringBundler.concat(
+				_uadTestIntegrationOutputPath, "/uad/exporter/test/",
+				entity.getName(), "UADExporterTest.java"));
+	}
+
 	private void _resolveEntity(Entity entity) throws Exception {
 		if (entity.isResolved()) {
 			return;
@@ -6710,6 +6739,7 @@ public class ServiceBuilder {
 	private String _tplUADEntityTestHelper =
 		_TPL_ROOT + "uad_entity_test_helper.ftl";
 	private String _tplUADExporter = _TPL_ROOT + "uad_exporter.ftl";
+	private String _tplUADExporterTest = _TPL_ROOT + "uad_exporter_test.ftl";
 	private String _tplUADTestBnd = _TPL_ROOT + "uad_test_bnd.ftl";
 	private String _uadDirName;
 	private String _uadOutputPath;

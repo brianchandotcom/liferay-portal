@@ -15,6 +15,8 @@
 package com.liferay.commerce.user.segment.web.internal.display.context;
 
 import com.liferay.commerce.user.segment.criterion.CommerceUserSegmentCriterionType;
+import com.liferay.commerce.user.segment.criterion.CommerceUserSegmentCriterionTypeJSPContributor;
+import com.liferay.commerce.user.segment.criterion.CommerceUserSegmentCriterionTypeJSPContributorRegistry;
 import com.liferay.commerce.user.segment.criterion.CommerceUserSegmentCriterionTypeRegistry;
 import com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion;
 import com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry;

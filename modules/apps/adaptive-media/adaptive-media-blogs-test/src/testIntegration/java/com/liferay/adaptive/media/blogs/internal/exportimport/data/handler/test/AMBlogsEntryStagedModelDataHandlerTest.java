@@ -16,6 +16,7 @@ package com.liferay.adaptive.media.blogs.internal.exportimport.data.handler.test
 
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper;
 import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
+import com.liferay.adaptive.media.test.util.html.HTMLAssert;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
@@ -47,7 +48,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -99,7 +99,7 @@ public class AMBlogsEntryStagedModelDataHandlerTest
 		BlogsEntry importedEntry = (BlogsEntry)getStagedModel(
 			blogsEntry.getUuid(), liveGroup);
 
-		Assert.assertEquals(
+		HTMLAssert.assertHTMLEquals(
 			_getExpectedDynamicContent(fileEntry1, fileEntry2),
 			importedEntry.getContent());
 	}
@@ -122,7 +122,7 @@ public class AMBlogsEntryStagedModelDataHandlerTest
 		BlogsEntry importedEntry = (BlogsEntry)getStagedModel(
 			blogsEntry.getUuid(), liveGroup);
 
-		_assertHTMLEquals(
+		HTMLAssert.assertHTMLEquals(
 			_getExpectedStaticContent(fileEntry1, fileEntry2),
 			importedEntry.getContent());
 	}
@@ -138,7 +138,7 @@ public class AMBlogsEntryStagedModelDataHandlerTest
 		BlogsEntry importedEntry = (BlogsEntry)getStagedModel(
 			blogsEntry.getUuid(), liveGroup);
 
-		Assert.assertEquals(
+		HTMLAssert.assertHTMLEquals(
 			blogsEntry.getContent(), importedEntry.getContent());
 	}
 
@@ -218,14 +218,6 @@ public class AMBlogsEntryStagedModelDataHandlerTest
 			FileUtil.getBytes(getClass(), "image.jpg"), serviceContext);
 	}
 
-	private void _assertHTMLEquals(String expectedHTML, String actualHTML)
-		throws Exception {
-
-		Assert.assertEquals(
-			_removeSpacing(StringUtil.toLowerCase(expectedHTML)),
-			_removeSpacing(StringUtil.toLowerCase(actualHTML)));
-	}
-
 	private String _getDynamicContent(FileEntry... fileEntries)
 		throws Exception {
 
@@ -280,7 +272,7 @@ public class AMBlogsEntryStagedModelDataHandlerTest
 
 	private String _getImgTag(long fileEntryId) throws Exception {
 		return String.format(
-			"<img alt=\"alt\" class=\"a class\" data-fileentryid=\"%s\" " +
+			"<img alt=\"alt\" class=\"a class\" data-fileEntryId=\"%s\" " +
 				"src=\"theURL\" />",
 			fileEntryId);
 	}
@@ -288,7 +280,7 @@ public class AMBlogsEntryStagedModelDataHandlerTest
 	private String _getPictureTag(FileEntry fileEntry) throws Exception {
 		StringBundler sb = new StringBundler(6);
 
-		sb.append("<picture data-fileentryid=\"");
+		sb.append("<picture data-fileEntryId=\"");
 		sb.append(fileEntry.getFileEntryId());
 		sb.append("\">");
 		sb.append("<source></source>");
@@ -314,10 +306,6 @@ public class AMBlogsEntryStagedModelDataHandlerTest
 		}
 
 		return sb.toString();
-	}
-
-	private String _removeSpacing(String text) {
-		return text.replaceAll("\\s", StringPool.BLANK);
 	}
 
 	@Inject

@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.user.associated.data.aggregator.UADAggregator;
-import com.liferay.user.associated.data.display.UADEntityDisplay;
+import com.liferay.user.associated.data.display.UADDisplay;
 
 import java.util.List;
 
@@ -32,25 +32,25 @@ import org.junit.Test;
 /**
  * @author Noah Sherrill
  */
-public abstract class BaseUADEntityDisplayTestCase<T> {
+public abstract class BaseUADDisplayTestCase<T> {
 
 	@Before
 	public void setUp() throws Exception {
 		_uadAggregator = getUADAggregator();
-		_uadEntityDisplay = getUADEntityDisplay();
+		_uadDisplay = getUADDisplay();
 		_user = UserTestUtil.addUser();
 	}
 
 	@Test
 	public void testGetApplicationName() {
 		Assert.assertEquals(
-			getApplicationName(), _uadEntityDisplay.getApplicationName());
+			getApplicationName(), _uadDisplay.getApplicationName());
 	}
 
 	@Test
 	public void testGetTypeDescription() {
 		Assert.assertEquals(
-			getTypeDescription(), _uadEntityDisplay.getTypeDescription());
+			getTypeDescription(), _uadDisplay.getTypeDescription());
 	}
 
 	@Test
@@ -60,7 +60,7 @@ public abstract class BaseUADEntityDisplayTestCase<T> {
 		String simpleClassName = StringUtil.extractLast(
 			baseModel.getModelClassName(), StringPool.PERIOD);
 
-		Assert.assertEquals(simpleClassName, _uadEntityDisplay.getTypeName());
+		Assert.assertEquals(simpleClassName, _uadDisplay.getTypeName());
 	}
 
 	protected abstract BaseModel<?> addBaseModel(long userId) throws Exception;
@@ -71,7 +71,7 @@ public abstract class BaseUADEntityDisplayTestCase<T> {
 
 	protected abstract UADAggregator<T> getUADAggregator();
 
-	protected abstract UADEntityDisplay<T> getUADEntityDisplay();
+	protected abstract UADDisplay<T> getUADDisplay();
 
 	private T _createBaseModel() throws Exception {
 		addBaseModel(_user.getUserId());
@@ -82,7 +82,7 @@ public abstract class BaseUADEntityDisplayTestCase<T> {
 	}
 
 	private UADAggregator<T> _uadAggregator;
-	private UADEntityDisplay<T> _uadEntityDisplay;
+	private UADDisplay<T> _uadDisplay;
 
 	@DeleteAfterTestRun
 	private User _user;

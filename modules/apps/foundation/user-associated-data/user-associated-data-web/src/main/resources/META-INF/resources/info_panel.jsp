@@ -18,15 +18,15 @@
 
 <%
 List<UADEntity> uadEntities = (List<UADEntity>)request.getAttribute(UADWebKeys.INFO_PANEL_UAD_ENTITIES);
-UADEntityDisplay uadEntityDisplay = (UADEntityDisplay)request.getAttribute(UADWebKeys.INFO_PANEL_UAD_ENTITY_DISPLAY);
+UADDisplay uadDisplay = (UADDisplay)request.getAttribute(UADWebKeys.INFO_PANEL_UAD_DISPLAY);
 %>
 
 <div class="sidebar sidebar-light">
 	<c:choose>
 		<c:when test="<%= ListUtil.isEmpty(uadEntities) %>">
 			<div class="sidebar-header">
-				<h3 class="sidebar-title"><%= uadEntityDisplay.getTypeName() %></h3>
-				<h5 class="sidebar-subtitle"><%= uadEntityDisplay.getApplicationName() %></h5>
+				<h3 class="sidebar-title"><%= uadDisplay.getTypeName() %></h3>
+				<h5 class="sidebar-subtitle"><%= uadDisplay.getApplicationName() %></h5>
 			</div>
 		</c:when>
 		<c:when test="<%= ListUtil.isNotEmpty(uadEntities) && (uadEntities.size() == 1) %>">
@@ -36,8 +36,8 @@ UADEntityDisplay uadEntityDisplay = (UADEntityDisplay)request.getAttribute(UADWe
 
 			Serializable primaryKey = uadEntity.getPrimaryKey();
 
-			Map<String, Object> displayValues = uadEntityDisplay.getNonanonymizableFieldValues(uadEntity.getEntity());
-			String identifierFieldName = uadEntityDisplay.getDisplayFieldNames()[0];
+			Map<String, Object> displayValues = uadDisplay.getNonanonymizableFieldValues(uadEntity.getEntity());
+			String identifierFieldName = uadDisplay.getDisplayFieldNames()[0];
 			%>
 
 			<div class="sidebar-header">
@@ -49,7 +49,7 @@ UADEntityDisplay uadEntityDisplay = (UADEntityDisplay)request.getAttribute(UADWe
 
 				<h3 class="sidebar-title"><%= StringUtil.shorten(String.valueOf(displayValues.get(identifierFieldName)), 200) %></h3>
 
-				<h5 class="sidebar-subtitle"><%= uadEntityDisplay.getTypeName() %></h5>
+				<h5 class="sidebar-subtitle"><%= uadDisplay.getTypeName() %></h5>
 			</div>
 
 			<div class="sidebar-body">
@@ -74,7 +74,7 @@ UADEntityDisplay uadEntityDisplay = (UADEntityDisplay)request.getAttribute(UADWe
 		</c:when>
 		<c:when test="<%= ListUtil.isNotEmpty(uadEntities) && (uadEntities.size() > 1) %>">
 			<div class="sidebar-header">
-				<h3 class="sidebar-title"><%= uadEntityDisplay.getTypeName() %></h3>
+				<h3 class="sidebar-title"><%= uadDisplay.getTypeName() %></h3>
 				<h5 class="sidebar-subtitle"><liferay-ui:message arguments="<%= uadEntities.size() %>" key="x-items-are-selected" /></h5>
 			</div>
 		</c:when>

@@ -12,9 +12,13 @@
  * details.
  */
 
-package com.liferay.wiki.uad.display.test;
+package com.liferay.contacts.uad.display.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
+import com.liferay.contacts.model.Entry;
+import com.liferay.contacts.uad.constants.ContactsUADConstants;
+import com.liferay.contacts.uad.test.EntryUADEntityTestHelper;
 
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -23,12 +27,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import com.liferay.user.associated.data.aggregator.UADAggregator;
-import com.liferay.user.associated.data.display.UADEntityDisplay;
-import com.liferay.user.associated.data.test.util.BaseUADEntityDisplayTestCase;
-
-import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.uad.constants.WikiUADConstants;
-import com.liferay.wiki.uad.test.WikiNodeUADEntityTestHelper;
+import com.liferay.user.associated.data.display.UADDisplay;
+import com.liferay.user.associated.data.test.util.BaseUADDisplayTestCase;
 
 import org.junit.After;
 import org.junit.ClassRule;
@@ -44,23 +44,23 @@ import java.util.List;
  * @generated
  */
 @RunWith(Arquillian.class)
-public class WikiNodeUADEntityDisplayTest extends BaseUADEntityDisplayTestCase {
+public class EntryUADDisplayTest extends BaseUADDisplayTestCase {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
 
 	@Override
 	protected BaseModel<?> addBaseModel(long userId) throws Exception {
-		WikiNode wikiNode = _wikiNodeUADEntityTestHelper.addWikiNode(userId);
+		Entry entry = _entryUADEntityTestHelper.addEntry(userId);
 
-		_wikiNodes.add(wikiNode);
+		_entries.add(entry);
 
-		return wikiNode;
+		return entry;
 	}
 
 	@Override
 	protected String getApplicationName() {
-		return WikiUADConstants.APPLICATION_NAME;
+		return ContactsUADConstants.APPLICATION_NAME;
 	}
 
 	@Override
@@ -69,28 +69,28 @@ public class WikiNodeUADEntityDisplayTest extends BaseUADEntityDisplayTestCase {
 	}
 
 	@Override
-	protected UADEntityDisplay getUADEntityDisplay() {
-		return _uadEntityDisplay;
+	protected UADDisplay getUADDisplay() {
+		return _uadDisplay;
 	}
 
 	@Override
 	protected String getTypeDescription() {
-		return "A wiki node";
+		return "";
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		_wikiNodeUADEntityTestHelper.cleanUpDependencies(_wikiNodes);
+		_entryUADEntityTestHelper.cleanUpDependencies(_entries);
 	}
 
 	@DeleteAfterTestRun
-	private final List<WikiNode> _wikiNodes = new ArrayList<WikiNode>();
+	private final List<Entry> _entries = new ArrayList<Entry>();
 	@Inject
-	private WikiNodeUADEntityTestHelper _wikiNodeUADEntityTestHelper;
+	private EntryUADEntityTestHelper _entryUADEntityTestHelper;
 	@Inject(filter = "model.class.name=" +
-	WikiUADConstants.CLASS_NAME_WIKI_NODE)
+	ContactsUADConstants.CLASS_NAME_ENTRY)
 	private UADAggregator _uadAggregator;
 	@Inject(filter = "model.class.name=" +
-	WikiUADConstants.CLASS_NAME_WIKI_NODE)
-	private UADEntityDisplay _uadEntityDisplay;
+	ContactsUADConstants.CLASS_NAME_ENTRY)
+	private UADDisplay _uadDisplay;
 }

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
-import com.liferay.user.associated.data.display.UADEntityDisplay;
+import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
 import com.liferay.user.associated.data.web.internal.display.UADEntity;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
@@ -73,11 +73,10 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 		resourceRequest.setAttribute(
 			UADWebKeys.INFO_PANEL_UAD_ENTITIES, uadEntities);
 
-		UADEntityDisplay uadEntityDisplay = _uadRegistry.getUADEntityDisplay(
-			uadRegistryKey);
+		UADDisplay uadDisplay = _uadRegistry.getUADDisplay(uadRegistryKey);
 
 		resourceRequest.setAttribute(
-			UADWebKeys.INFO_PANEL_UAD_ENTITY_DISPLAY, uadEntityDisplay);
+			UADWebKeys.INFO_PANEL_UAD_DISPLAY, uadDisplay);
 
 		include(resourceRequest, resourceResponse, "/info_panel.jsp");
 	}

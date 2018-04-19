@@ -17,7 +17,7 @@ package com.liferay.wiki.uad.display;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
-import com.liferay.user.associated.data.display.UADEntityDisplay;
+import com.liferay.user.associated.data.display.UADDisplay;
 
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.uad.constants.WikiUADConstants;
@@ -32,14 +32,14 @@ import java.util.Map;
  * @generated
  */
 @Component(immediate = true, property =  {
-	"model.class.name=" + WikiUADConstants.CLASS_NAME_WIKI_PAGE}, service = UADEntityDisplay.class)
-public class WikiPageUADEntityDisplay implements UADEntityDisplay<WikiPage> {
+	"model.class.name=" + WikiUADConstants.CLASS_NAME_WIKI_PAGE}, service = UADDisplay.class)
+public class WikiPageUADDisplay implements UADDisplay<WikiPage> {
 	public String getApplicationName() {
 		return WikiUADConstants.APPLICATION_NAME;
 	}
 
 	public String[] getDisplayFieldNames() {
-		return _wikiPageUADEntityDisplayHelper.getDisplayFieldNames();
+		return _wikiPageUADDisplayHelper.getDisplayFieldNames();
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class WikiPageUADEntityDisplay implements UADEntityDisplay<WikiPage> {
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
-		return _wikiPageUADEntityDisplayHelper.getWikiPageEditURL(wikiPage,
+		return _wikiPageUADDisplayHelper.getWikiPageEditURL(wikiPage,
 			liferayPortletRequest, liferayPortletResponse);
 	}
 
@@ -57,7 +57,7 @@ public class WikiPageUADEntityDisplay implements UADEntityDisplay<WikiPage> {
 
 	@Override
 	public Map<String, Object> getNonanonymizableFieldValues(WikiPage wikiPage) {
-		return _wikiPageUADEntityDisplayHelper.getUADEntityNonanonymizableFieldValues(wikiPage);
+		return _wikiPageUADDisplayHelper.getUADEntityNonanonymizableFieldValues(wikiPage);
 	}
 
 	@Override
@@ -71,5 +71,5 @@ public class WikiPageUADEntityDisplay implements UADEntityDisplay<WikiPage> {
 	}
 
 	@Reference
-	private WikiPageUADEntityDisplayHelper _wikiPageUADEntityDisplayHelper;
+	private WikiPageUADDisplayHelper _wikiPageUADDisplayHelper;
 }

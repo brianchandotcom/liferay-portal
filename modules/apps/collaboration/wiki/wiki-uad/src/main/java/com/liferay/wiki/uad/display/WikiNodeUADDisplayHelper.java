@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.model.WikiPage;
+import com.liferay.wiki.model.WikiNode;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,8 +32,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author William Newbury
  */
-@Component(immediate = true, service = WikiPageUADEntityDisplayHelper.class)
-public class WikiPageUADEntityDisplayHelper {
+@Component(immediate = true, service = WikiNodeUADDisplayHelper.class)
+public class WikiNodeUADDisplayHelper {
 
 	/**
 	 * Returns an ordered string array of the fields' names to be displayed.
@@ -43,38 +43,35 @@ public class WikiPageUADEntityDisplayHelper {
 	 * @return the array of field names to display
 	 */
 	public String[] getDisplayFieldNames() {
-		return new String[] {"title", "content", "summary"};
+		return new String[] {"name", "description"};
 	}
 
 	public Map<String, Object> getUADEntityNonanonymizableFieldValues(
-		WikiPage wikiPage) {
+		WikiNode wikiNode) {
 
 		Map<String, Object> uadEntityNonanonymizableFieldValues =
 			new HashMap<>();
 
 		uadEntityNonanonymizableFieldValues.put(
-			"content", wikiPage.getContent());
-		uadEntityNonanonymizableFieldValues.put(
-			"summary", wikiPage.getSummary());
-		uadEntityNonanonymizableFieldValues.put("title", wikiPage.getTitle());
+			"description", wikiNode.getDescription());
+		uadEntityNonanonymizableFieldValues.put("name", wikiNode.getName());
 
 		return uadEntityNonanonymizableFieldValues;
 	}
 
-	public String getWikiPageEditURL(
-			WikiPage wikiPage, LiferayPortletRequest liferayPortletRequest,
+	public String getWikiNodeEditURL(
+			WikiNode wikiNode, LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
 			portal.getControlPanelPlid(liferayPortletRequest),
-			WikiPortletKeys.WIKI, PortletRequest.RENDER_PHASE);
+			WikiPortletKeys.WIKI_ADMIN, PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
+		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_node");
 		portletURL.setParameter(
 			"redirect", portal.getCurrentURL(liferayPortletRequest));
-		portletURL.setParameter("nodeId", String.valueOf(wikiPage.getNodeId()));
-		portletURL.setParameter("title", String.valueOf(wikiPage.getTitle()));
+		portletURL.setParameter("nodeId", String.valueOf(wikiNode.getNodeId()));
 
 		return portletURL.toString();
 	}

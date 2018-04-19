@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
-import com.liferay.user.associated.data.display.UADEntityDisplay;
+import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
 import com.liferay.user.associated.data.web.internal.display.UADEntity;
 import com.liferay.user.associated.data.web.internal.display.ViewUADEntitiesDisplay;
@@ -97,19 +97,18 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 					applicationName, uadRegistryKey, currentURL,
 					liferayPortletResponse));
 
-			UADEntityDisplay uadEntityDisplay =
-				_uadRegistry.getUADEntityDisplay(uadRegistryKey);
+			UADDisplay uadDisplay = _uadRegistry.getUADDisplay(uadRegistryKey);
 
 			viewUADEntitiesDisplay.setSearchContainer(
 				_getSearchContainer(
-					renderRequest, currentURL, uadRegistryKey, uadEntityDisplay,
+					renderRequest, currentURL, uadRegistryKey, uadDisplay,
 					selectedUser.getUserId(), liferayPortletResponse));
-			viewUADEntitiesDisplay.setTypeName(uadEntityDisplay.getTypeName());
+			viewUADEntitiesDisplay.setTypeName(uadDisplay.getTypeName());
 
 			viewUADEntitiesDisplay.setUADRegistryKey(uadRegistryKey);
 
 			renderRequest.setAttribute(
-				UADWebKeys.INFO_PANEL_UAD_ENTITY_DISPLAY, uadEntityDisplay);
+				UADWebKeys.INFO_PANEL_UAD_DISPLAY, uadDisplay);
 			renderRequest.setAttribute(
 				UADWebKeys.VIEW_UAD_ENTITIES_DISPLAY, viewUADEntitiesDisplay);
 		}
@@ -121,23 +120,20 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	private <T> UADEntity<T> _constructUADEntity(
-			T entity, UADAggregator<T> uadAggregator,
-			UADEntityDisplay<T> uadEntityDisplay,
+			T entity, UADAggregator<T> uadAggregator, UADDisplay<T> uadDisplay,
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
 		UADEntity<T> uadEntity = new UADEntity(
 			entity, uadAggregator.getPrimaryKey(entity),
-			uadEntityDisplay.getEditURL(
+			uadDisplay.getEditURL(
 				entity, liferayPortletRequest, liferayPortletResponse));
 
 		Map<String, Object> nonanonymizableFieldValues =
-			uadEntityDisplay.getNonanonymizableFieldValues(entity);
+			uadDisplay.getNonanonymizableFieldValues(entity);
 
-		for (String displayFieldName :
-				uadEntityDisplay.getDisplayFieldNames()) {
-
+		for (String displayFieldName : uadDisplay.getDisplayFieldNames()) {
 			Object nonanonymizableFieldValue = nonanonymizableFieldValues.get(
 				displayFieldName);
 
@@ -158,12 +154,8 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 
 		NavigationItemList navigationItemList = new NavigationItemList();
 
-		for (UADEntityDisplay uadEntityDisplay :
-				_uadRegistry.getUADEntityDisplays()) {
-
-			if (!applicationName.equals(
-					uadEntityDisplay.getApplicationName())) {
-
+		for (UADDisplay uadDisplay : _uadRegistry.getUADDisplays()) {
+			if (!applicationName.equals(uadDisplay.getApplicationName())) {
 				continue;
 			}
 
@@ -173,11 +165,10 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 			navigationItemList.add(
 				navigationItem -> {
 					navigationItem.setActive(
-						uadRegistryKey.equals(uadEntityDisplay.getKey()));
+						uadRegistryKey.equals(uadDisplay.getKey()));
 					navigationItem.setHref(
-						tabPortletURL, "uadRegistryKey",
-						uadEntityDisplay.getKey());
-					navigationItem.setLabel(uadEntityDisplay.getTypeName());
+						tabPortletURL, "uadRegistryKey", uadDisplay.getKey());
+					navigationItem.setLabel(uadDisplay.getTypeName());
 				});
 		}
 
@@ -186,8 +177,8 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 
 	private SearchContainer<UADEntity> _getSearchContainer(
 			RenderRequest renderRequest, PortletURL currentURL,
-			String uadRegistryKey, UADEntityDisplay uadEntityDisplay,
-			long selectedUserId, LiferayPortletResponse liferayPortletResponse)
+			String uadRegistryKey, UADDisplay uadDisplay, long selectedUserId,
+			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
 		LiferayPortletRequest liferayPortletRequest =
@@ -210,8 +201,8 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 		for (Object entity : entities) {
 			uadEntities.add(
 				_constructUADEntity(
-					entity, uadAggregator, uadEntityDisplay,
-					liferayPortletRequest, liferayPortletResponse));
+					entity, uadAggregator, uadDisplay, liferayPortletRequest,
+					liferayPortletResponse));
 		}
 
 		searchContainer.setResults(uadEntities);

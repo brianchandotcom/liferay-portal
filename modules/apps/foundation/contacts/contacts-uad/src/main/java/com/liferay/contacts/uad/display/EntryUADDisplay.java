@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.message.boards.uad.display;
+package com.liferay.contacts.uad.display;
 
-import com.liferay.message.boards.model.MBCategory;
-import com.liferay.message.boards.uad.constants.MBUADConstants;
+import com.liferay.contacts.model.Entry;
+import com.liferay.contacts.uad.constants.ContactsUADConstants;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
-import com.liferay.user.associated.data.display.UADEntityDisplay;
+import com.liferay.user.associated.data.display.UADDisplay;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,33 +32,32 @@ import java.util.Map;
  * @generated
  */
 @Component(immediate = true, property =  {
-	"model.class.name=" + MBUADConstants.CLASS_NAME_MB_CATEGORY}, service = UADEntityDisplay.class)
-public class MBCategoryUADEntityDisplay implements UADEntityDisplay<MBCategory> {
+	"model.class.name=" + ContactsUADConstants.CLASS_NAME_ENTRY}, service = UADDisplay.class)
+public class EntryUADDisplay implements UADDisplay<Entry> {
 	public String getApplicationName() {
-		return MBUADConstants.APPLICATION_NAME;
+		return ContactsUADConstants.APPLICATION_NAME;
 	}
 
 	public String[] getDisplayFieldNames() {
-		return _mbCategoryUADEntityDisplayHelper.getDisplayFieldNames();
+		return _entryUADDisplayHelper.getDisplayFieldNames();
 	}
 
 	@Override
-	public String getEditURL(MBCategory mbCategory,
+	public String getEditURL(Entry entry,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
-		return _mbCategoryUADEntityDisplayHelper.getMBCategoryEditURL(mbCategory,
+		return _entryUADDisplayHelper.getEntryEditURL(entry,
 			liferayPortletRequest, liferayPortletResponse);
 	}
 
 	public String getKey() {
-		return MBUADConstants.CLASS_NAME_MB_CATEGORY;
+		return ContactsUADConstants.CLASS_NAME_ENTRY;
 	}
 
 	@Override
-	public Map<String, Object> getNonanonymizableFieldValues(
-		MBCategory mbCategory) {
-		return _mbCategoryUADEntityDisplayHelper.getUADEntityNonanonymizableFieldValues(mbCategory);
+	public Map<String, Object> getNonanonymizableFieldValues(Entry entry) {
+		return _entryUADDisplayHelper.getUADEntityNonanonymizableFieldValues(entry);
 	}
 
 	@Override
@@ -68,9 +67,9 @@ public class MBCategoryUADEntityDisplay implements UADEntityDisplay<MBCategory> 
 
 	@Override
 	public String getTypeName() {
-		return "MBCategory";
+		return "Entry";
 	}
 
 	@Reference
-	private MBCategoryUADEntityDisplayHelper _mbCategoryUADEntityDisplayHelper;
+	private EntryUADDisplayHelper _entryUADDisplayHelper;
 }

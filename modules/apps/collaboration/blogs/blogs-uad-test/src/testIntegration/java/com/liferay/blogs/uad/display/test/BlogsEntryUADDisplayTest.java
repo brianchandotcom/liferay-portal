@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.message.boards.uad.display.test;
+package com.liferay.blogs.uad.display.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
-import com.liferay.message.boards.model.MBMessage;
-import com.liferay.message.boards.uad.constants.MBUADConstants;
-import com.liferay.message.boards.uad.test.MBMessageUADEntityTestHelper;
+import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.uad.constants.BlogsUADConstants;
+import com.liferay.blogs.uad.test.BlogsEntryUADEntityTestHelper;
 
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -27,8 +27,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import com.liferay.user.associated.data.aggregator.UADAggregator;
-import com.liferay.user.associated.data.display.UADEntityDisplay;
-import com.liferay.user.associated.data.test.util.BaseUADEntityDisplayTestCase;
+import com.liferay.user.associated.data.display.UADDisplay;
+import com.liferay.user.associated.data.test.util.BaseUADDisplayTestCase;
 
 import org.junit.After;
 import org.junit.ClassRule;
@@ -44,23 +44,23 @@ import java.util.List;
  * @generated
  */
 @RunWith(Arquillian.class)
-public class MBMessageUADEntityDisplayTest extends BaseUADEntityDisplayTestCase {
+public class BlogsEntryUADDisplayTest extends BaseUADDisplayTestCase {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
 
 	@Override
 	protected BaseModel<?> addBaseModel(long userId) throws Exception {
-		MBMessage mbMessage = _mbMessageUADEntityTestHelper.addMBMessage(userId);
+		BlogsEntry blogsEntry = _blogsEntryUADEntityTestHelper.addBlogsEntry(userId);
 
-		_mbMessages.add(mbMessage);
+		_blogsEntries.add(blogsEntry);
 
-		return mbMessage;
+		return blogsEntry;
 	}
 
 	@Override
 	protected String getApplicationName() {
-		return MBUADConstants.APPLICATION_NAME;
+		return BlogsUADConstants.APPLICATION_NAME;
 	}
 
 	@Override
@@ -69,28 +69,28 @@ public class MBMessageUADEntityDisplayTest extends BaseUADEntityDisplayTestCase 
 	}
 
 	@Override
-	protected UADEntityDisplay getUADEntityDisplay() {
-		return _uadEntityDisplay;
+	protected UADDisplay getUADDisplay() {
+		return _uadDisplay;
 	}
 
 	@Override
 	protected String getTypeDescription() {
-		return "";
+		return "A blog post";
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		_mbMessageUADEntityTestHelper.cleanUpDependencies(_mbMessages);
+		_blogsEntryUADEntityTestHelper.cleanUpDependencies(_blogsEntries);
 	}
 
 	@DeleteAfterTestRun
-	private final List<MBMessage> _mbMessages = new ArrayList<MBMessage>();
+	private final List<BlogsEntry> _blogsEntries = new ArrayList<BlogsEntry>();
 	@Inject
-	private MBMessageUADEntityTestHelper _mbMessageUADEntityTestHelper;
+	private BlogsEntryUADEntityTestHelper _blogsEntryUADEntityTestHelper;
 	@Inject(filter = "model.class.name=" +
-	MBUADConstants.CLASS_NAME_MB_MESSAGE)
+	BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY)
 	private UADAggregator _uadAggregator;
 	@Inject(filter = "model.class.name=" +
-	MBUADConstants.CLASS_NAME_MB_MESSAGE)
-	private UADEntityDisplay _uadEntityDisplay;
+	BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY)
+	private UADDisplay _uadDisplay;
 }

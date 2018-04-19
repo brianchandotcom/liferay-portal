@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.contacts.uad.display;
+package com.liferay.blogs.uad.display;
 
-import com.liferay.contacts.model.Entry;
-import com.liferay.contacts.uad.constants.ContactsUADConstants;
+import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.uad.constants.BlogsUADConstants;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
-import com.liferay.user.associated.data.display.UADEntityDisplay;
+import com.liferay.user.associated.data.display.UADDisplay;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,44 +32,45 @@ import java.util.Map;
  * @generated
  */
 @Component(immediate = true, property =  {
-	"model.class.name=" + ContactsUADConstants.CLASS_NAME_ENTRY}, service = UADEntityDisplay.class)
-public class EntryUADEntityDisplay implements UADEntityDisplay<Entry> {
+	"model.class.name=" + BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY}, service = UADDisplay.class)
+public class BlogsEntryUADDisplay implements UADDisplay<BlogsEntry> {
 	public String getApplicationName() {
-		return ContactsUADConstants.APPLICATION_NAME;
+		return BlogsUADConstants.APPLICATION_NAME;
 	}
 
 	public String[] getDisplayFieldNames() {
-		return _entryUADEntityDisplayHelper.getDisplayFieldNames();
+		return _blogsEntryUADDisplayHelper.getDisplayFieldNames();
 	}
 
 	@Override
-	public String getEditURL(Entry entry,
+	public String getEditURL(BlogsEntry blogsEntry,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
-		return _entryUADEntityDisplayHelper.getEntryEditURL(entry,
+		return _blogsEntryUADDisplayHelper.getBlogsEntryEditURL(blogsEntry,
 			liferayPortletRequest, liferayPortletResponse);
 	}
 
 	public String getKey() {
-		return ContactsUADConstants.CLASS_NAME_ENTRY;
+		return BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY;
 	}
 
 	@Override
-	public Map<String, Object> getNonanonymizableFieldValues(Entry entry) {
-		return _entryUADEntityDisplayHelper.getUADEntityNonanonymizableFieldValues(entry);
+	public Map<String, Object> getNonanonymizableFieldValues(
+		BlogsEntry blogsEntry) {
+		return _blogsEntryUADDisplayHelper.getUADEntityNonanonymizableFieldValues(blogsEntry);
 	}
 
 	@Override
 	public String getTypeDescription() {
-		return "";
+		return "A blog post";
 	}
 
 	@Override
 	public String getTypeName() {
-		return "Entry";
+		return "BlogsEntry";
 	}
 
 	@Reference
-	private EntryUADEntityDisplayHelper _entryUADEntityDisplayHelper;
+	private BlogsEntryUADDisplayHelper _blogsEntryUADDisplayHelper;
 }

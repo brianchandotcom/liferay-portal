@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.contacts.uad.display;
+package com.liferay.wiki.uad.display;
 
-import com.liferay.contacts.constants.ContactsPortletKeys;
-import com.liferay.contacts.model.Entry;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.model.WikiPage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,44 +32,51 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author William Newbury
  */
-@Component(immediate = true, service = EntryUADEntityDisplayHelper.class)
-public class EntryUADEntityDisplayHelper {
+@Component(immediate = true, service = WikiPageUADDisplayHelper.class)
+public class WikiPageUADDisplayHelper {
 
+	/**
+	 * Returns an ordered string array of the fields' names to be displayed.
+	 * Each field name corresponds to a table column based on the order they are
+	 * specified.
+	 *
+	 * @return the array of field names to display
+	 */
 	public String[] getDisplayFieldNames() {
-		return new String[] {"fullName", "emailAddress", "comments"};
-	}
-
-	public String getEntryEditURL(
-			Entry entry, LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
-		throws Exception {
-
-		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			portal.getControlPanelPlid(liferayPortletRequest),
-			ContactsPortletKeys.CONCTACTS_CENTER, PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcPath", "/contacts_center/edit_entry");
-		portletURL.setParameter(
-			"redirect", portal.getCurrentURL(liferayPortletRequest));
-		portletURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
-
-		return portletURL.toString();
+		return new String[] {"title", "content", "summary"};
 	}
 
 	public Map<String, Object> getUADEntityNonanonymizableFieldValues(
-		Entry entry) {
+		WikiPage wikiPage) {
 
 		Map<String, Object> uadEntityNonanonymizableFieldValues =
 			new HashMap<>();
 
 		uadEntityNonanonymizableFieldValues.put(
-			"comments", entry.getComments());
+			"content", wikiPage.getContent());
 		uadEntityNonanonymizableFieldValues.put(
-			"emailAddress", entry.getEmailAddress());
-		uadEntityNonanonymizableFieldValues.put(
-			"fullName", entry.getFullName());
+			"summary", wikiPage.getSummary());
+		uadEntityNonanonymizableFieldValues.put("title", wikiPage.getTitle());
 
 		return uadEntityNonanonymizableFieldValues;
+	}
+
+	public String getWikiPageEditURL(
+			WikiPage wikiPage, LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws Exception {
+
+		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
+			portal.getControlPanelPlid(liferayPortletRequest),
+			WikiPortletKeys.WIKI, PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
+		portletURL.setParameter(
+			"redirect", portal.getCurrentURL(liferayPortletRequest));
+		portletURL.setParameter("nodeId", String.valueOf(wikiPage.getNodeId()));
+		portletURL.setParameter("title", String.valueOf(wikiPage.getTitle()));
+
+		return portletURL.toString();
 	}
 
 	@Reference

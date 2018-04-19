@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.wiki.uad.display;
+package com.liferay.message.boards.uad.display;
+
+import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.uad.constants.MBUADConstants;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
-import com.liferay.user.associated.data.display.UADEntityDisplay;
-
-import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.uad.constants.WikiUADConstants;
+import com.liferay.user.associated.data.display.UADDisplay;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,44 +32,45 @@ import java.util.Map;
  * @generated
  */
 @Component(immediate = true, property =  {
-	"model.class.name=" + WikiUADConstants.CLASS_NAME_WIKI_NODE}, service = UADEntityDisplay.class)
-public class WikiNodeUADEntityDisplay implements UADEntityDisplay<WikiNode> {
+	"model.class.name=" + MBUADConstants.CLASS_NAME_MB_CATEGORY}, service = UADDisplay.class)
+public class MBCategoryUADDisplay implements UADDisplay<MBCategory> {
 	public String getApplicationName() {
-		return WikiUADConstants.APPLICATION_NAME;
+		return MBUADConstants.APPLICATION_NAME;
 	}
 
 	public String[] getDisplayFieldNames() {
-		return _wikiNodeUADEntityDisplayHelper.getDisplayFieldNames();
+		return _mbCategoryUADDisplayHelper.getDisplayFieldNames();
 	}
 
 	@Override
-	public String getEditURL(WikiNode wikiNode,
+	public String getEditURL(MBCategory mbCategory,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
-		return _wikiNodeUADEntityDisplayHelper.getWikiNodeEditURL(wikiNode,
+		return _mbCategoryUADDisplayHelper.getMBCategoryEditURL(mbCategory,
 			liferayPortletRequest, liferayPortletResponse);
 	}
 
 	public String getKey() {
-		return WikiUADConstants.CLASS_NAME_WIKI_NODE;
+		return MBUADConstants.CLASS_NAME_MB_CATEGORY;
 	}
 
 	@Override
-	public Map<String, Object> getNonanonymizableFieldValues(WikiNode wikiNode) {
-		return _wikiNodeUADEntityDisplayHelper.getUADEntityNonanonymizableFieldValues(wikiNode);
+	public Map<String, Object> getNonanonymizableFieldValues(
+		MBCategory mbCategory) {
+		return _mbCategoryUADDisplayHelper.getUADEntityNonanonymizableFieldValues(mbCategory);
 	}
 
 	@Override
 	public String getTypeDescription() {
-		return "A wiki node";
+		return "";
 	}
 
 	@Override
 	public String getTypeName() {
-		return "WikiNode";
+		return "MBCategory";
 	}
 
 	@Reference
-	private WikiNodeUADEntityDisplayHelper _wikiNodeUADEntityDisplayHelper;
+	private MBCategoryUADDisplayHelper _mbCategoryUADDisplayHelper;
 }

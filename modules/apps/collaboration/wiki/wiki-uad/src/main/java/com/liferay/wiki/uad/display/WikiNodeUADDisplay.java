@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.blogs.uad.display;
-
-import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.uad.constants.BlogsUADConstants;
+package com.liferay.wiki.uad.display;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
-import com.liferay.user.associated.data.display.UADEntityDisplay;
+import com.liferay.user.associated.data.display.UADDisplay;
+
+import com.liferay.wiki.model.WikiNode;
+import com.liferay.wiki.uad.constants.WikiUADConstants;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,45 +32,44 @@ import java.util.Map;
  * @generated
  */
 @Component(immediate = true, property =  {
-	"model.class.name=" + BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY}, service = UADEntityDisplay.class)
-public class BlogsEntryUADEntityDisplay implements UADEntityDisplay<BlogsEntry> {
+	"model.class.name=" + WikiUADConstants.CLASS_NAME_WIKI_NODE}, service = UADDisplay.class)
+public class WikiNodeUADDisplay implements UADDisplay<WikiNode> {
 	public String getApplicationName() {
-		return BlogsUADConstants.APPLICATION_NAME;
+		return WikiUADConstants.APPLICATION_NAME;
 	}
 
 	public String[] getDisplayFieldNames() {
-		return _blogsEntryUADEntityDisplayHelper.getDisplayFieldNames();
+		return _wikiNodeUADDisplayHelper.getDisplayFieldNames();
 	}
 
 	@Override
-	public String getEditURL(BlogsEntry blogsEntry,
+	public String getEditURL(WikiNode wikiNode,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
-		return _blogsEntryUADEntityDisplayHelper.getBlogsEntryEditURL(blogsEntry,
+		return _wikiNodeUADDisplayHelper.getWikiNodeEditURL(wikiNode,
 			liferayPortletRequest, liferayPortletResponse);
 	}
 
 	public String getKey() {
-		return BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY;
+		return WikiUADConstants.CLASS_NAME_WIKI_NODE;
 	}
 
 	@Override
-	public Map<String, Object> getNonanonymizableFieldValues(
-		BlogsEntry blogsEntry) {
-		return _blogsEntryUADEntityDisplayHelper.getUADEntityNonanonymizableFieldValues(blogsEntry);
+	public Map<String, Object> getNonanonymizableFieldValues(WikiNode wikiNode) {
+		return _wikiNodeUADDisplayHelper.getUADEntityNonanonymizableFieldValues(wikiNode);
 	}
 
 	@Override
 	public String getTypeDescription() {
-		return "A blog post";
+		return "A wiki node";
 	}
 
 	@Override
 	public String getTypeName() {
-		return "BlogsEntry";
+		return "WikiNode";
 	}
 
 	@Reference
-	private BlogsEntryUADEntityDisplayHelper _blogsEntryUADEntityDisplayHelper;
+	private WikiNodeUADDisplayHelper _wikiNodeUADDisplayHelper;
 }

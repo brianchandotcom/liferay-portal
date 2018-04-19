@@ -15,7 +15,7 @@
 package com.liferay.message.boards.uad.display;
 
 import com.liferay.message.boards.constants.MBPortletKeys;
-import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.model.MBCategory;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.Portal;
@@ -32,8 +32,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author William Newbury
  */
-@Component(immediate = true, service = MBMessageUADEntityDisplayHelper.class)
-public class MBMessageUADEntityDisplayHelper {
+@Component(immediate = true, service = MBCategoryUADDisplayHelper.class)
+public class MBCategoryUADDisplayHelper {
 
 	/**
 	 * Returns an ordered string array of the fields' names to be displayed.
@@ -43,11 +43,11 @@ public class MBMessageUADEntityDisplayHelper {
 	 * @return the array of field names to display
 	 */
 	public String[] getDisplayFieldNames() {
-		return new String[] {"subject", "body"};
+		return new String[] {"name", "description"};
 	}
 
-	public String getMBMessageEditURL(
-			MBMessage mbMessage, LiferayPortletRequest liferayPortletRequest,
+	public String getMBCategoryEditURL(
+			MBCategory mbCategory, LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
@@ -55,24 +55,24 @@ public class MBMessageUADEntityDisplayHelper {
 			portal.getControlPanelPlid(liferayPortletRequest),
 			MBPortletKeys.MESSAGE_BOARDS, PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_message");
+		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_category");
 		portletURL.setParameter(
 			"redirect", portal.getCurrentURL(liferayPortletRequest));
 		portletURL.setParameter(
-			"messageId", String.valueOf(mbMessage.getMessageId()));
+			"mbCategoryId", String.valueOf(mbCategory.getCategoryId()));
 
 		return portletURL.toString();
 	}
 
 	public Map<String, Object> getUADEntityNonanonymizableFieldValues(
-		MBMessage mbMessage) {
+		MBCategory mbCategory) {
 
 		Map<String, Object> uadEntityNonanonymizableFieldValues =
 			new HashMap<>();
 
-		uadEntityNonanonymizableFieldValues.put("body", mbMessage.getBody());
 		uadEntityNonanonymizableFieldValues.put(
-			"subject", mbMessage.getSubject());
+			"description", mbCategory.getDescription());
+		uadEntityNonanonymizableFieldValues.put("name", mbCategory.getName());
 
 		return uadEntityNonanonymizableFieldValues;
 	}

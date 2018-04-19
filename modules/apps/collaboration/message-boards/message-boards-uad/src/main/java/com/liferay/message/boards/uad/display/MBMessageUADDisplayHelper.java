@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.wiki.uad.display;
+package com.liferay.message.boards.uad.display;
 
+import com.liferay.message.boards.constants.MBPortletKeys;
+import com.liferay.message.boards.model.MBMessage;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.model.WikiNode;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,8 +32,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author William Newbury
  */
-@Component(immediate = true, service = WikiNodeUADEntityDisplayHelper.class)
-public class WikiNodeUADEntityDisplayHelper {
+@Component(immediate = true, service = MBMessageUADDisplayHelper.class)
+public class MBMessageUADDisplayHelper {
 
 	/**
 	 * Returns an ordered string array of the fields' names to be displayed.
@@ -43,37 +43,38 @@ public class WikiNodeUADEntityDisplayHelper {
 	 * @return the array of field names to display
 	 */
 	public String[] getDisplayFieldNames() {
-		return new String[] {"name", "description"};
+		return new String[] {"subject", "body"};
 	}
 
-	public Map<String, Object> getUADEntityNonanonymizableFieldValues(
-		WikiNode wikiNode) {
-
-		Map<String, Object> uadEntityNonanonymizableFieldValues =
-			new HashMap<>();
-
-		uadEntityNonanonymizableFieldValues.put(
-			"description", wikiNode.getDescription());
-		uadEntityNonanonymizableFieldValues.put("name", wikiNode.getName());
-
-		return uadEntityNonanonymizableFieldValues;
-	}
-
-	public String getWikiNodeEditURL(
-			WikiNode wikiNode, LiferayPortletRequest liferayPortletRequest,
+	public String getMBMessageEditURL(
+			MBMessage mbMessage, LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
 			portal.getControlPanelPlid(liferayPortletRequest),
-			WikiPortletKeys.WIKI_ADMIN, PortletRequest.RENDER_PHASE);
+			MBPortletKeys.MESSAGE_BOARDS, PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_node");
+		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_message");
 		portletURL.setParameter(
 			"redirect", portal.getCurrentURL(liferayPortletRequest));
-		portletURL.setParameter("nodeId", String.valueOf(wikiNode.getNodeId()));
+		portletURL.setParameter(
+			"messageId", String.valueOf(mbMessage.getMessageId()));
 
 		return portletURL.toString();
+	}
+
+	public Map<String, Object> getUADEntityNonanonymizableFieldValues(
+		MBMessage mbMessage) {
+
+		Map<String, Object> uadEntityNonanonymizableFieldValues =
+			new HashMap<>();
+
+		uadEntityNonanonymizableFieldValues.put("body", mbMessage.getBody());
+		uadEntityNonanonymizableFieldValues.put(
+			"subject", mbMessage.getSubject());
+
+		return uadEntityNonanonymizableFieldValues;
 	}
 
 	@Reference

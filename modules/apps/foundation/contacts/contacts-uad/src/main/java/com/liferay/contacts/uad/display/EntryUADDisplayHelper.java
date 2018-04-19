@@ -12,13 +12,12 @@
  * details.
  */
 
-package com.liferay.blogs.uad.display;
+package com.liferay.contacts.uad.display;
 
-import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.contacts.constants.ContactsPortletKeys;
+import com.liferay.contacts.model.Entry;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.HashMap;
@@ -33,56 +32,42 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author William Newbury
  */
-@Component(immediate = true, service = BlogsEntryUADEntityDisplayHelper.class)
-public class BlogsEntryUADEntityDisplayHelper {
+@Component(immediate = true, service = EntryUADDisplayHelper.class)
+public class EntryUADDisplayHelper {
 
-	public String getBlogsEntryEditURL(
-			BlogsEntry blogsEntry, LiferayPortletRequest liferayPortletRequest,
+	public String[] getDisplayFieldNames() {
+		return new String[] {"fullName", "emailAddress", "comments"};
+	}
+
+	public String getEntryEditURL(
+			Entry entry, LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		String portletId = PortletProviderUtil.getPortletId(
-			BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
-
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			portal.getControlPanelPlid(liferayPortletRequest), portletId,
-			PortletRequest.RENDER_PHASE);
+			portal.getControlPanelPlid(liferayPortletRequest),
+			ContactsPortletKeys.CONCTACTS_CENTER, PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("mvcRenderCommandName", "/blogs/edit_entry");
+		portletURL.setParameter("mvcPath", "/contacts_center/edit_entry");
 		portletURL.setParameter(
 			"redirect", portal.getCurrentURL(liferayPortletRequest));
-		portletURL.setParameter(
-			"entryId", String.valueOf(blogsEntry.getEntryId()));
+		portletURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
 
 		return portletURL.toString();
 	}
 
-	public String[] getDisplayFieldNames() {
-		return new String[] {
-			"title", "subtitle", "urlTitle", "description", "content",
-			"smallImage", "smallImageId"
-		};
-	}
-
 	public Map<String, Object> getUADEntityNonanonymizableFieldValues(
-		BlogsEntry blogsEntry) {
+		Entry entry) {
 
 		Map<String, Object> uadEntityNonanonymizableFieldValues =
 			new HashMap<>();
 
 		uadEntityNonanonymizableFieldValues.put(
-			"content", blogsEntry.getContent());
+			"comments", entry.getComments());
 		uadEntityNonanonymizableFieldValues.put(
-			"description", blogsEntry.getDescription());
+			"emailAddress", entry.getEmailAddress());
 		uadEntityNonanonymizableFieldValues.put(
-			"smallImage", blogsEntry.getSmallImage());
-		uadEntityNonanonymizableFieldValues.put(
-			"smallImageId", blogsEntry.getSmallImageId());
-		uadEntityNonanonymizableFieldValues.put(
-			"subtitle", blogsEntry.getSubtitle());
-		uadEntityNonanonymizableFieldValues.put("title", blogsEntry.getTitle());
-		uadEntityNonanonymizableFieldValues.put(
-			"urlTitle", blogsEntry.getUrlTitle());
+			"fullName", entry.getFullName());
 
 		return uadEntityNonanonymizableFieldValues;
 	}

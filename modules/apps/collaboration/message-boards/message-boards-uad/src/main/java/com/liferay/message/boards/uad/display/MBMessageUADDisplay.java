@@ -20,7 +20,7 @@ import com.liferay.message.boards.uad.constants.MBUADConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
-import com.liferay.user.associated.data.display.UADEntityDisplay;
+import com.liferay.user.associated.data.display.UADDisplay;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,14 +32,14 @@ import java.util.Map;
  * @generated
  */
 @Component(immediate = true, property =  {
-	"model.class.name=" + MBUADConstants.CLASS_NAME_MB_MESSAGE}, service = UADEntityDisplay.class)
-public class MBMessageUADEntityDisplay implements UADEntityDisplay<MBMessage> {
+	"model.class.name=" + MBUADConstants.CLASS_NAME_MB_MESSAGE}, service = UADDisplay.class)
+public class MBMessageUADDisplay implements UADDisplay<MBMessage> {
 	public String getApplicationName() {
 		return MBUADConstants.APPLICATION_NAME;
 	}
 
 	public String[] getDisplayFieldNames() {
-		return _mbMessageUADEntityDisplayHelper.getDisplayFieldNames();
+		return _mbMessageUADDisplayHelper.getDisplayFieldNames();
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class MBMessageUADEntityDisplay implements UADEntityDisplay<MBMessage> {
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
-		return _mbMessageUADEntityDisplayHelper.getMBMessageEditURL(mbMessage,
+		return _mbMessageUADDisplayHelper.getMBMessageEditURL(mbMessage,
 			liferayPortletRequest, liferayPortletResponse);
 	}
 
@@ -58,7 +58,7 @@ public class MBMessageUADEntityDisplay implements UADEntityDisplay<MBMessage> {
 	@Override
 	public Map<String, Object> getNonanonymizableFieldValues(
 		MBMessage mbMessage) {
-		return _mbMessageUADEntityDisplayHelper.getUADEntityNonanonymizableFieldValues(mbMessage);
+		return _mbMessageUADDisplayHelper.getUADEntityNonanonymizableFieldValues(mbMessage);
 	}
 
 	@Override
@@ -72,5 +72,5 @@ public class MBMessageUADEntityDisplay implements UADEntityDisplay<MBMessage> {
 	}
 
 	@Reference
-	private MBMessageUADEntityDisplayHelper _mbMessageUADEntityDisplayHelper;
+	private MBMessageUADDisplayHelper _mbMessageUADDisplayHelper;
 }

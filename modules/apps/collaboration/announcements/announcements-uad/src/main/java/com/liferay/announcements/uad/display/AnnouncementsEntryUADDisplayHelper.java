@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.message.boards.uad.display;
+package com.liferay.announcements.uad.display;
 
-import com.liferay.message.boards.constants.MBPortletKeys;
-import com.liferay.message.boards.model.MBCategory;
+import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.HashMap;
@@ -30,49 +31,48 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author William Newbury
+ * @author Noah Sherrill
  */
-@Component(immediate = true, service = MBCategoryUADEntityDisplayHelper.class)
-public class MBCategoryUADEntityDisplayHelper {
+@Component(immediate = true, service = AnnouncementsEntryUADDisplayHelper.class)
+public class AnnouncementsEntryUADDisplayHelper {
 
-	/**
-	 * Returns an ordered string array of the fields' names to be displayed.
-	 * Each field name corresponds to a table column based on the order they are
-	 * specified.
-	 *
-	 * @return the array of field names to display
-	 */
-	public String[] getDisplayFieldNames() {
-		return new String[] {"name", "description"};
-	}
-
-	public String getMBCategoryEditURL(
-			MBCategory mbCategory, LiferayPortletRequest liferayPortletRequest,
+	public String getAnnouncementsEntryEditURL(
+			AnnouncementsEntry announcementsEntry,
+			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			portal.getControlPanelPlid(liferayPortletRequest),
-			MBPortletKeys.MESSAGE_BOARDS, PortletRequest.RENDER_PHASE);
+		String portletId = PortletProviderUtil.getPortletId(
+			AnnouncementsEntry.class.getName(), PortletProvider.Action.VIEW);
 
-		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_category");
+		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
+			portal.getControlPanelPlid(liferayPortletRequest), portletId,
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/announcements/edit_entry");
 		portletURL.setParameter(
 			"redirect", portal.getCurrentURL(liferayPortletRequest));
 		portletURL.setParameter(
-			"mbCategoryId", String.valueOf(mbCategory.getCategoryId()));
+			"entryId", String.valueOf(announcementsEntry.getEntryId()));
 
 		return portletURL.toString();
 	}
 
+	public String[] getDisplayFieldNames() {
+		return new String[] {"title", "content"};
+	}
+
 	public Map<String, Object> getUADEntityNonanonymizableFieldValues(
-		MBCategory mbCategory) {
+		AnnouncementsEntry announcementsEntry) {
 
 		Map<String, Object> uadEntityNonanonymizableFieldValues =
 			new HashMap<>();
 
 		uadEntityNonanonymizableFieldValues.put(
-			"description", mbCategory.getDescription());
-		uadEntityNonanonymizableFieldValues.put("name", mbCategory.getName());
+			"content", announcementsEntry.getContent());
+		uadEntityNonanonymizableFieldValues.put(
+			"title", announcementsEntry.getTitle());
 
 		return uadEntityNonanonymizableFieldValues;
 	}

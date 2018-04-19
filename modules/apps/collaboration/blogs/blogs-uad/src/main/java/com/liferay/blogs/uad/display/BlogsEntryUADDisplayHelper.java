@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.announcements.uad.display;
+package com.liferay.blogs.uad.display;
 
-import com.liferay.announcements.kernel.model.AnnouncementsEntry;
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -31,50 +31,58 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Noah Sherrill
+ * @author William Newbury
  */
-@Component(
-	immediate = true, service = AnnouncementsEntryUADEntityDisplayHelper.class
-)
-public class AnnouncementsEntryUADEntityDisplayHelper {
+@Component(immediate = true, service = BlogsEntryUADDisplayHelper.class)
+public class BlogsEntryUADDisplayHelper {
 
-	public String getAnnouncementsEntryEditURL(
-			AnnouncementsEntry announcementsEntry,
-			LiferayPortletRequest liferayPortletRequest,
+	public String getBlogsEntryEditURL(
+			BlogsEntry blogsEntry, LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
 		String portletId = PortletProviderUtil.getPortletId(
-			AnnouncementsEntry.class.getName(), PortletProvider.Action.VIEW);
+			BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
 			portal.getControlPanelPlid(liferayPortletRequest), portletId,
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/announcements/edit_entry");
+		portletURL.setParameter("mvcRenderCommandName", "/blogs/edit_entry");
 		portletURL.setParameter(
 			"redirect", portal.getCurrentURL(liferayPortletRequest));
 		portletURL.setParameter(
-			"entryId", String.valueOf(announcementsEntry.getEntryId()));
+			"entryId", String.valueOf(blogsEntry.getEntryId()));
 
 		return portletURL.toString();
 	}
 
 	public String[] getDisplayFieldNames() {
-		return new String[] {"title", "content"};
+		return new String[] {
+			"title", "subtitle", "urlTitle", "description", "content",
+			"smallImage", "smallImageId"
+		};
 	}
 
 	public Map<String, Object> getUADEntityNonanonymizableFieldValues(
-		AnnouncementsEntry announcementsEntry) {
+		BlogsEntry blogsEntry) {
 
 		Map<String, Object> uadEntityNonanonymizableFieldValues =
 			new HashMap<>();
 
 		uadEntityNonanonymizableFieldValues.put(
-			"content", announcementsEntry.getContent());
+			"content", blogsEntry.getContent());
 		uadEntityNonanonymizableFieldValues.put(
-			"title", announcementsEntry.getTitle());
+			"description", blogsEntry.getDescription());
+		uadEntityNonanonymizableFieldValues.put(
+			"smallImage", blogsEntry.getSmallImage());
+		uadEntityNonanonymizableFieldValues.put(
+			"smallImageId", blogsEntry.getSmallImageId());
+		uadEntityNonanonymizableFieldValues.put(
+			"subtitle", blogsEntry.getSubtitle());
+		uadEntityNonanonymizableFieldValues.put("title", blogsEntry.getTitle());
+		uadEntityNonanonymizableFieldValues.put(
+			"urlTitle", blogsEntry.getUrlTitle());
 
 		return uadEntityNonanonymizableFieldValues;
 	}

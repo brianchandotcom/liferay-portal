@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.bookmarks.uad.display;
+package com.liferay.announcements.uad.display;
 
-import com.liferay.bookmarks.model.BookmarksEntry;
-import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
+import com.liferay.announcements.kernel.model.AnnouncementsEntry;
+import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.user.associated.data.display.UADEntityDisplay;
+import com.liferay.user.associated.data.display.UADDisplay;
 
 import java.util.Map;
 
@@ -30,52 +30,52 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY,
-	service = UADEntityDisplay.class
+	property = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_ENTRY,
+	service = UADDisplay.class
 )
-public class BookmarksEntryUADEntityDisplay
-	implements UADEntityDisplay<BookmarksEntry> {
+public class AnnouncementsEntryUADDisplay
+	implements UADDisplay<AnnouncementsEntry> {
 
 	public String getApplicationName() {
-		return BookmarksUADConstants.APPLICATION_NAME;
+		return AnnouncementsUADConstants.APPLICATION_NAME;
 	}
 
 	public String[] getDisplayFieldNames() {
-		return _bookmarksEntryUADEntityDisplayHelper.getDisplayFieldNames();
+		return _announcementsEntryUADDisplayHelper.getDisplayFieldNames();
 	}
 
 	public String getEditURL(
-			BookmarksEntry bookmarksEntry,
+			AnnouncementsEntry announcementsEntry,
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		return _bookmarksEntryUADEntityDisplayHelper.getBookmarksEntryEditURL(
-			bookmarksEntry, liferayPortletRequest, liferayPortletResponse);
+		return _announcementsEntryUADDisplayHelper.getAnnouncementsEntryEditURL(
+			announcementsEntry, liferayPortletRequest, liferayPortletResponse);
 	}
 
 	public String getKey() {
-		return BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY;
+		return AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_ENTRY;
 	}
 
 	@Override
 	public Map<String, Object> getNonanonymizableFieldValues(
-		BookmarksEntry bookmarksEntry) {
+		AnnouncementsEntry announcementsEntry) {
 
-		return _bookmarksEntryUADEntityDisplayHelper.
-			getNonanonymizableFieldValues(bookmarksEntry);
+		return _announcementsEntryUADDisplayHelper.
+			getUADEntityNonanonymizableFieldValues(announcementsEntry);
 	}
 
 	public String getTypeDescription() {
-		return "A link to another page or website";
+		return "Announcements posted by the user";
 	}
 
 	public String getTypeName() {
-		return "BookmarksEntry";
+		return "AnnouncementsEntry";
 	}
 
 	@Reference
-	private BookmarksEntryUADEntityDisplayHelper
-		_bookmarksEntryUADEntityDisplayHelper;
+	private AnnouncementsEntryUADDisplayHelper
+		_announcementsEntryUADDisplayHelper;
 
 }

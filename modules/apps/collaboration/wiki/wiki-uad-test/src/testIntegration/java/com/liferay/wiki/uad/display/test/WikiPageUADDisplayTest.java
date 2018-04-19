@@ -12,13 +12,9 @@
  * details.
  */
 
-package com.liferay.message.boards.uad.display.test;
+package com.liferay.wiki.uad.display.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
-import com.liferay.message.boards.model.MBCategory;
-import com.liferay.message.boards.uad.constants.MBUADConstants;
-import com.liferay.message.boards.uad.test.MBCategoryUADEntityTestHelper;
 
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -27,8 +23,12 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import com.liferay.user.associated.data.aggregator.UADAggregator;
-import com.liferay.user.associated.data.display.UADEntityDisplay;
-import com.liferay.user.associated.data.test.util.BaseUADEntityDisplayTestCase;
+import com.liferay.user.associated.data.display.UADDisplay;
+import com.liferay.user.associated.data.test.util.BaseUADDisplayTestCase;
+
+import com.liferay.wiki.model.WikiPage;
+import com.liferay.wiki.uad.constants.WikiUADConstants;
+import com.liferay.wiki.uad.test.WikiPageUADEntityTestHelper;
 
 import org.junit.After;
 import org.junit.ClassRule;
@@ -44,23 +44,23 @@ import java.util.List;
  * @generated
  */
 @RunWith(Arquillian.class)
-public class MBCategoryUADEntityDisplayTest extends BaseUADEntityDisplayTestCase {
+public class WikiPageUADDisplayTest extends BaseUADDisplayTestCase {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
 
 	@Override
 	protected BaseModel<?> addBaseModel(long userId) throws Exception {
-		MBCategory mbCategory = _mbCategoryUADEntityTestHelper.addMBCategory(userId);
+		WikiPage wikiPage = _wikiPageUADEntityTestHelper.addWikiPage(userId);
 
-		_mbCategories.add(mbCategory);
+		_wikiPages.add(wikiPage);
 
-		return mbCategory;
+		return wikiPage;
 	}
 
 	@Override
 	protected String getApplicationName() {
-		return MBUADConstants.APPLICATION_NAME;
+		return WikiUADConstants.APPLICATION_NAME;
 	}
 
 	@Override
@@ -69,28 +69,28 @@ public class MBCategoryUADEntityDisplayTest extends BaseUADEntityDisplayTestCase
 	}
 
 	@Override
-	protected UADEntityDisplay getUADEntityDisplay() {
-		return _uadEntityDisplay;
+	protected UADDisplay getUADDisplay() {
+		return _uadDisplay;
 	}
 
 	@Override
 	protected String getTypeDescription() {
-		return "";
+		return "A wiki page";
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		_mbCategoryUADEntityTestHelper.cleanUpDependencies(_mbCategories);
+		_wikiPageUADEntityTestHelper.cleanUpDependencies(_wikiPages);
 	}
 
 	@DeleteAfterTestRun
-	private final List<MBCategory> _mbCategories = new ArrayList<MBCategory>();
+	private final List<WikiPage> _wikiPages = new ArrayList<WikiPage>();
 	@Inject
-	private MBCategoryUADEntityTestHelper _mbCategoryUADEntityTestHelper;
+	private WikiPageUADEntityTestHelper _wikiPageUADEntityTestHelper;
 	@Inject(filter = "model.class.name=" +
-	MBUADConstants.CLASS_NAME_MB_CATEGORY)
+	WikiUADConstants.CLASS_NAME_WIKI_PAGE)
 	private UADAggregator _uadAggregator;
 	@Inject(filter = "model.class.name=" +
-	MBUADConstants.CLASS_NAME_MB_CATEGORY)
-	private UADEntityDisplay _uadEntityDisplay;
+	WikiUADConstants.CLASS_NAME_WIKI_PAGE)
+	private UADDisplay _uadDisplay;
 }

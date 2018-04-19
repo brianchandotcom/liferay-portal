@@ -31,7 +31,7 @@ public class JSPNavigationItemList extends NavigationItemList {
 		request = (HttpServletRequest)pageContext.getRequest();
 	}
 
-	protected String currentURL; 
+	protected String currentURL;
 	protected RenderResponse renderResponse;
 	protected HttpServletRequest request;
 

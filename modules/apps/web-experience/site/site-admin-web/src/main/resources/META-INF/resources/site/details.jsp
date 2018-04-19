@@ -69,6 +69,7 @@ else if (group != null) {
 
 <aui:model-context bean="<%= liveGroup %>" model="<%= Group.class %>" />
 
+<liferay-ui:error exception="<%= DuplicateGroupException.class %>" message="please-enter-a-unique-name" />
 <liferay-ui:error exception="<%= GroupInheritContentException.class %>" message="this-site-cannot-inherit-content-from-its-parent-site" />
 
 <liferay-ui:error exception="<%= GroupKeyException.class %>">

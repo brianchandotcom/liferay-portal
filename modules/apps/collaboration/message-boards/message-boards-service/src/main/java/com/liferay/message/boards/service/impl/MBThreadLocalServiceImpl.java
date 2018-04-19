@@ -427,6 +427,10 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	* @deprecated As of 2.0.0, with no direct replacement
+	*/
+	@Deprecated
 	@Override
 	public List<MBThread> getNoAssetThreads() {
 		return mbThreadFinder.findByNoAssets();

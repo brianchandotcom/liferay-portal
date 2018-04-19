@@ -94,7 +94,9 @@ public class NonSerializableObjectRequestWrapper
 
 	@Override
 	public void setAttribute(String name, Object object) {
-		if (_WEBLOGIC_REQUEST_WRAP_NON_SERIALIZABLE) {
+		if (_WEBLOGIC_REQUEST_WRAP_NON_SERIALIZABLE &&
+			(!(object instanceof NonSerializableObjectHandler))) {
+
 			object = new NonSerializableObjectHandler(object);
 		}
 

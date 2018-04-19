@@ -13,10 +13,6 @@
 		</not>
 	</condition>
 
-	<condition property="replace.portal.data.release.sql">
-		<available file="sql/portal-data-release.sql" />
-	</condition>
-
 	<macrodef name="fetch-portal">
 		<attribute name="fetch.portal.branch.name" />
 		<attribute name="fetch.portal.repository.name" />
@@ -152,6 +148,12 @@
 			/>
 
 			<!-- sql/portal-data-release.sql -->
+
+			<local name="replace.portal.data.release.sql" />
+
+			<condition property="replace.portal.data.release.sql">
+				<available file="sql/portal-data-release.sql" />
+			</condition>
 
 			<replace-regex
 				if:set="replace.portal.data.release.sql"

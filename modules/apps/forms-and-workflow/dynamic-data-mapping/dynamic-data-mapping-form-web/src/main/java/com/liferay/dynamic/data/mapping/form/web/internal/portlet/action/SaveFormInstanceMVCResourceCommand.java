@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONSerializer;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -77,10 +78,14 @@ public class SaveFormInstanceMVCResourceCommand extends BaseMVCResourceCommand {
 
 			response.put("ddmStructureId", formInstance.getStructureId());
 			response.put("formInstanceId", formInstance.getFormInstanceId());
+
+			User user = themeDisplay.getUser();
+
 			response.put(
 				"modifiedDate",
 				formatDate(
-					formInstance.getModifiedDate(), themeDisplay.getLocale()));
+					formInstance.getModifiedDate(), user.getLocale(),
+					user.getTimeZoneId()));
 		}
 		catch (Throwable t) {
 			resourceResponse.setProperty(
@@ -96,14 +101,14 @@ public class SaveFormInstanceMVCResourceCommand extends BaseMVCResourceCommand {
 			resourceResponse, jsonSerializer.serializeDeep(response));
 	}
 
-	protected String formatDate(Date date, Locale locale) {
+	protected String formatDate(Date date, Locale locale, String timezoneId) {
 		DateTimeFormatter dateTimeFormatter =
 			DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
 
 		dateTimeFormatter = dateTimeFormatter.withLocale(locale);
 
 		LocalDateTime localDateTime = LocalDateTime.ofInstant(
-			date.toInstant(), ZoneId.systemDefault());
+			date.toInstant(), ZoneId.of(timezoneId));
 
 		return dateTimeFormatter.format(localDateTime);
 	}

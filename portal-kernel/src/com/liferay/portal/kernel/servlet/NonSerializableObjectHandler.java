@@ -34,13 +34,6 @@ public final class NonSerializableObjectHandler implements Serializable {
 	}
 
 	public NonSerializableObjectHandler(Object value) {
-		while (value instanceof NonSerializableObjectHandler) {
-			NonSerializableObjectHandler nonSerializableObjectHandler =
-				(NonSerializableObjectHandler)value;
-
-			value = nonSerializableObjectHandler.getValue();
-		}
-
 		_value = value;
 	}
 

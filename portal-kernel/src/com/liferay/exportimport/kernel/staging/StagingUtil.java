@@ -22,6 +22,7 @@ import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutRevision;
@@ -52,6 +53,13 @@ import javax.servlet.http.HttpServletRequest;
  */
 @ProviderType
 public class StagingUtil {
+
+	public static <T extends BaseModel> void addEntityToChangesetCollection(
+			T model)
+		throws PortalException {
+
+		_staging.addEntityToChangesetCollection(model);
+	}
 
 	public static String buildRemoteURL(
 		ExportImportConfiguration exportImportConfiguration) {

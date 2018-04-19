@@ -39,11 +39,11 @@ public class PortalAcceptancePullRequestJob extends PortalRepositoryJob {
 	public Set<String> getBatchNames() {
 		Properties portalTestProperties = getPortalTestProperties();
 
-		String testBatchNames = getProperty(
+		String testBatchNames = JenkinsResultsParserUtil.getProperty(
 			portalTestProperties, "test.batch.names[" + _testSuiteName + "]");
 
 		if (testBatchNames == null) {
-			testBatchNames = getProperty(
+			testBatchNames = JenkinsResultsParserUtil.getProperty(
 				portalTestProperties, "test.batch.names");
 		}
 
@@ -77,12 +77,12 @@ public class PortalAcceptancePullRequestJob extends PortalRepositoryJob {
 	public Set<String> getDistTypes() {
 		Properties portalTestProperties = getPortalTestProperties();
 
-		String testBatchDistAppServers = getProperty(
+		String testBatchDistAppServers = JenkinsResultsParserUtil.getProperty(
 			portalTestProperties,
 			"test.batch.dist.app.servers[" + _testSuiteName + "]");
 
 		if (testBatchDistAppServers == null) {
-			testBatchDistAppServers = getProperty(
+			testBatchDistAppServers = JenkinsResultsParserUtil.getProperty(
 				portalTestProperties, "test.batch.dist.app.servers");
 		}
 
@@ -104,7 +104,7 @@ public class PortalAcceptancePullRequestJob extends PortalRepositoryJob {
 
 		for (String propertyName : propertyNames) {
 			if (portalTestProperties.containsKey(propertyName)) {
-				String propertyValue = getProperty(
+				String propertyValue = JenkinsResultsParserUtil.getProperty(
 					portalTestProperties, propertyName);
 
 				if ((propertyValue != null) && !propertyValue.isEmpty()) {

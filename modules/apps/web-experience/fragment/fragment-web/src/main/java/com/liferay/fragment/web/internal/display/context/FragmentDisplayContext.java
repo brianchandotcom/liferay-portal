@@ -17,7 +17,9 @@ package com.liferay.fragment.web.internal.display.context;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.service.FragmentCollectionServiceUtil;
+import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.fragment.web.util.FragmentPortletUtil;
@@ -25,7 +27,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -58,7 +59,7 @@ public class FragmentDisplayContext {
 		_request = request;
 	}
 
-	public String getCssContent() throws PortalException {
+	public String getCssContent() {
 		if (Validator.isNotNull(_cssContent)) {
 			return _cssContent;
 		}
@@ -98,7 +99,7 @@ public class FragmentDisplayContext {
 		return _displayStyle;
 	}
 
-	public String getEditFragmentCollectionRedirect() throws PortalException {
+	public String getEditFragmentCollectionRedirect() {
 		String redirect = ParamUtil.getString(_request, "redirect");
 
 		if (Validator.isNull(redirect)) {
@@ -110,7 +111,7 @@ public class FragmentDisplayContext {
 		return redirect;
 	}
 
-	public String getEditFragmentEntryRedirect() throws PortalException {
+	public String getEditFragmentEntryRedirect() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
 		portletURL.setParameter(
@@ -125,13 +126,13 @@ public class FragmentDisplayContext {
 		return portletURL.toString();
 	}
 
-	public FragmentCollection getFragmentCollection() throws PortalException {
+	public FragmentCollection getFragmentCollection() {
 		if (_fragmentCollection != null) {
 			return _fragmentCollection;
 		}
 
 		_fragmentCollection =
-			FragmentCollectionServiceUtil.fetchFragmentCollection(
+			FragmentCollectionLocalServiceUtil.fetchFragmentCollection(
 				getFragmentCollectionId());
 
 		return _fragmentCollection;
@@ -163,7 +164,7 @@ public class FragmentDisplayContext {
 		};
 	}
 
-	public String getFragmentCollectionsRedirect() throws PortalException {
+	public String getFragmentCollectionsRedirect() {
 		PortletURL backURL = _renderResponse.createRenderURL();
 
 		backURL.setParameter("mvcRenderCommandName", "/fragment/view");
@@ -171,9 +172,7 @@ public class FragmentDisplayContext {
 		return backURL.toString();
 	}
 
-	public SearchContainer getFragmentCollectionsSearchContainer()
-		throws PortalException {
-
+	public SearchContainer getFragmentCollectionsSearchContainer() {
 		if (_fragmentCollectionsSearchContainer != null) {
 			return _fragmentCollectionsSearchContainer;
 		}
@@ -241,7 +240,7 @@ public class FragmentDisplayContext {
 		return _fragmentCollectionsSearchContainer;
 	}
 
-	public String getFragmentCollectionTitle() throws PortalException {
+	public String getFragmentCollectionTitle() {
 		FragmentCollection fragmentCollection = getFragmentCollection();
 
 		if (fragmentCollection == null) {
@@ -251,9 +250,7 @@ public class FragmentDisplayContext {
 		return fragmentCollection.getName();
 	}
 
-	public SearchContainer getFragmentEntriesSearchContainer()
-		throws PortalException {
-
+	public SearchContainer getFragmentEntriesSearchContainer() {
 		if (_fragmentEntriesSearchContainer != null) {
 			return _fragmentEntriesSearchContainer;
 		}
@@ -313,12 +310,12 @@ public class FragmentDisplayContext {
 		return _fragmentEntriesSearchContainer;
 	}
 
-	public FragmentEntry getFragmentEntry() throws PortalException {
+	public FragmentEntry getFragmentEntry() {
 		if (_fragmentEntry != null) {
 			return _fragmentEntry;
 		}
 
-		_fragmentEntry = FragmentEntryServiceUtil.fetchFragmentEntry(
+		_fragmentEntry = FragmentEntryLocalServiceUtil.fetchFragmentEntry(
 			getFragmentEntryId());
 
 		return _fragmentEntry;
@@ -334,7 +331,7 @@ public class FragmentDisplayContext {
 		return _fragmentEntryId;
 	}
 
-	public String getFragmentEntryTitle() throws PortalException {
+	public String getFragmentEntryTitle() {
 		FragmentEntry fragmentEntry = getFragmentEntry();
 
 		if (fragmentEntry == null) {
@@ -344,7 +341,7 @@ public class FragmentDisplayContext {
 		return fragmentEntry.getName();
 	}
 
-	public String getHtmlContent() throws PortalException {
+	public String getHtmlContent() {
 		if (Validator.isNotNull(_htmlContent)) {
 			return _htmlContent;
 		}
@@ -370,7 +367,7 @@ public class FragmentDisplayContext {
 		return _htmlContent;
 	}
 
-	public String getJsContent() throws PortalException {
+	public String getJsContent() {
 		if (Validator.isNotNull(_jsContent)) {
 			return _jsContent;
 		}
@@ -421,9 +418,7 @@ public class FragmentDisplayContext {
 		return new String[] {"create-date", "name"};
 	}
 
-	public boolean isDisabledFragmentCollectionsManagementBar()
-		throws PortalException {
-
+	public boolean isDisabledFragmentCollectionsManagementBar() {
 		if (_hasFragmentCollectionsResults()) {
 			return false;
 		}
@@ -435,9 +430,7 @@ public class FragmentDisplayContext {
 		return true;
 	}
 
-	public boolean isDisabledFragmentEntriesManagementBar()
-		throws PortalException {
-
+	public boolean isDisabledFragmentEntriesManagementBar() {
 		if (_hasFragmentEntriesResults()) {
 			return false;
 		}
@@ -471,7 +464,7 @@ public class FragmentDisplayContext {
 		return false;
 	}
 
-	public boolean isShowFragmentCollectionsSearch() throws PortalException {
+	public boolean isShowFragmentCollectionsSearch() {
 		if (_hasFragmentCollectionsResults()) {
 			return true;
 		}
@@ -483,7 +476,7 @@ public class FragmentDisplayContext {
 		return false;
 	}
 
-	public boolean isShowFragmentEntriesSearch() throws PortalException {
+	public boolean isShowFragmentEntriesSearch() {
 		if (_hasFragmentEntriesResults()) {
 			return true;
 		}
@@ -495,7 +488,7 @@ public class FragmentDisplayContext {
 		return false;
 	}
 
-	private boolean _hasFragmentCollectionsResults() throws PortalException {
+	private boolean _hasFragmentCollectionsResults() {
 		SearchContainer searchContainer =
 			getFragmentCollectionsSearchContainer();
 
@@ -506,7 +499,7 @@ public class FragmentDisplayContext {
 		return false;
 	}
 
-	private boolean _hasFragmentEntriesResults() throws PortalException {
+	private boolean _hasFragmentEntriesResults() {
 		SearchContainer searchContainer = getFragmentEntriesSearchContainer();
 
 		if (searchContainer.getTotal() > 0) {

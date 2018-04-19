@@ -6,6 +6,7 @@ dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0-20180326.173807-1"
 	testIntegrationCompile project(":private:apps:commerce:commerce-product-api")
 	testIntegrationCompile project(":private:apps:commerce:commerce-product-test-util")
+	testIntegrationCompile project(":private:apps:commerce:commerce-product-type-simple")
 }
 
 poshiRunnerResources {

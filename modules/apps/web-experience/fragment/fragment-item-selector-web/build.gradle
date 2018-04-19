@@ -11,7 +11,9 @@ dependencies {
 	compileOnly project(":apps:collaboration:item-selector:item-selector-api")
 	compileOnly project(":apps:collaboration:item-selector:item-selector-criteria-api")
 	compileOnly project(":apps:foundation:frontend-taglib:frontend-taglib")
+	compileOnly project(":apps:foundation:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:web-experience:fragment:fragment-api")
 	compileOnly project(":apps:web-experience:fragment:fragment-item-selector-api")
 	compileOnly project(":core:petra:petra-lang")
+	compileOnly project(":core:petra:petra-string")
 }

@@ -24,7 +24,7 @@ public class SecureRandomNumberGeneration {
 	public void method() {
 		SecureRandom random = new SecureRandom();
 
-		int i = random.nextInt();
+		random.nextInt();
 	}
 
 }

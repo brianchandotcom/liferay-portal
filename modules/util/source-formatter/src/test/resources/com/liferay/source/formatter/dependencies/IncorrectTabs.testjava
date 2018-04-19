@@ -26,6 +26,8 @@ public class IncorrectTabs {
 			"Hello" + StringUtil.trim("Hello World Hello World Hello World" +
 				StringPool.Period);
 
+		test = null;
+
 		StringUtil.merge(
 			new String[] {"One", "Two", "Three", "Four", "Five", "Six", "Seven",
 			"Eight"
@@ -35,6 +37,8 @@ public class IncorrectTabs {
 
 		for (String testStringWithAVeryVeryVeryVeryVeryVeryVeryLongName :
 			testStringArray) {
+
+			testStringWithAVeryVeryVeryVeryVeryVeryVeryLongName = null;
 
 			continue;
 		}

@@ -39,6 +39,8 @@ public class LPS28266 {
 
 			while (rs.next()) {
 				long count = rs.getLong(1);
+
+				count = 0;
 			}
 		}
 		finally {

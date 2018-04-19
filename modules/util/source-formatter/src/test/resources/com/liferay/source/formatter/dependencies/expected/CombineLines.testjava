@@ -91,19 +91,29 @@ public class CombineLines extends SuperClass {
 	public void method3() throws Exception {
 		String test1 = getString("test1");
 
+		test1 = null;
+
 		String test2 = getString(
 			"test1", "test2", "test3", "test4", "test5", "test6");
+
+		test2 = null;
 
 		String test3 = getString(
 			"test1", "test2", "test3", "test4", "test5", "test6", "test7");
 
+		test3 = null;
+
 		String test4 =
 			getString("test1", "test2", "test3") + getString("test4", "test5");
+
+		test4 = null;
 
 		String test5 = getString(
 			"test1", "test2", "test3", "test4", "test5", "test6", "test7",
 			"test8", "test9", "test10", "test11", "test12", "test13", "test14",
 			"test15", "test16", "test17", "test18", "test19");
+
+		test5 = null;
 
 		List<String> testList = new ArrayList<>();
 
@@ -112,6 +122,8 @@ public class CombineLines extends SuperClass {
 
 		List<String> listWithALongNameSoThatItWillNotAllFitOnOneLine =
 			new ArrayList<>();
+
+		listWithALongNameSoThatItWillNotAllFitOnOneLine = null;
 	}
 
 	public String method4() {
@@ -147,8 +159,12 @@ public class CombineLines extends SuperClass {
 			"Hello WorldHello World Hello" +
 				"HelloWorldHelloWorldHelloWorldHelloWorld");
 
+		b2 = false;
+
 		boolean b3 = StringUtil.merge(
 			new String[] {"One", "Two"}, "Hello World");
+
+		b3 = false;
 	}
 
 	public void method8(String s) {

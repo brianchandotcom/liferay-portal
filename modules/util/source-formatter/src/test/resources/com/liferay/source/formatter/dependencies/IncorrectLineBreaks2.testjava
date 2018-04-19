@@ -60,7 +60,7 @@ public class IncorrectLineBreaks2 {
 
 		String stringWithAMediumLongVariableName = "Hello World";
 
-		int i = StringUtil.indexOfAny(
+		StringUtil.indexOfAny(
 			stringWithAMediumLongVariableName, stringList
 		);
 	}

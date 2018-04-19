@@ -386,9 +386,14 @@ public class CPDefinitionOptionRelLocalServiceImpl
 				if (cpDefinitionOptionRelId ==
 						cpDefinitionOptionRel.getCPDefinitionOptionRelId()) {
 
+					long userId = PrincipalThreadLocal.getUserId();
+
+					if (userId <= 0) {
+						userId = cpInstance.getUserId();
+					}
+
 					cpInstanceLocalService.updateStatus(
-						PrincipalThreadLocal.getUserId(),
-						cpInstance.getCPInstanceId(),
+						userId, cpInstance.getCPInstanceId(),
 						WorkflowConstants.STATUS_INACTIVE, new ServiceContext(),
 						new HashMap<String, Serializable>());
 				}

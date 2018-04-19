@@ -215,15 +215,6 @@ public class MBThreadFinderImpl
 		long groupId, long userId, Date lastPostDate,
 		QueryDefinition<MBThread> queryDefinition) {
 
-		return countByG_U_LPD_A(
-			groupId, userId, lastPostDate, true, queryDefinition);
-	}
-
-	@Override
-	public int countByG_U_LPD_A(
-		long groupId, long userId, Date lastPostDate, boolean includeAnonymous,
-		QueryDefinition<MBThread> queryDefinition) {
-
 		Session session = null;
 
 		try {
@@ -238,11 +229,6 @@ public class MBThreadFinderImpl
 			}
 
 			sql = updateSQL(sql, queryDefinition);
-
-			if (!includeAnonymous) {
-				sql = CustomSQLUtil.appendCriteria(
-					sql, "AND (MBMessage.anonymous = [$FALSE$])");
-			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -664,15 +650,6 @@ public class MBThreadFinderImpl
 		long groupId, long userId, Date lastPostDate,
 		QueryDefinition<MBThread> queryDefinition) {
 
-		return findByG_U_LPD_A(
-			groupId, userId, lastPostDate, true, queryDefinition);
-	}
-
-	@Override
-	public List<MBThread> findByG_U_LPD_A(
-		long groupId, long userId, Date lastPostDate, boolean includeAnonymous,
-		QueryDefinition<MBThread> queryDefinition) {
-
 		Session session = null;
 
 		try {
@@ -687,11 +664,6 @@ public class MBThreadFinderImpl
 			}
 
 			sql = updateSQL(sql, queryDefinition);
-
-			if (!includeAnonymous) {
-				sql = CustomSQLUtil.appendCriteria(
-					sql, "AND (MBMessage.anonymous = [$FALSE$])");
-			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 

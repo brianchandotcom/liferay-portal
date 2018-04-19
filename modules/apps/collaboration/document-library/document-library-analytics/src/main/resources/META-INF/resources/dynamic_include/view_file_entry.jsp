@@ -29,7 +29,7 @@ FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_F
 <aui:script>
 	if (window.Analytics) {
 		Analytics.send(
-			'PREVIEW',
+			'previewed',
 			'DocumentLibrary',
 			{
 				fileEntryId: '<%= fileEntry.getFileEntryId() %>',

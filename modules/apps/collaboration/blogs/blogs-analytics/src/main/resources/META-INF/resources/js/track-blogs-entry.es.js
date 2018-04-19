@@ -15,7 +15,7 @@ export default (entryId, blogsEntryBodyId) => {
 		);
 
 		Analytics.send(
-			'VISITS',
+			'viewed',
 			applicationId,
 			{
 				entryId
@@ -45,7 +45,7 @@ export default (entryId, blogsEntryBodyId) => {
 
 			if (depth >= 0 && depth <= 100) {
 				Analytics.send(
-					'DEPTH',
+					'reachedDepth',
 					applicationId,
 					{
 						depth: depth,
@@ -81,7 +81,7 @@ export default (entryId, blogsEntryBodyId) => {
 				payload.src = element.src;
 			}
 
-			Analytics.send('CLICK', applicationId, payload);
+			Analytics.send('clicked', applicationId, payload);
 		};
 
 		entry.addEventListener('click', onClick);

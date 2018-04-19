@@ -39,7 +39,7 @@
 
 				if (match) {
 					Analytics.send(
-						'DOWNLOAD',
+						'downloaded',
 						'DocumentLibrary',
 						{
 							groupId: match[1],

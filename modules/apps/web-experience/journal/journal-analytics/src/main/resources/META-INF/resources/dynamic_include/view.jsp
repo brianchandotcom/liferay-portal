@@ -25,7 +25,7 @@ String articleId = (String)request.getAttribute(JournalWebKeys.JOURNAL_ARTICLE_I
 		function() {
 			if (window.Analytics) {
 				Analytics.send(
-					'VIEW',
+					'viewed',
 					'Journal',
 					{
 						articleId: '<%= articleId %>'

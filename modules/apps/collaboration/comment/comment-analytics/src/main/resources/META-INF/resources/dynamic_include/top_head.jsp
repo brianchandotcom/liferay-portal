@@ -27,7 +27,7 @@
 	var onMessagePosted = function(event) {
 		if (window.Analytics) {
 			Analytics.send(
-				'POST',
+				'posted',
 				'Comment',
 				{
 					className: event.className,

@@ -20,7 +20,7 @@
 	var onShare = function(data) {
 		if (window.Analytics) {
 			Analytics.send(
-				'SHARE',
+				'shared',
 				'SocialBookmarks',
 				{
 					className: data.className,

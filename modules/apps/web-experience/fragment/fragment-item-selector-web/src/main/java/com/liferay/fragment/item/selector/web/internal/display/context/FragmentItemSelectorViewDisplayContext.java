@@ -105,29 +105,6 @@ public class FragmentItemSelectorViewDisplayContext {
 		};
 	}
 
-	public FragmentCollection getFragmentCollection() throws PortalException {
-		if (_fragmentCollection != null) {
-			return _fragmentCollection;
-		}
-
-		_fragmentCollection =
-			FragmentCollectionServiceUtil.fetchFragmentCollection(
-				getFragmentCollectionId());
-
-		return _fragmentCollection;
-	}
-
-	public long getFragmentCollectionId() {
-		if (Validator.isNotNull(_fragmentCollectionId)) {
-			return _fragmentCollectionId;
-		}
-
-		_fragmentCollectionId = ParamUtil.getLong(
-			_request, "fragmentCollectionId");
-
-		return _fragmentCollectionId;
-	}
-
 	public String getFragmentCollectionsRedirect() {
 		PortletURL backURL = getPortletURL();
 
@@ -149,15 +126,15 @@ public class FragmentItemSelectorViewDisplayContext {
 				_portletRequest, getPortletURL(), null,
 				"there-are-no-collections");
 
-		if (isSearch()) {
+		if (_isSearch()) {
 			fragmentCollectionsSearchContainer.setSearch(true);
 		}
 
 		OrderByComparator<FragmentCollection> orderByComparator =
 			_getFragmentCollectionOrderByComparator(
-				getOrderByCol(), getOrderByType());
+				_getOrderByCol(), getOrderByType());
 
-		fragmentCollectionsSearchContainer.setOrderByCol(getOrderByCol());
+		fragmentCollectionsSearchContainer.setOrderByCol(_getOrderByCol());
 		fragmentCollectionsSearchContainer.setOrderByComparator(
 			orderByComparator);
 		fragmentCollectionsSearchContainer.setOrderByType(getOrderByType());
@@ -167,17 +144,17 @@ public class FragmentItemSelectorViewDisplayContext {
 		List<FragmentCollection> fragmentCollections = null;
 		int fragmentCollectionsCount = 0;
 
-		if (isSearch()) {
+		if (_isSearch()) {
 			fragmentCollections =
 				FragmentCollectionServiceUtil.getFragmentCollections(
-					themeDisplay.getScopeGroupId(), getKeywords(),
+					themeDisplay.getScopeGroupId(), _getKeywords(),
 					fragmentCollectionsSearchContainer.getStart(),
 					fragmentCollectionsSearchContainer.getEnd(),
 					orderByComparator);
 
 			fragmentCollectionsCount =
 				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
-					themeDisplay.getScopeGroupId(), getKeywords());
+					themeDisplay.getScopeGroupId(), _getKeywords());
 		}
 		else {
 			fragmentCollections =
@@ -209,7 +186,7 @@ public class FragmentItemSelectorViewDisplayContext {
 	}
 
 	public String getFragmentCollectionTitle() throws PortalException {
-		FragmentCollection fragmentCollection = getFragmentCollection();
+		FragmentCollection fragmentCollection = _getFragmentCollection();
 
 		return fragmentCollection.getName();
 	}
@@ -225,41 +202,41 @@ public class FragmentItemSelectorViewDisplayContext {
 		SearchContainer fragmentEntriesSearchContainer = new SearchContainer(
 			_portletRequest, getPortletURL(), null, "there-are-no-fragments");
 
-		if (isSearch()) {
+		if (_isSearch()) {
 			fragmentEntriesSearchContainer.setSearch(true);
 		}
 
 		OrderByComparator<FragmentEntry> orderByComparator =
 			_getFragmentEntryOrderByComparator(
-				getOrderByCol(), getOrderByType());
+				_getOrderByCol(), getOrderByType());
 
-		fragmentEntriesSearchContainer.setOrderByCol(getOrderByCol());
+		fragmentEntriesSearchContainer.setOrderByCol(_getOrderByCol());
 		fragmentEntriesSearchContainer.setOrderByComparator(orderByComparator);
 		fragmentEntriesSearchContainer.setOrderByType(getOrderByType());
 
 		List<FragmentEntry> fragmentEntries = null;
 		int fragmentEntriesCount = 0;
 
-		if (isSearch()) {
+		if (_isSearch()) {
 			fragmentEntries = FragmentEntryServiceUtil.getFragmentEntries(
-				themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
-				getKeywords(), fragmentEntriesSearchContainer.getStart(),
+				themeDisplay.getScopeGroupId(), _getFragmentCollectionId(),
+				_getKeywords(), fragmentEntriesSearchContainer.getStart(),
 				fragmentEntriesSearchContainer.getEnd(), orderByComparator);
 
 			fragmentEntriesCount =
 				FragmentEntryServiceUtil.getFragmentCollectionsCount(
-					themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
-					getKeywords());
+					themeDisplay.getScopeGroupId(), _getFragmentCollectionId(),
+					_getKeywords());
 		}
 		else {
 			fragmentEntries = FragmentEntryServiceUtil.getFragmentEntries(
-				themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
+				themeDisplay.getScopeGroupId(), _getFragmentCollectionId(),
 				fragmentEntriesSearchContainer.getStart(),
 				fragmentEntriesSearchContainer.getEnd(), orderByComparator);
 
 			fragmentEntriesCount =
 				FragmentEntryServiceUtil.getFragmentCollectionsCount(
-					themeDisplay.getScopeGroupId(), getFragmentCollectionId());
+					themeDisplay.getScopeGroupId(), _getFragmentCollectionId());
 		}
 
 		fragmentEntriesSearchContainer.setResults(fragmentEntries);
@@ -279,27 +256,6 @@ public class FragmentItemSelectorViewDisplayContext {
 
 	public String getItemSelectedEventName() {
 		return _itemSelectedEventName;
-	}
-
-	public String getKeywords() {
-		if (_keywords != null) {
-			return _keywords;
-		}
-
-		_keywords = ParamUtil.getString(_request, "keywords");
-
-		return _keywords;
-	}
-
-	public String getOrderByCol() {
-		if (Validator.isNotNull(_orderByCol)) {
-			return _orderByCol;
-		}
-
-		_orderByCol = ParamUtil.getString(
-			_request, "orderByCol", "create-date");
-
-		return _orderByCol;
 	}
 
 	public String getOrderByType() {
@@ -326,7 +282,7 @@ public class FragmentItemSelectorViewDisplayContext {
 			portletURL = liferayPortletResponse.createRenderURL();
 		}
 
-		long fragmentCollectionId = getFragmentCollectionId();
+		long fragmentCollectionId = _getFragmentCollectionId();
 
 		if (fragmentCollectionId > 0) {
 			portletURL.setParameter(
@@ -339,13 +295,13 @@ public class FragmentItemSelectorViewDisplayContext {
 			portletURL.setParameter("displayStyle", displayStyle);
 		}
 
-		String keywords = getKeywords();
+		String keywords = _getKeywords();
 
 		if (Validator.isNotNull(keywords)) {
 			portletURL.setParameter("keywords", keywords);
 		}
 
-		String orderByCol = getOrderByCol();
+		String orderByCol = _getOrderByCol();
 
 		if (Validator.isNotNull(orderByCol)) {
 			portletURL.setParameter("orderByCol", orderByCol);
@@ -387,10 +343,6 @@ public class FragmentItemSelectorViewDisplayContext {
 		};
 	}
 
-	public boolean isSearch() {
-		return _search;
-	}
-
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
 		return new DropdownItemList(_request) {
 			{
@@ -402,6 +354,29 @@ public class FragmentItemSelectorViewDisplayContext {
 					});
 			}
 		};
+	}
+
+	private FragmentCollection _getFragmentCollection() throws PortalException {
+		if (_fragmentCollection != null) {
+			return _fragmentCollection;
+		}
+
+		_fragmentCollection =
+			FragmentCollectionServiceUtil.fetchFragmentCollection(
+				_getFragmentCollectionId());
+
+		return _fragmentCollection;
+	}
+
+	private long _getFragmentCollectionId() {
+		if (Validator.isNotNull(_fragmentCollectionId)) {
+			return _fragmentCollectionId;
+		}
+
+		_fragmentCollectionId = ParamUtil.getLong(
+			_request, "fragmentCollectionId");
+
+		return _fragmentCollectionId;
 	}
 
 	private OrderByComparator<FragmentCollection>
@@ -450,13 +425,34 @@ public class FragmentItemSelectorViewDisplayContext {
 		return orderByComparator;
 	}
 
+	private String _getKeywords() {
+		if (_keywords != null) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(_request, "keywords");
+
+		return _keywords;
+	}
+
+	private String _getOrderByCol() {
+		if (Validator.isNotNull(_orderByCol)) {
+			return _orderByCol;
+		}
+
+		_orderByCol = ParamUtil.getString(
+			_request, "orderByCol", "create-date");
+
+		return _orderByCol;
+	}
+
 	private List<DropdownItem> _getOrderByDropdownItems() {
 		return new DropdownItemList(_request) {
 			{
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(
-							Objects.equals(getOrderByCol(), "name"));
+							Objects.equals(_getOrderByCol(), "name"));
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", "name");
 						dropdownItem.setLabel("name");
@@ -465,13 +461,17 @@ public class FragmentItemSelectorViewDisplayContext {
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(
-							Objects.equals(getOrderByCol(), "create-date"));
+							Objects.equals(_getOrderByCol(), "create-date"));
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", "create-date");
 						dropdownItem.setLabel("create-date");
 					});
 			}
 		};
+	}
+
+	private boolean _isSearch() {
+		return _search;
 	}
 
 	private String _displayStyle;

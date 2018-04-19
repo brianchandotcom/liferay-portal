@@ -90,7 +90,7 @@
 </tr>
 <tr>
 	<td>DELETE</td>
-	<td>//*[contains(@data-qa-id,'deleteButton')]</td>
+	<td>//*[*[name()='svg'][contains(@class,'icon-trash')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -130,7 +130,7 @@
 </tr>
 <tr>
 	<td>EXPIRE</td>
-	<td>//*[@data-qa-id='expireButton'] | //a[contains(@id,'expireArticle') or contains(@href,'editEntry')]/span[contains(@class,'icon-time')]</td>
+	<td>//*[*[name()='svg'][contains(@class,'icon-time')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -185,7 +185,7 @@
 </tr>
 <tr>
 	<td>MOVE</td>
-	<td>//*[@data-qa-id='moveButton'] | //a[contains(@href,'editEntry')]/span[contains(@class,'icon-move')]</td>
+	<td>//*[*[name()='svg'][contains(@class,'icon-change')]]</td>
 	<td></td>
 </tr>
 <tr>

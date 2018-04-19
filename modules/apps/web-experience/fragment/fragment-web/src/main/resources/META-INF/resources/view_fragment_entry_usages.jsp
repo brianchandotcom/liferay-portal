@@ -156,7 +156,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 							<liferay-ui:search-container-column-text
 								name="type"
 								translate="<%= true %>"
-								value='<%= (fragmentEntryLink.getClassNameId() == PortalUtil.getClassNameId(Layout.class)) ? "page" : "page-template" %>'
+								value="<%= fragmentEntryLinkDisplayContext.getFragmentEntryLinkTypeLabel(fragmentEntryLink) %>"
 							/>
 
 							<liferay-ui:search-container-column-date

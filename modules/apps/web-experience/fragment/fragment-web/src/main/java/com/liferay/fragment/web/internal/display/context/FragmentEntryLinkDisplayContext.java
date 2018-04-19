@@ -160,6 +160,31 @@ public class FragmentEntryLinkDisplayContext {
 		}
 	}
 
+	public String getFragmentEntryLinkTypeLabel(
+			FragmentEntryLink fragmentEntryLink)
+		throws PortalException {
+
+		long classNameId = fragmentEntryLink.getClassNameId();
+
+		if (classNameId == PortalUtil.getClassNameId(Layout.class)) {
+			return "page";
+		}
+		else {
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				LayoutPageTemplateEntryLocalServiceUtil.
+					getLayoutPageTemplateEntry(fragmentEntryLink.getClassPK());
+
+			if (layoutPageTemplateEntry.getType() ==
+					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
+
+				return "display-page";
+			}
+			else {
+				return "page-template";
+			}
+		}
+	}
+
 	public String getKeywords() {
 		if (Validator.isNotNull(_keywords)) {
 			return _keywords;

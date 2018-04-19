@@ -3395,8 +3395,6 @@ public class SocialActivityAchievementPersistenceImpl
 	@Override
 	protected SocialActivityAchievement removeImpl(
 		SocialActivityAchievement socialActivityAchievement) {
-		socialActivityAchievement = toUnwrappedModel(socialActivityAchievement);
-
 		Session session = null;
 
 		try {
@@ -3428,8 +3426,6 @@ public class SocialActivityAchievementPersistenceImpl
 	@Override
 	public SocialActivityAchievement updateImpl(
 		SocialActivityAchievement socialActivityAchievement) {
-		socialActivityAchievement = toUnwrappedModel(socialActivityAchievement);
-
 		boolean isNew = socialActivityAchievement.isNew();
 
 		SocialActivityAchievementModelImpl socialActivityAchievementModelImpl = (SocialActivityAchievementModelImpl)socialActivityAchievement;
@@ -3630,28 +3626,6 @@ public class SocialActivityAchievementPersistenceImpl
 		socialActivityAchievement.resetOriginalValues();
 
 		return socialActivityAchievement;
-	}
-
-	protected SocialActivityAchievement toUnwrappedModel(
-		SocialActivityAchievement socialActivityAchievement) {
-		if (socialActivityAchievement instanceof SocialActivityAchievementImpl) {
-			return socialActivityAchievement;
-		}
-
-		SocialActivityAchievementImpl socialActivityAchievementImpl = new SocialActivityAchievementImpl();
-
-		socialActivityAchievementImpl.setNew(socialActivityAchievement.isNew());
-		socialActivityAchievementImpl.setPrimaryKey(socialActivityAchievement.getPrimaryKey());
-
-		socialActivityAchievementImpl.setActivityAchievementId(socialActivityAchievement.getActivityAchievementId());
-		socialActivityAchievementImpl.setGroupId(socialActivityAchievement.getGroupId());
-		socialActivityAchievementImpl.setCompanyId(socialActivityAchievement.getCompanyId());
-		socialActivityAchievementImpl.setUserId(socialActivityAchievement.getUserId());
-		socialActivityAchievementImpl.setCreateDate(socialActivityAchievement.getCreateDate());
-		socialActivityAchievementImpl.setName(socialActivityAchievement.getName());
-		socialActivityAchievementImpl.setFirstInGroup(socialActivityAchievement.isFirstInGroup());
-
-		return socialActivityAchievementImpl;
 	}
 
 	/**

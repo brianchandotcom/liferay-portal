@@ -2862,8 +2862,6 @@ public class UserGroupGroupRolePersistenceImpl extends BasePersistenceImpl<UserG
 	@Override
 	protected UserGroupGroupRole removeImpl(
 		UserGroupGroupRole userGroupGroupRole) {
-		userGroupGroupRole = toUnwrappedModel(userGroupGroupRole);
-
 		Session session = null;
 
 		try {
@@ -2894,8 +2892,6 @@ public class UserGroupGroupRolePersistenceImpl extends BasePersistenceImpl<UserG
 
 	@Override
 	public UserGroupGroupRole updateImpl(UserGroupGroupRole userGroupGroupRole) {
-		userGroupGroupRole = toUnwrappedModel(userGroupGroupRole);
-
 		boolean isNew = userGroupGroupRole.isNew();
 
 		UserGroupGroupRoleModelImpl userGroupGroupRoleModelImpl = (UserGroupGroupRoleModelImpl)userGroupGroupRole;
@@ -3073,26 +3069,6 @@ public class UserGroupGroupRolePersistenceImpl extends BasePersistenceImpl<UserG
 		userGroupGroupRole.resetOriginalValues();
 
 		return userGroupGroupRole;
-	}
-
-	protected UserGroupGroupRole toUnwrappedModel(
-		UserGroupGroupRole userGroupGroupRole) {
-		if (userGroupGroupRole instanceof UserGroupGroupRoleImpl) {
-			return userGroupGroupRole;
-		}
-
-		UserGroupGroupRoleImpl userGroupGroupRoleImpl = new UserGroupGroupRoleImpl();
-
-		userGroupGroupRoleImpl.setNew(userGroupGroupRole.isNew());
-		userGroupGroupRoleImpl.setPrimaryKey(userGroupGroupRole.getPrimaryKey());
-
-		userGroupGroupRoleImpl.setMvccVersion(userGroupGroupRole.getMvccVersion());
-		userGroupGroupRoleImpl.setUserGroupId(userGroupGroupRole.getUserGroupId());
-		userGroupGroupRoleImpl.setGroupId(userGroupGroupRole.getGroupId());
-		userGroupGroupRoleImpl.setRoleId(userGroupGroupRole.getRoleId());
-		userGroupGroupRoleImpl.setCompanyId(userGroupGroupRole.getCompanyId());
-
-		return userGroupGroupRoleImpl;
 	}
 
 	/**

@@ -1076,8 +1076,6 @@ public class JournalArticleLocalizationPersistenceImpl
 	@Override
 	protected JournalArticleLocalization removeImpl(
 		JournalArticleLocalization journalArticleLocalization) {
-		journalArticleLocalization = toUnwrappedModel(journalArticleLocalization);
-
 		Session session = null;
 
 		try {
@@ -1109,8 +1107,6 @@ public class JournalArticleLocalizationPersistenceImpl
 	@Override
 	public JournalArticleLocalization updateImpl(
 		JournalArticleLocalization journalArticleLocalization) {
-		journalArticleLocalization = toUnwrappedModel(journalArticleLocalization);
-
 		boolean isNew = journalArticleLocalization.isNew();
 
 		JournalArticleLocalizationModelImpl journalArticleLocalizationModelImpl = (JournalArticleLocalizationModelImpl)journalArticleLocalization;
@@ -1188,27 +1184,6 @@ public class JournalArticleLocalizationPersistenceImpl
 		journalArticleLocalization.resetOriginalValues();
 
 		return journalArticleLocalization;
-	}
-
-	protected JournalArticleLocalization toUnwrappedModel(
-		JournalArticleLocalization journalArticleLocalization) {
-		if (journalArticleLocalization instanceof JournalArticleLocalizationImpl) {
-			return journalArticleLocalization;
-		}
-
-		JournalArticleLocalizationImpl journalArticleLocalizationImpl = new JournalArticleLocalizationImpl();
-
-		journalArticleLocalizationImpl.setNew(journalArticleLocalization.isNew());
-		journalArticleLocalizationImpl.setPrimaryKey(journalArticleLocalization.getPrimaryKey());
-
-		journalArticleLocalizationImpl.setArticleLocalizationId(journalArticleLocalization.getArticleLocalizationId());
-		journalArticleLocalizationImpl.setCompanyId(journalArticleLocalization.getCompanyId());
-		journalArticleLocalizationImpl.setArticlePK(journalArticleLocalization.getArticlePK());
-		journalArticleLocalizationImpl.setTitle(journalArticleLocalization.getTitle());
-		journalArticleLocalizationImpl.setDescription(journalArticleLocalization.getDescription());
-		journalArticleLocalizationImpl.setLanguageId(journalArticleLocalization.getLanguageId());
-
-		return journalArticleLocalizationImpl;
 	}
 
 	/**

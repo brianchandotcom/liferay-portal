@@ -4296,8 +4296,6 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 
 	@Override
 	protected UserGroup removeImpl(UserGroup userGroup) {
-		userGroup = toUnwrappedModel(userGroup);
-
 		userGroupToGroupTableMapper.deleteLeftPrimaryKeyTableMappings(userGroup.getPrimaryKey());
 
 		userGroupToTeamTableMapper.deleteLeftPrimaryKeyTableMappings(userGroup.getPrimaryKey());
@@ -4334,8 +4332,6 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 
 	@Override
 	public UserGroup updateImpl(UserGroup userGroup) {
-		userGroup = toUnwrappedModel(userGroup);
-
 		boolean isNew = userGroup.isNew();
 
 		UserGroupModelImpl userGroupModelImpl = (UserGroupModelImpl)userGroup;
@@ -4518,32 +4514,6 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		userGroup.resetOriginalValues();
 
 		return userGroup;
-	}
-
-	protected UserGroup toUnwrappedModel(UserGroup userGroup) {
-		if (userGroup instanceof UserGroupImpl) {
-			return userGroup;
-		}
-
-		UserGroupImpl userGroupImpl = new UserGroupImpl();
-
-		userGroupImpl.setNew(userGroup.isNew());
-		userGroupImpl.setPrimaryKey(userGroup.getPrimaryKey());
-
-		userGroupImpl.setMvccVersion(userGroup.getMvccVersion());
-		userGroupImpl.setUuid(userGroup.getUuid());
-		userGroupImpl.setUserGroupId(userGroup.getUserGroupId());
-		userGroupImpl.setCompanyId(userGroup.getCompanyId());
-		userGroupImpl.setUserId(userGroup.getUserId());
-		userGroupImpl.setUserName(userGroup.getUserName());
-		userGroupImpl.setCreateDate(userGroup.getCreateDate());
-		userGroupImpl.setModifiedDate(userGroup.getModifiedDate());
-		userGroupImpl.setParentUserGroupId(userGroup.getParentUserGroupId());
-		userGroupImpl.setName(userGroup.getName());
-		userGroupImpl.setDescription(userGroup.getDescription());
-		userGroupImpl.setAddedByLDAPImport(userGroup.isAddedByLDAPImport());
-
-		return userGroupImpl;
 	}
 
 	/**

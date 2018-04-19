@@ -21,7 +21,6 @@ import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -77,10 +76,6 @@ public class CPDefinitionIndexerTest {
 		Assert.assertEquals(cpDefinition.getTitle(), title);
 	}
 
-	private static Hits _search(SearchContext searchContext) throws Exception {
-		return _indexer.search(searchContext);
-	}
-
 	private Document _assertSearchOneCPDefinition(
 			long companyId, long groupId, String title)
 		throws Exception {
@@ -91,7 +86,7 @@ public class CPDefinitionIndexerTest {
 		searchContext.setCompanyId(companyId);
 		searchContext.setGroupIds(new long[] {groupId});
 
-		return HitsAssert.assertOnlyOne(_search(searchContext));
+		return HitsAssert.assertOnlyOne(_indexer.search(searchContext));
 	}
 
 	private static Indexer<CPDefinition> _indexer;

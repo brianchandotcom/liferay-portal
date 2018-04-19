@@ -34,7 +34,6 @@ import com.liferay.portal.search.filter.FilterBuilders;
 import com.liferay.portal.search.filter.TermsSetFilterBuilder;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Reference;
@@ -54,26 +53,16 @@ public abstract class BaseCommerceUserSegmentCriterionType
 			return;
 		}
 
-		if (Validator.isNull(commerceUserSegmentCriterion.getValue())) {
+		if (Validator.isNull(commerceUserSegmentCriterion.getTypeSettings())) {
 			return;
 		}
 
 		long[] classPKs = StringUtil.split(
-			commerceUserSegmentCriterion.getValue(), 0L);
+			commerceUserSegmentCriterion.getTypeSettings(), 0L);
 
 		document.addKeyword(getIndexerFieldName(), classPKs);
 		document.addKeyword(
 			getIndexerFieldName() + "required_matches", classPKs.length);
-	}
-
-	@Override
-	public List<String> getConditions() {
-		List<String> conditions = new ArrayList<>();
-
-		conditions.add("contains");
-		conditions.add("not_contains");
-
-		return Collections.unmodifiableList(conditions);
 	}
 
 	@Override
@@ -88,7 +77,7 @@ public abstract class BaseCommerceUserSegmentCriterionType
 				getCommerceUserSegmentCriterion(commerceUserSegmentCriterionId);
 
 		long[] classPKs = StringUtil.split(
-			commerceUserSegmentCriterion.getValue(), 0L);
+			commerceUserSegmentCriterion.getTypeSettings(), 0L);
 
 		if (ArrayUtil.containsAll(classPKs, getUserClassPKs(user))) {
 			return true;

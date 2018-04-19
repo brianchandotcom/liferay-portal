@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.user.segment.internal.criterion;
 
-import com.liferay.commerce.user.segment.constants.CommerceUserSegmentsConstants;
+import com.liferay.commerce.user.segment.constants.CommerceUserSegmentConstants;
 import com.liferay.commerce.user.segment.criterion.CommerceUserSegmentCriterionType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -30,8 +30,8 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"commerce.price.list.qualification.type.key=" + CommerceUserSegmentsConstants.CRITERION_TYPE_USER,
-		"commerce.price.list.qualification.type.priority:Integer=10"
+		"commerce.user.segment.criterion.type.key=" + CommerceUserSegmentConstants.CRITERION_TYPE_USER,
+		"commerce.user.segment.criterion.type.order:Integer=10"
 	},
 	service = CommerceUserSegmentCriterionType.class
 )
@@ -40,7 +40,7 @@ public class UserCommerceUserSegmentCriterionTypeImpl
 
 	@Override
 	public String getKey() {
-		return CommerceUserSegmentsConstants.CRITERION_TYPE_USER;
+		return CommerceUserSegmentConstants.CRITERION_TYPE_USER;
 	}
 
 	@Override

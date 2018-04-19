@@ -12,35 +12,30 @@
  * details.
  */
 
-package com.liferay.product.apio.internal.architect.resource;
+package com.liferay.product.apio.internal.resource;
 
-import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
+import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionModel;
 import com.liferay.commerce.product.service.CPDefinitionService;
-import com.liferay.journal.exception.NoSuchArticleException;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.model.JournalArticleModel;
-import com.liferay.journal.service.JournalArticleService;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.apio.architect.context.auth.MockPermissions;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.product.apio.architect.identifier.CPDefinitionId;
-import com.liferay.product.apio.internal.architect.form.ProductCreatorForm;
-import com.liferay.product.apio.internal.architect.form.ProductUpdaterForm;
+import com.liferay.product.apio.identifier.ProductDefinitionIdentifier;
+import com.liferay.product.apio.internal.form.ProductCreatorForm;
 import com.liferay.product.apio.internal.util.ProductResourceCollectionUtil;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.ServerErrorException;
@@ -60,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ProductNestedCollectionResource
 	implements
 		NestedCollectionResource<CPDefinition, Long,
-			CPDefinitionId, Long, WebSiteIdentifier> {
+			ProductDefinitionIdentifier, Long, WebSiteIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<CPDefinition, Long> collectionRoutes(
@@ -68,9 +63,9 @@ public class ProductNestedCollectionResource
 
 		return builder.addGetter(
 			this::_getPageItems
-/*		).addCreator(
-			this::_addJournalArticle, MockPermissions::validPermission,
-			ProductCreatorForm::buildForm*/
+		).addCreator(
+			this::_addCPDefinition, MockPermissions::validPermission,
+			ProductCreatorForm::buildForm
 		).build();
 	}
 
@@ -87,9 +82,6 @@ public class ProductNestedCollectionResource
 			this::_getCPDefinition
 		).addRemover(
 			this::_deleteCPDefinition, MockPermissions::validPermission
-/*		).addUpdater(
-			this::_updateJournalArticle, MockPermissions::validPermission,
-			ProductUpdaterForm::buildForm*/
 		).build();
 	}
 
@@ -121,32 +113,27 @@ public class ProductNestedCollectionResource
 		).build();
 	}
 
-/*	private CPDefinition _addJournalArticle(
-		Long webSiteId, ProductCreatorForm productCreatorForm) {
+	private CPDefinition _addCPDefinition(
+			Long webSiteId, ProductCreatorForm productCreatorForm)
+		throws PortalException {
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(webSiteId);
-
-		Try<CPDefinition> journalArticleTry = Try.fromFallible(() ->
-			_journalArticleService.addArticle(
-				webSiteId, productCreatorForm.getFolder(), 0, 0, null,
-				true, productCreatorForm.getTitleMap(),
+		try {
+			return _productResourceCollectionUtil.createCPDefinition(
+				webSiteId, productCreatorForm.getTitleMap(),
 				productCreatorForm.getDescriptionMap(),
-				productCreatorForm.getText(),
-				productCreatorForm.getStructure(),
-				productCreatorForm.getTemplate(), null,
-				productCreatorForm.getDisplayDateMonth(),
-				productCreatorForm.getDisplayDateDay(),
-				productCreatorForm.getDisplayDateYear(),
-				productCreatorForm.getDisplayDateHour(),
-				productCreatorForm.getDisplayDateMinute(), 0, 0, 0, 0, 0,
-				true, 0, 0, 0, 0, 0, true, true, null, serviceContext));
-
-		return journalArticleTry.getUnchecked();
-	}*/
+				productCreatorForm.getProductTypeName(),
+				_getAssetCategoryIds(productCreatorForm.getAssetCategoryIds()));
+		}
+		catch (CPDefinitionProductTypeNameException cpdptne) {
+			throw new NotFoundException(
+				"Unable to get product name " +
+					productCreatorForm.getProductTypeName(),
+				cpdptne);
+		}
+		catch (PortalException pe) {
+			throw new ServerErrorException(500, pe);
+		}
+	}
 
 	private void _deleteCPDefinition(Long cpDefinitionId) {
 		try {
@@ -155,6 +142,14 @@ public class ProductNestedCollectionResource
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);
 		}
+	}
+
+	private long[] _getAssetCategoryIds(List<Long> assetCategoryIdList) {
+		Stream<Long> assetCategoryIdStream = assetCategoryIdList.stream();
+
+		return assetCategoryIdStream.mapToLong(
+			Long::longValue
+		).toArray();
 	}
 
 	private CPDefinition _getCPDefinition(Long cpDefinitionId) {
@@ -190,9 +185,6 @@ public class ProductNestedCollectionResource
 	private Long _getUserOptional(CPDefinition cpDefinition) {
 		return cpDefinition.getUserId();
 	}
-
-	@Reference
-	private JournalArticleService _journalArticleService;
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;

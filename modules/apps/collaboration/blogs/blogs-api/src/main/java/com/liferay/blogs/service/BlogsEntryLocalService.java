@@ -418,6 +418,10 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	/**
+	* @deprecated As of 1.1.0, with no direct replacement
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BlogsEntry> getNoAssetEntries();
 

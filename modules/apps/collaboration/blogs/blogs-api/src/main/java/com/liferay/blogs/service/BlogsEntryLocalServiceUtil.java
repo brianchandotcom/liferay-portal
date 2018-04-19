@@ -565,6 +565,10 @@ public class BlogsEntryLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	/**
+	* @deprecated As of 1.1.0, with no direct replacement
+	*/
+	@Deprecated
 	public static java.util.List<com.liferay.blogs.model.BlogsEntry> getNoAssetEntries() {
 		return getService().getNoAssetEntries();
 	}

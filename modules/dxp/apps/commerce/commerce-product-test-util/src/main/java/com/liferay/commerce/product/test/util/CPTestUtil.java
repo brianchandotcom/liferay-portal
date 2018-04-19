@@ -38,20 +38,34 @@ import java.util.Map;
  */
 public class CPTestUtil {
 
+	public static CPDefinition addCPDefinition(
+			String productTypeName, boolean ignoreSKUCombinations,
+			boolean hasDefaultInstance, long groupId)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		return _addCPDefinition(
+			productTypeName, ignoreSKUCombinations, hasDefaultInstance,
+			serviceContext);
+	}
+
 	public static CPInstance addCPInstance(long groupId) throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
 
 		CPDefinition cpDefinition = _addCPDefinition(
-			SimpleCPTypeConstants.NAME, true, serviceContext);
+			SimpleCPTypeConstants.NAME, RandomTestUtil.randomBoolean(), true,
+			serviceContext);
 
 		return CPInstanceLocalServiceUtil.getCPInstance(
 			cpDefinition.getCPDefinitionId(), CPInstanceConstants.DEFAULT_SKU);
 	}
 
 	private static CPDefinition _addCPDefinition(
-			String productTypeName, boolean hasDefaultInstance,
-			ServiceContext serviceContext)
+			String productTypeName, boolean ignoreSKUCombinations,
+			boolean hasDefaultInstance, ServiceContext serviceContext)
 		throws Exception {
 
 		User user = UserLocalServiceUtil.getUser(serviceContext.getUserId());
@@ -71,7 +85,6 @@ public class CPTestUtil {
 			RandomTestUtil.randomLocaleStringMap();
 		Map<Locale, String> urlTitleMap =
 			RandomTestUtil.randomLocaleStringMap();
-		boolean ignoreSKUCombinations = RandomTestUtil.randomBoolean();
 		boolean shippable = RandomTestUtil.randomBoolean();
 		boolean freeShipping = RandomTestUtil.randomBoolean();
 		boolean shipSeparately = RandomTestUtil.randomBoolean();

@@ -14,9 +14,13 @@
 
 package com.liferay.portal.minifier;
 
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
+
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,30 +30,282 @@ import java.util.regex.Pattern;
  */
 public class CssCompressor {
 
-	private StringBuffer srcsb = new StringBuffer();
-
 	public CssCompressor(Reader in) throws IOException {
-		// Read the stream...
 		int c;
+
 		while ((c = in.read()) != -1) {
-			srcsb.append((char) c);
+			_sb.append((char)c);
 		}
+	}
+
+	public void compress(Writer out, int linebreakpos) throws IOException {
+		String css = _sb.toString();
+		ArrayList comments = new ArrayList(0);
+		ArrayList preservedTokens = new ArrayList(0);
+
+		css = _preserveCandidateCommments(css, comments);
+
+		css = _preserveParensToken(css, "url", preservedTokens);
+
+		css = _preserveParensToken(css, "calc", preservedTokens);
+
+		css = _preserveToken(
+			css, "progid:DXImageTransform.Microsoft.Matrix",
+			"(?i)progid:DXImageTransform.Microsoft.Matrix\\s*([\"']?)", false,
+			preservedTokens);
+
+		css = _preserveStrings(css, comments, preservedTokens);
+
+		css = _removeComments(css, comments, preservedTokens);
+
+		css = _preserveIE9Hack(css, preservedTokens);
+
+		css = _collapseWhitespace(css);
+
+		css = _removeUnneededLeadingSpaces(css);
+
+		css = _retainSpaceForSpecialIE6Cases(css);
+
+		css = _removeWhitespaceAfterPreservedComments(css);
+
+		css = _hoistCharsetDirectives(css);
+
+		css = _collapseCharsetDirectives(css);
+
+		css = _lowercaseDirectives(css);
+
+		css = _lowercasePseudoElements(css);
+
+		css = _lowercaseFunctions(css);
+
+		css = _lowercaseFunctionsThatCanBeValues(css);
+
+		css = _putSomeSpacesBack(css);
+
+		css = _removeUnneededTrailingSpaces(css);
+
+		css = _removeUnneededSemiColons(css);
+
+		css = _replace0UnitWith0(css);
+
+		css = _removeUnneededDecimals(css);
+
+		css = _collapseMultipleZeroes(css);
+
+		css = _restoreSomeMultipleZeroes(css);
+
+		css = _removeIntegerZeroBeforeDecimals(css);
+
+		css = _shortenRGBColors(css);
+
+		css = _shortenTwinComponentDigitsColors(css);
+
+		css = _shortenSymbolicNameColors(css);
+
+		css = _replaceBorderNone(css);
+
+		css = _shortenIEOpacityFilter(css);
+
+		css = _removeEmptyRules(css);
+
+		css = _applyLineBreak(css, linebreakpos);
+
+		css = _removeMultipleSemicolons(css);
+
+		css = _restorePreservedTokens(css, preservedTokens);
+
+		css = css.trim();
+
+		out.write(css);
+	}
+
+	private String _applyLineBreak(String css, int linebreakpos) {
+		if (linebreakpos >= 0) {
+			int i = 0;
+
+			int linestartpos = 0;
+
+			StringBuffer sb = new StringBuffer(css);
+
+			while (i < sb.length()) {
+				char c = sb.charAt(i++);
+
+				if ((c == '}') && ((i - linestartpos) > linebreakpos)) {
+					sb.insert(i, '\n');
+					linestartpos = i;
+				}
+			}
+
+			css = sb.toString();
+		}
+
+		return css;
+	}
+
+	private String _collapseCharsetDirectives(String css) {
+		Matcher m = _collapseCharsetDirectivesPattern.matcher(css);
+
+		StringBuffer sb = new StringBuffer();
+
+		while (m.find()) {
+			m.appendReplacement(
+				sb,
+				m.group(2) + StringUtil.toLowerCase(m.group(3)) + m.group(4));
+		}
+
+		m.appendTail(sb);
+
+		return sb.toString();
+	}
+
+	private String _collapseMultipleZeroes(String css) {
+		css = css.replaceAll(":0 0 0 0(;|})", ":0$1");
+
+		css = css.replaceAll(":0 0 0(;|})", ":0$1");
+
+		return css.replaceAll("(?<!flex):0 0(;|})", ":0$1");
+	}
+
+	private String _collapseWhitespace(String css) {
+		return css.replaceAll("\\s+", " ");
+	}
+
+	private String _hoistCharsetDirectives(String css) {
+		Matcher m = _hoistCharsetDirectivesPattern.matcher(css);
+
+		StringBuffer sb = new StringBuffer();
+
+		while (m.find()) {
+			String s = m.group(1);
+
+			s = s.replaceAll("\\\\", "\\\\\\\\");
+
+			s = s.replaceAll("\\$", "\\\\\\$");
+
+			m.appendReplacement(
+				sb, StringUtil.toLowerCase(m.group(2)) + m.group(3) + s);
+		}
+
+		m.appendTail(sb);
+
+		return sb.toString();
+	}
+
+	private String _lowercaseDirectives(String css) {
+		Matcher m = _lowercaseDirectivesPattern.matcher(css);
+
+		StringBuffer sb = new StringBuffer();
+
+		while (m.find()) {
+			m.appendReplacement(sb, '@' + StringUtil.toLowerCase(m.group(1)));
+		}
+
+		m.appendTail(sb);
+
+		return sb.toString();
+	}
+
+	private String _lowercaseFunctions(String css) {
+		Matcher m = _lowercaseFunctionsPattern.matcher(css);
+
+		StringBuffer sb = new StringBuffer();
+
+		while (m.find()) {
+			m.appendReplacement(
+				sb, ':' + StringUtil.toLowerCase(m.group(1)) + '(');
+		}
+
+		m.appendTail(sb);
+
+		return sb.toString();
+	}
+
+	private String _lowercaseFunctionsThatCanBeValues(String css) {
+		Matcher m = _lowercaseFunctionsThatCanBeValuesPattern.matcher(css);
+
+		StringBuffer sb = new StringBuffer();
+
+		while (m.find()) {
+			m.appendReplacement(
+				sb, m.group(1) + StringUtil.toLowerCase(m.group(2)));
+		}
+
+		m.appendTail(sb);
+
+		return sb.toString();
+	}
+
+	private String _lowercasePseudoElements(String css) {
+		Matcher m = _lowercasePseudoElementsPattern.matcher(css);
+
+		StringBuffer sb = new StringBuffer();
+
+		while (m.find()) {
+			m.appendReplacement(sb, ':' + StringUtil.toLowerCase(m.group(1)));
+		}
+
+		m.appendTail(sb);
+
+		return sb.toString();
+	}
+
+	private String _preserveCandidateCommments(String css, ArrayList comments) {
+		int startIndex = 0;
+		StringBuffer sb = new StringBuffer(css);
+		int cssLength = css.length();
+
+		while ((startIndex = sb.indexOf("/*", startIndex)) >= 0) {
+			int endIndex = sb.indexOf("*/", startIndex + 2);
+
+			if (endIndex < 0) {
+				endIndex = cssLength;
+			}
+
+			String token = sb.substring(startIndex + 2, endIndex);
+
+			comments.add(token);
+
+			sb.replace(
+				startIndex + 2, endIndex,
+				"___YUICSSMIN_PRESERVE_CANDIDATE_COMMENT_" +
+					(comments.size() - 1) + "___");
+
+			startIndex += 2;
+		}
+
+		return sb.toString();
+	}
+
+	private String _preserveIE9Hack(String css, ArrayList preservedTokens) {
+		String backslash9 = "\\9";
+
+		while (css.indexOf(backslash9) > -1) {
+			preservedTokens.add(backslash9);
+
+			css = css.replace(
+				backslash9,
+				"___YUICSSMIN_PRESERVED_TOKEN_" + (preservedTokens.size() - 1) +
+					"___");
+		}
+
+		return css;
 	}
 
 	private String _preserveParensToken(
 		String css, String preservedToken, ArrayList preservedTokens) {
 
+		int startIndex;
+		int fromIndex = 0;
 		StringBuffer sb = new StringBuffer();
 
-		int fromIndex = 0;
-		int startIndex;
+		while ((startIndex =
+					css.indexOf(preservedToken + "(", fromIndex)) != -1) {
 
-		while( (startIndex = css.indexOf(preservedToken + "(", fromIndex)) != -1) {
 			int index = startIndex + preservedToken.length() + 1;
 
 			int parensLevel = 1;
 
-			while(parensLevel > 0) {
+			while (parensLevel > 0) {
 				if (css.charAt(index) == '(') {
 					parensLevel++;
 				}
@@ -67,7 +323,8 @@ public class CssCompressor {
 			sb.append("___)");
 
 			preservedTokens.add(
-				css.substring(startIndex + preservedToken.length() + 1, index - 1));
+				css.substring(
+					startIndex + preservedToken.length() + 1, index - 1));
 
 			fromIndex = index;
 		}
@@ -77,16 +334,55 @@ public class CssCompressor {
 		return sb.toString();
 	}
 
-	/**
-	 * @param css - full css string
-	 * @param preservedToken - token to preserve
-	 * @param tokenRegex - regex to find token
-	 * @param removeWhiteSpace - remove any white space in the token
-	 * @param preservedTokens - array of token values
-	 * @return
-	 */
-	protected String preserveToken(String css, String preservedToken,
-								   String tokenRegex, boolean removeWhiteSpace, ArrayList preservedTokens) {
+	private String _preserveStrings(
+		String css, ArrayList comments, ArrayList preservedTokens) {
+
+		int i = 0;
+		int max = 0;
+		StringBuffer sb = new StringBuffer();
+
+		Matcher m = _preserveStringsPattern.matcher(css);
+
+		while (m.find()) {
+			String token = m.group();
+
+			char quote = token.charAt(0);
+			token = token.substring(1, token.length() - 1);
+
+			if (token.indexOf("___YUICSSMIN_PRESERVE_CANDIDATE_COMMENT_") >=
+					0) {
+
+				Object comment = comments.get(i);
+
+				for (i = 0, max = comments.size(); i < max; i += 1) {
+					token = token.replace(
+						"___YUICSSMIN_PRESERVE_CANDIDATE_COMMENT_" + i + "___",
+						comment.toString());
+				}
+			}
+
+			token = token.replaceAll(
+				"(?i)progid:DXImageTransform.Microsoft.Alpha\\(Opacity=",
+				"alpha(opacity=");
+
+			preservedTokens.add(token);
+
+			String preserver = StringBundler.concat(
+				Character.toString(quote), "___YUICSSMIN_PRESERVED_TOKEN_",
+				Integer.toString(preservedTokens.size() - 1), "___",
+				Character.toString(quote));
+
+			m.appendReplacement(sb, preserver);
+		}
+
+		m.appendTail(sb);
+
+		return sb.toString();
+	}
+
+	private String _preserveToken(
+		String css, String preservedToken, String tokenRegex,
+		boolean removeWhiteSpace, ArrayList preservedTokens) {
 
 		int maxIndex = css.length() - 1;
 		int appendIndex = 0;
@@ -94,16 +390,17 @@ public class CssCompressor {
 		StringBuffer sb = new StringBuffer();
 
 		Pattern p = Pattern.compile(tokenRegex);
+
 		Matcher m = p.matcher(css);
 
 		while (m.find()) {
 			int startIndex = m.start() + (preservedToken.length() + 1);
-			String terminator = m.group(1);
 
-			// skip this, if CSS was already copied to "sb" upto this position
 			if (m.start() < appendIndex) {
 				continue;
 			}
+
+			String terminator = m.group(1);
 
 			if (terminator.length() == 0) {
 				terminator = ")";
@@ -112,34 +409,42 @@ public class CssCompressor {
 			boolean foundTerminator = false;
 
 			int endIndex = m.end() - 1;
-			while(foundTerminator == false && endIndex+1 <= maxIndex) {
-				endIndex = css.indexOf(terminator, endIndex+1);
+
+			while (!foundTerminator && ((endIndex + 1) <= maxIndex)) {
+				endIndex = css.indexOf(terminator, endIndex + 1);
 
 				if (endIndex <= 0) {
 					break;
-				} else if ((endIndex > 0) && (css.charAt(endIndex-1) != '\\')) {
+				}
+				else if ((endIndex > 0) && (css.charAt(endIndex - 1) != '\\')) {
 					foundTerminator = true;
+
 					if (!")".equals(terminator)) {
 						endIndex = css.indexOf(")", endIndex);
 					}
 				}
 			}
 
-			// Enough searching, start moving stuff over to the buffer
 			sb.append(css.substring(appendIndex, m.start()));
 
 			if (foundTerminator) {
 				String token = css.substring(startIndex, endIndex);
-				if(removeWhiteSpace)
+
+				if (removeWhiteSpace) {
 					token = token.replaceAll("\\s+", "");
+				}
+
 				preservedTokens.add(token);
 
-				String preserver = preservedToken + "(___YUICSSMIN_PRESERVED_TOKEN_" + (preservedTokens.size() - 1) + "___)";
+				String preserver = StringBundler.concat(
+					preservedToken, "(___YUICSSMIN_PRESERVED_TOKEN_",
+					Integer.toString(preservedTokens.size() - 1), "___)");
+
 				sb.append(preserver);
 
 				appendIndex = endIndex + 1;
-			} else {
-				// No end terminator found, re-add the whole match. Should we throw/warn here?
+			}
+			else {
 				sb.append(css.substring(m.start(), m.end()));
 				appendIndex = m.end();
 			}
@@ -150,332 +455,346 @@ public class CssCompressor {
 		return sb.toString();
 	}
 
-	public void compress(Writer out, int linebreakpos)
-		throws IOException {
+	private String _putSomeSpacesBack(String css) {
+		return css.replaceAll("(?i)\\band\\(", "and (");
+	}
 
-		Pattern p;
-		Matcher m;
-		String css = srcsb.toString();
+	private String _removeComments(
+		String css, ArrayList comments, ArrayList preservedTokens) {
 
-		int startIndex = 0;
-		int endIndex = 0;
 		int i = 0;
 		int max = 0;
-		ArrayList preservedTokens = new ArrayList(0);
-		ArrayList comments = new ArrayList(0);
-		String token;
-		int totallen = css.length();
-		String placeholder;
 
-
-		StringBuffer sb = new StringBuffer(css);
-
-		// collect all comment blocks...
-		while ((startIndex = sb.indexOf("/*", startIndex)) >= 0) {
-			endIndex = sb.indexOf("*/", startIndex + 2);
-			if (endIndex < 0) {
-				endIndex = totallen;
-			}
-
-			token = sb.substring(startIndex + 2, endIndex);
-			comments.add(token);
-			sb.replace(startIndex + 2, endIndex, "___YUICSSMIN_PRESERVE_CANDIDATE_COMMENT_" + (comments.size() - 1) + "___");
-			startIndex += 2;
-		}
-		css = sb.toString();
-
-
-		css = this._preserveParensToken(css, "url", preservedTokens);
-		css = this._preserveParensToken(css, "calc", preservedTokens);
-		css = this.preserveToken(css, "progid:DXImageTransform.Microsoft.Matrix",  "(?i)progid:DXImageTransform.Microsoft.Matrix\\s*([\"']?)", false, preservedTokens);
-
-
-		// preserve strings so their content doesn't get accidentally minified
-		sb = new StringBuffer();
-		p = Pattern.compile("(\"([^\\\\\"]|\\\\.|\\\\)*\")|(\'([^\\\\\']|\\\\.|\\\\)*\')");
-		m = p.matcher(css);
-		while (m.find()) {
-			token = m.group();
-			char quote = token.charAt(0);
-			token = token.substring(1, token.length() - 1);
-
-			// maybe the string contains a comment-like substring?
-			// one, maybe more? put'em back then
-			if (token.indexOf("___YUICSSMIN_PRESERVE_CANDIDATE_COMMENT_") >= 0) {
-				for (i = 0, max = comments.size(); i < max; i += 1) {
-					token = token.replace("___YUICSSMIN_PRESERVE_CANDIDATE_COMMENT_" + i + "___", comments.get(i).toString());
-				}
-			}
-
-			// minify alpha opacity in filter strings
-			token = token.replaceAll("(?i)progid:DXImageTransform.Microsoft.Alpha\\(Opacity=", "alpha(opacity=");
-
-			preservedTokens.add(token);
-			String preserver = quote + "___YUICSSMIN_PRESERVED_TOKEN_" + (preservedTokens.size() - 1) + "___" + quote;
-			m.appendReplacement(sb, preserver);
-		}
-		m.appendTail(sb);
-		css = sb.toString();
-
-
-		// strings are safe, now wrestle the comments
 		for (i = 0, max = comments.size(); i < max; i += 1) {
+			Object comment = comments.get(i);
 
-			token = comments.get(i).toString();
-			placeholder = "___YUICSSMIN_PRESERVE_CANDIDATE_COMMENT_" + i + "___";
+			String token = comment.toString();
 
-			// ! in the first position of the comment means preserve
-			// so push to the preserved tokens while stripping the !
+			String placeholder =
+				"___YUICSSMIN_PRESERVE_CANDIDATE_COMMENT_" + i + "___";
+
 			if (token.startsWith("!")) {
 				preservedTokens.add(token);
-				css = css.replace(placeholder,  "___YUICSSMIN_PRESERVED_TOKEN_" + (preservedTokens.size() - 1) + "___");
+
+				css = css.replace(
+					placeholder,
+					"___YUICSSMIN_PRESERVED_TOKEN_" +
+						(preservedTokens.size() - 1) + "___");
+
 				continue;
 			}
 
-			// \ in the last position looks like hack for Mac/IE5
-			// shorten that to /*\*/ and the next one to /**/
 			if (token.endsWith("\\")) {
 				preservedTokens.add("\\");
-				css = css.replace(placeholder,  "___YUICSSMIN_PRESERVED_TOKEN_" + (preservedTokens.size() - 1) + "___");
-				i = i + 1; // attn: advancing the loop
+
+				css = css.replace(
+					placeholder,
+					"___YUICSSMIN_PRESERVED_TOKEN_" +
+						(preservedTokens.size() - 1) + "___");
+
+				i = i + 1;
+
 				preservedTokens.add("");
-				css = css.replace("___YUICSSMIN_PRESERVE_CANDIDATE_COMMENT_" + i + "___",  "___YUICSSMIN_PRESERVED_TOKEN_" + (preservedTokens.size() - 1) + "___");
+
+				css = css.replace(
+					"___YUICSSMIN_PRESERVE_CANDIDATE_COMMENT_" + i + "___",
+					"___YUICSSMIN_PRESERVED_TOKEN_" +
+						(preservedTokens.size() - 1) + "___");
+
 				continue;
 			}
 
-			// keep empty comments after child selectors (IE7 hack)
-			// e.g. html >/**/ body
 			if (token.length() == 0) {
-				startIndex = css.indexOf(placeholder);
-				if (startIndex > 2) {
-					if (css.charAt(startIndex - 3) == '>') {
-						preservedTokens.add("");
-						css = css.replace(placeholder,  "___YUICSSMIN_PRESERVED_TOKEN_" + (preservedTokens.size() - 1) + "___");
-					}
+				int startIndex = css.indexOf(placeholder);
+
+				if ((startIndex > 2) && (css.charAt(startIndex - 3) == '>')) {
+					preservedTokens.add("");
+
+					css = css.replace(
+						placeholder,
+						"___YUICSSMIN_PRESERVED_TOKEN_" +
+							(preservedTokens.size() - 1) + "___");
 				}
 			}
 
-			// in all other cases kill the comment
 			css = css.replace("/*" + placeholder + "*/", "");
 		}
 
-		// preserve \9 IE hack
-		final String backslash9 = "\\9";
-		while (css.indexOf(backslash9) > -1) {
-			preservedTokens.add(backslash9);
-			css = css.replace(backslash9,  "___YUICSSMIN_PRESERVED_TOKEN_" + (preservedTokens.size() - 1) + "___");
-		}
+		return css;
+	}
 
-		// Normalize all whitespace strings to single spaces. Easier to work with that way.
-		css = css.replaceAll("\\s+", " ");
+	private String _removeEmptyRules(String css) {
+		css = css.replaceAll(
+			"\\(([\\-A-Za-z]+):([0-9]+)\\/([0-9]+)\\)",
+			"($1:$2___YUI_QUERY_FRACTION___$3)");
 
-		// Remove the spaces before the things that should not have spaces before them.
-		// But, be careful not to turn "p :link {...}" into "p:link{...}"
-		// Swap out any pseudo-class colons with the token, and then swap back.
-		sb = new StringBuffer();
-		p = Pattern.compile("(^|\\})((^|([^\\{:])+):)+([^\\{]*\\{)");
-		m = p.matcher(css);
+		css = css.replaceAll("[^\\}\\{/;]+\\{\\}", "");
+
+		return css.replaceAll("___YUI_QUERY_FRACTION___", "/");
+	}
+
+	private String _removeIntegerZeroBeforeDecimals(String css) {
+		return css.replaceAll("(:|\\s)0+\\.(\\d+)", "$1.$2");
+	}
+
+	private String _removeMultipleSemicolons(String css) {
+		return css.replaceAll(";;+", ";");
+	}
+
+	private String _removeUnneededDecimals(String css) {
+		return css.replaceAll(
+			"([0-9])\\.0(px|em|%|in|cm|mm|pc|pt|ex|deg|g?rad|m?s|k?hz| |;)",
+			"$1$2");
+	}
+
+	private String _removeUnneededLeadingSpaces(String css) {
+		StringBuffer sb = new StringBuffer();
+
+		Matcher m = _removeUnneededLeadingSpacesPattern.matcher(css);
+
 		while (m.find()) {
-			String s = m.group();
-			s = s.replaceAll(":", "___YUICSSMIN_PSEUDOCLASSCOLON___");
-			s = s.replaceAll( "\\\\", "\\\\\\\\" ).replaceAll( "\\$", "\\\\\\$" );
-			m.appendReplacement(sb, s);
+			String group = m.group();
+
+			group = group.replaceAll(":", "___YUICSSMIN_PSEUDOCLASSCOLON___");
+
+			group = group.replaceAll("\\\\", "\\\\\\\\");
+
+			group = group.replaceAll("\\$", "\\\\\\$");
+
+			m.appendReplacement(sb, group);
 		}
+
 		m.appendTail(sb);
+
 		css = sb.toString();
-		// Remove spaces before the things that should not have spaces before them.
+
 		css = css.replaceAll("\\s+([!{};:>+\\(\\)\\],])", "$1");
-		// Restore spaces for !important
+
 		css = css.replaceAll("!important", " !important");
-		// bring back the colon
+
 		css = css.replaceAll("___YUICSSMIN_PSEUDOCLASSCOLON___", ":");
 
-		// retain space for special IE6 cases
-		sb = new StringBuffer();
-		p = Pattern.compile("(?i):first\\-(line|letter)(\\{|,)");
-		m = p.matcher(css);
-		while (m.find()) {
-			m.appendReplacement(sb, ":first-" + m.group(1).toLowerCase() + " " + m.group(2));
-		}
-		m.appendTail(sb);
-		css = sb.toString();
+		return css;
+	}
 
-		// no space after the end of a preserved comment
-		css = css.replaceAll("\\*/ ", "*/");
+	private String _removeUnneededSemiColons(String css) {
+		return css.replaceAll(";+}", "}");
+	}
 
-		// If there are multiple @charset directives, push them to the top of the file.
-		sb = new StringBuffer();
-		p = Pattern.compile("(?i)^(.*)(@charset)( \"[^\"]*\";)");
-		m = p.matcher(css);
-		while (m.find()) {
-			String s = m.group(1).replaceAll("\\\\", "\\\\\\\\").replaceAll("\\$", "\\\\\\$");
-			m.appendReplacement(sb, m.group(2).toLowerCase() + m.group(3) + s);
-		}
-		m.appendTail(sb);
-		css = sb.toString();
+	private String _removeUnneededTrailingSpaces(String css) {
+		return css.replaceAll("([!{}:;>+\\(\\[,])\\s+", "$1");
+	}
 
-		// When all @charset are at the top, remove the second and after (as they are completely ignored).
-		sb = new StringBuffer();
-		p = Pattern.compile("(?i)^((\\s*)(@charset)( [^;]+;\\s*))+");
-		m = p.matcher(css);
-		while (m.find()) {
-			m.appendReplacement(sb, m.group(2) + m.group(3).toLowerCase() + m.group(4));
-		}
-		m.appendTail(sb);
-		css = sb.toString();
+	private String _removeWhitespaceAfterPreservedComments(String css) {
+		return css.replaceAll("\\*/ ", "*/");
+	}
 
-		// lowercase some popular @directives (@charset is done right above)
-		sb = new StringBuffer();
-		p = Pattern.compile("(?i)@(font-face|import|(?:-(?:atsc|khtml|moz|ms|o|wap|webkit)-)?keyframe|media|page|namespace)");
-		m = p.matcher(css);
-		while (m.find()) {
-			m.appendReplacement(sb, '@' + m.group(1).toLowerCase());
-		}
-		m.appendTail(sb);
-		css = sb.toString();
-
-		// lowercase some more common pseudo-elements
-		sb = new StringBuffer();
-		p = Pattern.compile("(?i):(active|after|before|checked|disabled|empty|enabled|first-(?:child|of-type)|focus|hover|last-(?:child|of-type)|link|only-(?:child|of-type)|root|:selection|target|visited)");
-		m = p.matcher(css);
-		while (m.find()) {
-			m.appendReplacement(sb, ':' + m.group(1).toLowerCase());
-		}
-		m.appendTail(sb);
-		css = sb.toString();
-
-		// lowercase some more common functions
-		sb = new StringBuffer();
-		p = Pattern.compile("(?i):(lang|not|nth-child|nth-last-child|nth-last-of-type|nth-of-type|(?:-(?:moz|webkit)-)?any)\\(");
-		m = p.matcher(css);
-		while (m.find()) {
-			m.appendReplacement(sb, ':' + m.group(1).toLowerCase() + '(');
-		}
-		m.appendTail(sb);
-		css = sb.toString();
-
-		// lower case some common function that can be values
-		// NOTE: rgb() isn't useful as we replace with #hex later, as well as and() is already done for us right after this
-		sb = new StringBuffer();
-		p = Pattern.compile("(?i)([:,\\( ]\\s*)(attr|color-stop|from|rgba|to|url|(?:-(?:atsc|khtml|moz|ms|o|wap|webkit)-)?(?:calc|max|min|(?:repeating-)?(?:linear|radial)-gradient)|-webkit-gradient)");
-		m = p.matcher(css);
-		while (m.find()) {
-			m.appendReplacement(sb, m.group(1) + m.group(2).toLowerCase());
-		}
-		m.appendTail(sb);
-		css = sb.toString();
-
-		// Put the space back in some cases, to support stuff like
-		// @media screen and (-webkit-min-device-pixel-ratio:0){
-		css = css.replaceAll("(?i)\\band\\(", "and (");
-
-		// Remove the spaces after the things that should not have spaces after them.
-		css = css.replaceAll("([!{}:;>+\\(\\[,])\\s+", "$1");
-
-		// remove unnecessary semicolons
-		css = css.replaceAll(";+}", "}");
-
-		// Replace 0(px,em,%) with 0.
+	private String _replace0UnitWith0(String css) {
 		String oldCss;
-		p = Pattern.compile("(?i)(^|: ?)((?:[0-9a-z-.]+ )*?)?(?:0?\\.)?0(?:px|em|%|in|cm|mm|pc|pt|ex|deg|g?rad|m?s|k?hz)");
+
 		do {
 			oldCss = css;
-			m = p.matcher(css);
+
+			Matcher m = _replace0UnitWith0Pattern1.matcher(css);
+
 			css = m.replaceAll("$1$20");
 		} while (!(css.equals(oldCss)));
 
-		// Replace 0(px,em,%) with 0 inside groups (e.g. -MOZ-RADIAL-GRADIENT(CENTER 45DEG, CIRCLE CLOSEST-SIDE, ORANGE 0%, RED 100%))
-		p = Pattern.compile("(?i)\\( ?((?:[0-9a-z-.]+[ ,])*)?(?:0?\\.)?0(?:px|em|%|in|cm|mm|pc|pt|ex|deg|g?rad|m?s|k?hz)");
 		do {
 			oldCss = css;
-			m = p.matcher(css);
+
+			Matcher m = _replace0UnitWith0Pattern2.matcher(css);
+
 			css = m.replaceAll("($10");
 		} while (!(css.equals(oldCss)));
 
-		// Replace x.0(px,em,%) with x(px,em,%).
-		css = css.replaceAll("([0-9])\\.0(px|em|%|in|cm|mm|pc|pt|ex|deg|g?rad|m?s|k?hz| |;)", "$1$2");
+		return css;
+	}
 
-		// Replace 0 0 0 0; with 0.
-		css = css.replaceAll(":0 0 0 0(;|})", ":0$1");
-		css = css.replaceAll(":0 0 0(;|})", ":0$1");
-		css = css.replaceAll("(?<!flex):0 0(;|})", ":0$1");
+	private String _replaceBorderNone(String css) {
+		Matcher m = _replaceBorderNonePattern.matcher(css);
 
+		StringBuffer sb = new StringBuffer();
 
-		// Replace background-position:0; with background-position:0 0;
-		// same for transform-origin
-		sb = new StringBuffer();
-		p = Pattern.compile("(?i)(background-position|webkit-mask-position|transform-origin|webkit-transform-origin|moz-transform-origin|o-transform-origin|ms-transform-origin):0(;|})");
-		m = p.matcher(css);
 		while (m.find()) {
-			m.appendReplacement(sb, m.group(1).toLowerCase() + ":0 0" + m.group(2));
+			m.appendReplacement(
+				sb, StringUtil.toLowerCase(m.group(1)) + ":0" + m.group(2));
 		}
+
 		m.appendTail(sb);
-		css = sb.toString();
 
-		// Replace 0.6 to .6, but only when preceded by : or a white-space
-		css = css.replaceAll("(:|\\s)0+\\.(\\d+)", "$1.$2");
+		return sb.toString();
+	}
 
-		// Shorten colors from rgb(51,102,153) to #336699
-		// This makes it more likely that it'll get further compressed in the next step.
-		p = Pattern.compile("rgb\\s*\\(\\s*([0-9,\\s]+)\\s*\\)");
-		m = p.matcher(css);
-		sb = new StringBuffer();
+	private String _restorePreservedTokens(
+		String css, ArrayList preservedTokens) {
+
+		for (int i = 0, max = preservedTokens.size(); i < max; i++) {
+			Object preservedToken = preservedTokens.get(i);
+
+			css = css.replace(
+				"___YUICSSMIN_PRESERVED_TOKEN_" + i + "___",
+				preservedToken.toString());
+		}
+
+		return css;
+	}
+
+	private String _restoreSomeMultipleZeroes(String css) {
+		Matcher m = _restoreSomeMultipleZeroesPattern.matcher(css);
+
+		StringBuffer sb = new StringBuffer();
+
 		while (m.find()) {
-			String[] rgbcolors = m.group(1).split(",");
+			m.appendReplacement(
+				sb, StringUtil.toLowerCase(m.group(1)) + ":0 0" + m.group(2));
+		}
+
+		m.appendTail(sb);
+
+		return sb.toString();
+	}
+
+	private String _retainSpaceForSpecialIE6Cases(String css) {
+		Matcher m = _retainSpaceForSpecialIE6CasesPattern.matcher(css);
+
+		StringBuffer sb = new StringBuffer();
+
+		while (m.find()) {
+			m.appendReplacement(
+				sb,
+				StringBundler.concat(
+					":first-", StringUtil.toLowerCase(m.group(1)), " ",
+					m.group(2)));
+		}
+
+		m.appendTail(sb);
+
+		return sb.toString();
+	}
+
+	private String _shortenIEOpacityFilter(String css) {
+		return css.replaceAll(
+			"(?i)progid:DXImageTransform.Microsoft.Alpha\\(Opacity=",
+			"alpha(opacity=");
+	}
+
+	private String _shortenRGBColors(String css) {
+		Matcher m = _shortenRGBColorsPattern.matcher(css);
+
+		StringBuffer sb = new StringBuffer();
+
+		while (m.find()) {
+			String group = m.group(1);
+
+			String[] rgbcolors = group.split(",");
+
 			StringBuffer hexcolor = new StringBuffer("#");
-			for (i = 0; i < rgbcolors.length; i++) {
+
+			for (int i = 0; i < rgbcolors.length; i++) {
 				int val = Integer.parseInt(rgbcolors[i]);
+
 				if (val < 16) {
 					hexcolor.append("0");
 				}
 
-				// If someone passes an RGB value that's too big to express in two characters, round down.
-				// Probably should throw out a warning here, but generating valid CSS is a bigger concern.
 				if (val > 255) {
 					val = 255;
 				}
+
 				hexcolor.append(Integer.toHexString(val));
 			}
+
 			m.appendReplacement(sb, hexcolor.toString());
 		}
+
 		m.appendTail(sb);
-		css = sb.toString();
 
-		// Shorten colors from #AABBCC to #ABC. Note that we want to make sure
-		// the color is not preceded by either ", " or =. Indeed, the property
-		//     filter: chroma(color="#FFFFFF");
-		// would become
-		//     filter: chroma(color="#FFF");
-		// which makes the filter break in IE.
-		// We also want to make sure we're only compressing #AABBCC patterns inside { }, not id selectors ( #FAABAC {} )
-		// We also want to avoid compressing invalid values (e.g. #AABBCCD to #ABCD)
-		p = Pattern.compile("(\\=\\s*?[\"']?)?" + "#([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])" + "(:?\\}|[^0-9a-fA-F{][^{]*?\\})");
+		return sb.toString();
+	}
 
-		m = p.matcher(css);
-		sb = new StringBuffer();
+	private String _shortenSymbolicNameColors(String css) {
+		css = css.replaceAll("(:|\\s)(#f00)(;|})", "$1red$3");
+
+		css = css.replaceAll("(:|\\s)(#000080)(;|})", "$1navy$3");
+
+		css = css.replaceAll("(:|\\s)(#808080)(;|})", "$1gray$3");
+
+		css = css.replaceAll("(:|\\s)(#808000)(;|})", "$1olive$3");
+
+		css = css.replaceAll("(:|\\s)(#800080)(;|})", "$1purple$3");
+
+		css = css.replaceAll("(:|\\s)(#c0c0c0)(;|})", "$1silver$3");
+
+		css = css.replaceAll("(:|\\s)(#008080)(;|})", "$1teal$3");
+
+		css = css.replaceAll("(:|\\s)(#ffa500)(;|})", "$1orange$3");
+
+		css = css.replaceAll("(:|\\s)(#800000)(;|})", "$1maroon$3");
+
+		return css;
+	}
+
+	private String _shortenTwinComponentDigitsColors(String css) {
+		Matcher m = _shortenTwinComponentDigitsColorsPattern.matcher(css);
+
 		int index = 0;
 
-		while (m.find(index)) {
+		StringBuffer sb = new StringBuffer();
 
+		while (m.find(index)) {
 			sb.append(css.substring(index, m.start()));
 
-			boolean isFilter = (m.group(1) != null && !"".equals(m.group(1)));
+			boolean filter = false;
 
-			if (isFilter) {
-				// Restore, as is. Compression will break filters
-				sb.append(m.group(1) + "#" + m.group(2) + m.group(3) + m.group(4) + m.group(5) + m.group(6) + m.group(7));
-			} else {
-				if( m.group(2).equalsIgnoreCase(m.group(3)) &&
-					m.group(4).equalsIgnoreCase(m.group(5)) &&
-					m.group(6).equalsIgnoreCase(m.group(7))) {
+			if ((m.group(1) != null) && !"".equals(m.group(1))) {
+				filter = true;
+			}
 
-					// #AABBCC pattern
-					sb.append("#" + (m.group(3) + m.group(5) + m.group(7)).toLowerCase());
+			if (filter) {
+				sb.append(m.group(1));
 
-				} else {
+				sb.append("#");
 
-					// Non-compressible color, restore, but lower case.
-					sb.append("#" + (m.group(2) + m.group(3) + m.group(4) + m.group(5) + m.group(6) + m.group(7)).toLowerCase());
+				sb.append(m.group(2));
+
+				sb.append(m.group(3));
+
+				sb.append(m.group(4));
+
+				sb.append(m.group(5));
+
+				sb.append(m.group(6));
+
+				sb.append(m.group(7));
+			}
+			else {
+				if (StringUtil.equalsIgnoreCase(m.group(2), m.group(3)) &&
+					StringUtil.equalsIgnoreCase(m.group(4), m.group(5)) &&
+					StringUtil.equalsIgnoreCase(m.group(6), m.group(7))) {
+
+					sb.append("#");
+
+					sb.append(StringUtil.toLowerCase(m.group(3)));
+
+					sb.append(StringUtil.toLowerCase(m.group(5)));
+
+					sb.append(StringUtil.toLowerCase(m.group(7)));
+				}
+				else {
+					sb.append("#");
+
+					sb.append(StringUtil.toLowerCase(m.group(2)));
+
+					sb.append(StringUtil.toLowerCase(m.group(3)));
+
+					sb.append(StringUtil.toLowerCase(m.group(4)));
+
+					sb.append(StringUtil.toLowerCase(m.group(5)));
+
+					sb.append(StringUtil.toLowerCase(m.group(6)));
+
+					sb.append(StringUtil.toLowerCase(m.group(7)));
 				}
 			}
 
@@ -483,96 +802,64 @@ public class CssCompressor {
 		}
 
 		sb.append(css.substring(index));
-		css = sb.toString();
 
-		// Replace #f00 -> red
-		css = css.replaceAll("(:|\\s)(#f00)(;|})", "$1red$3");
-		// Replace other short color keywords
-		css = css.replaceAll("(:|\\s)(#000080)(;|})", "$1navy$3");
-		css = css.replaceAll("(:|\\s)(#808080)(;|})", "$1gray$3");
-		css = css.replaceAll("(:|\\s)(#808000)(;|})", "$1olive$3");
-		css = css.replaceAll("(:|\\s)(#800080)(;|})", "$1purple$3");
-		css = css.replaceAll("(:|\\s)(#c0c0c0)(;|})", "$1silver$3");
-		css = css.replaceAll("(:|\\s)(#008080)(;|})", "$1teal$3");
-		css = css.replaceAll("(:|\\s)(#ffa500)(;|})", "$1orange$3");
-		css = css.replaceAll("(:|\\s)(#800000)(;|})", "$1maroon$3");
-
-		// border: none -> border:0
-		sb = new StringBuffer();
-		p = Pattern.compile("(?i)(border|border-top|border-right|border-bottom|border-left|outline|background):none(;|})");
-		m = p.matcher(css);
-		while (m.find()) {
-			m.appendReplacement(sb, m.group(1).toLowerCase() + ":0" + m.group(2));
-		}
-		m.appendTail(sb);
-		css = sb.toString();
-
-		// shorter opacity IE filter
-		css = css.replaceAll("(?i)progid:DXImageTransform.Microsoft.Alpha\\(Opacity=", "alpha(opacity=");
-
-		// Find a fraction that is used for Opera's -o-device-pixel-ratio query
-		// Add token to add the "\" back in later
-		css = css.replaceAll("\\(([\\-A-Za-z]+):([0-9]+)\\/([0-9]+)\\)", "($1:$2___YUI_QUERY_FRACTION___$3)");
-
-		// Remove empty rules.
-		css = css.replaceAll("[^\\}\\{/;]+\\{\\}", "");
-
-		// Add "\" back to fix Opera -o-device-pixel-ratio query
-		css = css.replaceAll("___YUI_QUERY_FRACTION___", "/");
-
-		// TODO: Should this be after we re-insert tokens. These could alter the break points. However then
-		// we'd need to make sure we don't break in the middle of a string etc.
-		if (linebreakpos >= 0) {
-			// Some source control tools don't like it when files containing lines longer
-			// than, say 8000 characters, are checked in. The linebreak option is used in
-			// that case to split long lines after a specific column.
-			i = 0;
-			int linestartpos = 0;
-			sb = new StringBuffer(css);
-			while (i < sb.length()) {
-				char c = sb.charAt(i++);
-				if (c == '}' && i - linestartpos > linebreakpos) {
-					sb.insert(i, '\n');
-					linestartpos = i;
-				}
-			}
-
-			css = sb.toString();
-		}
-
-		// Replace multiple semi-colons in a row by a single one
-		// See SF bug #1980989
-		css = css.replaceAll(";;+", ";");
-
-		// restore preserved comments and strings
-		for(i = 0, max = preservedTokens.size(); i < max; i++) {
-			css = css.replace("___YUICSSMIN_PRESERVED_TOKEN_" + i + "___", preservedTokens.get(i).toString());
-		}
-
-		// Add spaces back in between operators for css calc function
-		// https://developer.mozilla.org/en-US/docs/Web/CSS/calc
-		// Added by Eric Arnol-Martin (earnolmartin@gmail.com)
-		sb = new StringBuffer();
-		p = Pattern.compile("calc\\([^\\)]*\\)");
-		m = p.matcher(css);
-		while (m.find()) {
-			String s = m.group();
-
-			s = s.replaceAll("(?<=[-|%|px|em|rem|vw|\\d]+)\\+", " + ");
-			s = s.replaceAll("(?<=[-|%|px|em|rem|vw|\\d]+)\\-", " - ");
-			s = s.replaceAll("(?<=[-|%|px|em|rem|vw|\\d]+)\\*", " * ");
-			s = s.replaceAll("(?<=[-|%|px|em|rem|vw|\\d]+)\\/", " / ");
-
-			m.appendReplacement(sb, s);
-		}
-		m.appendTail(sb);
-		css = sb.toString();
-
-		// Trim the final string (for any leading or trailing white spaces)
-		css = css.trim();
-
-		// Write the output...
-		out.write(css);
+		return sb.toString();
 	}
+
+	private static final Pattern _collapseCharsetDirectivesPattern =
+		Pattern.compile("(?i)^((\\s*)(@charset)( [^;]+;\\s*))+");
+	private static final Pattern _hoistCharsetDirectivesPattern =
+		Pattern.compile("(?i)^(.*)(@charset)( \"[^\"]*\";)");
+	private static final Pattern _lowercaseDirectivesPattern = Pattern.compile(
+		"(?i)@(font-face|import|(?:-(?:atsc|khtml|moz|ms|o|wap|webkit)-)?" +
+			"keyframe|media|page|namespace)");
+	private static final Pattern _lowercaseFunctionsPattern = Pattern.compile(
+		"(?i):(lang|not|nth-child|nth-last-child|nth-last-of-type|" +
+			"nth-of-type|(?:-(?:moz|webkit)-)?any)\\(");
+	private static final Pattern _lowercaseFunctionsThatCanBeValuesPattern =
+		Pattern.compile(
+			StringBundler.concat(
+				"(?i)([:,\\( ]\\s*)(attr|color-stop|from|rgba|to|url|",
+				"(?:-(?:atsc|khtml|moz|ms|o|wap|webkit)-)?(?:calc|max|min|",
+				"(?:repeating-)?(?:linear|radial)-gradient)",
+				"|-webkit-gradient)"));
+	private static final Pattern _lowercasePseudoElementsPattern =
+		Pattern.compile(
+			StringBundler.concat(
+				"(?i):(active|after|before|checked|disabled|empty|enabled|",
+				"first-(?:child|of-type)|focus|hover|last-(?:child|of-type)|",
+				"link|only-(?:child|of-type)|root|:selection|target|visited)"));
+	private static final Pattern _preserveStringsPattern = Pattern.compile(
+		"(\"([^\\\\\"]|\\\\.|\\\\)*\")|(\'([^\\\\\']|\\\\.|\\\\)*\')");
+	private static final Pattern _removeUnneededLeadingSpacesPattern =
+		Pattern.compile("(^|\\})((^|([^\\{:])+):)+([^\\{]*\\{)");
+	private static final Pattern _replace0UnitWith0Pattern1 = Pattern.compile(
+		"(?i)(^|: ?)((?:[0-9a-z-.]+ )*?)?(?:0?\\.)?0(?:px|em|%|in|cm|mm|" +
+			"pc|pt|ex|deg|g?rad|m?s|k?hz)");
+	private static final Pattern _replace0UnitWith0Pattern2 = Pattern.compile(
+		"(?i)\\( ?((?:[0-9a-z-.]+[ ,])*)?(?:0?\\.)?0(?:px|em|%|in|cm|mm|" +
+			"pc|pt|ex|deg|g?rad|m?s|k?hz)");
+	private static final Pattern _replaceBorderNonePattern = Pattern.compile(
+		"(?i)(border|border-top|border-right|border-bottom|border-left|" +
+			"outline|background):none(;|})");
+	private static final Pattern _restoreSomeMultipleZeroesPattern =
+		Pattern.compile(
+			StringBundler.concat(
+				"(?i)(background-position|webkit-mask-position|",
+				"transform-origin|webkit-transform-origin|",
+				"moz-transform-origin|o-transform-origin|",
+				"ms-transform-origin):0(;|})"));
+	private static final Pattern _retainSpaceForSpecialIE6CasesPattern =
+		Pattern.compile("(?i):first\\-(line|letter)(\\{|,)");
+	private static final Pattern _shortenRGBColorsPattern = Pattern.compile(
+		"rgb\\s*\\(\\s*([0-9,\\s]+)\\s*\\)");
+	private static final Pattern _shortenTwinComponentDigitsColorsPattern =
+		Pattern.compile(
+			StringBundler.concat(
+				"(\\=\\s*?[\"']?)?#([0-9a-fA-F])([0-9a-fA-F])",
+				"([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])",
+				"(:?\\}|[^0-9a-fA-F{][^{]*?\\})"));
+
+	private StringBuffer _sb = new StringBuffer();
 
 }

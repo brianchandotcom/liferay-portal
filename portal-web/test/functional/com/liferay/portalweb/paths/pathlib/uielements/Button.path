@@ -160,7 +160,7 @@
 </tr>
 <tr>
 	<td>BROWSE</td>
-	<td>//input[contains(@id,'file')]</td>
+	<td>//fieldset[contains(@class,'fieldset')]</td>
 	<td></td>
 </tr>
 <tr>

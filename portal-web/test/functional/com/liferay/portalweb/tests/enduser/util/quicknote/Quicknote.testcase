@@ -34,20 +34,10 @@
 		</if>
 	</tear-down>
 
-	<command name="AddQuickNote" priority="2">
-		<var name="portletName" value="Quick Note" />
-
-		<execute function="Click#clickAt" locator1="ControlMenu#ADD" />
-
-		<execute macro="Panel#expandSidebarApplicationsPanel" />
-
-		<execute function="Type#sendKeysApplicationSearch" locator1="NavBar#APPLICATION_SEARCH_FIELD" value1="${portletName}" />
-
-		<execute function="MouseOver" locator1="ControlMenuAddPanel#ADD_PORTLET_DRAG_LINK" />
-
-		<execute function="MouseOver" locator1="ControlMenuAddPanel#ADD_PORTLET_LINK" />
-
-		<execute function="Click" locator1="ControlMenuAddPanel#ADD_PORTLET_LINK" value1="Add" />
+	<command ignore="true" name="AddQuickNote" priority="2">
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Quick Note" />
+		</execute>
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Quick Note Page" />

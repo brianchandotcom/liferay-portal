@@ -159,7 +159,7 @@
 		<execute function="AssertHTMLSourceTextNotPresent" value1="${actualScript}" />
 		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
 
-		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Pages" />
+		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Site Pages" />
 
 		<var name="key_siteName" value="${siteName}" />
 

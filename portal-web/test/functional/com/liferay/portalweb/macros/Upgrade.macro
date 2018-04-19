@@ -694,7 +694,7 @@
 			<var name="pageName" value="Asset Publisher" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Portlet#TITLE" value1="Asset Publisher">
+		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#TITLE" value1="Asset Publisher">
 			<var name="key_portletName" value="Asset Publisher" />
 		</execute>
 
@@ -828,7 +828,7 @@
 			<var name="pageName" value="Nested Portlets" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Portlet#TITLE" value1="Nested Applications">
+		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#TITLE" value1="Nested Applications">
 			<var name="key_portletName" value="Nested Applications" />
 		</execute>
 
@@ -945,7 +945,7 @@
 			<var name="siteName" value="Staging Site" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Portlet#TITLE" value1="Nested Applications">
+		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#TITLE" value1="Nested Applications">
 			<var name="key_portletName" value="Nested Applications" />
 		</execute>
 

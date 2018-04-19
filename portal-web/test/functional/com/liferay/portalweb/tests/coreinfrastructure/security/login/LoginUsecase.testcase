@@ -103,6 +103,6 @@
 
 		<execute function="AssertElementPresent" locator1="UserBar#USER_SIGN_IN" />
 
-		<execute function="AssertTextEquals#assertText" locator1="HelloWorld#PORTLET_TITLE" value1="Hello World" />
+		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="HelloWorld#PORTLET_TITLE" value1="Hello World" />
 	</command>
 </definition>

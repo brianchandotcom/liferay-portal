@@ -143,7 +143,7 @@
 		<execute macro="Role#viewPermissionPG">
 			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
 			<var name="permissionFlagged" value="true" />
-			<var name="roleName" value="Owner" />
+			<var name="roleTitle" value="Owner" />
 		</execute>
 
 		<execute macro="IFrame#closeFrame" />

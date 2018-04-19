@@ -15,4 +15,5 @@
 	<bean class="com.liferay.fragment.service.persistence.impl.FragmentEntryPersistenceImpl" id="com.liferay.fragment.service.persistence.FragmentEntryPersistence" parent="basePersistence" />
 	<bean class="com.liferay.fragment.service.impl.FragmentEntryLinkLocalServiceImpl" id="com.liferay.fragment.service.FragmentEntryLinkLocalService" />
 	<bean class="com.liferay.fragment.service.persistence.impl.FragmentEntryLinkPersistenceImpl" id="com.liferay.fragment.service.persistence.FragmentEntryLinkPersistence" parent="basePersistence" />
+	<bean class="com.liferay.fragment.service.persistence.impl.FragmentEntryLinkFinderImpl" id="com.liferay.fragment.service.persistence.FragmentEntryLinkFinder" parent="basePersistence" />
 </beans>

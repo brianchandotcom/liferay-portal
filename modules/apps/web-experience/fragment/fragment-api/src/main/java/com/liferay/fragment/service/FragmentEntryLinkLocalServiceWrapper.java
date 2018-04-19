@@ -312,6 +312,16 @@ public class FragmentEntryLinkLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.fragment.model.FragmentEntryLink> getFragmentEntryLinks(
+		long groupId, long fragmentEntryId, long classNameId,
+		int layoutPageTemplateType, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentEntryLink> orderByComparator) {
+		return _fragmentEntryLinkLocalService.getFragmentEntryLinks(groupId,
+			fragmentEntryId, classNameId, layoutPageTemplateType, start, end,
+			orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.fragment.model.FragmentEntryLink> getFragmentEntryLinks(
 		long groupId, long fragmentEntryId, long classNameId, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentEntryLink> orderByComparator) {
@@ -372,6 +382,13 @@ public class FragmentEntryLinkLocalServiceWrapper
 		long classNameId) {
 		return _fragmentEntryLinkLocalService.getFragmentEntryLinksCount(groupId,
 			fragmentEntryId, classNameId);
+	}
+
+	@Override
+	public int getFragmentEntryLinksCount(long groupId, long fragmentEntryId,
+		long classNameId, int layoutPageTemplateType) {
+		return _fragmentEntryLinkLocalService.getFragmentEntryLinksCount(groupId,
+			fragmentEntryId, classNameId, layoutPageTemplateType);
 	}
 
 	@Override
@@ -446,6 +463,15 @@ public class FragmentEntryLinkLocalServiceWrapper
 		_fragmentEntryLinkLocalService.updateFragmentEntryLinks(userId,
 			groupId, classNameId, classPK, fragmentEntryIds, editableValues,
 			serviceContext);
+	}
+
+	@Override
+	public void updateFragmentEntryLinks(long[] fragmentEntryLinkIds,
+		long fragmentEntryId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_fragmentEntryLinkLocalService.updateFragmentEntryLinks(fragmentEntryLinkIds,
+			fragmentEntryId, serviceContext);
 	}
 
 	@Override

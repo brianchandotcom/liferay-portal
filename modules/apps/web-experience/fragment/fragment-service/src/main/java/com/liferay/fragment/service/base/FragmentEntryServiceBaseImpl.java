@@ -17,6 +17,7 @@ package com.liferay.fragment.service.base;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.fragment.service.persistence.FragmentCollectionPersistence;
+import com.liferay.fragment.service.persistence.FragmentEntryLinkFinder;
 import com.liferay.fragment.service.persistence.FragmentEntryLinkPersistence;
 import com.liferay.fragment.service.persistence.FragmentEntryPersistence;
 
@@ -358,6 +359,25 @@ public abstract class FragmentEntryServiceBaseImpl extends BaseServiceImpl
 		this.fragmentEntryLinkPersistence = fragmentEntryLinkPersistence;
 	}
 
+	/**
+	 * Returns the fragment entry link finder.
+	 *
+	 * @return the fragment entry link finder
+	 */
+	public FragmentEntryLinkFinder getFragmentEntryLinkFinder() {
+		return fragmentEntryLinkFinder;
+	}
+
+	/**
+	 * Sets the fragment entry link finder.
+	 *
+	 * @param fragmentEntryLinkFinder the fragment entry link finder
+	 */
+	public void setFragmentEntryLinkFinder(
+		FragmentEntryLinkFinder fragmentEntryLinkFinder) {
+		this.fragmentEntryLinkFinder = fragmentEntryLinkFinder;
+	}
+
 	public void afterPropertiesSet() {
 	}
 
@@ -438,4 +458,6 @@ public abstract class FragmentEntryServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.fragment.service.FragmentEntryLinkLocalService fragmentEntryLinkLocalService;
 	@BeanReference(type = FragmentEntryLinkPersistence.class)
 	protected FragmentEntryLinkPersistence fragmentEntryLinkPersistence;
+	@BeanReference(type = FragmentEntryLinkFinder.class)
+	protected FragmentEntryLinkFinder fragmentEntryLinkFinder;
 }

@@ -295,6 +295,15 @@ public class FragmentEntryLinkLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.fragment.model.FragmentEntryLink> getFragmentEntryLinks(
+		long groupId, long fragmentEntryId, long classNameId,
+		int layoutPageTemplateType, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentEntryLink> orderByComparator) {
+		return getService()
+				   .getFragmentEntryLinks(groupId, fragmentEntryId,
+			classNameId, layoutPageTemplateType, start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.fragment.model.FragmentEntryLink> getFragmentEntryLinks(
 		long groupId, long fragmentEntryId, long classNameId, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentEntryLink> orderByComparator) {
@@ -353,6 +362,13 @@ public class FragmentEntryLinkLocalServiceUtil {
 		return getService()
 				   .getFragmentEntryLinksCount(groupId, fragmentEntryId,
 			classNameId);
+	}
+
+	public static int getFragmentEntryLinksCount(long groupId,
+		long fragmentEntryId, long classNameId, int layoutPageTemplateType) {
+		return getService()
+				   .getFragmentEntryLinksCount(groupId, fragmentEntryId,
+			classNameId, layoutPageTemplateType);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
@@ -419,6 +435,15 @@ public class FragmentEntryLinkLocalServiceUtil {
 		getService()
 			.updateFragmentEntryLinks(userId, groupId, classNameId, classPK,
 			fragmentEntryIds, editableValues, serviceContext);
+	}
+
+	public static void updateFragmentEntryLinks(long[] fragmentEntryLinkIds,
+		long fragmentEntryId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.updateFragmentEntryLinks(fragmentEntryLinkIds, fragmentEntryId,
+			serviceContext);
 	}
 
 	public static FragmentEntryLinkLocalService getService() {

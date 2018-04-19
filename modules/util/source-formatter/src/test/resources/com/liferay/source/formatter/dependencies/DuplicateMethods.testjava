@@ -21,8 +21,6 @@ public class DuplicateMethods {
 
 	public void method(String input, int count) {
 		while (count > 0) {
-			String output = input;
-
 			count++;
 		}
 	}

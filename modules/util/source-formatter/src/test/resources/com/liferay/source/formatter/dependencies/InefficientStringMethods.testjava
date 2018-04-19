@@ -27,8 +27,8 @@ public class InefficientStringMethods {
 			return;
 		}
 
-		String test3 = test1.toLowerCase();
-		String test4 = test2.toUpperCase();
+		test1.toLowerCase();
+		test2.toUpperCase();
 	}
 
 }

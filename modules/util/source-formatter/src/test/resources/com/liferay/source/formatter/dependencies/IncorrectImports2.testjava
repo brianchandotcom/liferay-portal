@@ -28,9 +28,15 @@ public class IncorrectImports2 {
 	public void method() {
 		Class<?> clazz = Proxy.class;
 
+		clazz = null;
+
 		String s = StringPool.SPACE;
 
+		s = null;
+
 		List<String> list = Collections.emptyList();
+
+		list = null;
 	}
 
 }

@@ -1077,7 +1077,7 @@
 	</command>
 
 	<command name="selectAllCP">
-		<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
+		<execute macro="PortletEntry#selectAll" />
 	</command>
 
 	<command name="selectArticleCP">

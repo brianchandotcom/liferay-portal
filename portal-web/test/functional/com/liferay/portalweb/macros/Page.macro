@@ -818,7 +818,7 @@
 			<var name="key_pageName" value="${page}" />
 		</execute>
 
-		<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
+		<execute macro="PortletEntry#selectAll" />
 
 		<execute function="ClickNoError" locator1="Icon#DELETE" />
 

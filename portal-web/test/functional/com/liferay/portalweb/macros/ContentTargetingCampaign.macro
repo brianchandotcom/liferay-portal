@@ -157,7 +157,7 @@
 			<var name="navItem" value="Campaigns" />
 		</execute>
 
-		<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
+		<execute macro="PortletEntry#selectAll" />
 
 		<execute function="ClickNoError" locator1="Icon#DELETE" />
 

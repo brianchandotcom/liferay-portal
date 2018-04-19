@@ -155,7 +155,7 @@
 
 		<execute function="AssertTextEquals" locator1="Categories#VOCABULARY_CATEGORY" value1="${categoryName}" />
 
-		<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
+		<execute macro="PortletEntry#selectAll" />
 
 		<execute function="ClickNoError" locator1="Icon#DELETE" />
 
@@ -175,7 +175,7 @@
 
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 
-		<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
+		<execute macro="PortletEntry#selectAll" />
 
 		<execute function="ClickNoError" locator1="Icon#DELETE" />
 
@@ -235,7 +235,7 @@
 			<var name="rowEntry" value="${vocabularyName}" />
 		</execute>
 
-		<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
+		<execute macro="PortletEntry#selectAll" />
 
 		<execute function="ClickNoError" locator1="Icon#DELETE" />
 

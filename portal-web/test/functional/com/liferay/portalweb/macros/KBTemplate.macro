@@ -39,7 +39,7 @@
 		<if>
 			<condition function="IsElementPresent" locator1="ContentRow#ENTRY_CONTENT_ROW_1" />
 			<then>
-				<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
+				<execute macro="PortletEntry#selectAll" />
 
 				<execute function="AssertClickNoError" locator1="Button#DELETE" value1="Delete" />
 

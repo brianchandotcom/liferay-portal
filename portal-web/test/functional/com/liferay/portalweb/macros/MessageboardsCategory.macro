@@ -176,7 +176,7 @@
 		<if>
 			<condition function="IsElementPresent" locator1="Checkbox#SELECT_ALL" />
 			<then>
-				<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
+				<execute macro="PortletEntry#selectAll" />
 
 				<execute function="Click" locator1="Button#RECYCLE_BIN" />
 
@@ -302,7 +302,7 @@
 
 		<execute function="IsElementPresent" locator1="Checkbox#SELECT_ALL" />
 
-		<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
+		<execute macro="PortletEntry#selectAll" />
 
 		<execute function="Click" locator1="Icon#MOVE_TO_RECYCLE_BIN" />
 

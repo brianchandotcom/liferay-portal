@@ -120,17 +120,14 @@ public class JournalFeedsDisplayContext {
 
 		int feedsCount = JournalFeedLocalServiceUtil.searchCount(
 			themeDisplay.getCompanyId(), searchTerms.getGroupId(),
-			searchTerms.getFeedId(), searchTerms.getName(),
-			searchTerms.getDescription(), searchTerms.isAndOperator());
+			searchTerms.getKeywords());
 
 		_feedSearch.setTotal(feedsCount);
 
 		List feeds = JournalFeedLocalServiceUtil.search(
 			themeDisplay.getCompanyId(), searchTerms.getGroupId(),
-			searchTerms.getFeedId(), searchTerms.getName(),
-			searchTerms.getDescription(), searchTerms.isAndOperator(),
-			_feedSearch.getStart(), _feedSearch.getEnd(),
-			_feedSearch.getOrderByComparator());
+			searchTerms.getKeywords(), _feedSearch.getStart(),
+			_feedSearch.getEnd(), _feedSearch.getOrderByComparator());
 
 		_feedSearch.setResults(feeds);
 

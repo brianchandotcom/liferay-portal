@@ -76,7 +76,7 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 		UADDisplay uadDisplay = _uadRegistry.getUADDisplay(uadRegistryKey);
 
 		resourceRequest.setAttribute(
-			UADWebKeys.INFO_PANEL_UAD_ENTITY_DISPLAY, uadDisplay);
+			UADWebKeys.INFO_PANEL_UAD_DISPLAY, uadDisplay);
 
 		include(resourceRequest, resourceResponse, "/info_panel.jsp");
 	}

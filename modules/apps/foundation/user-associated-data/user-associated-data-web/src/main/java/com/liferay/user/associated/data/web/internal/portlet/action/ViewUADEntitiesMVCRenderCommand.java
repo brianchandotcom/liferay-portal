@@ -108,7 +108,7 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 			viewUADEntitiesDisplay.setUADRegistryKey(uadRegistryKey);
 
 			renderRequest.setAttribute(
-				UADWebKeys.INFO_PANEL_UAD_ENTITY_DISPLAY, uadDisplay);
+				UADWebKeys.INFO_PANEL_UAD_DISPLAY, uadDisplay);
 			renderRequest.setAttribute(
 				UADWebKeys.VIEW_UAD_ENTITIES_DISPLAY, viewUADEntitiesDisplay);
 		}

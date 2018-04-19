@@ -19,11 +19,11 @@ package com.liferay.user.associated.data.web.internal.constants;
  */
 public class UADWebKeys {
 
+	public static final String INFO_PANEL_UAD_DISPLAY =
+		"INFO_PANEL_UAD_DISPLAY";
+
 	public static final String INFO_PANEL_UAD_ENTITIES =
 		"INFO_PANEL_UAD_ENTITIES";
-
-	public static final String INFO_PANEL_UAD_ENTITY_DISPLAY =
-		"INFO_PANEL_UAD_ENTITY_DISPLAY";
 
 	public static final String UAD_APPLICATION_EXPORT_DISPLAY_LIST =
 		"UAD_APPLICATION_EXPORT_DISPLAY_LIST";

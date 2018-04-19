@@ -18,7 +18,7 @@
 
 <%
 List<UADEntity> uadEntities = (List<UADEntity>)request.getAttribute(UADWebKeys.INFO_PANEL_UAD_ENTITIES);
-UADDisplay uadDisplay = (UADDisplay)request.getAttribute(UADWebKeys.INFO_PANEL_UAD_ENTITY_DISPLAY);
+UADDisplay uadDisplay = (UADDisplay)request.getAttribute(UADWebKeys.INFO_PANEL_UAD_DISPLAY);
 %>
 
 <div class="sidebar sidebar-light">

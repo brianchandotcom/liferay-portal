@@ -28,6 +28,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcPath", "/orphan_portlets.jsp");
 portletURL.setParameter("backURL", backURL);
 
+portletDisplay.setDescription(LanguageUtil.get(request, "orphan-portlets-description"));
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 

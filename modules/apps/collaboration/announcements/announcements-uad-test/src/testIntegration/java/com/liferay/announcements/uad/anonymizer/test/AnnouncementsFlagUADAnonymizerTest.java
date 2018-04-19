@@ -19,7 +19,6 @@ import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.announcements.uad.test.AnnouncementsFlagUADEntityTestHelper;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -41,7 +40,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class AnnouncementsFlagUADAnonymizerTest
-	extends BaseUADAnonymizerTestCase {
+	extends BaseUADAnonymizerTestCase<AnnouncementsFlag> {
 
 	@ClassRule
 	@Rule
@@ -49,12 +48,13 @@ public class AnnouncementsFlagUADAnonymizerTest
 		new LiferayIntegrationTestRule();
 
 	@Override
-	protected BaseModel<?> addBaseModel(long userId) throws Exception {
+	protected AnnouncementsFlag addBaseModel(long userId) throws Exception {
 		return addBaseModel(userId, true);
 	}
 
 	@Override
-	protected BaseModel<?> addBaseModel(long userId, boolean deleteAfterTestRun)
+	protected AnnouncementsFlag addBaseModel(
+			long userId, boolean deleteAfterTestRun)
 		throws Exception {
 
 		AnnouncementsFlag announcementsFlag =

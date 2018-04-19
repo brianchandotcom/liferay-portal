@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.product.apio.architect.identifier;
+package com.liferay.product.apio.identifier;
 
 import com.liferay.apio.architect.identifier.Identifier;
 
@@ -22,5 +22,5 @@ import com.liferay.apio.architect.identifier.Identifier;
  * @author Zoltán Takács
  * @review
  */
-public interface CPDefinitionId extends Identifier<Long> {
+public interface ProductDefinitionIdentifier extends Identifier<Long> {
 }

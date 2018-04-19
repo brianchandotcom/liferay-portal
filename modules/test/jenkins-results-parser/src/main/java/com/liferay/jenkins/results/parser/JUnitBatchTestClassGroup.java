@@ -203,7 +203,8 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			return propertyValue;
 		}
 
-		return portalTestProperties.getProperty("test.class.names.excludes");
+		return JenkinsResultsParserUtil.getProperty(
+			portalTestProperties, "test.class.names.excludes");
 	}
 
 	private String _getTestClassNamesIncludesPropertyValue() {
@@ -214,7 +215,8 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			return propertyValue;
 		}
 
-		return portalTestProperties.getProperty("test.class.names.includes");
+		return JenkinsResultsParserUtil.getProperty(
+			portalTestProperties, "test.class.names.includes");
 	}
 
 	private List<PathMatcher> _getTestClassNamesPathMatchers(

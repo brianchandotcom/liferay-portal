@@ -47,7 +47,8 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 
 		if (!tckHomeDirectory.exists()) {
 			tckHomeDirectory = new File(
-				portalTestProperties.getProperty("tck.home"));
+				JenkinsResultsParserUtil.getProperty(
+					portalTestProperties, "tck.home"));
 		}
 
 		_tckHomeDirectory = tckHomeDirectory;

@@ -22,9 +22,15 @@ import com.liferay.fragment.util.comparator.FragmentCollectionCreateDateComparat
 import com.liferay.fragment.util.comparator.FragmentCollectionNameComparator;
 import com.liferay.fragment.util.comparator.FragmentEntryCreateDateComparator;
 import com.liferay.fragment.util.comparator.FragmentEntryNameComparator;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -34,6 +40,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -60,6 +67,14 @@ public class FragmentItemSelectorViewDisplayContext {
 		_portletURL = portletURL;
 	}
 
+	public String getClearResultsURL() {
+		PortletURL clearResultsURL = getPortletURL();
+
+		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+
+		return clearResultsURL.toString();
+	}
+
 	public String getDisplayStyle() {
 		if (Validator.isNotNull(_displayStyle)) {
 			return _displayStyle;
@@ -70,30 +85,27 @@ public class FragmentItemSelectorViewDisplayContext {
 		return _displayStyle;
 	}
 
-	public FragmentCollection getFragmentCollection() throws PortalException {
-		if (_fragmentCollection != null) {
-			return _fragmentCollection;
-		}
+	public List<DropdownItem> getFilterItemsDropdownItems() {
+		return new DropdownItemList(_request) {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getFilterNavigationDropdownItems());
+						dropdownGroupItem.setLabel("filter-by-navigation");
+					});
 
-		_fragmentCollection =
-			FragmentCollectionServiceUtil.fetchFragmentCollection(
-				getFragmentCollectionId());
-
-		return _fragmentCollection;
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getOrderByDropdownItems());
+						dropdownGroupItem.setLabel("order-by");
+					});
+			}
+		};
 	}
 
-	public long getFragmentCollectionId() {
-		if (Validator.isNotNull(_fragmentCollectionId)) {
-			return _fragmentCollectionId;
-		}
-
-		_fragmentCollectionId = ParamUtil.getLong(
-			_request, "fragmentCollectionId");
-
-		return _fragmentCollectionId;
-	}
-
-	public String getFragmentCollectionsRedirect() throws PortletException {
+	public String getFragmentCollectionsRedirect() {
 		PortletURL backURL = getPortletURL();
 
 		backURL.setParameter("fragmentCollectionId", "0");
@@ -101,9 +113,7 @@ public class FragmentItemSelectorViewDisplayContext {
 		return backURL.toString();
 	}
 
-	public SearchContainer getFragmentCollectionsSearchContainer()
-		throws PortletException {
-
+	public SearchContainer getFragmentCollectionsSearchContainer() {
 		if (_fragmentCollectionsSearchContainer != null) {
 			return _fragmentCollectionsSearchContainer;
 		}
@@ -116,15 +126,15 @@ public class FragmentItemSelectorViewDisplayContext {
 				_portletRequest, getPortletURL(), null,
 				"there-are-no-collections");
 
-		if (isSearch()) {
+		if (_isSearch()) {
 			fragmentCollectionsSearchContainer.setSearch(true);
 		}
 
 		OrderByComparator<FragmentCollection> orderByComparator =
 			_getFragmentCollectionOrderByComparator(
-				getOrderByCol(), getOrderByType());
+				_getOrderByCol(), getOrderByType());
 
-		fragmentCollectionsSearchContainer.setOrderByCol(getOrderByCol());
+		fragmentCollectionsSearchContainer.setOrderByCol(_getOrderByCol());
 		fragmentCollectionsSearchContainer.setOrderByComparator(
 			orderByComparator);
 		fragmentCollectionsSearchContainer.setOrderByType(getOrderByType());
@@ -134,17 +144,17 @@ public class FragmentItemSelectorViewDisplayContext {
 		List<FragmentCollection> fragmentCollections = null;
 		int fragmentCollectionsCount = 0;
 
-		if (isSearch()) {
+		if (_isSearch()) {
 			fragmentCollections =
 				FragmentCollectionServiceUtil.getFragmentCollections(
-					themeDisplay.getScopeGroupId(), getKeywords(),
+					themeDisplay.getScopeGroupId(), _getKeywords(),
 					fragmentCollectionsSearchContainer.getStart(),
 					fragmentCollectionsSearchContainer.getEnd(),
 					orderByComparator);
 
 			fragmentCollectionsCount =
 				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
-					themeDisplay.getScopeGroupId(), getKeywords());
+					themeDisplay.getScopeGroupId(), _getKeywords());
 		}
 		else {
 			fragmentCollections =
@@ -168,15 +178,20 @@ public class FragmentItemSelectorViewDisplayContext {
 		return _fragmentCollectionsSearchContainer;
 	}
 
+	public int getFragmentCollectionsTotalItems() {
+		SearchContainer fragmentCollectionsSearchContainer =
+			getFragmentCollectionsSearchContainer();
+
+		return fragmentCollectionsSearchContainer.getTotal();
+	}
+
 	public String getFragmentCollectionTitle() throws PortalException {
-		FragmentCollection fragmentCollection = getFragmentCollection();
+		FragmentCollection fragmentCollection = _getFragmentCollection();
 
 		return fragmentCollection.getName();
 	}
 
-	public SearchContainer getFragmentEntriesSearchContainer()
-		throws PortletException {
-
+	public SearchContainer getFragmentEntriesSearchContainer() {
 		if (_fragmentEntriesSearchContainer != null) {
 			return _fragmentEntriesSearchContainer;
 		}
@@ -187,41 +202,41 @@ public class FragmentItemSelectorViewDisplayContext {
 		SearchContainer fragmentEntriesSearchContainer = new SearchContainer(
 			_portletRequest, getPortletURL(), null, "there-are-no-fragments");
 
-		if (isSearch()) {
+		if (_isSearch()) {
 			fragmentEntriesSearchContainer.setSearch(true);
 		}
 
 		OrderByComparator<FragmentEntry> orderByComparator =
 			_getFragmentEntryOrderByComparator(
-				getOrderByCol(), getOrderByType());
+				_getOrderByCol(), getOrderByType());
 
-		fragmentEntriesSearchContainer.setOrderByCol(getOrderByCol());
+		fragmentEntriesSearchContainer.setOrderByCol(_getOrderByCol());
 		fragmentEntriesSearchContainer.setOrderByComparator(orderByComparator);
 		fragmentEntriesSearchContainer.setOrderByType(getOrderByType());
 
 		List<FragmentEntry> fragmentEntries = null;
 		int fragmentEntriesCount = 0;
 
-		if (isSearch()) {
+		if (_isSearch()) {
 			fragmentEntries = FragmentEntryServiceUtil.getFragmentEntries(
-				themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
-				getKeywords(), fragmentEntriesSearchContainer.getStart(),
+				themeDisplay.getScopeGroupId(), _getFragmentCollectionId(),
+				_getKeywords(), fragmentEntriesSearchContainer.getStart(),
 				fragmentEntriesSearchContainer.getEnd(), orderByComparator);
 
 			fragmentEntriesCount =
 				FragmentEntryServiceUtil.getFragmentCollectionsCount(
-					themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
-					getKeywords());
+					themeDisplay.getScopeGroupId(), _getFragmentCollectionId(),
+					_getKeywords());
 		}
 		else {
 			fragmentEntries = FragmentEntryServiceUtil.getFragmentEntries(
-				themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
+				themeDisplay.getScopeGroupId(), _getFragmentCollectionId(),
 				fragmentEntriesSearchContainer.getStart(),
 				fragmentEntriesSearchContainer.getEnd(), orderByComparator);
 
 			fragmentEntriesCount =
 				FragmentEntryServiceUtil.getFragmentCollectionsCount(
-					themeDisplay.getScopeGroupId(), getFragmentCollectionId());
+					themeDisplay.getScopeGroupId(), _getFragmentCollectionId());
 		}
 
 		fragmentEntriesSearchContainer.setResults(fragmentEntries);
@@ -232,29 +247,15 @@ public class FragmentItemSelectorViewDisplayContext {
 		return _fragmentEntriesSearchContainer;
 	}
 
+	public int getFragmentEntriesTotalItems() {
+		SearchContainer fragmentEntriesSearchContainer =
+			getFragmentEntriesSearchContainer();
+
+		return fragmentEntriesSearchContainer.getTotal();
+	}
+
 	public String getItemSelectedEventName() {
 		return _itemSelectedEventName;
-	}
-
-	public String getKeywords() {
-		if (_keywords != null) {
-			return _keywords;
-		}
-
-		_keywords = ParamUtil.getString(_request, "keywords");
-
-		return _keywords;
-	}
-
-	public String getOrderByCol() {
-		if (Validator.isNotNull(_orderByCol)) {
-			return _orderByCol;
-		}
-
-		_orderByCol = ParamUtil.getString(
-			_request, "orderByCol", "create-date");
-
-		return _orderByCol;
 	}
 
 	public String getOrderByType() {
@@ -267,14 +268,26 @@ public class FragmentItemSelectorViewDisplayContext {
 		return _orderByType;
 	}
 
-	public String[] getOrderColumns() {
-		return new String[] {"create-date", "name"};
-	}
+	public PortletURL getPortletURL() {
+		LiferayPortletResponse liferayPortletResponse =
+			PortalUtil.getLiferayPortletResponse(_portletResponse);
 
-	public PortletURL getPortletURL() throws PortletException {
-		PortletURL portletURL = PortletURLUtil.clone(
-			_portletURL,
-			PortalUtil.getLiferayPortletResponse(_portletResponse));
+		PortletURL portletURL = null;
+
+		try {
+			portletURL = PortletURLUtil.clone(
+				_portletURL, liferayPortletResponse);
+		}
+		catch (PortletException pe) {
+			portletURL = liferayPortletResponse.createRenderURL();
+		}
+
+		long fragmentCollectionId = _getFragmentCollectionId();
+
+		if (fragmentCollectionId > 0) {
+			portletURL.setParameter(
+				"fragmentCollectionId", String.valueOf(fragmentCollectionId));
+		}
 
 		String displayStyle = getDisplayStyle();
 
@@ -282,13 +295,13 @@ public class FragmentItemSelectorViewDisplayContext {
 			portletURL.setParameter("displayStyle", displayStyle);
 		}
 
-		String keywords = getKeywords();
+		String keywords = _getKeywords();
 
 		if (Validator.isNotNull(keywords)) {
 			portletURL.setParameter("keywords", keywords);
 		}
 
-		String orderByCol = getOrderByCol();
+		String orderByCol = _getOrderByCol();
 
 		if (Validator.isNotNull(orderByCol)) {
 			portletURL.setParameter("orderByCol", orderByCol);
@@ -303,8 +316,67 @@ public class FragmentItemSelectorViewDisplayContext {
 		return portletURL;
 	}
 
-	public boolean isSearch() {
-		return _search;
+	public String getSearchActionURL() {
+		PortletURL searchActionURL = getPortletURL();
+
+		return searchActionURL.toString();
+	}
+
+	public String getSortingURL() {
+		PortletURL sortingURL = getPortletURL();
+
+		sortingURL.setParameter(
+			"orderByType",
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
+
+		return sortingURL.toString();
+	}
+
+	public List<ViewTypeItem> getViewTypeItems() {
+		return new ViewTypeItemList(
+			_request, getPortletURL(), getDisplayStyle()) {
+
+			{
+				addCardViewTypeItem();
+			}
+
+		};
+	}
+
+	private List<DropdownItem> _getFilterNavigationDropdownItems() {
+		return new DropdownItemList(_request) {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(true);
+						dropdownItem.setHref(getPortletURL());
+						dropdownItem.setLabel("all");
+					});
+			}
+		};
+	}
+
+	private FragmentCollection _getFragmentCollection() throws PortalException {
+		if (_fragmentCollection != null) {
+			return _fragmentCollection;
+		}
+
+		_fragmentCollection =
+			FragmentCollectionServiceUtil.fetchFragmentCollection(
+				_getFragmentCollectionId());
+
+		return _fragmentCollection;
+	}
+
+	private long _getFragmentCollectionId() {
+		if (Validator.isNotNull(_fragmentCollectionId)) {
+			return _fragmentCollectionId;
+		}
+
+		_fragmentCollectionId = ParamUtil.getLong(
+			_request, "fragmentCollectionId");
+
+		return _fragmentCollectionId;
 	}
 
 	private OrderByComparator<FragmentCollection>
@@ -351,6 +423,55 @@ public class FragmentItemSelectorViewDisplayContext {
 		}
 
 		return orderByComparator;
+	}
+
+	private String _getKeywords() {
+		if (_keywords != null) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(_request, "keywords");
+
+		return _keywords;
+	}
+
+	private String _getOrderByCol() {
+		if (Validator.isNotNull(_orderByCol)) {
+			return _orderByCol;
+		}
+
+		_orderByCol = ParamUtil.getString(
+			_request, "orderByCol", "create-date");
+
+		return _orderByCol;
+	}
+
+	private List<DropdownItem> _getOrderByDropdownItems() {
+		return new DropdownItemList(_request) {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(
+							Objects.equals(_getOrderByCol(), "name"));
+						dropdownItem.setHref(
+							getPortletURL(), "orderByCol", "name");
+						dropdownItem.setLabel("name");
+					});
+
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(
+							Objects.equals(_getOrderByCol(), "create-date"));
+						dropdownItem.setHref(
+							getPortletURL(), "orderByCol", "create-date");
+						dropdownItem.setLabel("create-date");
+					});
+			}
+		};
+	}
+
+	private boolean _isSearch() {
+		return _search;
 	}
 
 	private String _displayStyle;

@@ -21,44 +21,19 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "collect
 PortalUtil.addPortletBreadcrumbEntry(request, fragmentItemSelectorViewDisplayContext.getFragmentCollectionTitle(), null);
 %>
 
-<liferay-frontend:management-bar
+<clay:management-toolbar
+	clearResultsURL="<%= fragmentItemSelectorViewDisplayContext.getClearResultsURL() %>"
+	componentId="fragmentItemSelectorFragmentEntriesManagementToolbar"
+	filterItems="<%= fragmentItemSelectorViewDisplayContext.getFilterItemsDropdownItems() %>"
+	searchActionURL="<%= fragmentItemSelectorViewDisplayContext.getSearchActionURL() %>"
 	searchContainerId="fragmentEntries"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon"} %>'
-			portletURL="<%= fragmentItemSelectorViewDisplayContext.getPortletURL() %>"
-			selectedDisplayStyle="<%= fragmentItemSelectorViewDisplayContext.getDisplayStyle() %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= fragmentItemSelectorViewDisplayContext.getPortletURL() %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= fragmentItemSelectorViewDisplayContext.getOrderByCol() %>"
-			orderByType="<%= fragmentItemSelectorViewDisplayContext.getOrderByType() %>"
-			orderColumns="<%= fragmentItemSelectorViewDisplayContext.getOrderColumns() %>"
-			portletURL="<%= fragmentItemSelectorViewDisplayContext.getPortletURL() %>"
-		/>
-
-		<li>
-
-			<%
-			PortletURL portletURL = fragmentItemSelectorViewDisplayContext.getPortletURL();
-			%>
-
-			<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
-				<liferay-ui:input-search
-					markupView="lexicon"
-				/>
-			</aui:form>
-		</li>
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
+	searchFormName="searchFm"
+	selectable="<%= false %>"
+	sortingOrder="<%= fragmentItemSelectorViewDisplayContext.getOrderByType() %>"
+	sortingURL="<%= fragmentItemSelectorViewDisplayContext.getSortingURL() %>"
+	totalItems="<%= fragmentItemSelectorViewDisplayContext.getFragmentEntriesTotalItems() %>"
+	viewTypes="<%= fragmentItemSelectorViewDisplayContext.getViewTypeItems() %>"
+/>
 
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<div id="breadcrumb">

@@ -122,11 +122,12 @@ public class LayoutPageTemplateEntryModelImpl extends BaseModelImpl<LayoutPageTe
 				"value.object.column.bitmask.enabled.com.liferay.layout.page.template.model.LayoutPageTemplateEntry"),
 			true);
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
-	public static final long DEFAULTTEMPLATE_COLUMN_BITMASK = 2L;
-	public static final long GROUPID_COLUMN_BITMASK = 4L;
-	public static final long LAYOUTPAGETEMPLATECOLLECTIONID_COLUMN_BITMASK = 8L;
-	public static final long NAME_COLUMN_BITMASK = 16L;
-	public static final long TYPE_COLUMN_BITMASK = 32L;
+	public static final long CLASSTYPEID_COLUMN_BITMASK = 2L;
+	public static final long DEFAULTTEMPLATE_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
+	public static final long LAYOUTPAGETEMPLATECOLLECTIONID_COLUMN_BITMASK = 16L;
+	public static final long NAME_COLUMN_BITMASK = 32L;
+	public static final long TYPE_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -524,7 +525,19 @@ public class LayoutPageTemplateEntryModelImpl extends BaseModelImpl<LayoutPageTe
 
 	@Override
 	public void setClassTypeId(long classTypeId) {
+		_columnBitmask |= CLASSTYPEID_COLUMN_BITMASK;
+
+		if (!_setOriginalClassTypeId) {
+			_setOriginalClassTypeId = true;
+
+			_originalClassTypeId = _classTypeId;
+		}
+
 		_classTypeId = classTypeId;
+	}
+
+	public long getOriginalClassTypeId() {
+		return _originalClassTypeId;
 	}
 
 	@JSON
@@ -735,6 +748,10 @@ public class LayoutPageTemplateEntryModelImpl extends BaseModelImpl<LayoutPageTe
 
 		layoutPageTemplateEntryModelImpl._setOriginalClassNameId = false;
 
+		layoutPageTemplateEntryModelImpl._originalClassTypeId = layoutPageTemplateEntryModelImpl._classTypeId;
+
+		layoutPageTemplateEntryModelImpl._setOriginalClassTypeId = false;
+
 		layoutPageTemplateEntryModelImpl._originalName = layoutPageTemplateEntryModelImpl._name;
 
 		layoutPageTemplateEntryModelImpl._originalType = layoutPageTemplateEntryModelImpl._type;
@@ -938,6 +955,8 @@ public class LayoutPageTemplateEntryModelImpl extends BaseModelImpl<LayoutPageTe
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;
 	private long _classTypeId;
+	private long _originalClassTypeId;
+	private boolean _setOriginalClassTypeId;
 	private String _name;
 	private String _originalName;
 	private int _type;

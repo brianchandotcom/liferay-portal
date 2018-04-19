@@ -230,14 +230,6 @@ public class LayoutPageTemplateEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_C_D() throws Exception {
-		_persistence.countByG_C_D(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
-
-		_persistence.countByG_C_D(0L, 0L, RandomTestUtil.randomBoolean());
-	}
-
-	@Test
 	public void testCountByG_T_LikeN() throws Exception {
 		_persistence.countByG_T_LikeN(RandomTestUtil.nextLong(), "",
 			RandomTestUtil.nextInt());
@@ -245,6 +237,15 @@ public class LayoutPageTemplateEntryPersistenceTest {
 		_persistence.countByG_T_LikeN(0L, "null", 0);
 
 		_persistence.countByG_T_LikeN(0L, (String)null, 0);
+	}
+
+	@Test
+	public void testCountByG_C_C_D() throws Exception {
+		_persistence.countByG_C_C_D(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_C_C_D(0L, 0L, 0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test

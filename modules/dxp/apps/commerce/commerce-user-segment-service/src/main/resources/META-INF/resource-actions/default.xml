@@ -5,6 +5,7 @@
 	<model-resource>
 		<model-name>com.liferay.commerce.user.segment</model-name>
 		<portlet-ref>
+			<portlet-name>com_liferay_commerce_user_segment_web_internal_portlet_CommerceUserSegmentPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
@@ -27,6 +28,7 @@
 	<model-resource>
 		<model-name>com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry</model-name>
 		<portlet-ref>
+			<portlet-name>com_liferay_commerce_user_segment_web_internal_portlet_CommerceUserSegmentPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>

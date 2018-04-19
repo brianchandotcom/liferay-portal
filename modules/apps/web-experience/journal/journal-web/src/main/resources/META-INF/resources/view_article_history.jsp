@@ -44,52 +44,17 @@ JournalArticle article = journalDisplayContext.getArticle();
 			items="<%= journalHistoryDisplayContext.getNavigationItems() %>"
 		/>
 
-		<liferay-frontend:management-bar
-			includeCheckBox="<%= true %>"
+		<clay:management-toolbar
+			actionItems="<%= journalHistoryDisplayContext.getActionItemsDropdownItems() %>"
+			componentId="journalHistoryManagementToolbar"
+			filterItems="<%= journalHistoryDisplayContext.getFilterItemsDropdownItems() %>"
 			searchContainerId="articleVersions"
-		>
-			<liferay-frontend:management-bar-buttons>
-				<liferay-frontend:management-bar-display-buttons
-					displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-					portletURL="<%= PortletURLUtil.clone(journalHistoryDisplayContext.getPortletURL(), renderResponse) %>"
-					selectedDisplayStyle="<%= journalHistoryDisplayContext.getDisplayStyle() %>"
-				/>
-			</liferay-frontend:management-bar-buttons>
-
-			<liferay-frontend:management-bar-filters>
-				<liferay-frontend:management-bar-navigation
-					navigationKeys='<%= new String[] {"all"} %>'
-					portletURL="<%= PortletURLUtil.clone(journalHistoryDisplayContext.getPortletURL(), renderResponse) %>"
-				/>
-
-				<liferay-frontend:management-bar-sort
-					orderByCol="<%= journalHistoryDisplayContext.getOrderByCol() %>"
-					orderByType="<%= journalHistoryDisplayContext.getOrderByType() %>"
-					orderColumns='<%= new String[] {"version", "display-date", "modified-date"} %>'
-					portletURL="<%= PortletURLUtil.clone(journalHistoryDisplayContext.getPortletURL(), renderResponse) %>"
-				/>
-			</liferay-frontend:management-bar-filters>
-
-			<liferay-frontend:management-bar-action-buttons>
-				<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) %>">
-					<liferay-frontend:management-bar-button
-						href="javascript:;"
-						icon="trash"
-						id="deleteArticles"
-						label="delete"
-					/>
-				</c:if>
-
-				<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.EXPIRE) %>">
-					<liferay-frontend:management-bar-button
-						href="javascript:;"
-						icon="time"
-						id="expireArticles"
-						label="expire"
-					/>
-				</c:if>
-			</liferay-frontend:management-bar-action-buttons>
-		</liferay-frontend:management-bar>
+			showSearch="<%= false %>"
+			sortingOrder="<%= journalHistoryDisplayContext.getOrderByType() %>"
+			sortingURL="<%= journalHistoryDisplayContext.getSortingURL() %>"
+			totalItems="<%= journalHistoryDisplayContext.getTotalItems() %>"
+			viewTypes="<%= journalHistoryDisplayContext.getViewTypeItems() %>"
+		/>
 
 		<%
 		PortletURL portletURL = journalHistoryDisplayContext.getPortletURL();
@@ -280,29 +245,23 @@ JournalArticle article = journalDisplayContext.getArticle();
 			);
 
 			<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) %>">
-				$('#<portlet:namespace />deleteArticles').on(
-					'click',
-					function() {
-						if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-version") %>')) {
-							var form = AUI.$(document.<portlet:namespace />fm);
+				window.<portlet:namespace />deleteArticles = function() {
+					if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-version") %>')) {
+						var form = AUI.$(document.<portlet:namespace />fm);
 
-							submitForm(form, '<portlet:actionURL name="deleteArticles"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
-						}
+						submitForm(form, '<portlet:actionURL name="deleteArticles"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
 					}
-				);
+				}
 			</c:if>
 
 			<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.EXPIRE) %>">
-				$('#<portlet:namespace />expireArticles').on(
-					'click',
-					function() {
-						if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-expire-the-selected-version") %>')) {
-							var form = AUI.$(document.<portlet:namespace />fm);
+				window.<portlet:namespace />expireArticles = function() {
+					if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-expire-the-selected-version") %>')) {
+						var form = AUI.$(document.<portlet:namespace />fm);
 
-							submitForm(form, '<portlet:actionURL name="expireArticles"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
-						}
+						submitForm(form, '<portlet:actionURL name="expireArticles"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
 					}
-				);
+				}
 			</c:if>
 		</aui:script>
 	</c:otherwise>

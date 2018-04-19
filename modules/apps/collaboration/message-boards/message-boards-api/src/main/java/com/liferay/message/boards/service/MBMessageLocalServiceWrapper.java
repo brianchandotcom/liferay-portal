@@ -673,6 +673,10 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 		return _mbMessageLocalService.getMessages(className, classPK, status);
 	}
 
+	/**
+	* @deprecated As of 2.0.0, with no direct replacement
+	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.message.boards.model.MBMessage> getNoAssetMessages() {
 		return _mbMessageLocalService.getNoAssetMessages();

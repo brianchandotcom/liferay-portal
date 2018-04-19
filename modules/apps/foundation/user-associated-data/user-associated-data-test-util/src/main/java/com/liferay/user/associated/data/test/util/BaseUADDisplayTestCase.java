@@ -48,12 +48,6 @@ public abstract class BaseUADDisplayTestCase<T> {
 	}
 
 	@Test
-	public void testGetTypeDescription() {
-		Assert.assertEquals(
-			getTypeDescription(), _uadDisplay.getTypeDescription());
-	}
-
-	@Test
 	public void testGetTypeName() throws Exception {
 		BaseModel baseModel = addBaseModel(_user.getUserId());
 

@@ -629,10 +629,6 @@ public class FragmentDisplayContext {
 		return _orderByType;
 	}
 
-	public String[] getOrderColumns() {
-		return new String[] {"create-date", "name"};
-	}
-
 	public boolean isDisabledFragmentCollectionsManagementBar() {
 		if (_hasFragmentCollectionsResults()) {
 			return false;
@@ -673,30 +669,6 @@ public class FragmentDisplayContext {
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getSiteGroupId(), actionId)) {
 
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isShowFragmentCollectionsSearch() {
-		if (_hasFragmentCollectionsResults()) {
-			return true;
-		}
-
-		if (isSearch()) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isShowFragmentEntriesSearch() {
-		if (_hasFragmentEntriesResults()) {
-			return true;
-		}
-
-		if (isSearch()) {
 			return true;
 		}
 

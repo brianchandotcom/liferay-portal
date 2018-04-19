@@ -17,33 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
-String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcPath", "/view_feeds.jsp");
-portletURL.setParameter("redirect", redirect);
-
-FeedSearch feedSearch = new FeedSearch(renderRequest, portletURL);
-
-feedSearch.setRowChecker(new EmptyOnClickRowChecker(renderResponse));
-
-FeedSearchTerms searchTerms = (FeedSearchTerms)feedSearch.getSearchTerms();
-
-int feedsCount = JournalFeedLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFeedId(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator());
-
-feedSearch.setTotal(feedsCount);
-
-List feeds = JournalFeedLocalServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFeedId(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator(), feedSearch.getStart(), feedSearch.getEnd(), feedSearch.getOrderByComparator());
-
-feedSearch.setResults(feeds);
+JournalFeedsDisplayContext journalFeedsDisplayContext = new JournalFeedsDisplayContext(renderRequest, renderResponse);
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBack(journalFeedsDisplayContext.getRedirect());
 
 renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 %>
@@ -54,30 +31,29 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 />
 
 <liferay-frontend:management-bar
-	disabled="<%= (feedsCount <= 0) && !searchTerms.isSearch() %>"
+	disabled="<%= journalFeedsDisplayContext.isDisabledManagementBar() %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="feeds"
 >
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+			portletURL="<%= PortletURLUtil.clone(journalFeedsDisplayContext.getPortletURL(), renderResponse) %>"
 		/>
-
-		<%
-		PortletURL iteratorURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-		iteratorURL.setParameter("displayStyle", displayStyle);
-		%>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= orderByCol %>"
-			orderByType="<%= orderByType %>"
+			orderByCol="<%= journalFeedsDisplayContext.getOrderByCol() %>"
+			orderByType="<%= journalFeedsDisplayContext.getOrderByType() %>"
 			orderColumns='<%= new String[] {"name", "id"} %>'
-			portletURL="<%= iteratorURL %>"
+			portletURL="<%= journalFeedsDisplayContext.getPortletURL() %>"
 		/>
 
-		<c:if test="<%= (feedsCount > 0) || searchTerms.isSearch() %>">
+		<c:if test="<%= journalFeedsDisplayContext.isShowSearch() %>">
+
+			<%
+			PortletURL portletURL = journalFeedsDisplayContext.getPortletURL();
+			%>
+
 			<li>
 				<aui:form action="<%= portletURL.toString() %>" method="post" name="searchFm">
 					<liferay-ui:input-search
@@ -91,8 +67,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-			selectedDisplayStyle="<%= displayStyle %>"
+			portletURL="<%= journalFeedsDisplayContext.getPortletURL() %>"
+			selectedDisplayStyle="<%= journalFeedsDisplayContext.getDisplayStyle() %>"
 		/>
 
 		<c:if test="<%= JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_FEED) %>">
@@ -129,7 +105,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 <aui:form action="<%= deleteFeedsURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<liferay-ui:search-container
 		id="feeds"
-		searchContainer="<%= feedSearch %>"
+		searchContainer="<%= journalFeedsDisplayContext.getFeedsSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.journal.model.JournalFeed"
@@ -154,7 +130,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 			%>
 
 			<c:choose>
-				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+				<c:when test='<%= Objects.equals(journalFeedsDisplayContext.getDisplayStyle(), "descriptive") %>'>
 					<liferay-ui:search-container-column-icon
 						icon="rss-svg"
 						toggleRowChecker="<%= true %>"
@@ -182,7 +158,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 						path="/feed_action.jsp"
 					/>
 				</c:when>
-				<c:when test='<%= displayStyle.equals("icon") %>'>
+				<c:when test='<%= Objects.equals(journalFeedsDisplayContext.getDisplayStyle(), "icon") %>'>
 
 					<%
 					row.setCssClass("entry-card lfr-asset-item");
@@ -201,7 +177,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>
-				<c:when test='<%= displayStyle.equals("list") %>'>
+				<c:when test='<%= Objects.equals(journalFeedsDisplayContext.getDisplayStyle(), "list") %>'>
 					<liferay-ui:search-container-column-text
 						name="id"
 						property="feedId"
@@ -228,7 +204,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
-			displayStyle="<%= displayStyle %>"
+			displayStyle="<%= journalFeedsDisplayContext.getDisplayStyle() %>"
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>

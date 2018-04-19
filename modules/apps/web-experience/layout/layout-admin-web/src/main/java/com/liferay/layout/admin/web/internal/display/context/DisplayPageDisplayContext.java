@@ -14,12 +14,20 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
+import com.liferay.asset.display.contributor.AssetDisplayContributor;
+import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.model.ClassType;
+import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
 import com.liferay.layout.admin.web.internal.util.LayoutPageTemplatePortletUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -50,8 +58,13 @@ public class DisplayPageDisplayContext {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-
 		_request = request;
+
+		_assetDisplayContributorTracker =
+			(AssetDisplayContributorTracker)request.getAttribute(
+				LayoutAdminWebKeys.ASSET_DISPLAY_CONTRIBUTOR_TRACKER);
+		_themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public SearchContainer getDisplayPagesSearchContainer()
@@ -184,6 +197,45 @@ public class DisplayPageDisplayContext {
 		return _layoutPageTemplateEntryId;
 	}
 
+	public String getMappingSubtypeLabel(
+			LayoutPageTemplateEntry layoutPageTemplateEntry)
+		throws PortalException {
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				layoutPageTemplateEntry.getClassName());
+
+		if ((assetRendererFactory == null) ||
+			(layoutPageTemplateEntry.getClassTypeId() <= 0)) {
+
+			return StringPool.SPACE;
+		}
+
+		ClassTypeReader classTypeReader =
+			assetRendererFactory.getClassTypeReader();
+
+		ClassType classType = classTypeReader.getClassType(
+			layoutPageTemplateEntry.getClassTypeId(),
+			_themeDisplay.getLocale());
+
+		return classType.getName();
+	}
+
+	public String getMappingTypeLabel(
+			LayoutPageTemplateEntry layoutPageTemplateEntry)
+		throws PortalException {
+
+		AssetDisplayContributor assetDisplayContributor =
+			_assetDisplayContributorTracker.getAssetDisplayContributor(
+				layoutPageTemplateEntry.getClassName());
+
+		if (assetDisplayContributor == null) {
+			return StringPool.BLANK;
+		}
+
+		return assetDisplayContributor.getLabel(_themeDisplay.getLocale());
+	}
+
 	public String getOrderByCol() {
 		if (Validator.isNotNull(_orderByCol)) {
 			return _orderByCol;
@@ -263,6 +315,8 @@ public class DisplayPageDisplayContext {
 		return false;
 	}
 
+	private final AssetDisplayContributorTracker
+		_assetDisplayContributorTracker;
 	private SearchContainer _displayPagesSearchContainer;
 	private String _displayStyle;
 	private String _keywords;
@@ -273,5 +327,6 @@ public class DisplayPageDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
+	private final ThemeDisplay _themeDisplay;
 
 }

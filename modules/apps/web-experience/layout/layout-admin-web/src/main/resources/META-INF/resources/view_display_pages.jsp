@@ -133,6 +133,31 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 							<liferay-frontend:vertical-card-header>
 								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - layoutPageTemplateEntry.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
 							</liferay-frontend:vertical-card-header>
+
+							<liferay-frontend:vertical-card-footer>
+								<div class="row">
+									<div class="col text-truncate">
+										<%= displayPageDisplayContext.getMappingTypeLabel(layoutPageTemplateEntry) %>
+									</div>
+								</div>
+
+								<div class="card-subtitle row">
+									<div class="col text-truncate">
+										<%= displayPageDisplayContext.getMappingSubtypeLabel(layoutPageTemplateEntry) %>
+									</div>
+								</div>
+							</liferay-frontend:vertical-card-footer>
+
+							<c:if test="<%= layoutPageTemplateEntry.getDefaultTemplate() %>">
+								<liferay-frontend:vertical-card-sticker-bottom>
+									<div class="sticker sticker-bottom-left sticker-primary">
+										<liferay-ui:icon
+											icon="check-circle"
+											markupView="lexicon"
+										/>
+									</div>
+								</liferay-frontend:vertical-card-sticker-bottom>
+							</c:if>
 						</liferay-frontend:vertical-card>
 					</c:when>
 					<c:otherwise>
@@ -148,6 +173,31 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 							<liferay-frontend:vertical-card-header>
 								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - layoutPageTemplateEntry.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
 							</liferay-frontend:vertical-card-header>
+
+							<liferay-frontend:vertical-card-footer>
+								<div class="row">
+									<div class="col text-truncate">
+										<%= displayPageDisplayContext.getMappingTypeLabel(layoutPageTemplateEntry) %>
+									</div>
+								</div>
+
+								<div class="card-subtitle row">
+									<div class="col text-truncate">
+										<%= displayPageDisplayContext.getMappingSubtypeLabel(layoutPageTemplateEntry) %>
+									</div>
+								</div>
+							</liferay-frontend:vertical-card-footer>
+
+							<c:if test="<%= layoutPageTemplateEntry.getDefaultTemplate() %>">
+								<liferay-frontend:vertical-card-sticker-bottom>
+									<div class="sticker sticker-bottom-left sticker-primary">
+										<liferay-ui:icon
+											icon="check-circle"
+											markupView="lexicon"
+										/>
+									</div>
+								</liferay-frontend:vertical-card-sticker-bottom>
+							</c:if>
 						</liferay-frontend:icon-vertical-card>
 					</c:otherwise>
 				</c:choose>

@@ -42,41 +42,18 @@ JournalViewMoreMenuItemsDisplayContext journalViewMoreMenuItemsDisplayContext = 
 	items="<%= journalViewMoreMenuItemsDisplayContext.getNavigationItems() %>"
 />
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= journalViewMoreMenuItemsDisplayContext.getPortletURL() %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= journalViewMoreMenuItemsDisplayContext.getOrderByCol() %>"
-			orderByType="<%= journalViewMoreMenuItemsDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"modified-date"} %>'
-			portletURL="<%= journalViewMoreMenuItemsDisplayContext.getPortletURL() %>"
-		/>
-
-		<%
-		PortletURL portletURL = journalViewMoreMenuItemsDisplayContext.getPortletURL();
-		%>
-
-		<li>
-			<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-				<liferay-ui:input-search
-					markupView="lexicon"
-				/>
-			</aui:form>
-		</li>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= journalViewMoreMenuItemsDisplayContext.getPortletURL() %>"
-			selectedDisplayStyle="list"
-		/>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	clearResultsURL="<%= journalViewMoreMenuItemsDisplayContext.getClearResultsURL() %>"
+	componentId="journalViewMoreMenuItemsManagementToolbar"
+	filterItems="<%= journalViewMoreMenuItemsDisplayContext.getFilterItemsDropdownItems() %>"
+	searchActionURL="<%= journalViewMoreMenuItemsDisplayContext.getSearchActionURL() %>"
+	searchFormName="searchFm"
+	selectable="<%= false %>"
+	sortingOrder="<%= journalViewMoreMenuItemsDisplayContext.getOrderByType() %>"
+	sortingURL="<%= journalViewMoreMenuItemsDisplayContext.getSortingURL() %>"
+	totalItems="<%= journalViewMoreMenuItemsDisplayContext.getTotalItems() %>"
+	viewTypes="<%= journalViewMoreMenuItemsDisplayContext.getViewTypeItems() %>"
+/>
 
 <aui:form cssClass="container-fluid-1280" name="addMenuItemFm">
 	<liferay-ui:search-container

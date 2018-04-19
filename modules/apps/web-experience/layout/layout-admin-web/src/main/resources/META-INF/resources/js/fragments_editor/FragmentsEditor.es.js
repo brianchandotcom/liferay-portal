@@ -523,6 +523,21 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
+	 * Callback executed when a mappeable field has been selected for the
+	 * given editable.
+	 * @param {!{
+	 *   editableId: !string,
+	 *   fragmentEntryLinkId: !string,
+	 *   key: !string
+	 * }} event
+	 * @private
+	 */
+
+	_handleMappeableFieldSelected(event) {
+		console.log(event);
+	}
+
+	/**
 	 * Callback executed when a mapping type hsa been selected
 	 * @param {{ labels: Array<string> }} event
 	 * @private

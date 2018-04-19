@@ -191,8 +191,8 @@ SelectMappingDialog.STATE = {
 		.arrayOf(
 			Config.shapeOf(
 				{
-					label: Config.string().required(),
-					key: Config.string().required()
+					key: Config.string().required(),
+					label: Config.string().required()
 				}
 			)
 		)

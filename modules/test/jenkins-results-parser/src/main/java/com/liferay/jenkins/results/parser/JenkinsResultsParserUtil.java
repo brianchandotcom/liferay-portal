@@ -922,6 +922,25 @@ public class JenkinsResultsParserUtil {
 		return properties;
 	}
 
+	public static String getProperty(Properties properties, String name) {
+		if (!properties.containsKey(name)) {
+			return null;
+		}
+
+		String value = properties.getProperty(name);
+
+		Matcher matcher = _nestedPropertyPattern.matcher(value);
+
+		String newValue = value;
+
+		while (matcher.find()) {
+			newValue = newValue.replace(
+				matcher.group(0), getProperty(properties, matcher.group(1)));
+		}
+
+		return newValue;
+	}
+
 	public static List<String> getRandomList(List<String> list, int size) {
 		if (list.size() < size) {
 			throw new IllegalStateException(
@@ -1809,6 +1828,8 @@ public class JenkinsResultsParserUtil {
 	private static String[] _buildPropertiesURLs;
 	private static final Pattern _javaVersionPattern = Pattern.compile(
 		"(\\d+\\.\\d+)");
+	private static final Pattern _nestedPropertyPattern = Pattern.compile(
+		"\\$\\{([^\\}]+)\\}");
 	private static Set<String> _redactTokens;
 	private static final Pattern _remoteURLAuthorityPattern1 = Pattern.compile(
 		"https://test.liferay.com/([0-9]+)/");

@@ -51,7 +51,8 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 		try {
 			_pluginsGitWorkingDirectory = new PluginsGitWorkingDirectory(
 				portalGitWorkingDirectory.getUpstreamBranchName(),
-				portalReleaseProperties.getProperty("lp.plugins.dir"));
+				JenkinsResultsParserUtil.getProperty(
+					portalReleaseProperties, "lp.plugins.dir"));
 
 			_pluginNamesExcludePathMatchers = _getPluginNamesPathMatchers(
 				"test.batch.plugin.names.excludes");

@@ -37,7 +37,7 @@ public abstract class SubrepositoryJob extends RepositoryJob {
 	public Set<String> getBatchNames() {
 		Set<String> batchNames = _getRequiredTestBatchNames();
 
-		String testBatchNames = getProperty(
+		String testBatchNames = JenkinsResultsParserUtil.getProperty(
 			getSubrepositoryTestProperties(), "test.batch.names");
 
 		if (!Objects.isNull(testBatchNames)) {
@@ -49,7 +49,7 @@ public abstract class SubrepositoryJob extends RepositoryJob {
 
 	@Override
 	public Set<String> getDistTypes() {
-		String distTypes = getProperty(
+		String distTypes = JenkinsResultsParserUtil.getProperty(
 			getSubrepositoryTestProperties(), "subrepo.dist.app.servers");
 
 		return new TreeSet<>(Arrays.asList(distTypes.split(",")));
@@ -139,7 +139,7 @@ public abstract class SubrepositoryJob extends RepositoryJob {
 	}
 
 	private Set<String> _getRequiredTestBatchNames() {
-		String testRequiredBatchNames = getProperty(
+		String testRequiredBatchNames = JenkinsResultsParserUtil.getProperty(
 			getSubrepositoryTestProperties(), "test.required.batch.names");
 
 		Set<String> testRequiredBatchNamesSet = new HashSet<>();

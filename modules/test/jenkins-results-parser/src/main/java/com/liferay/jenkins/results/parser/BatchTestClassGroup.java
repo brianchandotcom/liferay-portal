@@ -151,8 +151,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			}
 
 			if (portalTestProperties.containsKey(propertyName)) {
-				String propertyValue = portalTestProperties.getProperty(
-					propertyName);
+				String propertyValue = JenkinsResultsParserUtil.getProperty(
+					portalTestProperties, propertyName);
 
 				if ((propertyValue != null) && !propertyValue.isEmpty()) {
 					return propertyValue;

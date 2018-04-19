@@ -31,7 +31,7 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 
 	@Override
 	public Set<String> getBatchNames() {
-		String testBatchNames = getProperty(
+		String testBatchNames = JenkinsResultsParserUtil.getProperty(
 			getPortalTestProperties(), "test.batch.names");
 
 		return getSetFromString(testBatchNames);
@@ -39,7 +39,7 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 
 	@Override
 	public Set<String> getDistTypes() {
-		String testBatchDistAppServers = getProperty(
+		String testBatchDistAppServers = JenkinsResultsParserUtil.getProperty(
 			getPortalTestProperties(), "test.batch.dist.app.servers");
 
 		return getSetFromString(testBatchDistAppServers);
@@ -74,7 +74,7 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 		Properties portalTestProperties = getPortalTestProperties();
 
 		if (portalTestProperties.containsKey(propertyName)) {
-			String propertyValue = getProperty(
+			String propertyValue = JenkinsResultsParserUtil.getProperty(
 				portalTestProperties, propertyName);
 
 			if ((propertyValue != null) && !propertyValue.isEmpty()) {

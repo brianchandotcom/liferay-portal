@@ -19,7 +19,6 @@ import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.service.BookmarksEntryLocalService;
 import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
 import com.liferay.bookmarks.uad.test.BookmarksEntryUADEntityTestHelper;
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -43,7 +42,8 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class BookmarksEntryUADAnonymizerTest
-	extends BaseUADAnonymizerTestCase implements WhenHasStatusByUserIdField {
+	extends BaseUADAnonymizerTestCase<BookmarksEntry>
+	implements WhenHasStatusByUserIdField {
 
 	@ClassRule
 	@Rule
@@ -51,7 +51,7 @@ public class BookmarksEntryUADAnonymizerTest
 		new LiferayIntegrationTestRule();
 
 	@Override
-	public BaseModel<?> addBaseModelWithStatusByUserId(
+	public BookmarksEntry addBaseModelWithStatusByUserId(
 			long userId, long statusByUserId)
 		throws Exception {
 
@@ -65,12 +65,13 @@ public class BookmarksEntryUADAnonymizerTest
 	}
 
 	@Override
-	protected BaseModel<?> addBaseModel(long userId) throws Exception {
+	protected BookmarksEntry addBaseModel(long userId) throws Exception {
 		return addBaseModel(userId, true);
 	}
 
 	@Override
-	protected BaseModel<?> addBaseModel(long userId, boolean deleteAfterTestRun)
+	protected BookmarksEntry addBaseModel(
+			long userId, boolean deleteAfterTestRun)
 		throws Exception {
 
 		BookmarksEntry bookmarksEntry =

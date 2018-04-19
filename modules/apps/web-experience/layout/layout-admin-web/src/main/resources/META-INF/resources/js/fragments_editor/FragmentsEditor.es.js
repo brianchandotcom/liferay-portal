@@ -3,6 +3,7 @@ import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
+import './dialogs/SelectMappingDialog.es';
 import './dialogs/SelectMappingTypeDialog.es';
 import './sidebar/SidebarAddedFragments.es';
 import './sidebar/SidebarAvailableFragments.es';
@@ -509,6 +510,19 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
+	 * Callback executed when a mappeable fragment has been clicked
+	 * @param {!{ fragmentEntryLinkId: !string, editableId: !string }} event
+	 * @private
+	 * @review
+	 */
+
+	_handleMappeableFieldClicked(event) {
+		this._selectMappingDialogVisible = true;
+		this._selectMappingDialogFragmentEntryLinkId = event.fragmentEntryLinkId;
+		this._selectMappingDialogEditableId = event.editableId;
+	}
+
+	/**
 	 * Callback executed when a mapping type hsa been selected
 	 * @param {{ labels: Array<string> }} event
 	 * @private
@@ -526,6 +540,17 @@ class FragmentsEditor extends Component {
 
 	_handleSelectAssetTypeButtonClick() {
 		this._selectMappingTypeDialogVisible = true;
+	}
+
+	/**
+	 * Callback executed when the SelectMappingDialog visibility changes
+	 * @param {{ newVal: boolean }} change
+	 * @private
+	 * @review
+	 */
+
+	_handleSelectMappingDialogVisibleChanged(change) {
+		this._selectMappingDialogVisible = change.newVal;
 	}
 
 	/**
@@ -987,6 +1012,51 @@ FragmentsEditor.STATE = {
 	_lastSaveDate: Config.string()
 		.internal()
 		.value(''),
+
+	/**
+	 * EditableId of the field that is being mapped
+	 * @default ''
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @private
+	 * @review
+	 * @type {string}
+	 */
+
+	_selectMappingDialogEditableId: Config
+		.string()
+		.internal()
+		.value(''),
+
+	/**
+	 * FragmentEntryLinkId of the field that is being mapped
+	 * @default ''
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @private
+	 * @review
+	 * @type {string}
+	 */
+
+	_selectMappingDialogFragmentEntryLinkId: Config
+		.string()
+		.internal()
+		.value(''),
+
+	/**
+	 * Flag indicating if the SelectMappingDialog should be shown
+	 * @default false
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @private
+	 * @review
+	 * @type {boolean}
+	 */
+
+	_selectMappingDialogVisible: Config
+		.bool()
+		.internal()
+		.value(false),
 
 	/**
 	 * Flag indicating if the SelectMappingTypeDialog should be shown

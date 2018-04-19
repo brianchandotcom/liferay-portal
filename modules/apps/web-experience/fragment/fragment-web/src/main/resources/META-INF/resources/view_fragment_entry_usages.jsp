@@ -124,7 +124,12 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 					viewTypes="<%= fragmentEntryLinkDisplayContext.getViewTypeItems() %>"
 				/>
 
-				<aui:form name="fm">
+				<portlet:actionURL name="/fragment/propagate_fragment_entry_changes" var="propagateFragmentEntryChangesURL">
+					<portlet:param name="fragmentEntryId" value="<%= String.valueOf(fragmentEntryLinkDisplayContext.getFragmentEntryId()) %>" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+				</portlet:actionURL>
+
+				<aui:form action="<%= propagateFragmentEntryChangesURL %>" name="fm">
 					<liferay-ui:search-container
 						id="fragmentEntryLinks"
 						searchContainer="<%= fragmentEntryLinkDisplayContext.getSearchContainer() %>"
@@ -170,3 +175,11 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 		</div>
 	</div>
 </div>
+
+<aui:script>
+	var form = document.querySelector('#<portlet:namespace />fm');
+
+	window.<portlet:namespace/>propagate = function() {
+		submitForm(form);
+	};
+</aui:script>

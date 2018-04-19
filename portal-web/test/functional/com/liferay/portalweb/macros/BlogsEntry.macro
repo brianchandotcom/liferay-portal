@@ -175,7 +175,9 @@
 			<var name="entryTitle" value="${entryTitle2}" />
 		</execute>
 
-		<execute macro="BlogsNavigator#gotoAbstractField" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Configuration" />
+		</execute>
 
 		<execute function="Paste" locator1="TextInput#TRACKBACKS" />
 

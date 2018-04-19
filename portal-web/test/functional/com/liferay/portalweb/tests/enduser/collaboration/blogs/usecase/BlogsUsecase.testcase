@@ -2261,8 +2261,6 @@
 			<var name="panel" value="Configuration" />
 		</execute>
 
-		<execute macro="BlogsNavigator#gotoAbstractField" />
-
 		<execute macro="BlogsEntry#addCustomAbstract">
 			<var name="entryAbstractDescription" value="Blogs Entry Abstract Description" />
 		</execute>

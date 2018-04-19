@@ -333,7 +333,9 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="Site#gotoManageSitesTemplatesViaAddDropdown" />
+		<execute macro="LexiconEntry#gotoHeaderMenuItem">
+			<var name="menuItem" value="Manage Sites Templates" />
+		</execute>
 
 		<execute macro="SiteTemplates#viewDefaultCP">
 			<var name="siteTemplateNameList" value="Intranet Site,Community Site" />

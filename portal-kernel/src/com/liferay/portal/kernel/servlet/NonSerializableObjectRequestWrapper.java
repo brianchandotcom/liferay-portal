@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
-import java.io.NotSerializableException;
-
 import java.lang.reflect.Field;
 
 import java.util.Map;
@@ -78,15 +76,12 @@ public class NonSerializableObjectRequestWrapper
 			object = super.getAttribute(name);
 		}
 		catch (Exception e) {
-			if (e instanceof NotSerializableException) {
+			// LPS-31885
 
-				// LPS-31885
+			String message = e.getMessage();
 
-				String message = e.getMessage();
-
-				if ((message == null) || !message.contains("BEA-101362")) {
-					_log.error(e, e);
-				}
+			if ((message == null) || !message.contains("BEA-101362")) {
+				_log.error(e, e);
 			}
 
 			return null;

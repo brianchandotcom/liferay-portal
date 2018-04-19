@@ -76,6 +76,7 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 					%>
 
 					<liferay-ui:user-portrait
+						cssClass="user-icon-lg"
 						user="<%= entryUser %>"
 					/>
 				</div>
@@ -87,6 +88,10 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 
 							<div>
 								<span class="hide-accessible"><liferay-ui:message key="published-date" /></span><liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+
+								<c:if test="<%= blogsPortletInstanceConfiguration.enableReadingTime() %>">
+									- <liferay-reading-time:reading-time displayStyle="descriptive" model="<%= entry %>" />
+								</c:if>
 
 								<c:if test="<%= blogsPortletInstanceConfiguration.enableViewCount() %>">
 
@@ -164,26 +169,9 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 										/>
 									</span>
 
-									<%= String.valueOf(messagesCount) %>
+									<liferay-ui:message arguments="<%= messagesCount %>" key="comment-x" />
 								</a>
 							</liferay-util:whitespace-remover>
-						</div>
-					</c:if>
-
-					<c:if test="<%= blogsPortletInstanceConfiguration.enableReadingTime() %>">
-						<div class="autofit-col">
-							<button class="btn btn-outline-borderless btn-outline-secondary btn-sm" type="button">
-								<span class="inline-item inline-item-before">
-									<clay:icon
-										symbol="time"
-									/>
-								</span>
-
-								<liferay-reading-time:reading-time
-									displayStyle="simple"
-									model="<%= entry %>"
-								/>
-							</button>
 						</div>
 					</c:if>
 

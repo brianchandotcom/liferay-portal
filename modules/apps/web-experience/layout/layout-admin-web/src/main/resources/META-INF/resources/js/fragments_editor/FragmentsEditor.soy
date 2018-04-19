@@ -28,13 +28,18 @@
 	{@param? _handleFragmentMove: any}
 	{@param? _handleFragmentRemove: any}
 	{@param? _handleHideContextualSidebar: any}
+	{@param? _handleMappeableFieldClicked: any}
 	{@param? _handleMappingTypeSelected: any}
 	{@param? _handleToggleContextualSidebarButtonClick: any}
 	{@param? _handleSelectAssetTypeButtonClick: any}
+	{@param? _handleSelectMappingDialogVisibleChanged: any}
 	{@param? _handleSelectMappingTypeDialogVisibleChanged: any}
 	{@param? _handleSidebarTabClick: any}
 	{@param? _handleTranslationLanguageChange: any}
 	{@param? _lastSaveDate: string}
+	{@param? _selectMappingDialogEditableId: string}
+	{@param? _selectMappingDialogFragmentEntryLinkId: string}
+	{@param? _selectMappingDialogVisible: bool}
 	{@param? _selectMappingTypeDialogVisible: bool}
 	{@param? _sidebarSelectedTab: string}
 	{@param? _sidebarTabs: list<[id:string, label:string]>}
@@ -89,6 +94,7 @@
 								{param editableValues: $fragmentEntryLink.editableValues /}
 								{param events: [
 									'editableChanged': $_handleEditableChanged,
+									'mappeableFieldClicked': $_handleMappeableFieldClicked,
 									'move': $_handleFragmentMove,
 									'remove': $_handleFragmentRemove
 								] /}
@@ -109,6 +115,16 @@
 					{call .noFragmentsMessage /}
 				{/if}
 			</div>
+
+			{call com.liferay.layout.admin.web.SelectMappingDialog.render}
+				{param editableId: $_selectMappingDialogEditableId /}
+				{param events: [
+					'visibleChanged': $_handleSelectMappingDialogVisibleChanged
+				] /}
+				{param fragmentEntryLinkId: $_selectMappingDialogFragmentEntryLinkId /}
+				{param spritemap: $spritemap /}
+				{param visible: $_selectMappingDialogVisible ?: false /}
+			{/call}
 
 			{call com.liferay.layout.admin.web.SelectMappingTypeDialog.render}
 				{param classPK: $classPK /}

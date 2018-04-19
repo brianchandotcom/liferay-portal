@@ -35,9 +35,11 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 
-import javax.portlet.PortletURL;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Alessio Antonio Rendina
@@ -239,12 +241,13 @@ public class CommerceUserSegmentDisplayContext {
 					_searchContainer.getOrderByCol(),
 					_searchContainer.getOrderByType());
 
-			BaseModelSearchResult<CommerceUserSegmentEntry> baseModelSearchResult =
-				_commerceUserSegmentEntryService.
-					searchCommerceUserSegmentEntries(
-						_commerceUserSegmentRequestHelper.getCompanyId(),
-						groupId, getKeywords(), _searchContainer.getStart(),
-						_searchContainer.getEnd(), sort);
+			BaseModelSearchResult<CommerceUserSegmentEntry>
+				baseModelSearchResult =
+					_commerceUserSegmentEntryService.
+						searchCommerceUserSegmentEntries(
+							_commerceUserSegmentRequestHelper.getCompanyId(),
+							groupId, getKeywords(), _searchContainer.getStart(),
+							_searchContainer.getEnd(), sort);
 
 			_searchContainer.setTotal(baseModelSearchResult.getLength());
 			_searchContainer.setResults(baseModelSearchResult.getBaseModels());

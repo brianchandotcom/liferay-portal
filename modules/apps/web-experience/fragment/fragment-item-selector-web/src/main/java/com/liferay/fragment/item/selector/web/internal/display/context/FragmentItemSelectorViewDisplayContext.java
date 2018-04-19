@@ -312,10 +312,6 @@ public class FragmentItemSelectorViewDisplayContext {
 		return _orderByType;
 	}
 
-	public String[] getOrderColumns() {
-		return new String[] {"create-date", "name"};
-	}
-
 	public PortletURL getPortletURL() {
 		LiferayPortletResponse liferayPortletResponse =
 			PortalUtil.getLiferayPortletResponse(_portletResponse);

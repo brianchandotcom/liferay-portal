@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.aggregator.UADAggregator;
@@ -103,7 +104,9 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 				_getSearchContainer(
 					renderRequest, currentURL, uadRegistryKey, uadDisplay,
 					selectedUser.getUserId(), liferayPortletResponse));
-			viewUADEntitiesDisplay.setTypeName(uadDisplay.getTypeName());
+			viewUADEntitiesDisplay.setTypeName(
+				uadDisplay.getTypeName(
+					LocaleThreadLocal.getThemeDisplayLocale()));
 
 			viewUADEntitiesDisplay.setUADRegistryKey(uadRegistryKey);
 
@@ -168,7 +171,9 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 						uadRegistryKey.equals(uadDisplay.getKey()));
 					navigationItem.setHref(
 						tabPortletURL, "uadRegistryKey", uadDisplay.getKey());
-					navigationItem.setLabel(uadDisplay.getTypeName());
+					navigationItem.setLabel(
+						uadDisplay.getTypeName(
+							LocaleThreadLocal.getThemeDisplayLocale()));
 				});
 		}
 

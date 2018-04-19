@@ -74,9 +74,10 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 		attributes.put("viewCount", getViewCount());
 		attributes.put("lastPostByUserId", getLastPostByUserId());
 		attributes.put("lastPostDate", getLastPostDate());
+		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("priority", getPriority());
 		attributes.put("question", getQuestion());
-		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("title", getTitle());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -177,6 +178,12 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 			setLastPostDate(lastPostDate);
 		}
 
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
+		}
+
 		Double priority = (Double)attributes.get("priority");
 
 		if (priority != null) {
@@ -189,10 +196,10 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 			setQuestion(question);
 		}
 
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+		String title = (String)attributes.get("title");
 
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
+		if (title != null) {
+			setTitle(title);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -515,6 +522,16 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	@Override
 	public long getThreadId() {
 		return _mbThread.getThreadId();
+	}
+
+	/**
+	* Returns the title of this message boards thread.
+	*
+	* @return the title of this message boards thread
+	*/
+	@Override
+	public java.lang.String getTitle() {
+		return _mbThread.getTitle();
 	}
 
 	/**
@@ -1024,6 +1041,16 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	@Override
 	public void setThreadId(long threadId) {
 		_mbThread.setThreadId(threadId);
+	}
+
+	/**
+	* Sets the title of this message boards thread.
+	*
+	* @param title the title of this message boards thread
+	*/
+	@Override
+	public void setTitle(java.lang.String title) {
+		_mbThread.setTitle(title);
 	}
 
 	/**

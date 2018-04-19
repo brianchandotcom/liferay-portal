@@ -147,9 +147,13 @@
 		<field name="viewCount" type="int" />
 		<field name="lastPostByUserId" type="long" />
 		<field name="lastPostDate" type="Date" />
+		<field name="lastPublishDate" type="Date" />
 		<field name="priority" type="double" />
 		<field name="question" type="boolean" />
-		<field name="lastPublishDate" type="Date" />
+		<field name="title" type="String">
+			<sanitize content-type="text/plain" modes="ALL" />
+			<validator name="required" />
+		</field>
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />

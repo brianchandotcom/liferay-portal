@@ -15,69 +15,26 @@
 package com.liferay.message.boards.util.comparator;
 
 import com.liferay.message.boards.model.MBCategory;
-import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author David Zhang
  */
-public class CategoryTitleComparator<T> extends OrderByComparator<T> {
-
-	public static final String ORDER_BY_ASC =
-		"modelCategory ASC, priority DESC, name ASC, modifiedDate DESC, " +
-			"modelId ASC";
-
-	public static final String ORDER_BY_DESC =
-		"modelCategory ASC, priority DESC, name DESC, modifiedDate DESC, " +
-			"modelId ASC";
-
-	public static final String[] ORDER_BY_FIELDS =
-		{"modelCategory", "priority", "name", "modifiedDate", "modelId"};
-
-	public CategoryTitleComparator() {
-		this(false);
-	}
+public class CategoryTitleComparator<T> extends MBEntryTitleComparator<T> {
 
 	public CategoryTitleComparator(boolean ascending) {
-		_ascending = ascending;
+		super(ascending);
 	}
 
-	@Override
-	public int compare(T t1, T t2) {
-		String name1 = StringUtil.toLowerCase(getCategoryName(t1));
-		String name2 = StringUtil.toLowerCase(getCategoryName(t2));
-
-		int value = name1.compareTo(name2);
-
-		if (_ascending) {
-			return value;
-		}
-		else {
-			return -value;
-		}
-	}
-
-	@Override
-	public String getOrderBy() {
-		if (_ascending) {
-			return ORDER_BY_ASC;
-		}
-		else {
-			return ORDER_BY_DESC;
-		}
-	}
-
-	@Override
-	public String[] getOrderByFields() {
-		return ORDER_BY_FIELDS;
-	}
-
-	@Override
-	public boolean isAscending() {
-		return _ascending;
-	}
-
+	/**
+	 * @deprecated As of 4.0.0, Since 7.1.0, replaced by {@link #getMBEntryTitle(Object)}
+	 */
+	@Deprecated
 	protected String getCategoryName(Object obj) {
+		return getMBEntryTitle(obj);
+	}
+
+	@Override
+	protected String getMBEntryTitle(Object obj) {
 		if (obj instanceof MBCategory) {
 			MBCategory mbCategory = (MBCategory)obj;
 
@@ -86,7 +43,5 @@ public class CategoryTitleComparator<T> extends OrderByComparator<T> {
 
 		return null;
 	}
-
-	private final boolean _ascending;
 
 }

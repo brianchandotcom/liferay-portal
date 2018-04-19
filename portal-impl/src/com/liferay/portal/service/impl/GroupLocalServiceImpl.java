@@ -3276,6 +3276,12 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		String groupKey = group.getGroupKey();
 
+		List<String> names = new ArrayList(nameMap.values());
+
+		if (ListUtil.isNull(names)) {
+			throw new GroupKeyException();
+		}
+
 		if ((nameMap != null) &&
 			Validator.isNotNull(nameMap.get(LocaleUtil.getDefault()))) {
 

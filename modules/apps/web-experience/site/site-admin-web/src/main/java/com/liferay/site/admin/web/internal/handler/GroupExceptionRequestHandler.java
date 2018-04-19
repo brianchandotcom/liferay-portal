@@ -14,15 +14,19 @@
 
 package com.liferay.site.admin.web.internal.handler;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.DuplicateGroupException;
 import com.liferay.portal.kernel.exception.GroupInheritContentException;
+import com.liferay.portal.kernel.exception.GroupKeyException;
 import com.liferay.portal.kernel.exception.GroupParentException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.SiteConstants;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
@@ -58,6 +62,33 @@ public class GroupExceptionRequestHandler {
 				LanguageUtil.get(
 					themeDisplay.getLocale(),
 					"this-site-cannot-inherit-content-from-its-parent-site"));
+		}
+		else if (pe instanceof GroupKeyException) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(
+				LanguageUtil.format(
+					themeDisplay.getLocale(),
+					"the-x-cannot-be-x-or-a-reserved-word-such-as-x",
+					new String[] {
+						SiteConstants.NAME_LABEL,
+						SiteConstants.getNameGeneralRestrictions(
+							themeDisplay.getLocale()),
+						SiteConstants.NAME_RESERVED_WORDS
+					}));
+
+			sb.append(StringPool.SPACE);
+
+			sb.append(
+				LanguageUtil.format(
+					themeDisplay.getLocale(),
+					"the-x-cannot-contain-the-following-invalid-characters-x",
+					new String[] {
+						SiteConstants.NAME_LABEL,
+						SiteConstants.NAME_INVALID_CHARACTERS
+					}));
+
+			jsonObject.put("error", sb.toString());
 		}
 		else if (pe instanceof GroupParentException.MustNotBeOwnParent) {
 			jsonObject.put(

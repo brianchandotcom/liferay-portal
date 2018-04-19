@@ -82,66 +82,6 @@ for (int i = values.size() - 1; i >= 0; i--) {
 				/>
 			</liferay-ui:search-container-row>
 
-			<aui:script>
-				var form = $(document.<portlet:namespace />fm);
-
-				var openerForm = $(Liferay.Util.getOpener().document.<portlet:namespace />fm);
-
-				var fieldsQuantities = openerForm.fm('fieldsQuantities').val();
-
-				var itemQuantities = [];
-
-				if (fieldsQuantities) {
-					itemQuantities = fieldsQuantities.split(',');
-				}
-
-				while (itemQuantities.length < <%= searchContainer.getResultEnd() %>) {
-					itemQuantities.push(0);
-				}
-
-				<%
-				for (int i = searchContainer.getStart(); i < searchContainer.getResultEnd(); i++) {
-				%>
-
-					form.fm('fieldsQuantity<%= i %>').val(itemQuantities[<%= i %>]);
-
-				<%
-				}
-				%>
-
-				function <portlet:namespace />closeDialog() {
-					Liferay.fire(
-						'closeWindow',
-						{
-							id: '<portlet:namespace />itemQuantities'
-						}
-					);
-				}
-
-				function <portlet:namespace />setItemQuantities() {
-
-					<%
-					for (int i = searchContainer.getStart(); i < searchContainer.getResultEnd(); i++) {
-					%>
-
-						itemQuantities.splice(<%= i %>, 1, form.fm('fieldsQuantity<%= i %>').val());
-
-					<%
-					}
-					%>
-
-					openerForm.fm('fieldsQuantities').val(itemQuantities.join(','));
-				}
-
-				function <portlet:namespace />updateItemQuantities() {
-					<portlet:namespace />setItemQuantities();
-
-					<portlet:namespace />closeDialog();
-				}
-
-				AUI.$('.taglib-page-iterator').on('click', 'li a', <portlet:namespace />setItemQuantities);
-			</aui:script>
-
 			<liferay-ui:search-iterator />
 		</liferay-ui:search-container>
 	</aui:fieldset>
@@ -152,6 +92,76 @@ for (int i = values.size() - 1; i >= 0; i--) {
 		<aui:button onClick='<%= renderResponse.getNamespace() + "closeDialog();" %>' type="cancel" />
 	</aui:button-row>
 </aui:form>
+
+<aui:script>
+	var <portlet:namespace />openerForm = Liferay.Util.getOpener().document.querySelector('#<portlet:namespace />fm');
+
+	var <portlet:namespace />fieldsQuantities = <portlet:namespace />openerForm.querySelector('#<portlet:namespace />fieldsQuantities').value;
+
+	var <portlet:namespace />itemQuantities = [];
+
+	if (<portlet:namespace />fieldsQuantities) {
+		<portlet:namespace />itemQuantities = <portlet:namespace />fieldsQuantities.split(',');
+	}
+
+	while (<portlet:namespace />itemQuantities.length < <%= searchContainer.getResultEnd() %>) {
+		<portlet:namespace />itemQuantities.push(0);
+	}
+
+	var <portlet:namespace />form = document.querySelector('#<portlet:namespace />fm');
+
+	if (<portlet:namespace />form) {
+
+		<%
+		for (int i = searchContainer.getStart(); i < searchContainer.getResultEnd(); i++) {
+		%>
+
+			<portlet:namespace />form.querySelector('#<portlet:namespace />fieldsQuantity<%= i %>').value = <portlet:namespace />itemQuantities[<%= i %>];
+
+		<%
+		}
+		%>
+
+	}
+
+	var taglibPageIterator = document.querySelectorAll('.taglib-page-iterator li a');
+
+	if (taglibPageIterator) {
+		for (var i = 0; i < taglibPageIterator.length; i++) {
+			taglibPageIterator[i].addEventListener('click', <portlet:namespace />setItemQuantities);
+		}
+	}
+
+	function <portlet:namespace />closeDialog() {
+		Liferay.fire(
+			'closeWindow',
+			{
+				id: '<portlet:namespace />itemQuantities'
+			}
+		);
+	}
+
+	function <portlet:namespace />setItemQuantities() {
+
+		<%
+		for (int i = searchContainer.getStart(); i < searchContainer.getResultEnd(); i++) {
+		%>
+
+			<portlet:namespace />itemQuantities.splice(<%= i %>, 1, <portlet:namespace />form.querySelector('#<portlet:namespace />fieldsQuantity<%= i %>').value);
+
+		<%
+		}
+		%>
+
+		<portlet:namespace />openerForm.querySelector('#<portlet:namespace />fieldsQuantities').value = <portlet:namespace />itemQuantities.join(',');
+	}
+
+	function <portlet:namespace />updateItemQuantities() {
+		<portlet:namespace />setItemQuantities();
+
+		<portlet:namespace />closeDialog();
+	}
+</aui:script>
 
 <%!
 private List<String[]> _getPagePermutations(List<String[]> values, int[] repeats, int start, int resultEnd) {

@@ -416,23 +416,36 @@ long orderId = BeanParamUtil.getLong(order, request, "orderId");
 
 <aui:script>
 	function <portlet:namespace />deleteOrder() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.DELETE %>';
-		document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= HtmlUtil.escapeJS(redirect) %>';
+		var form = document.querySelector('#<portlet:namespace />fm');
 
-		submitForm(document.<portlet:namespace />fm);
+		if (form) {
+			form.querySelector('#<portlet:namespace /><%= Constants.CMD %>').value = '<%= Constants.DELETE %>';
+
+			form.querySelector('#<portlet:namespace />redirect').value = '<%= HtmlUtil.escapeJS(redirect) %>';
+
+			submitForm(form);
+		}
 	}
 
 	function <portlet:namespace />saveOrder() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.UPDATE %>';
+		var form = document.querySelector('#<portlet:namespace />fm');
 
-		submitForm(document.<portlet:namespace />fm);
+		if (form) {
+			form.querySelector('#<portlet:namespace /><%= Constants.CMD %>').value = '<%= Constants.UPDATE %>';
+
+			submitForm(form);
+		}
 	}
 
 	function <portlet:namespace />sendEmail(emailType) {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'sendEmail';
-		document.<portlet:namespace />fm.<portlet:namespace />emailType.value = emailType;
+		var form = document.querySelector('#<portlet:namespace />fm');
 
-		submitForm(document.<portlet:namespace />fm);
+		if (form) {
+			form.querySelector('<portlet:namespace /><%= Constants.CMD %>').value = 'sendEmail';
+			form.querySelector('<portlet:namespace />emailType').value = emailType;
+
+			submitForm(form);
+		}
 	}
 
 	function <portlet:namespace />viewCoupon() {

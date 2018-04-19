@@ -189,11 +189,13 @@ couponSearch.setResults(coupons);
 </aui:form>
 
 <aui:script>
-	$('#<portlet:namespace />deleteCoupons').on(
+	document.querySelector('#<portlet:namespace />deleteCoupons').addEventListener(
 		'click',
 		function() {
-			if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-coupons") %>')) {
-				submitForm(document.<portlet:namespace />fm);
+			var form = document.querySelector('#<portlet:namespace />fm');
+
+			if (form && confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-coupons") %>')) {
+				submitForm(form);
 			}
 		}
 	);

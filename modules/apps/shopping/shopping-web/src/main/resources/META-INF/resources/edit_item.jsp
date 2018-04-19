@@ -152,8 +152,8 @@ renderResponse.setTitle(((item == null) ? LanguageUtil.get(request, "new-item") 
 
 				<aui:button onClick="<%= taglibRemoveFolder %>" value="remove" />
 
-				<aui:script sandbox="<%= true %>">
-					$('#<portlet:namespace />selectCategoryButton').on(
+				<aui:script>
+					document.querySelector('#<portlet:namespace />selectCategoryButton').on(
 						'click',
 						function(event) {
 							Liferay.Util.selectEntity(
@@ -167,11 +167,13 @@ renderResponse.setTitle(((item == null) ? LanguageUtil.get(request, "new-item") 
 									uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/shopping/select_category" /><portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" /></portlet:renderURL>'
 								},
 								function(event) {
-									var form = $(document.<portlet:namespace />fm);
+									var form = document.querySelector('#<portlet:namespace />fm');
 
-									form.fm('categoryId').val(event.categoryid);
+									if (form) {
+										form.querySelector('#<portlet:namespace />categoryId').value = event.categoryid;
 
-									form.fm('categoryName').val(_.unescape(event.name));
+										form.querySelector('#<portlet:namespace />categoryName').value = _.unescape(event.name);
+									}
 								}
 							);
 						}
@@ -544,75 +546,85 @@ renderResponse.setTitle(((item == null) ? LanguageUtil.get(request, "new-item") 
 
 <aui:script>
 	function <portlet:namespace />addField() {
-		var form = AUI.$(document.<portlet:namespace />fm);
+		var form = document.querySelector('#<portlet:namespace />fm');
 
-		form.fm('scroll').val('<portlet:namespace />fields');
-		form.fm('fieldsCount').val(<%= fieldsCount + 1 %>);
-
-		submitForm(form);
-	}
-
-	function <portlet:namespace />addPrice() {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.fm('scroll').val('<portlet:namespace />prices');
-		form.fm('pricesCount').val(<%= pricesCount + 1 %>);
-
-		submitForm(form);
-	}
-
-	function <portlet:namespace />deleteField(i) {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.fm('scroll').val('<portlet:namespace />fields');
-		form.fm('fieldsCount').val(<%= fieldsCount - 1 %>);
-		form.fm('fieldId').val(i);
-
-		submitForm(form);
-	}
-
-	function <portlet:namespace />deletePrice(i) {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		if (form.fm('defaultPrice' + i).prop('checked')) {
-			alert('<%= UnicodeLanguageUtil.get(request, "you-cannot-delete-or-deactivate-a-default-price") %>');
-		}
-		else if (form.fm('pricesCount').val() > 1) {
-			form.fm('scroll').val('<portlet:namespace />prices');
-			form.fm('pricesCount').val(<%= pricesCount - 1 %>);
-			form.fm('priceId').val(i);
+		if (form) {
+			form.querySelector('#<portlet:namespace />scroll').value = '<portlet:namespace />fields';
+			form.querySelector('#<portlet:namespace />fieldsCount'.value = <%= fieldsCount + 1 %>;
 
 			submitForm(form);
 		}
 	}
 
-	function <portlet:namespace />editItemQuantities() {
-		var form = AUI.$(document.<portlet:namespace />fm);
+	function <portlet:namespace />addPrice() {
+		var form = document.querySelector('#<portlet:namespace />fm');
 
-		var itemQuantitiesURL = '<liferay-portlet:renderURL anchor="<%= false %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/shopping/edit_item_quantities" /></liferay-portlet:renderURL>';
+		if (form) {
+			form.querySelector('#<portlet:namespace />scroll').value = '<portlet:namespace />prices';
+			form.querySelector('#<portlet:namespace />pricesCount').value = <%= pricesCount + 1 %>;
 
-		<%
-		for (int i = 0; i < fieldsCount; i++) {
-		%>
-
-			itemQuantitiesURL += '&<portlet:namespace />n<%= i %>=' + encodeURIComponent(form.fm('fieldName<%= i %>').val());
-			itemQuantitiesURL += '&<portlet:namespace />v<%= i %>=' + encodeURIComponent(form.fm('fieldValues<%= i %>').val());
-
-		<%
+			submitForm(form);
 		}
-		%>
+	}
 
-		Liferay.Util.openWindow(
-			{
-				dialog: {
-					width: 680
-				},
-				id: '<portlet:namespace />itemQuantities',
-				refreshWindow: window,
-				title: '<%= UnicodeLanguageUtil.get(request, "edit-stock-quantity") %>',
-				uri: itemQuantitiesURL
+	function <portlet:namespace />deleteField(i) {
+		var form = document.querySelector('#<portlet:namespace />fm');
+
+		if (form) {
+			form.querySelector('#<portlet:namespace />scroll').value = '<portlet:namespace />fields';
+			form.querySelector('#<portlet:namespace />fieldsCount').value = <%= fieldsCount - 1 %>;
+			form.querySelector('#<portlet:namespace />fieldId').value = i;
+
+			submitForm(form);
+		}
+	}
+
+	function <portlet:namespace />deletePrice(i) {
+		var form = document.querySelector('#<portlet:namespace />fm');
+
+		if (form) {
+			if (form.querySelector('#<portlet:namespace />defaultPrice' + i).checked) {
+				alert('<%= UnicodeLanguageUtil.get(request, "you-cannot-delete-or-deactivate-a-default-price") %>');
 			}
-		);
+			else if (form.querySelector('#<portlet:namespace />pricesCount').value > 1) {
+				form.querySelector('#<portlet:namespace />scroll').value = '<portlet:namespace />prices';
+				form.querySelector('#<portlet:namespace />pricesCount').value = <%= pricesCount - 1 %>;
+				form.querySelector('#<portlet:namespace />priceId'.value = i;
+
+				submitForm(form);
+			}
+		}
+	}
+
+	function <portlet:namespace />editItemQuantities() {
+		var form = document.querySelector('#<portlet:namespace />fm');
+
+		if (form) {
+			var itemQuantitiesURL = '<liferay-portlet:renderURL anchor="<%= false %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/shopping/edit_item_quantities" /></liferay-portlet:renderURL>';
+
+			<%
+			for (int i = 0; i < fieldsCount; i++) {
+			%>
+
+				itemQuantitiesURL += '&<portlet:namespace />n<%= i %>=' + encodeURIComponent(form.querySelector('#<portlet:namespace />fieldName<%= i %>').value);
+				itemQuantitiesURL += '&<portlet:namespace />v<%= i %>=' + encodeURIComponent(form.querySelector('#<portlet:namespace />fieldValues<%= i %>').value);
+
+			<%
+			}
+			%>
+
+			Liferay.Util.openWindow(
+				{
+					dialog: {
+						width: 680
+					},
+					id: '<portlet:namespace />itemQuantities',
+					refreshWindow: window,
+					title: '<%= UnicodeLanguageUtil.get(request, "edit-stock-quantity") %>',
+					uri: itemQuantitiesURL
+				}
+			);
+		}
 	}
 
 	function <portlet:namespace />toggleInfiniteStock(checkbox) {

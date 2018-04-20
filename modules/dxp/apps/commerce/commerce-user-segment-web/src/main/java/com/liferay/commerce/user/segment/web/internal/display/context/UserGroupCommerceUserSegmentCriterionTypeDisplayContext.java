@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
-import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.user.groups.admin.item.selector.UserGroupItemSelectorCriterion;
 
@@ -115,19 +115,8 @@ public class UserGroupCommerceUserSegmentCriterionTypeDisplayContext
 	}
 
 	protected long[] getCheckedUserGroupIds() throws PortalException {
-		List<Long> userGroupIds = new ArrayList<>();
-
-		List<UserGroup> userGroups = getUserGroups();
-
-		for (UserGroup userGroup : userGroups) {
-			userGroupIds.add(userGroup.getUserGroupId());
-		}
-
-		if (!userGroupIds.isEmpty()) {
-			return ArrayUtil.toLongArray(userGroupIds);
-		}
-
-		return new long[0];
+		return ListUtil.toLongArray(
+			getUserGroups(), UserGroup.USER_GROUP_ID_ACCESSOR);
 	}
 
 	private final ItemSelector _itemSelector;

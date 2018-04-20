@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.roles.item.selector.RoleItemSelectorCriterion;
 
@@ -113,19 +113,7 @@ public class RoleCommerceUserSegmentCriterionTypeDisplayContext
 	}
 
 	protected long[] getCheckedRoleIds() throws PortalException {
-		List<Long> roleIds = new ArrayList<>();
-
-		List<Role> roles = getRoles();
-
-		for (Role role : roles) {
-			roleIds.add(role.getRoleId());
-		}
-
-		if (!roleIds.isEmpty()) {
-			return ArrayUtil.toLongArray(roleIds);
-		}
-
-		return new long[0];
+		return ListUtil.toLongArray(getRoles(), Role.ROLE_ID_ACCESSOR);
 	}
 
 	private final ItemSelector _itemSelector;

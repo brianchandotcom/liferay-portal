@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
-import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
@@ -117,19 +117,8 @@ public class OrganizationCommerceUserSegmentCriterionTypeDisplayContext
 	}
 
 	protected long[] getCheckedOrganizationIds() throws PortalException {
-		List<Long> organizationIds = new ArrayList<>();
-
-		List<Organization> organizations = getOrganizations();
-
-		for (Organization organization : organizations) {
-			organizationIds.add(organization.getOrganizationId());
-		}
-
-		if (!organizationIds.isEmpty()) {
-			return ArrayUtil.toLongArray(organizationIds);
-		}
-
-		return new long[0];
+		return ListUtil.toLongArray(
+			getOrganizations(), Organization.ORGANIZATION_ID_ACCESSOR);
 	}
 
 	private final ItemSelector _itemSelector;

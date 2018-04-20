@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.users.admin.item.selector.UserItemSelectorCriterion;
 
@@ -113,19 +113,7 @@ public class UserCommerceUserSegmentCriterionTypeDisplayContext
 	}
 
 	protected long[] getCheckedUserIds() throws PortalException {
-		List<Long> userIds = new ArrayList<>();
-
-		List<User> users = getUsers();
-
-		for (User user : users) {
-			userIds.add(user.getUserId());
-		}
-
-		if (!userIds.isEmpty()) {
-			return ArrayUtil.toLongArray(userIds);
-		}
-
-		return new long[0];
+		return ListUtil.toLongArray(getUsers(), User.USER_ID_ACCESSOR);
 	}
 
 	private final ItemSelector _itemSelector;

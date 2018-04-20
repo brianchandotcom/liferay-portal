@@ -58,7 +58,11 @@ public class ${entity.name}Wrapper implements ${entity.name}, ModelWrapper<${ent
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		<#list entity.regularEntityColumns as entityColumn>
-			attributes.put("${entityColumn.name}", get${entityColumn.methodName}());
+			<#if stringUtil.equals(entityColumn.type, "boolean")>
+				attributes.put("${entityColumn.name}", is${entityColumn.methodName}());
+			<#else>
+				attributes.put("${entityColumn.name}", get${entityColumn.methodName}());
+			</#if>
 		</#list>
 
 		return attributes;

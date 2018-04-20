@@ -293,6 +293,8 @@ public class ${entity.name}PersistenceTest {
 				Blob existing${entityColumn.methodName} = existing${entity.name}.get${entityColumn.methodName}();
 
 				Assert.assertTrue(Arrays.equals(existing${entityColumn.methodName}.getBytes(1, (int)existing${entityColumn.methodName}.length()), new${entityColumn.methodName}Bytes));
+			<#elseif stringUtil.equals(entityColumn.type, "boolean")>
+				Assert.assertEquals(existing${entity.name}.is${entityColumn.methodName}(), new${entity.name}.is${entityColumn.methodName}());
 			<#elseif stringUtil.equals(entityColumn.type, "Date")>
 				Assert.assertEquals(Time.getShortTimestamp(existing${entity.name}.get${entityColumn.methodName}()), Time.getShortTimestamp(new${entity.name}.get${entityColumn.methodName}()));
 			<#elseif stringUtil.equals(entityColumn.type, "double")>

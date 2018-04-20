@@ -690,7 +690,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 						args = new Object[] {
 							<#list entityColumns as entityColumn>
-								${entity.varName}ModelImpl.get${entityColumn.methodName}()
+								<#if stringUtil.equals(entityColumn.type, "boolean")>
+									${entity.varName}ModelImpl.is${entityColumn.methodName}()
+								<#else>
+									${entity.varName}ModelImpl.get${entityColumn.methodName}()
+								</#if>
 
 								<#if entityColumn_has_next>
 									,

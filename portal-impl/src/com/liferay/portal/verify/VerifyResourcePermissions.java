@@ -19,17 +19,11 @@ import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ContactLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.verify.model.VerifiableResourcedModel;
@@ -95,65 +89,44 @@ public class VerifyResourcePermissions extends VerifyProcess {
 		boolean count, VerifiableResourcedModel verifiableResourcedModel,
 		Role role) {
 
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(29);
 
-		String modelName = verifiableResourcedModel.getModelName();
+		sb.append("select ");
 
-		if (modelName.equals(User.class.getName())) {
-			sb.append("select ");
-
-			if (count) {
-				sb.append("count(*)");
-			}
-			else {
-				sb.append(verifiableResourcedModel.getPrimaryKeyColumnName());
-				sb.append(", ");
-				sb.append(verifiableResourcedModel.getUserIdColumnName());
-			}
-
-			sb.append(" from ");
-			sb.append(verifiableResourcedModel.getTableName());
-			sb.append(" where companyId = ");
-			sb.append(role.getCompanyId());
+		if (count) {
+			sb.append("count(*)");
 		}
 		else {
-			sb.append("select ");
-
-			if (count) {
-				sb.append("count(*)");
-			}
-			else {
-				sb.append(verifiableResourcedModel.getTableName());
-				sb.append(".");
-				sb.append(verifiableResourcedModel.getPrimaryKeyColumnName());
-				sb.append(", ");
-				sb.append(verifiableResourcedModel.getTableName());
-				sb.append(".");
-				sb.append(verifiableResourcedModel.getUserIdColumnName());
-				sb.append(", ResourcePermission.resourcePermissionId");
-			}
-
-			sb.append(" from ");
-			sb.append(verifiableResourcedModel.getTableName());
-			sb.append(" left join ResourcePermission on (ResourcePermission.");
-			sb.append("companyId = ");
-			sb.append(role.getCompanyId());
-			sb.append(" and ResourcePermission.name = '");
-			sb.append(verifiableResourcedModel.getModelName());
-			sb.append("' and ResourcePermission.scope = ");
-			sb.append(ResourceConstants.SCOPE_INDIVIDUAL);
-			sb.append(" and ResourcePermission.primKey = CAST_TEXT(");
 			sb.append(verifiableResourcedModel.getTableName());
 			sb.append(".");
 			sb.append(verifiableResourcedModel.getPrimaryKeyColumnName());
-			sb.append(") and ResourcePermission.roleId = ");
-			sb.append(role.getRoleId());
-			sb.append(") where ");
+			sb.append(", ");
 			sb.append(verifiableResourcedModel.getTableName());
-			sb.append(".companyId = ");
-			sb.append(role.getCompanyId());
-			sb.append(" and ResourcePermission.resourcePermissionId is NULL");
+			sb.append(".");
+			sb.append(verifiableResourcedModel.getUserIdColumnName());
+			sb.append(", ResourcePermission.resourcePermissionId");
 		}
+
+		sb.append(" from ");
+		sb.append(verifiableResourcedModel.getTableName());
+		sb.append(" left join ResourcePermission on (ResourcePermission.");
+		sb.append("companyId = ");
+		sb.append(role.getCompanyId());
+		sb.append(" and ResourcePermission.name = '");
+		sb.append(verifiableResourcedModel.getModelName());
+		sb.append("' and ResourcePermission.scope = ");
+		sb.append(ResourceConstants.SCOPE_INDIVIDUAL);
+		sb.append(" and ResourcePermission.primKey = CAST_TEXT(");
+		sb.append(verifiableResourcedModel.getTableName());
+		sb.append(".");
+		sb.append(verifiableResourcedModel.getPrimaryKeyColumnName());
+		sb.append(") and ResourcePermission.roleId = ");
+		sb.append(role.getRoleId());
+		sb.append(") where ");
+		sb.append(verifiableResourcedModel.getTableName());
+		sb.append(".companyId = ");
+		sb.append(role.getCompanyId());
+		sb.append(" and ResourcePermission.resourcePermissionId is NULL");
 
 		return SQLTransformer.transform(sb.toString());
 	}
@@ -171,56 +144,19 @@ public class VerifyResourcePermissions extends VerifyProcess {
 					"= ", String.valueOf(companyId), " and model ", modelName));
 		}
 
-		ResourcePermission resourcePermission = null;
-
-		if (modelName.equals(User.class.getName())) {
-			resourcePermission =
-				ResourcePermissionLocalServiceUtil.fetchResourcePermission(
-					companyId, modelName, ResourceConstants.SCOPE_INDIVIDUAL,
-					String.valueOf(primKey), role.getRoleId());
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"No resource found for {", String.valueOf(companyId), ", ",
+					modelName, ", ",
+					String.valueOf(ResourceConstants.SCOPE_INDIVIDUAL), ", ",
+					String.valueOf(primKey), ", ",
+					String.valueOf(role.getRoleId()), "}"));
 		}
 
-		if (resourcePermission == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"No resource found for {", String.valueOf(companyId),
-						", ", modelName, ", ",
-						String.valueOf(ResourceConstants.SCOPE_INDIVIDUAL),
-						", ", String.valueOf(primKey), ", ",
-						String.valueOf(role.getRoleId()), "}"));
-			}
-
-			ResourceLocalServiceUtil.addResources(
-				companyId, 0, ownerId, modelName, String.valueOf(primKey),
-				false, false, false);
-		}
-
-		if (!modelName.equals(User.class.getName())) {
-			return;
-		}
-
-		User user = UserLocalServiceUtil.getUserById(ownerId);
-
-		Contact contact = ContactLocalServiceUtil.fetchContact(
-			user.getContactId());
-
-		if ((contact != null) && (ownerId != contact.getUserId())) {
-			if (resourcePermission == null) {
-				resourcePermission =
-					ResourcePermissionLocalServiceUtil.fetchResourcePermission(
-						companyId, modelName,
-						ResourceConstants.SCOPE_INDIVIDUAL,
-						String.valueOf(primKey), role.getRoleId());
-
-				if (resourcePermission != null) {
-					resourcePermission.setOwnerId(contact.getUserId());
-
-					ResourcePermissionLocalServiceUtil.updateResourcePermission(
-						resourcePermission);
-				}
-			}
-		}
+		ResourceLocalServiceUtil.addResources(
+			companyId, 0, ownerId, modelName, String.valueOf(primKey), false,
+			false, false);
 	}
 
 	private void _verifyResourcedModel(

@@ -751,6 +751,8 @@
 	</command>
 
 	<command name="EditRule" priority="5">
+		<description message="This is a use case for LPS-79095." />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -800,6 +802,12 @@
 			<var name="actionRowNumber" value="1" />
 			<var name="actionTarget" value="Text Field 2" />
 		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoFormBuilder" />
+
+		<execute function="AssertVisible" locator1="Form#ADD_FIELD" />
+
+		<execute macro="FormsAdminNavigator#gotoRules" />
 
 		<execute macro="FormRules#save" />
 

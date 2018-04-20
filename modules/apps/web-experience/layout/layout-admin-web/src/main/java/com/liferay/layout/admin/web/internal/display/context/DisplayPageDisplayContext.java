@@ -219,8 +219,7 @@ public class DisplayPageDisplayContext {
 	}
 
 	public String getMappingTypeLabel(
-			LayoutPageTemplateEntry layoutPageTemplateEntry)
-		throws PortalException {
+		LayoutPageTemplateEntry layoutPageTemplateEntry) {
 
 		AssetDisplayContributor assetDisplayContributor =
 			_assetDisplayContributorTracker.getAssetDisplayContributor(

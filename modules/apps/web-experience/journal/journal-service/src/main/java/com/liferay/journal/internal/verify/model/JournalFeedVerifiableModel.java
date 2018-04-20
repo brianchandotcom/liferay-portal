@@ -14,20 +14,12 @@
 
 package com.liferay.journal.internal.verify.model;
 
-import com.liferay.journal.model.JournalFeed;
-import com.liferay.portal.kernel.verify.model.VerifiableResourcedModel;
 import com.liferay.portal.kernel.verify.model.VerifiableUUIDModel;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class JournalFeedVerifiableModel
-	implements VerifiableResourcedModel, VerifiableUUIDModel {
-
-	@Override
-	public String getModelName() {
-		return JournalFeed.class.getName();
-	}
+public class JournalFeedVerifiableModel implements VerifiableUUIDModel {
 
 	@Override
 	public String getPrimaryKeyColumnName() {
@@ -37,11 +29,6 @@ public class JournalFeedVerifiableModel
 	@Override
 	public String getTableName() {
 		return "JournalFeed";
-	}
-
-	@Override
-	public String getUserIdColumnName() {
-		return "userId";
 	}
 
 }

@@ -15,14 +15,12 @@
 package com.liferay.polls.internal.verify;
 
 import com.liferay.polls.internal.verify.model.PollsChoiceVerifiableModel;
-import com.liferay.polls.internal.verify.model.PollsQuestionVerifiableModel;
 import com.liferay.polls.internal.verify.model.PollsVoteVerifiableModel;
 import com.liferay.polls.service.PollsChoiceLocalService;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.verify.VerifyAuditedModel;
 import com.liferay.portal.verify.VerifyGroupedModel;
 import com.liferay.portal.verify.VerifyProcess;
-import com.liferay.portal.verify.VerifyResourcePermissions;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,7 +39,6 @@ public class PollsServiceVerifyProcess extends VerifyProcess {
 	protected void doVerify() throws Exception {
 		verifyAuditedModels();
 		verifyGroupedModels();
-		verifyResourcedModels();
 	}
 
 	@Reference(unbind = "-")
@@ -63,18 +60,9 @@ public class PollsServiceVerifyProcess extends VerifyProcess {
 		}
 	}
 
-	protected void verifyResourcedModels() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			_verifyResourcePermissions.verify(
-				new PollsQuestionVerifiableModel());
-		}
-	}
-
 	private final VerifyAuditedModel _verifyAuditedModel =
 		new VerifyAuditedModel();
 	private final VerifyGroupedModel _verifyGroupedModel =
 		new VerifyGroupedModel();
-	private final VerifyResourcePermissions _verifyResourcePermissions =
-		new VerifyResourcePermissions();
 
 }

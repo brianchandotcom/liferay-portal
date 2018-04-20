@@ -8929,89 +8929,41 @@ if (ppstate.equals("normal")) {
 	</target>
 
 	<target name="record-test-plugin-names">
-		<loadproperties srcFile="${lp.plugins.dir}/build.properties">
-			<filterchain>
-				<linecontains>
-					<contains value="plugins.excludes" />
-				</linecontains>
-			</filterchain>
-		</loadproperties>
+		<condition else="plugins-compile-jdk8" property="test.batch.name" value="${test.batch.name}">
+			<isset property="test.batch.name" />
+		</condition>
 
 		<beanshell>
 			<![CDATA[
-				import org.apache.tools.ant.DirectoryScanner;
+				import com.liferay.jenkins.results.parser.AxisTestClassGroup;
+				import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
+				import com.liferay.jenkins.results.parser.TestClassGroup;
+				import com.liferay.jenkins.results.parser.TestClassGroupFactory;
 
-				List getPluginGroups(List pluginNames, int groupsSize) {
-					List pluginNameGroups = new ArrayList(groupsSize);
+				PortalGitWorkingDirectory portalGitWorkingDirectory = new PortalGitWorkingDirectory(project.getProperty("git.working.branch.name"), project.getProperty("project.dir"));
 
-					for (int i = 0; i < groupsSize; i++) {
-						pluginNameGroups.add(new ArrayList());
-					}
+				TestClassGroup batchTestClassGroup = TestClassGroupFactory.newBatchTestClassGroup(project.getProperty("test.batch.name"), portalGitWorkingDirectory, project.getProperty("env.CI_TEST_SUITE"));
 
-					int i = 0;
-
-					for (String pluginName : pluginNames) {
-						List pluginNameGroup = pluginNameGroups.get(i++ % groupsSize);
-
-						pluginNameGroup.add(pluginName);
-					}
-
-					return pluginNameGroups;
-				}
-
-				List getPluginNames() {
-					DirectoryScanner directoryScanner = new DirectoryScanner();
-
-					directoryScanner.setBasedir(project.getProperty("lp.plugins.dir"));
-					directoryScanner.setIncludes(new String[] {"**/hooks/*/build.xml", "**/layoutpl/*/build.xml", "**/portlets/*/build.xml", "**/shared/*/build.xml", "**/themes/*/build.xml", "**/webs/*/build.xml"});
-
-					directoryScanner.scan();
-
-					String[] fileNames = directoryScanner.getIncludedFiles();
-
-					List pluginNames = new ArrayList();
-
-					for (String fileName : fileNames) {
-						int x = fileName.indexOf("/");
-						int y = fileName.lastIndexOf("/");
-
-						if (File.separator.equals("\\")) {
-							x = fileName.indexOf("\\");
-							y = fileName.lastIndexOf("\\");
-						}
-
-						String pluginName = fileName.substring(x + 1, y);
-
-						String pluginsExcludes = project.getProperty("plugins.excludes");
-
-						if (!pluginsExcludes.contains(pluginName)) {
-							pluginNames.add(pluginName);
-						}
-					}
-
-					Collections.sort(pluginNames);
-
-					return pluginNames;
-				}
+				int axisCount = batchTestClassGroup.getAxisCount();
 
 				StringBuilder sb = new StringBuilder();
 
-				int allTestPluginGroupsSize = Integer.parseInt(project.getProperty("test.plugin.groups.size"));
+				for (i = 0; i < axisCount; i++) {
+					AxisTestClassGroup axisTestClassGroup = batchTestClassGroup.getAxisTestClassGroup(i);
 
-				List pluginNames = getPluginNames();
-
-				List testPluginGroups = getPluginGroups(pluginNames, allTestPluginGroupsSize);
-
-				for (i = 0; i < allTestPluginGroupsSize; i++) {
-					List testPluginGroup = testPluginGroups.get(i);
+					List testClassGroup = axisTestClassGroup.getTestClassFiles();
 
 					sb.append("TEST_PLUGIN_GROUP_");
 					sb.append(i);
 					sb.append("=");
 
-					for (String testPlugin : testPluginGroup) {
-						sb.append(testPlugin);
+					for (File testClass : testClassGroup) {
+						sb.append(testClass.getName());
 						sb.append(",");
+					}
+
+					if (!testClassGroup.isEmpty()) {
+						sb.setLength(sb.length() - 1);
 					}
 
 					sb.append("\n\n");
@@ -9019,12 +8971,12 @@ if (ppstate.equals("normal")) {
 
 				sb.append("TEST_PLUGIN_GROUPS=");
 
-				for (int i = 0; i < allTestPluginGroupsSize; i++) {
+				for (int i = 0; i < axisCount; i++) {
 					sb.append(i);
 					sb.append(" ");
 				}
 
-				if (allTestPluginGroupsSize > 0) {
+				if (axisCount > 0) {
 					sb.setLength(sb.length() - 1);
 				}
 

@@ -170,8 +170,7 @@ public class FragmentsEditorContext {
 			_getFragmentEntryActionURL("/layout/render_fragment_entry"));
 
 		if (_showMapping) {
-			soyContext.put(
-				"selectedMappingTypeLabel", _getSelectedMappingTypeLabel());
+			soyContext.put("selectedMappingTypes", _getSelectedMappingTypes());
 		}
 
 		soyContext.put("sidebarTabs", _getSidebarTabs());
@@ -285,7 +284,7 @@ public class FragmentsEditorContext {
 		return assetDisplayContributor.getLabel(_themeDisplay.getLocale());
 	}
 
-	private SoyContext _getSelectedMappingTypeLabel() throws PortalException {
+	private SoyContext _getSelectedMappingTypes() throws PortalException {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_getLayoutPageTemplateEntry();
 
@@ -295,15 +294,25 @@ public class FragmentsEditorContext {
 			return SoyContextFactoryUtil.createSoyContext();
 		}
 
+		SoyContext soyContexts = SoyContextFactoryUtil.createSoyContext();
+
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
-		soyContext.put("type", _getMappingTypeLabel());
+		soyContext.put("id", layoutPageTemplateEntry.getClassNameId());
+		soyContext.put("label", _getMappingTypeLabel());
+
+		soyContexts.put("type", soyContext);
 
 		if (layoutPageTemplateEntry.getClassTypeId() > 0) {
-			soyContext.put("subtype", _getMappingSubtypeLabel());
+			soyContext = SoyContextFactoryUtil.createSoyContext();
+
+			soyContext.put("id", layoutPageTemplateEntry.getClassTypeId());
+			soyContext.put("label", _getMappingSubtypeLabel());
+
+			soyContexts.put("subtype", soyContext);
 		}
 
-		return soyContext;
+		return soyContexts;
 	}
 
 	private SoyContext _getSidebarTab(String label) {

@@ -167,7 +167,7 @@
 			<var name="user" value="userfn userln" />
 		</execute>
 
-		<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
+		<execute macro="PortletEntry#selectAll" />
 
 		<execute function="Click" locator1="Icon#MARK_AS_READ" />
 
@@ -185,7 +185,7 @@
 			<var name="portlet" value="Notifications" />
 		</execute>
 
-		<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
+		<execute macro="PortletEntry#selectAll" />
 
 		<execute function="Click" locator1="Icon#MARK_AS_UNREAD" />
 

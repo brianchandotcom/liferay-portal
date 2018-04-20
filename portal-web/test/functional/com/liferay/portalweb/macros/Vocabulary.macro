@@ -162,7 +162,7 @@
 
 		<execute function="AssertTextEquals" locator1="Categories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
 
-		<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
+		<execute macro="PortletEntry#selectAll" />
 
 		<execute function="ClickNoError" locator1="Icon#DELETE" />
 
@@ -246,7 +246,7 @@
 		<if>
 			<condition function="IsElementPresent" locator1="Checkbox#SELECT_ALL" />
 			<then>
-				<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
+				<execute macro="PortletEntry#selectAll" />
 
 				<execute function="ClickNoError" locator1="Icon#DELETE" />
 

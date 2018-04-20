@@ -239,8 +239,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LEXICON_SELECT_ALL</td>
-	<td>//div[contains(@class,'collapse on')]//input</td>
+	<td>LEXICON_SELECT_ALL_CONTAINER</td>
+	<td>//nav[contains(@class,'management-bar')]//div[contains(@class,'custom-checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LEXICON_SELECT_ALL_INPUT</td>
+	<td>//nav[contains(@class,'management-bar')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

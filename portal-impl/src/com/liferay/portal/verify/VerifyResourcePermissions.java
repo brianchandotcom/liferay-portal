@@ -242,6 +242,10 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			}
 		}
 
+		if (total == 0) {
+			return;
+		}
+
 		try (LoggingTimer loggingTimer = new LoggingTimer(
 				verifiableResourcedModel.getTableName());
 			Connection con = DataAccess.getConnection();

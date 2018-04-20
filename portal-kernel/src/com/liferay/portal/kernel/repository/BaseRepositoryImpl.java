@@ -662,7 +662,7 @@ public abstract class BaseRepositoryImpl
 			fileEntryId);
 
 		boolean manualCheckInRequired =
-			repositoryEntry.getManualCheckInRequired();
+			repositoryEntry.isManualCheckInRequired();
 
 		if (!manualCheckInRequired) {
 			return;

@@ -348,7 +348,7 @@ public class PasswordPolicyLocalServiceImpl
 		PasswordPolicy passwordPolicy =
 			passwordPolicyPersistence.findByPrimaryKey(passwordPolicyId);
 
-		if (!passwordPolicy.getDefaultPolicy()) {
+		if (!passwordPolicy.isDefaultPolicy()) {
 			validate(passwordPolicyId, passwordPolicy.getCompanyId(), name);
 
 			passwordPolicy.setName(name);

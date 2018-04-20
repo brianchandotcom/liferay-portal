@@ -116,7 +116,7 @@ public class AddressStagedModelDataHandler
 				address.getStreet1(), address.getStreet2(),
 				address.getStreet3(), address.getCity(), address.getZip(),
 				address.getRegionId(), address.getCountryId(),
-				address.getTypeId(), address.getMailing(), address.isPrimary(),
+				address.getTypeId(), address.isMailing(), address.isPrimary(),
 				serviceContext);
 		}
 		else {
@@ -124,7 +124,7 @@ public class AddressStagedModelDataHandler
 				existingAddress.getAddressId(), address.getStreet1(),
 				address.getStreet2(), address.getStreet3(), address.getCity(),
 				address.getZip(), address.getRegionId(), address.getCountryId(),
-				address.getTypeId(), address.getMailing(), address.isPrimary());
+				address.getTypeId(), address.isMailing(), address.isPrimary());
 		}
 
 		portletDataContext.importClassedModel(address, importedAddress);

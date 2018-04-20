@@ -74,7 +74,7 @@ public class StagedGroupImpl implements StagedGroup {
 
 	@Override
 	public boolean getActive() {
-		return _group.getActive();
+		return _group.isActive();
 	}
 
 	@Override
@@ -266,7 +266,7 @@ public class StagedGroupImpl implements StagedGroup {
 
 	@Override
 	public boolean getInheritContent() {
-		return _group.getInheritContent();
+		return _group.isInheritContent();
 	}
 
 	@Override
@@ -296,7 +296,7 @@ public class StagedGroupImpl implements StagedGroup {
 
 	@Override
 	public boolean getManualMembership() {
-		return _group.getManualMembership();
+		return _group.isManualMembership();
 	}
 
 	@Override
@@ -450,7 +450,7 @@ public class StagedGroupImpl implements StagedGroup {
 
 	@Override
 	public boolean getSite() {
-		return _group.getSite();
+		return _group.isSite();
 	}
 
 	@Override

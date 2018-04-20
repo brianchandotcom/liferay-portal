@@ -255,7 +255,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 
 			if (StagingServiceHttp.hasRemoteLayout(
 					httpPrincipal, parentLayout.getUuid(), remoteGroupId,
-					parentLayout.getPrivateLayout())) {
+					parentLayout.isPrivateLayout())) {
 
 				// If one parent is found, all others are assumed to exist
 

@@ -37,7 +37,7 @@ public class PluginSettingImpl extends PluginSettingBaseImpl {
 		setPluginId(pluginSetting.getPluginId());
 		setPluginType(pluginSetting.getPluginType());
 		setRoles(pluginSetting.getRoles());
-		setActive(pluginSetting.getActive());
+		setActive(pluginSetting.isActive());
 	}
 
 	/**

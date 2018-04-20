@@ -2642,7 +2642,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			fields.add("firstName");
 		}
 
-		if (male != contact.getMale()) {
+		if (male != contact.isMale()) {
 			fields.add("gender");
 		}
 

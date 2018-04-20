@@ -720,7 +720,7 @@ public class LayoutSetPrototypePropagationTest
 				_layoutSetPrototype.getLayoutSetPrototypeId(),
 				_layoutSetPrototype.getNameMap(),
 				_layoutSetPrototype.getDescriptionMap(),
-				_layoutSetPrototype.getActive(), layoutsUpdateable,
+				_layoutSetPrototype.isActive(), layoutsUpdateable,
 				ServiceContextTestUtil.getServiceContext());
 	}
 

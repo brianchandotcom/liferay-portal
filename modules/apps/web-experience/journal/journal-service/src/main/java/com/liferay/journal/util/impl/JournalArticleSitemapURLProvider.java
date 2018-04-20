@@ -119,7 +119,7 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 
 			Layout layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
 				journalArticle.getLayoutUuid(), layoutSet.getGroupId(),
-				layoutSet.getPrivateLayout());
+				layoutSet.isPrivateLayout());
 
 			if (layout == null) {
 				continue;

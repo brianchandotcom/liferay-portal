@@ -987,7 +987,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				portletModel.setDefaultPluginSetting(
 					portlet.getDefaultPluginSetting());
 				portletModel.setRoles(portlet.getRoles());
-				portletModel.setActive(portlet.getActive());
+				portletModel.setActive(portlet.isActive());
 			}
 		}
 

@@ -128,9 +128,9 @@ public class PasswordPolicyStagedModelDataHandler
 				_passwordPolicyLocalService.addPasswordPolicy(
 					userId, passwordPolicy.isDefaultPolicy(),
 					passwordPolicy.getName(), passwordPolicy.getDescription(),
-					passwordPolicy.getChangeable(),
+					passwordPolicy.isChangeable(),
 					passwordPolicy.isChangeRequired(),
-					passwordPolicy.getMinAge(), passwordPolicy.getCheckSyntax(),
+					passwordPolicy.getMinAge(), passwordPolicy.isCheckSyntax(),
 					passwordPolicy.isAllowDictionaryWords(),
 					passwordPolicy.getMinAlphanumeric(),
 					passwordPolicy.getMinLength(),

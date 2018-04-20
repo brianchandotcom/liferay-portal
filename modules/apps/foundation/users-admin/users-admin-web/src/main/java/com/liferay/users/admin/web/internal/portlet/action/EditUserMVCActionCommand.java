@@ -500,7 +500,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			User.class.getName(), actionRequest);
 
 		user = _userService.updateUser(
-			user.getUserId(), oldPassword, null, null, user.getPasswordReset(),
+			user.getUserId(), oldPassword, null, null, user.isPasswordReset(),
 			null, null, screenName, emailAddress, facebookId, user.getOpenId(),
 			!deleteLogo, portraitBytes, languageId, user.getTimeZoneId(),
 			user.getGreeting(), comments, firstName, middleName, lastName,

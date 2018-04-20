@@ -256,7 +256,7 @@ public class SitemapImpl implements Sitemap {
 			}
 
 			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-				layoutSet.getGroupId(), layoutSet.getPrivateLayout(),
+				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
 				entry.getKey());
 
 			for (Layout layout : layouts) {
@@ -273,7 +273,7 @@ public class SitemapImpl implements Sitemap {
 				sb.append("&groupId=");
 				sb.append(layoutSet.getGroupId());
 				sb.append("&privateLayout=");
-				sb.append(layout.getPrivateLayout());
+				sb.append(layout.isPrivateLayout());
 
 				locationElement.addText(sb.toString());
 			}

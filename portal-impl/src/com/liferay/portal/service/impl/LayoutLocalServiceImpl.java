@@ -1704,7 +1704,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			Layout layout = layoutPersistence.findByPrimaryKey(
 				group.getClassPK());
 
-			if (layout.getPrivateLayout() == privateLayout) {
+			if (layout.isPrivateLayout() == privateLayout) {
 				layouts.add(layout);
 			}
 		}

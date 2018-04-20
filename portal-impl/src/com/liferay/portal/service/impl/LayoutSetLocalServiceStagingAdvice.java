@@ -68,7 +68,7 @@ public class LayoutSetLocalServiceStagingAdvice implements BeanFactoryAware {
 	protected LayoutSet wrapLayoutSet(LayoutSet layoutSet) {
 		try {
 			if (!LayoutStagingUtil.isBranchingLayoutSet(
-					layoutSet.getGroup(), layoutSet.getPrivateLayout())) {
+					layoutSet.getGroup(), layoutSet.isPrivateLayout())) {
 
 				return layoutSet;
 			}

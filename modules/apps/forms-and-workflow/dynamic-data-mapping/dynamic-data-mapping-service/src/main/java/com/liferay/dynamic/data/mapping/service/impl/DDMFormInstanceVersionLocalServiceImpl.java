@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceVersionExcep
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
 import com.liferay.dynamic.data.mapping.service.base.DDMFormInstanceVersionLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.util.comparator.FormInstanceVersionVersionComparator;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -100,6 +101,30 @@ public class DDMFormInstanceVersionLocalServiceImpl
 			new FormInstanceVersionVersionComparator());
 
 		return ddmFormInstanceVersions.get(0);
+	}
+
+	@Override
+	public DDMFormInstanceVersion getLatestFormInstanceVersion(
+			long formInstanceId, int status)
+		throws PortalException {
+
+		List<DDMFormInstanceVersion> formInstanceVersions =
+			ddmFormInstanceVersionPersistence.findByF_S(formInstanceId, status);
+
+		if (formInstanceVersions.isEmpty()) {
+			throw new NoSuchFormInstanceVersionException(
+				StringBundler.concat(
+					"No form instance versions found for form instance ID ",
+					Long.toString(formInstanceId), " with status ",
+					Integer.toString(status)));
+		}
+
+		formInstanceVersions = ListUtil.copy(formInstanceVersions);
+
+		Collections.sort(
+			formInstanceVersions, new FormInstanceVersionVersionComparator());
+
+		return formInstanceVersions.get(0);
 	}
 
 }

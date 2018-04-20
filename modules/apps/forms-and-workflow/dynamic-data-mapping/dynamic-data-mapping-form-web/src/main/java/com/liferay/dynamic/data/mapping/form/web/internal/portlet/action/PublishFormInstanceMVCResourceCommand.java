@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.values.query.DDMFormValuesQuery;
 import com.liferay.dynamic.data.mapping.form.values.query.DDMFormValuesQueryFactory;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
@@ -32,8 +33,11 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -84,8 +88,26 @@ public class PublishFormInstanceMVCResourceCommand
 
 			updatePublishedDDMFormFieldValue(settingsDDMFormValues, published);
 
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				DDMFormInstance.class.getName(), resourceRequest);
+
+			if (published) {
+				serviceContext.setAttribute(
+					"status", WorkflowConstants.STATUS_APPROVED);
+			}
+			else {
+				DDMFormInstanceVersion latestFormInstanceVersion =
+					formInstance.getFormInstanceVersion(
+						formInstance.getVersion());
+
+				serviceContext.setAttribute(
+					"status", latestFormInstanceVersion.getStatus());
+			}
+
 			_formInstanceService.updateFormInstance(
-				formInstanceId, settingsDDMFormValues);
+				formInstanceId, formInstance.getStructureId(),
+				formInstance.getNameMap(), formInstance.getDescriptionMap(),
+				settingsDDMFormValues, serviceContext);
 		}
 		catch (Throwable t) {
 			resourceResponse.setProperty(

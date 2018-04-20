@@ -23,14 +23,17 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.DDMFormSuccessPageSettings;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.petra.string.StringPool;
@@ -76,6 +79,8 @@ public class DDMFormDisplayContext {
 	public DDMFormDisplayContext(
 			RenderRequest renderRequest, RenderResponse renderResponse,
 			DDMFormInstanceService ddmFormInstanceService,
+			DDMFormInstanceVersionLocalService
+				ddmFormInstanceVersionLocalService,
 			DDMFormInstanceRecordVersionLocalService
 				ddmFormInstanceRecordVersionLocalService,
 			DDMFormRenderer ddmFormRenderer,
@@ -88,6 +93,8 @@ public class DDMFormDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_ddmFormInstanceService = ddmFormInstanceService;
+		_ddmFormInstanceVersionLocalService =
+			ddmFormInstanceVersionLocalService;
 		_ddmFormInstanceRecordVersionLocalService =
 			ddmFormInstanceRecordVersionLocalService;
 		_ddmFormRenderer = ddmFormRenderer;
@@ -135,13 +142,12 @@ public class DDMFormDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		DDMStructure ddmStructure = ddmFormInstance.getStructure();
 		boolean requireCaptcha = isCaptchaRequired(ddmFormInstance);
 
-		DDMForm ddmForm = getDDMForm(ddmStructure, requireCaptcha);
+		DDMForm ddmForm = getDDMForm(ddmFormInstance, requireCaptcha);
 
 		DDMFormLayout ddmFormLayout = getDDMFormLayout(
-			ddmStructure, requireCaptcha);
+			ddmFormInstance, requireCaptcha);
 
 		DDMFormRenderingContext ddmFormRenderingContext =
 			createDDMFormRenderingContext(ddmForm);
@@ -370,9 +376,28 @@ public class DDMFormDisplayContext {
 	}
 
 	protected DDMForm getDDMForm(
-		DDMStructure ddmStructure, boolean requireCaptcha) {
+			DDMFormInstance ddmFormInstance, boolean requireCaptcha)
+		throws PortalException {
 
-		DDMForm ddmForm = ddmStructure.getDDMForm();
+		DDMForm ddmForm = null;
+
+		if (isPreview()) {
+			DDMStructure ddmStructure = ddmFormInstance.getStructure();
+
+			ddmForm = ddmStructure.getDDMForm();
+		}
+		else {
+			DDMFormInstanceVersion latestFormInstanceVersion =
+				_ddmFormInstanceVersionLocalService.
+					getLatestFormInstanceVersion(
+						ddmFormInstance.getFormInstanceId(),
+						WorkflowConstants.STATUS_APPROVED);
+
+			DDMStructureVersion structureVersion =
+				latestFormInstanceVersion.getStructureVersion();
+
+			ddmForm = structureVersion.getDDMForm();
+		}
 
 		if (requireCaptcha) {
 			DDMFormField captchaDDMFormField = new DDMFormField(
@@ -388,10 +413,28 @@ public class DDMFormDisplayContext {
 	}
 
 	protected DDMFormLayout getDDMFormLayout(
-			DDMStructure ddmStructure, boolean requireCaptcha)
+			DDMFormInstance ddmFormInstance, boolean requireCaptcha)
 		throws PortalException {
 
-		DDMFormLayout ddmFormLayout = ddmStructure.getDDMFormLayout();
+		DDMFormLayout ddmFormLayout = null;
+
+		if (isPreview()) {
+			DDMStructure ddmStructure = ddmFormInstance.getStructure();
+
+			ddmFormLayout = ddmStructure.getDDMFormLayout();
+		}
+		else {
+			DDMFormInstanceVersion latestFormInstanceVersion =
+				_ddmFormInstanceVersionLocalService.
+					getLatestFormInstanceVersion(
+						ddmFormInstance.getFormInstanceId(),
+						WorkflowConstants.STATUS_APPROVED);
+
+			DDMStructureVersion structureVersion =
+				latestFormInstanceVersion.getStructureVersion();
+
+			ddmFormLayout = structureVersion.getDDMFormLayout();
+		}
 
 		if (requireCaptcha) {
 			DDMFormLayoutPage lastDDMFormLayoutPage = getLastDDMFormLayoutPage(
@@ -583,6 +626,8 @@ public class DDMFormDisplayContext {
 	private final DDMFormInstanceRecordVersionLocalService
 		_ddmFormInstanceRecordVersionLocalService;
 	private final DDMFormInstanceService _ddmFormInstanceService;
+	private final DDMFormInstanceVersionLocalService
+		_ddmFormInstanceVersionLocalService;
 	private final DDMFormRenderer _ddmFormRenderer;
 	private final DDMFormValuesFactory _ddmFormValuesFactory;
 	private final DDMFormValuesMerger _ddmFormValuesMerger;

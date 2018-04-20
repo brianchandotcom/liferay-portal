@@ -155,7 +155,7 @@ public class SaveFormInstanceMVCCommandHelper {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMFormInstance.class.getName(), portletRequest);
 
-		if (ParamUtil.getBoolean(portletRequest, "autoSave")) {
+		if (ParamUtil.getBoolean(portletRequest, "saveAsDraft")) {
 			serviceContext.setAttribute(
 				"status", WorkflowConstants.STATUS_DRAFT);
 		}
@@ -355,7 +355,7 @@ public class SaveFormInstanceMVCCommandHelper {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMFormInstance.class.getName(), portletRequest);
 
-		if (ParamUtil.getBoolean(portletRequest, "autoSave")) {
+		if (ParamUtil.getBoolean(portletRequest, "saveAsDraft")) {
 			serviceContext.setAttribute(
 				"status", WorkflowConstants.ACTION_SAVE_DRAFT);
 		}

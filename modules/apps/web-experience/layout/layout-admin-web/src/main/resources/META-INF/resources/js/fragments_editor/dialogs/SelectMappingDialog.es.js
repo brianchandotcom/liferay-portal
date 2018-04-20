@@ -1,5 +1,5 @@
-import Component from 'metal-component';
 import {Config} from 'metal-state';
+import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import Soy from 'metal-soy';
 
 import templates from './SelectMappingDialog.soy';
@@ -8,7 +8,7 @@ import templates from './SelectMappingDialog.soy';
  * SelectMappingDialog
  */
 
-class SelectMappingDialog extends Component {
+class SelectMappingDialog extends PortletBase {
 
 	/**
 	 * @inheritDoc

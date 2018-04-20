@@ -15,6 +15,7 @@
 package com.liferay.commerce.user.segment.web.internal.portlet;
 
 import com.liferay.commerce.user.segment.constants.CommerceUserSegmentPortletKeys;
+import com.liferay.commerce.user.segment.criterion.CommerceUserSegmentCriterionTypeJSPContributorRegistry;
 import com.liferay.commerce.user.segment.criterion.CommerceUserSegmentCriterionTypeRegistry;
 import com.liferay.commerce.user.segment.service.CommerceUserSegmentCriterionService;
 import com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryService;
@@ -43,7 +44,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=portlet-commerce-user-segment",
-		"com.liferay.portlet.display-category=commerce",
+		"com.liferay.portlet.display-category=category.hidden",
+		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.layout-cacheable=true",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.preferences-unique-per-layout=false",
@@ -74,6 +76,7 @@ public class CommerceUserSegmentPortlet extends MVCPortlet {
 		CommerceUserSegmentDisplayContext commerceUserSegmentDisplayContext =
 			new CommerceUserSegmentDisplayContext(
 				_commerceUserSegmentCriterionService,
+				_commerceUserSegmentCriterionTypeJSPContributorRegistry,
 				_commerceUserSegmentCriterionTypeRegistry,
 				_commerceUserSegmentEntryService, httpServletRequest);
 
@@ -86,6 +89,10 @@ public class CommerceUserSegmentPortlet extends MVCPortlet {
 	@Reference
 	private CommerceUserSegmentCriterionService
 		_commerceUserSegmentCriterionService;
+
+	@Reference
+	private CommerceUserSegmentCriterionTypeJSPContributorRegistry
+		_commerceUserSegmentCriterionTypeJSPContributorRegistry;
 
 	@Reference
 	private CommerceUserSegmentCriterionTypeRegistry

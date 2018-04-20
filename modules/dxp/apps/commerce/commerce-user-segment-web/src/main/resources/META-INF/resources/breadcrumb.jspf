@@ -14,7 +14,7 @@
  */
 --%>
 
-<div class="product-detail-header">
+<div class="user-segment-detail-header">
 	<div class="container-fluid-1280">
 		<div class="col-md-12">
 			<div>
@@ -26,7 +26,7 @@
 				/>
 			</div>
 
-			<div class="product-title">
+			<div class="header-title">
 				<h1><%= HtmlUtil.escape(title) %></h1>
 			</div>
 		</div>

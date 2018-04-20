@@ -30,9 +30,8 @@ Map<String, Object> data = new HashMap<>();
 
 data.put("direction-right", StringPool.TRUE);
 
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "user-segments"), redirect, data);
-PortalUtil.addPortletBreadcrumbEntry(request, title, portletURL.toString(), data);
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, CommerceUserSegmentScreenNavigationConstants.CATEGORY_KEY_COMMERCE_USER_SEGMENT_DETAIL), StringPool.BLANK, data);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "user-segments"), String.valueOf(renderResponse.createRenderURL()), data);
+PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 %>
 
 <%@ include file="/breadcrumb.jspf" %>

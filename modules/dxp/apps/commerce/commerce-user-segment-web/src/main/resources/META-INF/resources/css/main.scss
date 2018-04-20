@@ -1,0 +1,73 @@
+.portlet-commerce-user-segment {
+	.user-segment-detail-header {
+		background-color: #FFF;
+	}
+
+	.breadcrumb {
+		margin-bottom: 0;
+
+		& > li {
+			text-transform: capitalize;
+
+			a {
+				font-size: 0.9rem;
+			}
+		}
+	}
+}
+
+.definition-toolbar-filter {
+	background-color: #FFF;
+
+	.label {
+		margin-right: 10px;
+	}
+
+	.filter-selector {
+		padding-bottom: 1rem;
+		padding-top: 1rem;
+
+		&.form-inline {
+			margin-bottom: 0px;
+		}
+
+		label {
+			font-weight: normal;
+		}
+
+		select {
+			margin-left: 1rem;
+		}
+
+		.filter-selector-select {
+			margin-right: 1rem;
+		}
+
+		.filter-select {
+			margin-right: 1rem;
+		}
+
+		.categoriesselector {
+			display: inline-block;
+			vertical-align: middle;
+
+			.categoriesselector-content {
+				ul {
+					margin-bottom: 0;
+				}
+			}
+		}
+	}
+
+	.filter-list {
+		border-color: #F1F2F5;
+		border-style: solid;
+		border-width: 1px 0 0 0;
+		padding-bottom: 1rem;
+		padding-top: 1rem;
+
+		p {
+			margin-bottom: 0;
+		}
+	}
+}

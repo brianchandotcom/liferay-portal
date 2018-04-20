@@ -786,81 +786,64 @@ public class VersionedEntryTest {
 
 		draftVersionedEntry = _versionService.updateDraft(draftVersionedEntry);
 
-		Object[] parameters = methodNameToParametersMap.get("afterCreateDraft");
+		Object[] parameters = methodNameToParametersMap.remove(
+			"afterCreateDraft");
 
 		Assert.assertSame(draftVersionedEntry, parameters[0]);
-
-		methodNameToParametersMap.clear();
 
 		draftVersionedEntry = _versionService.updateDraft(draftVersionedEntry);
 
-		parameters = methodNameToParametersMap.get("afterUpdateDraft");
+		parameters = methodNameToParametersMap.remove("afterUpdateDraft");
 
 		Assert.assertSame(draftVersionedEntry, parameters[0]);
 
-		methodNameToParametersMap.clear();
-
 		_versionedEntry = _versionService.publishDraft(draftVersionedEntry);
 
-		parameters = methodNameToParametersMap.get("afterPublishDraft");
+		parameters = methodNameToParametersMap.remove("afterPublishDraft");
 
 		Assert.assertSame(draftVersionedEntry, parameters[0]);
 		Assert.assertSame(1, parameters[1]);
 
-		methodNameToParametersMap.clear();
-
 		draftVersionedEntry = _versionService.getDraft(_versionedEntry);
 
-		parameters = methodNameToParametersMap.get("afterCreateDraft");
+		parameters = methodNameToParametersMap.remove("afterCreateDraft");
 
 		Assert.assertSame(draftVersionedEntry, parameters[0]);
-
-		methodNameToParametersMap.clear();
 
 		_versionedEntry = _versionService.publishDraft(draftVersionedEntry);
 
-		parameters = methodNameToParametersMap.get("afterPublishDraft");
+		parameters = methodNameToParametersMap.remove("afterPublishDraft");
 
 		Assert.assertSame(draftVersionedEntry, parameters[0]);
 		Assert.assertSame(2, parameters[1]);
-
-		methodNameToParametersMap.clear();
 
 		VersionedEntryVersion versionedEntryVersion =
 			_versionService.getVersion(_versionedEntry, 1);
 
 		_versionService.deleteVersion(versionedEntryVersion);
 
-		parameters = methodNameToParametersMap.get("afterDeleteVersion");
+		parameters = methodNameToParametersMap.remove("afterDeleteVersion");
 
 		Assert.assertEquals(versionedEntryVersion, parameters[0]);
 
-		methodNameToParametersMap.clear();
-
 		draftVersionedEntry = _versionService.checkout(_versionedEntry, 2);
 
-		parameters = methodNameToParametersMap.get("afterCheckout");
+		parameters = methodNameToParametersMap.remove("afterCheckout");
 
 		Assert.assertSame(draftVersionedEntry, parameters[0]);
 		Assert.assertEquals(2, parameters[1]);
 
-		methodNameToParametersMap.clear();
-
 		_versionService.deleteDraft(draftVersionedEntry);
 
-		parameters = methodNameToParametersMap.get("afterDeleteDraft");
+		parameters = methodNameToParametersMap.remove("afterDeleteDraft");
 
 		Assert.assertSame(draftVersionedEntry, parameters[0]);
 
-		methodNameToParametersMap.clear();
-
 		_versionService.delete(_versionedEntry);
 
-		parameters = methodNameToParametersMap.get("afterDelete");
+		parameters = methodNameToParametersMap.remove("afterDelete");
 
 		Assert.assertSame(_versionedEntry, parameters[0]);
-
-		methodNameToParametersMap.clear();
 
 		_versionedEntry = null;
 

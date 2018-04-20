@@ -208,7 +208,7 @@ public class DisplayPageDisplayContext {
 		if ((assetRendererFactory == null) ||
 			(layoutPageTemplateEntry.getClassTypeId() <= 0)) {
 
-			return StringPool.SPACE;
+			return StringPool.BLANK;
 		}
 
 		ClassTypeReader classTypeReader =

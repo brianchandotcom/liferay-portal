@@ -137,13 +137,37 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 							<liferay-frontend:vertical-card-footer>
 								<div class="row">
 									<div class="col text-truncate">
-										<%= displayPageDisplayContext.getMappingTypeLabel(layoutPageTemplateEntry) %>
+
+										<%
+										String typeLabel = displayPageDisplayContext.getMappingTypeLabel(layoutPageTemplateEntry);
+										%>
+
+										<c:choose>
+											<c:when test="<%= Validator.isNotNull(typeLabel) %>">
+												<%= typeLabel %>
+											</c:when>
+											<c:otherwise>
+												&nbsp;
+											</c:otherwise>
+										</c:choose>
 									</div>
 								</div>
 
 								<div class="card-subtitle row">
 									<div class="col text-truncate">
-										<%= displayPageDisplayContext.getMappingSubtypeLabel(layoutPageTemplateEntry) %>
+
+										<%
+										String subtypeLabel = displayPageDisplayContext.getMappingSubtypeLabel(layoutPageTemplateEntry);
+										%>
+
+										<c:choose>
+											<c:when test="<%= Validator.isNotNull(subtypeLabel) %>">
+												<%= subtypeLabel %>
+											</c:when>
+											<c:otherwise>
+												&nbsp;
+											</c:otherwise>
+										</c:choose>
 									</div>
 								</div>
 							</liferay-frontend:vertical-card-footer>
@@ -177,13 +201,37 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 							<liferay-frontend:vertical-card-footer>
 								<div class="row">
 									<div class="col text-truncate">
-										<%= displayPageDisplayContext.getMappingTypeLabel(layoutPageTemplateEntry) %>
+
+										<%
+										String typeLabel = displayPageDisplayContext.getMappingTypeLabel(layoutPageTemplateEntry);
+										%>
+
+										<c:choose>
+											<c:when test="<%= Validator.isNotNull(typeLabel) %>">
+												<%= typeLabel %>
+											</c:when>
+											<c:otherwise>
+												&nbsp;
+											</c:otherwise>
+										</c:choose>
 									</div>
 								</div>
 
 								<div class="card-subtitle row">
 									<div class="col text-truncate">
-										<%= displayPageDisplayContext.getMappingSubtypeLabel(layoutPageTemplateEntry) %>
+
+										<%
+										String subtypeLabel = displayPageDisplayContext.getMappingSubtypeLabel(layoutPageTemplateEntry);
+										%>
+
+										<c:choose>
+											<c:when test="<%= Validator.isNotNull(subtypeLabel) %>">
+												<%= subtypeLabel %>
+											</c:when>
+											<c:otherwise>
+												&nbsp;
+											</c:otherwise>
+										</c:choose>
 									</div>
 								</div>
 							</liferay-frontend:vertical-card-footer>

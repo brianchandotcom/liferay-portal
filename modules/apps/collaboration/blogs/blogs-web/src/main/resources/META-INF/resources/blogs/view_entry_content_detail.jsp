@@ -42,6 +42,22 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 		</portlet:renderURL>
 
 		<div class="container widget-mode-detail-header">
+			<liferay-asset:asset-categories-available
+				className="<%= BlogsEntry.class.getName() %>"
+				classPK="<%= entry.getEntryId() %>"
+			>
+				<div class="row">
+					<div class="col-md-8 mx-auto widget-metadata">
+						<liferay-asset:asset-categories-summary
+							className="<%= BlogsEntry.class.getName() %>"
+							classPK="<%= entry.getEntryId() %>"
+							displayStyle="simple-category"
+							portletURL="<%= renderResponse.createRenderURL() %>"
+						/>
+					</div>
+				</div>
+			</liferay-asset:asset-categories-available>
+
 			<div class="row">
 				<div class="col-md-8 mx-auto">
 					<div class="autofit-row">
@@ -59,7 +75,21 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 
 						<div class="autofit-col visible-interaction">
 							<div class="dropdown dropdown-action">
-								<liferay-util:include page="/blogs/entry_action.jsp" servletContext="<%= application %>" />
+								<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
+									<portlet:renderURL var="editEntryURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+										<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
+										<portlet:param name="redirect" value="<%= currentURL %>" />
+										<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+									</portlet:renderURL>
+
+									<a href="<%= editEntryURL.toString() %>">
+										<span class="hide-accessible"><liferay-ui:message key="edit-entry" /></span>
+
+										<clay:icon
+											symbol="pencil"
+										/>
+									</a>
+								</c:if>
 							</div>
 						</div>
 					</div>
@@ -237,19 +267,6 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 						/>
 					</div>
 				</c:if>
-
-				<liferay-asset:asset-categories-available
-					className="<%= BlogsEntry.class.getName() %>"
-					classPK="<%= entry.getEntryId() %>"
-				>
-					<div class="entry-categories">
-						<liferay-asset:asset-categories-summary
-							className="<%= BlogsEntry.class.getName() %>"
-							classPK="<%= entry.getEntryId() %>"
-							portletURL="<%= renderResponse.createRenderURL() %>"
-						/>
-					</div>
-				</liferay-asset:asset-categories-available>
 			</div>
 		</div>
 	</c:when>

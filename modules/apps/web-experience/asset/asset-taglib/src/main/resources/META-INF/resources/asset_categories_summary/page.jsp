@@ -19,6 +19,7 @@
 <%
 String className = (String)request.getAttribute("liferay-asset:asset-categories-summary:className");
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-asset:asset-categories-summary:classPK"));
+String displayStyle = GetterUtil.getString((String)request.getAttribute("liferay-asset:asset-categories-summary:displayStyle"), "default");
 String paramName = GetterUtil.getString((String)request.getAttribute("liferay-asset:asset-categories-summary:paramName"), "categoryId");
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-asset:asset-categories-summary:portletURL");
 
@@ -37,41 +38,80 @@ for (AssetVocabulary vocabulary : vocabularies) {
 %>
 
 	<c:if test="<%= !curCategories.isEmpty() %>">
-		<span class="taglib-asset-categories-summary">
-			<%= HtmlUtil.escape(vocabulary.getUnambiguousTitle(vocabularies, themeDisplay.getSiteGroupId(), themeDisplay.getLocale())) %>:
+		<c:choose>
+			<c:when test='<%= displayStyle.equals("simple-category") %>'>
+				<span class="taglib-asset-categories-summary">
+					<c:choose>
+						<c:when test="<%= portletURL != null %>">
 
-			<c:choose>
-				<c:when test="<%= portletURL != null %>">
+							<%
+							for (AssetCategory category : curCategories) {
+								portletURL.setParameter(paramName, String.valueOf(category.getCategoryId()));
+							%>
 
-					<%
-					for (AssetCategory category : curCategories) {
-						portletURL.setParameter(paramName, String.valueOf(category.getCategoryId()));
-					%>
+								<a class="label label-dark label-lg" href="<%= HtmlUtil.escape(portletURL.toString()) %>"><%= HtmlUtil.escape(category.getTitle(themeDisplay.getLocale())) %></a>
 
-						<a class="asset-category" href="<%= HtmlUtil.escape(portletURL.toString()) %>"><%= _buildCategoryPath(category, themeDisplay) %></a>
+							<%
+							}
+							%>
 
-					<%
-					}
-					%>
+						</c:when>
+						<c:otherwise>
 
-				</c:when>
-				<c:otherwise>
+							<%
+							for (AssetCategory category : curCategories) {
+							%>
 
-					<%
-					for (AssetCategory category : curCategories) {
-					%>
+								<span class="label label-dark label-lg">
+									<%= HtmlUtil.escape(category.getTitle(themeDisplay.getLocale())) %>
+								</span>
 
-						<span class="asset-category">
-							<%= _buildCategoryPath(category, themeDisplay) %>
-						</span>
+							<%
+							}
+							%>
 
-					<%
-					}
-					%>
+						</c:otherwise>
+					</c:choose>
+				</span>
+			</c:when>
+			<c:otherwise>
+				<span class="taglib-asset-categories-summary">
+					<%= HtmlUtil.escape(vocabulary.getUnambiguousTitle(vocabularies, themeDisplay.getSiteGroupId(), themeDisplay.getLocale())) %>:
 
-				</c:otherwise>
-			</c:choose>
-		</span>
+					<c:choose>
+						<c:when test="<%= portletURL != null %>">
+
+							<%
+							for (AssetCategory category : curCategories) {
+								portletURL.setParameter(paramName, String.valueOf(category.getCategoryId()));
+							%>
+
+								<a class="asset-category" href="<%= HtmlUtil.escape(portletURL.toString()) %>"><%= _buildCategoryPath(category, themeDisplay) %></a>
+
+							<%
+							}
+							%>
+
+						</c:when>
+						<c:otherwise>
+
+							<%
+							for (AssetCategory category : curCategories) {
+							%>
+
+								<span class="asset-category">
+									<%= _buildCategoryPath(category, themeDisplay) %>
+								</span>
+
+							<%
+							}
+							%>
+
+						</c:otherwise>
+					</c:choose>
+				</span>
+			</c:otherwise>
+		</c:choose>
 	</c:if>
 
 <%

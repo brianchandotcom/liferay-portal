@@ -95,7 +95,7 @@ public class UpdateUserRolesMVCActionCommand extends BaseMVCActionCommand {
 
 			_userService.updateUser(
 				user.getUserId(), user.getPassword(), null, null,
-				user.getPasswordReset(), null, null, user.getScreenName(),
+				user.isPasswordReset(), null, null, user.getScreenName(),
 				user.getEmailAddress(), user.getFacebookId(), user.getOpenId(),
 				user.getLanguageId(), user.getTimeZoneId(), user.getGreeting(),
 				user.getComments(), user.getFirstName(), user.getMiddleName(),

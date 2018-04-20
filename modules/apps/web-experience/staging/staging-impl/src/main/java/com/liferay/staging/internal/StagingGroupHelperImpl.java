@@ -116,7 +116,7 @@ public class StagingGroupHelperImpl implements StagingGroupHelper {
 
 			HttpPrincipal httpPrincipal = new HttpPrincipal(
 				remoteURL, user.getLogin(), user.getPassword(),
-				user.getPasswordEncrypted());
+				user.isPasswordEncrypted());
 
 			long remoteGroupId = GetterUtil.getLong(
 				_getTypeSettingsProperty(group, "remoteGroupId"));

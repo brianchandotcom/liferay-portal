@@ -103,7 +103,7 @@ public class DeletePasswordPolicyPortletConfigurationIcon
 				_passwordPolicyLocalService.fetchPasswordPolicy(
 					passwordPolicyId);
 
-			if (!passwordPolicy.getDefaultPolicy() &&
+			if (!passwordPolicy.isDefaultPolicy() &&
 				PasswordPolicyPermissionUtil.contains(
 					themeDisplay.getPermissionChecker(), passwordPolicyId,
 					ActionKeys.UPDATE)) {

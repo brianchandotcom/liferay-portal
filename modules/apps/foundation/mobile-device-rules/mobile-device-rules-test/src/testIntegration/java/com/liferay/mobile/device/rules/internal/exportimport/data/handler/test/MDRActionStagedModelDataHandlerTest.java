@@ -66,9 +66,9 @@ public class MDRActionStagedModelDataHandlerTest
 
 		LayoutLocalServiceUtil.addLayout(
 			TestPropsValues.getUserId(), liveGroup.getGroupId(),
-			_layout.getPrivateLayout(), _layout.getParentLayoutId(),
+			_layout.isPrivateLayout(), _layout.getParentLayoutId(),
 			_layout.getName(), _layout.getTitle(), _layout.getDescription(),
-			_layout.getType(), _layout.getHidden(), _layout.getFriendlyURL(),
+			_layout.getType(), _layout.isHidden(), _layout.getFriendlyURL(),
 			serviceContext);
 	}
 

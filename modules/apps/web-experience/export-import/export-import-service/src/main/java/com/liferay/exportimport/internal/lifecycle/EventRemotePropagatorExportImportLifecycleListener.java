@@ -176,7 +176,7 @@ public class EventRemotePropagatorExportImportLifecycleListener
 		try {
 			httpPrincipal = new HttpPrincipal(
 				remoteURL, user.getLogin(), user.getPassword(),
-				user.getPasswordEncrypted());
+				user.isPasswordEncrypted());
 		}
 		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {

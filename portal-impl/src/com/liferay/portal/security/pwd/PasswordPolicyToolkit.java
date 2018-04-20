@@ -171,7 +171,7 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 			long minAge = passwordPolicy.getMinAge() * 1000;
 
 			if ((passwordModificationElapsedTime < minAge) &&
-				!user.getPasswordReset()) {
+				!user.isPasswordReset()) {
 
 				throw new UserPasswordException.MustNotBeChangedYet(
 					userId, new Date(passwordModfiedDate.getTime() + minAge));

@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checkstyle.util;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.DebugUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
@@ -70,7 +71,7 @@ public class CheckstyleUtil {
 
 	public static Configuration getConfiguration(
 			String configurationFileName, Map<String, Properties> propertiesMap,
-			int maxLineLength, boolean showDebugInformation)
+			SourceFormatterArgs sourceFormatterArgs)
 		throws Exception {
 
 		ClassLoader classLoader = CheckstyleUtil.class.getClassLoader();
@@ -81,22 +82,36 @@ public class CheckstyleUtil {
 			new PropertiesExpander(System.getProperties()), false);
 
 		configuration = _addAttribute(
-			configuration, "maxLineLength", String.valueOf(maxLineLength),
+			configuration, "baseDirName", sourceFormatterArgs.getBaseDirName(),
+			"com.liferay.source.formatter.checkstyle.checks." +
+				"GetterMethodCallCheck");
+		configuration = _addAttribute(
+			configuration, "portalBranchName",
+			SourceFormatterUtil.getPropertyValue(
+				SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH, propertiesMap),
+			"com.liferay.source.formatter.checkstyle.checks." +
+				"GetterMethodCallCheck");
+		configuration = _addAttribute(
+			configuration, "maxLineLength",
+			String.valueOf(sourceFormatterArgs.getMaxLineLength()),
 			"com.liferay.source.formatter.checkstyle.checks.AppendCheck");
 		configuration = _addAttribute(
-			configuration, "maxLineLength", String.valueOf(maxLineLength),
+			configuration, "maxLineLength",
+			String.valueOf(sourceFormatterArgs.getMaxLineLength()),
 			"com.liferay.source.formatter.checkstyle.checks.ConcatCheck");
 		configuration = _addAttribute(
-			configuration, "maxLineLength", String.valueOf(maxLineLength),
+			configuration, "maxLineLength",
+			String.valueOf(sourceFormatterArgs.getMaxLineLength()),
 			"com.liferay.source.formatter.checkstyle.checks." +
 				"PlusStatementCheck");
 		configuration = _addAttribute(
 			configuration, "showDebugInformation",
-			String.valueOf(showDebugInformation), "com.liferay.*");
+			String.valueOf(sourceFormatterArgs.isShowDebugInformation()),
+			"com.liferay.*");
 
 		configuration = _addPropertiesAttributes(configuration, propertiesMap);
 
-		if (showDebugInformation) {
+		if (sourceFormatterArgs.isShowDebugInformation()) {
 			DebugUtil.addCheckNames(
 				CheckType.CHECKSTYLE, getCheckNames(configuration));
 		}

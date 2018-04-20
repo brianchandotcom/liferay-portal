@@ -748,9 +748,9 @@ public class SiteAdminPortlet extends MVCPortlet {
 			friendlyURL = ParamUtil.getString(
 				actionRequest, "friendlyURL", liveGroup.getFriendlyURL());
 			inheritContent = ParamUtil.getBoolean(
-				actionRequest, "inheritContent", liveGroup.getInheritContent());
+				actionRequest, "inheritContent", liveGroup.isInheritContent());
 			active = ParamUtil.getBoolean(
-				actionRequest, "active", liveGroup.getActive());
+				actionRequest, "active", liveGroup.isActive());
 
 			liveGroup = groupService.updateGroup(
 				liveGroupId, parentGroupId, nameMap, descriptionMap, type,

@@ -281,7 +281,7 @@ public class SitesImpl implements Sites {
 				targetLayout.getNameMap(), targetLayout.getTitleMap(),
 				targetLayout.getDescriptionMap(), targetLayout.getKeywordsMap(),
 				targetLayout.getRobotsMap(), layoutPrototypeLayout.getType(),
-				targetLayout.getHidden(), targetLayout.getFriendlyURLMap(),
+				targetLayout.isHidden(), targetLayout.getFriendlyURLMap(),
 				layoutPrototypeLayout.isIconImage(), iconBytes, serviceContext);
 		}
 		finally {
@@ -1467,7 +1467,7 @@ public class SitesImpl implements Sites {
 
 		LayoutServiceUtil.updateLayout(
 			layoutPrototypeLayout.getGroupId(),
-			layoutPrototypeLayout.getPrivateLayout(),
+			layoutPrototypeLayout.isPrivateLayout(),
 			layoutPrototypeLayout.getLayoutId(),
 			layoutPrototypeLayout.getTypeSettings());
 	}
@@ -1500,7 +1500,7 @@ public class SitesImpl implements Sites {
 
 		LayoutSetServiceUtil.updateSettings(
 			layoutSetPrototypeLayoutSet.getGroupId(),
-			layoutSetPrototypeLayoutSet.getPrivateLayout(),
+			layoutSetPrototypeLayoutSet.isPrivateLayout(),
 			layoutSetPrototypeLayoutSet.getSettings());
 	}
 

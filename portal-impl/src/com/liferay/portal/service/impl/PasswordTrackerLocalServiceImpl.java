@@ -72,7 +72,7 @@ public class PasswordTrackerLocalServiceImpl
 		PasswordPolicy passwordPolicy =
 			passwordPolicyLocalService.getPasswordPolicyByUserId(userId);
 
-		if ((passwordPolicy == null) || !passwordPolicy.getHistory()) {
+		if ((passwordPolicy == null) || !passwordPolicy.isHistory()) {
 			return true;
 		}
 

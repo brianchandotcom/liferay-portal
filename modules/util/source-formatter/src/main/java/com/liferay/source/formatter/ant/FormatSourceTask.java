@@ -72,8 +72,8 @@ public class FormatSourceTask extends Task {
 		_sourceFormatterArgs.setAutoFix(autoFix);
 	}
 
-	public void setBaseDir(String baseDir) {
-		_sourceFormatterArgs.setBaseDirName(baseDir);
+	public void setBaseDir(String baseDirName) {
+		_sourceFormatterArgs.setBaseDirName(baseDirName);
 	}
 
 	public void setFileNames(String fileNames) {

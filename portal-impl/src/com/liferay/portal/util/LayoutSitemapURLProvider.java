@@ -50,7 +50,7 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 		throws PortalException {
 
 		Layout layout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-			layoutUuid, layoutSet.getGroupId(), layoutSet.getPrivateLayout());
+			layoutUuid, layoutSet.getGroupId(), layoutSet.isPrivateLayout());
 
 		visitLayout(element, layout, themeDisplay);
 	}
@@ -77,7 +77,7 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 			}
 
 			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-				layoutSet.getGroupId(), layoutSet.getPrivateLayout(),
+				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
 				entry.getKey());
 
 			for (Layout layout : layouts) {

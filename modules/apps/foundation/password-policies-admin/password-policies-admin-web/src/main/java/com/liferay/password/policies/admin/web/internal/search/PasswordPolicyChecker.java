@@ -39,7 +39,7 @@ public class PasswordPolicyChecker extends EmptyOnClickRowChecker {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		if (passwordPolicy.getDefaultPolicy() ||
+		if (passwordPolicy.isDefaultPolicy() ||
 			!PasswordPolicyPermissionUtil.contains(
 				permissionChecker, passwordPolicy.getPasswordPolicyId(),
 				ActionKeys.DELETE)) {

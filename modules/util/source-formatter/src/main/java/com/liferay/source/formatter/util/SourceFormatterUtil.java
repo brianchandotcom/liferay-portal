@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.ExcludeSyntax;
 import com.liferay.source.formatter.ExcludeSyntaxPattern;
@@ -28,6 +29,8 @@ import com.liferay.source.formatter.checks.util.SourceUtil;
 
 import java.io.File;
 import java.io.IOException;
+
+import java.net.URL;
 
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
@@ -54,6 +57,9 @@ import java.util.regex.Pattern;
  * @author Hugo Huijser
  */
 public class SourceFormatterUtil {
+
+	public static final String GIT_LIFERAY_PORTAL_BRANCH =
+		"git.liferay.portal.branch";
 
 	public static List<String> filterFileNames(
 		List<String> allFileNames, String[] excludes, String[] includes,
@@ -149,7 +155,7 @@ public class SourceFormatterUtil {
 	}
 
 	public static List<String> filterRecentChangesFileNames(
-			String baseDir, List<String> recentChangesFileNames,
+			String baseDirName, List<String> recentChangesFileNames,
 			String[] excludes, String[] includes,
 			SourceFormatterExcludes sourceFormatterExcludes,
 			boolean includeSubrepositories)
@@ -163,7 +169,7 @@ public class SourceFormatterUtil {
 			excludes, includes, sourceFormatterExcludes);
 
 		return _filterRecentChangesFileNames(
-			baseDir, recentChangesFileNames, pathMatchers);
+			baseDirName, recentChangesFileNames, pathMatchers);
 	}
 
 	public static List<String> getAttributeNames(
@@ -213,9 +219,26 @@ public class SourceFormatterUtil {
 		return getAttributeNames(null, checkName, propertiesMap);
 	}
 
-	public static File getFile(String baseDir, String fileName, int level) {
+	public static String getContent(
+			String baseDirName, String fileName, int level)
+		throws Exception {
+
+		File file = getFile(baseDirName, fileName, level);
+
+		if (file != null) {
+			String content = FileUtil.read(file);
+
+			if (Validator.isNotNull(content)) {
+				return content;
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
+	public static File getFile(String baseDirName, String fileName, int level) {
 		for (int i = 0; i < level; i++) {
-			File file = new File(baseDir + fileName);
+			File file = new File(baseDirName + fileName);
 
 			if (file.exists()) {
 				return file;
@@ -225,6 +248,34 @@ public class SourceFormatterUtil {
 		}
 
 		return null;
+	}
+
+	public static String getPortalContent(
+			String baseDirName, String portalBranchName, String fileName)
+		throws Exception {
+
+		String content = getContent(
+			baseDirName, fileName, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+		if (Validator.isNotNull(content)) {
+			return content;
+		}
+
+		if (Validator.isNull(portalBranchName)) {
+			return null;
+		}
+
+		try {
+			URL url = new URL(
+				StringBundler.concat(
+					_GIT_LIFERAY_PORTAL_URL, portalBranchName, StringPool.SLASH,
+					fileName));
+
+			return StringUtil.read(url.openStream());
+		}
+		catch (Exception e) {
+			return null;
+		}
 	}
 
 	public static String getPropertyValue(
@@ -249,12 +300,18 @@ public class SourceFormatterUtil {
 			key = StringUtil.toLowerCase(checkTypeName) + "." + key;
 		}
 
+		return getPropertyValue(key, propertiesMap);
+	}
+
+	public static String getPropertyValue(
+		String propertyName, Map<String, Properties> propertiesMap) {
+
 		StringBundler sb = new StringBundler(propertiesMap.size() * 2);
 
 		for (Map.Entry<String, Properties> entry : propertiesMap.entrySet()) {
 			Properties properties = entry.getValue();
 
-			String value = properties.getProperty(key);
+			String value = properties.getProperty(propertyName);
 
 			if (value != null) {
 				sb.append(value);
@@ -277,7 +334,7 @@ public class SourceFormatterUtil {
 	}
 
 	public static List<File> getSuppressionsFiles(
-			String basedir, List<String> allFileNames,
+			String baseDirName, List<String> allFileNames,
 			SourceFormatterExcludes sourceFormatterExcludes,
 			String... fileNames)
 		throws Exception {
@@ -293,7 +350,7 @@ public class SourceFormatterUtil {
 
 			// Find suppressions files in any parent directory
 
-			String parentDirName = basedir;
+			String parentDirName = baseDirName;
 
 			for (int j = 0; j < ToolsUtil.PORTAL_MAX_DIR_LEVEL; j++) {
 				File suppressionsFile = new File(parentDirName + fileName);
@@ -332,7 +389,7 @@ public class SourceFormatterUtil {
 	}
 
 	public static List<String> scanForFiles(
-			String baseDir, String[] excludes, String[] includes,
+			String baseDirName, String[] excludes, String[] includes,
 			SourceFormatterExcludes sourceFormatterExcludes,
 			boolean includeSubrepositories)
 		throws Exception {
@@ -344,7 +401,7 @@ public class SourceFormatterUtil {
 		PathMatchers pathMatchers = _getPathMatchers(
 			excludes, includes, sourceFormatterExcludes);
 
-		return _scanForFiles(baseDir, pathMatchers, includeSubrepositories);
+		return _scanForFiles(baseDirName, pathMatchers, includeSubrepositories);
 	}
 
 	private static String _createRegex(String s) {
@@ -388,7 +445,7 @@ public class SourceFormatterUtil {
 	}
 
 	private static List<String> _filterRecentChangesFileNames(
-			String baseDir, List<String> recentChangesFileNames,
+			String baseDirName, List<String> recentChangesFileNames,
 			PathMatchers pathMatchers)
 		throws Exception {
 
@@ -396,7 +453,7 @@ public class SourceFormatterUtil {
 
 		recentChangesFileNamesLoop:
 		for (String fileName : recentChangesFileNames) {
-			fileName = baseDir.concat(fileName);
+			fileName = baseDirName.concat(fileName);
 
 			File file = new File(fileName);
 
@@ -541,14 +598,14 @@ public class SourceFormatterUtil {
 	}
 
 	private static List<String> _scanForFiles(
-			final String baseDir, final PathMatchers pathMatchers,
+			final String baseDirName, final PathMatchers pathMatchers,
 			final boolean includeSubrepositories)
 		throws Exception {
 
 		final List<String> fileNames = new ArrayList<>();
 
 		Files.walkFileTree(
-			Paths.get(baseDir),
+			Paths.get(baseDirName),
 			new SimpleFileVisitor<Path>() {
 
 				@Override
@@ -565,7 +622,7 @@ public class SourceFormatterUtil {
 
 					if (!includeSubrepositories) {
 						String baseDirPath = SourceUtil.getAbsolutePath(
-							baseDir);
+							baseDirName);
 
 						if (!baseDirPath.equals(currentDirPath)) {
 							Path gitRepoPath = dirPath.resolve(".gitrepo");
@@ -670,6 +727,9 @@ public class SourceFormatterUtil {
 
 		return fileNames;
 	}
+
+	private static final String _GIT_LIFERAY_PORTAL_URL =
+		"https://raw.githubusercontent.com/liferay/liferay-portal/";
 
 	private static class PathMatchers {
 

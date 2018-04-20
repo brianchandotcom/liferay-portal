@@ -20,6 +20,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -323,10 +325,19 @@ public class SiteBrowserDisplayContext {
 		return Collections.emptyList();
 	}
 
-	public PortletURL getPortletURL() throws PortalException {
+	public PortletURL getPortletURL() {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
-		User selUser = PortalUtil.getSelectedUser(_request);
+		User selUser = null;
+
+		try {
+			selUser = PortalUtil.getSelectedUser(_request);
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
 
 		if (selUser != null) {
 			portletURL.setParameter(
@@ -414,8 +425,7 @@ public class SiteBrowserDisplayContext {
 	}
 
 	private List<Group> _filterGroups(
-			List<Group> groups, PermissionChecker permissionChecker)
-		throws Exception {
+		List<Group> groups, PermissionChecker permissionChecker) {
 
 		List<Group> filteredGroups = new ArrayList();
 
@@ -428,9 +438,7 @@ public class SiteBrowserDisplayContext {
 		return filteredGroups;
 	}
 
-	private List<Group> _filterGroups(List<Group> groups, String filter)
-		throws Exception {
-
+	private List<Group> _filterGroups(List<Group> groups, String filter) {
 		List<Group> filteredGroups = new ArrayList();
 
 		for (Group group : groups) {
@@ -474,6 +482,9 @@ public class SiteBrowserDisplayContext {
 		PortalUtil.getClassNameId(Group.class),
 		PortalUtil.getClassNameId(Organization.class)
 	};
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SiteBrowserDisplayContext.class);
 
 	private String _displayStyle;
 	private String _filter;

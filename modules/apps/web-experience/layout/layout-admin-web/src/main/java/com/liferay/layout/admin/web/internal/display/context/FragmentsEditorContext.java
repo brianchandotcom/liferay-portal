@@ -170,6 +170,9 @@ public class FragmentsEditorContext {
 			_getFragmentEntryActionURL("/layout/render_fragment_entry"));
 
 		if (_showMapping) {
+			soyContext.put(
+				"mappingFieldsURL",
+				_getFragmentEntryActionURL("/layout/get_mapping_fields"));
 			soyContext.put("selectedMappingTypes", _getSelectedMappingTypes());
 		}
 

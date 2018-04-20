@@ -17,6 +17,7 @@
 		fragmentCollectionId: string,
 		name: string
 	]>}
+	{@param mappingFieldsURL: string}
 	{@param imageSelectorURL: string}
 	{@param languageId: string}
 	{@param portletNamespace: string}
@@ -130,6 +131,9 @@
 					'visibleChanged': $_handleSelectMappingDialogVisibleChanged
 				] /}
 				{param fragmentEntryLinkId: $_selectMappingDialogFragmentEntryLinkId /}
+				{param mappingFieldsURL: $mappingFieldsURL /}
+				{param namespace: $portletNamespace /}
+				{param selectedMappingTypes: $selectedMappingTypes /}
 				{param spritemap: $spritemap /}
 				{param visible: $_selectMappingDialogVisible ?: false /}
 			{/call}

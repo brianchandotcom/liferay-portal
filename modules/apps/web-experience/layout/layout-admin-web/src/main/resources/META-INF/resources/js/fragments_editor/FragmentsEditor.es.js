@@ -891,6 +891,17 @@ FragmentsEditor.STATE = {
 	).value([]),
 
 	/**
+	 * URL for getting the list of mapping fields
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	mappingFieldsURL: Config.string().required(),
+
+	/**
 	 * Currently selected language id.
 	 * @default undefined
 	 * @instance

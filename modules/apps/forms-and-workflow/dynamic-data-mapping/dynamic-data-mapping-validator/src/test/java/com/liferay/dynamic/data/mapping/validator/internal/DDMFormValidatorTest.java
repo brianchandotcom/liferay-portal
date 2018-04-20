@@ -40,11 +40,13 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.Mus
 import com.liferay.portal.bean.BeanPropertiesImpl;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Set;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -208,6 +210,34 @@ public class DDMFormValidatorTest {
 		ddmForm.addDDMFormField(ddmFormField);
 
 		_ddmFormValidatorImpl.validate(ddmForm);
+	}
+
+	@Test
+	public void testInvalidFieldValidationExpressionMessage() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
+
+		DDMFormField ddmFormField = new DDMFormField(
+			"Name", DDMFormFieldType.TEXT);
+
+		DDMFormFieldValidation ddmFormFieldValidation =
+			new DDMFormFieldValidation();
+
+		String expression = "*/+";
+
+		ddmFormFieldValidation.setExpression(expression);
+
+		ddmFormField.setDDMFormFieldValidation(ddmFormFieldValidation);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		try {
+			_ddmFormValidatorImpl.validate(ddmForm);
+		}
+		catch (MustSetValidValidationExpression msvve) {
+			Assert.assertTrue(
+				StringUtil.equals(expression, msvve.getExpression()));
+		}
 	}
 
 	@Test(expected = MustSetValidVisibilityExpression.class)

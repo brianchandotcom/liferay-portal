@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.user.associated.data.display.UADDisplay;
 
+import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -70,7 +71,7 @@ public class AnnouncementsEntryUADDisplay
 		return "Announcements posted by the user";
 	}
 
-	public String getTypeName() {
+	public String getTypeName(Locale locale) {
 		return "AnnouncementsEntry";
 	}
 

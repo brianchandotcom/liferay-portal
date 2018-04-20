@@ -18,8 +18,10 @@ import aQute.bnd.annotation.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 2.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface BookmarksEntryFinder {
 	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry> findByNoAssets();

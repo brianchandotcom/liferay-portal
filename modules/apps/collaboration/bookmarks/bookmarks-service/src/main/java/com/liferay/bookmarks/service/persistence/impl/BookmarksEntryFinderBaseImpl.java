@@ -30,8 +30,10 @@ import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 2.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 public class BookmarksEntryFinderBaseImpl extends BasePersistenceImpl<BookmarksEntry> {
 	public BookmarksEntryFinderBaseImpl() {
 		setModelClass(BookmarksEntry.class);

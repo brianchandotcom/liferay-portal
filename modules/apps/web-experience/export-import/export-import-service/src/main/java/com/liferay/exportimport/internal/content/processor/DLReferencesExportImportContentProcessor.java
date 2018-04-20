@@ -14,6 +14,7 @@
 
 package com.liferay.exportimport.internal.content.processor;
 
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
@@ -590,7 +591,8 @@ public class DLReferencesExportImportContentProcessor
 					ExportImportContentValidationException eicve =
 						new ExportImportContentValidationException(
 							DLReferencesExportImportContentProcessor.class.
-								getName());
+								getName(),
+							new NoSuchFileEntryException());
 
 					eicve.setDlReferenceParameters(dlReferenceParameters);
 					eicve.setType(

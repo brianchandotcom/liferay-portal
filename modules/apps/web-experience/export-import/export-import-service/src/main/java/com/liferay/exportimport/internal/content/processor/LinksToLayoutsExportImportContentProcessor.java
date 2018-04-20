@@ -20,6 +20,7 @@ import com.liferay.exportimport.kernel.exception.ExportImportContentValidationEx
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -247,7 +248,8 @@ public class LinksToLayoutsExportImportContentProcessor
 				ExportImportContentValidationException eicve =
 					new ExportImportContentValidationException(
 						LinksToLayoutsExportImportContentProcessor.class.
-							getName());
+							getName(),
+						new NoSuchLayoutException());
 
 				Map<String, String> layoutReferenceParameters = new HashMap<>();
 

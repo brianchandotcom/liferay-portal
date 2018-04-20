@@ -863,7 +863,8 @@ public class LayoutReferencesExportImportContentProcessor
 				ExportImportContentValidationException eicve =
 					new ExportImportContentValidationException(
 						LayoutReferencesExportImportContentProcessor.class.
-							getName());
+							getName(),
+						new NoSuchLayoutException());
 
 				eicve.setGroupFriendlyURL(groupFriendlyURL);
 				eicve.setLayoutURL(url);

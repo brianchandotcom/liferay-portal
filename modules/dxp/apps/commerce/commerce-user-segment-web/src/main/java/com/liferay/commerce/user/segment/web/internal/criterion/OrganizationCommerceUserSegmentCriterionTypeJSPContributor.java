@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "commerce.user.segment.criterion.type.jsp.contributor.key=" + CommerceUserSegmentConstants.CRITERION_TYPE_ORGANIZATION,
 	service = CommerceUserSegmentCriterionTypeJSPContributor.class
 )
-public class OrganizationCUSCriterionTypeJSPContributor
+public class OrganizationCommerceUserSegmentCriterionTypeJSPContributor
 	implements CommerceUserSegmentCriterionTypeJSPContributor {
 
 	public void render(

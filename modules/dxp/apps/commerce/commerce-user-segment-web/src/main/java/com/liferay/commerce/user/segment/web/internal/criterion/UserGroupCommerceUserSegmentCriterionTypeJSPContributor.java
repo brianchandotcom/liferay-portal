@@ -20,10 +20,10 @@ import com.liferay.commerce.user.segment.criterion.CommerceUserSegmentCriterionT
 import com.liferay.commerce.user.segment.criterion.CommerceUserSegmentCriterionTypeRegistry;
 import com.liferay.commerce.user.segment.service.CommerceUserSegmentCriterionService;
 import com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryService;
-import com.liferay.commerce.user.segment.web.internal.display.context.CommerceUserSegmentCriterionTypeRoleDisplayContext;
+import com.liferay.commerce.user.segment.web.internal.display.context.CommerceUserSegmentCriterionTypeUserGroupDisplayContext;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -37,10 +37,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.user.segment.criterion.type.jsp.contributor.key=" + CommerceUserSegmentConstants.CRITERION_TYPE_ROLE,
+	property = "commerce.user.segment.criterion.type.jsp.contributor.key=" + CommerceUserSegmentConstants.CRITERION_TYPE_USER_GROUP,
 	service = CommerceUserSegmentCriterionTypeJSPContributor.class
 )
-public class RoleCUSCriterionTypeJSPContributor
+public class UserGroupCommerceUserSegmentCriterionTypeJSPContributor
 	implements CommerceUserSegmentCriterionTypeJSPContributor {
 
 	public void render(
@@ -50,22 +50,22 @@ public class RoleCUSCriterionTypeJSPContributor
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		CommerceUserSegmentCriterionTypeRoleDisplayContext
-			commerceUserSegmentCriterionTypeRoleDisplayContext =
-				new CommerceUserSegmentCriterionTypeRoleDisplayContext(
+		CommerceUserSegmentCriterionTypeUserGroupDisplayContext
+			commerceUserSegmentCriterionTypeUserGroupDisplayContext =
+				new CommerceUserSegmentCriterionTypeUserGroupDisplayContext(
 					_commerceUserSegmentCriterionService,
 					_commerceUserSegmentCriterionTypeJSPContributorRegistry,
 					_commerceUserSegmentCriterionTypeRegistry,
 					_commerceUserSegmentEntryService, httpServletRequest,
-					_itemSelector, _roleLocalService);
+					_itemSelector, _userGroupLocalService);
 
 		httpServletRequest.setAttribute(
-			"role.jsp-portletDisplayContext",
-			commerceUserSegmentCriterionTypeRoleDisplayContext);
+			"user_group.jsp-portletDisplayContext",
+			commerceUserSegmentCriterionTypeUserGroupDisplayContext);
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/contributor/role.jsp");
+			"/contributor/user_group.jsp");
 	}
 
 	@Reference
@@ -89,12 +89,12 @@ public class RoleCUSCriterionTypeJSPContributor
 	@Reference
 	private JSPRenderer _jspRenderer;
 
-	@Reference
-	private RoleLocalService _roleLocalService;
-
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.user.segment.web)"
 	)
 	private ServletContext _servletContext;
+
+	@Reference
+	private UserGroupLocalService _userGroupLocalService;
 
 }

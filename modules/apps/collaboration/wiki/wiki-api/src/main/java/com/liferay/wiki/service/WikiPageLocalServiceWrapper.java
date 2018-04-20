@@ -511,6 +511,10 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 			preferApproved);
 	}
 
+	/**
+	* @deprecated As of 2.0.0, with no direct replacement
+	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.wiki.model.WikiPage> getNoAssetPages() {
 		return _wikiPageLocalService.getNoAssetPages();

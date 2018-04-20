@@ -36,10 +36,7 @@ class SelectMappingTypeDialog extends Component {
 	 */
 
 	_emitSelectedMappingLabels() {
-		const label = {
-			subtype: '',
-			type: ''
-		};
+		const mappingTypes = {};
 		const subtype = this._mappingSubtypes.find(
 			subtype => subtype.id === this._selectedMappingSubtypeId
 		);
@@ -48,14 +45,20 @@ class SelectMappingTypeDialog extends Component {
 		);
 
 		if (subtype) {
-			label.subtype = subtype.label;
+			mappingTypes.subtype = {
+				id: this._selectedMappingSubtypeId,
+				label: subtype.label
+			};
 		}
 
 		if (type) {
-			label.type = type.label;
+			mappingTypes.type = {
+				id: this._selectedMappingTypeId,
+				label: type.label
+			};
 		}
 
-		this.emit('mappingTypeSelected', {label});
+		this.emit('mappingTypeSelected', {mappingTypes});
 	}
 
 	/**

@@ -420,16 +420,32 @@ FragmentEntryLink.STATE = {
 	 * @memberOf FragmentEntryLink
 	 * @review
 	 * @type {{
-	 *   subtype: string,
-	 *   type: string
+	 *   subtype: {
+	 *   	id: !string,
+	 *   	label: !string
+	 *   },
+	 *   type: {
+	 *   	id: !string,
+	 *   	label: !string
+	 *   }
 	 * }}
 	 */
 
-	selectedMappingTypeLabel: Config
+	selectedMappingTypes: Config
 		.shapeOf(
 			{
-				subtype: Config.string().value(''),
-				type: Config.string().value('')
+				subtype: Config.shapeOf(
+					{
+						id: Config.string().required(),
+						label: Config.string().required()
+					}
+				),
+				type: Config.shapeOf(
+					{
+						id: Config.string().required(),
+						label: Config.string().required()
+					}
+				)
 			}
 		)
 		.value({}),

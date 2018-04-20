@@ -538,14 +538,25 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
-	 * Callback executed when a mapping type hsa been selected
-	 * @param {{ labels: Array<string> }} event
+	 * Callback executed when a mapping type has selected
+	 * @param {{
+	 * 	 mappingTypes: {
+	 *     subtype: {
+	 *   	  id: !string,
+	 *   	  label: !string
+	 *     },
+	 *     type: {
+	 *   	  id: !string,
+	 *   	  label: !string
+	 *     }
+	 * 	 }
+     * }} event
 	 * @private
 	 * @review
 	 */
 
 	_handleMappingTypeSelected(event) {
-		this.selectedMappingTypeLabel = event.label;
+		this.selectedMappingTypes = event.mappingTypes;
 	}
 
 	/**
@@ -913,22 +924,38 @@ FragmentsEditor.STATE = {
 	renderFragmentEntryURL: Config.string().required(),
 
 	/**
-	 * Selected mapping type label
+	 * Selected mapping types
 	 * @default {}
 	 * @instance
 	 * @memberOf FragmentsEditor
 	 * @review
 	 * @type {{
-	 *   subtype: string,
-	 *   type: string
+	 *   subtype: {
+	 *   	id: !string,
+	 *   	label: !string
+	 *   },
+	 *   type: {
+	 *   	id: !string,
+	 *   	label: !string
+	 *   }
 	 * }}
 	 */
 
-	selectedMappingTypeLabel: Config
+	selectedMappingTypes: Config
 		.shapeOf(
 			{
-				subtype: Config.string().value(''),
-				type: Config.string().value('')
+				subtype: Config.shapeOf(
+					{
+						id: Config.string().required(),
+						label: Config.string().required()
+					}
+				),
+				type: Config.shapeOf(
+					{
+						id: Config.string().required(),
+						label: Config.string().required()
+					}
+				)
 			}
 		)
 		.value({}),

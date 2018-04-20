@@ -232,7 +232,7 @@ public class OAuthApplicationModelImpl extends BaseModelImpl<OAuthApplication>
 		attributes.put("consumerSecret", getConsumerSecret());
 		attributes.put("accessLevel", getAccessLevel());
 		attributes.put("logoId", getLogoId());
-		attributes.put("shareableAccessToken", getShareableAccessToken());
+		attributes.put("shareableAccessToken", isShareableAccessToken());
 		attributes.put("callbackURI", getCallbackURI());
 		attributes.put("websiteURL", getWebsiteURL());
 
@@ -651,7 +651,7 @@ public class OAuthApplicationModelImpl extends BaseModelImpl<OAuthApplication>
 		oAuthApplicationImpl.setConsumerSecret(getConsumerSecret());
 		oAuthApplicationImpl.setAccessLevel(getAccessLevel());
 		oAuthApplicationImpl.setLogoId(getLogoId());
-		oAuthApplicationImpl.setShareableAccessToken(getShareableAccessToken());
+		oAuthApplicationImpl.setShareableAccessToken(isShareableAccessToken());
 		oAuthApplicationImpl.setCallbackURI(getCallbackURI());
 		oAuthApplicationImpl.setWebsiteURL(getWebsiteURL());
 
@@ -805,7 +805,7 @@ public class OAuthApplicationModelImpl extends BaseModelImpl<OAuthApplication>
 
 		oAuthApplicationCacheModel.logoId = getLogoId();
 
-		oAuthApplicationCacheModel.shareableAccessToken = getShareableAccessToken();
+		oAuthApplicationCacheModel.shareableAccessToken = isShareableAccessToken();
 
 		oAuthApplicationCacheModel.callbackURI = getCallbackURI();
 
@@ -855,7 +855,7 @@ public class OAuthApplicationModelImpl extends BaseModelImpl<OAuthApplication>
 		sb.append(", logoId=");
 		sb.append(getLogoId());
 		sb.append(", shareableAccessToken=");
-		sb.append(getShareableAccessToken());
+		sb.append(isShareableAccessToken());
 		sb.append(", callbackURI=");
 		sb.append(getCallbackURI());
 		sb.append(", websiteURL=");
@@ -923,7 +923,7 @@ public class OAuthApplicationModelImpl extends BaseModelImpl<OAuthApplication>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>shareableAccessToken</column-name><column-value><![CDATA[");
-		sb.append(getShareableAccessToken());
+		sb.append(isShareableAccessToken());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>callbackURI</column-name><column-value><![CDATA[");

@@ -174,10 +174,10 @@ public class SamlIdpSpConnectionModelImpl extends BaseModelImpl<SamlIdpSpConnect
 		attributes.put("samlSpEntityId", getSamlSpEntityId());
 		attributes.put("assertionLifetime", getAssertionLifetime());
 		attributes.put("attributeNames", getAttributeNames());
-		attributes.put("attributesEnabled", getAttributesEnabled());
+		attributes.put("attributesEnabled", isAttributesEnabled());
 		attributes.put("attributesNamespaceEnabled",
-			getAttributesNamespaceEnabled());
-		attributes.put("enabled", getEnabled());
+			isAttributesNamespaceEnabled());
+		attributes.put("enabled", isEnabled());
 		attributes.put("metadataUrl", getMetadataUrl());
 		attributes.put("metadataXml", getMetadataXml());
 		attributes.put("metadataUpdatedDate", getMetadataUpdatedDate());
@@ -624,9 +624,9 @@ public class SamlIdpSpConnectionModelImpl extends BaseModelImpl<SamlIdpSpConnect
 		samlIdpSpConnectionImpl.setSamlSpEntityId(getSamlSpEntityId());
 		samlIdpSpConnectionImpl.setAssertionLifetime(getAssertionLifetime());
 		samlIdpSpConnectionImpl.setAttributeNames(getAttributeNames());
-		samlIdpSpConnectionImpl.setAttributesEnabled(getAttributesEnabled());
-		samlIdpSpConnectionImpl.setAttributesNamespaceEnabled(getAttributesNamespaceEnabled());
-		samlIdpSpConnectionImpl.setEnabled(getEnabled());
+		samlIdpSpConnectionImpl.setAttributesEnabled(isAttributesEnabled());
+		samlIdpSpConnectionImpl.setAttributesNamespaceEnabled(isAttributesNamespaceEnabled());
+		samlIdpSpConnectionImpl.setEnabled(isEnabled());
 		samlIdpSpConnectionImpl.setMetadataUrl(getMetadataUrl());
 		samlIdpSpConnectionImpl.setMetadataXml(getMetadataXml());
 		samlIdpSpConnectionImpl.setMetadataUpdatedDate(getMetadataUpdatedDate());
@@ -760,11 +760,11 @@ public class SamlIdpSpConnectionModelImpl extends BaseModelImpl<SamlIdpSpConnect
 			samlIdpSpConnectionCacheModel.attributeNames = null;
 		}
 
-		samlIdpSpConnectionCacheModel.attributesEnabled = getAttributesEnabled();
+		samlIdpSpConnectionCacheModel.attributesEnabled = isAttributesEnabled();
 
-		samlIdpSpConnectionCacheModel.attributesNamespaceEnabled = getAttributesNamespaceEnabled();
+		samlIdpSpConnectionCacheModel.attributesNamespaceEnabled = isAttributesNamespaceEnabled();
 
-		samlIdpSpConnectionCacheModel.enabled = getEnabled();
+		samlIdpSpConnectionCacheModel.enabled = isEnabled();
 
 		samlIdpSpConnectionCacheModel.metadataUrl = getMetadataUrl();
 
@@ -841,11 +841,11 @@ public class SamlIdpSpConnectionModelImpl extends BaseModelImpl<SamlIdpSpConnect
 		sb.append(", attributeNames=");
 		sb.append(getAttributeNames());
 		sb.append(", attributesEnabled=");
-		sb.append(getAttributesEnabled());
+		sb.append(isAttributesEnabled());
 		sb.append(", attributesNamespaceEnabled=");
-		sb.append(getAttributesNamespaceEnabled());
+		sb.append(isAttributesNamespaceEnabled());
 		sb.append(", enabled=");
-		sb.append(getEnabled());
+		sb.append(isEnabled());
 		sb.append(", metadataUrl=");
 		sb.append(getMetadataUrl());
 		sb.append(", metadataXml=");
@@ -909,15 +909,15 @@ public class SamlIdpSpConnectionModelImpl extends BaseModelImpl<SamlIdpSpConnect
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>attributesEnabled</column-name><column-value><![CDATA[");
-		sb.append(getAttributesEnabled());
+		sb.append(isAttributesEnabled());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>attributesNamespaceEnabled</column-name><column-value><![CDATA[");
-		sb.append(getAttributesNamespaceEnabled());
+		sb.append(isAttributesNamespaceEnabled());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>enabled</column-name><column-value><![CDATA[");
-		sb.append(getEnabled());
+		sb.append(isEnabled());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>metadataUrl</column-name><column-value><![CDATA[");

@@ -238,10 +238,10 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("definitionId", getDefinitionId());
 		attributes.put("format", getFormat());
-		attributes.put("scheduleRequest", getScheduleRequest());
+		attributes.put("scheduleRequest", isScheduleRequest());
 		attributes.put("startDate", getStartDate());
 		attributes.put("endDate", getEndDate());
-		attributes.put("repeating", getRepeating());
+		attributes.put("repeating", isRepeating());
 		attributes.put("recurrence", getRecurrence());
 		attributes.put("emailNotifications", getEmailNotifications());
 		attributes.put("emailDelivery", getEmailDelivery());
@@ -737,10 +737,10 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		entryImpl.setModifiedDate(getModifiedDate());
 		entryImpl.setDefinitionId(getDefinitionId());
 		entryImpl.setFormat(getFormat());
-		entryImpl.setScheduleRequest(getScheduleRequest());
+		entryImpl.setScheduleRequest(isScheduleRequest());
 		entryImpl.setStartDate(getStartDate());
 		entryImpl.setEndDate(getEndDate());
-		entryImpl.setRepeating(getRepeating());
+		entryImpl.setRepeating(isRepeating());
 		entryImpl.setRecurrence(getRecurrence());
 		entryImpl.setEmailNotifications(getEmailNotifications());
 		entryImpl.setEmailDelivery(getEmailDelivery());
@@ -860,7 +860,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 			entryCacheModel.format = null;
 		}
 
-		entryCacheModel.scheduleRequest = getScheduleRequest();
+		entryCacheModel.scheduleRequest = isScheduleRequest();
 
 		Date startDate = getStartDate();
 
@@ -880,7 +880,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 			entryCacheModel.endDate = Long.MIN_VALUE;
 		}
 
-		entryCacheModel.repeating = getRepeating();
+		entryCacheModel.repeating = isRepeating();
 
 		entryCacheModel.recurrence = getRecurrence();
 
@@ -972,13 +972,13 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		sb.append(", format=");
 		sb.append(getFormat());
 		sb.append(", scheduleRequest=");
-		sb.append(getScheduleRequest());
+		sb.append(isScheduleRequest());
 		sb.append(", startDate=");
 		sb.append(getStartDate());
 		sb.append(", endDate=");
 		sb.append(getEndDate());
 		sb.append(", repeating=");
-		sb.append(getRepeating());
+		sb.append(isRepeating());
 		sb.append(", recurrence=");
 		sb.append(getRecurrence());
 		sb.append(", emailNotifications=");
@@ -1046,7 +1046,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>scheduleRequest</column-name><column-value><![CDATA[");
-		sb.append(getScheduleRequest());
+		sb.append(isScheduleRequest());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>startDate</column-name><column-value><![CDATA[");
@@ -1058,7 +1058,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>repeating</column-name><column-value><![CDATA[");
-		sb.append(getRepeating());
+		sb.append(isRepeating());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>recurrence</column-name><column-value><![CDATA[");

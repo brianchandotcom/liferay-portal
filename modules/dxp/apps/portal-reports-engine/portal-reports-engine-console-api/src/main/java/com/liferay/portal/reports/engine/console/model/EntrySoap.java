@@ -43,10 +43,10 @@ public class EntrySoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setDefinitionId(model.getDefinitionId());
 		soapModel.setFormat(model.getFormat());
-		soapModel.setScheduleRequest(model.getScheduleRequest());
+		soapModel.setScheduleRequest(model.isScheduleRequest());
 		soapModel.setStartDate(model.getStartDate());
 		soapModel.setEndDate(model.getEndDate());
-		soapModel.setRepeating(model.getRepeating());
+		soapModel.setRepeating(model.isRepeating());
 		soapModel.setRecurrence(model.getRecurrence());
 		soapModel.setEmailNotifications(model.getEmailNotifications());
 		soapModel.setEmailDelivery(model.getEmailDelivery());

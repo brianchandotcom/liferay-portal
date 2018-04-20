@@ -66,17 +66,17 @@ public class SamlSpIdpConnectionWrapper implements SamlSpIdpConnection,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("samlIdpEntityId", getSamlIdpEntityId());
 		attributes.put("assertionSignatureRequired",
-			getAssertionSignatureRequired());
+			isAssertionSignatureRequired());
 		attributes.put("clockSkew", getClockSkew());
-		attributes.put("enabled", getEnabled());
-		attributes.put("forceAuthn", getForceAuthn());
-		attributes.put("ldapImportEnabled", getLdapImportEnabled());
+		attributes.put("enabled", isEnabled());
+		attributes.put("forceAuthn", isForceAuthn());
+		attributes.put("ldapImportEnabled", isLdapImportEnabled());
 		attributes.put("metadataUrl", getMetadataUrl());
 		attributes.put("metadataXml", getMetadataXml());
 		attributes.put("metadataUpdatedDate", getMetadataUpdatedDate());
 		attributes.put("name", getName());
 		attributes.put("nameIdFormat", getNameIdFormat());
-		attributes.put("signAuthnRequest", getSignAuthnRequest());
+		attributes.put("signAuthnRequest", isSignAuthnRequest());
 		attributes.put("userAttributeMappings", getUserAttributeMappings());
 
 		return attributes;

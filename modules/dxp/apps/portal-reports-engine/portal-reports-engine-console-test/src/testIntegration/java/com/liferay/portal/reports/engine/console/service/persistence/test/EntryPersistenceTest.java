@@ -180,14 +180,13 @@ public class EntryPersistenceTest {
 		Assert.assertEquals(existingEntry.getDefinitionId(),
 			newEntry.getDefinitionId());
 		Assert.assertEquals(existingEntry.getFormat(), newEntry.getFormat());
-		Assert.assertEquals(existingEntry.getScheduleRequest(),
-			newEntry.getScheduleRequest());
+		Assert.assertEquals(existingEntry.isScheduleRequest(),
+			newEntry.isScheduleRequest());
 		Assert.assertEquals(Time.getShortTimestamp(existingEntry.getStartDate()),
 			Time.getShortTimestamp(newEntry.getStartDate()));
 		Assert.assertEquals(Time.getShortTimestamp(existingEntry.getEndDate()),
 			Time.getShortTimestamp(newEntry.getEndDate()));
-		Assert.assertEquals(existingEntry.getRepeating(),
-			newEntry.getRepeating());
+		Assert.assertEquals(existingEntry.isRepeating(), newEntry.isRepeating());
 		Assert.assertEquals(existingEntry.getRecurrence(),
 			newEntry.getRecurrence());
 		Assert.assertEquals(existingEntry.getEmailNotifications(),

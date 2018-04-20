@@ -72,7 +72,7 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 		attributes.put("nameIdSPNameQualifier", getNameIdSPNameQualifier());
 		attributes.put("nameIdValue", getNameIdValue());
 		attributes.put("sessionIndex", getSessionIndex());
-		attributes.put("terminated", getTerminated());
+		attributes.put("terminated", isTerminated());
 
 		return attributes;
 	}

@@ -182,8 +182,8 @@ public class OAuthApplicationPersistenceTest {
 			newOAuthApplication.getAccessLevel());
 		Assert.assertEquals(existingOAuthApplication.getLogoId(),
 			newOAuthApplication.getLogoId());
-		Assert.assertEquals(existingOAuthApplication.getShareableAccessToken(),
-			newOAuthApplication.getShareableAccessToken());
+		Assert.assertEquals(existingOAuthApplication.isShareableAccessToken(),
+			newOAuthApplication.isShareableAccessToken());
 		Assert.assertEquals(existingOAuthApplication.getCallbackURI(),
 			newOAuthApplication.getCallbackURI());
 		Assert.assertEquals(existingOAuthApplication.getWebsiteURL(),

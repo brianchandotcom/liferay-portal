@@ -180,16 +180,16 @@ public class SamlSpIdpConnectionPersistenceTest {
 			Time.getShortTimestamp(newSamlSpIdpConnection.getModifiedDate()));
 		Assert.assertEquals(existingSamlSpIdpConnection.getSamlIdpEntityId(),
 			newSamlSpIdpConnection.getSamlIdpEntityId());
-		Assert.assertEquals(existingSamlSpIdpConnection.getAssertionSignatureRequired(),
-			newSamlSpIdpConnection.getAssertionSignatureRequired());
+		Assert.assertEquals(existingSamlSpIdpConnection.isAssertionSignatureRequired(),
+			newSamlSpIdpConnection.isAssertionSignatureRequired());
 		Assert.assertEquals(existingSamlSpIdpConnection.getClockSkew(),
 			newSamlSpIdpConnection.getClockSkew());
-		Assert.assertEquals(existingSamlSpIdpConnection.getEnabled(),
-			newSamlSpIdpConnection.getEnabled());
-		Assert.assertEquals(existingSamlSpIdpConnection.getForceAuthn(),
-			newSamlSpIdpConnection.getForceAuthn());
-		Assert.assertEquals(existingSamlSpIdpConnection.getLdapImportEnabled(),
-			newSamlSpIdpConnection.getLdapImportEnabled());
+		Assert.assertEquals(existingSamlSpIdpConnection.isEnabled(),
+			newSamlSpIdpConnection.isEnabled());
+		Assert.assertEquals(existingSamlSpIdpConnection.isForceAuthn(),
+			newSamlSpIdpConnection.isForceAuthn());
+		Assert.assertEquals(existingSamlSpIdpConnection.isLdapImportEnabled(),
+			newSamlSpIdpConnection.isLdapImportEnabled());
 		Assert.assertEquals(existingSamlSpIdpConnection.getMetadataUrl(),
 			newSamlSpIdpConnection.getMetadataUrl());
 		Assert.assertEquals(existingSamlSpIdpConnection.getMetadataXml(),
@@ -202,8 +202,8 @@ public class SamlSpIdpConnectionPersistenceTest {
 			newSamlSpIdpConnection.getName());
 		Assert.assertEquals(existingSamlSpIdpConnection.getNameIdFormat(),
 			newSamlSpIdpConnection.getNameIdFormat());
-		Assert.assertEquals(existingSamlSpIdpConnection.getSignAuthnRequest(),
-			newSamlSpIdpConnection.getSignAuthnRequest());
+		Assert.assertEquals(existingSamlSpIdpConnection.isSignAuthnRequest(),
+			newSamlSpIdpConnection.isSignAuthnRequest());
 		Assert.assertEquals(existingSamlSpIdpConnection.getUserAttributeMappings(),
 			newSamlSpIdpConnection.getUserAttributeMappings());
 	}

@@ -40,17 +40,17 @@ public class SamlSpIdpConnectionSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setSamlIdpEntityId(model.getSamlIdpEntityId());
-		soapModel.setAssertionSignatureRequired(model.getAssertionSignatureRequired());
+		soapModel.setAssertionSignatureRequired(model.isAssertionSignatureRequired());
 		soapModel.setClockSkew(model.getClockSkew());
-		soapModel.setEnabled(model.getEnabled());
-		soapModel.setForceAuthn(model.getForceAuthn());
-		soapModel.setLdapImportEnabled(model.getLdapImportEnabled());
+		soapModel.setEnabled(model.isEnabled());
+		soapModel.setForceAuthn(model.isForceAuthn());
+		soapModel.setLdapImportEnabled(model.isLdapImportEnabled());
 		soapModel.setMetadataUrl(model.getMetadataUrl());
 		soapModel.setMetadataXml(model.getMetadataXml());
 		soapModel.setMetadataUpdatedDate(model.getMetadataUpdatedDate());
 		soapModel.setName(model.getName());
 		soapModel.setNameIdFormat(model.getNameIdFormat());
-		soapModel.setSignAuthnRequest(model.getSignAuthnRequest());
+		soapModel.setSignAuthnRequest(model.isSignAuthnRequest());
 		soapModel.setUserAttributeMappings(model.getUserAttributeMappings());
 
 		return soapModel;

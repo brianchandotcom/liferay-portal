@@ -182,12 +182,12 @@ public class SamlIdpSpConnectionPersistenceTest {
 			newSamlIdpSpConnection.getAssertionLifetime());
 		Assert.assertEquals(existingSamlIdpSpConnection.getAttributeNames(),
 			newSamlIdpSpConnection.getAttributeNames());
-		Assert.assertEquals(existingSamlIdpSpConnection.getAttributesEnabled(),
-			newSamlIdpSpConnection.getAttributesEnabled());
-		Assert.assertEquals(existingSamlIdpSpConnection.getAttributesNamespaceEnabled(),
-			newSamlIdpSpConnection.getAttributesNamespaceEnabled());
-		Assert.assertEquals(existingSamlIdpSpConnection.getEnabled(),
-			newSamlIdpSpConnection.getEnabled());
+		Assert.assertEquals(existingSamlIdpSpConnection.isAttributesEnabled(),
+			newSamlIdpSpConnection.isAttributesEnabled());
+		Assert.assertEquals(existingSamlIdpSpConnection.isAttributesNamespaceEnabled(),
+			newSamlIdpSpConnection.isAttributesNamespaceEnabled());
+		Assert.assertEquals(existingSamlIdpSpConnection.isEnabled(),
+			newSamlIdpSpConnection.isEnabled());
 		Assert.assertEquals(existingSamlIdpSpConnection.getMetadataUrl(),
 			newSamlIdpSpConnection.getMetadataUrl());
 		Assert.assertEquals(existingSamlIdpSpConnection.getMetadataXml(),

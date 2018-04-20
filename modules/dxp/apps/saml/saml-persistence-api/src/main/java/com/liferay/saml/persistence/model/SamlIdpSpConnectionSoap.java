@@ -42,9 +42,9 @@ public class SamlIdpSpConnectionSoap implements Serializable {
 		soapModel.setSamlSpEntityId(model.getSamlSpEntityId());
 		soapModel.setAssertionLifetime(model.getAssertionLifetime());
 		soapModel.setAttributeNames(model.getAttributeNames());
-		soapModel.setAttributesEnabled(model.getAttributesEnabled());
-		soapModel.setAttributesNamespaceEnabled(model.getAttributesNamespaceEnabled());
-		soapModel.setEnabled(model.getEnabled());
+		soapModel.setAttributesEnabled(model.isAttributesEnabled());
+		soapModel.setAttributesNamespaceEnabled(model.isAttributesNamespaceEnabled());
+		soapModel.setEnabled(model.isEnabled());
 		soapModel.setMetadataUrl(model.getMetadataUrl());
 		soapModel.setMetadataXml(model.getMetadataXml());
 		soapModel.setMetadataUpdatedDate(model.getMetadataUpdatedDate());

@@ -47,7 +47,7 @@ public class SamlSpSessionSoap implements Serializable {
 		soapModel.setNameIdSPNameQualifier(model.getNameIdSPNameQualifier());
 		soapModel.setNameIdValue(model.getNameIdValue());
 		soapModel.setSessionIndex(model.getSessionIndex());
-		soapModel.setTerminated(model.getTerminated());
+		soapModel.setTerminated(model.isTerminated());
 
 		return soapModel;
 	}

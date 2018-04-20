@@ -70,7 +70,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 		attributes.put("consumerSecret", getConsumerSecret());
 		attributes.put("accessLevel", getAccessLevel());
 		attributes.put("logoId", getLogoId());
-		attributes.put("shareableAccessToken", getShareableAccessToken());
+		attributes.put("shareableAccessToken", isShareableAccessToken());
 		attributes.put("callbackURI", getCallbackURI());
 		attributes.put("websiteURL", getWebsiteURL());
 

@@ -175,7 +175,7 @@ public class SamlSpSessionModelImpl extends BaseModelImpl<SamlSpSession>
 		attributes.put("nameIdSPNameQualifier", getNameIdSPNameQualifier());
 		attributes.put("nameIdValue", getNameIdValue());
 		attributes.put("sessionIndex", getSessionIndex());
-		attributes.put("terminated", getTerminated());
+		attributes.put("terminated", isTerminated());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -585,7 +585,7 @@ public class SamlSpSessionModelImpl extends BaseModelImpl<SamlSpSession>
 		samlSpSessionImpl.setNameIdSPNameQualifier(getNameIdSPNameQualifier());
 		samlSpSessionImpl.setNameIdValue(getNameIdValue());
 		samlSpSessionImpl.setSessionIndex(getSessionIndex());
-		samlSpSessionImpl.setTerminated(getTerminated());
+		samlSpSessionImpl.setTerminated(isTerminated());
 
 		samlSpSessionImpl.resetOriginalValues();
 
@@ -763,7 +763,7 @@ public class SamlSpSessionModelImpl extends BaseModelImpl<SamlSpSession>
 			samlSpSessionCacheModel.sessionIndex = null;
 		}
 
-		samlSpSessionCacheModel.terminated = getTerminated();
+		samlSpSessionCacheModel.terminated = isTerminated();
 
 		return samlSpSessionCacheModel;
 	}
@@ -801,7 +801,7 @@ public class SamlSpSessionModelImpl extends BaseModelImpl<SamlSpSession>
 		sb.append(", sessionIndex=");
 		sb.append(getSessionIndex());
 		sb.append(", terminated=");
-		sb.append(getTerminated());
+		sb.append(isTerminated());
 		sb.append("}");
 
 		return sb.toString();
@@ -873,7 +873,7 @@ public class SamlSpSessionModelImpl extends BaseModelImpl<SamlSpSession>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>terminated</column-name><column-value><![CDATA[");
-		sb.append(getTerminated());
+		sb.append(isTerminated());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

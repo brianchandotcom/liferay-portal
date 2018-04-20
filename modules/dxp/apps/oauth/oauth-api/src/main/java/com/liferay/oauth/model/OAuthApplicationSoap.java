@@ -46,7 +46,7 @@ public class OAuthApplicationSoap implements Serializable {
 		soapModel.setConsumerSecret(model.getConsumerSecret());
 		soapModel.setAccessLevel(model.getAccessLevel());
 		soapModel.setLogoId(model.getLogoId());
-		soapModel.setShareableAccessToken(model.getShareableAccessToken());
+		soapModel.setShareableAccessToken(model.isShareableAccessToken());
 		soapModel.setCallbackURI(model.getCallbackURI());
 		soapModel.setWebsiteURL(model.getWebsiteURL());
 

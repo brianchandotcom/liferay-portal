@@ -186,8 +186,8 @@ public class SamlSpSessionPersistenceTest {
 			newSamlSpSession.getNameIdValue());
 		Assert.assertEquals(existingSamlSpSession.getSessionIndex(),
 			newSamlSpSession.getSessionIndex());
-		Assert.assertEquals(existingSamlSpSession.getTerminated(),
-			newSamlSpSession.getTerminated());
+		Assert.assertEquals(existingSamlSpSession.isTerminated(),
+			newSamlSpSession.isTerminated());
 	}
 
 	@Test

@@ -67,10 +67,10 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 		attributes.put("samlSpEntityId", getSamlSpEntityId());
 		attributes.put("assertionLifetime", getAssertionLifetime());
 		attributes.put("attributeNames", getAttributeNames());
-		attributes.put("attributesEnabled", getAttributesEnabled());
+		attributes.put("attributesEnabled", isAttributesEnabled());
 		attributes.put("attributesNamespaceEnabled",
-			getAttributesNamespaceEnabled());
-		attributes.put("enabled", getEnabled());
+			isAttributesNamespaceEnabled());
+		attributes.put("enabled", isEnabled());
 		attributes.put("metadataUrl", getMetadataUrl());
 		attributes.put("metadataXml", getMetadataXml());
 		attributes.put("metadataUpdatedDate", getMetadataUpdatedDate());

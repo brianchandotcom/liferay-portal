@@ -175,17 +175,17 @@ public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnect
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("samlIdpEntityId", getSamlIdpEntityId());
 		attributes.put("assertionSignatureRequired",
-			getAssertionSignatureRequired());
+			isAssertionSignatureRequired());
 		attributes.put("clockSkew", getClockSkew());
-		attributes.put("enabled", getEnabled());
-		attributes.put("forceAuthn", getForceAuthn());
-		attributes.put("ldapImportEnabled", getLdapImportEnabled());
+		attributes.put("enabled", isEnabled());
+		attributes.put("forceAuthn", isForceAuthn());
+		attributes.put("ldapImportEnabled", isLdapImportEnabled());
 		attributes.put("metadataUrl", getMetadataUrl());
 		attributes.put("metadataXml", getMetadataXml());
 		attributes.put("metadataUpdatedDate", getMetadataUpdatedDate());
 		attributes.put("name", getName());
 		attributes.put("nameIdFormat", getNameIdFormat());
-		attributes.put("signAuthnRequest", getSignAuthnRequest());
+		attributes.put("signAuthnRequest", isSignAuthnRequest());
 		attributes.put("userAttributeMappings", getUserAttributeMappings());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -647,17 +647,17 @@ public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnect
 		samlSpIdpConnectionImpl.setCreateDate(getCreateDate());
 		samlSpIdpConnectionImpl.setModifiedDate(getModifiedDate());
 		samlSpIdpConnectionImpl.setSamlIdpEntityId(getSamlIdpEntityId());
-		samlSpIdpConnectionImpl.setAssertionSignatureRequired(getAssertionSignatureRequired());
+		samlSpIdpConnectionImpl.setAssertionSignatureRequired(isAssertionSignatureRequired());
 		samlSpIdpConnectionImpl.setClockSkew(getClockSkew());
-		samlSpIdpConnectionImpl.setEnabled(getEnabled());
-		samlSpIdpConnectionImpl.setForceAuthn(getForceAuthn());
-		samlSpIdpConnectionImpl.setLdapImportEnabled(getLdapImportEnabled());
+		samlSpIdpConnectionImpl.setEnabled(isEnabled());
+		samlSpIdpConnectionImpl.setForceAuthn(isForceAuthn());
+		samlSpIdpConnectionImpl.setLdapImportEnabled(isLdapImportEnabled());
 		samlSpIdpConnectionImpl.setMetadataUrl(getMetadataUrl());
 		samlSpIdpConnectionImpl.setMetadataXml(getMetadataXml());
 		samlSpIdpConnectionImpl.setMetadataUpdatedDate(getMetadataUpdatedDate());
 		samlSpIdpConnectionImpl.setName(getName());
 		samlSpIdpConnectionImpl.setNameIdFormat(getNameIdFormat());
-		samlSpIdpConnectionImpl.setSignAuthnRequest(getSignAuthnRequest());
+		samlSpIdpConnectionImpl.setSignAuthnRequest(isSignAuthnRequest());
 		samlSpIdpConnectionImpl.setUserAttributeMappings(getUserAttributeMappings());
 
 		samlSpIdpConnectionImpl.resetOriginalValues();
@@ -776,15 +776,15 @@ public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnect
 			samlSpIdpConnectionCacheModel.samlIdpEntityId = null;
 		}
 
-		samlSpIdpConnectionCacheModel.assertionSignatureRequired = getAssertionSignatureRequired();
+		samlSpIdpConnectionCacheModel.assertionSignatureRequired = isAssertionSignatureRequired();
 
 		samlSpIdpConnectionCacheModel.clockSkew = getClockSkew();
 
-		samlSpIdpConnectionCacheModel.enabled = getEnabled();
+		samlSpIdpConnectionCacheModel.enabled = isEnabled();
 
-		samlSpIdpConnectionCacheModel.forceAuthn = getForceAuthn();
+		samlSpIdpConnectionCacheModel.forceAuthn = isForceAuthn();
 
-		samlSpIdpConnectionCacheModel.ldapImportEnabled = getLdapImportEnabled();
+		samlSpIdpConnectionCacheModel.ldapImportEnabled = isLdapImportEnabled();
 
 		samlSpIdpConnectionCacheModel.metadataUrl = getMetadataUrl();
 
@@ -827,7 +827,7 @@ public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnect
 			samlSpIdpConnectionCacheModel.nameIdFormat = null;
 		}
 
-		samlSpIdpConnectionCacheModel.signAuthnRequest = getSignAuthnRequest();
+		samlSpIdpConnectionCacheModel.signAuthnRequest = isSignAuthnRequest();
 
 		samlSpIdpConnectionCacheModel.userAttributeMappings = getUserAttributeMappings();
 
@@ -860,15 +860,15 @@ public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnect
 		sb.append(", samlIdpEntityId=");
 		sb.append(getSamlIdpEntityId());
 		sb.append(", assertionSignatureRequired=");
-		sb.append(getAssertionSignatureRequired());
+		sb.append(isAssertionSignatureRequired());
 		sb.append(", clockSkew=");
 		sb.append(getClockSkew());
 		sb.append(", enabled=");
-		sb.append(getEnabled());
+		sb.append(isEnabled());
 		sb.append(", forceAuthn=");
-		sb.append(getForceAuthn());
+		sb.append(isForceAuthn());
 		sb.append(", ldapImportEnabled=");
-		sb.append(getLdapImportEnabled());
+		sb.append(isLdapImportEnabled());
 		sb.append(", metadataUrl=");
 		sb.append(getMetadataUrl());
 		sb.append(", metadataXml=");
@@ -880,7 +880,7 @@ public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnect
 		sb.append(", nameIdFormat=");
 		sb.append(getNameIdFormat());
 		sb.append(", signAuthnRequest=");
-		sb.append(getSignAuthnRequest());
+		sb.append(isSignAuthnRequest());
 		sb.append(", userAttributeMappings=");
 		sb.append(getUserAttributeMappings());
 		sb.append("}");
@@ -926,7 +926,7 @@ public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnect
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>assertionSignatureRequired</column-name><column-value><![CDATA[");
-		sb.append(getAssertionSignatureRequired());
+		sb.append(isAssertionSignatureRequired());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>clockSkew</column-name><column-value><![CDATA[");
@@ -934,15 +934,15 @@ public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnect
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>enabled</column-name><column-value><![CDATA[");
-		sb.append(getEnabled());
+		sb.append(isEnabled());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>forceAuthn</column-name><column-value><![CDATA[");
-		sb.append(getForceAuthn());
+		sb.append(isForceAuthn());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>ldapImportEnabled</column-name><column-value><![CDATA[");
-		sb.append(getLdapImportEnabled());
+		sb.append(isLdapImportEnabled());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>metadataUrl</column-name><column-value><![CDATA[");
@@ -966,7 +966,7 @@ public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnect
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>signAuthnRequest</column-name><column-value><![CDATA[");
-		sb.append(getSignAuthnRequest());
+		sb.append(isSignAuthnRequest());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userAttributeMappings</column-name><column-value><![CDATA[");

@@ -66,10 +66,10 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("definitionId", getDefinitionId());
 		attributes.put("format", getFormat());
-		attributes.put("scheduleRequest", getScheduleRequest());
+		attributes.put("scheduleRequest", isScheduleRequest());
 		attributes.put("startDate", getStartDate());
 		attributes.put("endDate", getEndDate());
-		attributes.put("repeating", getRepeating());
+		attributes.put("repeating", isRepeating());
 		attributes.put("recurrence", getRecurrence());
 		attributes.put("emailNotifications", getEmailNotifications());
 		attributes.put("emailDelivery", getEmailDelivery());

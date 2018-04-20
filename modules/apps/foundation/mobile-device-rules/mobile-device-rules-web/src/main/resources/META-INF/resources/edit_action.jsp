@@ -97,7 +97,7 @@ MDRRuleGroupInstance ruleGroupInstance = (MDRRuleGroupInstance)renderRequest.get
 
 		var form = $(document.<portlet:namespace />fm);
 
-		<portlet:resourceURL id="/mobile_device_rules/site_url_layouts" var="siteURLLayoutsURL" />
+		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/mobile_device_rules/site_url_layouts" var="siteURLLayoutsURL" />
 
 		$.ajax(
 			'<%= siteURLLayoutsURL.toString() %>',

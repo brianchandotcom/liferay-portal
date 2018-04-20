@@ -495,6 +495,19 @@ public class LayoutsAdminDisplayContext {
 			_themeDisplay.getRequest());
 	}
 
+	public String getPortletResource() {
+		String portletResource = ParamUtil.getString(
+			_request, "portletResource");
+
+		if (Validator.isNull(portletResource)) {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			portletResource = portletDisplay.getPortletName();
+		}
+
+		return portletResource;
+	}
+
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 

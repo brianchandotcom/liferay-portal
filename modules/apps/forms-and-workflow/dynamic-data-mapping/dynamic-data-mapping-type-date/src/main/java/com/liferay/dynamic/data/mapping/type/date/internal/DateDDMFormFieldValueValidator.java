@@ -57,7 +57,7 @@ public class DateDDMFormFieldValueValidator
 	}
 
 	protected void validateDateValue(
-		DDMFormField ddmFormField, Locale defaultLocale, String valueString)
+			DDMFormField ddmFormField, Locale defaultLocale, String valueString)
 		throws DDMFormFieldValueValidationException {
 
 		if (Validator.isNotNull(valueString)) {

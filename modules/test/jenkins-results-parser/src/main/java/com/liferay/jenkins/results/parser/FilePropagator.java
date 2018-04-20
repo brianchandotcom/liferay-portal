@@ -184,6 +184,7 @@ public class FilePropagator {
 		StringBuffer sb = new StringBuffer(
 			"ssh -o ConnectTimeout=10 -o NumberOfPasswordPrompts=0 ");
 
+		sb.append("-o ConnectTimeout=10 ");
 		sb.append(targetSlave);
 		sb.append(" '");
 

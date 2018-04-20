@@ -359,4 +359,52 @@ public class AutoCloseUtil {
 		return list;
 	}
 
+	public boolean isAutoCloseOnCriticalTestFailuresActive() {
+		String criticalTestBranchesString = project.getProperty("test.branch.names.critical.test[" + project.getProperty("repository") + "]");
+
+		if ((criticalTestBranchesString == null) || criticalTestBranchesString.isEmpty()) {
+			return false;
+		}
+
+		String[] criticalTestBranches = StringUtils.split(criticalTestBranchesString, ",");
+
+		for (String criticalTestBranch : criticalTestBranches) {
+			if (criticalTestBranch.equals(project.getProperty("branch.name"))) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public boolean isAutoCloseBranch() {
+		String repository = project.getProperty("repository");
+
+		String testBranchNamesAutoClose = project.getProperty(
+			"test.branch.names.auto.close[" + repository + "]");
+
+		if (testBranchNamesAutoClose == null) {
+			return false;
+		}
+
+		String branchName = project.getProperty("branch.name");
+
+		List testBranchNamesAutoCloseList = Arrays.asList(testBranchNamesAutoClose.split(","));
+
+		return testBranchNamesAutoCloseList.contains(branchName);
+	}
+
+	public String getBatchName(Build downstreamBuild) throws Exception {
+		Map parameters = downstreamBuild.getParameters();
+
+		if (parameters.containsKey("JOB_VARIANT")) {
+			return parameters.get("JOB_VARIANT");
+		}
+
+		if (parameters.containsKey("JENKINS_JOB_VARIANT")) {
+			return downstreamBuild.getJobName() + "/" + parameters.get("JENKINS_JOB_VARIANT");
+		}
+
+		return null;
+	}
 }

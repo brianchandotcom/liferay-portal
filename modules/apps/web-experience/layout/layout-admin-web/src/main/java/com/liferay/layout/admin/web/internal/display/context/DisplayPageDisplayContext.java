@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -150,15 +149,6 @@ public class DisplayPageDisplayContext {
 		return _displayStyle;
 	}
 
-	public String getEditDisplayPagesRedirect() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/view_display_pages.jsp");
-		portletURL.setParameter("tabs1", "display-pages");
-
-		return portletURL.toString();
-	}
-
 	public String getKeywords() {
 		if (_keywords != null) {
 			return _keywords;
@@ -167,20 +157,6 @@ public class DisplayPageDisplayContext {
 		_keywords = ParamUtil.getString(_request, "keywords");
 
 		return _keywords;
-	}
-
-	public LayoutPageTemplateEntry getLayoutPageTemplateEntry()
-		throws PortalException {
-
-		if (_layoutPageTemplateEntry != null) {
-			return _layoutPageTemplateEntry;
-		}
-
-		_layoutPageTemplateEntry =
-			LayoutPageTemplateEntryServiceUtil.fetchLayoutPageTemplateEntry(
-				getLayoutPageTemplateEntryId());
-
-		return _layoutPageTemplateEntry;
 	}
 
 	public long getLayoutPageTemplateEntryId() {
@@ -313,7 +289,6 @@ public class DisplayPageDisplayContext {
 	private SearchContainer _displayPagesSearchContainer;
 	private String _displayStyle;
 	private String _keywords;
-	private LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private Long _layoutPageTemplateEntryId;
 	private String _orderByCol;
 	private String _orderByType;

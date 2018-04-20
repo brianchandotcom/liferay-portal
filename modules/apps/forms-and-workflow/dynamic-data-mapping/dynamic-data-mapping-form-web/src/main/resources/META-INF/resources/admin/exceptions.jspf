@@ -56,6 +56,15 @@
 	<liferay-ui:message arguments="<%= msvcffn.getFieldName() %>" key="invalid-characters-were-defined-for-field-name-x" translateArguments="<%= false %>" />
 </liferay-ui:error>
 
+<liferay-ui:error exception="<%= DDMFormValidationException.MustSetValidValidationExpression.class %>">
+
+	<%
+	DDMFormValidationException.MustSetValidValidationExpression msvve = (DDMFormValidationException.MustSetValidValidationExpression)errorException;
+	%>
+
+	<liferay-ui:message arguments="<%= new Object[] {msvve.getValidationExpression(), msvve.getFieldName()} %>" key="the-validation-expression-x-set-for-field-x-is-invalid" translateArguments="<%= false %>" />
+</liferay-ui:error>
+
 <liferay-ui:error exception="<%= DDMFormValidationException.MustSetValidVisibilityExpression.class %>">
 
 	<%

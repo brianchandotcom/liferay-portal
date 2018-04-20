@@ -16,10 +16,12 @@ package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -62,16 +64,26 @@ public class SaveFormInstanceMVCActionCommand
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
-		DDMFormInstance formInstance =
-			saveFormInstanceMVCCommandHelper.saveFormInstance(
-				actionRequest, actionResponse, true);
+		try {
+			DDMFormInstance formInstance =
+				saveFormInstanceMVCCommandHelper.saveFormInstance(
+					actionRequest, actionResponse, true);
 
-		portletURL.setParameter(
-			"formInstanceId", String.valueOf(formInstance.getFormInstanceId()));
+			portletURL.setParameter(
+				"formInstanceId",
+				String.valueOf(formInstance.getFormInstanceId()));
 
-		portletURL.setParameter("redirect", redirect);
+			portletURL.setParameter("redirect", redirect);
 
-		actionRequest.setAttribute(WebKeys.REDIRECT, portletURL.toString());
+			actionRequest.setAttribute(WebKeys.REDIRECT, portletURL.toString());
+		}
+		catch (
+			DDMFormValidationException.MustSetValidValidationExpression msvve) {
+
+			Class<?> exceptionClass = msvve.getClass();
+
+			SessionErrors.add(actionRequest, exceptionClass.getName());
+		}
 	}
 
 	@Reference

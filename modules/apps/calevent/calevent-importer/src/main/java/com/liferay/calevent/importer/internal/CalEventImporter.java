@@ -327,8 +327,8 @@ public class CalEventImporter {
 		String userName, Date createDate, Date modifiedDate, long categoryId,
 		long rootMessageId, long rootMessageUserId, int messageCount,
 		int viewCount, long lastPostByUserId, Date lastPostDate,
-		double priority, boolean question, int status, long statusByUserId,
-		String statusByUserName, Date statusDate) {
+		double priority, boolean question, String title, int status,
+		long statusByUserId, String statusByUserName, Date statusDate) {
 
 		MBThread mbThread = _mbThreadLocalService.createMBThread(threadId);
 
@@ -348,6 +348,7 @@ public class CalEventImporter {
 		mbThread.setLastPostDate(lastPostDate);
 		mbThread.setPriority(priority);
 		mbThread.setQuestion(question);
+		mbThread.setTitle(title);
 		mbThread.setStatus(status);
 		mbThread.setStatusByUserId(statusByUserId);
 		mbThread.setStatusByUserName(statusByUserName);
@@ -1188,7 +1189,7 @@ public class CalEventImporter {
 			mbThread.getRootMessageUserId(), mbThread.getMessageCount(),
 			mbThread.getViewCount(), mbThread.getLastPostByUserId(),
 			mbThread.getLastPostDate(), mbThread.getPriority(),
-			mbThread.isQuestion(), mbThread.getStatus(),
+			mbThread.isQuestion(), mbThread.getTitle(), mbThread.getStatus(),
 			mbThread.getStatusByUserId(), mbThread.getStatusByUserName(),
 			mbThread.getStatusDate());
 

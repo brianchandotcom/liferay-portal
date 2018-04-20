@@ -340,6 +340,22 @@ public interface MBThreadModel extends BaseModel<MBThread>, ContainerModel,
 	public void setLastPostDate(Date lastPostDate);
 
 	/**
+	 * Returns the last publish date of this message boards thread.
+	 *
+	 * @return the last publish date of this message boards thread
+	 */
+	@Override
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this message boards thread.
+	 *
+	 * @param lastPublishDate the last publish date of this message boards thread
+	 */
+	@Override
+	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
 	 * Returns the priority of this message boards thread.
 	 *
 	 * @return the priority of this message boards thread
@@ -375,20 +391,19 @@ public interface MBThreadModel extends BaseModel<MBThread>, ContainerModel,
 	public void setQuestion(boolean question);
 
 	/**
-	 * Returns the last publish date of this message boards thread.
+	 * Returns the title of this message boards thread.
 	 *
-	 * @return the last publish date of this message boards thread
+	 * @return the title of this message boards thread
 	 */
-	@Override
-	public Date getLastPublishDate();
+	@AutoEscape
+	public String getTitle();
 
 	/**
-	 * Sets the last publish date of this message boards thread.
+	 * Sets the title of this message boards thread.
 	 *
-	 * @param lastPublishDate the last publish date of this message boards thread
+	 * @param title the title of this message boards thread
 	 */
-	@Override
-	public void setLastPublishDate(Date lastPublishDate);
+	public void setTitle(String title);
 
 	/**
 	 * Returns the status of this message boards thread.

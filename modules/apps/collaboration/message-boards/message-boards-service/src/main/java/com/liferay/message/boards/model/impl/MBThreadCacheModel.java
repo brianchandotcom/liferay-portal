@@ -64,7 +64,7 @@ public class MBThreadCacheModel implements CacheModel<MBThread>, Externalizable 
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(47);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -96,12 +96,14 @@ public class MBThreadCacheModel implements CacheModel<MBThread>, Externalizable 
 		sb.append(lastPostByUserId);
 		sb.append(", lastPostDate=");
 		sb.append(lastPostDate);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append(", priority=");
 		sb.append(priority);
 		sb.append(", question=");
 		sb.append(question);
-		sb.append(", lastPublishDate=");
-		sb.append(lastPublishDate);
+		sb.append(", title=");
+		sb.append(title);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -166,14 +168,21 @@ public class MBThreadCacheModel implements CacheModel<MBThread>, Externalizable 
 			mbThreadImpl.setLastPostDate(new Date(lastPostDate));
 		}
 
-		mbThreadImpl.setPriority(priority);
-		mbThreadImpl.setQuestion(question);
-
 		if (lastPublishDate == Long.MIN_VALUE) {
 			mbThreadImpl.setLastPublishDate(null);
 		}
 		else {
 			mbThreadImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
+		mbThreadImpl.setPriority(priority);
+		mbThreadImpl.setQuestion(question);
+
+		if (title == null) {
+			mbThreadImpl.setTitle("");
+		}
+		else {
+			mbThreadImpl.setTitle(title);
 		}
 
 		mbThreadImpl.setStatus(status);
@@ -225,11 +234,12 @@ public class MBThreadCacheModel implements CacheModel<MBThread>, Externalizable 
 
 		lastPostByUserId = objectInput.readLong();
 		lastPostDate = objectInput.readLong();
+		lastPublishDate = objectInput.readLong();
 
 		priority = objectInput.readDouble();
 
 		question = objectInput.readBoolean();
-		lastPublishDate = objectInput.readLong();
+		title = objectInput.readUTF();
 
 		status = objectInput.readInt();
 
@@ -278,11 +288,18 @@ public class MBThreadCacheModel implements CacheModel<MBThread>, Externalizable 
 
 		objectOutput.writeLong(lastPostByUserId);
 		objectOutput.writeLong(lastPostDate);
+		objectOutput.writeLong(lastPublishDate);
 
 		objectOutput.writeDouble(priority);
 
 		objectOutput.writeBoolean(question);
-		objectOutput.writeLong(lastPublishDate);
+
+		if (title == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(title);
+		}
 
 		objectOutput.writeInt(status);
 
@@ -313,9 +330,10 @@ public class MBThreadCacheModel implements CacheModel<MBThread>, Externalizable 
 	public int viewCount;
 	public long lastPostByUserId;
 	public long lastPostDate;
+	public long lastPublishDate;
 	public double priority;
 	public boolean question;
-	public long lastPublishDate;
+	public String title;
 	public int status;
 	public long statusByUserId;
 	public String statusByUserName;

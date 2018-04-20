@@ -134,6 +134,9 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.FullyQualifiedNameCheck">
 			<message key="import.statement.use" value="Use import statement instead of Fully Qualified Name for ''{0}'" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.GetterMethodCallCheck">
+			<message key="method.call.rename" value="Call ''{0}'' instead of ''{1}''" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.IndentationCheck">
 			<message key="indentation.incorrect" value="Line starts with ''{0}'' tabs, but ''{1}'' tabs are expected" />
 			<message key="indentation.inside.chain.incorrect" value="Incorrect indentation inside chain. See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/chaining.markdown" />

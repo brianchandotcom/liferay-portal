@@ -82,6 +82,16 @@ public class CheckstyleUtil {
 			new PropertiesExpander(System.getProperties()), false);
 
 		configuration = _addAttribute(
+			configuration, "baseDirName", sourceFormatterArgs.getBaseDirName(),
+			"com.liferay.source.formatter.checkstyle.checks." +
+				"GetterMethodCallCheck");
+		configuration = _addAttribute(
+			configuration, "portalBranchName",
+			SourceFormatterUtil.getPropertyValue(
+				_GIT_LIFERAY_PORTAL_BRANCH, propertiesMap),
+			"com.liferay.source.formatter.checkstyle.checks." +
+				"GetterMethodCallCheck");
+		configuration = _addAttribute(
 			configuration, "maxLineLength",
 			String.valueOf(sourceFormatterArgs.getMaxLineLength()),
 			"com.liferay.source.formatter.checkstyle.checks.AppendCheck");
@@ -260,5 +270,8 @@ public class CheckstyleUtil {
 
 		return configuration;
 	}
+
+	private static final String _GIT_LIFERAY_PORTAL_BRANCH =
+		"git.liferay.portal.branch";
 
 }

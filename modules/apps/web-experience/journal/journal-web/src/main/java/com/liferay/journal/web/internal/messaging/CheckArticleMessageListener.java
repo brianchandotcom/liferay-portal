@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Tina Tian
  */
 @Component(
-	configurationPid = "com.liferay.journal.web.configuration.JournalWebConfiguration",
+	configurationPid = "com.liferay.journal.configuration.JournalServiceConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	service = CheckArticleMessageListener.class
 )

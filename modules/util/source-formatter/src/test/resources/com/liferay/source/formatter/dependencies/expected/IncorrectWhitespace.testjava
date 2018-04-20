@@ -48,21 +48,13 @@ public class IncorrectWhitespace {
 
 		String s6 = s2;
 
-		s6 = null;
-
 		String s7 = s3;
-
-		s7 = null;
 
 		if (true) {
 			String s8 = s4;
-
-			s8 = null;
 		}
 
 		String s9 = s5;
-
-		s9 = null;
 
 		if (isGif()) {
 			return;
@@ -81,8 +73,6 @@ public class IncorrectWhitespace {
 		String s3 = "hello\" ,world";
 		String s4 = "hello\\\" ,world";
 
-		s4 = null;
-
 		if (true) {
 			s2 = s1;
 		}
@@ -98,14 +88,11 @@ public class IncorrectWhitespace {
 
 		for (int i = 1; i < 10; i++) {
 			String[] stringArray1 = {"test1"};
-
-			stringArray1 = null;
 		}
 
 		List<String> list = null;
 
 		for (String s : list) {
-			s = null;
 			s2 = (String)s1;
 		}
 	}

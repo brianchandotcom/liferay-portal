@@ -39,17 +39,17 @@ public class IncorrectLineBreaks1 {
 			test = thisIsAStringWithAVeryVeryVeryLongName;
 		}
 
-		StringUtil.contains(
+		boolean b = StringUtil.contains(
 			StringUtil.replace(
 				"Hello World", "Hello", "World"), "Hello World Hello World");
 
-		StringUtil.contains(
+		boolean b1 = StringUtil.contains(
 			"Hello World Hello World Hello World " +
 				"Hello World Hello World Hello World", "Hello");
 
 		String anotherStringWithAVeryLongName = "Hello World";
 
-		StringUtil.contains(
+		boolean b2 = StringUtil.contains(
 			anotherStringWithAVeryLongName, StringUtil.trim(
 				anotherStringWithAVeryLongName));
 
@@ -111,7 +111,7 @@ public class IncorrectLineBreaks1 {
 
 			});
 
-		StringUtil.lastIndexOfAny(
+		int i = StringUtil.lastIndexOfAny(
 			"Hello",
 			new String[] {
 				"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight"
@@ -141,8 +141,6 @@ public class IncorrectLineBreaks1 {
 
 		for (String testStringWithAVeryVeryVeryVeryVeryVeryVeryLongName :
 				testStringArray) {
-
-			testStringWithAVeryVeryVeryVeryVeryVeryVeryLongName = null;
 
 			continue;
 		}

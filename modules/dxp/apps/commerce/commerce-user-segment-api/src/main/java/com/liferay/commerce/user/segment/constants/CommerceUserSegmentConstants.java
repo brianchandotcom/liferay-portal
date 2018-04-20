@@ -19,15 +19,13 @@ package com.liferay.commerce.user.segment.constants;
  */
 public class CommerceUserSegmentConstants {
 
-	public static final String CRITERION_TYPE_ORGANIZATION =
-		"CRITERION_TYPE_ORGANIZATION";
+	public static final String CRITERION_TYPE_ORGANIZATION = "organization";
 
-	public static final String CRITERION_TYPE_ROLE = "CRITERION_TYPE_ROLE";
+	public static final String CRITERION_TYPE_ROLE = "role";
 
-	public static final String CRITERION_TYPE_USER = "CRITERION_TYPE_USER";
+	public static final String CRITERION_TYPE_USER = "user";
 
-	public static final String CRITERION_TYPE_USER_GROUP =
-		"CRITERION_TYPE_USER_GROUP";
+	public static final String CRITERION_TYPE_USER_GROUP = "user-group";
 
 	public static final String RESOURCE_NAME =
 		"com.liferay.commerce.user.segment";

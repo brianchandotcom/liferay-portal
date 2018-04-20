@@ -248,7 +248,7 @@ public class LayoutPageTemplateEntryServiceImpl
 	}
 
 	@Override
-	public void setDefaultLayoutPageTemplateEntry(
+	public void updateLayoutPageTemplateEntry(
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws PortalException {
 

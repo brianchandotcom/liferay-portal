@@ -78,6 +78,7 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateLinkModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateModelImpl;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
+import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalizationModel;
 import com.liferay.friendly.url.model.FriendlyURLEntryMappingModel;
 import com.liferay.friendly.url.model.FriendlyURLEntryModel;
@@ -1437,6 +1438,15 @@ public class DataFactory {
 		CounterModel counterModel = new CounterModelImpl();
 
 		counterModel.setName(Counter.class.getName());
+		counterModel.setCurrentId(_counter.get());
+
+		counterModels.add(counterModel);
+
+		// FriendlyURLEntryLocalization
+
+		counterModel = new CounterModelImpl();
+
+		counterModel.setName(FriendlyURLEntryLocalization.class.getName());
 		counterModel.setCurrentId(_counter.get());
 
 		counterModels.add(counterModel);

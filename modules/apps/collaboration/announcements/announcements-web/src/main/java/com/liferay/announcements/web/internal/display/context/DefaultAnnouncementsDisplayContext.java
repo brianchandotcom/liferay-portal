@@ -153,6 +153,12 @@ public class DefaultAnnouncementsDisplayContext
 
 	@Override
 	public boolean isCustomizeAnnouncementsDisplayed() {
+		String portletName = _announcementsRequestHelper.getPortletName();
+
+		if (portletName.equals(AnnouncementsPortletKeys.ALERTS)) {
+			return false;
+		}
+
 		Group scopeGroup = _announcementsRequestHelper.getScopeGroup();
 
 		return PrefsParamUtil.getBoolean(

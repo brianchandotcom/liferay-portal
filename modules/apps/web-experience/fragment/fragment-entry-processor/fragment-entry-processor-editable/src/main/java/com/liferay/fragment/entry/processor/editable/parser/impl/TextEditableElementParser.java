@@ -32,6 +32,11 @@ import org.osgi.service.component.annotations.Component;
 public class TextEditableElementParser implements EditableElementParser {
 
 	@Override
+	public String getValue(Element element) {
+		return element.html();
+	}
+
+	@Override
 	public void replace(Element element, String value) {
 		Document document = Jsoup.parseBodyFragment(value);
 

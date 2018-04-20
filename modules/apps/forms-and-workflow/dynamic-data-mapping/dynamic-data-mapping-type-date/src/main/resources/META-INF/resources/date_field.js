@@ -101,7 +101,11 @@ AUI.add(
 
 							nodeClass = '.' + nodeClass.replace(' ', '.');
 
-							if (instance.datePicker.getCalendar().get('boundingBox').one(nodeClass)) {
+							var datePicker = instance.datePicker;
+
+							var calendar = datePicker.getCalendar();
+
+							if (calendar.get('boundingBox').one(nodeClass)) {
 								hasFocus = true;
 							}
 						}

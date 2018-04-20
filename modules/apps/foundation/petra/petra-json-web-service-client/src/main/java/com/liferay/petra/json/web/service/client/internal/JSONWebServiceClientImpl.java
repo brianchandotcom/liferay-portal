@@ -66,6 +66,11 @@ public class JSONWebServiceClientImpl extends BaseJSONWebServiceClientImpl {
 			setProxyPassword(_getString("proxyPassword", properties));
 		}
 
+		if (properties.containsKey("maxRetryCount")) {
+			setMaxRetryCount(
+				Integer.parseInt(_getString("maxRetryCount", properties)));
+		}
+
 		afterPropertiesSet();
 	}
 

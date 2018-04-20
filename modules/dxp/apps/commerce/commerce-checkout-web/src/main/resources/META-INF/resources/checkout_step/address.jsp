@@ -50,7 +50,7 @@ long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 
 	<aui:input disabled="<%= commerceAddresses.isEmpty() ? true : false %>" name="<%= baseAddressCheckoutStepDisplayContext.getParamName() %>" type="hidden" value="" />
 
-	<aui:input name="newAddress" type="hidden" value='<%= (commerceAddressId > 0) ? "1" : "0" %>' />
+	<aui:input name="newAddress" type="hidden" value='<%= (commerceAddressId > 0) ? "0" : "1" %>' />
 </div>
 
 <liferay-ui:error exception="<%= CommerceAddressCityException.class %>" message="please-enter-a-valid-city" />

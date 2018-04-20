@@ -623,6 +623,10 @@ public class GroupFinderImpl
 		}
 	}
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public List<Group> findByNullFriendlyURL() {
 		Session session = null;

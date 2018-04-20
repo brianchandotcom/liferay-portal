@@ -202,12 +202,12 @@ public class PortalUpgradeProcessTest {
 	private static class InnerPortalUpgradeProcess
 		extends PortalUpgradeProcess {
 
-		private InnerPortalUpgradeProcess() throws SQLException {
-			connection = DataAccess.getUpgradeOptimizedConnection();
+		public void close() throws SQLException {
+			connection.close();
 		}
 
-		private void close() throws SQLException {
-			connection.close();
+		private InnerPortalUpgradeProcess() throws SQLException {
+			connection = DataAccess.getUpgradeOptimizedConnection();
 		}
 
 	}

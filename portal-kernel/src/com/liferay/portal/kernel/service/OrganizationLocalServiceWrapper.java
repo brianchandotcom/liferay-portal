@@ -1001,7 +1001,9 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	* </p>
 	*
 	* @param companyId the primary key of the organization's company
+	* @deprecated As of 7.0.0, with no direct replacement
 	*/
+	@Deprecated
 	@Override
 	public void rebuildTree(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -55,7 +55,7 @@ if (commerceOrderPayment != null) {
 				<liferay-ui:message key="success-your-order-has-been-processed" />
 			</div>
 
-			<liferay-ui:message key="you-will-be-redireted-in-a-few-seconds" />
+			<liferay-ui:message key="you-will-be-redirected-in-a-few-seconds" />
 
 			<aui:button-row>
 				<aui:button primary="<%= true %>" type="submit" value="go-to-order-details" />

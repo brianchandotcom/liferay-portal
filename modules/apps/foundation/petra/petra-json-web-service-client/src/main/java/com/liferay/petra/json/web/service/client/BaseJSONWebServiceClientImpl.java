@@ -795,15 +795,15 @@ public abstract class BaseJSONWebServiceClientImpl
 		}
 		catch (ExecutionException ee) {
 			throw new JSONWebServiceTransportException.CommunicationFailure(
-				"Unable to transmit request", ee);
+				"Unable to transmit request to " + _hostName, ee);
 		}
 		catch (InterruptedException ie) {
 			throw new JSONWebServiceTransportException.CommunicationFailure(
-				"Unable to transmit request", ie);
+				"Unable to transmit request to " + _hostName, ie);
 		}
 		catch (IOException ioe) {
 			throw new JSONWebServiceTransportException.CommunicationFailure(
-				"Unable to transmit request", ioe);
+				"Unable to transmit request to " + _hostName, ioe);
 		}
 		finally {
 			httpRequestBase.releaseConnection();

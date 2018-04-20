@@ -135,13 +135,9 @@ public class PullRequest {
 
 	public boolean isAutoCloseCommentAvailable() {
 		String url = JenkinsResultsParserUtil.combine(
-			new String[] {
-				"https://api.github.com/repos/",
-				project.getProperty("env.GITHUB_RECEIVER_USERNAME"), "/",
-				project.getProperty("repository"), "/issues/",
-				project.getProperty("env.GITHUB_PULL_REQUEST_NUMBER"),
-				"/comments?page="
-			});
+			"https://api.github.com/repos/",
+			getOwnerUsername(), "/", getRepositoryName(), "/issues/",
+			getNumber(), "/comments?page=");
 
 		try {
 			int i = 1;
@@ -151,9 +147,7 @@ public class PullRequest {
 					url + i, false);
 
 				if (content.contains("auto-close=\\\"false\\\"")) {
-					project.setProperty("auto.close.comment.available", "true");
-
-					break;
+					return true;
 				}
 
 				if (content.matches("\\s*\\[\\s*\\]\\s*")) {
@@ -162,10 +156,13 @@ public class PullRequest {
 
 				i++;
 			}
+			
+			return false;
 		}
-		catch (Exception e) {
-			System.out.println(
-				"Unable to check for auto-close property in GitHub comments");
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to check for auto-close property in GitHub comments",
+				ioe);
 		}
 	}
 

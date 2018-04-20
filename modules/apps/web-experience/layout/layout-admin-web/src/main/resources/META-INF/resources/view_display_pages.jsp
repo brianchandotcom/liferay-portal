@@ -139,7 +139,7 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 									<div class="col text-truncate">
 
 										<%
-										String typeLabel = displayPageDisplayContext.getMappingTypeLabel(layoutPageTemplateEntry);
+										String typeLabel = displayPageDisplayContext.getTypeLabel(layoutPageTemplateEntry);
 										%>
 
 										<c:choose>
@@ -157,7 +157,7 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 									<div class="col text-truncate">
 
 										<%
-										String subtypeLabel = displayPageDisplayContext.getMappingSubtypeLabel(layoutPageTemplateEntry);
+										String subtypeLabel = displayPageDisplayContext.getSubtypeLabel(layoutPageTemplateEntry);
 										%>
 
 										<c:choose>
@@ -203,7 +203,7 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 									<div class="col text-truncate">
 
 										<%
-										String typeLabel = displayPageDisplayContext.getMappingTypeLabel(layoutPageTemplateEntry);
+										String typeLabel = displayPageDisplayContext.getTypeLabel(layoutPageTemplateEntry);
 										%>
 
 										<c:choose>
@@ -221,7 +221,7 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 									<div class="col text-truncate">
 
 										<%
-										String subtypeLabel = displayPageDisplayContext.getMappingSubtypeLabel(layoutPageTemplateEntry);
+										String subtypeLabel = displayPageDisplayContext.getSubtypeLabel(layoutPageTemplateEntry);
 										%>
 
 										<c:choose>

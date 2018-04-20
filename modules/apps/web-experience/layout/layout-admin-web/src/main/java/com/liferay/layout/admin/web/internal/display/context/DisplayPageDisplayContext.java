@@ -170,44 +170,6 @@ public class DisplayPageDisplayContext {
 		return _layoutPageTemplateEntryId;
 	}
 
-	public String getMappingSubtypeLabel(
-			LayoutPageTemplateEntry layoutPageTemplateEntry)
-		throws PortalException {
-
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				layoutPageTemplateEntry.getClassName());
-
-		if ((assetRendererFactory == null) ||
-			(layoutPageTemplateEntry.getClassTypeId() <= 0)) {
-
-			return StringPool.BLANK;
-		}
-
-		ClassTypeReader classTypeReader =
-			assetRendererFactory.getClassTypeReader();
-
-		ClassType classType = classTypeReader.getClassType(
-			layoutPageTemplateEntry.getClassTypeId(),
-			_themeDisplay.getLocale());
-
-		return classType.getName();
-	}
-
-	public String getMappingTypeLabel(
-		LayoutPageTemplateEntry layoutPageTemplateEntry) {
-
-		AssetDisplayContributor assetDisplayContributor =
-			_assetDisplayContributorTracker.getAssetDisplayContributor(
-				layoutPageTemplateEntry.getClassName());
-
-		if (assetDisplayContributor == null) {
-			return StringPool.BLANK;
-		}
-
-		return assetDisplayContributor.getLabel(_themeDisplay.getLocale());
-	}
-
 	public String getOrderByCol() {
 		if (Validator.isNotNull(_orderByCol)) {
 			return _orderByCol;
@@ -231,6 +193,44 @@ public class DisplayPageDisplayContext {
 
 	public String[] getOrderColumns() {
 		return new String[] {"create-date", "name"};
+	}
+
+	public String getSubtypeLabel(
+			LayoutPageTemplateEntry layoutPageTemplateEntry)
+		throws PortalException {
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				layoutPageTemplateEntry.getClassName());
+
+		if ((assetRendererFactory == null) ||
+			(layoutPageTemplateEntry.getClassTypeId() <= 0)) {
+
+			return StringPool.BLANK;
+		}
+
+		ClassTypeReader classTypeReader =
+			assetRendererFactory.getClassTypeReader();
+
+		ClassType classType = classTypeReader.getClassType(
+			layoutPageTemplateEntry.getClassTypeId(),
+			_themeDisplay.getLocale());
+
+		return classType.getName();
+	}
+
+	public String getTypeLabel(
+		LayoutPageTemplateEntry layoutPageTemplateEntry) {
+
+		AssetDisplayContributor assetDisplayContributor =
+			_assetDisplayContributorTracker.getAssetDisplayContributor(
+				layoutPageTemplateEntry.getClassName());
+
+		if (assetDisplayContributor == null) {
+			return StringPool.BLANK;
+		}
+
+		return assetDisplayContributor.getLabel(_themeDisplay.getLocale());
 	}
 
 	public boolean isDisabledDisplayPagesManagementBar()

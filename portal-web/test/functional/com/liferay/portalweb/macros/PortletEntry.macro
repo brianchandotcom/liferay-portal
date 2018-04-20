@@ -1,5 +1,4 @@
 <definition>
-<<<<<<< HEAD
 	<command name="changeLocale">
 		<execute function="Click" locator1="Button#LOCALIZATION">
 			<var name="key_fieldName" value="${fieldName}" />

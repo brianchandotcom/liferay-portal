@@ -596,24 +596,6 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
-	<command name="exportSite">
-		<var name="key_siteName" value="${siteName}" />
-
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="Sites#SITE_TABLE_NAME" value1="${siteName}" />
-
-		<execute function="AssertClick" locator1="SitePages#TOOLBAR_EXPORT" value1="Export" />
-
-		<execute function="SelectFrame" locator1="SitesExport#EXPORT_IFRAME" />
-
-		<execute function="Type" locator1="SitesImport#EXPORT_FILE_NAME" value1="${fileName}" />
-
-		<execute function="AssertClick" locator1="SitesExport#EXPORT_BUTTON" value1="Export" />
-
-		<execute function="Pause" locator1="5000" />
-
-		<execute function="AssertClick" locator1="SitesExport#DOWNLOAD_FILE" value1="${fileDownload}" />
-	</command>
-
 	<command name="gotoSiteViaMySitesPG">
 		<execute function="AssertClick" locator1="ListGroupItem#ITEM_NAME_LINK" value1="${siteName}">
 			<var name="key_itemName" value="${siteName}" />

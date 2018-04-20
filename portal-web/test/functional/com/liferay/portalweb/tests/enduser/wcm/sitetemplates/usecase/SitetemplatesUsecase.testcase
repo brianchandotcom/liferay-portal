@@ -303,8 +303,8 @@
 			<var name="portlet" value="User Groups" />
 		</execute>
 
-		<execute macro="UserGroup#gotoManagePages">
-			<var name="userGroupName" value="UG UserGroup Name" />
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Manage Pages" />
 		</execute>
 
 		<for list="Home,Wiki" param="page">

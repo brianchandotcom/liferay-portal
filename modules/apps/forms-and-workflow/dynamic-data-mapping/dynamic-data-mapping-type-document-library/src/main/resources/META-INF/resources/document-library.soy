@@ -54,22 +54,25 @@
 					{param lexiconIconsPath: $lexiconIconsPath /}
 				{/call}
 
-				{else}
-					<div class="input-group">
+			{else}
+				<div class="input-group">
+					<div class="input-group-item input-group-prepend">
 						<input class="field form-control"
-							{if $dir}dir="{$dir}"{/if}
-							{if $readOnly}disabled{/if}
-							id="inputFile"
-							type="text"
-							value="{$fileEntryTitle ? $fileEntryTitle : ''}"
-							>
-						{call .button_group}
-							{param clearButtonVisible: $clearButtonVisible /}
-							{param lexiconIconsPath: $lexiconIconsPath /}
-							{param readOnly: $readOnly /}
-							{param strings: $strings /}
-						{/call}
+							   {if $dir}dir="{$dir}"{/if}
+							   disabled
+							   id="inputFile"
+							   type="text"
+							   value="{$fileEntryTitle ? $fileEntryTitle : ''}"
+						>
 					</div>
+
+					{call .button_group}
+						{param clearButtonVisible: $clearButtonVisible /}
+						{param lexiconIconsPath: $lexiconIconsPath /}
+						{param readOnly: $readOnly /}
+						{param strings: $strings /}
+					{/call}
+				</div>
 			{/if}
 			<input class="field form-control" name="{$name}" type="hidden" value="{$value ? $value : ''}">
 		</div>
@@ -85,18 +88,20 @@
 	{@param? clearButtonVisible: bool}
 	{@param? lexiconIconsPath: string}
 
-	<span class="input-group-btn">
+	<div class="input-group-append input-group-item input-group-item-shrink">
 		<button class="btn btn-secondary select-button" {if $readOnly}disabled{/if} type="button">
 			<span class="lfr-btn-label">{$strings.select}</span>
 		</button>
-		{if $clearButtonVisible}
+	</div>
+	{if $clearButtonVisible}
+		<div class="input-group-append input-group-item input-group-item-shrink">
 			<button class="btn btn-secondary clear-button" type="button">
 				<svg class="lexicon-icon">
 					<use xlink:href="{$lexiconIconsPath}times" />
 				</svg>
 			</button>
-		{/if}
-	</span>
+		</div>
+	{/if}
 {/template}
 
 /**

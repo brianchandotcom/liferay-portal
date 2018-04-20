@@ -15,7 +15,6 @@
 package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -49,14 +48,11 @@ public class EditLayoutPageTemplateEntrySettingsMVCActionCommand
 		long layoutPageTemplateEntryId = ParamUtil.getLong(
 			actionRequest, "layoutPageTemplateEntryId");
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryService.fetchLayoutPageTemplateEntry(
-				layoutPageTemplateEntryId);
+		boolean defaultTemplate = ParamUtil.getBoolean(
+			actionRequest, "defaultTemplate");
 
-		if (layoutPageTemplateEntry != null) {
-			_layoutPageTemplateEntryService.setDefaultLayoutPageTemplateEntry(
-				layoutPageTemplateEntry);
-		}
+		_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
+			layoutPageTemplateEntryId, defaultTemplate);
 	}
 
 	@Reference

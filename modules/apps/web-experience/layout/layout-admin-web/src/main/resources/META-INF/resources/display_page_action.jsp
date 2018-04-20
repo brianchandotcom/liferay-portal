@@ -87,6 +87,7 @@ LayoutPageTemplateEntry layoutPageTemplateEntry = (LayoutPageTemplateEntry)row.g
 		<portlet:actionURL name="/layout/edit_layout_page_template_settings" var="markAsPrimaryURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="layoutPageTemplateEntryId" value="<%= String.valueOf(layoutPageTemplateEntry.getLayoutPageTemplateEntryId()) %>" />
+			<portlet:param name="defaultTemplate" value="<%= Boolean.TRUE.toString() %>" />
 		</portlet:actionURL>
 
 		<%

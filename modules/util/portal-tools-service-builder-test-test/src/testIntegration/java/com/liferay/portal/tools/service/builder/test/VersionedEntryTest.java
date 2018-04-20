@@ -606,8 +606,6 @@ public class VersionedEntryTest {
 		_versionedEntryLocalService.updateVersionedEntryContent(
 			draftVersionedEntry, _LANGUAGE_ID_1, _CONTENT_1);
 
-		draftVersionedEntry = _versionService.updateDraft(draftVersionedEntry);
-
 		Assert.assertTrue(draftVersionedEntry.isDraft());
 
 		Assert.assertNull(_versionService.fetchPublished(draftVersionedEntry));

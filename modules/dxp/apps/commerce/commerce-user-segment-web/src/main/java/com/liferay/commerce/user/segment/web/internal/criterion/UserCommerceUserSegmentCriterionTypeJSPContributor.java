@@ -20,7 +20,7 @@ import com.liferay.commerce.user.segment.criterion.CommerceUserSegmentCriterionT
 import com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterionConstants;
 import com.liferay.commerce.user.segment.service.CommerceUserSegmentCriterionService;
 import com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryService;
-import com.liferay.commerce.user.segment.web.internal.display.context.CommerceUserSegmentCriterionTypeUserDisplayContext;
+import com.liferay.commerce.user.segment.web.internal.display.context.UserCommerceUserSegmentCriterionTypeDisplayContext;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -49,9 +49,9 @@ public class UserCommerceUserSegmentCriterionTypeJSPContributor
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		CommerceUserSegmentCriterionTypeUserDisplayContext
-			commerceUserSegmentCriterionTypeUserDisplayContext =
-				new CommerceUserSegmentCriterionTypeUserDisplayContext(
+		UserCommerceUserSegmentCriterionTypeDisplayContext
+			userCommerceUserSegmentCriterionTypeDisplayContext =
+				new UserCommerceUserSegmentCriterionTypeDisplayContext(
 					_commerceUserSegmentCriterionService,
 					_commerceUserSegmentCriterionTypeJSPContributorRegistry,
 					_commerceUserSegmentCriterionTypeRegistry,
@@ -60,7 +60,7 @@ public class UserCommerceUserSegmentCriterionTypeJSPContributor
 
 		httpServletRequest.setAttribute(
 			"user.jsp-portletDisplayContext",
-			commerceUserSegmentCriterionTypeUserDisplayContext);
+			userCommerceUserSegmentCriterionTypeDisplayContext);
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,

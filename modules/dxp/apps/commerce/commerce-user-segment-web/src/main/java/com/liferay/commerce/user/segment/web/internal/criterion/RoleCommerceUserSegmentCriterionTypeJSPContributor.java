@@ -20,7 +20,7 @@ import com.liferay.commerce.user.segment.criterion.CommerceUserSegmentCriterionT
 import com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterionConstants;
 import com.liferay.commerce.user.segment.service.CommerceUserSegmentCriterionService;
 import com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryService;
-import com.liferay.commerce.user.segment.web.internal.display.context.CommerceUserSegmentCriterionTypeRoleDisplayContext;
+import com.liferay.commerce.user.segment.web.internal.display.context.RoleCommerceUserSegmentCriterionTypeDisplayContext;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -49,9 +49,9 @@ public class RoleCommerceUserSegmentCriterionTypeJSPContributor
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		CommerceUserSegmentCriterionTypeRoleDisplayContext
-			commerceUserSegmentCriterionTypeRoleDisplayContext =
-				new CommerceUserSegmentCriterionTypeRoleDisplayContext(
+		RoleCommerceUserSegmentCriterionTypeDisplayContext
+			roleCommerceUserSegmentCriterionTypeDisplayContext =
+				new RoleCommerceUserSegmentCriterionTypeDisplayContext(
 					_commerceUserSegmentCriterionService,
 					_commerceUserSegmentCriterionTypeJSPContributorRegistry,
 					_commerceUserSegmentCriterionTypeRegistry,
@@ -60,7 +60,7 @@ public class RoleCommerceUserSegmentCriterionTypeJSPContributor
 
 		httpServletRequest.setAttribute(
 			"role.jsp-portletDisplayContext",
-			commerceUserSegmentCriterionTypeRoleDisplayContext);
+			roleCommerceUserSegmentCriterionTypeDisplayContext);
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,

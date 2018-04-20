@@ -17,9 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceUserSegmentCriterionTypeOrganizationDisplayContext commerceUserSegmentCriterionTypeOrganizationDisplayContext = (CommerceUserSegmentCriterionTypeOrganizationDisplayContext)request.getAttribute("organization.jsp-portletDisplayContext");
+OrganizationCommerceUserSegmentCriterionTypeDisplayContext organizationCommerceUserSegmentCriterionTypeDisplayContext = (OrganizationCommerceUserSegmentCriterionTypeDisplayContext)request.getAttribute("organization.jsp-portletDisplayContext");
 
-List<Organization> organizations = commerceUserSegmentCriterionTypeOrganizationDisplayContext.getOrganizations();
+List<Organization> organizations = organizationCommerceUserSegmentCriterionTypeDisplayContext.getOrganizations();
 %>
 
 <liferay-util:buffer
@@ -94,7 +94,7 @@ List<Organization> organizations = commerceUserSegmentCriterionTypeOrganizationD
 						}
 					},
 					title: '<liferay-ui:message arguments="organization" key="select-x" />',
-					url: '<%= commerceUserSegmentCriterionTypeOrganizationDisplayContext.getItemSelectorUrl() %>'
+					url: '<%= organizationCommerceUserSegmentCriterionTypeDisplayContext.getItemSelectorUrl() %>'
 				}
 			);
 

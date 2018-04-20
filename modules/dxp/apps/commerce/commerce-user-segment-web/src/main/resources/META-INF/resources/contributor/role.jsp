@@ -17,9 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceUserSegmentCriterionTypeRoleDisplayContext commerceUserSegmentCriterionTypeRoleDisplayContext = (CommerceUserSegmentCriterionTypeRoleDisplayContext)request.getAttribute("role.jsp-portletDisplayContext");
+RoleCommerceUserSegmentCriterionTypeDisplayContext roleCommerceUserSegmentCriterionTypeDisplayContext = (RoleCommerceUserSegmentCriterionTypeDisplayContext)request.getAttribute("role.jsp-portletDisplayContext");
 
-List<Role> roles = commerceUserSegmentCriterionTypeRoleDisplayContext.getRoles();
+List<Role> roles = roleCommerceUserSegmentCriterionTypeDisplayContext.getRoles();
 %>
 
 <liferay-util:buffer
@@ -94,7 +94,7 @@ List<Role> roles = commerceUserSegmentCriterionTypeRoleDisplayContext.getRoles()
 						}
 					},
 					title: '<liferay-ui:message arguments="role" key="select-x" />',
-					url: '<%= commerceUserSegmentCriterionTypeRoleDisplayContext.getItemSelectorUrl() %>'
+					url: '<%= roleCommerceUserSegmentCriterionTypeDisplayContext.getItemSelectorUrl() %>'
 				}
 			);
 

@@ -17,9 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceUserSegmentCriterionTypeUserGroupDisplayContext commerceUserSegmentCriterionTypeUserGroupDisplayContext = (CommerceUserSegmentCriterionTypeUserGroupDisplayContext)request.getAttribute("user_group.jsp-portletDisplayContext");
+UserGroupCommerceUserSegmentCriterionTypeDisplayContext userGroupCommerceUserSegmentCriterionTypeDisplayContext = (UserGroupCommerceUserSegmentCriterionTypeDisplayContext)request.getAttribute("user_group.jsp-portletDisplayContext");
 
-List<UserGroup> userGroups = commerceUserSegmentCriterionTypeUserGroupDisplayContext.getUserGroups();
+List<UserGroup> userGroups = userGroupCommerceUserSegmentCriterionTypeDisplayContext.getUserGroups();
 %>
 
 <liferay-util:buffer
@@ -94,7 +94,7 @@ List<UserGroup> userGroups = commerceUserSegmentCriterionTypeUserGroupDisplayCon
 						}
 					},
 					title: '<liferay-ui:message arguments="user-group" key="select-x" />',
-					url: '<%= commerceUserSegmentCriterionTypeUserGroupDisplayContext.getItemSelectorUrl() %>'
+					url: '<%= userGroupCommerceUserSegmentCriterionTypeDisplayContext.getItemSelectorUrl() %>'
 				}
 			);
 

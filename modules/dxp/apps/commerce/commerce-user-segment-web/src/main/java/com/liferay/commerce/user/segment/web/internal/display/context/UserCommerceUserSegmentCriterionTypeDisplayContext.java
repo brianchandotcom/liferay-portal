@@ -43,10 +43,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceUserSegmentCriterionTypeUserDisplayContext
+public class UserCommerceUserSegmentCriterionTypeDisplayContext
 	extends CommerceUserSegmentDisplayContext {
 
-	public CommerceUserSegmentCriterionTypeUserDisplayContext(
+	public UserCommerceUserSegmentCriterionTypeDisplayContext(
 		CommerceUserSegmentCriterionService commerceUserSegmentCriterionService,
 		CommerceUserSegmentCriterionTypeJSPContributorRegistry
 			commerceUserSegmentCriterionTypeJSPContributorRegistry,

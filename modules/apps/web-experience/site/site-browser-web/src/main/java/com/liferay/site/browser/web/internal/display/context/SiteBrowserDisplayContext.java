@@ -166,9 +166,7 @@ public class SiteBrowserDisplayContext {
 				themeDisplay.getCompanyId(), Layout.class.getName(),
 				_getGroupId());
 		}
-		else if (type.equals("parent-sites")) {
-		}
-		else {
+		else if (!type.equals("parent-sites")) {
 			total = GroupLocalServiceUtil.searchCount(
 				themeDisplay.getCompanyId(), classNameIds,
 				groupSearchTerms.getKeywords(), _getGroupParams());
@@ -392,7 +390,7 @@ public class SiteBrowserDisplayContext {
 	private List<Group> _filterGroups(
 		List<Group> groups, PermissionChecker permissionChecker) {
 
-		List<Group> filteredGroups = new ArrayList();
+		List<Group> filteredGroups = new ArrayList<>();
 
 		for (Group group : groups) {
 			if (permissionChecker.isGroupAdmin(group.getGroupId())) {
@@ -404,7 +402,7 @@ public class SiteBrowserDisplayContext {
 	}
 
 	private List<Group> _filterGroups(List<Group> groups, String filter) {
-		List<Group> filteredGroups = new ArrayList();
+		List<Group> filteredGroups = new ArrayList<>();
 
 		for (Group group : groups) {
 			if (filter.equals("contentSharingWithChildrenEnabled") &&
@@ -421,7 +419,7 @@ public class SiteBrowserDisplayContext {
 			List<Group> groups, Boolean privateLayout)
 		throws Exception {
 
-		List<Group> filteredGroups = new ArrayList();
+		List<Group> filteredGroups = new ArrayList<>();
 
 		if (privateLayout == null) {
 			return groups;

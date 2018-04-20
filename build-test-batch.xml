@@ -3387,6 +3387,8 @@ ${output.content}</echo>
 					<then>
 						<exec executable="git">
 							<arg value="diff" />
+							<arg value=":!*/*-portlet-service.jar" />
+							<arg value=":!*/service.properties" />
 						</exec>
 
 						<fail>

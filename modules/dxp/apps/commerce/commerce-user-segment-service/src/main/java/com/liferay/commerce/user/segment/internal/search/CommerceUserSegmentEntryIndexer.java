@@ -16,10 +16,13 @@ package com.liferay.commerce.user.segment.internal.search;
 
 import com.liferay.commerce.user.segment.criterion.CommerceUserSegmentCriterionType;
 import com.liferay.commerce.user.segment.criterion.CommerceUserSegmentCriterionTypeRegistry;
+import com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion;
 import com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry;
+import com.liferay.commerce.user.segment.service.CommerceUserSegmentCriterionLocalService;
 import com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -145,6 +148,32 @@ public class CommerceUserSegmentEntryIndexer
 		document.addNumberSortable(
 			Field.PRIORITY, commerceUserSegmentEntry.getPriority());
 
+		try {
+			List<CommerceUserSegmentCriterion> commerceUserSegmentCriteria =
+				_commerceUserSegmentCriterionLocalService.
+					getCommerceUserSegmentCriteria(
+						commerceUserSegmentEntry.
+							getCommerceUserSegmentEntryId(),
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			for (CommerceUserSegmentCriterion commerceUserSegmentCriterion :
+					commerceUserSegmentCriteria) {
+
+				CommerceUserSegmentCriterionType
+					commerceUserSegmentCriterionType =
+						_commerceUserSegmentCriterionTypeRegistry.
+							getCommerceUserSegmentCriterionType(
+								commerceUserSegmentCriterion.getType());
+
+				commerceUserSegmentCriterionType.contributeToDocument(
+					commerceUserSegmentCriterion, document);
+			}
+		}
+		catch (Exception ex) {
+			_log.error(
+				"Error indexing Document" + commerceUserSegmentEntry, ex);
+		}
+
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				"Document " + commerceUserSegmentEntry +
@@ -235,6 +264,10 @@ public class CommerceUserSegmentEntryIndexer
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceUserSegmentEntryIndexer.class);
+
+	@Reference
+	private CommerceUserSegmentCriterionLocalService
+		_commerceUserSegmentCriterionLocalService;
 
 	@Reference
 	private CommerceUserSegmentCriterionTypeRegistry

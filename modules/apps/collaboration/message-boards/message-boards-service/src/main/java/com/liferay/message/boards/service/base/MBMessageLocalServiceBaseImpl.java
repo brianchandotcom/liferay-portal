@@ -71,6 +71,7 @@ import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.PortletPreferencesPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -120,12 +121,13 @@ public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Creates a new message-boards message with the primary key. Does not add the message-boards message to the database.
-	 *
-	 * @param messageId the primary key for the new message-boards message
-	 * @return the new message-boards message
-	 */
+	* Creates a new message-boards message with the primary key. Does not add the message-boards message to the database.
+	*
+	* @param messageId the primary key for the new message-boards message
+	* @return the new message-boards message
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public MBMessage createMBMessage(long messageId) {
 		return mbMessagePersistence.create(messageId);
 	}

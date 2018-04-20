@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.lock.model.Lock;
@@ -85,12 +86,13 @@ public abstract class LockLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Creates a new lock with the primary key. Does not add the lock to the database.
-	 *
-	 * @param lockId the primary key for the new lock
-	 * @return the new lock
-	 */
+	* Creates a new lock with the primary key. Does not add the lock to the database.
+	*
+	* @param lockId the primary key for the new lock
+	* @return the new lock
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public Lock createLock(long lockId) {
 		return lockPersistence.create(lockId);
 	}

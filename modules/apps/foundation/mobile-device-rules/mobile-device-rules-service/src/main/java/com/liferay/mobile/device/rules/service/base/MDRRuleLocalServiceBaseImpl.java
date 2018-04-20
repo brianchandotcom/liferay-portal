@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.SystemEventPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -96,12 +97,13 @@ public abstract class MDRRuleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Creates a new mdr rule with the primary key. Does not add the mdr rule to the database.
-	 *
-	 * @param ruleId the primary key for the new mdr rule
-	 * @return the new mdr rule
-	 */
+	* Creates a new mdr rule with the primary key. Does not add the mdr rule to the database.
+	*
+	* @param ruleId the primary key for the new mdr rule
+	* @return the new mdr rule
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public MDRRule createMDRRule(long ruleId) {
 		return mdrRulePersistence.create(ruleId);
 	}

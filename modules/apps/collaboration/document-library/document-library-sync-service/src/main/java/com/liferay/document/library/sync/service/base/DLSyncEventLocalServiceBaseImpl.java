@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -86,12 +87,13 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new dl sync event with the primary key. Does not add the dl sync event to the database.
-	 *
-	 * @param syncEventId the primary key for the new dl sync event
-	 * @return the new dl sync event
-	 */
+	* Creates a new dl sync event with the primary key. Does not add the dl sync event to the database.
+	*
+	* @param syncEventId the primary key for the new dl sync event
+	* @return the new dl sync event
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public DLSyncEvent createDLSyncEvent(long syncEventId) {
 		return dlSyncEventPersistence.create(syncEventId);
 	}

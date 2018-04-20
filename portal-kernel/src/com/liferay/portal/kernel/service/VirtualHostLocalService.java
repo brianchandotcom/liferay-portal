@@ -73,6 +73,7 @@ public interface VirtualHostLocalService extends BaseLocalService,
 	* @param virtualHostId the primary key for the new virtual host
 	* @return the new virtual host
 	*/
+	@Transactional(enabled = false)
 	public VirtualHost createVirtualHost(long virtualHostId);
 
 	/**

@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.ClusterGroupLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClusterGroupPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -84,12 +85,13 @@ public abstract class ClusterGroupLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new cluster group with the primary key. Does not add the cluster group to the database.
-	 *
-	 * @param clusterGroupId the primary key for the new cluster group
-	 * @return the new cluster group
-	 */
+	* Creates a new cluster group with the primary key. Does not add the cluster group to the database.
+	*
+	* @param clusterGroupId the primary key for the new cluster group
+	* @return the new cluster group
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public ClusterGroup createClusterGroup(long clusterGroupId) {
 		return clusterGroupPersistence.create(clusterGroupId);
 	}

@@ -67,6 +67,7 @@ import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowDefinitionLinkPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -120,12 +121,13 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new journal folder with the primary key. Does not add the journal folder to the database.
-	 *
-	 * @param folderId the primary key for the new journal folder
-	 * @return the new journal folder
-	 */
+	* Creates a new journal folder with the primary key. Does not add the journal folder to the database.
+	*
+	* @param folderId the primary key for the new journal folder
+	* @return the new journal folder
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public JournalFolder createJournalFolder(long folderId) {
 		return journalFolderPersistence.create(folderId);
 	}

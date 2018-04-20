@@ -198,6 +198,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	* @param plid the primary key for the new layout
 	* @return the new layout
 	*/
+	@Transactional(enabled = false)
 	public Layout createLayout(long plid);
 
 	/**

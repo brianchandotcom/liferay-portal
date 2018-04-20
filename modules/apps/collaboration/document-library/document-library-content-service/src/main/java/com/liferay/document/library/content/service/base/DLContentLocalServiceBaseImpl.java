@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -87,12 +88,13 @@ public abstract class DLContentLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Creates a new document library content with the primary key. Does not add the document library content to the database.
-	 *
-	 * @param contentId the primary key for the new document library content
-	 * @return the new document library content
-	 */
+	* Creates a new document library content with the primary key. Does not add the document library content to the database.
+	*
+	* @param contentId the primary key for the new document library content
+	* @return the new document library content
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public DLContent createDLContent(long contentId) {
 		return dlContentPersistence.create(contentId);
 	}

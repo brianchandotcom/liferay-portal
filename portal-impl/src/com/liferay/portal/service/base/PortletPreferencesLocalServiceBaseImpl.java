@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.service.persistence.PortletPreferencesFinder;
 import com.liferay.portal.kernel.service.persistence.PortletPreferencesPersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -93,12 +94,13 @@ public abstract class PortletPreferencesLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new portlet preferences with the primary key. Does not add the portlet preferences to the database.
-	 *
-	 * @param portletPreferencesId the primary key for the new portlet preferences
-	 * @return the new portlet preferences
-	 */
+	* Creates a new portlet preferences with the primary key. Does not add the portlet preferences to the database.
+	*
+	* @param portletPreferencesId the primary key for the new portlet preferences
+	* @return the new portlet preferences
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public PortletPreferences createPortletPreferences(
 		long portletPreferencesId) {
 		return portletPreferencesPersistence.create(portletPreferencesId);

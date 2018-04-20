@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
 import com.liferay.portal.kernel.service.persistence.ResourceActionPersistence;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionFinder;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -87,12 +88,13 @@ public abstract class ResourceActionLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new resource action with the primary key. Does not add the resource action to the database.
-	 *
-	 * @param resourceActionId the primary key for the new resource action
-	 * @return the new resource action
-	 */
+	* Creates a new resource action with the primary key. Does not add the resource action to the database.
+	*
+	* @param resourceActionId the primary key for the new resource action
+	* @return the new resource action
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public ResourceAction createResourceAction(long resourceActionId) {
 		return resourceActionPersistence.create(resourceActionId);
 	}

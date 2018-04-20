@@ -140,6 +140,7 @@ public interface DDLRecordSetLocalService extends BaseLocalService,
 	* @param recordSetId the primary key for the new ddl record set
 	* @return the new ddl record set
 	*/
+	@Transactional(enabled = false)
 	public DDLRecordSet createDDLRecordSet(long recordSetId);
 
 	/**

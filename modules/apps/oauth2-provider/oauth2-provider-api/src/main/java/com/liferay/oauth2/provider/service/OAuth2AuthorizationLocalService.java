@@ -103,6 +103,7 @@ public interface OAuth2AuthorizationLocalService extends BaseLocalService,
 	* @param oAuth2AuthorizationId the primary key for the new o auth2 authorization
 	* @return the new o auth2 authorization
 	*/
+	@Transactional(enabled = false)
 	public OAuth2Authorization createOAuth2Authorization(
 		long oAuth2AuthorizationId);
 

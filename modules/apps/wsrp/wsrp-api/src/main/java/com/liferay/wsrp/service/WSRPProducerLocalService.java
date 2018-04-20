@@ -90,6 +90,7 @@ public interface WSRPProducerLocalService extends BaseLocalService,
 	* @param wsrpProducerId the primary key for the new wsrp producer
 	* @return the new wsrp producer
 	*/
+	@Transactional(enabled = false)
 	public WSRPProducer createWSRPProducer(long wsrpProducerId);
 
 	/**

@@ -88,6 +88,7 @@ public interface WSRPConsumerLocalService extends BaseLocalService,
 	* @param wsrpConsumerId the primary key for the new wsrp consumer
 	* @return the new wsrp consumer
 	*/
+	@Transactional(enabled = false)
 	public WSRPConsumer createWSRPConsumer(long wsrpConsumerId);
 
 	/**

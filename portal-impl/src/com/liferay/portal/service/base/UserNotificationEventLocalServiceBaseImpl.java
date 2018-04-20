@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserNotificationEventPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -87,12 +88,13 @@ public abstract class UserNotificationEventLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new user notification event with the primary key. Does not add the user notification event to the database.
-	 *
-	 * @param userNotificationEventId the primary key for the new user notification event
-	 * @return the new user notification event
-	 */
+	* Creates a new user notification event with the primary key. Does not add the user notification event to the database.
+	*
+	* @param userNotificationEventId the primary key for the new user notification event
+	* @return the new user notification event
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public UserNotificationEvent createUserNotificationEvent(
 		long userNotificationEventId) {
 		return userNotificationEventPersistence.create(userNotificationEventId);

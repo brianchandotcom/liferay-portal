@@ -110,6 +110,7 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	* @param questionId the primary key for the new polls question
 	* @return the new polls question
 	*/
+	@Transactional(enabled = false)
 	public PollsQuestion createPollsQuestion(long questionId);
 
 	/**

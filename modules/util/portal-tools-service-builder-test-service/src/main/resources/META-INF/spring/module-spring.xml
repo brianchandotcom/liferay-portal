@@ -8,4 +8,9 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.BigDecimalEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.BigDecimalEntryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.VersionedEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.VersionedEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.VersionedEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.VersionedEntryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.VersionedEntryContentPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.VersionedEntryContentPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.VersionedEntryContentVersionPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.VersionedEntryContentVersionPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.VersionedEntryVersionPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.VersionedEntryVersionPersistence" parent="basePersistence" />
 </beans>

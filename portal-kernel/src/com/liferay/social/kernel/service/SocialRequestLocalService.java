@@ -102,6 +102,7 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	* @param requestId the primary key for the new social request
 	* @return the new social request
 	*/
+	@Transactional(enabled = false)
 	public SocialRequest createSocialRequest(long requestId);
 
 	/**

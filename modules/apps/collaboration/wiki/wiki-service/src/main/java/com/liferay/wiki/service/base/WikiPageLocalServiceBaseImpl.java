@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.service.persistence.PortletPreferencesPersisten
 import com.liferay.portal.kernel.service.persistence.SystemEventPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -121,12 +122,13 @@ public abstract class WikiPageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Creates a new wiki page with the primary key. Does not add the wiki page to the database.
-	 *
-	 * @param pageId the primary key for the new wiki page
-	 * @return the new wiki page
-	 */
+	* Creates a new wiki page with the primary key. Does not add the wiki page to the database.
+	*
+	* @param pageId the primary key for the new wiki page
+	* @return the new wiki page
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public WikiPage createWikiPage(long pageId) {
 		return wikiPagePersistence.create(pageId);
 	}

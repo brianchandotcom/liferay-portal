@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.service.persistence.RecentLayoutRevisionPersist
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -96,12 +97,13 @@ public abstract class LayoutRevisionLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new layout revision with the primary key. Does not add the layout revision to the database.
-	 *
-	 * @param layoutRevisionId the primary key for the new layout revision
-	 * @return the new layout revision
-	 */
+	* Creates a new layout revision with the primary key. Does not add the layout revision to the database.
+	*
+	* @param layoutRevisionId the primary key for the new layout revision
+	* @return the new layout revision
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public LayoutRevision createLayoutRevision(long layoutRevisionId) {
 		return layoutRevisionPersistence.create(layoutRevisionId);
 	}

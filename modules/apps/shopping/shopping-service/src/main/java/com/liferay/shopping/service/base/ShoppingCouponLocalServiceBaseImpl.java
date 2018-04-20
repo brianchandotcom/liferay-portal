@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -92,12 +93,13 @@ public abstract class ShoppingCouponLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new shopping coupon with the primary key. Does not add the shopping coupon to the database.
-	 *
-	 * @param couponId the primary key for the new shopping coupon
-	 * @return the new shopping coupon
-	 */
+	* Creates a new shopping coupon with the primary key. Does not add the shopping coupon to the database.
+	*
+	* @param couponId the primary key for the new shopping coupon
+	* @return the new shopping coupon
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public ShoppingCoupon createShoppingCoupon(long couponId) {
 		return shoppingCouponPersistence.create(couponId);
 	}

@@ -145,6 +145,7 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	* @param resourcePermissionId the primary key for the new resource permission
 	* @return the new resource permission
 	*/
+	@Transactional(enabled = false)
 	public ResourcePermission createResourcePermission(
 		long resourcePermissionId);
 

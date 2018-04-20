@@ -76,6 +76,7 @@ public interface PortletItemLocalService extends BaseLocalService,
 	* @param portletItemId the primary key for the new portlet item
 	* @return the new portlet item
 	*/
+	@Transactional(enabled = false)
 	public PortletItem createPortletItem(long portletItemId);
 
 	/**

@@ -85,6 +85,7 @@ import com.liferay.portal.kernel.service.persistence.UserGroupRolePersistence;
 import com.liferay.portal.kernel.service.persistence.UserIdMapperPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -138,12 +139,13 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Creates a new user with the primary key. Does not add the user to the database.
-	 *
-	 * @param userId the primary key for the new user
-	 * @return the new user
-	 */
+	* Creates a new user with the primary key. Does not add the user to the database.
+	*
+	* @param userId the primary key for the new user
+	* @return the new user
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public User createUser(long userId) {
 		return userPersistence.create(userId);
 	}

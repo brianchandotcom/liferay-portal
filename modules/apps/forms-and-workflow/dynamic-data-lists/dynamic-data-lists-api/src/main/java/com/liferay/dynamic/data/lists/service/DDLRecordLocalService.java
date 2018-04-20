@@ -160,6 +160,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	* @param recordId the primary key for the new ddl record
 	* @return the new ddl record
 	*/
+	@Transactional(enabled = false)
 	public DDLRecord createDDLRecord(long recordId);
 
 	/**

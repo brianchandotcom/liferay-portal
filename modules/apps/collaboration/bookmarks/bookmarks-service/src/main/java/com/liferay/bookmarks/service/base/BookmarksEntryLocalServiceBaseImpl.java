@@ -67,6 +67,7 @@ import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.PortletPreferencesPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -119,12 +120,13 @@ public abstract class BookmarksEntryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new bookmarks entry with the primary key. Does not add the bookmarks entry to the database.
-	 *
-	 * @param entryId the primary key for the new bookmarks entry
-	 * @return the new bookmarks entry
-	 */
+	* Creates a new bookmarks entry with the primary key. Does not add the bookmarks entry to the database.
+	*
+	* @param entryId the primary key for the new bookmarks entry
+	* @return the new bookmarks entry
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public BookmarksEntry createBookmarksEntry(long entryId) {
 		return bookmarksEntryPersistence.create(entryId);
 	}

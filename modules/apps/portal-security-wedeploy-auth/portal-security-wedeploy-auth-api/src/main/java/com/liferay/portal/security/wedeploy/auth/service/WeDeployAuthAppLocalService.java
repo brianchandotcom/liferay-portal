@@ -79,6 +79,7 @@ public interface WeDeployAuthAppLocalService extends BaseLocalService,
 	* @param weDeployAuthAppId the primary key for the new we deploy auth app
 	* @return the new we deploy auth app
 	*/
+	@Transactional(enabled = false)
 	public WeDeployAuthApp createWeDeployAuthApp(long weDeployAuthAppId);
 
 	/**

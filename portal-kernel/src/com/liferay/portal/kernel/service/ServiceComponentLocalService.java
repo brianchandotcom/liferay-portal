@@ -75,6 +75,7 @@ public interface ServiceComponentLocalService extends BaseLocalService,
 	* @param serviceComponentId the primary key for the new service component
 	* @return the new service component
 	*/
+	@Transactional(enabled = false)
 	public ServiceComponent createServiceComponent(long serviceComponentId);
 
 	/**

@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -102,12 +103,13 @@ public abstract class AssetCategoryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new asset category with the primary key. Does not add the asset category to the database.
-	 *
-	 * @param categoryId the primary key for the new asset category
-	 * @return the new asset category
-	 */
+	* Creates a new asset category with the primary key. Does not add the asset category to the database.
+	*
+	* @param categoryId the primary key for the new asset category
+	* @return the new asset category
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public AssetCategory createAssetCategory(long categoryId) {
 		return assetCategoryPersistence.create(categoryId);
 	}

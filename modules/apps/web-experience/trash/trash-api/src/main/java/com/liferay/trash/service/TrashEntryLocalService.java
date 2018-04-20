@@ -106,6 +106,7 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @param entryId the primary key for the new trash entry
 	* @return the new trash entry
 	*/
+	@Transactional(enabled = false)
 	public TrashEntry createTrashEntry(long entryId);
 
 	public void deleteEntries(long groupId);

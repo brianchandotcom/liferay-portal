@@ -77,6 +77,7 @@ public interface MembershipRequestLocalService extends BaseLocalService,
 	* @param membershipRequestId the primary key for the new membership request
 	* @return the new membership request
 	*/
+	@Transactional(enabled = false)
 	public MembershipRequest createMembershipRequest(long membershipRequestId);
 
 	/**

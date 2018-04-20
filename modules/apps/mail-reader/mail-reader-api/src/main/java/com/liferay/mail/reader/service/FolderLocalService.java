@@ -80,6 +80,7 @@ public interface FolderLocalService extends BaseLocalService,
 	* @param folderId the primary key for the new folder
 	* @return the new folder
 	*/
+	@Transactional(enabled = false)
 	public Folder createFolder(long folderId);
 
 	/**

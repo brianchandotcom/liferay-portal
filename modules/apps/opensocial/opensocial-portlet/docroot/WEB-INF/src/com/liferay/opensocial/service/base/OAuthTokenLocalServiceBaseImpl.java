@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -89,12 +90,13 @@ public abstract class OAuthTokenLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new o auth token with the primary key. Does not add the o auth token to the database.
-	 *
-	 * @param oAuthTokenId the primary key for the new o auth token
-	 * @return the new o auth token
-	 */
+	* Creates a new o auth token with the primary key. Does not add the o auth token to the database.
+	*
+	* @param oAuthTokenId the primary key for the new o auth token
+	* @return the new o auth token
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public OAuthToken createOAuthToken(long oAuthTokenId) {
 		return oAuthTokenPersistence.create(oAuthTokenId);
 	}

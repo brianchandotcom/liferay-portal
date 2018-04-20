@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.PortletPreferencesPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -106,12 +107,13 @@ public abstract class KBCommentLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Creates a new kb comment with the primary key. Does not add the kb comment to the database.
-	 *
-	 * @param kbCommentId the primary key for the new kb comment
-	 * @return the new kb comment
-	 */
+	* Creates a new kb comment with the primary key. Does not add the kb comment to the database.
+	*
+	* @param kbCommentId the primary key for the new kb comment
+	* @return the new kb comment
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public KBComment createKBComment(long kbCommentId) {
 		return kbCommentPersistence.create(kbCommentId);
 	}

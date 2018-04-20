@@ -80,6 +80,7 @@ public interface SocialActivityAchievementLocalService extends BaseLocalService,
 	* @param activityAchievementId the primary key for the new social activity achievement
 	* @return the new social activity achievement
 	*/
+	@Transactional(enabled = false)
 	public SocialActivityAchievement createSocialActivityAchievement(
 		long activityAchievementId);
 

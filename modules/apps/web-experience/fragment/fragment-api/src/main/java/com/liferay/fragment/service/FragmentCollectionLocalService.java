@@ -87,6 +87,7 @@ public interface FragmentCollectionLocalService extends BaseLocalService,
 	* @param fragmentCollectionId the primary key for the new fragment collection
 	* @return the new fragment collection
 	*/
+	@Transactional(enabled = false)
 	public FragmentCollection createFragmentCollection(
 		long fragmentCollectionId);
 

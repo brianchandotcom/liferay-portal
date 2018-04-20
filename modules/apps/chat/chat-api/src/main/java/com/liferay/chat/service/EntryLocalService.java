@@ -82,6 +82,7 @@ public interface EntryLocalService extends BaseLocalService,
 	* @param entryId the primary key for the new entry
 	* @return the new entry
 	*/
+	@Transactional(enabled = false)
 	public Entry createEntry(long entryId);
 
 	public void deleteEntries(long userId);

@@ -468,6 +468,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param id the primary key for the new journal article
 	* @return the new journal article
 	*/
+	@Transactional(enabled = false)
 	public JournalArticle createJournalArticle(long id);
 
 	/**

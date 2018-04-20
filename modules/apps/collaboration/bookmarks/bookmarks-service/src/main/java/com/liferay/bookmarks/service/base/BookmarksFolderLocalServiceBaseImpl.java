@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -117,12 +118,13 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new bookmarks folder with the primary key. Does not add the bookmarks folder to the database.
-	 *
-	 * @param folderId the primary key for the new bookmarks folder
-	 * @return the new bookmarks folder
-	 */
+	* Creates a new bookmarks folder with the primary key. Does not add the bookmarks folder to the database.
+	*
+	* @param folderId the primary key for the new bookmarks folder
+	* @return the new bookmarks folder
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public BookmarksFolder createBookmarksFolder(long folderId) {
 		return bookmarksFolderPersistence.create(folderId);
 	}

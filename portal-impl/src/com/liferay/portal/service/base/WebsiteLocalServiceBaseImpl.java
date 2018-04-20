@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.service.persistence.ListTypePersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WebsitePersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -96,12 +97,13 @@ public abstract class WebsiteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Creates a new website with the primary key. Does not add the website to the database.
-	 *
-	 * @param websiteId the primary key for the new website
-	 * @return the new website
-	 */
+	* Creates a new website with the primary key. Does not add the website to the database.
+	*
+	* @param websiteId the primary key for the new website
+	* @return the new website
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public Website createWebsite(long websiteId) {
 		return websitePersistence.create(websiteId);
 	}

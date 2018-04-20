@@ -89,6 +89,7 @@ public interface WeDeployAuthTokenLocalService extends BaseLocalService,
 	* @param weDeployAuthTokenId the primary key for the new we deploy auth token
 	* @return the new we deploy auth token
 	*/
+	@Transactional(enabled = false)
 	public WeDeployAuthToken createWeDeployAuthToken(long weDeployAuthTokenId);
 
 	/**

@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -98,12 +99,13 @@ public abstract class WSRPConsumerLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new wsrp consumer with the primary key. Does not add the wsrp consumer to the database.
-	 *
-	 * @param wsrpConsumerId the primary key for the new wsrp consumer
-	 * @return the new wsrp consumer
-	 */
+	* Creates a new wsrp consumer with the primary key. Does not add the wsrp consumer to the database.
+	*
+	* @param wsrpConsumerId the primary key for the new wsrp consumer
+	* @return the new wsrp consumer
+	*/
 	@Override
+	@Transactional(enabled = false)
 	public WSRPConsumer createWSRPConsumer(long wsrpConsumerId) {
 		return wsrpConsumerPersistence.create(wsrpConsumerId);
 	}

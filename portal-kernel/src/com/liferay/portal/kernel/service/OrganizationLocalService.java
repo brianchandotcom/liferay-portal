@@ -175,6 +175,7 @@ public interface OrganizationLocalService extends BaseLocalService,
 	* @param organizationId the primary key for the new organization
 	* @return the new organization
 	*/
+	@Transactional(enabled = false)
 	public Organization createOrganization(long organizationId);
 
 	public void deleteGroupOrganization(long groupId, long organizationId);

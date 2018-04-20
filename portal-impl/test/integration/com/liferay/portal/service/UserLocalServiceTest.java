@@ -16,7 +16,6 @@ package com.liferay.portal.service;
 
 import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalServiceUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ContactLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -60,19 +59,6 @@ public class UserLocalServiceTest {
 
 		Assert.assertFalse(users.toString(), users.contains(user1));
 		Assert.assertTrue(users.toString(), users.contains(user2));
-	}
-
-	@Test
-	public void testGetNoContacts() throws Exception {
-		User user = UserTestUtil.addUser();
-
-		_users.add(user);
-
-		ContactLocalServiceUtil.deleteContact(user.getContactId());
-
-		List<User> users = UserLocalServiceUtil.getNoContacts();
-
-		Assert.assertTrue(users.toString(), users.contains(user));
 	}
 
 	@Test

@@ -50,6 +50,8 @@ public class CommerceUserSegmentDisplayContext {
 
 	public CommerceUserSegmentDisplayContext(
 		CommerceUserSegmentCriterionService commerceUserSegmentCriterionService,
+		CommerceUserSegmentCriterionTypeJSPContributorRegistry
+			commerceUserSegmentCriterionTypeJSPContributorRegistry,
 		CommerceUserSegmentCriterionTypeRegistry
 			commerceUserSegmentCriterionTypeRegistry,
 		CommerceUserSegmentEntryService commerceUserSegmentEntryService,
@@ -57,12 +59,14 @@ public class CommerceUserSegmentDisplayContext {
 
 		_commerceUserSegmentCriterionService =
 			commerceUserSegmentCriterionService;
+		_commerceUserSegmentCriterionTypeJSPContributorRegistry =
+			commerceUserSegmentCriterionTypeJSPContributorRegistry;
 		_commerceUserSegmentCriterionTypeRegistry =
 			commerceUserSegmentCriterionTypeRegistry;
 		_commerceUserSegmentEntryService = commerceUserSegmentEntryService;
 
-		_commerceUserSegmentRequestHelper =
-			new CommerceUserSegmentRequestHelper(httpServletRequest);
+		commerceUserSegmentRequestHelper = new CommerceUserSegmentRequestHelper(
+			httpServletRequest);
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			httpServletRequest);
 	}
@@ -75,7 +79,7 @@ public class CommerceUserSegmentDisplayContext {
 		}
 
 		_commerceUserSegmentCriteriaSearchContainer = new SearchContainer<>(
-			_commerceUserSegmentRequestHelper.getLiferayPortletRequest(),
+			commerceUserSegmentRequestHelper.getLiferayPortletRequest(),
 			getPortletURL(), null, "there-are-no-criteria");
 
 		setOrderByColAndType(
@@ -94,7 +98,7 @@ public class CommerceUserSegmentDisplayContext {
 
 		_commerceUserSegmentCriteriaSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(
-				_commerceUserSegmentRequestHelper.getLiferayPortletResponse()));
+				commerceUserSegmentRequestHelper.getLiferayPortletResponse()));
 
 		int total =
 			_commerceUserSegmentCriterionService.
@@ -123,7 +127,7 @@ public class CommerceUserSegmentDisplayContext {
 		}
 
 		HttpServletRequest httpServletRequest =
-			_commerceUserSegmentRequestHelper.getRequest();
+			commerceUserSegmentRequestHelper.getRequest();
 
 		long commerceUserSegmentCriterionId = ParamUtil.getLong(
 			httpServletRequest, "commerceUserSegmentCriterionId");
@@ -171,7 +175,7 @@ public class CommerceUserSegmentDisplayContext {
 		}
 
 		HttpServletRequest httpServletRequest =
-			_commerceUserSegmentRequestHelper.getRequest();
+			commerceUserSegmentRequestHelper.getRequest();
 
 		long commerceUserSegmentEntryId = ParamUtil.getLong(
 			httpServletRequest, "commerceUserSegmentEntryId");
@@ -198,18 +202,62 @@ public class CommerceUserSegmentDisplayContext {
 
 	public PortletURL getPortletURL() {
 		LiferayPortletResponse liferayPortletResponse =
-			_commerceUserSegmentRequestHelper.getLiferayPortletResponse();
+			commerceUserSegmentRequestHelper.getLiferayPortletResponse();
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
+		HttpServletRequest httpServletRequest =
+			commerceUserSegmentRequestHelper.getRequest();
+
 		long commerceUserSegmentEntryId = ParamUtil.getLong(
-			_commerceUserSegmentRequestHelper.getRequest(),
-			"commerceUserSegmentEntryId");
+			httpServletRequest, "commerceUserSegmentEntryId");
 
 		if (commerceUserSegmentEntryId > 0) {
 			portletURL.setParameter(
 				"commerceUserSegmentEntryId",
 				String.valueOf(commerceUserSegmentEntryId));
+		}
+
+		String delta = ParamUtil.getString(httpServletRequest, "delta");
+
+		if (Validator.isNotNull(delta)) {
+			portletURL.setParameter("delta", delta);
+		}
+
+		String deltaEntry = ParamUtil.getString(
+			httpServletRequest, "deltaEntry");
+
+		if (Validator.isNotNull(deltaEntry)) {
+			portletURL.setParameter("deltaEntry", deltaEntry);
+		}
+
+		String orderByCol = ParamUtil.getString(
+			httpServletRequest, "orderByCol");
+
+		if (Validator.isNotNull(orderByCol)) {
+			portletURL.setParameter("orderByCol", orderByCol);
+		}
+
+		String orderByType = ParamUtil.getString(
+			httpServletRequest, "orderByType");
+
+		if (Validator.isNotNull(orderByType)) {
+			portletURL.setParameter("orderByType", orderByType);
+		}
+
+		String redirect = ParamUtil.getString(httpServletRequest, "redirect");
+
+		if (Validator.isNotNull(redirect)) {
+			portletURL.setParameter("redirect", redirect);
+		}
+
+		String screenNavigationEntryKey = ParamUtil.getString(
+			commerceUserSegmentRequestHelper.getRequest(),
+			"screenNavigationEntryKey");
+
+		if (Validator.isNotNull(screenNavigationEntryKey)) {
+			portletURL.setParameter(
+				"screenNavigationEntryKey", screenNavigationEntryKey);
 		}
 
 		return portletURL;
@@ -223,7 +271,7 @@ public class CommerceUserSegmentDisplayContext {
 		}
 
 		_searchContainer = new SearchContainer<>(
-			_commerceUserSegmentRequestHelper.getLiferayPortletRequest(),
+			commerceUserSegmentRequestHelper.getLiferayPortletRequest(),
 			getPortletURL(), null, "there-are-no-entries");
 
 		setOrderByColAndType(
@@ -240,9 +288,9 @@ public class CommerceUserSegmentDisplayContext {
 
 		_searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(
-				_commerceUserSegmentRequestHelper.getLiferayPortletResponse()));
+				commerceUserSegmentRequestHelper.getLiferayPortletResponse()));
 
-		long groupId = _commerceUserSegmentRequestHelper.getScopeGroupId();
+		long groupId = commerceUserSegmentRequestHelper.getScopeGroupId();
 
 		if (isSearch()) {
 			Sort sort =
@@ -254,7 +302,7 @@ public class CommerceUserSegmentDisplayContext {
 				baseModelSearchResult =
 					_commerceUserSegmentEntryService.
 						searchCommerceUserSegmentEntries(
-							_commerceUserSegmentRequestHelper.getCompanyId(),
+							commerceUserSegmentRequestHelper.getCompanyId(),
 							groupId, getKeywords(), _searchContainer.getStart(),
 							_searchContainer.getEnd(), sort);
 
@@ -285,7 +333,7 @@ public class CommerceUserSegmentDisplayContext {
 		}
 
 		_keywords = ParamUtil.getString(
-			_commerceUserSegmentRequestHelper.getRequest(), "keywords");
+			commerceUserSegmentRequestHelper.getRequest(), "keywords");
 
 		return _keywords;
 	}
@@ -303,14 +351,14 @@ public class CommerceUserSegmentDisplayContext {
 		String defaultOrderByCol, String defaultOrderByType) {
 
 		HttpServletRequest httpServletRequest =
-			_commerceUserSegmentRequestHelper.getRequest();
+			commerceUserSegmentRequestHelper.getRequest();
 
 		String orderByCol = ParamUtil.getString(
 			httpServletRequest, searchContainer.getOrderByColParam());
 		String orderByType = ParamUtil.getString(
 			httpServletRequest, searchContainer.getOrderByTypeParam());
 
-		String namespace = _commerceUserSegmentRequestHelper.getPortletId();
+		String namespace = commerceUserSegmentRequestHelper.getPortletId();
 		String prefix = TextFormatter.format(
 			clazz.getSimpleName(), TextFormatter.K);
 
@@ -333,20 +381,21 @@ public class CommerceUserSegmentDisplayContext {
 		searchContainer.setOrderByType(orderByType);
 	}
 
+	protected final CommerceUserSegmentRequestHelper
+		commerceUserSegmentRequestHelper;
+
 	private SearchContainer<CommerceUserSegmentCriterion>
 		_commerceUserSegmentCriteriaSearchContainer;
 	private CommerceUserSegmentCriterion _commerceUserSegmentCriterion;
 	private final CommerceUserSegmentCriterionService
 		_commerceUserSegmentCriterionService;
-	private CommerceUserSegmentCriterionTypeJSPContributorRegistry
+	private final CommerceUserSegmentCriterionTypeJSPContributorRegistry
 		_commerceUserSegmentCriterionTypeJSPContributorRegistry;
 	private final CommerceUserSegmentCriterionTypeRegistry
 		_commerceUserSegmentCriterionTypeRegistry;
 	private CommerceUserSegmentEntry _commerceUserSegmentEntry;
 	private final CommerceUserSegmentEntryService
 		_commerceUserSegmentEntryService;
-	private final CommerceUserSegmentRequestHelper
-		_commerceUserSegmentRequestHelper;
 	private String _keywords;
 	private final PortalPreferences _portalPreferences;
 	private SearchContainer<CommerceUserSegmentEntry> _searchContainer;

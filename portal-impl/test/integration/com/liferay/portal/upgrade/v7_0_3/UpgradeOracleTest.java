@@ -111,7 +111,7 @@ public class UpgradeOracleTest {
 	protected int getCharLength(String tableName, String columnName)
 		throws Exception {
 
-		try (Connection connection = DataAccess.getUpgradeOptimizedConnection();
+		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement ps = connection.prepareStatement(
 				StringBundler.concat(
 					"select char_length from user_tab_columns where ",
@@ -129,7 +129,7 @@ public class UpgradeOracleTest {
 	protected String getCharUsed(String tableName, String columnName)
 		throws Exception {
 
-		try (Connection connection = DataAccess.getUpgradeOptimizedConnection();
+		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement ps = connection.prepareStatement(
 				StringBundler.concat(
 					"select char_used from user_tab_columns where table_name ",

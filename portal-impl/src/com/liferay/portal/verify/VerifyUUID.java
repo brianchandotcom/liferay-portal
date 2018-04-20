@@ -87,7 +87,7 @@ public class VerifyUUID extends VerifyProcess {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer(
 				verifiableUUIDModel.getTableName());
-			Connection con = DataAccess.getUpgradeOptimizedConnection();
+			Connection con = DataAccess.getConnection();
 			PreparedStatement ps1 = con.prepareStatement(
 				StringBundler.concat(
 					"select ", verifiableUUIDModel.getPrimaryKeyColumnName(),

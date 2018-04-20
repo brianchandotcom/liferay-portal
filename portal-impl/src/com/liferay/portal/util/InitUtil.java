@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.SanitizerLogWrapper;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.upgrade.dao.orm.UpgradeOptimizedConnectionProviderRegistryUtil;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -48,7 +47,6 @@ import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.security.lang.SecurityManagerUtil;
 import com.liferay.portal.spring.context.ArrayApplicationContext;
-import com.liferay.portal.upgrade.dao.orm.UpgradeOptimizedConnectionProviderRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
@@ -174,12 +172,6 @@ public class InitUtil {
 		// DB manager
 
 		DBManagerUtil.setDBManager(DoPrivilegedUtil.wrap(new DBManagerImpl()));
-
-		// Upgrade optimized connection provider registry
-
-		UpgradeOptimizedConnectionProviderRegistryUtil.
-			setUpgradeOptimizedConnectionProviderRegistry(
-				new UpgradeOptimizedConnectionProviderRegistryImpl());
 
 		// ROME
 

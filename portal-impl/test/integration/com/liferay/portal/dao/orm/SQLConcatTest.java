@@ -99,7 +99,7 @@ public class SQLConcatTest {
 	}
 
 	private void _assertConcat(String query, String expected) throws Exception {
-		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+		try (Connection con = DataAccess.getConnection();
 			PreparedStatement ps = con.prepareStatement(
 				SQLTransformer.transform(query));
 			ResultSet rs = ps.executeQuery()) {

@@ -18,25 +18,20 @@ import com.liferay.portal.kernel.dao.db.DBType;
 
 /**
  * @author Cristina González
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class UpgradeOptimizedConnectionProviderRegistryUtil {
 
 	public static UpgradeOptimizedConnectionProvider
 		getUpgradeOptimizedConnectionProvider(DBType dbType) {
 
-		return _upgradeOptimizedConnectionProviderRegistry.
-			getUpgradeOptimizedConnectionProvider(dbType);
+		return null;
 	}
 
 	public static void setUpgradeOptimizedConnectionProviderRegistry(
 		UpgradeOptimizedConnectionProviderRegistry
 			upgradeOptimizedConnectionProviderRegistry) {
-
-		_upgradeOptimizedConnectionProviderRegistry =
-			upgradeOptimizedConnectionProviderRegistry;
 	}
-
-	private static UpgradeOptimizedConnectionProviderRegistry
-		_upgradeOptimizedConnectionProviderRegistry;
 
 }

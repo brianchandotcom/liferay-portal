@@ -72,7 +72,7 @@ public class SQLEscapedConcatTest {
 
 	@Test
 	public void testConcatWithEscapedQuotes() throws Exception {
-		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+		try (Connection con = DataAccess.getConnection();
 			PreparedStatement ps = con.prepareStatement(
 				SQLTransformer.transform(
 					"select CONCAT('This is a \\'', data, '\\' for escaped " +

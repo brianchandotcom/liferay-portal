@@ -182,7 +182,6 @@
 		</check>
 		<check name="JavaCleanUpMethodSuperCleanUpCheck" />
 		<check name="JavaCleanUpMethodVariablesCheck" />
-		<check name="JavaDataAccessConnectionCheck" />
 		<check name="JavaDeprecatedKernelClassesCheck">
 			<property name="enabled" value="false" />
 		</check>

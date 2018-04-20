@@ -41,7 +41,7 @@ public class UpgradeUserNotificationEventTest {
 
 	@Test
 	public void testColumnExists() throws Exception {
-		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
+		try (Connection con = DataAccess.getConnection()) {
 			DBInspector dbInspector = new DBInspector(con);
 
 			Assert.assertTrue(dbInspector.hasTable("UserNotificationEvent"));

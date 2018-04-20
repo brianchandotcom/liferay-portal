@@ -138,7 +138,7 @@ public class Table {
 	}
 
 	public void generateTempFile() throws Exception {
-		Connection con = DataAccess.getUpgradeOptimizedConnection();
+		Connection con = DataAccess.getConnection();
 
 		try {
 			generateTempFile(con);
@@ -478,7 +478,7 @@ public class Table {
 	}
 
 	public void populateTable() throws Exception {
-		Connection con = DataAccess.getUpgradeOptimizedConnection();
+		Connection con = DataAccess.getConnection();
 
 		try {
 			populateTable(con);
@@ -666,7 +666,7 @@ public class Table {
 		String sql = sb.toString();
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
+			con = DataAccess.getConnection();
 
 			ps = con.prepareStatement(sql);
 

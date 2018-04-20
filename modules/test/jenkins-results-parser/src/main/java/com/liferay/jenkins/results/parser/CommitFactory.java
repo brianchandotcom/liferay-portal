@@ -31,7 +31,10 @@ public class CommitFactory {
 			throw new RuntimeException("Unable to find Git SHA");
 		}
 
+		String gitHubUserName = GitWorkingDirectory.getGitHubUserName(
+			gitWorkingDirectory.getRemote("upstream"));
 		String message = matcher.group("message");
+		String repositoryName = gitWorkingDirectory.getRepositoryName();
 		String sha = matcher.group("sha");
 		Commit.Type type = Commit.Type.MANUAL;
 
@@ -39,7 +42,8 @@ public class CommitFactory {
 			type = Commit.Type.LEGACY_ARCHIVE;
 		}
 
-		return new BaseCommit(gitWorkingDirectory, message, sha, type);
+		return new BaseCommit(
+			gitHubUserName, message, repositoryName, sha, type);
 	}
 
 	private static final Pattern _pattern = Pattern.compile(

@@ -21,22 +21,6 @@ import org.json.JSONObject;
  */
 public class BaseCommit implements Commit {
 
-	public BaseCommit(
-		GitWorkingDirectory gitWorkingDirectory, String message, String sha) {
-
-		this(gitWorkingDirectory, message, sha, null);
-	}
-
-	public BaseCommit(
-		GitWorkingDirectory gitWorkingDirectory, String message, String sha,
-		Type type) {
-
-		this.gitWorkingDirectory = gitWorkingDirectory;
-		_message = message;
-		_sha = sha;
-		_type = type;
-	}
-
 	@Override
 	public boolean equals(Object object) {
 		if (object.hashCode() == hashCode()) {
@@ -54,10 +38,8 @@ public class BaseCommit implements Commit {
 	@Override
 	public String getGitHubCommitURL() {
 		return JenkinsResultsParserUtil.combine(
-			"https://github.com/",
-			GitWorkingDirectory.getGitHubUserName(
-				gitWorkingDirectory.getRemote("upstream")),
-			"/", gitWorkingDirectory.getRepositoryName(), "/commit/", getSHA());
+			"https://github.com/", _gitHubUserName, "/", _repositoryName,
+			"/commit/", getSHA());
 	}
 
 	@Override
@@ -84,6 +66,17 @@ public class BaseCommit implements Commit {
 		return json.hashCode();
 	}
 
+	protected BaseCommit(
+		String gitHubUserName, String message, String sha,
+		String repositoryName, Type type) {
+
+		_gitHubUserName = gitHubUserName;
+		_message = message;
+		_sha = sha;
+		_repositoryName = repositoryName;
+		_type = type;
+	}
+
 	protected GitWorkingDirectory gitWorkingDirectory;
 
 	private JSONObject _toJSONObject() {
@@ -95,7 +88,9 @@ public class BaseCommit implements Commit {
 		return jsonObject;
 	}
 
+	private final String _gitHubUserName;
 	private final String _message;
+	private final String _repositoryName;
 	private final String _sha;
 	private final Type _type;
 

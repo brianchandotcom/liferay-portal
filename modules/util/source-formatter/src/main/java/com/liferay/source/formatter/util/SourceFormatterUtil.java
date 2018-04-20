@@ -58,6 +58,9 @@ import java.util.regex.Pattern;
  */
 public class SourceFormatterUtil {
 
+	public static final String GIT_LIFERAY_PORTAL_BRANCH =
+		"git.liferay.portal.branch";
+
 	public static List<String> filterFileNames(
 		List<String> allFileNames, String[] excludes, String[] includes,
 		SourceFormatterExcludes sourceFormatterExcludes,

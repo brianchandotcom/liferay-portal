@@ -88,7 +88,7 @@ public class CheckstyleUtil {
 		configuration = _addAttribute(
 			configuration, "portalBranchName",
 			SourceFormatterUtil.getPropertyValue(
-				_GIT_LIFERAY_PORTAL_BRANCH, propertiesMap),
+				SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH, propertiesMap),
 			"com.liferay.source.formatter.checkstyle.checks." +
 				"GetterMethodCallCheck");
 		configuration = _addAttribute(
@@ -270,8 +270,5 @@ public class CheckstyleUtil {
 
 		return configuration;
 	}
-
-	private static final String _GIT_LIFERAY_PORTAL_BRANCH =
-		"git.liferay.portal.branch";
 
 }

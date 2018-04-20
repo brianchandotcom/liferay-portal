@@ -364,7 +364,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 	protected String getPortalContent(String fileName) throws Exception {
 		String portalBranchName = SourceFormatterUtil.getPropertyValue(
-			_GIT_LIFERAY_PORTAL_BRANCH, _propertiesMap);
+			SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH, _propertiesMap);
 
 		return SourceFormatterUtil.getPortalContent(
 			_baseDirName, portalBranchName, fileName);
@@ -632,9 +632,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 	protected static final String RUN_OUTSIDE_PORTAL_EXCLUDES =
 		"run.outside.portal.excludes";
-
-	private static final String _GIT_LIFERAY_PORTAL_BRANCH =
-		"git.liferay.portal.branch";
 
 	private String _baseDirName;
 	private boolean _enabled = true;

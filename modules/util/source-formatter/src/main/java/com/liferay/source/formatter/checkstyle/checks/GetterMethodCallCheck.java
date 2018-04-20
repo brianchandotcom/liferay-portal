@@ -37,6 +37,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
 /**
@@ -96,14 +97,14 @@ public class GetterMethodCallCheck extends BaseCheck {
 		String getterObjectName, String variableName, String variableTypeName,
 		List<String> importNames, int lineNo) {
 
-		if (Validator.isNull(variableTypeName)) {
+		if (!Validator.isVariableName(variableTypeName)) {
 			return;
 		}
 
 		Document serviceXMLDocument = _getServiceXMLDocument(
 			_getPackageName(variableTypeName, importNames));
 
-		if (serviceXMLDocument == null) {
+		if ((serviceXMLDocument == null) || !serviceXMLDocument.hasContent()) {
 			return;
 		}
 
@@ -217,10 +218,12 @@ public class GetterMethodCallCheck extends BaseCheck {
 	}
 
 	private Document _getServiceXMLDocument(String packageName) {
-		Document serviceXMLDocument = _serviceXMLDocumentsMap.get(packageName);
+		if (Validator.isNull(packageName)) {
+			return null;
+		}
 
-		if (serviceXMLDocument != null) {
-			return serviceXMLDocument;
+		if (_serviceXMLDocumentsMap.containsKey(packageName)) {
+			return _serviceXMLDocumentsMap.get(packageName);
 		}
 
 		String fileLocation = StringBundler.concat(
@@ -232,7 +235,7 @@ public class GetterMethodCallCheck extends BaseCheck {
 			fileLocation, "/kernel/model", StringPool.BLANK);
 
 		try {
-			serviceXMLDocument = SourceUtil.readXML(
+			Document serviceXMLDocument = SourceUtil.readXML(
 				SourceFormatterUtil.getPortalContent(
 					_baseDirName, _portalBranchName, fileLocation));
 
@@ -241,6 +244,9 @@ public class GetterMethodCallCheck extends BaseCheck {
 			return serviceXMLDocument;
 		}
 		catch (Exception e) {
+			_serviceXMLDocumentsMap.put(
+				packageName, DocumentHelper.createDocument());
+
 			return null;
 		}
 	}
